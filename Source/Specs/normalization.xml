@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="header" ident="normalization">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="normalization">
   <equiv/>
   <gloss version="2009-01-05" xml:lang="fr">normalisation</gloss>
   <desc>indicates the extent of normalization or regularization of the original source carried out
@@ -28,9 +27,9 @@ $Id$
     <memberOf key="model.editorialDeclPart"/>
   </classes>
   <content>
-    <rng:oneOrMore>
-      <rng:ref name="model.pLike"/>
-    </rng:oneOrMore>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.pLike"/>
+    </oneOrMore>
   </content>
   <attList>
     <attDef ident="source" usage="opt">
@@ -47,11 +46,10 @@ $Id$
         llevada a cabo.</desc>
       <desc version="2007-01-21" xml:lang="it">indica l'autorità per ogni normalizzazione eseguita.</desc>
       <datatype>
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>Points to a bibliographic description or other resource documenting the principles
         underlying the normalization which has been applied. </valDesc>
-
       <valDesc xml:lang="fr">pointe vers une description bibliographique ou vers toute autre
         ressource documentant les principes selon lesquels la normalisation a été appliquée.
       </valDesc>
@@ -113,6 +111,27 @@ $Id$
         <normalization source="http://www.dict.sztaki.hu/webster">
           <p>Spelling converted throughout to Modern American usage, based on Websters 9th
             Collegiate dictionary.</p>
+        </normalization>
+      </editorialDecl>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Acad">
+      <editorialDecl>
+        <normalization method="markup">
+          <p>Là où les majuscules et les minuscules i, j, u, v et vv ont été normalisées selon la
+              pratique typographique moderne, l'élément<gi> choice</gi> a été employé en association
+              avec <gi>orig</gi> et <gi>reg</gi>pour fournir à la fois les formes originales et les
+              formes nouvelles , respectivement ... </p>
+        </normalization>
+        <normalization method="silent">
+          <p> L'espace entre chaque mot a été régularisé à un espace. Un signe de ponctuation
+              simple est suivi d'un espace, un signe de ponctuation double est précédé et suivi d'un
+              espace.</p>
+        </normalization>
+        <normalization source="http://www.academie-francaise.fr/langue/orthographe/plan.html">
+          <p>Normalisation effectuée selon le Rapport Du Conseil Supérieur De La Langue Française
+              publié dans les documents administratifs du Journal officiel du 6 décembre 1990</p>
         </normalization>
       </editorialDecl>
     </egXML>

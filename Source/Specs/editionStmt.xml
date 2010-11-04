@@ -28,17 +28,17 @@ $Id$
   <desc version="2007-05-04" xml:lang="es">agrupa la información relativa a la edición de un texto.</desc>
   <desc version="2007-01-21" xml:lang="it">raggruppa le informazioni riguardo una edizione di un testo.</desc>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:group>
-        <rng:ref name="edition"/>
-        <rng:zeroOrMore>
-          <rng:ref name="respStmt"/>
-        </rng:zeroOrMore>
-      </rng:group>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <ref name="edition"/>
+        <zeroOrMore>
+          <ref name="respStmt"/>
+        </zeroOrMore>
+      </group>
+    </choice>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -48,6 +48,25 @@ $Id$
           <resp>Adapted by </resp>
           <name>Elizabeth Kirk</name>
         </respStmt>
+      </editionStmt>
+    </egXML>
+  </exemplum>
+  <exemplum version="2010-02-26" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <editionStmt>
+        <edition>Deuxième édition</edition>
+        <respStmt>
+          <resp>réalisée par</resp>
+          <name>L. F.</name>
+        </respStmt>
+      </editionStmt>
+    </egXML>
+  </exemplum>
+  <exemplum version="2010-02-26" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <editionStmt>
+        <p>Première édition électronique, Nancy, <date> 2002</date>, réalisée dans le cadre de la
+            base <ref target="http://www.frantext.fr/">FRANTEXT</ref> .</p>
       </editionStmt>
     </egXML>
   </exemplum>
@@ -66,7 +85,7 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <editionStmt>
         <p>初版<date>1991年，上學期</date>
-        </p>
+            </p>
       </editionStmt>
     </egXML>
   </exemplum>
@@ -74,7 +93,7 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <editionStmt>
         <p>First edition, <date>Michaelmas Term, 1991.</date>
-   </p>
+            </p>
       </editionStmt>
     </egXML>
   </exemplum>

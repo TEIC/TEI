@@ -23,45 +23,45 @@ connect the nodes.</desc>
   <classes>
     <memberOf key="model.divPart"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:group>
-      <rng:optional>
-        <rng:ref name="label"/>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:optional>
-      <rng:choice>
-        <rng:group>
-          <rng:oneOrMore>
-            <rng:ref name="node"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:oneOrMore>
-          <rng:zeroOrMore>
-            <rng:ref name="arc"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:zeroOrMore>
-        </rng:group>
-        <rng:group>
-          <rng:oneOrMore>
-            <rng:ref name="arc"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:oneOrMore>
-          <rng:oneOrMore>
-            <rng:ref name="node"/>
-            <rng:zeroOrMore>
-              <rng:ref name="model.global"/>
-            </rng:zeroOrMore>
-          </rng:oneOrMore>
-        </rng:group>
-      </rng:choice>
-    </rng:group>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <optional>
+        <ref name="label"/>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </optional>
+      <choice>
+        <group>
+          <oneOrMore>
+            <ref name="node"/>
+            <zeroOrMore>
+              <ref name="model.global"/>
+            </zeroOrMore>
+          </oneOrMore>
+          <zeroOrMore>
+            <ref name="arc"/>
+            <zeroOrMore>
+              <ref name="model.global"/>
+            </zeroOrMore>
+          </zeroOrMore>
+        </group>
+        <group>
+          <oneOrMore>
+            <ref name="arc"/>
+            <zeroOrMore>
+              <ref name="model.global"/>
+            </zeroOrMore>
+          </oneOrMore>
+          <oneOrMore>
+            <ref name="node"/>
+            <zeroOrMore>
+              <ref name="model.global"/>
+            </zeroOrMore>
+          </oneOrMore>
+        </group>
+      </choice>
+    </group>
   </content>
   <attList>
     <attDef ident="type" usage="rec">
@@ -76,7 +76,7 @@ connect the nodes.</desc>
       <desc version="2007-05-04" xml:lang="es">describe el tipo de gráfico</desc>
       <desc version="2007-01-21" xml:lang="it">descrive il tipo di grafo</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="undirected">
@@ -168,10 +168,10 @@ instead of the <att>adj</att> attribute.</p>
       <desc version="2007-05-04" xml:lang="es">define el orden del gráfico, es decir, el número de sus nodos.</desc>
       <desc version="2007-01-21" xml:lang="it">definisce l'ordine del grafo, cioè il numero dei suoi nodi</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A positive integer.</valDesc>
-<valDesc xml:lang="fr" version="2009-11-17">Un entier positif.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un entier positif.</valDesc>
     </attDef>
     <attDef ident="size" usage="opt">
       <equiv/>
@@ -185,10 +185,10 @@ instead of the <att>adj</att> attribute.</p>
       <desc version="2007-05-04" xml:lang="es">define la dimensión del gráfico, es decir, el número de sus arcos.</desc>
       <desc version="2007-01-21" xml:lang="it">definisce la dimensione del grafo, cioè il numero dei suoi archi</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A non-negative integer.</valDesc>
-<valDesc version="2009-11-17" xml:lang="fr">Un entier non négatif.</valDesc>
+      <valDesc version="2009-11-17" xml:lang="fr">Un entier non négatif.</valDesc>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -214,6 +214,32 @@ instead of the <att>adj</att> attribute.</p>
         <arc from="#lax" to="#phx"/>
         <arc from="#lvg" to="#phx"/>
         <arc from="#phx" to="#tus"/>
+      </graph>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <graph xml:id="fr_cug1" type="undirected" order="5" size="4" rend="LABEL-PLACE bottom center           NODE-FRAME none ARC solid line">
+        <label>Inter-connexions des compagnies aériennes dans le Sud-Ouest des Etats-Unis.</label>
+        <node xml:id="fr_lax" degree="2">
+          <label>LAX</label>
+        </node>
+        <node xml:id="fr_lvg" degree="2">
+          <label>LVG</label>
+        </node>
+        <node xml:id="fr_phx" degree="3">
+          <label>PHX</label>
+        </node>
+        <node xml:id="fr_tus" degree="1">
+          <label>TUS</label>
+        </node>
+        <node xml:id="fr_cib" degree="0">
+          <label>CIB</label>
+        </node>
+        <arc from="#fr_lax" to="#lvg"/>
+        <arc from="#fr_lax" to="#phx"/>
+        <arc from="#fr_lvg" to="#phx"/>
+        <arc from="#fr_phx" to="#tus"/>
       </graph>
     </egXML>
   </exemplum>

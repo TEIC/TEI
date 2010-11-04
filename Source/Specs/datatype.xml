@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="datatype">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="datatype">
   <equiv/>
   <gloss version="2007-06-12" xml:lang="fr">type de données</gloss>
   <desc>specifies the declared value for an attribute, by referring to
@@ -21,11 +21,11 @@ $Id$
   <desc version="2007-05-04" xml:lang="es">indica el valor declarado de un atributo haciendo referencia a cualquier tipo de datos definido en el lenguaje elegido para el esquema.</desc>
   <desc version="2007-01-21" xml:lang="it">indica il valore dichiarato di un attributo facendo riferimento a un qualsiasi tipo di dati definito nel linguaggio scelto per lo schema</desc>
   <content>
-    <rng:zeroOrMore>
-      <rng:group>
-        <rng:ref name="macro.schemaPattern"/>
-      </rng:group>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <group>
+        <ref name="macro.schemaPattern"/>
+      </group>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="minOccurs">
@@ -48,7 +48,7 @@ $Id$
       <desc version="2007-11-06" xml:lang="it">indica il numero minimo di volte che questo tipo di dati può verificarsi nella definizione dell'attributo da definire</desc>
       <desc version="2007-05-04" xml:lang="es">indica el mínimo número de veces que los tipo de datos pueden aparecer en la especificación del atributo que se define.</desc>
       <datatype>
-        <rng:ref name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <defaultVal>1</defaultVal>
     </attDef>
@@ -71,10 +71,10 @@ $Id$
       <desc version="2007-11-06" xml:lang="it">indica il numero massimo di volte che questo tipo di dati può verificarsi nella definizione dell'attributo da definire</desc>
       <desc version="2007-05-04" xml:lang="es">indica el máximo número de veces que los tipo de datos pueden aparecer en la especificación del atributo que se define.</desc>
       <datatype>
-        <rng:choice>
-          <rng:ref name="data.count"/>
-          <rng:value>unbounded</rng:value>
-        </rng:choice>
+        <choice xmlns="http://relaxng.org/ns/structure/1.0">
+          <ref name="data.count"/>
+          <value>unbounded</value>
+        </choice>
       </datatype>
       <defaultVal>1</defaultVal>
     </attDef>
@@ -82,21 +82,44 @@ $Id$
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <datatype>
-        <rng:data type="token"/>
+        <data xmlns="http://relaxng.org/ns/structure/1.0" type="token"/>
+      </datatype>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <datatype>
+        <data xmlns="http://relaxng.org/ns/structure/1.0" type="token"/>
+      </datatype>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">L'encodage de l'exemple suivant exige que l'attribut défini contienne au moins deux URIs
+        dans ses valeurs, comme le cas de l'attribut <att>targets</att> dans <gi>join</gi>.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <datatype minOccurs="2" maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <datatype minOccurs="2" maxOccurs="unbounded">
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
     </egXML>
   </exemplum>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <datatype>
-        <rng:ref name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
     </egXML>
   </exemplum>
@@ -107,7 +130,7 @@ $Id$
     <gi>join</gi>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <datatype minOccurs="2" maxOccurs="unbounded">
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
     </egXML>
   </exemplum>

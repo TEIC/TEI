@@ -6,9 +6,7 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-	     module="core" ident="ref">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="ref">
   <gloss>reference</gloss>
   <gloss version="2007-12-20" xml:lang="kr">참조</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -32,16 +30,14 @@
     <memberOf key="att.declaring"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
-
- <constraintSpec scheme="isoschematron" ident="refAtts">
+  <constraintSpec scheme="isoschematron" ident="refAtts">
     <constraint>
-      	<sch:report test="@target and @cRef">Only one of the
-	attributes 'target' and 'cRef' may be supplied.</sch:report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
+	attributes 'target' and 'cRef' may be supplied.</report>
     </constraint>
-  </constraintSpec> 
-
+  </constraintSpec>
   <attList>
     <attDef ident="cRef" usage="opt">
       <gloss>canonical reference</gloss>
@@ -66,7 +62,7 @@
         riferimento canonico da uno schema definito in un elemento <gi>refsDecl</gi>
         nell'intestazione TEI</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>the value of <att>cRef</att> should be constructed so
       that when the algorithm for the resolution of canonical
@@ -94,22 +90,21 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref
-        target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> See especially the second
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> See especially the second
       sentence</ref> See also <ref>s.v. <term>locution</term>
-      </ref>.</egXML>
+         </ref>.</egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> v. en partic. la deuxième phrase.
+        </ref> v.aussi<ref>s.v. <term>locution</term>
+         </ref>
+      </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref
-        target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> 關於第二行，</ref> 請參考 <ref>下列
-        <term>慣用語</term></ref>.</egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> 關於第二行，</ref> 請參考 <ref>下列
+        <term>慣用語</term>
+         </ref>.</egXML>
   </exemplum>
-    <exemplum version="2008-04-06" xml:lang="fr">
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><ref
-          target="http://www.natcorp.ox.ac.uk/Texts/A02.xml#s2"> v. en partic. la deuxième phrase.
-        </ref> v.aussi<ref>s.v. <term>locution</term></ref>
-      </egXML>
-    </exemplum>
   <remarks>
     <p>The <att>target</att> and <att>cRef</att> attributes are mutually exclusive.</p>
   </remarks>

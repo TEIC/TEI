@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="ADMININFO" ident="adminInfo">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="ADMININFO" ident="adminInfo">
   <equiv/>
   <gloss>administrative information</gloss>
   <gloss version="2007-12-20" xml:lang="kr">관리 정보</gloss>
@@ -29,29 +29,30 @@ description itself. </desc>
   <desc version="2007-01-21" xml:lang="it">contiene informazioni relative alla gestione e disponibilità del manoscritto e alla descrizione stessa della documentazione</desc>
   <classes/>
   <content>
-<!--<rng:choice >
+    <!--<rng:choice >
     <rng:ref name="macro.specialPara"/>-->
-    <rng:group>
-      <rng:optional>
-        <rng:ref name="recordHist"/>
-      </rng:optional>
-      <rng:optional>
-        <rng:ref name="availability"/>
-      </rng:optional>
-      <rng:optional>
-        <rng:ref name="custodialHist"/>
-      </rng:optional>
-      <rng:optional>
-        <rng:ref name="model.noteLike"/>
-<!-- was remarks -->
-      </rng:optional>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <optional>
+        <ref name="recordHist"/>
+      </optional>
+      <optional>
+        <ref name="availability"/>
+      </optional>
+      <optional>
+        <ref name="custodialHist"/>
+      </optional>
+      <optional>
+        <ref name="model.noteLike"/>
+        <!-- was remarks -->
+      </optional>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <adminInfo>
         <recordHist>
-          <source>Record created <date>1 Aug 2004</date></source>
+          <source>Record created <date>1 Aug 2004</date>
+               </source>
         </recordHist>
         <availability>
           <p>Until 2015 permission to photocopy some materials from this
@@ -66,11 +67,28 @@ Edgar Holden in 1993. Donor number: 1993-034.</p>
       </adminInfo>
     </egXML>
   </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <adminInfo>
+        <recordHist>
+          <source>Notice établie à partir du document original</source>
+          <change when="2009-10-05" who="Markova">Description mise à jour le <date type="crea">5
+                octobre 2009 </date>en vue de l'encodage en TEI des descriptions des reliure de la
+              Réserve des livres rares</change>
+          <change when="2009-06-01" who="Le Bars">Description revue le <date type="maj">1er juin
+                2009 </date> par Fabienne Le Bars.....</change>
+          <change when="2009-06-25" who="Le Bars">Description validée le<date type="valid">25
+                juin 2009</date>par Fabienne Le Bars</change>
+        </recordHist>
+      </adminInfo>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <adminInfo>
         <recordHist>
-          <source>紀錄建立於<date>2004年8月1日</date></source>
+          <source>紀錄建立於<date>2004年8月1日</date>
+               </source>
         </recordHist>
         <availability>
           <p>2015年以前，非經贈與此書者同意，不得翻印。若對內容有興趣，請洽藏書單位。</p>

@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" ident="certainty">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="certainty" ident="certainty">
   <desc>indicates the degree of certainty associated
   with some aspect of the text markup. </desc>
   <desc version="2007-12-20" xml:lang="kr">텍스트 마크업의 어떤 특성과 관련된 확실성 또는 불확실성의 정도를 가리킨다.</desc>
@@ -24,12 +24,11 @@ $Id$
     <memberOf key="att.scoping"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:ref name="model.glossLike"/>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.glossLike"/>
+    </zeroOrMore>
   </content>
   <attList>
-
     <attDef ident="locus" usage="req">
       <equiv/>
       <desc>indicates more exactly the aspect concerning which
@@ -50,7 +49,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">indica la posición precisa de la incertidumbre en el marcaje: aplicabilidad del elemento, posición precisa del comienzo y del final de la etiqueta, valor de un atributo específico, etc.</desc>
       <desc version="2007-01-21" xml:lang="it">indica la posizione dell'incertezza nella codifica: l'applicabilità dell'elemento, la precisa posizione del marcatore iniziale o finale, il valore di un singolo attributo, ecc.</desc>
       <datatype>
-        <rng:ref name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="closed">
         <valItem ident="name">
@@ -71,7 +70,7 @@ $Id$
 	  element.</desc>
         </valItem>
         <valItem ident="value">
-	  <desc>uncertainty concerns the content (for an element) or
+          <desc>uncertainty concerns the content (for an element) or
 	  the value (for an attribute)</desc>
         </valItem>
       </valList>
@@ -115,11 +114,11 @@ in the text.</desc>
           viene dado ninguno, se aplica al marcaje en el texto.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna un valore alternativo all'apetto della codifica in questione, un identificatore generico, una trascrizione, il valore di un attributo, o l'identificatore di un elemento <gi>anchor</gi> (per indicare una posizione di inizio o fine alternativa). Se viene fornito un attributo <att>assertedValue</att>, il livello di sicurezza specificato dall'attributo <att>degree</att> si applica alla codifica alternativa specificata dall'attributo <att>assertedValue</att>; se non viene fornito alcun attributo, si applica alla codifica del testo.</desc>
       <datatype>
-        <rng:choice>
-          <rng:ref name="data.pointer"/>
-          <rng:ref name="data.name"/>
-          <rng:ref name="data.word"/>
-        </rng:choice>
+        <choice xmlns="http://relaxng.org/ns/structure/1.0">
+          <ref name="data.pointer"/>
+          <ref name="data.name"/>
+          <ref name="data.word"/>
+        </choice>
       </datatype>
       <valDesc>generic identifier, attribute value, location (e.g.
 indicated by a reference to an <gi>anchor</gi> element or to an
@@ -127,10 +126,15 @@ indicated by a reference to an <gi>anchor</gi> element or to an
 value.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <certainty target="#ESX" locus="name"
-		     assertedValue="placeName" degree="0.2">
-<desc>It is unlikely, but possible, that this refers to the place
-rather than the person.</desc></certainty>
+          <certainty target="#ESX" locus="name" assertedValue="placeName" degree="0.2">
+            <desc>It is unlikely, but possible, that this refers to the place
+rather than the person.</desc>
+          </certainty>
+        </egXML>
+      </exemplum>
+      <exemplum version="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <certainty target="#fr_ESX" locus="name" assertedValue="place" degree="0.2"/>
         </egXML>
       </exemplum>
       <remarks>
@@ -171,7 +175,7 @@ element.</p>
       <desc version="2007-05-04" xml:lang="es">indica las condiciones asumidas en la asignación de un grado de confianza </desc>
       <desc version="2007-01-21" xml:lang="it">indica le condizioni presunte nell'assegnare un grado di certezza</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>a pointer to a characterization of the conditions which
       are assumed in the assignment of a degree of
@@ -289,10 +293,10 @@ of the markup named by the <att>locus</att> attribute.</desc>
       <desc version="2009-01-06" xml:lang="fr">Indique le degré de confiance attribué à l'aspect
           du balisage que désigne l'attribut <att>locus</att>.</desc>
       <desc version="2007-05-04" xml:lang="es">indica el grado de confianza asignado al aspecto del marcaje llamado por el atributo <att>locus</att>
-			</desc>
+			      </desc>
       <desc version="2007-01-21" xml:lang="it">indica il grado di certezza assegnato ad un aspetto della codifica  indicato dall'attributo <att>locus</att>.</desc>
       <datatype>
-        <rng:ref name="data.probability"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.probability"/>
       </datatype>
     </attDef>
   </attList>
@@ -301,28 +305,38 @@ of the markup named by the <att>locus</att> attribute.</desc>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to <anchor xml:id="A1"/> old
 <persName xml:id="SYB">Saybrook</persName>.
 <certainty xml:id="c1" target="#SYB" locus="name" degree="0.6"/>
-			<certainty target="#SYB" locus="start" given="#c1" degree="0.9"/>
-			<certainty xml:id="C-c2" target="#SYB" locus="name" assertedValue="persName" degree="0.4"/>
-			<certainty target="#SYB" locus="start" given="#C-c2" degree="0.5"/>
-			<certainty target="#SYB" locus="start" assertedValue="#a1" given="#c1" degree="0.5"/>
-		</egXML>
+			      <certainty target="#SYB" locus="start" given="#c1" degree="0.9"/>
+			      <certainty xml:id="C-c2" target="#SYB" locus="name" assertedValue="persName" degree="0.4"/>
+			      <certainty target="#SYB" locus="start" given="#C-c2" degree="0.5"/>
+			      <certainty target="#SYB" locus="start" assertedValue="#a1" given="#c1" degree="0.5"/>
+		    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">( Pour la discussion sur cet exemple, voir <ptr target="#CECECE"/>)</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest est allé au <anchor xml:id="fr_A1"/> vieux
+          <persName xml:id="fr_SYB">Saybrook</persName>.<certainty xml:id="fr_c1" target="#fr_SYB" locus="name" degree="0.6"/>
+        <certainty target="#fr_SYB" locus="start" given="#c1" degree="0.9"/>
+        <certainty xml:id="fr_C-c2" target="#fr_SYB" locus="name" assertedValue="persName" degree="0.4"/>
+        <certainty target="#fr_SYB" locus="start" given="#C-c2" degree="0.5"/>
+        <certainty target="#fr_SYB" locus="start" assertedValue="#a1" given="#c1" degree="0.5"/>
+      </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       張先生去看<persName xml:id="zh-tw_JZZ">江子翠</persName>那邊有什麼活動。
       <certainty target="#zh-tw_JZZ" locus="name" degree="0.6"/>
-      <certainty target="#zh-tw_JZZ" locus="name" assertedValue="placeName" degree="0.4"/>
-    </egXML>
+         <certainty target="#zh-tw_JZZ" locus="name" assertedValue="placeName" degree="0.4"/>
+      </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
     王先生找到<anchor xml:id="zh-tw_A1"/>小<persName xml:id="zh-tw_lin">林</persName>，感動極了。
       <certainty xml:id="zh-tw_c1" target="#zh-tw_lin" locus="name" degree="0.8"/>
-      <certainty target="#zh-tw_lin" given="#c1" locus="start" degree="0.9"/>      
-    <certainty xml:id="zh-tw_c2" target="#zh-tw_lin" locus="name" assertedValue="placeName" degree="0.2"/>
-      <certainty target="#zh-tw_lin" given="#c2" locus="start" degree="0.1"/>
-      <certainty target="#zh-tw_lin" given="#c2" locus="start" assertedValue="#a1" degree="0.9"/>
-    </egXML>
+         <certainty target="#zh-tw_lin" given="#c1" locus="start" degree="0.9"/>      
+         <certainty xml:id="zh-tw_c2" target="#zh-tw_lin" locus="name" assertedValue="placeName" degree="0.2"/>
+         <certainty target="#zh-tw_lin" given="#c2" locus="start" degree="0.1"/>
+         <certainty target="#zh-tw_lin" given="#c2" locus="start" assertedValue="#a1" degree="0.9"/>
+      </egXML>
   </exemplum>
   <listRef>
     <ptr target="#CECECE"/>

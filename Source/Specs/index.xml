@@ -6,8 +6,7 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="core" ident="index">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="index">
   <equiv/>
   <gloss>index entry</gloss>
   <gloss version="2007-12-20" xml:lang="kr">색인 표제 항목</gloss>
@@ -28,14 +27,14 @@
     <memberOf key="att.spanning"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:group>
-        <rng:ref name="term"/>
-        <rng:optional>
-          <rng:ref name="index"/>
-        </rng:optional>
-      </rng:group>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <group>
+        <ref name="term"/>
+        <optional>
+          <ref name="index"/>
+        </optional>
+      </group>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="indexName" usage="opt">
@@ -51,7 +50,7 @@
       <desc version="2007-01-21" xml:lang="it">fornisce un nome per specificare a quale indice (o
         indici) la voce di indice appartiene.</desc>
       <datatype>
-        <rng:ref name="data.name"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
       </datatype>
       <valDesc>an application-specific name, consisting of Unicode characters only.</valDesc>
       <remarks>
@@ -67,18 +66,15 @@
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">David's other principal backer, Josiah ha-Kohen
-        <index indexName="NAMES">
-        <term>Josiah ha-Kohen b. Azarya</term>
-      </index> b. Azarya, son of one of the last gaons of Sura <index indexName="PLACES">
-        <term>Sura</term>
-      </index> was David's own first cousin.</egXML>
+        <index indexName="NAMES"><term>Josiah ha-Kohen b. Azarya</term></index> b. Azarya, son of one of the last gaons of Sura <index indexName="PLACES"><term>Sura</term></index> was David's own first cousin.</egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Flaubert_Tent"> Ils [les
+        onagres] me venaient de mon grand-père maternel, l'empereur <index indexName="NAMES"><term>Saharil</term></index>, fils d'Iakhschab, fils d'<index indexName="NAMES"><term>Iaarab</term></index>, fils de <index indexName="NAMES"><term>Kastan</term></index>
+      </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 道家思想的主要代表家為老子。 <index indexName="NAMES">
-        <term>老子</term>
-      </index>姓李名耳，字伯陽，有人說又稱老聃。在傳說中，老子一生下來時，就具有白色的眉毛及鬍子，所以被後來稱為老子。相傳生活在春秋時期。<index indexName="eras">
-        <term>春秋時期</term>
-      </index> 著有《道德經》，是中國古代著名思想家。</egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 道家思想的主要代表家為老子。 <index indexName="NAMES"><term>老子</term></index>姓李名耳，字伯陽，有人說又稱老聃。在傳說中，老子一生下來時，就具有白色的眉毛及鬍子，所以被後來稱為老子。相傳生活在春秋時期。<index indexName="eras"><term>春秋時期</term></index> 著有《道德經》，是中國古代著名思想家。</egXML>
   </exemplum>
   <listRef>
     <ptr target="#CONOIX"/>

@@ -6,10 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr"
-	     ident="damageSpan"
-    xmlns:s="http://www.ascc.net/xml/schematron" 
-    xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="damageSpan">
   <gloss>damaged span of text</gloss>
   <gloss version="2007-12-20" xml:lang="kr">텍스트의 손상 구간</gloss>
   <gloss version="2008-04-06" xml:lang="es">fragmento de texto dañado</gloss>
@@ -27,26 +24,26 @@ endommagée d'une manière quelconque mais toujours lisible.</desc>
   <desc version="2007-11-06" xml:lang="it">segnala l'inizio di una sequenza più estesa di testo danneggiata ma ancora leggibile</desc>
   <classes>
     <memberOf key="model.global.edit"/>
-<!--    <memberOf key="att.editLike"/>-->
+    <!--    <memberOf key="att.editLike"/>-->
     <memberOf key="att.damaged"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.spanning"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
-    <constraintSpec ident="spanTo" scheme="isoschematron">
-      <constraint>
-	<sch:assert test="@spanTo">The spanTo= attribute of
-	<sch:name/> is required.</sch:assert>
-      </constraint>
-    </constraintSpec> 
-    <!-- FC j'ai traduit ici la contrainte schematron -->
-    <constraintSpec ident="spanTo_fr" scheme="isoschematron" xml:lang="fr">
-        <constraint>
-            <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
-        </constraint>    
-    </constraintSpec> 
+  <constraintSpec ident="spanTo" scheme="isoschematron">
+    <constraint>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@spanTo">The spanTo= attribute of
+	<name/> is required.</assert>
+    </constraint>
+  </constraintSpec>
+  <!-- FC j'ai traduit ici la contrainte schematron -->
+  <constraintSpec ident="spanTo_fr" scheme="isoschematron" xml:lang="fr">
+    <constraint>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@spanTo">L'attribut spanTo est requis.</assert>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p>Paragraph partially damaged.  This is the undamaged
@@ -56,6 +53,16 @@ portion of the paragraph.</p>
       <p>Paragraph partially damaged; in the middle of this
 paragraph the damage ends and the anchor point marks
 the start of the  <anchor xml:id="a34"/> undamaged part of the text. ...</p>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Paragraph partially damaged. This is the undamaged portion <damageSpan spanTo="#fr_a34"/>and
+          this the damaged portion of the paragraph.</p>
+      <p>This paragraph is entirely damaged.</p>
+      <p>Paragraph partially damaged; in the middle of this paragraph the damage ends and the
+          anchor point marks the start of the <anchor xml:id="fr_a34"/> undamaged part of the text.
+        ...</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">

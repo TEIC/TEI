@@ -6,8 +6,7 @@
   $Date$
   $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="core" ident="gap">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="gap">
   <equiv/>
   <gloss>gap</gloss>
   <gloss version="2008-12-09" xml:lang="fr">omission</gloss>
@@ -35,9 +34,9 @@
     <memberOf key="att.editLike"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:ref name="model.glossLike"/>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.glossLike"/>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="reason" usage="opt">
@@ -47,8 +46,7 @@
       <desc version="2007-12-20" xml:lang="kr">누락의 이유를 제시한다. 그 값의 예들은 다음과 같다: <val>sampling</val>,
           <val>illegible</val>, <val>inaudible</val>, <val>irrelevant</val>, <val>cancelled</val>,
           <val>cancelled and illegible</val>.</desc>
-      <desc version="2007-05-02" xml:lang="zh-tw"
-          >說明省略的原因。屬性值的例子有<val>sampling</val>、、<val>inaudible</val>、<val>irrelevant</val>、<val>cancelled</val>、<val>cancelled
+      <desc version="2007-05-02" xml:lang="zh-tw">說明省略的原因。屬性值的例子有<val>sampling</val>、、<val>inaudible</val>、<val>irrelevant</val>、<val>cancelled</val>、<val>cancelled
           and illegible</val>。</desc>
       <desc version="2008-04-05" xml:lang="ja"> 省略の理由を示す．例えば， <val>見本</val>, <val>聞こえない</val>,
           <val>無関係</val>, <val>取り消し</val>, <val>取り消しがありかつ判読できない</val>，など． </desc>
@@ -56,7 +54,7 @@
         d'échantillon comprennent <val>échantillonnage</val>, <val>illisible</val>,
         <val>inaudible</val>, <val>non pertinent</val>, <val>biffé</val>, <val>biffé et
         illisible.</val>
-      </desc>
+         </desc>
       <desc version="2007-05-04" xml:lang="es">declara la causa de la omisión. Los valores de
         muestra incluyen <val>sampling (ejemplificación)</val>, <val>inaudible (inaudible)</val>,
           <val>irrelevant (irrelevante)</val>, <val>cancelled (cancelado)</val>, <val>cancelled and
@@ -65,11 +63,11 @@
         possibili ci sono <val>campionatura</val>, <val>incomprensibile</val>,
         <val>irrilevante</val>, <val>cancellato</val>, <val>cancellato e illegibile</val>.</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref name="data.word"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>any short indication of the reason for the omission.</valDesc>
       <valDesc version="2008-12-09" xml:lang="fr">une courte indication de la raison de l'omission.</valDesc>
-          </attDef>
+    </attDef>
     <attDef ident="hand" usage="opt">
       <equiv/>
       <desc>in the case of text omitted from the transcription because of deliberate deletion by an
@@ -86,11 +84,10 @@
       <desc version="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato volontariamente
         omesso dalla trascrizione da una mano identificabile, indica la mano autrice dell'omissione</desc>
       <datatype>
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>must be one of the hand identifiers declared in the document header (see section <ptr
-          target="#PHDH"/>).</valDesc>
-          </attDef>
+      <valDesc>must be one of the hand identifiers declared in the document header (see section <ptr target="#PHDH"/>).</valDesc>
+    </attDef>
     <attDef ident="agent" usage="opt">
       <equiv/>
       <desc>In the case of text omitted because of damage, categorizes the cause of the damage, if
@@ -105,7 +102,7 @@
       <desc version="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato omesse a causa di
         danneggiamento, indica la causa del danno qualora possa essere identificata.</desc>
       <datatype>
-        <rng:ref name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="open">
         <valItem ident="rubbing">
@@ -142,11 +139,21 @@
           <desc version="2007-01-21" xml:lang="it">il danno è causato dal fumo</desc>
         </valItem>
       </valList>
-          </attDef>
+    </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <gap extent="4" unit="chars" reason="illegible"/>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <gap extent="4" unit="chars" reason="illegible"/>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <gap extent="1" unit="essay" reason="sampling"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">

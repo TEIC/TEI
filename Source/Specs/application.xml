@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="application" module="header">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="application" module="header">
   <desc>provides information about an application which has acted upon the document.</desc>
   <desc version="2007-12-20" xml:lang="kr">문서에 사용한 애플리케이션에 관한 정보를 제시한다.</desc>
   <desc version="2008-04-06" xml:lang="es">proporciona información sobre la aplicación que ha
@@ -22,19 +22,19 @@ $Id$
     <memberOf key="model.applicationLike"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:oneOrMore>
-        <rng:ref name="model.labelLike"/>
-      </rng:oneOrMore>
-      <rng:choice>
-        <rng:zeroOrMore>
-          <rng:ref name="model.ptrLike"/>
-        </rng:zeroOrMore>
-        <rng:zeroOrMore>
-          <rng:ref name="model.pLike"/>
-        </rng:zeroOrMore>
-      </rng:choice>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.labelLike"/>
+      </oneOrMore>
+      <choice>
+        <zeroOrMore>
+          <ref name="model.ptrLike"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="model.pLike"/>
+        </zeroOrMore>
+      </choice>
+    </group>
   </content>
   <attList>
     <attDef ident="ident" usage="req">
@@ -49,7 +49,7 @@ $Id$
       <desc version="2007-11-06" xml:lang="it">indica un identificatore per l'applicazione,
         indipendentemente dal numero di versione o dal nome visualizzato</desc>
       <datatype>
-        <rng:ref name="data.name"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
       </datatype>
     </attDef>
     <attDef ident="version" usage="req">
@@ -64,10 +64,10 @@ $Id$
       <desc version="2007-11-06" xml:lang="it">indica un numero di versione per l'applicazione,
         indipendentemente dall'identificatore o dal nome visualizzato</desc>
       <datatype>
-        <rng:data type="token">
-          <rng:param name="pattern">[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}</rng:param>
-        </rng:data>
-<!--
+        <data xmlns="http://relaxng.org/ns/structure/1.0" type="token">
+          <param name="pattern">[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}</param>
+        </data>
+        <!--
 	    This matches the following types of version numbers:
 	    
 	    1
@@ -97,6 +97,16 @@ $Id$
       Markup Tool1 application has an interest in two parts of a document which was last saved on
       June 6 2006. The parts concerned are accessible at the URLs given as target for the two
         <gi>ptr</gi> elements. </p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <appInfo>
+        <application version="1.24" ident="Xaira">
+          <label>XAIRA Indexer</label>
+          <ptr target="#fr_HD"/>
+        </application>
+      </appInfo>
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="header" ident="namespace">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="namespace">
   <equiv/>
   <gloss version="2009-01-05" xml:lang="fr">espace de noms</gloss>
   <desc>supplies the formal name of the namespace to which the elements documented by its children
@@ -24,9 +23,9 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">fornisce il nome formale del namespace a cui appartengono
     gli elementi documentati dai suoi figli.</desc>
   <content>
-    <rng:oneOrMore>
-      <rng:ref name="tagUsage"/>
-    </rng:oneOrMore>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="tagUsage"/>
+    </oneOrMore>
   </content>
   <attList>
     <attDef ident="name" usage="req">
@@ -41,7 +40,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">el nombre formal completo del namespace concerniente.</desc>
       <desc version="2007-01-21" xml:lang="it">l'intero nome formale del namespace in questione.</desc>
       <datatype>
-        <rng:ref name="data.namespace"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
       </datatype>
     </attDef>
   </attList>
@@ -50,6 +49,14 @@ $Id$
       <namespace name="http://www.tei-c.org/ns/1.0">
         <tagUsage gi="hi" occurs="28" withId="2" render="#it"> Used only to mark English words
           italicised in the copy text </tagUsage>
+      </namespace>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <namespace name="http://www.tei-c.org/ns/1.0">
+        <tagUsage gi="foreign" render="#fr_it">Employé pour marquer des mots non-français dans le
+            texte.</tagUsage>
       </namespace>
     </egXML>
   </exemplum>

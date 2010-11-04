@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="gaiji" xml:id="GLYPH" ident="glyph">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="GLYPH" ident="glyph">
   <equiv/>
   <gloss>character glyph</gloss>
   <gloss version="2007-12-20" xml:lang="kr">그림 문자</gloss>
@@ -28,33 +28,33 @@ otherwise available in the document character set-->. </desc>
   <desc version="2007-01-21" xml:lang="it">fornisce informazioni descrittive su di un glifo.</desc>
   <classes/>
   <content>
-<!-- (name, gloss?, charProp* , desc?, mapping*, figure*, note?)-->
-    <rng:group>
-      <rng:optional>
-        <rng:ref name="glyphName"/>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="model.glossLike"/>
-      </rng:zeroOrMore>
-<!--      <rng:ref name="macro.glossSeq"/>-->
-      <rng:zeroOrMore>
-        <rng:ref name="charProp"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="mapping"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="figure"/>
-      </rng:zeroOrMore>
-<rng:zeroOrMore>
-        <rng:ref name="model.graphicLike"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="model.noteLike"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <!-- (name, gloss?, charProp* , desc?, mapping*, figure*, note?)-->
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <optional>
+        <ref name="glyphName"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="model.glossLike"/>
+      </zeroOrMore>
+      <!--      <rng:ref name="macro.glossSeq"/>-->
+      <zeroOrMore>
+        <ref name="charProp"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="mapping"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="figure"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="model.graphicLike"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="model.noteLike"/>
+      </zeroOrMore>
+    </group>
   </content>
-<!-- <attDef ident="ucs" usage="opt">
+  <!-- <attDef ident="ucs" usage="opt">
       <equiv/>
       <datatype><rng:ref name="datatype.ucs"/>
       </datatype>
@@ -70,7 +70,21 @@ otherwise available in the document character set-->. </desc>
           <localName>entity</localName>
           <value>rstroke</value>
         </charProp>
-        <figure><graphic url="glyph-rstroke.png"/></figure>
+        <figure>
+          <graphic url="glyph-rstroke.png"/>
+        </figure>
+      </glyph>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <glyph xml:id="fr_napos">
+        <glyphName>N latin minuscule précédé d'une apostrophe</glyphName>
+        <charProp>
+          <localName>entity</localName>
+          <value>napos</value>
+        </charProp>
+        <graphic url="glyph-napos.png"/>
       </glyph>
     </egXML>
   </exemplum>

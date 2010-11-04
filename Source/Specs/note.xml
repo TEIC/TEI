@@ -21,10 +21,10 @@
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
   </content>
   <attList>
-<!--    <attDef ident="type" usage="opt">
+    <!--    <attDef ident="type" usage="opt">
       <equiv/>
       <desc>describes the type of note.</desc>
       <desc version="2009-01-06" xml:lang="fr">décrit le type de la note</desc>
@@ -50,7 +50,8 @@
             type="div1"/>.</p>
       </remarks>
     </attDef>
-    --><attDef ident="anchored" usage="opt">
+    -->
+    <attDef ident="anchored" usage="opt">
       <equiv/>
       <desc>indicates whether the copy text shows the exact place of reference for the note.</desc>
       <desc version="2009-01-06" xml:lang="fr">indique si l'exemplaire du texte montre l'emplacement
@@ -62,7 +63,7 @@
         riferimento della nota.</desc>
       <desc version="2006-10-28" xml:lang="ja">当該注釈がある場所への参照は，正確にその場所を示しているかどうか．</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
       </datatype>
       <defaultVal>true</defaultVal>
       <remarks>
@@ -87,7 +88,7 @@
           est ancrée doivent être enregistrés, l'attribut <att>n</att>sera utilisé.</p>
       </remarks>
     </attDef>
-<!--    <attDef ident="target" usage="rwa">
+    <!--    <attDef ident="target" usage="rwa">
       <equiv/>
       <desc>indicates the point (or points) of attachment for a note, or the beginning of the span
         to which the note is attached.</desc>
@@ -119,7 +120,7 @@
       </remarks>
     </attDef>
     -->
-<attDef ident="targetEnd" usage="rwa">
+    <attDef ident="targetEnd" usage="rwa">
       <equiv/>
       <desc>points to the end of the span to which the note is attached, if the note is not embedded
         in the text at that point.</desc>
@@ -132,57 +133,61 @@
         nota è allegata nel caso in cui la nota non sia inclusa nel testo in quel punto.</desc>
       <desc version="2006-10-28" xml:lang="ja">当該注釈・コメントの終了点を示す．(当該注釈が注釈先の場所に埋め込 まれていない場合)</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>reference to the <att>xml:id</att>(s) of element(s) which <emph>end</emph> at the
         location(s) in question, or to an empty element at the point in question.</valDesc>
       <valDesc xml:lang="fr">référence à l' (aux) <att>xml:id</att>(s) qui <emph>finit</emph> à l'
         (aux) endroit(s) en question, ou à un élément vide à ce point en question.</valDesc>
-            <remarks>
+      <remarks>
         <p>This attribute is retained for backwards compatibility; it may be removed at a subsequent
           release of the Guidelines. The recommended way of pointing to a span of elements is by
-          means of the <ident>range</ident> function of XPointer, as further described in <ptr
-            target="#SATSRN"/>. </p>
+          means of the <ident>range</ident> function of XPointer, as further described in <ptr target="#SATSRN"/>. </p>
       </remarks>
       <remarks xml:lang="fr">
         <p>Cet attribut est conservé pour assurer un arrière-plan compatible ; il sera supprimé dans la
           prochaine mise à jour des Recommandations. La procédure recommandée pour pointer en
           direction d'une expansion des éléments est de le faire au moyen de la fonction
-            <ident>range</ident> de XPointer, ainsi qu'e la description en est faite  à <ptr
-            target="#SATSRN"/>. </p>
+            <ident>range</ident> de XPointer, ainsi qu'e la description en est faite  à <ptr target="#SATSRN"/>. </p>
       </remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-<p>In the following example, the translator has supplied a footnote
+    <p>In the following example, the translator has supplied a footnote
 containing an explanation of the term translated as "painterly":
-<egXML xmlns="http://www.tei-c.org/ns/Examples"  corresp="#NOTE-eg">And yet it is not only
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NOTE-eg">And yet it is not only
 in the great line of Italian renaissance art, but even in the
-painterly <note place="bottom" type="gloss" resp="#MDMH"><term
-xml:lang="de" >Malerisch</term>. This word has, in the German, two
+painterly <note place="bottom" type="gloss" resp="#MDMH"><term xml:lang="de">Malerisch</term>. This word has, in the German, two
 distinct meanings, one objective, a quality residing in the object,
 the other subjective, a mode of apprehension and creation.  To avoid
 confusion, they have been distinguished in English as
 <mentioned>picturesque</mentioned> and
 <mentioned>painterly</mentioned> respectively.</note> style of the
 Dutch genre painters of the seventeenth century that drapery has this
-psychological significance. </egXML></p>
-<p> For this example to be valid, the
+psychological significance. </egXML>
+      </p>
+    <p> For this example to be valid, the
 code <ident>MDMH</ident> must be defined elsewhere, for example by
 means of a responsibility statement in the associated TEI Header:</p>
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<respStmt xml:id="MDMH">
-<resp>translation from German to English</resp>
-<name>Hottinger, Marie Donald Mackie</name>
-</respStmt></egXML>
-</exemplum>
-  <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 爾時王園精舍有比丘尼，名曰毘梨<note type="gloss"
-      >毘梨，秦言雄也。</note>時彼國人一切共為俱蜜頭星會 </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <respStmt xml:id="MDMH">
+        <resp>translation from German to English</resp>
+        <name>Hottinger, Marie Donald Mackie</name>
+      </respStmt>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Perec-esp">
+      <p>J'écris dans la<lb/> marge...<lb/> Je vais<lb/> à la ligne.<lb/> Je renvoie à une
+            note<note type="gloss" place="foot"> J'aime beaucoup les renvois en bas de page, même si
+            je n'ai rien de particulier à y préciser.</note>en bas de page.</p>
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n14"
-        >此片的膠片已不存在，但《明星月報》刊登的艾霞電影腳本大綱，仍可供我們咀嚼艾霞的創作旨趣。<note n="35" anchored="true">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 爾時王園精舍有比丘尼，名曰毘梨<note type="gloss">毘梨，秦言雄也。</note>時彼國人一切共為俱蜜頭星會 </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n14">此片的膠片已不存在，但《明星月報》刊登的艾霞電影腳本大綱，仍可供我們咀嚼艾霞的創作旨趣。<note n="35" anchored="true">
         此時電影很少有完整的腳本，多是類似早期新劇的「幕表」
     ，也就是大綱，因為是默片，台詞也很簡單，主要依靠導演指示，演員臨場作戲。</note>從她的文字風格語主題特色裡，...</egXML>
   </exemplum>
@@ -190,13 +195,12 @@ means of a responsibility statement in the associated TEI Header:</p>
     <p>The global <att>n</att> attribute may be used to supply the symbol or number used to mark the
       note's point of attachment in the source text, as in the
     following example: </p>
-<egXML
-        xmlns="http://www.tei-c.org/ns/Examples">Mevorakh b. Saadya's mother, the matriarch of the
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">Mevorakh b. Saadya's mother, the matriarch of the
         family during the second half of the eleventh century, <note n="126" anchored="true"> The
           alleged mention of Judah Nagid's mother in a letter from 1071 is, in fact, a reference to
           Judah's children; cf. above, nn. 111 and 54. </note> is well known from Geniza documents
-        published by Jacob Mann.</egXML> 
-<p>However, if notes are numbered in sequence and their
+        published by Jacob Mann.</egXML>
+    <p>However, if notes are numbered in sequence and their
       numbering can be reconstructed automatically by processing software, it may well be considered
       unnecessary to record the note numbers.</p>
   </exemplum>
@@ -204,8 +208,7 @@ means of a responsibility statement in the associated TEI Header:</p>
     <p>L'attribut global<att>n</att> sera employé pour donner le
     symbole ou le nombre utilisé pour marquer le point d'insertion
     dans le texte source, comme dans l'exemple suivant :
-<egXML
-    xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">Mevorakh b. Saadya's
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">Mevorakh b. Saadya's
     mother, the matriarch of the family during the second half of the
     eleventh century, <note n="126" anchored="true"> The alleged
     mention of Judah Nagid's mother in a letter from 1071 is, in fact,

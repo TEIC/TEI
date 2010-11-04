@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="gaiji" xml:id="CHAR" ident="char">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="CHAR" ident="char">
   <equiv/>
   <gloss>character</gloss>
   <gloss version="2007-12-20" xml:lang="kr">문자</gloss>
@@ -28,30 +28,30 @@ otherwise available in the document character set-->. </desc>
   <desc version="2007-01-21" xml:lang="it">fornisce informazioni descrittive su di un carattere.</desc>
   <classes/>
   <content>
-    <rng:group>
-      <rng:optional>
-        <rng:ref name="charName"/>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="model.glossLike"/>
-      </rng:zeroOrMore>
-<!--      <rng:ref name="macro.glossSeq"/>-->
-      <rng:zeroOrMore>
-        <rng:ref name="charProp"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="mapping"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-	<rng:ref name="figure"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-	<rng:ref name="model.graphicLike"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="model.noteLike"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <optional>
+        <ref name="charName"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="model.glossLike"/>
+      </zeroOrMore>
+      <!--      <rng:ref name="macro.glossSeq"/>-->
+      <zeroOrMore>
+        <ref name="charProp"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="mapping"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="figure"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="model.graphicLike"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="model.noteLike"/>
+      </zeroOrMore>
+    </group>
   </content>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -66,6 +66,22 @@ otherwise available in the document character set-->. </desc>
           <value>36</value>
         </charProp>
         <mapping type="standard">人</mapping>
+      </char>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <char xml:id="fr_circledU4EBA">
+        <charName>IDEOGRAMME ENCADRE 4EBA</charName>
+        <charProp>
+          <unicodeName>table de correspondance qui donne la composition des caractères.</unicodeName>
+          <value>encadrement</value>
+        </charProp>
+        <charProp>
+          <localName>daikanwa</localName>
+          <value>36</value>
+        </charProp>
+        <mapping type="standard"> 人 </mapping>
       </char>
     </egXML>
   </exemplum>

@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="OBJECTDESC" ident="objectDesc">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="OBJECTDESC" ident="objectDesc">
   <equiv/>
   <gloss version="2007-06-12" xml:lang="fr">description d'objet</gloss>
   <desc>contains a description of the physical
@@ -24,19 +24,19 @@ $Id$
     <memberOf key="model.physDescPart"/>
   </classes>
   <content>
-    <rng:choice>
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:group>
-        <rng:optional>
-          <rng:ref name="supportDesc"/>
-        </rng:optional>
-        <rng:optional>
-          <rng:ref name="layoutDesc"/>
-        </rng:optional>
-      </rng:group>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="supportDesc"/>
+        </optional>
+        <optional>
+          <ref name="layoutDesc"/>
+        </optional>
+      </group>
+    </choice>
   </content>
   <attList>
     <attDef ident="form">
@@ -57,7 +57,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">un nombre breve específico de un proyecto que identifica la forma física del documento, por ejemplo códex, rollo, fragmento, folio parcial, recorte, etc.</desc>
       <desc version="2007-01-21" xml:lang="it">un nome breve specifico di un progetto che identifica la forma fisica del documento, per esempio codice, rotolo, frammento, foglio parziale, ritaglio, ecc.</desc>
       <datatype>
-        <rng:ref name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valDesc>a short project-defined name</valDesc>
       <valDesc xml:lang="fr" version="2009-04-17">un nom court défini par le projet</valDesc>
@@ -74,6 +74,21 @@ $Id$
         <layoutDesc>
           <layout ruledLines="25 32"/>
         </layoutDesc>
+      </objectDesc>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <objectDesc>
+        <supportDesc>
+          <extent>
+            <dimensions type="binding">
+              <height unit="mm">168</height>
+              <width unit="mm">106</width>
+              <depth unit="mm">22</depth>
+            </dimensions>
+          </extent>
+        </supportDesc>
       </objectDesc>
     </egXML>
   </exemplum>

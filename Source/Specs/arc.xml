@@ -19,13 +19,13 @@ $Id$
 			dans un graphe.</desc>
   <desc version="2007-05-04" xml:lang="es">codifica un arco, es decir, la conexión entre un nodo y otro al interno de un gráfico</desc>
   <desc version="2007-01-21" xml:lang="it">codifica un arco, cioè il collegamento tra un nodo e l'altro all'interno di un grafo</desc>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:optional>
-      <rng:ref name="label"/>
-      <rng:optional>
-        <rng:ref name="label"/>
-      </rng:optional>
-    </rng:optional>
+  <content>
+    <optional xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="label"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+    </optional>
   </content>
   <attList>
     <attDef ident="from" usage="req">
@@ -41,10 +41,10 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">proporciona el identificador al nodo adyacente al nodo corriente.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna un identificatore al nodo non adiacente all'arco</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>The identifier of a node.</valDesc>
-<valDesc xml:lang="fr" version="2009-11-17">L'identifiant d'un nœud.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">L'identifiant d'un nœud.</valDesc>
     </attDef>
     <attDef ident="to" usage="req">
       <equiv/>
@@ -59,15 +59,23 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">proporciona el identificador al nodo adyacente al nodo corriente.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna un identificatore al nodo adiacente all'arco</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>The identifier of a node.</valDesc>
-        <valDesc xml:lang="fr" version="2009-11-17">L'identifiant d'un nœud.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">L'identifiant d'un nœud.</valDesc>
     </attDef>
   </attList>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <arc from="#T3" to="#T3">
+        <label>OLD</label>
+        <label>VIEUX</label>
+      </arc>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <arc from="#fr_T3" to="#T3">
         <label>OLD</label>
         <label>VIEUX</label>
       </arc>

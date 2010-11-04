@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="iso-fs" ident="numeric">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="numeric">
   <gloss>numeric value</gloss>
   <gloss version="2007-12-20" xml:lang="kr">수치</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw">數值</gloss>
@@ -29,7 +29,7 @@ $Id$
     <memberOf key="model.featureVal.single"/>
   </classes>
   <content>
-    <rng:empty/>
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="value" usage="req">
@@ -47,7 +47,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">proporciona el límite inferior para el valor numérico representado, y también (si no se proporciona <att>max</att>) su límite superior. </desc>
       <desc version="2007-01-21" xml:lang="it">fornisce un limite inferiore al valore numerico rappresentato e anche (qualora l'attributo <att>max</att> (maz) non sia presente) il limite superiore.</desc>
       <datatype>
-        <rng:ref name="data.numeric"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
       </datatype>
       <valDesc>A real number or integer.</valDesc>
       <valDesc xml:lang="fr">Un nombre réel ou entier.</valDesc>
@@ -65,7 +65,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">proporciona el límite superior para el valor numérico representado.</desc>
       <desc version="2007-01-21" xml:lang="it">fornisce un superiore inferiore al valore numerico rappresentato.</desc>
       <datatype>
-        <rng:ref name="data.numeric"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
       </datatype>
       <valDesc>A real number or integer.</valDesc>
       <valDesc xml:lang="fr">Un nombre réel ou entier.</valDesc>
@@ -84,7 +84,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">especifica si el valor representado debe ser truncado para dar un valor entero.</desc>
       <desc version="2007-01-21" xml:lang="it">indica se il valore rappresentato debba essere troncato per ottenere un numero intero.</desc>
       <datatype>
-        <rng:ref name="data.truthValue"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
       </datatype>
     </attDef>
   </attList>
@@ -93,6 +93,21 @@ $Id$
       <numeric value="42"/>
     </egXML>
     <p>This represents the numeric value 42.</p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <numeric value="42"/>
+    </egXML>
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Ceci représente la valeur numérique 42.</p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <numeric value="42.45" max="50" trunc="true"/>
+    </egXML>
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Ceci représente n'importe laquelle des neuf valeurs des entiers possibles entre 42 et 50
+        inclus. Si l'attribut <att> trunc</att> avait eu la valeur FALSE, cet exemple aurait
+        représenté n'importe lequel des nombres infinis ayant des valeurs numériques comprises entre
+        42.45 et 50.0</p>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

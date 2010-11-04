@@ -6,9 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="delSpan"
-    xmlns:s="http://www.ascc.net/xml/schematron" 
-    xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="delSpan">
   <equiv/>
   <gloss>deleted span of text</gloss>
   <gloss version="2007-12-20" xml:lang="kr">텍스트의 삭제 구간</gloss>
@@ -32,26 +30,26 @@ author, scribe, annotator, or corrector.</desc>
   <desc version="2007-01-21" xml:lang="it">segnala l'inizio di una porzione di testo più lunga cancellata, indicata come cancellata, o indicata come superflua o spuria da un autore, un trascrittore, un annotatore o un correttore</desc>
   <classes>
     <memberOf key="model.global.edit"/>
-<!--    <memberOf key="att.editLike"/>-->
+    <!--    <memberOf key="att.editLike"/>-->
     <memberOf key="att.transcriptional"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.spanning"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
-    <constraintSpec ident="spanTo" scheme="isoschematron">
-      <constraint>
-      <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/>
-      is required.</sch:assert>
-      </constraint>
-    </constraintSpec> 
-    <!-- FC j'ai traduit ici la contrainte schematron -->
-    <constraintSpec ident="spanTo_fr" scheme="isoschematron" xml:lang="fr">
-        <constraint>
-            <sch:assert test="@spanTo">L'attribut spanTo est requis.</sch:assert>
-        </constraint>
-    </constraintSpec> 
+  <constraintSpec ident="spanTo" scheme="isoschematron">
+    <constraint>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@spanTo">The spanTo= attribute of <name/>
+      is required.</assert>
+    </constraint>
+  </constraintSpec>
+  <!-- FC j'ai traduit ici la contrainte schematron -->
+  <constraintSpec ident="spanTo_fr" scheme="isoschematron" xml:lang="fr">
+    <constraint>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@spanTo">L'attribut spanTo est requis.</assert>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p>Paragraph partially deleted.  This is the undeleted
@@ -62,6 +60,16 @@ portion of the paragraph.</p>
       <p>Paragraph partially deleted; in the middle of this
 paragraph the deletion ends and the anchor point marks
 the resumption <anchor xml:id="a23"/> of the text. ...</p>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Paragraph partially deleted. This is the undeleted portion <delSpan spanTo="#fr_a23"/>and
+          this the deleted portion of the paragraph.</p>
+      <p>Paragraph deleted together with adjacent material.</p>
+      <p>Second fully deleted paragraph.</p>
+      <p>Paragraph partially deleted; in the middle of this paragraph the deletion ends and the
+          anchor point marks the resumption <anchor xml:id="fr_a23"/> of the text. ...</p>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">

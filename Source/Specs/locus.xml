@@ -28,7 +28,7 @@ $Id$
     <memberOf key="att.pointing"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/>
   </content>
   <attList>
     <attDef ident="scheme">
@@ -46,7 +46,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">identifica la foliazione in base alla posizione
         specificata</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A pointer to some <gi>foliation</gi> element which defines the foliation scheme used,
         or an external link to some equivalent resource. </valDesc>
@@ -68,7 +68,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">specifica l'inizio della posizione in forma
         normalizzata</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>typically this will be a page number</valDesc>
       <valDesc xml:lang="fr" version="2009-04-17">habituellement on y saisit un numéro de
@@ -88,13 +88,13 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">specifica il termine della posizione in forma
         normalizzata</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>typically this will be a page number</valDesc>
       <valDesc xml:lang="fr" version="2009-04-17">habituellement on y saisit un numéro de
         page.</valDesc>
     </attDef>
-<!--    <attDef ident="target">
+    <!--    <attDef ident="target">
       <equiv/>
       <desc>supplies a link to one or more transcriptions of the specified range of folios.</desc>
       <desc version="2007-12-20" xml:lang="kr">명시된 범위의 장에 대한 하나 이상의 페이지 이미지 또는 전사본에 대한 연결을
@@ -132,6 +132,36 @@ $Id$
       <!-- ... -->
     </egXML>
   </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <msItem n="1">
+        <locus target="#fr_F1r #fr_F1v #fr_F2r">ff. 1r-2r</locus>
+        <author>Ben Jonson</author>
+        <title>Ode to himself</title>
+        <rubric rend="italics"> An Ode<lb/> to him selfe.</rubric>
+        <incipit>Com leaue the loathed stage</incipit>
+        <explicit>And see his chariot triumph ore his wayne.</explicit>
+        <bibl><name>Beal</name>, <title>Index 1450-1625</title>, JnB 380</bibl>
+      </msItem>
+      <pb xml:id="fr_F1r"/>
+      <pb xml:id="fr_F1v"/>
+      <pb xml:id="fr_F2r"/>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">The <att>facs</att> attribute is available globally when the <ident type="module">transcr</ident> module is included in a schema. It may be used to point directly to an
+        image file, as in the following example: </p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <msItem>
+        <locus facs="images/08v.jpg images/09r.jpg images/09v.jpg images/10r.jpg images/10v.jpg">fols. 8v-10v</locus>
+        <title>Birds Praise of Love</title>
+        <bibl>
+          <title>IMEV</title>
+          <biblScope>1506</biblScope>
+        </bibl>
+      </msItem>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <locus target="#zh-tw_P12 #zh-tw_P13 #zh-tw_P14 #zh-tw_P16">fols 12-14, 16r</locus>
@@ -144,13 +174,11 @@ $Id$
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <p>The <att>facs</att> attribute is available globally when the <ident type="module"
-        >transcr</ident> module is included in a schema. It may be used to point directly to an
+    <p>The <att>facs</att> attribute is available globally when the <ident type="module">transcr</ident> module is included in a schema. It may be used to point directly to an
       image file, as in the following example: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <msItem>
-        <locus facs="images/08v.jpg images/09r.jpg images/09v.jpg images/10r.jpg images/10v.jpg"
-          >fols. 8v-10v</locus>
+        <locus facs="images/08v.jpg images/09r.jpg images/09v.jpg images/10r.jpg images/10v.jpg">fols. 8v-10v</locus>
         <title>Birds Praise of Love</title>
         <bibl>
           <title>IMEV</title>

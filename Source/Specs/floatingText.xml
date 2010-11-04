@@ -29,30 +29,30 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="front"/>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:optional>
-      <rng:choice>
-        <rng:ref name="body"/>
-        <rng:ref name="group"/>
-      </rng:choice>
-      <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="back"/>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:optional>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="front"/>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </optional>
+      <choice>
+        <ref name="body"/>
+        <ref name="group"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="back"/>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </optional>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -76,6 +76,35 @@ $Id$
               </floatingText>
               <sp>
                 <p>Now that the play is finished ...</p>
+              </sp>
+            </div>
+          </body>
+        </text>
+      </TEI>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <TEI>
+        <teiHeader> </teiHeader>
+        <text>
+          <body>
+            <div type="scene">
+              <sp>
+                <p>Chut ! Les acteurs commencent...</p>
+              </sp>
+              <floatingText type="pwp">
+                <body>
+                  <div type="act">
+                    <sp>
+                      <l>Notre histoire se passe à Athènes....</l>
+                      <!-- ... rest of nested act here -->
+                    </sp>
+                  </div>
+                </body>
+              </floatingText>
+              <sp>
+                <p>La pièce est maintenant finie ...</p>
               </sp>
             </div>
           </body>

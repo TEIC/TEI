@@ -25,18 +25,18 @@ $Id$
     <memberOf key="att.translatable"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:zeroOrMore>
-      <rng:choice>
-        <rng:ref name="egXML"/>
-        <rng:ref name="eg"/>
-      </rng:choice>
-      <rng:zeroOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.pLike"/>
+      </zeroOrMore>
+      <choice>
+        <ref name="egXML"/>
+        <ref name="eg"/>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.pLike"/>
+      </zeroOrMore>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -60,6 +60,25 @@ $Id$
     <p>Note that an explicit end-tag must be supplied for the paragraph immediately preceding the
         <gi>eg</gi> element within an<gi>exemplum</gi>, to prevent the <gi>eg</gi> from being
       mistaken for part of the paragraph.</p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Ionesco-chauve">
+      <exemplum>
+        <p>L'élément<gi>name</gi> est employé à la fois pour les noms propres de personne et de
+            lieu : </p>
+        <eg>
+            &lt;q&gt;
+              &lt;name type="person"&gt;Mrs. Parker&lt;/name&gt;, connaît un épicier bulgare, nommé, &lt;name
+                type="person"&gt;Popochef Rosenfeld&lt;/name&gt;qui vient d'arriver de &lt;name type="place"
+                &gt;Constantinople&lt;/name&gt;. C'est un grand spécialiste en yaourts.&lt;/q&gt;
+          </eg>
+        <p>Comme il est indiqué ci-dessus, l'attribut<att>type</att> peut être utilisé pour
+            distinguer un élément de l'autre.</p>
+      </exemplum>
+    </egXML>
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Notons qu'une balise fermante explicite doit être appliquée pour le paragraphe précédant
+        immédiatement l'élément <gi>eg</gi> dans un <gi>exemplum</gi>, pour empêcher que <gi>eg</gi>
+        soit considéré par erreur comme faisant partie du paragraphe. </p>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

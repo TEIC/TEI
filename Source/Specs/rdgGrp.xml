@@ -31,7 +31,7 @@ relationship or other affinity.</desc>
     <memberOf key="att.textCritical"/>
   </classes>
   <content>
-<!--    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <!--    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
         <rng:ref name="model.global"/>
       </rng:zeroOrMore>
@@ -58,38 +58,38 @@ relationship or other affinity.</desc>
         </rng:choice>
       </rng:oneOrMore>
     </rng:group>-->
-<!-- restored original(post P3, pre P4) corrected form of content
+    <!-- restored original(post P3, pre P4) corrected form of content
      model  LB Dec 04 -->
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:group>
-            <rng:ref name="rdgGrp"/>
-            <rng:optional>
-              <rng:ref name="wit"/>
-            </rng:optional>
-          </rng:group>
-          <rng:zeroOrMore>
-            <rng:group>
-              <rng:optional>
-                <rng:group>
-                  <rng:ref name="lem"/>
-                  <rng:optional>
-                    <rng:ref name="wit"/>
-                  </rng:optional>
-                </rng:group>
-              </rng:optional>
-              <rng:group>
-                <rng:ref name="model.rdgLike"/>
-                <rng:optional>
-                  <rng:ref name="wit"/>
-                </rng:optional>
-              </rng:group>
-            </rng:group>
-          </rng:zeroOrMore>
-        </rng:choice>
-      </rng:oneOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <choice>
+          <group>
+            <ref name="rdgGrp"/>
+            <optional>
+              <ref name="wit"/>
+            </optional>
+          </group>
+          <zeroOrMore>
+            <group>
+              <optional>
+                <group>
+                  <ref name="lem"/>
+                  <optional>
+                    <ref name="wit"/>
+                  </optional>
+                </group>
+              </optional>
+              <group>
+                <ref name="model.rdgLike"/>
+                <optional>
+                  <ref name="wit"/>
+                </optional>
+              </group>
+            </group>
+          </zeroOrMore>
+        </choice>
+      </oneOrMore>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -98,6 +98,17 @@ relationship or other affinity.</desc>
         <rdgGrp type="orthographic">
           <rdg wit="#Hg">thogh</rdg>
           <rdg wit="#La">thouhe</rdg>
+        </rdgGrp>
+      </app>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <app>
+        <lem wit="#fr_wit1">comte</lem>
+        <rdgGrp type="orthographic">
+          <rdg wit="#fr_wit2">cante</rdg>
+          <rdg wit="#fr_wit3">contes</rdg>
         </rdgGrp>
       </app>
     </egXML>

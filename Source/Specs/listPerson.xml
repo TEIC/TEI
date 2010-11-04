@@ -12,7 +12,7 @@
   <gloss version="2008-04-06" xml:lang="es">lista de personas</gloss>
   <gloss version="2008-12-09" xml:lang="fr">liste de personnes</gloss>
   <gloss version="2007-11-06" xml:lang="it">elenco delle persone</gloss>
-<!-- formerly particDesc -->
+  <!-- formerly particDesc -->
   <desc>contains a list of descriptions, each of which provides information about an identifiable
     person or a group of people, for example the participants in a language interaction, or the
     people referred to in a historical source. </desc>
@@ -37,23 +37,23 @@
     <memberOf key="model.listLike"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.headLike"/>
-      </rng:zeroOrMore>
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="model.personLike"/>
-          <rng:ref name="listPerson"/>
-        </rng:choice>
-      </rng:oneOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="relation"/>
-          <rng:ref name="relationGrp"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.headLike"/>
+      </zeroOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="model.personLike"/>
+          <ref name="listPerson"/>
+        </choice>
+      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="relation"/>
+          <ref name="relationGrp"/>
+        </choice>
+      </zeroOrMore>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -63,6 +63,18 @@
         <person xml:id="P4332" sex="1" age="mid"/>
         <relationGrp>
           <relation type="personal" name="spouse" mutual="#P1234 #P4332"/>
+        </relationGrp>
+      </listPerson>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPerson type="respondents">
+        <personGrp xml:id="fr_PXXX"/>
+        <person xml:id="fr_P1234" sex="2" age="mid"/>
+        <person xml:id="fr_P4332" sex="1" age="mid"/>
+        <relationGrp>
+          <relation type="personal" name="spouse" mutual="#fr_P1234 #fr_P4332"/>
         </relationGrp>
       </listPerson>
     </egXML>

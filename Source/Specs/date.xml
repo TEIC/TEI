@@ -25,14 +25,14 @@
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.gLike"/>
-        <rng:ref name="model.phrase"/>
-        <rng:ref name="model.global"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="calendar" usage="opt">
@@ -49,7 +49,7 @@
       <desc version="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
         appartiene.</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="Gregorian">
@@ -128,9 +128,14 @@
         </valItem>
       </valList>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="Gregorian"
-            >Feb. 22, 1732</date> 
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="Gregorian">Feb. 22, 1732</date> 
 	(<date calendar="Julian" when="1732-02-22"> Feb. 11, 1731/32, O.S.</date>).</egXML>
+      </exemplum>
+      <exemplum version="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Bouiller_Rapport"> L'année
+            1960 fut, en vertu du calendrier grégorien, bissextile ; le 22 juin tomba ainsi le jour
+            de l'été, le<date calendar="Gregorian"> 22 juin. </date>
+            </egXML>
       </exemplum>
     </attDef>
   </attList>
@@ -139,9 +144,26 @@
       <date when="1980-02">early February 1980</date>
     </egXML>
   </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date when="1980-02">au début de février 1980</date>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Pascal_Pensees">
+      <date when="1654-11-23">L'an de grâce 1654,<lb/> Lundi, 23 novembre, jour de saint Clément,
+          pape et martyr et autres au martyrologe, <lb/>Veille de saint Chrysogone, martyr, et
+          autres, <lb/> Depuis environ dix heures et demie du soir jusques environ minuit et
+        demi.</date>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date when="1990-09">September 1990</date>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 他出生於<date calendar="Gregorian"
-      >西元2007年12月24日</date> (<date calendar="Chinese" when="2007-12-24"> 丁亥年11月15日</date>).</egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"> 他出生於<date calendar="Gregorian">西元2007年12月24日</date> (<date calendar="Chinese" when="2007-12-24"> 丁亥年11月15日</date>).</egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -149,8 +171,7 @@
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="0637-11"
-      >貞觀十一年十一月</date>，唐太宗聽說年輕的武則天長得妖媚嬌艷，楚楚動人，便將她納入宮中，封為四品才人，賜號「武媚」。</egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><date when="0637-11">貞觀十一年十一月</date>，唐太宗聽說年輕的武則天長得妖媚嬌艷，楚楚動人，便將她納入宮中，封為四品才人，賜號「武媚」。</egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -161,7 +182,7 @@
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date when="1977-06-12">Twelfth Day
         of June in the Year of Our Lord One Thousand Nine Hundred and Seventy-seven of the Republic
         the Two Hundredth and first and of the University the Eighty-Sixth.</date>
-    </egXML>
+      </egXML>
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

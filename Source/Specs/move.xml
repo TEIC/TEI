@@ -30,7 +30,7 @@ $Id$
     <memberOf key="att.ascribed"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -46,7 +46,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">indica il tipo di movimento, ad esempio come entrata
         o uscita.</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="entrance">
@@ -91,7 +91,7 @@ $Id$
       <desc version="2007-06-12" xml:lang="fr">indique la direction d'un mouvement sur scène.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica la direzione di un movimento in scena.</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="open">
         <valItem ident="L">
@@ -171,14 +171,12 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">indica la rappresentazione o le rappresentazioni in
         cui il movimento è stato eseguito così come specificato.</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>The references are derived from the <att>xml:id</att> attribute on a
         <gi>performance</gi> element.</valDesc>
       <valDesc xml:lang="fr">Les références sont dérivées de l’ attribut <att>xml:id</att> sur un 
         élément <gi>performance</gi>. </valDesc>
-      
-
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -195,6 +193,20 @@ $Id$
       <!-- ... -->
       <stage type="entrance"><move who="#bellaf" type="enter" where="L" perf="#perf1"/> Enter
         Bellafront mad.</stage>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Shakes-Richard-III">
+      <performance xml:id="fr_perf1">
+        <p>Première apparition</p>
+        <castList>
+          <castItem>
+            <role xml:id="fr_clar">Clarence</role>
+          </castItem>
+        </castList>
+      </performance>
+      <stage type="entrance"><move who="#fr_clar" type="enter" perf="#perf1"/>(Entre Clarence,
+          entouré de gardes).</stage>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">

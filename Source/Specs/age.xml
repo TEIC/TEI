@@ -6,7 +6,7 @@
   $Date$
   $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="age">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="age">
   <gloss>age</gloss>
   <gloss xml:lang="fr" version="2008-12-09">âge</gloss>
   <desc>specifies the age of a person.</desc>
@@ -20,10 +20,10 @@
     <memberOf key="model.persTraitLike"/>
     <memberOf key="att.editLike"/>
     <memberOf key="att.datable"/>
-<!-- sic -->
+    <!-- sic -->
   </classes>
   <content>
-    <rng:ref name="macro.phraseSeq.limited"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq.limited"/>
   </content>
   <attList>
     <attDef ident="value" usage="opt">
@@ -38,7 +38,7 @@
       <desc version="2007-01-21" xml:lang="it">assegna un codice numerco che rappresenta l'età o la
         fascia di età</desc>
       <datatype>
-        <rng:ref name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <remarks>
         <p>This attribute may be used to complement a more detailed discussion of a person's age in
@@ -53,10 +53,14 @@
       </remarks>
     </attDef>
   </attList>
-
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <age value="2" notAfter="1986">under 20 in the early eighties</age>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <age value="2" notAfter="1986">ayant une vingtaine d'années au début des années 70</age>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
@@ -64,12 +68,13 @@
       <age value="2" notAfter="1986">在八○年代早期不到二十歲</age>
     </egXML>
   </exemplum>
-    <remarks><p>As with other culturally-constructed traits such as
+  <remarks>
+    <p>As with other culturally-constructed traits such as
     sex, the way in which this concept is described in different
     cultural contexts may vary. The normalising attributes are
     provided as a means of simplifying that variety to Western
     European norms and should not be used where that is
     inappropriate. The content of the element may be used to describe
     the intended concept in more detail, using plain text. </p>
-    </remarks>
+  </remarks>
 </elementSpec>

@@ -6,7 +6,7 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="core" ident="divGen">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="divGen">
   <equiv/>
   <gloss>automatically generated text division</gloss>
   <gloss version="2007-12-20" xml:lang="kr">자동적으로 생성된 텍스트 구역</gloss>
@@ -33,9 +33,9 @@
     <memberOf key="model.divGenLike"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:ref name="model.headLike"/>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.headLike"/>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -53,7 +53,7 @@
       <desc version="2007-05-04" xml:lang="es">especifica que tipo de divisón de texto generada aparece (p.ej. índice, tabla de contenidos, etc.)</desc>
       <desc version="2007-01-21" xml:lang="it">specifica quale tipo di partizione testuale generata (ad esempio indice, sommario, ecc.) apparirà</desc>
       <datatype>
-        <rng:ref name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="open">
         <valItem ident="index">
@@ -116,7 +116,7 @@
                 </p>
       </remarks>
     </attDef>
-<!--
+    <!--
             <attDef>
             <ident>xmlns:tei</ident>
             <datatype><rng:text/></datatype>
@@ -163,6 +163,39 @@
       </back>
     </egXML>
   </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Une utilisation de cet élément est de permettre au logiciel de traiter des documents afin
+        de générer en sortie un index et de l' insérer à l'endroit approprié. L'exemple ci-dessous
+        suppose que l'attribut <att>indexName</att> sur les éléments <gi>index</gi> dans le texte a
+        été employé pour spécifier des entrées d'index pour deux index produits, nommés NAMES and
+        THINGS:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <back>
+        <div1 type="backmat">
+          <head>Bibliographie</head>
+          <listBibl> </listBibl>
+        </div1>
+        <div1 type="backmat">
+          <head>Indices</head>
+          <divGen n="Index Nominum" type="NAMES"/>
+          <divGen n="Index Rerum" type="THINGS"/>
+        </div1>
+      </back>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Un autre usage de <gi>divGen</gi> est de spécifier l'emplacement d'une table des matières
+        automatiquement produite.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <front>
+        <divGen type="toc"/>
+        <div>
+          <head>Préface</head>
+          <p> ... </p>
+        </div>
+      </front>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <back>
@@ -183,7 +216,7 @@
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <front>
-<!--<titlePage>書名頁</titlePage>-->
+        <!--<titlePage>書名頁</titlePage>-->
         <divGen type="toc"/>
         <div>
           <head>序</head>
@@ -197,7 +230,7 @@
             location of an automatically produced table of contents:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <front>
-<!--<titlePage>...</titlePage>-->
+        <!--<titlePage>...</titlePage>-->
         <divGen type="toc"/>
         <div>
           <head>Preface</head>

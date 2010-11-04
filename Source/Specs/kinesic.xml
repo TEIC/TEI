@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="spoken" ident="kinesic">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="kinesic">
   <gloss xml:lang="fr" version="2009-04-17">mouvement</gloss>
   <desc>any communicative phenomenon, not necessarily vocalized, for
   example a gesture, frown, etc.</desc>
@@ -27,9 +27,9 @@ $Id$
     <memberOf key="att.ascribed"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:ref name="model.glossLike"/>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.glossLike"/>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="iterated" usage="opt">
@@ -46,7 +46,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">indica si el fenómeno es eventual o si se repite.</desc>
       <desc version="2007-01-21" xml:lang="it">indica l'eventuale ripetizione del fenomeno</desc>
       <datatype>
-        <rng:ref name="data.xTruthValue"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
       </datatype>
       <defaultVal>false</defaultVal>
       <remarks>
@@ -69,6 +69,13 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <kinesic dur="PT1.5S" iterated="true" type="reinforcing">
         <desc>nodding head vigorously</desc>
+      </kinesic>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <kinesic dur="PT1.5S" iterated="true" type="reinforcing">
+        <desc>hochant la tête vigoureusement</desc>
       </kinesic>
     </egXML>
   </exemplum>

@@ -27,30 +27,30 @@ elements within a cast list.</desc>
       plusieurs personnages.</desc>
   <desc version="2007-01-21" xml:lang="it">raggruppa uno o più elementi individuali castItem in una lista dei personaggi.</desc>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.global"/>
-          <rng:ref name="model.headLike"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="castItem"/>
-          <rng:ref name="castGroup"/>
-          <rng:ref name="roleDesc"/>
-        </rng:choice>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:oneOrMore>
-      <rng:optional>
-        <rng:ref name="trailer"/>
-        <rng:zeroOrMore>
-          <rng:ref name="model.global"/>
-        </rng:zeroOrMore>
-      </rng:optional>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <choice>
+          <ref name="model.global"/>
+          <ref name="model.headLike"/>
+        </choice>
+      </zeroOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="castItem"/>
+          <ref name="castGroup"/>
+          <ref name="roleDesc"/>
+        </choice>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </oneOrMore>
+      <optional>
+        <ref name="trailer"/>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </optional>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -64,6 +64,19 @@ elements within a cast list.</desc>
           <actor>Mr F.W. Irish</actor>
         </castItem>
         <roleDesc>friends of Mathias</roleDesc>
+      </castGroup>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Guerre-Troie">
+      <castGroup>
+        <head>Messagers</head>
+        <castItem><actor>Jean-Claude Islert</actor>, <actor>Michel Sausin</actor>.</castItem>
+      </castGroup>
+      <castGroup>
+        <head>Servantes troyennes</head>
+        <castItem><actor>Dominique Jayr</actor>, <actor>Annie Seurat</actor>,<actor> Hélène
+            Augier</actor></castItem>
       </castGroup>
     </egXML>
   </exemplum>
