@@ -6,10 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
-    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-    xmlns:rng="http://relaxng.org/ns/structure/1.0"
-module="iso-fs" ident="f">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="f">
   <equiv/>
   <gloss>feature</gloss>
   <gloss version="2007-12-20" xml:lang="kr">자질</gloss>
@@ -31,29 +28,26 @@ module="iso-fs" ident="f">
   <desc version="2007-05-04" xml:lang="es">representa una <term>feature value specification (especificación de valor de rasgo)</term>, es decir, la asociación de un nombre con un valor de cualquier de los diferentes tipos.</desc>
   <desc version="2007-01-21" xml:lang="it">rappresenta una <term>feature value specification</term>, cioè l'associazione di un nome con il valore di uno qualsiasi di diversi tratti.</desc>
   <content>
-    <rng:zeroOrMore >
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.gLike"/>
-	<rng:ref name="model.featureVal"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.featureVal"/>
+      </choice>
+    </zeroOrMore>
   </content>
-
-<constraintSpec ident="fValConstraints" scheme="isoschematron"
->
- <constraint>
-   <sch:rule context="tei:fVal">
-    <sch:assert test="not(tei:* and text)"> A feature value cannot
-    contain both text and element content</sch:assert>
-     </sch:rule>
-   <sch:rule context="tei:fVal">
-    <sch:report test="count(tei:*)>1"> A feature value can contain
-    only one child element</sch:report>
-     </sch:rule>
- </constraint>
-
-</constraintSpec>
+  <constraintSpec ident="fValConstraints" scheme="isoschematron">
+    <constraint>
+      <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:fVal">
+        <assert test="not(tei:* and text)"> A feature value cannot
+    contain both text and element content</assert>
+      </rule>
+      <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:fVal">
+        <report test="count(tei:*)&gt;1"> A feature value can contain
+    only one child element</report>
+      </rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="name" usage="req">
       <equiv/>
@@ -67,7 +61,7 @@ module="iso-fs" ident="f">
       <desc version="2007-05-04" xml:lang="es">proporciona un nombre para un rasgo.</desc>
       <desc version="2007-01-21" xml:lang="it">fornisce il nome del tratto.</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
       </datatype>
       <valDesc>Any name.</valDesc>
       <valDesc xml:lang="fr">un nom quelconque.</valDesc>
@@ -90,7 +84,7 @@ module="iso-fs" ident="f">
       <desc version="2007-05-04" xml:lang="es">indica cualquier elemento que puede ser usado para representar el valor de un rasgo.</desc>
       <desc version="2007-01-21" xml:lang="it">indica un qualsiasi elemento che può essere usato come valore di un tratto.</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>the  identifier of an element representing
       a  feature value</valDesc>
@@ -110,6 +104,13 @@ module="iso-fs" ident="f">
     </attDef>
   </attList>
   <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <f name="gender">
+        <symbol value="feminine"/>
+      </f>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <f name="gender">
         <symbol value="feminine"/>

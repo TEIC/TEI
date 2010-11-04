@@ -23,12 +23,12 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">contiene una lista delle parole chiave o frasi che
     identificano l'argomento o la natura di un testo.</desc>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="term"/>
-      </rng:oneOrMore>
-      <rng:ref name="list"/>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="term"/>
+      </oneOrMore>
+      <ref name="list"/>
+    </choice>
   </content>
   <attList>
     <attDef ident="scheme" usage="req">
@@ -47,7 +47,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">identifica il vocabolario controllato all'interno del
         quale sono definite le parole chiave.</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>Usually this will indicate an external website or other location where the scheme is
         documented. </valDesc>
@@ -58,8 +58,19 @@ $Id$
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <keywords scheme="http://classificationweb.net">
-<term>Babbage, Charles</term>
-          <term>Mathematicians - Great Britain - Biography</term>
+        <term>Babbage, Charles</term>
+        <term>Mathematicians - Great Britain - Biography</term>
+      </keywords>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <keywords scheme="#fr_RAMEAU">
+        <list>
+          <item>Littérature française -- 20ème siècle -- Histoire et critique</item>
+          <item>Littérature française -- Histoire et critique -- Théorie, etc.</item>
+          <item>Français (langue) -- Style -- Bases de données.</item>
+        </list>
       </keywords>
     </egXML>
   </exemplum>
@@ -73,13 +84,13 @@ $Id$
       </keywords>
     </egXML>
   </exemplum>
-<remarks>
-<p>Each individual  keyword (including compound subject headings) should
+  <remarks>
+    <p>Each individual  keyword (including compound subject headings) should
 be supplied as a <gi>term</gi> element directly within the
 <gi>keywords</gi>  element. An alternative usage, in which each
 <gi>term</gi> appears within a <gi>item</gi> inside a <gi>list</gi> is
-permitted for backwards compatibility, but is deprecated.</p></remarks>
-
+permitted for backwards compatibility, but is deprecated.</p>
+  </remarks>
   <listRef>
     <ptr target="#HD43"/>
   </listRef>

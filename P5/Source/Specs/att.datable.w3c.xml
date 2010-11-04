@@ -6,12 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<classSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" 
-	   xmlns="http://www.tei-c.org/ns/1.0" 
-	   module="tei" 
-	   type="atts" 
-	   ident="att.datable.w3c" 
-	   xml:id="DATABLEW3C">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.datable.w3c" xml:id="DATABLEW3C">
   <desc>provides attributes for normalization of elements that contain
   datable events using the W3C datatypes.</desc>
   <desc version="2007-12-20" xml:lang="kr">W3C 데이터 유형을 사용하여 날짜가 명기된 사건을 포함하는 요소의 규격화를 위한 속성을 제공한다.</desc>
@@ -42,10 +37,10 @@ définissant une période de temps nommée pendant laquelle l'item datable
 s'inscrit.</desc>
       <desc version="2007-11-06" xml:lang="it">fornisce un puntatore a una data posizione definendo un determinato periodo di tempo entro il quale l'oggetto da datare è collocabile</desc>
       <datatype>
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
     </attDef>
-<!--     <attList>org="choice">-->
+    <!--     <attList>org="choice">-->
     <attDef ident="when" usage="opt">
       <desc>supplies the value of the date or time in a standard form,
       e.g. yyyy-mm-dd.</desc>
@@ -58,7 +53,7 @@ s'inscrit.</desc>
       <desc version="2007-11-06" xml:lang="it">indica il valore di una data o di un orario in un formato standard</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el valor de una fecha o una hora en un formato estandard.</desc>
       <datatype>
-        <rng:ref name="data.temporal.w3c"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
       </datatype>
       <valDesc>A normalized form of temporal expression conforming to the W3C
 	<title>XML Schema Part 2: Datatypes Second Edition</title>.</valDesc>
@@ -80,6 +75,33 @@ s'inscrit.</desc>
           <date when="-0056">56 BC</date>
         </egXML>
       </exemplum>
+      <exemplum version="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date when="1945-10-24">24 Oct 45</date>
+          <date when="1996-09-24T07:25:00Z">24 septembre 1996 à 3h 25 du matin</date>
+          <time when="1999-01-04T20:42:00-05:00">4 janvier 1999 à 8h de l'après-midi.</time>
+          <time when="14:12:38">14 h 12 minutes et 38 secondes</time>
+          <date when="1962-10">octobre 1962</date>
+          <date when="--06-12">12 juin</date>
+          <date when="---01">premier du mois</date>
+          <date when="--08">Août</date>
+          <date when="2006">MMVI</date>
+          <date when="0056">56 ap. J.-C.</date>
+          <date when="-0056">56 av. J.-C.</date>
+        </egXML>
+      </exemplum>
+      <exemplum version="2010-02-26" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Ormesson-douane">Shakespeare meurt dix jours plus tard, à Stratford-on-Avon, Warwickshire, dans
+            l'Angleterre protestante et dans le calendrier julien, le <date calendar="julian" when="--04-23">mardi 23 avril ancien style</date>, c'est-à-dire le <date calendar="gregorian" when="--05-03">3 mai</date> dans le calendrier grégorien. </egXML>
+      </exemplum>
+      <exemplum version="2010-02-26" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Laclos-liaisons">
+          <opener>
+            <dateline><placeName>Paris,</placeName>, ce <date when="--12-11">11 décembre 17.. </date></dateline>
+            <salute>à Madame De Rosemonde.,</salute>
+          </opener>
+        </egXML>
+      </exemplum>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">This list begins in
 the year 1632, more precisely on Trinity Sunday, i.e. the Sunday after
@@ -88,9 +110,10 @@ Pentecost, in that year the <date calendar="Julian" when="1632-06-06">27th of Ma
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <opener><dateline><placeName>Dorchester, Village,</placeName><date when="1828-03-02">March 2d.  1828.</date></dateline><salute>To
-Mrs. Cornell,</salute> Sunday <time when="12:00:00">noon.</time></opener>
+Mrs. Cornell,</salute> Sunday <time when="12:00:00">noon.</time>
+               </opener>
         </egXML>
-<!--        <p>
+        <!--        <p>
 	       <note type="cit">
 	       <bibl>
 	       <author>
@@ -119,17 +142,20 @@ attribute is  <code>yyyy-mm-dd</code>, but
       </remarks>
       <remarks xml:lang="fr">
         <p>La valeur de l'attribut <att>when</att> doit être une représentation normalisée de la date ou de l'heure, ou des deux, dans l'un des formats spécifiés par le <title>XML Schema Part 2: Datatypes Second Edition</title>, selon le calendrier grégorien.</p>
-<p> Pour la date, le format le plus courant est <code>yyyy-mm-dd</code>, mais on trouve aussi <code>yyyy</code>, <code>--mm</code>, <code>---dd</code>, <code>yyyy-mm</code>, ou <code>--mm-dd</code>. Pour l'heure, on utilise le format <code>hh:mm:ss</code>.</p>
+        <p> Pour la date, le format le plus courant est <code>yyyy-mm-dd</code>, mais on trouve aussi <code>yyyy</code>, <code>--mm</code>, <code>---dd</code>, <code>yyyy-mm</code>, ou <code>--mm-dd</code>. Pour l'heure, on utilise le format <code>hh:mm:ss</code>.</p>
         <p>Il faut noter qu'actuellement ce format ne permet pas d'utiliser la valeur <val>0000</val> pour représenter l'année précédant le début de l'ère chrétienne ; on doit utiliser la valeur <val>-0001</val>.</p>
       </remarks>
       <remarks xml:lang="es">
         <p>El valor del atributo <att>cuando</att> es una serie que representa una fecha o una hora, o ambas, en cualquiera de los siguientes formatos:
 	  <list><item>una fecha en los formatos estándares descritos por la <title>XML Schema Part 2: Datatypes Second Edition</title>, p.ej. en el formato más común <code>aaaa-mm-dd</code>, pero también
 	  <code>aaaa</code>, <code>--mm</code>, <code>---dd</code>,
-	  <code>aaaa-mm</code>, o <code>--mm-dd</code></item><item>; una hora en el formato estándar descrito en 
+	  <code>aaaa-mm</code>, o <code>--mm-dd</code>
+                  </item><item>; una hora en el formato estándar descrito en 
 	  <title>XML Schema Part 2: Datatypes Second
-	  Edition</title>, es decir. <code>hh: mm: ss</code></item><item>; o una fecha y una hora combinadas en los formatos estándares descritos en <title>XML Schema Part 2: Datatypes Second
-	  Edition</title>, es decir. <code>aaaa-mm-ddThh: mm: ss</code></item></list>.</p>
+	  Edition</title>, es decir. <code>hh: mm: ss</code>
+                  </item><item>; o una fecha y una hora combinadas en los formatos estándares descritos en <title>XML Schema Part 2: Datatypes Second
+	  Edition</title>, es decir. <code>aaaa-mm-ddThh: mm: ss</code>
+                  </item></list>.</p>
         <p>Obligatoriamente el valor de <att>cuando</att> aparecerá en un formato de fecha, tiempo, o ambos formatos combinados, de los reconocidos por W3C <title>XML Schema Part 2: Datatypes</title>. Esto se dará si el componente de la fecha (eventualmente) es una fecha gregoriana o proléptica gregoriana.</p>
         <p>A la hora de esta escritura, W3C no permite el año <val>0000</val>, que sería utilizado normalmente para representar el año 1 antes de nuestra era. Usando el sistema actual de W3C, el año 1 a.C. se indica con <val>-0001</val>, el año 2 a.C. con <val>-0002</val>, etc. <quote>Es la intención del grupo de trabajo del esquema de XML permitir <val>0000</val> como la representación léxica de 1 a.C. (que es un año bisiesto),
 	  <val>-0001</val> se convertiria en la representación léxica de 2 a.C., <val>-0002</val> de 3 a.C., etc.</quote> Así en algunos casos puede ser ventajoso utilizar en su lugar el atributo <att>cuando-ISO</att>
@@ -151,7 +177,7 @@ attribute is  <code>yyyy-mm-dd</code>, but
         ある標準形式で示された日付と時間．例えば，
         <code>yyyy-mm-ddThh:mm:ss</code>．
 	  </item></list>
-	  </p>
+	           </p>
         <p>
 	属性<att>when</att>の値は，日付や時間またはその組み合わを，
 	<title>XML Schema Part 2: Datatypes</title>に従って示される．
@@ -187,7 +213,7 @@ attribute is  <code>yyyy-mm-dd</code>, but
       <desc version="2007-11-06" xml:lang="it">specifica la prima data possibile per un evento nel formato standard aaaa-mm-gg</desc>
       <desc version="2007-05-04" xml:lang="es">especifica la fecha más temprana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
       <datatype>
-        <rng:ref name="data.temporal.w3c"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
       </datatype>
       <valDesc>A normalized form of temporal expression conforming to
 	the W3C <title>XML Schema Part 2: Datatypes Second
@@ -209,7 +235,7 @@ attribute is  <code>yyyy-mm-dd</code>, but
       <desc version="2007-11-06" xml:lang="it">specifica l'ultima data possibile per un evento nel formato standard aaaa-mm-gg</desc>
       <desc version="2007-05-04" xml:lang="es">especifica la fecha más tardana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
       <datatype>
-        <rng:ref name="data.temporal.w3c"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
       </datatype>
       <valDesc>A normalized form of temporal expression conforming to the W3C
 	  <title>XML Schema Part 2: Datatypes Second Edition</title>.</valDesc>
@@ -229,7 +255,7 @@ attribute is  <code>yyyy-mm-dd</code>, but
       <desc version="2007-11-06" xml:lang="it">indica l'inizio del periodo nel formato standard</desc>
       <desc version="2007-05-04" xml:lang="es">indica el punto de inicio del período en el formato estándard.</desc>
       <datatype>
-        <rng:ref name="data.temporal.w3c"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
       </datatype>
       <valDesc>A normalized form of temporal expression conforming to
 	  the W3C <title>XML Schema Part 2: Datatypes Second
@@ -251,7 +277,7 @@ attribute is  <code>yyyy-mm-dd</code>, but
       <desc version="2007-11-06" xml:lang="it">indica la fine del periodo nel formato standard</desc>
       <desc version="2007-05-04" xml:lang="es">indica el punto final de un periodo en formato estándard.</desc>
       <datatype>
-        <rng:ref name="data.temporal.w3c"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
       </datatype>
       <valDesc>A normalized form of temporal expression conforming to
 	  the W3C <title>XML Schema Part 2: Datatypes Second
@@ -260,7 +286,7 @@ attribute is  <code>yyyy-mm-dd</code>, but
         <title>XML Schema Part 2: Datatypes Second Edition</title>.</valDesc>
     </attDef>
   </attList>
-<!--  <remarks>
+  <!--  <remarks>
     <p>If both <att>when</att> and <att>dur</att> are specified, the
     values should be interpreted as indicating a span of time by its
     starting time (or date) and duration. In order to represent a time

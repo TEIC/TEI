@@ -30,7 +30,7 @@ $Id$
     <memberOf key="att.internetMedia"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="name" usage="opt">
@@ -45,7 +45,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">specifica un concetto sottostante di cui il genitore
         è una rappesentazione</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
       </datatype>
       <valDesc>any name</valDesc>
     </attDef>
@@ -67,7 +67,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">indica il concetto sottostante di cui il genitore è
         una rappesentazione attraverso un identificatore esterno</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>a URI</valDesc>
     </attDef>
@@ -84,7 +84,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">indica uno script esterno contenente un metodo per
         trasformare le occorrenze dell'elemento in TEI canonico</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>a URI</valDesc>
     </attDef>
@@ -97,6 +97,27 @@ $Id$
       <elementSpec ident="hi" mode="change">
         <equiv name="BOLD"/>
         <desc>bold typography</desc>
+        <attList>
+          <attDef ident="rend">
+            <valList>
+              <valItem ident="bold"/>
+            </valList>
+          </attDef>
+        </attList>
+      </elementSpec>
+      <elementSpec ident="bo" mode="add">
+        <equiv name="BOLD" uri="http://www.typesrus.com/bold"/>
+      </elementSpec>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">L'exemple suivant déclare que l'élément <gi scheme="imaginary">bo</gi> est conceptuellement
+        équivalent au marqueur construit <tag>hi rend='bold'</tag>, et qu'une définition externe de
+        ce concept est disponible à l'URI indiqué.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementSpec ident="hi" mode="change">
+        <equiv name="BOLD"/>
+        <desc>caractères gras</desc>
         <attList>
           <attDef ident="rend">
             <valList>

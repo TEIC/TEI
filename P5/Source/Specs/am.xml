@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="transcr" ident="am">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="am">
   <gloss>abbreviation marker</gloss>
   <gloss version="2007-12-20" xml:lang="kr">축약 표지</gloss>
   <gloss version="2008-04-06" xml:lang="es">marcador de la abreviatura</gloss>
@@ -31,18 +31,25 @@ l'abréviation</desc>
     <memberOf key="att.editLike"/>
   </classes>
   <content>
-<!--    <rng:ref name="macro.xtext"/>-->
-<rng:zeroOrMore>
-<rng:choice>
-<rng:text/>
-<rng:ref name="model.gLike"/>
-<rng:ref name="model.pPart.transcriptional"/>
-</rng:choice>
-</rng:zeroOrMore>
+    <!--    <rng:ref name="macro.xtext"/>-->
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.pPart.transcriptional"/>
+      </choice>
+    </zeroOrMore>
   </content>
   <exemplum xml:lang="en" corresp="#pos4st">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">do you
-    <abbr>Mr<am>.</am></abbr> Jones?</egXML>
+    <abbr>Mr<am>.</am>
+         </abbr> Jones?</egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Duhamel-Pasquier"> Le <abbr>Dr
+            <am>.</am>
+         </abbr>Pasquier se prit à marcher de long en large, les mains glissées dans la
+        ceinture de sa blouse.</egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

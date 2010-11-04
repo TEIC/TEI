@@ -37,14 +37,14 @@ a public broadcast. </desc>
     <memberOf key="att.duration"/>
   </classes>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="model.recordingPart"/>
-      </rng:zeroOrMore>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <zeroOrMore>
+        <ref name="model.recordingPart"/>
+      </zeroOrMore>
+    </choice>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -99,6 +99,47 @@ a public broadcast. </desc>
       </recording>
     </egXML>
   </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <recording type="audio" dur="P30M">
+        <p><orgName>Harmonia Mundi</orgName> S.A., enregistré à <placeName>Boughton Aluph Saints
+              Church</placeName>, <date>septembre 1977</date>.</p>
+      </recording>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Teleph_sonne">
+      <recording type="audio" dur="P10M">
+        <equipment>
+          <p>podcast</p>
+        </equipment>
+        <broadcast>
+          <bibl>
+            <title>Questions sur la souffrance et la santé au travail : pénibilité, stress,
+              dépression, harcèlement, maladies et accidents...</title>
+            <author>France Inter</author>
+            <respStmt>
+              <resp>Présentateur</resp>
+              <name>Alain Bédouet</name>
+            </respStmt>
+            <respStmt>
+              <resp>Personne interrogée</resp>
+              <name> Marie Pezé, Docteur en psychologie, psychanalyste, expert judiciaire ; dirige
+                la consultation « souffrance et travail » à l’Hôpital de Nanterre (92), auteure de
+                  <title>ils ne mourraient pas tous mais tous étaient frappés</title>, Editions
+                Pearson.</name>
+            </respStmt>
+            <series>
+              <title>Le Téléphone sonne</title>
+            </series>
+            <note>Première diffusion le <date when="2008-09-24">mercredi 24 septembre
+            2008</date>
+                  </note>
+          </bibl>
+        </broadcast>
+      </recording>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <recording type="audio" dur="P30M">
@@ -129,7 +170,8 @@ a public broadcast. </desc>
             <series>
               <title>鬼吹燈</title>
             </series>
-            <note>首播於<date when="1989-11-27">1989年11月27日</date></note>
+            <note>首播於<date when="1989-11-27">1989年11月27日</date>
+                  </note>
           </bibl>
         </broadcast>
       </recording>
@@ -157,7 +199,8 @@ a public broadcast. </desc>
               <title>The World Tonight</title>
             </series>
             <note>First broadcast on
-        <date when="1989-11-27">27 Nov 89</date></note>
+        <date when="1989-11-27">27 Nov 89</date>
+                  </note>
           </bibl>
         </broadcast>
       </recording>
@@ -166,7 +209,7 @@ a public broadcast. </desc>
   <remarks>
     <p>The <att>dur</att> attribute is used to indicate the original
     duration of the recording.</p>
-<!--
+    <!--
     I've put the remark above in to replicate what was here:
      <attDef ident="dur" usage="opt">
       <desc>the original duration of the recording. </desc>
@@ -191,7 +234,7 @@ a public broadcast. </desc>
     属性<att>dur</att>は，当該録音，録画の，元の長さを示すために使用さ
     れる．
     </p>
-<!--
+    <!--
     I've put the remark above in to replicate what was here:
      <attDef ident="dur" usage="opt">
       <desc>the original duration of the recording. </desc>

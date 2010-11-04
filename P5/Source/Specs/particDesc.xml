@@ -31,17 +31,17 @@ in any kind of text. </desc>
     <memberOf key="att.declarable"/>
   </classes>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="model.personLike"/>
-          <rng:ref name="listPerson"/>
-        </rng:choice>
-      </rng:oneOrMore>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="model.personLike"/>
+          <ref name="listPerson"/>
+        </choice>
+      </oneOrMore>
+    </choice>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -77,6 +77,40 @@ Speaks French fluently. Socio-Economic status B2.</p>
 very detailed one, using some of the more specialised
  elements from the module for Names and
  Dates. </p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <particDesc>
+        <listPerson>
+          <person xml:id="fr_P-1234" sex="2" age="mid">
+            <p>informateur, sexe féminin, bonne éducation, née à Shropshire UK, 12 Jan 1950,
+                commerçante parle français couramment., Statut socio-économique (SSE) :
+              commerçant.</p>
+          </person>
+          <person xml:id="fr_P-4332" sex="1">
+            <persName>
+              <surname>Delaunay</surname>
+              <forename>Liliane</forename>
+              <forename>Andrée</forename>
+              <forename>Alberte</forename>
+            </persName>
+            <residence notAfter="1959">
+              <address>
+                <street>rue de Falaise</street>
+                <settlement>la Guérinière, Caen</settlement>
+              </address>
+            </residence>
+            <occupation>serveuse</occupation>
+          </person>
+          <relationGrp>
+            <relation type="personal" name="spouse" mutual="#fr_P-1234 #fr_P-4332"/>
+          </relationGrp>
+        </listPerson>
+      </particDesc>
+    </egXML>
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples"> Cet exemple montre une description très simple d'une personne et une description très
+        détaillée, utilisant quelques éléments plus spécialisés du module pour les noms et les
+        dates. </p>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n25">
@@ -124,7 +158,7 @@ formal specification of any relationships amongst them.</p>
   </remarks>
   <listRef>
     <ptr target="#CCAH"/>
-<!--    <ptr target="#HD4"/>
+    <!--    <ptr target="#HD4"/>
     <ptr target="#CCAS2"/>-->
   </listRef>
 </elementSpec>

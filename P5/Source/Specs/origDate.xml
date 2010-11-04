@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
- module="msdescription" xml:id="ORIGDATE" ident="origDate">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="ORIGDATE" ident="origDate">
   <gloss>origin date</gloss>
   <gloss version="2007-12-20" xml:lang="kr">생성 날짜</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -33,17 +32,22 @@ $Id$
     <memberOf key="model.pPart.msdesc"/>
   </classes>
   <content>
-<rng:zeroOrMore>
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.gLike"/>
-        <rng:ref name="model.phrase"/>
-        <rng:ref name="model.global"/>
-      </rng:choice>
-</rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
   </content>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <origDate notBefore="-0300" notAfter="-0200">3rd century BCE</origDate>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <origDate notBefore="-0300" notAfter="-0200">3rd century BCE</origDate>
     </egXML>
   </exemplum>

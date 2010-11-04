@@ -30,16 +30,16 @@ $Id$
     <memberOf key="model.ptrLike.form"/>
     <!--memberOf key="att.ptrLike.form"/-->
     <memberOf key="att.lexicographic"/>
-<memberOf key="att.pointing"/>
+    <memberOf key="att.pointing"/>
   </classes>
   <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.gLike"/>
-        <rng:ref name="oRef"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+        <ref name="oRef"/>
+      </choice>
+    </zeroOrMore>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -52,7 +52,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">indica el tipo de variante implicada</desc>
       <desc version="2007-01-21" xml:lang="it">indica il tipo di variante.</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="open">
         <valItem ident="pt">
@@ -89,7 +89,7 @@ $Id$
           <gloss version="2007-11-06" xml:lang="it">plurale</gloss>
         </valItem>
       </valList>
-          </attDef>
+    </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -99,6 +99,19 @@ $Id$
         </form>
         <cit type="example">
           <quote>Mr Burton <oVar type="pt">took</oVar> us for French</quote>
+        </cit>
+      </entry>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Colette-Ecole">
+      <entry>
+        <form>
+          <orth>soprani</orth>
+        </form>
+        <cit type="example">
+          <quote>Les <oVar type="pl">sopranos</oVar> piaillent avec conviction. là-bas au
+              lointain, l' hymne du matin s' élève en un doux murmure... </quote>
         </cit>
       </entry>
     </egXML>

@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSITEM" ident="msItem">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSITEM" ident="msItem">
   <gloss>manuscript item</gloss>
   <gloss version="2007-12-20" xml:lang="kr">원고 항목</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -29,26 +29,26 @@ $Id$
     <memberOf key="att.msExcerpt"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-	<rng:choice>
-        <rng:ref name="locus"/>
-        <rng:ref name="locusGrp"/>
-	</rng:choice>
-      </rng:zeroOrMore>
-      <rng:choice>
-        <rng:oneOrMore>
-          <rng:ref name="model.pLike"/>
-        </rng:oneOrMore>
-        <rng:oneOrMore>
-          <rng:choice>
-            <rng:ref name="model.titlepagePart"/>
-            <rng:ref name="model.msItemPart"/>
-            <rng:ref name="model.global"/>
-          </rng:choice>
-        </rng:oneOrMore>
-      </rng:choice>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <choice>
+          <ref name="locus"/>
+          <ref name="locusGrp"/>
+        </choice>
+      </zeroOrMore>
+      <choice>
+        <oneOrMore>
+          <ref name="model.pLike"/>
+        </oneOrMore>
+        <oneOrMore>
+          <choice>
+            <ref name="model.titlepagePart"/>
+            <ref name="model.msItemPart"/>
+            <ref name="model.global"/>
+          </choice>
+        </oneOrMore>
+      </choice>
+    </group>
   </content>
   <attList>
     <attDef ident="class">
@@ -66,12 +66,12 @@ item</desc>
       <desc version="2007-05-04" xml:lang="es">identifica la tipología textual u otras clasificaciones aplicables al objeto en cuestión.</desc>
       <desc version="2007-01-21" xml:lang="it">identifica la tipologia testuale o altre classificazioni applicabili all'oggetto in questione</desc>
       <datatype>
-        <rng:ref name="data.code"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.code"/>
       </datatype>
       <valDesc>One or more codes, each of which is used as the identifier for
 a text classification element supplied in the TEI Header <gi>textClass</gi>
 element.</valDesc>
-      <valDesc xml:lang="fr" version="2009-04-17">Un ou plusieurs codes, chacun utilisé comme identifiant pour un élément de classification de texte fourni dans l'élément <gi>textClass</gi> de l'en-tête TEI.</valDesc>  
+      <valDesc xml:lang="fr" version="2009-04-17">Un ou plusieurs codes, chacun utilisé comme identifiant pour un élément de classification de texte fourni dans l'élément <gi>textClass</gi> de l'en-tête TEI.</valDesc>
     </attDef>
   </attList>
   <exemplum xml:lang="mul">
@@ -83,11 +83,39 @@ element.</valDesc>
 <gap reason="illegible" extent="7"/>sc 
 heim se<ex>m</ex> þio</incipit>
         <explicit>h<ex>on</ex> hev<ex>er</ex> 
-<ex>oc</ex>þa buit hesta .ij. aNan viþ 
+               <ex>oc</ex>þa buit hesta .ij. aNan viþ 
 fé enh<ex>on</ex>o<ex>m</ex> aNan til
-reiþ<ex>ar</ex></explicit>
+reiþ<ex>ar</ex>
+            </explicit>
         <textLang mainLang="non">Old Norse/Icelandic</textLang>
       </msItem>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <msContents>
+        <msItem>
+          <!-- pour le traitement des recueils la solution possible est de répéter l'élément <msItem>  -->
+          <docAuthor>
+            <surname>Longus</surname>
+          </docAuthor>
+          <docTitle>
+            <titlePart type="main">Les amours pastorales de Daphnis et Chloé</titlePart>
+          </docTitle>
+          <docImprint>
+            <pubPlace>Paris</pubPlace>
+            <publisher>[Jacques Quillau]</publisher>
+          </docImprint>
+          <docDate when="1718">1718</docDate>
+          <note>in-8°.</note>
+          <!-- in-32°; in-24°; in-16°; in-8°; in-4°; in-folio; gr. folio -->
+          <note>Exemplaire réglé.</note>
+          <note>
+            <ref target="http://catalogue.bnf.fr/ark:/12148/cb30831232s">Notice bibliographique
+                dans le Catalogue général</ref>
+          </note>
+        </msItem>
+      </msContents>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
@@ -99,7 +127,7 @@ reiþ<ex>ar</ex></explicit>
         <explicit>惟商舶可以航海，凡使節往來咸藉之。</explicit>
         <textLang mainLang="zh-tw">繁體中文</textLang>
       </msItem>
-<!-- http://catalog.ndap.org.tw/?URN=2155367 -->
+      <!-- http://catalog.ndap.org.tw/?URN=2155367 -->
     </egXML>
   </exemplum>
   <listRef>

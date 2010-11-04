@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright TEI Consortium. Licensed under the GNU General Public License. See the file COPYING.txt for details $Date$ $Id$ -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="linking" ident="joinGrp">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="joinGrp">
   <equiv/>
   <gloss>join group</gloss>
   <gloss version="2007-12-20" xml:lang="kr">결합군</gloss>
@@ -21,18 +21,18 @@
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-        <rng:ref name="model.glossLike"/>
-      </rng:zeroOrMore>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.glossLike"/>
+      </zeroOrMore>
       <!-- <rng:optional> <rng:ref name="macro.glossSeq"/> </rng:optional>-->
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="join"/>
-          <rng:ref name="ptr"/>
-        </rng:choice>
-      </rng:oneOrMore>
-    </rng:group>
+      <oneOrMore>
+        <choice>
+          <ref name="join"/>
+          <ref name="ptr"/>
+        </choice>
+      </oneOrMore>
+    </group>
   </content>
   <attList>
     <attDef ident="result" usage="opt">
@@ -45,7 +45,7 @@
       <desc version="2007-05-04" xml:lang="es">describe el resultado de los enlaces agrupados en tal conjunto.</desc>
       <desc version="2007-01-21" xml:lang="it">descrive il risultato dei collegamenti raggruppati in tale insieme</desc>
       <datatype>
-        <rng:ref name="data.name"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
       </datatype>
       <valDesc>supplies the default value for the <att>result</att> on each <gi>join</gi> included within the group.</valDesc>
       <valDesc xml:lang="fr" version="2009-10-06">fournit la valeur par défaut de l'attribut <att>result</att> de chacun des éléments <gi>join</gi> inclus dans le groupe.</valDesc>
@@ -53,9 +53,17 @@
   </attList>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <joinGrp domains="zuitxt zuitxt zuitxt" result="q">
+      <joinGrp domains="#zuitxt1 #zuitxt2 #zuitxt3" result="q">
         <join targets="#zuiq1 #zuiq2 #zuiq6"/>
         <join targets="#zuiq3 #zuiq4 #zuiq5"/>
+      </joinGrp>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <joinGrp domains="#zuitxt1 #zuitxt2 #zuitxt3" result="q">
+        <join targets="#fr_zuiq1 #fr_zuiq2 #fr_zuiq6"/>
+        <join targets="#fr_zuiq3 #fr_zuiq4 #fr_zuiq5"/>
       </joinGrp>
     </egXML>
   </exemplum>

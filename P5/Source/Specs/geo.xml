@@ -6,47 +6,52 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="geo">
-    <gloss>geographical coordinates</gloss>
-    <gloss version="2007-12-20" xml:lang="kr">지리적 좌표</gloss>
-    <gloss version="2008-04-06" xml:lang="es">coordenadas geográficas</gloss>
-    <gloss version="2008-12-09" xml:lang="fr">coordonnées géographiques</gloss>
-    <gloss version="2007-11-06" xml:lang="it">coordinate geografiche</gloss>
-    <desc>contains any expression of a set of geographic coordinates, representing a point, line, or area on the surface of the earth in some
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="geo">
+  <gloss>geographical coordinates</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">지리적 좌표</gloss>
+  <gloss version="2008-04-06" xml:lang="es">coordenadas geográficas</gloss>
+  <gloss version="2008-12-09" xml:lang="fr">coordonnées géographiques</gloss>
+  <gloss version="2007-11-06" xml:lang="it">coordinate geografiche</gloss>
+  <desc>contains any expression of a set of geographic coordinates, representing a point, line, or area on the surface of the earth in some
         notation.</desc>
-    <desc version="2007-12-20" xml:lang="kr">특정 표기법으로 지표상 지점, 선, 영역을 표시하는 지리적 좌표의 집합 표현을 포함한다.</desc>
-    <desc version="2008-04-06" xml:lang="es">contiene cualquier expresión de un conjunto de coordenadas geográficas, representando un punto, línea o
+  <desc version="2007-12-20" xml:lang="kr">특정 표기법으로 지표상 지점, 선, 영역을 표시하는 지리적 좌표의 집합 표현을 포함한다.</desc>
+  <desc version="2008-04-06" xml:lang="es">contiene cualquier expresión de un conjunto de coordenadas geográficas, representando un punto, línea o
         área en la superficie de la tierra en alguna anotación.</desc>
-    <desc version="2008-04-05" xml:lang="ja"> 地球上の一点，線，領域を表すための，地理上の座標を示す． </desc>
-    <desc version="2009-03-19" xml:lang="fr">contient toute expression, dans un système de notation, d'un ensemble de coordonnées géographiques
+  <desc version="2008-04-05" xml:lang="ja"> 地球上の一点，線，領域を表すための，地理上の座標を示す． </desc>
+  <desc version="2009-03-19" xml:lang="fr">contient toute expression, dans un système de notation, d'un ensemble de coordonnées géographiques
         représentant un point, une ligne ou une zone sur la surface de la Terre.</desc>
-    <desc version="2007-11-06" xml:lang="it">contiene una qualsiasi espressione di una serie di coordinate geografiche che rappresenti un punto, una
+  <desc version="2007-11-06" xml:lang="it">contiene una qualsiasi espressione di una serie di coordinate geografiche che rappresenti un punto, una
         linea o un'area sulla superficie della terra in una data notazione</desc>
-    <classes>
-        <memberOf key="model.measureLike"/>
-    </classes>
-    <content>
-        <rng:text/>
-    </content>
-    <exemplum xml:lang="und">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <geo>41.687142 -74.870109</geo>
-        </egXML>
-    </exemplum>
-    <remarks>
-        <p>All uses of <gi>geo</gi> within a document are required to use the same coordinate system, which is that defined by a <gi>geoDecl</gi>
+  <classes>
+    <memberOf key="model.measureLike"/>
+  </classes>
+  <content>
+    <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <geo>41.687142 -74.870109</geo>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <geo>W 8°37'--W 6°00'/N 34°00'--N 31°57'</geo>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>All uses of <gi>geo</gi> within a document are required to use the same coordinate system, which is that defined by a <gi>geoDecl</gi>
             element supplied in the TEI Header. If no such element is supplied, the assumption is that the content of each <gi>geo</gi> element will
             be a pair of numbers separated by whitespace, to be interpreted as latitude followed by longitude according to the World Geodetic
             System.</p>
-    </remarks>
-    <remarks version="2008-12-09" xml:lang="fr">
-        <p>Toutes les utilisations de l'élément <gi>geo</gi> à l'intérieur d'un document doivent obligatoirement recourir au même système de
+  </remarks>
+  <remarks version="2008-12-09" xml:lang="fr">
+    <p>Toutes les utilisations de l'élément <gi>geo</gi> à l'intérieur d'un document doivent obligatoirement recourir au même système de
             coordonnées, qui est celui défini par un élément <gi>geoDecl</gi> fourni dans l'En-tête TEI. En l'absence d'un tel élément, il est supposé
             que le contenu de chaque élément <gi>geo</gi> est un couple de nombres séparés par une espace, à interpréter comme une latitude suivie
             d'une longitude, conformément au système géodésique mondial.</p>
-    </remarks>
-    <remarks xml:lang="ja">
-        <p> 文書中の全要素<gi>geo</gi>は，同じ座標システムを使う必要がある．使 用される座標システムは，TEIヘダー中の要素<gi>geoDecl</gi>で定義さ れる．もし座標システムが宣言されていない場合は，世界測地システムに 従い，緯度，経度の順にある数値とされる．
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 文書中の全要素<gi>geo</gi>は，同じ座標システムを使う必要がある．使 用される座標システムは，TEIヘダー中の要素<gi>geoDecl</gi>で定義さ れる．もし座標システムが宣言されていない場合は，世界測地システムに 従い，緯度，経度の順にある数値とされる．
         </p>
-    </remarks>
+  </remarks>
 </elementSpec>

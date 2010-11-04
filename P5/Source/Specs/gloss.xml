@@ -29,9 +29,9 @@
     <memberOf key="model.glossLike"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
-<!--  <attList org="choice">
+  <!--  <attList org="choice">
     <attDef ident="target" usage="opt">
       <equiv/>
       <desc>identifies the associated <gi>term</gi> element by an absolute or relative URI reference</desc>
@@ -51,22 +51,19 @@
       <valDesc>should be a valid URI reference that resolves to a <gi>term</gi> element</valDesc>
     </attDef>
 -->
-<attList>
+  <attList>
     <attDef ident="cRef" usage="opt">
       <gloss>canonical reference</gloss>
       <gloss version="2007-12-20" xml:lang="kr">표준 참조</gloss>
       <gloss version="2008-04-06" xml:lang="es">referencia canónica</gloss>
       <gloss version="2008-03-30" xml:lang="fr">référence canonique</gloss>
       <gloss version="2007-11-06" xml:lang="it">riferimento canonico</gloss>
-
-
       <desc>identifies the associated <gi>term</gi> element using a canonical reference from a
         scheme defined in a <gi>refsDecl</gi> element in the TEI header</desc>
       <desc version="2007-12-20" xml:lang="kr">TEI 헤더의 <gi>refsDecl</gi> 요소에서 정의된 스키마로부터 표준 참조를 사용하여
         관련 <gi>term</gi> 요소를 구별한다.</desc>
-      <desc version="2007-05-02" xml:lang="zh-tw"
-          >用元素<gi>refsDecl</gi>在TEI標頭內所定義的標準參照來指明相關聯的元素<gi>term</gi>
-      </desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">用元素<gi>refsDecl</gi>在TEI標頭內所定義的標準參照來指明相關聯的元素<gi>term</gi>
+         </desc>
       <desc version="2008-04-05" xml:lang="ja"> TEIヘダー中の要素<gi>refsDecl</gi>で定義されているスキームにある，
           関連する要素<gi>term</gi>を標準的参照方法で特定する． </desc>
       <desc version="2009-01-06" xml:lang="fr">identifie l'élément associé <gi>term</gi> au moyen
@@ -79,7 +76,7 @@
         un riferimento canonico a partire da uno schema definito in un elemento <gi>refsDecl</gi>
         nell'intestazione TEI</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>the result of applying the algorithm for the resolution of canonical references
         (described in section <ptr target="#SACR"/>) should be a valid URI reference that resolves
@@ -99,16 +96,21 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">We may define <term xml:id="tdpv" rend="sc"
-        >discoursal point of view</term> as <gloss target="#tdpv">the relationship, expressed
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">We may define <term xml:id="tdpv" rend="sc">discoursal point of view</term> as <gloss target="#tdpv">the relationship, expressed
         through discourse structure, between the implied author or some other addresser, and the
         fiction.</gloss>
-    </egXML>
+      </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Dubois_Dict_Ling"> Les<term>
+          embrayeurs</term> sont <gloss>une classe de mots dont le sens varie avec la situation; ces
+          mots, n'ayant pas de référence propre dans la langue, ne reçoivent un référent que
+          lorsqu'ils sont inclus dans un message.</gloss>
+      </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n4"> 我們可以定義 <term
-        xml:id="zh-tw_tdpv" rend="sc">戀母情結</term> 為 <gloss target="#zh-tw_tdpv"
-        >佛洛伊德心理分析理論中的重要觀念，指三至六歲大的男孩在性慾上有一種戀母情結的階段，這情結更進一步發展成對父親的忌妒仇視，甚至亟欲除之而後快。</gloss></egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n4"> 我們可以定義 <term xml:id="zh-tw_tdpv" rend="sc">戀母情結</term> 為 <gloss target="#zh-tw_tdpv">佛洛伊德心理分析理論中的重要觀念，指三至六歲大的男孩在性慾上有一種戀母情結的階段，這情結更進一步發展成對父親的忌妒仇視，甚至亟欲除之而後快。</gloss>
+      </egXML>
   </exemplum>
   <remarks>
     <p>The <att>target</att> and <att>cRef</att> attributes are mutually exclusive.</p>

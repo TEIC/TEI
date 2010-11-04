@@ -6,10 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-	     module="msdescription" xml:id="DIMENSIONS"
-	     ident="dimensions"
-	     xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="DIMENSIONS" ident="dimensions">
   <gloss xml:lang="fr" version="2009-04-17">dimensions</gloss>
   <desc xml:id="dimensions.desc">contains a dimensional specification.</desc>
   <desc version="2007-12-20" xml:lang="kr">어떤 차원의 명세를 포함한다.</desc>
@@ -24,30 +21,30 @@ $Id$
     <memberOf key="att.dimensions"/>
     <memberOf key="model.pPart.msdesc"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:group>
-<!--this group is only needed for DTDs-->
-      <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:ref name="dim"/>
-	  <rng:ref name="model.dimLike"/>
-	</rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <!--this group is only needed for DTDs-->
+      <zeroOrMore>
+        <choice>
+          <ref name="dim"/>
+          <ref name="model.dimLike"/>
+        </choice>
+      </zeroOrMore>
+    </group>
   </content>
   <constraintSpec scheme="isoschematron" ident="duplicateDim">
     <constraint>
-      <sch:report test="count(tei:width)&gt; 1">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="count(tei:width)&gt; 1">
 	Width element may appear once only
-      </sch:report>
-      <sch:report test="count(tei:height)&gt; 1">
+      </report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="count(tei:height)&gt; 1">
 	Height element may appear once only
-      </sch:report>
-      <sch:report test="count(tei:depth)&gt; 1">
+      </report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="count(tei:depth)&gt; 1">
 	Depth element may appear once only
-      </sch:report>
+      </report>
     </constraint>
-  </constraintSpec> 
+  </constraintSpec>
   <attList>
     <attDef ident="type">
       <equiv/>
@@ -61,7 +58,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">indica que aspecto del objeto se mide.</desc>
       <desc version="2007-01-21" xml:lang="it">indica quale aspetto dell'oggetto viene misurato</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="open">
         <valItem ident="leaves">
@@ -188,23 +185,49 @@ autre conteneur dans lequel le manuscrit est conservé.</desc>
       </dimensions>
     </egXML>
   </exemplum>
-
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <dimensions type="binding">
+        <height unit="mm">328 (336)</height>
+        <width unit="mm">203</width>
+        <depth unit="mm">74</depth>
+      </dimensions>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Quand de simples quantités numériques sont impliquées, elles peuvent être exprimées par
+        l'attribut <att>quantity</att> sur chaque ou sur tous les éléments enfants, comme dans
+        l'exemple suivant : </p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <dimensions type="binding">
+        <height unit="mm">170</height>
+        <width unit="mm">98</width>
+        <depth unit="mm">15</depth>
+      </dimensions>
+      <dimensions type="binding">
+        <height unit="mm">168</height>
+        <width unit="mm">106</width>
+        <depth unit="mm">22</depth>
+      </dimensions>
+    </egXML>
+  </exemplum>
   <exemplum xml:lang="en">
-<p>This element may be used to record the dimensions of any
+    <p>This element may be used to record the dimensions of any
 text-bearing object, not necessarily a codex. For example:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <dimensions type="panels">
-<height scope="all">7004</height>
-<width scope="all">1803</width>
-<dim type="relief" unit="mm">345</dim>
-      </dimensions></egXML>
-<p>This might be used to show that the inscribed panels on some (imaginary)
+        <height scope="all">7004</height>
+        <width scope="all">1803</width>
+        <dim type="relief" unit="mm">345</dim>
+      </dimensions>
+    </egXML>
+    <p>This might be used to show that the inscribed panels on some (imaginary)
 monument are all the same size (7004 by 1803 cm) and stand out from
 the rest of the monument by 345 mm.
 </p>
   </exemplum>
-  <exemplum xml:lang="en"> 
-   <p>When simple numeric quantities are involved, they may be
+  <exemplum xml:lang="en">
+    <p>When simple numeric quantities are involved, they may be
     expressed on the <att>quantity</att> attribute of any or all of
     the child elements, as in the following example:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

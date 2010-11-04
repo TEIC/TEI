@@ -14,13 +14,9 @@ $Id$
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
   <gloss version="2008-04-06" xml:lang="es">declaración de notación métrica</gloss>
   <gloss version="2007-11-06" xml:lang="it">dichiarazione di notazione metrica</gloss>
-
-
-
   <desc>documents the notation employed to represent a metrical pattern when this is specified as
     the value of a <att>met</att>, <att>real</att>, or <att>rhyme</att> attribute on any structural
     element of a metrical text (e.g. <gi>lg</gi>, <gi>l</gi>, or <gi>seg</gi>).</desc>
-
   <desc version="2009-01-05" xml:lang="fr"> documente la notation utilisée pour noter un modèle
     métrique lorsque celui-ci est spécifié comme la valeur des attributs <att>met </att>,
     <att>real</att>, ou <att>rhyme</att>, qui s’appliquent à tout élément de la structure d’un texte
@@ -50,24 +46,23 @@ $Id$
     <memberOf key="att.declarable"/>
   </classes>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="model.pLike"/>
-          <rng:ref name="model.noteLike"/>
-        </rng:choice>
-      </rng:oneOrMore>
-      <rng:oneOrMore>
-        <rng:ref name="metSym"/>
-      </rng:oneOrMore>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <choice>
+          <ref name="model.pLike"/>
+          <ref name="model.noteLike"/>
+        </choice>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="metSym"/>
+      </oneOrMore>
+    </choice>
   </content>
   <attList>
     <attDef ident="type" usage="mwa">
       <equiv/>
       <desc>indicates whether the notation conveys the abstract metrical form, its actual prosodic
         realization, or the rhyme scheme, or some combination thereof.</desc>
-
       <desc version="2009-01-05" xml:lang="fr">indique si la notation traduit la forme métrique
         abstraite, sa réalisation prosodique, le schéma des rimes, ou une combinaison de ces
         différents éléments.</desc>
@@ -84,19 +79,22 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">indica se l'annotazione fornisce la forma metrica
         estratta, la sua realizzazione prosodica,lo schema delle rime o un loro combinazione</desc>
       <datatype minOccurs="1" maxOccurs="3">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <defaultVal>met real</defaultVal>
       <valList type="closed">
         <valItem ident="met">
           <gloss><att>met</att> attribute</gloss>
           <gloss version="2007-12-20" xml:lang="kr"><att>met</att> 속성</gloss>
-          <gloss version="2007-05-02" xml:lang="zh-tw">屬性<att>met</att></gloss>
-          <gloss version="2007-05-02" xml:lang="zh-tw">屬性<att>rhyme</att></gloss>
+          <gloss version="2007-05-02" xml:lang="zh-tw">屬性<att>met</att>
+               </gloss>
+          <gloss version="2007-05-02" xml:lang="zh-tw">屬性<att>rhyme</att>
+               </gloss>
           <gloss version="2007-06-12" xml:lang="fr">attribut <att>met</att>
-          </gloss>
+               </gloss>
           <gloss version="2007-11-06" xml:lang="it">attributo met</gloss>
-          <gloss version="2007-05-04" xml:lang="es">atributo <att>met</att></gloss>
+          <gloss version="2007-05-04" xml:lang="es">atributo <att>met</att>
+               </gloss>
           <gloss version="2007-05-04" xml:lang="es">atributo <att>rhyme</att> (rima)</gloss>
           <desc>declaration applies to the abstract metrical form recorded on the <att>met</att>
             attribute</desc>
@@ -114,10 +112,13 @@ $Id$
         <valItem ident="real">
           <gloss><att>real</att> attribute</gloss>
           <gloss version="2007-12-20" xml:lang="kr"><att>real</att> 속성</gloss>
-          <gloss version="2007-05-02" xml:lang="zh-tw">屬性<att>real</att></gloss>
-          <gloss version="2007-06-12" xml:lang="fr">attribut <att>real</att></gloss>
+          <gloss version="2007-05-02" xml:lang="zh-tw">屬性<att>real</att>
+               </gloss>
+          <gloss version="2007-06-12" xml:lang="fr">attribut <att>real</att>
+               </gloss>
           <gloss version="2007-11-06" xml:lang="it">attributo real</gloss>
-          <gloss version="2007-05-04" xml:lang="es">atributo <att>real</att></gloss>
+          <gloss version="2007-05-04" xml:lang="es">atributo <att>real</att>
+               </gloss>
           <desc>declaration applies to the actual realization of the conventional metrical structure
             recorded on the <att>real</att> attribute</desc>
           <desc version="2007-12-20" xml:lang="kr">선언은 <att>real</att> 속성에 기록된 관례적 운율 구조의 실제 실현에
@@ -140,7 +141,8 @@ $Id$
           <desc>declaration applies to the rhyme scheme recorded on the <att>rhyme</att> attribute</desc>
           <desc version="2007-12-20" xml:lang="kr">선언은 <att>rhyme</att> 속성에 기록된 운 스키마에 적용한다.</desc>
           <desc version="2008-04-06" xml:lang="es">la declaración se aplica al esquema de rima
-            registrado en el atributo <att>rima</att></desc>
+            registrado en el atributo <att>rima</att>
+               </desc>
           <desc version="2008-04-05" xml:lang="ja"> 属性<att>rhyme</att>にある押韻スキームに該当する． </desc>
           <desc version="2007-06-12" xml:lang="fr">la déclaration s'applique à la structure métrique
             abstraite <!--A VALIDER : au schéma de rimes décrit dans-->notée par l'attribut
@@ -149,7 +151,7 @@ $Id$
             contenuto nell'attributo rhyme</desc>
         </valItem>
       </valList>
-            <remarks>
+      <remarks>
         <p>By default, the <gi>metDecl</gi> element documents the notation used for metrical pattern
           and realization. It may also be used to document the notation used for rhyme scheme
           information; if not otherwise documented, the rhyme scheme notation defaults to the
@@ -185,17 +187,14 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">specifica un'espressione regolare che definisce
         qualsiasi valore legale per l'annotazione</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
       </datatype>
       <valDesc>the value must be a valid regular expression per the World Wide Web Consortium's
-          <title>XML Schema Part 2: Datatypes Second Edition</title>, <ref
-          target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix F</ref></valDesc>
-
+          <title>XML Schema Part 2: Datatypes Second Edition</title>, <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix F</ref>
+         </valDesc>
       <valDesc xml:lang="fr">la valeur doit être une expression régulière valide pour le Consortium
-        du World Wide Web <title>XML Schema Part 2: Datatypes Second Edition</title>, <ref
-          target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix F</ref></valDesc>
-
-
+        du World Wide Web <title>XML Schema Part 2: Datatypes Second Edition</title>, <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix F</ref>
+         </valDesc>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -210,6 +209,19 @@ $Id$
       iambic pentameter. Only metrical patterns containing exactly ten syllables, alternately
       stressed and unstressed, (except for the first two which may be in either order) to each
       metrical line can be expressed using this notation.</p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <metDecl xml:id="fr_ip" type="met" pattern="((AATAAT|AATAATA\)">
+        <metSym value="T">syllabe tonique</metSym>
+        <metSym value="A">syllabe atone</metSym>
+        <metSym value="|">pause métrique</metSym>
+      </metDecl>
+    </egXML>
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Cette notation décrit ici la division en groupes rythmiques d'un vers composé de douze
+        syllabes (alexandrin) comme dans ce vers de Baudelaire : 
+          <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Baudelaire-vie"><metDecl type="met" pattern="((AATAAT|AATAATA\)"/><lg n="1" type="quatrain"><l n="1">J'ai longtemps habité sous de vastes portiques</l></lg></egXML>
+      </p>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

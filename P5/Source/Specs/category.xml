@@ -25,24 +25,43 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">contiene una sola categoria descrittiva, possibilmente
     innestata in una categoria più generale, all'interno di una tassonomia definita dall'utente.</desc>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-	<rng:oneOrMore>
-        <rng:ref name="catDesc"/>
-	</rng:oneOrMore>
-        <rng:zeroOrMore>
-          <rng:ref name="model.glossLike"/>
-        </rng:zeroOrMore>
-      </rng:choice>
-      <rng:zeroOrMore>
-        <rng:ref name="category"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <oneOrMore>
+          <ref name="catDesc"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="model.glossLike"/>
+        </zeroOrMore>
+      </choice>
+      <zeroOrMore>
+        <ref name="category"/>
+      </zeroOrMore>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <category xml:id="b1">
         <catDesc>Prose reportage</catDesc>
+      </category>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <category xml:id="fr_tax.a.d">
+        <catDesc>Récits de voyage</catDesc>
+      </category>
+      <bibl>indexation selon le système d'indexation RAMEAU, géré par la Bibliothèque nationale de
+          France</bibl>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <category xml:id="fr_b1">
+        <catDesc>Devinettes et énigmes </catDesc>
+        <category xml:id="fr_b11">
+          <catDesc>Anagrammes </catDesc>
+        </category>
       </category>
     </egXML>
   </exemplum>
@@ -81,23 +100,24 @@ $Id$
   </exemplum>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<category xml:id="LIT">
-<catDesc xml:lang="pl">literatura piękna</catDesc>
-<catDesc xml:lang="en">fiction</catDesc>
-<category xml:id="LPROSE">
-<catDesc xml:lang="pl">proza</catDesc>
-<catDesc xml:lang="en">prose</catDesc>
-</category>
-<category xml:id="LPOETRY">
-<catDesc xml:lang="pl">poezja</catDesc>
-<catDesc xml:lang="en">poetry</catDesc>
-</category>
-<category xml:id="LDRAMA">
-<catDesc xml:lang="pl">dramat</catDesc>
-<catDesc xml:lang="en">drama</catDesc>
-</category>
-</category>
-    </egXML>  </exemplum>
+      <category xml:id="LIT">
+        <catDesc xml:lang="pl">literatura piękna</catDesc>
+        <catDesc xml:lang="en">fiction</catDesc>
+        <category xml:id="LPROSE">
+          <catDesc xml:lang="pl">proza</catDesc>
+          <catDesc xml:lang="en">prose</catDesc>
+        </category>
+        <category xml:id="LPOETRY">
+          <catDesc xml:lang="pl">poezja</catDesc>
+          <catDesc xml:lang="en">poetry</catDesc>
+        </category>
+        <category xml:id="LDRAMA">
+          <catDesc xml:lang="pl">dramat</catDesc>
+          <catDesc xml:lang="en">drama</catDesc>
+        </category>
+      </category>
+    </egXML>
+  </exemplum>
   <listRef>
     <ptr target="#HD55"/>
   </listRef>

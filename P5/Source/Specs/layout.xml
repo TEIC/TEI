@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="LAYOUT" ident="layout">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="LAYOUT" ident="layout">
   <equiv/>
   <gloss version="2007-06-12" xml:lang="fr">mise en page</gloss>
   <desc xml:id="layout.desc">describes how text is laid out on the
@@ -24,7 +24,7 @@ $Id$
   <desc version="2007-05-04" xml:lang="es">describe la disposición del texto en la página, comprendiendo eventuales informaciones sobre la lineación***, indicaciones de agujereado***, u otras señales de técnicas de preparación de la página utilizadas.</desc>
   <desc version="2007-01-21" xml:lang="it">descrive la disposizione del testo sulla pagina, ivi comprese eventuali informazioni su rigatura, applicazione di indicazioni per foratura, o altri segni di tecniche di preparazione della pagina</desc>
   <content>
-    <rng:ref name="macro.specialPara"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
   </content>
   <attList>
     <attDef ident="columns">
@@ -41,7 +41,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">indica el número de columnas por página.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica il numero di colonne per pagina</desc>
       <datatype minOccurs="1" maxOccurs="2">
-        <rng:ref name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>may be given as a pair of numbers (to indicate a range) or as a
       single number.</valDesc>
@@ -61,7 +61,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">especifica el número de líneas delineadas por columna.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica il numero di righe per colonna</desc>
       <datatype minOccurs="1" maxOccurs="2">
-        <rng:ref name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>may be given as a pair of numbers (a range) or as a
       single number.</valDesc>
@@ -81,7 +81,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">especifica el número de líneas escritas por columna.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica il numero di righe scritte per colonna</desc>
       <datatype minOccurs="1" maxOccurs="2">
-        <rng:ref name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>may be given as a pair of numbers (a range), or as a
       single number.</valDesc>
@@ -92,6 +92,27 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <layout columns="1" ruledLines="25 32">
 Most pages have between 25 and 32 long lines ruled in lead.</layout>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <layout columns="1" ruledLines="25 32"> Most pages have between 25 and 32 long lines ruled
+          in lead.</layout>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <layout columns="2" ruledLines="42">
+        <p>2 columns of 42 lines ruled in ink, with central rule between the columns.</p>
+      </layout>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <layout columns="1 2" writtenLines="40 50">
+        <p>Some pages have 2 columns, with central rule between the columns; each column with
+            between 40 and 50 lines of writing.</p>
+      </layout>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">

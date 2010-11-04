@@ -6,86 +6,103 @@
   $Date$
   $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="listNym">
-    <gloss>list of canonical names</gloss>
-    <gloss version="2007-12-20" xml:lang="kr">표준 이름 목록</gloss>
-    <gloss version="2008-04-06" xml:lang="es">lista de nombres canónicos</gloss>
-    <gloss version="2009-03-19" xml:lang="fr">liste de noms canoniques</gloss>
-    <gloss version="2007-11-06" xml:lang="it">elenco di nomi canonici</gloss>
-    <desc>contains a list of nyms, that is, standardized names for any thing. </desc>
-    <desc version="2007-12-20" xml:lang="kr">어떤 사물에 대한 표준화된 이름 목록을 포함한다.</desc>
-    <desc version="2007-05-02" xml:lang="zh-tw">包含一正式名稱列表，即任何事物的標準名稱。</desc>
-    <desc version="2008-04-05" xml:lang="ja"> 別名，すなわち，一般的に使われている名前のリストを示す． </desc>
-    <desc version="2009-03-19" xml:lang="fr">contient une liste de noms normalisés pour tous types d'objets.</desc>
-    <desc version="2007-11-06" xml:lang="it">contiene una lista di nym, cioè nomi standard per qualsiasi cosa</desc>
-    <desc version="2007-05-04" xml:lang="es">contiene una lista de nyms, es decir, nombres estándard para cualquier cosa.</desc>
-    <classes>
-        <memberOf key="att.typed"/>
-        <memberOf key="att.declarable"/>
-        <memberOf key="model.listLike"/>
-    </classes>
-    <content>
-        <rng:group>
-            <rng:zeroOrMore>
-                <rng:ref name="model.headLike"/>
-            </rng:zeroOrMore>
-            <rng:oneOrMore>
-                <rng:choice>
-                    <rng:ref name="nym"/>
-                    <rng:ref name="listNym"/>
-                </rng:choice>
-            </rng:oneOrMore>
-            <rng:zeroOrMore>
-                <rng:choice>
-                    <rng:ref name="relationGrp"/>
-                    <rng:ref name="relation"/>
-                </rng:choice>
-            </rng:zeroOrMore>
-        </rng:group>
-    </content>
-    <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <listNym type="floral">
-                <nym xml:id="ROSE">
-                    <form>Rose</form>
-                </nym>
-                <nym xml:id="DAISY">
-                    <form>Daisy</form>
-                    <etym>Contraction of <mentioned>day's eye</mentioned>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listNym">
+  <gloss>list of canonical names</gloss>
+  <gloss version="2007-12-20" xml:lang="kr">표준 이름 목록</gloss>
+  <gloss version="2008-04-06" xml:lang="es">lista de nombres canónicos</gloss>
+  <gloss version="2009-03-19" xml:lang="fr">liste de noms canoniques</gloss>
+  <gloss version="2007-11-06" xml:lang="it">elenco di nomi canonici</gloss>
+  <desc>contains a list of nyms, that is, standardized names for any thing. </desc>
+  <desc version="2007-12-20" xml:lang="kr">어떤 사물에 대한 표준화된 이름 목록을 포함한다.</desc>
+  <desc version="2007-05-02" xml:lang="zh-tw">包含一正式名稱列表，即任何事物的標準名稱。</desc>
+  <desc version="2008-04-05" xml:lang="ja"> 別名，すなわち，一般的に使われている名前のリストを示す． </desc>
+  <desc version="2009-03-19" xml:lang="fr">contient une liste de noms normalisés pour tous types d'objets.</desc>
+  <desc version="2007-11-06" xml:lang="it">contiene una lista di nym, cioè nomi standard per qualsiasi cosa</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene una lista de nyms, es decir, nombres estándard para cualquier cosa.</desc>
+  <classes>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="model.listLike"/>
+  </classes>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.headLike"/>
+      </zeroOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="nym"/>
+          <ref name="listNym"/>
+        </choice>
+      </oneOrMore>
+      <zeroOrMore>
+        <choice>
+          <ref name="relationGrp"/>
+          <ref name="relation"/>
+        </choice>
+      </zeroOrMore>
+    </group>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listNym type="floral">
+        <nym xml:id="ROSE">
+          <form>Rose</form>
+        </nym>
+        <nym xml:id="DAISY">
+          <form>Daisy</form>
+          <etym>Contraction of <mentioned>day's eye</mentioned>
                     </etym>
-                </nym>
-                <nym xml:id="HTHR">
-                    <form>Heather</form>
-                </nym>
-            </listNym>
-        </egXML>
-    </exemplum>
-    <exemplum xml:lang="zh-tw">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-            <listNym type="floral">
-                <nym xml:id="zh-tw_ROSE">
-                    <form>玫瑰</form>
-                </nym>
-                <nym xml:id="zh-tw_ORCHID">
-                    <form>蘭花</form>
-                    <etym>多年生草本植物，葉細長而尖，春天開花，味清香。</etym>
-                </nym>
-                <nym xml:id="zh-tw_HTHR">
-                    <form>Heather(石南屬植物)</form>
-                </nym>
-            </listNym>
-        </egXML>
-    </exemplum>
-    <remarks>
-        <p rend="dataDesc">The type attribute may be used to distinguish lists of names of a particular type if convenient.</p>
-    </remarks>
-    <remarks version="2008-12-09" xml:lang="fr">
-        <p rend="dataDesc"> L'attribut type peut être utilisé pour établir des listes par type de nom si cela présente un intérêt.</p>
-    </remarks>
-    <remarks xml:lang="ja">
-        <p rend="dataDesc"> 属性typeは，特別な種類の名前を区別する際に使用されるかもしれない． </p>
-    </remarks>
-    <listRef>
-        <ptr target="#NDNYM"/>
-    </listRef>
+        </nym>
+        <nym xml:id="HTHR">
+          <form>Heather</form>
+        </nym>
+      </listNym>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listNym type="floral">
+        <nym xml:id="fr_ROSE">
+          <form>Rose</form>
+        </nym>
+        <nym xml:id="fr_DAISY">
+          <form>Daisy</form>
+          <etym>contraction de <mentioned>day's eye</mentioned>
+               </etym>
+        </nym>
+        <nym xml:id="fr_HTHR">
+          <form>Heather</form>
+        </nym>
+      </listNym>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-tw">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listNym type="floral">
+        <nym xml:id="zh-tw_ROSE">
+          <form>玫瑰</form>
+        </nym>
+        <nym xml:id="zh-tw_ORCHID">
+          <form>蘭花</form>
+          <etym>多年生草本植物，葉細長而尖，春天開花，味清香。</etym>
+        </nym>
+        <nym xml:id="zh-tw_HTHR">
+          <form>Heather(石南屬植物)</form>
+        </nym>
+      </listNym>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">The type attribute may be used to distinguish lists of names of a particular type if convenient.</p>
+  </remarks>
+  <remarks version="2008-12-09" xml:lang="fr">
+    <p rend="dataDesc"> L'attribut type peut être utilisé pour établir des listes par type de nom si cela présente un intérêt.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc"> 属性typeは，特別な種類の名前を区別する際に使用されるかもしれない． </p>
+  </remarks>
+  <listRef>
+    <ptr target="#NDNYM"/>
+  </listRef>
 </elementSpec>

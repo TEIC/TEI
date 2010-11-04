@@ -6,11 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
-	     module="msdescription" xml:id="MSIDENTIFIER"
-	     ident="msIdentifier"
-	     xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSIDENTIFIER" ident="msIdentifier">
   <gloss>manuscript identifier</gloss>
   <gloss version="2007-12-20" xml:lang="kr">원고 확인소</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -32,45 +28,64 @@ the  manuscript being described. </desc>
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
-    <rng:group>
-	<rng:group>
-	  <rng:ref name="model.placeNamePart_sequenceOptional"/>
-	  <rng:optional>
-	    <rng:ref name="institution"/>
-	  </rng:optional>
-	  <rng:optional>
-	    <rng:ref name="repository"/>
-	  </rng:optional>
-	  <rng:zeroOrMore>
-	    <rng:ref name="collection"/>
-	  </rng:zeroOrMore>
-	  <rng:optional>
-	    <rng:ref name="idno"/>
-	  </rng:optional>
-	</rng:group>
-      <rng:zeroOrMore>
-	  <rng:choice>
-	    <rng:ref name="msName"/>
-	    <rng:ref name="altIdentifier"/>
-	  </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <group>
+        <ref name="model.placeNamePart_sequenceOptional"/>
+        <optional>
+          <ref name="institution"/>
+        </optional>
+        <optional>
+          <ref name="repository"/>
+        </optional>
+        <zeroOrMore>
+          <ref name="collection"/>
+        </zeroOrMore>
+        <optional>
+          <ref name="idno"/>
+        </optional>
+      </group>
+      <zeroOrMore>
+        <choice>
+          <ref name="msName"/>
+          <ref name="altIdentifier"/>
+        </choice>
+      </zeroOrMore>
+    </group>
   </content>
-  <constraintSpec scheme="isoschematron" ident="msId_minimal"> 
+  <constraintSpec scheme="isoschematron" ident="msId_minimal">
     <constraint>
-	  <sch:report test="local-name(*[1])='idno' or 
-                            local-name(*[1])='altIdentifier' or
-			    .='' ">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="local-name(*[1])='idno' or                              local-name(*[1])='altIdentifier' or        .='' ">
 	    You must supply either a locator of some type or a
-	    name</sch:report>
+	    name</report>
     </constraint>
-  </constraintSpec> 
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <msIdentifier>
         <settlement>San Marino</settlement>
         <repository>Huntington Library</repository>
         <idno>MS.El.26.C.9</idno>
+      </msIdentifier>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <msIdentifier>
+        <country>France</country>
+        <settlement>Paris</settlement>
+        <repository xml:lang="fre">Bibliothèque nationale de France. Réserve des livres rares&gt;</repository>
+        <idno>B- 73</idno>
+        <!-- dans le cas des recueils : cote uniquement sans les sous-cotes -->
+        <altIdentifier>
+          <idno>B-121</idno>
+          <note> Cote de la bibliothèque royale au XVIIIe siècle (inscrite à l'encre, sur la
+              doublure de tabis).</note>
+        </altIdentifier>
+        <altIdentifier>
+          <idno>Double de B. 274. A (Réserve)</idno>
+          <note>Cote inscrite face à la page de titre, en remplacement de la cote "1541",
+            barrée</note>
+        </altIdentifier>
       </msIdentifier>
     </egXML>
   </exemplum>

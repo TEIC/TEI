@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="MSDESC" ident="msDesc">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSDESC" ident="msDesc">
   <gloss>manuscript description</gloss>
   <gloss version="2007-12-20" xml:lang="kr">원고 기술</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -28,34 +28,34 @@ manuscript or other text-bearing object.</desc>
     <memberOf key="model.biblLike"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:ref name="msIdentifier"/>
-      <rng:zeroOrMore>
-        <rng:ref name="model.headLike"/>
-      </rng:zeroOrMore>
-      <rng:choice>
-        <rng:oneOrMore>
-          <rng:ref name="model.pLike"/>
-        </rng:oneOrMore>
-        <rng:group>
-          <rng:optional>
-            <rng:ref name="msContents"/>
-          </rng:optional>
-          <rng:optional>
-            <rng:ref name="physDesc"/>
-          </rng:optional>
-          <rng:optional>
-            <rng:ref name="history"/>
-          </rng:optional>
-          <rng:optional>
-            <rng:ref name="additional"/>
-          </rng:optional>
-          <rng:zeroOrMore>
-            <rng:ref name="msPart"/>
-          </rng:zeroOrMore>
-        </rng:group>
-      </rng:choice>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="msIdentifier"/>
+      <zeroOrMore>
+        <ref name="model.headLike"/>
+      </zeroOrMore>
+      <choice>
+        <oneOrMore>
+          <ref name="model.pLike"/>
+        </oneOrMore>
+        <group>
+          <optional>
+            <ref name="msContents"/>
+          </optional>
+          <optional>
+            <ref name="physDesc"/>
+          </optional>
+          <optional>
+            <ref name="history"/>
+          </optional>
+          <optional>
+            <ref name="additional"/>
+          </optional>
+          <zeroOrMore>
+            <ref name="msPart"/>
+          </zeroOrMore>
+        </group>
+      </choice>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -81,6 +81,126 @@ folios being written in two cursive anglicana scripts, while the
 remainder is for the most part in a mixed secretary hand.</p>
           </objectDesc>
         </physDesc>
+      </msDesc>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <msDesc>
+        <msIdentifier>
+          <country>France</country>
+          <settlement>Paris</settlement>
+          <repository xml:lang="fre">Bibliothèque nationale de France. Réserve des livres rares&gt;</repository>
+          <idno>RES P- YC- 1275</idno>
+          <!-- dans le cas des recueils : cote uniquement sans les sous-cotes -->
+          <altIdentifier>
+            <idno>Y. 1341</idno>
+            <note>Cote de la Bibliothèque royale au XVIIIe s. (Catalogue de 1750).</note>
+          </altIdentifier>
+          <altIdentifier>
+            <idno/>
+            <note/>
+          </altIdentifier>
+        </msIdentifier>
+        <msContents>
+          <msItem>
+            <!-- pour le traitement des recueils la solution possible est de répéter l'élément <msItem>  -->
+            <docAuthor>
+              <forename>Juvénal</forename>
+            </docAuthor>
+            <docAuthor>
+              <forename>Perse</forename>
+            </docAuthor>
+            <docTitle>
+              <titlePart type="main"/>
+              <titlePart type="sub"/>
+            </docTitle>
+            <docImprint>
+              <pubPlace>Venise</pubPlace>
+              <publisher>F. Torresani</publisher>
+              <!-- dans le Catalogue général: "in aedibus haeredum Aldi et Andreae soceri" -->
+              <publisher>G.-F. Torresani</publisher>
+            </docImprint>
+            <docDate when="1535">1535</docDate>
+            <note>In-8°.</note>
+            <!-- in-32°; in-24°; in-16°; in-8°; in-4°; in-folio; gr. folio -->
+            <note>Exemplaire avec rehauts peints en argent, or et bleu.</note>
+            <note>
+              <ref target="http://catalogue.bnf.fr/ark:/12148/cb31088624r">Notice bibliographique
+                  dans le Catalogue général</ref>
+            </note>
+          </msItem>
+        </msContents>
+        <physDesc>
+          <p>
+            <ref target="http://bnf.fr/ark://">Image de la reliure dans l'iconothèque</ref>
+            <!-- RC-B-05225 (plat sup.) -->
+          </p>
+          <objectDesc>
+            <supportDesc>
+              <extent>
+                <dimensions type="binding">
+                  <height unit="mm">170</height>
+                  <width unit="mm">98</width>
+                  <depth unit="mm">15</depth>
+                </dimensions>
+              </extent>
+            </supportDesc>
+          </objectDesc>
+          <bindingDesc>
+            <binding contemporary="true">
+              <p><index indexName="typo_reliure"><term>Reliure à décor</term></index><index indexName="typo_decor"><term>Entrelacs géométriques</term></index> Reliure en <material>maroquin</material> brun jaspé</p>
+              <decoNote type="plats"> à décor d’entrelacs géométriques (structure de losange et
+                  rectangle) complété de fers évidés.</decoNote>
+              <decoNote type="plat_sup">Titre <q>ivvenalis. persivs</q> et ex-libris de Jean
+                  Grolier <q>io. grolierii et amicorvm.</q> dorés respectivement au centre et au bas
+                  du plat supérieur. </decoNote>
+              <decoNote type="plat_inf">Devise de Jean Grolier<q>portio mea sit in terra
+                  viventivm</q> dorée au centre du plat inférieur.</decoNote>
+              <decoNote type="dos">Dos à cinq nerfs, sans décor ; simple filet doré sur chaque
+                  nerf et en encadrement des caissons ; passages de chaînette marqués de même.</decoNote>
+              <decoNote type="tranchefiles">Tranchefiles simples unicolores, vert foncé.</decoNote>
+              <decoNote type="coupes">Filet doré sur les coupes.</decoNote>
+              <decoNote type="annexes"/>
+              <decoNote type="tranches">Tranches dorées.</decoNote>
+              <decoNote type="contreplats">Contreplats en vélin.</decoNote>
+              <decoNote type="chasses">Filet doré sur les chasses.</decoNote>
+              <!-- Description des gardes : gardes blanches ; gardes couleurs (marbrées, gaufrées, peintes, dominotées, etc.) généralement suivies de gardes blanches ; dans tous les cas, spécifier le nombre de gardes (début + fin du volume)-->
+              <decoNote type="gardes">Gardes en papier et vélin (2+1+2 / 2+1+2) ; filigrane au
+                    pot.<ref>Briquet N° XX</ref>
+                     </decoNote>
+              <!-- Élément qui inclut aussi bien des remarques sur la couture que les charnières, claies ou modes d'attaches des plats : tous éléments de la structure dont la description est jugée utile à la description et l'identification de la reliure-->
+              <decoNote type="structure">Defet manuscrit utilisé comme claie au contreplat
+                  inférieur (visible par transparence, sous la contregarde en vélin).</decoNote>
+              <condition>Traces de mouillures anciennes plus ou moins importantes au bas des
+                  feuillets, qui n'ont pas affecté la reliure ; éraflure en tête du plat
+                inférieur.</condition>
+            </binding>
+          </bindingDesc>
+        </physDesc>
+        <history>
+          <origin notBefore="1540-01-01" notAfter="1547-09-15">
+            <p>Reliure exécutée pour Jean Grolier par Jean Picard, Paris, entre 1540 et 1547.</p>
+          </origin>
+          <provenance>
+            <p/>
+          </provenance>
+          <acquisition notBefore="1680-12-31" notAfter="1724-12-31">Estampille n° 1, utilisée de
+              la fin du XVIIe siècle à 1724 (page de titre).</acquisition>
+        </history>
+        <additional>
+          <adminInfo>
+            <recordHist>
+              <source>Notice établie à partir du document original</source>
+              <change when="2009-10-05" who="Markova">Description mise à jour le <date type="crea">5 octobre 2009 </date>en vue de l'encodage en TEI des descriptions des reliure
+                  de la Réserve des livres rares</change>
+              <change when="2009-06-01" who="Le Bars">Description revue le <date type="maj">1er
+                    juin 2009 </date> par Fabienne Le Bars.....</change>
+              <change when="2009-06-25" who="Le Bars">Description validée le<date type="valid">25
+                    juin 2009</date>par Fabienne Le Bars</change>
+            </recordHist>
+          </adminInfo>
+        </additional>
       </msDesc>
     </egXML>
   </exemplum>

@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="iso-fs" ident="fsdLink">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="fsdLink">
   <gloss>feature structure declaration link</gloss>
   <gloss version="2007-12-20" xml:lang="kr">자질 구조 선언 연결</gloss>
   <gloss version="2008-04-06" xml:lang="es">enlace a la declaración de la estructura de rasgos</gloss>
@@ -23,7 +23,7 @@ structure declaration for it.</desc>
 sa déclaration de structure de traits.</desc>
   <desc version="2007-11-06" xml:lang="it">associa il nome di una struttura di tratti alla dichiarazione relativa</desc>
   <content>
-    <rng:empty/>
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="type" usage="req">
@@ -40,11 +40,11 @@ feature structure.</desc>
       <desc version="2007-05-04" xml:lang="es">identifica el tipo de estructura de rasgos documentada por el FSD; éste será el valor del atributo <att>type</att> al menos en una estructura de rasgos.</desc>
       <desc version="2009-04-16" xml:lang="fr">identifie le type de structure de traits à documenter ; ce sera la valeur de l’attribut <att>type</att> d’au moins une structure de traits.</desc>
       <datatype>
-        <rng:ref name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valDesc>any string of characters.</valDesc>
       <valDesc xml:lang="fr">toute chaîne de caractères.</valDesc>
-          </attDef>
+    </attDef>
     <attDef ident="target" usage="req">
       <desc>supplies a pointer to a feature structure declaration
       (<gi>fsDecl</gi>) element within the current document or elsewhere. </desc>
@@ -58,11 +58,16 @@ feature structure.</desc>
 ailleurs.</desc>
       <desc version="2007-11-06" xml:lang="it">fornisce un puntatore che indica l'elemento relativo alla dichiarazione di una struttura di tratti (fsDecl) all'interno del documento corrente o altrove</desc>
       <datatype>
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <fsdLink type="subentry" target="http://www.example.com/fsdLib.xml#L1234"/>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <fsdLink type="subentry" target="http://www.example.com/fsdLib.xml#L1234"/>
     </egXML>

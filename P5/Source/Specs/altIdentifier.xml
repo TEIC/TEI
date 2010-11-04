@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="ALTIDENTIFIER" ident="altIdentifier">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="ALTIDENTIFIER" ident="altIdentifier">
   <equiv/>
   <gloss>alternative identifier</gloss>
   <gloss version="2007-12-20" xml:lang="kr">대체 확인소</gloss>
@@ -31,22 +31,22 @@ a manuscript, such as a former catalogue number.</desc>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:ref name="model.placeNamePart_sequenceOptional"/>
-      <rng:optional>
-        <rng:ref name="institution"/>
-      </rng:optional>
-      <rng:optional>
-        <rng:ref name="repository"/>
-      </rng:optional>
-      <rng:optional>
-        <rng:ref name="collection"/>
-      </rng:optional>
-      <rng:ref name="idno"/>
-      <rng:optional>
-        <rng:ref name="note"/>
-      </rng:optional>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.placeNamePart_sequenceOptional"/>
+      <optional>
+        <ref name="institution"/>
+      </optional>
+      <optional>
+        <ref name="repository"/>
+      </optional>
+      <optional>
+        <ref name="collection"/>
+      </optional>
+      <ref name="idno"/>
+      <optional>
+        <ref name="note"/>
+      </optional>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -54,6 +54,14 @@ a manuscript, such as a former catalogue number.</desc>
         <settlement>San Marino</settlement>
         <repository>Huntington Library</repository>
         <idno>MS.El.26.C.9</idno>
+      </altIdentifier>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <altIdentifier>
+        <idno>B 106</idno>
+        <note>Cote de la Bibliothèque royale au XVIIIe siècle.</note>
       </altIdentifier>
     </egXML>
   </exemplum>

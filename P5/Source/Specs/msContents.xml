@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSCONTENTS"
-  ident="msContents">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSCONTENTS" ident="msContents">
   <gloss>manuscript contents</gloss>
   <gloss version="2007-12-20" xml:lang="kr">원고 내용</gloss>
   <gloss version="2008-04-06" xml:lang="es">contenido del manuscrito</gloss>
@@ -29,28 +28,28 @@ $Id$
     <memberOf key="att.msExcerpt"/>
   </classes>
   <content>
-    <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:group>
-        <rng:optional>
-          <rng:ref name="summary"/>
-        </rng:optional>
-        <rng:optional>
-          <rng:ref name="textLang"/>
-        </rng:optional>
-        <rng:optional>
-          <rng:ref name="titlePage"/>
-        </rng:optional>
-        <rng:zeroOrMore>
-          <rng:choice>
-            <rng:ref name="msItem"/>
-            <rng:ref name="msItemStruct"/>
-          </rng:choice>
-        </rng:zeroOrMore>
-      </rng:group>
-    </rng:choice>
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+      <group>
+        <optional>
+          <ref name="summary"/>
+        </optional>
+        <optional>
+          <ref name="textLang"/>
+        </optional>
+        <optional>
+          <ref name="titlePage"/>
+        </optional>
+        <zeroOrMore>
+          <choice>
+            <ref name="msItem"/>
+            <ref name="msItemStruct"/>
+          </choice>
+        </zeroOrMore>
+      </group>
+    </choice>
   </content>
   <attList>
     <attDef ident="class">
@@ -67,19 +66,82 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">identifica la tipologia testuale o altre
         classificazioni applicabili all'oggetto in questione</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.code"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.code"/>
       </datatype>
       <valDesc>One or more codes, each of which is used as the identifier for a text classification
         element supplied in the TEI Header <gi>textClass</gi> element.</valDesc>
       <!-- better: make it a member of declaring -->
-      <valDesc  xml:lang="fr">Un ou plusieurs codes, chacun d'eux utilisé comme identifiant d'un élément de
+      <valDesc xml:lang="fr">Un ou plusieurs codes, chacun d'eux utilisé comme identifiant d'un élément de
         classification de texte fourni dans l'élément <gi>textClass</gi> de l'en-tête TEI.</valDesc>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <msContents>
         <p>A collection of Lollard sermons</p>
+      </msContents>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <msContents>
+        <msItem>
+          <!-- pour le traitement des recueils la solution possible est de répéter l'élément <msItem>  -->
+          <docAuthor>
+            <forename>Guillaume de Lorris </forename>
+          </docAuthor>
+          <docAuthor>
+            <forename>Jean de Meung</forename>
+          </docAuthor>
+          <docTitle>
+            <titlePart type="main">Le Rommant de la rose</titlePart>
+            <titlePart type="sub"/>
+          </docTitle>
+          <docImprint>
+            <pubPlace>Paris</pubPlace>
+            <publisher>Antoine Vérard</publisher>
+          </docImprint>
+          <docDate when="1497">1497 ou 1498</docDate>
+          <note>
+            <date notBefore="1497-01-01" notAfter="1498-12-31"/>
+          </note>
+          <note>in-2°.</note>
+          <!-- in-32°; in-24°; in-16°; in-8°; in-4°; in-folio; gr. folio -->
+          <note>Exemplaire sur vélin, enluminé, « vraisemblablement dans l’atelier d’Antoine
+              Vérard » <ref target="#fr_bib06">(Charon 1988, n° 3)</ref>
+               </note>
+          <note>
+            <ref target="http://catalogue.bnf.fr/ark:/12148/cb305575966">Notice bibliographique
+                dans le Catalogue général</ref>
+          </note>
+        </msItem>
+      </msContents>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <msContents>
+        <msItem>
+          <!-- pour le traitement des recueils la solution possible est de répéter l'élément <msItem>  -->
+          <docAuthor>
+            <surname>Longus</surname>
+          </docAuthor>
+          <docTitle>
+            <titlePart type="main">Les amours pastorales de Daphnis et Chloé</titlePart>
+          </docTitle>
+          <docImprint>
+            <pubPlace>Paris</pubPlace>
+            <publisher>[Jacques Quillau]</publisher>
+          </docImprint>
+          <docDate when="1718">1718</docDate>
+          <note>in-8°.</note>
+          <!-- in-32°; in-24°; in-16°; in-8°; in-4°; in-folio; gr. folio -->
+          <note>Exemplaire réglé.</note>
+          <note>
+            <ref target="http://catalogue.bnf.fr/ark:/12148/cb30831232s">Notice bibliographique
+                dans le Catalogue général</ref>
+          </note>
+        </msItem>
       </msContents>
     </egXML>
   </exemplum>
@@ -141,7 +203,7 @@ $Id$
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <msContents>
         <msItem n="1">
           <locus>fols. 5r-7v</locus>

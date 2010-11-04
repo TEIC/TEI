@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="header" ident="change">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="change">
   <equiv/>
   <gloss version="2009-01-05" xml:lang="fr">changement</gloss>
   <desc>summarizes a particular change or correction made to a particular version of an electronic
@@ -26,22 +25,22 @@ $Id$
     effettuato ad una particolare versione di un documento elettronico, condivisa da più
     ricercatori.</desc>
   <classes>
-   <memberOf key="att.ascribed"/>
-   <memberOf key="att.datable"/>
-   <memberOf key="att.docStatus"/>
+    <memberOf key="att.ascribed"/>
+    <memberOf key="att.datable"/>
+    <memberOf key="att.docStatus"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.limitedPhrase"/>
-        <rng:ref name="model.inter"/>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.limitedPhrase"/>
+        <ref name="model.inter"/>
         <!--        <rng:ref name="model.divPart"/>-->
-        <rng:ref name="model.global"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
   </content>
-<!--
+  <!--
   <attList>
     <attDef ident="when" usage="mwa">
       <equiv/>
@@ -61,7 +60,8 @@ $Id$
           Schema Part 2: Datatypes Second Edition</title></valDesc>
     </attDef>
   </attList>
--->  <exemplum xml:lang="en">
+-->
+  <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <titleStmt>
         <title> ... </title>
@@ -77,6 +77,24 @@ $Id$
         <change who="#BZ" when="2008-01-02" status="draft">Finished chapter 2</change>
         <change n="P2.2" when="1991-12-21" who="#LDB">Added examples to section 3</change>
         <change when="1991-11-11" who="#MSM">Deleted chapter 10</change>
+      </revisionDesc>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <titleStmt>
+        <title> ... </title>
+        <editor xml:id="fr_GK">G.K.</editor>
+        <respStmt xml:id="fr_RT">
+          <resp>copie</resp>
+          <name>R.T.</name>
+        </respStmt>
+      </titleStmt>
+      <revisionDesc>
+        <change who="#fr_RT" when="2008-02-02">Fin du chapitre 23</change>
+        <change who="#fr_RT" when="2008-01-02">FIn du chapitre 2</change>
+        <change n="P2.2" when="1991-12-21" who="#fr_GK">Ajout d'exemples dans la section 3</change>
+        <change when="1991-11-11" who="#fr_MSM">Suppression du chapitre 10</change>
       </revisionDesc>
     </egXML>
   </exemplum>

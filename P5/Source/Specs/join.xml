@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright TEI Consortium. Licensed under the GNU General Public License. See the file COPYING.txt for details $Date$ $Id$ -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
-	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-  module="linking" ident="join">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="join">
   <equiv/>
   <gloss version="2009-10-06" xml:lang="fr">jointure</gloss>
   <desc>identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it.</desc>
@@ -19,27 +16,28 @@
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:ref name="model.glossLike"/>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.glossLike"/>
+    </zeroOrMore>
   </content>
-      <constraintSpec ident="joinTargets1" scheme="isoschematron">
-	<constraint>
-	<sch:report test="@target and @targets">You may not supply both 
-	@target and @targets</sch:report>
-	</constraint>
-      </constraintSpec>
-      <constraintSpec ident="joinTargets2" scheme="isoschematron">	<constraint>
-	<sch:report test="not(@target) and not(@targets)">You must
-	supply either @target or @targets</sch:report>
-	</constraint>
-      </constraintSpec> 
-      <constraintSpec ident="joinTargets3" scheme="isoschematron">	<constraint>
-<sch:assert test="contains(@target,' ')">You must supply at least two
-values for @target</sch:assert>
-	</constraint>
-      </constraintSpec>
-
+  <constraintSpec ident="joinTargets1" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @targets">You may not supply both 
+	@target and @targets</report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="joinTargets2" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(@target) and not(@targets)">You must
+	supply either @target or @targets</report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="joinTargets3" scheme="isoschematron">
+    <constraint>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@target,' ')">You must supply at least two
+values for @target</assert>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="targets" usage="opt">
       <equiv/>
@@ -51,17 +49,16 @@ values for @target</sch:assert>
       <desc version="2007-05-04" xml:lang="es">especifica los identificadores de los elementos o fragmentos de texto a enlazar en un elemento virtual.</desc>
       <desc version="2007-01-21" xml:lang="it">specifica gli identificatori degli elementi o porzioni di testo da collegare in un elemento virtuale</desc>
       <datatype minOccurs="2" maxOccurs="unbounded">
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>two or more pointers (URIs), separated by whitespace</valDesc>
       <valDesc xml:lang="fr" version="2009-10-05">deux pointeurs ou plus (URI), séparés par des espaces.</valDesc>
-
-<remarks><p>This attribute is deprecated. It is retained for backward compatibility
+      <remarks>
+        <p>This attribute is deprecated. It is retained for backward compatibility
 only; the attribute <att>target</att> should be used for
 preference. It is an error to supply both attributes, but one or the
-other must be present.</p></remarks>
-
-
+other must be present.</p>
+      </remarks>
     </attDef>
     <attDef ident="result" usage="opt">
       <equiv/>
@@ -73,7 +70,7 @@ other must be present.</p></remarks>
       <desc version="2007-05-04" xml:lang="es">indica el nombre del elemento representado por el conjunto de identificadores en cuestión.</desc>
       <desc version="2007-01-21" xml:lang="it">indica il nome dell'elemento rappresentato dall'insieme di identificatori in questione</desc>
       <datatype>
-        <rng:ref name="data.name"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
       </datatype>
       <valDesc>The generic identifier of an element in the current DTD.</valDesc>
       <valDesc xml:lang="fr" version="2009-10-05">L'identificateur générique d'un élément dans le modèle XML utilisé.</valDesc>
@@ -117,7 +114,8 @@ other must be present.</p></remarks>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <sp>
         <speaker>Hughie</speaker>
-        <p>How does it go? <q><l xml:id="frog_x1">da-da-da</l><l xml:id="frog_l2">gets a new frog</l><l>...</l></q> </p>
+        <p>How does it go? <q><l xml:id="frog_x1">da-da-da</l><l xml:id="frog_l2">gets a new frog</l><l>...</l></q> 
+            </p>
       </sp>
       <sp>
         <speaker>Louie</speaker>
@@ -131,7 +129,8 @@ other must be present.</p></remarks>
       <sp>
         <speaker>Dewey</speaker>
         <p>
-          <q>... <l xml:id="frog_l3">It's a new pond.</l> </q>
+          <q>... <l xml:id="frog_l3">It's a new pond.</l> 
+               </q>
         </p>
         <join targets="#frog_l1 #frog_l2 #frog_l3" result="lg" scope="root"/>
       </sp>
@@ -139,12 +138,13 @@ other must be present.</p></remarks>
     <!-- a famous haiku by Bashoo, in an eccentric translation -->
     <p>The <gi>join</gi> element here identifies a linegroup (<gi>lg</gi>) comprising the three lines indicated by the <att>targets</att> attribute. The value <code>root</code> for the <att>scope</att> attribute indicates that the resulting virtual element contains the three <gi>l</gi> elements linked to at #frog_l1 #frog_l2 #frog_l3, rather than their character data content.</p>
   </exemplum>
-  <exemplum xml:lang="fr" version="2005-10-06">
-    <p>L'exemple ci-après est commenté dans la section <ptr target="#SAAG"/>:</p>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">The following example is discussed in section <ptr target="#SAAG"/>:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <sp>
         <speaker>Hughie</speaker>
-        <p>How does it go? <q><l xml:id="fr_frog_x1">da-da-da</l><l xml:id="fr_frog_l2">gets a new frog</l><l>...</l></q> </p>
+        <p>How does it go? <q><l xml:id="fr_frog_x1">da-da-da</l><l xml:id="fr_frog_l2">gets a new frog</l><l>...</l></q>
+            </p>
       </sp>
       <sp>
         <speaker>Louie</speaker>
@@ -158,19 +158,39 @@ other must be present.</p></remarks>
       <sp>
         <speaker>Dewey</speaker>
         <p>
-          <q>... <l xml:id="fr_frog_l3">It's a new pond.</l> </q>
+          <q>... <l xml:id="fr_frog_l3">It's a new pond.</l>
+               </q>
         </p>
         <join targets="#fr_frog_l1 #fr_frog_l2 #fr_frog_l3" result="lg" scope="root"/>
       </sp>
     </egXML>
-    <!-- a famous haiku by Bashoo, in an eccentric translation -->
-    <p>L'élément <gi>join</gi> présenté ci-dessus identifie un groupe de vers (<gi>lg</gi>) englobant les trois lignes de vers indiquées par les valeurs de l'attribut <att>targets</att> . La valeur <code>root</code> de l'attribut <att>scope</att> indique que l'élément virtuel résultat contient les trois éléments <gi>l</gi> joints tels qu'on les trouve à #fr_frog_l1 #fr_frog_l2 #fr_frog_l3, plutôt que leur contenu textuel.</p>
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">The <gi>join</gi> element here identifies a linegroup (<gi>lg</gi>) comprising the three
+        lines indicated by the <att>targets</att> attribute. The value <code>root</code> for
+          the<att>scope</att> attribute indicates that the resulting virtual element contains the
+        three <gi>l</gi> elements linked to at #frog_l1 #frog_l2 #frog_l3, rather than their
+        character data content.</p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">In this example, the attribute <att>scope</att> is specified with the value of
+          <code>branches</code> to indicate that the virtual list being constructed is to be made by
+        taking the lists indicated by the <att>targets</att> attribute of the <gi>join</gi> element,
+        discarding the <gi>list</gi> tags which enclose them, and combining the items contained
+        within the lists into a single virtual list:</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Southern dialect (my own variety, at least) has only <list xml:id="fr_LP1"><item><s>I done gone</s></item><item><s>I done went</s></item></list> whereas Negro Non-Standard basilect has both these and <list xml:id="fr_LP2"><item><s>I done go</s></item></list>.</p>
+      <p>White Southern dialect also has <list xml:id="fr_LP3"><item><s>I've done gone</s></item><item><s>I've done went</s></item></list> which, when they occur in Negro dialect, should probably be considered as
+          borrowings from other varieties of English.</p>
+      <join result="list" xml:id="fr_LST1" targets="#fr_LP1 #fr_LP2 #fr_LP3" scope="branches">
+        <desc>Sample sentences in Southern speech</desc>
+      </join>
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <sp>
         <speaker>休</speaker>
-        <p>怎麼樣了？<q><l xml:id="zh-tw_frog_x1">呱、呱、呱</l><l xml:id="zh-tw_frog_l2">有新來的青蛙</l><l>...</l></q> </p>
+        <p>怎麼樣了？<q><l xml:id="zh-tw_frog_x1">呱、呱、呱</l><l xml:id="zh-tw_frog_l2">有新來的青蛙</l><l>...</l></q> 
+            </p>
       </sp>
       <sp>
         <speaker>路易</speaker>
@@ -184,7 +204,8 @@ other must be present.</p></remarks>
       <sp>
         <speaker>迪威</speaker>
         <p>
-          <q>... <l xml:id="zh-tw_frog_l3">有新的池塘</l> </q>
+          <q>... <l xml:id="zh-tw_frog_l3">有新的池塘</l> 
+               </q>
         </p>
         <join targets="#zh-tw_frog_l1 #zh-tw_frog_l2 #zh-tw_frog_l3" result="lg" scope="root"/>
       </sp>
@@ -205,16 +226,6 @@ other must be present.</p></remarks>
       <p>Southern dialect (my own variety, at least) has only <list xml:id="LP1"><item><s>I done gone</s></item><item><s>I done went</s></item></list> whereas Negro Non-Standard basilect has both these and <list xml:id="LP2"><item><s>I done go</s></item></list>.</p>
       <p>White Southern dialect also has <list xml:id="LP3"><item><s>I've done gone</s></item><item><s>I've done went</s></item></list> which, when they occur in Negro dialect, should probably be considered as borrowings from other varieties of English.</p>
       <join result="list" xml:id="LST1" targets="#LP1 #LP2 #LP3" scope="branches">
-        <desc>Sample sentences in Southern speech</desc>
-      </join>
-    </egXML>
-  </exemplum>
-  <exemplum xml:lang="fr" version="2009-10-06">
-    <p>Dans cet exemple, l'attribut <att>scope</att> a la valeur <code>branches</code> pour indiquer que la liste virtuelle doit être constrruite en prenant les listes désignées par les valeurs de l'attribut <att>targets</att> de l'élément <gi>join</gi> , sans prendre en compte les balises <gi>list</gi> qui les contiennent, en réunissant en une liste virtuelle les items contenus dans ces listes.</p>
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <p>Southern dialect (my own variety, at least) has only <list xml:id="fr_LP1"><item><s>I done gone</s></item><item><s>I done went</s></item></list> whereas Negro Non-Standard basilect has both these and <list xml:id="fr_LP2"><item><s>I done go</s></item></list>.</p>
-      <p>White Southern dialect also has <list xml:id="fr_LP3"><item><s>I've done gone</s></item><item><s>I've done went</s></item></list> which, when they occur in Negro dialect, should probably be considered as borrowings from other varieties of English.</p>
-      <join result="list" xml:id="fr_LST1" targets="#fr_LP1 #fr_LP2 #fr_LP3" scope="branches">
         <desc>Sample sentences in Southern speech</desc>
       </join>
     </egXML>

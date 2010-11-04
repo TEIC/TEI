@@ -6,7 +6,7 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="core" ident="choice">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="choice">
   <gloss version="2009-01-06" xml:lang="fr">choix</gloss>
   <desc>groups a number of alternative encodings for the same point in
         a text.</desc>
@@ -24,12 +24,12 @@
     <memberOf key="model.pPart.editorial"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:choice>
-        <rng:ref name="model.choicePart"/>
-        <rng:ref name="choice"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <ref name="model.choicePart"/>
+        <ref name="choice"/>
+      </choice>
+    </zeroOrMore>
   </content>
   <exemplum xml:lang="en">
     <p>An American encoding of <title>Gulliver's Travels</title> which
@@ -42,7 +42,14 @@
                 with free access to our royal person, and other marks of our
                 <choice><orig>favour</orig><reg>favor</reg></choice>.</p>
     </egXML>
-<!-- Gulliver's Travels -->
+    <!-- Gulliver's Travels -->
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">L'encodage d'une édition des <title>Essais</title> pourra faire état à la fois des formes
+        originales et des formes modernisées correspondantes:.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Montaigne_Essais">
+      <p>Ainsi lecteur, je suis<choice><sic>moy-mesmes</sic><corr>moi-même</corr></choice> la matière de mon livre : ce n'est pas raison que tu emploies ton loisir en un <choice><orig>subject</orig><reg>sujet</reg></choice>si frivole et si vain.</p>
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

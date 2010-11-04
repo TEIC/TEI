@@ -19,22 +19,22 @@
   <desc version="2007-01-21" xml:lang="it">raggruppa le informazioni riguardo la pubblicazione o distribuzione di un'unità bibliograica.</desc>
   <desc version="2006-10-28" xml:lang="ja">書誌情報の対象となるものの，出版に関する情報．</desc>
   <classes/>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:oneOrMore>
-      <rng:choice>
-        <rng:group>
-<!--just here to so odd2dtd puts parens into DTD-->
-          <rng:ref name="model.imprintPart"/>
-        </rng:group>
-        <rng:group>
-<!--just here to so odd2dtd puts parens into DTD-->
-          <rng:ref name="model.dateLike"/>
-        </rng:group>
-      </rng:choice>
-      <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
-      </rng:zeroOrMore>
-    </rng:oneOrMore>
+  <content>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <group>
+          <!--just here to so odd2dtd puts parens into DTD-->
+          <ref name="model.imprintPart"/>
+        </group>
+        <group>
+          <!--just here to so odd2dtd puts parens into DTD-->
+          <ref name="model.dateLike"/>
+        </group>
+      </choice>
+      <zeroOrMore>
+        <ref name="model.global"/>
+      </zeroOrMore>
+    </oneOrMore>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -42,6 +42,15 @@
         <pubPlace>Oxford</pubPlace>
         <publisher>Clarendon Press</publisher>
         <date>1987</date>
+      </imprint>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <imprint>
+        <pubPlace>Paris</pubPlace>
+        <publisher>Les Éd. de Minuit</publisher>
+        <date>2001</date>
       </imprint>
     </egXML>
   </exemplum>

@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="gaiji" ident="g" xml:id="G">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" ident="g" xml:id="G">
   <equiv/>
   <gloss>character or glyph</gloss>
   <gloss version="2007-12-20" xml:lang="kr">문자 또는 그림문자</gloss>
@@ -29,7 +28,7 @@ $Id$
     <!--  <memberOf key="model.global"/> -->
   </classes>
   <content>
-    <rng:text/>
+    <text xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="ref">
@@ -43,7 +42,7 @@ $Id$
       <desc version="2007-05-04" xml:lang="es">indica la descripción del carácter o pictograma dado.</desc>
       <desc version="2007-01-21" xml:lang="it">punta a una descrizione del carattere o glifo.</desc>
       <datatype>
-        <rng:ref name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>a pointer to some another element.</valDesc>
       <valDesc xml:lang="fr">pointeur vers un autre élément</valDesc>
@@ -54,10 +53,16 @@ $Id$
       <g ref="#ctlig">ct</g>
     </egXML>
     <p>This example points to a <gi>glyph</gi> element with the identifier <code>ctlig</code> like
-      the following: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-        <glyph xml:id="ctlig"><!-- here we describe the particular ct-ligature intended --></glyph>
-      </egXML>
-    </p>
+      the following: <egXML xmlns="http://www.tei-c.org/ns/Examples"><glyph xml:id="ctlig"><!-- here we describe the particular ct-ligature intended --></glyph></egXML>
+      </p>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <g ref="#fr_flig">fl</g>
+    </egXML>
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Cet exemple pointe vers un élément<gi>glyph</gi>à l'aide du code
+        identifiant<code>flig</code> comme dans l'exemple suivant :<egXML xmlns="http://www.tei-c.org/ns/Examples"><glyph xml:id="flig"/></egXML>
+      </p>
   </exemplum>
   <exemplum xml:lang="zh-tw">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -76,11 +81,8 @@ $Id$
       <g ref="#per-glyph">per</g>
     </egXML>
     <p>The medieval brevigraph per could similarly be considered as an individual glyph, defined in
-      a <gi>glyph</gi> element with the identifier <code>per</code> like the following: <egXML
-        xmlns="http://www.tei-c.org/ns/Examples">
-        <glyph xml:id="per-glyph"><!-- ... --></glyph>
-      </egXML>
-    </p>
+      a <gi>glyph</gi> element with the identifier <code>per</code> like the following: <egXML xmlns="http://www.tei-c.org/ns/Examples"><glyph xml:id="per-glyph"><!-- ... --></glyph></egXML>
+      </p>
   </exemplum>
   <remarks>
     <p>The name <ident>g</ident> is short for <term>gaiji</term>, which is the Japanese term for a

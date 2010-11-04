@@ -6,9 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs"
-	     ident="elementSpec"
- xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec">
   <gloss>element specification</gloss>
   <gloss version="2007-12-20" xml:lang="kr">요소 명시</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -30,35 +28,35 @@ $Id$
     <memberOf key="att.identified"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-        <rng:ref name="model.glossLike"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="classes"/>
-      </rng:optional>
-      <rng:optional>
-	<rng:ref name="content"/>
-      </rng:optional>
-      <rng:optional>
-        <rng:ref name="valList"/>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="constraintSpec"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="attList"/>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="exemplum"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="remarks"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="listRef"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.glossLike"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="classes"/>
+      </optional>
+      <optional>
+        <ref name="content"/>
+      </optional>
+      <optional>
+        <ref name="valList"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="constraintSpec"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="attList"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="exemplum"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="remarks"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="listRef"/>
+      </zeroOrMore>
+    </group>
   </content>
   <attList>
     <attDef ident="ns" usage="opt">
@@ -80,7 +78,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene tale
         elemento</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
       </datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
@@ -90,10 +88,10 @@ $Id$
       relating to the element, unless otherwise stated. 
       </desc>
       <datatype>
-	<rng:choice>
-	  <rng:value></rng:value>  
-	  <rng:ref name="data.name"/>
-	</rng:choice>
+        <choice xmlns="http://relaxng.org/ns/structure/1.0">
+          <value/>
+          <ref name="data.name"/>
+        </choice>
       </datatype>
       <remarks>
         <p>Colons, although permitted inside the value, will cause an
@@ -109,7 +107,6 @@ $Id$
         </p>
       </remarks>
     </attDef>
-
     <!-- removed @usage -->
   </attList>
   <exemplum xml:lang="en">
@@ -122,14 +119,38 @@ $Id$
           <memberOf key="model.emphLike"/>
         </classes>
         <content>
-          <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+          <text xmlns="http://relaxng.org/ns/structure/1.0"/>
         </content>
         <attList>
           <attDef ident="type" usage="opt">
             <equiv/>
             <desc>the language of the code</desc>
             <datatype>
-              <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+              <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+            </datatype>
+          </attDef>
+        </attList>
+      </elementSpec>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementSpec module="tagdocs" xml:id="fr_Code" ident="code">
+        <equiv/>
+        <gloss/>
+        <desc>contient le code littéral</desc>
+        <classes>
+          <memberOf key="model.emphLike"/>
+        </classes>
+        <content>
+          <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+        </content>
+        <attList>
+          <attDef ident="type" usage="opt">
+            <equiv/>
+            <desc>la langue du code</desc>
+            <datatype>
+              <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
             </datatype>
           </attDef>
         </attList>
@@ -146,14 +167,14 @@ $Id$
           <memberOf key="model.emphLike"/>
         </classes>
         <content>
-          <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+          <text xmlns="http://relaxng.org/ns/structure/1.0"/>
         </content>
         <attList>
           <attDef ident="type" usage="opt">
             <equiv/>
             <desc>規則的表達方式</desc>
             <datatype>
-              <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+              <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
             </datatype>
           </attDef>
         </attList>

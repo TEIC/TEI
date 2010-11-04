@@ -6,10 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec     
-    xmlns="http://www.tei-c.org/ns/1.0" 
-    module="textstructure" 
-    ident="TEI">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="TEI">
   <equiv/>
   <gloss>TEI document</gloss>
   <gloss version="2007-12-20" xml:lang="kr">TEI 문서</gloss>
@@ -33,40 +30,37 @@ comprising a TEI header and a text, either in isolation or as part of a
   <desc version="2006-10-18" xml:lang="de"> 
 enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) und Text besteht, entweder als eigenständige Datei oder als  Teil eines Elements <gi>teiCorpus</gi>.
 </desc>
-  <desc version="2007-05-04" xml:lang="es">contiene un único documento TEI-conforme, que comprende un encabezado y un texto, sea este aislado o parte de un elemento <gi>teiCorpus</gi></desc>
-  <desc version="2007-01-21" xml:lang="it">contiene un documento TEI-conforme, comprendente un'intestazione e un testo, sia esso isolato o parte di un elemento <gi>teiCorpus</gi></desc>
+  <desc version="2007-05-04" xml:lang="es">contiene un único documento TEI-conforme, que comprende un encabezado y un texto, sea este aislado o parte de un elemento <gi>teiCorpus</gi>
+   </desc>
+  <desc version="2007-01-21" xml:lang="it">contiene un documento TEI-conforme, comprendente un'intestazione e un testo, sia esso isolato o parte di un elemento <gi>teiCorpus</gi>
+   </desc>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:ref name="teiHeader"/>
-      <rng:choice>
-        <rng:group>
-          <rng:oneOrMore>
-            <rng:ref name="model.resourceLike"/>
-          </rng:oneOrMore>
-<!--	<rng:ref name="text"/>-->
-          <rng:optional>
-            <rng:ref name="text"/>
-          </rng:optional>
-        </rng:group>
-        <rng:ref name="text"/>
-      </rng:choice>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="teiHeader"/>
+      <choice>
+        <group>
+          <oneOrMore>
+            <ref name="model.resourceLike"/>
+          </oneOrMore>
+          <!--	<rng:ref name="text"/>-->
+          <optional>
+            <ref name="text"/>
+          </optional>
+        </group>
+        <ref name="text"/>
+      </choice>
+    </group>
   </content>
   <constraintSpec ident="c1" scheme="isoschematron">
     <constraint>
-      <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"
-	  xmlns="http://purl.oclc.org/dsdl/schematron"
-	  />
+      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
     </constraint>
-  </constraintSpec> 
+  </constraintSpec>
   <constraintSpec ident="c2" scheme="isoschematron">
     <constraint>
-      <ns 
-	  xmlns="http://purl.oclc.org/dsdl/schematron"
-	  prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+      <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
     </constraint>
-  </constraintSpec> 
-
+  </constraintSpec>
   <attList>
     <attDef ident="version" usage="opt">
       <equiv/>
@@ -82,7 +76,7 @@ enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) un
       <desc version="2007-05-04" xml:lang="es">Versión del esquema TEI</desc>
       <desc version="2007-01-21" xml:lang="it">versione dello schema TEI</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.version"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.version"/>
       </datatype>
       <valDesc>A TEI version number</valDesc>
     </attDef>
@@ -106,6 +100,30 @@ enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) un
         <text>
           <body>
             <p>This is about the shortest TEI document imaginable.</p>
+          </body>
+        </text>
+      </TEI>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <TEI>
+        <teiHeader>
+          <fileDesc>
+            <titleStmt>
+              <title>Le document TEI le plus court possible.</title>
+            </titleStmt>
+            <publicationStmt>
+              <p>D'abord publié comme faisant partie de la TEI P2.</p>
+            </publicationStmt>
+            <sourceDesc>
+              <p>Aucune source : il s'agit d'un document original.</p>
+            </sourceDesc>
+          </fileDesc>
+        </teiHeader>
+        <text>
+          <body>
+            <p>Au sujet du document Tei le plus court possible.</p>
           </body>
         </text>
       </TEI>

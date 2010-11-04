@@ -6,8 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="BINDING"
-  ident="binding">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="BINDING" ident="binding">
   <equiv/>
   <gloss version="2007-06-12" xml:lang="fr">reliure</gloss>
   <desc xml:id="binding.desc">contains a description of one binding, i.e. type of covering, boards,
@@ -25,13 +24,13 @@ $Id$
     <memberOf key="att.datable"/>
   </classes>
   <content>
-    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:ref name="model.pLike"/>
-        <rng:ref name="condition"/>
-        <rng:ref name="decoNote"/>
-      </rng:choice>
-    </rng:oneOrMore>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <ref name="model.pLike"/>
+        <ref name="condition"/>
+        <ref name="decoNote"/>
+      </choice>
+    </oneOrMore>
   </content>
   <attList>
     <attDef ident="contemporary">
@@ -49,7 +48,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">specifica se la legatura è coeva o meno rispetto alla
         maggior parte del suo contenuto</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
       </datatype>
       <remarks>
         <p>The value <val>true</val> indicates that the binding is contemporaneous with its
@@ -68,11 +67,79 @@ $Id$
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <binding contemporary="true">
         <p>Contemporary blind stamped leather over wooden boards with evidence of a fore edge clasp
           closing to the back cover.</p>
       </binding>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <binding contemporary="true">
+        <p><index indexName="typo_reliure"><term>Reliure à la grecque, sur ais</term></index><index indexName="typo_decor"><term>Décor de rinceaux</term></index> Reliure à la grecque en <material>maroquin</material> orange</p>
+        <decoNote type="plats"> aux armes de Henri II dorées sur une pièce de maroquin olive
+            découpée à la forme exacte des armes (104 mm), mosaïquée dans un rectangle central aux
+            angles orné d'un léger motif de rinceaux peints en noir, le tout encadré d'une large
+            bordure mosaïquée de maroquin rouge, à plein décor de rinceaux dorés (incluant un
+            croissant dans les angles) dessinés en réserve sur un fond pointillé doré.</decoNote>
+        <decoNote type="plat_sup">Au plat supérieur, titre <q>i • schonerii • opera •</q> doré
+            au-dessus du bloc armorial.</decoNote>
+        <decoNote type="plat_inf"/>
+        <decoNote type="dos">Dos long à décor analogue avec pièces losangées de maroquin rouge et
+            brun mosaïquées, respectivement au centre et aux deux extrémités du dos, ornées d'un
+            décor de rinceaux doré en réserve sur un fond doré pointillé, avec fer azuré au chapeau
+            à chaque extrémité ; chaque pièce de maroquin est redessinée par un encadrement argenté,
+            lui-même complété de rinceaux sur les côtés et relevé par des traits tracés de plume à
+            effet de rayures.</decoNote>
+        <decoNote type="tranchefiles">Tranchefiles doubles bicolores : points droits sur chevrons,
+            bleus et jaunes.</decoNote>
+        <decoNote type="coupes">Chants des ais rainurés.</decoNote>
+        <decoNote type="annexes">Traces de petits boulons aux angles du rectangle intérieur ;
+            traces des quatre lanières tressées d'origine sur les deux plats ; pas de traces de
+            sabots.</decoNote>
+        <decoNote type="tranches">Tranches dorées, ciselées et peintes (teinte rosée), à décor de
+            rinceaux incluant des éléments de l'héraldique royale : triple croissant en tête, grand
+            H couronné associé à un croissant en gouttière, chiffre HH en queue.</decoNote>
+        <decoNote type="contreplats"/>
+        <decoNote type="chasses">Absence de chasses.</decoNote>
+        <!-- Description des gardes : gardes blanches ; gardes couleurs (marbrées, gaufrées, peintes, dominotées, etc.) généralement suivies de gardes blanches ; dans tous les cas, spécifier le nombre de gardes (début + fin du volume)-->
+        <decoNote type="gardes">Gardes (3+2), filigrane <watermark>B</watermark>. </decoNote>
+        <!-- Élément qui inclut aussi bien des remarques sur la couture que les charnières, claies ou modes d'attaches des plats : tous éléments de la structure dont la description est jugée utile à la description et l'identification de la reliure-->
+        <decoNote type="structure"/>
+        <condition/>
+      </binding>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-BnF-Reliures">
+      <bindingDesc>
+        <binding contemporary="true">
+          <p><index indexName="typo_reliure"><term>Reliure à décor</term></index><index indexName="typo_decor"><term>Compartiments espacés</term></index> Reliure en <material>maroquin</material> rouge sombre</p>
+          <decoNote type="plats"> aux armes du chancelier Pierre Séguier, à décor de compartiments
+              complétés de fers filigranés, parmi lesquels un fer à la petite tête (type B).</decoNote>
+          <decoNote type="plat_sup"/>
+          <decoNote type="plat_inf"/>
+          <decoNote type="dos">Dos à 6 nerfs, à décor filigrané analogue ; palette ornée sur les
+              nerfs et en tête et queue du dos ; titrage dans le 2e caisson.</decoNote>
+          <decoNote type="tranchefiles">Tranchefiles à chapiteau tricolore (bleu, blanc et rose).</decoNote>
+          <decoNote type="coupes">Coupes ornées.</decoNote>
+          <decoNote type="annexes"/>
+          <decoNote type="tranches">Tranches dorées.</decoNote>
+          <decoNote type="contreplats">Contregardes en papier marbré à petit peigne, dans les tons
+              bleu, blanc, jaune, rouge et blanc.</decoNote>
+          <decoNote type="chasses">Chasses ornées.</decoNote>
+          <!-- Description des gardes : gardes blanches ; gardes couleurs (marbrées, gaufrées, peintes, dominotées, etc.) généralement suivies de gardes blanches ; dans tous les cas, spécifier le nombre de gardes (début + fin du volume)-->
+          <decoNote type="gardes">
+            <watermark/>
+          </decoNote>
+          <!-- Élément qui inclut aussi bien des remarques sur la couture que les charnières, claies ou modes d'attaches des plats : tous éléments de la structure dont la description est jugée utile à la description et l'identification de la reliure-->
+          <decoNote type="structure"/>
+          <condition>Quelques taches sombres <!--surla --> sur le plat supérieur et larges
+              éraflures du cuir au plat inférieur. Restauration en queue du mors inférieur (bande de
+              cuir).</condition>
+        </binding>
+      </bindingDesc>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
@@ -95,7 +162,7 @@ $Id$
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <bindingDesc>
         <binding contemporary="false">
           <p>Quarter bound by the Phillipps' binder, Bretherton, with his sticker on the front

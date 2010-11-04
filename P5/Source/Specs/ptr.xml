@@ -6,11 +6,7 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
-	     module="core"
-	     ident="ptr"
-	     xmlns:sch="http://purl.oclc.org/dsdl/schematron"
->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="ptr">
   <gloss>pointer</gloss>
   <gloss version="2007-12-20" xml:lang="kr">포인터</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
@@ -31,18 +27,16 @@
     <memberOf key="att.declaring"/>
   </classes>
   <content>
-    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
-
- <constraintSpec scheme="isoschematron" ident="ptrAtts">
+  <constraintSpec scheme="isoschematron" ident="ptrAtts">
     <constraint>
-      	<sch:report test="@target and @cRef">Only one of the
-	attributes 'target' and 'cRef' may be supplied.</sch:report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
+	attributes 'target' and 'cRef' may be supplied.</report>
     </constraint>
-  </constraintSpec> 
-
+  </constraintSpec>
   <attList>
-<!--    <attDef ident="target" usage="req">
+    <!--    <attDef ident="target" usage="req">
       <equiv/>
       <desc>specifies the destination of the pointer by supplying one or more URI References</desc>
       <desc version="2007-12-20" xml:lang="kr">하나 혹은 다수의 URI 참조를 이용하여 포인터의 목적지를 명시한다.</desc>
@@ -68,7 +62,6 @@
         devrait être traité normalement , par exemple avec le mécanisme
         <code>TEI%20Consortium</code>.</valDesc>
     </attDef>-->
-
     <attDef ident="cRef" usage="opt">
       <gloss>canonical reference</gloss>
       <gloss version="2007-12-20" xml:lang="kr">표준 참조</gloss>
@@ -92,19 +85,16 @@
         riferimento canonico a partire da uno schema definito in un elemento <gi>refsDecl</gi>
         nell'intestazione TEI</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>the value of <att>cRef</att> should be constructed so
       that when the algorithm for the resolution of canonical
       references (described in section <ptr target="#SACR"/>) is
       applied to it the result is a valid URI reference to the
       intended target</valDesc>
-
       <valDesc xml:lang="fr">le résultat de l’application de l'algorithme pour la résolution des
         références canoniques (décrit à la section <ptr target="#SACR"/>) sera une référence URI
         valide pour la cible prévue. </valDesc>
-
-
       <remarks>
         <p>The <gi>refsDecl</gi> to use may be indicated with the <att>decls</att> attribute.</p>
         <p>Currently these Guidelines only provide for a single canonical reference to be encoded on
@@ -128,7 +118,13 @@
       <ptr target="http://www.tei-c.org"/>
     </egXML>
   </exemplum>
-<!--  <remarks>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <ptr target="#fr_p143 #fr_p144"/>
+      <ptr target="http://www.tei-c.org"/>
+    </egXML>
+  </exemplum>
+  <!--  <remarks>
     <p>The <att>target</att> and <att>cRef</att> attributes are mutually exclusive.</p>
   </remarks>
   <remarks xml:lang="fr">

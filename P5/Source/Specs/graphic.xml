@@ -6,9 +6,7 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
-module="core" xml:id="GRAPHIC" ident="graphic">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="GRAPHIC" ident="graphic">
   <equiv/>
   <desc>indicates the location of an inline graphic, illustration, or figure.</desc>
   <desc version="2007-12-20" xml:lang="kr">인라인 그래픽, 삽화, 또는 도형의 위치를 표시한다.</desc>
@@ -27,10 +25,10 @@ module="core" xml:id="GRAPHIC" ident="graphic">
     <memberOf key="att.declaring"/>
   </classes>
   <content>
-<rng:zeroOrMore>
-<rng:ref name="model.glossLike"/>
-</rng:zeroOrMore>
-<!--    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>-->
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.glossLike"/>
+    </zeroOrMore>
+    <!--    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>-->
   </content>
   <attList>
     <attDef ident="width" usage="opt">
@@ -43,7 +41,7 @@ module="core" xml:id="GRAPHIC" ident="graphic">
       <desc version="2007-05-04" xml:lang="es">la anchura de la imagen.</desc>
       <desc version="2007-01-21" xml:lang="it">ampiezza dell'immagine da visualizzare</desc>
       <datatype>
-        <rng:ref  name="data.outputMeasurement"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
       </datatype>
     </attDef>
     <attDef ident="height" usage="opt">
@@ -56,7 +54,7 @@ module="core" xml:id="GRAPHIC" ident="graphic">
       <desc version="2007-05-04" xml:lang="es">la altura de la imagen.</desc>
       <desc version="2007-01-21" xml:lang="it">altezza dell'immagine da visualizzare</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
       </datatype>
     </attDef>
     <attDef ident="scale" usage="opt">
@@ -72,7 +70,7 @@ module="core" xml:id="GRAPHIC" ident="graphic">
       <desc version="2007-01-21" xml:lang="it">scala da applicare all'immagine per ottenere la
         grandezza desiderata</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
       </datatype>
     </attDef>
     <attDef ident="url" usage="req">
@@ -89,7 +87,7 @@ module="core" xml:id="GRAPHIC" ident="graphic">
       <desc version="2007-05-04" xml:lang="es">La meta URL</desc>
       <desc version="2007-01-21" xml:lang="it">URL di destinazione</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
     </attDef>
   </attList>
@@ -100,6 +98,31 @@ module="core" xml:id="GRAPHIC" ident="graphic">
         <head>Figure One: The View from the Bridge</head>
         <figDesc>A Whistleresque view showing four or five sailing boats in the foreground, and a
           series of buoys strung out between them.</figDesc>
+      </figure>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Huizinga_Aut">
+      <figure>
+        <graphic url="fig1.png"/>
+        <head>Figure Une : Jan van Eyck, La Vierge du chancelier Rolin</head>
+        <figDesc>Si, attiré par la curiosité, on a l'imprudence de l'approcher d'un peu trop prés,
+            c'est fini, on est pris pour tout le temps que peut durer l'effort d'une attention
+            soutenue ; on s'extasie devant la finesse du détail ; ou regarde, fleuron à fleuron, la
+            couronne de la Vierge, une orfèvrerie de rêve ; figure à figure, les groupes qui
+            remplissent, sans les alourdir, les chapiteaux des piliers ; fleur à fleur, feuille à
+            feuille, les richesses du parterre ; l’œil stupéfait découvre, entre la tête de l'enfant
+            divin et l'épaule de la Vierge, dans une ville pleine de pignons et d'élégants clochers,
+            une grande église aux nombreux contreforts, une vaste place coupée en deux dans toute sa
+            largeur par un escalier où vont, viennent, courent d'innombrables petits coups de
+            pinceau qui sont autant de figures vivantes ; il est attiré par un pont en dos d'âne
+            chargé de groupes qui se pressent et s'entrecroisent ; il suit les méandres d'un fleuve
+            sillonné de barques minuscules, au milieu duquel, dans une île plus petite que l'ongle
+            d'un doigt d'enfant, se dresse, entouré d'arbres, un château seigneurial aux nombreux
+            clochetons ; il parcourt, sur la gauche, un quai planté d'arbres, peuplé de promeneurs ;
+            il va toujours plus loin, franchit une à une les croupes des collines verdoyantes ; se
+            repose un moment sur une ligne lointaine de montagnes neigeuses; pour se perdre ensuite
+            dans l'infini d'un ciel à peine bleu, où s'estompent de flottantes nuées. </figDesc>
       </figure>
     </egXML>
   </exemplum>

@@ -26,34 +26,34 @@ $Id$
     <memberOf key="att.identified"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.glossLike"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="datatype"/>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="constraintSpec"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="defaultVal"/>
-      </rng:optional>
-      <rng:optional>
-        <rng:choice>
-          <rng:ref name="valList"/>
-          <rng:oneOrMore>
-            <rng:ref name="valDesc"/>
-          </rng:oneOrMore>
-        </rng:choice>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="exemplum"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="remarks"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.glossLike"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="datatype"/>
+      </optional>
+      <zeroOrMore>
+        <ref name="constraintSpec"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="defaultVal"/>
+      </optional>
+      <optional>
+        <choice>
+          <ref name="valList"/>
+          <oneOrMore>
+            <ref name="valDesc"/>
+          </oneOrMore>
+        </choice>
+      </optional>
+      <zeroOrMore>
+        <ref name="exemplum"/>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="remarks"/>
+      </zeroOrMore>
+    </group>
   </content>
   <attList>
     <attDef ident="usage" usage="opt">
@@ -77,7 +77,7 @@ $Id$
           <gloss version="2007-06-12" xml:lang="fr">requis</gloss>
           <gloss version="2007-11-06" xml:lang="it">richiesto</gloss>
           <gloss version="2007-05-04" xml:lang="es">requerido</gloss>
-	  <gloss xml:lang="zh-tw">必備的</gloss>
+          <gloss xml:lang="zh-tw">必備的</gloss>
         </valItem>
         <valItem ident="mwa">
           <equiv/>
@@ -90,7 +90,7 @@ $Id$
         <valItem ident="rec">
           <equiv/>
           <gloss>recommended </gloss>
-	  <gloss xml:lang="zh-tw">推薦的</gloss>
+          <gloss xml:lang="zh-tw">推薦的</gloss>
           <gloss version="2008-04-05" xml:lang="ja">推奨．</gloss>
           <gloss version="2007-06-12" xml:lang="fr">recommandé</gloss>
           <gloss version="2007-11-06" xml:lang="it">consigliato</gloss>
@@ -103,16 +103,16 @@ $Id$
           <gloss version="2007-06-12" xml:lang="fr">recommandé si c'est applicable</gloss>
           <gloss version="2007-11-06" xml:lang="it">consigliato se rilevante</gloss>
           <gloss version="2007-05-04" xml:lang="es">recomendado cuando es pertinente</gloss>
-	  <gloss xml:lang="zh-tw">可應用時必備的</gloss>
-	</valItem>
+          <gloss xml:lang="zh-tw">可應用時必備的</gloss>
+        </valItem>
         <valItem ident="opt">
           <equiv/>
           <gloss>optional </gloss>
           <gloss version="2008-04-05" xml:lang="ja">選択的．</gloss>
           <gloss version="2007-06-12" xml:lang="fr">facultatif</gloss>
           <gloss version="2007-11-06" xml:lang="it">facoltativo</gloss>
-	  <gloss version="2007-05-04" xml:lang="es">opcional</gloss>
-	  <gloss xml:lang="zh-tw">非必備的</gloss>
+          <gloss version="2007-05-04" xml:lang="es">opcional</gloss>
+          <gloss xml:lang="zh-tw">非必備的</gloss>
         </valItem>
       </valList>
     </attDef>
@@ -135,7 +135,7 @@ $Id$
       <desc version="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene
         l'attributo</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
       </datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
@@ -146,6 +146,15 @@ $Id$
         <desc>specifies a name conventionally used for this level of subdivision, e.g.
           <val>act</val>, <val>volume</val>, <val>book</val>, <val>section</val>, <val>canto</val>,
           etc.</desc>
+      </attDef>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <attDef usage="rec" ident="type">
+        <desc>spécifie un nom conventionnellement utilisé pour ce niveau de divisions , par ex.
+              <val>acte</val>, <val>volume</val>, <val>livre</val>, <val>section</val>,
+            <val>chant</val>, etc.</desc>
       </attDef>
     </egXML>
   </exemplum>

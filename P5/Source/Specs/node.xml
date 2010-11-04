@@ -18,13 +18,13 @@ $Id$
   <desc version="2007-06-12" xml:lang="fr">encode un nœud, c'est-à-dire un sommet, étiqueté ou non, dans un graphe.</desc>
   <desc version="2007-05-04" xml:lang="es">codifica un nodo, un punto en un gráfico al que se le puede proporiconar una etiqueta.</desc>
   <desc version="2007-01-21" xml:lang="it">codifica un nodo, un punto in un grafo a cui può essere assegnata un'etichetta</desc>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:optional>
-      <rng:ref name="label"/>
-      <rng:optional>
-        <rng:ref name="label"/>
-      </rng:optional>
-    </rng:optional>
+  <content>
+    <optional xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="label"/>
+      <optional>
+        <ref name="label"/>
+      </optional>
+    </optional>
   </content>
   <attList>
     <attDef ident="value" usage="opt">
@@ -40,10 +40,10 @@ other analytic element.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona el valor de un nodo, que puede ser una estructura de rasgos u otro elemento de análisis.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna al nodo un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A valid identifier.</valDesc>
-<valDesc xml:lang="fr" version="2009-11-17">Un identifiant valide.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un identifiant valide.</valDesc>
     </attDef>
     <attDef ident="type" usage="opt">
       <equiv/>
@@ -57,7 +57,7 @@ other analytic element.</desc>
       <desc version="2007-05-04" xml:lang="es">define un tipo de nodo.</desc>
       <desc version="2007-01-21" xml:lang="it">definisce un tipo di nodo</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <valList type="semi">
         <valItem ident="initial">
@@ -104,10 +104,10 @@ transition.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona los identificadores a los nodos adyacentes al nodo corriente.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna degli identificatori ai nodi adiacenti al nodo corrente</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A list of identifiers.</valDesc>
-<valDesc version="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
+      <valDesc version="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
     </attDef>
     <attDef ident="adjFrom" usage="rwa">
       <gloss>adjacent from</gloss>
@@ -126,17 +126,17 @@ node.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona los identificadores a los nodos adyacentes al nodo corriente.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna degli identificatori ai nodi non adiacenti al nodo corrente</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A list of identifiers.</valDesc>
-        <valDesc version="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
+      <valDesc version="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
     </attDef>
     <attDef ident="adj" usage="rwa">
       <gloss>adjacent</gloss>
       <gloss version="2007-12-20" xml:lang="kr">인접한</gloss>
       <gloss version="2008-04-06" xml:lang="es">adyacente</gloss>
       <gloss version="2007-11-06" xml:lang="it">adiacente</gloss>
-<gloss xml:lang="fr" version="2009-11-17">adjacent</gloss>
+      <gloss xml:lang="fr" version="2009-11-17">adjacent</gloss>
       <desc>gives the identifiers of the nodes which are both adjacent to and
 adjacent from the current node.</desc>
       <desc version="2009-11-17" xml:lang="fr">donne les identifiants des nœuds adjacents au nœud courant.</desc>
@@ -149,10 +149,10 @@ adjacent from the current node.</desc>
       <desc version="2007-05-04" xml:lang="es">proporciona los identificadores a los nodos adyacentes al nodo corriente.</desc>
       <desc version="2007-01-21" xml:lang="it">assegna degli identificatori ai nodi adiacenti e non adiacenti al nodo corrente</desc>
       <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>A list of identifiers.</valDesc>
-        <valDesc version="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
+      <valDesc version="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
       <remarks>
         <p>Use this attribute instead of the <att>adjTo</att> and
 <att>adjFrom</att> attributes when the graph is undirected and vice
@@ -182,10 +182,10 @@ are adjacent from the given node.</desc>
       <desc version="2007-05-04" xml:lang="es">indica el grado de entrada del nodo, es decir, el número de los nodos no adyacentes al nodo dado.</desc>
       <desc version="2007-01-21" xml:lang="it">indica il grado in entrata del nodo, cioè il numero dei nodi non adiacenti al nodo stesso</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A non-negative integer.</valDesc>
-<valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
     </attDef>
     <attDef ident="outDegree" usage="opt">
       <equiv/>
@@ -201,10 +201,10 @@ are adjacent to the given node.</desc>
       <desc version="2007-05-04" xml:lang="es">indica el grado de salida del nodo, es decir, el número de los nodos no adyacentes al nodo dado.</desc>
       <desc version="2007-01-21" xml:lang="it">indica il grado in uscita del nodo, cioè il numero dei nodi adiacenti al nodo stesso</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A non-negative integer.</valDesc>
-        <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
     </attDef>
     <attDef ident="degree" usage="opt">
       <equiv/>
@@ -219,10 +219,10 @@ the node is incident.</desc>
       <desc version="2007-05-04" xml:lang="es">define el grado del nodo, es decir,  el número de los arcos incidentes al nodo</desc>
       <desc version="2007-01-21" xml:lang="it">definisce il grado del nodo, cioè il numero degli archi incidenti al nodo</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
       <valDesc>A non-negative integer.</valDesc>
-        <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Un entier non négatif.</valDesc>
       <remarks>
         <p>Use this attribute instead of the <att>inDegree</att> and
 <att>outDegree</att> attributes when the graph is undirected and vice
@@ -243,6 +243,13 @@ versa if the graph is directed.</p>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <node xml:id="t6" type="final" inDegree="2" outDegree="0">
+        <label>6</label>
+      </node>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <node xml:id="fr_t6" type="final" inDegree="2" outDegree="0">
         <label>6</label>
       </node>
     </egXML>
