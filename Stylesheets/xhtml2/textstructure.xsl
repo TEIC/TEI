@@ -900,7 +900,7 @@
 	              <xsl:value-of select="//tei:schemaSpec[1]/@docLang"/>
             </xsl:when>
             <xsl:otherwise>
-	              <xsl:text>en</xsl:text>
+	      <xsl:text>en</xsl:text>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
@@ -918,7 +918,7 @@
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-      <xsl:attribute name="lang">
+      <xsl:attribute name="xml:lang">
 	<xsl:value-of select="$supplied"/>
       </xsl:attribute>
   </xsl:template>
