@@ -135,8 +135,8 @@ tex: xml
 	  echo "========================="; \
 	fi
 	-rm missfont.log fonttest.*
-	${SAXON} ${SAXON_ARGS}  Guidelines.xml Utilities/Guidelines.xsl > Guidelines.tex
-	rm Utilities/Guidelines.xsl
+	${SAXON} ${SAXON_ARGS}  Guidelines.xml Utilities/guidelines.xsl > Guidelines.tex
+	rm Utilities/guidelines.xsl
 	for i in Guidelines-REF*tex; \
 	  do \
 	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
