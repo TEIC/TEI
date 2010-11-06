@@ -1344,20 +1344,19 @@ class romaDom extends domDocument
 
 	$theClasses = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'classes' );
 	$oClasses = $oElementSpec->appendChild( $theClasses );
-	$oClasses->setAttribute( 'mode', 'change' );
-	
+	$oClasses->setAttribute( 'mode', 'replace' );
 
 	foreach ( $aszClasses as $szClass => $classValue )
-	  {
-	  if ($classValue != 'replace') 
 	  {
 	    $theMemberOf = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'memberOf' );
 	    $oMember = $oClasses->appendChild( $theMemberOf );
 	    $oMember->setAttribute( 'key', $szClass );
-	    $oMember->setAttribute( 'mode',$classValue );
-		}		
-	}
-      }  
+	    if ($classValue != 'replace') 
+	      {
+		$oMember->setAttribute( 'mode',$classValue );
+	      }		
+	  }
+    }  
 
     public function addAttribute( $aszConfig )
       {
