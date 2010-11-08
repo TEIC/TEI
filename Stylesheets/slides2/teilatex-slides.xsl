@@ -272,7 +272,16 @@ XSL LaTeX stylesheet to make slides
 	              <xsl:text>{6.5pt}{7pt}</xsl:text>
             </xsl:when>
             <xsl:when test="@rend='small'">
+	              <xsl:text>{7pt}{8pt}</xsl:text>
+            </xsl:when>
+            <xsl:when test="@rend='smaller'">
 	              <xsl:text>{7.5pt}{8pt}</xsl:text>
+            </xsl:when>
+            <xsl:when test="@rend='larger'">
+	              <xsl:text>{9.5pt}{10.5pt}</xsl:text>
+            </xsl:when>
+            <xsl:when test="@rend='large'">
+	              <xsl:text>{10.5pt}{11.5pt}</xsl:text>
             </xsl:when>
             <xsl:otherwise>
 	              <xsl:text>{8.5pt}{9pt}</xsl:text>
