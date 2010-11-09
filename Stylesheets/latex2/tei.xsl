@@ -109,8 +109,29 @@
 
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
-      <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
+      <xsl:choose>
+         <xsl:when test="parent::*/@xml:lang='zh-tw'">
+	           <xsl:text>{\textChinese </xsl:text>
+		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
+	           <xsl:text>}</xsl:text>
+         </xsl:when>
+         <xsl:when test="parent::*/@xml:lang='ja'">
+	           <xsl:text>{\textJapanese </xsl:text>
+		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
+	           <xsl:text>}</xsl:text>
+         </xsl:when>
+         <xsl:when test="parent::*/@xml:lang='kr'">
+	           <xsl:text>{\textKorean </xsl:text>
+		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
+	           <xsl:text>}</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+	   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
+         </xsl:otherwise>
+      </xsl:choose>
+
   </xsl:template>
+
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc><p>We need the backslash and two curly braces to insert LaTeX

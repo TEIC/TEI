@@ -31,7 +31,6 @@ XSL LaTeX stylesheet to make slides
                 exclude-result-prefixes="a s map atom xhtml teix tei xsl rng"
                 version="2.0">
   <xsl:import href="../latex2/tei.xsl"/>
-  <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:variable name="docClass">beamer</xsl:variable>
@@ -141,15 +140,12 @@ XSL LaTeX stylesheet to make slides
    </xsl:template>
 
    <xsl:template name="makeOuterFrame">
-      <xsl:text>
-\section{</xsl:text>
+      <xsl:text>&#10;\section{</xsl:text>
       <xsl:for-each select="tei:head">
          <xsl:apply-templates/>
       </xsl:for-each>
       <xsl:text>}</xsl:text>
-      <xsl:text>
-\begin{frame} 
-  \frametitle{</xsl:text>
+      <xsl:text>&#10;\begin{frame}&#10;\frametitle{</xsl:text>
       <xsl:for-each select="tei:head">
          <xsl:apply-templates/>
       </xsl:for-each>
@@ -162,14 +158,12 @@ XSL LaTeX stylesheet to make slides
 	           <xsl:text>{\Huge…}</xsl:text>
 	        </xsl:otherwise>
       </xsl:choose>
-      <xsl:text>
-\end{frame}&#10;</xsl:text>
+      <xsl:text>&#10;\end{frame}&#10;</xsl:text>
       <xsl:apply-templates select="tei:div1|tei:div2|tei:div"/>
   </xsl:template>
 
    <xsl:template name="makeFrame">
-      <xsl:text>
-\begin{frame}</xsl:text>
+      <xsl:text>&#10;\begin{frame}</xsl:text>
       <xsl:choose>
          <xsl:when test="@rend='fragile'">
             <xsl:text>[fragile]</xsl:text>
@@ -187,15 +181,13 @@ XSL LaTeX stylesheet to make slides
             <xsl:text>[fragile]</xsl:text>
          </xsl:when>
       </xsl:choose>
-      <xsl:text>
-\frametitle{</xsl:text>
+      <xsl:text>&#10;\frametitle{</xsl:text>
       <xsl:for-each select="tei:head">
          <xsl:apply-templates/>
       </xsl:for-each>
       <xsl:text>}</xsl:text>
       <xsl:apply-templates/>
-      <xsl:text>
-\end{frame}&#10;</xsl:text>
+      <xsl:text>&#10;\end{frame}&#10;</xsl:text>
    </xsl:template>
 
    <xsl:template name="makePic">

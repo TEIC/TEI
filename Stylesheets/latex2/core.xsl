@@ -471,8 +471,7 @@
             <xsl:apply-templates/>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element mentioned</desc>
