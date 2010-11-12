@@ -1647,13 +1647,15 @@
   </xsl:template>
 
   <xsl:template name="generateParents">
+
       <xsl:element namespace="{$outputNS}" name="{$divName}">
          <xsl:attribute name="{$rendName}">parent</xsl:attribute>
          <xsl:variable name="list">
 	   <List>
 	     <xsl:call-template name="generateParentsByElement">
-	       <xsl:with-param name="I" select="concat(@ident,'')"/>
+	       <xsl:with-param name="I" select="@ident"/>
 	     </xsl:call-template>
+<!--
 	     <xsl:call-template name="generateParentsByElement">
 	       <xsl:with-param name="I" select="concat(@ident,'_alternation')"/>
 	     </xsl:call-template>
@@ -1672,18 +1674,62 @@
 	       <xsl:with-param name="I"
 			       select="concat(@ident,'_sequenceRepeatable')"/>
 	     </xsl:call-template>
+-->
 	     <xsl:call-template name="generateParentsByMacro"/>
 	     <xsl:call-template name="generateParentsByClass"/>
 	   </List>
          </xsl:variable>
+
          <xsl:for-each select="$list/List/Item">
 	   <xsl:copy-of select="*|text()"/>
 	   <xsl:if test="following-sibling::Item">
 	     <xsl:call-template name="showSpaceBetweenItems"/>
 	   </xsl:if>
          </xsl:for-each>
+
          <xsl:call-template name="generateParentsByAttribute"/>
+
+	 <!-- now look at class membership -->
+	 <xsl:variable name="here" select="."/>
+	 <xsl:variable name="Parents">      
+	   <xsl:for-each select="tei:classes/tei:memberOf">
+	     <xsl:for-each select="key('CLASSES',@key)">
+	       <xsl:if test="@type='model'">
+		 <xsl:call-template name="ProcessClass"/>
+	       </xsl:if>
+	     </xsl:for-each>
+	   </xsl:for-each>
+	 </xsl:variable>
+	 <xsl:if test="count($Parents/*)&gt;0">
+	   <xsl:text> — </xsl:text>
+	   <xsl:for-each-group select="$Parents/*" group-by=".">
+	     <xsl:sort select="."/>
+	     <xsl:variable name="me" select="."/>
+	     <xsl:for-each select="$here">
+	       <xsl:call-template name="linkTogether">
+		 <xsl:with-param name="name" select="$me"/>
+		 <xsl:with-param name="class">link_odd_element</xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:for-each>
+	     <xsl:if test="following-sibling::*">
+	       <xsl:call-template name="showSpaceBetweenItems"/>
+	     </xsl:if>
+	   </xsl:for-each-group>
+	 </xsl:if>
       </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="ProcessClass">
+    <xsl:for-each select="key('REFS',@ident)">
+      <e><xsl:value-of select="ancestor::tei:elementSpec/@ident"/></e>
+    </xsl:for-each>
+    <xsl:for-each select="tei:classes/tei:memberOf">
+      <xsl:for-each select="key('CLASSES',@key)">
+	<xsl:if test="@type='model'">
+	  <xsl:call-template name="ProcessClass"/>
+	</xsl:if>
+      </xsl:for-each>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="generateMembers">

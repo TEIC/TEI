@@ -54,7 +54,11 @@
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
   <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/>
   <xsl:key match="rng:ref" name="CLASSREFS" use="@name"/>
-  <xsl:key match="tei:elementSpec/tei:content//rng:ref" name="REFS" use="@name"/>
+  <xsl:key match="tei:elementSpec/tei:content//rng:ref" name="REFS"
+	   use="@name"/>
+  <xsl:key match="tei:elementSpec/tei:content//rng:ref[contains(@name,'_')]" name="REFS"
+	   use="substring-before(@name,'_')"/>
+
   <xsl:key match="tei:elementSpec/tei:attList/tei:attDef/tei:datatype/rng:ref"
     name="ATTREFS-ELEMENT" use="@name"/>
   <xsl:key match="tei:classSpec/tei:attList/tei:attDef/tei:datatype/rng:ref" name="ATTREFS-CLASS"
@@ -1613,6 +1617,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:param name="name"/>
     <xsl:param name="reftext"/>
     <xsl:param name="class">link_odd</xsl:param>
+
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
@@ -1636,6 +1641,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+
     <xsl:choose>
       <xsl:when test="not(key('IDENTS',$partialname))">
         <xsl:value-of select="$link"/>
