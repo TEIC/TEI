@@ -1,4 +1,4 @@
-DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx oo nlm
+DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx oo nlm tite
 OLDDIRS=slides fo html common latex odds
 SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub
 PREFIX=/usr
