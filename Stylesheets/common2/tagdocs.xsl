@@ -683,6 +683,31 @@
 		                      <xsl:value-of select="$documentationLanguage"/>
 		                   </xsl:attribute>
 		                   <xsl:call-template name="i18n">
+		                      <xsl:with-param name="word">Contained by</xsl:with-param>
+		                   </xsl:call-template>
+	                 </xsl:element>
+	              </xsl:element>
+	              <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	                 <xsl:attribute name="{$rendName}">
+		                   <xsl:text>wovenodd-col2</xsl:text>
+	                 </xsl:attribute>
+	                 <xsl:call-template name="generateParents2"/>
+	              </xsl:element>
+	           </xsl:element>
+
+	           <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	              <xsl:element namespace="{$outputNS}" name="{$cellName}">
+	                 <xsl:attribute name="{$rendName}">
+		                   <xsl:text>wovenodd-col1</xsl:text>
+	                 </xsl:attribute>
+	                 <xsl:element namespace="{$outputNS}" name="{$hiName}">
+		                   <xsl:attribute name="{$rendName}">
+		                      <xsl:text>label</xsl:text>
+		                   </xsl:attribute>
+		                   <xsl:attribute name="xml:lang">
+		                      <xsl:value-of select="$documentationLanguage"/>
+		                   </xsl:attribute>
+		                   <xsl:call-template name="i18n">
 		                      <xsl:with-param name="word">
 		                         <xsl:text>May contain</xsl:text>
 		                      </xsl:with-param>
@@ -1655,26 +1680,6 @@
 	     <xsl:call-template name="generateParentsByElement">
 	       <xsl:with-param name="I" select="@ident"/>
 	     </xsl:call-template>
-<!--
-	     <xsl:call-template name="generateParentsByElement">
-	       <xsl:with-param name="I" select="concat(@ident,'_alternation')"/>
-	     </xsl:call-template>
-	     <xsl:call-template name="generateParentsByElement">
-	       <xsl:with-param name="I" select="concat(@ident,'_sequence')"/>
-	     </xsl:call-template>
-	     <xsl:call-template name="generateParentsByElement">
-	       <xsl:with-param name="I"
-			       select="concat(@ident,'_sequenceOptional')"/>
-	     </xsl:call-template>
-	     <xsl:call-template name="generateParentsByElement">
-	       <xsl:with-param name="I"
-			       select="concat(@ident,'_sequenceOptionalRepeatable')"/>
-	     </xsl:call-template>
-	     <xsl:call-template name="generateParentsByElement">
-	       <xsl:with-param name="I"
-			       select="concat(@ident,'_sequenceRepeatable')"/>
-	     </xsl:call-template>
--->
 	     <xsl:call-template name="generateParentsByMacro"/>
 	     <xsl:call-template name="generateParentsByClass"/>
 	   </List>
@@ -1689,10 +1694,20 @@
 
          <xsl:call-template name="generateParentsByAttribute"/>
 
-	 <!-- now look at class membership -->
+      </xsl:element>
+  </xsl:template>
+
+  <xsl:template name="generateParents2">
+      <xsl:element namespace="{$outputNS}" name="{$divName}">
+	<xsl:attribute name="{$rendName}">parent</xsl:attribute>
 	 <xsl:variable name="here" select="."/>
-	 <xsl:variable name="Parents">      
-	   <xsl:for-each select="tei:classes/tei:memberOf">
+	 <xsl:variable name="Parents">
+	   <!-- direct parents -->
+	   <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
+	     <e><xsl:value-of select="@ident"/></e>
+	   </xsl:for-each>
+	 <!-- now look at class membership -->
+	 <xsl:for-each select="tei:classes/tei:memberOf">
 	     <xsl:for-each select="key('CLASSES',@key)">
 	       <xsl:if test="@type='model'">
 		 <xsl:call-template name="ProcessClass"/>
@@ -1701,7 +1716,6 @@
 	   </xsl:for-each>
 	 </xsl:variable>
 	 <xsl:if test="count($Parents/*)&gt;0">
-	   <xsl:text> — </xsl:text>
 	   <xsl:for-each-group select="$Parents/*" group-by=".">
 	     <xsl:sort select="."/>
 	     <xsl:variable name="me" select="."/>
@@ -1718,6 +1732,7 @@
 	 </xsl:if>
       </xsl:element>
   </xsl:template>
+
 
   <xsl:template name="ProcessClass">
     <xsl:for-each select="key('REFS',@ident)">
