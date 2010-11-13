@@ -1723,13 +1723,16 @@
       <xsl:element namespace="{$outputNS}" name="{$divName}">
 	<xsl:attribute name="{$rendName}">parent</xsl:attribute>
 	 <xsl:variable name="here" select="."/>
+	 <xsl:variable name="i" select="@ident"/>
 	 <xsl:variable name="Parents">
 	   <xsl:call-template name="ProcessDirectRefs"/>
 	   <!-- now look at class membership -->
 	   <xsl:for-each select="tei:classes/tei:memberOf">
 	     <xsl:for-each select="key('CLASSES',@key)">
 	       <xsl:if test="@type='model'">
-		 <xsl:call-template name="ProcessClass"/>
+		 <xsl:call-template name="ProcessClass">
+		   <xsl:with-param name="i" select="$i"/>
+		 </xsl:call-template>
 	       </xsl:if>
 	     </xsl:for-each>
 	   </xsl:for-each>
@@ -1773,17 +1776,25 @@
       
       
   <xsl:template name="ProcessClass">
+    <xsl:param name="i"/>
     <xsl:for-each select="key('REFS',@ident)/ancestor::tei:content/parent::tei:*">
-      <xsl:if test="self::tei:elementSpec">
-	<e type="{local-name()}">
-	  <xsl:value-of select="@ident"/>
-	</e>
-      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="self::tei:elementSpec">
+	  <e type="{local-name()}">
+	    <xsl:value-of select="@ident"/>
+	  </e>
+	</xsl:when>
+	<xsl:when test="self::tei:macroSpec">
+	   <xsl:call-template name="ProcessDirectRefs"/>
+	</xsl:when>
+      </xsl:choose>
     </xsl:for-each>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('CLASSES',@key)">
 	<xsl:if test="@type='model'">
-	  <xsl:call-template name="ProcessClass"/>
+	  <xsl:call-template name="ProcessClass">
+	    <xsl:with-param name="i" select="$i"/>
+	  </xsl:call-template>
 	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
