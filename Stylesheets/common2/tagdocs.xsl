@@ -1677,9 +1677,11 @@
          <xsl:attribute name="{$rendName}">parent</xsl:attribute>
          <xsl:variable name="list">
 	   <List>
+	     <!--
 	     <xsl:call-template name="generateParentsByElement">
 	       <xsl:with-param name="I" select="@ident"/>
 	     </xsl:call-template>
+	     -->
 	     <xsl:call-template name="generateParentsByMacro"/>
 	     <xsl:call-template name="generateParentsByClass"/>
 	   </List>
@@ -1725,7 +1727,7 @@
 		 <xsl:with-param name="class">link_odd_element</xsl:with-param>
 	       </xsl:call-template>
 	     </xsl:for-each>
-	     <xsl:if test="following-sibling::*">
+	     <xsl:if test="not(position() = last())">
 	       <xsl:call-template name="showSpaceBetweenItems"/>
 	     </xsl:if>
 	   </xsl:for-each-group>
