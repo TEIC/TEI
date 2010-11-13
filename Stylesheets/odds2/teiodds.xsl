@@ -53,11 +53,8 @@
   <xsl:key match="tei:macroSpec" name="MACROS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
   <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/>
-  <xsl:key match="rng:ref" name="CLASSREFS" use="@name"/>
-  <xsl:key match="tei:elementSpec/tei:content//rng:ref" name="REFS"
-	   use="@name"/>
-  <xsl:key match="tei:elementSpec/tei:content//rng:ref[contains(@name,'_')]" name="REFS"
-	   use="substring-before(@name,'_')"/>
+  <xsl:key match="rng:ref" name="REFS"  use="@name"/>
+  <xsl:key match="rng:ref[contains(@name,'_')]" name="REFS" use="substring-before(@name,'_')"/>
 
   <xsl:key match="tei:elementSpec/tei:attList/tei:attDef/tei:datatype/rng:ref"
     name="ATTREFS-ELEMENT" use="@name"/>
@@ -67,8 +64,7 @@
     name="ATTREFS-ELEMENT" use="@name"/>
   <xsl:key match="tei:classSpec/tei:attList/tei:attList/tei:attDef/tei:datatype/rng:ref"
     name="ATTREFS-CLASS" use="@name"/>
-  <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"
-	   use="@name"/>
+  <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"  use="@name"/>
 
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS"
     use="tei:classes/tei:memberOf/@key"/>
@@ -711,8 +707,8 @@ select="$makeDecls"/></xsl:message>
 
     <xsl:choose>
       <xsl:when test="not(ancestor::tei:schemaSpec)">x</xsl:when>
-      <xsl:when test="key('CLASSREFS',concat($class,$suffix))">x</xsl:when>
-      <xsl:when test="key('CLASSREFS',$class)">x</xsl:when>
+      <xsl:when test="key('REFS',concat($class,$suffix))">x</xsl:when>
+      <xsl:when test="key('REFS',$class)">x</xsl:when>
       <xsl:when test="not($suffix='')"/>
       <xsl:when test="tei:classes/tei:memberOf">
         <xsl:for-each select="tei:classes/tei:memberOf">

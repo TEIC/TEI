@@ -404,7 +404,7 @@
                      <xsl:attribute name="{$rendName}">
                         <xsl:text>wovenodd-col2</xsl:text>
                      </xsl:attribute>
-                     <xsl:call-template name="generateParents"/>
+                     <xsl:call-template name="generateModelParents"/>
                   </xsl:element>
                </xsl:element>
             </xsl:if>
@@ -666,7 +666,7 @@
 	                 <xsl:attribute name="{$rendName}">
 		                   <xsl:text>wovenodd-col2</xsl:text>
 	                 </xsl:attribute>
-	                 <xsl:call-template name="generateParents"/>
+	                 <xsl:call-template name="generateModelParents"/>
 	              </xsl:element>
 	           </xsl:element>
 	  
@@ -689,9 +689,9 @@
 	              </xsl:element>
 	              <xsl:element namespace="{$outputNS}" name="{$cellName}">
 	                 <xsl:attribute name="{$rendName}">
-		                   <xsl:text>wovenodd-col2</xsl:text>
+			   <xsl:text>wovenodd-col2</xsl:text>
 	                 </xsl:attribute>
-	                 <xsl:call-template name="generateParents2"/>
+	                 <xsl:call-template name="generateIndirectParents"/>
 	              </xsl:element>
 	           </xsl:element>
 
@@ -1180,7 +1180,7 @@
                         <xsl:attribute name="{$rendName}">
                            <xsl:text>wovenodd-col2</xsl:text>
                         </xsl:attribute>
-                        <xsl:call-template name="generateParents"/>
+                        <xsl:call-template name="generateModelParents"/>
                      </xsl:element>
                   </xsl:element>
 	              </xsl:when>
@@ -1648,8 +1648,7 @@
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[odds] <param name="mode">mode</param>
-      </desc>
+      <desc>[odds] display attribute list  </desc>
    </doc>
   <xsl:template name="displayAttList">
       <xsl:param name="mode"/>
@@ -1671,45 +1670,63 @@
       </xsl:if>
   </xsl:template>
 
-  <xsl:template name="generateParents">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[odds] display list of model parents </desc>
+   </doc>
+  <xsl:template name="generateModelParents">
 
+    <xsl:variable name="here" select="."/>
       <xsl:element namespace="{$outputNS}" name="{$divName}">
          <xsl:attribute name="{$rendName}">parent</xsl:attribute>
-         <xsl:variable name="list">
-	   <List>
-	     <!--
-	     <xsl:call-template name="generateParentsByElement">
-	       <xsl:with-param name="I" select="@ident"/>
-	     </xsl:call-template>
-	     -->
-	     <xsl:call-template name="generateParentsByMacro"/>
-	     <xsl:call-template name="generateParentsByClass"/>
-	   </List>
+         <xsl:variable name="Parents">
+	   <xsl:for-each
+	       select="key('REFS',@ident)/ancestor::tei:content/parent::*">
+	     <e type="{local-name()}">
+	       <xsl:value-of select="@ident"/>
+	     </e>
+	   </xsl:for-each>
+	   <xsl:for-each select="tei:classes/tei:memberOf">
+	     <xsl:for-each select="key('CLASSES',@key)">
+	       <xsl:if test="@type='model'">
+		 <e type="classSpec">
+		   <xsl:value-of select="@ident"/>
+		 </e>
+	       </xsl:if>
+	     </xsl:for-each>
+	   </xsl:for-each>
          </xsl:variable>
-
-         <xsl:for-each select="$list/List/Item">
-	   <xsl:copy-of select="*|text()"/>
-	   <xsl:if test="following-sibling::Item">
-	     <xsl:call-template name="showSpaceBetweenItems"/>
-	   </xsl:if>
-         </xsl:for-each>
-
+	 <xsl:if test="count($Parents/*)&gt;0">
+	   <xsl:for-each-group select="$Parents/*" group-by=".">
+	     <xsl:sort select="."/>
+	     <xsl:variable name="me" select="."/>
+	     <xsl:variable name="type" select="@type"/>
+	     <xsl:for-each select="$here">
+	       <xsl:call-template name="linkTogether">
+		 <xsl:with-param name="name" select="$me"/>
+		 <xsl:with-param name="class">link_odd_<xsl:value-of select="$type"/></xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:for-each>
+	     <xsl:if test="not(position() = last())">
+	       <xsl:call-template name="showSpaceBetweenItems"/>
+	     </xsl:if>
+	   </xsl:for-each-group>
+	 </xsl:if>
          <xsl:call-template name="generateParentsByAttribute"/>
-
       </xsl:element>
   </xsl:template>
 
-  <xsl:template name="generateParents2">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[odds] display list of generated parents (via models)   </desc>
+   </doc>
+
+  <xsl:template name="generateIndirectParents">
       <xsl:element namespace="{$outputNS}" name="{$divName}">
 	<xsl:attribute name="{$rendName}">parent</xsl:attribute>
 	 <xsl:variable name="here" select="."/>
 	 <xsl:variable name="Parents">
-	   <!-- direct parents -->
-	   <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
-	     <e><xsl:value-of select="@ident"/></e>
-	   </xsl:for-each>
-	 <!-- now look at class membership -->
-	 <xsl:for-each select="tei:classes/tei:memberOf">
+	   <xsl:call-template name="ProcessDirectRefs"/>
+	   <!-- now look at class membership -->
+	   <xsl:for-each select="tei:classes/tei:memberOf">
 	     <xsl:for-each select="key('CLASSES',@key)">
 	       <xsl:if test="@type='model'">
 		 <xsl:call-template name="ProcessClass"/>
@@ -1721,10 +1738,11 @@
 	   <xsl:for-each-group select="$Parents/*" group-by=".">
 	     <xsl:sort select="."/>
 	     <xsl:variable name="me" select="."/>
+	     <xsl:variable name="type" select="@type"/>
 	     <xsl:for-each select="$here">
 	       <xsl:call-template name="linkTogether">
 		 <xsl:with-param name="name" select="$me"/>
-		 <xsl:with-param name="class">link_odd_element</xsl:with-param>
+		 <xsl:with-param name="class">link_odd_<xsl:value-of select="$type"/></xsl:with-param>
 	       </xsl:call-template>
 	     </xsl:for-each>
 	     <xsl:if test="not(position() = last())">
@@ -1734,11 +1752,33 @@
 	 </xsl:if>
       </xsl:element>
   </xsl:template>
-
-
+  
+  <xsl:template name="ProcessDirectRefs">
+    <!-- direct parents -->
+    <xsl:for-each
+	select="key('REFS',@ident)/ancestor::tei:content/parent::tei:*">
+      <xsl:choose>
+	<xsl:when test="self::tei:elementSpec">
+	  <e type="{local-name()}">
+	    <xsl:value-of
+		select="@ident"/>
+	  </e>
+	</xsl:when>
+	<xsl:when test="self::tei:macroSpec">
+	   <xsl:call-template name="ProcessDirectRefs"/>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+      
+      
   <xsl:template name="ProcessClass">
-    <xsl:for-each select="key('REFS',@ident)">
-      <e><xsl:value-of select="ancestor::tei:elementSpec/@ident"/></e>
+    <xsl:for-each select="key('REFS',@ident)/ancestor::tei:content/parent::tei:*">
+      <xsl:if test="self::tei:elementSpec">
+	<e type="{local-name()}">
+	  <xsl:value-of select="@ident"/>
+	</e>
+      </xsl:if>
     </xsl:for-each>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('CLASSES',@key)">
@@ -1841,28 +1881,13 @@
                         <xsl:with-param name="name" select="."/>
                      </xsl:call-template>
                      <xsl:if test="following::item">
-                        <xsl:text> 
-</xsl:text>
+                        <xsl:text> &#10;</xsl:text>
                      </xsl:if>
                   </xsl:for-each>
                </xsl:otherwise>
             </xsl:choose>
          </xsl:when>
       </xsl:choose>
-  </xsl:template>
-
-
-  <xsl:template name="generateParentsByElement">
-    <xsl:param name="I"/>
-    <xsl:for-each select="key('REFS',$I)/ancestor::tei:elementSpec">
-      <xsl:sort select="@ident"/>
-      <Item>
-	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name" select="@ident"/>
-	  <xsl:with-param name="class">link_odd_element</xsl:with-param>
-	</xsl:call-template>
-      </Item>
-    </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="generateParentsByAttribute">
@@ -1961,55 +1986,6 @@
 	           </xsl:for-each>
          </xsl:element>
       </xsl:if>
-  </xsl:template>
-
-  <xsl:template name="generateParentsByMacro">
-      <xsl:variable name="this" select="@ident"/>
-      <xsl:if test="key('MACROREFS',$this)">
-         <xsl:for-each select="key('MACROREFS',$this)/ancestor::tei:macroSpec">
-	           <xsl:sort select="@ident"/>
-	           <Item>
-	              <xsl:call-template name="linkTogether">
-	                 <xsl:with-param name="name" select="@ident"/>
-	                 <xsl:with-param name="class">link_odd_macro</xsl:with-param>
-	              </xsl:call-template>
-	           </Item>
-         </xsl:for-each>
-      </xsl:if>
-      <!--
-      <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
-	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name" select="@ident"/>
-	</xsl:call-template>
-      </xsl:for-each>
-      <xsl:call-template name="generateParentsByMacro"/>
--->
-  </xsl:template>
-
-  <xsl:template name="generateParentsByClass">
-      <xsl:variable name="this" select="@ident"/>
-      <xsl:for-each select="tei:classes/tei:memberOf">
-         <xsl:for-each select="key('CLASSES',@key)">
-	           <xsl:sort select="@ident"/>
-	           <Item>
-	              <xsl:if test="@type='model'">
-	                 <xsl:call-template name="linkTogether">
-	                    <xsl:with-param name="name" select="@ident"/>
-	                    <xsl:with-param name="class">link_odd_class</xsl:with-param>
-	                 </xsl:call-template>
-	              </xsl:if>
-	              <!--
-	      <xsl:for-each select="key('REFS',@ident)/ancestor::tei:elementSpec">
-	      <xsl:call-template name="linkTogether">
-	      <xsl:with-param name="name" select="@ident"/>
-	      </xsl:call-template>
-	      </xsl:for-each>
-	      <xsl:call-template name="generateParentsByClass"/>
-	      <xsl:call-template name="generateParentsByMacro"/>
-	  -->
-	</Item>
-         </xsl:for-each>
-      </xsl:for-each>
   </xsl:template>
 
 
