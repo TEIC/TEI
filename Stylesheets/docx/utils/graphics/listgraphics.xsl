@@ -60,17 +60,17 @@
 	     <xsl:value-of select="$F"/> 
 	   </xsl:when>
 	   <xsl:when test="starts-with($F,'/')">
-	     <xsl:text>cp </xsl:text>
+	     <xsl:text>cp "</xsl:text>
 	     <xsl:value-of select="$F"/> 
-	     <xsl:text> </xsl:text>
+	     <xsl:text>" </xsl:text>
 	     <xsl:value-of select="$target"/>
 	   </xsl:when>
 	   <xsl:otherwise> 
-	     <xsl:text>cp </xsl:text>
+	     <xsl:text>cp "</xsl:text>
 	     <xsl:value-of select="$ORIG"/>
 	     <xsl:text>/</xsl:text>
 	     <xsl:value-of select="$F"/> 
-	     <xsl:text> </xsl:text>
+	     <xsl:text>" </xsl:text>
 	     <xsl:value-of select="$target"/>
 	   </xsl:otherwise>
          </xsl:choose>
