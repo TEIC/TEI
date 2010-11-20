@@ -267,6 +267,7 @@
 		<xsl:when test="self::tei:placeName">true</xsl:when>
 		<xsl:when test="self::tei:ptr">true</xsl:when>
 		<xsl:when test="self::tei:publisher">true</xsl:when>
+		<xsl:when test="self::tei:pubPlace">true</xsl:when>
 		<xsl:when test="self::tei:q[not(parent::tei:div)]">true</xsl:when>
 		<xsl:when test="self::tei:ref">true</xsl:when>
 		<xsl:when test="self::tei:region">true</xsl:when>
@@ -274,6 +275,7 @@
 		<xsl:when test="self::tei:roleName">true</xsl:when>
 		<xsl:when test="self::tei:rubric">true</xsl:when>
 		<xsl:when test="self::tei:seg">true</xsl:when>
+		<xsl:when test="self::tei:sic">true</xsl:when>
 		<xsl:when test="self::tei:settlement">true</xsl:when>
 		<xsl:when test="self::tei:soCalled">true</xsl:when>
 		<xsl:when test="self::tei:summary">true</xsl:when>

@@ -52,7 +52,6 @@
     <!-- Templates transforming graphic elements -->
     <xsl:include href="graphics/graphics.xsl"/>
 
-
     <!-- Templates transforming elements from drama -->
     <xsl:include href="drama/drama.xsl"/>
 
@@ -946,7 +945,9 @@
     
     <xsl:template match="tei:q">
       <xsl:choose>
-
+	<xsl:when test="tei:l">
+	  <xsl:apply-templates/>
+	</xsl:when>
 	<xsl:when test="teix:egXML|tei:list|parent::tei:cit|parent::tei:div">
 	  <xsl:call-template name="block-element"/>
 	</xsl:when>
@@ -968,7 +969,7 @@
     </xsl:template>
 
 
-    <!-- 
+   <!-- 
         GI
     -->
 
@@ -2155,6 +2156,12 @@
     </xsl:template>
 
     <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[@type='sub']">
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style">Subtitle</xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[2]">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Subtitle</xsl:with-param>
         </xsl:call-template>
