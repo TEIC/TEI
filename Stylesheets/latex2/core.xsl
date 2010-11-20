@@ -312,6 +312,7 @@
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element item</desc>
    </doc>
@@ -391,7 +392,7 @@
 	   <xsl:apply-templates/>
 	   <xsl:text>&#10;\end{enumerate}</xsl:text>
 	 </xsl:when>
-         <xsl:when test="@type='runin'">
+         <xsl:when test="@type='runin' or @rend='runon'">
             <xsl:apply-templates mode="runin" select="tei:item"/>
          </xsl:when>
          <xsl:otherwise> 
@@ -711,6 +712,32 @@
     <xsl:text>}</xsl:text>
     </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element space</desc>
+   </doc>
+  <xsl:template match="tei:space">
+    <xsl:variable name="unit">
+      <xsl:choose>
+	<xsl:when test="@unit">
+	  <xsl:value-of select="@unit"/>
+	</xsl:when>
+	<xsl:otherwise>em</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="quantity">
+      <xsl:choose>
+	<xsl:when test="@quantity">
+	  <xsl:value-of select="@quantity"/>
+	</xsl:when>
+	<xsl:otherwise>1</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:text>\hspace{</xsl:text>
+    <xsl:value-of select="$quantity"/>
+    <xsl:value-of select="$unit"/>
+    <xsl:text>}</xsl:text>
+    </xsl:template>
+    
 
    <xsl:template name="emphasize">
       <xsl:param name="class"/>
