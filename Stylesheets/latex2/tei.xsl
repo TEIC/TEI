@@ -154,7 +154,7 @@
       <!--<xsl:value-of select="translate($letters, '\{}','⃥❴❵')"/>-->
       
       <xsl:value-of
-	  select="replace(replace(replace($letters,'\\','\\textbackslash '),'\{','\\{'),'\}','\\}')"/>
+	  select="replace(replace(replace(translate($letters,'&#10;','  '), '\\','\\textbackslash '),'\{','\\{'),'\}','\\}')"/>
   </xsl:function>
 
 
