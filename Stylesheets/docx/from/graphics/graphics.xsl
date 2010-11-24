@@ -83,11 +83,6 @@
 				</xsl:otherwise>
 			      </xsl:choose>
 			    </xsl:attribute>
-			    <xsl:if test=".//wp:docPr/@descr">
-			      <xsl:attribute name="n">
-				<xsl:value-of select=".//wp:docPr/@descr"/>
-			      </xsl:attribute>
-			    </xsl:if>
 			  <xsl:attribute name="width"
 					 select="concat(number(descendant::wp:extent[1]/@cx) div 360000,'cm')"/>
 			  <xsl:attribute name="height"
@@ -104,7 +99,11 @@
                                     <xsl:otherwise>inline</xsl:otherwise>
                                 </xsl:choose>
                             </xsl:attribute>
-                            
+			    <xsl:if test=".//wp:docPr/@descr">
+			      <xsl:element name="desc">
+				<xsl:value-of select=".//wp:docPr/@descr"/>
+			      </xsl:element>
+			    </xsl:if>                            
                         </graphic>
                     </xsl:when>
                     <xsl:otherwise>
