@@ -391,6 +391,11 @@
 	    <xsl:apply-templates mode="plain"/>
 	  </xsl:for-each>
         </xsl:when>
+        <xsl:when test="tei:desc">
+          <xsl:for-each select="tei:desc">
+	    <xsl:apply-templates mode="plain"/>
+	  </xsl:for-each>
+        </xsl:when>
         <xsl:when test="tei:head">
           <xsl:value-of select="tei:head/text()"/>
         </xsl:when>
