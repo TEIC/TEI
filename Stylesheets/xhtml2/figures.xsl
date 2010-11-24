@@ -371,6 +371,11 @@
       </xsl:variable>
       <xsl:variable name="Alt">
          <xsl:choose>
+            <xsl:when test="tei:desc">
+               <xsl:for-each select="tei:desc">
+		 <xsl:apply-templates mode="plain"/>
+	       </xsl:for-each>
+            </xsl:when>
             <xsl:when test="tei:figDesc">
                <xsl:for-each select="tei:figDesc">
 	                 <xsl:apply-templates mode="plain"/>
