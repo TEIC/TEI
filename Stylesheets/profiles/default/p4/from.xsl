@@ -121,8 +121,9 @@
     </figure>
   </xsl:template>
   
-  
+ 
   <xsl:template match="figure/@entity"/>
+
   
   <xsl:template match="figure[@entity]">
     <figure>
@@ -259,7 +260,7 @@
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="@ana|@active|@adj|@adjFrom|@adjTo|@children|@children|@class|@code|@code|@copyOf|@corresp|@decls|@domains|@end|@exclude|@fVal|@feats|@follow|@from|@hand|@inst|@langKey|@location|@mergedin|@new|@next|@old|@origin|@otherLangs|@parent|@passive|@perf|@prev|@render|@resp|@sameAs|@scheme|@script|@select|@since|@start|@synch|@target|@targetEnd|@to|@to|@value|@value|@who|@wit">
+  <xsl:template match="@ana|@active|@adj|@adjFrom|@adjTo|@children|@class|@code|@copyOf|@corresp|@decls|@domains|@end|@exclude|@fVal|@feats|@follow|@hand|@inst|@langKey|@location|@mergedin|@new|@next|@old|@origin|@otherLangs|@parent|@passive|@perf|@prev|@render|@resp|@sameAs|@scheme|@script|@select|@since|@start|@synch|@target|@targetEnd|@value|@value|@who|@wit">
     <xsl:attribute name="{name(.)}">
       <xsl:call-template name="splitter">
 	<xsl:with-param name="val">
@@ -653,7 +654,16 @@
   <xsl:template match="@TEIform"/>  
 
 <!-- assorted atts -->
+
+  <xsl:template match="gi/@TEI">  	 
+    <xsl:if test=".='yes'">
+      <xsl:attribute name="scheme">TEI</xsl:attribute>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="@old"/>  
+
+  <xsl:template match="ref/@from"/>  
 
   <xsl:template match="@mergedin">  
     <xsl:attribute name="mergedIn">
@@ -739,5 +749,4 @@
     </floatingText>
   </xsl:template>
 
-	
 </xsl:stylesheet>

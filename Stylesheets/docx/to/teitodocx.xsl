@@ -1066,7 +1066,11 @@
         Handle TEI tables 
     -->
     <xsl:template match="tei:table">
-        <xsl:call-template name="table-header"/>
+      <xsl:call-template name="table-body"/>
+      <xsl:call-template name="table-header"/>
+    </xsl:template>
+
+    <xsl:template name="table-body">
         <w:tbl>
             <xsl:choose>
                 <xsl:when test="w:tblPr">

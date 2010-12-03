@@ -1338,6 +1338,11 @@
       </xsl:if>
     </xsl:template>
 
+    <xsl:template match="tei:table">
+        <xsl:call-template name="table-header"/>
+	<xsl:call-template name="table-body"/>
+    </xsl:template>
+
     <xsl:template match="tei:p[@rend='Table units']"/>
 
 </xsl:stylesheet>
