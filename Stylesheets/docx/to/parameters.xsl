@@ -80,4 +80,5 @@
         <xsl:value-of select="concat($word-directory, '/word/document.xml')"/>
     </xsl:param> 
     <xsl:param name="shadowGraphics">false</xsl:param>
+    <xsl:param name="alignFigures">center</xsl:param>
 </xsl:stylesheet>

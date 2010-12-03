@@ -87,16 +87,24 @@
         Handle figures 
     -->
     
-    <xsl:template match="tei:figure[not(@rend)]">
-        <xsl:call-template name="block-element">
+    <xsl:template match="tei:figure">
+      <xsl:choose>
+	<xsl:when test="@rend='inline' or @place='inline'">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="block-element">
             <xsl:with-param name="pPr">
-                <w:pPr>
-                    <w:spacing w:before="240"/>
-                    <w:jc w:val="left"/>
-                </w:pPr>
+	      <w:pPr>
+		<w:spacing w:before="240"/>
+		<w:jc w:val="{$alignFigures}"/>
+	      </w:pPr>
             </xsl:with-param>
-        </xsl:call-template>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
+
     <xsl:template match="tei:figure/tei:figDesc"/>
     
     <xsl:template match="tei:figure/tei:head">
@@ -332,48 +340,53 @@
                 <w:drawing>
                     <!-- choose between inline and block -->
                     <xsl:choose>
-                        <xsl:when test="parent::tei:figure">
-                            <!-- render  as block -->
-                            <wp:anchor simplePos="0" relativeHeight="10" behindDoc="0" locked="0" layoutInCell="1"
-                                allowOverlap="1">
-                                <wp:simplePos x="0" y="0"/>
-                                <wp:positionH relativeFrom="margin">
-                                    <wp:align>center</wp:align>
-                                </wp:positionH>
-                                <wp:positionV relativeFrom="paragraph">
-                                    <wp:align>center</wp:align>
-                                </wp:positionV>
-                                <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
-				<xsl:if test="$shadowGraphics='true'">
-				  <wp:effectExtent l="50800" t="25400" r="101600" b="63500"/>
-				</xsl:if>
-                                <wp:wrapTopAndBottom/>
-                                <wp:docPr  name="{tokenize(@url, '/')[last()]}">
-                                    <xsl:attribute name="id">
-				      <xsl:value-of select="$generatedID"/>
-                                    </xsl:attribute>
-                                </wp:docPr>                                
-				<xsl:if test="$shadowGraphics='true'">
-				  <wp:cNvGraphicFramePr/>
-				</xsl:if>
-                                <xsl:copy-of select="$graphic-element"/>
-                            </wp:anchor>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <wp:inline>
-                                <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
-                                <wp:docPr name="{tokenize(@url, '/')[last()]}">
-                                    <xsl:attribute name="id">
-				      <xsl:value-of select="$generatedID"/>
-                                    </xsl:attribute>
-                                </wp:docPr>
-                                <xsl:copy-of select="$graphic-element"/>
-                            </wp:inline>
-                        </xsl:otherwise>
+		      <xsl:when test="parent::tei:figure[@place='left'
+				      or @place='right' or @place='center']">
+			<wp:anchor simplePos="0" relativeHeight="10" behindDoc="0" locked="0" layoutInCell="1"
+				   allowOverlap="1">
+			  <wp:simplePos x="0" y="0"/>
+			  <wp:positionH relativeFrom="margin">
+			    <wp:align>
+			      <xsl:value-of select="parent::tei:figure/@place"/>
+			    </wp:align>
+			  </wp:positionH>
+			  <wp:positionV relativeFrom="paragraph">
+			    <wp:align>center</wp:align>
+			  </wp:positionV>
+			  <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
+			  <xsl:if test="$shadowGraphics='true'">
+			    <wp:effectExtent l="50800" t="25400" r="101600" b="63500"/>
+			  </xsl:if>
+			  <wp:wrapSquare wrapText="bothSides"/>
+			  <wp:docPr  name="{tokenize(@url, '/')[last()]}">
+			    <xsl:attribute name="id">
+			      <xsl:value-of select="$generatedID"/>
+			    </xsl:attribute>
+			  </wp:docPr>                                
+			  <xsl:if test="$shadowGraphics='true'">
+			    <wp:cNvGraphicFramePr/>
+			  </xsl:if>
+			  <xsl:copy-of select="$graphic-element"/>
+			</wp:anchor>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<wp:inline distT="0" distB="0" distL="0" distR="0">
+			  <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
+			  <xsl:if test="$shadowGraphics='true'">
+			    <wp:effectExtent l="50800" t="25400" r="101600" b="63500"/>
+			  </xsl:if>
+			  <wp:docPr  name="{tokenize(@url, '/')[last()]}">
+			    <xsl:attribute name="id">
+			      <xsl:value-of select="$generatedID"/>
+			    </xsl:attribute>
+			  </wp:docPr>                                
+			  <xsl:if test="$shadowGraphics='true'">
+			    <wp:cNvGraphicFramePr/>
+			  </xsl:if>
+			  <xsl:copy-of select="$graphic-element"/>
+			</wp:inline>
+		      </xsl:otherwise>
                     </xsl:choose>
-                    <!-- end inline/block -->
-                    
-                    
                 </w:drawing>
             </w:r>
 	  </xsl:when>

@@ -231,6 +231,7 @@
 		<xsl:when test="self::tei:emph">true</xsl:when>
 		<xsl:when test="self::tei:ex">true</xsl:when>
 		<xsl:when test="self::tei:expan">true</xsl:when>
+		<xsl:when test="self::tei:figure[@place='inline']">true</xsl:when>
 		<xsl:when test="self::tei:foreign">true</xsl:when>
 		<xsl:when test="self::tei:forename">true</xsl:when>
 		<xsl:when test="self::tei:gap">true</xsl:when>
