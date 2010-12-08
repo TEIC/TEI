@@ -227,6 +227,7 @@ capable of dealing with UTF-8 directly.
  {\usepackage[utf8]{inputenc}}
 <xsl:call-template name="latexBabel"/>
 \usepackage[T1]{fontenc}
+\usepackage{float}
 \usepackage[]{ucs}
 \uc@dclc{8421}{default}{\textbackslash }
 \uc@dclc{10100}{default}{\{}
