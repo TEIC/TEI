@@ -374,8 +374,16 @@
       <ref>
 	<xsl:variable name="rid" select="@r:id"/>
 	<xsl:attribute name="target">
-	  <xsl:value-of
-	      select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+	  <xsl:choose>
+	    <xsl:when test="ancestor::w:endnote">
+	      <xsl:value-of
+		  select="document(concat($word-directory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of
+		  select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:attribute>
 	<xsl:apply-templates/>
       </ref>
