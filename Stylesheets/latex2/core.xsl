@@ -533,7 +533,7 @@
          <xsl:when test="parent::tei:note and not(preceding-sibling::tei:p)">
       </xsl:when>
          <xsl:otherwise>
-	           <xsl:text>\par </xsl:text>
+	           <xsl:text>\par&#10;</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
       <xsl:if test="$numberParagraphs='true'">

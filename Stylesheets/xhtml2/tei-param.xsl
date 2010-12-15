@@ -498,7 +498,7 @@ Make a panel with next page/previous page links.
 Generate a unique ID for all paragraphs
 </desc>
    </doc>
-  <xsl:param name="generateParagraphIDs">true</xsl:param>
+  <xsl:param name="generateParagraphIDs">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="string">
       <desc>
          <p>Character separating values in a rend attribute.</p>

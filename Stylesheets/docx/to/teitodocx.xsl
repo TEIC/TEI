@@ -2165,7 +2165,7 @@
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[2]">
+    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[2]" priority="99">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Subtitle</xsl:with-param>
         </xsl:call-template>
