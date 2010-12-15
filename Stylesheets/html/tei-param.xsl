@@ -637,11 +637,6 @@ URL to link back to from foot of ODD reference pages
 <xsl:param name="refDocFooterURL">index.html</xsl:param>
 
 
-  <xd:doc type="string" class="figures">
-position of table caption (choice is top or bottom)
-  </xd:doc>
-<xsl:param name="tableCaptionPosition">bottom</xsl:param>
-
 
 <xsl:template name="navInterSep">
   <xsl:text>: </xsl:text>
