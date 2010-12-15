@@ -253,7 +253,7 @@
                   <xsl:copy-of select="."/>
                </xsl:if>
             </xsl:for-each>
-	    <xsl:if test="tei:head and $tableCaptionPosition='top'">
+	    <xsl:if test="tei:head">
 	      <caption>
 		<xsl:apply-templates mode="xref" select="."/>
 	      </caption>
@@ -272,7 +272,7 @@
 		<xsl:apply-templates select="tei:row"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
-	    <xsl:if test="tei:head and $tableCaptionPosition='bottom'">
+	    <xsl:if test="tei:head">
 	      <caption>
 		<xsl:apply-templates mode="xref" select="."/>
 	      </caption>
