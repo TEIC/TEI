@@ -419,13 +419,10 @@
           <xsl:call-template name="odd2odd-simplifyRelax"/>
         </xsl:for-each>
       </xsl:when>
-      <xsl:when test="starts-with($N,'data.')">
-        <xsl:apply-templates select="key('odd2odd-MACROS',$N)/tei:content/*" mode="odd2odd-pass2"/>
-      </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
+	<ref xmlns="http://relaxng.org/ns/structure/1.0">
 	  <xsl:apply-templates select="@*|*|text()|processing-instruction()" mode="odd2odd-pass2"/>
-	</xsl:copy>
+	</ref>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -510,12 +507,11 @@ How can a class be ok?
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
-      <xsl:when test="starts-with($k,'data.')"/>
       <xsl:when test="key('odd2odd-REFED',$k)">
-        <xsl:copy>
+	<ref xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:copy-of select="@*"/>
           <xsl:apply-templates mode="odd2odd-pass2"/>
-        </xsl:copy>
+	</ref>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$verbose='true'">
@@ -1132,9 +1128,6 @@ so that is only put back in if there is some content
                 <xsl:choose>
                   <xsl:when test="$stripped='true'">
                     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$N}"/>
-                  </xsl:when>
-                  <xsl:when test="starts-with($N,'data.')">
-                    <xsl:apply-templates select="key('odd2odd-MACROS',$N)/tei:content/*" mode="odd2odd-pass2"/>
                   </xsl:when>
                   <xsl:when test="key('odd2odd-DELETE',$N)"/>
                   <xsl:otherwise>
