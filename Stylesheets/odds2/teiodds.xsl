@@ -256,10 +256,10 @@
         <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
+	<zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0" >
           <xsl:copy-of select="@*"/>
           <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
-        </xsl:copy>
+	</zeroOrMore>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -271,10 +271,10 @@
         <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
+	<choice xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:copy-of select="@*"/>
           <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
-        </xsl:copy>
+	</choice>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -295,19 +295,19 @@
         </xsl:variable>
         <xsl:choose>
           <xsl:when test="$that=$this"/>
-          <xsl:otherwise>
-            <xsl:copy>
+	  <xsl:otherwise>
+	    <group xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:copy-of select="@*"/>
               <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
-            </xsl:copy>
+	    </group>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy>
+	<xsl:element name="{local-name()}" xmlns="http://relaxng.org/ns/structure/1.0" >
           <xsl:copy-of select="@*"/>
           <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
-        </xsl:copy>
+	</xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2109,6 +2109,9 @@ select="$makeDecls"/></xsl:message>
           xmlns="http://www.ascc.net/xml/schematron">
           <xsl:apply-templates mode="justcopy" select="."/>
         </pattern>
+      </xsl:when>
+      <xsl:when test="self::sch:ns">
+        <ns prefix="{@prefix}" uri="{@uri}" xmlns="http://purl.oclc.org/dsdl/schematron"/>
       </xsl:when>
       <xsl:when test="self::sch:pattern">
         <xsl:apply-templates mode="justcopy" select="."/>

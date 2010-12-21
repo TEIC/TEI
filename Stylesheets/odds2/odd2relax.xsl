@@ -402,9 +402,9 @@
   <xsl:template match="rng:define" mode="pass2">
       <xsl:choose>
          <xsl:when test="key('REFED',@name)">
-	   <xsl:copy>
+	   <define xmlns="http://relaxng.org/ns/structure/1.0" >
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-	   </xsl:copy>
+	   </define>
 	 </xsl:when>
 	 <xsl:otherwise>
 	   <xsl:if test="$verbose='true'">
@@ -467,9 +467,9 @@
   <xsl:template match="rng:choice" mode="pass3">
       <xsl:choose>
 	<xsl:when test="rng:value|rng:name|.//rng:ref|.//rng:text|.//rng:data">
-	   <xsl:copy>
+	   <choice xmlns="http://relaxng.org/ns/structure/1.0">
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
-	   </xsl:copy>
+	   </choice>
 	</xsl:when>
 	<xsl:otherwise>
       <xsl:if test="$verbose='true'">
@@ -486,11 +486,11 @@
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
 	</xsl:when>
 	<xsl:otherwise>
-	   <xsl:copy>
+	  <optional xmlns="http://relaxng.org/ns/structure/1.0">
 	     <xsl:apply-templates
 		 select="*|@*|processing-instruction()|comment()|text()"
 		 mode="pass3"/>
-	   </xsl:copy>
+	  </optional>
 	</xsl:otherwise>
       </xsl:choose>			   
   </xsl:template>
