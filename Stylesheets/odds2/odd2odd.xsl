@@ -508,10 +508,10 @@ How can a class be ok?
     <xsl:choose>
       <xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
       <xsl:when test="key('odd2odd-REFED',$k)">
-	<ref xmlns="http://relaxng.org/ns/structure/1.0">
+	<macroSpec xmlns="http://www.tei-c.org/ns/1.0" >
           <xsl:copy-of select="@*"/>
           <xsl:apply-templates mode="odd2odd-pass2"/>
-	</ref>
+	</macroSpec>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$verbose='true'">
