@@ -732,10 +732,7 @@
 	  <xsl:attribute name="url">
 	    <xsl:value-of select="$newName"/>
 	  </xsl:attribute>
-	  <xsl:copy-of select="@n"/>
-	  <xsl:copy-of select="@height"/>
-	  <xsl:copy-of select="@width"/>
-	  <xsl:copy-of select="@scale"/>
+	  <xsl:copy-of select="@*[not(local-name()='url')]"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:copy-of select="@*"/>
