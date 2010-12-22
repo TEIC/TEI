@@ -202,7 +202,7 @@
         </xsl:for-each>
       </xsl:when>
       <xsl:when test="matches( @target, '#\i\c*$' )">
-        <xsl:variable name="sgrDoc" select="concat( document-uri(/), substring-before(@target,'#') )"/>
+        <xsl:variable name="sgrDoc" select="substring-before(@target,'#')"/>
         <xsl:variable name="sgrID" select="substring-after(@target,'#')"/>
         <!-- sgr = specification group reference :-) -->
         <xsl:for-each select="id( $sgrID, document( $sgrDoc, $top ) )">
