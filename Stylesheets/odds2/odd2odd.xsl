@@ -78,23 +78,22 @@
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:classSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
 
-  <xsl:key name="odd2odd-MODULE_MEMBERS_MODEL" match="tei:classSpec[@type='model']"
-	   use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_MODEL" match="tei:classSpec[@type='model']" use="@module"/>
 
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
 
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
       <xsl:when test="$defaultSource != ''">
-	<xsl:value-of select="$defaultSource"/>
+        <xsl:value-of select="$defaultSource"/>
       </xsl:when>
       <xsl:when test="$configDirectory != ''">
-	<xsl:value-of select="$configDirectory"/>
-	<xsl:text>odd/p5subset.xml</xsl:text>
+        <xsl:value-of select="$configDirectory"/>
+        <xsl:text>odd/p5subset.xml</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:value-of select="$defaultDirectory"/>
-	<xsl:text>odd/p5subset.xml</xsl:text>
+        <xsl:value-of select="$defaultDirectory"/>
+        <xsl:text>odd/p5subset.xml</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -102,7 +101,7 @@
     <xsl:text>derived-module-</xsl:text>
     <xsl:value-of select="$selectedSchema"/>
   </xsl:variable>
-
+  
   <xsl:variable name="ODD">
     <xsl:for-each select="/tei:TEI">
       <xsl:copy>
@@ -202,6 +201,17 @@
           <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
         </xsl:for-each>
       </xsl:when>
+      <xsl:when test="matches( @target, '#\i\c*$' )">
+        <xsl:variable name="sgrDoc" select="concat( document-uri(/), substring-before(@target,'#') )"/>
+        <xsl:variable name="sgrID" select="substring-after(@target,'#')"/>
+        <!-- sgr = specification group reference :-) -->
+        <xsl:for-each select="id( $sgrID, document( $sgrDoc, $top ) )">
+          <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:when test="contains(@target,'#')">
+        <xsl:message>WARNING: Sorry, I don't know how to process the target=<xsl:value-of select="@target"/> of &lt;specGrpRef></xsl:message>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:for-each select="document(@target)/tei:specGrp">
           <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
@@ -209,7 +219,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
   <xsl:template match="text()|@*" mode="odd2odd-pass0">
       <xsl:copy-of select="."/>
   </xsl:template>
