@@ -284,6 +284,7 @@
 	  <xsl:if test="$debug='true'">
 	    <xsl:message>write file OEBPS/content.opf</xsl:message>
 	</xsl:if>
+
         <xsl:result-document href="{concat($directory,'OEBPS/content.opf')}" method="xml">
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
@@ -405,7 +406,9 @@
 		      media-type="{$mimetype}"/>
 		</xsl:if>
               </xsl:for-each>
-              <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+              <item id="ncx" href="toc.ncx"
+		    media-type="application/x-dtbncx+xml"/>
+	      <xsl:call-template name="epubManifestHook"/>
             </manifest>
             <spine toc="ncx">
               <itemref idref="titlepage" linear="yes"/>
@@ -439,6 +442,7 @@
 		  </xsl:if>
               </xsl:for-each>
               <itemref idref="titlepageback"  linear="no"/>
+	      <xsl:call-template name="epubSpineHook"/>
             </spine>
 
 	    <guide>
@@ -1014,5 +1018,7 @@
     </xsl:choose>
   </xsl:template>
 
-  
+
+  <xsl:template name="epubSpineHook"/>
+  <xsl:template name="epubManifestHook"/>  
  </xsl:stylesheet>
