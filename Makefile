@@ -8,14 +8,11 @@ XELATEX=xelatex
 VERBOSE=
 PREFIX=/usr
 SOURCETREE=Source
-LANGTREE=${SOURCETREE}/Guidelines/${INPUTLANGUAGE}
-DRIVER=${LANGTREE}/guidelines.xml
-FASCFILE=${LANGTREE}/FASC-${CHAP}.xml
+DRIVER=${SOURCETREE}/guidelines-${INPUTLANGUAGE}.xml
 ROMA=roma2
 ROMAOPTS="--localsource=`pwd`/p5subset.xml"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
-CHAPTER=$(shell find ${LANGTREE} -iname ${CHAP}*.xml)
 # If you have not installed the Debian packages, uncomment one
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
@@ -67,7 +64,7 @@ html-web: check
 	-mkdir Guidelines-web
 	echo making HTML Guidelines for language ${LANGUAGE}
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
-	cp -r webnav/* odd.css guidelines.css COPYING.txt guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html/ 
+	cp -r Source/Guidelines/${INPUTLANGUAGE}/Images webnav/* odd.css guidelines.css COPYING.txt guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html/ 
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
 		pageLayout=CSS \
@@ -75,8 +72,6 @@ html-web: check
 	        doclang=${LANGUAGE} \
 		googleAnalytics=${GOOGLEANALYTICS} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}  ${VERBOSE}
-	mkdir Guidelines-web-tmp/${LANGUAGE}/html/Images
-	cp  ${SOURCETREE}/Images/*.* Guidelines-web-tmp/${LANGUAGE}/html/Images
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css)
 	-rm -rf Guidelines-web/${LANGUAGE}
@@ -91,27 +86,6 @@ validate-html:
 	$(JING) -c ../../../xhtml.rnc z_$$i; \
 	 rm z_$$i;\
 	 done)
-
-html:check subset
-	-rm -rf Guidelines
-	-mkdir Guidelines
-	perl -p -e \
-		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
-		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
-		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
-	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines-print.xsl \
-	    outputDir=Guidelines \
-	    localsource=`pwd`/p5subset.xml \
-	    STDOUT=false \
-	    displayMode=rnc \
-	    lang=${LANGUAGE} \
-	    doclang=${LANGUAGE} \
-	    documentationLanguage=${DOCUMENTATIONLANGUAGE} 
-	-cp guidelines.css COPYING.txt  Guidelines
-	-cp -r ${SOURCETREE}/Images Guidelines/
-	(cd Guidelines; for i in *.html; do perl -i ../Utilities/cleanrnc.pl $$i;done)
-	(cd Guidelines; perl -p -i -e 's+ xmlns:html="http://www.w3.org/1999/xhtml"++' index.html)
-	-xmllint --noout --valid Guidelines/index.html
 
 xml: check  
 	${SAXON} ${SAXON_ARGS}  -o Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
@@ -147,22 +121,17 @@ tex: xml
 
 pdf: tex
 	echo make sure you have Junicode, arphic and mincho fonts installed
-	mkdir -p Images
-	cp -r Source/Images/*.* Images
 	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
 	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
 	makeindex -s p5.ist Guidelines
 	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
 	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
-	rm -rf Images
 
 
 chapterpdfs:
 	@echo Checking you have a running ${LATEX} before trying to make PDF...
 	which ${XELATEX} || exit 1
-	mkdir -p Images
-	cp -r Source/Images/*.* Images
 	for i in `grep "\\include{" Guidelines.tex | sed 's/.*{\(.*\)}.*/\\1/'`; \
 	do echo PDF for chapter $$i; \
 	echo  $$i | ${XELATEX} Guidelines; \
@@ -170,7 +139,6 @@ chapterpdfs:
 	mv Guidelines.pdf $$i.pdf; \
 	perl -p -i -e 's/.*zf@fam.*//' $$i.aux; \
 	done
-	rm -rf Images
 
 validate: dtds schemas oddschema exampleschema valid 
 
