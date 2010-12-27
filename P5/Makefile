@@ -9,7 +9,7 @@ VERBOSE=
 PREFIX=/usr
 SOURCETREE=Source
 LANGTREE=${SOURCETREE}/Guidelines/${INPUTLANGUAGE}
-DRIVER=${LANGTREE}/guidelines-${INPUTLANGUAGE}.xml
+DRIVER=${LANGTREE}/guidelines.xml
 FASCFILE=${LANGTREE}/FASC-${CHAP}.xml
 ROMA=roma2
 ROMAOPTS="--localsource=`pwd`/p5subset.xml"
