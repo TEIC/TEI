@@ -64,6 +64,7 @@
   <xsl:param name="tocFront">true</xsl:param>
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
+  <xsl:param name="outputTarget">epub</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[epub] Suppress normal page footer      </desc>
@@ -181,6 +182,7 @@
       <xsl:apply-templates mode="fixgraphics"/>
     </xsl:variable>
     <xsl:for-each select="$stage1">
+      <xsl:call-template name="processTEIHook"/>
       <xsl:variable name="coverImageOutside">
 	<xsl:choose>
 	  <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs]">
@@ -235,18 +237,34 @@
 	  <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
 	</xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'OEBPS/stylesheet.css')}">
-	<xsl:if test="$debug='true'">
-	  <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
-	</xsl:if>
-          <xsl:for-each select="tokenize(unparsed-text($cssFile),
+	  <xsl:if test="$debug='true'">
+	    <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
+	  </xsl:if>
+	  <xsl:for-each select="tokenize(unparsed-text($cssFile),
 				'\r?\n')">
 	    <xsl:call-template name="purgeCSS"/>
-          </xsl:for-each>
+	  </xsl:for-each>
+	  <xsl:if test="not($cssSecondaryFile='')">
+	    <xsl:for-each select="tokenize(unparsed-text($cssSecondaryFile),
+				  '\r?\n')">
+	      <xsl:call-template name="purgeCSS"/>
+	    </xsl:for-each>
+	  </xsl:if>
+	  <xsl:if test="$odd='true'">
+	    <xsl:if test="$debug='true'">
+	      <xsl:message>reading file <xsl:value-of
+	      select="$cssODDFile"/></xsl:message>
+	    </xsl:if>
+	    <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
+	      <xsl:call-template name="purgeCSS"/>
+	    </xsl:for-each>
+	  </xsl:if>
+
           <xsl:if test="$odd='true'">
-	      <xsl:if test="$debug='true'">
-		<xsl:message>reading file <xsl:value-of
-		select="$cssODDFile"/></xsl:message>
-	      </xsl:if>
+	    <xsl:if test="$debug='true'">
+	      <xsl:message>reading file <xsl:value-of
+	      select="$cssODDFile"/></xsl:message>
+	    </xsl:if>
             <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
 	      <xsl:call-template name="purgeCSS"/>
             </xsl:for-each>

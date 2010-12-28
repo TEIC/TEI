@@ -351,31 +351,6 @@
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-      <p>Process element gi</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:gi">
-    <span class="gi">
-      <xsl:text>&lt;</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>&gt;</xsl:text>
-    </span>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element gi</desc>
-  </doc>
-  <xsl:template match="tei:gi" mode="plain">
-    <span class="gi">
-      <xsl:text>&lt;</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>&gt;</xsl:text>
-    </span>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
       <p>Process element att</p>
       <p>
         <p xmlns="http://www.w3.org/1999/xhtml"> special purpose </p>
@@ -536,11 +511,6 @@
   <xsl:template match="tei:item">
     <li>
       <xsl:call-template name="rendToClass"/>
-      <xsl:if test="@n">
-        <xsl:attribute name="value">
-          <xsl:value-of select="@n"/>
-        </xsl:attribute>
-      </xsl:if>
       <xsl:choose>
         <xsl:when test="@xml:id">
           <xsl:call-template name="makeAnchor">
@@ -993,6 +963,29 @@
 	  <xsl:text>)</xsl:text>
 	</span>
       </xsl:when>
+      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
+        <span>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
+	  </xsl:call-template>
+	  <xsl:choose>
+          <xsl:when test="$footnoteFile='true'">
+            <a class="notelink" title="Go to note" href="{$masterFile}-notes.html#{$identifier}">
+              <sup>
+                <xsl:call-template name="noteN"/>
+              </sup>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
+            <a class="notelink" title="Go to note" href="#{$identifier}">
+              <sup>
+                <xsl:call-template name="noteN"/>
+              </sup>
+            </a>
+          </xsl:otherwise>
+        </xsl:choose>
+	</span>
+      </xsl:when>
       <xsl:when test="(@place='display' or tei:q) 
 		      and (parent::tei:div or parent::tei:p or parent::tei:body)">
 	<div class="note">
@@ -1032,29 +1025,6 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
         </blockquote>
-      </xsl:when>
-      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <span>
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
-	  </xsl:call-template>
-	  <xsl:choose>
-          <xsl:when test="$footnoteFile='true'">
-            <a class="notelink" title="Go to note" href="{$masterFile}-notes.html#{$identifier}">
-              <sup>
-                <xsl:call-template name="noteN"/>
-              </sup>
-            </a>
-          </xsl:when>
-          <xsl:otherwise>
-            <a class="notelink" title="Go to note" href="#{$identifier}">
-              <sup>
-                <xsl:call-template name="noteN"/>
-              </sup>
-            </a>
-          </xsl:otherwise>
-        </xsl:choose>
-	</span>
       </xsl:when>
       <xsl:when test="parent::tei:p or parent::tei:hi">
 	<span class="note">

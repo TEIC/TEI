@@ -152,37 +152,29 @@
 	                 <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
 	                 <head>
 	                    <title>
-		                      <xsl:text>TEI </xsl:text>
-		                      <xsl:value-of select="substring-before(local-name(),'Spec')"/>
-		                      <xsl:text> </xsl:text>
-		                      <xsl:value-of select="$name"/>
-		                      <xsl:text> </xsl:text>
-		                      <xsl:call-template name="makeGloss">
-		                         <xsl:with-param name="langs" select="$langs"/>
-		                      </xsl:call-template>
+			      <xsl:text>TEI </xsl:text>
+			      <xsl:value-of select="substring-before(local-name(),'Spec')"/>
+			      <xsl:text> </xsl:text>
+			      <xsl:value-of select="$name"/>
+			      <xsl:text> </xsl:text>
+			      <xsl:call-template name="makeGloss">
+				<xsl:with-param name="langs" select="$langs"/>
+			      </xsl:call-template>
 	                    </title>
-	                    <xsl:choose>
-		                      <xsl:when test="$cssFile = ''"/>
-		                      <xsl:otherwise>
-		                         <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
-		                      </xsl:otherwise>
-	                    </xsl:choose>
-	                    <xsl:if test="not($cssSecondaryFile = '')">
-		                      <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
-	                    </xsl:if>
+			    <xsl:call-template name="includeCSS"/>
 	                    <xsl:call-template name="generateLocalCSS"/>
 	                    <xsl:call-template name="metaHTML">
-		                      <xsl:with-param name="title">
-		                         <xsl:value-of select="substring-before(local-name(),'Spec')"/>
-		                         <xsl:text> </xsl:text>
-		                         <xsl:value-of select="@ident"/>
-		                         <xsl:text> </xsl:text>
-		                         <xsl:call-template name="makeGloss">
-		                            <xsl:with-param name="langs" select="$langs"/>
-		                         </xsl:call-template>
-		                         <xsl:text> - </xsl:text>
-		                         <xsl:call-template name="generateTitle"/>
-		                      </xsl:with-param>
+			      <xsl:with-param name="title">
+				<xsl:value-of select="substring-before(local-name(),'Spec')"/>
+				<xsl:text> </xsl:text>
+				<xsl:value-of select="@ident"/>
+				<xsl:text> </xsl:text>
+				<xsl:call-template name="makeGloss">
+				  <xsl:with-param name="langs" select="$langs"/>
+				</xsl:call-template>
+				<xsl:text> - </xsl:text>
+				<xsl:call-template name="generateTitle"/>
+			      </xsl:with-param>
 	                    </xsl:call-template>
 	                    <xsl:call-template name="includeJavascript"/>
 	                    <xsl:call-template name="javascriptHook"/>
@@ -190,19 +182,19 @@
 	                 <body id="TOP">
 	                    <xsl:call-template name="bodyHook"/>
 	                    <xsl:call-template name="teiTOP">
-		                      <xsl:with-param name="name">
-		                         <xsl:value-of select="$name"/>
-		                      </xsl:with-param>
+			      <xsl:with-param name="name">
+				<xsl:value-of select="$name"/>
+			      </xsl:with-param>
 	                    </xsl:call-template>
 	                    <div class="main-content">
-		                      <xsl:call-template name="startDivHook"/>
-		                      <xsl:apply-templates mode="weavebody" select="."/>
+			      <xsl:call-template name="startDivHook"/>
+			      <xsl:apply-templates mode="weavebody" select="."/>
 	                    </div>
 	                    <xsl:call-template name="stdfooter">
-		                      <xsl:with-param name="file">
-		                         <xsl:text>ref-</xsl:text>
-		                         <xsl:value-of select="@ident"/>
-		                      </xsl:with-param>
+			      <xsl:with-param name="file">
+				<xsl:text>ref-</xsl:text>
+				<xsl:value-of select="@ident"/>
+			      </xsl:with-param>
 	                    </xsl:call-template>
 	                    <xsl:call-template name="bodyEndHook"/>
 	                 </body>
@@ -545,6 +537,71 @@
 
   <xsl:template name="specHook">
       <xsl:param name="name"/>
+  </xsl:template>
+
+  <xsl:template match="tei:ident">
+      <xsl:choose>
+         <xsl:when test="@type='class' and key('CLASSES',.)">
+            <xsl:call-template name="linkTogether">
+               <xsl:with-param name="name">
+                  <xsl:value-of select="."/>
+               </xsl:with-param>
+               <xsl:with-param name="reftext">
+                  <xsl:value-of select="."/>
+               </xsl:with-param>
+            </xsl:call-template>
+         </xsl:when>
+         <xsl:when test="@type">
+            <span class="ident-{@type}">
+               <xsl:apply-templates/>
+            </span>
+         </xsl:when>
+         <xsl:otherwise>
+            <span class="ident">
+               <xsl:apply-templates/>
+            </span>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+  <xsl:template match="tei:gi">
+      <xsl:choose>
+         <xsl:when test="parent::tei:ref or parent::tei:head or string-length(@scheme)&gt;0">
+            <span class="gi">
+               <xsl:text>&lt;</xsl:text>
+               <xsl:apply-templates/>
+               <xsl:text>&gt;</xsl:text>
+            </span>
+         </xsl:when>
+         <xsl:when test="key('ELEMENTS',.)">
+            <xsl:for-each select="key('ELEMENTS',.)">
+               <xsl:call-template name="linkTogether">
+                  <xsl:with-param name="class">gi</xsl:with-param>
+                  <xsl:with-param name="name">
+                     <xsl:value-of select="@ident"/>
+                  </xsl:with-param>
+                  <xsl:with-param name="reftext">
+                     <xsl:choose>
+                        <xsl:when test="tei:content/rng:empty">
+                           <span class="emptySlash">
+                              <xsl:value-of select="@ident"/>
+                           </span>
+                        </xsl:when>
+                        <xsl:otherwise>
+                           <xsl:value-of select="@ident"/>
+                        </xsl:otherwise>
+                     </xsl:choose>
+                  </xsl:with-param>
+               </xsl:call-template>
+            </xsl:for-each>
+         </xsl:when>
+         <xsl:otherwise>
+            <span class="gi">
+               <xsl:text>&lt;</xsl:text>
+               <xsl:apply-templates/>
+               <xsl:text>&gt;</xsl:text>
+            </span>
+         </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 
 

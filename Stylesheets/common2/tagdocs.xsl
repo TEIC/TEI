@@ -1976,7 +1976,7 @@
 	              <xsl:element namespace="{$outputNS}" name="{$rowName}">
 	                 <xsl:call-template name="identifyElement">
 	                    <xsl:with-param name="id">
-		                      <xsl:value-of select="$this"/>
+			      <xsl:value-of select="translate($this,':','_')"/>
 	                    </xsl:with-param>
 	                 </xsl:call-template>
 	                 <xsl:element namespace="{$outputNS}" name="{$cellName}">

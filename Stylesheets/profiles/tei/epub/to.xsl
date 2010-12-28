@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
   <xsl:import href="../../../odds2/odd2html.xsl"/>
   <xsl:import href="../../../epub/tei-to-epub.xsl"/>
+
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
   <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
   <xsl:param name="googleAnalytics"/>
@@ -27,8 +28,8 @@
   <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]" use="substring-after(@corresp,'#')"/>
   <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']" use="substring-after(@target,'#')"/>
   <xsl:template name="copyrightStatement">Copyright TEI Consortium 2010</xsl:template>
-  <xsl:template match="/">
-    <xsl:apply-imports/>
+  
+  <xsl:template name="processTEIHook">
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
       <xsl:variable name="documentationLanguage">
@@ -186,6 +187,7 @@
       </xsl:result-document>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="metaHTML">
     <xsl:param name="title"/>
     <meta name="Language" content="{$documentationLanguage}"/>
@@ -196,12 +198,16 @@
     <meta content="application/xhtml+xml; charset=utf-8" http-equiv="Content-Type"/>
   </xsl:template>
   <xsl:template name="startDivHook">
-    <h2><xsl:value-of select="tei:head"/></h2>
     <xsl:if test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
+      <xsl:if test="$outputTarget='epub'">
+	<h2>
+	  <xsl:call-template name="header"/>
+	</h2>
+      </xsl:if>
       <div>
-	<xsl:if test="$outputTarget='html'">
+	<xsl:if test="$outputTarget='epub'">
 	  <xsl:attribute name="style">
-	    <xsl:text>margin-top: -5em;</xsl:text>
+	    <xsl:text>margin-top: 0em;</xsl:text>
 	  </xsl:attribute>
 	</xsl:if>
         <xsl:choose>
@@ -224,7 +230,6 @@
           <li class="subtoc">
             <xsl:call-template name="nextLink"/>
           </li>
-	  <xsl:if test="$outputTarget='html'">
           <li class="subtoc">
             <a class="navigation" href="index.html">
               <xsl:call-template name="i18n">
@@ -278,7 +283,6 @@
               </xsl:when>
             </xsl:choose>
           </li>
-	  </xsl:if>
         </ul>
       </div>
     </xsl:if>
@@ -306,9 +310,11 @@
                 </xsl:call-template>
               </a>
             </li>
-            <li>
-              <a href="../../en/Guidelines.pdf">PDF</a>
-            </li>
+	    <xsl:if test="$outputTarget='html'">
+	      <li>
+		<a href="../../en/Guidelines.pdf">PDF</a>
+	      </li>
+	    </xsl:if>
             <li>
               <a href="http://www.tei-c.org/Council/tcw06.xml">
                 <xsl:call-template name="i18n">
@@ -422,51 +428,49 @@
             </li>
           </ul>
         </div>
-        <xsl:call-template name="makeoddtoc"/>
+	<xsl:variable name="name">TEI Guidelines TOC </xsl:variable>
+	<xsl:variable name="outName">
+	  <xsl:call-template name="outputChunkName">
+	    <xsl:with-param name="ident">
+	      <xsl:text>index-toc</xsl:text>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:variable>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
+	<xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+	  <html>
+	    <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (8) </xsl:comment>
+	    <head>
+	      <title>
+		<xsl:value-of select="$name"/>
+	      </title>
+	      <xsl:call-template name="includeCSS"/>
+	      <meta content="Text Encoding Initiative Consortium XSLT stylesheets" name="generator"/>
+	      <meta content="{$name}" name="DC.Title"/>
+	      <meta content="application/xhtml+xml; charset=utf-8" http-equiv="Content-Type"/>
+	      <xsl:call-template name="includeJavascript"/>
+	      <xsl:call-template name="javascriptHook"/>
+	    </head>
+	    <body id="TOP">
+	      <xsl:call-template name="bodyHook"/>
+	      <xsl:call-template name="teiTOP"/>
+	      <div id="onecol" class="main-content">
+		<xsl:call-template name="mainTOC"/>
+	      </div>
+	      <xsl:call-template name="stdfooter"/>
+	    </body>
+	  </html>
+	</xsl:result-document>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
+	</xsl:if>
       </xsl:if>
-      <xsl:call-template name="stdfooter"/>
     </div>
   </xsl:template>
-  <xsl:template name="makeoddtoc">
-    <xsl:variable name="name">TEI Guidelines TOC </xsl:variable>
-    <xsl:variable name="outName">
-      <xsl:call-template name="outputChunkName">
-        <xsl:with-param name="ident">
-          <xsl:text>index-toc</xsl:text>
-        </xsl:with-param>
-      </xsl:call-template>
-    </xsl:variable>
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
-    </xsl:if>
-    <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
-      <html>
-        <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (8) </xsl:comment>
-        <head>
-          <title>
-            <xsl:value-of select="$name"/>
-          </title>
-          <xsl:call-template name="includeCSS"/>
-          <meta content="Text Encoding Initiative Consortium XSLT stylesheets" name="generator"/>
-          <meta content="{$name}" name="DC.Title"/>
-          <meta content="application/xhtml+xml; charset=utf-8" http-equiv="Content-Type"/>
-          <xsl:call-template name="includeJavascript"/>
-          <xsl:call-template name="javascriptHook"/>
-        </head>
-        <body id="TOP">
-          <xsl:call-template name="bodyHook"/>
-          <xsl:call-template name="teiTOP"/>
-          <div id="onecol" class="main-content">
-            <xsl:call-template name="mainTOC"/>
-          </div>
-          <xsl:call-template name="stdfooter"/>
-        </body>
-      </html>
-    </xsl:result-document>
-    <xsl:if test="$verbose='true'">
-      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-    </xsl:if>
-  </xsl:template>
+
+
   <xsl:template name="showHead">
     <xsl:param name="ID"/>
     <xsl:variable name="Here" select="/"/>
@@ -672,7 +676,7 @@
 
 -->
   <xsl:template match="tei:divGen[@type='toc']">
-    <xsl:call-template name="makeoddtoc"/>
+    <xsl:call-template name="mainPage"/>
   </xsl:template>
   <xsl:template name="javascriptHook">
     <script type="text/javascript" src="jquery-1.2.6.min.js">
@@ -1319,7 +1323,13 @@ glyphes non standard</head>
       <itemref xmlns="http://www.idpf.org/2007/opf" idref="ref-{@ident}" linear="no"/>
     </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="atozHeader">
     <xsl:param name="Key"/>
   </xsl:template>
+
+   <xsl:template name="navInterSep">
+      <xsl:text> </xsl:text>
+   </xsl:template>
+
 </xsl:stylesheet>
