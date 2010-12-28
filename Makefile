@@ -350,6 +350,12 @@ check:
 	@echo -n saxon: 
 	@which ${SAXON} || exit 1
 
+epub:
+	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
+	${XSL}/teitoepub --profile=tei teip5.xml
+	mv teip5.epub Guidelines.epub
+	rm teip5.xml
+
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
 	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
