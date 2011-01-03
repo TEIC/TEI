@@ -59,13 +59,13 @@ cd $TEMPDIR
 unzip -o -q $TEMPLATES/template.odt
 if $odd
 then
-    saxon -o $TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl defaultSource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
-    saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o $TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/oo/fixgraphics.xsl DIR=`pwd`
+    saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl defaultSource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
+    saxon -o:$TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
+    saxon -o:$TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/oo/fixgraphics.xsl DIR=`pwd`
 else
-    saxon -o $TEMPDIR/tmp3.xml $F $XSL/oo/fixgraphics.xsl DIR=`pwd`
+    saxon -o:$TEMPDIR/tmp3.xml $F $XSL/oo/fixgraphics.xsl DIR=`pwd`
 fi
-saxon -o newcontent.xml tmp3.xml $APPHOME/profiles/$profile/oo/to.xsl  debug=$debug dir=$TEMPDIR 
+saxon -o:newcontent.xml tmp3.xml $APPHOME/profiles/$profile/oo/to.xsl  debug=$debug dir=$TEMPDIR 
 mv newcontent.xml content.xml
 if $debug 
 then

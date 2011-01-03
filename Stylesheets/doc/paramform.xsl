@@ -8,7 +8,6 @@
     version="2.0">
 
 <xsl:import href="../xhtml2/tei.xsl"/>
-<xsl:import href="../common2/verbatim.xsl"/>
 
 <doc scope="stylesheet" xmlns="http://www.oxygenxml.com/ns/doc/xsl" >
     <desc>

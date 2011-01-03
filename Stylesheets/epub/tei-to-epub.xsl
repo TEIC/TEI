@@ -1039,4 +1039,5 @@
 
   <xsl:template name="epubSpineHook"/>
   <xsl:template name="epubManifestHook"/>  
- </xsl:stylesheet>
+  <xsl:template name="processTEIHook"/>
+</xsl:stylesheet>

@@ -62,19 +62,19 @@ fi
 unzip -o -q $TEMPLATES/template.docx
 if $odd
 then
-    saxon -o $TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl defaultSource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
-    saxon -o $TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o $TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
+    saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl defaultSource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
+    saxon -o:$TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
+    saxon -o:$TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 else
-    saxon -o $TEMPDIR/tmp3.xml  $F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
+    saxon -o:$TEMPDIR/tmp3.xml  $F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 fi
-saxon -o tmp4.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
+saxon -o:tmp4.xml tmp3.xml $APPHOME/profiles/$profile/docx/to.xsl  \
     debug=$debug isofreestanding=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR tei-directory=$TEMPDIR/ tableMethod=$tables
 
 if test -f $APPHOME/profiles/$profile/docx/makecoverpages2.xsl 
 then
    echo rewrite cover page
-   saxon -o doctemp.xml word/document.xml $APPHOME/profiles/$profile/docx/makecoverpages.xsl \
+   saxon -o:doctemp.xml word/document.xml $APPHOME/profiles/$profile/docx/makecoverpages.xsl \
        header-file=$TEMPDIR/tmp3.xml document-file=$TEMPDIR/tmp4.xml 
    mv doctemp.xml word/document.xml
 else
