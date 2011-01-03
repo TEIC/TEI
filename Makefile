@@ -88,7 +88,7 @@ validate-html:
 	 done)
 
 xml: check  
-	${SAXON} ${SAXON_ARGS}  -o Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
+	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	#@echo Success. Created Guidelines.xml. now attempt to validate
@@ -205,7 +205,7 @@ exampleschema: subset
 #	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
 subset:
-	${SAXON} ${SAXON_ARGS}  -o p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
+	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 	rm -f release/tei-`cat VERSION`.zip
@@ -365,7 +365,7 @@ changelog:
 
 
 catalogue:
-	${SAXON} ${SAXON_ARGS}  -o catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
+	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
 	${SAXON} ${SAXON_ARGS}  catalogue.xml ${XSL}/xhtml2/tei.xsl > catalogue.html
 	echo Made catalogue.html
 
