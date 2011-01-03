@@ -31,7 +31,6 @@
                 version="2.0"
                 exclude-result-prefixes="a cp dc dcterms dcmitype prop     iso m mml mo mv o pic r rel     tbx tei teidocx v xs ve w10 w wne wp xpath">
 
-    <xsl:import href="../parameters.xsl"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

@@ -11,7 +11,7 @@
                 exclude-result-prefixes="tei xlink xhtml m"
                 version="2.0">
   <xsl:import href="../xhtml2/tei.xsl"/>
-  <xsl:import href="../common2/verbatim.xsl"/>
+
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
