@@ -13,7 +13,7 @@ makeODD()
     echo "1. expand and simplify ODD "
     if test "x$lang" = "x"
     then
-	xmllint --xinclude $ODD | saxon  -o $RESULTS/$ODD.compiled - \
+	xmllint --xinclude $ODD | saxon  -o:$RESULTS/$ODD.compiled - \
 	    $TEIXSLDIR/odds2/odd2odd.xsl \
 	    $SELECTEDSCHEMA  \
 	    $LANGUAGE\
@@ -28,7 +28,7 @@ makeODD()
 	    currentDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    $SOURCE $DEBUG  \
-	    | saxon -o $RESULTS/$ODD.compiled - $TEIXSLDIR/odds2/translate-odd.xsl \
+	    | saxon -o:$RESULTS/$ODD.compiled - $TEIXSLDIR/odds2/translate-odd.xsl \
 	    $DEBUG $LANGUAGE $DOCLANG 
    fi
 }
@@ -84,7 +84,7 @@ makeISOSCH()
 makeHTMLDOC() 
 {
     echo "10. make HTML documentation $schema.doc.html "
-    saxon -o $RESULTS/$schema.doc.html $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2html.xsl \
+    saxon -o:$RESULTS/$schema.doc.html $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2html.xsl \
 	$DOCFLAGS  \
 	$DEBUG  $LANGUAGE $DOCLANG TEIC=$TEIC \
 	STDOUT=true \
@@ -94,7 +94,7 @@ makeHTMLDOC()
 makePDFDOC() 
 {
     echo "7. make PDF documentation $schema.doc.pdf and $schema.doc.tex "
-    saxon  -o $RESULTS/$schema.doc.tex $RESULTS/$schema.doc.xml $TEIXSLDIR/latex2/tei.xsl \
+    saxon  -o:$RESULTS/$schema.doc.tex $RESULTS/$schema.doc.xml $TEIXSLDIR/latex2/tei.xsl \
 	$DEBUG $DOCFLAGS $LANGUAGE $DOCLANG TEIC=$TEIC useHeaderFrontMatter=true reencode=false \
 	preQuote=“ postQuote=”
     cat > $RESULTS/perl$$.pl<<EOF
@@ -138,7 +138,7 @@ EOF
 makeXMLDOC() 
 {
     echo "6. make expanded documented ODD $schema.doc.xml "
-    saxon -o $RESULTS/$schema.doc.xml  \
+    saxon -o:$RESULTS/$schema.doc.xml  \
     $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2lite.xsl \
     $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG $SOURCE TEIC=$TEIC 
 }
