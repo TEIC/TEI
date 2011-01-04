@@ -59,7 +59,7 @@ All output is converted to UTF-8.</li>
    
    <xsl:template match="/" name="main">
      <xsl:choose>
-       <xsl:when test="unparsed-text-available($input-uri)">
+       <xsl:when test="unparsed-text-available($input-uri, $input-encoding)">
 	 <xsl:variable name="csv"
 		       select="unparsed-text($input-uri, $input-encoding)"/>
 	 <xsl:variable name="lines" select="tokenize($csv, '&#xa;')"
