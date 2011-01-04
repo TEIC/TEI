@@ -23,7 +23,7 @@ schemas:
 	-rm tei_xinclude.dtd tei_xinclude.xsd
 
 names:
-	saxon -o exnames.xml ../Source/Guidelines/${LANGUAGE}/${DRIVER} ../Utilities/makeexnames.xsl  
+	saxon -o:exnames.xml ../Source/Guidelines/${LANGUAGE}/${DRIVER} ../Utilities/makeexnames.xsl  
 
 
 dist: schemas
