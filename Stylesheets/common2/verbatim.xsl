@@ -84,8 +84,7 @@
   </doc>
   <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>

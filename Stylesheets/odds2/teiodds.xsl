@@ -14,8 +14,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
   version="2.0">
-  <xsl:import href="../common2/verbatim.xsl"/>
-  <xsl:import href="../common2/i18n.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for processing TEI ODD markup </p>
@@ -379,12 +378,6 @@
         </xsl:apply-templates>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-
-
-  <xsl:template match="tei:author">
-    <xsl:apply-templates/>
-    <xsl:text>, </xsl:text>
   </xsl:template>
 
 
@@ -1307,11 +1300,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="copyright">
-    <xsl:apply-templates mode="copyrighttext"
-      select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
-  </xsl:template>
-
   <xsl:template match="tei:p" mode="copyrighttext">
     <xsl:text>&#10;</xsl:text>
     <xsl:apply-templates/>
@@ -1759,12 +1747,6 @@ select="$makeDecls"/></xsl:message>
     <xsl:call-template name="processSchemaFragment"/>
   </xsl:template>
 
-  <xsl:template name="typewriter">
-    <xsl:param name="text"/>
-  </xsl:template>
-
-  <xsl:template name="refdoc"/>
-
   <xsl:template name="generateOutput">
     <xsl:param name="body"/>
     <xsl:param name="suffix"/>
@@ -2144,21 +2126,6 @@ select="$makeDecls"/></xsl:message>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="bitOut">
-    <xsl:param name="grammar"/>
-    <xsl:param name="element"/>
-    <xsl:param name="content"/>
-  </xsl:template>
-
-  <xsl:template name="makeAnchor">
-    <xsl:param name="name"/>
-  </xsl:template>
-
-  <xsl:template name="makeLink">
-    <xsl:param name="class"/>
-    <xsl:param name="name"/>
-    <xsl:param name="text"/>
-  </xsl:template>
 
    <xsl:template match="@*|text()" mode="justcopy">
       <xsl:copy-of select="."/>
