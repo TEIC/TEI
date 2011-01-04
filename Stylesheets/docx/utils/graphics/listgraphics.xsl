@@ -76,5 +76,7 @@
          </xsl:choose>
          <xsl:text>&#10;</xsl:text>
       </xsl:for-each>
+
   </xsl:template>
+
 </xsl:stylesheet>

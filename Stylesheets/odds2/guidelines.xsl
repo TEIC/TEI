@@ -824,6 +824,7 @@ glyphes non standard</head>
       </xsl:variable>
       <li>
         <xsl:choose>
+	  <xsl:when test="$outputTarget='epub'"/>
           <xsl:when test="not(ancestor::tei:div) and tei:div">
             <xsl:attribute name="class">
               <xsl:text>tocTree</xsl:text>

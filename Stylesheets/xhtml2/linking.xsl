@@ -42,7 +42,8 @@
          <xsl:when test="@xml:id and $useIDs='true'">
             <xsl:value-of select="@xml:id"/>
          </xsl:when>
-         <xsl:when test="starts-with(local-name(.),'div') or self::tei:text">
+         <xsl:when test="starts-with(local-name(.),'div') or
+			 self::tei:text">
             <xsl:variable name="xpath">
                <xsl:for-each select="ancestor-or-self::tei:*">
 	                 <xsl:value-of select="local-name()"/>
@@ -62,11 +63,11 @@
 	   <xsl:call-template name="addCorpusID"/>
 	 </xsl:when>
          <xsl:otherwise>
-	           <xsl:value-of select="$BaseFile"/>
-	           <xsl:text>-</xsl:text>
-	           <xsl:value-of select="local-name(.)"/>
-	           <xsl:text>-</xsl:text>
-	           <xsl:value-of select="generate-id()"/>
+	   <xsl:value-of select="$BaseFile"/>
+	   <xsl:text>-</xsl:text>
+	   <xsl:value-of select="local-name(.)"/>
+	   <xsl:text>-</xsl:text>
+	   <xsl:value-of select="generate-id()"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
