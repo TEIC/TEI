@@ -24,7 +24,7 @@ SAXON=saxon
 SAXON_ARGS=-ext:on
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema clean dist exemplars
 
-default: dtds schemas validate exemplars test pdf html-web validate-html
+default: dtds schemas validate exemplars test pdf epub html-web validate-html
 
 convert: dtds schemas
 
