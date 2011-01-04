@@ -337,8 +337,6 @@ install: clean install-schema install-doc install-test install-exemplars install
 
 check:
 	@echo Checking you have running XML tools and Perl before trying to run transform...
-	@echo -n saxon: 
-	@which saxon || exit 1
 	@echo -n Perl: 
 	@which perl || exit 1
 	@echo -n xmllint: 
