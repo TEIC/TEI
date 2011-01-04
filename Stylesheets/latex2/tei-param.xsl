@@ -248,9 +248,9 @@ capable of dealing with UTF-8 directly.
 \def\textJapanese{\fontspec{Kochi Mincho}}
 \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
 \def\textKorean{\fontspec{Baekmuk Gulim} }
-\setmonofont{DejaVu Sans Mono}
-%\setsansfont{Arial}
-%\setromanfont{Times New Roman}
+\setmonofont{<xsl:value-of select="$typewriterFont"/>}
+\setsansfont{<xsl:value-of select="$sansFont"/>}
+\setromanfont{<xsl:value-of select="$romanFont"/>}
 </xsl:otherwise>
       </xsl:choose>
 \DeclareTextSymbol{\textpi}{OML}{25}
@@ -260,11 +260,11 @@ capable of dealing with UTF-8 directly.
 \def\@textsubscript#1{%
   {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
 \def\textquoted#1{‘#1’}
-\def\textcal#1{\ensuremath{\mathcal{#1}}}
 \def\textsmall#1{{\small #1}}
 \def\textlarge#1{{\large #1}}
 \def\textoverbar#1{\ensuremath{\overline{#1}}}
-\def\textgothic#1{\ensuremath{\mathscr{#1}}}
+\def\textgothic#1{{\fontspec{<xsl:value-of select="$gothicFont"/>}#1}}
+\def\textcal#1{{\fontspec{<xsl:value-of select="$calligraphicFont"/>}#1}}
 \RequirePackage{array}
 \def\@testpach{\@chclass
  \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
@@ -380,6 +380,17 @@ capable of dealing with UTF-8 directly.
 </doc>
 <xsl:param name="latexPaperSize">a4paper</xsl:param>
      
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for literal code</desc>   </doc>
+<xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for sans-serif</desc>   </doc>
+<xsl:param name="sansFont">Arial</xsl:param>
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for serif</desc>   </doc>
+<xsl:param name="romanFont">Times New Roman</xsl:param>
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for gothic</desc>   </doc>
+<xsl:param name="gothicFont">Lucida Blackletter</xsl:param>
+<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for calligraphic</desc>   </doc>
+<xsl:param name="calligraphicFont">Lucida Calligraphhy</xsl:param>
+
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
          <p>LaTeX layout preamble</p>
