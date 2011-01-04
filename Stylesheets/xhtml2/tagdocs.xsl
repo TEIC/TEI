@@ -1076,4 +1076,160 @@ function showByMod() {
     </div>
   </xsl:template>
 
+  <xsl:template name="atozHeader">
+    <xsl:param name="Key"/>
+    <div id="azindex">
+      <span>
+        <xsl:call-template name="i18n">
+          <xsl:with-param name="word">Sorted alphabetically</xsl:with-param>
+        </xsl:call-template>
+      </span>
+      <ul class="index">
+        <xsl:if test="count(key($Key,'a'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-a');" href="#">a</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'b'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-b');" href="#">b</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'c'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-c');" href="#">c</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'d'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-d');" href="#">d</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'e'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-e');" href="#">e</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'f'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-f');" href="#">f</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'g'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-g');" href="#">g</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'h'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-h');" href="#">h</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'i'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-i');" href="#">i</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'j'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-j');" href="#">j</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'k'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-k');" href="#">k</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'l'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-l');" href="#">l</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'m'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-m');" href="#">m</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'n'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-n');" href="#">n</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'o'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-o');" href="#">o</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'p'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-p');" href="#">p</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'q'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-q');" href="#">q</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'r'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-r');" href="#">r</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'s'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-s');" href="#">s</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'t'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-t');" href="#">t</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'u'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-u');" href="#">u</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'v'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-v');" href="#">v</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'w'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-w');" href="#">w</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'x'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-x');" href="#">x</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'y'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-y');" href="#">y</a>
+          </li>
+        </xsl:if>
+        <xsl:if test="count(key($Key,'z'))&gt;0">
+          <li>
+            <a onclick="hideallExcept('element-z');" href="#">z</a>
+          </li>
+        </xsl:if>
+        <li class="showall">
+          <a onclick="showall();" href="#">
+            <xsl:call-template name="i18n">
+              <xsl:with-param name="word">Show all</xsl:with-param>
+            </xsl:call-template>
+          </a>
+        </li>
+        <li class="showall">
+          <a onclick="showByMod();" href="#">
+            <xsl:call-template name="i18n">
+              <xsl:with-param name="word">Show by module</xsl:with-param>
+            </xsl:call-template>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </xsl:template>
 </xsl:stylesheet>
