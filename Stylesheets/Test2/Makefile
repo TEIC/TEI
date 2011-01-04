@@ -49,9 +49,11 @@ oddbyexample:
 
 general:
 	../teitolatex test.xml
+	xelatex test.tex
 	../teitoepub  test.xml 
 	../teitoodt test.xml 
 	../teitodocx test.xml 
+	for i in test.xml.odt test.epub test.xml.docx test.tex; do diff $$i ok/$$i;done
 
 clean:
 	-rm test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
@@ -66,4 +68,5 @@ clean:
 	-rm test7.zip
 	-rm test8.doc
 	-rm test8.out
+	-rm test.aux test.log test.out test.pdf 
 
