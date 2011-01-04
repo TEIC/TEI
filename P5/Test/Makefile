@@ -69,7 +69,7 @@ schemas:
 		echo ; echo PROCESS $$i ; \
 		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK; \
-		saxon -o $$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
+		saxon -o:$$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
 		$(ROMA) $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
 		echo check egXML in $$i.odd; \
 		perl -p -e "s/testlite-examples/$$i-examples/" ex.nvdl > $$i.nvdl; \
