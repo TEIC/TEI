@@ -53,6 +53,9 @@ general:
 	../teitoepub  test.xml 
 	../teitoodt test.xml 
 	../teitodocx test.xml 
+	unzip -t test.xml.docx
+	unzip -t test.xml.odt
+	unzip -t test.epub
 	for i in test.xml.odt test.epub test.xml.docx test.tex; do diff $$i ok/$$i;done
 
 clean:
