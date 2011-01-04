@@ -804,6 +804,7 @@ for change individually.
           </classes>
           <!-- valList -->
           <xsl:choose>
+            <xsl:when test="tei:valList[@mode='delete']"/>
             <xsl:when test="tei:valList">
               <xsl:apply-templates mode="odd2odd-copy" select="tei:valList"/>
             </xsl:when>
@@ -1850,6 +1851,7 @@ so that is only put back in if there is some content
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
+	  <xsl:when test="tei:valList[@mode='delete']"/>
           <xsl:when test="tei:valList[@mode='add' or @mode='replace']">
             <xsl:for-each select="tei:valList">
               <xsl:copy>
