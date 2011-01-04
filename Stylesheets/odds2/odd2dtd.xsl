@@ -10,6 +10,8 @@
                 exclude-result-prefixes="a t tei fo rng xs"
                 version="2.0">
   <xsl:import href="teiodds.xsl"/>
+  <xsl:import href="../common2/i18n.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making DTD from ODD </p>
@@ -1615,4 +1617,16 @@
          </xsl:choose>
       </xsl:if>
   </xsl:template>
+
+
+  <xsl:template name="copyright">
+    <xsl:apply-templates mode="copyrighttext"
+      select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
+  </xsl:template>
+
+  <xsl:template name="typewriter">
+    <xsl:param name="text"/>
+  </xsl:template>
+
+
 </xsl:stylesheet>
