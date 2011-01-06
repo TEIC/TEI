@@ -47,8 +47,8 @@
 			    encoding="UTF-8" method="text">
 	 <xsl:for-each select="tei:row">
 	   <xsl:for-each select="tei:cell">
-	     <xsl:value-of select="concat('&quot;',.,'&quot;')"/>
-	     <xsl:if test="following-sibling::tei:cell[1]">, </xsl:if>
+	     <xsl:value-of select="concat('&quot;',normalize-space(.),'&quot;')"/>
+	     <xsl:if test="following-sibling::tei:cell[1]">,</xsl:if>
 	   </xsl:for-each>
 	   <xsl:text>&#xa;</xsl:text>
 	 </xsl:for-each>
