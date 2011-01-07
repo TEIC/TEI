@@ -65,7 +65,7 @@ default: schemas test-extns test-frag
 schemas:
 	echo SETUP IS $(ROMAOPTS)
 	Modules="tei core textstructure figures header linking" 
-	-for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTBADFILES); do \
+	for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTBADFILES); do \
 		echo ; echo PROCESS $$i ; \
 		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK; \
@@ -95,7 +95,7 @@ schemas:
 			grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml ; \
 			done; \
 		done
-	-for i in $(TESTSPECIALFILES) ; do \
+	for i in $(TESTSPECIALFILES) ; do \
 		echo ; echo PROCESS $$i ; \
 		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
