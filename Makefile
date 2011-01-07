@@ -157,8 +157,8 @@ valid: check
 #\
 #	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
 	@echo --------- rnv
-	-xmllint --noent --xinclude ${DRIVER} > Source.xml
-	-rnv -v p5odds.rnc Source.xml
+	xmllint --noent --xinclude ${DRIVER} > Source.xml
+	rnv -v p5odds.rnc Source.xml
 	@echo --------- nvdl
 #	onvdl seems to report an "unfinished element" every
 #	time a required child element from another namespace occurs
