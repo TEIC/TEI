@@ -386,4 +386,8 @@ clean:
 	(cd Exemplars; make clean)
 	rm -rf FASC-*
 	rm -rf catalogue.* modList
-
+	rm -f       p5.xml
+	rm -f       Guidelines.epub
+	rm -f       Test/detest.rnc
+	rm -f       Test/detest.rng
+	rm -f       Test/detest.dtd
