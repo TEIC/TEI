@@ -18,7 +18,7 @@
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
          <p>Author: James Cummings </p>
-         <p>Id: $Id: from.xsl 7953 2010-08-12 21:41:00Z rahtz $</p>
+         <p>Id: $Id$</p>
          <p>Copyright: 2010, TEI Consortium</p>
 	<p>
 		Usage:  saxon filename.xsl tei2csv.xsl 

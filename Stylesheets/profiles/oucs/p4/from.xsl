@@ -18,7 +18,7 @@
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
          <p>Author: See AUTHORS</p>
-         <p>Id: $Id: from.xsl 8226 2010-11-02 22:06:29Z rahtz $</p>
+         <p>Id: $Id$</p>
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
@@ -29,7 +29,7 @@
        
        Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>
        
-       $Date: 2010-11-02 22:06:29 +0000 (Tue, 02 Nov 2010) $  $Id: from.xsl 8226 2010-11-02 22:06:29Z rahtz $
+       $Date$  $Id$
        
   -->
   <xsl:output method="xml" encoding="utf-8"
