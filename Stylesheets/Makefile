@@ -80,7 +80,7 @@ p5: p4
 	@echo INFO Build for P5, XSLT 1.0
 	test -d release/p5 || mkdir -p release/p5/xml/tei/stylesheet/
 	for i in ${OLDDIRS} ; do \
-	test -d release/p5/xml/tei/stylesheet/$$i || mkdir release/p5/xml/tei/stylesheet/$$i; cp $$i/*.xsl release/p5/xml/tei/stylesheet/$$i; \
+	test -d release/p5/xml/tei/stylesheet/$$i || mkdir -p release/p5/xml/tei/stylesheet/$$i; cp $$i/*.xsl release/p5/xml/tei/stylesheet/$$i; \
 	done
 	(cd release/p5/xml/tei/stylesheet/html;test -d ../xhtml || mkdir ../xhtml; for i in *.xsl; do \
 	cp  $$i ../xhtml/$$i;  \
@@ -103,7 +103,7 @@ common:
 	cp *.css i18n.xml release/common/xml/tei/stylesheet
 
 doc:
-	test -d release/common/doc/tei-xsl-common || mkdir release/common/doc/tei-xsl-common
+	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
 	saxon -o:customize.xml param.xml doc/param.xsl 
 	saxon -o:style.xml param.xml  doc/paramform.xsl 
 	saxon -o:release/common/doc/tei-xsl-common/index.html teixsl.xml profiles/default/html/to.xsl 
