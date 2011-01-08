@@ -29,40 +29,39 @@ default: dtds schemas validate exemplars test pdf epub html-web validate-html
 convert: dtds schemas
 
 dtds: check
-	-mkdir DTD
-	-rm DTD/*
-	# generate the DTDs
+	rm -rf DTD
+	mkdir DTD
+	@echo INFO generate modular DTDs
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/odd2dtd.xsl outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
 	TEIC=true  ${VERBOSE}
-	#for i in DTD/* ; do perl -i Utilities/cleandtd.pl $$i; done	
 
 schemas:check schema-relaxng schema-sch
 
 schema-relaxng:
-	-mkdir Schema
-	-rm Schema/*
-	# generate the relaxNG schemas
+	rm -rf Schema
+	mkdir Schema
+	@echo INFO generate modular RELAX NG schemas
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
 	lang=${LANGUAGE}  \
 	TEIC=true  ${VERBOSE}
-	# convert RelaxNG XML syntax to compact syntax with ${TRANG}
+	@echo "INFO generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 
 schema-sch:
-	# extract Schematron rules
+	@echo INFO extract schema rules to make p5.isosch
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/extract-isosch.xsl > p5.isosch
 
 html-web: check
+	@echo INFO making HTML Guidelines for language ${LANGUAGE}
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
-	-rm -rf Guidelines-web-tmp
-	-mkdir Guidelines-web-tmp
-	-mkdir Guidelines-web
-	echo making HTML Guidelines for language ${LANGUAGE}
+	mkdir -p Guidelines-web
+	rm -rf Guidelines-web-tmp 
+	mkdir Guidelines-web-tmp
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
 	cp -r Source/Guidelines/${INPUTLANGUAGE}/Images webnav/* odd.css guidelines.css COPYING.txt guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html/ 
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
@@ -74,14 +73,15 @@ html-web: check
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}  ${VERBOSE}
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
 	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css)
-	-rm -rf Guidelines-web/${LANGUAGE}
-	-mv Guidelines-web-tmp/${LANGUAGE} Guidelines-web/${LANGUAGE}
-	-rmdir Guidelines-web-tmp
+	rm -rf Guidelines-web/${LANGUAGE}
+	mv Guidelines-web-tmp/${LANGUAGE} Guidelines-web/${LANGUAGE}
+	rmdir Guidelines-web-tmp
 
 validate-html:
+	@echo INFO validate HTML version of Guidelines
 	(cd Guidelines-web/${LANGUAGE}/html; \
 	for i in *.html; do \
-	echo validate $$i; \
+	echo ..validate $$i; \
 	xmllint --noent --dropdtd $$i > z_$$i; \
 	$(JING) -c ../../../xhtml.rnc z_$$i; \
 	 rm z_$$i;\
@@ -91,8 +91,6 @@ xml: check
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
-	#@echo Success. Created Guidelines.xml. now attempt to validate
-	#-rnv Exemplars/teilite.rnc Guidelines.xml
 
 tex: xml
 	@echo Checking you have a running ${XELATEX} before trying to make TeX...
@@ -108,9 +106,9 @@ tex: xml
 	  echo "WARNING: you do not have Minion or Myriad fonts installed, reverting to Computer Modern " ;\
 	  echo "========================="; \
 	fi
-	-rm missfont.log fonttest.*
+	rm -f missfont.log fonttest.*
 	${SAXON} ${SAXON_ARGS}  Guidelines.xml Utilities/guidelines.xsl > Guidelines.tex
-	rm Utilities/guidelines.xsl
+	rm -f Utilities/guidelines.xsl
 	for i in Guidelines-REF*tex; \
 	  do \
 	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
@@ -120,12 +118,12 @@ tex: xml
 	done
 
 pdf: tex
-	echo make sure you have Junicode, arphic and mincho fonts installed
-	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
-	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
+	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
+	echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
+	echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
 	makeindex -s p5.ist Guidelines
-	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
-	-echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
+	echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
+	echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 
 
@@ -144,7 +142,7 @@ validate: dtds schemas oddschema exampleschema valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
-	@echo --------- jing
+	@echo INFO check validity with jing
 	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
 #	from ISO 639-2 as illegal values of xml:lang= even though
@@ -156,10 +154,10 @@ valid: check
 	 $(JING) -t p5odds.rng ${DRIVER} 
 #\
 #	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
-	@echo --------- rnv
 	xmllint --noent --xinclude ${DRIVER} > Source.xml
+	@echo INFO check validity with rnv
 	rnv -v p5odds.rnc Source.xml
-	@echo --------- nvdl
+	@echo INFO check validity with nvdl
 #	onvdl seems to report an "unfinished element" every
 #	time a required child element from another namespace occurs
 #	in the instance. In our case, this happens every time there
@@ -169,27 +167,28 @@ valid: check
 #	required to make it finished) we end up throwing out all such
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
-	-${ONVDL} p5.nvdl ${DRIVER} \
-	 | grep -v ': error: unfinished element$$' \
-	 | grep -v ': error: unfinished element .* required to finish the element$$'
-	@echo --------- Schematron
+	-${ONVDL} p5.nvdl ${DRIVER} | grep -v ': error: unfinished element$$' | grep -v ': error: unfinished element .* required to finish the element$$' > nvdl.log
+	cat nvdl.log
+	rm nvdl.log
+	@echo INFO check validity with Schematron
 	${SAXON} ${SAXON_ARGS}  p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} p5.isosch.xsl
-	@echo --------- XSLT validator
+	@echo INFO check validity with local XSLT script
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/validator.xsl
 	rm Utilities/pointerattributes.xsl
-	@echo --------- xmllint RelaxNG test REMOVED
 	rm Source.xml
-#	@xmllint --version
-#	-xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
-	echo check for places with no example
+	#@echo INFO check validity with xmllint
+	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
+	@echo INFO check for places with no examples
 	${SAXON} ${DRIVER} Utilities/listspecwithnoexample.xsl
 
 test: subset
+	echo INFO Run test cases for P5
 	(cd Test; make XSL=${XSL})
 
 exemplars: subset
+	echo INFO Build TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 oddschema: subset
@@ -280,8 +279,8 @@ dist-doc:
 	cssFile=html/guidelines.css \
 	> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
-	-make pdf
-	-cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc/en
+	make pdf
+	cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc/en
 	(cd release; 	\
 	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
 	zip -q -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
@@ -371,8 +370,8 @@ catalogue-print:
 	${SAXON} ${SAXON_ARGS} ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
 clean:
-	-rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
-	-rm Guidelines.??? Guidelines-* \
+	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
+	rm -rf Guidelines.??? Guidelines-* \
 	p5odds-examples.rng  p5odds-examples.rnc \
 	p5odds.rng p5odds.rnc \
 	*.xsd \
