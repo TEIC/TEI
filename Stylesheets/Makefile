@@ -50,12 +50,14 @@ default:
 	@echo
 
 p5-2:
+	echo INFO Build for P5, XSLT 2.0
 	-mkdir -p release/p5-2/xml/tei/stylesheet/
 	for i in  ${DIRS} ; do \
 	tar cf - --exclude .svn $$i | (cd release/p5-2/xml/tei/stylesheet; tar xf - ); \
 	done
 
 p4:
+	echo INFO Build for P4
 	-mkdir -p release/p4/xml/teip4/stylesheet/
 	for i in ${OLDDIRS} ; do \
 		mkdir -p release/p4/xml/teip4/stylesheet/$$i; \
@@ -75,6 +77,7 @@ p4:
 	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/p4/xml/teip4/stylesheet/xhtml/tei-param.xsl
 
 p5: p4
+	echo INFO Build for P5, XSLT 1.0
 	-mkdir -p release/p5/xml/tei/stylesheet/
 	for i in ${OLDDIRS} ; do \
 	mkdir -p release/p5/xml/tei/stylesheet/$$i; cp $$i/*.xsl release/p5/xml/tei/stylesheet/$$i; \
@@ -93,6 +96,7 @@ p5: p4
 	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/p5/xml/tei/stylesheet/xhtml/tei-param.xsl
 
 common: 
+	echo INFO Build for P5, common files and documentation
 	mkdir -p          release/common/xml/teip4/stylesheet
 	cp *.css i18n.xml release/common/xml/teip4/stylesheet
 	mkdir -p          release/common/xml/tei/stylesheet
@@ -114,6 +118,7 @@ oxygendoc:
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 test: p4 p5 p5-2 common
+	echo INFO Run tests
 	(cd release/p5/xml/tei/stylesheet; cp ../../../../../i18n.xml .)
 	(cd Test2; make)
 	(cd Test; make)
