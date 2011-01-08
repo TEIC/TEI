@@ -49,7 +49,7 @@ oddbyexample:
 
 general:
 	../teitolatex test.xml
-	xelatex test.tex
+	which xelatex && xelatex test.tex
 	../teitoepub  test.xml 
 	../teitoodt test.xml 
 	../teitodocx test.xml 
