@@ -56,7 +56,7 @@ release: clean
 	perl -p -i -e "s+.*define.*roma_version.*+define (\'roma_version\',\'$$V\');+" roma/config-dist.php; \
 	tar --exclude=.svn -c  -f - $(FILES) | (cd release/tei-roma; tar xf -); \
 	perl -p -i -e "s/{roma_version}/$$V/;s/{roma_date}/$$D/" release/tei-roma/roma/templates/main.tem
-	(cd roma; ../roma2.sh --xsl=${PREFIX}${LOCATION}/share/xml/tei/stylesheet --localsource=${LOCATION}/share/xml/tei/odd/p5subset.xml --nodtd --noxsd oddschema.odd .)
+	(cd roma; ../roma2.sh --nodtd --noxsd oddschema.odd .)
 
 clean:
 	-rm -rf release
