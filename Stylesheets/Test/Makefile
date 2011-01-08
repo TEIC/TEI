@@ -30,26 +30,25 @@ testp4:
 test3:
 	xsltproc -o dummy $(XSLTOPT) ../release/p5/xml/tei/stylesheet/html/tei.xsl test3.xml
 	xsltproc -o dummy4 $(XSLTOPT) ../release/p5/xml/tei/stylesheet/html/tei.xsl test4.xml
-	echo differences:
+	@echo "differences between numbered and unnumbered divs (xsltproc)"
 	diff dummy dummy4
 
 test4:
 	saxon -o:dummy -versionmsg:off  test3.xml ../release/p5/xml/tei/stylesheet/html/tei.xsl $(SAXONOPT) 
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../release/p5/xml/tei/stylesheet/html/tei.xsl $(SAXONOPT) 
-	echo differences:
+	@echo "differences between numbered and unnumbered divs (saxon)"
 	diff dummy dummy4
-
 
 test5:
 	xsltproc -o dummy $(XSLTOPT) ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl test3.xml
 	xsltproc -o dummy4 $(XSLTOPT) ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl test4.xml
-	echo differences:
+	@echo "differences between numbered and unnumbered divs (xhtml, xsltproc):"
 	diff dummy dummy4
 
 test6:
 	saxon -o:dummy -versionmsg:off test3.xml ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl $(SAXONOPT) 
 	saxon -o:dummy4 -versionmsg:off test4.xml ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl $(SAXONOPT)
-	echo differences:
+	@echo "differences between numbered and unnumbered divs (xhtml, saxon):"
 	diff dummy dummy4
 
 clean:
