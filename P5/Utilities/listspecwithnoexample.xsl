@@ -19,7 +19,7 @@
       <xsl:sort select="@module"/>
       <xsl:sort select="@ident"/>
       <xsl:if test="not(./tei:exemplum/teix:egXML)">
-	<xsl:text>* ERROR: elementSpec for </xsl:text>
+	<xsl:text>* Warning: elementSpec for </xsl:text>
 	<xsl:value-of select="@ident"/>
 	<xsl:text> has no example&#10;</xsl:text>
       </xsl:if>
