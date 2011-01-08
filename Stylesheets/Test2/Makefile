@@ -49,7 +49,7 @@ oddbyexample:
 
 general:
 	../teitolatex test.xml
-	which xelatex && xelatex test.tex
+	which xelatex && xelatex --interaction=batchmode test.tex
 	../teitoepub  test.xml 
 	../teitoodt test.xml 
 	../teitodocx test.xml 
