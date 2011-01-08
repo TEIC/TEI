@@ -2,7 +2,7 @@ VERSION=`cat ../VERSION`
 XSLTOPT=--stringparam verbose true --stringparam useFixedDate true 
 SAXONOPT=verbose=true useFixedDate=true
 
-default: test testp4 test3 test4 testsplit
+default: test testp4 test3 test4 test5 test6 testsplit
 
 test:
 	xsltproc -o dummy $(XSLTOPT) ../release/p5/xml/tei/stylesheet/html/tei.xsl test.xml
@@ -32,17 +32,21 @@ test3:
 	xsltproc -o dummy4 $(XSLTOPT) ../release/p5/xml/tei/stylesheet/html/tei.xsl test4.xml
 	echo differences:
 	diff dummy dummy4
+
+test4:
 	saxon -o:dummy -versionmsg:off  test3.xml ../release/p5/xml/tei/stylesheet/html/tei.xsl $(SAXONOPT) 
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../release/p5/xml/tei/stylesheet/html/tei.xsl $(SAXONOPT) 
 	echo differences:
 	diff dummy dummy4
 
 
-test4:
+test5:
 	xsltproc -o dummy $(XSLTOPT) ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl test3.xml
 	xsltproc -o dummy4 $(XSLTOPT) ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl test4.xml
 	echo differences:
 	diff dummy dummy4
+
+test6:
 	saxon -o:dummy -versionmsg:off test3.xml ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl $(SAXONOPT) 
 	saxon -o:dummy4 -versionmsg:off test4.xml ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl $(SAXONOPT)
 	echo differences:
