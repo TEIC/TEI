@@ -1,35 +1,35 @@
 VERSION=`cat ../VERSION`
+SAXONOPT=verbose=true  useFixedDate=true
 default: general test test3 test4 test5 test6 oddbyexample
 
 test:
-	saxon -o:dummy  test.xml ../xhtml2/tei.xsl verbose=true 
+	saxon -o:dummy  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
 
 testsplit:
-	-saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1
+	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
 
 test3:
-	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl verbose=true 
-	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl verbose=true 
+	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
 	-diff dummy dummy4
 
 test4:
-	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl verbose=true 
-	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl verbose=true 
+	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
 	-diff dummy dummy4
 
 test5:
-	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl
+	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
 	-diff test5.xhtml ok/test5.xhtml
-	saxon -o:test5.tex test5.xml ../latex2/tei.xsl
+	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
 	-diff test5.tex ok/test5.tex
-	saxon -o:test5.fo test5.xml ../fo2/tei.xsl
+	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
 	-diff test5.fo ok/test5.fo
 
 test6:
 	saxon -o:test6.tex test6.xml ../slides2/teilatex-slides.xsl 
-	saxon  test6.xml ../slides2/teihtml-slides.xsl 
 	-diff test6.tex ok/test6.tex
 
 odd:

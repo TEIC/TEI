@@ -130,11 +130,18 @@
     of TEI P4</desc>
   </doc>
   <xsl:param name="teiP4Compat">false</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
     <desc> Title, author and date is taken from the
     &lt;teiHeader&gt; rather than looked for in the front matter</desc>
   </doc>
   <xsl:param name="useHeaderFrontMatter">false</xsl:param>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
+    <desc>Whether to attempt to work out a current date (set to true
+    for test results which won't differ</desc>
+  </doc>
+  <xsl:param name="useFixedDate">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering">
     <desc>[common] How to number sections in back matter</desc>
   </doc>

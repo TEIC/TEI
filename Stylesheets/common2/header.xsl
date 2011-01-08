@@ -183,6 +183,7 @@
 	      </xsl:choose>
 	    </xsl:for-each>
 	 </xsl:when>
+	 <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
 	 <xsl:otherwise>
 	   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
 	 </xsl:otherwise>

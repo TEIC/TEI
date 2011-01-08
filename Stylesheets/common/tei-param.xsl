@@ -98,6 +98,8 @@
   <xd:doc class="misc" type="boolean"> Title, author and date is taken from the
     &lt;teiHeader&gt; rather than looked for in the front matter</xd:doc>
   <xsl:param name="useHeaderFrontMatter">false</xsl:param>
+  <xsl:param name="useFixedDate">false</xsl:param>
+
   <xd:doc class="numbering">
     <xd:short>[common] How to number sections in back matter</xd:short>
     <xd:detail> </xd:detail>

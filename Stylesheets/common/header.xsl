@@ -288,6 +288,7 @@
   </xd:doc>
   <xsl:template name="whatsTheDate">
     <xsl:choose>
+      <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
       <xsl:when test="function-available('edate:date-time')">
         <xsl:value-of select="edate:date-time()"/>
       </xsl:when>
