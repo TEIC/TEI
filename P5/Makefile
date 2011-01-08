@@ -3,7 +3,7 @@ GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
-XELATEXFLAGS='--output-driver=xdvipdfmx -V 5'
+XELATEXFLAGS='--interaction=batchmode --output-driver=xdvipdfmx -V 5'
 XELATEX=xelatex 
 VERBOSE=
 PREFIX=/usr
