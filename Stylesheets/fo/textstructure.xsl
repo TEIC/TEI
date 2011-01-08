@@ -634,7 +634,8 @@
             <xsl:value-of select="@xml:id"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="generate-id()"/>
+	    <xsl:text>ID</xsl:text>
+            <xsl:number level="any"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:variable>
@@ -1197,7 +1198,8 @@
               <xsl:value-of select="@xml:id"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="generate-id()"/>
+	      <xsl:text>ID</xsl:text>
+	      <xsl:number level="any"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:attribute>
@@ -1232,7 +1234,8 @@
               <xsl:value-of select="@xml:id"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="generate-id()"/>
+	      <xsl:text>ID</xsl:text>
+	      <xsl:number level="any"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:attribute>

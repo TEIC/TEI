@@ -51,19 +51,19 @@ default:
 
 p5-2:
 	@echo INFO Build for P5, XSLT 2.0
-	-mkdir -p release/p5-2/xml/tei/stylesheet/
+	test -d release/p5-2 || mkdir -p release/p5-2/xml/tei/stylesheet/
 	for i in  ${DIRS} ; do \
 	tar cf - --exclude .svn $$i | (cd release/p5-2/xml/tei/stylesheet; tar xf - ); \
 	done
 
 p4:
 	@echo INFO Build for P4
-	-mkdir -p release/p4/xml/teip4/stylesheet/
+	test -d release/p4 || mkdir -p release/p4/xml/teip4/stylesheet/
 	for i in ${OLDDIRS} ; do \
-		mkdir -p release/p4/xml/teip4/stylesheet/$$i; \
+		test -d release/p4/xml/teip4/stylesheet/$$i || mkdir -p release/p4/xml/teip4/stylesheet/$$i; \
 		for j in $$i/*.xsl; do perl toP4.pl < $$j > release/p4/xml/teip4/stylesheet/$$j;done; \
 	done
-	(cd release/p4/xml/teip4/stylesheet/html/;mkdir ../xhtml; for i in *.xsl; do \
+	(cd release/p4/xml/teip4/stylesheet/html/;test -d ../xhtml || mkdir ../xhtml; for i in *.xsl; do \
 	cp  $$i ../xhtml/$$i;  \
 	perl -p -i -e 's+<xsl:stylesheet+<xsl:stylesheet xmlns=\"http://www.w3.org/1999/xhtml\"+'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/>html</>xml</'  ../xhtml/$$i ;  \
@@ -78,11 +78,11 @@ p4:
 
 p5: p4
 	@echo INFO Build for P5, XSLT 1.0
-	-mkdir -p release/p5/xml/tei/stylesheet/
+	test -d release/p5 || mkdir -p release/p5/xml/tei/stylesheet/
 	for i in ${OLDDIRS} ; do \
-	mkdir -p release/p5/xml/tei/stylesheet/$$i; cp $$i/*.xsl release/p5/xml/tei/stylesheet/$$i; \
+	test -d release/p5/xml/tei/stylesheet/$$i || mkdir release/p5/xml/tei/stylesheet/$$i; cp $$i/*.xsl release/p5/xml/tei/stylesheet/$$i; \
 	done
-	(cd release/p5/xml/tei/stylesheet/html;mkdir ../xhtml; for i in *.xsl; do \
+	(cd release/p5/xml/tei/stylesheet/html;test -d ../xhtml || mkdir ../xhtml; for i in *.xsl; do \
 	cp  $$i ../xhtml/$$i;  \
 	perl -p -i -e 's+<xsl:stylesheet+<xsl:stylesheet xmlns=\"http://www.w3.org/1999/xhtml\"+'  ../xhtml/$$i ;  \
 	perl -p -i -e 's/>html</>xml</'  ../xhtml/$$i ;  \
@@ -97,13 +97,13 @@ p5: p4
 
 common: 
 	@echo INFO Build for P5, common files and documentation
-	mkdir -p          release/common/xml/teip4/stylesheet
+	test -d release/common || mkdir -p release/common/xml/teip4/stylesheet
 	cp *.css i18n.xml release/common/xml/teip4/stylesheet
-	mkdir -p          release/common/xml/tei/stylesheet
+	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
 	cp *.css i18n.xml release/common/xml/tei/stylesheet
 
 doc:
-	mkdir -p release/common/doc/tei-xsl-common
+	test -d release/common/doc/tei-xsl-common || mkdir release/common/doc/tei-xsl-common
 	saxon -o:customize.xml param.xml doc/param.xsl 
 	saxon -o:style.xml param.xml  doc/paramform.xsl 
 	saxon -o:release/common/doc/tei-xsl-common/index.html teixsl.xml profiles/default/html/to.xsl 
@@ -117,7 +117,7 @@ oxygendoc:
 	@echo using oXygen stylesheet documentation generator
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
-test: p4 p5 p5-2 common
+test: clean p4 p5 p5-2 common
 	@echo INFO Run tests
 	(cd release/p5/xml/tei/stylesheet; cp ../../../../../i18n.xml .)
 	(cd release/p4/xml/teip4/stylesheet; cp ../../../../../i18n.xml .)
@@ -177,10 +177,10 @@ log:
 clean:
 	echo "" > test~
 	find . -name "*~"  | xargs rm
-	-rm stylebear style.xml customize.xml teixsl.html
-	-rm -rf release
-	-rm -rf xhtml
-	-rm -rf doc/xsltdoc
+	rm -f stylebear style.xml customize.xml teixsl.html
+	rm -rf release
+	rm -rf xhtml
+	rm -rf doc/xsltdoc
 	(cd Test; make clean)
 	(cd Test2; make clean)
 

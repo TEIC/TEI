@@ -146,6 +146,7 @@
    </doc>
   <xsl:template name="generateDate">
       <xsl:choose>
+	 <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
          <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate">
             <xsl:apply-templates mode="date" select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate"/>
          </xsl:when>
@@ -183,7 +184,6 @@
 	      </xsl:choose>
 	    </xsl:for-each>
 	 </xsl:when>
-	 <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
 	 <xsl:otherwise>
 	   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
 	 </xsl:otherwise>

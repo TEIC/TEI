@@ -1,5 +1,5 @@
 VERSION=`cat ../VERSION`
-SAXONOPT=verbose=true  useFixedDate=true
+SAXONOPT=verbose=true useFixedDate=true
 default: general test test3 test4 test5 test6 oddbyexample
 
 test:
@@ -12,25 +12,25 @@ test3:
 	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
-	-diff dummy dummy4
+	diff dummy dummy4
 
 test4:
 	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
-	-diff dummy dummy4
+	diff dummy dummy4
 
 test5:
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
-	-diff test5.xhtml ok/test5.xhtml
+	diff test5.xhtml ok/test5.xhtml
 	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
-	-diff test5.tex ok/test5.tex
+	diff test5.tex ok/test5.tex
 	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
-	-diff test5.fo ok/test5.fo
+	diff test5.fo ok/test5.fo
 
 test6:
 	saxon -o:test6.tex test6.xml ../slides2/teilatex-slides.xsl 
-	-diff test6.tex ok/test6.tex
+	diff test6.tex ok/test6.tex
 
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
@@ -42,10 +42,9 @@ oddbyexample:
 	jing -c oddbyexample.rnc bare/test2.xml
 	jing oddbyexample.xsd bare/test2.xml
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
-	@echo NOTE: expect errors now about "wicked"
-	-jing -c oddbyexample.rnc bare/test.xml
-	-jing oddbyexample.xsd bare/test.xml
-	-xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
+	jing -c oddbyexample.rnc bare/test.xml
+	jing oddbyexample.xsd bare/test.xml
+	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
 general:
 	../teitolatex test.xml
@@ -56,20 +55,20 @@ general:
 	unzip -t test.xml.docx
 	unzip -t test.xml.odt
 	unzip -t test.epub
-	for i in test.xml.odt test.epub test.xml.docx test.tex; do diff $$i ok/$$i;done
+	for i in test.tex; do diff $$i ok/$$i;done
 
 clean:
-	-rm test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
-	-rm oddbyexample.* xml.xsd index*div*html
-	-rm test.tex test.xml.odt test.xml.docx test.epub
-	-rm test8.pdf
-	-rm test8.log
-	-rm test5.xml.odt
-	-rm test8.aux
-	-rm test7.xml
-	-rm test8.tex
-	-rm test7.zip
-	-rm test8.doc
-	-rm test8.out
-	-rm test.aux test.log test.out test.pdf 
+	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
+	rm -f  oddbyexample.* xml.xsd index*div*html
+	rm -f  test.tex test.xml.odt test.xml.docx test.epub
+	rm -f  test8.pdf
+	rm -f  test8.log
+	rm -f  test5.xml.odt
+	rm -f  test8.aux
+	rm -f  test7.xml
+	rm -f  test8.tex
+	rm -f  test7.zip
+	rm -f  test8.doc
+	rm -f  test8.out
+	rm -f  test.aux test.log test.out test.pdf 
 
