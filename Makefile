@@ -31,7 +31,7 @@ convert: dtds schemas
 dtds: check
 	rm -rf DTD
 	mkdir DTD
-	@echo INFO generate modular DTDs
+	@echo BUILD generate modular DTDs
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/odd2dtd.xsl outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
@@ -42,7 +42,7 @@ schemas:check schema-relaxng schema-sch
 schema-relaxng:
 	rm -rf Schema
 	mkdir Schema
-	@echo INFO generate modular RELAX NG schemas
+	@echo BUILD generate modular RELAX NG schemas
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
 	lang=${LANGUAGE}  \
 	TEIC=true  ${VERBOSE}
@@ -50,11 +50,11 @@ schema-relaxng:
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 
 schema-sch:
-	@echo INFO extract schema rules to make p5.isosch
+	@echo BUILD extract schema rules to make p5.isosch
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/extract-isosch.xsl > p5.isosch
 
 html-web: check
-	@echo INFO making HTML Guidelines for language ${LANGUAGE}
+	@echo BUILD making HTML Guidelines for language ${LANGUAGE}
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
@@ -78,7 +78,7 @@ html-web: check
 	rmdir Guidelines-web-tmp
 
 validate-html:
-	@echo INFO validate HTML version of Guidelines
+	@echo BUILD validate HTML version of Guidelines
 	(cd Guidelines-web/${LANGUAGE}/html; \
 	for i in *.html; do \
 	echo ..validate $$i; \
@@ -142,7 +142,7 @@ validate: dtds schemas oddschema exampleschema valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
-	@echo INFO check validity with jing
+	@echo BUILD check validity with jing
 	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
 #	from ISO 639-2 as illegal values of xml:lang= even though
@@ -155,9 +155,9 @@ valid: check
 #\
 #	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
 	xmllint --noent --xinclude ${DRIVER} > Source.xml
-	@echo INFO check validity with rnv
+	@echo BUILD check validity with rnv
 	rnv -v p5odds.rnc Source.xml
-	@echo INFO check validity with nvdl
+	@echo BUILD check validity with nvdl
 #	onvdl seems to report an "unfinished element" every
 #	time a required child element from another namespace occurs
 #	in the instance. In our case, this happens every time there
@@ -170,25 +170,25 @@ valid: check
 	-${ONVDL} p5.nvdl ${DRIVER} | grep -v ': error: unfinished element$$' | grep -v ': error: unfinished element .* required to finish the element$$' > nvdl.log
 	cat nvdl.log
 	rm nvdl.log
-	@echo INFO check validity with Schematron
+	@echo BUILD check validity with Schematron
 	${SAXON} ${SAXON_ARGS}  p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} p5.isosch.xsl
-	@echo INFO check validity with local XSLT script
+	@echo BUILD check validity with local XSLT script
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/validator.xsl
 	rm Utilities/pointerattributes.xsl
 	rm Source.xml
-	#@echo INFO check validity with xmllint
+	#@echo BUILD check validity with xmllint
 	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
-	@echo INFO check for places with no examples
+	@echo BUILD check for places with no examples
 	${SAXON} ${DRIVER} Utilities/listspecwithnoexample.xsl
 
 test: subset
-	echo INFO Run test cases for P5
+	echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
 
 exemplars: subset
-	echo INFO Build TEI Exemplars
+	echo BUILD Build TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 oddschema: subset
