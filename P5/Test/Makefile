@@ -135,25 +135,21 @@ test-sgml:
 	@echo BUILD check SGML extension mechanism
 	onsgmls -e -g -s  sgmldecl.tei extns.sgm 
 
-test-bad:
+detest:
 	@echo BUILD Now test file with deliberate errors
-	@echo =======================================
-	@echo Many errors will occur here
-	@echo =======================================
-	@echo JING RelaxNG...
-	-for i in $(TESTBADFILES); do \
-	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) $$i.odd . ; \
-	jing -t $$i.rng $$i.xml ; \
-	echo RNV.... ; \
-	xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
-	echo JING XSD; \
-	jing $$i.xsd $$i.xml; done
+	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) detest.odd .
+	-jing -t detest.rng detest.xml  > detest.log.all
+	-xmllint --noent --dropdtd  detest.xml | rnv detest.rnc 2>> detest.log.all
+	-jing detest.xsd detest.xml >> detest.log.all
+	sed 's/.*detest.xml:/detest.xml:/' < detest.log.all | sed 's/Elapsed time.*//' >  detest.log
+	diff detest.log detest.log.ok
 
 
 clean:
 	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.teix.xsd test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
 	rm -rf LOG *~ *.xsd Schema RomaResults DTD 
 	rm -rf *.doc.*
+	rm -f detest.log detest.log.all
 	rm -f *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
 	rm -f detest.rnc    detest.rng   detest.dtd   detest.isosch
 
