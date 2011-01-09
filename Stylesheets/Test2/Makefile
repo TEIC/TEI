@@ -29,12 +29,12 @@ test5:
 	diff test5.fo ok/test5.fo
 
 test6:
-	saxon -o:test6.tex test6.xml ../slides2/teilatex-slides.xsl 
+	saxon -o:test6.tex test6.xml ../slides2/teilatex-slides.xsl $(SAXONOPT)
 	diff test6.tex ok/test6.tex
 
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
-	TEIC=true localsource=`pwd`/p5subset.xml > testdrama.compiled.xml
+	TEIC=true localsource=`pwd`/p5subset.xml $(SAXONOPT) > testdrama.compiled.xml
 
 oddbyexample:
 	saxon -o:oddbyexample.odd ../tools2/oddbyexample.xsl ../tools2/oddbyexample.xsl corpus=`pwd`/bare 
