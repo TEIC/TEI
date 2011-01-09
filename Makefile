@@ -45,7 +45,7 @@ schema-relaxng:
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
 	lang=${LANGUAGE}  \
 	TEIC=true  ${VERBOSE}
-	@echo "INFO generate modular RELAX NG (compact) schemas using trang"
+	@echo "BUILD generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 
 schema-sch:
@@ -175,7 +175,7 @@ test: subset
 	(cd Test; make XSL=${XSL})
 
 exemplars: subset
-	@echo BUILD Build TEI Exemplars
+	@echo BUILD TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 oddschema: subset
