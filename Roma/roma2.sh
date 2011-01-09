@@ -132,7 +132,7 @@ EOF
     fi
     rm perl$$.pl
     mv $RESULTS/perl$$.tex $RESULTS/$schema.doc.tex
-    (cd $RESULTS; xelatex --interaction=batchmode $schema.doc.tex; xelatex ==interaction=batchmode $schema.doc.tex)
+    (cd $RESULTS; xelatex --interaction=batchmode $schema.doc.tex; xelatex --interaction=batchmode $schema.doc.tex)
 }
 
 makeXMLDOC() 
