@@ -1,0 +1,22 @@
+#!/bin/sh
+#	onvdl seems to report an "unfinished element" every
+#	time a required child element from another namespace occurs
+#	in the instance. In our case, this happens every time there
+#	is an <egXML> child of <exemplum>. Since the error message is
+#	non-specific (doesn't tell us that <exemplum> is the
+#	unfinished element or that one of <eg> or <egXML> would be
+#	required to make it finished) we end up throwing out all such
+#	messages via the grep -v command so we're not annoyed by the
+#	over 800 that are not really problems.
+
+onvdl $1 $2 | grep -v ": error: unfinished element .exemplum" | grep -v "unknown element .egXML" > $$.nvdl.log
+if [ -s $$.nvdl.log ]
+then
+ echo `wc -l $$.nvdl.log` errors
+  cat $$.nvdl.log
+  rm  $$.nvdl.log
+  exit 1
+else
+  rm  $$.nvdl.log
+  exit 0
+fi

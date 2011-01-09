@@ -19,12 +19,11 @@ XSLP4=/usr/share/xml/teip4/stylesheet
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 JING=jing
 TRANG=trang
-ONVDL=onvdl
 SAXON=saxon
 SAXON_ARGS=-ext:on
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema clean dist exemplars
 
-default: dtds schemas validate exemplars test pdf epub html-web validate-html
+default: validate exemplars test pdf epub html-web validate-html
 
 convert: dtds schemas
 
@@ -81,7 +80,7 @@ validate-html:
 	@echo BUILD validate HTML version of Guidelines
 	(cd Guidelines-web/${LANGUAGE}/html; \
 	for i in *.html; do \
-	echo ..validate $$i; \
+	@echo ..validate $$i; \
 	xmllint --noent --dropdtd $$i > z_$$i; \
 	$(JING) -c ../../../xhtml.rnc z_$$i; \
 	 rm z_$$i;\
@@ -112,7 +111,7 @@ tex: xml
 	for i in Guidelines-REF*tex; \
 	  do \
 	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
-		echo NOTE: diff $$i.new $$i; \
+		@echo NOTE: diff $$i.new $$i; \
 		diff $$i.new $$i; \
 		mv $$i.new $$i; \
 	done
@@ -158,18 +157,7 @@ valid: check
 	@echo BUILD check validity with rnv
 	rnv -v p5odds.rnc Source.xml
 	@echo BUILD check validity with nvdl
-#	onvdl seems to report an "unfinished element" every
-#	time a required child element from another namespace occurs
-#	in the instance. In our case, this happens every time there
-#	is an <egXML> child of <exemplum>. Since the error message is
-#	non-specific (doesn't tell us that <exemplum> is the
-#	unfinished element or that one of <eg> or <egXML> would be
-#	required to make it finished) we end up throwing out all such
-#	messages via the grep -v command so we're not annoyed by the
-#	over 800 that are not really problems.
-	-${ONVDL} p5.nvdl ${DRIVER} | grep -v ': error: unfinished element$$' | grep -v ': error: unfinished element .* required to finish the element$$' > nvdl.log
-	cat nvdl.log
-	rm nvdl.log
+	-./run-onvdl p5.nvdl ${DRIVER} 
 	@echo BUILD check validity with Schematron
 	${SAXON} ${SAXON_ARGS}  p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} p5.isosch.xsl
@@ -184,11 +172,11 @@ valid: check
 	${SAXON} ${DRIVER} Utilities/listspecwithnoexample.xsl
 
 test: subset
-	echo BUILD Run test cases for P5
+	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
 
 exemplars: subset
-	echo BUILD Build TEI Exemplars
+	@echo BUILD Build TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 oddschema: subset
@@ -364,7 +352,7 @@ changelog:
 catalogue:
 	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
 	${SAXON} ${SAXON_ARGS}  catalogue.xml ${XSL}/xhtml2/tei.xsl > catalogue.html
-	echo Made catalogue.html
+	@echo Made catalogue.html
 
 catalogue-print:
 	${SAXON} ${SAXON_ARGS} ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
