@@ -13,7 +13,7 @@ ROMAOPTS= --localsource=../p5subset.xml --xsl=${XSL}
 
 schemas: 
 	${ROMA} ${ROMAOPTS} teilite.odd .
-	for i in $(DOCODDS); do echo Process $$i; ${ROMA} ${ROMAOPTS} --noxsd --nodtd --norelax --docflags="summaryDoc=true" --docpdf --dochtml $$i.odd .; echo TEST schema; jing $$i.rng $$i.xml && echo $$i validates OK;done
+	for i in $(DOCODDS); do echo Process $$i; ${ROMA} ${ROMAOPTS} --docflags="summaryDoc=true" --docpdf --dochtml $$i.odd .; echo TEST schema; jing $$i.rng $$i.xml && echo $$i validates OK;done
 	-for i in $(ODDS) ; do echo Process $$i; xmllint --xinclude $$i.odd > $$i.xi;${ROMA} ${ROMAOPTS} $$i.xi .; echo TEST schema; jing $$i.rng $$i.xml && echo $$i validates OK ;done
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
