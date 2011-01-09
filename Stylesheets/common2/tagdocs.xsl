@@ -2497,6 +2497,14 @@
     <xsl:variable name="name" select="@ident"/>
     <xsl:variable name="Original" select="/"/>
     <xsl:choose>
+      <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
+	<xsl:element namespace="{$outputNS}" name="{$segName}">
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:attribute>
+	  <xsl:text>ANY</xsl:text>
+	</xsl:element>
+      </xsl:when>
       <xsl:when test="tei:content/rng:empty">
 	<xsl:element namespace="{$outputNS}" name="{$segName}">
 	  <xsl:attribute name="xml:lang">
