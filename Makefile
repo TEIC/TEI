@@ -3,7 +3,7 @@ GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
-XELATEXFLAGS='--interaction=batchmode --output-driver=xdvipdfmx -V 5'
+XELATEXFLAGS=--interaction=batchmode --output-driver="xdvipdfmx -V 5"
 XELATEX=xelatex 
 VERBOSE=
 PREFIX=/usr
@@ -99,7 +99,7 @@ tex: xml
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	xelatex --interaction=batchmode Utilities/fonttest 
 	if [ -f "missfont.log" ]  ; then  \
-	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/Guidelines.xsl ;\
+	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/guidelines.xsl ;\
 	  echo "========================="; \
 	  echo "WARNING: you do not have Minion or Myriad fonts installed, reverting to Computer Modern " ;\
 	  echo "========================="; \
@@ -110,7 +110,7 @@ tex: xml
 	for i in Guidelines-REF*tex; \
 	  do \
 	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
-		@echo NOTE: diff $$i.new $$i; \
+		echo NOTE: diff $$i.new $$i; \
 		diff $$i.new $$i; \
 		mv $$i.new $$i; \
 	done

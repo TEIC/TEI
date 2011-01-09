@@ -30,7 +30,7 @@
 
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
-\usepackage{makeidx,askinclude}
+\usepackage{makeidx}
 \makeindex
 \defaultfontfeatures{Scale=MatchLowercase}
 %\setromanfont{DejaVu Serif}
