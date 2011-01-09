@@ -9,14 +9,18 @@
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
 
-onvdl $1 $2 | grep -v ": error: unfinished element .exemplum" | grep -v "unknown element .egXML" > $$.nvdl.log
-if [ -s $$.nvdl.log ]
+onvdl $1 $2 | grep -v ": error: unfinished element .exemplum" \
+      | grep -v "unknown element .egXML" \
+      | sed 's/error: unfinished element/warning: unfinished element/' > $$.nvdl.log
+grep error $$.nvdl.log
+if [ $? -eq 0 ] 
 then
- echo `wc -l $$.nvdl.log` errors
   cat $$.nvdl.log
   rm  $$.nvdl.log
+  echo nvdl run found errors
   exit 1
 else
-  rm  $$.nvdl.log
-  exit 0
+ cat $$.nvdl.log
+ rm  $$.nvdl.log
+ exit 0
 fi
