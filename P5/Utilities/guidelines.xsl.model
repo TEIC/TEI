@@ -154,7 +154,8 @@ translations of each other, and hence identical from the perspective of
 their encoding.</p>
 
 
-	      <ul>
+
+              <xsl:variable name="items">
 		<xsl:for-each
 		    select="/tei:TEI/tei:text/tei:body/tei:div">
 		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
@@ -165,8 +166,12 @@ their encoding.</p>
 		    </li>
 		  </xsl:if>
 		</xsl:for-each>
-	      </ul>
-
+              </xsl:variable>
+              <xsl:if test="count($items/html:li)&gt;0">
+                <ul>
+                  <xsl:copy-of select="$items/html:li"/>
+                </ul>
+              </xsl:if>
 	      <xsl:for-each
 		  select="/tei:TEI/tei:text/tei:body/tei:div">
 		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
