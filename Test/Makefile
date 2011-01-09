@@ -66,32 +66,32 @@ normal:
 	@echo INFO Setup for Roma is $(ROMAOPTS)
 	Modules="tei core textstructure figures header linking" 
 	for i in $(TESTFILES) $(TESTDTDFILES) ; do \
-		@echo BUILD Test case $$i ; \
-		@echo Try to validate $$i.odd; \
+		echo BUILD Test case $$i ; \
+		echo Try to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo ODD $$i validates OK; \
 		saxon -o:$$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
 		$(ROMA) $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
-		@echo check egXML in $$i.odd; \
+		echo check egXML in $$i.odd; \
 		perl -p -e "s/testlite-examples/$$i-examples/" ex.nvdl > $$i.nvdl; \
 		../run-onvdl $$i.nvdl $$i.odd ; \
 		for j in `grep "<schemaSpec" $$i.odd | sed 's/.*ident=.//' | sed 's/\".*//'`; do \
-			@echo found schemaSpec $$j in $$i; \
+			echo found schemaSpec $$j in $$i; \
 			$(ROMA) $(ROMAOPTS) --xsl=$(XSL) --schema=$$j  $$i.odd .; \
 			cp xml.xsd.w3c xml.xsd ; \
 			test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 			test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd; \
 			test -f teix.xsd && mv teix.xsd $$j.teix.xsd ; \
 			test -f $$j.teix.xsd && perl -p -i -e "s/teix.xsd/$$j.teix.xsd/" $$j.xsd; \
-			@echo Now validating instances documents against $$j schema; \
-			@echo JING RelaxNG... ; \
+			echo Now validating instances documents against $$j schema; \
+			echo JING RelaxNG... ; \
 			jing -t $$j.rng $$i.xml; \
-			@echo RNV.... ; \
+			echo RNV.... ; \
 			xmllint --noent --dropdtd  $$i.xml | rnv $$j.rnc ;   \
-			@echo xmllint DTD  ; \
+			echo xmllint DTD  ; \
 			xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$j.dtd - ; \
-			@echo JING .. for XSD.... ; \
+			echo JING .. for XSD.... ; \
 			jing $$j.xsd $$i.xml; \
-			@echo xmllint DTD using DTD fragments.... ; \
+			echo xmllint DTD using DTD fragments.... ; \
 			grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml ; \
 			done; \
 		done
@@ -99,8 +99,8 @@ normal:
 test-special:
 	@echo BUILD testing files which only work to make RELAX NG schemas
 	for i in $(TESTSPECIALFILES) ; do \
-		@echo "BUILD test of (special) $$i" ; \
-		@echo Try  to validate $$i.odd; \
+		echo "BUILD test of (special) $$i" ; \
+		echo Try  to validate $$i.odd; \
 		rnv ../p5odds.rnc $$i.odd && echo ODD $$i validates OK ; \
 		$(ROMA) --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
@@ -110,7 +110,7 @@ test-special:
 		echo JING RelaxNG... ; \
 		jing -t $$i.rng $$i.xml; \
 		xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc  ; \
-		@echo JING .. for XSD.... ; \
+		echo JING .. for XSD.... ; \
 		jing $$i.xsd $$i.xml;  \
 		done
 
