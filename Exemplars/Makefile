@@ -53,7 +53,7 @@ dist: schemas
 
 
 clean:
-	-rm *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.* *~ *.xi
-	-rm exnames.xml
-	-rm enrich.rng isofs.rng
-	-rm names.xml
+	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.* *~ *.xi
+	rm -f exnames.xml
+	rm -f enrich.rng isofs.rng
+	rm -f names.xml

@@ -151,11 +151,11 @@ test-bad:
 
 
 clean:
-	-rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.teix.xsd test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
-	-rm -rf LOG *~ *.xsd Schema RomaResults DTD 
-	-rm -rf *.doc.*
-	-rm -f *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
-	-rm -f detest.rnc    detest.rng   detest.dtd   detest.isosch
+	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.teix.xsd test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
+	rm -rf LOG *~ *.xsd Schema RomaResults DTD 
+	rm -rf *.doc.*
+	rm -f *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
+	rm -f detest.rnc    detest.rng   detest.dtd   detest.isosch
 
 
 
