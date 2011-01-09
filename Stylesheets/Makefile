@@ -97,7 +97,7 @@ p5: p4
 
 common: 
 	@echo BUILD Build for P5, common files and documentation
-	test -d release/common || mkdir -p release/common/xml/teip4/stylesheet
+	test -d release/common/xml/teip4/stylesheet || mkdir -p release/common/xml/teip4/stylesheet
 	cp *.css i18n.xml release/common/xml/teip4/stylesheet
 	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
 	cp *.css i18n.xml release/common/xml/tei/stylesheet
