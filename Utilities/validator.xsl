@@ -193,7 +193,7 @@
 
 <xsl:template name="Remark">
   <xsl:param name="value"/>
-  <xsl:message>Remark: <xsl:value-of 
+  <xsl:message>Warning: <xsl:value-of 
 select="name(.)"/> points to ID not in my namespace: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </xsl:message>
 </xsl:template>
 
@@ -264,9 +264,11 @@ select="$value"/> (<xsl:call-template name="loc"/>)
 	    </xsl:when>
 	-->
 	<xsl:otherwise>
-	    <xsl:call-template name="Warning">
-	    <xsl:with-param name="value" select="$What"/>
-	    </xsl:call-template>
+	  <!--
+	      <xsl:call-template name="Warning">
+	      <xsl:with-param name="value" select="$What"/>
+	      </xsl:call-template>
+	    -->
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:when>
