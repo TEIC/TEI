@@ -41,7 +41,6 @@ TESTFILES= \
 	testplace \
 	testrendition \
 	testspoken \
-	testtagdocs \
 	testtranscr \
 	testall 
 
@@ -54,6 +53,7 @@ TESTSPECIALFILES= \
 	testits  \
 	testmathml \
 	testodds \
+	testtagdocs \
 	testplace-gml \
 	testplace-kml \
 	testrend \
