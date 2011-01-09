@@ -60,45 +60,48 @@ TESTSPECIALFILES= \
 	testmeta2010 \
 	testsvg  
 
-default: schemas test-extns test-frag
+default: normal special test-extns test-frag
 
-schemas:
-	echo SETUP IS $(ROMAOPTS)
+normal:
+	@echo INFO Setup for Roma is $(ROMAOPTS)
 	Modules="tei core textstructure figures header linking" 
-	for i in $(TESTFILES) $(TESTDTDFILES)  $(TESTBADFILES); do \
-		echo ; echo PROCESS $$i ; \
-		echo Try  to validate $$i.odd; \
-		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK; \
+	for i in $(TESTFILES) $(TESTDTDFILES) ; do \
+		@echo BUILD Test case $$i ; \
+		@echo Try to validate $$i.odd; \
+		rnv ../p5odds.rnc $$i.odd && echo ODD $$i validates OK; \
 		saxon -o:$$i-ex.odd $$i.odd ../Utilities/odd2exodd.xsl TEIC=true ;\
 		$(ROMA) $(ROMAOPTS) --nodtd --noxsd  --xsl=$(XSL)	$$i-ex.odd . ; \
-		echo check egXML in $$i.odd; \
+		@echo check egXML in $$i.odd; \
 		perl -p -e "s/testlite-examples/$$i-examples/" ex.nvdl > $$i.nvdl; \
-		onvdl $$i.nvdl $$i.odd | grep -v ": error: unfinished element$$" | grep -v "unknown element .egXML" ; \
+		../run-onvdl $$i.nvdl $$i.odd ; \
 		for j in `grep "<schemaSpec" $$i.odd | sed 's/.*ident=.//' | sed 's/\".*//'`; do \
-			echo found schemaSpec $$j in $$i; \
+			@echo found schemaSpec $$j in $$i; \
 			$(ROMA) $(ROMAOPTS) --xsl=$(XSL) --schema=$$j  $$i.odd .; \
 			cp xml.xsd.w3c xml.xsd ; \
 			test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
 			test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd; \
 			test -f teix.xsd && mv teix.xsd $$j.teix.xsd ; \
 			test -f $$j.teix.xsd && perl -p -i -e "s/teix.xsd/$$j.teix.xsd/" $$j.xsd; \
-			echo Now validating instances documents against $$j schema; \
-			echo JING RelaxNG... ; \
+			@echo Now validating instances documents against $$j schema; \
+			@echo JING RelaxNG... ; \
 			jing -t $$j.rng $$i.xml; \
-			echo RNV.... ; \
+			@echo RNV.... ; \
 			xmllint --noent --dropdtd  $$i.xml | rnv $$j.rnc ;   \
-			echo xmllint DTD  ; \
+			@echo xmllint DTD  ; \
 			xmllint --dropdtd $$i.xml | xmllint --noout --dtdvalid $$j.dtd - ; \
-			echo JING .. for XSD.... ; \
+			@echo JING .. for XSD.... ; \
 			jing $$j.xsd $$i.xml; \
-			echo xmllint DTD using DTD fragments.... ; \
+			@echo xmllint DTD using DTD fragments.... ; \
 			grep -H DOCTYPE $$i.xml && xmllint --noout --valid $$i.xml ; \
 			done; \
 		done
+
+test-special:
+	@echo BUILD testing files which only work to make RELAX NG schemas
 	for i in $(TESTSPECIALFILES) ; do \
-		echo ; echo PROCESS $$i ; \
-		echo Try  to validate $$i.odd; \
-		rnv ../p5odds.rnc $$i.odd && echo $$i validates OK stage; \
+		@echo "BUILD test of (special) $$i" ; \
+		@echo Try  to validate $$i.odd; \
+		rnv ../p5odds.rnc $$i.odd && echo ODD $$i validates OK ; \
 		$(ROMA) --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   $$i.odd .; \
 		cp xml.xsd.w3c xml.xsd ; \
 		test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd; \
@@ -107,14 +110,12 @@ schemas:
 		echo JING RelaxNG... ; \
 		jing -t $$i.rng $$i.xml; \
 		xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc  ; \
-		echo JING .. for XSD.... ; \
+		@echo JING .. for XSD.... ; \
 		jing $$i.xsd $$i.xml;  \
 		done
 
-#echo XMLLINT .. for RELAXNG ; \
-#xmllint --dropdtd --noout --relaxng $$i.rng $$i.xml; \
-
 test-frag:
+	@echo BUILD testing files which exercise inclusion of fragments
 	test -f testlite.dtd &&	jing -t -c frag.rnc testlite.xml
 	xmllint --dropdtd testlite.xml | 	rnv frag.rnc 
 
@@ -135,15 +136,15 @@ test-xerces:
 
 
 test-extns:
-	echo check whether user extensions work ....
+	@echo BUILD testing files which demonstrate user extensions
 	xmllint --noout --valid extns.xml
 
 test-sgml:
-	echo Check SGML extension mechanism
+	@echo BUILD check SGML extension mechanism
 	onsgmls -e -g -s  sgmldecl.tei extns.sgm 
 
 test-schematron:
-	echo Run Schematron tests - these may produce warnings
+	@echo BUILD Run Schematron tests - these may produce warnings
 	for i in $(TESTFILES) $(TESTDTDFILES) $(TESTSPECIALFILES); do \
 	 echo Schematron on $$i: ; \
 	 saxon $$i.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $$i.xsl; \
@@ -151,12 +152,13 @@ test-schematron:
 	done
 
 test-bad:
-	echo Now test file with deliberate errors
-	echo =======================================
-	echo Many errors will occur here
-	echo =======================================
-	echo JING RelaxNG...
+	@echo BUILD Now test file with deliberate errors
+	@echo =======================================
+	@echo Many errors will occur here
+	@echo =======================================
+	@echo JING RelaxNG...
 	-for i in $(TESTBADFILES); do \
+	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) $$i.odd . ; \
 	jing -t $$i.rng $$i.xml ; \
 	echo RNV.... ; \
 	xmllint --noent --dropdtd  $$i.xml | rnv $$i.rnc ; \
