@@ -307,11 +307,6 @@ install-schema: dist-schema
 
 install-doc: dist-doc
 	@echo BUILD: Make distribution directory for schema
-	@echo Making schema release in ${PREFIX}
-	(cd release/tei-p5-schema; tar cf - .) | (cd ${PREFIX}; tar xf - )
-
-install-doc
-	@echo BUILD: Making documentation release in ${PREFIX}
 	(cd release/tei-p5-doc; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-source: dist-source
