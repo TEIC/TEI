@@ -66,7 +66,7 @@ normaldtd: $(TESTFILES)
 special: $(TESTSPECIALFILES)
 
 %.rng: %.odd
-	@echo "BUILD schemas from $<"
+	@echo "BUILD: Test schema from $<"
 	@echo Validate $< itself
 	rnv ../p5odds.rnc $< 
 	saxon -o:$*-ex.odd $< ../Utilities/odd2exodd.xsl TEIC=true
@@ -100,7 +100,7 @@ special: $(TESTSPECIALFILES)
 	jing $*.xsd $*.xml
 
 %.special: %.odd
-	@echo "BUILD test of (special) $<" 
+	@echo "BUILD:  Test schema from (special) $<" 
 	@echo Try  to validate $<
 	xmllint --xinclude $< > xi_$<
 	rnv ../p5odds.rnc xi_$*.odd
@@ -122,21 +122,21 @@ testmeta2010:
 	done
 
 test-frag:
-	@echo BUILD testing files which exercise inclusion of fragments
+	@echo BUILD: Testing files which exercise inclusion of fragments
 	test -f testlite.dtd &&	jing -t -c frag.rnc testlite.xml
 	xmllint --dropdtd testlite.xml | rnv frag.rnc 
 
 
 test-extns:
-	@echo BUILD testing files which demonstrate user extensions
+	@echo BUILD: Testing files which demonstrate user extensions
 	xmllint --noout --valid extns.xml
 
 test-sgml:
-	@echo BUILD check SGML extension mechanism
+	@echo BUILD: Test SGML extension mechanism
 	onsgmls -e -g -s  sgmldecl.tei extns.sgm 
 
 detest:
-	@echo BUILD Now test file with deliberate errors
+	@echo BUILD: Test file with deliberate errors
 	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) detest.odd .
 	-jing -t detest.rng detest.xml  > detest.log.all
 	-xmllint --noent --dropdtd  detest.xml | rnv detest.rnc 2>> detest.log.all

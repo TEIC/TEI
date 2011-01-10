@@ -30,7 +30,7 @@ convert: dtds schemas
 dtds: check
 	rm -rf DTD
 	mkdir DTD
-	@echo BUILD generate modular DTDs
+	@echo BUILD: Generate modular DTDs
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/odd2dtd.xsl outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
@@ -41,19 +41,19 @@ schemas:check schema-relaxng schema-sch
 schema-relaxng:
 	rm -rf Schema
 	mkdir Schema
-	@echo BUILD generate modular RELAX NG schemas
+	@echo BUILD: Generate modular RELAX NG schemas
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
 	lang=${LANGUAGE}  \
 	TEIC=true  ${VERBOSE}
-	@echo "BUILD generate modular RELAX NG (compact) schemas using trang"
+	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 
 schema-sch:
-	@echo BUILD extract schema rules to make p5.isosch
+	@echo BUILD: Extract schema rules to make p5.isosch
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/extract-isosch.xsl > p5.isosch
 
 html-web: check
-	@echo BUILD making HTML Guidelines for language ${LANGUAGE}
+	@echo BUILD: Making HTML Guidelines for language ${LANGUAGE}
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
@@ -77,7 +77,7 @@ html-web: check
 	rmdir Guidelines-web-tmp
 
 validate-html:
-	@echo BUILD validate HTML version of Guidelines
+	@echo BUILD: Validate HTML version of Guidelines
 	(cd Guidelines-web/${LANGUAGE}/html; \
 	for i in *.html; do \
 	xmllint --noent --dropdtd $$i > z_$$i; \
@@ -140,7 +140,7 @@ validate: dtds schemas oddschema exampleschema valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
-	@echo BUILD check validity with jing
+	@echo BUILD: Check validity with jing
 	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
 #	from ISO 639-2 as illegal values of xml:lang= even though
@@ -153,21 +153,21 @@ valid: check
 #\
 #	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
 	xmllint --noent --xinclude ${DRIVER} > Source.xml
-	@echo BUILD check validity with rnv
+	@echo BUILD: Check validity with rnv
 	rnv -v p5odds.rnc Source.xml
-	@echo BUILD check validity with nvdl
+	@echo BUILD: Check validity with nvdl
 	-./run-onvdl p5.nvdl ${DRIVER} 
-	@echo BUILD check validity with Schematron
+	@echo BUILD: Check validity with Schematron
 	${SAXON} ${SAXON_ARGS}  p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} p5.isosch.xsl
-	@echo BUILD check validity with local XSLT script
+	@echo BUILD: Check validity with local XSLT script
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/validator.xsl
 	rm Utilities/pointerattributes.xsl
 	rm Source.xml
-	#@echo BUILD check validity with xmllint
+	#@echo BUILD: Check validity with xmllint
 	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
-	@echo BUILD check for places with no examples
+	@echo BUILD: Check for places with no examples
 	${SAXON} ${DRIVER} Utilities/listspecwithnoexample.xsl
 
 test: subset
@@ -194,6 +194,7 @@ subset:
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
+	@echo BUILD: Make final zip archives
 	rm -f release/tei-`cat VERSION`.zip
 	export V=`cat VERSION`;\
 	for i in source schema doc test database exemplars; \
@@ -201,6 +202,7 @@ dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exempl
 	zip -q -r ../../tei-$$V.zip .);done
 
 dist-source: subset
+	@echo BUILD: Make distribution directory for source
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
 	tar -c -f - --exclude "*~" --exclude .svn 	\
@@ -235,6 +237,7 @@ dist-source: subset
 	zip -q -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
 
 dist-schema: schemas dtds oddschema exampleschema
+	@echo BUILD: Make distribution directory for schema
 	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/relaxng
@@ -248,6 +251,7 @@ dist-schema: schemas dtds oddschema exampleschema
 	zip -q -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
 
 dist-doc:  
+	@echo BUILD: Make distribution directory for doc
 	make html-web
 	make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
 	make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
@@ -273,6 +277,7 @@ dist-doc:
 	zip -q -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
 
 dist-test:
+	@echo BUILD: Make distribution directory for test
 	rm -rf release/tei-p5-test*
 	mkdir -p release/tei-p5-test/share/xml/tei
 	(cd Test; make clean)
@@ -283,9 +288,11 @@ dist-test:
 	zip -q -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
 
 dist-exemplars: 
+	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make dist)
 
 dist-database: 
+	@echo BUILD: Make distribution directory for database
 	rm -rf release/tei-p5-database*
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
 	(cd Query; tar --exclude .svn --exclude "*~" -c -f - . ) \
@@ -299,24 +306,29 @@ install-schema: dist-schema
 	(cd release/tei-p5-schema; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-doc: dist-doc
-	@echo Making documentation release in ${PREFIX}
+	@echo BUILD: Make distribution directory for schema
+	@echo Making schema release in ${PREFIX}
+	(cd release/tei-p5-schema; tar cf - .) | (cd ${PREFIX}; tar xf - )
+
+install-doc
+	@echo BUILD: Making documentation release in ${PREFIX}
 	(cd release/tei-p5-doc; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-source: dist-source
-	@echo Making source release in ${PREFIX}
+	@echo BUILD: Making source release in ${PREFIX}
 	(cd release/tei-p5-source; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-test: dist-test
-	@echo Making testfiles release in ${PREFIX}
+	@echo BUILD: Making testfiles release in ${PREFIX}
 	(cd release/tei-p5-test; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install-exemplars: dist-exemplars
-	@echo Making exemplars release in ${PREFIX}
+	@echo BUILD: Making exemplars release in ${PREFIX}
 	(cd release/tei-p5-exemplars; tar cf - share) | \
 	(cd ${PREFIX}; tar xf -)
 
 install-database: dist-database
-	@echo Making database release in ${PREFIX}
+	@echo BUILD: Making database release in ${PREFIX}
 	(cd release/tei-p5-database; tar cf - .) | (cd ${PREFIX}; tar xf - )
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
@@ -335,6 +347,7 @@ check:
 	@which ${SAXON} || exit 1
 
 epub:
+	@echo BUILD: Make epub version of Guidelines
 	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
 	${XSL}/teitoepub --profile=tei teip5.xml
 	mv teip5.epub Guidelines.epub
