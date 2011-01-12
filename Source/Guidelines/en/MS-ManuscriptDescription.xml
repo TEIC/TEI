@@ -273,11 +273,12 @@ alphabetical order:
 <specDesc key="locus"/>
 <specDesc key="locusGrp"/>
 <specDesc key="material"/>
-<specDesc key="watermark"/>
-<specDesc key="origDate"/>
-<specDesc key="origPlace"/>
-<specDesc key="secFol"/>
-<specDesc key="signatures"/>
+ <specDesc key="watermark"/>
+ <specDesc key="objectType"/>
+ <specDesc key="origDate"/>
+ <specDesc key="origPlace"/>
+ <specDesc key="secFol"/>
+ <specDesc key="signatures"/>
 </specList></p>
 <p>Within a manuscript description, many other
 standard TEI phrase level elements are available, notably those
@@ -313,21 +314,27 @@ attributes:
 
 </div>
 <div type="div3" xml:id="msmat">
-<head>Material</head>
+<head>Material and object type</head>
 <p>The <gi>material</gi> element can be used to tag any specific term
 used for the physical material of which a manuscript (or binding, seal, etc.)
-is composed.
-<specList>
-<specDesc key="material"/>
+is composed. The <gi>objectType</gi> element may be used to tag any term
+ specifying the type of object or manuscript upon with the text is written.
+ <specList>
+  <specDesc key="material"/>
+  <specDesc key="objectType"/>
 </specList></p>
-<p>The element may appear wherever a term regarded as significant by
-the encoder occurs, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<binding>
-<p>Brown <material>calfskin</material>, previously with two clasps.</p>
-</binding>
-</egXML>
-
+<p>These elements may appear wherever a term regarded as significant by
+ the encoder occurs, as in the following examples:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <binding>
+   <p>Brown <material>calfskin</material>, previously with two clasps.</p>
+  </binding>
+ </egXML>
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <support>
+   <p><material>Parchment</material> <objectType>codex</objectType> with half <material>goat-leather</material> binding.</p>
+  </support>
+ </egXML>
 </p>
 </div>
 <div type="div3" xml:id="mswat"><head>Watermarks and Stamps</head>
@@ -805,6 +812,7 @@ racchiudono l'inizio dell'epistolario di Paolino.</p>
 &locus;
 &locusGrp;
 &material;
+&objectType;
 &origDate;
 &origPlace;
 &secFol;
