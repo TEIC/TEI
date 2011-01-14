@@ -146,8 +146,6 @@
     <!-- define special rendering for attributes -->
     <xsl:function name="teidocx:render-bold" as="xs:boolean">
         <xsl:param name="element"/>
-
-
         <xsl:for-each select="$element">
             <xsl:choose>
                 <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
