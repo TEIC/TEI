@@ -74,4 +74,3 @@ clean:
 	rm -f  test8.out
 	rm -f  test.xml.*.list
 	rm -f  test.aux test.log test.out test.pdf 
-
