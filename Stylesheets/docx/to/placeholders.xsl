@@ -134,4 +134,87 @@
     
     <xsl:template name="created-by"/>
     <xsl:template name="headerParts"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        
+        Template for all simple block elements.
+        This template looks for a style definition template (mode="get-style") that
+        matches the block element that is currently processed. If none is specified
+        it copies the style definition from the parent element.
+        
+        If some special rendering is required you should overwrite this template.
+        
+    </desc>
+   </doc>
+    <xsl:template match="*[not(teidocx:is-inline(.))]" priority="-10">
+        <xsl:param name="style"/>
+        <xsl:param name="pPr"/>
+        <xsl:param name="nop"/>
+
+        <!-- calculate style definition -->
+        <xsl:variable name="newStyle">
+            <xsl:apply-templates select="." mode="get-style"/>
+        </xsl:variable>
+        <xsl:variable name="styleToPassOn">
+            <xsl:choose>
+                <xsl:when test="string-length($newStyle) &gt; 0">
+                    <xsl:value-of select="$newStyle"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$style"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <!-- process children  -->
+        <xsl:call-template name="block-element">
+            <xsl:with-param name="style" select="$styleToPassOn"/>
+            <xsl:with-param name="pPr" select="$pPr"/>
+            <xsl:with-param name="nop" select="$nop"/>
+        </xsl:call-template>
+    </xsl:template>
+    <!-- end template simple block elements: *[not(teidocx:is-inline(.))] -->
+
+
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        
+            Template for all simple inline elements
+            This template looks for a character style definition template (mode="get-style")
+            for the currently processed element.
+        
+    </desc>
+   </doc>
+    <xsl:template match="*[teidocx:is-inline(.)]" priority="-10">
+        <xsl:param name="character-style"/>
+
+        <xsl:variable name="style">
+            <xsl:apply-templates select="." mode="get-style"/>
+        </xsl:variable>
+
+	<xsl:variable name="iso-style">
+	  <xsl:if test=".//tbx:termNote/@iso:style">
+	    <xsl:value-of select=".//tbx:termNote/@iso:style"/>
+	  </xsl:if>
+	</xsl:variable>
+
+        <xsl:variable name="use-style">
+            <xsl:choose>
+                <xsl:when test="(string-length($style) &gt; 0)">
+                    <xsl:value-of select="$style"/>
+                </xsl:when>
+		<xsl:when test="(string-length($iso-style) &gt; 0)">
+		  <xsl:value-of select="$iso-style"/>
+		</xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$character-style"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:apply-templates>
+            <xsl:with-param name="character-style" select="$use-style"/>
+        </xsl:apply-templates>
+    </xsl:template>
 </xsl:stylesheet>

@@ -31,20 +31,15 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its tei a xs pic fn xsi dc dcterms dcmitype contypes teidocx teix html cals">
 
+    <xsl:import href="../../common2/core.xsl"/>
 
     <xsl:import href="../utils/functions.xsl"/>
     <xsl:import href="../utils/variables.xsl"/>
-
     <xsl:import href="../utils/identity/identity.xsl"/>
     <xsl:import href="../utils/verbatim/tei-docx-verbatim.xsl"/>
-    <xsl:import href="../utils/maths/mml2omml.xsl"/>
-
-   
-    <xsl:import href="parameters.xsl"/>
+    <xsl:import href="../utils/maths/mml2omml.xsl"/>  
 
     <xsl:import href="placeholders.xsl"/>
-
-    <xsl:import href="../../common2/core.xsl"/>
 
     <xsl:import href="../../common2/msdescription.xsl"/>
 
@@ -77,9 +72,38 @@
     <xsl:include href="docxfiles/numbering-definition.xsl"/>
     <xsl:include href="docxfiles/relationships.xsl"/>
     <xsl:include href="docxfiles/settings.xsl"/>
-
-
-
+    <!--
+        A4 is 210mm x 297mm; leaving 1in margin (25mm),
+        gives 160 x 247 approx useable area.  In Microsoft speak, 
+        1mm = 35998 units. so page size is 6659630 x 9791456
+        Divide by 100 to avoid overflow.
+    -->
+    <xsl:param name="pageWidth">575.9680</xsl:param>
+    <xsl:param name="pageHeight">889.1506</xsl:param>
+    <xsl:param name="defaultHeaderFooterFile">templates/default.xml</xsl:param>
+    <xsl:param name="postQuote">’</xsl:param>
+    <xsl:param name="preQuote">‘</xsl:param>
+    <xsl:param name="bulletOne"></xsl:param>
+    <xsl:param name="bulletTwo">•</xsl:param>
+    <xsl:param name="bulletThree">*</xsl:param>
+    <xsl:param name="bulletFour">+</xsl:param>
+    <xsl:param name="bulletFive">•</xsl:param>
+    <xsl:param name="bulletSix">•</xsl:param>
+    <xsl:param name="bulletSeven">•</xsl:param>
+    <xsl:param name="bulletEight">•</xsl:param>
+    
+    <xsl:param name="word-directory">..</xsl:param>
+    <xsl:param name="debug">false</xsl:param>
+    <xsl:param name="styleDoc">
+        <xsl:value-of select="concat($word-directory, '/word/styles.xml')"/>
+    </xsl:param>
+    <xsl:param name="docDoc">
+        <xsl:value-of select="concat($word-directory, '/word/document.xml')"/>
+    </xsl:param> 
+    <xsl:param name="shadowGraphics">false</xsl:param>
+    <xsl:param name="alignFigures">center</xsl:param>
+    <xsl:param name="renderAddDel">true</xsl:param>
+    <xsl:param name="addColour">red</xsl:param>
 
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -533,88 +557,6 @@
     <!-- end template _process-blockelement -->
 
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        
-        Template for all simple block elements.
-        This template looks for a style definition template (mode="get-style") that
-        matches the block element that is currently processed. If none is specified
-        it copies the style definition from the parent element.
-        
-        If some special rendering is required you should overwrite this template.
-        
-    </desc>
-   </doc>
-    <xsl:template match="*[not(teidocx:is-inline(.))]" priority="-10">
-        <xsl:param name="style"/>
-        <xsl:param name="pPr"/>
-        <xsl:param name="nop"/>
-
-        <!-- calculate style definition -->
-        <xsl:variable name="newStyle">
-            <xsl:apply-templates select="." mode="get-style"/>
-        </xsl:variable>
-        <xsl:variable name="styleToPassOn">
-            <xsl:choose>
-                <xsl:when test="string-length($newStyle) &gt; 0">
-                    <xsl:value-of select="$newStyle"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$style"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <!-- process children  -->
-        <xsl:call-template name="block-element">
-            <xsl:with-param name="style" select="$styleToPassOn"/>
-            <xsl:with-param name="pPr" select="$pPr"/>
-            <xsl:with-param name="nop" select="$nop"/>
-        </xsl:call-template>
-    </xsl:template>
-    <!-- end template simple block elements: *[not(teidocx:is-inline(.))] -->
-
-
-
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        
-            Template for all simple inline elements
-            This template looks for a character style definition template (mode="get-style")
-            for the currently processed element.
-        
-    </desc>
-   </doc>
-    <xsl:template match="*[teidocx:is-inline(.)]" priority="-10">
-        <xsl:param name="character-style"/>
-
-        <xsl:variable name="style">
-            <xsl:apply-templates select="." mode="get-style"/>
-        </xsl:variable>
-
-	<xsl:variable name="iso-style">
-	  <xsl:if test=".//tbx:termNote/@iso:style">
-	    <xsl:value-of select=".//tbx:termNote/@iso:style"/>
-	  </xsl:if>
-	</xsl:variable>
-
-        <xsl:variable name="use-style">
-            <xsl:choose>
-                <xsl:when test="(string-length($style) &gt; 0)">
-                    <xsl:value-of select="$style"/>
-                </xsl:when>
-		<xsl:when test="(string-length($iso-style) &gt; 0)">
-		  <xsl:value-of select="$iso-style"/>
-		</xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$character-style"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:apply-templates>
-            <xsl:with-param name="character-style" select="$use-style"/>
-        </xsl:apply-templates>
-    </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -956,7 +898,7 @@
 	    <!-- colour -->
 	    <xsl:choose>
 	      <xsl:when test="$renderAddDel='true' and ancestor-or-self::tei:add">
-		<w:color w:val="red"/>
+		<w:color w:val="{$addColour}"/>
 	      </xsl:when>
 	      <xsl:when test="contains(@rend,'color(')">
 		<w:color w:val="{substring-before(substring-after(@rend,'color('),')')}"/>
@@ -2449,9 +2391,14 @@
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	Setting inline styles. Here we map TEI inline elements to Word styles
+	Page break
       </desc>
     </doc>
+    <xsl:template match="tei:pb">
+      <w:r>
+	<w:br w:type="page"/>
+      </w:r>
+    </xsl:template>
 
   
 </xsl:stylesheet>

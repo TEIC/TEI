@@ -164,12 +164,6 @@
         <xsl:apply-templates/>
     </xsl:template>
     
-    <xsl:template match="tei:pb">
-        <w:r>
-            <w:br w:type="page"/>
-        </w:r>
-    </xsl:template>
-    
     <xsl:template match="tei:seg[not(@*) and normalize-space(.)='']">
         <w:r>
             <w:t>

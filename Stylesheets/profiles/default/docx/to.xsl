@@ -26,9 +26,10 @@
     <xsl:import href="../../../docx/to/teitodocx.xsl"/>
     
     <!-- import functions -->
-    <xsl:include href="default-functions.xsl"/>
+    <xsl:import href="default-functions.xsl"/>
     
     <xsl:param name="renderAddDel">true</xsl:param>
+    <xsl:param name="addColour">red</xsl:param>
 
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -79,13 +80,7 @@
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:c[@iso:font and @n]">
-        <w:r>
-            <w:sym w:font="{@iso:font}" w:char="{@n}"/>
-        </w:r>
-    </xsl:template>
-    
-    <xsl:template match="tei:editionStmt">
+       <xsl:template match="tei:editionStmt">
         <w:r>
             <w:t>
             <xsl:value-of select="tei:edition"/> Edition</w:t>
@@ -94,47 +89,42 @@
 
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
         <xsl:param name="nop"/>   
-	     <xsl:variable name="pair">
-	        <tei:list>
-	           <tei:glossListEntry count="{count(ancestor::tei:list)}">
-	              <tei:hi rend="bold">
-		                <xsl:apply-templates mode="iden"/>
-	              </tei:hi>
-	              <tei:lb/>
-	              <xsl:for-each select="following-sibling::tei:item[1]">
-		                <xsl:apply-templates mode="iden"/>
-	              </xsl:for-each>
-	           </tei:glossListEntry>
-	        </tei:list>
-	     </xsl:variable>
-	     <xsl:apply-templates select="$pair/tei:list/tei:glossListEntry"/>
+	<xsl:variable name="pair">
+	  <tei:list>
+	    <tei:glossListEntry count="{count(ancestor::tei:list)}">
+	      <tei:hi rend="bold">
+		<xsl:apply-templates mode="iden"/>
+	      </tei:hi>
+	      <tei:lb/>
+	      <xsl:for-each select="following-sibling::tei:item[1]">
+		<xsl:apply-templates mode="iden"/>
+	      </xsl:for-each>
+	    </tei:glossListEntry>
+	  </tei:list>
+	</xsl:variable>
+	<xsl:apply-templates select="$pair/tei:list/tei:glossListEntry"/>
     </xsl:template>
 
     <xsl:template match="tei:glossListEntry">
-        <xsl:call-template name="block-element">
-	        <xsl:with-param name="style" select="dl"/>
-	        <xsl:with-param name="pPr">
-	           <w:pPr>
-	              <w:pStyle w:val="dl"/>
-	              <w:ind w:left="360" w:hanging="360"/>
-	           </w:pPr>
-	        </xsl:with-param>
-	     </xsl:call-template>
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style" select="dl"/>
+	<xsl:with-param name="pPr">
+	  <w:pPr>
+	    <w:pStyle w:val="dl"/>
+	    <w:ind w:left="360" w:hanging="360"/>
+	  </w:pPr>
+	</xsl:with-param>
+      </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:pb">
-        <w:r>
-            <w:br w:type="page"/>
-        </w:r>
-    </xsl:template>
-    
+   
     <xsl:template match="tei:seg[not(@*) and normalize-space(.)='']">
-        <w:r>
-            <w:t>
-                <xsl:attribute name="xml:space">preserve</xsl:attribute>
-                <xsl:text> </xsl:text>
-            </w:t>
-        </w:r>
+      <w:r>
+	<w:t>
+	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	  <xsl:text> </xsl:text>
+	</w:t>
+      </w:r>
     </xsl:template>
 
     
@@ -376,12 +366,6 @@
 	        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"/>
       </xsl:copy>
     </xsl:template>
-
-  <xsl:template match="tei:gap">
-    <xsl:call-template name="msInline">
-      <xsl:with-param name="before">[...]</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
+ 
 
 </xsl:stylesheet>

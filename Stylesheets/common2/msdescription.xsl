@@ -355,8 +355,7 @@
       <xsl:with-param name="after">⟩</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <xsl:template match="tei:gap">
-    <xsl:message>This is a gap</xsl:message>
+  <xsl:template match="tei:gap" priority="10">
     <xsl:call-template name="msInline">
       <xsl:with-param name="before">[...]</xsl:with-param>
     </xsl:call-template>
