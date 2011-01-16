@@ -703,7 +703,9 @@
 	<xsl:when test="$renderAddDel='true'">
 	  <w:r>
 	    <xsl:copy-of select="$rProps"/>
-	    <xsl:call-template name="Text"/>
+	    <w:t>
+	      <xsl:call-template name="Text"/>
+	    </w:t>
 	  </w:r>
 	</xsl:when>
 	<xsl:when test="parent::tei:del">
@@ -742,14 +744,18 @@
 	    </xsl:if>
 	    <w:r>
 	      <xsl:copy-of select="$rProps"/>
-	      <xsl:call-template name="Text"/>
+	      <w:t>
+		<xsl:call-template name="Text"/>
+	      </w:t>
 	    </w:r>
 	  </w:ins>
 	</xsl:when>
 	<xsl:otherwise>
 	  <w:r>
 	    <xsl:copy-of select="$rProps"/>
-	    <xsl:call-template name="Text"/>
+	    <w:t>
+	      <xsl:call-template name="Text"/>
+	    </w:t>
 	  </w:r>
 	</xsl:otherwise>
       </xsl:choose>
@@ -814,24 +820,18 @@
 	      </xsl:variable>
 	      <xsl:choose>
 		<xsl:when test="contains($out,'&#2011;')">
-		  <w:t>
 		    <xsl:attribute
 			name="xml:space">preserve</xsl:attribute>
 		    <xsl:value-of select="substring-before($out,'&#2011;')"/>
-		  </w:t>
 		  <w:noBreakHyphen/>
-		  <w:t>
 		    <xsl:attribute
 			name="xml:space">preserve</xsl:attribute>
 		    <xsl:value-of select="substring-after($out,'&#2011;')"/>
-		  </w:t>
 		</xsl:when>
 		<xsl:otherwise>
-		  <w:t>
 		    <xsl:attribute
 			name="xml:space">preserve</xsl:attribute>
 		    <xsl:value-of select="$out"/>
-		  </w:t>
 		</xsl:otherwise>
 	      </xsl:choose>
             </xsl:otherwise>
