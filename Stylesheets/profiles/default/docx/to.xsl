@@ -22,12 +22,14 @@
                 version="2.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn tei teidocx">
     <!-- import conversion style -->
+
     <xsl:import href="../../../docx/to/teitodocx.xsl"/>
-    <xsl:import href="../../../common2/msdescription.xsl"/>
     
     <!-- import functions -->
     <xsl:include href="default-functions.xsl"/>
     
+    <xsl:param name="renderAddDel">true</xsl:param>
+
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -59,27 +61,23 @@
     
     <!-- Styles -->
     
-    <xsl:template match="tei:foreign" mode="get-style">teiforeign</xsl:template>
-
+    <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
     <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
-    <xsl:template match="tei:date" mode="get-style">teidate</xsl:template>
+    <xsl:template match="tei:date" mode="get-style">date</xsl:template>
+    <xsl:template match="tei:foreign" mode="get-style">teiforeign</xsl:template>
     <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
-    <xsl:template match="tei:list[@type='termlist' and ancestor-or-self::*/@type='termsAndDefinitions']/tei:item/tei:abbr"
-                 mode="get-style">ExtRef</xsl:template>
     <xsl:template match="tei:mentioned" mode="get-style">teimentioned</xsl:template>
     <xsl:template match="tei:orgName" mode="get-style">orgName</xsl:template>
+    <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
+    <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
+    <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
+    <xsl:template match="tei:unclear" mode="get-style">teiunclear</xsl:template>
+
     <xsl:template match="tei:p[@rend]" mode="get-style">
         <xsl:call-template name="getStyleName">
             <xsl:with-param name="in" select="@rend"/>
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
-    <xsl:template match="tei:ref" mode="get-style">ExtXref</xsl:template>
-    
-    <!-- 
-        Inline Templates:
-        Here we can overwrite how inline elements are rendered
-    -->
 
     <xsl:template match="tei:c[@iso:font and @n]">
         <w:r>
@@ -222,7 +220,7 @@
     
     <!-- who created this document -->
     <xsl:template name="created-by">
-        <xsl:text>Vesta</xsl:text>
+        <xsl:text>TEI XSL</xsl:text>
     </xsl:template>
 
 
@@ -379,6 +377,11 @@
       </xsl:copy>
     </xsl:template>
 
+  <xsl:template match="tei:gap">
+    <xsl:call-template name="msInline">
+      <xsl:with-param name="before">[...]</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
   
 
 </xsl:stylesheet>

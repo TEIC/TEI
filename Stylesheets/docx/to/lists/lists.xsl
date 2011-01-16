@@ -103,8 +103,6 @@
    </doc>
     <xsl:template match="tei:item">
         <xsl:param name="nop"/>
-
-
         <xsl:variable name="listStyle">
             <xsl:choose>
                 <xsl:when test="../@type='unordered' or ../@type='simple' or not(../@type)">

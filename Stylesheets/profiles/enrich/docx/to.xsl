@@ -24,10 +24,6 @@
     <!-- import conversion style -->
     <xsl:import href="../../default/docx/to.xsl"/>
     
-    <xsl:import href="../../../common2/msdescription.xsl"/>
-
- 
-    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making Word docx files from TEI XML (see tei-docx.xsl) for Vesta </p>
@@ -64,88 +60,6 @@
     </xsl:template>
 
 
-    <xsl:template name="msSection">
-      <xsl:param name="level"/>
-      <xsl:param name="implicitBlock"/>
-      <xsl:param name="heading"/>
-      <w:p>
-	        <w:pPr>
-	           <w:pStyle w:val="tei{local-name()}"/>
-	        </w:pPr>
-	        <w:r>
-	           <w:t>
-	              <xsl:value-of select="$heading"/>
-	           </w:t>
-	        </w:r>
-      </w:p>
-      <xsl:call-template name="block-element"/>
-    </xsl:template>
-    
-    <xsl:template name="msInline">
-      <xsl:param name="before"/>
-      <xsl:param name="after"/>
-      <xsl:param name="style"/>
-      <w:r>
-	        <w:rPr>
-	           <w:rStyle w:val="tei{local-name()}"/>
-	           <xsl:choose>
-	              <xsl:when test="$style='italic'">
-	                 <w:i/>
-	              </xsl:when>
-	              <xsl:when test="$style='bold'">
-	                 <w:b/>
-	              </xsl:when>
-	           </xsl:choose>
-	        </w:rPr>
-	        <w:t>
-	           <xsl:value-of select="$before"/>
-	           <xsl:value-of select="."/>
-	           <xsl:value-of select="$after"/>
-	        </w:t>
-      </w:r>
-    </xsl:template>
-
-    <xsl:template name="msBlock">
-      <xsl:param name="style"/>
-      <xsl:call-template name="block-element">
-	        <xsl:with-param name="style">
-	           <xsl:value-of select="$style"/>
-	        </xsl:with-param>
-      </xsl:call-template>
-    </xsl:template>
-
-    <xsl:template name="msLabelled">
-      <xsl:param name="before"/>
-      <w:r>
-	        <w:rPr>
-	           <w:i/>
-	        </w:rPr>
-	        <w:t>
-	           <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	           <xsl:value-of select="$before"/>
-	           <xsl:text>: </xsl:text>
-	        </w:t>
-      </w:r>
-      <w:r>
-	        <w:rPr>
-	           <w:rStyle w:val="tei{local-name()}"/>
-	        </w:rPr>
-	        <w:t>
-	           <xsl:value-of select="."/>
-	        </w:t>
-      </w:r>
-    </xsl:template>
-
-    <xsl:template name="msLiteral">
-      <xsl:param name="text"/>
-      <w:r>
-	        <w:rPr/>
-	        <w:t>
-	           <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	           <xsl:value-of select="$text"/>
-	        </w:t>
-      </w:r>
-    </xsl:template>
 
 
     <xsl:template name="headerParts">

@@ -55,9 +55,8 @@
       <desc>
          <p>Template used to process block elements</p>
          <p>
-            Template used to process block elements:
-            
-            Is implemented by the main stylesheet and should usually not be overridden.
+            Template used to process block elements: Is implemented by
+            the main stylesheet and should usually not be overridden.
         </p>
       </desc>
    </doc>
@@ -74,8 +73,7 @@
       <desc>
          <p>to a given style name, this template returns the correct style id
         looking it up in styles.xml</p>
-         <p>
-            
+         <p>            
             The template is implemented by the main stylesheet.
         </p>
       </desc>
@@ -112,11 +110,6 @@
             <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"> </xsl:when>
             <xsl:when
 		test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Title</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
                 <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
                     <xsl:call-template name="block-element">
                         <xsl:with-param name="style">Title</xsl:with-param>

@@ -81,4 +81,5 @@
     </xsl:param> 
     <xsl:param name="shadowGraphics">false</xsl:param>
     <xsl:param name="alignFigures">center</xsl:param>
+    <xsl:param name="renderAddDel">true</xsl:param>
 </xsl:stylesheet>

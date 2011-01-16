@@ -44,7 +44,9 @@
 
     <xsl:import href="placeholders.xsl"/>
 
-    <xsl:include href="../../common2/core.xsl"/>
+    <xsl:import href="../../common2/core.xsl"/>
+
+    <xsl:import href="../../common2/msdescription.xsl"/>
 
     <!-- Deals with dynamic text creation such as toc -->
     <xsl:include href="dynamic/dynamic.xsl"/>
@@ -130,6 +132,117 @@
     <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
     <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
 
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Generic template from msDescription for high-level section
+    </desc>
+   </doc>
+  <xsl:template name="msSection">
+    <xsl:param name="level"/>
+    <xsl:param name="implicitBlock"/>
+    <xsl:param name="heading"/>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="tei{local-name()}"/>
+      </w:pPr>
+      <w:r>
+        <w:t>
+          <xsl:value-of select="$heading"/>
+        </w:t>
+      </w:r>
+    </w:p>
+    <xsl:call-template name="block-element"/>
+  </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Generic template from msDescription for inline objects
+    </desc>
+   </doc>
+  <xsl:template name="msInline">
+    <xsl:param name="before"/>
+    <xsl:param name="after"/>
+    <xsl:param name="style"/>
+    <w:r>
+      <w:rPr>
+        <w:rStyle w:val="tei{local-name()}"/>
+        <xsl:choose>
+          <xsl:when test="$style='italic'">
+            <w:i/>
+          </xsl:when>
+          <xsl:when test="$style='bold'">
+            <w:b/>
+          </xsl:when>
+        </xsl:choose>
+	<xsl:if test="$renderAddDel='true' and ancestor-or-self::tei:del">
+	  <w:strike/>
+	</xsl:if>
+      </w:rPr>
+      <w:t>
+        <xsl:value-of select="$before"/>
+        <xsl:value-of select="."/>
+        <xsl:value-of select="$after"/>
+      </w:t>
+    </w:r>
+  </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Generic template from msDescription for mid-level block
+    </desc>
+</doc>
+  <xsl:template name="msBlock">
+    <xsl:param name="style"/>
+    <xsl:call-template name="block-element">
+      <xsl:with-param name="style">
+        <xsl:value-of select="$style"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Generic template from msDescription for labelled object
+    </desc>
+    </doc>
+  <xsl:template name="msLabelled">
+    <xsl:param name="before"/>
+    <w:r>
+      <w:rPr>
+        <w:i/>
+      </w:rPr>
+      <w:t>
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        <xsl:value-of select="$before"/>
+        <xsl:text>: </xsl:text>
+      </w:t>
+    </w:r>
+    <w:r>
+      <w:rPr>
+        <w:rStyle w:val="tei{local-name()}"/>
+      </w:rPr>
+      <w:t>
+        <xsl:value-of select="."/>
+      </w:t>
+    </w:r>
+  </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        Generic template from msDescription for literal text
+    </desc>
+    </doc>
+  <xsl:template name="msLiteral">
+    <xsl:param name="text"/>
+    <w:r>
+      <w:rPr/>
+      <w:t>
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        <xsl:value-of select="$text"/>
+      </w:t>
+    </w:r>
+  </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -274,7 +387,6 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Template used to process block elements:</p>
-         <p> Template used to process block elements: 
 	 <ul>
  	    <li><b>style</b>: A style for all the <gi>w:p</gi>s</li>
             <li><b>pPr</b>: An entire <gi>pPr</gi> element to use </li>
@@ -282,7 +394,6 @@
 	    <li><b>bookmark-id</b>: if present in conjunction with bookmark-name, a bookmark is created around the current element </li>
 	    <li><b>bookmark-name</b>: see bookmark-id </li>
 	 </ul>
-	 </p>
       </desc>
    </doc>
     <xsl:template name="block-element">
@@ -329,7 +440,6 @@
         <xsl:param name="nop"/>
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
-
 
         <!-- bookmark -->
         <xsl:if test="string-length($bookmark-name) &gt; 0 and string-length($bookmark-id) &gt; 0">
@@ -522,7 +632,7 @@
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
         Handles text sections. Adds a bookmark if they are the
-	first text in this object
+	first text in this object. 
     </desc>
    </doc>
     <xsl:template match="text()">
@@ -558,38 +668,92 @@
 	  </w:t>
 	</w:r>
       </xsl:if>
-      <w:r>
-	  <!-- if no specific style is assigned we might check for any other indication to assign 
-	       some style ... -->
-	  <xsl:variable name="renderingProperties">
-	    <xsl:for-each select="..">
-	      <xsl:call-template name="applyRend"/>
-	    </xsl:for-each>
-	  </xsl:variable>
-	  
-	  <xsl:if test="string-length($character-style) &gt; 0 or not(empty($renderingProperties))">
-	    <w:rPr>
-	      <xsl:if test="string-length($character-style) &gt; 0">
-		<w:rStyle>
-		  <xsl:choose>
-		    <!-- this is a rogue - trap it and kill it -->
-		    <xsl:when test="$character-style='footnote reference'">
-		      <xsl:attribute name="w:val" select="'FootnoteReference'"/>
-		    </xsl:when>
-		    <xsl:otherwise>
-		      <xsl:attribute name="w:val" select="$character-style"/>
-		    </xsl:otherwise>
-		  </xsl:choose>		    
-		</w:rStyle>
-	      </xsl:if>
-	      <xsl:copy-of select="$renderingProperties"/>
-	      <xsl:if test="ancestor::*[@xml:lang]">
-		<w:lang w:val="{ancestor::*[@xml:lang][1]/@xml:lang}"/>
-	      </xsl:if>
-	    </w:rPr>
-	  </xsl:if>
-	  <xsl:call-template name="Text"/>
-	</w:r>
+      
+      <!-- if no specific style is assigned we might check for any other indication to assign 
+	   some style ... -->
+      <xsl:variable name="renderingProperties">
+	<xsl:for-each select="..">
+	  <xsl:call-template name="applyRend"/>
+	</xsl:for-each>
+      </xsl:variable>
+      <xsl:variable name="rProps">
+	<xsl:if test="string-length($character-style) &gt; 0 or not(empty($renderingProperties))">
+	  <w:rPr>
+	    <xsl:if test="string-length($character-style) &gt; 0">
+	      <w:rStyle>
+		<xsl:choose>
+		  <!-- this is a rogue - trap it and kill it -->
+		  <xsl:when test="$character-style='footnote reference'">
+		    <xsl:attribute name="w:val" select="'FootnoteReference'"/>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:attribute name="w:val" select="$character-style"/>
+		  </xsl:otherwise>
+		</xsl:choose>		    
+	      </w:rStyle>
+	    </xsl:if>
+	    <xsl:copy-of select="$renderingProperties"/>
+	    <xsl:if test="ancestor::*[@xml:lang]">
+	      <w:lang w:val="{ancestor::*[@xml:lang][1]/@xml:lang}"/>
+	    </xsl:if>
+	  </w:rPr>
+	</xsl:if>
+      </xsl:variable>	
+      <xsl:choose>
+	<xsl:when test="$renderAddDel='true'">
+	  <w:r>
+	    <xsl:copy-of select="$rProps"/>
+	    <xsl:call-template name="Text"/>
+	  </w:r>
+	</xsl:when>
+	<xsl:when test="parent::tei:del">
+	  <w:del>
+	    <xsl:variable name="N">
+	      <xsl:for-each select="..">
+		<xsl:number level="any"/>
+	      </xsl:for-each>
+	    </xsl:variable>
+	    <xsl:attribute name="w:id" select="number($N) + 50000"/>
+	    <xsl:if test="../@when">
+	      <xsl:attribute name="w:date">
+		<xsl:value-of select="../@when"/>
+	      </xsl:attribute>
+	    </xsl:if>
+	    <w:r>
+	      <xsl:copy-of select="$rProps"/>
+	      <w:delText>
+		<xsl:call-template name="Text"/>
+	      </w:delText>
+	    </w:r>
+	  </w:del>
+	</xsl:when>
+	<xsl:when test="parent::tei:add">
+	  <w:ins>
+	    <xsl:variable name="N">
+	      <xsl:for-each select="..">
+		<xsl:number level="any"/>
+	      </xsl:for-each>
+	    </xsl:variable>
+	    <xsl:attribute name="w:id" select="number($N) + 50000"/>
+	    <xsl:if test="../@when">
+	      <xsl:attribute name="w:date">
+		<xsl:value-of select="../@when"/>
+	      </xsl:attribute>
+	    </xsl:if>
+	    <w:r>
+	      <xsl:copy-of select="$rProps"/>
+	      <xsl:call-template name="Text"/>
+	    </w:r>
+	  </w:ins>
+	</xsl:when>
+	<xsl:otherwise>
+	  <w:r>
+	    <xsl:copy-of select="$rProps"/>
+	    <xsl:call-template name="Text"/>
+	  </w:r>
+	</xsl:otherwise>
+      </xsl:choose>
+      
       <xsl:choose>
 	<xsl:when test="ancestor::tei:head"/>
 	<xsl:when test="ancestor::tei:bibl"/>
@@ -631,9 +795,17 @@
 		      <xsl:text> </xsl:text>
 		    </xsl:if>
 		    <xsl:value-of select="normalize-space(.)"/>
-		    <xsl:if test="substring(.,string-length(.),1)=' '">
-		      <xsl:text> </xsl:text>
-		    </xsl:if>
+		    <xsl:choose>
+		      <xsl:when test="substring(.,string-length(.),1)=' '">
+			<xsl:text> </xsl:text>
+		      </xsl:when>
+		      <xsl:when test="substring(.,string-length(.),1)='&#9;'">
+			<xsl:text> </xsl:text>
+		      </xsl:when>
+		      <xsl:when test="substring(.,string-length(.),1)='&#10;'">
+			<xsl:text> </xsl:text>
+		      </xsl:when>
+		    </xsl:choose>
 		    <xsl:if test="substring(.,string-length(.),1)='&#xA;'">
 		      <xsl:text> </xsl:text>
 		    </xsl:if>
@@ -769,17 +941,27 @@
             </xsl:if>
 
 	    <!-- strikethrough -->
-            <xsl:if test="contains(@rend,'strikethrough')">
-	      <w:strike/>
-	    </xsl:if>
-            <xsl:if test="contains(@rend,'strikedoublethrough')">
-	      <w:dstrike/>
-	    </xsl:if>
+	    <xsl:choose>
+	      <xsl:when test="$renderAddDel='true' and ancestor-or-self::tei:del">
+		<w:strike/>
+	      </xsl:when>
+	      <xsl:when test="contains(@rend,'strikethrough')">
+		<w:strike/>
+	      </xsl:when>
+	      <xsl:when test="contains(@rend,'strikedoublethrough')">
+		<w:dstrike/>
+	      </xsl:when>
+	    </xsl:choose>
 	    
 	    <!-- colour -->
-	    <xsl:if test="contains(@rend,'color(')">
+	    <xsl:choose>
+	      <xsl:when test="$renderAddDel='true' and ancestor-or-self::tei:add">
+		<w:color w:val="red"/>
+	      </xsl:when>
+	      <xsl:when test="contains(@rend,'color(')">
 		<w:color w:val="{substring-before(substring-after(@rend,'color('),')')}"/>
-	    </xsl:if>
+	      </xsl:when>
+	    </xsl:choose>
 
 	    <!-- background color -->
 	    <xsl:if test="contains(@rend,'background(')">
@@ -787,12 +969,14 @@
 	    </xsl:if>
 
 	    <!-- underline -->
-            <xsl:if test="contains(@rend,'underline')">
-	      <w:u w:val="single"/>
-	    </xsl:if>
-            <xsl:if test="contains(@rend,'underdoubleline')">
-	      <w:u w:val="double"/>
-	    </xsl:if>
+	    <xsl:choose>
+	      <xsl:when  test="contains(@rend,'underline') ">
+		<w:u w:val="single"/>
+	      </xsl:when>
+	      <xsl:when test="contains(@rend,'underdoubleline')">
+		<w:u w:val="double"/>
+	      </xsl:when>
+	    </xsl:choose>
 
 	    <!-- sub- and superscript -->
 	    <xsl:choose>
@@ -2263,4 +2447,11 @@
     </w:r>
   </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	Setting inline styles. Here we map TEI inline elements to Word styles
+      </desc>
+    </doc>
+
+  
 </xsl:stylesheet>

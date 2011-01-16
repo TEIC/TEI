@@ -207,7 +207,9 @@
 		<xsl:when test="self::mml:math">true</xsl:when>
 		<xsl:when test="self::tei:abbr">true</xsl:when>
 		<xsl:when test="self::tei:affiliation">true</xsl:when>
-		<xsl:when test="self::tei:altIdentifier">true</xsl:when>
+		<xsl:when
+		    test="self::tei:altIdentifier">true</xsl:when>
+		<xsl:when test="self::tei:add">true</xsl:when>
 		<xsl:when test="self::tei:am">true</xsl:when>
 		<xsl:when test="self::tei:att">true</xsl:when>
 		<xsl:when test="self::tei:author">true</xsl:when>
@@ -222,6 +224,7 @@
 		<xsl:when test="self::tei:country">true</xsl:when>
 		<xsl:when test="self::tei:damage">true</xsl:when>
 		<xsl:when test="self::tei:date">true</xsl:when>
+		<xsl:when test="self::tei:del">true</xsl:when>
 		<xsl:when test="self::tei:depth">true</xsl:when>
 		<xsl:when test="self::tei:dim">true</xsl:when>
 		<xsl:when test="self::tei:dimensions">true</xsl:when>
@@ -267,6 +270,7 @@
 		<xsl:when test="self::tei:ptr">true</xsl:when>
 		<xsl:when test="self::tei:publisher">true</xsl:when>
 		<xsl:when test="self::tei:pubPlace">true</xsl:when>
+		<xsl:when test="self::tei:q[tei:l]">false</xsl:when>
 		<xsl:when test="self::tei:q[not(parent::tei:div)]">true</xsl:when>
 		<xsl:when test="self::tei:ref">true</xsl:when>
 		<xsl:when test="self::tei:region">true</xsl:when>

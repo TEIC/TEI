@@ -80,29 +80,11 @@
     <!-- Styles -->
     
 
-    <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
-    <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
-    <xsl:template match="tei:date" mode="get-style">date</xsl:template>
-    <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
     <xsl:template match="tei:list[@type='termlist' and ancestor-or-self::*/@type='termsAndDefinitions']/tei:item/tei:abbr"
                  mode="get-style">ExtRef</xsl:template>
-    <xsl:template match="tei:mentioned" mode="get-style">mentioned</xsl:template>
-    <xsl:template match="tei:orgName" mode="get-style">orgName</xsl:template>
-    <xsl:template match="tei:p[@rend]" mode="get-style">
-        <xsl:call-template name="getStyleName">
-            <xsl:with-param name="in" select="@rend"/>
-        </xsl:call-template>
-    </xsl:template>
-    <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
-    <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style">
-      <xsl:value-of select="@rend"/>
-   </xsl:template>
     <xsl:template match="tei:seg[@rend='FormulaReference']">FormulaReference</xsl:template>
     <xsl:template match="tei:seg[@iso:provision]" mode="get-style">
       <xsl:value-of select="@iso:provision"/>
-   </xsl:template>
-    <xsl:template match="tei:seg[@rend]" mode="get-style">
-      <xsl:value-of select="@rend"/>
    </xsl:template>
     <xsl:template match="tei:hi[@rend='language']" mode="get-style">
       <xsl:text>language</xsl:text>
