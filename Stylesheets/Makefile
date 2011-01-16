@@ -1,3 +1,7 @@
+JING=jing
+TRANG=trang
+SAXON=saxon
+SAXON_ARGS=-ext:on
 DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx oo nlm tite
 OLDDIRS=slides fo html common latex odds
 SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub
@@ -41,13 +45,20 @@ TARGETS= \
 
 .PHONY: doc release common
 
-default:
-	@echo
-	@echo TEI XSL stylesheets
-	@echo - install target puts files directly into ${PREFIX} 
-	@echo - dist target  makes a release subdirectory of runtime files
-	@echo There is no default action
-	@echo
+default: check test release
+
+check:
+	@echo Checking you have running XML tools and Perl before trying to run transform...
+	@echo -n Perl: 
+	@which perl || exit 1
+	@echo -n xmllint: 
+	@which xmllint || exit 1
+	@echo -n trang: 
+	@which ${TRANG} || exit 1
+	@echo -n jing: 
+	@which ${JING} || exit 1
+	@echo -n saxon: 
+	@which ${SAXON} || exit 1
 
 p5-2:
 	@echo BUILD Build for P5, XSLT 2.0
