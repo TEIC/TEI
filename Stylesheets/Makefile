@@ -2,7 +2,7 @@ DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx oo nlm ti
 OLDDIRS=slides fo html common latex odds
 SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub
 PREFIX=/usr
-OXY=`locate stylesheetDocumentation.sh | head -1`
+OXY=/usr/share/oxygen/stylesheetDocumentation.sh
 TARGETS= \
 	latex2/tei.xsl \
 	xhtml2/tei.xsl \
@@ -113,7 +113,7 @@ doc:
 	cp tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
 
 oxygendoc:
-	-locate stylesheetDocumentation.sh || exit 1
+	test -f $(OXY) || exit 1
 	@echo using oXygen stylesheet documentation generator
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
