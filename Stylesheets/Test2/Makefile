@@ -48,14 +48,13 @@ oddbyexample:
 
 general:
 	../teitolatex test.xml
-	which xelatex && xelatex --interaction=batchmode test.tex
+	diff test.tex ok/test.tex
 	../teitoepub  test.xml 
 	../teitoodt test.xml 
 	../teitodocx test.xml 
 	unzip -t test.xml.docx
 	unzip -t test.xml.odt
 	unzip -t test.epub
-	for i in test.tex; do diff $$i ok/$$i;done
 
 clean:
 	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
