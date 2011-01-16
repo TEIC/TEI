@@ -52,11 +52,11 @@ general:
 	../teitoepub  test.xml 
 	../teitoodt test.xml 
 	../teitodocx test.xml 
-	unzip -t test.xml.docx  | sort > test.xml.docx.list
+	unzip -t test.xml.docx  | sort | grep testing: > test.xml.docx.list
 	diff test.xml.docx.list ok/test.xml.docx.list
-	unzip -t test.xml.odt  | sort > test.xml.odt.list
+	unzip -t test.xml.odt  | sort | grep testing: > test.xml.odt.list
 	diff test.xml.odt.list ok/test.xml.odt.list
-	unzip -t test.epub  | sort > test.xml.epub.list
+	unzip -t test.epub  | sort | grep testing: > test.xml.epub.list
 	diff test.xml.epub.list ok/test.xml.epub.list
 
 clean:
