@@ -52,9 +52,12 @@ general:
 	../teitoepub  test.xml 
 	../teitoodt test.xml 
 	../teitodocx test.xml 
-	unzip -t test.xml.docx
-	unzip -t test.xml.odt
-	unzip -t test.epub
+	unzip -t test.xml.docx > test.xml.docx.list
+	diff test.xml.docx.list ok/test.xml.docx.list
+	unzip -t test.xml.odt > test.xml.odt.list
+	diff test.xml.odt.list ok/test.xml.odt.list
+	unzip -t test.epub > test.xml.epub.list
+	diff test.xml.epub.list ok/test.xml.epub.list
 
 clean:
 	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
@@ -69,5 +72,6 @@ clean:
 	rm -f  test7.zip
 	rm -f  test8.doc
 	rm -f  test8.out
+	rm -r  test.xml.*.list
 	rm -f  test.aux test.log test.out test.pdf 
 
