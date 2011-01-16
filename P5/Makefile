@@ -340,6 +340,8 @@ check:
 	@which ${JING} || exit 1
 	@echo -n saxon: 
 	@which ${SAXON} || exit 1
+	@echo -n rnv: 
+	@which rnv || exit 1
 
 epub:
 	@echo BUILD: Make epub version of Guidelines
