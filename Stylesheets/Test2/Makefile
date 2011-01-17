@@ -48,6 +48,7 @@ oddbyexample:
 
 general:
 	../teitolatex test.xml
+	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
 	diff test.tex ok/test.tex
 	../teitoepub  test.xml 
 	../teitoodt test.xml 
