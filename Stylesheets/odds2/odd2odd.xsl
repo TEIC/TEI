@@ -40,19 +40,14 @@
   <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
   <xsl:key name="odd2odd-CLASSREFS" match="tei:classRef" use="@key"/>
   <xsl:key name="odd2odd-ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
-  <xsl:key name="odd2odd-ATTREFS" match="tei:attRef" use="concat(@name,'_',../../@ident)"/>
-  <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="@ident"/>
-  <xsl:key name="odd2odd-CHANGE" match="tei:elementSpec[@mode='change']" use="@ident"/>
-  <xsl:key name="odd2odd-CHANGE" match="tei:macroSpec[@mode='change']" use="@ident"/>
   <xsl:key name="odd2odd-CHANGEATT" match="tei:attDef[@mode='change']" use="concat(../../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CHANGECONSTRAINT" match="tei:constraintSpec[@mode='change']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:classSpec"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:classSpec[@mode='delete']" use="@ident"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:elementSpec[@mode='delete']" use="@ident"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:macroSpec[@mode='delete']" use="@ident"/>
+  <xsl:key name="odd2odd-ATTREFS" match="tei:attRef" use="concat(@name,'_',../../@ident)"/>
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode='delete']" use="concat(ancestor::tei:elementSpec/@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-DELETEATT" match="tei:attDef[@mode='delete']" use="concat(ancestor::tei:classSpec/@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-DELETECONSTRAINT" match="tei:constraintSpec[@mode='delete']" use="concat(../@ident,'_',@ident)"/>
+
   <xsl:key name="odd2odd-ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:elementSpec"/>
   <xsl:key name="odd2odd-IDS" match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="odd2odd-MACROS" use="@ident" match="tei:macroSpec"/>
@@ -65,15 +60,9 @@
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[ancestor::tei:macroSpec and not(@name=ancestor::tei:macroSpec/@ident)]"/>
   <xsl:key name="odd2odd-REFED" use="substring-before(@name,'.attribute')" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:classSpec[@mode='replace']" use="@ident"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode='replace']" use="@ident"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:macroSpec[@mode='replace']" use="@ident"/>
   <xsl:key name="odd2odd-REPLACEATT" match="tei:attDef[@mode='replace']" use="concat(../../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-REPLACECONSTRAINT" match="tei:constraintSpec[@mode='replace']" use="concat(../@ident,'_',@ident)"/>
 
-  <xsl:key name="odd2odd-IDENTS" match="tei:macroSpec" use="@ident"/>
-  <xsl:key name="odd2odd-IDENTS" match="tei:classSpec" use="@ident"/>
-  <xsl:key name="odd2odd-IDENTS" match="tei:elementSpec" use="@ident"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:macroSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:classSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
@@ -81,6 +70,23 @@
   <xsl:key name="odd2odd-MODULE_MEMBERS_MODEL" match="tei:classSpec[@type='model']" use="@module"/>
 
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
+
+  <xsl:key name="odd2odd-IDENTS" match="tei:macroSpec" use="@ident"/>
+  <xsl:key name="odd2odd-IDENTS" match="tei:classSpec" use="@ident"/>
+  <xsl:key name="odd2odd-IDENTS" match="tei:elementSpec" use="@ident"/>
+
+   <!-- all of these use a combination of @ident _and_ @ns (where
+   present), in case of duplication of names across schemes -->
+
+  <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:elementSpec[@mode='change']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:macroSpec[@mode='change']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:classSpec[@mode='delete']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:elementSpec[@mode='delete']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:macroSpec[@mode='delete']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:classSpec[@mode='replace']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode='replace']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:macroSpec[@mode='replace']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
 
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
@@ -545,7 +551,7 @@ How can a class be ok?
         done
   -->
       <xsl:variable name="Current" select="."/>
-      <xsl:variable name="specName" select="@ident"/>
+      <xsl:variable name="specName" select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
       <xsl:variable name="N" select="local-name(.)"/>
       <xsl:for-each select="$ODD">
         <xsl:choose>
