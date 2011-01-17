@@ -72,7 +72,6 @@
     <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
     <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
-    <xsl:template match="tei:unclear" mode="get-style">teiunclear</xsl:template>
 
     <xsl:template match="tei:p[@rend]" mode="get-style">
         <xsl:call-template name="getStyleName">

@@ -360,6 +360,11 @@
       <xsl:with-param name="before">[...]</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+  <xsl:template match="tei:unclear" priority="10">
+    <xsl:call-template name="msInline">
+      <xsl:with-param name="after">[?]</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
   <xsl:template match="tei:placeName|tei:genName|tei:geogName|tei:roleName|tei:name|tei:persName">
     <xsl:choose>
       <xsl:when test="*">
