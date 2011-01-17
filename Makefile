@@ -21,6 +21,26 @@ JING=jing
 TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
+# to make this thingt build under Ubuntu/Debian, here are all the packages you'll need:
+#	jing
+#	msttcorefonts
+#	onvdl
+#	rnv
+#	saxon
+#	tei-oxygen
+#	tei-p5-source
+#	tei-p5-xsl
+#	tei-p5-xsl2
+#	tei-roma
+#	tei-xsl-common
+#	trang-java
+#	ttf-arphic-ukai
+#	ttf-arphic-uming 
+#	ttf-baekmuk 
+#	ttf-junicode
+#	ttf-kochi-gothic
+#	ttf-kochi-mincho 
+#	zip 
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema clean dist exemplars
 
 default: validate exemplars test pdf epub html-web validate-html
