@@ -551,7 +551,8 @@ How can a class be ok?
         done
   -->
       <xsl:variable name="Current" select="."/>
-      <xsl:variable name="specName" select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+      <xsl:variable name="specName"
+		    select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
       <xsl:variable name="N" select="local-name(.)"/>
       <xsl:for-each select="$ODD">
         <xsl:choose>
@@ -705,7 +706,7 @@ How can a class be ok?
   </xsl:template>
   <xsl:template match="tei:elementSpec" mode="odd2odd-change">
     <xsl:variable name="elementName">
-      <xsl:value-of select="@ident"/>
+      <xsl:value-of select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
     </xsl:variable>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
@@ -888,7 +889,7 @@ for change individually.
   </xsl:template>
   <xsl:template match="tei:macroSpec" mode="odd2odd-change">
     <xsl:variable name="elementName">
-      <xsl:value-of select="@ident"/>
+      <xsl:value-of select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>"/>
     </xsl:variable>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
@@ -996,7 +997,7 @@ for change individually.
   </xsl:template>
   <xsl:template match="tei:classSpec" mode="odd2odd-change">
     <xsl:variable name="className">
-      <xsl:value-of select="@ident"/>
+	<xsl:value-of select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>"/>
     </xsl:variable>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
