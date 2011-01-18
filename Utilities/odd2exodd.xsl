@@ -68,7 +68,7 @@
 	<elementRef key="egXML"/>
       </xsl:otherwise>
     </xsl:choose>
-    <elementSpec ident="egXML" mode="change">
+    <elementSpec ident="egXML" mode="change" ns="http://www.tei-c.org/ns/Examples">
       <content>
 	<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
 	  <choice>
