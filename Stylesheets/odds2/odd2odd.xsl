@@ -78,15 +78,15 @@
    <!-- all of these use a combination of @ident _and_ @ns (where
    present), in case of duplication of names across schemes -->
 
-  <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
-  <xsl:key name="odd2odd-CHANGE" match="tei:elementSpec[@mode='change']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
-  <xsl:key name="odd2odd-CHANGE" match="tei:macroSpec[@mode='change']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:classSpec[@mode='delete']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:elementSpec[@mode='delete']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:macroSpec[@mode='delete']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:classSpec[@mode='replace']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode='replace']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:macroSpec[@mode='replace']" use="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:elementSpec[@mode='change']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:macroSpec[@mode='change']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:classSpec[@mode='delete']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:elementSpec[@mode='delete']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:macroSpec[@mode='delete']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:classSpec[@mode='replace']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode='replace']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:macroSpec[@mode='replace']" use="concat(@ns,@ident)"/>
 
   <xsl:variable name="DEFAULTSOURCE">
     <xsl:choose>
@@ -552,7 +552,7 @@ How can a class be ok?
   -->
       <xsl:variable name="Current" select="."/>
       <xsl:variable name="specName"
-		    select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+		    select="concat(@ns,@ident)"/>
       <xsl:variable name="N" select="local-name(.)"/>
       <xsl:for-each select="$ODD">
         <xsl:choose>
@@ -706,8 +706,9 @@ How can a class be ok?
   </xsl:template>
   <xsl:template match="tei:elementSpec" mode="odd2odd-change">
     <xsl:variable name="elementName">
-      <xsl:value-of select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>
+      <xsl:value-of select="concat(@ns,@ident)"/>
     </xsl:variable>
+
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
       <xsl:attribute name="rend">change</xsl:attribute>
@@ -889,7 +890,7 @@ for change individually.
   </xsl:template>
   <xsl:template match="tei:macroSpec" mode="odd2odd-change">
     <xsl:variable name="elementName">
-      <xsl:value-of select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>"/>
+      <xsl:value-of select="concat(@ns,@ident)"/>"/>
     </xsl:variable>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
@@ -997,7 +998,7 @@ for change individually.
   </xsl:template>
   <xsl:template match="tei:classSpec" mode="odd2odd-change">
     <xsl:variable name="className">
-	<xsl:value-of select="concat(ancestor-or-self::*[@ns][1]/@ns,@ident)"/>"/>
+	<xsl:value-of select="concat(@ns,@ident)"/>
     </xsl:variable>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
