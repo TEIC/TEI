@@ -890,7 +890,7 @@ for change individually.
   </xsl:template>
   <xsl:template match="tei:macroSpec" mode="odd2odd-change">
     <xsl:variable name="elementName">
-      <xsl:value-of select="concat(@ns,@ident)"/>"/>
+      <xsl:value-of select="concat(@ns,@ident)"/>
     </xsl:variable>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
