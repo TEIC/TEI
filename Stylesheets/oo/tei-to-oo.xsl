@@ -503,38 +503,33 @@
 
 <!-- lists -->
   <xsl:template match="tei:list">
-    <xsl:call-template name="startHook"/>
     <xsl:if test="tei:head">
-      <text:p><xsl:apply-templates select="tei:head" mode="show"/></text:p>
+      <text:p>
+	<xsl:attribute name="text:style-name">
+	  <xsl:choose>
+	    <xsl:when  test="@type='ordered'">P2</xsl:when>
+	    <xsl:otherwise>P1</xsl:otherwise>
+	  </xsl:choose>
+      </xsl:attribute>
+      <xsl:apply-templates select="tei:head" mode="show"/>
+      </text:p>
     </xsl:if>
-    <text:list text:style-name="L3">
+    <text:list>
+      <xsl:attribute name="text:style-name">
+	<xsl:choose>
+            <xsl:when test="not(@type)">L1</xsl:when>
+            <xsl:when test="@type='ordered'">L3</xsl:when>
+            <xsl:when test="@type='unordered'">L1</xsl:when>
+	</xsl:choose>
+      </xsl:attribute>
       <xsl:apply-templates/>
     </text:list>
-    <xsl:call-template name="endHook"/>
   </xsl:template>
 
 
-  <xsl:template match="tei:list[@type='unordered']">
-    <xsl:call-template name="startHook"/>
-    <text:list text:style-name="L3">
-      <xsl:apply-templates/>
-    </text:list>
-    <xsl:call-template name="endHook"/>
-  </xsl:template>
 
-
-  <xsl:template match="tei:list[@type='ordered']">
-    <xsl:call-template name="startHook"/>
-    <text:list text:style-name="L1">
-      <xsl:apply-templates/>
-    </text:list>
-    <xsl:call-template name="endHook"/>
-  </xsl:template>
-
-  <xsl:template match="tei:list[@type='gloss']">
-    <xsl:call-template name="startHook"/>
+  <xsl:template match="tei:list[@type='gloss']" priority="10">
     <xsl:apply-templates/>
-    <xsl:call-template name="endHook"/>
   </xsl:template>
 
   <xsl:template match="tei:list[@type='gloss']/tei:item">
@@ -549,55 +544,21 @@
     </text:p>
   </xsl:template>
 
-  <xsl:template name="startHook">
-    <xsl:choose>
-      <xsl:when test="self::tei:list and parent::tei:item">
-	<xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
-	<xsl:text disable-output-escaping="yes">&lt;/text:list&gt;</xsl:text>
-      </xsl:when>
-      <xsl:when test="parent::tei:p">
-      <xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-
-  <xsl:template name="endHook">
-    <xsl:choose>
-      <xsl:when test="self::tei:list and parent::tei:item">
-	<xsl:text disable-output-escaping="yes">&lt;text:list
-	</xsl:text>
-	<xsl:choose>
-	  <xsl:when test="parent::tei:list[@type='ordered']">
-	  </xsl:when>
-	</xsl:choose>
-	<xsl:text>&gt;</xsl:text>
-	<xsl:text disable-output-escaping="yes">&lt;text:p  text:style-name="List Contents&gt;</xsl:text>
-      </xsl:when>
-      <xsl:when test="parent::tei:p">
-      <xsl:text disable-output-escaping="yes">&lt;text:p&gt;</xsl:text>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-
-
-
   <xsl:template match="tei:item/tei:p">
     <xsl:apply-templates/>
   </xsl:template>
 
-
   <xsl:template match="tei:item">
     <text:list-item>
       <xsl:choose>
-	<xsl:when test="list">
+	<xsl:when test="tei:list">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <text:p>
 	    <xsl:attribute name="text:style-name">
 	      <xsl:choose>
-		<xsl:when
-		    test="parent::tei:list/@type='ordered'">P2</xsl:when>
+		<xsl:when  test="parent::tei:list/@type='ordered'">P2</xsl:when>
 		<xsl:otherwise>P1</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:attribute>
@@ -1668,6 +1629,37 @@
 	</xsl:otherwise>
       </xsl:choose>
     </text:a>
+  </xsl:template>
+
+
+  <xsl:template name="startHook">
+    <xsl:choose>
+      <xsl:when test="self::tei:list and parent::tei:item">
+	<xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
+	<xsl:text disable-output-escaping="yes">&lt;/text:list&gt;</xsl:text>
+      </xsl:when>
+      <xsl:when test="parent::tei:p">
+      <xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="endHook">
+    <xsl:choose>
+      <xsl:when test="self::tei:list and parent::tei:item">
+	<xsl:text disable-output-escaping="yes">&lt;text:list
+	</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="parent::tei:list[@type='ordered']">
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:text>&gt;</xsl:text>
+	<xsl:text disable-output-escaping="yes">&lt;text:p  text:style-name="List Contents&gt;</xsl:text>
+      </xsl:when>
+      <xsl:when test="parent::tei:p">
+      <xsl:text disable-output-escaping="yes">&lt;text:p&gt;</xsl:text>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
