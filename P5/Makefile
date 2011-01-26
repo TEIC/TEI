@@ -1,4 +1,5 @@
 LANGUAGE=en
+SFUSER=rahtz
 GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
@@ -215,6 +216,18 @@ subset:
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
 	@echo BUILD: Make final zip archives
+	(cd release; 	\
+	ln -s tei-p5-database tei-p5-database-`cat ../VERSION` ; \
+	zip -q -r tei-p5-database-`cat ../VERSION`.zip tei-p5-database-`cat ../VERSION` )
+	(cd release; 	\
+	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
+	zip -q -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
+	(cd release; 	\
+	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
+	zip -q -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
+	(cd release; 	\
+	ln -s tei-p5-test tei-p5-test-`cat ../VERSION` ; \
+	zip -q -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
 	rm -f release/tei-`cat VERSION`.zip
 	export V=`cat VERSION`;\
 	for i in source schema doc test database exemplars; \
@@ -252,9 +265,6 @@ dist-source: subset
 	validator.xsl \
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
-	(cd release; 	\
-	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
-	zip -q -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
 
 dist-schema: schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
@@ -292,9 +302,6 @@ dist-doc:
 	done
 	make pdf
 	cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc/en
-	(cd release; 	\
-	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
-	zip -q -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
 
 dist-test:
 	@echo BUILD: Make distribution directory for test
@@ -303,9 +310,6 @@ dist-test:
 	(cd Test; make clean)
 	tar --exclude "*~" --exclude .svn -c -f - Test \
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
-	(cd release; 	\
-	ln -s tei-p5-test tei-p5-test-`cat ../VERSION` ; \
-	zip -q -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
 
 dist-exemplars: 
 	@echo BUILD: Make distribution directory for exemplars
@@ -317,9 +321,6 @@ dist-database:
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
 	(cd Query; tar --exclude .svn --exclude "*~" -c -f - . ) \
 	| (cd release/tei-p5-database/share/xml/tei/xquery; tar xf - )
-	(cd release; 	\
-	ln -s tei-p5-database tei-p5-database-`cat ../VERSION` ; \
-	zip -q -r tei-p5-database-`cat ../VERSION`.zip tei-p5-database-`cat ../VERSION` )
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
@@ -385,6 +386,9 @@ catalogue:
 
 catalogue-print:
 	${SAXON} ${SAXON_ARGS} ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
+
+upload:
+	rsync -e ssh release/*zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/TEIP5
 
 clean:
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
