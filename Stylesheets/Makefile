@@ -1,3 +1,4 @@
+SFUSER=rahtz
 JING=jing
 TRANG=trang
 SAXON=saxon
@@ -152,11 +153,10 @@ installp5-2: p5-2
 	(cd release/p5-2; tar cf - .) | (cd ${PREFIX}/share; tar xvf  -)
 	mkdir -p ${PREFIX}/bin
 	for i in $(SCRIPTS); do \
-	cp $$i ${PREFIX}/share/xml/tei/stylesheet/$$i; \
-	chmod 755 ${PREFIX}/share/xml/tei/stylesheet/$$i; \
-	cp $$i ${PREFIX}/bin/$$i; \
-	chmod 755 ${PREFIX}/bin/$$i; \
-	perl -p -i -e 's+APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i;done
+	  cp $$i ${PREFIX}/bin/$$i; \
+	  chmod 755 ${PREFIX}/bin/$$i; \
+	  perl -p -i -e 's+APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i; \
+	done
 
 installp5: p5
 	mkdir -p ${PREFIX}/share
@@ -177,6 +177,9 @@ installcommon: doc common
 	(cd release/common/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
 install: installp4 installp5 installp5-2 installcommon
+
+sfupload:
+	rsync -e ssh release/*zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
 
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \

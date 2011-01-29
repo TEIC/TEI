@@ -441,12 +441,18 @@
       </xsl:for-each>
       <xsl:apply-templates
 	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+      <xsl:apply-templates
+	  select="tbx:descrip[@type='definition']"/>
 
       <xsl:apply-templates
 	  select="tbx:descripGrp/tbx:descrip[@type='figure']"/>
+      <xsl:apply-templates
+	  select="tbx:descrip[@type='figure']"/>
 
       <xsl:apply-templates
 	  select="tbx:descripGrp/tbx:descrip[@type='example']"/>
+      <xsl:apply-templates
+	  select="tbx:descrip[@type='example']"/>
 
       <xsl:apply-templates select="tbx:note" mode="tbxnote"/>
 
@@ -469,12 +475,18 @@
 
       <xsl:apply-templates
 	  select="tbx:descripGrp/tbx:descrip[@type='definition']"/>
+      <xsl:apply-templates
+	  select="tbx:descrip[@type='definition']"/>
 
       <xsl:apply-templates
 	  select="tbx:descripGrp/tbx:descrip[@type='figure']"/>
+      <xsl:apply-templates
+	  select="tbx:descrip[@type='figure']"/>
 
       <xsl:apply-templates
 	  select="tbx:descripGrp/tbx:descrip[@type='example']"/>
+      <xsl:apply-templates
+	  select="tbx:descrip[@type='example']"/>
 
       <xsl:apply-templates select="tbx:note" mode="tbxnote"/>
 

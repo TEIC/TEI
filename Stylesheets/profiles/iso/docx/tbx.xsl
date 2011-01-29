@@ -61,20 +61,24 @@
 	 <w:pStyle w:val="Definition"/>
        </w:pPr>
        <xsl:for-each
-	   select="ancestor::tbx:termEntry/tbx:descripGrp/tbx:descrip[@type='subjectField']">
-	 <w:r>
-	   <w:rPr>
-	     <w:rStyle w:val="domain"/>
-	   </w:rPr>
-	   <w:t>
-	     <xsl:text>〈</xsl:text>
-	     <xsl:value-of select="."/>
-	     <xsl:text>〉</xsl:text>
-	   </w:t>
-	 </w:r>
-	 <w:r>
-	   <w:t xml:space='preserve'> </w:t>
-	 </w:r>
+	   select="ancestor::tbx:termEntry">
+	 <xsl:for-each
+	     select="tbx:descripGrp/tbx:descrip[@type='subjectField']
+		     or tbx:descrip[@type='subjectField']">
+	   <w:r>
+	     <w:rPr>
+	       <w:rStyle w:val="domain"/>
+	     </w:rPr>
+	     <w:t>
+	       <xsl:text>〈</xsl:text>
+	       <xsl:value-of select="."/>
+	       <xsl:text>〉</xsl:text>
+	     </w:t>
+	   </w:r>
+	   <w:r>
+	     <w:t xml:space='preserve'> </w:t>
+	   </w:r>
+	 </xsl:for-each>
        </xsl:for-each>
        <xsl:apply-templates/>
        <xsl:for-each select="../../tbx:admin[@type='source']">
