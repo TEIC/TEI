@@ -1,4 +1,5 @@
 LANGUAGE=en
+JOB=job$$
 SFUSER=rahtz
 GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
@@ -22,26 +23,7 @@ JING=jing
 TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
-# to make this thingt build under Ubuntu/Debian, here are all the packages you'll need:
-#	jing
-#	msttcorefonts
-#	onvdl
-#	rnv
-#	saxon
-#	tei-oxygen
-#	tei-p5-source
-#	tei-p5-xsl
-#	tei-p5-xsl2
-#	tei-roma
-#	tei-xsl-common
-#	trang-java
-#	ttf-arphic-ukai
-#	ttf-arphic-uming 
-#	ttf-baekmuk 
-#	ttf-junicode
-#	ttf-kochi-gothic
-#	ttf-kochi-mincho 
-#	zip 
+
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema clean dist exemplars
 
 default: validate exemplars test pdf epub html-web validate-html
@@ -138,11 +120,16 @@ tex: xml
 
 pdf: tex
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
-	echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
-	echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
-	makeindex -s p5.ist Guidelines
-	echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
-	echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
+	grep -v "Failed to convert input string to UTF16" $(JOB).log
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
+	grep -v "Failed to convert input string to UTF16" $(JOB).log
+	makeindex -s p5.ist Guidelines 
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
+	grep -v "Failed to convert input string to UTF16" $(JOB).log
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
+	grep -v "Failed to convert input string to UTF16" $(JOB).log
+	rm $(JOB).log
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 
 
@@ -177,7 +164,7 @@ valid: check
 	@echo BUILD: Check validity with rnv
 	rnv -v p5odds.rnc Source.xml
 	@echo BUILD: Check validity with nvdl
-	-./run-onvdl p5.nvdl ${DRIVER} 
+	./run-onvdl p5.nvdl ${DRIVER} 
 	@echo BUILD: Check validity with Schematron
 	${SAXON} ${SAXON_ARGS}  p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} p5.isosch.xsl
@@ -387,8 +374,30 @@ catalogue:
 catalogue-print:
 	${SAXON} ${SAXON_ARGS} ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
-upload:
+sfupload:
 	rsync -e ssh release/*zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/TEIP5
+
+dependencies:
+	@echo to make this thingt build under Ubuntu/Debian, here are all the packages you'll need:
+	@echo	jing
+	@echo	msttcorefonts
+	@echo	onvdl
+	@echo	rnv
+	@echo	saxon
+	@echo	tei-oxygen
+	@echo	tei-p5-source
+	@echo	tei-p5-xsl
+	@echo	tei-p5-xsl2
+	@echo	tei-roma
+	@echo	tei-xsl-common
+	@echo	trang-java
+	@echo	ttf-arphic-ukai
+	@echo	ttf-arphic-uming 
+	@echo	ttf-baekmuk 
+	@echo	ttf-junicode
+	@echo	ttf-kochi-gothic
+	@echo	ttf-kochi-mincho 
+	@echo	zip 
 
 clean:
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
