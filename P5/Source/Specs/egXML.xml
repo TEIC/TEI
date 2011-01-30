@@ -31,6 +31,7 @@ $Id$
     <memberOf key="model.egLike"/>
 <!--    <memberOf key="att.xmlspace"/>-->
   </classes>
+
   <content>
     <rng:zeroOrMore>
       <rng:group>
@@ -41,8 +42,29 @@ $Id$
       </rng:group>
     </rng:zeroOrMore>
   </content>
+
+<attList>
+<attDef ident="valid">
+<desc>indicates the intended validity of the example with respect to
+a schema.</desc>
+<defaultVal>true</defaultVal>
+<valList type="closed">
+<valItem ident="true"><desc>the example is intended to be fully valid,
+assuming that its root element can be used as the root element in the
+schema concerned.</desc></valItem>
+<valItem ident="feasible"><desc>the example could be transformed into
+a valid document by inserting any number of valid attributes and child
+elements anywhere within it; it is valid against a version of the
+schema concerned in which every data, list, element, or attribute
+element has been made optional.</desc>
+</valItem>
+<valItem ident="false"><desc>the example is not intended to be valid,
+and contains deliberate errors.</desc></valItem>
+</valList>
+</attDef></attList>
+
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und">
       <egXML>
         <langUsage>
           <language ident="en">English</language>
@@ -50,6 +72,20 @@ $Id$
       </egXML>
     </egXML>
   </exemplum>
+<!--
+<exemplum>
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" >
+<egXML xml:lang="und" valid="feasible">
+<TEI >
+<teiHeader xml:lang="fra">
+-->  <!-- ... -->
+<!--</teiHeader>
+<text xml:lang="eng">-->
+<!-- ... -->
+<!--</text></TEI></egXML>
+</egXML>
+</exemplum>-->
+
   <remarks>
     <p>In the source of the TEI Guidelines, this element declares itself and its content as
       belonging to the namespace <ident type="ns">http://www.tei-c.org/ns/Examples</ident>. This
