@@ -2094,22 +2094,30 @@ The <gi>note</gi> element allows us to record that the scribe wrote
 lines within the four lines.  </p></div></div>
 <div type="div2" xml:id="PHSK"><head>Headers, Footers, and Similar Matter</head>
 
-<p>Such information as  page numbers, signatures, or catchwords
-(technically known as <term>forme work</term> in the context of early
-Western printing) may be recorded in a specialized element <gi>fw</gi>
-provided for that purpose. A subset of that information may
-alternatively or additionally be
-recorded using the <att>n</att> attribute of the <gi>pb</gi> or <gi>gb</gi> elements,
-or by other appropriate <gi>milestone</gi> elements, as further
-discussed in  section <ptr target="#CORS"/>.  In text-critical
-situations where these elements need tagging in their own right (for
-instance, when the catch-word presents a variant reading, or spacing
-in the header or footer is significant for compositor identification),
-the element <gi>fw</gi> should be preferred:
-<specList><specDesc key="fw"/></specList>
-The name <mentioned>fw</mentioned> is short for <q>forme work</q>. It
-may be used  to encode any of
-the unchanging portions of a page forme, such as:
+<p>Such information as page numbers, signatures, or catchwords may be
+recorded in a specialised <gi>fw</gi> element provided for that
+purpose. Although the name derives from the term <term>forme
+work</term>, used in description of early printed documents (the
+<q>forme</q> being the block used to hold movable type), the
+<gi>fw</gi> element may be used for such features of any document,
+written or printed.  Note that the purpose of this element is to
+record page numbers etc. <emph>actually present</emph> in the document
+being encoded, not necessarily to provide a complete or accurate
+pagination of it. </p>
+<p>Information about pagination etc. may also be provided using the <att>n</att> attribute of the
+<gi>pb</gi> or <gi>gb</gi> elements, or by other appropriate
+<gi>milestone</gi> elements, as further discussed in section <ptr
+target="#CORS"/>: since this information is usually provided by the
+encoder, it is not subject to the constraint that it should be
+present only if textually present in the source being encoded. In
+text-critical situations it may be useful to provide both a normalised
+version of the pagination and a representation of the catch-word
+or numbering, especially when the latter presents a variant reading, or is
+significant for compositor identification. 
+ <specList><specDesc key="fw"/></specList> 
+The <gi>fw</gi> element may
+be used to encode any of the unchanging portions of a page forme, such
+as:
 <list type="simple">
 <item>running heads (whether repeated or changing on every page, or
 alternating pages)</item>
