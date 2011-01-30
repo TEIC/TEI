@@ -1,7 +1,6 @@
 <xsl:stylesheet
   exclude-result-prefixes="xlink dbk rng tei teix xhtml a html xs xsl"
   version="2.0"
-  xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns="http://www.tei-c.org/ns/1.0"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:dbk="http://docbook.org/ns/docbook"
