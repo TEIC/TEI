@@ -31,6 +31,7 @@
     <memberOf key="att.typed"/>
     <memberOf key="att.sourced"/>
     <memberOf key="att.spanning"/>
+    <memberOf key="att.breaking"/>
   </classes>
   <content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
@@ -46,14 +47,14 @@
   </exemplum>
   <exemplum xml:lang="en">
 <p>This example encodes typographical line breaks as a means of
-preserving the visual appearance of a title page. The <att>type</att>
+preserving the visual appearance of a title page. The <att>break</att>
 attribute is used to show that the line break does not (as elsewhere)
 mark the start of a new word.  </p>
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr" corresp="#rab3">
 <titlePart rend="italic">
 <lb/>L'auteur susdict supplie les Lecteurs
 <lb/>benevoles, soy reserver à rire au 
-soi-<lb type="inWord"/>xante &amp; dixhuytiesme livre.
+soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
 </titlePart>
 </egXML>
   </exemplum>
@@ -67,11 +68,11 @@ soi-<lb type="inWord"/>xante &amp; dixhuytiesme livre.
         <gi>l</gi> element is available) except in circumstances where structural units cannot
       otherwise be marked. </p>
     <p>The <att>type</att> attribute may be used to characterize the
-    line break in any respect, but its most common use is to specify
-    that the presence of the line break does not imply the end of the
-    word in which it is embedded. A value such as <val>inWord</val> or <val>nobreak</val> is
-    recommended for this purpose, but encoders are free to choose
-    whichever values are appropriate. </p>
+    line break in any respect. The more specialised attributes
+    <att>break</att> and <att>ed</att> should be preferred when the
+    intent is to indicate whether or not the line
+    break is word-breaking, or to note the source from which it
+    derives.  </p>
   </remarks>
   <remarks xml:lang="fr">
 
@@ -84,7 +85,8 @@ soi-<lb type="inWord"/>xante &amp; dixhuytiesme livre.
       l’élément <gi>l</gi> est disponible) sauf dans le cas où des blocs structurés ne peuvent pas
       être marqués autrement. </p>
     <p> L'attribut <att>type</att> sera employé pour caractériser toute espèce de caractéristiques
-      du saut de ligne, par exemple avec une coupure de mot ou non. </p>
+      du saut de ligne, sauf la coupure des mots (indique par
+    l'attribut <att>break</att>) ou la source concernée. </p>
   </remarks>
 
   <remarks xml:lang="ja">

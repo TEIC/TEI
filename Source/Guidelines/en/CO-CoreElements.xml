@@ -182,18 +182,20 @@ may be significantly ambiguous. To some extent, the availability of
 the Unicode character set addresses the first of these problems, since
 it provides specific code points for most punctuation marks, and also
 the second to the extent that it distinguishes glyphs (such as stop,
-comma, and hyphen) which are used with different functions. Thus, for
+comma, and hyphen) which are used with different functions. <!-- Thus, for
 example, different Unicode code points are available for the hyphen
 used as a minus sign (<val>x2212</val>), as a word breaking hyphen
 (<val>x2010</val>), and as a soft or
 <soCalled>non-breaking</soCalled> hyphen (<val>x00AD</val>); such
 distinctions are not however made in all possible cases, particularly
-where older writing systems are concerned. Where punctuation
+where older writing systems are concerned. --> Where punctuation
 itself is the subject of study, the element <gi>pc</gi> (punctuation
 character) may be used to mark it explicitly, as further discussed in
-<ptr target="#AIPC"/>. The <gi>g</gi> element and other facilities described in
-chapter <ptr target="#WD"/> may also be used to define markup for
-non-standard punctuation characters. </p>
+<ptr target="#AIPC"/>. Where the character used for a punctuation mark
+is not available in Unicode, the <gi>g</gi> element and other facilities described in
+chapter <ptr target="#WD"/> may also be used to mark its presence.</p>
+
+<div xml:id="COPU-1"><head>Functions of Punctuation</head>
 
 <p>Punctuation is itself a form of markup, historically introduced to
 provide the reader with an indication about how the text should be
@@ -276,6 +278,137 @@ the project.
 </p> 
 
 </div>
+
+<div xml:id="COPU-2"><head>Hyphenation</head>
+
+<p>Hyphenation as a phenomenon is generally of most concern when
+producing formatted text for display in print or on screen: different
+languages and systems have developed quite sophisticated sets of rules
+about where hyphens may be introduced and for what reason. These
+generally do not concern the text encoder, since they belong to the
+domain of formatting and will generally be handled by the rendition
+software in use. In this section, we discuss issues arising from the
+appearance of hyphens in pre-existing formatted texts which are being
+re-encoded for analysis or other processing. Unicode distinguishes
+four  characters  visually similar to the hyphen, including the
+undifferentiated hyphen-minus (U+002D) which is retained for compatibility
+reasons. The hard hyphen (U+2010) is distinguished from the minus sign
+(U+2212) which is for use in mathematical expressions, and
+also from the soft hyphen (U+00AD) which may appear in <soCalled>born
+digital</soCalled> documents to indicate places where it is acceptable
+to insert a hyphen when the document is formatted. </p>
+
+<p> Historically, the hard hyphen has been used in printed or
+manuscript documents for two distinct purposes. In many languages, it
+is used between words to show that they function as a single syntactic
+or lexical unit. For example, in French, <mentioned>est-ce
+que</mentioned>; in English <mentioned>body-snatcher</mentioned>,
+<mentioned>tea-party</mentioned> etc. It may also have an important
+role in disambiguation (for example, by distinguishing say a
+<mentioned>man-eating fish</mentioned> from a <mentioned>man eating
+fish</mentioned>). Such usages, although possibly problematic when a
+linguistic analysis is undertaken, are not generally of concern to
+text encoders: the hyphen character is usually retained in the text,
+because it may be regarded as part of the way a compound or other
+lexical item is spelled. Deciding whether a compound is to be
+decomposed into its constituent parts, and if so how, is a different
+question, involving consideration of many other phenomena in addition
+to the simple presence of a hyphen. </p>
+
+<p> When it appears at the end of a printed or written line however,
+the hard hyphen generally indicates that — contrary to what might be
+expected — a word is not yet complete, but continues on the next line
+(or over the next page or column or other boundary). The hyphen
+character is not, in this case, part of the word, but just a signal
+that the word continues over the break. Unfortunately, few languages
+distinguish these two cases visually, which necessarily poses a
+problem for text encoders. Suppose, for example, that we wish to
+investigate a diachronic English corpus for occurrences of "tea-pot"
+and "teapot", to find evidence for the point at which this compound
+becomes lexicalized. Any case where the word is hyphenated across a
+linebreak, like this: <eg><![CDATA[tea-
+pot]]></eg> is entirely ambigous: there is simply no way of deciding
+which of the two spellings was intended.
+</p>
+
+<p>As elsewhere, therefore, the encoder has a range of choices:
+<list>
+<item>They
+may decide simply to remove any end-of-line hyphenation from the
+encoded text, on the grounds that its presence is purely a secondary
+matter of formatting. This will obviously apply also if line endings
+are themselves regarded as unimportant.</item>
+<item>Alternatively, they may decide to record the presence of the
+hyphen, perhaps on the grounds that it provides useful morphological
+information; perhaps in order to retain information about the visual
+appearance of the original source. In either case, they need to decide
+whether to record it explicitly, by including an appropriate
+punctuation character in the text data, or implicitly by supplying an
+appropriate symbolic value for one or more of the attributes on the
+<gi>lb</gi> or other milestone element used to record the fact of the line
+division. </item>
+</list>
+A similar range of possibilities applies equally to the representation of
+other common punctuation marks, notably quotation marks, as discussed
+in <ptr target="#COHQQ"/>.</p>
+
+<p> The <soCalled>text data</soCalled> of which XML documents are
+composed is decomposable into smaller units, here called
+<term>orthographic tokens</term>, even if those units are not
+explicitly indicated by the XML markup. The ambiguity of the
+end-of-line hyphen also causes problems in the way a processor
+identifies such tokens in the absence of explicit markup. If token
+boundaries are not explicitly marked (for example using the
+<gi>seg</gi> or <gi>w</gi> elements), for most languages a processor
+will rely on character class information to determine where they are
+to be found: some punctuation characters are considered to be
+word-breaking, while others are not. In XML, the newline character in
+text data is a kind of white space, and is therefore word
+breaking. <!-- XML mixed-content rules are notoriously confusing on this
+issue. --> However, it is generally unsafe to assume that whitespace
+adjacent to markup tags will always be preserved, and it is decidedly
+unsafe to assume that markup tags themselves are equivalent to
+whitespace. </p>
+
+<p> The <gi>lb</gi>, <gi>pb</gi>, and <gi>cb</gi> elements are notable
+exceptions to this general rule, since their function is precisely to
+represent (or replace) line, page, or column breaks, which, as noted
+above, are generally considered to be equivalent to white space. These
+elements provide a more reliable way of preserving the lineation,
+pagination, etc of a source document, since the encoder should not
+assume that (untagged) line breaks etc. in an XML source file will
+necessarily be preserved. </p>
+
+<p>To control the intended tokenization, the encoder may use the
+<att>break</att> attribute on such elements to indicate whether or not
+the element is to be regarded as equivalent to white space. This
+attribute can take the values <val>yes</val> or <val>no</val> to
+indicate whether or not the element corresponds with a token
+boundary. The value <val>maybe</val> is also available, for cases
+where the encoder does not wish (or is unable) to determine whether
+the orthographic token concerned is broken by the line ending.
+</p>
+
+<p>As a final complication, it should be noted that in some languages,
+particularly German and Dutch, the spelling of a word may be altered
+in the presence of end of line hyphenation. For example, in Dutch, the
+word <mentioned>opaatje</mentioned> (<gloss>granddad</gloss>),
+occurring at the end of a line may be hyphenated as
+<mentioned>opa-tje</mentioned>, with a single letter a. An encoder
+wishing to preserve the original form of this orthographic token in a
+printed text while at the same time facilitating its recognition as
+the word <mentioned>opaatje</mentioned> will therefore need to rely on
+a more sophisticated process than simply removing the hyphen. This is
+however essentially the same as any other form of normalization
+accompanying the recognition of variations in spelling or morphology:
+as such it may be encoded using the <gi>choice</gi> element discussed
+in <ptr target="#COED"/>, or the more sophisticated mechanisms for
+linguistic analysis discussed in chapter <ptr target="#AI"/>.
+</p>
+</div>
+</div>
+
+
 <div type="div2" xml:id="COHQ"><head>Highlighting and Quotation</head>
 <p>This section deals with a variety of textual features, all of
 which have in common that they are frequently realized in conventional
@@ -3365,25 +3498,28 @@ changes of speaker in a dramatic text, where these are not marked
 using structural elements such as <gi>sp</gi>, perhaps in order to
 avoid a clash of hierarchies.</p>
 <!-- example to be supplied by DS -->
-<p>The <att>type</att> attribute may be used on milestone elements
-such as <gi>lb</gi> and <gi>pb</gi> to categorize them in any way. One
-particularly useful way is to indicate whether or not these milestone
-tags are word-breaking. By default it is reasonable to assume that
+<p>As noted in <ptr target="#COPU-2"/> above, milestone elements such
+as <gi>lb</gi> or <gi>pb</gi> represent white space and are therefore
+by default assumed to occur between orthographic tokens in the text, where
+these are not otherwise indicated.  By default it is reasonable to assume that
 words are not broken across page or line boundaries, and that
 therefore a sequence such as 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 ...sed imp<lb/>erator dixit...
 </egXML>
-should be tokenized as four words (sed, imp, erator, and dixit). To
-make explicit that this is not the case, a tagging such as the
-following is recommended:
+should be tokenized as four words (<mentioned>sed</mentioned>,
+<mentioned>imp</mentioned>, <mentioned>erator</mentioned>, and
+<mentioned>dixit</mentioned>). The <att>break</att> attribute is
+provided to change the default assumption. To make explicit that
+<mentioned>imperator</mentioned> in the above example should be
+treated as a single word, a tagging such as the following is recommended:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-...sed imp<lb type="nobreak"/>erator dixit...
+...sed imp<lb break="no"/>erator dixit...
 </egXML>
 Where hyphenation appears before a line or page break, the encoder may
-or may not choose to include it, either explicitly using an
+or may not choose to record the fact, either explicitly using an
 appropriate Unicode character, or descriptively for example by means
-of the <att>rend</att> attribute; see further <ptr target="#COPU"/>.</p>
+of the <att>rend</att> attribute; see further <ptr target="#COPU-2"/>.</p>
 <specGrp xml:id="DCORSM" n="Milestone tags">
 &milestone;
 &pb;

@@ -91,9 +91,10 @@ and the document type declaration (see chapter <ptr target="#SG"/>); and-->
 from the <term>front matter</term> of the text itself (for which see
 section <ptr target="#DSFRONT"/>). A composite text, such as a corpus or
 collection, may contain several headers, as further discussed below.  In
-the usual case, however, a TEI-conformant text will contain a single
-<gi>teiHeader</gi> element, followed by a single <gi>text</gi> element.
-<!-- mentioning of facsimile --></p>
+the general case, however, a TEI-conformant text will contain a single
+<gi>teiHeader</gi> element, followed by a single <gi>text</gi> or
+<gi>facsimile</gi> element, or both.
+</p>
 <p>The header element has the following description:
 <specList><specDesc key="teiHeader" atts="type"/></specList>
 </p>
@@ -102,17 +103,16 @@ components:
 <specList><specDesc key="fileDesc"/><specDesc key="encodingDesc"/><specDesc key="profileDesc"/><specDesc key="revisionDesc"/></specList>
 </p>
 <p>Of these, only the <gi>fileDesc</gi> element is required in all TEI
-headers; the others are optional.  The top level elements in the full form of a TEI header are
-thus:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
-    <fileDesc> <!-- ... --></fileDesc>
-    <encodingDesc> <!-- ... --></encodingDesc>
-    <profileDesc> <!-- ... --></profileDesc>
-    <revisionDesc> <!-- ... --></revisionDesc>
-</teiHeader></egXML>
-while a minimal header takes the form:
+headers; the others are optional.  Only one of the four components of the TEI header (the
+<gi>fileDesc</gi>) is mandatory, and it also has some mandatory
+components, as further discussed in <ptr target="#HD2"/> below. 
+The smallest possible valid TEI Header thus looks like this:
   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
-    <fileDesc> <!-- ... --></fileDesc>
+    <fileDesc> <titleStmt><title><!-- title of the resource
+				      ... --></title></titleStmt>
+<publicationStmt><p>(Information about distribution of the
+resource)</p></publicationStmt>
+<sourceDesc><p>(Information about source from which the resource derives)</p></sourceDesc></fileDesc>
 </teiHeader></egXML>
 </p>
 <p>The content of the elements making up a TEI Header may be given in
@@ -120,16 +120,16 @@ any language, not necessarily that of the text to which the header
 applies, and not necessarily English. As elsewhere, the
 <att>xml:lang</att> attribute should be used at an appropriate level
 to specify the language. 
-For example, in the following (incomplete) example, an
+For example, in the following schematic example, an
 English text has been given a French header:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
-<TEI >
+  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" >
+<![CDATA[<TEI >
 <teiHeader xml:lang="fra">
   <!-- ... -->
 </teiHeader>
 <text xml:lang="eng">
 <!-- ... -->
-</text></TEI></egXML>
+</text></TEI>]]></egXML>
 </p>
 <p>In the case of language corpora or collections, it may be
 desirable to record header information either at the level of the individual
@@ -138,7 +138,7 @@ the corpus or collection itself (more details
 concerning the tagging of composite texts are given in section <ptr target="#CC"/>, which should be read in conjunction with the current
 chapter). The <att>type</att> attribute may be used to indicate whether the header applies
 to a corpus or a single text.  A corpus may thus take the form:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<teiCorpus>
    <teiHeader type="corpus">
      <!-- corpus-level metadata here -->
    </teiHeader>
@@ -154,7 +154,7 @@ to a corpus or a single text.  A corpus may thus take the form:
       </teiHeader>
       <text> <!-- ... --></text>
    </TEI>
-</teiCorpus></egXML>
+</teiCorpus>]]></egXML>
 <!-- left this in for now, but I dont think it's very helpful (LB) -->
 	<!-- that's cause you already know it.  the reader don't. -msm     -->
 	<!-- I left it, too, but at least I fixed the outermost TEI to   -->
@@ -269,29 +269,26 @@ are listed below in the order in which they must be given within the
 <gi>fileDesc</gi> element.
 <specList><specDesc key="titleStmt"/><specDesc key="editionStmt"/><specDesc key="extent"/><specDesc key="publicationStmt"/><specDesc key="seriesStmt"/><specDesc key="notesStmt"/><specDesc key="sourceDesc"/></specList>
 </p>
-<p>A file description containing all possible sub-elements has the
-following structure:
+<p>A complete file description containing all possible sub-elements
+might look like this:
   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
     <fileDesc>
-         <titleStmt> <!-- ... --></titleStmt>
-         <editionStmt> <!-- ... --></editionStmt>
-         <extent> <!-- ... --></extent>
-         <publicationStmt> <!-- ... --></publicationStmt>
-         <seriesStmt> <!-- ... --></seriesStmt>
-         <notesStmt> <!-- ... --></notesStmt>
-         <sourceDesc><!-- ... --></sourceDesc>
+         <titleStmt> <title><!-- title of the resource --></title> </titleStmt>
+         <editionStmt> <p> <!-- information about the edition of the
+				resource  --></p> </editionStmt>
+         <extent> <!-- description of the size of the resource --></extent>
+         <publicationStmt> <p><!-- information about the distribution
+				   of the resource --> </p></publicationStmt>
+         <seriesStmt> <p><!-- information about any series to which
+			      the resource belongs  --></p></seriesStmt>
+         <notesStmt> <note><!-- notes on other aspects of the resource --> </note></notesStmt>
+         <sourceDesc> <p> <!-- information about the source from which
+			       the resource was derived  --> </p></sourceDesc>
     </fileDesc>
 </teiHeader></egXML>
-Several of these elements may be omitted; a minimal file description has
-the following structure:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
-    <fileDesc>
-         <titleStmt> <!-- ... --></titleStmt>
-         <publicationStmt> <!-- ... --></publicationStmt>
-         <sourceDesc> <!-- ... --></sourceDesc>
-    </fileDesc>
-    <!-- other optional parts of the header here -->
-</teiHeader></egXML>
+Of these  elements, only the <gi>titleStmt</gi>,
+<gi>publicationStmt</gi>, and <gi>sourceDesc</gi> are required; the
+others  may be omitted unless considered useful.
 </p>
 <specGrp xml:id="D222" n="The file description">&fileDesc;
 <specGrpRef target="#D2221"/>
@@ -1973,24 +1970,6 @@ attribute may be used to indicate it.</p>
 most recent first.</p>
 <p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <fileDesc>
-      <titleStmt>
-	<title>The Amorous Prince, or, the Curious Husband, 1671</title>
-	<author><persName ref="#abehn.aeh">Behn, Aphra</persName></author>
-	<respStmt xml:id="pcaton.xzc">
-	  <persName>Caton, Paul</persName>
-	  <resp>electronic publication editor</resp>
-	</respStmt>
-	<respStmt xml:id="wgui.ner">
-	  <persName>Gui, Weihsin</persName>
-	  <resp>encoder</resp>
-	</respStmt>
-	<respStmt xml:id="jwernimo.lrv">
-          <persName>Wernimont, Jacqueline</persName>
-	  <resp>encoder</resp>
-	</respStmt>
-      </titleStmt>
-  </fileDesc>
   <!-- ... -->
   <revisionDesc>
     <change n="RCS:1.39" when="2007-08-08" who="#jwernimo.lrv">Changed <val>drama.verse</val>
@@ -2007,8 +1986,32 @@ most recent first.</p>
 </egXML>
 <!-- adapted from WWP TR00241 -->
 In the above example, the <att>who</att> attributes point to
-<gi>respStmt</gi> elements; they could equally well point to
-<gi>person</gi> elements.</p>
+<gi>respStmt</gi> elements which have been included earlier in the
+<gi>titleStmt</gi> of the same header:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <titleStmt>
+	<title>The Amorous Prince, or, the Curious Husband, 1671</title>
+	<author><persName ref="#abehn.aeh">Behn, Aphra</persName></author>
+	<respStmt xml:id="pcaton.xzc">
+	  <persName>Caton, Paul</persName>
+	  <resp>electronic publication editor</resp>
+	</respStmt>
+	<respStmt xml:id="wgui.ner">
+	  <persName>Gui, Weihsin</persName>
+	  <resp>encoder</resp>
+	</respStmt>
+	<respStmt xml:id="jwernimo.lrv">
+          <persName>Wernimont, Jacqueline</persName>
+	  <resp>encoder</resp>
+	</respStmt>
+      </titleStmt>
+</egXML>
+There is however no requirement that the <gi>respStmt</gi> be used for
+this person, or that the elements indicated be contained within the
+same document. A project might for example maintain a separate
+document listing all of its personnel in which they were represented
+using the 
+<gi>person</gi> element described in <ptr target="#CCAHPA"/>.</p>
 <specGrp xml:id="D226" n="The Revision Description">
 &revisionDesc;
 &change;
