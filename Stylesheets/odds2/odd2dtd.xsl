@@ -92,49 +92,41 @@
 	                    <xsl:text>. Generated </xsl:text>
 	                    <xsl:call-template name="showDate"/>
 	                    <xsl:text>. </xsl:text>
-	                    <xsl:if test="$TEIC='true'">
-		                      <xsl:call-template name="copyright"/>
-	                    </xsl:if>
+			    <xsl:call-template name="copyright"/>
 	                    <xsl:call-template name="makeTEIVersion"/>
 	                    <xsl:call-template name="makeDescription"/>
 	                 </xsl:with-param>
                </xsl:call-template>
                <xsl:choose>
                   <xsl:when test="@type='core'">
-                     <xsl:if test="$TEIC='true'">
-                        <xsl:text>&lt;!ENTITY % TEI.extensions.ent '' &gt;&#10;</xsl:text>
-                        <xsl:text>%TEI.extensions.ent;&#10;</xsl:text>
-                     </xsl:if>
-                     <xsl:call-template name="dtdComment">
-                        <xsl:with-param name="text">
-                           <xsl:text>list of element names</xsl:text>
+		    <xsl:text>&lt;!ENTITY % TEI.extensions.ent '' &gt;&#10;</xsl:text>
+		    <xsl:text>%TEI.extensions.ent;&#10;</xsl:text>
+		    <xsl:call-template name="dtdComment">
+		      <xsl:with-param name="text">
+			<xsl:text>list of element names</xsl:text>
                         </xsl:with-param>
-                     </xsl:call-template>
-                     <xsl:if test="$parameterize='true' and         count(key('NSELEMENTS',1))&gt;0">
-                        <xsl:text>&lt;!ENTITY % NS '</xsl:text>
-                        <xsl:value-of select="$nsPrefix"/>
-                        <xsl:text>' &gt;&#10;</xsl:text>
-                     </xsl:if>
-                     <xsl:if test="$parameterize='true'">
-                        <xsl:call-template name="NameList"/>
-                     </xsl:if>
-                     <xsl:call-template name="datatypeMacros"/>
-                     <xsl:if test="$TEIC='true'">
-                        <xsl:call-template name="omissability"/>
-                     </xsl:if>
-                     <xsl:call-template name="entityModules"/>
-                     <xsl:call-template name="predeclaredClasses"/>
-                     <xsl:call-template name="predeclaredMacros"/>
-                     <xsl:call-template name="normalClasses"/>
-                     <xsl:call-template name="normalMacros"/>
-                     <xsl:if test="$TEIC='true'">
-                        <xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;&#10;</xsl:text>
-                        <xsl:text>%TEI.extensions.dtd;&#10;</xsl:text>
-                     </xsl:if>
-                     <xsl:apply-templates mode="tangle" select="key('ElementModule',@ident)">
-                        <xsl:sort select="@ident"/>
-                     </xsl:apply-templates>
-                     <xsl:call-template name="elementModules"/>
+		    </xsl:call-template>
+		    <xsl:if test="$parameterize='true' and count(key('NSELEMENTS',1))&gt;0">
+		      <xsl:text>&lt;!ENTITY % NS '</xsl:text>
+		      <xsl:value-of select="$nsPrefix"/>
+		      <xsl:text>' &gt;&#10;</xsl:text>
+		    </xsl:if>
+		    <xsl:if test="$parameterize='true'">
+		      <xsl:call-template name="NameList"/>
+		    </xsl:if>
+		    <xsl:call-template name="datatypeMacros"/>
+		    <xsl:call-template name="omissability"/>
+		    <xsl:call-template name="entityModules"/>
+		    <xsl:call-template name="predeclaredClasses"/>
+		    <xsl:call-template name="predeclaredMacros"/>
+		    <xsl:call-template name="normalClasses"/>
+		    <xsl:call-template name="normalMacros"/>
+		    <xsl:text>&#10;&lt;!ENTITY % TEI.extensions.dtd '' &gt;&#10;</xsl:text>
+		    <xsl:text>%TEI.extensions.dtd;&#10;</xsl:text>
+		    <xsl:apply-templates mode="tangle" select="key('ElementModule',@ident)">
+		      <xsl:sort select="@ident"/>
+		    </xsl:apply-templates>
+		    <xsl:call-template name="elementModules"/>
                   </xsl:when>
                   <xsl:otherwise>
                      <xsl:apply-templates mode="tangle" select="key('ElementModule',@ident)">
@@ -156,9 +148,7 @@
 		                      <xsl:text>. Generated </xsl:text>
 		                      <xsl:call-template name="showDate"/>
 		                      <xsl:text>.&#10;</xsl:text>
-		                      <xsl:if test="$TEIC='true'">
-		                         <xsl:call-template name="copyright"/>
-		                      </xsl:if>
+				      <xsl:call-template name="copyright"/>
 		                      <xsl:call-template name="makeTEIVersion"/>
 		                      <xsl:call-template name="makeDescription"/>
 	                    </xsl:with-param>
@@ -329,8 +319,8 @@
             <xsl:choose>
                <xsl:when test="@predeclare='true'"/>
                <!--	    <xsl:when test="key('PredeclareMacros',@ident)"/>-->
-          <xsl:otherwise>
-                  <xsl:apply-templates mode="tangle" select="."/>
+	       <xsl:otherwise>
+		 <xsl:apply-templates mode="tangle" select="."/>
                </xsl:otherwise>
             </xsl:choose>
          </xsl:if>
@@ -367,9 +357,7 @@
             <xsl:text>DTD Generated </xsl:text>
             <xsl:call-template name="showDate"/>
             <xsl:text>. </xsl:text>
-            <xsl:if test="$TEIC='true'">
-               <xsl:call-template name="copyright"/>
-            </xsl:if>
+	    <xsl:call-template name="copyright"/>
             <xsl:call-template name="makeTEIVersion"/>
             <xsl:call-template name="makeDescription"/>
          </xsl:with-param>
@@ -403,40 +391,44 @@
       <xsl:text>&#10;&lt;!-- start datatypes --&gt;&#10;</xsl:text>
       <xsl:apply-templates mode="tangle" select="tei:macroSpec[@type='dt']"/>
       <xsl:text>&#10;&lt;!-- end datatypes --&gt;&#10;</xsl:text>
-      <xsl:if test="$TEIC='true'">
+      <xsl:if test="tei:classSpec[@predeclare='true']">
          <xsl:text>&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
          <xsl:for-each select="tei:classSpec[@predeclare='true']">
-	           <xsl:choose>
-	              <xsl:when test="@type='atts'">
-	                 <xsl:call-template name="classAtt">
-	                    <xsl:with-param name="declare">true</xsl:with-param>
-	                 </xsl:call-template>
-	              </xsl:when>
-	              <xsl:when test="@type='model' and $parameterize='false'">
-	                 <xsl:call-template name="classModel">
-	                    <xsl:with-param name="declare">true</xsl:with-param>
-	                 </xsl:call-template>
-	              </xsl:when>
-	           </xsl:choose>
+	   <xsl:choose>
+	     <xsl:when test="@type='atts'">
+	       <xsl:call-template name="classAtt">
+		 <xsl:with-param name="declare">true</xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:when>
+	     <xsl:when test="@type='model' and $parameterize='false'">
+	       <xsl:call-template name="classModel">
+		 <xsl:with-param name="declare">true</xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:when>
+	   </xsl:choose>
          </xsl:for-each>
          <xsl:text>&#10;&lt;!--end of predeclared classes --&gt;&#10;</xsl:text>
          <xsl:apply-templates mode="tangle" select="tei:classSpec"/>
       </xsl:if>
       <xsl:text>&#10;&lt;!-- start predeclared patterns --&gt;&#10;</xsl:text>
-      <xsl:for-each select="tei:macroSpec[@predeclare='true']">
-         <xsl:apply-templates mode="tangle" select="."/>
+      <xsl:for-each select="tei:macroSpec">
+	<xsl:if test="@predeclare='true'">
+	  <xsl:apply-templates mode="tangle" select="."/>
+	</xsl:if>
       </xsl:for-each>
+      <xsl:text>&#10;&lt;!-- end predeclared patterns --&gt;&#10;</xsl:text>
       <xsl:text>&#10;&lt;!-- start rest of patterns --&gt;&#10;</xsl:text>
-      <xsl:for-each select="tei:macroSpec[not(@type='dt')]">
-         <xsl:choose>
-            <xsl:when test="@predeclare='true'"/>
-            <xsl:otherwise>
-               <xsl:apply-templates mode="tangle" select="."/>
-            </xsl:otherwise>
-         </xsl:choose>
+      <xsl:for-each select="tei:macroSpec">
+	<xsl:choose>
+	  <xsl:when test="@predeclare='true'"/>
+	  <xsl:when test="@type='dt'"/>
+	  <xsl:otherwise>
+	    <xsl:apply-templates mode="tangle" select="."/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:for-each>
       <xsl:text>&#10;&lt;!-- end patterns --&gt;&#10;</xsl:text>
-      <xsl:if test="$TEIC='false'">
+      <xsl:if test="not(tei:classSpec[@predeclare='true'])">
          <xsl:text>&#10;&lt;!-- start classes --&gt;&#10;</xsl:text>
          <xsl:apply-templates mode="tangle" select="tei:classSpec[@type='atts']"/>
          <xsl:apply-templates mode="tangle" select="tei:classSpec[@type='model']"/>
@@ -1037,14 +1029,10 @@
          <xsl:when test="$parameterize='false'">
             <xsl:call-template name="elementBody"/>
          </xsl:when>
-         <xsl:when test="$TEIC='false'">
-            <xsl:call-template name="elementBody"/>
-         </xsl:when>
          <xsl:otherwise>
             <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
             <xsl:value-of select="@ident"/>
-            <xsl:text> 'INCLUDE' &gt;
-	&lt;![ %</xsl:text>
+            <xsl:text> 'INCLUDE' &gt;&#10;&lt;![ %</xsl:text>
             <xsl:value-of select="@ident"/>
             <xsl:text>; [&#10;</xsl:text>
             <xsl:call-template name="elementBody"/>
@@ -1090,7 +1078,7 @@
       <xsl:text> --&gt;&#10;</xsl:text>
       <xsl:text>&lt;!ELEMENT </xsl:text>
       <xsl:value-of select="$ename"/>
-      <xsl:if test="$parameterize='true' and $TEIC='true'">
+      <xsl:if test="$parameterize='true'">
          <xsl:text> %om.RR;</xsl:text>
       </xsl:if>
       <xsl:text> </xsl:text>
@@ -1158,15 +1146,6 @@
             <xsl:apply-templates mode="tangleAtts" select="tei:classes/tei:memberOf"/>
          </xsl:if>
          <xsl:call-template name="attributeList"/>
-         <!--
-	  <xsl:if test="$TEIC='true'">
-	  <xsl:if test="not(starts-with(@ident,'%'))">
-	  <xsl:text>&#10; TEIform CDATA &#39;</xsl:text>
-	  <xsl:value-of select="@ident"/>
-	  <xsl:text>&#39; </xsl:text>
-	  </xsl:if>
-	  </xsl:if>
-      -->
     </xsl:variable>
       <xsl:if test="string-length($maybeatts) &gt;0">
          <xsl:text>&#10;&lt;!ATTLIST </xsl:text>
@@ -1269,8 +1248,7 @@
   </xsl:template>
   <xsl:template match="tei:classSpec" mode="tangle">
       <xsl:if test="$verbose='true'">
-         <xsl:message> .. classSpec <xsl:value-of select="@ident"/>,<xsl:value-of select="@type"/>
-			      </xsl:message>
+         <xsl:message> .. classSpec <xsl:value-of select="@ident"/>,<xsl:value-of select="@type"/></xsl:message>
       </xsl:if>
       <xsl:choose>
          <xsl:when test="@type='atts'">

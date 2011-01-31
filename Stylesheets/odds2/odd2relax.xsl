@@ -96,9 +96,9 @@
                      <xsl:when test="@ns">
                         <xsl:value-of select="@ns"/>
                      </xsl:when>
-                     <xsl:when test="$TEIC='true'">
+                     <xsl:otherwise>
                         <xsl:text>http://www.tei-c.org/ns/1.0</xsl:text>
-                     </xsl:when>
+		     </xsl:otherwise>
                   </xsl:choose>
                </xsl:attribute>
                <xsl:comment>
@@ -109,11 +109,9 @@
                   <xsl:call-template name="makeDescription"/>
                   <xsl:text>&#10;</xsl:text>
                </xsl:comment>
-               <xsl:if test="$TEIC='true'">
-                  <xsl:comment>
-                     <xsl:call-template name="copyright"/>
-                  </xsl:comment>
-               </xsl:if>
+	       <xsl:comment>
+		 <xsl:call-template name="copyright"/>
+	       </xsl:comment>
                <xsl:choose>
                   <xsl:when test="tei:specGrpRef">
                      <xsl:variable name="SPECS">
@@ -229,9 +227,7 @@
                            <xsl:text>Schema generated </xsl:text>
                            <xsl:call-template name="showDate"/>
                            <xsl:call-template name="makeTEIVersion"/>
-                           <xsl:if test="$TEIC='true'">
-                              <xsl:call-template name="copyright"/>
-                           </xsl:if>
+			   <xsl:call-template name="copyright"/>
                            <xsl:call-template name="makeDescription"/>
                         </xsl:comment>
                         <xsl:call-template name="moduleSpec-body"/>

@@ -36,6 +36,7 @@
    </doc>
   <xsl:output encoding="utf-8" indent="yes" method="text"/>
   <xsl:strip-space elements="*"/>
+  <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"/>
@@ -151,6 +152,7 @@
       <xsl:text>&#10;</xsl:text>
     </xsl:for-each>
     <xsl:text>],</xsl:text>
+
     <xsl:text>"macros": [</xsl:text>
     <xsl:for-each select="key('MACRODOCS',1)">
       <xsl:sort select="@ident"/>
@@ -192,9 +194,11 @@
 
   <xsl:template name="atts">
     <xsl:call-template name="listAtts"/>
-    <xsl:call-template name="classA">
-      <xsl:with-param name="i">att.global</xsl:with-param>
-    </xsl:call-template>
+    <xsl:if test="$TEIC='true'">
+      <xsl:call-template name="classA">
+	<xsl:with-param name="i">att.global</xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:call-template name="classA">
 	<xsl:with-param name="i" select="@key"/>

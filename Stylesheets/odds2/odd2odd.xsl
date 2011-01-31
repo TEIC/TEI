@@ -505,8 +505,8 @@ How can a class be ok?
 -->
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
-      <xsl:when test="self::tei:classSpec and         $stripped='true'">y</xsl:when>
-      <xsl:when test="starts-with(@ident,'att.global')">y</xsl:when>
+      <xsl:when test="$TEIC='true' and starts-with(@ident,'att.global')">y</xsl:when>
+      <xsl:when test="self::tei:classSpec and $stripped='true'">y</xsl:when>
       <xsl:when test="key('odd2odd-ELEMENT_MEMBERED',$k)">y</xsl:when>
       <xsl:when test="key('odd2odd-REFED',$k)">y</xsl:when>
       <xsl:when test="key('odd2odd-CLASS_MEMBERED',$k)">
@@ -689,7 +689,7 @@ How can a class be ok?
   </xsl:template>
 
   <xsl:template name="odd2odd-addClassAttsToCopy">
-    <xsl:if test="not(@ns) or @ns='http://www.tei-c.org/ns/1.0' or @ns='http://www.tei-c.org/ns/Examples'">
+    <xsl:if test="$TEIC='true' and not(@ns) or @ns='http://www.tei-c.org/ns/1.0' or @ns='http://www.tei-c.org/ns/Examples'">
       <xsl:call-template name="odd2odd-classAttributes">
         <xsl:with-param name="whence">1</xsl:with-param>
         <xsl:with-param name="elementName" select="@ident"/>
@@ -1730,11 +1730,13 @@ so that is only put back in if there is some content
     <xsl:choose>
       <xsl:when test="$elementName=''"/>
       <xsl:otherwise>
-        <xsl:call-template name="odd2odd-classAttributes">
-          <xsl:with-param name="whence">7</xsl:with-param>
-          <xsl:with-param name="elementName" select="$elementName"/>
-          <xsl:with-param name="className" select="'att.global'"/>
-        </xsl:call-template>
+	<xsl:if test="$TEIC='true'">
+	  <xsl:call-template name="odd2odd-classAttributes">
+	    <xsl:with-param name="whence">7</xsl:with-param>
+	    <xsl:with-param name="elementName" select="$elementName"/>
+	    <xsl:with-param name="className" select="'att.global'"/>
+	  </xsl:call-template>
+	</xsl:if>
         <xsl:variable name="classMembership">
           <x>
             <xsl:choose>
@@ -1982,12 +1984,14 @@ so that is only put back in if there is some content
         <xsl:apply-templates mode="odd2odd-copy" select="tei:content"/>
         <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
         <attList xmlns="http://www.tei-c.org/ns/1.0">
-          <xsl:comment>1.</xsl:comment>
-          <xsl:call-template name="odd2odd-classAttributesSimple">
-            <xsl:with-param name="whence">9</xsl:with-param>
-            <xsl:with-param name="elementName" select="$elementName"/>
-            <xsl:with-param name="className" select="'att.global'"/>
-          </xsl:call-template>
+	  <xsl:if test="$TEIC='true'">
+	    <xsl:comment>1.</xsl:comment>
+	    <xsl:call-template name="odd2odd-classAttributesSimple">
+	      <xsl:with-param name="whence">9</xsl:with-param>
+	      <xsl:with-param name="elementName" select="$elementName"/>
+	      <xsl:with-param name="className" select="'att.global'"/>
+	    </xsl:call-template>
+	  </xsl:if>
           <xsl:comment>2.</xsl:comment>
           <xsl:for-each select="tei:classes/tei:memberOf">
             <xsl:comment>3: <xsl:value-of select="@key"/>

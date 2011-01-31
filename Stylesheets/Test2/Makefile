@@ -34,7 +34,7 @@ test6:
 
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
-	TEIC=true localsource=`pwd`/p5subset.xml $(SAXONOPT) > testdrama.compiled.xml
+	localsource=`pwd`/p5subset.xml $(SAXONOPT) > testdrama.compiled.xml
 
 oddbyexample:
 	saxon -o:oddbyexample.odd ../tools2/oddbyexample.xsl ../tools2/oddbyexample.xsl corpus=`pwd`/bare 

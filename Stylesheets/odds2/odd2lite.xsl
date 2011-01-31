@@ -182,7 +182,10 @@
          <xsl:value-of select="$objectname"/>
       </xsl:variable>
       <xsl:choose>
-         <xsl:when test="self::tei:classSpec and not(@ident='att.global') and         count(key('CLASSMEMBERS',@ident))=0">
+         <xsl:when test="$TEIC='true' and @ident='att.global'">
+            <xsl:apply-templates mode="weavebody" select="."/>
+	 </xsl:when>
+         <xsl:when test="self::tei:classSpec and  count(key('CLASSMEMBERS',@ident))=0">
             <xsl:if test="$verbose='true'">
                <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
           </xsl:message>

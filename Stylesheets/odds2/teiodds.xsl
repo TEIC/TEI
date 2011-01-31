@@ -43,7 +43,7 @@
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
   <xsl:param name="patternPrefix"/>
-  <xsl:param name="TEIC">true</xsl:param>
+  <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
@@ -93,7 +93,6 @@
   <xsl:variable name="parameterize">
     <xsl:choose>
       <xsl:when test="key('SCHEMASPECS',1)">false</xsl:when>
-      <xsl:when test="$TEIC='false'">true</xsl:when>
       <xsl:otherwise>true</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -839,7 +838,7 @@ select="$makeDecls"/></xsl:message>
                   <xsl:choose>
                     <xsl:when test="$parameterize='true'">
                       <ref name="{$elementPrefix}{@ident}.content"/>
-                      <xsl:if test="not($Attributes='') or $TEIC='true'">
+                      <xsl:if test="not($Attributes='')">
 			<xsl:if test="$verbose='true'">
 			  <xsl:message>   refer to attributes: </xsl:message>
 			</xsl:if>
@@ -848,7 +847,7 @@ select="$makeDecls"/></xsl:message>
 		    </xsl:when>
 		    <xsl:otherwise>
                       <xsl:call-template name="defineContent"/>
-                      <xsl:if test="not($Attributes='') or $TEIC='true'">
+                      <xsl:if test="not($Attributes='')">
 			<xsl:call-template name="defineAttributes"/>
                       </xsl:if>
                     </xsl:otherwise>
@@ -870,7 +869,7 @@ select="$makeDecls"/></xsl:message>
                   name="{$elementPrefix}{@ident}.content">
                   <xsl:call-template name="defineContent"/>
                 </define>
-                <xsl:if test="not($Attributes='') or $TEIC='true'">
+                <xsl:if test="not($Attributes='')">
                   <define xmlns="http://relaxng.org/ns/structure/1.0"
                     name="{$elementPrefix}{@ident}.localattributes">
                     <xsl:call-template name="defineAttributes"/>
@@ -941,24 +940,8 @@ select="$makeDecls"/></xsl:message>
       </xsl:with-param>
     </xsl:apply-templates>
     <!-- place holder to make sure something gets into the
-	     pattern -->
-    <xsl:if test="$TEIC='true'">
-      <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-    </xsl:if>
-    <!--
-    <xsl:choose>
-      <xsl:when test="$TEIC='true'">
-	<optional xmlns="http://relaxng.org/ns/structure/1.0">
-	  <attribute name="TEIform" a:defaultValue="{@ident}" xmlns="http://relaxng.org/ns/structure/1.0">
-	    <text xmlns="http://relaxng.org/ns/structure/1.0"/>
-	  </attribute>
-	</optional>
-      </xsl:when>
-      <xsl:otherwise>
-	<empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </xsl:otherwise>
-    </xsl:choose>
--->
+	 pattern -->
+    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </xsl:template>
 
   <xsl:template name="defineContent">
