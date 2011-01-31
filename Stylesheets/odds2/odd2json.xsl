@@ -18,6 +18,7 @@
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
+  <xsl:import href="../common2/header.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making JSON from ODD </p>
@@ -57,9 +58,12 @@
   <xsl:variable name="dq">"</xsl:variable>
   <xsl:variable name="escdq">\\"</xsl:variable>
   <xsl:template match="/">
-    <xsl:text>{"title": "TEI P5",
-    "generator": "oddj2s",
-    "modules": [</xsl:text>
+    <xsl:text>{"title": "</xsl:text>
+    <xsl:call-template name="generateTitle"/>
+    <xsl:text>","generator": "oddj2son",
+    "date":"</xsl:text>
+    <xsl:call-template name="showDate"/>
+    <xsl:text>","modules": [</xsl:text>
     <xsl:for-each select="key('Modules',1)">
       <xsl:sort select="@ident"/>
       <xsl:text>{"ident":"</xsl:text>
@@ -82,7 +86,20 @@
       <xsl:value-of select="@module"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
-      <xsl:text>,"attributes":[</xsl:text>
+      <xsl:if test="tei:classes">
+	<xsl:text>,"classes":[</xsl:text>
+	<xsl:for-each select="tei:classes/tei:memberOf">
+	  <xsl:text>{"</xsl:text>
+	  <xsl:value-of select="@key"/>
+	  <xsl:text>":"</xsl:text>
+	  <xsl:for-each select="key('IDENTS',@key)">
+	    <xsl:value-of select="@type"/>
+	  </xsl:for-each>
+	  <xsl:text>"}</xsl:text>
+	  <xsl:if test="following-sibling::tei:memberOf">,</xsl:if>
+	</xsl:for-each>
+      </xsl:if>
+      <xsl:text>],"attributes":[</xsl:text>
       <xsl:variable name="a">
 	<xsl:call-template name="atts"/>
       </xsl:variable>
@@ -205,5 +222,20 @@
     </xsl:for-each>
   </xsl:template>
 
+
+  <xsl:template name="makeExternalLink">
+      <xsl:param name="ptr"/>
+      <xsl:param name="dest"/>
+      <xsl:choose>
+         <xsl:when test="$ptr='true'">
+            <tei:ptr target="{$dest}"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <tei:ref target="{$dest}">
+               <xsl:apply-templates/>
+            </tei:ref>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>

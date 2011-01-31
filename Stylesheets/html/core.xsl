@@ -626,7 +626,9 @@
   </xd:doc>
   <xsl:template match="tei:lb">
     <br>
-      <xsl:call-template name="rendering"/>
+      <xsl:if test="@rend">
+	<xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
+      </xsl:if>
     </br>
   </xsl:template>
   <xd:doc>
