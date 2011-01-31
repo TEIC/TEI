@@ -99,8 +99,9 @@
 	  <xsl:text>"}</xsl:text>
 	  <xsl:if test="following-sibling::tei:memberOf">,</xsl:if>
 	</xsl:for-each>
+	<xsl:text>]</xsl:text>
       </xsl:if>
-      <xsl:text>],"attributes":[</xsl:text>
+      <xsl:text>,"attributes":[</xsl:text>
       <xsl:variable name="a">
 	<xsl:call-template name="atts"/>
       </xsl:variable>
