@@ -2,10 +2,16 @@
 profile=default
 odd=false
 debug=false
+X=`dirname $0`
+APPHOME=`(cd $X; pwd)`
+TEMPDIR=/tmp/odt$$
+PROFILEDIR=$APPHOME/profiles
+TEMPLATES=$PROFILEDIR/$profile/oo
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
     --odd)       odd=true;;
+    --profiledir=*) PROFILEDIR=`echo $1 | sed 's/.*=//'`;;
     --debug)     debug=true;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -20,13 +26,9 @@ HERE=`pwd`
 D=`dirname "$1"`
 F=`basename "$1"`
 THERE=`(cd $D; pwd)`
-X=`dirname $0`
-APPHOME=`(cd $X; pwd)`
-TEMPDIR=/tmp/odt$$
-TEMPLATES=$APPHOME/profiles/$profile/oo
 if ! test -d $TEMPLATES 
 then
-  echo No support for profile $profile: $APPHOME/profiles/$profile/oo does not exist
+  echo No support for profile $profile: $PROFILEDIR/$profile/oo does not exist
   exit 1
 fi
 
@@ -65,7 +67,7 @@ then
 else
     saxon -o:$TEMPDIR/tmp3.xml $F $XSL/oo/fixgraphics.xsl DIR=`pwd`
 fi
-saxon -o:newcontent.xml tmp3.xml $APPHOME/profiles/$profile/oo/to.xsl  debug=$debug dir=$TEMPDIR 
+saxon -o:newcontent.xml tmp3.xml $PROFILEDIR/$profile/oo/to.xsl  debug=$debug dir=$TEMPDIR 
 mv newcontent.xml content.xml
 if $debug 
 then

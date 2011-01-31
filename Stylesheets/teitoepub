@@ -47,9 +47,16 @@ verbose=false
 uid=
 debug=false
 splitLevel=
+DOCHOME=`(cd $D; pwd)`
+X=`dirname $0`
+APPHOME=`(cd $X; pwd)`
+TEMPDIR=/tmp/epub$$
+TEMPLATEDIR=$APPHOME/profiles
+TEMPLATES=$TEMPLATEDIR/$profile/epub
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
+    --profiledir=*) PROFILEDIR=`echo $1 | sed 's/.*=//'`;;
     --uid=*)  uid=`echo $1 | sed 's/.*=//'`;;
     --splitLevel=*)  splitLevel=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
@@ -81,15 +88,10 @@ fi
 D=`dirname $1`
 F=`basename $1`
 B=`basename $1 .xml`
-DOCHOME=`(cd $D; pwd)`
-X=`dirname $0`
-APPHOME=`(cd $X; pwd)`
-TEMPDIR=/tmp/epub$$
-TEMPLATES=$APPHOME/profiles/$profile/epub
 XSL=$APPHOME
 if test "x$conversion" = "x"
 then
-  TOXSL=$APPHOME/profiles/$profile/epub/to.xsl
+  TOXSL=$PROFILEDIR/$profile/epub/to.xsl
 else
   TOXSL=$conversion
 fi
