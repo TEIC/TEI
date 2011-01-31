@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
@@ -6,12 +6,13 @@ See the file COPYING.txt for details
 $Date: 2009-02-13 14:41:55 +0000 (Fri, 13 Feb 2009) $
 $Id: c.xml 5665 2009-02-13 14:41:55Z ge8 $
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"  xmlns:rng="http://relaxng.org/ns/structure/1.0" module="analysis" ident="pc">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="analysis" ident="pc">
   <equiv/>
   <gloss>punctuation character</gloss>
   <desc>a character or string of characters regarded as constituting a
   single punctuation mark.</desc>
   <classes>
+    <memberOf key="att.global"/>
     <memberOf key="model.segLike"/>
     <memberOf key="att.segLike"/>
     <memberOf key="att.typed"/>
@@ -25,45 +26,50 @@ $Id: c.xml 5665 2009-02-13 14:41:55Z ge8 $
       </rng:choice>
     </rng:zeroOrMore>
   </content>
-
   <attList>
     <attDef ident="force" usage="opt">
       <equiv/>
       <desc>indicates the extent to which this punctuation mark
       conventionally separates words or phrases</desc>
-<datatype>
+      <datatype>
         <rng:ref name="data.enumerated"/>
-</datatype>
-<valList type="closed">
-<valItem ident="strong"><desc>the punctuation mark is a word separator</desc></valItem>
-<valItem ident="weak"><desc>the punctuation mark is not a word separator</desc></valItem>
-<valItem ident="inter"><desc>the punctuation mark may or may not be a
-word separator</desc></valItem>
-</valList></attDef>
+      </datatype>
+      <valList type="closed">
+        <valItem ident="strong">
+          <desc>the punctuation mark is a word separator</desc>
+        </valItem>
+        <valItem ident="weak">
+          <desc>the punctuation mark is not a word separator</desc>
+        </valItem>
+        <valItem ident="inter">
+          <desc>the punctuation mark may or may not be a
+word separator</desc>
+        </valItem>
+      </valList>
+    </attDef>
     <attDef ident="unit" usage="opt">
       <equiv/>
       <desc>provides a name for the kind of unit delimited by  this punctuation mark.</desc>
-<datatype>
+      <datatype>
         <rng:ref name="data.enumerated"/>
-</datatype>
+      </datatype>
     </attDef>
-
     <attDef ident="pre" usage="opt">
       <equiv/>
       <desc>indicates whether this punctuation mark precedes or
       follows the unit it delimits.</desc>
-<datatype>
+      <datatype>
         <rng:ref name="data.truthValue"/>
-</datatype>
+      </datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <phr>
-	<w>do</w>
-	<w>you</w>
-	<w>understand</w>
-	<pc type="interrogative">?</pc>
+        <w>do</w>
+        <w>you</w>
+        <w>understand</w>
+        <pc type="interrogative">?</pc>
       </phr>
     </egXML>
   </exemplum>
