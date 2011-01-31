@@ -18,7 +18,6 @@
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
-  <xsl:import href="../common2/header.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making JSON from ODD </p>
@@ -60,6 +59,8 @@
   <xsl:template match="/">
     <xsl:text>{"title": "</xsl:text>
     <xsl:call-template name="generateTitle"/>
+    <xsl:text>","edition": "</xsl:text>
+    <xsl:call-template name="generateEdition"/>
     <xsl:text>","generator": "oddj2son",
     "date":"</xsl:text>
     <xsl:call-template name="showDate"/>
@@ -223,19 +224,23 @@
   </xsl:template>
 
 
-  <xsl:template name="makeExternalLink">
-      <xsl:param name="ptr"/>
-      <xsl:param name="dest"/>
-      <xsl:choose>
-         <xsl:when test="$ptr='true'">
-            <tei:ptr target="{$dest}"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <tei:ref target="{$dest}">
-               <xsl:apply-templates/>
-            </tei:ref>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
+    <xsl:template name="generateEdition">
+      <xsl:value-of
+	  select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+    </xsl:template>
+
+    <xsl:template name="generateTitle">
+      <xsl:for-each
+	  select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
+	<xsl:choose>
+	  <xsl:when test="tei:title[@type='main']">
+	    <xsl:apply-templates select="tei:title"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:apply-templates select="tei:title"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+    </xsl:template>
 
 </xsl:stylesheet>
