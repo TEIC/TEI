@@ -37,7 +37,7 @@ dtds: check
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/odd2dtd.xsl outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
-	TEIC=true  ${VERBOSE}
+	${VERBOSE}
 
 schemas:check schema-relaxng schema-sch
 
@@ -47,7 +47,7 @@ schema-relaxng:
 	@echo BUILD: Generate modular RELAX NG schemas
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
 	lang=${LANGUAGE}  \
-	TEIC=true  ${VERBOSE}
+	${VERBOSE}
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 
