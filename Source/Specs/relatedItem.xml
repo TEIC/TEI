@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
     Copyright TEI Consortium.
     Licensed under the GNU General Public License.
@@ -6,10 +6,7 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"
-	     xmlns:rng="http://relaxng.org/ns/structure/1.0"
-    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-  ident="relatedItem" module="core">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="relatedItem" module="core">
   <desc>contains or references some other bibliographic item which is related to the present one in
     some specified manner, for example as a constituent or alternative version of it.</desc>
   <desc version="2007-12-20" xml:lang="kr">구성물이나 대체 버전과 같이 현 항목과 특정 방식으로 관련된 다른 서지 항목을 명시적 방식에 따라
@@ -26,35 +23,37 @@
     se relaciona con el actual de alguna manera, por ejemplo como un versión complementaria o
     alternativa de este. </desc>
   <classes>
+    <memberOf key="att.global"/>
     <memberOf key="model.biblPart"/>
     <memberOf key="att.typed"/>
   </classes>
   <content>
     <rng:optional>
       <rng:choice>
-	<rng:ref name="model.biblLike"/>
-	<rng:ref name="model.ptrLike"/>
+        <rng:ref name="model.biblLike"/>
+        <rng:ref name="model.ptrLike"/>
       </rng:choice>
     </rng:optional>
   </content>
   <constraintSpec ident="targetorcontent1" scheme="isoschematron">
     <constraint>
-      <sch:report test="@target and count( child::* ) > 0">If the 'target' attribute is used, the
+      <sch:report test="@target and count( child::* ) &gt; 0">If the 'target' attribute is used, the
         relatedItem element must be empty</sch:report>
       <sch:assert test="@target or child::*">A relatedItem element should have either a 'target' attribute
         or a child element to indicate the related bibliographic item</sch:assert>
     </constraint>
-  </constraintSpec> 
+  </constraintSpec>
   <attList>
     <attDef ident="target" usage="opt">
       <equiv/>
       <desc>points to the related bibliographic element by means of an
       absolute or relative URI reference</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        <rng:ref name="data.pointer"/>
       </datatype>
     </attDef>
-  </attList>  <exemplum xml:lang="en">
+  </attList>
+  <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblStruct>
         <monogr>
@@ -89,9 +88,11 @@
       </biblStruct>
     </egXML>
   </exemplum>
-  <remarks><p>If the <att>target</att> attribute is used to reference
+  <remarks>
+    <p>If the <att>target</att> attribute is used to reference
   the related bibliographic item, the element should be
-  empty.</p></remarks>
+  empty.</p>
+  </remarks>
   <listRef>
     <ptr target="#COBIRI"/>
   </listRef>

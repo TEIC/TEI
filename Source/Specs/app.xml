@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Licensed under the GNU General Public License. 
@@ -28,6 +28,7 @@ lemma and at least one reading.</desc>
   <desc version="2007-05-04" xml:lang="es">contiene una entrada en el aparato crítico, con un lema opcional y, al menos, una lectura.</desc>
   <desc version="2007-01-21" xml:lang="it">contiene una singola voce in un apparato critico, con un lemma facoltativo e almeno una lettura</desc>
   <classes>
+    <memberOf key="att.global"/>
     <memberOf key="model.pPart.transcriptional"/>
   </classes>
   <content>
@@ -79,9 +80,7 @@ lemma and at least one reading.</desc>
   </content>
   <constraintSpec scheme="isoschematron" ident="only1lem">
     <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-      <sch:assert test="count( descendant::tei:lem[ generate-id(
-      current() ) = generate-id( ancestor::tei:app[1] ) ]) &lt;
-      2">Only one &lt;lem&gt; element may appear within a single
+      <sch:assert test="count( descendant::tei:lem[ generate-id(       current() ) = generate-id( ancestor::tei:app[1] ) ]) &lt;       2">Only one &lt;lem&gt; element may appear within a single
       apparatus entry, whether it appears outside a &lt;rdgGrp&gt;
       element or within it.</sch:assert>
     </constraint>
@@ -113,7 +112,7 @@ of the variation or the principles required to understand it (e.g.
         <mentioned>ponctuation</mentioned>, etc.), son importance pour la critique textuelle (par exemple
         <mentioned>significatif</mentioned>, <mentioned>fortuit</mentioned>, <mentioned>peu clair</mentioned>) ou la nature de la variation ou des principes nécessaires à sa compréhension
         (par exemple <mentioned>lectio difficilior</mentioned>, <mentioned>usus auctoris</mentioned>, etc.).</valDesc>
-          </attDef>
+    </attDef>
     <attDef ident="from" usage="opt">
       <equiv/>
       <desc>identifies the beginning of the lemma in the base text, if
@@ -132,7 +131,7 @@ necessary.</desc>
       </datatype>
       <valDesc>any valid identifier</valDesc>
       <valDesc xml:lang="fr">tout identifiant valide</valDesc>
-            <remarks>
+      <remarks>
         <p>This attribute is only used when the double-end point
 method of apparatus markup is used.</p>
       </remarks>
@@ -166,7 +165,7 @@ necessary.</desc>
       </datatype>
       <valDesc>any valid identifier</valDesc>
       <valDesc xml:lang="fr">tout identifiant valide</valDesc>
-            <remarks>
+      <remarks>
         <p>This attribute is only used when the double-end point
 method of apparatus markup is used, with the encoded apparatus held
 in a separate file rather than being embedded <term>in-line</term> in
@@ -212,7 +211,7 @@ location-referenced method of apparatus markup is used.</desc>
       <valDesc>A string containing a canonical reference for the passage
       to which the variation applies.</valDesc>
       <valDesc xml:lang="fr">Toute chaîne contenant une référence canonique du passage auquel la variation s'applique.</valDesc>
-            <remarks>
+      <remarks>
         <p>This attribute is used only when the location-referenced
 encoding method is used.<!-- [Suppress it and use <att>from</att> instead?  -MSM]     --></p>
       </remarks>
@@ -257,7 +256,7 @@ encoding method is used.<!-- [Suppress it and use <att>from</att> instead?  -MSM
       </app>
     </egXML>
   </exemplum>
-<!--  <remarks>
+  <!--  <remarks>
     <p rend="dataDesc">May contain an optional lemma and one or more readings or
 reading groups, each associated with witness specifications.</p>
   </remarks>
