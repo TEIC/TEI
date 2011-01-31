@@ -3,10 +3,15 @@ profile=default
 debug=false
 header=
 conversion=
+X=`dirname $0`
+APPHOME=`(cd $X; pwd)`
+PROFILEDIR=$APPHOME/profiles
+TEMPLATES=$PROFILEDIR/$profile/oo
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
     --header=*)  header=`echo $1 | sed 's/.*=//'`;;
+    --profiledir=*) PROFILEDIR=`echo $1 | sed 's/.*=//'`;;
     --conversion=*)  conversion=`echo $1 | sed 's/.*=//'`;;
     --debug)     debug=true;;
      *) if test "$1" = "${1#--}" ; then 
@@ -18,13 +23,10 @@ while test $# -gt 0; do
   shift
 done
 test -f "$1" || exit 1
+N=`basename "$1" .odt`
 HERE=`pwd`
 D=`dirname "$1"`
 THERE=`(cd $D; pwd)`
-X=`dirname $0`
-APPHOME=`(cd $X; pwd)`
-N=`basename "$1" .odt`
-TEMPLATES=$APPHOME/profiles/$profile/oo
 if ! test -d $TEMPLATES 
 then
     echo No support for profile $profile: $APPHOME/profiles/$profile/oo does not exist

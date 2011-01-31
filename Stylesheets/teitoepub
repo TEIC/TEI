@@ -47,12 +47,11 @@ verbose=false
 uid=
 debug=false
 splitLevel=
-DOCHOME=`(cd $D; pwd)`
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 TEMPDIR=/tmp/epub$$
-TEMPLATEDIR=$APPHOME/profiles
-TEMPLATES=$TEMPLATEDIR/$profile/epub
+PROFILEDIR=$APPHOME/profiles
+TEMPLATES=$PROFILEDIR/$profile/epub
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
@@ -88,6 +87,7 @@ fi
 D=`dirname $1`
 F=`basename $1`
 B=`basename $1 .xml`
+DOCHOME=`(cd $D; pwd)`
 XSL=$APPHOME
 if test "x$conversion" = "x"
 then
