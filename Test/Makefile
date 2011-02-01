@@ -69,7 +69,7 @@ special: $(TESTSPECIALFILES)
 	@echo "BUILD: Test schema from $<"
 	@echo Validate $< itself
 	rnv ../p5odds.rnc $< 
-	saxon -o:$*-ex.odd $< ../Utilities/odd2exodd.xsl TEIC=true
+	saxon -o:$*-ex.odd $< ../Utilities/odd2exodd.xsl 
 	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) $*-ex.odd . 
 	@echo check egXML in $<
 	perl -p -e "s/testlite-examples/$*-examples/" ex.nvdl > $*.nvdl
