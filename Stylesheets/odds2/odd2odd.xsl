@@ -28,7 +28,7 @@
     </desc>
   </doc>
   <xsl:output encoding="utf-8" indent="no"/>
-  <xsl:param name="TEIC">false</xsl:param>
+  <xsl:param name="autoGlobal">false</xsl:param>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="verbose"/>
   <xsl:param name="useVersionFromTEI">true</xsl:param>
@@ -505,7 +505,7 @@ How can a class be ok?
 -->
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
-      <xsl:when test="$TEIC='true' and starts-with(@ident,'att.global')">y</xsl:when>
+      <xsl:when test="$autoGlobal='true' and starts-with(@ident,'att.global')">y</xsl:when>
       <xsl:when test="self::tei:classSpec and $stripped='true'">y</xsl:when>
       <xsl:when test="key('odd2odd-ELEMENT_MEMBERED',$k)">y</xsl:when>
       <xsl:when test="key('odd2odd-REFED',$k)">y</xsl:when>
@@ -689,7 +689,7 @@ How can a class be ok?
   </xsl:template>
 
   <xsl:template name="odd2odd-addClassAttsToCopy">
-    <xsl:if test="$TEIC='true' and (not(@ns) or @ns='http://www.tei-c.org/ns/1.0' or @ns='http://www.tei-c.org/ns/Examples')">
+    <xsl:if test="$autoGlobal='true' and (not(@ns) or @ns='http://www.tei-c.org/ns/1.0' or @ns='http://www.tei-c.org/ns/Examples')">
       <xsl:call-template name="odd2odd-classAttributes">
         <xsl:with-param name="whence">1</xsl:with-param>
         <xsl:with-param name="elementName" select="@ident"/>
@@ -1730,7 +1730,7 @@ so that is only put back in if there is some content
     <xsl:choose>
       <xsl:when test="$elementName=''"/>
       <xsl:otherwise>
-	<xsl:if test="$TEIC='true'">
+	<xsl:if test="$autoGlobal='true'">
 	  <xsl:call-template name="odd2odd-classAttributes">
 	    <xsl:with-param name="whence">7</xsl:with-param>
 	    <xsl:with-param name="elementName" select="$elementName"/>
@@ -1984,7 +1984,7 @@ so that is only put back in if there is some content
         <xsl:apply-templates mode="odd2odd-copy" select="tei:content"/>
         <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
         <attList xmlns="http://www.tei-c.org/ns/1.0">
-	  <xsl:if test="$TEIC='true'">
+	  <xsl:if test="$autoGlobal='true'">
 	    <xsl:comment>1.</xsl:comment>
 	    <xsl:call-template name="odd2odd-classAttributesSimple">
 	      <xsl:with-param name="whence">9</xsl:with-param>

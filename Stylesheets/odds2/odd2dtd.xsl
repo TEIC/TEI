@@ -31,6 +31,7 @@
       </desc>
    </doc>
   <xsl:output method="text"/>
+  <xsl:param name="autoGlobal">false</xsl:param>
   <xsl:param name="verbose"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"> </xsl:param>
@@ -1139,7 +1140,7 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:variable name="maybeatts">
-         <xsl:if test="$parameterize='true' and $TEIC='true'">
+         <xsl:if test="$parameterize='true' and $autoGlobal='true'">
             <xsl:text>&#10; %att.global.attributes;</xsl:text>
          </xsl:if>
          <xsl:if test="$parameterize='true'">

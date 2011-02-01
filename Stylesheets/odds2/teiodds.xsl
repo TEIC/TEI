@@ -44,6 +44,7 @@
   <xsl:param name="doclang"/>
   <xsl:param name="patternPrefix"/>
   <xsl:param name="TEIC">false</xsl:param>
+  <xsl:param name="autoGlobal">false</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
   <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
@@ -910,7 +911,7 @@ select="$makeDecls"/></xsl:message>
       select="@ident"/> (parameterize=<xsl:value-of select="$parameterize"/>)</xsl:message>
     </xsl:if>
     <xsl:if test="$parameterize='true'">
-      <xsl:if test="$TEIC='true'">
+      <xsl:if test="$autoGlobal='true'">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="att.global.attributes"/>
       </xsl:if>
       <xsl:for-each select="tei:classes/tei:memberOf">
