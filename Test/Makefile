@@ -111,7 +111,16 @@ special: $(TESTSPECIALFILES)
 	rm xi_$*.odd
 
 testmeta2010:
-	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//'`; do \
+	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _old `; do \
+		echo found schemaSpec $$j in testmeta2010; \
+		$(ROMA) $(ROMAOPTS) --autoglobal --nodtd --noxsd --xsl=$(XSL) --schema=$$j  testmeta2010.odd .; \
+		echo Now validating instances documents against $$j schema; \
+		echo Validate using Jing for RelaxNG... ; \
+		jing -t $$j.rng testmeta2010.xml; \
+		echo Validate using RNV.... ; \
+		xmllint --noent --dropdtd  testmeta2010.xml | rnv $$j.rnc ;   \
+	done
+	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _new `; do \
 		echo found schemaSpec $$j in testmeta2010; \
 		$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) --schema=$$j  testmeta2010.odd .; \
 		echo Now validating instances documents against $$j schema; \
