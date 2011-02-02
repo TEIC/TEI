@@ -189,7 +189,7 @@ exit 1
 TEIXSLDIR=/usr/share/xml/tei/stylesheet
 useVersionFromTEI=true
 LOCALSOURCE=
-AUTOGLOBAL=true
+AUTOGLOBAL=false
 DOCFLAGS=
 doclang=
 lang=

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://www.tei-c.org/ns/1.0">
   <!--
-Schema generated from ODD source 2011-01-07T17:10:05Z. 
-Edition: 1.8.0. Last updated on November 5th 2010.
-Edition Location: http://www.tei-c.org/Vault/P5/1.8.0/
+Schema generated from ODD source 2011-01-10T00:10:17Z. 
+Edition: 1.7.0. Last updated on July 6th 2010.
+Edition Location: http://www.tei-c.org/Vault/P5/1.7.0/
 
 -->
   <!---->
@@ -833,7 +833,7 @@ attribute and its content.</a:documentation>
       <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="status" a:defaultValue="draft">
         <a:documentation>describes the status of a document either currently or, when
 associated with a dated element, at the time indicated.
-Sample values include: 1] approved; 2] candidate; 3] cleared; 4] deprecated; 5] draft; 6] embargoed; 7] expired; 8] frozen; 9] galley; 10] proposed; 11] published; 12] recommendation; 13] submitted; 14] unfinished; 15] withdrawn</a:documentation>
+Sample values include: 1] candidate; 2] recommendation; 3] submitted; 4] approved; 5] deprecated; 6] proposed; 7] cleared; 8] embargoed; 9] draft; 10] frozen; 11] expired; 12] unfinished; 13] draft; 14] galley; 15] published; 16] withdrawn; 17] expired </a:documentation>
         <ref name="TEI_data.enumerated"/>
       </attribute>
     </optional>
@@ -953,8 +953,7 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
     <optional>
       <attribute name="xml:lang">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(language) indicates the language of the element content using a tag generated
-        according to BCP 47
-         </a:documentation>
+        according to BCP 47</a:documentation>
         <ref name="TEI_data.language"/>
       </attribute>
     </optional>
@@ -1013,32 +1012,16 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
   </define>
   <define name="TEI_att.handFeatures.attributes">
     <ref name="TEI_att.handFeatures.attribute.scribe"/>
-    <ref name="TEI_att.handFeatures.attribute.scribeRef"/>
     <ref name="TEI_att.handFeatures.attribute.script"/>
-    <ref name="TEI_att.handFeatures.attribute.scriptRef"/>
     <ref name="TEI_att.handFeatures.attribute.medium"/>
     <ref name="TEI_att.handFeatures.attribute.scope"/>
   </define>
   <define name="TEI_att.handFeatures.attribute.scribe">
     <optional>
       <attribute name="scribe">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives a name or other identifier for the scribe
+        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">gives a standard name or other identifier for the scribe
 believed to be responsible for this hand.</a:documentation>
         <ref name="TEI_data.name"/>
-      </attribute>
-    </optional>
-  </define>
-  <define name="TEI_att.handFeatures.attribute.scribeRef">
-    <optional>
-      <attribute name="scribeRef">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a full description of the scribe concerned, typically supplied by a person element
-      elsewhere in the description.</a:documentation>
-        <list>
-          <ref name="TEI_data.pointer"/>
-          <zeroOrMore>
-            <ref name="TEI_data.pointer"/>
-          </zeroOrMore>
-        </list>
       </attribute>
     </optional>
   </define>
@@ -1051,21 +1034,6 @@ this hand, for example secretary, copperplate, Chancery, Italian, etc.</a:docume
           <ref name="TEI_data.name"/>
           <zeroOrMore>
             <ref name="TEI_data.name"/>
-          </zeroOrMore>
-        </list>
-      </attribute>
-    </optional>
-  </define>
-  <define name="TEI_att.handFeatures.attribute.scriptRef">
-    <optional>
-      <attribute name="scriptRef">
-        <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">points to a full description of the script or writing style used by
-this hand, typically supplied by a scriptNote element
-      elsewhere in the description.</a:documentation>
-        <list>
-          <ref name="TEI_data.pointer"/>
-          <zeroOrMore>
-            <ref name="TEI_data.pointer"/>
           </zeroOrMore>
         </list>
       </attribute>
@@ -5370,8 +5338,8 @@ Sample values include: 1] suspension; 2] contraction; 3] brevigraph; 4] superscr
       <empty/>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="ptr-constraint-ptrAtts">
         <rule context="tei:ptr">
-          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@target and @cRef">Only one of the
-	attributes 'target' and 'cRef' may be supplied.</report>
+          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@target and @cRef">Only one of the
+	attributes 'target' and 'cRef' may be supplied.</sch:report>
         </rule>
       </pattern>
       <ref name="TEI_att.global.attributes"/>
@@ -5399,8 +5367,8 @@ Sample values include: 1] suspension; 2] contraction; 3] brevigraph; 4] superscr
       <ref name="TEI_macro.paraContent"/>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="ref-constraint-refAtts">
         <rule context="tei:ref">
-          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@target and @cRef">Only one of the
-	attributes 'target' and 'cRef' may be supplied.</report>
+          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@target and @cRef">Only one of the
+	attributes 'target' and 'cRef' may be supplied.</sch:report>
         </rule>
       </pattern>
       <ref name="TEI_att.global.attributes"/>
@@ -5674,7 +5642,6 @@ Suggested values include: 1] ordered; 2] bulleted; 3] simple; 4] gloss</a:docume
       <ref name="TEI_att.global.attributes"/>
       <ref name="TEI_att.typed.attributes"/>
       <ref name="TEI_att.sourced.attributes"/>
-      <ref name="TEI_att.spanning.attributes"/>
       <attribute name="unit">
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">provides a conventional name for the kind of section changing at this milestone.
 Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] canto; 7] speaker; 8] stanza; 9] act; 10] scene; 11] section; 12] absent; 13] unnumbered</a:documentation>
@@ -5718,7 +5685,6 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
       <ref name="TEI_att.global.attributes"/>
       <ref name="TEI_att.typed.attributes"/>
       <ref name="TEI_att.sourced.attributes"/>
-      <ref name="TEI_att.spanning.attributes"/>
       <empty/>
     </element>
   </define>
@@ -5729,7 +5695,6 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
       <ref name="TEI_att.global.attributes"/>
       <ref name="TEI_att.typed.attributes"/>
       <ref name="TEI_att.sourced.attributes"/>
-      <ref name="TEI_att.spanning.attributes"/>
       <empty/>
     </element>
   </define>
@@ -5741,7 +5706,6 @@ Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] cant
       <ref name="TEI_att.global.attributes"/>
       <ref name="TEI_att.typed.attributes"/>
       <ref name="TEI_att.sourced.attributes"/>
-      <ref name="TEI_att.spanning.attributes"/>
       <empty/>
     </element>
   </define>
@@ -6510,7 +6474,7 @@ distribution of a text.</a:documentation>
       <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(identifier) supplies any form of identifier used to identify some object,
   such as a bibliographic item, a person, a title, an organization,
   etc. in a standardized way.</a:documentation>
-      <ref name="TEI_macro.xtext"/>
+      <text/>
       <ref name="TEI_att.global.attributes"/>
       <optional>
         <attribute name="type">
@@ -7435,9 +7399,6 @@ Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Gri
         </zeroOrMore>
         <zeroOrMore>
           <ref name="TEI_figure"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="TEI_model.graphicLike"/>
         </zeroOrMore>
         <zeroOrMore>
           <ref name="TEI_model.noteLike"/>
@@ -8410,15 +8371,15 @@ Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Gri
       </optional>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="relation-constraint-activemutual">
         <rule context="tei:relation">
-          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@active and @mutual">Only one of the attributes
-	'active' and 'mutual' may be supplied</report>
+          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@active and @mutual">Only one of the attributes
+	'active' and 'mutual' may be supplied</sch:report>
         </rule>
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="relation-constraint-activepassive">
         <rule context="tei:relation">
-          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@passive and not(@active)">the attribute 'passive'
+          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@passive and not(@active)">the attribute 'passive'
 	may be supplied only if the attribute 'active' is
-	supplied</report>
+	supplied</sch:report>
         </rule>
       </pattern>
       <ref name="TEI_att.global.attributes"/>
@@ -10375,12 +10336,12 @@ Sample values include: 1] TEI(text encoding initiative) ; 2] DBK(docbook) ; 3] X
         <ref name="TEI_content"/>
       </optional>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="moduleRef-constraint-modref">
-        <rule xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" context="tei:moduleRef">
-          <report test="* and @key">
+        <sch:rule xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" context="tei:moduleRef">
+          <sch:report test="* and @key">
 	  child elements of moduleRef are only allowed when an external module
 	  is being loaded
-	</report>
-        </rule>
+	</sch:report>
+        </sch:rule>
       </pattern>
       <ref name="TEI_att.global.attributes"/>
       <ref name="TEI_att.readFrom.attributes"/>
@@ -10765,9 +10726,6 @@ that is a group of
           </choice>
         </zeroOrMore>
         <zeroOrMore>
-          <ref name="TEI_constraintSpec"/>
-        </zeroOrMore>
-        <zeroOrMore>
           <ref name="TEI_exemplum"/>
         </zeroOrMore>
         <zeroOrMore>
@@ -10950,8 +10908,7 @@ avoid potential nameclashes. </a:documentation>
             <a:documentation>Each name referenced in e.g. a rng:ref
 	  element within a content model is automatically prefixed by
 	  the value of the prefix attribute on the current
-	  schemaSpec
-               </a:documentation>
+	  schemaSpec</a:documentation>
             <value>false</value>
             <a:documentation>No prefixes are added: 
  any prefix required by the value of the prefix attribute on the current
@@ -11239,7 +11196,6 @@ datatype element.</a:documentation>
     <ref name="TEI_att.identified.attribute.ident"/>
     <ref name="TEI_att.identified.attribute.predeclare"/>
     <ref name="TEI_att.identified.attribute.module"/>
-    <ref name="TEI_att.identified.attribute.status"/>
   </define>
   <define name="TEI_att.identified.attribute.ident">
     <attribute name="ident">
@@ -11252,7 +11208,7 @@ datatype element.</a:documentation>
       <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="predeclare" a:defaultValue="false">
         <a:documentation>Says whether this object should be predeclared in the
       tei infrastructure module.</a:documentation>
-        <ref name="TEI_data.truthValue"/>
+        <data type="boolean"/>
       </attribute>
     </optional>
   </define>
@@ -11262,28 +11218,6 @@ datatype element.</a:documentation>
         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Supplies a name for the module in which this object is to
       be declared.</a:documentation>
         <data type="NCName"/>
-      </attribute>
-    </optional>
-  </define>
-  <define name="TEI_att.identified.attribute.status">
-    <optional>
-      <attribute xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" name="status" a:defaultValue="stable">
-        <a:documentation>indicates the current status of the object identified with
-respect to the current version of the TEI Guidelines.</a:documentation>
-        <choice>
-          <value>deprecated</value>
-          <a:documentation>the item is not recommended for use,
-and may be withdrawn at a future release.</a:documentation>
-          <value>unstable</value>
-          <a:documentation>the item is new and still under
-review.</a:documentation>
-          <value>changed</value>
-          <a:documentation>the item has changed significantly since the
-preceding version.</a:documentation>
-          <value>stable</value>
-          <a:documentation>the item has not recently changed and is
-not expected to do so except for correction of any errors.</a:documentation>
-        </choice>
       </attribute>
     </optional>
   </define>
@@ -11493,20 +11427,20 @@ Suggested values include: 1] d(days) ; 2] h(hours) ; 3] min(minutes) ; 4] s(seco
       </zeroOrMore>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="join-constraint-joinTargets1">
         <rule context="tei:join">
-          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@target and @targets">You may not supply both 
-	@target and @targets</report>
+          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@target and @targets">You may not supply both 
+	@target and @targets</sch:report>
         </rule>
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="join-constraint-joinTargets2">
         <rule context="tei:join">
-          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="not(@target) and not(@targets)">You must
-	supply either @target or @targets</report>
+          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="not(@target) and not(@targets)">You must
+	supply either @target or @targets</sch:report>
         </rule>
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="join-constraint-joinTargets3">
         <rule context="tei:join">
-          <assert xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="contains(@target,' ')">You must supply at least two
-values for @target</assert>
+          <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="contains(@target,' ')">You must supply at least two
+values for @target</sch:assert>
         </rule>
       </pattern>
       <ref name="TEI_att.global.attributes"/>
@@ -11575,20 +11509,20 @@ values for @target</assert>
       <empty/>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="alt-constraint-altTargets1">
         <rule context="tei:alt">
-          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@target and @targets">You may not supply both 
-	@target and @targets</report>
+          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="@target and @targets">You may not supply both 
+	@target and @targets</sch:report>
         </rule>
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="alt-constraint-altTargets2">
         <rule context="tei:alt">
-          <report xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="not(@target) and not(@targets)">You must
-	supply either @target or @targets</report>
+          <sch:report xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="not(@target) and not(@targets)">You must
+	supply either @target or @targets</sch:report>
         </rule>
       </pattern>
       <pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="alt-constraint-altTargets3">
         <rule context="tei:alt">
-          <assert xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="contains(@target,' ')">You must supply at least two
-values for @target</assert>
+          <sch:assert xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" test="contains(@target,' ')">You must supply at least two
+values for @target</sch:assert>
         </rule>
       </pattern>
       <ref name="TEI_att.global.attributes"/>
