@@ -243,12 +243,12 @@ ODD=${1:?"no schemaspec (i.e., ODD file) supplied; for usage syntax issue $0 --h
 RESULTS=${2:-RomaResults}
 H=`pwd`/
 D=`date "+%Y-%m-%d %H:%M:%S"`
-echo "========= $D Roma starts, info:"
-echo "Test for software: xmllint, saxon, trang, and perl"
-which xmllint || die "you do not have xmllint"
-which saxon || die "you do not have saxon installed"
-which trang || die "you do not have trang installed"
-which perl || die "you do not have perl installed"
+echo "========= $D Roma starts ==========="
+# "Test for software: xmllint, saxon, trang, and perl"
+which  xmllint > dev/null || die "you do not have xmllint"
+which  saxon > dev/null || die "you do not have saxon installed"
+which trang > dev/null || die "you do not have trang installed"
+which perl > dev/null || die "you do not have perl installed"
 test -f $ODD || die "file $ODD does not exist"
 echo "TEI stylesheet tree: $TEIXSLDIR"
 test -d $TEIXSLDIR/odds2 || \
