@@ -243,7 +243,7 @@ ODD=${1:?"no schemaspec (i.e., ODD file) supplied; for usage syntax issue $0 --h
 RESULTS=${2:-RomaResults}
 H=`pwd`/
 D=`date "+%Y-%m-%d %H:%M:%S"`
-echo "========= $D Roma starts ==========="
+echo "========= Roma starts at $D ==========="
 # "Test for software: xmllint, saxon, trang, and perl"
 which  xmllint > dev/null || die "you do not have xmllint"
 which  saxon > dev/null || die "you do not have saxon installed"
@@ -263,7 +263,7 @@ echo "Results to: $RESULTS"
 mkdir -p $RESULTS || die "cannot make directory $RESULTS"
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
 echo "Process $ODD to create $schema{.dtd|.xsd|.doc.xml|.rng|.rnc} in $RESULTS"
-echo "========= $D Roma starts, execution:"
+echo "========= Roma starts execution at $D ==========="
 if test "x$PATTERNPREFIX" = "x"
 then
    PATTERN=" "
