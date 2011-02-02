@@ -405,6 +405,12 @@
     </choice>
   </xsl:template>
   
+  <xsl:template match="gap">
+    <gap>
+      <xsl:apply-templates select="@*[not(name()='desc')]"/>
+      <xsl:apply-templates select="@*[name()='desc']"/>
+    </gap>
+  </xsl:template>
   <xsl:template match="gap/@desc">
     <desc>
       <xsl:value-of select="."/>
