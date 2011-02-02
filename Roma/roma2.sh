@@ -20,11 +20,11 @@ makeODD()
 	    $DOCLANG \
 	    currentDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
-	    TEIC=$TEIC $SOURCE $DEBUG  
+	    autoGlobal=$AUTOGLOBAL $SOURCE $DEBUG  
     else
 	echo  [names translated to language $lang]
 	xmllint --xinclude $ODD | saxon - $TEIXSLDIR/odds2/odd2odd.xsl \
-	    TEIC=$TEIC \
+	    autoGlobal=$AUTOGLOBAL \
 	    currentDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    $SOURCE $DEBUG  \
@@ -39,7 +39,7 @@ makeRelax()
     saxon   $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2relax.xsl \
     $PATTERN $DEBUG $LANGUAGE $DOCLANG  $SELECTEDSCHEMA \
 	     parameterize=$parameterize \
-             TEIC=$TEIC \
+             autoGlobal=$AUTOGLOBAL \
              outputDir=$RESULTS   
     (cd $RESULTS; \
     echo "3. make RELAX NG compact from XML"; \
@@ -61,7 +61,7 @@ makeDTD()
     saxon $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2dtd.xsl \
 	$DEBUG $LANGUAGE $DOCLANG   $SELECTEDSCHEMA \
 	    parameterize=$parameterize \
-	    TEIC=$TEIC \
+	    autoGlobal=$AUTOGLOBAL \
             outputDir=$RESULTS       
 }
 
@@ -86,7 +86,7 @@ makeHTMLDOC()
     echo "10. make HTML documentation $schema.doc.html "
     saxon -o:$RESULTS/$schema.doc.html $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2html.xsl \
 	$DOCFLAGS  \
-	$DEBUG  $LANGUAGE $DOCLANG TEIC=$TEIC \
+	$DEBUG  $LANGUAGE $DOCLANG autoGlobal=$AUTOGLOBAL \
 	STDOUT=true \
 	splitLevel=-1 
 }
@@ -95,7 +95,7 @@ makePDFDOC()
 {
     echo "7. make PDF documentation $schema.doc.pdf and $schema.doc.tex "
     saxon  -o:$RESULTS/$schema.doc.tex $RESULTS/$schema.doc.xml $TEIXSLDIR/latex2/tei.xsl \
-	$DEBUG $DOCFLAGS $LANGUAGE $DOCLANG TEIC=$TEIC useHeaderFrontMatter=true reencode=false \
+	$DEBUG $DOCFLAGS $LANGUAGE $DOCLANG autoGlobal=$AUTOGLOBAL useHeaderFrontMatter=true reencode=false \
 	preQuote=“ postQuote=”
     cat > $RESULTS/perl$$.pl<<EOF
 #!/usr/bin/perl
@@ -140,7 +140,7 @@ makeXMLDOC()
     echo "6. make expanded documented ODD $schema.doc.xml "
     saxon -o:$RESULTS/$schema.doc.xml  \
     $RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2lite.xsl \
-    $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG $SOURCE TEIC=$TEIC 
+    $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG $SOURCE autoGlobal=$AUTOGLOBAL 
 }
 
 
@@ -174,7 +174,7 @@ echo "  --docpdf           # create PDF version of doc"
 echo "  --lang=LANG        # language for names of attributes and elements"
 echo "  --nodtd            # suppress DTD creation"
 echo "  --norelax          # suppress RELAX NG creation"
-echo "  --noteic           # suppress TEI-specific features"
+echo "  --autoglobal       # adds global attribute class to all elements"
 echo "  --noxsd            # suppress W3C XML Schema creation"
 echo "  --schematron       # extract Schematron rules"
 echo "  --isoschematron    # extract ISO Schematron rules"
@@ -189,7 +189,7 @@ exit 1
 TEIXSLDIR=/usr/share/xml/tei/stylesheet
 useVersionFromTEI=true
 LOCALSOURCE=
-TEIC=false
+AUTOGLOBAL=true
 DOCFLAGS=
 doclang=
 lang=
@@ -220,7 +220,7 @@ while test $# -gt 0; do
     --localsource=*) LOCALSOURCE=`echo $1 | sed 's/.*=//'`;;
     --nodtd)       dtd=false;;
     --norelax)     relax=false;;
-    --noteic)      TEIC=false;;
+    --autoglobal)      AUTOGLOBAL=true;;
     --noxsd)       xsd=false;;
     --schematron)      schematron=true;;
     --isoschematron)      isoschematron=true;;
