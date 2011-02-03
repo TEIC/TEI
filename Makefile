@@ -94,12 +94,14 @@ xml: check
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 
 tex: xml
+	@echo BUILD: build LaTeX version of Guidelines
 	@echo Checking you have a running ${XELATEX} before trying to make TeX...
 	which ${XELATEX} || exit 1
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
+	@echo BUILD: check XeLaTeX systems works locally
 	xelatex --interaction=batchmode Utilities/fonttest 
 	if [ -f "missfont.log" ]  ; then  \
 	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/guidelines.xsl ;\
@@ -107,7 +109,7 @@ tex: xml
 	  echo "WARNING: you do not have Minion or Myriad fonts installed, reverting to Computer Modern " ;\
 	  echo "========================="; \
 	fi
-	rm -f missfont.log fonttest.*
+	rm -f fonttest.*
 	${SAXON} ${SAXON_ARGS}  Guidelines.xml Utilities/guidelines.xsl > Guidelines.tex
 	rm -f Utilities/guidelines.xsl
 	for i in Guidelines-REF*tex; \
@@ -119,6 +121,7 @@ tex: xml
 	done
 
 pdf: tex
+	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
 	grep -v "Failed to convert input string to UTF16" $(JOB).log
@@ -428,4 +431,4 @@ clean:
 	rm -f       Test/detest.rng
 	rm -f       Test/detest.dtd
 	rm -rf valid v.xml
-	rm -f v.body v.header
+	rm -f v.body v.header missfont.log 
