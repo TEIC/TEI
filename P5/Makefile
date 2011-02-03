@@ -166,9 +166,6 @@ valid: check
 	@echo BUILD: Check feasible validity with nvdl
 	./run-onvdl p5.nvdl ${DRIVER} 
 	@echo check individual examples
-
-
-foo:
 	-rm -rf  valid
 	${SAXON} ${DRIVER} Utilities/extractegXML.xsl 
 	echo "<!DOCTYPE p [" > v.xml
