@@ -9,10 +9,7 @@ ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/
 TESTFILES= \
 	testClasses.dtd \
 	testbare.dtd \
-	testchinese.dtd \
-	testcorpus.dtd \
 	testdictionaries.dtd \
-	testdrama.dtd \
 	testfand.dtd \
 	testfand2.dtd \
 	testfand3.dtd \
@@ -20,27 +17,17 @@ TESTFILES= \
 	testfand5.dtd \
 	testfs.dtd \
 	testglobals.dtd \
-	testlangs.dtd \
-	testlite.dtd \
-	testminimal.dtd \
-	testoucs.dtd 
+	testlangs.dtd 
 
 TESTFILES2 = \
-	testall.xsd \
 	testconstraint.xsd \
 	testconstraint2.xsd \
-	testgos.xsd \
 	testi18n.xsd \
 	testjustfs.xsd \
 	testmav.xsd \
-	testms.xsd \
-	testnames.xsd \
 	testns.xsd \
 	testp4compat.xsd \
-	testplace.xsd \
 	testrendition.xsd \
-	testspoken.xsd \
-	testtite.xsd \
 	testtranscr.xsd 
 
 TESTSPECIALFILES= \
