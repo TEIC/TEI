@@ -16,6 +16,7 @@ TESTFILES= \
 	testfand4.dtd \
 	testfand5.dtd \
 	testfs.dtd \
+	testlite.dtd \
 	testglobals.dtd \
 	testlangs.dtd 
 
