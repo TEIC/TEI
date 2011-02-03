@@ -167,15 +167,13 @@ valid: check
 	./run-onvdl p5.nvdl ${DRIVER} 
 	@echo check individual examples
 	-rm -rf  valid
-	${SAXON} ${DRIVER} Utilities/extractegXML.xsl 
-	echo "<!DOCTYPE p [" > v.xml
-	(cd valid; ls | perl -p -e  "s+(.*)+<\!ENTITY \1 SYSTEM \"valid/\1\">+") >> v.xml
-	echo "]>" >> v.xml
-	echo "<p xmlns='http://www.tei-c.org/ns/Examples'>" >> v.xml
-	(cd valid; ls | perl -p -e  "s/(.*)/\&\1;/") >> v.xml
-	echo "</p>" >> v.xml
+	${SAXON} ${DRIVER} Utilities/extractegXML.xsl > v.body
+	echo "<!DOCTYPE p [" > v.header
+	(cd valid; ls | perl -p -e  "s+(.*)+<\!ENTITY \1 SYSTEM \"valid/\1\">+") >> v.header
+	echo "]>" >> v.header
+	cat v.header v.body > v.xml
 	./run-onvdl  p5valid.nvdl  v.xml
-	-rm -rf valid v.xml
+	rm v.body v.header
 	@echo BUILD: Check validity with Schematron
 	${SAXON} ${SAXON_ARGS}  p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} p5.isosch.xsl
@@ -431,3 +429,5 @@ clean:
 	rm -f       Test/detest.rnc
 	rm -f       Test/detest.rng
 	rm -f       Test/detest.dtd
+	rm -rf valid v.xml
+	rm -f v.body v.header
