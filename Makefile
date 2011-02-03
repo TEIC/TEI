@@ -148,8 +148,8 @@ validate: dtds schemas oddschema exampleschema valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
-	@echo BUILD: Check validity with jing
-	@echo ${jing_version}
+#	@echo BUILD: Check validity with jing
+#	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
 #	from ISO 639-2 as illegal values of xml:lang= even though
 #	they are perfectly valid per RFC 3066. We have submitted a
@@ -157,16 +157,14 @@ valid: check
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-	 $(JING) -t p5odds.rng ${DRIVER} 
-#\
-#	 | grep -v ": error: Illegal xml:lang value \"[A-Za-z][A-Za-z][A-Za-z]\"\.$$"
-	xmllint --noent --xinclude ${DRIVER} > Source.xml
+#	 $(JING) -t p5odds.rng ${DRIVER} 
+#
 	@echo BUILD: Check validity with rnv
+	xmllint --noent --xinclude ${DRIVER} > Source.xml
 	rnv -v p5odds.rnc Source.xml
-	@echo BUILD: Check feasible validity with nvdl
+	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
 	./run-onvdl p5.nvdl ${DRIVER} 
-	@echo check individual examples
-	-rm -rf  valid
+	@echo BUILD: Check full validity of relevant examples with nvdl
 	${SAXON} ${DRIVER} Utilities/extractegXML.xsl > v.body
 	echo "<!DOCTYPE p [" > v.header
 	(cd valid; ls | perl -p -e  "s+(.*)+<\!ENTITY \1 SYSTEM \"valid/\1\">+") >> v.header
