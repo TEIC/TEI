@@ -193,7 +193,7 @@
 
 <xsl:template name="Remark">
   <xsl:param name="value"/>
-  <xsl:message>Warning: <xsl:value-of 
+  <xsl:message>Note: <xsl:value-of 
 select="name(.)"/> points to ID not in my namespace: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </xsl:message>
 </xsl:template>
 
@@ -211,7 +211,7 @@ select="name(.)"/> points to non-existent <xsl:value-of select="$value"/> (<xsl:
     <xsl:value-of select="name(.)"/>
   </xsl:variable>
 
-  <xsl:message>Warning: <xsl:value-of 
+  <xsl:message>Note: <xsl:value-of 
 select="$where"/> points to something I cannot find: <xsl:value-of
 select="$value"/> (<xsl:call-template name="loc"/>) 
 </xsl:message>
@@ -292,4 +292,5 @@ select="$value"/> (<xsl:call-template name="loc"/>)
 </xsl:template>
 
 </xsl:stylesheet>
+
 
