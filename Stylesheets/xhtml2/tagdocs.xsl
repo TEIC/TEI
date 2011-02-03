@@ -284,6 +284,12 @@
         <xsl:if test="not(*)">
           <xsl:text> cdata</xsl:text>
         </xsl:if>
+	<xsl:if test="@valid='feasible'">
+          <xsl:text> feasible</xsl:text>
+	</xsl:if>
+	<xsl:if test="@valid='false'">
+          <xsl:text> invalid</xsl:text>
+	</xsl:if>
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="$simple='true'">
