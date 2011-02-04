@@ -1987,7 +1987,7 @@ so that is only put back in if there is some content
         <xsl:apply-templates mode="odd2odd-copy" select="tei:content"/>
         <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
         <attList xmlns="http://www.tei-c.org/ns/1.0">
-	  <xsl:if test="$autoGlobal='true' and not(tei:classes/tei:memberOf[@key='att.global])">
+	  <xsl:if test="$autoGlobal='true' and not(tei:classes/tei:memberOf[@key='att.global'])">
 	    <xsl:comment>1.</xsl:comment>
 	    <xsl:call-template name="odd2odd-classAttributesSimple">
 	      <xsl:with-param name="whence">9</xsl:with-param>
