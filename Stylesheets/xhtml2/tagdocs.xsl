@@ -280,16 +280,21 @@
         <xsl:apply-templates mode="ident" select="."/>
       </xsl:attribute>
       <xsl:attribute name="class">
-        <xsl:text>pre</xsl:text>
-        <xsl:if test="not(*)">
-          <xsl:text> cdata</xsl:text>
-        </xsl:if>
-	<xsl:if test="@valid='feasible'">
-          <xsl:text> feasible</xsl:text>
+	<xsl:text>pre</xsl:text>
+	<xsl:if test="not(*)">
+	  <xsl:text> cdata</xsl:text>
 	</xsl:if>
-	<xsl:if test="@valid='false'">
-          <xsl:text> invalid</xsl:text>
-	</xsl:if>
+	<xsl:choose>
+	  <xsl:when test="@valid='feasible'">
+	    <xsl:text> egXML_feasible</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="@valid='false'">
+	    <xsl:text> egXML_invalid</xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text> egXML_valid</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:attribute>
       <xsl:choose>
         <xsl:when test="$simple='true'">
