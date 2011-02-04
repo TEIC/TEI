@@ -124,7 +124,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="anyURI">
     <desc> The home page for these stylesheets</desc>
   </doc>
-  <xsl:param name="teixslHome">http://www.tei-c.org/Stylesheets/teic/</xsl:param>
+  <xsl:param name="teixslHome">http://www.tei-c.org/Stylesheets/</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
     <desc> Process elements according to assumptions
     of TEI P4</desc>

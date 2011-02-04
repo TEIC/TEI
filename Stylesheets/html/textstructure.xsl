@@ -2381,7 +2381,7 @@ $requestedID: requests a particular page
         <br/>
         <xsl:call-template name="copyrightStatement"/>
         <xsl:comment>Generated <xsl:if test="not($masterFile='index')"><xsl:text>from </xsl:text><xsl:value-of select="$masterFile"/></xsl:if><xsl:text> using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
-	  based on <xsl:value-of select="$teixslHome"/>tei.xsl
+	  based on <xsl:value-of select="$teixslHome"/>
 	  processed using <xsl:value-of select="system-property('xsl:vendor')"/>
 	  on <xsl:call-template name="whatsTheDate"/></xsl:comment>
       </address>
@@ -2445,7 +2445,7 @@ $requestedID: requests a particular page
     <xsl:call-template name="preAddressHook"/>
     <address>
       <xsl:comment><xsl:text>&#10;	Generated using an XSLT version </xsl:text><xsl:value-of select="system-property('xsl:version')"/> stylesheet
-	based on <xsl:value-of select="$teixslHome"/>tei.xsl
+	based on <xsl:value-of select="$teixslHome"/>
 	processed using: <xsl:value-of select="system-property('xsl:vendor')"/></xsl:comment>
     </address>
   </xsl:template>

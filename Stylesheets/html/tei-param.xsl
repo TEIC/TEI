@@ -258,8 +258,8 @@ Width of left-hand column when $pageLayout is "Table"
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template name="logoPicture">
-    <a class="framelogo" href="http://www.tei-c.org/Stylesheets/teic/">
-      <img src="http://www.tei-c.org/Stylesheets/teic/teixsl.png"
+    <a class="framelogo" href="http://www.tei-c.org/Stylesheets/">
+      <img src="http://www.tei-c.org/release/common/doc/tei-xsl-common/teixsl.png"
 	   vspace="5" width="124" height="161" border="0" 
 	   alt="created by TEI XSL Stylesheets"/>
     </a>

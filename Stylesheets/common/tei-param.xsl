@@ -91,7 +91,7 @@
   <xd:doc class="links" type="anyURI"> Link to search application</xd:doc>
   <xsl:param name="searchURL">http://www.google.com</xsl:param>
   <xd:doc class="misc" type="anyURI"> The home page for these stylesheets</xd:doc>
-  <xsl:param name="teixslHome">http://www.tei-c.org/Stylesheets/teic/</xsl:param>
+  <xsl:param name="teixslHome">http://www.tei-c.org/Stylesheets/</xsl:param>
   <xd:doc class="misc" type="boolean"> Process elements according to assumptions
     of TEI P4</xd:doc>
   <xsl:param name="teiP4Compat">false</xsl:param>
