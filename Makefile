@@ -291,9 +291,7 @@ dist-doc:
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
-	for i in ReleaseNotes/readme*xml; do  \
-		${SAXON} $i ${XSL}/xhtml2/tei.xsl  \
-		cssFile=html/guidelines.css \
+	for i in ReleaseNotes/readme*xml; do  ${SAXON} $$i ${XSL}/xhtml2/tei.xsl cssFile=html/guidelines.css \
 		> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	make pdf
