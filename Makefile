@@ -365,6 +365,7 @@ epub:
 	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
 	${XSL}/teitoepub --profile=tei teip5.xml
 	mv teip5.epub Guidelines.epub
+	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
 	which kindlegen || exit 1
 	kindlegen Guidelines.epub
 	rm teip5.xml
