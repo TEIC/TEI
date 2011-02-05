@@ -292,13 +292,14 @@ dist-doc:
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  \
-	saxon \
-	$$i ${XSL}/xhtml2/tei.xsl  \
-	cssFile=html/guidelines.css \
-	> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
+		${SAXON} $i ${XSL}/xhtml2/tei.xsl  \
+		cssFile=html/guidelines.css \
+		> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	make pdf
 	cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc/en
+	make epub
+	cp Guidelines.epub Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
 
 dist-test:
 	@echo BUILD: Make distribution directory for test
@@ -366,6 +367,8 @@ epub:
 	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
 	${XSL}/teitoepub --profile=tei teip5.xml
 	mv teip5.epub Guidelines.epub
+	which ebook-convert || exit 1
+	ebook-convert Guidelines.epub Guidelines.mobi --output-profile=kindle
 	rm teip5.xml
 
 changelog:
