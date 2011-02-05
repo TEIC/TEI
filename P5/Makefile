@@ -363,7 +363,7 @@ check:
 epub:
 	@echo BUILD: Make epub version of Guidelines
 	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
-	${XSL}/teitoepub --profile=tei teip5.xml
+	${XSL}/teitoepub --coverimage=`pwd`/Utilties/cover.jpg --profile=tei teip5.xml
 	mv teip5.epub Guidelines.epub
 	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
 	which kindlegen || exit 1
