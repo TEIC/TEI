@@ -365,8 +365,8 @@ epub:
 	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
 	${XSL}/teitoepub --profile=tei teip5.xml
 	mv teip5.epub Guidelines.epub
-	which ebook-convert || exit 1
-	ebook-convert Guidelines.epub Guidelines.mobi --output-profile=kindle
+	which kindlegen || exit 1
+	kindlegen Guidelines.epub
 	rm teip5.xml
 
 changelog:
