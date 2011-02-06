@@ -1,5 +1,5 @@
 # Main makefile for TEI P5
-# $Id: guidelines.css 8517 2011-02-05 17:20:04Z rahtz $
+# $Id$
 LANGUAGE=en
 JOB=job$$
 SFUSER=rahtz
