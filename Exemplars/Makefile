@@ -47,11 +47,6 @@ dist: schemas
 	test -f $$i.doc.pdf && cp $$i.doc.pdf  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf ; \
 	done
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
-	(cd ../release; 	\
-	ln -s tei-p5-exemplars tei-p5-exemplars-`cat ../VERSION` ; \
-	rm tei-p5-exemplars-`cat ../VERSION`.zip ; \
-	zip -q -r tei-p5-exemplars-`cat ../VERSION`.zip tei-p5-exemplars-`cat ../VERSION` )
-
 
 clean:
 	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.* *~ *.xi

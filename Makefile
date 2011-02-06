@@ -1,3 +1,5 @@
+# Main makefile for TEI P5
+# $Id: guidelines.css 8517 2011-02-05 17:20:04Z rahtz $
 LANGUAGE=en
 JOB=job$$
 SFUSER=rahtz
@@ -23,6 +25,8 @@ JING=jing
 TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
+VERSION=`cat VERSION`
+UPVERSION=`cat ../VERSION`
 
 .PHONY: convert dtds schemas html validate valid test oddschema exampleschema clean dist exemplars
 
@@ -212,24 +216,33 @@ subset:
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 
 dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
-	@echo BUILD: Make final zip archives
-	(cd release; 	\
-	ln -s tei-p5-database tei-p5-database-`cat ../VERSION` ; \
-	zip -q -r tei-p5-database-`cat ../VERSION`.zip tei-p5-database-`cat ../VERSION` )
-	(cd release; 	\
-	ln -s tei-p5-source tei-p5-source-`cat ../VERSION` ; \
-	zip -q -r tei-p5-source-`cat ../VERSION`.zip tei-p5-source-`cat ../VERSION` )
-	(cd release; 	\
-	ln -s tei-p5-doc tei-p5-doc-`cat ../VERSION` ; \
-	zip -q -r tei-p5-doc-`cat ../VERSION`.zip tei-p5-doc-`cat ../VERSION` )
-	(cd release; 	\
-	ln -s tei-p5-test tei-p5-test-`cat ../VERSION` ; \
-	zip -q -r tei-p5-test-`cat ../VERSION`.zip tei-p5-test-`cat ../VERSION` )
-	rm -f release/tei-`cat VERSION`.zip
-	export V=`cat VERSION`;\
-	for i in source schema doc test database exemplars; \
-	  do (cd release/tei-p5-$$i-$$V/share; \
-	zip -q -r ../../tei-$$V.zip .);done
+	@echo BUILD: Make overall zip archive
+	rm -f release/tei-${VERSION}.zip
+	(cd release/tei-p5-database/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-doc/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-exemplars/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-schema/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-source/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-test/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release; zip -q -r ../tei-${UPVERSION}.zip xml doc)
+	@echo BUILD: Make individual l zip archives
+	rm -f tei-p5-exemplars-${VERSION}.zip
+	rm -f tei-p5-test-${VERSION}.zip
+	rm -f tei-p5-source-${VERSION}.zip
+	rm -f tei-p5-database-${VERSION}.zip
+	rm -f tei-p5-doc-${VERSION}.zip
+	mv release/tei-p5-database release/tei-p5-database-${VERSION} 
+	mv release/tei-p5-doc release/tei-p5-doc-${VERSION} 
+	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
+	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
+	mv release/tei-p5-source release/tei-p5-source-${VERSION} 
+	mv release/tei-p5-test release/tei-p5-test-${VERSION} 
+	(cd release; zip -q -r tei-p5-database-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-doc-${UPVERSION}.zip tei-p5-doc-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-exemplars-${UPVERSION}.zip tei-p5-exemplars-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-source-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test-${UPVERSION} )
 
 dist-source: subset
 	@echo BUILD: Make distribution directory for source
@@ -273,12 +286,12 @@ dist-schema: schemas dtds oddschema exampleschema
 	cp catalog.p5 release/tei-p5-schema/share/xml/tei/schema/catalog.xml
 	(cd Schema; tar --exclude .svn -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
-	(cd release; 	\
-	ln -s tei-p5-schema tei-p5-schema-`cat ../VERSION` ; \
-	zip -q -r tei-p5-schema-`cat ../VERSION`.zip tei-p5-schema-`cat ../VERSION` )
 
 dist-doc:  
 	@echo BUILD: Make distribution directory for doc
+	rm -rf release/tei-p5-doc*
+	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
+	@echo BUILD: Make web guidelines in all supported languages
 	make html-web
 	make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
 	make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
@@ -287,17 +300,18 @@ dist-doc:
 	make LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
 	make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
 	make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
-	rm -rf release/tei-p5-doc*
-	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
+	@echo BUILD: Validate HTML
+	make validate-html
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  ${SAXON} $$i ${XSL}/xhtml2/tei.xsl cssFile=html/guidelines.css \
 		> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
-	make pdf
-	cp Guidelines.pdf release/tei-p5-doc/share/doc/tei-p5-doc/en
+	@echo BUILD: make PDF version of Guidelines
+	echo ""> Guidelines.pdf ; echo make pdf
+	@echo BUILD: make ePub and Kindle version of Guidelines
 	make epub
-	cp Guidelines.epub Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
+	cp Guidelines.pdf Guidelines.epub Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
 
 dist-test:
 	@echo BUILD: Make distribution directory for test
@@ -379,7 +393,7 @@ changelog:
 
 
 catalogue:
-	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} 
+	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
 	${SAXON} ${SAXON_ARGS}  catalogue.xml ${XSL}/xhtml2/tei.xsl > catalogue.html
 	@echo Made catalogue.html
 
