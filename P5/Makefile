@@ -215,35 +215,6 @@ exampleschema: subset
 subset:
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 
-dist: clean dist-source dist-schema dist-doc dist-test dist-database dist-exemplars
-	@echo BUILD: Make overall zip archive
-	rm -f release/tei-${VERSION}.zip
-	(cd release/tei-p5-database/share; tar cf - . | (cd ../../; tar xf - ))
-	(cd release/tei-p5-doc/share; tar cf - . | (cd ../../; tar xf - ))
-	(cd release/tei-p5-exemplars/share; tar cf - . | (cd ../../; tar xf - ))
-	(cd release/tei-p5-schema/share; tar cf - . | (cd ../../; tar xf - ))
-	(cd release/tei-p5-source/share; tar cf - . | (cd ../../; tar xf - ))
-	(cd release/tei-p5-test/share; tar cf - . | (cd ../../; tar xf - ))
-	(cd release; zip -q -r ../tei-${UPVERSION}.zip xml doc)
-	@echo BUILD: Make individual l zip archives
-	rm -f tei-p5-exemplars-${VERSION}.zip
-	rm -f tei-p5-test-${VERSION}.zip
-	rm -f tei-p5-source-${VERSION}.zip
-	rm -f tei-p5-database-${VERSION}.zip
-	rm -f tei-p5-doc-${VERSION}.zip
-	mv release/tei-p5-database release/tei-p5-database-${VERSION} 
-	mv release/tei-p5-doc release/tei-p5-doc-${VERSION} 
-	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
-	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
-	mv release/tei-p5-source release/tei-p5-source-${VERSION} 
-	mv release/tei-p5-test release/tei-p5-test-${VERSION} 
-	(cd release; zip -q -r tei-p5-database-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-doc-${UPVERSION}.zip tei-p5-doc-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-exemplars-${UPVERSION}.zip tei-p5-exemplars-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-source-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test-${UPVERSION} )
-
 dist-source: subset
 	@echo BUILD: Make distribution directory for source
 	rm -rf release/tei-p5-source*
@@ -331,6 +302,36 @@ dist-database:
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
 	(cd Query; tar --exclude .svn --exclude "*~" -c -f - . ) \
 	| (cd release/tei-p5-database/share/xml/tei/xquery; tar xf - )
+
+dist: 
+	@echo BUILD: Make overall zip archive
+	rm -f release/tei-${VERSION}.zip
+	(cd release/tei-p5-database/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-doc/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-exemplars/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-schema/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-source/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release/tei-p5-test/share; tar cf - . | (cd ../../; tar xf - ))
+	(cd release; zip -q -r ../tei-${UPVERSION}.zip xml doc)
+	@echo BUILD: Make individual l zip archives
+	rm -f tei-p5-exemplars-${VERSION}.zip
+	rm -f tei-p5-test-${VERSION}.zip
+	rm -f tei-p5-source-${VERSION}.zip
+	rm -f tei-p5-database-${VERSION}.zip
+	rm -f tei-p5-doc-${VERSION}.zip
+	mv release/tei-p5-database release/tei-p5-database-${VERSION} 
+	mv release/tei-p5-doc release/tei-p5-doc-${VERSION} 
+	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
+	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
+	mv release/tei-p5-source release/tei-p5-source-${VERSION} 
+	mv release/tei-p5-test release/tei-p5-test-${VERSION} 
+	(cd release; zip -q -r tei-p5-database-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-doc-${UPVERSION}.zip tei-p5-doc-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-exemplars-${UPVERSION}.zip tei-p5-exemplars-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-source-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test-${UPVERSION} )
+	(cd release; zip -q -r tei-${UPVERSION} xml doc)
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
