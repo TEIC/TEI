@@ -46,7 +46,7 @@ TEMPDIR=/tmp/oo$$
 mkdir $TEMPDIR
 cd $TEMPDIR
 unzip -q $THERE/"$N.odt"
-saxon -o "$N.xml" content.xml $FROMXSL dir="$TEMPDIR" debug=$debug 
+saxon -o:"$N.xml" content.xml $FROMXSL dir="$TEMPDIR" debug=$debug 
 mkdir -p Pictures
 if [ "$(ls -q -A Pictures)" ]; then
  echo found graphics files in document, so writing $N.zip in $THERE
