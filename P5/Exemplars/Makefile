@@ -49,7 +49,8 @@ dist: schemas
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 	(cd ../release; 	\
 	ln -s tei-p5-exemplars tei-p5-exemplars-`cat ../VERSION` ; \
-	zip -r tei-p5-exemplars-`cat ../VERSION`.zip tei-p5-exemplars-`cat ../VERSION` )
+	rm tei-p5-exemplars-`cat ../VERSION`.zip ; \
+	zip -q -r tei-p5-exemplars-`cat ../VERSION`.zip tei-p5-exemplars-`cat ../VERSION` )
 
 
 clean:
