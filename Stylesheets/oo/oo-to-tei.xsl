@@ -337,7 +337,7 @@
 
       <xsl:otherwise>
         <p>
-          <xsl:apply-templates/>
+	  <xsl:call-template name="applyStyle"/>
         </p>
       </xsl:otherwise>
     </xsl:choose>
