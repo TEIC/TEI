@@ -1,20 +1,35 @@
 PREFIX=/usr
 BIN=${PREFIX}/bin
-ODDS=tei_allPlus tei_bare tei_corpus tei_dictionaries	\
-	tei_drama tei_its tei_math tei_minimal tei_ms tei_odds	\
-	tei_speech tei_svg tei_xinclude isofs tei_enrich \
-	tei_all 
-DOCODDS=tei_tite teilite
+ODDS=tei_allPlus.rng tei_bare.rng tei_corpus.rng tei_dictionaries.rng	\
+	tei_drama.rng tei_its.rng tei_math.rng tei_minimal.rng tei_ms.rng tei_odds.rng	\
+	tei_speech.rng tei_svg.rng tei_xinclude isofs.rng tei_enrich.rng \
+	tei_all.rng
+DOCODDS=tei_tite.doc.pdf teilite.doc.pdf
 ROMA=roma2
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS= --localsource=../p5subset.xml --xsl=${XSL}
 
-schemas: 
-	${ROMA} ${ROMAOPTS} teilite.odd .
-	for i in $(DOCODDS); do echo Process $$i; ${ROMA} ${ROMAOPTS} --docflags="summaryDoc=true" --docpdf --dochtml $$i.odd .; echo TEST schema; jing $$i.rng $$i.xml && echo $$i validates OK;done
-	-for i in $(ODDS) ; do echo Process $$i; xmllint --xinclude $$i.odd > $$i.xi;${ROMA} ${ROMAOPTS} $$i.xi .; echo TEST schema; jing $$i.rng $$i.xml && echo $$i validates OK ;done
+
+%.rng: %.odd
+	@echo "BUILD: Test schema from $<"
+	@echo Validate $< itself
+	rnv ../p5odds.rnc $< 
+	xmllint --xinclude $*.odd > $*.xi
+	${ROMA} ${ROMAOPTS} $*.xi .
+	@echo Test schema built from $<
+	jing $*.rng $*.xml && echo $* validates OK
+
+%.doc.pdf: %.odd
+	@echo "BUILD: Test schema from $<"
+	@echo Validate $< itself
+	rnv ../p5odds.rnc $< 
+	${ROMA} ${ROMAOPTS} --docflags="summaryDoc=true" --docpdf --dochtml $< .
+	@echo Test schema built from $<
+	jing $*.rng $*.xml && echo $* validates OK
+
+schemas: $(ODDS) $(DOCODDS)
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
@@ -41,11 +56,8 @@ dist: schemas
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	cp *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
-	-for i in ${DOCODDS}; do  \
-	cp $$i.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html ; \
-	cp $$i.doc.xml  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml ; \
-	test -f $$i.doc.pdf && cp $$i.doc.pdf  ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf ; \
-	done
+	cp *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
+	cp *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:

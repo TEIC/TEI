@@ -313,18 +313,18 @@ dist:
 	(cd release/tei-p5-source/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-test/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release; zip -q -r ../tei-${UPVERSION}.zip xml doc)
-	@echo BUILD: Make individual l zip archives
+	@echo BUILD: Make individual zip archives
 	rm -f tei-p5-exemplars-${VERSION}.zip
 	rm -f tei-p5-test-${VERSION}.zip
 	rm -f tei-p5-source-${VERSION}.zip
 	rm -f tei-p5-database-${VERSION}.zip
 	rm -f tei-p5-doc-${VERSION}.zip
-	mv release/tei-p5-database release/tei-p5-database-${VERSION} 
-	mv release/tei-p5-doc release/tei-p5-doc-${VERSION} 
+	mv release/tei-p5-database  release/tei-p5-database-${VERSION} 
+	mv release/tei-p5-doc       release/tei-p5-doc-${VERSION} 
 	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
-	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
-	mv release/tei-p5-source release/tei-p5-source-${VERSION} 
-	mv release/tei-p5-test release/tei-p5-test-${VERSION} 
+	mv release/tei-p5-schema    release/tei-p5-schema-${VERSION} 
+	mv release/tei-p5-source    release/tei-p5-source-${VERSION} 
+	mv release/tei-p5-test      release/tei-p5-test-${VERSION} 
 	(cd release; zip -q -r tei-p5-database-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
 	(cd release; zip -q -r tei-p5-doc-${UPVERSION}.zip tei-p5-doc-${UPVERSION} )
 	(cd release; zip -q -r tei-p5-exemplars-${UPVERSION}.zip tei-p5-exemplars-${UPVERSION} )
