@@ -532,7 +532,7 @@ capable of dealing with UTF-8 directly.
    <xsl:template name="latexBegin">
       <xsl:text>
 \makeatletter
-\thispagestyle{plain}</xsl:text>
+\thispagestyle{empty}</xsl:text>
       <xsl:text>\markright{\@title}\markboth{\@title}{\@author}
 \renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
    \belowdisplayskip \abovedisplayskip
