@@ -272,11 +272,6 @@
 		<xsl:apply-templates select="tei:row"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
-	    <xsl:if test="tei:head">
-	      <caption>
-		<xsl:apply-templates mode="xref" select="."/>
-	      </caption>
-	    </xsl:if>
          </table>
 	 <xsl:apply-templates select="tei:note"/>
       </div>
