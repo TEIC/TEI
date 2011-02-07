@@ -2,7 +2,7 @@ PREFIX=/usr
 BIN=${PREFIX}/bin
 ODDS= \
 	isofs.rng \
-	tei_all.rng
+	tei_all.rng \
 	tei_allPlus.rng \
 	tei_bare.rng \
 	tei_corpus.rng \
