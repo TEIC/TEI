@@ -312,7 +312,7 @@ dist:
 	(cd release/tei-p5-schema/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-source/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-test/share; tar cf - . | (cd ../../; tar xf - ))
-	(cd release; zip -q -r ../tei-${UPVERSION}.zip xml doc)
+	(cd release; zip -q -r tei-${UPVERSION}.zip xml doc)
 	@echo BUILD: Make individual zip archives
 	rm -f tei-p5-exemplars-${VERSION}.zip
 	rm -f tei-p5-test-${VERSION}.zip
@@ -329,9 +329,8 @@ dist:
 	(cd release; zip -q -r tei-p5-doc-${UPVERSION}.zip tei-p5-doc-${UPVERSION} )
 	(cd release; zip -q -r tei-p5-exemplars-${UPVERSION}.zip tei-p5-exemplars-${UPVERSION} )
 	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-source-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-schema-${UPVERSION}.zip tei-p5-schema-${UPVERSION} )
 	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test-${UPVERSION} )
-	(cd release; zip -q -r tei-${UPVERSION} xml doc)
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
