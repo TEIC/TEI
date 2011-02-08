@@ -197,7 +197,7 @@
       </w:p>
       <w:tbl>
         <w:tblPr>
-	  <w:tblW w:w="4500" w:type="pct"/>
+          <w:tblW w:w="4500" w:type="pct"/>
           <w:jc w:val="center"/>
           <w:tblBorders>
             <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
@@ -206,10 +206,10 @@
             <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
           </w:tblBorders>
         </w:tblPr>
-	<w:tblGrid>
-	  <w:gridCol w:w="2154"/>
-	  <w:gridCol w:w="6464"/>
-	</w:tblGrid>
+        <w:tblGrid>
+          <w:gridCol w:w="2154"/>
+          <w:gridCol w:w="6464"/>
+        </w:tblGrid>
         <xsl:call-template name="twocells">
           <xsl:with-param name="cell1">Name</xsl:with-param>
           <xsl:with-param name="cell2">:</xsl:with-param>
@@ -228,13 +228,21 @@
         </xsl:call-template>
       </w:tbl>
       <w:p>
-	<w:r>
-	  <w:br w:type="page"/>
-	</w:r>
+        <w:r>
+          <w:br w:type="page"/>
+        </w:r>
       </w:p>
     </xsl:for-each>
   </xsl:template>
   <xsl:template match="details">
+    <w:p>
+      <w:r>
+        <w:br w:type="page"/>
+      </w:r>
+      <w:r>
+        <w:t> </w:t>
+      </w:r>
+    </w:p>
     <w:tbl>
       <w:tblPr>
         <w:tblW w:w="0" w:type="auto"/>
@@ -293,6 +301,11 @@
     </w:tbl>
   </xsl:template>
   <xsl:template name="roomtable">
+   <w:p>
+      <w:r>
+        <w:t> </w:t>
+      </w:r>
+    </w:p>
     <w:tbl>
       <w:tblPr>
         <w:tblW w:w="0" w:type="auto"/>
@@ -349,11 +362,11 @@
       </w:tblPrEx>
       <w:tc>
         <w:p>
-	  <w:pPr>
-	    <w:pStyle>
-	      <xsl:attribute name="w:val">CourseTable</xsl:attribute>
-	    </w:pStyle>
-	  </w:pPr>
+          <w:pPr>
+            <w:pStyle>
+              <xsl:attribute name="w:val">CourseTable</xsl:attribute>
+            </w:pStyle>
+          </w:pPr>
           <w:r>
             <w:t>
               <xsl:value-of select="$content"/>
@@ -372,11 +385,11 @@
       </w:tblPrEx>
       <w:tc>
         <w:p>
-	  <w:pPr>
-	    <w:pStyle>
-	      <xsl:attribute name="w:val">CourseTable</xsl:attribute>
-	    </w:pStyle>
-	  </w:pPr>
+          <w:pPr>
+            <w:pStyle>
+              <xsl:attribute name="w:val">CourseTable</xsl:attribute>
+            </w:pStyle>
+          </w:pPr>
           <w:r>
             <w:rPr>
               <w:b/>
@@ -396,4 +409,5 @@
       </w:tc>
     </w:tr>
   </xsl:template>
+  <xsl:template name="document-title"/>
 </xsl:stylesheet>
