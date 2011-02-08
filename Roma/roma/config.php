@@ -25,7 +25,7 @@ define('DEBUG', false);
 ini_set("max_execution_time", 120);
 
 //#########################
-define ( 'oxgarage_server',          'http://localhost:8080/ege-webservice');
+define ( 'oxgarage_server',          'http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice');
 define ( 'roma_customization_validator','roma/oddschema.rng');
 define ( 'roma_temporaryFilesDir',   '/tmp' );
 define ( 'roma_xquery_server',       'http://tei.oucs.ox.ac.uk/Query/' );
