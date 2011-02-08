@@ -2156,46 +2156,54 @@ class romaDom extends domDocument
 
     public function outputLatex( &$szLatex )
       {
-	$target="latex%3Aapplication%3Ax-latex";
+	$target="TEI%3Atext%3Axml/latex%3Aapplication%3Ax-latex";
 	$this->callGarage($szLatex, $target);
       }
 
     public function outputPdfLatex( &$szPdf )
       {
-	$target="latex%3Aapplication%3Ax-latex";
+	$target="TEI%3Atext%3Axml/latex%3Aapplication%3Ax-latex";
+	$this->updateProgressBar( '10' );
 	$this->callGarage($szTmp, $target);
+	$this->updateProgressBar( '50' );
 	$szID = md5( uniqid(rand(), true ) );
 	
-	$szInputFile = roma_temporaryFilesDir . '/' . $szID . '.tex';    
-	$szOutputFile = roma_temporaryFilesDir . '/' . $szID . '.pdf';    
+	$szFileName =  roma_temporaryFilesDir . '/' . $szID; 
 	
-	file_put_contents( $szInputFile ,$szTmp );
+	file_put_contents( $szFileName . ".tex" ,$szTmp );
 
-	$this->m_oRomaDom->updateProgressBar( '85' );
-	
 	$szCurrentDir = getcwd();
 	chdir( roma_temporaryFilesDir );
-	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szInputFile );
-	$this->m_oRomaDom->updateProgressBar( '90' );
+	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szFileName . ".tex" );
+	$this->updateProgressBar( '70' );
+	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szFileName . ".tex" );
+	$this->updateProgressBar( '90' );
 
-	exec( roma_pdflatex . ' -interaction=nonstopmode ' . $szInputFile );
 	chdir( $szCurrentDir );
 
-	$this->m_oRomaDom->updateProgressBar( '95' );
-	
-	$szPdf = join( '', file( $szOutputFile ) );
-	
-	unlink( $szInputFile );
-	unlink( $szOutputFile );
+	$this->updateProgressBar( '95' );
+	if (file_exists($szFileName . ".pdf")) {
+	  $szPdf = join( '', file( $szFileName . ".pdf" ) );	
+	   unlink( $szFileName . ".tex" );
+	   unlink( $szFileName . ".aux" );
+	   unlink( $szFileName . ".toc" );
+	   unlink( $szFileName . ".out" );
+	   unlink( $szFileName . ".pdf" );
+	}
+	else
+	  {
+	    unlink( $szFileName . ".tex" );
+	    print "<p>ERROR: run of XeLaTeX failed.</p>";
+	  }
 
-	$this->m_oRomaDom->updateProgressBar( '100' );
+	$this->updateProgressBar( '100' );
       }
 
     public function outputPDF( &$szPdf )
       {
 	$this->getTeiLiteDom( $oTeiLiteDom );
 
-	$this->m_oRomaDom->updateProgressBar( '60' );
+	$this->updateProgressBar( '60' );
 
 	$oXSL = new domDocument();
 	$oXSL->load(  roma_tei . '/xml/tei/stylesheet/fo/tei.xsl' );
@@ -2204,7 +2212,7 @@ class romaDom extends domDocument
 	$oProc->importStylesheet( $oXSL );
 	$oTmpDom = $oProc->transformToDoc( $oTeiLiteDom );
 
-	$this->m_oRomaDom->updateProgressBar( '70' );
+	$this->updateProgressBar( '70' );
 	
 	//Save File
 	$szID = md5( uniqid(rand(), true ) );
@@ -2214,18 +2222,18 @@ class romaDom extends domDocument
 	
 	file_put_contents( $szInputFile , $oTmpDom->SaveXML() );
 
-	$this->m_oRomaDom->updateProgressBar( '80' );
+	$this->updateProgressBar( '80' );
 
 	exec( roma_fop . ' ' . $szInputFile . ' ' . $szOutputFile );
 
-	$this->m_oRomaDom->updateProgressBar( '90' );
+	$this->updateProgressBar( '90' );
 
 	$szPdf = join( '', file( $szOutputFile ) );
 	
 	unlink( $szInputFile );
 	unlink( $szOutputFile );
 
-	$this->m_oRomaDom->updateProgressBar( '100' );
+	$this->updateProgressBar( '100' );
       }
 
     public function outputHTML ( &$szHTML )
@@ -2392,4 +2400,29 @@ class romaDom extends domDocument
     }
   }
 
+
+//$myDirectory = opendir(".");
+//while($entryName = readdir($myDirectory)) {
+//	$dirArray[] = $entryName;
+//}
+//closedir($myDirectory);
+//$indexCount	= count($dirArray);
+//Print ("$indexCount files<br>\n");
+//sort($dirArray);
+//print("<TABLE border=1 cellpadding=5 cellspacing=0 class=whitelinks>\n");
+//print("<TR><TH>Filename</TH><th>Filetype</th><th>Filesize</th></TR>\n");
+//for($index=0; $index < $indexCount; $index++) {
+//        if (substr("$dirArray[$index]", 0, 1) != "."){ // don't list hidden files
+//		print("<TR><TD><a href=\"$dirArray[$index]\">$dirArray[$index]</a></td>");
+//		print("<td>");
+//		print(filetype($dirArray[$index]));
+//		print("</td>");
+//		print("<td>");
+//		print(filesize($dirArray[$index]));
+//		print("</td>");
+//		print("</TR>\n");
+//	}
+//}
+//print("</TABLE>\n");
+//
 ?>
