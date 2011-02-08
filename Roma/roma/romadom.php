@@ -2188,12 +2188,17 @@ class romaDom extends domDocument
 	   unlink( $szFileName . ".aux" );
 	   unlink( $szFileName . ".toc" );
 	   unlink( $szFileName . ".out" );
+	   unlink( $szFileName . ".log" );
 	   unlink( $szFileName . ".pdf" );
 	}
 	else
 	  {
 	    unlink( $szFileName . ".tex" );
-	    print "<p>ERROR: run of XeLaTeX failed.</p>";
+    	    print "<p>ERROR: run of XeLaTeX failed.</p>";
+	    print "<pre>";
+	    print file_get_contents($szFileName . ".log");
+	    print "</pre>";
+	    unlink( $szFileName . ".log" );
 	  }
 
 	$this->updateProgressBar( '100' );
