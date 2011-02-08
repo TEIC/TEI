@@ -2186,7 +2186,7 @@ class romaDom extends domDocument
 	  $szPdf = join( '', file( $szFileName . ".pdf" ) );	
 	   unlink( $szFileName . ".tex" );
 	   unlink( $szFileName . ".aux" );
-	   unlink( $szFileName . ".toc" );
+	   if (file_exists($szFileName . ".toc")) {unlink( $szFileName . ".toc" ); }
 	   unlink( $szFileName . ".out" );
 	   unlink( $szFileName . ".log" );
 	   unlink( $szFileName . ".pdf" );
