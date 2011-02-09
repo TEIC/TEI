@@ -314,7 +314,7 @@ dist:
 	(cd release/tei-p5-test/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release; zip -q -r tei-${UPVERSION}.zip xml doc)
 	@echo BUILD: Make individual zip archives
-	(cd release; rm -f tei-p5-*-${VERSION}.zip)
+	(cd release; rm -f tei-p5-*-${UPVERSION}.zip)
 	mv release/tei-p5-database  release/tei-p5-database-${VERSION} 
 	mv release/tei-p5-doc       release/tei-p5-doc-${VERSION} 
 	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
