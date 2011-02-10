@@ -31,25 +31,25 @@ test3:
 	xsltproc $(XSLTOPT) ../release/p5/xml/tei/stylesheet/html/tei.xsl test3.xml | sed 's/"id[0-9]*/"id/' > dummy 
 	xsltproc $(XSLTOPT) ../release/p5/xml/tei/stylesheet/html/tei.xsl test4.xml | sed 's/"id[0-9]*/"id/' > dummy4 
 	@echo "differences between numbered and unnumbered divs (xsltproc)"
-	diff dummy dummy4
+	-diff dummy dummy4
 
 test4:
 	saxon -versionmsg:off  test3.xml ../release/p5/xml/tei/stylesheet/html/tei.xsl $(SAXONOPT) | sed 's/"id[0-9]*/"id/' >dummy
 	saxon -versionmsg:off  test4.xml ../release/p5/xml/tei/stylesheet/html/tei.xsl $(SAXONOPT) | sed 's/"id[0-9]*/"id/' >dummy4
 	@echo "differences between numbered and unnumbered divs (saxon)"
-	diff dummy dummy4
+	-diff dummy dummy4
 
 test5:
 	xsltproc $(XSLTOPT) ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl test3.xml | sed 's/"id[0-9]*/"id/' > dummy 
 	xsltproc $(XSLTOPT) ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl test4.xml | sed 's/"id[0-9]*/"id/' > dummy4 
 	@echo "differences between numbered and unnumbered divs (xhtml, xsltproc):"
-	diff dummy dummy4
+	-diff dummy dummy4
 
 test6:
 	saxon -versionmsg:off test3.xml ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl $(SAXONOPT) | sed 's/"id[0-9]*/"id/' >dummy
 	saxon -versionmsg:off test4.xml ../release/p5/xml/tei/stylesheet/xhtml/tei.xsl $(SAXONOPT)| sed 's/"id[0-9]*/"id/' >dummy4
 	@echo "differences between numbered and unnumbered divs (xhtml, saxon):"
-	diff dummy dummy4
+	-diff dummy dummy4
 
 clean:
 	rm -f test.tex test.fo *.html *~ dummy* *.aux *.out *.log
