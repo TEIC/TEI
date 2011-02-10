@@ -2979,6 +2979,8 @@ $requestedID: requests a particular page
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
     <xsl:attribute name="id">
+      <xsl:value-of select="local-name()"/>
+      <xsl:text>_</xsl:text>
       <xsl:value-of select="$ident"/>
     </xsl:attribute>
   </xsl:template>
