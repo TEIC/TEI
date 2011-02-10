@@ -12,13 +12,13 @@ test3:
 	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
-	diff dummy dummy4
+	-diff dummy dummy4
 
 test4:
 	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
-	diff dummy dummy4
+	-diff dummy dummy4
 
 test5:
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
