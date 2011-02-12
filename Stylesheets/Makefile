@@ -206,7 +206,7 @@ clean:
 	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
-	-(cd debian-tei-xsl-common; `which debclean` && debclean)
-	-(cd debian-tei-p5-xsl;     `which debclean` && debclean)
-	-(cd debian-tei-p5-xsl2;    `which debclean` && debclean)
+	-(cd debian-tei-xsl-common; `which debuild` && debuild clean)
+	-(cd debian-tei-p5-xsl;     `which debuild` && debuild clean)
+	-(cd debian-tei-p5-xsl2;    `which debuild` && debuild clean)
 
