@@ -50,7 +50,7 @@ dist:  release-stamp
 	zip -r tei-roma-`cat ../VERSION`.zip tei-roma-`cat ../VERSION` )
 
 deb:	
-	(cd tei-roma-debian; debuild -i.svn -I.svn -uc -us)
+	(cd debian-tei-roma; debuild -i.svn -I.svn -uc -us)
 
 release: clean release-stamp
 
@@ -71,7 +71,7 @@ release-stamp:
 clean:
 	rm -rf release
 	rm -f release-stamp roma/oddschema.rnc
-	-`which debclean` && debclean
+	-(cd tei-roma-debian; `which debclean` && debclean)
 	rm -f tei-roma_*
 
 log:
