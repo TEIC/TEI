@@ -6,7 +6,6 @@ DESTDIR = $(CURDIR)/debian/tei-xsl-common/usr
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	# Add here commands to configure the package.
 	touch configure-stamp
 
 
@@ -14,8 +13,6 @@ build: build-stamp
 
 build-stamp: configure-stamp 
 	dh_testdir
-
-	# Add here commands to compile the package.
 	touch build-stamp
 
 clean:
@@ -29,7 +26,7 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	(cd ..; make PREFIX=$(DESTDIR) oxygendoc installcommon clean)
+	(cd ..; make PREFIX=$(DESTDIR) doc oxygendoc installcommon)
 	perl -p -i -e 's+http://www.tei-c.org/release+/usr/share+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
 	perl -p -i -e 's+.ID=+#+' $(DESTDIR)/share/doc/tei-xsl-common/style.xml
 

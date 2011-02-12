@@ -179,6 +179,7 @@ installcommon: doc common
 install: installp4 installp5 installp5-2 installcommon
 
 deb:
+	@echo BUILD Make Debian packages
 	(cd debian-tei-xsl-common; debuild  -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-xsl;     debuild  -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-xsl2;    debuild  -i.svn -I.svn -uc -us)
