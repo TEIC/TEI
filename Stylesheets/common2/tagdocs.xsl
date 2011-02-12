@@ -29,7 +29,7 @@
     02111-1307 USA </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id$</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
 
@@ -619,7 +619,7 @@
 		                         <xsl:value-of select="$documentationLanguage"/>
 		                      </xsl:attribute>
 		                      <xsl:call-template name="i18n">
-		                         <xsl:with-param name="word">In addition to global attributes</xsl:with-param>
+		                         <xsl:with-param name="word">Attributes</xsl:with-param>
 		                      </xsl:call-template>
 		                   </xsl:element>
 	                 </xsl:element>
@@ -2239,53 +2239,38 @@
 	           <xsl:text>]</xsl:text>
          </xsl:when>
          <xsl:when test="not($clatts='')">
-	           <xsl:if test="ancestor::tei:schemaSpec and key('CLASSES','att.global')">
-	              <xsl:element namespace="{$outputNS}" name="{$segName}">
-	                 <xsl:attribute name="xml:lang">
-	                    <xsl:value-of select="$documentationLanguage"/>
-	                 </xsl:attribute>
-	                 <xsl:call-template name="i18n">
-	                    <xsl:with-param name="word">
-		                      <xsl:choose>
-		                         <xsl:when test=".//tei:attDef">
-		                            <xsl:call-template name="i18n">
-		                               <xsl:with-param name="word">In addition to global attributes and those inherited from</xsl:with-param>
-		                            </xsl:call-template>
-		                            <xsl:value-of select="$spaceCharacter"/>
-		                         </xsl:when>
-		                         <xsl:otherwise>
-		                            <xsl:call-template name="i18n">
-		                               <xsl:with-param name="word">Global attributes and those inherited from</xsl:with-param>
-		                            </xsl:call-template>
-		                            <xsl:value-of select="$spaceCharacter"/>
-		                         </xsl:otherwise>
-		                      </xsl:choose>
-	                    </xsl:with-param>
-	                 </xsl:call-template>
-	              </xsl:element>
-	           </xsl:if>
-	           <xsl:copy-of select="$clatts"/>
+	   <xsl:if test="ancestor::tei:schemaSpec and key('CLASSES','att.global')">
+	     <xsl:element namespace="{$outputNS}" name="{$segName}">
+	       <xsl:attribute name="xml:lang">
+		 <xsl:value-of select="$documentationLanguage"/>
+	       </xsl:attribute>
+	       <xsl:call-template name="i18n">
+		 <xsl:with-param name="word">
+		   <xsl:choose>
+		     <xsl:when test="not($autoGlobal='true')">Attributes</xsl:when>
+		     <xsl:when test=".//tei:attDef">In addition to global attributes and those inherited from</xsl:when>
+		     <xsl:otherwise>Global attributes and those inherited from</xsl:otherwise>
+		   </xsl:choose>
+		 </xsl:with-param>
+	       </xsl:call-template>
+	       <xsl:value-of select="$spaceCharacter"/>
+	     </xsl:element>
+	   </xsl:if>
+	   <xsl:copy-of select="$clatts"/>
          </xsl:when>
-         <xsl:when test="ancestor::tei:schemaSpec and         not(key('CLASSES','att.global'))">
+         <xsl:when test="ancestor::tei:schemaSpec and not(key('CLASSES','att.global'))">
       </xsl:when>
-         <xsl:otherwise>
-	           <xsl:call-template name="i18n">
-	              <xsl:with-param name="word">
-	                 <xsl:choose>
-	                    <xsl:when test=".//tei:attDef">
-		                      <xsl:call-template name="i18n">
-		                         <xsl:with-param name="word">In addition to global attributes</xsl:with-param>
-		                      </xsl:call-template>
-	                    </xsl:when>
-	                    <xsl:otherwise>
-		                      <xsl:call-template name="i18n">
-		                         <xsl:with-param name="word">Global attributes only</xsl:with-param>
-		                      </xsl:call-template>
-                     </xsl:otherwise>
-	                 </xsl:choose>
-	              </xsl:with-param>
-	           </xsl:call-template>
-         </xsl:otherwise>
+      <xsl:otherwise>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">	    
+	    <xsl:choose>
+	      <xsl:when test="not($autoGlobal='true')">Attributes</xsl:when>
+	      <xsl:when test=".//tei:attDef">In addition to global attributes</xsl:when>
+	      <xsl:otherwise>Global attributes only</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   
