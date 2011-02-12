@@ -71,7 +71,7 @@ release-stamp:
 clean:
 	rm -rf release
 	rm -f release-stamp roma/oddschema.rnc
-	-(cd tei-roma-debian; `which debclean` && debclean)
+	-(cd tei-roma-debian; `which  debuild` && debuild clean)
 	rm -f tei-roma_*
 
 log:
