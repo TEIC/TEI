@@ -210,4 +210,3 @@ clean:
 	(cd debian-tei-p5-xsl/debian;      rm -rf tei-p5-xsl)
 	(cd debian-tei-p5-xsl2/debian;     rm -rf tei-p5-xsl2)
 
-
