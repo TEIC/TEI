@@ -178,6 +178,12 @@ installcommon: doc common
 
 install: installp4 installp5 installp5-2 installcommon
 
+deb:
+	(cd debian-tei-xsl-common; debuild  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-xsl;     debuild  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-xsl2;    debuild  -i.svn -I.svn -uc -us)
+
+
 sfupload:
 	rsync -e ssh release/*zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
 
@@ -197,4 +203,10 @@ clean:
 	rm -rf doc/xsltdoc
 	(cd Test; make clean)
 	(cd Test2; make clean)
+	rm -rf tei-p5-xsl_*
+	rm -rf tei-p5-xsl2_*
+	rm -rf tei-xsl-common_*
+	-(cd debian-tei-xsl-common; `which debclean` && debclean)
+	-(cd debian-tei-p5-xsl;     `which debclean` && debclean)
+	-(cd debian-tei-p5-xsl2;    `which debclean` && debclean)
 
