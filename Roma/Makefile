@@ -50,7 +50,7 @@ dist:  release-stamp
 	zip -r tei-roma-`cat ../VERSION`.zip tei-roma-`cat ../VERSION` )
 
 deb:	
-	debuild
+	debuild -i.svn -I.svn
 
 release: clean release-stamp
 
