@@ -72,6 +72,7 @@ clean:
 	rm -rf release
 	rm -f release-stamp roma/oddschema.rnc
 	rm -f tei-roma_*
+	rm -rf debian-tei-roma/debian/tei-roma
 
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
