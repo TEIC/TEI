@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
+export DH_COMPAT=5
 DESTDIR = $(CURDIR)/debian/tei-p5-xsl/usr
+
 
 configure: configure-stamp
 configure-stamp:
@@ -24,7 +26,7 @@ install: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	(cd ..; make PREFIX=$(DESTDIR) installp5 clean)
+	(cd ..; make PREFIX=$(DESTDIR) installp5)
 
 # Build architecture-independent files here.
 binary-indep: build install
