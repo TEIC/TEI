@@ -36,7 +36,7 @@
       </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id$</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
   <xsl:output encoding="utf-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN"/>

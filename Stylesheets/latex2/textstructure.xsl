@@ -33,7 +33,7 @@
       </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id$</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

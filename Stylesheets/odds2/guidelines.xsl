@@ -1043,6 +1043,7 @@ glyphes non standard</head>
             <xsl:with-param name="word">Show all</xsl:with-param>
           </xsl:call-template>
         </a>
+	<xsl:text>&#160;</xsl:text>
       </div>
     </xsl:for-each>
   </xsl:template>

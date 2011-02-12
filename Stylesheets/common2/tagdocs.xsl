@@ -775,14 +775,16 @@
 	              <xsl:with-param name="content">
 	                 <Wrapper>
 	                    <rng:element name="{$name}">
-		                      <xsl:if test="not(key('SCHEMASPECS',1))">
-		                         <rng:ref name="att.global.attributes"/>
-		                         <xsl:for-each select="..">
-		                            <xsl:call-template name="showClassAtts"/>
-		                         </xsl:for-each>
-		                      </xsl:if>
-		                      <xsl:apply-templates mode="tangle" select="../tei:attList"/>
-		                      <xsl:copy-of select="rng:*"/>
+			      <xsl:if test="not(key('SCHEMASPECS',1))">
+				<xsl:if test="$autoGlobal='true'">
+				  <rng:ref name="att.global.attributes"/>
+				</xsl:if>
+				<xsl:for-each select="..">
+				  <xsl:call-template name="showClassAtts"/>
+				</xsl:for-each>
+			      </xsl:if>
+			      <xsl:apply-templates mode="tangle" select="../tei:attList"/>
+			      <xsl:copy-of select="rng:*"/>
 	                    </rng:element>
 	                 </Wrapper>
 	              </xsl:with-param>

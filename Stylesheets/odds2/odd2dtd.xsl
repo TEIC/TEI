@@ -27,7 +27,7 @@
 			330, Boston, MA 02111-1307 USA </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id$</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
   <xsl:output method="text"/>

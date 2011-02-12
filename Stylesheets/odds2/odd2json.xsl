@@ -31,7 +31,7 @@
       Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id: odd2relax.xsl 8384 2011-01-09 17:45:35Z rahtz $</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
   <xsl:output encoding="utf-8" indent="yes" method="text"/>
