@@ -329,6 +329,14 @@ dist:
 	(cd release; zip -q -r tei-p5-schema-${UPVERSION}.zip tei-p5-schema-${UPVERSION} )
 	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test-${UPVERSION} )
 
+deb:
+	(cd debian/tei-p5-database; debuild -i.svn -I.svn -uc -us)
+	(cd debian/tei-p5-doc; debuild -i.svn -I.svn -uc -us)
+	(cd debian/tei-p5-exemplars; debuild -i.svn -I.svn -uc -us)
+	(cd debian/tei-p5-schema; debuild -i.svn -I.svn -uc -us)
+	(cd debian/tei-p5-source; debuild -i.svn -I.svn -uc -us)
+	(cd debian/tei-p5-test; debuild -i.svn -I.svn -uc -us)
+
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
 	(cd release/tei-p5-schema; tar cf - .) | (cd ${PREFIX}; tar xf - )
