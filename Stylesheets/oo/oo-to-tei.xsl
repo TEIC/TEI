@@ -79,6 +79,9 @@
       <xsl:when test="doc-available(concat($dir,'/meta.xml'))">
         <xsl:copy-of select="document(concat($dir,'/meta.xml'))/office:document-meta/office:meta"/>
       </xsl:when>
+      <xsl:when test="/office:document/office:meta">
+        <xsl:copy-of select="/office:document/office:meta"/>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="/office:document-meta/office:meta"/>
       </xsl:otherwise>
@@ -102,8 +105,18 @@
     </xsl:choose>
   </xsl:variable>
 
+  <xsl:template match="*" mode="summary">
+    <xsl:text>&#10;</xsl:text>
+    <xsl:for-each select="ancestor::*"><xsl:text>.</xsl:text></xsl:for-each>
+    <xsl:value-of select="name()"/>:
+    <xsl:apply-templates mode="summary"/>
+  </xsl:template>
 
-  <xsl:template match="/office:document-content">
+  <xsl:template match="/">
+      <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="office:document-content|office:body">
     <xsl:for-each select="descendant::text:variable-decl">
       <xsl:variable name="name">
         <xsl:value-of select="@text:name"/>
@@ -120,7 +133,6 @@
         <xsl:text disable-output-escaping="yes">]&gt;</xsl:text>
       </xsl:if>
     </xsl:for-each>
-
     <TEI>
 	<xsl:for-each select="$META/office:meta/dc:language">
 	  <xsl:attribute name="xml:lang">

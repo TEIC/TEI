@@ -184,6 +184,8 @@ deb:
 	(cd debian-tei-p5-xsl;     debuild  -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-xsl2;    debuild  -i.svn -I.svn -uc -us)
 
+teioo:
+	(cd oo; jar cf ../teioo.jar *xsl *ott teilite.dtd META-INF/manifest.xml mimetype TypeDetection.xcu)
 
 sfupload:
 	rsync -e ssh release/*zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
