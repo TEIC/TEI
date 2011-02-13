@@ -32,7 +32,7 @@ install: build
 	dh_testroot
 	dh_installdirs
 	install -d $(DESTDIR)
-	(cd tei-p5-exemplars; tar cf - . ) | (cd $(DESTDIR); tar xf - )
+	(cd ..; make PREFIX=$(DESTDIR) install-exemplars)
 
 # Build architecture-independent files here.
 binary-indep: build install

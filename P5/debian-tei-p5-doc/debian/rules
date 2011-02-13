@@ -27,9 +27,7 @@ install: build
 	dh_testroot
 	dh_installdirs
 	install -d $(DESTDIR)
-	(cd tei-p5-doc; tar cf - . ) | (cd $(DESTDIR); tar xf - )
-	(cd $(DESTDIR)/share/doc/tei-p5-doc;\
-	ln -s en/html html )
+	(cd ..; make PREFIX=$(DESTDIR) install-doc)
 
 # Build architecture-independent files here.
 binary-indep: build install
