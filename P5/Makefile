@@ -28,7 +28,7 @@ SAXON_ARGS=-ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 
-.PHONY: convert dtds schemas html validate valid test oddschema exampleschema clean dist exemplars
+.PHONY: convert dtds schemas html validate valid test clean dist exemplars
 
 default: validate exemplars test pdf epub html-web validate-html
 
@@ -59,7 +59,10 @@ schema-sch:
 	@echo BUILD: Extract schema rules to make p5.isosch
 	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/extract-isosch.xsl > p5.isosch
 
-html-web: check
+
+html-web: html-web.stamp check.stamp
+
+html-web.stamp:
 	@echo BUILD: Making HTML Guidelines for language ${LANGUAGE}
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
@@ -82,6 +85,7 @@ html-web: check
 	rm -rf Guidelines-web/${LANGUAGE}
 	mv Guidelines-web-tmp/${LANGUAGE} Guidelines-web/${LANGUAGE}
 	rmdir Guidelines-web-tmp
+	touch html-web.stamp
 
 validate-html:
 	@echo BUILD: Validate HTML version of Guidelines
@@ -92,12 +96,12 @@ validate-html:
 	 rm z_$$i;\
 	 done)
 
-xml: check  
+Guidelines.xml: check  
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 
-tex: xml
+Guidelines.tex: Guidelines.xml
 	@echo BUILD: build LaTeX version of Guidelines
 	@echo Checking you have a running ${XELATEX} before trying to make TeX...
 	which ${XELATEX} || exit 1
@@ -124,7 +128,9 @@ tex: xml
 		mv $$i.new $$i; \
 	done
 
-pdf: tex
+pdf: Guidelines.pdf
+
+Guidelines.pdf: Guidelines.tex
 	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
@@ -200,17 +206,18 @@ exemplars: subset
 	@echo BUILD TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
-oddschema: subset
-	@echo Checking you have a running ${ROMA} before trying to make oddschema ...
+oddschema: p5odds.rng
+
+p5odds.rng: p5odds.odd
+	@echo Checking you have a running ${ROMA} before trying to make p5odds.rng ...
 	which ${ROMA} || exit 1
 	${ROMA} ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
 
-exampleschema: subset
-	@echo Checking you have a running ${ROMA} before trying to make exampleschema ...
+exampleschema: p5odds-examples.rng
+p5odds-examples.rng: p5odds-examples.odd
+	@echo Checking you have a running ${ROMA} before trying to make p5odds-examples.rng ...
 	which ${ROMA} || exit 1
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
-#	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rnc && \
-#	 perl -p -i -e 's+org/ns/1.0+org/ns/Examples+' p5examples.rng
 
 subset:
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
@@ -364,7 +371,9 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-check:
+check: check.stamp
+
+check.stamp:
 	@echo Checking you have running XML tools and Perl before trying to run transform...
 	@echo -n Perl: 
 	@which perl || exit 1
@@ -378,8 +387,11 @@ check:
 	@which ${SAXON} || exit 1
 	@echo -n rnv: 
 	@which rnv || exit 1
+	touch check.stamp
 
-epub:
+epub: epub.stamp
+
+epub.stamp:
 	@echo BUILD: Make epub version of Guidelines
 	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
 	${XSL}/teitoepub --coverimage=Utilities/cover.jpg --profile=tei teip5.xml
@@ -387,6 +399,7 @@ epub:
 	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
 	kindlegen Guidelines.epub
 	rm teip5.xml
+	touch epub.stamp
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
@@ -452,3 +465,4 @@ clean:
 	rm -f       Test/detest.dtd
 	rm -rf valid v.xml
 	rm -f v.body v.header missfont.log 
+	rm -f *.stamp
