@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 export DH_COMPAT=5
 
-DESTDIR = $(CURDIR)/debian/tei-p5-database/usr/
+DESTDIR = $(CURDIR)/debian/tei-p5-database/usr
 
 configure: configure-stamp
 configure-stamp:
@@ -27,12 +27,7 @@ install: build
 	dh_installdirs
 	install -d $(DESTDIR)
 	install -d $(DESTDIR)/bin
-	cp tei-database-rebuild $(DESTDIR)/bin
-	(cd tei-p5-database; tar cf - . ) | (cd $(DESTDIR); tar xf - )
-	cp teinames.xml $(DESTDIR)/share/xml/tei/xquery
-	cp index.xconf $(DESTDIR)/share/xml/tei/xquery
-	cp addtoexist.pl $(DESTDIR)/share/xml/tei/xquery
-	#(cd $(DESTDIR)/share/xml/tei/xquery; mv sitemap-dist.xmap sitemap.xmap)
+	(cd ..; make PREFIX=$(DESTDIR) install-database)
 
 # Build architecture-independent files here.
 binary-indep: build install
