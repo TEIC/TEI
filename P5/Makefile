@@ -198,31 +198,32 @@ valid: check
 	@echo BUILD: Check for places with no examples
 	${SAXON} ${DRIVER} Utilities/listspecwithnoexample.xsl
 
-test: subset
+test: subset.stamp
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
 
-exemplars: subset
+exemplars: subset.stamp
 	@echo BUILD TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
-oddschema: p5odds.rng
+oddschema: p5odds.rng 
 
-p5odds.rng: p5odds.odd
+p5odds.rng: subset.stamp p5odds.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds.rng ...
 	which ${ROMA} || exit 1
 	${ROMA} ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
 
-exampleschema: p5odds-examples.rng
-p5odds-examples.rng: p5odds-examples.odd
+exampleschema:  p5odds-examples.rng 
+p5odds-examples.rng: subset.stamp p5odds-examples.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds-examples.rng ...
 	which ${ROMA} || exit 1
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
 
-subset:
+subset.stamp:
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
+	touch subset.stamp
 
-dist-source: subset
+dist-source: subset.stamp
 	@echo BUILD: Make distribution directory for source
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
