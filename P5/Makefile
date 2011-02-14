@@ -220,6 +220,7 @@ p5odds-examples.rng: subset.stamp p5odds-examples.odd
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
 
 subset.stamp:
+	@echo BUILD make subset of P5 with just the module/element/class/macro Spec elements
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 	touch subset.stamp
 
@@ -338,12 +339,12 @@ dist:
 	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test-${UPVERSION} )
 
 deb:
-	(cd debian-tei-p5-database; debuild -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-doc; debuild -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-exemplars; debuild -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-schema; debuild -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-source; debuild -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-test; debuild -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-database; debuild -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-doc; debuild -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-exemplars; debuild -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-schema; debuild -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-source; debuild -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-test; debuild -nc  -b  -i.svn -I.svn -uc -us)
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
