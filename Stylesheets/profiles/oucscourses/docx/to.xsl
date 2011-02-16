@@ -217,11 +217,14 @@
           <xsl:with-param name="cell2">:</xsl:with-param>
         </xsl:call-template>
       </w:tbl>
+	<xsl:if test="not(room=following-sibling::session[1]/room) or not(weekday=following-sibling::session[1]/weekday)">
+
       <w:p>
 	<w:r>
 	  <w:br w:type="page"/>
 	</w:r>
       </w:p>
+	</xsl:if>
     </xsl:for-each>
   </xsl:template>
   <xsl:template match="details">
