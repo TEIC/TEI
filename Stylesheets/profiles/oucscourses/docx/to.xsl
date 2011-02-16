@@ -309,7 +309,7 @@
     <w:tbl>
       <w:tblPr>
         <w:tblW w:w="0" w:type="auto"/>
-        <w:jc w:val="center"/>
+<!--        <w:jc w:val="center"/> -->
         <w:tblBorders>
           <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
           <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
@@ -332,7 +332,7 @@
     <w:tbl>
       <w:tblPr>
         <w:tblW w:w="0" w:type="auto"/>
-        <w:jc w:val="center"/>
+<!--        <w:jc w:val="center"/> -->
         <w:tblBorders>
           <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
           <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
