@@ -107,34 +107,16 @@
         </w:p>
       </xsl:if>
       <xsl:call-template name="roomtable"/>
-      <xsl:if test="not(room=following-sibling::session[1]/room) or not(weekday=following-sibling::session[1]/weekday)">
-        <w:p>
-          <w:r>
-            <w:br w:type="page"/>
-          </w:r>
-	</w:p>
+      <xsl:if test="following-sibling::session">
+	<xsl:if test="not(room=following-sibling::session[1]/room) or not(weekday=following-sibling::session[1]/weekday)">
+	  <w:p>
+	    <w:r>
+	      <w:br w:type="page"/>
+	    </w:r>
+	  </w:p>
+	</xsl:if>
       </xsl:if>
     </xsl:for-each> 
-<!--
-    <xsl:for-each select="$data2/sessions/session">
-      <xsl:if test="not(room=preceding-sibling::session[1]/room) or not(weekday=preceding-sibling::session[1]/weekday)">
-        <w:p>
-          <w:pPr>
-            <w:pStyle>
-              <xsl:attribute name="w:val">ROOM</xsl:attribute>
-            </w:pStyle>
-          </w:pPr>
-          <w:r>
-            <w:br w:type="page"/>
-          </w:r>
-          <w:r>
-            <w:t>Room: <xsl:value-of select="normalize-space(room)"/>: <xsl:value-of select="xdate"/></w:t>
-          </w:r>
-        </w:p>
-      </xsl:if>
-      <xsl:call-template name="roomtable"/>
-    </xsl:for-each>
--->
   </xsl:template>
   <xsl:template match="table[@rend='roomlabel2']">
     <!-- room, date, start, end, title, person -->
@@ -207,7 +189,6 @@
       <w:tbl>
         <w:tblPr>
           <w:tblW w:w="4500" w:type="pct"/>
-          <w:jc w:val="center"/>
           <w:tblBorders>
             <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
             <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
@@ -237,9 +218,9 @@
         </xsl:call-template>
       </w:tbl>
       <w:p>
-        <w:r>
-          <w:br w:type="page"/>
-        </w:r>
+	<w:r>
+	  <w:br w:type="page"/>
+	</w:r>
       </w:p>
     </xsl:for-each>
   </xsl:template>
@@ -255,7 +236,6 @@
     <w:tbl>
       <w:tblPr>
         <w:tblW w:w="0" w:type="auto"/>
-        <w:jc w:val="center"/>
         <w:tblBorders>
           <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
           <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
@@ -318,7 +298,6 @@
     <w:tbl>
       <w:tblPr>
         <w:tblW w:w="0" w:type="auto"/>
-<!--        <w:jc w:val="center"/> -->
         <w:tblBorders>
           <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
           <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
@@ -341,7 +320,6 @@
     <w:tbl>
       <w:tblPr>
         <w:tblW w:w="0" w:type="auto"/>
-<!--        <w:jc w:val="center"/> -->
         <w:tblBorders>
           <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
           <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
