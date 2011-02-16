@@ -81,7 +81,7 @@
         </xsl:for-each>
       </sessions>
     </xsl:variable>
-<!--    <xsl:for-each select="$data2/sessions/session">
+    <xsl:for-each select="$data2/sessions/session">
       <xsl:if test="not(weekday=preceding-sibling::session[1]/weekday)">
         <w:p>
           <w:pPr>
@@ -107,7 +107,15 @@
         </w:p>
       </xsl:if>
       <xsl:call-template name="roomtable"/>
-    </xsl:for-each> -->
+      <xsl:if test="not(room=following-sibling::session[1]/room) or not(weekday=following-sibling::session[1]/weekday)">
+        <w:p>
+          <w:r>
+            <w:br w:type="page"/>
+          </w:r>
+	</w:p>
+      </xsl:if>
+    </xsl:for-each> 
+<!--
     <xsl:for-each select="$data2/sessions/session">
       <xsl:if test="not(room=preceding-sibling::session[1]/room) or not(weekday=preceding-sibling::session[1]/weekday)">
         <w:p>
@@ -126,6 +134,7 @@
       </xsl:if>
       <xsl:call-template name="roomtable"/>
     </xsl:for-each>
+-->
   </xsl:template>
   <xsl:template match="table[@rend='roomlabel2']">
     <!-- room, date, start, end, title, person -->
