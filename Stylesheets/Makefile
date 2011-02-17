@@ -178,6 +178,11 @@ installcommon: doc common
 
 install: installp4 installp5 installp5-2 installcommon
 
+debversion:
+	(cd debian-tei-xsl-common;  dch -v `cat ../VERSION` new release)
+	(cd debian-tei-p5-xsl;  dch -v `cat ../VERSION` new release)
+	(cd debian-tei-p5-xsl2;  dch -v `cat ../VERSION` new release)
+
 deb:
 	@echo BUILD Make Debian packages
 	(cd debian-tei-xsl-common; debuild  -nc -b -i.svn -I.svn -uc -us)
