@@ -315,7 +315,7 @@ dist-database:
 
 dist: 
 	@echo BUILD: Make overall zip archive
-	rm -f tei-${VERSION}.zip
+	rm -f tei-*.zip
 	(cd release/tei-p5-database/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-doc/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-exemplars/share; tar cf - . | (cd ../../; tar xf - ))
@@ -464,6 +464,7 @@ clean:
 	*.xsd \
 	p5.sch p5.isosch \
 	*.isosch.xsl \
+	tei-*.zip \
 	Test/*.isosch \
 	p5subset.xml \
 	Utilities/guidelines.xsl Utilities-1/guidelines.xsl
