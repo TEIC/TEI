@@ -314,14 +314,14 @@ dist-database:
 
 dist: 
 	@echo BUILD: Make overall zip archive
-	rm -f release/tei-${VERSION}.zip
+	rm -f tei-${VERSION}.zip
 	(cd release/tei-p5-database/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-doc/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-exemplars/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-schema/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-source/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-test/share; tar cf - . | (cd ../../; tar xf - ))
-	(cd release; zip -q -r tei-${UPVERSION}.zip xml doc)
+	(cd release; zip -q -r ../tei-${UPVERSION}.zip xml doc)
 	@echo BUILD: Make individual zip archives
 	(cd release; rm -rf tei-p5-*-${UPVERSION})
 	(cd release; rm -rf tei-p5-*-${UPVERSION}.zip)
