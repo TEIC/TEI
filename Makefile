@@ -271,6 +271,7 @@ dist-doc:
 	@echo BUILD: Make distribution directory for doc
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
+	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
 	@echo BUILD: Make web guidelines in all supported languages
 	make html-web
 	make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
