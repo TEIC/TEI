@@ -338,7 +338,18 @@ dist:
 	(cd release; zip -q -r tei-p5-schema-${UPVERSION}.zip tei-p5-schema-${UPVERSION} )
 	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test-${UPVERSION} )
 
+debversion:
+	(cd debian-tei-p5-database;  dch -v `cat ../VERSION` release)
+	(cd debian-tei-p5-doc;       dch -v `cat ../VERSION` release)
+	(cd debian-tei-p5-exemplars; dch -v `cat ../VERSION` release)
+	(cd debian-tei-p5-schema;    dch -v `cat ../VERSION` release)
+	(cd debian-tei-p5-source;    dch -v `cat ../VERSION` release)
+	(cd debian-tei-p5-test;      dch -v `cat ../VERSION` release)
+
 deb:
+	rm -f tei-p5-*_*deb
+	rm -f tei-p5-*_*changes
+	rm -f tei-p5-*_*build
 	(cd debian-tei-p5-database; debuild -nc  -b  -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-doc; debuild -nc  -b  -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-exemplars; debuild -nc  -b  -i.svn -I.svn -uc -us)
