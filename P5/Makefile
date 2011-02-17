@@ -96,6 +96,17 @@ validate-html:
 	 rm z_$$i;\
 	 done)
 
+teiwebsiteguidelines:
+	make GOOGLEANALYTICS=UA-4372657-1 html-web
+	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
+	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
+	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
+	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
+	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
+	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=kr DOCUMENTATIONLANGUAGE=kr html-web
+	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
+	(cd Guidelines-web; zip -r ../teiwebsiteguidelines.zip . ) 
+
 Guidelines.xml: check  
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
