@@ -185,6 +185,9 @@ debversion:
 
 deb:
 	@echo BUILD Make Debian packages
+	rm -f tei*xsl*_*deb
+	rm -f tei*xsl*_*changes
+	rm -f tei*xsl*_*build
 	(cd debian-tei-xsl-common; debuild  -nc -b -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-xsl;     debuild  -nc -b -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-xsl2;    debuild  -nc -b -i.svn -I.svn -uc -us)
