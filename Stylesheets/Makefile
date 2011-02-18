@@ -144,10 +144,10 @@ test: clean p4 p5 p5-2 common
 
 dist: clean release
 	-rm tei-xsl-`cat VERSION`.zip
-	(cd release/common; zip -r ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/p4; zip -r ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/p5; zip -r ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/p5-2; zip -r ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/common; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/p4; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/p5; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/p5-2; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 
 release: common doc oxygendoc p4 p5 p5-2
 
