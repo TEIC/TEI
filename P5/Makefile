@@ -97,14 +97,14 @@ validate-html:
 	 done)
 
 teiwebsiteguidelines:
-	make GOOGLEANALYTICS=UA-4372657-1 html-web.stamp
-	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web.stamp
-	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web.stamp
-	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web.stamp
-	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web.stamp
-	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web.stamp
-	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=kr DOCUMENTATIONLANGUAGE=kr html-web.stamp
-	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web.stamp
+	make GOOGLEANALYTICS=UA-4372657-1 html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=kr DOCUMENTATIONLANGUAGE=kr html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 
 Guidelines.xml: check  
@@ -285,13 +285,13 @@ dist-doc:
 	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
 	@echo BUILD: Make web guidelines in all supported languages
 	make html-web
-	make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
-	make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
-	make LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
-	make LANGUAGE=kr DOCUMENTATIONLANGUAGE=kr html-web
-	make LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
-	make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
-	make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
+	rm html-web.stamp;make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
+	rm html-web.stamp;make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
+	rm html-web.stamp;make LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
+	rm html-web.stamp;make LANGUAGE=kr DOCUMENTATIONLANGUAGE=kr html-web
+	rm html-web.stamp;make LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
+	rm html-web.stamp;make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
+	rm html-web.stamp;make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	@echo BUILD: Validate HTML
 	make validate-html
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
