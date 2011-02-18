@@ -492,3 +492,6 @@ clean:
 	rm -rf valid v.xml
 	rm -f v.body v.header missfont.log 
 	rm -f *.stamp
+	rm -f tei-p5-*_*deb
+	rm -f tei-p5-*_*changes
+	rm -f tei-p5-*_*build
