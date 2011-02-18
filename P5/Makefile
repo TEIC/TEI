@@ -105,7 +105,7 @@ teiwebsiteguidelines:
 	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web.stamp
 	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=kr DOCUMENTATIONLANGUAGE=kr html-web.stamp
 	make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web.stamp
-	(cd Guidelines-web; zip -r ../teiwebsiteguidelines.zip . ) 
+	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 
 Guidelines.xml: check  
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
