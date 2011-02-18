@@ -65,7 +65,7 @@ p5-2:
 	@echo BUILD Build for P5, XSLT 2.0
 	test -d release/p5-2 || mkdir -p release/p5-2/xml/tei/stylesheet/
 	for i in  ${DIRS} ; do \
-	tar cf - --exclude .svn $$i | (cd release/p5-2/xml/tei/stylesheet; tar xf - ); \
+		tar cf - --exclude .svn $$i | (cd release/p5-2/xml/tei/stylesheet; tar xf - ); \
 	done
 
 p4:
@@ -129,6 +129,9 @@ oxygendoc:
 	@echo using oXygen stylesheet documentation generator
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
+teioo.jar:
+	(cd oo; jar cf ../teioo.jar *xsl *ott teilite.dtd META-INF/manifest.xml mimetype TypeDetection.xcu)
+
 test: clean p4 p5 p5-2 common
 	@echo BUILD Run tests
 	(cd release/p5/xml/tei/stylesheet; cp ../../../../../i18n.xml .)
@@ -148,9 +151,10 @@ dist: clean release
 
 release: common doc oxygendoc p4 p5 p5-2
 
-installp5-2: p5-2
-	mkdir -p ${PREFIX}/share
-	(cd release/p5-2; tar cf - .) | (cd ${PREFIX}/share; tar xvf  -)
+installp5-2: p5-2 teioo.jar
+	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
+	cp teioo.jar ${PREFIX}/share/xml/tei/stylesheet
+	(cd release/p5-2; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	mkdir -p ${PREFIX}/bin
 	for i in $(SCRIPTS); do \
 	  cp $$i ${PREFIX}/bin/$$i; \
@@ -160,11 +164,11 @@ installp5-2: p5-2
 
 installp5: p5
 	mkdir -p ${PREFIX}/share
-	(cd release/p5; tar cf - .) | (cd ${PREFIX}/share; tar xvf  -)
+	(cd release/p5; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 
 installp4: p4 
 	mkdir -p ${PREFIX}/share
-	(cd release/p4; tar cf - .) |  (cd ${PREFIX}/share; tar xvf  -)
+	(cd release/p4; tar cf - .) |  (cd ${PREFIX}/share; tar xf  -)
 
 
 installcommon: doc common
@@ -192,9 +196,6 @@ deb:
 	(cd debian-tei-p5-xsl;     debuild  -nc -b -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-xsl2;    debuild  -nc -b -i.svn -I.svn -uc -us)
 
-teioo:
-	(cd oo; jar cf ../teioo.jar *xsl *ott teilite.dtd META-INF/manifest.xml mimetype TypeDetection.xcu)
-
 sfupload:
 	rsync -e ssh release/*zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
 
@@ -220,4 +221,4 @@ clean:
 	(cd debian-tei-xsl-common/debian;  rm -rf tei-xsl-common)
 	(cd debian-tei-p5-xsl/debian;      rm -rf tei-p5-xsl)
 	(cd debian-tei-p5-xsl2/debian;     rm -rf tei-p5-xsl2)
-
+	rm -f teioo.jar
