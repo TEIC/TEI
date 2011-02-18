@@ -130,7 +130,7 @@ oxygendoc:
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 teioo.jar:
-	(cd oo; jar cf ../teioo.jar *xsl *ott teilite.dtd META-INF/manifest.xml mimetype TypeDetection.xcu)
+	(cd oo; zip -r ../teioo.jar META-INF/manifest.xml mimetype TypeDetection.xcu *xsl *ott teilite.dtd )
 
 test: clean p4 p5 p5-2 common
 	@echo BUILD Run tests
