@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/teilite.rng" type="xml"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>How to edit the TEI Guidelines</title>
+        <author>Lou Burnard</author>
+      </titleStmt>
+      <publicationStmt>
+        <p>Unpublished first draft for review by TEI Technical council</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>All my own work</p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc>
+      <change when="2011-02-19">started first draft</change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>This document is intended to set out the way things currently are, and have been in the
+        editing of the TEI Guidelines. General notes on why it is the way it is may be added here
+        later. </p>
+      <div>
+        <head>Logical organisation of the Guidelines</head>
+        <p>It cannot have escaped your notice that each chapter (almost) of the Guidelines defines a
+          distinct module. In theory at least, each chapter is organised in more or less the same
+          way: <list>
+            <item>it begins with a paragraph explaining what the module is for, and containing a lot
+              of links to the individual subsections it contains</item>
+            <item>each subsection introduces a (small) group of elements, usually beginning with a
+                <gi>specList</gi></item>
+            <item>each element is then introduced in turn, usually including an appropriate usage
+              example (see further <ptr target="examples"/>)</item>
+            <item>a <gi>specGrp</gi>. for each group of elements defined may be given at the end of
+              each section</item>
+            <item>a <gi>specGrp</gi> for the whole module is given at the end of the chapter: it
+              includes the other specifications either directly (by means of an entity reference) or
+              indirectly (by means of a <gi>specGrpRef</gi> pointing to a preceding
+              <gi>specGrp</gi>).</item>
+          </list></p>
+      </div>
+      <div>
+        <head>Physical organization: the ODD files</head>
+        <p>Each element, class, and macro defined in the Guidelines is declared within its own file,
+          containing an <gi>elementSpec</gi>, <gi> classSpec</gi>, or <gi>macroSpec</gi> as
+          appropriate. These files are in the directory <ident>Specs</ident>For example, the file
+            <ident>Specs/abbr.xml</ident> contains the element spec for the <gi>abbr</gi> element. </p>
+        <p>Each chapter of the Guidelines is stored in a file called
+            <ident>xx/Guidelines/YY-name.xml</ident> where xx is the language (currently only en or
+          fr), YY is the two letter identifier for each chapter (see <ptr target="chaptercodes"/>)
+          and name is the name of the module being defined by that chapter. </p>
+        <p>The file <ident>P5/Source/guidelines-xx.xml</ident> (where xx is either en or fr) is the
+            <soCalled>driver file</soCalled> for the whole shebang. It contains system entity
+          declarations for each of the documents making up the P5 source. These entities are then
+          referenced throughout the source to embed the required component at the right place. </p>
+        <p>Hence, to add a new element (say <gi>saintName</gi>) you might proceed as follows: <list>
+            <item>Write a new file <ident>saintName.xml</ident> containing the <gi>elementSpec</gi>
+              for the new element and add it to the <ident>Specs</ident> folder. </item>
+            <item>Add a declaration like this to the existing driver file <eg>
+                <![CDATA[<!ENTITY saintName SYSTEM "Specs/saintName.xml">
+              ]]></eg></item>
+            <item>Edit the source of the relevant chapter (presumably
+                <ident>ND-namesdates.xml</ident>) to include a reference to the element spec (like
+              this <code>&amp;saintName;</code>), and also some discussion of its usage. The former
+              can appear anywhere, but good practice is to include it in an alphabetic list of such
+              declarations near the end of the relevant section. You can also use a
+                <gi>specList</gi> to reference the description from your new spec within the body of
+              the text. </item>
+          </list>
+        </p>
+      </div>
+      <div>
+        <head>Style Notes</head>
+        <div>
+          <head>General</head>
+          <p>The Guidelines are a reference manual, not a tutorial. You should not talk down to the
+            reader, but assume they have a reasonably well-informed knowledge of the subjects under
+            discussion. Make copious use of cross references, rather than repetition.</p>
+          <p>Bear in mind however that your reader may not have English as their first language.
+            Avoid needlessly complex sentences and unnecessarily obscure terminology. Make sure that
+            technical terms are glossed on their first appearance: this should be in the chapter on
+            XML in the case of XML-related terminology. If you want to provide other references, do
+            so as footnotes, using the <gi>note</gi> element. </p>
+          <p>Provide bibliographic citations for any other standards (etc) referenced, following the
+            existing style. Do not introduce bibliographic citations simply in order to demonstrate
+            your learning.</p>
+          <p>A separate document (copied <ref target="house-style">below</ref>) attempts to
+            summarise current <soCalled>house style</soCalled> with reference to well known vexed
+            issues about spelling, punctuation, etc. The goal of these rules is to avoid
+            inconsistency, and also (wherever possible) to avoid producing text which is markedly
+            either British or American English. </p>
+        </div>
+        <div xml:id="examples">
+          <head>Examples</head>
+          <p>The purpose of an example is to illustrate a specific element or feature. Do not
+            include irrelevant encoding which does not contribute to this primary goal. If such
+            encoding is unavoidable (eg to make your example valid), then it must be explained in
+            the supporting text.</p>
+          <p>Wherever possible, choose your examples from real documents and provide bibliographic
+            citations for them in the file <ident>BIB.xml</ident>. Use the <att>corresp</att>
+            attribute on the <gi>egXML</gi> element to link to an example to its source note. Note
+            that the <att>xml:lang</att> attribute is mandatory on <gi>exemplum</gi>: this is to
+            ensure that the ODD processor knows which examples to choose in a given context.</p>
+          <p>All examples should be valid against a modified TEI schema in which any element can act
+            as a root element: this validity is checked during the build process. </p>
+          <p>As well as a validity check, the build process checks that any cross references found
+            in examples are satisfied. This is done (rather unsatisfactorily) by assuming that the
+            whole of the Guidelines document and its examples come from the same identifier-space.
+            Consequently, any <att>xml:id</att> attribute values appearing in your examples must be
+            unique within the text of the whole of the Guidelines. Furthermore, any
+              <att>target</att> (etc.) values must be satisfied somewhere in the source. </p>
+        </div>
+      </div>
+      <div>
+        <head>Making a change to the Guidelines</head>
+        <list>
+          <item>Use <ident>svn</ident> to update a fresh copy of the source text <emph>before</emph>
+            you make any changes in it.</item>
+          <item>Make your changes. Make sure your source is still valid against the
+              <ident>p5odds.rnc</ident> schema. </item>
+          <item>If you have a locally installed P5 build environment, make sure you can still build,
+            and that the examples are still valid.</item>
+          <item>If you don't, just use subversion to check your updated version back in and wait for
+              <ident>Jenkyns</ident> to assess your work</item>
+        </list>
+        <p>Error messages may appear at any stage. Please do not leave the source in an invalid
+          state (it makes life unnecessarily difficult for others). If you cannot immediately fix a
+          validity error, revert your change while you think about it.</p>
+        <p>Error messages appearing during the <ident>make test</ident> phase usually indicate that
+          your changes are in conflict with the Birnbaum Doctrine, which decrees that changes in the
+          Guideline schemas should not invalidate existing documents. You may wish to discuss the
+          specific issue with other Council members.</p>
+      </div>
+      <div>
+        <head>Reference section</head>
+        <div>
+          <head>Chapter codes</head>
+        </div>
+        <div>
+          <head>House style</head>
+        </div>
+        <div>
+          <head>Naming conventions</head>
+          <p>TEI naming conventions have evolved over time, but remain fairly consistent. </p>
+          <list type="gloss">
+            <label>generic identifiers</label>
+            <item>An element and attribute identifiers should be a single natural language word in
+              lowercase if possible. If more than one word is conjoined to form a name, then the
+              first letter of the second and any subsequent word should be uppercased. Hyphens,
+              underscores, dots etc are not used within element or attribute names. </item>
+            <label>class names</label>
+            <item>Class names are made up three parts: a name, constructed like an element name,
+              with a prefix and optionally a suffix. The prefix is one of <code>model.</code> or
+                <code>att.</code> and indicates whether this is a model or an attribute class. The
+              suffix, if present, is used to indicate subclassing: for example
+                <ident>att.linking.foo</ident> is the <ident>foo</ident> subclass of the attribute
+              class <ident>att.linking</ident></item>
+            <label>xml:id values</label>
+            <item>The conventions for these vary somewhat. Most of the older chapters of the
+              guidelines have consistently constructed identifiers, derived from the individual
+              section headings. Identifiers must be provided for:- <list>
+                <item>every <gi>div</gi>, whether or not it is explicitly linked to elsewhere</item>
+                <item>every bibliographic reference in the <ident>BIB.xml</ident> file</item>
+              </list></item>
+          </list>
+        </div>
+      </div>
+
+    </body>
+  </text>
+</TEI>
