@@ -136,6 +136,25 @@
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
+
+    <!-- defines whether or not a word paragraph is a list element-->
+    <xsl:function name="teidocx:is-list" as="xs:boolean">
+        <xsl:param name="p"/>        
+        <xsl:choose>
+            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'List')]">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+    <!-- defines whether or not a word paragraph is a figure element-->
+    <xsl:function name="teidocx:is-figure" as="xs:boolean">
+        <xsl:param name="p"/>        
+        <xsl:choose>
+            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Figure')]">true</xsl:when>
+            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Caption')]">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
     
     <!-- Is given a header style and returns the style for the next level header -->
     <xsl:function name="teidocx:get-nextlevel-header" as="xs:string">

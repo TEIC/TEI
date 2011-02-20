@@ -107,7 +107,6 @@
    </doc>
     <xsl:template name="generate-section-heading">
         <xsl:param name="Style"/>
-        
         <head>
             <xsl:apply-templates/>
         </head>

@@ -260,83 +260,97 @@
 		list etc. and into individual groups for simple paragraphs...
 		</p>
       </desc>
-   </doc>
+	  </doc>
 	  <xsl:template match="w:tbl|w:p" mode="inSectionGroup">
-
-		<!-- 
-			We are looking for:
-				- Lists -> 1
-				- Table of Contents -> 2
-			Anything else is assigned a number of position()+100. This should be
-			sufficient even if we find lots more things to group.
-		-->
-		<xsl:for-each-group select="current-group()"
-				    group-adjacent="if (contains(w:pPr/w:pStyle/@w:val,'List'))
-						    then 1
-					  else
-					  if (starts-with(w:pPr/w:pStyle/@w:val,'toc'))
-					  then 2
-					  else position() + 100">
-
-			<!-- For each defined grouping call a specific template. If there is no
-				grouping defined, apply templates with mode paragraph -->
-			<xsl:choose>
-			  <xsl:when test="current-grouping-key()=1">
-			    <xsl:call-template name="listSection"/>
-			  </xsl:when>
-			  <xsl:when test="current-grouping-key()=2">
-			    <xsl:call-template name="tocSection"/>
-			  </xsl:when>
-			  
-			  
-			  <!-- it is not a defined grouping .. apply templates -->
-			  <xsl:otherwise>
-			    <xsl:apply-templates select="." mode="paragraph"/>
-			  </xsl:otherwise>
-			</xsl:choose>
-		    </xsl:for-each-group>
+	    
+	    <!-- 
+		 We are looking for:
+		 - Lists -> 1
+		 - Table of Contents -> 2
+		 - Figures -> 3
+		 
+		 Anything else is assigned a number of position()+100. This should be
+		 sufficient even if we find lots more things to group.
+	    -->
+	    <xsl:for-each-group 
+		select="current-group()"
+		group-adjacent="if (teidocx:is-list(.))  then 1
+				else  if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 2
+				else  if (teidocx:is-figure(.)) then 3
+				else position() + 100">
+	      
+	      <!-- For each defined grouping call a specific template. If there is no
+		   grouping defined, apply templates with mode paragraph -->
+	      <xsl:choose>
+		<xsl:when test="current-grouping-key()=1">
+		  <xsl:call-template name="listSection"/>
+		</xsl:when>
+		<xsl:when test="current-grouping-key()=2">
+		  <xsl:call-template name="tocSection"/>
+		</xsl:when>
+		<xsl:when test="current-grouping-key()=3">
+		  <xsl:call-template name="figureSection"/>
+		</xsl:when>
+		<!-- it is not a defined grouping .. apply templates -->
+		<xsl:otherwise>
+		  <xsl:apply-templates select="." mode="paragraph"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each-group>
 	  </xsl:template>
 
-
-	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-		Groups the document by headings and thereby creating the document structure. 
-	</desc>
-   </doc>
-	  <xsl:template name="group-by-section">
-		    <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
-		    <xsl:variable name="NextHeader" select="teidocx:get-nextlevel-header($Style)"/>
-		    <div>
-		      <!-- generate the head -->
-		      <xsl:call-template name="generate-section-heading">
-			<xsl:with-param name="Style" select="$Style"/>
-		      </xsl:call-template>
-		      <!-- Process sub-sections -->
-		      <xsl:for-each-group select="current-group() except ."
-					  group-starting-with="w:p[w:pPr/w:pStyle/@w:val=$NextHeader]">
-			<xsl:choose>
-			  <xsl:when test="teidocx:is-heading(.)">
-			    <xsl:call-template name="group-by-section"/>
-			  </xsl:when>
-			  <xsl:otherwise>
-			    <xsl:apply-templates select="." mode="inSectionGroup"/>
-			  </xsl:otherwise>
-			</xsl:choose>
-		      </xsl:for-each-group>
-		    </div>
-	  </xsl:template>
-	
-
-	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Looks through the document to find forme work related sections.</p>
-         <p>
-			Creates a &lt;fw&gt; element for each forme work related section. These include
-			running headers and footers. The corresponding elements in OOXML are w:headerReference
-			and w:footerReference. These elements only define a reference that to a header or
-			footer definition file. The reference itself is resolved in the file word/_rels/document.xml.rels.
-		</p>
+	Creating a group of a figure
       </desc>
+   </doc>
+    <xsl:template name="figureSection">
+      <figure>
+	<xsl:for-each select="current-group()">
+	  <xsl:apply-templates select="." mode="paragraph"/>
+	</xsl:for-each>
+      </figure>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	Groups the document by headings and thereby creating the document structure. 
+      </desc>
+   </doc>
+   <xsl:template name="group-by-section">
+     <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
+     <xsl:variable name="NextHeader" select="teidocx:get-nextlevel-header($Style)"/>
+     <div>
+       <!-- generate the head -->
+       <xsl:call-template name="generate-section-heading">
+	 <xsl:with-param name="Style" select="$Style"/>
+       </xsl:call-template>
+       <!-- Process sub-sections -->
+       <xsl:for-each-group select="current-group() except ."
+			   group-starting-with="w:p[w:pPr/w:pStyle/@w:val=$NextHeader]">
+	 <xsl:choose>
+	   <xsl:when test="teidocx:is-heading(.)">
+	     <xsl:call-template name="group-by-section"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:apply-templates select="." mode="inSectionGroup"/>
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:for-each-group>
+     </div>
+   </xsl:template>
+   
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+     <desc>
+       <p>Looks through the document to find forme work related sections.</p>
+       <p>
+	 Creates a &lt;fw&gt; element for each forme work related section. These include
+	 running headers and footers. The corresponding elements in OOXML are w:headerReference
+	 and w:footerReference. These elements only define a reference that to a header or
+	 footer definition file. The reference itself is resolved in the file word/_rels/document.xml.rels.
+       </p>
+     </desc>
    </doc>
 	  <xsl:template name="extract-forme-work">
 	    <xsl:if test="preserveWordHeadersFooters='true'">
