@@ -45,9 +45,18 @@ esac
 
 ${ECHO} curl -O -s $dir/${pname}-${version}.zip || \
     die "Unable to fetch package $dir/${pname}-${version}.zip"
-${ECHO} unzip -o ${pname}-${version}.zip -d /usr/share
+${ECHO} unzip -q -o ${pname}-${version}.zip -d /usr/share
 ${ECHO} mkdir -p ${Vault}/${name}/${version}
-${ECHO} unzip -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
+${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
 ${ECHO} rm ${Vault}/${name}/current
 ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
 
+case $package in 
+  TEIP5-Release)
+	echo Get special HTML pages for TEI web site;
+	${ECHO} curl -O -s $dir/teiwebsiteguidelines.zip || \
+	    die "Unable to fetch package $dir/teiwebsiteguidelines.zip";
+	${ECHO} unzip -q -o teiwebsiteguidelines.zip -d /usr/share/doc/tei-p5-doc;
+	${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;;
+	
+esac

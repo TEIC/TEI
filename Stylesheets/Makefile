@@ -197,7 +197,7 @@ deb:
 	(cd debian-tei-p5-xsl2;    debuild  -nc -b -i.svn -I.svn -uc -us)
 
 sfupload:
-	rsync -e ssh release/*zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
+	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
 
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
