@@ -13,7 +13,7 @@ $LastChangedRevision$
       </titleStmt>
       <editionStmt>
 	<edition>
-	  <date>March 2011</date>
+	  <date>February 2011</date>
 	</edition>
       </editionStmt>
       <publicationStmt> 
@@ -31,7 +31,6 @@ taken when changes are made to the TEI P5 sources.</p>
 <div xml:id="svn">
 <head>Building the release</head>
 <p>You will always start from the packages on Sourceforge, managed using Subversion. These are
-
 <list type="gloss">
 <label>I18N</label><item>Input to I18N utilities. Not published</item>
 <label>P5</label><item>The main TEI P5 source</item>
@@ -41,26 +40,39 @@ taken when changes are made to the TEI P5 sources.</p>
 <label>tei-emacs</label><item></item>
 </list>
 The rest of this documents assumes that we are dealing with the main
-<ident>P5</ident> package.
-</p>
+<ident>P5</ident> package, and that you are on a Linux or MacOSX system with a
+command line, and know (more or less) how to use the <q>make</q> utility.
+The same instructions apply, <foreign>mutatis mutandis</foreign>, to the packages
+for Roma and Stylesheets.</p>
+
 <p>First edit the file <ident>VERSION</ident>, and make it say what
 you are about to release. Now check that the source is clean and tested. 
 When you are happy that these are what you want,
-do <code>make dist</code>. This will build a set of runtime
-directories in <code>./release</code>, for 
-<ident>tei-p5-database</ident>,
-<ident>tei-p5-exemplars</ident>,
-<ident>tei-p5-source</ident>,
-<ident>tei-p5-doc</ident>,
-<ident>tei-p5-schema</ident>, and
-<ident>tei-p5-test</ident>. There is a zip file and a directory tree
-for each. </p>
+do <code>make dist</code>. This makes a single zip file
+with all the TEI P5 deliverables in, called <code>tei-</code><emph>versionumber</emph><code>.zip</code>.</p>
+
+<p>If you also say <code>make deb</code>, and you have the Debian devscripts packages installed,
+six Debian packages will be created.</p>
+
+<p>If you do not have a build system yourself, the Jenkins CI server
+(currently experimentally at <ptr
+target="http://tei.oucs.ox.ac.uk/jenkins"/>) will watch Subversion,
+make all the tests, and rebuild everything after any change. It will
+create the zip archive and Debian packages for you.</p>
 </div>
 
 <div xml:id="sf">
 <head>Uploading file releases to Sourceforge</head>
-<p>The zip files we build in <code>P5/release</code> 
-are what we put up on Sourceforge. </p>
+<p>The zip file <code>tei-</code><emph>versionumber</emph><code>.zip</code>
+is what we put up on Sourceforge. If you have not created it youself, grab
+from <ptr target="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5-Release/lastSuccessfulBuild/artifact/tei-1.9.0.zip"/>.
+You will now need to put this in the Sourceforge download area by using one 
+of the supported methods to upload the file. I do (eg)
+<eg>
+rsync -e ssh tei-1.9.0.zip rahtz,tei@frs.sourceforge.net:/home/frs/project/t/te/tei/TEIP5-All
+</eg>
+the details are at <ptr target="https://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download"/>
+</p>
 </div>
 
 <div xml:id="debian">
@@ -71,42 +83,42 @@ support files. For each of the
 6 packages described above, there is a directory under P5 named
 <code>debian-<emph>packagename</emph></code>
 inside which is a directory called <code>debian</code> containing the
-necessary added material. The Make target <code>deb</code> goes into
+necessary added material. The make target <code>deb</code> goes into
 each of the directories and builds the package, creating 6 corresponding .deb, .build and .changes
-files.</p>
+files. As above, if you cannot build these yourself, grab from 
+<ptr target="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5-Release/lastSuccessfulBuild/artifact/"/></p>
 
-<p>Now you can move the Debian files to a repository and rebuild
-the package database. </p>
-
-<p>There are plenty of potential slips 'twixt cup and lip here.
+<p>Now you can move the Debian files to a repository somewhere (tei.oucs.ox.ac.uk:/home/tei/teideb,
+if you have access) and rebuild
+the package database. There are plenty of potential slips 'twixt cup and lip here.
 Building Debian packages is extensively documented on the web, but
 there is a lot more to it than I describe here (such as the content of
 the control files for post-installation, pre-removal, init scripts,
-menus etc).
-</p>
+menus etc).</p>
 
 <p>The important TEI-related Debian packages are
 <list type="gloss">
-<label>nxml-mode-tei  </label><item>Emacs mode for editing XML documents</item>
-<label>tei-doc        </label><item>P4 Guidelines</item>
-<label>tei-emacs      </label><item>Emacs setup</item>
-<label>tei-lite       </label><item>TEI Lite</item>
-<label>tei-oxygen     </label><item>oXygen XML editor setup</item>
-<label>tei-p5-doc     </label><item>P5 Guidelines</item>
-<label>tei-p5-schema  </label><item>P5 Schemas/DTDs</item>
-<label>tei-p5-source  </label><item>P5 Sources</item>
-<label>tei-roma       </label><item>Roma TEI Schema Builder</item>
-<label>tei-schema     </label><item>P4 Schemas/DTDs</item>
-<label>tei-teaching   </label><item>Teaching support, exercises, data etc</item>
-<label>tei-xsl        </label><item>XSLT stylesheets</item>
-<label>tei-xsl-teic   </label><item>XSLT stylesheets for TEIC</item>
+<label>tei-emacs</label><item>TEI Emacs setup</item>
+<label>tei-oxygen</label><item>oXygen XML editor</item>
+<label>tei-p4-doc</label><item>TEI Guidelines (P4)</item>
+<label>tei-p4-lite</label><item>TEI P4 Lite</item>
+<label>tei-p4-schema</label><item>TEI P4 Schemas/DTDs</item>
+<label>tei-p4-xsl</label><item>TEI P4 XSLT stylesheets </item>
+<label>tei-p5-doc</label><item>TEI Guidelines</item>
+<label>tei-p5-exemplars</label><item>TEI exemplar customiza</item>
+<label>tei-p5-schema</label><item>TEI Schemas/DTDs</item>
+<label>tei-p5-source</label><item>TEI sources/DTDs</item>
+<label>tei-p5-test</label><item>TEI test files</item>
+<label>tei-p5-xsl</label><item>TEI XSLT (1.0) stylesheets</item>
+<label>tei-p5-xsl2</label><item>TEI XSLT (2.0) stylesheets</item>
+<label>tei-xsl-common</label><item>TEI XSLT stylesheets, shared files</item>
 </list>
 Some of these will require other packages, which will get pulled in as
 needed (trang, jing etc).</p>
 </div>
 
 <div xml:id="web">
-<head>Installing data on the TEI web site</head>
+<head>Installing files on the TEI web site</head>
 <p>People wanting to download bundles should always be sent to SF,
 so the point of having dtds, schemas and stylesheets on the web site(s) is 
 <list>
@@ -244,14 +256,13 @@ tei
 `-- xquery
 
 </eg>
-The <ident>schema</ident> directory holds copies of the generated
-Relax NG schemas (XML and compact format) from P5; the stylesheet
-directory holds the <emph>generated</emph> XSLT stylesheets for general TEI
-documents (<code>stylesheet</code>). This directory has 2 copies, for
-P4 and for P5, but both are generated from the master copy in
-Subversion. Within the two copies, there are separate subdirectories for
-HTML, FO, LaTeX and ODD-processing. These stylesheets are used
-extensively by the web site and by Roma, and are changed at your peril.
+There is a script in P5/Utilities/tei-install.sh which can be run to pull
+the latest artefacts from Jenkins, and put them in the right place(s) on the TEI
+web site. Usage is something like
+<eg>
+./tei-install.sh --package=TEIP5-Release --version=1.9.0
+</eg>
+ie where you specify the Jenkins package name, and the version number.
 </p>
 </div>
 
@@ -265,7 +276,9 @@ file <code>roma/config.php</code> (on the web site, this is in the
 <code>/usr/share/tei-roma/</code> directory). However, this varies between sites, so
 what is distributed is <code>config-dist.php</code>. </p>
 
-<p>How does TEI P5 get into eXist? Using the script <code>tei-database-rebuild</code>.</p>
+<p>How does TEI P5 get into eXist? Using the script <code>tei-database-rebuild</code>,
+which is installed into <code>/usr/bin</code>. Running that on the TEI web site will,
+with a following wind, do the right thing.</p>
 
 </div>
 
