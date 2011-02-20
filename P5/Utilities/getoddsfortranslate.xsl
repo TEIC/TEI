@@ -10,17 +10,17 @@
 
 <xsl:param name="transdate">2011-02-18</xsl:param>
 
-<xsl:key name="MOD" match="tei:moduleSpec" use="'1'"/>
+<xsl:key name="MOD" match="tei:moduleSpec" use="1"/>
 <xsl:output method="xml"/>
 
 <xsl:template match="/">
-  <xsl:for-each select="key('MOD','1')">
+  <xsl:for-each select="key('MOD',1)">
     <xsl:variable name="module" select="@ident"/>
     <xsl:result-document         
 	method="xml"
 	cdata-section-elements="tei:eg teix:egXML" 
 	indent="yes"
-	href="fortranslate/{@ident}.xml">
+	href="fortranslate-{$translang}/{@ident}.xml">
       <xsl:copy>
 	<xsl:copy-of select="@ident"/>
 	<xsl:for-each select="//tei:elementSpec[@module=$module]|//tei:classSpec[@module=$module]|//tei:macroSpec[@module=$module]">
@@ -54,7 +54,7 @@
 	<xsl:attribute name="notBefore">
 	  <xsl:value-of select="$transdate"/>
 	</xsl:attribute>
-	<xsl:if test="string-length(text())&gt;0">
+	<xsl:if test="string-length(.)&gt;0">
 	  <xsl:text>TO BE TRANSLATED</xsl:text>
 	</xsl:if>
       </xsl:copy>
