@@ -443,7 +443,7 @@ catalogue-print:
 	${SAXON} ${SAXON_ARGS} ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
 sfupload:
-	rsync -e ssh tei-p5-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/TEIP5
+	rsync -e ssh tei-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/TEIP5
 
 dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you'll need:
