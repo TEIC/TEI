@@ -209,6 +209,7 @@ log:
 clean:
 	echo "" > test~
 	find . -name "*~"  | xargs rm
+	rm -f tei-xsl-`cat VERSION`.zip	
 	rm -f stylebear style.xml customize.xml teixsl.html
 	rm -rf release
 	rm -rf xhtml
