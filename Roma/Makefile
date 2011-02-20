@@ -45,9 +45,7 @@ install: release-stamp
 
 
 dist:  release-stamp
-	(cd release; 	\
-	ln -s tei-roma tei-roma-`cat ../VERSION` ; \
-	zip -r tei-roma-`cat ../VERSION`.zip tei-roma-`cat ../VERSION` )
+	(cd release; zip -r ../tei-roma-`cat ../VERSION`.zip tei-roma)
 
 deb:	
 	(cd debian-tei-roma; debuild -i.svn -I.svn -uc -us)
@@ -70,6 +68,7 @@ release-stamp:
 
 clean:
 	rm -rf release
+	rm -f tei-roma-`cat ../VERSION`.zip
 	rm -f release-stamp roma/oddschema.rnc
 	rm -f tei-roma_*
 	rm -rf debian-tei-roma/debian/tei-roma
