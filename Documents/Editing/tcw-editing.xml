@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+$LastChangedDate: 2010-04-10$.
+$LastChangedBy: jamesc$
+$LastChangedRevision$
+-->
 <?oxygen RNGSchema="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/teilite.rng" type="xml"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
@@ -20,7 +25,7 @@
   </teiHeader>
   <text>
     <body>
-      <p>This document is intended to set out the way things currently are, and have been in the
+      <p>This document is intended to set out the way things currently are, and have been, in the
         editing of the TEI Guidelines. General notes on why it is the way it is may be added here
         later. </p>
       <div>
@@ -33,7 +38,7 @@
             <item>each subsection introduces a (small) group of elements, usually beginning with a
                 <gi>specList</gi></item>
             <item>each element is then introduced in turn, usually including an appropriate usage
-              example (see further <ptr target="examples"/>)</item>
+              example (see further <ptr target="#examples"/>)</item>
             <item>a <gi>specGrp</gi>. for each group of elements defined may be given at the end of
               each section</item>
             <item>a <gi>specGrp</gi> for the whole module is given at the end of the chapter: it
@@ -46,13 +51,13 @@
         <head>Physical organization: the ODD files</head>
         <p>Each element, class, and macro defined in the Guidelines is declared within its own file,
           containing an <gi>elementSpec</gi>, <gi> classSpec</gi>, or <gi>macroSpec</gi> as
-          appropriate. These files are in the directory <ident>Specs</ident>For example, the file
-            <ident>Specs/abbr.xml</ident> contains the element spec for the <gi>abbr</gi> element. </p>
+          appropriate. These files are in the directory <ident>Source/Specs</ident>For example, the file
+            <ident>Source/Specs/abbr.xml</ident> contains the element spec for the <gi>abbr</gi> element. </p>
         <p>Each chapter of the Guidelines is stored in a file called
-            <ident>xx/Guidelines/YY-name.xml</ident> where xx is the language (currently only en or
-          fr), YY is the two letter identifier for each chapter (see <ptr target="chaptercodes"/>)
+            <ident>Source/Guidelines/xx/YY-name.xml</ident> where xx is the language (currently only en or
+          fr), YY is the two letter identifier for each chapter (see <ptr target="#chaptercodes"/>)
           and name is the name of the module being defined by that chapter. </p>
-        <p>The file <ident>P5/Source/guidelines-xx.xml</ident> (where xx is either en or fr) is the
+        <p>The file <ident>Source/guidelines-xx.xml</ident> (where xx is either en or fr) is the
             <soCalled>driver file</soCalled> for the whole shebang. It contains system entity
           declarations for each of the documents making up the P5 source. These entities are then
           referenced throughout the source to embed the required component at the right place. </p>
@@ -87,7 +92,7 @@
           <p>Provide bibliographic citations for any other standards (etc) referenced, following the
             existing style. Do not introduce bibliographic citations simply in order to demonstrate
             your learning.</p>
-          <p>A separate document (copied <ref target="house-style">below</ref>) attempts to
+          <p>A separate document (copied <ref target="#house-style">below</ref>) attempts to
             summarise current <soCalled>house style</soCalled> with reference to well known vexed
             issues about spelling, punctuation, etc. The goal of these rules is to avoid
             inconsistency, and also (wherever possible) to avoid producing text which is markedly
@@ -100,31 +105,32 @@
             encoding is unavoidable (eg to make your example valid), then it must be explained in
             the supporting text.</p>
           <p>Wherever possible, choose your examples from real documents and provide bibliographic
-            citations for them in the file <ident>BIB.xml</ident>. Use the <att>corresp</att>
+            citations for them in the file <ident>BIB-Bibliography.xml</ident>. Use the <att>corresp</att>
             attribute on the <gi>egXML</gi> element to link to an example to its source note. Note
             that the <att>xml:lang</att> attribute is mandatory on <gi>exemplum</gi>: this is to
             ensure that the ODD processor knows which examples to choose in a given context.</p>
           <p>All examples should be valid against a modified TEI schema in which any element can act
             as a root element: this validity is checked during the build process. </p>
-          <p>As well as a validity check, the build process checks that any cross references found
-            in examples are satisfied. This is done (rather unsatisfactorily) by assuming that the
-            whole of the Guidelines document and its examples come from the same identifier-space.
-            Consequently, any <att>xml:id</att> attribute values appearing in your examples must be
-            unique within the text of the whole of the Guidelines. Furthermore, any
-              <att>target</att> (etc.) values must be satisfied somewhere in the source. </p>
+          <p>As well as a validity check, the build process looks at
+          cross-references. Since the Guidelines is a single XML
+          document, IDs must be unique across the text and the
+          examples.  Consequently, any <att>xml:id</att> attribute
+          values appearing in your examples must be unique within the
+          text of the whole of the Guidelines. Furthermore, any
+          <att>target</att> (etc.) values which do not point to
+          anything in the source may be flagged with a warning. </p>
         </div>
       </div>
       <div>
         <head>Making a change to the Guidelines</head>
         <list>
-          <item>Use <ident>svn</ident> to update a fresh copy of the source text <emph>before</emph>
+          <item>Use a Subversion client to update a fresh copy of the source text <emph>before</emph>
             you make any changes in it.</item>
           <item>Make your changes. Make sure your source is still valid against the
               <ident>p5odds.rnc</ident> schema. </item>
           <item>If you have a locally installed P5 build environment, make sure you can still build,
             and that the examples are still valid.</item>
-          <item>If you don't, just use subversion to check your updated version back in and wait for
-              <ident>Jenkyns</ident> to assess your work</item>
+          <item>If you don't, just use subversion to check your updated version back in and wait for the Continuous Integration server <ident>Jenkins</ident> (<ptr target="http://tei.oucs.ox.ac.uk/jenkins/"/>) to assess your work</item>
         </list>
         <p>Error messages may appear at any stage. Please do not leave the source in an invalid
           state (it makes life unnecessarily difficult for others). If you cannot immediately fix a
@@ -139,7 +145,7 @@
         <div>
           <head>Chapter codes</head>
         </div>
-        <div>
+        <div xml:id="house-style">
           <head>House style</head>
         </div>
         <div>
