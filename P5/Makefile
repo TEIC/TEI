@@ -297,7 +297,6 @@ dist-doc:
 	rm html-web.stamp;make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
 	rm html-web.stamp;make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	@echo BUILD: Validate HTML
-	make validate-html
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  ${SAXON} $$i ${XSL}/xhtml2/tei.xsl cssFile=html/guidelines.css \
