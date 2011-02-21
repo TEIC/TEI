@@ -304,7 +304,7 @@ dist-doc:
 		> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	@echo BUILD: make PDF version of Guidelines
-	echo ""> Guidelines.pdf ; echo make pdf
+	make pdf
 	@echo BUILD: make ePub and Kindle version of Guidelines
 	make epub
 	cp Guidelines.pdf Guidelines.epub Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
