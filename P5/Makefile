@@ -97,6 +97,8 @@ validate-html:
 	 done)
 
 teiwebsiteguidelines:
+	@echo BUILD: make HTML version of Guidelines just for TEI web site
+	rm -f teiwebsiteguidelines.zip
 	make GOOGLEANALYTICS=UA-4372657-1 html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
