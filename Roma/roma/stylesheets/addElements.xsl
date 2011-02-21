@@ -288,7 +288,7 @@ Description
   </xsl:template>
   <xsl:template name="attClassList">
     <div class="classes">
-      <xsl:for-each select="/addElement/attClassList/attClass[not(starts-with(className,'att.global'))]">
+      <xsl:for-each select="/addElement/attClassList/attClass">
         <xsl:variable name="currentClass">
           <xsl:value-of select="className"/>
         </xsl:variable>
