@@ -19,7 +19,7 @@ Vault=/projects/tei/web/Vault
 Jenkins=http://tei.oucs.ox.ac.uk/jenkins/job
 ECHO=
 version=
-package=TEIP5-Release
+package=TEIP5
 while test $# -gt 0; do
   case $1 in  
     --dummy)       ECHO=echo;;
@@ -38,7 +38,7 @@ dir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
 echo Try to fetch $version package from $dir
 case $package in 
   Roma)          name=Roma;        pname=tei-roma;;
-  TEIP5-Release) name=P5;          pname=tei;;
+  TEIP5) name=P5;          pname=tei;;
   Stylesheets)   name=Stylesheets; pname=tei-xsl;;
     *) echo "Error: package $package unsupported"; exit 1;;
 esac
@@ -52,7 +52,7 @@ ${ECHO} rm ${Vault}/${name}/current
 ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
 
 case $package in 
-  TEIP5-Release)
+  TEIP5)
 	echo Get special HTML pages for TEI web site;
 	${ECHO} curl -O -s $dir/teiwebsiteguidelines.zip || \
 	    die "Unable to fetch package $dir/teiwebsiteguidelines.zip";
