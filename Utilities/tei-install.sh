@@ -42,11 +42,9 @@ case $package in
   Stylesheets)   name=Stylesheets; pname=tei-xsl;;
     *) echo "Error: package $package unsupported"; exit 1;;
 esac
-
+rm -f ${pname}-${version}.zip
 ${ECHO} curl -O -s $dir/${pname}-${version}.zip || \
     die "Unable to fetch package $dir/${pname}-${version}.zip"
-echo unpack to /usr/share
-${ECHO} unzip -q -o ${pname}-${version}.zip -d /usr/share
 ${ECHO} mkdir -p ${Vault}/${name}/${version}
 echo unpack to ${Vault}/${name}/${version}
 ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
@@ -55,12 +53,10 @@ ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
 
 case $package in 
   TEIP5)
+	rm -f teiwebsiteguidelines.zip
 	echo Get special HTML pages for TEI web site;
 	${ECHO} curl -O -s $dir/teiwebsiteguidelines.zip || \
 	    die "Unable to fetch package $dir/teiwebsiteguidelines.zip";
-	unpack web guidelines to /usr/share;
-	${ECHO} unzip -q -o teiwebsiteguidelines.zip -d /usr/share/doc/tei-p5-doc;
 	unpack web guidelines to ${Vault}/${name}/${version};
 	${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;;
-	
 esac
