@@ -92,7 +92,7 @@ define( 'roma_startupOption_minimum', 'minimum' );
 define( 'roma_startupOption_other', 'other' );
 define( 'roma_startupOption_upload', 'upload' );
 
-define( 'roma_validate_schema', true );
+define( 'roma_validate_schema', false );
 
 
 //#########################
