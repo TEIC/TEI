@@ -38,7 +38,7 @@ dir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
 echo Try to fetch $version package from $dir
 case $package in 
   Roma)          name=Roma;        pname=tei-roma;;
-  TEIP5) name=P5;          pname=tei;;
+    TEIP5)       name=P5;          pname=tei;;
   Stylesheets)   name=Stylesheets; pname=tei-xsl;;
     *) echo "Error: package $package unsupported"; exit 1;;
 esac
