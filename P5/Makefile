@@ -209,33 +209,33 @@ valid: check
 	@echo BUILD: Check for places with no examples
 	${SAXON} ${DRIVER} Utilities/listspecwithnoexample.xsl
 
-test: subset.stamp
+test: p5subset.xml
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
 
-exemplars: subset.stamp
+exemplars: p5subset.xml
 	@echo BUILD TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
 oddschema: p5odds.rng 
 
-p5odds.rng: subset.stamp p5odds.odd
+p5odds.rng: p5subset.xml p5odds.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds.rng ...
 	which ${ROMA} || exit 1
 	${ROMA} ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
 
 exampleschema:  p5odds-examples.rng 
-p5odds-examples.rng: subset.stamp p5odds-examples.odd
+p5odds-examples.rng: p5subset.xml p5odds-examples.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds-examples.rng ...
 	which ${ROMA} || exit 1
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
 
-subset.stamp:
+p5subset.xml: Source/Specs/*.xml Source/Guidelines/en/*.xml
 	@echo BUILD make subset of P5 with just the module/element/class/macro Spec elements
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
-	touch subset.stamp
+	touch p5subset.xml
 
-dist-source: subset.stamp
+dist-source: p5subset.xml
 	@echo BUILD: Make distribution directory for source
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
@@ -266,6 +266,7 @@ dist-source: subset.stamp
 	validator.xsl \
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
+	touch dist-source.stamp
 
 dist-schema: schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
@@ -277,6 +278,7 @@ dist-schema: schemas dtds oddschema exampleschema
 	cp catalog.p5 release/tei-p5-schema/share/xml/tei/schema/catalog.xml
 	(cd Schema; tar --exclude .svn -c -f - .) \
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
+	touch dist-schema.stamp
 
 dist-doc:  
 	@echo BUILD: Make distribution directory for doc
@@ -304,6 +306,7 @@ dist-doc:
 	@echo BUILD: make ePub and Kindle version of Guidelines
 	make epub
 	cp Guidelines.pdf Guidelines.epub Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
+	touch dist-doc.stamp
 
 dist-test:
 	@echo BUILD: Make distribution directory for test
@@ -312,10 +315,12 @@ dist-test:
 	(cd Test; make clean)
 	tar --exclude "*~" --exclude .svn -c -f - Test \
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
+	touch dist-test.stamp
 
 dist-exemplars: 
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make dist)
+	touch dist-exemplars.stamp
 
 dist-database: 
 	@echo BUILD: Make distribution directory for database
@@ -323,8 +328,21 @@ dist-database:
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
 	(cd Query; tar --exclude .svn --exclude "*~" -c -f - . ) \
 	| (cd release/tei-p5-database/share/xml/tei/xquery; tar xf - )
+	touch dist-database.stamp
 
-dist: 
+dist-source.stamp: dist-source
+
+dist-schema.stamp: dist-schema
+
+dist-doc.stamp: dist-doc
+
+dist-test.stamp: dist-test
+
+dist-exemplars.stamp: dist-exemplars
+
+dist-database.stamp: dist-database
+
+dist: dist-source.stamp dist-schema.stamp dist-doc.stamp dist-test.stamp dist-exemplars.stamp dist-database.stamp
 	@echo BUILD: Make overall zip archive
 	rm -f tei-*.zip
 	(cd release/tei-p5-database/share; tar cf - . | (cd ../../; tar xf - ))
@@ -495,3 +513,5 @@ clean:
 	rm -f tei-p5-*_*deb
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
+
+
