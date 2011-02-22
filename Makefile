@@ -141,9 +141,9 @@ Guidelines.tex: Guidelines.xml
 		mv $$i.new $$i; \
 	done
 
-pdf: Guidelines.pdf
+pdf: pdf.stamp
 
-Guidelines.pdf: Guidelines.tex
+pdf.stamp: Guidelines.tex
 	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
@@ -157,6 +157,7 @@ Guidelines.pdf: Guidelines.tex
 	grep -v "Failed to convert input string to UTF16" $(JOB).log
 	rm $(JOB).log
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
+	touch pdf.stamp
 
 
 chapterpdfs:
@@ -296,7 +297,6 @@ dist-doc:
 	rm html-web.stamp;make LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
 	rm html-web.stamp;make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
 	rm html-web.stamp;make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
-	@echo BUILD: Validate HTML
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	for i in ReleaseNotes/readme*xml; do  ${SAXON} $$i ${XSL}/xhtml2/tei.xsl cssFile=html/guidelines.css \
