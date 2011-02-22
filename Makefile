@@ -352,20 +352,13 @@ dist: dist-source dist-schema dist-doc dist-test dist-exemplars dist-database
 	(cd release/tei-p5-test/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release; zip -q -r ../tei-${UPVERSION}.zip xml doc)
 	@echo BUILD: Make individual zip archives
-	(cd release; rm -rf tei-p5-*-${UPVERSION})
 	(cd release; rm -rf tei-p5-*-${UPVERSION}.zip)
-	mv release/tei-p5-database  release/tei-p5-database-${VERSION} 
-	mv release/tei-p5-doc       release/tei-p5-doc-${VERSION} 
-	mv release/tei-p5-exemplars release/tei-p5-exemplars-${VERSION} 
-	mv release/tei-p5-schema    release/tei-p5-schema-${VERSION} 
-	mv release/tei-p5-source    release/tei-p5-source-${VERSION} 
-	mv release/tei-p5-test      release/tei-p5-test-${VERSION} 
-	(cd release; zip -q -r tei-p5-database-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-doc-${UPVERSION}.zip tei-p5-doc-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-exemplars-${UPVERSION}.zip tei-p5-exemplars-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-database-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-schema-${UPVERSION}.zip tei-p5-schema-${UPVERSION} )
-	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test-${UPVERSION} )
+	(cd release; zip -q -r tei-p5-database-${UPVERSION}.zip tei-p5-database )
+	(cd release; zip -q -r tei-p5-doc-${UPVERSION}.zip tei-p5-doc )
+	(cd release; zip -q -r tei-p5-exemplars-${UPVERSION}.zip tei-p5-exemplars )
+	(cd release; zip -q -r tei-p5-source-${UPVERSION}.zip tei-p5-database )
+	(cd release; zip -q -r tei-p5-schema-${UPVERSION}.zip tei-p5-schema )
+	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test )
 
 debversion:
 	(cd debian-tei-p5-database;  dch -v `cat ../VERSION` release)
@@ -375,7 +368,7 @@ debversion:
 	(cd debian-tei-p5-source;    dch -v `cat ../VERSION` release)
 	(cd debian-tei-p5-test;      dch -v `cat ../VERSION` release)
 
-deb:
+deb: dist
 	rm -f tei-p5-*_*deb
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
@@ -463,7 +456,7 @@ sfupload:
 	rsync -e ssh tei-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/TEIP5-all
 
 dependencies:
-	@echo to make this thing build under Ubuntu/Debian, here are all the packages you'll need:
+	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
 	@echo	jing
 	@echo	msttcorefonts
 	@echo	onvdl
