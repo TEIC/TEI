@@ -18,10 +18,12 @@ die()
 Vault=/projects/tei/web/Vault
 Jenkins=http://tei.oucs.ox.ac.uk/jenkins/job
 ECHO=
+SFUSER=rahtz
 version=
 package=TEIP5
 while test $# -gt 0; do
-  case $1 in  
+  case $1 in
+    --sfuser)      SFUSER=`echo $1 | sed 's/.*=//'`;;
     --dummy)       ECHO=echo;;
     --package=*)   package=`echo $1 | sed 's/.*=//'`;;
     --version=*)   version=`echo $1 | sed 's/.*=//'`;;
@@ -36,10 +38,11 @@ while test $# -gt 0; do
 done
 dir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
 echo Try to fetch $version package from $dir
+sfname=$package
 case $package in 
-  Roma)          name=Roma;        pname=tei-roma;;
-    TEIP5)       name=P5;          pname=tei;;
+  TEIP5)         name=P5;          pname=tei;      SFNAME=TEIP5-All;;
   Stylesheets)   name=Stylesheets; pname=tei-xsl;;
+  Roma)          name=Roma;        pname=tei-roma;;
     *) echo "Error: package $package unsupported"; exit 1;;
 esac
 rm -f ${pname}-${version}.zip
@@ -50,6 +53,8 @@ echo unpack to ${Vault}/${name}/${version}
 ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
 ${ECHO} rm ${Vault}/${name}/current
 ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
+echo upload ${pname}-${version}.zip to Sourceforge ${SFNAME} as user ${SFUSER}
+${ECHO} rsync -e ssh ${pname}-${version}.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/${SFNAME}
 
 case $package in 
   Roma)
