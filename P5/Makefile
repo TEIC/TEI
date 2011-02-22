@@ -109,13 +109,15 @@ teiwebsiteguidelines:
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 
-Guidelines.xml: check  
+
+pdf: pdf.stamp
+
+pdf.stamp: check
+	@echo BUILD: build Lite version of Guidelines
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
-
-Guidelines.tex: Guidelines.xml
-	@echo BUILD: build LaTeX version of Guidelines
+	@echo BUILD: build LaTeX version of Guidelines from Lite
 	@echo Checking you have a running ${XELATEX} before trying to make TeX...
 	which ${XELATEX} || exit 1
 	perl -p -e \
@@ -140,10 +142,6 @@ Guidelines.tex: Guidelines.xml
 		diff $$i.new $$i; \
 		mv $$i.new $$i; \
 	done
-
-pdf: pdf.stamp
-
-pdf.stamp: 
 	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
