@@ -210,6 +210,9 @@ clean:
 	echo "" > test~
 	find . -name "*~"  | xargs rm
 	rm -f tei-xsl-`cat VERSION`.zip	
+	rm -rf tei-p5-xsl_*
+	rm -rf tei-p5-xsl2_*
+	rm -rf tei-xsl-common_*
 	rm -f stylebear style.xml customize.xml teixsl.html
 	rm -rf release
 	rm -rf xhtml
