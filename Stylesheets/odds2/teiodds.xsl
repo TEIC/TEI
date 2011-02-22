@@ -2002,7 +2002,7 @@ select="$makeDecls"/></xsl:message>
       <xsl:when test="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']">
         <!-- JC Additions to form proper URL from version number -->
         <xsl:variable name="TEIVersion"
-          select="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION']"/>
+          select="ancestor-or-self::tei:TEI/processing-instruction()[name()='TEIVERSION'][1]"/>
         <xsl:variable name="TEIVersion-edition"
           select="substring-before($TEIVersion, ' Last')"/>
         <xsl:variable name="TEIVersion-datestring"
