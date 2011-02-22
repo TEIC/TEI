@@ -63,7 +63,7 @@ release-stamp:
 	perl -p -i -e "s+.*define.*roma_version.*+define (\'roma_version\',\'$$V\');+" roma/config-dist.php; \
 	tar --exclude=.svn -c  -f - $(FILES) | (cd release/tei-roma; tar xf -); \
 	perl -p -i -e "s/{roma_version}/$$V/;s/{roma_date}/$$D/" release/tei-roma/roma/templates/main.tem
-	(cd roma; ../roma2.sh --nodtd --noxsd oddschema.odd .)
+	test -f /usr/share/xml/tei/odd/p5subset.xml && (cd roma; ../roma2.sh --nodtd --noxsd oddschema.odd .)
 	touch release-stamp
 
 clean:
