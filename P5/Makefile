@@ -143,7 +143,7 @@ Guidelines.tex: Guidelines.xml
 
 pdf: pdf.stamp
 
-pdf.stamp: Guidelines.tex
+pdf.stamp: 
 	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
