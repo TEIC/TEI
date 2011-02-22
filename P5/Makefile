@@ -236,7 +236,7 @@ p5subset.xml: Source/Specs/*.xml Source/Guidelines/en/*.xml
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 	touch p5subset.xml
 
-dist-source: p5subset.xml
+dist-source.stamp: p5subset.xml
 	@echo BUILD: Make distribution directory for source
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
@@ -269,7 +269,7 @@ dist-source: p5subset.xml
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	touch dist-source.stamp
 
-dist-schema: schemas dtds oddschema exampleschema
+dist-schema.stamp: schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
 	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
@@ -281,7 +281,7 @@ dist-schema: schemas dtds oddschema exampleschema
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	touch dist-schema.stamp
 
-dist-doc:  
+dist-doc.stamp:  
 	@echo BUILD: Make distribution directory for doc
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
@@ -307,7 +307,7 @@ dist-doc:
 	cp Guidelines.pdf Guidelines.epub Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
 	touch dist-doc.stamp
 
-dist-test:
+dist-test.stamp:
 	@echo BUILD: Make distribution directory for test
 	rm -rf release/tei-p5-test*
 	mkdir -p release/tei-p5-test/share/xml/tei
@@ -316,12 +316,12 @@ dist-test:
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
 	touch dist-test.stamp
 
-dist-exemplars: 
+dist-exemplars.stamp: 
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make dist)
 	touch dist-exemplars.stamp
 
-dist-database: 
+dist-database.stamp: 
 	@echo BUILD: Make distribution directory for database
 	rm -rf release/tei-p5-database*
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
@@ -329,19 +329,19 @@ dist-database:
 	| (cd release/tei-p5-database/share/xml/tei/xquery; tar xf - )
 	touch dist-database.stamp
 
-dist-source.stamp: dist-source
+dist-source: dist-source.stamp
 
-dist-schema.stamp: dist-schema
+dist-schema: dist-schema.stamp
 
-dist-doc.stamp: dist-doc
+dist-doc: dist-doc.stamp
 
-dist-test.stamp: dist-test
+dist-test: dist-test.stamp
 
-dist-exemplars.stamp: dist-exemplars
+dist-exemplars: dist-exemplars.stamp
 
-dist-database.stamp: dist-database
+dist-database: dist-database.stamp
 
-dist: dist-source.stamp dist-schema.stamp dist-doc.stamp dist-test.stamp dist-exemplars.stamp dist-database.stamp
+dist: dist-source dist-schema dist-doc dist-test dist-exemplars dist-database
 	@echo BUILD: Make overall zip archive
 	rm -f tei-*.zip
 	(cd release/tei-p5-database/share; tar cf - . | (cd ../../; tar xf - ))
