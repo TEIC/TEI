@@ -343,7 +343,7 @@ dist-database: dist-database.stamp
 
 dist: dist-source dist-schema dist-doc dist-test dist-exemplars dist-database
 	@echo BUILD: Make overall zip archive
-	rm -f tei-*.zip release/xml release/doc
+	rm -rf tei-*.zip release/xml release/doc
 	(cd release/tei-p5-database/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-doc/share; tar cf - . | (cd ../../; tar xf - ))
 	(cd release/tei-p5-exemplars/share; tar cf - . | (cd ../../; tar xf - ))
