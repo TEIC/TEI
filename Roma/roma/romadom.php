@@ -2085,7 +2085,7 @@ class romaDom extends domDocument
     protected function callGarage ( &$garageResult, $target) {
 	$OXG = oxgarage_server . '/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/';
 	$this->getDocLanguage( $szDocLanguage );
-	$properties ="?properties=<conversions><conversion%20index='1'><property%20id="oxgarage.textOnly">true</property><property%20id='oxgarage.lang'>" . $szDocLanguage .  "</property></conversion></conversions>";
+	$properties ="?properties=<conversions><conversion%20index='1'><property%20id='oxgarage.textOnly'>true</property><property%20id='oxgarage.lang'>" . $szDocLanguage .  "</property></conversion></conversions>";
 	$this->loadProgressBar();
 	$this->updateProgressBar( '10' );
 
