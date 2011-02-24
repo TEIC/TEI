@@ -29,6 +29,33 @@
    </doc>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element gi</desc>
+   </doc>
+  <xsl:template match="tei:gi">
+      <xsl:text>\texttt{&lt;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>&gt;}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element att</desc>
+   </doc>
+  <xsl:template match="tei:att">
+      <xsl:value-of select="$preQuote"/>
+      <xsl:apply-templates/>
+      <xsl:value-of select="$postQuote"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element val</desc>
+   </doc>
+  <xsl:template match="tei:att">
+      <xsl:text>\textbf{@</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Example element</desc>
    </doc>
 

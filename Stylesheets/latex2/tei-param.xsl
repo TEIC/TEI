@@ -225,6 +225,7 @@ capable of dealing with UTF-8 directly.
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
+\PrerenderUnicode{–}
 <xsl:call-template name="latexBabel"/>
 \usepackage[T1]{fontenc}
 \usepackage{float}
@@ -249,8 +250,12 @@ capable of dealing with UTF-8 directly.
 \def\textChinese{\fontspec{HAN NOM A}\XeTeXlinebreaklocale "zh"\XeTeXlinebreakskip = 0pt plus 1pt }
 \def\textKorean{\fontspec{Baekmuk Gulim} }
 \setmonofont{<xsl:value-of select="$typewriterFont"/>}
-\setsansfont{<xsl:value-of select="$sansFont"/>}
-\setromanfont{<xsl:value-of select="$romanFont"/>}
+<xsl:if test="not($sansFont='')">
+  \setsansfont{<xsl:value-of select="$sansFont"/>}
+</xsl:if>
+<xsl:if test="not($romanFont='')">
+  \setromanfont{<xsl:value-of select="$romanFont"/>}
+</xsl:if>
 </xsl:otherwise>
       </xsl:choose>
 \DeclareTextSymbol{\textpi}{OML}{25}
@@ -383,9 +388,9 @@ capable of dealing with UTF-8 directly.
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for literal code</desc>   </doc>
 <xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for sans-serif</desc>   </doc>
-<xsl:param name="sansFont">DejaVu Sans</xsl:param>
+<xsl:param name="sansFont"></xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for serif</desc>   </doc>
-<xsl:param name="romanFont">DejaVu Serif</xsl:param>
+<xsl:param name="romanFont"></xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for gothic</desc>   </doc>
 <xsl:param name="gothicFont">Lucida Blackletter</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for calligraphic</desc>   </doc>

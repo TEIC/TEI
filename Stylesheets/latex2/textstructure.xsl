@@ -225,7 +225,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process the tei:div elements</desc>
    </doc>
-  <xsl:template match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
+  <xsl:template match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
       <xsl:choose>
          <xsl:when test="@type='letter'">
             <xsl:text>\subsection*{</xsl:text>
@@ -235,11 +235,6 @@
             <xsl:text>}</xsl:text>
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="@type='bibliography'">
-	   <xsl:text>&#10;\begin{thebibliography}{1}&#10;</xsl:text>
-	   <xsl:call-template name="bibliography"/>
-	   <xsl:text>&#10;\end{thebibliography}&#10;</xsl:text>
-	 </xsl:when>
          <xsl:otherwise>
             <xsl:apply-templates/>
          </xsl:otherwise>
@@ -247,11 +242,21 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>Table of contents</desc>
    </doc>
-  <xsl:template match="tei:divGen[@type='toc']">
-\tableofcontents
-</xsl:template>
+   <xsl:template match="tei:divGen[@type='toc']">
+     \tableofcontents
+   </xsl:template>
+   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Bibliography</desc>
+  </doc>
+  <xsl:template match="tei:divGen[@type='bibliography']">
+    <xsl:text>&#10;\begin{thebibliography}{1}&#10;</xsl:text>
+    <xsl:call-template name="bibliography"/>
+    <xsl:text>&#10;\end{thebibliography}&#10;</xsl:text>    
+  </xsl:template>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
@@ -366,5 +371,14 @@
 
 </xsl:text>
    </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[latex] make a bibliography</desc>
+   </doc>
+  <xsl:template name="bibliography">
+      <xsl:apply-templates mode="biblio"
+                           select="//tei:ref[@type='cite'] | //tei:ptr[@type='cite']"/>
+  </xsl:template>
+
 
 </xsl:stylesheet>

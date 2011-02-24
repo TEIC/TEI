@@ -39,13 +39,57 @@
   <xsl:template match="tei:bibl" mode="cite">
       <xsl:apply-templates select="text()[1]"/>
   </xsl:template>
+
+
+  <xsl:template match="tei:cit">
+    <xsl:choose>
+      <xsl:when test="@rend='display' and tei:quote">
+            <xsl:if test="@n">
+              <xsl:text>(</xsl:text>
+              <xsl:value-of select="@n"/>
+              <xsl:text>) </xsl:text>
+            </xsl:if>
+            <xsl:apply-templates select="tei:q|tei:quote"/>
+            <xsl:apply-templates select="tei:*[not(self::tei:q or self::tei:quote)]"/>
+      </xsl:when>
+      <xsl:when test="@rend='display'">
+        <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+            <xsl:if test="@n">
+              <xsl:text>(</xsl:text>
+              <xsl:value-of select="@n"/>
+              <xsl:text>) </xsl:text>
+            </xsl:if>
+            <xsl:apply-templates select="tei:q|tei:quote"/>
+            <xsl:apply-templates select="tei:bibl"/>
+        <xsl:text>&#10;\end{quote}&#10;</xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:bibl">
+          <xsl:if test="@n">
+            <xsl:text>(</xsl:text>
+            <xsl:value-of select="@n"/>
+            <xsl:text>) </xsl:text>
+          </xsl:if>
+          <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="$preQuote"/>
+	<xsl:if test="@n">
+	  <xsl:text>(</xsl:text>
+	  <xsl:value-of select="@n"/>
+	  <xsl:text>) </xsl:text>
+	</xsl:if>
+	<xsl:apply-templates/>
+	<xsl:value-of select="$postQuote"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element code</desc>
    </doc>
   <xsl:template match="tei:code">\texttt{<xsl:apply-templates/>}</xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process &lt;corr&gt;</desc></doc>
-
   <xsl:template match="tei:corr">
       <xsl:apply-templates/>
       <xsl:choose>
@@ -179,14 +223,6 @@
       <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element gi</desc>
-   </doc>
-  <xsl:template match="tei:gi">
-      <xsl:text>\texttt{&lt;</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>&gt;}</xsl:text>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element head</desc>
    </doc>
   <xsl:template match="tei:head">
@@ -202,8 +238,7 @@
             <xsl:variable name="depth">
                <xsl:apply-templates mode="depth" select=".."/>
             </xsl:variable>
-            <xsl:text>
-\Div</xsl:text>
+            <xsl:text>&#10;\Div</xsl:text>
             <xsl:choose>
                <xsl:when test="$depth=0">I</xsl:when>
                <xsl:when test="$depth=1">II</xsl:when>
@@ -621,15 +656,15 @@
             <xsl:apply-templates/>
             <xsl:text>'</xsl:text>
          </xsl:when>
-         <xsl:when test="contains(concat(' ', @rend, ' '), ' quoted ')">
+         <xsl:when test="@rend='inline' or contains(concat(' ', @rend, ' '), ' quoted ')">
             <xsl:value-of select="$preQuote"/>
             <xsl:apply-templates/>
             <xsl:value-of select="$postQuote"/>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:text>\begin{quote}</xsl:text>
-	           <xsl:apply-templates/>
-	           <xsl:text>\end{quote}</xsl:text>
+	   <xsl:text>\begin{quote}</xsl:text>
+	   <xsl:apply-templates/>
+	   <xsl:text>\end{quote}</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -685,13 +720,6 @@
 	   <xsl:value-of select="tei:escapeCharsVerbatim(.)"/>
          </xsl:otherwise>
       </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[latex] </desc>
-   </doc>
-  <xsl:template name="bibliography">
-      <xsl:apply-templates mode="biblio"
-                           select="//tei:ref[@type='cite'] | //tei:ptr[@type='cite']"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
