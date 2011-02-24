@@ -372,12 +372,12 @@ deb: dist
 	rm -f tei-p5-*_*deb
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
-	(cd debian-tei-p5-database; debuild -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-doc; debuild -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-exemplars; debuild -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-schema; debuild -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-source; debuild -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-test; debuild -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-database; debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-doc; debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-exemplars; debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-schema; debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-source; debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-test; debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
