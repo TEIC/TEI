@@ -1284,7 +1284,7 @@
     <xsl:choose>
       <xsl:when test="parent::tei:cit">
         <div class="citquote">
-          <xsl:apply-templates/
+          <xsl:apply-templates/>
         </div>
       </xsl:when>
       <xsl:when test="contains(concat(' ', @rend, ' '), ' quoted ')">
