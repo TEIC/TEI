@@ -38,16 +38,16 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element att</desc>
+      <desc>Process element val</desc>
    </doc>
-  <xsl:template match="tei:att">
+  <xsl:template match="tei:val">
       <xsl:value-of select="$preQuote"/>
       <xsl:apply-templates/>
       <xsl:value-of select="$postQuote"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element val</desc>
+      <desc>Process element att</desc>
    </doc>
   <xsl:template match="tei:att">
       <xsl:text>\textbf{@</xsl:text>
