@@ -6,7 +6,7 @@
     <xsl:import href="../../../epub/tei-to-epub.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
-      <p> TEI stylesheet for simplifying TEI ODD markup </p>
+      <p> TEI stylesheet for making ePub from TEI.</p>
       <p> This library is free software; you can redistribute it and/or modify it under the
       terms of the GNU Lesser General Public License as published by the Free Software Foundation;
       either version 2.1 of the License, or (at your option) any later version. This library is
