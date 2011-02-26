@@ -4,6 +4,7 @@
                 xmlns:o="urn:schemas-microsoft-com:office:office"
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:v="urn:schemas-microsoft-com:vml"
+		xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -29,7 +30,7 @@
   <xsl:param name="DIR"/>
   <xsl:param name="ORIG">.</xsl:param>
 
-  <xsl:key match="tei:graphic" use="1" name="G"/>
+  <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
   <xsl:key match="o:OLEObject" use="1" name="BINARY"/>
   <xsl:key match="v:imagedata" use="1" name="BINARY"/>
 

@@ -233,7 +233,6 @@
          <xsl:when test="parent::tei:lg"> \subsection*{<xsl:apply-templates/>} </xsl:when>
          <xsl:when test="parent::tei:table"/>
          <xsl:when test="parent::tei:div1[@type='letter']"/>
-         <xsl:when test="parent::tei:div[@type='bibliography']"/>
          <xsl:otherwise>
             <xsl:variable name="depth">
                <xsl:apply-templates mode="depth" select=".."/>
@@ -442,43 +441,46 @@
       <desc>Process element listBibl</desc>
    </doc>
    <xsl:template match="tei:listBibl">
-      <xsl:choose>
-         <xsl:when test="tei:biblStruct">
-	           <xsl:text>\begin{bibitemlist}{1}
-</xsl:text>
-	           <xsl:for-each select="tei:biblStruct">
-	              <xsl:sort select="translate(string(tei:*[1]/tei:author/tei:surname or  tei:*[1]/tei:author/tei:orgName or  tei:*[1]/tei:author/tei:name or  tei:*[1]/tei:editor/tei:surname or  tei:*[1]/tei:editor/tei:name or  tei:*[1]/tei:title),$uc,$lc)"/>
-	              <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
-	              <xsl:text>\bibitem[</xsl:text>
-	              <xsl:apply-templates select="." mode="xref"/>
-	              <xsl:text>]{</xsl:text>
-	              <xsl:value-of select="@xml:id"/>
-	              <xsl:text>}\hypertarget{</xsl:text>
-	              <xsl:value-of select="@xml:id"/>
-	              <xsl:text>}{}</xsl:text>
-	              <xsl:apply-templates select="."/>
-	           </xsl:for-each>
-	           <xsl:text>
-\end{bibitemlist}
-</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:text>\begin{bibitemlist}{1}
-</xsl:text>
-	           <xsl:apply-templates/> 
-	           <xsl:text>
-\end{bibitemlist}
-</xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
+     <xsl:choose>
+       <xsl:when test="tei:biblStruct">
+	 <xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
+	 <xsl:for-each select="tei:biblStruct">
+	   <xsl:sort select="translate(string(tei:*[1]/tei:author/tei:surname or  tei:*[1]/tei:author/tei:orgName or  tei:*[1]/tei:author/tei:name or  tei:*[1]/tei:editor/tei:surname or  tei:*[1]/tei:editor/tei:name or  tei:*[1]/tei:title),$uc,$lc)"/>
+	   <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
+	   <xsl:text>\bibitem[</xsl:text>
+	   <xsl:apply-templates select="." mode="xref"/>
+	   <xsl:text>]{</xsl:text>
+	   <xsl:value-of select="@xml:id"/>
+	   <xsl:text>}\hypertarget{</xsl:text>
+	   <xsl:value-of select="@xml:id"/>
+	   <xsl:text>}{}</xsl:text>
+	   <xsl:apply-templates select="."/>
+	 </xsl:for-each>
+	 <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
+	 <xsl:apply-templates/> 
+	 <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element tei:bibl</desc>
    </doc>
    <xsl:template match="tei:bibl">
+     <xsl:choose>
+       <xsl:when test="parent::tei:div|tei:listBibl">
      \par \bgroup\itshape <xsl:apply-templates/> \egroup\vskip6pt\par
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:text>\bgroup\itshape </xsl:text>
+	 <xsl:apply-templates/>
+	 <xsl:text>\egroup </xsl:text>
+       </xsl:otherwise>
+     </xsl:choose>
    </xsl:template>
    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

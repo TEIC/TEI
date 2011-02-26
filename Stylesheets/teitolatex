@@ -86,8 +86,12 @@ cd $TEMPDIR
 # images
 saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$DOCHOME DIR=$TEMPDIR/media > fetch
 sh $TEMPDIR/fetch
+if $debug 
+then
+cat $TEMPDIR/fetch
+else
 rm $TEMPDIR/fetch
-
+fi
 if $odd
 then
     saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
