@@ -537,13 +537,13 @@ capable of dealing with UTF-8 directly.
    <xsl:template name="latexBegin">
       <xsl:text>
 \makeatletter
-\thispagestyle{empty}</xsl:text>
-      <xsl:text>\markright{\@title}\markboth{\@title}{\@author}
+\thispagestyle{empty}
+\markright{\@title}\markboth{\@title}{\@author}
 \renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
-   \belowdisplayskip \abovedisplayskip
-   \abovedisplayshortskip \z@ plus2\p@
-   \belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
-   \def\@listi{\leftmargin\leftmargini
+\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip \z@ plus2\p@
+\belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
+\def\@listi{\leftmargin\leftmargini
                \topsep 2\p@ plus1\p@ minus1\p@
                \parsep 2\p@ plus\p@ minus\p@
                \itemsep 1pt}
@@ -554,10 +554,10 @@ capable of dealing with UTF-8 directly.
 \setlength{\headheight}{14pt}
 \fancyhead[LE]{\bfseries\leftmark} 
 \fancyhead[RO]{\bfseries\rightmark} 
-\fancyfoot[RO]{\TheFullDate}
+\fancyfoot[RO]{}
 \fancyfoot[CO]{\thepage}
 \fancyfoot[LO]{\TheID}
-\fancyfoot[LE]{\TheFullDate}
+\fancyfoot[LE]{}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{\TheID}
 \hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
