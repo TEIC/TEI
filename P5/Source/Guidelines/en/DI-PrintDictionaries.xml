@@ -9,7 +9,8 @@ $Id$
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DI" n="12">
 <head>Dictionaries</head>
 
-<p>This chapter defines a module for encoding human-oriented
+<p>This chapter defines a module for encoding lexical resources of all
+kinds, in particular human-oriented
 monolingual and multilingual dictionaries, glossaries, and similar
 documents. The elements described here may also be useful in the
 encoding of computational lexica and similar resources intended for
@@ -20,14 +21,21 @@ their printed form; however, increasing numbers of dictionaries exist
 also in electronic forms which are independent of any particular
 printed form, but from which various displays can be produced. </p>
 
-<p>Both typographically and structurally, print dictionaries are extremely
-complex. In addition, dictionaries are of interest to many communities with
-different and sometimes conflicting goals. As a result, many general
-problems of text encoding are particularly pronounced here, and more
-compromises and alternatives within the encoding scheme may be
-required in the future.<note place="bottom">We refer the reader to previous and
-current discussions of a common format for encoding dictionaries. For
-example, <ptr type="cit" target="#DI-BIBL-1"/>; <ptr type="cit" target="#DI-BIBL-2"/>;<ptr type="cit" target="#DI-BIBL-3"/>; <ptr type="cit" target="#DI-BIBL-4"/>; <ptr type="cit" target="#DI-BIBL-5"/>; <ptr type="cit" target="#DI-BIBL-6"/>; <ptr type="cit" target="#DI-BIBL-7"/>; and <ptr type="cit" target="#DI-BIBL-8"/>; <ptr type="cit" target="#DI-BIBL-9"/>.</note> Two problems are particularly prominent.</p>
+<p>Both typographically and structurally, print dictionaries are
+extremely complex. Such lexical resources are moreover of interest to
+many communities with different and sometimes conflicting goals. As a
+result, many general problems of text encoding are particularly
+pronounced here, and more compromises and alternatives within the
+encoding scheme may be required in the future.<note place="bottom">We
+refer the reader to previous and current discussions of a common
+format for encoding lexical resources. For example, <ptr type="cit"
+target="#DI-BIBL-1"/>; <ptr type="cit" target="#DI-BIBL-2"/>;<ptr
+type="cit" target="#DI-BIBL-3"/>; <ptr type="cit"
+target="#DI-BIBL-4"/>; <ptr type="cit" target="#DI-BIBL-5"/>; <ptr
+type="cit" target="#DI-BIBL-6"/>; <ptr type="cit"
+target="#DI-BIBL-7"/>; and <ptr type="cit" target="#DI-BIBL-8"/>; <ptr
+type="cit" target="#DI-BIBL-9"/>.</note> Two problems are particularly
+prominent.</p>
 
 <p>First, because the structure of dictionary entries varies widely
 both among and within dictionaries, the simplest way for an encoding
@@ -174,12 +182,12 @@ purpose. In some dictionaries, homographs are treated in distinct
 parts of the same entry; in these cases, they may be separated by use
 of the <gi>hom</gi> element, for which see section <ptr target="#DIENHI"/>. </p>
 
-<p>A sort key, given in the <att>key</att> attribute, is often
+<p>A sort key, given in the <att>sortKey</att> attribute, is often
 required for superentries and entries, especially in cases where the
 order of entries does not follow the local character-set collating
 sequence (as, for example, when an entry for <q>3D</q> appears at the
 place where <q>three-D</q> would appear). </p>
-<!-- maybe rename this attribute to avoid confusion with existing @key -->
+
 
 
 <p>A dictionary with no internal divisions might thus have a structure like
@@ -824,7 +832,7 @@ pattern:<q rend="display">
 <gramGrp>
 <pos>vb</pos>
 </gramGrp>
-<form type="infl">
+<form type="inflected">
 <orth>brags</orth>
 <orth>bragging</orth>
 <orth>bragged</orth>
@@ -2041,7 +2049,7 @@ used in formal English. <ref target="#DIC-CED">CED</ref> </q>
 <!-- note: &triangle; changed to utrif to avoid name conflict (msm)  -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <entry>
-<form type="contr">
+<form type="contraction">
 <orth>ain't</orth>
 <pron>eInt</pron>
 </form>
@@ -2415,7 +2423,7 @@ d'oeuvre <code lang="ipa">/'duhv(z) </code> (Fr ~)/ <ref target="#DIC-NPEG">NPEG
 <pron xml:id="di-p2">OR d0vR</pron>
 </form>
 </form>
-<form type="infl">
+<form type="inflected">
 <number>pl</number>
 <orth>hors d'oeuvres</orth>
 <orth>hors d'oeuvre</orth>
@@ -2626,7 +2634,7 @@ entry, which retains all rendition text, might resemble the following:<egXML xml
 </form>
 <gramGrp>
 <pos>n.</pos>, </gramGrp>
-<form type="infl">
+<form type="inflected">
 <number>pl.</number>
 <form>
 <orth type="lat" extent="part">-nae</orth>
@@ -2683,7 +2691,7 @@ global <att>n</att> attribute</item>
 <gramGrp>
 <pos>n</pos>
 </gramGrp>
-<form type="infl">
+<form type="inflected">
 <number>pl</number>
 <form>
 <orth type="lat" extent="part">-nae</orth>
@@ -2776,7 +2784,7 @@ given together</item>
 <form>
 <orth>pinna</orth>
 <pron>"pIn@</pron>
-<form type="infl">
+<form type="inflected">
 <number>pl</number>
 <form>
 <orth type="lat">pinnae</orth>
@@ -2855,11 +2863,11 @@ expanded to <q>delayed, delayed, delaying</q>. An encoding of the editorial view
 might take this form:<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <form>
 <orth>delay</orth>
-<form type="infl">
+<form type="inflected">
 <orth norm="delayed" extent="part">-ed</orth>
 <tns norm="pst,pstp"/>
 </form>
-<form type="infl">
+<form type="inflected">
 <orth norm="delaying" extent="part">-ing</orth>
 <tns norm="prsp"/>
 </form>
@@ -2869,12 +2877,12 @@ representation of implicit information even though it has no print realization. 
 <p>The lexical view might be encoded thus:<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <form>
 <orth>delay</orth>
-<form type="infl">
+<form type="inflected">
 <orth orig="-ed">delayed</orth>
 <tns orig="">pst</tns>
 <tns orig="">pstp</tns>
 </form>
-<form type="infl">
+<form type="inflected">
 <orth orig="-ing">delaying</orth>
 <tns orig="">prsp</tns>
 </form>
@@ -2987,7 +2995,7 @@ defined for the attribute class <ident type="class">att.lexicographic</ident>:<s
 <orth>pinna</orth>
 <pron>'pIn@</pron>
 <anchor xml:id="p01"/>
-<form type="infl">
+<form type="inflected">
 <number>pl</number>
 <form>
 <orth extent="part">-nae</orth>
