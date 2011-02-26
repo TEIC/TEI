@@ -50,4 +50,31 @@
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Generate revision description</desc>
+  </doc>
+  <xsl:template match="tei:divGen[@type='revHist']">
+    <xsl:variable name="r">
+      <div xmlns="http://www.tei-c.org/ns/1.0" rend='nonumber'>
+	<head>Revision history</head>
+	<table rend="rules" >
+	  <xsl:for-each
+	      select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change">
+	    <row>
+	      <cell><xsl:value-of select="@when"/></cell>
+	      <cell><xsl:value-of select="@who"/></cell>
+	      <cell><xsl:value-of select="."/></cell>
+	    </row>
+	  </xsl:for-each>
+	</table>
+      </div>
+    </xsl:variable>
+    <xsl:for-each select="$r">
+      <xsl:apply-templates/>
+    </xsl:for-each>
+  </xsl:template>
+
+
+
 </xsl:stylesheet>
