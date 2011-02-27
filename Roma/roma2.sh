@@ -182,6 +182,7 @@ echo "  --useteiversion    # use version data from TEI P5"
 echo "  --parameterize     # create parameterized DTD"
 echo "  --patternprefix=STRING # prefix RELAX NG patterns with STRING"
 echo "  --schema=NAME      # select named schema spec"
+echo "  --version          # which version of Roma is this"
 exit 1
 }
 
@@ -225,6 +226,7 @@ while test $# -gt 0; do
     --schematron)      schematron=true;;
     --isoschematron)      isoschematron=true;;
     --useteiversion=*) useVersionFromTEI=`echo $1 | sed 's/.*=//'`;;
+    --version) echo Roma version is VVVERSION;;
     --parameterize)       parameterize=true;;
     --schema=*)    schema=`echo $1 | sed 's/.*=//'`;;
     --patternprefix=*) PATTERNPREFIX=`echo $1 | sed 's/.*=//'`;;
@@ -263,7 +265,7 @@ echo "Results to: $RESULTS"
 mkdir -p $RESULTS || die "cannot make directory $RESULTS"
 D=`date "+%Y-%m-%d %H:%M:%S.%N"`
 echo "Process $ODD to create $schema{.dtd|.xsd|.doc.xml|.rng|.rnc} in $RESULTS"
-echo "========= Roma starts execution at $D ==========="
+echo "========= Roma version VVVERSION starts execution at $D ==========="
 if test "x$PATTERNPREFIX" = "x"
 then
    PATTERN=" "

@@ -702,7 +702,6 @@ class roma
 	notamHandler::getError( 'moduleChanged', $aoErrors );
 	notamHandler::deleteError( 'moduleChanged' );
 	$this->addErrorsDom( $oListDom, $aoErrors );
-
 	$this->m_oRomaDom->getExcludedElementsInModule( $_REQUEST[ 'module' ], $oExcludedElements );
 	$this->m_oRomaDom->getIncludedElementsInModule( $_REQUEST[ 'module' ], $oIncludedElements );
 	$this->m_oRomaDom->getElementsWithChangedNameInModuleDom( $_REQUEST[ 'module' ], $oChanged );

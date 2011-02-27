@@ -10,7 +10,6 @@ FILES=ChangeLog \
 	progressbar \
 	resource \
 	roma \
-	roma.sh \
 	roma2.sh \
 	roma.1 \
 	roma.css \
@@ -34,10 +33,9 @@ install: release-stamp
 	mkdir -p ${PREFIX}${LOCATION}/share/tei-roma
 	(cd release; tar cf - . ) | (cd ${PREFIX}${LOCATION}/share; tar xf - )
 	mkdir -p ${PREFIX}${LOCATION}/bin
-	cp -p roma.sh ${PREFIX}${LOCATION}/bin/roma
-	chmod 755 ${PREFIX}${LOCATION}/bin/roma
-	cp -p roma2.sh ${PREFIX}${LOCATION}/bin/roma2
-	chmod 755 ${PREFIX}${LOCATION}/bin/roma2
+	sed "s/VVVERSION/`cat VERSION`/" roma2.sh > ${PREFIX}${LOCATION}/bin/roma
+	sed "s/VVVERSION/`cat VERSION`/" roma2.sh > ${PREFIX}${LOCATION}/bin/roma2
+	chmod 755 ${PREFIX}${LOCATION}/bin/roma ${PREFIX}${LOCATION}/bin/roma2
 	mkdir -p $(PREFIX)/etc/tei-roma
 	cp $(PREFIX)/${LOCATION}/share/tei-roma/roma/config-dist.php $(PREFIX)/etc/tei-roma/config.php
         perl -p -i -e 's+http://www.tei-c.org/release+/usr/share+' $(PREFIX)/etc/tei-roma/config.php
