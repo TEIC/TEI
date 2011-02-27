@@ -43,15 +43,6 @@
 
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="@rend='display' and tei:quote">
-            <xsl:if test="@n">
-              <xsl:text>(</xsl:text>
-              <xsl:value-of select="@n"/>
-              <xsl:text>) </xsl:text>
-            </xsl:if>
-            <xsl:apply-templates select="tei:q|tei:quote"/>
-            <xsl:apply-templates select="tei:*[not(self::tei:q or self::tei:quote)]"/>
-      </xsl:when>
       <xsl:when test="@rend='display'">
         <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
             <xsl:if test="@n">
@@ -62,14 +53,6 @@
             <xsl:apply-templates select="tei:q|tei:quote"/>
             <xsl:apply-templates select="tei:bibl"/>
         <xsl:text>&#10;\end{quote}&#10;</xsl:text>
-      </xsl:when>
-      <xsl:when test="tei:bibl">
-          <xsl:if test="@n">
-            <xsl:text>(</xsl:text>
-            <xsl:value-of select="@n"/>
-            <xsl:text>) </xsl:text>
-          </xsl:if>
-          <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:value-of select="$preQuote"/>
@@ -643,7 +626,7 @@
          </xsl:when>
          <xsl:when test="tei:lg"> \begin{quote}<xsl:apply-templates/> \end{quote} </xsl:when>
          <xsl:otherwise>
-	           <xsl:call-template name="makeQuote"/>
+	   <xsl:call-template name="makeQuote"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -653,21 +636,16 @@
    </doc>
   <xsl:template match="tei:quote">
       <xsl:choose>
-         <xsl:when test="parent::tei:cit">
-            <xsl:text>`</xsl:text>
-            <xsl:apply-templates/>
-            <xsl:text>'</xsl:text>
-         </xsl:when>
-         <xsl:when test="@rend='inline' or contains(concat(' ', @rend, ' '), ' quoted ')">
-            <xsl:value-of select="$preQuote"/>
-            <xsl:apply-templates/>
-            <xsl:value-of select="$postQuote"/>
-         </xsl:when>
-         <xsl:otherwise>
+	 <xsl:when test="@rend='display'">
 	   <xsl:text>\begin{quote}</xsl:text>
 	   <xsl:apply-templates/>
 	   <xsl:text>\end{quote}</xsl:text>
-         </xsl:otherwise>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:value-of select="$preQuote"/>
+            <xsl:apply-templates/>
+            <xsl:value-of select="$postQuote"/>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
 
