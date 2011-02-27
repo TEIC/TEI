@@ -118,15 +118,22 @@
     </address>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element author</desc>
+  </doc>
+  <xsl:template match="tei:author">
+    <span>
+      <xsl:call-template name="rendToClass"/>
+      <xsl:apply-imports/>
+    </span>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element bibl</desc>
   </doc>
   <xsl:template match="tei:bibl">
     <xsl:choose>
       <xsl:when test="parent::tei:cit">
         <div class="citbibl">
-          <xsl:text>(</xsl:text>
           <xsl:apply-templates/>
-          <xsl:text>)</xsl:text>
         </div>
       </xsl:when>
       <xsl:when test="parent::tei:div">
@@ -218,7 +225,7 @@
               <xsl:text>) </xsl:text>
             </xsl:if>
             <xsl:apply-templates select="tei:q|tei:quote"/>
-            <xsl:apply-templates select="tei:bibl"/>
+            <xsl:apply-templates select="tei:*[not(self::tei:q or self::tei:quote)]"/>
           </p>
         </blockquote>
       </xsl:when>
@@ -263,7 +270,17 @@
     <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc/>
+    <desc>Decorate date</desc>
+  </doc>
+  <xsl:template match="tei:date">
+    <span>
+      <xsl:call-template name="rendToClass"/>
+      <xsl:apply-imports/>
+    </span>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>The del element</desc>
   </doc>
   <xsl:template match="tei:del">
     <del>
@@ -1287,33 +1304,15 @@
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="contains(concat(' ', @rend, ' '), ' quoted ')">
-        <xsl:value-of select="$preQuote"/>
-        <xsl:apply-templates/>
-        <xsl:value-of select="$postQuote"/>
-        <xsl:if test="following-sibling::tei:bibl">
-          <span class="quotedbibl">
-            <xsl:text>(</xsl:text>
-            <xsl:apply-templates select="following-sibling::tei:bibl"/>
-            <xsl:text>)</xsl:text>
-          </span>
-        </xsl:if>
+      <xsl:when test="@rend='inline'">
+	<span class="quote_inline">
+	  <xsl:value-of select="$preQuote"/>
+	  <xsl:apply-templates/>
+	  <xsl:value-of select="$postQuote"/>
+	</span>
       </xsl:when>
-      <xsl:when test="parent::tei:p or parent::tei:note">
-        <div class="blockquote">
-          <xsl:choose>
-            <xsl:when test="tei:p|tei:l|tei:lg">
-              <xsl:apply-templates/>
-            </xsl:when>
-            <xsl:otherwise>
-              <p>
-                <xsl:apply-templates/>
-              </p>
-            </xsl:otherwise>
-          </xsl:choose>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
+      <xsl:when test="@rend='display' or tei:p or tei:l or
+		      string-length(.)&gt;150">
         <blockquote>
           <xsl:call-template name="rendToClass"/>
           <xsl:choose>
@@ -1330,9 +1329,17 @@
             </xsl:otherwise>
           </xsl:choose>
         </blockquote>
+      </xsl:when>
+      <xsl:otherwise>
+	<span class="quote_inline">
+	  <xsl:value-of select="$preQuote"/>
+	  <xsl:apply-templates/>
+	  <xsl:value-of select="$postQuote"/>
+	</span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element resp</desc>
   </doc>

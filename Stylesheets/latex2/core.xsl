@@ -646,7 +646,12 @@
 	<xsl:when test="parent::tei:cit">
 	  <xsl:apply-templates/>
 	</xsl:when>
-	<xsl:when test="@rend='display' or tei:p or tei:l">
+	<xsl:when test="@rend='inline'">
+	  <xsl:value-of select="$preQuote"/>
+	  <xsl:apply-templates/>
+	  <xsl:value-of select="$postQuote"/>
+	</xsl:when>
+	<xsl:when test="@rend='display' or tei:p or tei:l or string-length(.)&gt;150">
 	  <xsl:text>\begin{quote}</xsl:text>
 	  <xsl:apply-templates/>
 	  <xsl:text>\end{quote}</xsl:text>
