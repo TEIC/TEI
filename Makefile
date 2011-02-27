@@ -505,5 +505,5 @@ clean:
 	rm -f tei-p5-*_*deb
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
-
+	rm -f teiwebsiteguidelines.zip
 
