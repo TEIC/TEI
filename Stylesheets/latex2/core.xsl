@@ -43,7 +43,8 @@
 
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="@rend='display'">
+      <xsl:when test="@rend='display' or tei:q/tei:p or
+		      tei:quote/tei:l or tei:quote/tei:p">
         <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
             <xsl:if test="@n">
               <xsl:text>(</xsl:text>
@@ -51,6 +52,7 @@
               <xsl:text>) </xsl:text>
             </xsl:if>
             <xsl:apply-templates select="tei:q|tei:quote"/>
+	    <xsl:text>\par&#10;</xsl:text>
             <xsl:apply-templates select="tei:bibl"/>
         <xsl:text>&#10;\end{quote}&#10;</xsl:text>
       </xsl:when>
@@ -456,7 +458,12 @@
    <xsl:template match="tei:bibl">
      <xsl:choose>
        <xsl:when test="parent::tei:div|tei:listBibl">
-     \par \bgroup\itshape <xsl:apply-templates/> \egroup\vskip6pt\par
+	 <xsl:text>\par \bgroup\itshape&#10;</xsl:text>
+	 <xsl:apply-templates/> 
+	 <xsl:text>\egroup\vskip6pt\par&#10;</xsl:text>
+       </xsl:when>
+       <xsl:when test="parent::tei:cit">
+	 <xsl:apply-templates/>
        </xsl:when>
        <xsl:otherwise>
 	 <xsl:text>\bgroup\itshape </xsl:text>
@@ -553,7 +560,7 @@
          <xsl:when test="parent::tei:note and not(preceding-sibling::tei:p)">
       </xsl:when>
          <xsl:otherwise>
-	           <xsl:text>\par&#10;</xsl:text>
+	   <xsl:text>\par&#10;</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
       <xsl:if test="$numberParagraphs='true'">
@@ -636,16 +643,19 @@
    </doc>
   <xsl:template match="tei:quote">
       <xsl:choose>
-	 <xsl:when test="@rend='display'">
-	   <xsl:text>\begin{quote}</xsl:text>
-	   <xsl:apply-templates/>
-	   <xsl:text>\end{quote}</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:value-of select="$preQuote"/>
-            <xsl:apply-templates/>
-            <xsl:value-of select="$postQuote"/>
-	 </xsl:otherwise>
+	<xsl:when test="parent::tei:cit">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:when test="@rend='display' or tei:p or tei:l">
+	  <xsl:text>\begin{quote}</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>\end{quote}</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$preQuote"/>
+	  <xsl:apply-templates/>
+	  <xsl:value-of select="$postQuote"/>
+	</xsl:otherwise>
       </xsl:choose>
   </xsl:template>
 
