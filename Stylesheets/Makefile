@@ -122,7 +122,7 @@ doc:
 	saxon -o:release/common/doc/tei-xsl-common/style.html style.xml  profiles/default/html/to.xsl 
 	saxon -o:release/common/doc/tei-xsl-common/customize.html customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
 	cp doc/teixsl.png teixsl.xml style.xml customize.xml release/common/doc/tei-xsl-common
-	cp tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
+	cp VERSION tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
 
 oxygendoc:
 	test -f $(OXY) || exit 1
@@ -209,7 +209,7 @@ log:
 clean:
 	echo "" > test~
 	find . -name "*~"  | xargs rm
-	rm -f tei-xsl-`cat VERSION`.zip	
+	rm -f tei-xsl-*.zip	
 	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
