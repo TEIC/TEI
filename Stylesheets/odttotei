@@ -6,7 +6,6 @@ conversion=
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 PROFILEDIR=$APPHOME/profiles
-TEMPLATES=$PROFILEDIR/$profile/oo
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
@@ -27,6 +26,7 @@ N=`basename "$1" .odt`
 HERE=`pwd`
 D=`dirname "$1"`
 THERE=`(cd $D; pwd)`
+TEMPLATES=$PROFILEDIR/$profile/oo
 if ! test -d $TEMPLATES 
 then
     echo No support for profile $profile: $APPHOME/profiles/$profile/oo does not exist
