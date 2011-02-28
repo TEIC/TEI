@@ -18,8 +18,7 @@
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
-                
-                xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 version="2.0"
                 exclude-result-prefixes="cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
     
@@ -40,10 +39,11 @@
          <p>Author: See AUTHORS</p>
          <p>Id: $Id$</p>
          <p>Copyright: 2008, TEI Consortium</p>
-      </desc>
-   </doc>
+      </desc></doc>
+
     
-    <!-- Converts a dimension into the 20th of a ps point -->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Converts a dimension into the 20th of a ps point.</desc></doc>
     <xsl:function name="teidocx:convert-dim-pt20" as="xs:integer">
         <xsl:param name="dim"/>
 	     <xsl:value-of select="number(substring($dim,0,string-length($dim)-1)) * 20"/>
@@ -75,7 +75,8 @@
         </xsl:choose>
     </xsl:function>
     
-    <!-- convert a dimension into english metric unit -->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Convert a dimension into english metric unit.</desc></doc>
     <xsl:function name="teidocx:convert-dim-emu" as="xs:integer">
         <xsl:param name="dim"/>
 	<xsl:variable name="result">
@@ -103,13 +104,15 @@
 	<xsl:value-of select="$result"/>
     </xsl:function>
     
-    <!-- returns a listtype for a given stylename (return empty string to figure it out dynamically) -->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Returns a listtype for a given stylename (return empty string to figure it out dynamically).</desc></doc>
     <xsl:function name="teidocx:get-listtype" as="xs:string">
         <xsl:param name="style"/>
         <xsl:text/>
     </xsl:function>
     
-    <!-- returns the correct heading style (return empty string to figure it out dynamically)-->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Returns the correct heading style (return empty string to figure it out dynamically).</desc></doc>
     <xsl:function name="teidocx:get-headingstyle" as="xs:string">
         <xsl:param name="element"/>
         <xsl:param name="level"/>
@@ -117,7 +120,8 @@
         <xsl:text/>
     </xsl:function>    
     
-    <!-- defines whether or not a word paragraph is a first level heading -->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Defines whether or not a word paragraph is a first level heading.</desc></doc>
     <xsl:function name="teidocx:is-firstlevel-heading" as="xs:boolean">
         <xsl:param name="p"/>
         
@@ -127,7 +131,8 @@
         </xsl:choose>
     </xsl:function>
     
-    <!-- defines whether or not a word paragraph is a  heading -->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Defines whether or not a word paragraph is a  heading.</desc></doc>
     <xsl:function name="teidocx:is-heading" as="xs:boolean">
         <xsl:param name="p"/>
         
@@ -137,7 +142,8 @@
         </xsl:choose>
     </xsl:function>
 
-    <!-- defines whether or not a word paragraph is a list element-->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Defines whether or not a word paragraph is a list element.</desc></doc>
     <xsl:function name="teidocx:is-list" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
@@ -146,7 +152,18 @@
         </xsl:choose>
     </xsl:function>
 
-    <!-- defines whether or not a word paragraph is a figure element-->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Defines whether or not a word paragraph is a table of contents.</desc></doc>
+    <xsl:function name="teidocx:is-toc" as="xs:boolean">
+        <xsl:param name="p"/>        
+        <xsl:choose>
+            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'toc')]">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Defines whether or not a word paragraph is a figure element.</desc></doc>
     <xsl:function name="teidocx:is-figure" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
@@ -156,13 +173,15 @@
         </xsl:choose>
     </xsl:function>
     
-    <!-- Is given a header style and returns the style for the next level header -->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Is given a header style and returns the style for the next level header.</desc></doc>
     <xsl:function name="teidocx:get-nextlevel-header" as="xs:string">
         <xsl:param name="current-header"/>
         <xsl:value-of select="translate($current-header,'12345678','23456789')"/>
     </xsl:function>
     
-    <!-- define special rendering for attributes -->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Define special rendering for attributes.</desc></doc>
     <xsl:function name="teidocx:render-bold" as="xs:boolean">
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
@@ -183,6 +202,8 @@
         </xsl:for-each>
     </xsl:function>
     
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Whether to render something in italic code.</desc></doc>
     <xsl:function name="teidocx:render-italic" as="xs:boolean">
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
@@ -205,6 +226,8 @@
         </xsl:for-each>
     </xsl:function>
     
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Whether to render something in typewriter-like code.</desc></doc>
     <xsl:function name="teidocx:render-typewriter" as="xs:boolean">
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
@@ -218,7 +241,8 @@
         </xsl:for-each>
     </xsl:function>
     
-    <!-- is given an element and defines whether or not this element is to be rendered inline. -->
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Is given an element and defines whether or not this element is to be rendered inline.</desc></doc>
     <xsl:function name="teidocx:is-inline" as="xs:boolean">
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
@@ -226,8 +250,7 @@
 		<xsl:when test="self::mml:math">true</xsl:when>
 		<xsl:when test="self::tei:abbr">true</xsl:when>
 		<xsl:when test="self::tei:affiliation">true</xsl:when>
-		<xsl:when
-		    test="self::tei:altIdentifier">true</xsl:when>
+		<xsl:when test="self::tei:altIdentifier">true</xsl:when>
 		<xsl:when test="self::tei:add">true</xsl:when>
 		<xsl:when test="self::tei:am">true</xsl:when>
 		<xsl:when test="self::tei:att">true</xsl:when>
@@ -323,11 +346,10 @@
         </xsl:for-each>
     </xsl:function>
 
-	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-		Returns the current date.
-	</desc>
-   </doc>
+		Returns the current date.</desc></doc>
+
 	  <xsl:function name="teidocx:whatsTheDate">
         <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
     </xsl:function>

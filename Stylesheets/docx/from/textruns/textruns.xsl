@@ -124,7 +124,7 @@
        </xsl:when>
        
        <xsl:when test="not($style='')">
-	 <hi rend="{$style}">
+	 <hi rend="{replace($style,' ','_')}">
 	   <xsl:apply-templates/>
 	 </hi>
        </xsl:when>

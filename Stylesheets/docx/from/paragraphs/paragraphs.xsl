@@ -77,7 +77,7 @@
      <p>
        <xsl:if test="w:pPr/w:pStyle/@w:val">
 	 <xsl:attribute name="rend">
-	   <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+	   <xsl:value-of select="(w:pPr/w:pStyle/@w:val)"/>
 	 </xsl:attribute>
        </xsl:if>
        <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">
@@ -101,7 +101,6 @@
 	   <xsl:call-template name="process-checking-for-crossrefs"/>
 	 </xsl:otherwise>
        </xsl:choose>
-   
      </p>
    </xsl:template>
    

@@ -274,8 +274,8 @@
 	    -->
 	    <xsl:for-each-group 
 		select="current-group()"
-		group-adjacent="if (teidocx:is-list(.))  then 1
-				else  if (starts-with(w:pPr/w:pStyle/@w:val,'toc')) then 2
+		group-adjacent="if       (teidocx:is-list(.))  then 1
+				else  if (teidocx:is-toc(.))   then 2
 				else  if (teidocx:is-figure(.)) then 3
 				else position() + 100">
 	      
