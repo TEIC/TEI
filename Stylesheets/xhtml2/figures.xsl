@@ -4,14 +4,13 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:svg="http://www.w3.org/2000/svg"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-
+                xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:teix="http://www.tei-c.org/ns/Examples"
-                
+                xmlns:teix="http://www.tei-c.org/ns/"                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="#default svg a fo rng tei teix m"
+                exclude-result-prefixes="#default svg a fo rng tei teidocx teix m"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -59,63 +58,73 @@
 	<xsl:otherwise>td</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-      <xsl:element name="{$cellname}">
-	  <xsl:attribute name="valign">top</xsl:attribute>
-         <xsl:for-each select="@*">
-            <xsl:choose>
-               <xsl:when test="name(.) = 'width'          or name(.) = 'border'          or name(.) = 'cellspacing'          or name(.) = 'cellpadding'">
-                  <xsl:copy-of select="."/>
-               </xsl:when>
-               <xsl:when test="name(.)='rend' and starts-with(.,'width:')">
-                  <xsl:attribute name="width">
-                     <xsl:value-of select="substring-after(.,'width:')"/>
-                  </xsl:attribute>
-               </xsl:when>
-               <xsl:when test="name(.)='rend' and starts-with(.,'class:')">
-                  <xsl:attribute name="class">
-                     <xsl:value-of select="substring-after(.,'class:')"/>
-                  </xsl:attribute>
-               </xsl:when>
-               <xsl:when test="name(.)='rend' and starts-with(.,'style=')">
-                  <xsl:attribute name="style">
-                     <xsl:value-of select="substring-after(.,'style=')"/>
-                  </xsl:attribute>
-               </xsl:when>
-               <xsl:when test="name(.)='rend'">
-                  <xsl:attribute name="class">
-                     <xsl:value-of select="."/>
-                  </xsl:attribute>
-               </xsl:when>
-               <xsl:when test="name(.)='cols'">
-                  <xsl:attribute name="colspan">
-                     <xsl:value-of select="."/>
-                  </xsl:attribute>
-               </xsl:when>
-               <xsl:when test="name(.)='rows'">
-                  <xsl:attribute name="rowspan">
-                     <xsl:value-of select="."/>
-                  </xsl:attribute>
-               </xsl:when>
-               <xsl:when test="name(.)='align'">
-                  <xsl:attribute name="align">
-                     <xsl:value-of select="."/>
-                  </xsl:attribute>
-               </xsl:when>
-            </xsl:choose>
-         </xsl:for-each>
-         <xsl:if test="not(@align) and not($cellAlign='left')">
-            <xsl:attribute name="align">
-               <xsl:value-of select="$cellAlign"/>
-            </xsl:attribute>
-         </xsl:if>
-         <xsl:if test="@role and not (@rend)">
-            <xsl:attribute name="class">
-               <xsl:value-of select="@role"/>
-            </xsl:attribute>
-         </xsl:if>
-         <xsl:call-template name="makeAnchor"/>
-         <xsl:apply-templates/>
-      </xsl:element>
+    <xsl:element name="{$cellname}">
+      <xsl:attribute name="valign">top</xsl:attribute>
+      <xsl:for-each select="@*">
+	<xsl:choose>
+	  <xsl:when test="name(.) = 'width' or name(.) =
+			  'border' or name(.) = 'cellspacing'
+			  or name(.) = 'cellpadding'">
+	    <xsl:copy-of select="."/>
+	  </xsl:when>
+	  <xsl:when test="name(.)='rend' and starts-with(.,'width:')">
+	    <xsl:attribute name="width">
+	      <xsl:value-of select="substring-after(.,'width:')"/>
+	    </xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="name(.)='rend' and starts-with(.,'class:')">
+	    <xsl:attribute name="class">
+	      <xsl:value-of select="substring-after(.,'class:')"/>
+	    </xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="name(.)='rend' and starts-with(.,'style=')">
+	    <xsl:attribute name="style">
+	      <xsl:value-of select="substring-after(.,'style=')"/>
+	    </xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="name(.)='rend'">
+	    <xsl:attribute name="class">
+	      <xsl:value-of select="."/>
+	    </xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="name(.)='cols'">
+	    <xsl:attribute name="colspan">
+	      <xsl:value-of select="."/>
+	    </xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="name(.)='rows'">
+	    <xsl:attribute name="rowspan">
+	      <xsl:value-of select="."/>
+	    </xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="name(.)='align'">
+	    <xsl:attribute name="align">
+	      <xsl:value-of select="."/>
+	    </xsl:attribute>
+	  </xsl:when>
+	</xsl:choose>
+      </xsl:for-each>
+      <xsl:choose>
+	<xsl:when test="@teidocx:align">
+	  <xsl:attribute name="align">
+	    <xsl:value-of select="@teidocx:align"/>
+	  </xsl:attribute>
+	</xsl:when>
+	<xsl:when test="@align"/>
+	<xsl:when test="not($cellAlign='left')">
+	  <xsl:attribute name="align">
+	    <xsl:value-of select="$cellAlign"/>
+	  </xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:if test="@role and not (@rend)">
+	<xsl:attribute name="class">
+	  <xsl:value-of select="@role"/>
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:call-template name="makeAnchor"/>
+      <xsl:apply-templates/>
+    </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element figDesc</desc>
