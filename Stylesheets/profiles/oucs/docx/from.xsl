@@ -43,6 +43,10 @@
     
     <xsl:template match="@rend[.='ITLP Body Text']" mode="pass2"/>
 
+    <xsl:template match="tei:cell/@rend[.='ITLP Body Text background-color(D9D9D9)']" mode="pass2">
+      <xsl:attribute name="role">label</xsl:attribute>
+    </xsl:template>
+
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	Returns a listtype for a given stylename (return empty string to
@@ -157,7 +161,10 @@
       <xsl:value-of select="translate($current-header,'12345678','23456789')"/>
     </xsl:function>
    
-    <!-- defines whether or not a word paragraph is a list element-->
+    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>Defines whether or not a word paragraph is a list element.</desc>
+    </doc>
+   
     <xsl:function name="teidocx:is-list" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
@@ -168,6 +175,58 @@
         </xsl:choose>
     </xsl:function>
 
-  
+    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>Override default behaviour for a styled paragraph</desc>
+    </doc>
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Task Text']"  mode="paragraph">
+      <p type="TaskText">
+	<xsl:apply-templates/>
+      </p>
+    </xsl:template>
+
+    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>Override default behaviour for a styled text run</desc>
+    </doc>
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP FileSpec']">
+      <hi rend="FileSpec">
+	<xsl:apply-templates/>
+      </hi>
+    </xsl:template>
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Button']">
+      <hi rend="Button">
+	<xsl:apply-templates/>
+      </hi>
+    </xsl:template>
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Input']">
+      <hi rend="Input">
+	<xsl:apply-templates/>
+      </hi>
+    </xsl:template>
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Key']">
+      <hi rend="Key">
+	<xsl:apply-templates/>
+      </hi>
+    </xsl:template>
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Label']">
+      <hi rend="Label">
+	<xsl:apply-templates/>
+      </hi>
+    </xsl:template>
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Menu']">
+      <hi rend="Menu">
+	<xsl:apply-templates/>
+      </hi>
+    </xsl:template>
+
+    <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Software']">
+      <hi rend="Software">
+	<xsl:apply-templates/>
+      </hi>
+    </xsl:template>
+
   </xsl:stylesheet>
   
