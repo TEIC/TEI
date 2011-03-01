@@ -41,9 +41,11 @@
     </desc>
   </doc>
     
+    <xsl:template match="@rend[.='ITLP_Body_Text']" mode="pass2"/>
+
     <xsl:template match="@rend[.='ITLP Body Text']" mode="pass2"/>
 
-    <xsl:template match="tei:cell/@rend[.='ITLP Body Text background-color(D9D9D9)']" mode="pass2">
+    <xsl:template match="tei:cell/@rend[.='ITLP_Body_Text background-color(D9D9D9)']" mode="pass2">
       <xsl:attribute name="role">label</xsl:attribute>
     </xsl:template>
 
@@ -65,7 +67,11 @@
 	  <xsl:apply-templates/>
         </head>
     </xsl:template>
-
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Ex Tasks Bulleted']" mode="paragraph">
+        <item>
+	  <xsl:apply-templates/>
+        </item>
+    </xsl:template>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP BodyText Bulletted']" mode="paragraph">
         <item>
 	  <xsl:apply-templates/>
@@ -171,6 +177,7 @@
             <xsl:when
 		test="$p[contains(w:pPr/w:pStyle/@w:val,'List')]">true</xsl:when>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulletted')]">true</xsl:when>
+            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Bulleted')]">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
@@ -178,8 +185,33 @@
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>Override default behaviour for a styled paragraph</desc>
     </doc>
-    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Task Text']"  mode="paragraph">
-      <p type="TaskText">
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Ex Explanation']"
+		  mode="paragraph">
+      <p rend="ExampleExplanation">
+	<xsl:apply-templates/>
+      </p>
+    </xsl:template>
+
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Task Text']"
+		  mode="paragraph">
+      <p rend="ExampleTask">
+	<xsl:apply-templates/>
+      </p>
+    </xsl:template>
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Step Text']"
+		  mode="paragraph">
+      <p rend="ExampleStep">
+	<xsl:apply-templates/>
+      </p>
+    </xsl:template>
+
+
+    <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Ex Heading']"
+		  mode="paragraph">
+      <p rend="ExampleHeading">
 	<xsl:apply-templates/>
       </p>
     </xsl:template>
@@ -188,44 +220,44 @@
       <desc>Override default behaviour for a styled text run</desc>
     </doc>
     <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP FileSpec']">
-      <hi rend="FileSpec">
+      <code rend="FileSpec">
 	<xsl:apply-templates/>
-      </hi>
+      </code>
     </xsl:template>
     <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Button']">
-      <hi rend="Button">
+      <code rend="Button">
 	<xsl:apply-templates/>
-      </hi>
+      </code>
     </xsl:template>
 
     <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Input']">
-      <hi rend="Input">
+      <code rend="Input">
 	<xsl:apply-templates/>
-      </hi>
+      </code>
     </xsl:template>
 
     <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Key']">
-      <hi rend="Key">
+      <code rend="Key">
 	<xsl:apply-templates/>
-      </hi>
+      </code>
     </xsl:template>
 
     <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Label']">
-      <hi rend="Label">
+      <code rend="Label">
 	<xsl:apply-templates/>
-      </hi>
+      </code>
     </xsl:template>
 
     <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Menu']">
-      <hi rend="Menu">
+      <code rend="Menu">
 	<xsl:apply-templates/>
-      </hi>
+      </code>
     </xsl:template>
 
     <xsl:template match="w:r[w:rPr/w:rStyle/@w:val='ITLP Software']">
-      <hi rend="Software">
+      <code rend="Software">
 	<xsl:apply-templates/>
-      </hi>
+      </code>
     </xsl:template>
 
   </xsl:stylesheet>

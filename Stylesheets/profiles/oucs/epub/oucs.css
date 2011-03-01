@@ -1,4 +1,4 @@
-/* OUCS Standard April 2009 */
+/* OUCS for ePub March 2011 */
 .homepagesideheading {
     margin-top: 0px;
     margin-bottom: 5px;
@@ -232,9 +232,20 @@ th {
 td:first-child {
     text-align: left;
 }
+td.alignleft {
+    text-align: left;
+}
+td.aligncenter {
+    text-align: center;
+}
+td.alignright {
+    text-align: right;
+}
+td.alignboth {
+    text-align: justify;
+}
 td {
     padding: 2px;
-    text-align: right;
     font-size: 0.9em;
 }
 /* Table cell background colours */
@@ -429,6 +440,7 @@ div#trailOuter a, div#trailOuter a:link, div#trailOuter a:visited {
     color: #999999;
 }
 body {
+    counter-reset: exercise;
     margin: 0;
     padding: 0;
     font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
@@ -1492,48 +1504,46 @@ caption {
     text-align: center;
 }
 /*  end Tables */
-/* special icon style bullets */
-.ff-bullet {
-    list-style-image: url(/images/ff-bullet.png);
-    margin-left: 2em;
+
+/* ITLP booklets */
+p.ExampleHeading:before {
+    content: "Exercise " counter(exercise) ": ";
+ }
+p.ExampleHeading {
+    font-size: large;
+    font-weight: bold;
+    counter-increment: exercise;
 }
-.ie-bullet {
-    list-style-image: url(/images/ie-bullet.png);
-    margin-left: 2em;
+p.ExampleExplanation {
+    font-style: italic;
 }
-.apple-bullet {
-    list-style-image: url(/images/apple-bullet.png);
-    margin-left: 2em;
+
+p.ExampleHeading:before {
+    content: "Exercise " counter(exercise) ": ";
+ }
+p.ExampleHeading {
+    font-size: large;
+    font-weight: bold;
+    counter-increment: exercise;
+    counter-reset: task;
 }
-.entourage-bullet {
-    list-style-image: url(/images/entourage-bullet.png);
-    margin-left: 2em;
+
+td.ITLP_Task_Number p.ExampleTask:before {
+    font-weight: bold;
+    content: "Task " counter(task) ": ";
+ }
+td.ITLP_Task_Number p.ExampleTask {
+    counter-reset: step;
+    counter-increment: task;
 }
-.outlook-bullet {
-    list-style-image: url(/images/outlook-bullet.png);
-    margin-left: 2em;
+
+td.ITLP_Step_Number p.ExampleStep:before {
+    font-weight: bold;
+    content: "Step " counter(step) ": ";
+ }
+td.ITLP_Step_Number p.ExampleStep {
+    counter-increment: step;
 }
-.outlook10-bullet {
-    list-style-image: url(/images/outlook10-icon.png);
-    margin-left: 2em;
-}
-/* End fancy bullet styles */
-/* used by JQuery tablesorter */
-table.tablesorter thead tr.header {
-    padding-right: 15px;
-    background-image: url(/images/bg.gif);
-    background-repeat: no-repeat;
-    background-position: center right;
-    cursor: pointer;
-}
-table.tablesorter thead tr.headerSortUp {
-    padding-right: 10px;
-    background-image: url(/images/asc.gif);
-}
-table.tablesorter thead tr.headerSortDown {
-    padding-right: 10px;
-    background-image: url(/images/desc.gif);
-}
-table.tablesorter thead tr.noSort {
-    background: none;
+td.ITLP_Step_Number {
+    text-align: left;
 }
