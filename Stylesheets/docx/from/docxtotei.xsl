@@ -192,51 +192,51 @@
 	    </desc>
 	  </doc>
 	  <xsl:template name="mainProcess">
-				<!-- 
-					group all paragraphs that form a first level section.
-				-->
-				<xsl:for-each-group select="w:sdt|w:p|w:tbl"
-						    group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
-
-					          <xsl:choose>
-						
-						<!-- We are dealing with a first level section, we now have
-						to further divide the section into subsections that we can then
-						finally work on -->
-
-						<xsl:when test="teidocx:is-heading(.)">
-						  <xsl:call-template name="group-by-section"/>
-						</xsl:when>
-						
-						<!-- We have found some loose paragraphs. These are most probably
-						front matter paragraps. We can simply convert them without further
-						trying to split them up into sub sections. -->
-						<xsl:otherwise>
-						  <xsl:apply-templates select="." mode="inSectionGroup"/>
-						</xsl:otherwise>
-						  </xsl:choose>
-				        </xsl:for-each-group>
-				
-				        <!-- I have no idea why I need this, but I apparently do. 
-				//TODO: find out what is going on-->
-				<xsl:apply-templates select="w:sectPr" mode="paragraph"/>
+	    <!-- 
+		 group all paragraphs that form a first level section.
+	    -->
+	    <xsl:for-each-group select="w:sdt|w:p|w:tbl"
+				group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
+	      
+	      <xsl:choose>
+		
+		<!-- We are dealing with a first level section, we now have
+		     to further divide the section into subsections that we can then
+		     finally work on -->
+		
+		<xsl:when test="teidocx:is-heading(.)">
+		  <xsl:call-template name="group-by-section"/>
+		</xsl:when>
+		
+		<!-- We have found some loose paragraphs. These are most probably
+		     front matter paragraps. We can simply convert them without further
+		     trying to split them up into sub sections. -->
+		<xsl:otherwise>
+		  <xsl:apply-templates select="." mode="inSectionGroup"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each-group>
+	    
+	    <!-- I have no idea why I need this, but I apparently do. 
+		 //TODO: find out what is going on-->
+	    <xsl:apply-templates select="w:sectPr" mode="paragraph"/>
 	  </xsl:template>
-
+	  
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Bookmarks in section mode</p>
-         <p>
+	    <desc>
+	      <p>Bookmarks in section mode</p>
+	      <p>
 		There are certain elements, that we don't really care about, but that
 		force us to regroup everything from the next sibling on.
 		
 		@see grouping in construction of headline outline.
-		</p>
-      </desc>
-   </doc>
+	      </p>
+	    </desc>
+	  </doc>
 	  <xsl:template match="w:bookmarkStart|w:bookmarkEnd" mode="inSectionGroup">
-		    <xsl:for-each-group select="current-group() except ." group-adjacent="1">
-			      <xsl:apply-templates select="." mode="inSectionGroup"/>
-		    </xsl:for-each-group>
+	    <xsl:for-each-group select="current-group() except ." group-adjacent="1">
+	      <xsl:apply-templates select="." mode="inSectionGroup"/>
+	    </xsl:for-each-group>
 	  </xsl:template>
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

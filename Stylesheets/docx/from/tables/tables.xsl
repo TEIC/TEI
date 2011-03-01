@@ -352,11 +352,17 @@
 		  <row>
 		    <xsl:for-each select="w:tc">
 		      <cell>
-			<xsl:if test="w:p/w:pPr/w:jc">
-			  <xsl:attribute name="teidocx:align">
-			    <xsl:value-of select="w:p[1]/w:pPr/w:jc/@w:val"/>
+			<xsl:attribute name="teidocx:align">
+			  <xsl:choose>
+			    <xsl:when test="w:p/w:pPr/w:jc">
+			      <xsl:value-of
+				  select="w:p[1]/w:pPr/w:jc/@w:val"/>
+			    </xsl:when>
+			    <xsl:otherwise>
+			      <xsl:text>left</xsl:text>
+			    </xsl:otherwise>
+			  </xsl:choose>
 			  </xsl:attribute>
-			</xsl:if>
 			<xsl:variable name="val" select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
 			<xsl:choose>
 			  <xsl:when test="$val='[No Paragraph Style]'"/>
@@ -365,7 +371,7 @@
 			  <xsl:when test="string-length($val)=0"/>
 			  <xsl:otherwise>
 			    <xsl:attribute name="rend">
-			      <xsl:value-of select="$val"/>
+			      <xsl:value-of select="replace($val,' ','_')"/>
 			      <xsl:if test="w:tcPr/w:shd/@w:fill and not(w:tcPr/w:shd/@w:fill='auto')">
 				<xsl:text> background-color(</xsl:text>
 				<xsl:value-of select="w:tcPr/w:shd/@w:fill"/>
