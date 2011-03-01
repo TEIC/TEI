@@ -258,6 +258,7 @@
   </doc>
   <xsl:template match="tei:code">
     <code>
+      <xsl:call-template name="rendToClass"/>
       <xsl:apply-templates/>
     </code>
   </xsl:template>
@@ -381,7 +382,7 @@
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc/>
+    <desc>Process gloss element</desc>
   </doc>
   <xsl:template match="tei:gloss">
     <span class="gloss">
@@ -391,9 +392,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Process element head</p>
-      <p>
         <p xmlns="http://www.w3.org/1999/xhtml"> headings etc </p>
-      </p>
     </desc>
   </doc>
   <xsl:template match="tei:head">
