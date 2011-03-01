@@ -526,6 +526,7 @@
 	</xsl:otherwise>       
       </xsl:choose> 	
     </xsl:when>
+    <xsl:when test="@w:font='Wingdings 2' and @w:char='F050'">&#x2713;</xsl:when><!-- tick mark-->
 	<xsl:otherwise> 	  
 	  <g iso:style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
