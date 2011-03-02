@@ -3,19 +3,19 @@ BIN=${PREFIX}/bin
 ODDS= \
 	isofs.rng \
 	tei_allPlus.rng \
+	tei_svg.rng \
+	tei_xinclude.rng \
+	tei_its.rng \
+	tei_math.rng \
+	tei_odds.rng	\
 	tei_bare.rng \
 	tei_corpus.rng \
 	tei_dictionaries.rng	\
 	tei_drama.rng \
 	tei_enrich.rng \
-	tei_its.rng \
-	tei_math.rng \
 	tei_minimal.rng \
 	tei_ms.rng \
-	tei_odds.rng	\
 	tei_speech.rng \
-	tei_svg.rng \
-	tei_xinclude.rng \
 	tei_all.rng 
 DOCODDS=tei_tite.doc.pdf teilite.doc.pdf
 ROMA=roma2
