@@ -2,7 +2,6 @@ PREFIX=/usr
 BIN=${PREFIX}/bin
 ODDS= \
 	isofs.rng \
-	tei_all.rng \
 	tei_allPlus.rng \
 	tei_bare.rng \
 	tei_corpus.rng \
@@ -16,7 +15,8 @@ ODDS= \
 	tei_odds.rng	\
 	tei_speech.rng \
 	tei_svg.rng \
-	tei_xinclude.rng 
+	tei_xinclude.rng \
+	tei_all.rng 
 DOCODDS=tei_tite.doc.pdf teilite.doc.pdf
 ROMA=roma2
 LANGUAGE=en
