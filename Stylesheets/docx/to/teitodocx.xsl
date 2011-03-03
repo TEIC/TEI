@@ -2061,16 +2061,24 @@
     <xsl:template match="tei:ptr">
       <xsl:call-template name="linkMe">
 	<xsl:with-param name="anchor">
-	      <xsl:choose>
-		<xsl:when test="starts-with(@target,'#')">
-		  <xsl:apply-templates
-		      select="key('IDS',substring-after(@target,'#'))"
-		      mode="xref"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:value-of select="@target"/>
-		</xsl:otherwise>
-	      </xsl:choose>
+	  <xsl:choose>
+	    <xsl:when test="@type='cit'">[</xsl:when>
+	    <xsl:when test="@type='figure'">Figure </xsl:when>
+	    <xsl:when test="@type='table'">Table </xsl:when>
+	  </xsl:choose>
+	  <xsl:choose>
+	    <xsl:when test="starts-with(@target,'#')">
+	      <xsl:apply-templates
+		  select="key('IDS',substring-after(@target,'#'))"
+		  mode="xref"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@target"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:choose>
+	    <xsl:when test="@type='cit'">]</xsl:when>
+	  </xsl:choose>
 	</xsl:with-param>
       </xsl:call-template>
     </xsl:template>
@@ -2223,7 +2231,11 @@
 
     </xsl:template>
 
-    <xsl:template match="tei:note|tei:figure|tei:table|tei:item|tei:bibl|tei:biblStruct" mode="xref">
+    <xsl:template match="tei:bibl|tei:biblStruct" mode="xref">
+      <xsl:number/>
+    </xsl:template>
+
+    <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">
         <xsl:number/>
     </xsl:template>
 
