@@ -203,17 +203,11 @@
     <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
       <xsl:apply-templates/>
       <xsl:call-template name="tei:makeText">
-	<xsl:with-param name="letters"> (</xsl:with-param>
-      </xsl:call-template>
-      <xsl:call-template name="tei:makeText">
-	<xsl:with-param name="letters">ed</xsl:with-param>
+	<xsl:with-param name="letters"> (ed</xsl:with-param>
       </xsl:call-template>
       <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
       <xsl:call-template name="tei:makeText">
-	<xsl:with-param name="letters">.</xsl:with-param>
-      </xsl:call-template>
-      <xsl:call-template name="tei:makeText">
-	<xsl:with-param name="letters">) </xsl:with-param>
+	<xsl:with-param name="letters">.)</xsl:with-param>
       </xsl:call-template>
     </xsl:when>
     <xsl:otherwise>

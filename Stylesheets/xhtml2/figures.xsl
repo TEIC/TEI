@@ -122,7 +122,9 @@
 	  <xsl:value-of select="@role"/>
 	</xsl:attribute>
       </xsl:if>
-      <xsl:call-template name="makeAnchor"/>
+      <xsl:if test="@xml:id">	   
+	<xsl:call-template name="makeAnchor"/>
+      </xsl:if>
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
@@ -248,7 +250,9 @@
 	              <xsl:value-of select="@align"/>
 	           </xsl:if>
          </xsl:attribute>
-         <xsl:call-template name="makeAnchor"/>
+	 <xsl:if test="@xml:id">	   
+	   <xsl:call-template name="makeAnchor"/>
+	 </xsl:if>
          <table>
             <xsl:call-template name="rendToClass">
 	              <xsl:with-param name="id">false</xsl:with-param>
@@ -305,7 +309,9 @@
                <xsl:copy-of select="."/>
             </xsl:if>
          </xsl:for-each>
-         <xsl:call-template name="makeAnchor"/>
+	 <xsl:if test="@xml:id">
+	   <xsl:call-template name="makeAnchor"/>
+	 </xsl:if>
          <xsl:apply-templates/>
       </table>
   </xsl:template>
