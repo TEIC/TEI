@@ -1,0 +1,84 @@
+<?oxygen RNGSchema="tei_odds.rnc" type="compact"?>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0" >
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Mapping TEI to CIDOC CRM</title>
+	    <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+     <body>
+       <specGrp xml:id="mainobjects">
+<!--
+msDesc
+div[@type='inscription']
+-->
+
+	 <elementSpec ident="person" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E21" uri="http://erlangen-crm.org/101001/E21_Person"/>
+	 </elementSpec>
+	 <elementSpec ident="place" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E53" uri="http://erlangen-crm.org/101001/E53_Place"/>
+	 </elementSpec>
+	 <elementSpec ident="persName" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E82" uri="http://erlangen-crm.org/101001/E82_Actor_Appellation"/>
+	 </elementSpec>
+	 <elementSpec ident="placeName" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E48"
+		 uri="http://erlangen-crm.org/101001/E48_Place_Name"/>
+	 </elementSpec>
+       </specGrp>
+
+       <specGrp xml:id="properties">
+	 <elementSpec ident="event" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E5" uri="http://erlangen-crm.org/101001/E5_Event"/>
+	 </elementSpec>
+	 <elementSpec ident="org" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E74" uri="http://erlangen-crm.org/101001/E74_Group"/>
+	 </elementSpec>
+	 <elementSpec ident="residence" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="P74" uri="http://erlangen-crm.org/101001/P74_has_current_or_former_residence"/>
+	 </elementSpec>
+	 <elementSpec ident="birth" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E67" uri="http://erlangen-crm.org/101001/E67_Birth"/>
+	 </elementSpec>
+	 <elementSpec ident="death" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E69" uri="http://erlangen-crm.org/101001/E67_Death"/>
+	 </elementSpec>
+	 <elementSpec ident="geo" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl" name="E47"
+		  uri="http://erlangen-crm.org/101001/E47_Place_Spatial_Coordinates"/>
+	 </elementSpec>
+	 <elementSpec ident="name" mode="change">
+	   <equiv filter="crm.xsl" mimeType="text/xsl"
+		  name="teiname"/>
+	   <attList>
+	     <attDef ident="ref" mode="change" usage="req"/>
+	   </attList>
+	 </elementSpec>
+	 <classSpec ident="att.global" mode="change">
+	   <attList>
+	     <attDef ident="xml:id" mode="change" usage="req"/>
+	   </attList>
+	 </classSpec>
+       </specGrp>
+
+       <schemaSpec ident="crm" start="TEI"> 
+	 <moduleRef key="header"/> 
+	 <moduleRef key="core"/> 
+	 <moduleRef key="tei"/> 
+	 <moduleRef key="textstructure"/> 
+	 <moduleRef key="namesdates"/> 
+	 <specGrpRef target="#properties"/>
+       </schemaSpec> 
+     </body>
+   </text>
+</TEI>
