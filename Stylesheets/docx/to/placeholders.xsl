@@ -50,38 +50,6 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-    
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Template used to process block elements</p>
-         <p>
-            Template used to process block elements: Is implemented by
-            the main stylesheet and should usually not be overridden.
-        </p>
-      </desc>
-   </doc>
-    <xsl:template name="block-element">
-        <xsl:param name="style"/>
-        <xsl:param name="select" select="."/>
-        <xsl:param name="pPr"/>
-        <xsl:param name="nop"/>
-        <xsl:param name="bookmark-id"/>
-        <xsl:param name="bookmark-name"/>
-    </xsl:template>
-    
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>to a given style name, this template returns the correct style id
-        looking it up in styles.xml</p>
-         <p>            
-            The template is implemented by the main stylesheet.
-        </p>
-      </desc>
-   </doc>
-    <xsl:template name="getStyleName">
-        <xsl:param name="in"/>
-    </xsl:template>
-    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
         A callback for any titlepages that belong to the front matter.

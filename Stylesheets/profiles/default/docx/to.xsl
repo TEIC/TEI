@@ -134,7 +134,7 @@
   
     
     <!-- Dates -->
-    <xsl:template match="tei:date">
+    <xsl:template match="tei:date[ancestor::tei:teiHeader]">
         <w:r>
             <w:rPr>
                 <w:rStyle w:val="date"/>

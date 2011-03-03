@@ -31,7 +31,7 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its tei a xs pic fn xsi dc dcterms dcmitype contypes teidocx teix html cals">
 
-    <xsl:import href="../../common2/core.xsl"/>
+    <xsl:import href="placeholders.xsl"/>
 
     <xsl:import href="../utils/functions.xsl"/>
     <xsl:import href="../utils/variables.xsl"/>
@@ -39,7 +39,8 @@
     <xsl:import href="../utils/verbatim/tei-docx-verbatim.xsl"/>
     <xsl:import href="../utils/maths/mml2omml.xsl"/>  
 
-    <xsl:import href="placeholders.xsl"/>
+
+    <xsl:import href="../../common2/core.xsl"/>
 
     <xsl:import href="../../common2/msdescription.xsl"/>
 

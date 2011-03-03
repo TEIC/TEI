@@ -189,7 +189,7 @@
    </xsl:template>
 
    <!-- authors and editors -->
-<xsl:template match="tei:author|tei:editor">
+<xsl:template match="tei:editor|tei:author">
   <xsl:choose>
     <xsl:when test="ancestor::tei:bibl">
       <xsl:apply-templates/>
@@ -480,7 +480,7 @@
          <xsl:when test="ancestor::tei:bibl">
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="@type='vol'">
+         <xsl:when test="@type='vol' or @type='volume'">
             <xsl:call-template name="emphasize">
                <xsl:with-param name="class">
 	                 <xsl:text>vol</xsl:text>
@@ -505,7 +505,7 @@
 	      <xsl:with-param name="letters">) </xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
-         <xsl:when test="@type='pp'">
+         <xsl:when test="@type='pp' or @type='pages'">
             <xsl:choose>
                <xsl:when test="contains(.,'-')">
 	                 <xsl:call-template name="tei:makeText">
@@ -579,5 +579,14 @@
       </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="tei:bibl/tei:note|tei:biblStruct/tei:note">
+    <xsl:call-template name="tei:makeText">
+      <xsl:with-param name="letters"> (</xsl:with-param>
+    </xsl:call-template>
+      <xsl:apply-templates/>
+    <xsl:call-template name="tei:makeText">
+      <xsl:with-param name="letters">)</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
 
 </xsl:stylesheet>
