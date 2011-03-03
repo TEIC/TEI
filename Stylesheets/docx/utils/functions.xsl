@@ -247,10 +247,13 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
+
+
 		<xsl:when test="self::mml:math">true</xsl:when>
 		<xsl:when test="self::tei:abbr">true</xsl:when>
 		<xsl:when test="self::tei:affiliation">true</xsl:when>
 		<xsl:when test="self::tei:altIdentifier">true</xsl:when>
+		<xsl:when test="self::tei:analytic">true</xsl:when>
 		<xsl:when test="self::tei:add">true</xsl:when>
 		<xsl:when test="self::tei:am">true</xsl:when>
 		<xsl:when test="self::tei:att">true</xsl:when>
@@ -270,6 +273,7 @@
 		<xsl:when test="self::tei:depth">true</xsl:when>
 		<xsl:when test="self::tei:dim">true</xsl:when>
 		<xsl:when test="self::tei:dimensions">true</xsl:when>
+		<xsl:when test="self::tei:editor">true</xsl:when>
 		<xsl:when test="self::tei:editionStmt">true</xsl:when>
 		<xsl:when test="self::tei:emph">true</xsl:when>
 		<xsl:when test="self::tei:ex">true</xsl:when>

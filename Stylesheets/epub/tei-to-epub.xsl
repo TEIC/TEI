@@ -417,6 +417,9 @@
                   <xsl:choose>
                     <xsl:when test="contains(@url,'.gif')">image/gif</xsl:when>
                     <xsl:when test="contains(@url,'.png')">image/png</xsl:when>
+                    <xsl:when test="contains(@url,'.mpeg')">video/mpeg4</xsl:when>
+                    <xsl:when test="contains(@url,'.mp4')">video/mpeg4</xsl:when>
+                    <xsl:when test="contains(@url,'.m4v')">video/mpeg4</xsl:when>
                     <xsl:otherwise>image/jpeg</xsl:otherwise>
                   </xsl:choose>
 		</xsl:variable>
@@ -1034,6 +1037,10 @@
       </xsl:when>
       <xsl:otherwise>&#160;</xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="tei:graphic[@mimeType='video/mp4']">
+    <video src="{@url}" controls="controls"/>
   </xsl:template>
 
 

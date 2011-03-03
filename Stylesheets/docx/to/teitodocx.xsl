@@ -2222,7 +2222,7 @@
 
     </xsl:template>
 
-    <xsl:template match="tei:note|tei:figure|tei:table|tei:item|tei:bibl" mode="xref">
+    <xsl:template match="tei:note|tei:figure|tei:table|tei:item|tei:bibl|tei:biblStruct" mode="xref">
         <xsl:number/>
     </xsl:template>
 

@@ -242,7 +242,7 @@
    </xsl:template>
 
    <xsl:template match="tei:forename">
-</xsl:template>
+   </xsl:template>
 
    <xsl:template match="tei:nameLink">
 </xsl:template>
