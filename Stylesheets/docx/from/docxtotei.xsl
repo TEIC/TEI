@@ -114,17 +114,15 @@
 			templates that are relevant in the second stage of the conversion are 
 			defined in mode "pass2"</li>
 			
-			<li> inSectionGroup:
-			Defines a template
-			that is working o a
-			group of consecutive
-			elements (w:p or w:tbl
-			elenents)
-			that form a section (a normal section not to be confused with w:sectPr).</li>
+			<li> inSectionGroup: Defines a template that
+			is working o a group of consecutive elements
+			(w:p or w:tbl elements) that form a section (a
+			normal section not to be confused with
+			w:sectPr).</li>
 			
-			<li> paragraph:
-			Defines that the template works on an individual element (usually starting with a
-			w:p element).  </li>
+			<li> paragraph: Defines that the template
+			works on an individual element (usually
+			starting with a w:p element).  </li>
 			
 			<li> iden: simply copies the content</li>
 			</ul>
