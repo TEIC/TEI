@@ -46,9 +46,9 @@ dist:  release-stamp
 	(cd release; zip -r ../tei-roma-`cat ../VERSION`.zip tei-roma)
 
 deb:	
-	rm tei-roma_*_*changes
-	rm tei-roma_*_*build
-	rm tei-roma_*_*deb
+	rm -f tei-roma*_*changes
+	rm -f tei-roma*_*build
+	rm -f tei-roma*_*deb
 	(cd debian-tei-roma; debclean; debuild -i.svn -I.svn -uc -us)
 
 release: clean release-stamp
