@@ -38,9 +38,9 @@ while test $# -gt 0; do
 done
 dir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
 echo Try to fetch $version package from $dir
-sfname=$package
+SFNAME=$package
 case $package in 
-  TEIP5)         name=P5;          pname=tei;      SFNAME=TEIP5-All;;
+  TEIP5)         name=P5;          pname=tei;      SFNAME=TEI-P5-all;;
   Stylesheets)   name=Stylesheets; pname=tei-xsl;;
   Roma)          name=Roma;        pname=tei-roma;;
     *) echo "Error: package $package unsupported"; exit 1;;

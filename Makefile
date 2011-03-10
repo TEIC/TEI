@@ -397,8 +397,7 @@ install-test: dist-test
 
 install-exemplars: dist-exemplars
 	@echo BUILD: Making exemplars release in ${PREFIX}
-	(cd release/tei-p5-exemplars; tar cf - share) | \
-	(cd ${PREFIX}; tar xf -)
+	(cd release/tei-p5-exemplars; tar cf - share) | (cd ${PREFIX}; tar xf -)
 
 install-database: dist-database
 	@echo BUILD: Making database release in ${PREFIX}
