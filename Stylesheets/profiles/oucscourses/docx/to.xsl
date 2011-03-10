@@ -82,7 +82,7 @@
       </sessions>
     </xsl:variable>
     <xsl:for-each select="$data2/sessions/session">
-      <xsl:if test="not(weekday=preceding-sibling::session[1]/weekday)">
+<!--      <xsl:if test="not(weekday=preceding-sibling::session[1]/weekday)">
         <w:p>
           <w:pPr>
             <w:pStyle>
@@ -93,8 +93,18 @@
             <w:t>What's On <xsl:value-of select="xdate"/></w:t>
           </w:r>
         </w:p>
-      </xsl:if>
+      </xsl:if> -->
       <xsl:if test="not(room=preceding-sibling::session[1]/room) or not(weekday=preceding-sibling::session[1]/weekday)">
+        <w:p>
+          <w:pPr>
+            <w:pStyle>
+              <xsl:attribute name="w:val">DAY</xsl:attribute>
+            </w:pStyle>
+          </w:pPr>
+          <w:r>
+            <w:t>What's On <xsl:value-of select="xdate"/></w:t>
+          </w:r>
+        </w:p>
         <w:p>
           <w:pPr>
             <w:pStyle>
