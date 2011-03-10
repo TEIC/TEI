@@ -990,16 +990,20 @@ select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei
     </script>
   </xsl:if>
   <div id="container">
-    <a href="#contentstart" 
-       title="Skip to content" 
-       class="skip">skip to content</a>
-    <div id="banner">
-      <img src="Images/banner.jpg"
-	   alt="Text Encoding Initiative logo and banner"/>
-    </div>
-    <xsl:if test="not($googleAnalytics='')">    
-      <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$googleAnalytics=''">    
+	<a href="#contentstart" 
+	   title="Skip to content" 
+	   class="skip">skip to content</a>
+	<div id="banner">
+	  <img src="Images/banner.jpg"
+	       alt="Text Encoding Initiative logo and banner"/>
+	</div>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy-of select="document('staticnav.xml')/html:ul"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </div>
   
   <xsl:if test="not($googleAnalytics='')">    
