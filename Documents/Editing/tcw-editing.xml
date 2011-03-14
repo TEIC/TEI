@@ -25,33 +25,41 @@ $LastChangedRevision$
   </teiHeader>
   <text>
     <body>
-      <p>This document is intended to set out the way things currently are, and have been, in the
-        editing of the TEI Guidelines. General notes on why it is the way it is may be added here
-        later. </p>
+      <p>This document is intended to set out the way things are
+      currently managed  in the
+        editing of the TEI Guidelines. General notes on the rationale
+	for this state -- <emph>why</emph> it is the way it is -- may be added here
+        later. The intention is to provide information for Council
+      members wishing to contribute actively to the continued
+      development and maintenance of the text of the Guidelines. </p>
       <div>
         <head>Logical organisation of the Guidelines</head>
         <p>It cannot have escaped your notice that each chapter (almost) of the Guidelines defines a
           distinct module. In theory at least, each chapter is organised in more or less the same
           way: <list>
             <item>it begins with a paragraph explaining what the module is for, and containing a lot
-              of links to the individual subsections it contains</item>
+              of links to the individual subsections it contains; </item>
             <item>each subsection introduces a (small) group of elements, usually beginning with a
-                <gi>specList</gi></item>
+                <gi>specList</gi>; </item>
             <item>each element is then introduced in turn, usually including an appropriate usage
-              example (see further <ptr target="#examples"/>)</item>
+              example (on examples, see further <ptr target="#examples"/>); </item>
             <item>a <gi>specGrp</gi>. for each group of elements defined may be given at the end of
-              each section</item>
+              each section; </item>
             <item>a <gi>specGrp</gi> for the whole module is given at the end of the chapter: it
               includes the other specifications either directly (by means of an entity reference) or
               indirectly (by means of a <gi>specGrpRef</gi> pointing to a preceding
               <gi>specGrp</gi>).</item>
           </list></p>
+<p>The only chapters not organised in this way are those which do not
+introduce or define particular modules.  </p>
       </div>
       <div>
         <head>Physical organization: the ODD files</head>
-        <p>Each element, class, and macro defined in the Guidelines is declared within its own file,
+        <p>Each element, class, and macro defined in the Guidelines is
+	declared within its own XML file,
           containing an <gi>elementSpec</gi>, <gi> classSpec</gi>, or <gi>macroSpec</gi> as
-          appropriate. These files are in the directory <ident>Source/Specs</ident>For example, the file
+          appropriate. These files are in the directory
+	  <ident>Source/Specs</ident>. For example, the file
             <ident>Source/Specs/abbr.xml</ident> contains the element spec for the <gi>abbr</gi> element. </p>
         <p>Each chapter of the Guidelines is stored in a file called
             <ident>Source/Guidelines/xx/YY-name.xml</ident> where xx is the language (currently only en or
@@ -60,10 +68,14 @@ $LastChangedRevision$
         <p>The file <ident>Source/guidelines-xx.xml</ident> (where xx is either en or fr) is the
             <soCalled>driver file</soCalled> for the whole shebang. It contains system entity
           declarations for each of the documents making up the P5 source. These entities are then
-          referenced throughout the source to embed the required component at the right place. </p>
-        <p>Hence, to add a new element (say <gi>saintName</gi>) you might proceed as follows: <list>
-            <item>Write a new file <ident>saintName.xml</ident> containing the <gi>elementSpec</gi>
-              for the new element and add it to the <ident>Specs</ident> folder. </item>
+          referenced throughout the source to embed the required
+	  component at the right place.<note place="foot">At one point
+	we considered using <code>xInclude</code> to do this instead,
+	but decided against it for reasons which now escape me.</note></p>
+        <p>Hence, to add a new element (say <gi>saintName</gi>) you
+	might proceed as follows: <list type="ordered">
+            <item>Write a new file <ident>saintName.xml</ident> containing an <gi>elementSpec</gi>
+              for your new element and add it to the <ident>Specs</ident> folder. </item>
             <item>Add a declaration like this to the existing driver file <eg>
                 <![CDATA[<!ENTITY saintName SYSTEM "Specs/saintName.xml">
               ]]></eg></item>
@@ -73,7 +85,12 @@ $LastChangedRevision$
               can appear anywhere, but good practice is to include it in an alphabetic list of such
               declarations near the end of the relevant section. You can also use a
                 <gi>specList</gi> to reference the description from your new spec within the body of
-              the text. </item>
+              the text, like this:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> 
+<p>This module also defines the following canonical element: <specList>
+<specDesc key="saintName"/>
+</specList></p>
+</egXML> </item>
           </list>
         </p>
       </div>
@@ -106,7 +123,7 @@ $LastChangedRevision$
             the supporting text.</p>
           <p>Wherever possible, choose your examples from real documents and provide bibliographic
             citations for them in the file <ident>BIB-Bibliography.xml</ident>. Use the <att>corresp</att>
-            attribute on the <gi>egXML</gi> element to link to an example to its source note. Note
+            attribute on the <gi>egXML</gi> element to link an example to its source note. Note
             that the <att>xml:lang</att> attribute is mandatory on <gi>exemplum</gi>: this is to
             ensure that the ODD processor knows which examples to choose in a given context.</p>
           <p>All examples should be valid against a modified TEI schema in which any element can act
@@ -118,13 +135,14 @@ $LastChangedRevision$
           values appearing in your examples must be unique within the
           text of the whole of the Guidelines. Furthermore, any
           <att>target</att> (etc.) values which do not point to
-          anything in the source may be flagged with a warning. </p>
+          anything in the source will be flagged with a warning during
+	  the build process. </p>
         </div>
       </div>
       <div>
         <head>Making a change to the Guidelines</head>
         <list>
-          <item>Use a Subversion client to update a fresh copy of the source text <emph>before</emph>
+          <item>Use a Subversion client to update your local copy of the source text <emph>before</emph>
             you make any changes in it.</item>
           <item>Make your changes. Make sure your source is still valid against the
               <ident>p5odds.rnc</ident> schema. </item>
@@ -144,7 +162,70 @@ $LastChangedRevision$
         <head>Reference section</head>
         <div>
           <head>Chapter codes</head>
-        </div>
+<p>Following a length debate in the Council as to whether the
+two-character codes originally used to identify individual chapters 
+should be dropped in favour of longer more human-readable names, a
+compromise solution was reached in which the two character codes were
+retained as prefixes to longer human-readable names. The same
+two-character codes are also used to identify the HTML and PDF files
+generated during the release process.</p>
+<p>The following
+table shows the correspondence between the printed organization of the
+Guidelines and the corresponding filenames. The order is determined by the
+driver file <ident>Source/guidelines-xx.xml</ident>, from which the
+table is derived.
+<table>
+<row role="label"><cell>Chapter</cell><cell>Title</cell><cell>filename</cell></row>
+&TitlePageVerso;
+&Dedication;
+&FM1-IntroductoryNote;
+&AB-About;
+&SG-GentleIntroduction;
+&CH-LanguagesCharacterSets;
+&ST-Infrastructure;
+&HD-Header;
+&CO-CoreElements;
+&DS-DefaultTextStructure;
+&WD-NonStandardCharacters;
+&VE-Verse;
+&DR-PerformanceTexts;
+&TS-TranscriptionsofSpeech;
+&DI-PrintDictionaries;
+&MS-ManuscriptDescription;
+&PH-PrimarySources;
+&TC-CriticalApparatus;
+&ND-NamesDates;
+&FT-TablesFormulaeGraphics;
+&CC-LanguageCorpora;
+&SA-LinkingSegmentationAlignment;
+&AI-AnalyticMechanisms;
+&FS-FeatureStructures;
+&GD-GraphsNetworksTrees;
+&NH-Non-hierarchical;
+&CE-CertaintyResponsibility;
+&TD-DocumentationElements;
+&USE;
+&REF-CLASSES-MODEL;
+&REF-CLASSES-ATTS;
+&REF-ELEMENTS;
+&REF-ATTRIBUTES;
+&REF-MACROS;
+&BIB-Bibliography;
+&PrefatoryNote;
+&COL-Colophon;
+
+</table>
+
+
+</p>
+<p>In most chapters, the two character code is also used as a prefix
+for the <att>xml:id</att> values given to each <gi>div</gi>
+element. Note that every <gi>div</gi> element carries an
+<att>xml:id</att> value, whether or not it is actually referenced
+explicitly elewhere in the Guidelines.
+</p>
+
+  </div>
         <div xml:id="house-style">
           <head>House style</head>
         </div>
@@ -174,7 +255,43 @@ $LastChangedRevision$
           </list>
         </div>
       </div>
-
     </body>
-  </text>
+<back>
+<div type="appendix">
+<head>Some other (mostly superceded) documents on the topic</head>
+
+<listBibl>
+ <bibl ><idno>TEI ED W9</idno>
+<title>Points of Style For Drafts of TEI Guidelines</title>
+<date>2 Mar 1990</date>
+<ref target="ED/edw09.gml">in Waterloo Script format</ref>
+</bibl>
+
+<bibl >
+<title>Notes on House Style</title>
+<idno>TEI ED W11</idno>
+<date>14 Sep 1992</date>
+<ref target="ED/edw11.gml">in Waterloo script</ref>
+<ref target="ED/edw11.txt">formatted text</ref>
+</bibl>
+
+
+ <bibl ><idno>TEI ED W55</idno>
+<title>Form for Draft Chapters of the TEI Guidelines</title>
+<date >5 june 1996</date>
+<ref target="ED/edw55.tei">in TEI P2 format</ref>
+<ref target="ED/edw55.htm">in HTML format</ref>
+<ref target="ED/edw55.odd">in ODD format</ref>
+</bibl>
+
+ <bibl ><idno>TEI ED W57</idno>
+<title>Procedures for Correcting Errors in the TEI Guidelines</title>
+<date >July 23, 1994</date>
+<ref target="ED/edw57.tei">in TEI P2 format</ref>
+<ref target="ED/edw57.htm">in HTML format</ref>
+</bibl>
+
+</listBibl>
+</div>
+</back>  </text>
 </TEI>
