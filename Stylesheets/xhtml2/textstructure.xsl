@@ -72,12 +72,12 @@
          </xsl:when>
          <xsl:when test="local-name(..)='front'">
             <xsl:apply-templates select="."/>
-            <xsl:apply-templates mode="paging" select="following-sibling::tei:*[1]"/>
-            <xsl:apply-templates mode="paging" select="../../tei:body/tei:*[1]"/>
+            <xsl:apply-templates mode="paging" select="following-sibling::*[1]"/>
+            <xsl:apply-templates mode="paging" select="../../tei:body/*[1]"/>
          </xsl:when>
          <xsl:otherwise>
             <xsl:apply-templates select="."/>
-            <xsl:apply-templates mode="paging" select="following-sibling::tei:*[1]"/>
+            <xsl:apply-templates mode="paging" select="following-sibling::*[1]"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
