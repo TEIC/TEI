@@ -139,16 +139,15 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>If there is no special style defined, look at the Word
-      underlying basic formatting</desc>
+      underlying basic formatting. We can ignore the run's font change if 
+      a) it's not a special para AND the font is the ISO default, OR 
+      b) the font for the run is the same as its parent paragraph.
+      </desc>
    </doc>
     <xsl:template name="basicStyles">
 
       <xsl:variable name="styles">
 	<xsl:if test="w:rPr/w:rFonts//@w:ascii">
-	  <!-- ignore the run's font change if 
-	       a) it's not a special para AND the font is the ISO default, OR 
-	       b) the font for the run is the same as its parent paragraph 
-	  -->
 	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
 			not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
 	    <xsl:if test="$preserveFontFamily='true'">
@@ -160,7 +159,7 @@
 	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
 	  </xsl:if>
 	</xsl:if>
-	<xsl:if test="w:rPr/w:position/@w:val">
+	<xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
 	  <s n="position">
 	    <xsl:value-of select="w:rPr/w:position/@w:val"/>
 	  </s>
@@ -253,23 +252,23 @@
 			     xmlns="http://www.w3.org/2005/11/its"
 			     select="$dir"/>
 	    </xsl:if>
-	    <xsl:attribute name="rend">
-	      <xsl:choose>
-		<xsl:when test="$effects/*">
+	    <xsl:choose>
+	      <xsl:when test="$effects/*">
+		<xsl:attribute name="rend">
 		  <xsl:for-each select="$effects/*">
 		    <xsl:value-of select="."/>
 		    <xsl:if test="following-sibling::*">
 		      <xsl:text> </xsl:text>
 		    </xsl:if>
 		  </xsl:for-each>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:if test="$preserveFontFamily='true'">
-		    <xsl:text>isoStyle</xsl:text>
-		  </xsl:if>
-		</xsl:otherwise>
-	      </xsl:choose>
-	    </xsl:attribute>
+		</xsl:attribute>
+	      </xsl:when>
+	      <xsl:when test="$preserveFontFamily='true'">
+		<xsl:attribute name="rend">
+		  <xsl:text>isoStyle</xsl:text>
+		</xsl:attribute>
+	      </xsl:when>
+	    </xsl:choose>
 	    <xsl:if test="$styles/*">
 	      <xsl:attribute name="iso:style">
 		<xsl:for-each select="$styles/*">
