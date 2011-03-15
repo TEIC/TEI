@@ -118,7 +118,12 @@
         <xsl:variable name="langs">
           <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
         </xsl:variable>
-        <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+        <xsl:result-document doctype-public="{$doctypePublic}" 
+			   omit-xml-declaration="yes"
+			   doctype-system="{$doctypeSystem}" 
+			   encoding="{$outputEncoding}" 
+			   href="{$outName}" 
+			   method="{$outputMethod}">
           <html>
             <xsl:call-template name="addLangAtt"/>
             <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>

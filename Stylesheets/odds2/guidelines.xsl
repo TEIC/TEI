@@ -686,7 +686,13 @@ glyphes non standard</head>
         <xsl:if test="$verbose='true'">
           <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
         </xsl:if>
-        <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
+        <xsl:result-document 
+	    doctype-public="{$doctypePublic}"
+	    omit-xml-declaration="yes"
+	    doctype-system="{$doctypeSystem}" 
+	    encoding="{$outputEncoding}" 
+	    href="{$outName}" 
+	    method="{$outputMethod}">
           <html>
             <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (8) </xsl:comment>
             <head>

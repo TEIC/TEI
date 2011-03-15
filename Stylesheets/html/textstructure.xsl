@@ -1839,8 +1839,10 @@ $requestedID: requests a particular page
         </xsl:if>
         <xsl:if test="element-available('exsl:document')">
           <exsl:document doctype-public="{$doctypePublic}"
-            doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}"
-            href="{$outName}" method="{$outputMethod}">
+            doctype-system="{$doctypeSystem}" 
+	    encoding="{$outputEncoding}"
+            href="{$outName}" 
+	    method="{$outputMethod}">
             <xsl:copy-of select="$content"/>
           </exsl:document>
         </xsl:if>
