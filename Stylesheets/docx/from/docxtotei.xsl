@@ -93,40 +93,42 @@
          <p>The main template that starts the conversion from docx to TEI</p>
 	 <p><b>IMPORTING STYLESHEETS AND OVERRIDING MATCHED TEMPLATES:</b></p>
 		
-	<p>	When importing a stylesheet (xsl:import) all the templates in the imported stylesheet
-		get a lower import-precedence than the ones in the importing stylesheet. If the importing
-		stylesheet now wants to override, let's say a general template to match all &lt;w:p&gt; elements
-		where no more specialized rule applies it can't since it will automatically override
-		all w:p[somepredicate] template in the imported stylesheet as well. 
-		In this case we have outsourced the processing of the general template into a named template
-		and all the imported stylesheet does is to call the named template. Now, the importing
-		stylesheet can simply override the named template, and everything works out fine.</p>
+	<p>When importing a stylesheet (xsl:import) all the templates
+	in the imported stylesheet get a lower import-precedence than
+	the ones in the importing stylesheet. If the importing
+	stylesheet wants to override, let's say a general template to
+	match all &lt;w:p&gt; elements where no more specialized rule
+	applies it can't, since it will automatically override all
+	w:p[somepredicate] template in the imported stylesheet as
+	well.  In this case we have outsourced the processing of the
+	general template into a named template and all the imported
+	stylesheet does is to call the named template. Now, the
+	importing stylesheet can simply override the named template,
+	and everything works out fine.</p>
 		
-		<p>See templates:
-			- w:p (mode: paragraph)</p>
+	<p>See templates: - w:p (mode: paragraph)</p>
 	
-			<p>Modes:</p>
-			<ul>
-			<li> pass0: a normalization
-			process for styles. Can also detect illegal styles.</li>
-						
-			<li> pass2: 	
-			templates that are relevant in the second stage of the conversion are 
-			defined in mode "pass2"</li>
-			
-			<li> inSectionGroup: Defines a template that
-			is working o a group of consecutive elements
-			(w:p or w:tbl elements) that form a section (a
-			normal section not to be confused with
-			w:sectPr).</li>
-			
-			<li> paragraph: Defines that the template
-			works on an individual element (usually
-			starting with a w:p element).  </li>
-			
-			<li> iden: simply copies the content</li>
-			</ul>
-			
+	<p>Modes:</p>
+	<ul>
+	  <li>pass0: a normalization process for styles. Can also
+	  detect illegal styles.</li>
+	  
+	  <li>pass2: templates that apply in the second stage
+	  of the conversion, cleaning TEI elements created in the
+	  first ise."</li>
+	  
+	  <li>inSectionGroup: defines a template that works on a
+	  group of consecutive elements (w:p or w:tbl elements) that
+	  form a section (a normal section, not to be confused with
+	  w:sectPr).</li>
+	  
+	  <li>paragraph: defines that the template
+	  works on an individual element (usually
+	  starting with a w:p element).  </li>
+	  
+	  <li>iden: simply copies the content</li>
+	</ul>
+	
       </desc>
    </doc>
    <xsl:template match="/">
