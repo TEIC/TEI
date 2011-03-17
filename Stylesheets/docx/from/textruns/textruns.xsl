@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:prop="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
@@ -25,8 +26,6 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-                
-
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
                 exclude-result-prefixes="a cp dc dcterms dcmitype prop     iso m mml mo mv o pic r rel     tbx tei teidocx v xs ve w10 w wne wp">
@@ -159,6 +158,12 @@
 	    <!-- what do we want to do about cs (Complex Scripts), hAnsi (high ANSI), eastAsia etc? -->
 	  </xsl:if>
 	</xsl:if>
+	<xsl:if test="w:rPr/w:sz">
+	  <s n="font-size">
+	    <xsl:value-of select="number(w:rPr/w:sz/@w:val) div 2"/>
+	    <xsl:text>pt</xsl:text>
+	  </s>
+	</xsl:if>
 	<xsl:if test="w:rPr/w:position/@w:val and not(w:rPr/w:position/@w:val='0')">
 	  <s n="position">
 	    <xsl:value-of select="w:rPr/w:position/@w:val"/>
@@ -270,7 +275,7 @@
 	      </xsl:when>
 	    </xsl:choose>
 	    <xsl:if test="$styles/*">
-	      <xsl:attribute name="iso:style">
+	      <xsl:attribute name="html:style">
 		<xsl:for-each select="$styles/*">
 		  <xsl:value-of select="@n"/>
 		  <xsl:text>:</xsl:text>
@@ -309,7 +314,7 @@
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="parent::w:r/w:rPr/w:rFonts[starts-with(@w:ascii,'ISO')]">
-                <seg iso:style="font-family:{parent::w:r/w:rPr/w:rFonts/@w:ascii};">
+                <seg html:style="font-family:{parent::w:r/w:rPr/w:rFonts/@w:ascii};">
                     <xsl:value-of select="$t"/>
                 </seg>
             </xsl:when>
@@ -521,13 +526,13 @@
 <xsl:when test="@w:char='F0FD'">&#xF8FD;</xsl:when><!--	# RIGHT CURLY BRACKET MID	# bracerightmid (CUS) -->
 <xsl:when test="@w:char='F0FE'">&#xF8FE;</xsl:when><!--	# RIGHT CURLY BRACKET BOTTOM	# bracerightbt (CUS) -->
 	<xsl:otherwise> 	  
-	  <g iso:style="font-family:{@w:font};" n="{@w:char}"/>
+	  <g html:style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose> 	
     </xsl:when>
     <xsl:when test="@w:font='Wingdings 2' and @w:char='F050'">&#x2713;</xsl:when><!-- tick mark-->
 	<xsl:otherwise> 	  
-	  <g iso:style="font-family:{@w:font};" n="{@w:char}"/>
+	  <g html:style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose>
     </xsl:template>     
