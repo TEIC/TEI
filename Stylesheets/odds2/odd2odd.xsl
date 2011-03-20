@@ -554,8 +554,17 @@ How can a class be ok?
         done
   -->
       <xsl:variable name="Current" select="."/>
-      <xsl:variable name="specName"
-		    select="concat(@ns,@ident)"/>
+      <xsl:variable name="specName">
+	<xsl:choose>
+	  <xsl:when test="@ns">
+	    <xsl:value-of select="@ns"/>
+	  </xsl:when>
+	  <xsl:when test="ancestor::tei:schemaSpec/@ns">
+	    <xsl:value-of select="ancestor::tei:schemaSpec/@ns"/>
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:value-of select="@ident"/>
+      </xsl:variable>
       <xsl:variable name="N" select="local-name(.)"/>
       <xsl:for-each select="$ODD">
         <xsl:choose>

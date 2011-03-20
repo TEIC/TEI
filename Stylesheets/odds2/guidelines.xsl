@@ -1040,6 +1040,7 @@ glyphes non standard</head>
           <xsl:text>bibliography</xsl:text>
           <!--	  <span class="citLink">&#x270d;</span>-->
         </a>
+	<xsl:text>&#160;</xsl:text>
       </div>
     </xsl:if>
     <xsl:for-each select="ancestor::tei:elementSpec">
