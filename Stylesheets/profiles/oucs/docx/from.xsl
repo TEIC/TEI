@@ -49,13 +49,6 @@
       <xsl:attribute name="role">label</xsl:attribute>
     </xsl:template>
 
-    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Returns a listtype for a given stylename (return empty string to
-	figure it out dynamically)
-      </desc>
-    </doc>
-    
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='ITLP Caption']" mode="paragraph">
         <head>
 	  <xsl:apply-templates/>
@@ -78,6 +71,13 @@
         </item>
     </xsl:template>
 
+    <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	Returns a listtype for a given stylename (return empty string to
+	figure it out dynamically)
+      </desc>
+    </doc>
+    
     <xsl:function name="teidocx:get-listtype" as="xs:string">
       <xsl:param name="style"/>
       <xsl:choose>
