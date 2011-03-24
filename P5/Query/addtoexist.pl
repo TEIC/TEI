@@ -8,7 +8,9 @@ $PASS = "admin";
 $HELP = 0;
 $PUT = 0;
 $QUERY = 0;
-
+$HOST="localhost";
+$PORT="8080";
+$WEBAPP="exist";
 GetOptions(
     "u|user=s" => \$USER,
     "p|password=s" => \$PASS,
@@ -17,9 +19,12 @@ GetOptions(
     "s|store" => \$PUT,
     "r|remove=s" => \$REMOVE,
     "b|binary" => \$BINARY,
+    "w|webapp=s" => \$WEBAPP,
+    "P|port=s" => \$PORT,
+    "h|host=s" => \$HOST,
 ) or exit(1);
 
-$URL = "http://$USER:$PASS\@localhost:8080/exist/rest";
+$URL = "http://$USER:$PASS\@$HOST:$PORT/$WEBAPP/rest";
 $ua = LWP::UserAgent->new();
 if($REMOVE) {
     remove($REMOVE)
