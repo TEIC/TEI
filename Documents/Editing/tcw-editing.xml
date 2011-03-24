@@ -158,6 +158,155 @@ introduce or define particular modules.  </p>
           Guideline schemas should not invalidate existing documents. You may wish to discuss the
           specific issue with other Council members.</p>
       </div>
+
+<div xml:id="svn">
+<head>Building the release</head>
+<p>The TEI maintains a number of distinct packages on Sourceforge. The
+source for all of them is maintained in a Subversion repository. The
+main published packages are :
+<list type="gloss">
+<label>P5</label><item>The main TEI P5 source</item>
+<label>Roma</label><item>The web application</item>
+<label>Stylesheets</label><item>The stylesheet library</item>
+<label>tei-emacs</label><item>TEI customisation of emacs</item>
+</list>
+</p>
+<p>Two other packages, <ident>I18N</ident>, which provides input for
+the internationalization utilities used in producing P5,   and
+<ident>TEIOO</ident> which provides P5 support for Open Office, 
+are also maintained, but unpublished.
+</p>
+<p>The rest of this section describes how to make a new release for
+the main <ident>P5</ident> package, but similar procedures apply
+to the others. The instructions assume you are working on a Linux or
+MacOSX system with a command line, and know (more or less) how to use
+the standard GNU <q>make</q> utility.</p>
+
+<div><head>Creating a new file release</head>
+
+<p>First edit the file <ident>VERSION</ident>, and make it say what
+you are about to release. Now check that the source is clean and tested. 
+When you are happy that these are what you want,
+do <code>make dist</code>. This makes a single zip file
+with all the TEI P5 deliverables in, called <code>tei-</code><hi>versionumber</hi><code>.zip</code>.</p>
+
+<p>If you also say <code>make deb</code>, and you have the Debian
+devscripts packages installed, six Debian packages will be created
+(see further <ptr target="#debian"/> below).</p>
+
+<p>If you do not have a build system yourself, the Jenkins CI server
+(currently experimentally at <ptr
+target="http://tei.oucs.ox.ac.uk/jenkins"/>) will watch Subversion,
+make all the tests, and rebuild everything after any change. It will
+create the zip archive and Debian packages for you.</p>
+</div>
+
+<div xml:id="sf">
+<head>Uploading file releases to Sourceforge</head>
+<p>The zip file <code>tei-</code><hi>versionumber</hi><code>.zip</code>
+is what we put up on Sourceforge. If you did not create this in your own
+build process, you can take a copy 
+from <ptr target="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/tei-1.9.0.zip"/>.
+You now need to upload this file to the Sourceforge download area by using one 
+of the supported methods, such as secure FTP or rsync. For example 
+<eg>
+rsync -e ssh tei-1.9.0.zip rahtz,tei@frs.sourceforge.net:/home/frs/project/t/te/tei/TEIP5-All
+</eg>
+Further details of the upload procedure are provided in <ref
+target="https://sourceforge.net/apps/trac/sourceforge/wiki/Release%20files%20for%20download">the
+Sourceforge Wiki</ref>.
+</p>
+</div>
+
+<div xml:id="debian">
+<head>Making Debian packages</head>
+<p>A Debian package
+combines a set of source files with Debian-specific metadata and
+support files. For each of the 
+packages mentioned above, there is a directory under P5 named
+<code>debian-</code><hi>packagename</hi>/<code>debian</code>  containing the
+necessary additional material. The command <code>make deb</code> goes into
+each of the directories and builds the package, creating 6 corresponding .deb, .build and .changes
+files. As above, if you cannot build these yourself, grab from 
+<ptr target="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/"/></p>
+
+<p>Now you can move the Debian files to a repository somewhere
+(tei.oucs.ox.ac.uk:/home/tei/teideb, if you have access) and rebuild
+the package database. Building Debian packages is extensively
+documented on the web, but there is a lot more to it than described
+here (such as the content of the control files for post-installation,
+pre-removal, init scripts, menus etc).</p>
+
+<p>The important TEI-related Debian packages are
+<table>
+<row><cell>tei-emacs</cell><cell>TEI Emacs setup</cell></row>
+<row><cell>tei-oxygen</cell><cell>oXygen XML editor</cell></row>
+<row><cell>tei-p4-doc</cell><cell>TEI Guidelines (P4)</cell></row>
+<row><cell>tei-p4-lite</cell><cell>TEI P4 Lite</cell></row>
+<row><cell>tei-p4-schema</cell><cell>TEI P4 Schemas/DTDs</cell></row>
+<row><cell>tei-p4-xsl</cell><cell>TEI P4 XSLT stylesheets </cell></row>
+<row><cell>tei-p5-doc</cell><cell>TEI Guidelines</cell></row>
+<row><cell>tei-p5-exemplars</cell><cell>TEI exemplar customiza</cell></row>
+<row><cell>tei-p5-schema</cell><cell>TEI Schemas/DTDs</cell></row>
+<row><cell>tei-p5-source</cell><cell>TEI sources/DTDs</cell></row>
+<row><cell>tei-p5-test</cell><cell>TEI test files</cell></row>
+<row><cell>tei-p5-xsl</cell><cell>TEI XSLT (1.0) stylesheets</cell></row>
+<row><cell>tei-p5-xsl2</cell><cell>TEI XSLT (2.0) stylesheets</cell></row>
+<row><cell>tei-xsl-common</cell><cell>TEI XSLT stylesheets, shared files</cell></row></table>
+</p>
+<p>Some of these packages have dependencies on other packages, which will get pulled in as
+needed (trang, jing etc).</p>
+</div>
+
+<div xml:id="web">
+<head>Installing files on the TEI web site</head>
+<p>Most users of the TEI will want to download and install either the
+debian packages or the full release files from sourceforge. For
+convenience however we also provide copies of the current dtds, schemas and
+stylesheets on the main TEI web site. These copies are provided for
+the following reasons: 
+<list>
+<item>to service the rendering web pages themselves</item>
+<item>to let Roma find resources</item>
+<item>to provide a service of fixed URLs for DTDs and schemas</item>
+</list>
+The files are organised as indicated below (<ptr target="#fileOrg"/>). There is a script in P5/Utilities/tei-install.sh which can be run to pull
+the latest artefacts from Jenkins, and put them in the right place(s) on the TEI
+web site. The script requires at least two parameters, one to specify
+the Jenkins package name, and the other the version number required : 
+<eg>
+./tei-install.sh --package=TEIP5 --version=1.9.0
+</eg>
+</p>
+</div>
+
+<div xml:id="roma">
+<head>Setting up Roma and eXist</head>
+<p>Roma needs access to XSLT stylesheets, P5 Relax NG schemas, and an
+eXist database of TEI P5. Where it finds these is determined by the
+file <code>roma/config.php</code> (on the main TEI web site, this is in the
+<code>/usr/share/tei-roma/</code> directory). However, this varies between sites, so
+what is distributed is <code>config-dist.php</code>. </p>
+
+<p>How does TEI P5 get into eXist? Using the script <code>tei-database-rebuild</code>,
+which is installed into <code>/usr/bin</code>. Running that on the TEI web site 
+will attempt to install the files into both the standard locations and the 
+the archive of releases.</p>
+</div>
+
+<div xml:id="oxgarage">
+<head>Setting up OxGarage</head>
+<p>The Roma installation at <ptr target="http://www.tei-c.org/Roma/"/>
+depends on the web service supplied by OxGarage
+(currently at <ptr target="http://www.tei-c.org/ege-webservice/"/>) to provide
+ODD manipulation.  The OxGarage configuration is set to look for its stylesheets
+and copy of TEI P5 in the standard location (under <code>/usr/share/xml/tei</code>),
+using symbolic links, so no special case is needed to have it take notice of a new
+release.</p>
+</div>
+</div>
+
+
       <div>
         <head>Reference section</head>
         <div  xml:id="chaptercodes">
@@ -367,6 +516,141 @@ ed. online (<ptr target="dictionary.oed.com"/>)</item>
               </list></item>
           </list>
         </div>
+<div xml:id="fileOrg"><head>File release structure</head>
+<p>
+Currently, the organisation of the <code>/usr/share/xml/tei</code> and
+<code>/usr/share/doc/tei-*</code> directories on the TEI web site is
+as follows:
+<eg>
+tei
+|-- Test
+|-- custom
+|   |-- odd
+|   |-- schema
+|   |   |-- dtd
+|   |   |-- relaxng
+|   |   `-- xsd
+|   `-- templates
+|-- odd
+|   |-- Exemplars
+|   |-- ReleaseNotes
+|   |-- Source
+|   |   |-- Guidelines
+|   |   |   |-- en
+|   |   |   |   `-- Images
+|   |   |   `-- fr
+|   |   |       `-- Images
+|   |   |-- Images
+|   |   `-- Specs
+|   |       |-- 18decembre
+|   |       `-- exemples
+|   |-- Utilities
+|   `-- webnav
+|       `-- icons
+|-- schema
+|   |-- dtd
+|   `-- relaxng
+|-- stylesheet
+|   |-- common
+|   |-- common2
+|   |-- docx
+|   |   |-- from
+|   |   |   |-- dynamic
+|   |   |   |   `-- tests
+|   |   |   |       `-- xspec
+|   |   |   |-- graphics
+|   |   |   |-- lists
+|   |   |   |-- marginals
+|   |   |   |-- maths
+|   |   |   |-- paragraphs
+|   |   |   |-- pass0
+|   |   |   |-- pass2
+|   |   |   |-- tables
+|   |   |   |-- templates
+|   |   |   |-- textruns
+|   |   |   |-- utils
+|   |   |   `-- wordsections
+|   |   |-- misc
+|   |   |-- to
+|   |   |   |-- docxfiles
+|   |   |   |-- drama
+|   |   |   |-- dynamic
+|   |   |   |-- graphics
+|   |   |   |-- lists
+|   |   |   |-- maths
+|   |   |   |-- templates
+|   |   |   `-- wordsections
+|   |   `-- utils
+|   |       |-- graphics
+|   |       |-- identity
+|   |       |-- maths
+|   |       `-- verbatim
+|   |-- epub
+|   |-- fo
+|   |-- fo2
+|   |-- html
+|   |-- latex
+|   |-- latex2
+|   |-- nlm
+|   |-- odds
+|   |-- odds2
+|   |-- oo
+|   |-- profiles
+|   |   |-- bodley
+|   |   |   `-- epub
+|   |   |-- default
+|   |   |   |-- csv
+|   |   |   |-- docbook
+|   |   |   |-- docx
+|   |   |   |-- dtd
+|   |   |   |-- epub
+|   |   |   |-- fo
+|   |   |   |-- html
+|   |   |   |-- latex
+|   |   |   |-- lite
+|   |   |   |-- oddhtml
+|   |   |   |-- oo
+|   |   |   |-- p4
+|   |   |   `-- relaxng
+|   |   |-- enrich
+|   |   |   |-- docx
+|   |   |   |-- fo
+|   |   |   |-- html
+|   |   |   `-- latex
+|   |   |-- iso
+|   |   |   |-- docx
+|   |   |   |   `-- model
+|   |   |   |-- epub
+|   |   |   |-- fo
+|   |   |   |-- html
+|   |   |   |-- latex
+|   |   |   |-- schema
+|   |   |   `-- tbx
+|   |   |-- ota
+|   |   |   |-- epub
+|   |   |   `-- html
+|   |   |-- oucs
+|   |   |   |-- docx
+|   |   |   |-- epub
+|   |   |   `-- p4
+|   |   |-- oucscourses
+|   |   |   `-- docx
+|   |   |-- podcasts
+|   |   |   |-- docx
+|   |   |   `-- epub
+|   |   `-- tei
+|   |       `-- epub
+|   |-- slides
+|   |-- slides2
+|   |-- tite
+|   |-- tools2
+|   |-- xhtml
+|   `-- xhtml2
+`-- xquery
+
+</eg>
+</p></div>
+
       </div>
     </body>
 <back>
