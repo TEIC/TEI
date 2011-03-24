@@ -13,7 +13,7 @@ $LastChangedRevision$
       </titleStmt>
       <editionStmt>
 	<edition>
-	  <date>February 2011</date>
+	  <date>March 2011</date>
 	</edition>
       </editionStmt>
       <publicationStmt> 
@@ -41,7 +41,8 @@ a new release.</p>
 </list>
 The rest of this document assumes that we are dealing with the main
 <ident>P5</ident> package, and that you are on a Linux or MacOSX system with a
-command line, and know (more or less) how to use the <q>make</q> utility.
+command line, and know (more or less) how to use the <q>make</q>
+utility. There are more details about some of this at <ptr target="http://www.tei-c.org/Guidelines/P5/get.xml"/>.
 The same instructions apply, <foreign>mutatis mutandis</foreign>, to the packages
 for Roma and Stylesheets. To run the process under Windows would require quite a bit of 
 new scripting.</p>
@@ -49,7 +50,7 @@ new scripting.</p>
 <p>First, you will edit the file <ident>VERSION</ident>, and make it say what
 you are about to release. This must be three digits seperated by dots, and it
 will be used to name files, so be careful. Now check that the source is clean and tested. 
-When you are happy that these are what you want, do <code>make dist</code>. This makes a single zip file
+When you are happy that this is what you want, do <code>make dist</code>. This makes a single zip file
 with all the TEI P5 deliverables in, called <code>tei-</code><hi>versionumber</hi><code>.zip</code>.</p>
 
 <p>If you also say <code>make deb</code>, and you have the Debian <code>devscripts</code> package installed,
@@ -80,7 +81,7 @@ the instructions for upload are at <ptr target="https://sourceforge.net/apps/tra
 <head>Making Debian packages</head>
 <p>You make a Debian package by combining a set of source files with
 Debian-specific metadata and support files. For each of the 6 packages
-described above, there is a directory under P5 named
+ there is a directory under P5 named
 <code>debian-</code><hi>packagename</hi> inside which is a directory
 called <ident>debian</ident> containing the necessary added
 material. The make target <code>deb</code> goes into each of the
@@ -88,6 +89,14 @@ directories and builds the package, creating 6 corresponding .deb,
 .build and .changes files. As above, if you cannot build these
 yourself, grab from <ptr
 target="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/"/></p>
+<list type="gloss">
+<label>tei-p5-database</label><item>Interaction for eXist for Roma</item>
+<label>tei-p5-doc</label><item>TEI Guidelines</item>
+<label>tei-p5-exemplars</label><item>TEI exemplar customiza</item>
+<label>tei-p5-schema</label><item>TEI Schemas/DTDs</item>
+<label>tei-p5-source</label><item>TEI sources/DTDs</item>
+<label>tei-p5-test</label><item>TEI test files</item>
+</list>
 
 <p>Now you can move the Debian files to a repository somewhere
 (tei.oucs.ox.ac.uk:/home/tei/teideb, if you have access) and rebuild
@@ -96,18 +105,13 @@ documented on the web, and there is a lot more to it than I describe
 here (such as the content of the control files for post-installation,
 pre-removal, init scripts, menus etc).</p>
 
-<p>The important TEI-related Debian packages are
+<p>The other TEI-related Debian packages, maintained separately, are
 <list type="gloss">
 <label>tei-oxygen</label><item>oXygen XML editor</item>
 <label>tei-p4-doc</label><item>TEI Guidelines (P4)</item>
 <label>tei-p4-lite</label><item>TEI P4 Lite</item>
 <label>tei-p4-schema</label><item>TEI P4 Schemas/DTDs</item>
 <label>tei-p4-xsl</label><item>TEI P4 XSLT stylesheets </item>
-<label>tei-p5-doc</label><item>TEI Guidelines</item>
-<label>tei-p5-exemplars</label><item>TEI exemplar customiza</item>
-<label>tei-p5-schema</label><item>TEI Schemas/DTDs</item>
-<label>tei-p5-source</label><item>TEI sources/DTDs</item>
-<label>tei-p5-test</label><item>TEI test files</item>
 <label>tei-p5-xsl</label><item>TEI XSLT (1.0) stylesheets</item>
 <label>tei-p5-xsl2</label><item>TEI XSLT (2.0) stylesheets</item>
 <label>tei-xsl-common</label><item>TEI XSLT stylesheets, shared files</item>
