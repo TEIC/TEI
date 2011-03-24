@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-$LastChangedDate: 2010-04-10$.
-$LastChangedBy: jamesc$
-$LastChangedRevision$
--->
 <?oxygen RNGSchema="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/teilite.rng" type="xml"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
@@ -20,6 +15,7 @@ $LastChangedRevision$
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2011-03-24">merged with release howto</change>
       <change when="2011-02-19">started first draft</change>
     </revisionDesc>
   </teiHeader>
@@ -185,10 +181,11 @@ the standard GNU <q>make</q> utility.</p>
 <div><head>Creating a new file release</head>
 
 <p>First edit the file <ident>VERSION</ident>, and make it say what
-you are about to release. Now check that the source is clean and tested. 
-When you are happy that these are what you want,
-do <code>make dist</code>. This makes a single zip file
-with all the TEI P5 deliverables in, called <code>tei-</code><hi>versionumber</hi><code>.zip</code>.</p>
+you are about to release. Now check that the source is clean and
+tested.  When you are happy that these are what you want, do
+<code>make dist</code>. This makes a single zip file with all the TEI
+P5 deliverables in, called
+<code>tei-</code><hi>versionumber</hi><code>.zip</code>.</p>
 
 <p>If you also say <code>make deb</code>, and you have the Debian
 devscripts packages installed, six Debian packages will be created
@@ -270,8 +267,8 @@ the following reasons:
 <item>to let Roma find resources</item>
 <item>to provide a service of fixed URLs for DTDs and schemas</item>
 </list>
-The files are organised as indicated below (<ptr target="#fileOrg"/>). There is a script in P5/Utilities/tei-install.sh which can be run to pull
-the latest artefacts from Jenkins, and put them in the right place(s) on the TEI
+The files are organised as indicated below (<ptr target="#fileOrg"/>). There is a script in <ident>P5/Utilities/tei-install.sh</ident> which can be run to pull
+the latest artefacts from Jenkins, and put them in the right place on the TEI
 web site. The script requires at least two parameters, one to specify
 the Jenkins package name, and the other the version number required : 
 <eg>
@@ -284,14 +281,15 @@ the Jenkins package name, and the other the version number required :
 <head>Setting up Roma and eXist</head>
 <p>Roma needs access to XSLT stylesheets, P5 Relax NG schemas, and an
 eXist database of TEI P5. Where it finds these is determined by the
-file <code>roma/config.php</code> (on the main TEI web site, this is in the
-<code>/usr/share/tei-roma/</code> directory). However, this varies between sites, so
-what is distributed is <code>config-dist.php</code>. </p>
+file <ident>roma/config.php</ident> (on the main TEI web site, this is in the
+<ident>/usr/share/tei-roma/</ident> directory). However, this varies between sites, so
+what is distributed is <ident>config-dist.php</ident>. </p>
 
-<p>How does TEI P5 get into eXist? Using the script <code>tei-database-rebuild</code>,
-which is installed into <code>/usr/bin</code>. Running that on the TEI web site 
-will attempt to install the files into both the standard locations and the 
-the archive of releases.</p>
+<p>How does TEI P5 get into eXist? Using the script
+<ident>tei-database-rebuild</ident>, which is installed into
+<ident>/usr/bin</ident>. Running that on the TEI web site will attempt
+to install the files into both the standard locations and the 
+archive of releases.</p>
 </div>
 
 <div xml:id="oxgarage">
@@ -300,7 +298,7 @@ the archive of releases.</p>
 depends on the web service supplied by OxGarage
 (currently at <ptr target="http://www.tei-c.org/ege-webservice/"/>) to provide
 ODD manipulation.  The OxGarage configuration is set to look for its stylesheets
-and copy of TEI P5 in the standard location (under <code>/usr/share/xml/tei</code>),
+and copy of TEI P5 in the standard location (under <ident>/usr/share/xml/tei</ident>),
 using symbolic links, so no special case is needed to have it take notice of a new
 release.</p>
 </div>
@@ -462,7 +460,7 @@ encountered problems of word spacing and hyphenation:
 <row><cell>data set</cell><cell>       OED</cell></row>
 <row><cell>datatype</cell><cell>       [OED, ORDS have 'data type', but Guidelines                       consistently use single word dozens of places]</cell></row>
 <row><cell>end-tag</cell><cell>        ORDS</cell></row>
-<row><cell>high-level (adj.)       MW, OED</cell></row>
+<row><cell>high-level (adj.)   </cell><cell>    MW, OED</cell></row>
 <row><cell>line break</cell><cell/></row>
 <row><cell>lowercase/uppercase</cell><cell>MW, ORDS</cell></row>
 <row><cell>proofread</cell><cell>      MW, OED</cell></row>
