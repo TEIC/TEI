@@ -1359,6 +1359,9 @@ select="$makeDecls"/></xsl:message>
             <xsl:when test="tei:datatype/rng:ref[@name='data.enumerated']">
               <data type="Name"/>
             </xsl:when>
+	    <xsl:when test="not(tei:datatype)">
+              <data type="Name"/>
+	    </xsl:when>
             <xsl:otherwise>
               <xsl:apply-templates select="tei:datatype/rng:*"/>
             </xsl:otherwise>
