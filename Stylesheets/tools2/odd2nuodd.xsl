@@ -70,6 +70,7 @@ included -->
       <xsl:variable name="includelist">
 	<xsl:for-each select="document($P5)">
 	  <xsl:for-each select="key('EbyM',$module)">
+	    <xsl:sort select="@ident"/>
 	    <xsl:variable name="e" select="@ident"/>
 	    <xsl:for-each select="$orig">
 	      <xsl:if test="not(key('deletedE',$e))">
