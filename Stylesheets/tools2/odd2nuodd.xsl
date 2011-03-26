@@ -94,7 +94,6 @@ included -->
       <xsl:when test="starts-with(@target,'#')">
 	<xsl:for-each
 	    select="key('IDS',substring-after(@target,'#'))">
-<xsl:message><xsl:for-each select="*"><xsl:value-of select="name()"/></xsl:for-each></xsl:message>
 	  <xsl:if test="*">
 	    <specGrpRef target="#{@xml:id}"/>
 	  </xsl:if>
