@@ -5,27 +5,30 @@
 	xmlns="http://www.tei-c.org/ns/1.0"
 >
 
-<!--
+  <!--
+      
+      $Id$
+      Sebastian Rahtz 2011/03/26
+      
+      Read an ODD with <elementSpec mode="delete"> statements and rewrite it
+      as <moduleRef include="* * *" or except="* * *">
+      
+  -->
+  <!-- where is a copy of P5? -->
+  <xsl:param name="P5">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
+  
+  <!-- do you want moduleRef generated with @include or @except? -->
+  <xsl:param name="method">include</xsl:param>
 
- $Id$
- Sebastian Rahtz 2011/03/26
-
-Read an ODD with <elementSpec mode="delete"> statements and rewrite it
-as <moduleRef include="* * *">
-
--->
   <xsl:key name="IDS" match="*" use="@xml:id"/>
 
   <xsl:key name="EbyM" match="elementSpec" use="@module"/>
 
   <xsl:key name="deletedE" match="elementSpec[@mode='delete']" use="@ident"/>
 
-  <xsl:param name="P5">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
-  <xsl:param name="method">include</xsl:param>
-
   <xsl:variable name="orig" select="/"/>
 
-<!-- identifty transforms -->
+  <!-- identifty transforms -->
   <xsl:template match="@*|text()|comment()|processing-instruction()">
     <xsl:copy-of select="."/>
   </xsl:template>
@@ -47,8 +50,8 @@ as <moduleRef include="* * *">
     </xsl:copy>
   </xsl:template>
   
-
-<!-- work in two phases, so we can zap empty specGrp on pass 2-->
+  
+  <!-- work in two phases, so we can zap empty specGrp on pass 2-->
   <xsl:template match="/">
     <xsl:variable name="stage1">
       <xsl:apply-templates/>
@@ -58,15 +61,15 @@ as <moduleRef include="* * *">
     </xsl:for-each>
   </xsl:template>
   
-<!-- ignore elementSpec @mode='delete' -->
+  <!-- ignore elementSpec @mode='delete' -->
   <xsl:template match="elementSpec[@mode='delete']"/>
   
-  <!-- for any moduleRef, look up all the members of it in P5;
-       if they are not deleted by this odd, add them to a list to be
-       included -->
   <xsl:template match="moduleRef/@include"/>
   <xsl:template match="moduleRef/@except"/>
 
+  <!-- for any moduleRef, look up all the members of it in P5;
+       if they are not deleted by this odd, add them to a list to be
+       included -->
   <xsl:template match="moduleRef[@key]">
     <xsl:variable name="here" select="."/>
     <xsl:copy>
@@ -80,17 +83,20 @@ as <moduleRef include="* * *">
 	  <xsl:copy-of select="@except"/>
 	</xsl:when>	
 	<xsl:when test="$method='include' and @except">
+	  <xsl:variable name="not">
+	    <xsl:for-each select="tokenize($here/@except,' ')">
+	      <not ident="{.}"/>
+	    </xsl:for-each>
+	  </xsl:variable>
 	  <xsl:variable name="includelist">
 	    <xsl:for-each select="document($P5)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
-		  <xsl:for-each select="tokenize($here/@except,' ')">
-		  <xsl:if test="not(.=$e)">
-		    <xsl:value-of select="$e"/>
+		<xsl:if test="not($not/not[@ident=$e])">
+		  <xsl:value-of select="$e"/>
 		    <xsl:text> </xsl:text>
-		  </xsl:if>
-		</xsl:for-each>
+		</xsl:if>
 	      </xsl:for-each>
 	    </xsl:for-each>
 	  </xsl:variable>
@@ -119,13 +125,18 @@ as <moduleRef include="* * *">
 	  </xsl:if>
 	</xsl:when>
 	<xsl:when test="$method='except' and @include">
+	  <xsl:variable name="yes">
+	    <xsl:for-each select="tokenize($here/@include,' ')">
+	      <yes ident="{.}"/>
+	    </xsl:for-each>
+	  </xsl:variable>
 	  <xsl:variable name="exceptlist">
 	    <xsl:for-each select="document($P5)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
 		<xsl:for-each select="$orig">
-		  <xsl:if test="not(key('deletedE',$e))">
+		  <xsl:if test="not($yes/yes[@ident=$e])">
 		    <xsl:value-of select="$e"/>
 		    <xsl:text> </xsl:text>
 		  </xsl:if>
