@@ -25,6 +25,8 @@
   <xsl:key name="EbyM" match="elementSpec" use="@module"/>
 
   <xsl:key name="deletedE" match="elementSpec[@mode='delete']" use="@ident"/>
+  <xsl:key name="changedE" match="elementSpec[@mode='change']" use="@ident"/>
+  <xsl:key name="changedE" match="elementSpec[@mode='replace']" use="@ident"/>
 
   <xsl:variable name="orig" select="/"/>
 
@@ -111,10 +113,13 @@
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
 		<xsl:for-each select="$orig">
-		  <xsl:if test="not(key('deletedE',$e))">
+		  <xsl:choose>
+		  <xsl:when test="key('deletedE',$e)"/>
+		  <xsl:otherwise>
 		    <xsl:value-of select="$e"/>
 		    <xsl:text> </xsl:text>
-		  </xsl:if>
+		  </xsl:otherwise>
+		  </xsl:choose>
 		</xsl:for-each>
 	      </xsl:for-each>
 	    </xsl:for-each>
