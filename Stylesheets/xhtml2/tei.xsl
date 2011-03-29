@@ -56,39 +56,6 @@
   <xsl:include href="verse.xsl"/>
   <xsl:include href="../common2/verbatim.xsl"/>
 
-  <xsl:template match="teix:egXML">
-      <xsl:param name="simple">false</xsl:param>
-      <xsl:param name="highlight"/>
-      <div>
-         <xsl:attribute name="id">
-	           <xsl:apply-templates mode="ident" select="."/>
-         </xsl:attribute>
-         <xsl:attribute name="class">
-	           <xsl:text>pre</xsl:text>
-	           <xsl:if test="not(*)">
-	              <xsl:text> cdata</xsl:text>
-	           </xsl:if>
-         </xsl:attribute>
-         <xsl:choose>
-	           <xsl:when test="$simple='true'">
-	              <xsl:apply-templates mode="verbatim">
-	                 <xsl:with-param name="highlight">
-	                    <xsl:value-of select="$highlight"/>
-	                 </xsl:with-param>
-	              </xsl:apply-templates>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:call-template name="egXMLStartHook"/>
-	              <xsl:apply-templates mode="verbatim">
-	                 <xsl:with-param name="highlight">
-	                    <xsl:value-of select="$highlight"/>
-	                 </xsl:with-param>
-	              </xsl:apply-templates>
-	              <xsl:call-template name="egXMLEndHook"/>
-	           </xsl:otherwise>
-         </xsl:choose>
-      </div>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc>

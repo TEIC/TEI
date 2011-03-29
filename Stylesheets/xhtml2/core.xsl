@@ -467,23 +467,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element ident</desc>
-  </doc>
-  <xsl:template match="tei:ident">
-    <xsl:choose>
-      <xsl:when test="@type">
-        <span class="ident-{@type}">
-          <xsl:apply-templates/>
-        </span>
-      </xsl:when>
-      <xsl:otherwise>
-        <strong>
-          <xsl:apply-templates/>
-        </strong>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element item</desc>
   </doc>

@@ -69,6 +69,9 @@
     </div>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element ident</desc>
+  </doc>
   <xsl:template match="tei:ident">
     <xsl:choose>
       <xsl:when test="@type">
@@ -84,6 +87,9 @@
     </xsl:choose>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element gi</desc>
+  </doc>
   <xsl:template match="tei:gi">
     <span class="gi">
       <xsl:text>&lt;</xsl:text>
