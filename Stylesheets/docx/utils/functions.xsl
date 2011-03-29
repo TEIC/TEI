@@ -208,6 +208,7 @@
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>
+	        <xsl:when test="self::tei:ref and teidocx:render-italic(..)">true</xsl:when>
                 <xsl:when test="contains(@rend,'italics')">true</xsl:when>
                 <xsl:when test="contains(@rend,'italic')">true</xsl:when>
                 <xsl:when test="self::tei:emph">true</xsl:when>

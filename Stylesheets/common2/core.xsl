@@ -278,7 +278,6 @@
    </xsl:template>
 
    <xsl:template match="tei:title">
-
       <xsl:choose>
          <xsl:when test="parent::tei:titleStmt/parent::tei:fileDesc">
             <xsl:if test="preceding-sibling::tei:title">

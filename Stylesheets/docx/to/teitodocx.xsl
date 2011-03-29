@@ -633,6 +633,7 @@
 		    <xsl:attribute name="w:val" select="$character-style"/>
 		  </xsl:otherwise>
 		</xsl:choose>		    
+
 	      </w:rStyle>
 	    </xsl:if>
 	    <xsl:copy-of select="$renderingProperties"/>
@@ -761,6 +762,7 @@
 		  </xsl:otherwise>
 		</xsl:choose>
 	      </xsl:variable>
+
 	      <xsl:choose>
 		<xsl:when test="contains($out,'&#2011;')">
 		    <xsl:attribute
@@ -2144,7 +2146,6 @@
 
     <xsl:template name="linkMe">
       <xsl:param name="anchor"/>
-
       <!-- create the field codes for the complex field -->
       <!-- based on information in tei:ref/@tei:rend -->
       <xsl:variable name="instrText">
@@ -2322,6 +2323,7 @@
     <xsl:template match="tei:index"/>
 
     <xsl:template name="applyRendition"/>
+
     <xsl:template name="emphasize">
       <xsl:param name="class"/>
       <xsl:param name="content"/>
@@ -2411,6 +2413,17 @@
       <w:r>
 	<w:br w:type="page"/>
       </w:r>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	If you meet an inline element with a link inside it, pass by
+	on the other side
+      </desc>
+    </doc>
+
+    <xsl:template match="tei:title[tei:ref]|tei:hi[tei:ref]">
+      <xsl:apply-templates/>
     </xsl:template>
 
   
