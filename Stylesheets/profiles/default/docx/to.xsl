@@ -106,7 +106,7 @@
 
     <xsl:template match="tei:glossListEntry">
       <xsl:call-template name="block-element">
-	<xsl:with-param name="style" select="dl"/>
+	<xsl:with-param name="style">dl</xsl:with-param>
 	<xsl:with-param name="pPr">
 	  <w:pPr>
 	    <w:pStyle w:val="dl"/>
