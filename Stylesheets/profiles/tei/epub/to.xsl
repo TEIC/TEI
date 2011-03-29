@@ -14,7 +14,7 @@
 
   <xsl:import href="../../../epub/tei-to-epub.xsl"/>
   <xsl:import href="../../../odds2/teiodds.xsl"/>
-  <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
+  <xsl:import href="../../../xhtml/oddprocessing.xsl"/>
   <xsl:import href="../../../odds2/guidelines.xsl"/>
 
   <xsl:param name="googleAnalytics"/>

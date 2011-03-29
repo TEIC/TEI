@@ -14,7 +14,7 @@
                 exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
                 version="2.0">
    <xsl:import href="../../../xhtml2/tei.xsl"/>
-   <xsl:import href="../../../xhtml2/tagdocs.xsl"/>
+   <xsl:import href="../../../xhtml/oddprocessing.xsl"/>
    <xsl:import href="../../../odds2/teiodds.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
    <xsl:import href="../isotei-schema.xsl"/>

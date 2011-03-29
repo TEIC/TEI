@@ -68,6 +68,7 @@
       </xsl:choose>
     </div>
   </xsl:template>
+
   <xsl:template match="tei:ident">
     <xsl:choose>
       <xsl:when test="@type">
@@ -82,11 +83,12 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="tei:gi">
-        <span class="gi">
-          <xsl:text>&lt;</xsl:text>
-          <xsl:apply-templates/>
-          <xsl:text>&gt;</xsl:text>
-        </span>
+    <span class="gi">
+      <xsl:text>&lt;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>&gt;</xsl:text>
+    </span>
   </xsl:template>
 </xsl:stylesheet>
