@@ -284,26 +284,45 @@
   </xsl:template>
 
   <xsl:template match="tei:p">
-    <text:p>
+    <xsl:variable name="style">
       <xsl:choose>
 	<xsl:when test="ancestor::tei:note[@place='foot']">
-	  <xsl:attribute name="text:style-name">
 	    <xsl:text>Footnote</xsl:text>
-	  </xsl:attribute>
 	</xsl:when>
 	<xsl:when test="ancestor::tei:row[@role='label']">
-	  <xsl:attribute name="text:style-name">Table Heading</xsl:attribute>
+	  <xsl:text>Table Heading</xsl:text>
 	</xsl:when>
 	<xsl:when test="ancestor::tei:row">
-	  <xsl:attribute name="text:style-name">Table Contents</xsl:attribute>
+	  <xsl:text>Table Contents</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:attribute name="text:style-name">Text body</xsl:attribute>
+	  <xsl:text>Text body</xsl:text>
 	</xsl:otherwise>
       </xsl:choose>
-      <xsl:call-template name="test.id"/>
-      <xsl:apply-templates/>
-    </text:p>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="tei:list">
+	<xsl:for-each-group select="node()" group-adjacent="boolean(self::tei:list)">
+	  <xsl:choose>
+	    <xsl:when test="current-grouping-key()">
+	      <xsl:apply-templates select="current-group()"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	    <text:p text:style-name="{$style}">
+	      <xsl:call-template name="test.id"/>
+	      <xsl:apply-templates select="current-group()"/>
+	    </text:p>
+	  </xsl:otherwise>  
+        </xsl:choose>
+	</xsl:for-each-group>
+      </xsl:when>
+      <xsl:otherwise>
+	<text:p text:style-name="{$style}">
+	  <xsl:call-template name="test.id"/>
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:otherwise>  
+    </xsl:choose>
   </xsl:template>
 
 
