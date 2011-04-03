@@ -344,6 +344,11 @@ capable of dealing with UTF-8 directly.
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
+\begingroup
+\catcode`\_=\active
+\gdef_#1{\ensuremath{\sb{\mathrm{#1}}}}
+\endgroup
+\mathcode`\_=\string"8000
 \catcode`\_=12\relax
 </xsl:text>
    </xsl:template>
