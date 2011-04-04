@@ -276,7 +276,6 @@
 	  <xsl:when test="self::tbx:descrip">true</xsl:when>
 	  <xsl:when test="self::tbx:termGrp">true</xsl:when>
 	  <xsl:when test="self::m:oMath">true</xsl:when>
-	  <xsl:when test="self::m:oMath">true</xsl:when>
 	  <xsl:when test="self::mml:math">true</xsl:when>
 	  <xsl:when
 	      test="self::teidocx:dynamicContent">true</xsl:when>
@@ -322,6 +321,8 @@
 	  <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='inline' and parent::tei:q]">true</xsl:when>
+	  <xsl:when test="self::tei:note[@place='inline' and not(parent::tei:div or
+			parent::tei:list)]">true</xsl:when>
 	  <xsl:when test="self::tei:num">true</xsl:when>
 	  <xsl:when test="self::tei:mentioned">true</xsl:when>
 	  <xsl:when test="self::tei:orgName">true</xsl:when>

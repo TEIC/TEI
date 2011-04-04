@@ -412,7 +412,8 @@
 	<xsl:when test="ancestor::tei:cell or ancestor::cals:entry">
 	  <xsl:call-template name="create-inlinenote"/>
 	</xsl:when>
-	<xsl:when test="@place='inline' and not(parent::tei:div or parent::tei:list)">
+	<xsl:when test="@place='inline' and not(parent::tei:div or
+			parent::tei:list)">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>

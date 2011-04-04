@@ -2422,7 +2422,7 @@
       </desc>
     </doc>
 
-    <xsl:template match="tei:title[tei:ref]|tei:hi[tei:ref]">
+    <xsl:template match="tei:title[tei:ref]|tei:hi[tei:ref]" priority="-1">
       <xsl:apply-templates/>
     </xsl:template>
 
