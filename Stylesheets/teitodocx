@@ -22,7 +22,12 @@ while test $# -gt 0; do
   esac
   shift
 done
-test -f "$1" || exit 1
+if ! test -f "$1"
+then
+  echo Error: file $1 does not exist
+  exit 1
+fi
+
 HERE=`pwd`
 D=`dirname "$1"`
 F=`basename "$1"`
