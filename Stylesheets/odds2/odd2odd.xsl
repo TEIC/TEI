@@ -962,6 +962,9 @@ for change individually.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
+            <xsl:when test="tei:valList">
+              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:valList"/>
+            </xsl:when>
             <xsl:when test="tei:stringVal">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:stringVal"/>
             </xsl:when>

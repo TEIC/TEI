@@ -267,12 +267,12 @@
   <xsl:template match="rng:choice">
     <xsl:choose>
       <xsl:when test="count(rng:*)=1">
-        <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+        <xsl:apply-templates select="a:*|rng:*|tei:*|text()|comment()"/>
       </xsl:when>
       <xsl:otherwise>
 	<choice xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:copy-of select="@*"/>
-          <xsl:apply-templates select="rng:*|tei:*|text()|comment()"/>
+          <xsl:apply-templates select="a:*|rng:*|tei:*|text()|comment()"/>
 	</choice>
       </xsl:otherwise>
     </xsl:choose>
@@ -1053,16 +1053,19 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="entityContent">
       <TEMPTREE>
         <xsl:choose>
+	  <xsl:when test="tei:valList[@type='closed']">
+            <xsl:call-template name="valListChildren"/>
+	  </xsl:when>
           <xsl:when test="tei:content/rng:group/rng:ref">
-	    <xsl:apply-templates select="tei:content/rng:*|tei:content/processing-instruction()"/>	    
+	    <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>	    
 	  </xsl:when>
           <xsl:when test="tei:content/rng:group">
             <choice xmlns="http://relaxng.org/ns/structure/1.0">
-              <xsl:apply-templates select="tei:content/rng:group/rng:*"/>
+              <xsl:apply-templates select="tei:content/rng:group/*"/>
             </choice>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates select="tei:content/rng:*|tei:content/processing-instruction()"/>
+            <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
           </xsl:otherwise>
         </xsl:choose>
       </TEMPTREE>
@@ -2128,10 +2131,17 @@ select="$makeDecls"/></xsl:message>
    </xsl:template>
 
    <xsl:template match="*" mode="justcopy">
-      <xsl:copy>
+     <xsl:copy>
          <xsl:apply-templates
 	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
-      </xsl:copy>
+     </xsl:copy>
+   </xsl:template>
+
+   <xsl:template match="a:*" mode="justcopy">
+      <xsl:element name="{name()}">
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+      </xsl:element>
    </xsl:template>
 
 </xsl:stylesheet>
