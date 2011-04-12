@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="figures" ident="notatedMusic">
+    <equiv/>
+    <desc>This element encodes the presence of music notation in a text. It is possible to describe
+        the content of the notation using elements from the model.glossLike class and it is possible
+        to point to an external representation using elements from model.ptrLike. It is possible to
+        specify the location of digital objects representing the notated music in other media such
+        as images or audio-visual files. The encoder's interpretation of the correspondence between
+        the notated music and these digital objects is not encoded explicitly. We recommend the use
+        of graphic and binaryObject mainly as a fallback mechanism when the notated music format is
+        not displayable by the application using the encoding. The alignment of encoded notated
+        music, images carrying the notation, and audio files is a complex matter for which we refer
+        the encoder to other formats and specifications such as MPEG-SMR.</desc>
+    <classes>
+        <memberOf key="model.global"/>
+	<memberOf key="att.global"/>
+        <memberOf key="att.placement"/>
+        <memberOf key="att.typed"/>
+    </classes>
+    <content>
+        <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+            <choice>
+                <ref name="model.labelLike"/>
+                <ref name="model.ptrLike"/>
+                <ref name="graphic"/>
+                <ref name="binaryObject"/>
+            </choice>
+        </zeroOrMore>
+    </content>
+    <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <notatedMusic>
+                <ptr target="bar1.xml"/>
+                <graphic url="bar1.jpg"/>
+                <desc>First bar of Chopin's Scherzo No.3 Op.39</desc>
+            </notatedMusic>
+        </egXML>
+    </exemplum>
+</elementSpec>
