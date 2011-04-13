@@ -22,6 +22,13 @@
         <rng:ref name="data.probability"/>
       </datatype>
     </attDef>
+    <attDef ident="precision">
+      <desc>characterizes the precision of the element or attribute pointed 
+        to by the <gi>precision</gi> element.</desc>
+      <datatype>
+        <rng:ref name="data.certainty"/>
+      </datatype>
+    </attDef>
     <attDef ident="stdDeviation" usage="opt">
       <equiv/>
       <desc>supplies a standard deviation associated with the value in
@@ -33,10 +40,18 @@
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <date xml:id="date001" notBefore="0014" notAfter="0064">About 50
-years after the death of Augustus</date>
-      <precision target="#date001" match="@notAfter" degree="0.3"/>
+      <date xml:id="date001" notBefore="0014" notAfter="0064">Within about 50
+        years of the death of Augustus</date>
       <precision target="#date001" match="@notBefore" degree="0.9"/>
+      <precision target="#date001" match="@notAfter" degree="0.3"/>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date notBefore="1632" notAfter="1642">Not more than ten years before the start of the Civil War
+      <precision match="@notBefore" precision="low"/>
+      <precision match="@notAfter" precision="high"/>
+      </date>
     </egXML>
   </exemplum>
 </elementSpec>
