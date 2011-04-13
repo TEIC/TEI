@@ -30,6 +30,17 @@ $Id$
     </zeroOrMore>
   </content>
   <attList>
+    <attDef ident="cert" usage="opt">
+      <gloss>certainty</gloss>
+      <gloss version="2007-12-20" xml:lang="kr">확실성</gloss>
+      <gloss version="2008-04-06" xml:lang="es">certeza</gloss>
+      <gloss version="2008-03-30" xml:lang="fr">certitude</gloss>
+      <gloss version="2007-11-06" xml:lang="it">certezza</gloss>
+      <desc>signifies the degree of certainty associated with the object pointed to by the <gi>certainty</gi> element.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.certainty"/>
+      </datatype>
+    </attDef>
     <attDef ident="locus" usage="req">
       <equiv/>
       <desc>indicates more exactly the aspect concerning which
@@ -127,15 +138,19 @@ indicated by a reference to an <gi>anchor</gi> element or to an
 value.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <certainty target="#ESX" locus="name" assertedValue="placeName" degree="0.2">
-            <desc>It is unlikely, but possible, that this refers to the place
-rather than the person.</desc>
+          <certainty target="#ESX" locus="name" assertedValue="placeName" cert="low">
+            <desc>It is unlikely, but possible, that this refers to the place rather than the person.</desc>
           </certainty>
         </egXML>
       </exemplum>
       <exemplum version="2008-04-06" xml:lang="fr">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <certainty target="#fr_ESX" locus="name" assertedValue="place" degree="0.2"/>
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <certainty match="parent::tei:gap/@reason" locus="value" cert="low"/>
         </egXML>
       </exemplum>
       <remarks>
