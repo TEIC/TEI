@@ -1672,7 +1672,8 @@ elements.</p><p>The <gi>variantEncoding</gi> element is available only when the
 schema. Its purpose is to document the method used to encode textual
 variants in the text, as discussed in section <ptr target="#TCAPLK"/>.</p>
 </div>
-</div><div type="div2" xml:id="HD4"><head>The Profile Description</head>
+</div>
+  <div type="div2" xml:id="HD4"><head>The Profile Description</head>
 <p>The <gi>profileDesc</gi> element is the third major subdivision of
 the TEI Header. It is an optional element, the purpose of which is to
 enable information characterizing various descriptive aspects of a text
@@ -1695,9 +1696,10 @@ elsewhere in the TEI header.
 elements taken from the <ident>model.profileDesc</ident> class. In the
 simplest case, this means it may contain the following elements:
 <specList>
-<specDesc key="creation"/>
-<specDesc key="langUsage"/>
-<specDesc key="textClass"/>
+  <specDesc key="creation"/>
+  <specDesc key="langUsage"/>
+  <specDesc key="textClass"/>
+  <specDesc key="calendarDesc"/>
 </specList>
 These elements are further described in the remainder of this section.</p>
 <p>When the the <ident type="module">corpus</ident>
@@ -1731,9 +1733,10 @@ schema. See further the discussion at <ptr target="#PHDH"/>.  </p>
 <specGrp xml:id="D224" n="The profile description">
 <!--&model.profileDescPart;-->
 &profileDesc;&handNote;
-<specGrpRef target="#D224C"/>
-<specGrpRef target="#D2241"/>
-<specGrpRef target="#D2243"/>
+  <specGrpRef target="#D224C"/>
+  <specGrpRef target="#D2241"/>
+  <specGrpRef target="#D2243"/>
+  <specGrpRef target="#D2242"/>
 </specGrp>
 <div type="div3" xml:id="HD4C"><head>Creation</head>
 <p>The <gi>creation</gi> element contains phrases describing the
@@ -1933,7 +1936,29 @@ enumerated, typically with  the header, for the former, while the
 latter may be used to indicate a more open ended or descriptive
 classification system.</p>
 <specGrp xml:id="D2243" n="Text Classification">&textClass;&keywords;&classCode;&catRef;
-</specGrp></div></div>
+</specGrp></div>
+<div type="div3" xml:id="HD44"><head>Calendar Description</head>
+  <p>The <gi>calendarDesc</gi> element is used within the <gi>profileDesc</gi>
+    describe and document calendars refered to in the <att>calendar</att> attribute on <gi>date</gi>
+    or dating schemes pointed to by the <att>dateScheme</att> attribute on databale elements.
+  </p>
+  <p>This element may contain one or more of:
+    <specList>
+      <specDesc key="calendar"/>
+    </specList></p>
+  <p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <calendarDesc>
+        <calendar xml:id="Gregorian"><p>Gregorian calendar</p></calendar>
+        <calendar xml:id="Stardate"><p>Fictional Stardate (from Star Trek series)</p></calendar>
+        <calendar xml:id="BP"><p>Calendar years before present (measured from 1950)</p></calendar>
+      </calendarDesc>
+    </egXML>
+  </p>
+  <specGrp xml:id="D2242" n="Calendar Description">&calendarDesc;&calendar;
+  </specGrp>
+</div>
+  </div>
 <div type="div2" xml:id="HD6"><head>The Revision Description</head>
 <p>The final sub-element of the TEI header, the <gi>revisionDesc</gi>
 element, provides a detailed change log in which each change made to a
