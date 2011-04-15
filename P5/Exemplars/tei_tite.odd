@@ -729,16 +729,21 @@ some say, "No."
        <attDef ident="period" mode="delete"/>
        <attDef ident="notBefore" mode="delete"/>
        <attDef ident="notAfter" mode="delete"/>
-       <attDef ident="from" mode="delete"/>
-       <attDef ident="to" mode="delete"/>
       </attList>
      </classSpec>
 
      <classSpec ident="att.declaring" mode="delete" module="tei" type="atts"/>
      <!-- removes @decls -->
 
-     <classSpec ident="att.dimensions" mode="delete" module="tei" type="atts"/>
-     <!-- removes @unit @quantity @extent @precision @scope -->
+     <classSpec ident="att.dimensions" mode="delete" module="tei" type="atts">
+       <!-- leave only @extent -->
+       <attList>
+         <attDef ident="unit" mode="delete"/>
+         <attDef ident="quantity" mode="delete"/>
+         <attDef ident="precision" mode="delete"/>
+         <attDef ident="scope" mode="delete"/>
+       </attList>
+     </classSpec>
 
      <classSpec ident="att.duration" mode="delete" module="tei" type="atts"/>
      <!-- removes @dur -->
@@ -758,7 +763,7 @@ some say, "No."
      <classSpec ident="att.responsibility" mode="delete" module="tei" type="atts"/>
      <!-- removes @atLeast @cert @resp -->
 
-     <!--classSpec ident="att.sourced" mode="delete" module="tei" type="atts"/-->
+     <classSpec ident="att.sourced" mode="delete" module="tei" type="atts"/>
      <!-- removes @ed -->
 
      <classSpec ident="att.spanning" mode="delete" module="tei" type="atts"/>
@@ -812,9 +817,9 @@ some say, "No."
      <moduleRef key="gaiji" include="g"/>
 
      <moduleRef key="core"
-      include="abbr addrLine address author  bibl biblScope   cb  cit  date  desc editor email 
+      include="abbr addrLine address author  bibl cb  cit  date  desc editor email 
       foreign  gap graphic head hi item l label lb lg list listBibl milestone name note num
-  p pb ptr pubPlace publisher q ref relatedItem resp respStmt sp speaker stage   time  title 
+  p pb ptr pubPlace publisher q ref resp respStmt sp speaker stage   time  title 
   titlePage titlePart trailer unclear"/>
 
 
@@ -834,6 +839,14 @@ some say, "No."
      <elementSpec ident="date" mode="change" module="core">
       <attList>
        <attDef ident="calendar" mode="delete"/>
+      </attList>
+     </elementSpec>
+
+     <elementSpec ident="time" mode="change" module="core">
+      <attList>
+         <attDef ident="from" mode="delete"/>
+         <attDef ident="to" mode="delete"/>
+         <attDef ident="extent" mode="delete"/>
       </attList>
      </elementSpec>
 
@@ -873,7 +886,7 @@ some say, "No."
      <elementSpec ident="note" mode="change" module="core">
       <attList>
        <attDef ident="anchored" mode="delete"/>
-       <!--attDef ident="targetEnd" mode="delete"/-->
+       <attDef ident="targetEnd" mode="delete"/>
       </attList>
      </elementSpec>
 
