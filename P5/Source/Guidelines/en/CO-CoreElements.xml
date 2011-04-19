@@ -3965,10 +3965,28 @@ editors, etc., and the number of the volume within that series.
 In the same way, an article in a journal requires at least two levels of
 information:  the analytic level describing the article itself, and the
 monographic level describing the journal.
- </p>
-<p>These three levels may be distinguished within a <gi>bibl</gi>
-element, and must be distinguished within a <gi>biblStruct</gi> element
-by means of the following elements:
+</p>
+  <p>Within <gi>bibl</gi>, these three levels may be distinguished simply by the use
+    of the <att>level</att> attribute on <gi>title</gi>. They may also be distinguished through
+    the practice of employing nested <gi>bibl</gi> elements. In this example, for
+    instance, the monograph-level component of the reference is encapsulated in
+    its own <gi>bibl</gi> within the main <gi>bibl</gi> for the article:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <bibl type="article" subtype="magazine_article" xml:id="beaupaire_1911">
+        <author><name><surname>Beaupaire</surname>
+          (<forename>Edmond</forename>)</name></author>,
+        <title level="a">A propos de la rue de la Femme-sans-Tête</title>,
+        <bibl type="monogr">
+          <title level="j">La Cité</title>,
+          <date when="1911-01">janvier 1911</date>, pp. <biblScope
+            type="pages">5-17</biblScope>.
+        </bibl>
+      </bibl>
+      </egXML>
+  </p>
+  
+  <p>Within <gi>biblStruct</gi>, the levels must be distinguished by the use of the
+    following elements:
 
 <specList><specDesc key="analytic"/><specDesc key="monogr"/><specDesc key="series"/></specList>
  </p>
