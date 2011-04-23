@@ -20,10 +20,13 @@ while test $# -gt 0; do
   esac
   shift
 done
-if ! test -f "$1"
-then
-  echo Error: file $1 does not exist
-  exit 1
+FILE=${1:?"no TEI file supplied; for usage syntax $0 --help"}
+if test -f $FILLE
+then 
+     echo Read file $FILE
+else
+  echo File $FILE does not exist
+  die
 fi
 
 HERE=`pwd`
