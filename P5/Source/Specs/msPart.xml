@@ -34,7 +34,10 @@ distinct manuscript or part of a manuscript, now forming part of a composite man
                  physDesc?, history?,  additional?, 
                  msPart*)> -->
     <rng:group>
+<rng:choice>
       <rng:ref name="altIdentifier"/>
+      <rng:ref name="msIdentifier"/>
+</rng:choice>
       <rng:zeroOrMore>
         <rng:ref name="model.headLike"/>
       </rng:zeroOrMore>
@@ -82,6 +85,12 @@ distinct manuscript or part of a manuscript, now forming part of a composite man
       </msDesc>
     </egXML>
   </exemplum>
+<remarks>
+<p>For compatability purposes, the identifier of a manuscript part may
+be supplied as a simple <gi>altIdentifier</gi> rather than using the
+more structured <gi>msIdentifier</gi> element. This usage is however
+deprecated.
+</p></remarks>
   <listRef>
     <ptr target="#mspt"/>
   </listRef>
