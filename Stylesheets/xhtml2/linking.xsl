@@ -31,13 +31,14 @@
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements * to work out a unique identififying string</desc>
+      <desc>Process any element and work out a unique identififying string</desc>
    </doc>
   <xsl:template match="*" mode="ident">
       <xsl:variable name="BaseFile">
          <xsl:value-of select="$masterFile"/>
          <xsl:call-template name="addCorpusID"/>
       </xsl:variable>
+
       <xsl:choose>
          <xsl:when test="@xml:id and $useIDs='true'">
             <xsl:value-of select="@xml:id"/>
@@ -84,6 +85,7 @@
       <xsl:variable name="Hash">
          <xsl:text>#</xsl:text>
       </xsl:variable>
+
       <xsl:choose>
          <xsl:when test="$STDOUT='true' and number($depth) &lt;= number($splitLevel)">
             <xsl:value-of select="$masterFile"/>
@@ -109,6 +111,10 @@
          <xsl:when test="ancestor::tei:front and not($splitFrontmatter)">
             <xsl:value-of select="concat($Hash,$ident)"/>
          </xsl:when>
+	 <xsl:when test="self::tei:text and $splitLevel=0">
+	   <xsl:value-of select="$ident"/>
+	   <xsl:value-of select="$standardSuffix"/>
+	 </xsl:when>
          <xsl:when test="number($splitLevel)= -1 and
 			 ancestor::tei:teiCorpus">
             <xsl:value-of select="$masterFile"/>
@@ -268,16 +274,19 @@
       <desc>[html] </desc>
    </doc>
   <xsl:template name="locateParentdiv">
+
       <xsl:choose>
-	 <xsl:when test="ancestor-or-self::tei:body[tei:head]/parent::tei:text/parent::tei:group">
+
+	<xsl:when
+	     test="ancestor-or-self::tei:body/parent::tei:text/ancestor::tei:group">
             <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
          </xsl:when>
 
-	 <xsl:when test="ancestor-or-self::tei:body/parent::tei:text[tei:front]/parent::tei:group">
+	 <xsl:when test="ancestor-or-self::tei:front/parent::tei:text/ancestor::tei:group">
             <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
          </xsl:when>
 
-	 <xsl:when test="ancestor-or-self::tei:back/parent::tei:text/parent::tei:group">
+	 <xsl:when test="ancestor-or-self::tei:back/parent::tei:text/ancestor::tei:group">
             <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
          </xsl:when>
 
@@ -285,9 +294,6 @@
             <xsl:apply-templates mode="ident" select="ancestor::tei:div[last()]"/>
          </xsl:when>
 
-         <xsl:when test="ancestor-or-self::tei:div">
-            <xsl:apply-templates mode="ident" select="ancestor::tei:div[last() - number($splitLevel)]"/>
-         </xsl:when>
          <xsl:otherwise>
             <xsl:choose>
                <xsl:when test="number($splitLevel) = 0">
@@ -308,6 +314,7 @@
             </xsl:choose>
          </xsl:otherwise>
       </xsl:choose>
+
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] create external link<param name="ptr">ptr</param>
@@ -472,7 +479,6 @@
 	       <xsl:copy-of select="$linktext"/>
 	     </xsl:when>
 	     <xsl:otherwise>
-
 	       <a href="{$target}">
 		 <xsl:call-template name="htmlAttributes"/>
 		 <xsl:choose>

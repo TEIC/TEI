@@ -827,30 +827,17 @@
          <xsl:when test="parent::tei:TEI">
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="parent::tei:group and tei:body/tei:head
-			 and $splitLevel=0">
+         <xsl:when test="ancestor::tei:group and $splitLevel=0">
 	   <xsl:call-template name="makeDivPage">
 	     <xsl:with-param name="depth">-1</xsl:with-param>
 	   </xsl:call-template>
-
          </xsl:when>
-         <xsl:when test="parent::tei:group and tei:front//tei:titlePart/tei:title
-			 and $splitLevel=0">
-	   <xsl:call-template name="makeDivPage">
-	     <xsl:with-param name="depth">-1</xsl:with-param>
-	   </xsl:call-template>
-
-         </xsl:when>
-         <xsl:when test="parent::tei:group">
-	   <xsl:call-template name="doDivBody"/>
-	 </xsl:when>
 	 <xsl:otherwise>
-	   <div class="innertext">
-	     <xsl:apply-templates mode="innertext"/>
-	   </div>
+	   <xsl:call-template name="doDivBody"/>
 	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element titlePage</desc>
    </doc>
@@ -1547,128 +1534,153 @@
 	    </xsl:for-each>
 	  </ul>
 	</xsl:when>
-         <xsl:when
-	     test="ancestor-or-self::tei:TEI/tei:text/tei:group and
-		   $splitLevel=0">
-	     <xsl:for-each
-		 select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	<xsl:when
+	    test="ancestor-or-self::tei:TEI/tei:text/tei:group and
+		  $splitLevel=0">
+	  <xsl:for-each
+	      select="ancestor-or-self::tei:TEI/tei:text/tei:front">
 	       <xsl:call-template name="partTOC">
 		 <xsl:with-param name="part">front</xsl:with-param>
 	       </xsl:call-template>
-	     </xsl:for-each>
+	  </xsl:for-each>
+	  
+	  <xsl:for-each
+	      select="ancestor-or-self::tei:TEI/tei:text/tei:group">
+	    <xsl:call-template name="groupTOC"/>
+	  </xsl:for-each>
 
-	     <ul class="toc toc_group">
-
-	     
-	     <xsl:for-each
-		 select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
-	       <xsl:variable name="pointer">
-		 <xsl:apply-templates mode="generateLink" select="."/>
-	       </xsl:variable>
-	       <li>
-		 <xsl:if test="not(tei:head or tei:body/tei:head or @n)">
-		   <xsl:attribute
-		       name="class">headless</xsl:attribute>
-		 </xsl:if>
-		 <xsl:call-template name="header">
-		   <xsl:with-param name="toc" select="$pointer"/>
-		   <xsl:with-param name="minimal">false</xsl:with-param>
-		   <xsl:with-param name="display">plain</xsl:with-param>
-		 </xsl:call-template>
-		 <xsl:for-each select="tei:front">
-		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="part">front</xsl:with-param>
-		   </xsl:call-template>
-		 </xsl:for-each>
-		 
-		 <xsl:for-each select="tei:body">
-		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="part">body</xsl:with-param>
-		   </xsl:call-template>
-		 </xsl:for-each>
-		 
-		 <xsl:for-each select="tei:back">
-		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="part">back</xsl:with-param>
-		   </xsl:call-template>
-		 </xsl:for-each>
-	       </li>
-
-	     </xsl:for-each>
-	     </ul>
-	     <xsl:for-each
-		 select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-	       <xsl:call-template name="partTOC">
-		 <xsl:with-param name="part">back</xsl:with-param>
-	       </xsl:call-template>
-	     </xsl:for-each>
-
-	 </xsl:when>
-
-         <xsl:when
-	     test="ancestor-or-self::tei:TEI/tei:text/tei:group">
-
-	     <xsl:for-each
-		 select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
-	       <h3>
-		 <xsl:number/>
-		 <xsl:choose>
-		   <xsl:when test="tei:body/tei:head">
-		     <xsl:text>. </xsl:text>
-		     <xsl:apply-templates select="tei:body/tei:head" mode="plain"/>
-		   </xsl:when>
-		   <xsl:when
-		       test="tei:front/tei:titlePage//tei:title">
-		     <xsl:apply-templates select="tei:front/tei:titlePage//tei:title[1]" mode="plain"/>
-		   </xsl:when>
-		 </xsl:choose>
-	       </h3>
-		 <xsl:for-each select="tei:front">
-		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="part">front</xsl:with-param>
-		   </xsl:call-template>
-		 </xsl:for-each>
-		 
-		 <xsl:for-each select="tei:body">
-		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="part">body</xsl:with-param>
-		   </xsl:call-template>
-		 </xsl:for-each>
-		 
-		 <xsl:for-each select="tei:back">
-		   <xsl:call-template name="partTOC">
-		     <xsl:with-param name="part">back</xsl:with-param>
-		   </xsl:call-template>
-		 </xsl:for-each>
-
-	     </xsl:for-each>
-
-	 </xsl:when>
-	 <xsl:otherwise>
-	   <xsl:if test="$tocFront">
-	     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-	       <xsl:call-template name="partTOC">
-		 <xsl:with-param name="part">front</xsl:with-param>
-	       </xsl:call-template>
-	     </xsl:for-each>
-	   </xsl:if>
-	   
-	   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-	     <xsl:call-template name="partTOC">
-	       <xsl:with-param name="part">body</xsl:with-param>
-	     </xsl:call-template>
-	   </xsl:for-each>
-	   
-	   <xsl:if test="$tocBack">
-	     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-	       <xsl:call-template name="partTOC">
-		 <xsl:with-param name="part">back</xsl:with-param>
-	       </xsl:call-template>
-	     </xsl:for-each>
-	   </xsl:if>
-	 </xsl:otherwise>
+	  <xsl:for-each
+	      select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	    <xsl:call-template name="partTOC">
+	      <xsl:with-param name="part">back</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:when>
+	
+	<xsl:when
+	    test="ancestor-or-self::tei:TEI/tei:text/tei:group">	  
+	  <xsl:for-each
+	      select="ancestor-or-self::tei:TEI/tei:text/tei:group/tei:text">
+	    <h3>
+	      <xsl:number/>
+	      <xsl:choose>
+		<xsl:when test="tei:body/tei:head">
+		  <xsl:text>. </xsl:text>
+		  <xsl:apply-templates select="tei:body/tei:head" mode="plain"/>
+		</xsl:when>
+		<xsl:when
+		    test="tei:front/tei:titlePage//tei:title">
+		  <xsl:apply-templates select="tei:front/tei:titlePage//tei:title[1]" mode="plain"/>
+		</xsl:when>
+	      </xsl:choose>
+	    </h3>
+	    <xsl:for-each select="tei:front">
+	      <xsl:call-template name="partTOC">
+		<xsl:with-param name="part">front</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	    
+	    <xsl:for-each select="tei:body">
+	      <xsl:call-template name="partTOC">
+		<xsl:with-param name="part">body</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	    
+	    <xsl:for-each select="tei:back">
+	      <xsl:call-template name="partTOC">
+		<xsl:with-param name="part">back</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	    
+	  </xsl:for-each>
+	  
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:if test="$tocFront">
+	    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:front">
+	      <xsl:call-template name="partTOC">
+		<xsl:with-param name="part">front</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:if>
+	  
+	  <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:body">
+	    <xsl:call-template name="partTOC">
+	      <xsl:with-param name="part">body</xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	  
+	  <xsl:if test="$tocBack">
+	    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:text/tei:back">
+	      <xsl:call-template name="partTOC">
+		<xsl:with-param name="part">back</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:if>
+	</xsl:otherwise>
       </xsl:choose>
-  </xsl:template>
+    </xsl:template>
+
+    <xsl:template name="groupTOC">
+      <xsl:variable name="gDepth"
+		    select="count(ancestor::tei:group)"/>
+      <hr/>
+      <ul class="toc toc_group{$gDepth}">	    	   
+      <li>
+	<xsl:if test="not($autoHead='true') and not(tei:head or tei:body/tei:head or @n)">
+	  <xsl:attribute
+	      name="class">headless</xsl:attribute>
+	</xsl:if>
+	<ul>
+	  <xsl:for-each select="tei:text">
+	    <li>
+	      <xsl:for-each select="tei:front">
+		<xsl:if
+		    test="tei:titlePage/tei:docTitle/tei:titlePart">
+		  <span>
+		    <xsl:apply-templates
+			select="tei:titlePage/tei:docTitle/tei:titlePart"
+			mode="plain"/>
+		  </span>
+		</xsl:if>
+		  <xsl:call-template name="partTOC">
+		  <xsl:with-param name="part">front</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	      
+	      <xsl:choose>
+		<xsl:when test="tei:group">
+		  <xsl:for-each select="tei:group">
+		    <xsl:call-template name="groupTOC"/>
+		  </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:call-template name="header">
+		    <xsl:with-param name="toc">
+		      <xsl:apply-templates mode="generateLink" select="."/>
+		    </xsl:with-param>
+		    <xsl:with-param name="minimal">false</xsl:with-param>
+		    <xsl:with-param name="display">plain</xsl:with-param>
+		  </xsl:call-template>
+		  <xsl:for-each select="tei:body">
+		    <xsl:call-template name="partTOC">
+		      <xsl:with-param name="part">body</xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      
+	      <xsl:for-each select="tei:back">
+		<xsl:call-template name="partTOC">
+		  <xsl:with-param name="part">back</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	    </li>
+	  </xsl:for-each>
+	</ul>
+      </li>
+      </ul>
+    </xsl:template>
 
   <xsl:template name="partTOC">
       <xsl:param name="part"/>
@@ -2146,14 +2158,14 @@
       </xsl:if>
       <!-- main text -->
     <xsl:choose>
-         <xsl:when test="tei:text/tei:group">
-	   <xsl:apply-templates select="tei:text/tei:group"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:apply-templates select="tei:text/tei:body"/>
-         </xsl:otherwise>
-      </xsl:choose>
-      <!-- back matter -->
+      <xsl:when test="tei:text/tei:group">
+	<xsl:apply-templates select="tei:text/tei:group"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates select="tei:text/tei:body"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    <!-- back matter -->
     <xsl:apply-templates select="tei:text/tei:back"/>
       <xsl:call-template name="printNotes"/>
   </xsl:template>

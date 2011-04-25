@@ -61,7 +61,7 @@
       <li>
 	<xsl:attribute name="class">
 	  <xsl:text>toc</xsl:text>
-	  <xsl:if test="not(tei:head or @n)"> headless</xsl:if>
+	  <xsl:if test="not($autoHead='true') and not(tei:head or @n)"> headless</xsl:if>
 	</xsl:attribute>
         <xsl:call-template name="header">
           <xsl:with-param name="toc" select="$pointer"/>
@@ -1132,7 +1132,8 @@
           <xsl:call-template name="rendToClass"/>
         </div>
       </xsl:when>
-      <xsl:when test="$pagebreakStyle='visible' and parent::tei:body">
+      <xsl:when test="$pagebreakStyle='visible' and (parent::tei:body
+		      or parent::tei:front or parent::tei:back or parent::tei:group)">
         <div class="pagebreak">
           <xsl:call-template name="makeAnchor"/>
           <xsl:text> [</xsl:text>
