@@ -1624,59 +1624,61 @@
     <xsl:template name="groupTOC">
       <xsl:variable name="gDepth"
 		    select="count(ancestor::tei:group)"/>
-      <hr/>
       <ul class="toc toc_group{$gDepth}">	    	   
-      <li>
-	<xsl:if test="not($autoHead='true') and not(tei:head or tei:body/tei:head or @n)">
-	  <xsl:attribute
-	      name="class">headless</xsl:attribute>
-	</xsl:if>
-	<ul>
-	  <xsl:for-each select="tei:text">
-	    <li>
-	      <xsl:for-each select="tei:front">
-		<xsl:if
-		    test="tei:titlePage/tei:docTitle/tei:titlePart">
-		  <span>
-		    <xsl:apply-templates
-			select="tei:titlePage/tei:docTitle/tei:titlePart"
-			mode="plain"/>
-		  </span>
-		</xsl:if>
+	<li>
+	  <xsl:if test="not($autoHead='true') and not(tei:head or tei:body/tei:head or @n)">
+	    <xsl:attribute
+		name="class">headless</xsl:attribute>
+	  </xsl:if>
+	  <ul>
+	    <xsl:for-each select="tei:text">
+	      <li>
+		<xsl:for-each select="tei:front">
+		  <xsl:if
+		      test="tei:titlePage/tei:docTitle/tei:titlePart">
+		    <span>
+		      <xsl:apply-templates
+			  select="tei:titlePage/tei:docTitle/tei:titlePart"
+			  mode="plain"/>
+		    </span>
+		  </xsl:if>
 		  <xsl:call-template name="partTOC">
-		  <xsl:with-param name="part">front</xsl:with-param>
-		</xsl:call-template>
-	      </xsl:for-each>
-	      
-	      <xsl:choose>
-		<xsl:when test="tei:group">
-		  <xsl:for-each select="tei:group">
-		    <xsl:call-template name="groupTOC"/>
-		  </xsl:for-each>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:call-template name="header">
-		    <xsl:with-param name="toc">
-		      <xsl:apply-templates mode="generateLink" select="."/>
-		    </xsl:with-param>
-		    <xsl:with-param name="minimal">false</xsl:with-param>
-		    <xsl:with-param name="display">plain</xsl:with-param>
+		    <xsl:with-param name="part">front</xsl:with-param>
 		  </xsl:call-template>
-		  <xsl:for-each select="tei:body">
-		    <xsl:call-template name="partTOC">
-		      <xsl:with-param name="part">body</xsl:with-param>
+		</xsl:for-each>
+		
+		<xsl:choose>
+		  <xsl:when test="tei:group">
+		    <xsl:for-each select="tei:group">
+		      <xsl:call-template name="groupTOC"/>
+		    </xsl:for-each>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:call-template name="header">
+		      <xsl:with-param name="toc">
+			<xsl:apply-templates mode="generateLink" select="."/>
+		      </xsl:with-param>
+		      <xsl:with-param name="minimal">false</xsl:with-param>
+		      <xsl:with-param name="display">plain</xsl:with-param>
 		    </xsl:call-template>
-		  </xsl:for-each>
-		</xsl:otherwise>
-	      </xsl:choose>
-	      
-	      <xsl:for-each select="tei:back">
-		<xsl:call-template name="partTOC">
-		  <xsl:with-param name="part">back</xsl:with-param>
-		</xsl:call-template>
-	      </xsl:for-each>
-	    </li>
-	  </xsl:for-each>
+		    <xsl:for-each select="tei:body">
+		      <xsl:call-template name="partTOC">
+			<xsl:with-param name="part">body</xsl:with-param>
+		      </xsl:call-template>
+		    </xsl:for-each>
+		  </xsl:otherwise>
+		</xsl:choose>
+		
+		<xsl:for-each select="tei:back">
+		  <xsl:call-template name="partTOC">
+		    <xsl:with-param name="part">back</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:for-each>
+	      </li>
+	    </xsl:for-each>
+	    <xsl:for-each select="tei:group">
+	      <xsl:call-template name="groupTOC"/>
+	    </xsl:for-each>
 	</ul>
       </li>
       </ul>
