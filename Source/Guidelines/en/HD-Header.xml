@@ -584,8 +584,37 @@ individual or organization, this person or institution is termed the
 the entire publication statement is given as prose.  Each may be
 followed by one or more of the following elements, in the following order:<note place="bottom">This constraint is not however enforced by the current
 version of the TEI Guidelines.</note>
-<specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc key="idno" atts="type"/><specDesc key="availability" atts="status"/><specDesc key="date"/></specList>
+<specList>
+<specDesc key="pubPlace"/>
+<specDesc key="address"/>
+<specDesc key="idno" atts="type"/>
+<specDesc key="availability" atts="status"/>
+<specDesc key="licence" atts="from to target"/>
+<specDesc key="date"/></specList>
 </p>
+<p>The <att>status</att> attribute on the <gi>availability</gi>
+element may be used simply to indicate whether the document is freely
+available or subject to some kinds of licence or other
+embargo. Details of the licensing according to which the document is
+made available may be provided as informal prose content within the
+<gi>availability</gi> element, or more formally by means of one or
+more <gi>licence</gi> elements within it. </p>
+<p>If a canonical reference such as an URI is available as a means of
+defining the applicable licensing scheme, the <gi>licence</gi> element
+may point to it by means of its <att>target</att> attribute. In such a
+case, the <gi>licence</gi> element itself may be empty, or it may
+contain a summary of any additional considerations applicable. If no
+such reference is provided, the <gi>licence</gi> element should
+contain a full statement of the terms under which the content of the
+document is made available.</p>
+<p>If the licensing is time-bound in some way, for example if the
+content of the document is embargoed until a certain date, the
+<gi>licence</gi> element should indicate this by means of an
+appropriate combination of attributes from the <ident
+type="class">att.datable</ident> class. </p>
+
+
+
 <p>Note that the dates, places, etc., given in the publication statement
 relate to the publisher, distributor, or release authority most recently
 mentioned.  If the text was created at some date other than its date of
@@ -599,14 +628,23 @@ when the module described in chapter <ptr target="#ND"/> is included
 in a schema.
 </p>
 <p>Examples:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
      <publisher>Oxford University Press</publisher>
      <pubPlace>Oxford</pubPlace> <date>1989</date>
      <idno type="ISBN">0-19-254705-4</idno>
      <availability><p>Copyright 1989, Oxford University Press</p></availability></publicationStmt></egXML>
+
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
     <authority>James D. Benson</authority>
-    <pubPlace>London</pubPlace> <date>1984</date></publicationStmt></egXML>
+    <pubPlace>London</pubPlace> <date>1998</date>
+<availability status="restricted">
+<licence target="http://creativecommons.org/licenses/by/3.0/">Creative
+Commons Attribution 3.0 Unported License</licence>
+</availability>
+</publicationStmt></egXML>
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
   <publisher>Sigma Press</publisher>
   <address>
@@ -623,7 +661,8 @@ in a schema.
   </availability>
 </publicationStmt></egXML>
 </p>
-<specGrp xml:id="D2224" n="The publication statement">&publicationStmt;&distributor;&authority;&idno;&availability;
+<specGrp xml:id="D2224" n="The publication
+			   statement">&publicationStmt;&distributor;&authority;&idno;&availability; &licence;
 </specGrp>
 </div>
 <div type="div3" xml:id="HD26"><head>The Series Statement</head>

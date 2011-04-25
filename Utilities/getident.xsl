@@ -7,6 +7,8 @@
 <xsl:key name="IDENTS" match="tei:macroSpec[@ident]" use="1"/>
 <xsl:template match="/">
  <xsl:for-each select="key('IDENTS',1)">
+   <xsl:value-of select="@module"/>
+<xsl:text> </xsl:text>
    <xsl:value-of select="@ident"/>
    <xsl:text>&#10;</xsl:text>
  </xsl:for-each>
