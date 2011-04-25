@@ -392,16 +392,16 @@
 		  <xsl:when test="not(html:a)"/>
 		  <xsl:when test="starts-with(html:a/@href,'#')"/>
 		  <xsl:otherwise>
-		  <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
-		    <xsl:attribute name="id">
-		      <xsl:text>section</xsl:text>
-		      <xsl:number count="html:li" level="any"/>
-		    </xsl:attribute>
-		  </item>
+		    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
+		      <xsl:attribute name="id">
+			<xsl:text>section</xsl:text>
+			<xsl:number count="html:li" level="any"/>
+		      </xsl:attribute>
+		    </item>
 		  </xsl:otherwise>
 		</xsl:choose>
 		<xsl:if test="html:ul">
-		  <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
+		  <xsl:for-each select="html:ul//html:li[html:a and not(contains(html:a/@href,'#'))]">
 		    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
 		      <xsl:attribute name="id">
 			<xsl:text>section</xsl:text>
@@ -456,7 +456,7 @@
 		  </xsl:otherwise>
 		  </xsl:choose>
                   <xsl:if test="html:ul">
-                    <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
+                    <xsl:for-each select="html:ul//html:li[html:a and not(contains(html:a/@href,'#'))]">
                       <itemref linear="yes">
                         <xsl:attribute name="idref">
                           <xsl:text>section</xsl:text>
