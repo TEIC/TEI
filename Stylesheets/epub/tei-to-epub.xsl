@@ -369,6 +369,10 @@
 	      <xsl:if test="not($coverImageOutside='')">
 		<item href="{$coverImageOutside}" id="cover-image" media-type="image/jpeg"/>
 	      </xsl:if>
+	      <xsl:if test="not($coverimage='') and not($coverimage=$coverImageOutside)">
+		<item href="{$coverimage}" id="cover-image-extra" media-type="image/jpeg"/>
+	      </xsl:if>
+
 	      <item href="stylesheet.css" id="css" media-type="text/css"/>
 	      <item href="titlepage.html" id="titlepage"
 		    media-type="application/xhtml+xml"/>	      
