@@ -60,10 +60,6 @@
         <xsl:apply-templates select="tei:head" mode="plain"/>
       </xsl:when>
       <xsl:when test="@n">
-	<xsl:if test="@type">
-	  <xsl:value-of select="@type"/>
-	  <xsl:text> </xsl:text>
-	</xsl:if>
 	<xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="@type">

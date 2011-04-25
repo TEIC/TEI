@@ -60,7 +60,7 @@
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="subject"/>
-  <xsl:param name="tocDepth">3</xsl:param>
+  <xsl:param name="tocDepth">5</xsl:param>
   <xsl:param name="tocFront">true</xsl:param>
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
@@ -1037,7 +1037,10 @@
         <xsl:apply-templates select="tei:head" mode="plain"/>
       </xsl:when>
       <xsl:when test="@n">
-        <xsl:value-of select="@n"/>
+	<xsl:value-of select="@n"/>
+      </xsl:when>
+      <xsl:when test="@type">
+        <xsl:value-of select="@type"/>
       </xsl:when>
       <xsl:otherwise>&#160;</xsl:otherwise>
     </xsl:choose>
