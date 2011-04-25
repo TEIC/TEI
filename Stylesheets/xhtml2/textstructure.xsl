@@ -1677,7 +1677,9 @@
 	      </li>
 	    </xsl:for-each>
 	    <xsl:for-each select="tei:group">
-	      <xsl:call-template name="groupTOC"/>
+	      <li>
+		<xsl:call-template name="groupTOC"/>
+	      </li>
 	    </xsl:for-each>
 	</ul>
       </li>
