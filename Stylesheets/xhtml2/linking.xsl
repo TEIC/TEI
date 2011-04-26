@@ -487,7 +487,7 @@
 	       <a href="{$target}">
 		 <xsl:call-template name="htmlAttributes"/>
 		 <xsl:choose>
-		   <xsl:when test="@rend!=''">
+		   <xsl:when test="@rend">
 		     <xsl:attribute name="class">
 		       <xsl:value-of select="@rend"/>
 		     </xsl:attribute>

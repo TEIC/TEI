@@ -281,7 +281,6 @@
             <xsl:call-template name="makeInternalLink">
                <xsl:with-param name="target" select="substring-after(@target,'#')"/>
                <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="class" select="@rend"/>
                <xsl:with-param name="dest">
                   <xsl:call-template name="generateEndLink">
                      <xsl:with-param name="where">
@@ -296,7 +295,6 @@
             <xsl:call-template name="makeInternalLink">
                <xsl:with-param name="target" select="@target"/>
                <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="class" select="@rend"/>
                <xsl:with-param name="dest">
                   <xsl:call-template name="generateEndLink">
                      <xsl:with-param name="where">
@@ -321,7 +319,6 @@
             <xsl:call-template name="makeInternalLink">
                <xsl:with-param name="target" select="substring-after(@url,'#')"/>
                <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="class" select="@rend"/>
                <xsl:with-param name="dest">
                   <xsl:call-template name="generateEndLink">
                      <xsl:with-param name="where">
