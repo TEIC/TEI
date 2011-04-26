@@ -642,6 +642,12 @@
 	<xsl:text>-</xsl:text>
 	<br/>
       </xsl:when>
+      <xsl:when test="@rend='above'">
+	<sup>(</sup>
+      </xsl:when>
+      <xsl:when test="@rend='below'">
+	<sub>(</sub>
+      </xsl:when>
       <xsl:when test="@rend">
 	<br class="{@rend}"/>
       </xsl:when>

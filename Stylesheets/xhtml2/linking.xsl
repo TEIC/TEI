@@ -271,7 +271,8 @@
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>[html] Find the name of the outermost container for the
+      current object which would create an output file</desc>
    </doc>
   <xsl:template name="locateParentdiv">
 
@@ -292,6 +293,10 @@
 
          <xsl:when test="ancestor-or-self::tei:div and number($splitLevel) &lt; 0">
             <xsl:apply-templates mode="ident" select="ancestor::tei:div[last()]"/>
+         </xsl:when>
+
+         <xsl:when test="ancestor-or-self::tei:div">
+            <xsl:apply-templates mode="ident" select="ancestor::tei:div[last() - number($splitLevel)]"/>
          </xsl:when>
 
          <xsl:otherwise>
