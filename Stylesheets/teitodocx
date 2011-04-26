@@ -77,7 +77,7 @@ fi
 unzip -o -q $TEMPLATES/template.docx
 if $odd
 then
-    saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl defaultSource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
+    saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl verbose=$debug TEIC=true
     saxon -o:$TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
     saxon -o:$TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
 else

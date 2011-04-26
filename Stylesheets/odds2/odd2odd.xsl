@@ -37,7 +37,7 @@
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"></xsl:param>
-  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/current/</xsl:param>
   <xsl:key name="odd2odd-CLASSREFS" match="tei:classRef" use="@key"/>
   <xsl:key name="odd2odd-ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
   <xsl:key name="odd2odd-CHANGEATT" match="tei:attDef[@mode='change']" use="concat(../../@ident,'_',@ident)"/>
@@ -99,7 +99,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$defaultTEIServer"/>
-	<xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+	<xsl:text>xml/tei/odd/p5subset.xml</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -189,11 +189,21 @@
     <xsl:if test="@ident=$selectedSchema or ($selectedSchema='' and not(preceding-sibling::tei:schemaSpec))">
       <xsl:copy>
 	<xsl:copy-of select="@*"/>
-	<xsl:if test="not(@source)">
+	<xsl:choose>
+	<xsl:when test="@source">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Source for TEI is<xsl:value-of select="@source"/> </xsl:message>
+	</xsl:if>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>Source for TEI will be set to <xsl:value-of select="$DEFAULTSOURCE"/> </xsl:message>
+	  </xsl:if>
 	  <xsl:attribute name="source">
 	    <xsl:value-of select="$DEFAULTSOURCE"/>
 	  </xsl:attribute>
-	</xsl:if>
+	</xsl:otherwise>
+	</xsl:choose>
 	<xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
       </xsl:copy>
     </xsl:if>
@@ -2241,7 +2251,7 @@ so that is only put back in if there is some content
 	<xsl:when test="starts-with($loc,'tei:')">
 	  <xsl:value-of
 	      select="replace($loc,'tei:',$defaultTEIServer)"/>
-	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+	  <xsl:text>xml/tei/odd/p5subset.xml</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:value-of select="$currentDirectory"/>
