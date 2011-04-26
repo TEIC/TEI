@@ -184,22 +184,69 @@ out correctly. <!-- more about test files --></p>
 
       <div xml:id="jenkins">
 	<head>Jenkins setup</head>
-	<p>Jenkins  divides the work of building P5 into three linked stages: Test, Documentation and the final assembly. The second is triggered by a successful run of the first,  and the third by a successful run of the second. The work they do is as follows
+	<p>Jenkins divides the work of building P5 into three linked
+	stages: Test, Documentation and the final assembly. The work they do is as
+	follows:
 	<list type="ordered">
 	  <item>Test stage: this monitors
 	  <code>https://tei.svn.sourceforge.net/svnroot/tei/trunk/P5</code>,
 	  the part of the TEI sourceforge subversion repository where
 	  the P5 source is stored. If any change is detected, it runs <code>make clean validate test exemplars</code></item>
-	  <item>Documentation stage: this also monitors the subversion
-	  repository for updates. It runs <code>make clean dist-doc validate-html</code></item>
-	  <item>Final stage: this copies artefacts produced during the
-	  first two stages, and then does <code>rm -f dist-source.stamp dist-schema.stamp dist-test.stamp dist-database.stamp dist-exemplars.stamp</code>, followed by <code>make dist deb</code> and  <code>make teiwebsiteguidelines</code>. It makes available <code>release/xml/**, release/doc/**,*.zip,tei-p5-*_*,teiwebsiteguidelines.zip</code> on the web.</item>
+	  <item>Documentation stage: this also updates itself from the Subversion
+	  repository before it runs, but is triggered by the success of the Test run, not directly by monitoring Subversion. 
+	  It runs <code>make clean dist-doc validate-html</code></item>
+	  <item>Final stage: this is triggered by a successful run of
+	  the Documentation stage, gets copies of artefacts
+	  produced during the first two stages, and then does <code>rm
+	  -f dist-source.stamp dist-schema.stamp dist-test.stamp
+	  dist-database.stamp dist-exemplars.stamp</code>, followed by
+	  <code>make dist deb</code> and <code>make
+	  teiwebsiteguidelines</code>. It makes available
+	  <code>release/xml/**,
+	  release/doc/**,*.zip,tei-p5-*_*,teiwebsiteguidelines.zip</code>
+	  on the web.</item>
 </list>
 	</p>
 	<p>See <ptr
 	target="https://wiki.jenkins-ci.org/display/JENKINS/Administering+Jenkins"/>
-	for details on how to configure   Jenkins The files currently
+	for details on how to configure   Jenkins. The files currently
 	used for this purpose are accessible in the Sourceforge <code>Documents/Editing/Jenkins</code> directory.</p>
+<p>The Jenkins plugins which should be installed are as follows:
+<list type="gloss">
+<label>Copy Artifact Plugin</label>
+<item>Adds a build step to copy artifacts from another project.</item>
+	
+<label>Jenkins CVS Plug-in</label>
+<item>Integrates Jenkins with CVS version control system.</item>
+
+<label>Emotional Hudson plugin</label>
+<item>This funny plugin changes the expression of Mr. Hudson in the background when your builds fail.</item>
+	
+<label>Green Balls</label>
+<item>Because green is better than blue!</item>
+	
+<label>Hudson Job Configuration History Plugin</label>
+<item>Job history plugin for hudson.</item>
+	
+<label>Log Parser Plugin</label>
+<item></item>
+	
+<label>Maven Integration plugin</label>
+<item></item>
+	
+<label>Plot plugin</label>
+<item>This plugin provides generic plotting (or graphing) capability.</item>
+	
+<label>Hudson SCP publisher plugin</label>
+<item>This plugin uploads build artifacts to repository sites using SCP (SSH) protocol.</item>
+	
+<label>Jenkins Subversion Plug-in</label>
+<item></item>
+
+<label>Hudson WebSVN2 plugin</label>
+<item>This plugin integrates WebSVN browser interface for Subversion to Hudson. Entries in change logs will by hyperlinked to the specified files/diffs in WebSVN.</item>
+</list>
+</p>
       </div>
 
 
