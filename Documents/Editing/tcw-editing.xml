@@ -15,6 +15,8 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2011-04-26">merged back in Seb's notes on Jenkins</change>
+      <change when="2011-04-13">updated during council meeting</change>
       <change when="2011-03-24">merged with release howto</change>
       <change when="2011-02-19">started first draft</change>
     </revisionDesc>
@@ -23,11 +25,14 @@
     <body>
       <p>This document is intended to set out the way things are
       currently managed  in the
-        editing of the TEI Guidelines. General notes on the rationale
+        editing of the source files from which the TEI Guidelines and
+	schemas are generated. General notes on the rationale
 	for this state -- <emph>why</emph> it is the way it is -- may be added here
         later. The intention is to provide information for Council
       members wishing to contribute actively to the continued
-      development and maintenance of the text of the Guidelines. </p>
+      development and maintenance of those source files, which we
+      refer to collectively in this document as the
+      <q>Guidelines</q>. </p>
       <div>
         <head>Logical organisation of the Guidelines</head>
         <p>It cannot have escaped your notice that each chapter (almost) of the Guidelines defines a
@@ -137,6 +142,17 @@ introduce or define particular modules.  </p>
       </div>
       <div>
         <head>Making a change to the Guidelines</head>
+<p>The Guidelines are maintained in a Sourceforge subversion
+repository. "Subversion" is a widely-used source control system, and
+we don't explain further here how to use. To make changes in the
+repository you need to have an account on Sourceforge and "developer"
+rights on the TEI project. We don't explain here how to obtain a
+sourceforge account: go to the website http://www.sf.net to find more
+information about this. To get developer rights, if you don't already
+have them, you need to contact
+one of the project administrators whose email addresses are listed on
+the TEI project page at http://tei.sf.net.</p>
+
         <list>
           <item>Use a Subversion client to update your local copy of the source text <emph>before</emph>
             you make any changes in it.</item>
@@ -144,7 +160,12 @@ introduce or define particular modules.  </p>
               <ident>p5odds.rnc</ident> schema. </item>
           <item>If you have a locally installed P5 build environment, make sure you can still build,
             and that the examples are still valid.</item>
-          <item>If you don't, just use subversion to check your updated version back in and wait for the Continuous Integration server <ident>Jenkins</ident> (<ptr target="http://tei.oucs.ox.ac.uk/jenkins/"/>) to assess your work</item>
+          <item>If you don't have a locally-installed P5 build
+	  environment, just use subversion to check your updated
+	  version back in and wait for the Continuous Integration (CI)
+	  server <ident>Jenkins</ident> to assess your work; see
+	  further <ptr
+	  target="#jenkins"/>. </item>
         </list>
         <p>Error messages may appear at any stage. Please do not leave the source in an invalid
           state (it makes life unnecessarily difficult for others). If you cannot immediately fix a
@@ -153,20 +174,34 @@ introduce or define particular modules.  </p>
           your changes are in conflict with the Birnbaum Doctrine, which decrees that changes in the
           Guideline schemas should not invalidate existing documents. You may wish to discuss the
           specific issue with other Council members.</p>
+<p>When making changes to the ODDs, it is advisable to add testfiles
+to the Test directory to ensure that your changes have been carried
+out correctly. <!-- more about test files --></p>
+
+
       </div>
+
 
       <div xml:id="jenkins">
 	<head>Jenkins setup</head>
-	<p>The Jenkins CI divides the work of building P5 into three linked stages: Test, Documentation and the final assembly. The second and is trigged by a successful run of the first,  and the third by a successful run of the second. The work they do is as follows
+	<p>Jenkins  divides the work of building P5 into three linked stages: Test, Documentation and the final assembly. The second is triggered by a successful run of the first,  and the third by a successful run of the second. The work they do is as follows
 	<list type="ordered">
-	  <item>Test stage: this monitors <code>https://tei.svn.sourceforge.net/svnroot/tei/trunk/P5</code> and if a change is detected runs <code>make clean validate test exemplars</code></item>
-	  <item>Documentation stage: this updates from SVN, and runs <code>make clean dist-doc validate-html</code></item>
-	  <item>Final stage: this copies artefacts from the first two stages, then does <code>rm -f dist-source.stamp dist-schema.stamp dist-test.stamp dist-database.stamp dist-exemplars.stamp</code>, followed by <code>make dist deb</code> and then <code>make teiwebsiteguidelines</code>. It makes available <code>release/xml/**, release/doc/**,*.zip,tei-p5-*_*,teiwebsiteguidelines.zip</code> on the web.</item>
+	  <item>Test stage: this monitors
+	  <code>https://tei.svn.sourceforge.net/svnroot/tei/trunk/P5</code>,
+	  the part of the TEI sourceforge subversion repository where
+	  the P5 source is stored. If any change is detected, it runs <code>make clean validate test exemplars</code></item>
+	  <item>Documentation stage: this also monitors the subversion
+	  repository for updates. It runs <code>make clean dist-doc validate-html</code></item>
+	  <item>Final stage: this copies artefacts produced during the
+	  first two stages, and then does <code>rm -f dist-source.stamp dist-schema.stamp dist-test.stamp dist-database.stamp dist-exemplars.stamp</code>, followed by <code>make dist deb</code> and  <code>make teiwebsiteguidelines</code>. It makes available <code>release/xml/**, release/doc/**,*.zip,tei-p5-*_*,teiwebsiteguidelines.zip</code> on the web.</item>
 </list>
 	</p>
-	<p>See <ptr target="https://wiki.jenkins-ci.org/display/JENKINS/Administering+Jenkins"/> for details on how to manage  Jenkins, and 
-the Sourceforge <code>Documents/Editing/Jenkins</code> directory for current config files.</p>
+	<p>See <ptr
+	target="https://wiki.jenkins-ci.org/display/JENKINS/Administering+Jenkins"/>
+	for details on how to configure   Jenkins The files currently
+	used for this purpose are accessible in the Sourceforge <code>Documents/Editing/Jenkins</code> directory.</p>
       </div>
+
 
 <div xml:id="svn">
 <head>Building the release</head>
