@@ -1565,18 +1565,18 @@
       <xsl:when test="@place='end'">
         <xsl:choose>
           <xsl:when test="$consecutiveFNs = 'true'">
-            <xsl:number count="tei:note[./@place='end' or @place='bottom']" level="any"/>
+            <xsl:number count="tei:note[./@place='end']" level="any"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[./@place='end' or @place='bottom']" from="tei:front" level="any"/>
+                <xsl:number count="tei:note[./@place='end' ]" from="tei:front" level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[./@place='end' or @place='bottom']" from="tei:back" level="any"/>
+                <xsl:number count="tei:note[./@place='end' ]" from="tei:back" level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[./@place='end' or @place='bottom']" from="tei:body" level="any"/>
+                <xsl:number count="tei:note[./@place='end' ]" from="tei:body" level="any"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>
@@ -1605,7 +1605,7 @@
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] Show relevant footnotes<param name="currentID">currentID</param>
+    <desc>[html] Show relevant footnotes <param name="currentID">currentID</param>
       </desc>
   </doc>
   <xsl:template name="partialFootNotes">
