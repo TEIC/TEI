@@ -58,7 +58,14 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:cell">
-    <td valign="top">
+    <xsl:variable name="cellname">
+      <xsl:choose>
+	<xsl:when test="parent::tei:row[@rend='thead']">th</xsl:when>
+	<xsl:otherwise>td</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:element name="{$cellname}">
+    <xsl:attribute name="valign">top</xsl:attribute>
       <xsl:for-each select="@*">
         <xsl:choose>
           <xsl:when
@@ -114,7 +121,7 @@
       </xsl:if>
       <xsl:call-template name="makeAnchor"/>
       <xsl:apply-templates/>
-    </td>
+    </xsl:element>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:figDesc</xd:short>
