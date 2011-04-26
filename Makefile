@@ -30,7 +30,7 @@ UPVERSION=`cat ../VERSION`
 
 .PHONY: convert dtds schemas html validate valid test clean dist exemplars
 
-default: validate exemplars test pdf epub html-web validate-html
+default: validate exemplars test html-web validate-html
 
 convert: dtds schemas
 
@@ -262,6 +262,7 @@ dist-source.stamp: p5subset.xml
 	iso-schematron.rng \
 	p5sch.xsl \
 	schematron1-5.rnc \
+	run-onvdl \
 	*.css \
 	webnav \
 	validator.xsl \
