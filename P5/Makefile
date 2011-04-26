@@ -30,7 +30,7 @@ UPVERSION=`cat ../VERSION`
 
 .PHONY: convert dtds schemas html validate valid test clean dist exemplars
 
-default: validate exemplars test html-web validate-html
+default: validate exemplars test html-web
 
 convert: dtds schemas
 
