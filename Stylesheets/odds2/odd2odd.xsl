@@ -98,8 +98,8 @@
         <xsl:text>odd/p5subset.xml</xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="$defaultDirectory"/>
-        <xsl:text>odd/p5subset.xml</xsl:text>
+        <xsl:value-of select="$defaultTEIServer"/>
+	<xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
