@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Build distribution packages as zip archives and Debian packages</description>
+  <logRotator>
+    <daysToKeep>-1</daysToKeep>
+    <numToKeep>2</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.SubversionSCM">
+    <locations>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>https://tei.svn.sourceforge.net/svnroot/tei/trunk/P5</remote>
+        <local>.</local>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+    </locations>
+    <excludedRegions></excludedRegions>
+    <includedRegions></includedRegions>
+    <excludedUsers></excludedUsers>
+    <excludedRevprop></excludedRevprop>
+    <excludedCommitMessages></excludedCommitMessages>
+    <workspaceUpdater class="hudson.scm.subversion.UpdateUpdater"/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers class="vector"/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.plugins.copyartifact.CopyArtifact>
+      <projectName>TEIP5-Test</projectName>
+      <filter>Test/**,Exemplars/**</filter>
+      <target></target>
+      <selector class="hudson.plugins.copyartifact.WorkspaceSelector"/>
+    </hudson.plugins.copyartifact.CopyArtifact>
+    <hudson.plugins.copyartifact.CopyArtifact>
+      <projectName>TEIP5-Documentation</projectName>
+      <filter>release/**,*.stamp,Guidelines.*</filter>
+      <target></target>
+      <selector class="hudson.plugins.copyartifact.WorkspaceSelector"/>
+    </hudson.plugins.copyartifact.CopyArtifact>
+    <hudson.tasks.Shell>
+      <command>rm -f dist-source.stamp dist-schema.stamp dist-test.stamp dist-database.stamp dist-exemplars.stamp</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>make dist deb</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Shell>
+      <command>make teiwebsiteguidelines</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>release/xml/**, release/doc/**,*.zip,tei-p5-*_*,teiwebsiteguidelines.zip</artifacts>
+      <latestOnly>false</latestOnly>
+    </hudson.tasks.ArtifactArchiver>
+    <hudson.plugins.logparser.LogParserPublisher>
+      <unstableOnWarning>true</unstableOnWarning>
+      <failBuildOnError>false</failBuildOnError>
+      <parsingRulesPath>/var/lib/jenkins/hudson-log-parse-rules</parsingRulesPath>
+    </hudson.plugins.logparser.LogParserPublisher>
+    <hudson.tasks.Mailer>
+      <recipients>sebastian.rahtz@oucs.ox.ac.uk</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>true</sendToIndividuals>
+    </hudson.tasks.Mailer>
+    <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher/>
+  </publishers>
+  <buildWrappers/>
+</project>
