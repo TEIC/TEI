@@ -59,6 +59,9 @@
       <xsl:when test="tei:head">
         <xsl:apply-templates select="tei:head" mode="plain"/>
       </xsl:when>
+      <xsl:when test="tei:front/tei:head">
+        <xsl:apply-templates select="tei:front/tei:head" mode="plain"/>
+      </xsl:when>
       <xsl:when test="@n">
 	<xsl:value-of select="@n"/>
       </xsl:when>

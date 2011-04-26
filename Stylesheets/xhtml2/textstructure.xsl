@@ -1621,6 +1621,13 @@
       </xsl:choose>
     </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>[html] </p>
+	 <p xmlns="http://www.w3.org/1999/xhtml"> make table of
+	 contents for nested texts/groups</p>
+      </desc>
+   </doc>
     <xsl:template name="groupTOC">
       <xsl:variable name="gDepth"
 		    select="count(ancestor::tei:group)"/>
@@ -1633,6 +1640,15 @@
 	  <ul>
 	    <xsl:for-each select="tei:text">
 	      <li>
+		
+		<xsl:call-template name="header">
+		  <xsl:with-param name="toc">
+		    <xsl:apply-templates mode="generateLink" select="."/>
+		  </xsl:with-param>
+		  <xsl:with-param name="minimal">false</xsl:with-param>
+		  <xsl:with-param name="display">plain</xsl:with-param>
+		</xsl:call-template>
+		
 		<xsl:for-each select="tei:front">
 		  <xsl:if
 		      test="tei:titlePage/tei:docTitle/tei:titlePart">
@@ -1647,27 +1663,15 @@
 		  </xsl:call-template>
 		</xsl:for-each>
 		
-		<xsl:choose>
-		  <xsl:when test="tei:group">
-		    <xsl:for-each select="tei:group">
-		      <xsl:call-template name="groupTOC"/>
-		    </xsl:for-each>
-		  </xsl:when>
-		  <xsl:otherwise>
-		    <xsl:call-template name="header">
-		      <xsl:with-param name="toc">
-			<xsl:apply-templates mode="generateLink" select="."/>
-		      </xsl:with-param>
-		      <xsl:with-param name="minimal">false</xsl:with-param>
-		      <xsl:with-param name="display">plain</xsl:with-param>
-		    </xsl:call-template>
-		    <xsl:for-each select="tei:body">
-		      <xsl:call-template name="partTOC">
-			<xsl:with-param name="part">body</xsl:with-param>
-		      </xsl:call-template>
-		    </xsl:for-each>
-		  </xsl:otherwise>
-		</xsl:choose>
+		<xsl:for-each select="tei:group">
+		  <xsl:call-template name="groupTOC"/>
+		</xsl:for-each>
+		
+		<xsl:for-each select="tei:body">
+		  <xsl:call-template name="partTOC">
+		    <xsl:with-param name="part">body</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:for-each>
 		
 		<xsl:for-each select="tei:back">
 		  <xsl:call-template name="partTOC">
@@ -1686,6 +1690,13 @@
       </ul>
     </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>[html] </p>
+	 <p xmlns="http://www.w3.org/1999/xhtml"> make partial
+	    table of contents         </p>
+      </desc>
+   </doc>
   <xsl:template name="partTOC">
       <xsl:param name="part"/>
       <xsl:param name="force"/>

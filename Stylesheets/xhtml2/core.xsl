@@ -398,7 +398,7 @@
   <xsl:template match="tei:head">
     <xsl:variable name="parent" select="local-name(..)"/>
     <xsl:choose>
-      <xsl:when test="parent::tei:body">
+      <xsl:when test="parent::tei:body or parent::tei:front or parent::tei:back">
         <h1>
           <xsl:call-template name="rendToClass"/>
           <xsl:apply-templates/>
