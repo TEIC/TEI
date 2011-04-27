@@ -344,11 +344,14 @@ their encoding.</p>
         <xsl:with-param name="currentID" select="$currentID"/>
         <xsl:with-param name="minimal">true</xsl:with-param>
       </xsl:call-template>
-      <xsl:call-template name="partialFootNotes">
-	<xsl:with-param name="currentID" select="$currentID"/>
-      </xsl:call-template>
-      <xsl:if test="$currentID=''">
-        <div style="float:left; margin:4%;">
+      <xsl:choose>
+	<xsl:when test="not($currentID='')">
+	  <xsl:call-template name="partialFootNotes">
+	    <xsl:with-param name="currentID" select="$currentID"/>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
+	  <div style="float:left; margin:4%;">
           <h3>
 	  	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">Versions of the Guidelines</xsl:with-param>
@@ -545,7 +548,8 @@ their encoding.</p>
 	    <xsl:if test="$verbose='true'">
 	      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
 	    </xsl:if>
-      </xsl:if>
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="stdfooter"/>
 
     </div>
