@@ -63,8 +63,7 @@
        <xsl:for-each
 	   select="ancestor::tbx:termEntry">
 	 <xsl:for-each
-	     select="tbx:descripGrp/tbx:descrip[@type='subjectField']
-		     or tbx:descrip[@type='subjectField']">
+	     select="tbx:descripGrp/tbx:descrip[@type='subjectField']|tbx:descrip[@type='subjectField']">
 	   <w:r>
 	     <w:rPr>
 	       <w:rStyle w:val="domain"/>
