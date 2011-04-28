@@ -1129,8 +1129,11 @@ so that is only put back in if there is some content
 -->
     <xsl:variable name="contents">
       <WHAT>
-        <xsl:for-each select="rng:*|processing-instruction()">
+        <xsl:for-each select="a:*|rng:*|processing-instruction()">
           <xsl:choose>
+            <xsl:when test="self::a:*">
+              <xsl:copy-of select="."/>
+            </xsl:when>
             <xsl:when test="self::processing-instruction()">
               <xsl:copy-of select="."/>
             </xsl:when>
