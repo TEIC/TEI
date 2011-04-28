@@ -965,7 +965,6 @@ glyphes non standard</head>
     <xsl:call-template name="jsForOdds"/>
   </xsl:template>
   <xsl:template name="sectionHeadHook">
-    <xsl:param name="whence">default</xsl:param>
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>

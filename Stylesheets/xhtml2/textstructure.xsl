@@ -53,9 +53,7 @@
             <xsl:if test="not(preceding-sibling::tei:*) or preceding-sibling::tei:titlePage">
                <h2>
                   <xsl:apply-templates mode="xref" select="."/>
-		  <xsl:call-template name="sectionHeadHook">
-		    <xsl:with-param name="whence">* paging</xsl:with-param>
-		  </xsl:call-template>
+		  <xsl:call-template name="sectionHeadHook"/>
                </h2>
                <xsl:if test="$topNavigationPanel='true'">
                   <xsl:call-template name="xrefpanel">
@@ -327,10 +325,7 @@
                <xsl:when test="starts-with(local-name(),'div') and      $pageLayout='Table'      or      $pageLayout='CSS'">
                   <h2>
                      <xsl:apply-templates mode="xref" select="."/>
-		     <xsl:call-template name="sectionHeadHook">
-		    <xsl:with-param name="whence">no path</xsl:with-param>
-		  </xsl:call-template>
-
+		     <xsl:call-template name="sectionHeadHook"/>
                   </h2>
 		  <xsl:if test="$topNavigationPanel='true'">
 		    <xsl:call-template name="xrefpanel">
@@ -365,9 +360,7 @@
 			</div>
                         <h2>
                            <xsl:apply-templates mode="xref" select="."/>
-			   <xsl:call-template name="sectionHeadHook">
-			     <xsl:with-param name="whence">end of the line</xsl:with-param>
-			   </xsl:call-template>
+			   <xsl:call-template name="sectionHeadHook"/>
                         </h2>
                         <xsl:apply-templates/>
                         <xsl:call-template name="printNotes"/>
@@ -1008,10 +1001,7 @@
 		 <xsl:call-template name="header">
 		   <xsl:with-param name="display">full</xsl:with-param>
 		 </xsl:call-template>
-		 <xsl:call-template name="sectionHeadHook">
-		    <xsl:with-param name="whence">divbody <xsl:value-of select="$Depth + $divOffset"/></xsl:with-param>
-		  </xsl:call-template>
-
+		 <xsl:call-template name="sectionHeadHook"/>
                </xsl:element>
             </xsl:if>
             <xsl:apply-templates/>
@@ -1475,9 +1465,7 @@
                   <xsl:for-each select="key('IDS',$currentID)">
                      <h2>
                         <xsl:apply-templates mode="xref" select="."/>
-			<xsl:call-template name="sectionHeadHook">
-			  <xsl:with-param name="whence">textstructure</xsl:with-param>
-			</xsl:call-template>
+			<xsl:call-template name="sectionHeadHook"/>
                      </h2>
 		     <xsl:if test="$topNavigationPanel='true'">
 		       <xsl:call-template name="xrefpanel">
