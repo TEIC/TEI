@@ -1306,10 +1306,7 @@
         <blockquote>
           <xsl:call-template name="rendToClass"/>
           <xsl:choose>
-            <xsl:when test="tei:p">
-              <xsl:apply-templates/>
-            </xsl:when>
-            <xsl:when test="tei:l">
+            <xsl:when test="tei:p|tei:l|tei:lg">
               <xsl:apply-templates/>
             </xsl:when>
             <xsl:otherwise>

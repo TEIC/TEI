@@ -445,12 +445,12 @@ glyphes non standard</head>
     <meta content="application/xhtml+xml; charset=utf-8" http-equiv="Content-Type"/>
   </xsl:template>
   <xsl:template name="startDivHook">
-    <xsl:if test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
-      <xsl:if test="$outputTarget='epub'">
+      <xsl:if test="$outputTarget='epub' and not(parent::tei:div)">
         <h2>
           <xsl:call-template name="header"/>
         </h2>
       </xsl:if>
+    <xsl:if test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
       <div>
         <xsl:if test="$outputTarget='epub'">
           <xsl:attribute name="style">
@@ -965,6 +965,7 @@ glyphes non standard</head>
     <xsl:call-template name="jsForOdds"/>
   </xsl:template>
   <xsl:template name="sectionHeadHook">
+    <xsl:param name="whence">default</xsl:param>
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>

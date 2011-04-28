@@ -8,7 +8,7 @@
 		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/"
 		version="2.0" exclude-result-prefixes="iso tei dc html ncx">
   <xsl:import href="../xhtml2/tei.xsl"/>
-  <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+  <xsl:output method="xml" encoding="utf-8" indent="no"/>
   <xsl:key name="GRAPHICS" use="1"
 	   match="tei:graphic"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
