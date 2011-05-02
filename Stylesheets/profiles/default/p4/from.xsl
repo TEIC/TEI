@@ -71,9 +71,7 @@
     <xsl:value-of select="."/>
   </xsl:template>
   
-  
-  <!-- change of name, or replaced by another element -->
-  <xsl:template match="teiCorpus.2">
+    <xsl:template match="teiCorpus.2">
     <teiCorpus>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </teiCorpus>
@@ -401,10 +399,15 @@
     </choice>
   </xsl:template>
   
-  <xsl:template match="gap/@desc">
-    <desc>
-      <xsl:value-of select="."/>
-    </desc>
+  <xsl:template match="gap">
+    <gap>
+      <xsl:apply-templates select="@*"/>
+      <xsl:if test="@desc">
+	<desc>
+	  <xsl:value-of select="@desc"/>
+	</desc>
+      </xsl:if>
+    </gap>
   </xsl:template>
 
   <xsl:template match="sic[@corr]">
