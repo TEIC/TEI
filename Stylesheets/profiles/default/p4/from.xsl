@@ -399,6 +399,8 @@
     </choice>
   </xsl:template>
   
+  <xsl:template match="gap/@desc"/>
+
   <xsl:template match="gap">
     <gap>
       <xsl:apply-templates select="@*"/>
