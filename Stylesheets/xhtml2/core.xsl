@@ -364,7 +364,14 @@
           <xsl:value-of select="tei:desc"/>
         </xsl:attribute>
       </xsl:if>
-      <xsl:text> [...]</xsl:text>
+      <xsl:choose>
+	<xsl:when test="starts-with(@rend,'content:')">
+	  <xsl:value-of select="substring-after(@rend,'content:')"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text> [...]</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
