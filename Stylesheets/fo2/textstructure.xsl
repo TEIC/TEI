@@ -244,19 +244,12 @@
       <desc/>
    </doc>
   <xsl:template match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
-      <xsl:choose>
-         <xsl:when test="@type='letter'">
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:call-template name="NumberedHeading">
-               <xsl:with-param name="level">
-                  <xsl:value-of select="substring-after(local-name(),'div')"/>
-               </xsl:with-param>
-            </xsl:call-template>
-            <xsl:apply-templates/>
-         </xsl:otherwise>
-      </xsl:choose>
+    <xsl:call-template name="NumberedHeading">
+      <xsl:with-param name="level">
+	<xsl:value-of select="substring-after(local-name(),'div')"/>
+      </xsl:with-param>
+    </xsl:call-template>
+    <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elements

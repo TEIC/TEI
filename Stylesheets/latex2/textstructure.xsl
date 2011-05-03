@@ -226,19 +226,7 @@
       <desc>Process the tei:div elements</desc>
    </doc>
   <xsl:template match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5">
-      <xsl:choose>
-         <xsl:when test="@type='letter'">
-            <xsl:text>\subsection*{</xsl:text>
-            <xsl:for-each select="tei:head">
-               <xsl:apply-templates/>
-            </xsl:for-each>
-            <xsl:text>}</xsl:text>
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:apply-templates/>
-         </xsl:otherwise>
-      </xsl:choose>
+    <xsl:apply-templates/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
