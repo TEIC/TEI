@@ -897,6 +897,13 @@
     </dd>
   </xsl:template>
 
+  <xsl:template match="tei:publicationStmt/tei:pubPlace" mode="metadata">
+    <dt>Place of publication</dt>
+    <dd>
+    <xsl:apply-templates/>
+    </dd>
+  </xsl:template>
+
   <xsl:template match="tei:distributor" mode="metadata">
     <dt>Distributor</dt>
     <dd>
