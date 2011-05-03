@@ -100,9 +100,9 @@
       </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element sp/tei:stage</desc>
+      <desc>Process element stage inside sp or head</desc>
    </doc>
-  <xsl:template match="tei:sp/tei:stage">
+  <xsl:template match="tei:sp/tei:stage|tei:head/tei:stage">
       <span class="stage">
          <xsl:apply-templates/>
       </span>

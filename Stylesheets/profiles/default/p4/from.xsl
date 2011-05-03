@@ -749,8 +749,10 @@
 
   <xsl:template match="letter">
     <floatingText type="letter">
-    <xsl:apply-templates 
-        select="*|@*|processing-instruction()|comment()|text()"/>
+      <body>
+	<xsl:apply-templates 
+	    select="*|@*|processing-instruction()|comment()|text()"/>
+      </body>
     </floatingText>
   </xsl:template>
 
