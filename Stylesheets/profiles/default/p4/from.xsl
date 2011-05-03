@@ -726,10 +726,18 @@
 
 <!-- remove default values for attributes -->
 
+<xsl:template match="row/@role[.='data']"/>
 <xsl:template match="cell/@role[.='data']"/>
 <xsl:template match="cell/@rows[.='1']"/>
 <xsl:template match="cell/@cols[.='1']"/>
 <xsl:template match="q/@broken[.='no']"/>
+
+  <xsl:template match="text[not(parent::TEI.2)]">
+    <floatingText>
+	<xsl:apply-templates 
+	    select="*|@*|processing-instruction()|comment()|text()"/>
+    </floatingText>
+  </xsl:template>
 
 <!-- from CES -->
   <xsl:template match="cesdoc">
@@ -755,5 +763,6 @@
       </body>
     </floatingText>
   </xsl:template>
+
 
 </xsl:stylesheet>
