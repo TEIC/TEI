@@ -99,14 +99,7 @@
          <xsl:apply-templates/>
       </span>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element stage inside sp or head</desc>
-   </doc>
-  <xsl:template match="tei:sp/tei:stage|tei:head/tei:stage">
-      <span class="stage">
-         <xsl:apply-templates/>
-      </span>
-  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element roleDesc</desc>
    </doc>
@@ -188,12 +181,23 @@
       <desc>Process element stage</desc>
    </doc>
   <xsl:template match="tei:stage">
-      <p>
-         <span class="stage">
-            <xsl:apply-templates/>
-         </span>
-      </p>
+    <xsl:variable name="e">
+      <xsl:choose>
+      <xsl:when test="parent::tei:head">span</xsl:when>
+      <xsl:when test="parent::tei:l">span</xsl:when>
+      <xsl:when test="parent::tei:p">span</xsl:when>
+      <xsl:when test="parent::tei:ab">span</xsl:when>
+      <xsl:otherwise>div</xsl:otherwise>
+    </xsl:choose>
+    </xsl:variable>
+    <xsl:element name="{$e}">
+      <xsl:call-template name="rendToClass">
+	<xsl:with-param name="default">stage it</xsl:with-param>
+      </xsl:call-template>
+      <xsl:apply-templates/>
+    </xsl:element>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element tech</desc>
    </doc>

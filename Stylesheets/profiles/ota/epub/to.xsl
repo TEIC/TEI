@@ -124,6 +124,7 @@
       <xsl:choose>
       <xsl:when test="parent::tei:head">span</xsl:when>
       <xsl:when test="parent::tei:l">span</xsl:when>
+      <xsl:when test="parent::tei:p">span</xsl:when>
       <xsl:when test="parent::tei:ab">span</xsl:when>
       <xsl:otherwise>div</xsl:otherwise>
     </xsl:choose>
