@@ -284,23 +284,10 @@
       </xsl:call-template>
       <xsl:apply-templates/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Frontispiece</desc>
-   </doc>
-  <xsl:template match="tei:div[@type='frontispiece']">
-      <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:div[@type='illustration']">
-      <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-    
+      <desc>    
          <p xmlns="http://www.w3.org/1999/XSL/Format">Table of contents </p>
-    
       </desc>
    </doc>
   <xsl:template match="tei:divGen">

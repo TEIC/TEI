@@ -569,18 +569,6 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element div[@type='frontispiece']</desc>
-   </doc>
-  <xsl:template match="tei:div[@type='frontispiece']">
-      <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element div[@type='illustration']</desc>
-   </doc>
-  <xsl:template match="tei:div[@type='illustration']">
-      <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process elements
       tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6</desc>
    </doc>

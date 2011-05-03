@@ -41,4 +41,12 @@
       <xsl:copy-of select="."/>
     </xsl:template>
 
+  <xsl:template match="tei:div[@type='frontispiece']">
+      <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="tei:div[@type='illustration']">
+      <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>
