@@ -1183,9 +1183,25 @@
   <xsl:template match="tei:p">
     <xsl:variable name="wrapperElement">
       <xsl:choose>
-        <xsl:when test="tei:floatingText|tei:note[tei:q]|tei:q[tei:l]|tei:q[tei:lg]|tei:q[tei:p]|tei:l|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:q/tei:figure|tei:figure|tei:note[@place='display']">
-          <xsl:text>div</xsl:text>
-        </xsl:when>
+	<xsl:when test="tei:eg">div</xsl:when>
+	<xsl:when test="tei:figure">div</xsl:when>
+	<xsl:when test="tei:floatingText">div</xsl:when>
+	<xsl:when test="tei:l">div</xsl:when>
+	<xsl:when test="tei:list">div</xsl:when>
+	<xsl:when test="tei:moduleSpec">div</xsl:when>
+	<xsl:when test="tei:note[@place='display']">div</xsl:when>
+	<xsl:when test="tei:note[tei:q]">div</xsl:when>
+	<xsl:when test="tei:q/tei:figure">div</xsl:when>
+	<xsl:when test="tei:q[@rend='display']">div</xsl:when>
+	<xsl:when test="tei:q[tei:l]">div</xsl:when>
+	<xsl:when test="tei:q[tei:lg]">div</xsl:when>
+	<xsl:when test="tei:q[tei:p]">div</xsl:when>
+	<xsl:when test="tei:quote">div</xsl:when>
+	<xsl:when test="tei:specGrp">div</xsl:when>
+	<xsl:when test="tei:specGrpRef">div</xsl:when>
+	<xsl:when test="tei:specList">div</xsl:when>
+	<xsl:when test="tei:table">div</xsl:when>
+	<xsl:when test="teix:egXML">div</xsl:when>
         <xsl:when test="parent::tei:p">
           <xsl:text>div</xsl:text>
         </xsl:when>
