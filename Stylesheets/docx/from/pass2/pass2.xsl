@@ -8,6 +8,7 @@
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
                 xmlns:dcterms="http://purl.org/dc/terms/"
                 xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+		xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:iso="http://www.iso.org/ns/1.0"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
@@ -29,7 +30,7 @@
                 
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
-                exclude-result-prefixes="a cp dc dcterms dcmitype prop     iso m mml mo mv o pic r rel cals     tbx tei teidocx v xs ve w10 w wne wp">
+                exclude-result-prefixes="a cp dc dcterms dcmitype prop  html   iso m mml mo mv o pic r rel cals     tbx tei teidocx v xs ve w10 w wne wp">
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -255,6 +256,17 @@
   </doc>
 
   <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="pass2"/>
+
+  <xsl:template match="tei:hi[@rend='Endnote_anchor']" mode="pass2" priority="99">
+    <xsl:apply-templates mode="pass2"/>
+  </xsl:template>
+  <xsl:template match="tei:hi[@rend='EndnoteReference']" mode="pass2"  priority="99">
+    <xsl:apply-templates mode="pass2"/>
+  </xsl:template>
+  <xsl:template match="tei:hi[@rend='EndnoteCharacters']" mode="pass2"
+		 priority="99">
+    <xsl:apply-templates mode="pass2"/>
+  </xsl:template>
 
   <xsl:template match="tei:hi[@rend]" mode="pass2">
     <xsl:variable name="r" select="@rend"/>

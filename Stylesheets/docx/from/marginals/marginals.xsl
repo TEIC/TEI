@@ -10,6 +10,7 @@
                 xmlns:iso="http://www.iso.org/ns/1.0"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
+		xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main"
                 xmlns:mv="urn:schemas-microsoft-com:mac:vml"
                 xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -28,7 +29,7 @@
                 
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
-                exclude-result-prefixes="a cp dc dcterms dcmitype prop     iso m mml mo mv o pic r rel     tbx tei teidocx v xs ve w10 w wne wp">
+                exclude-result-prefixes="a cp dc dcterms dcmitype prop  html   iso m mml mo mv o pic r rel     tbx tei teidocx v xs ve w10 w wne wp">
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

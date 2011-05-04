@@ -16,10 +16,11 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
+		xmlns:html="http://www.w3.org/1999/xhtml"
 		xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 version="2.0"
-                exclude-result-prefixes="ve o r m v wp its w10 w wne mml tbx iso">
+                exclude-result-prefixes="ve o r m v wp html its w10 w wne mml tbx iso">
     <!-- import base conversion style -->
 
     <xsl:import href="../../../docx/from/docxtotei.xsl"/>
@@ -45,35 +46,5 @@
 
     <xsl:template match="@rend[.='Body Text']" mode="pass2"/>
     <xsl:template match="@rend[.='Body Text Indent']" mode="pass2"/>
-
-
-  <xsl:template match="tei:hi[@rend]" mode="part2">
-    <xsl:variable name="r" select="@rend"/>
-    <xsl:choose>
-      <xsl:when test="preceding-sibling::node()[1][self::tei:hi[@rend=$r]]">
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:copy>
-	  <xsl:copy-of select="@*"/>
-	  <xsl:apply-templates mode="part2"/>
-	  <xsl:call-template name="nextHi">
-	    <xsl:with-param name="r" select="$r"/>
-	  </xsl:call-template>
-	</xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
-   </xsl:template>
-
-   <xsl:template name="nextHi">
-      <xsl:param name="r"/>
-      <xsl:for-each select="following-sibling::node()[1]">
-         <xsl:if test="self::tei:hi[@rend=$r]">
-            <xsl:apply-templates mode="part2"/>
-            <xsl:call-template name="nextHi">
-	              <xsl:with-param name="r" select="$r"/>
-            </xsl:call-template>
-         </xsl:if>
-      </xsl:for-each>
-   </xsl:template>
 
 </xsl:stylesheet>

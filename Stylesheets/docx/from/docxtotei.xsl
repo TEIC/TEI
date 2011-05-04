@@ -17,6 +17,7 @@
                 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
                 xmlns:rel="http://schemas.openxmlformats.org/package/2006/relationships"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+		xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 xmlns:v="urn:schemas-microsoft-com:vml"
@@ -29,7 +30,7 @@
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
                 exclude-result-prefixes="a cp dc dcterms dcmitype prop
-					  iso m mml mo mv o pic r rel       tbx tei teidocx v xs ve w10 w wne wp">
+					  iso m mml mo mv o pic r rel   html    tbx tei teidocx v xs ve w10 w wne wp">
 
 	  <xsl:import href="../utils/maths/omml2mml.xsl"/>
 	  <xsl:import href="../utils/functions.xsl"/>
@@ -143,7 +144,11 @@
 	 <xsl:apply-templates/>
        </xsl:for-each>
      </xsl:variable>		  
-     
+     <!-- debug
+	 <xsl:result-document href="/tmp/foo.xml">
+	 <xsl:copy-of select="$part1"/>
+	 </xsl:result-document>
+     -->
      <!-- Do the final parse and create valid TEI -->
      <xsl:apply-templates select="$part1" mode="pass2"/>
      
