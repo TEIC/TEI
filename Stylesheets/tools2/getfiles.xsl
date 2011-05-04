@@ -7,6 +7,7 @@
 
   <xsl:param name="debug">false</xsl:param>
   <xsl:param name="corpus"/>
+  <xsl:param name="suffix">xml</xsl:param>
   <xsl:param name="corpusList"/>
   <xsl:param name="processP4">false</xsl:param>
   <xsl:param name="processP5">true</xsl:param>
@@ -23,7 +24,7 @@
       <xsl:variable name="pathlist">
          <xsl:choose>
 	           <xsl:when test="$corpusList=''">
-	              <xsl:value-of select="concat($corpus,         '?select=*.xml;recurse=yes;on-error=warning')"/>
+	              <xsl:value-of select="concat($corpus,         '?select=*.',$suffix,';recurse=yes;on-error=warning')"/>
 	           </xsl:when>
 	           <xsl:otherwise>
 	              <xsl:value-of select="$corpusList"/>
@@ -31,7 +32,7 @@
          </xsl:choose>
       </xsl:variable>
       <xsl:if test="$debug='true'">
-	<xsl:message>Process 	              <xsl:value-of select="$pathlist"/></xsl:message>
+	<xsl:message>Process <xsl:value-of select="$pathlist"/></xsl:message>
       </xsl:if>
       <xsl:variable name="docs" select="collection($pathlist)"/> 
       <xsl:variable name="all">
