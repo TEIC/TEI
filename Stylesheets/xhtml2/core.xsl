@@ -1183,7 +1183,7 @@
   <xsl:template match="tei:p">
     <xsl:variable name="wrapperElement">
       <xsl:choose>
-        <xsl:when test="tei:note[tei:q]|tei:q[tei:l]|tei:q[tei:lg]|tei:q[tei:p]|tei:l|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:q/tei:figure|tei:figure|tei:note[@place='display']">
+        <xsl:when test="tei:floatingText|tei:note[tei:q]|tei:q[tei:l]|tei:q[tei:lg]|tei:q[tei:p]|tei:l|tei:specList|tei:quote|tei:moduleSpec|tei:list|tei:eg|teix:egXML|tei:table|tei:specGrp|tei:specGrpRef|tei:q[@rend='display']|tei:q/tei:figure|tei:figure|tei:note[@place='display']">
           <xsl:text>div</xsl:text>
         </xsl:when>
         <xsl:when test="parent::tei:p">
