@@ -719,7 +719,7 @@
 	    <xsl:text>SmallCaps</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:text>Highlight</xsl:text>
+	    <xsl:text>Emphasis</xsl:text>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:attribute>
