@@ -41,7 +41,7 @@
 \setromanfont{Times New Roman}
 %\setromanfont{Minion Pro}
 %\setmonofont{CourierStd}
-\setsansfont{Myriad Pro}
+%\setsansfont{Myriad Pro}
 \setlength{\headheight}{14pt}
 </xsl:template>
 
