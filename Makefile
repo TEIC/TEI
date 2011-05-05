@@ -112,6 +112,16 @@ teiwebsiteguidelines:
 
 pdf: pdf.stamp
 
+fontcheck:
+	xelatex --interaction=batchmode Utilities/fonttest 
+	if [ -f "missfont.log" ]  ; then  \
+	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/guidelines.xsl ;\
+	  echo "========================="; \
+	  echo "Note: you do not have Minion or Myriad fonts installed, reverting to Computer Modern " ;\
+	  echo "========================="; \
+	fi
+	rm -f fonttest.*
+
 pdf.stamp: check
 	@echo BUILD: build Lite version of Guidelines
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
@@ -125,14 +135,6 @@ pdf.stamp: check
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	@echo BUILD: check XeLaTeX systems works locally
-	xelatex --interaction=batchmode Utilities/fonttest 
-	if [ -f "missfont.log" ]  ; then  \
-	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/guidelines.xsl ;\
-	  echo "========================="; \
-	  echo "Note: you do not have Minion or Myriad fonts installed, reverting to Computer Modern " ;\
-	  echo "========================="; \
-	fi
-	rm -f fonttest.*
 	${SAXON} ${SAXON_ARGS}  Guidelines.xml Utilities/guidelines.xsl > Guidelines.tex
 	rm -f Utilities/guidelines.xsl
 	for i in Guidelines-REF*tex; \
