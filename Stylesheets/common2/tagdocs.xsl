@@ -2416,7 +2416,7 @@
             </xsl:for-each>
          </xsl:when>
 	 <xsl:otherwise>
-	   <xsl:text>UNKNOWN ELEMENT <xsl:value-of select="$name"/></xsl:text>
+	   <xsl:text>UNKNOWN ELEMENT </xsl:text><xsl:value-of select="$name"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
