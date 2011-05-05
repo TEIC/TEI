@@ -46,7 +46,6 @@
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="autoGlobal">false</xsl:param>
   <xsl:param name="lookupDatabase">false</xsl:param>
-  <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
   <xsl:param name="verbose">false</xsl:param>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
   <xsl:key match="tei:*" name="LOCALIDENTS" use="@ident"/>

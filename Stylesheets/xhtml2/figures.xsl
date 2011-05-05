@@ -138,72 +138,69 @@
   <xsl:template match="tei:figure">
       <xsl:choose>
          <xsl:when test="@rend='inline' or @place='inline'">
-	           <xsl:call-template name="showGraphic"/>
+	   <xsl:apply-templates/>
          </xsl:when>
          <xsl:when test="parent::tei:ref">
-	           <xsl:call-template name="showGraphic"/>
+	   <xsl:apply-templates/>
          </xsl:when>
          <xsl:otherwise>
-	           <div>
-	              <xsl:choose>
-	                 <xsl:when test="@rend">
-	                    <xsl:attribute name="class">
-		                      <xsl:value-of select="@rend"/>
-	                    </xsl:attribute>
-	                 </xsl:when>
-	                 <xsl:when test="@rendition">
-	                    <xsl:call-template name="applyRendition"/>
-	                 </xsl:when>
-	                 <xsl:otherwise>
-	                    <xsl:attribute name="class">
-		                      <xsl:text>figure</xsl:text>
-	                    </xsl:attribute>
-	                 </xsl:otherwise>
-	              </xsl:choose>
-	  
-	              <xsl:if test="@xml:id">
-			<xsl:attribute name="id">
-			  <xsl:value-of select="@xml:id"/>
-			</xsl:attribute>
-	              </xsl:if>
-	              <xsl:if test="@file|@url|@entity">
-	                 <xsl:call-template name="showGraphic"/>
-	              </xsl:if>
-	              <xsl:call-template name="figureHook"/>
-	              <xsl:apply-templates/>
-	              <xsl:if test="tei:head">
-	                 <div class="caption">
-	                    <xsl:choose>
-		                      <xsl:when test="ancestor::tei:front and  $numberFrontFigures='true'">
-		                         <xsl:call-template name="i18n">
-		                            <xsl:with-param name="word">figureWord</xsl:with-param>
-		                         </xsl:call-template>
-		                         <xsl:text> </xsl:text>
-		                         <xsl:number count="tei:figure[tei:head]" from="tei:front" level="any"/>
-		                         <xsl:text>. </xsl:text>
-		                      </xsl:when>
-		                      <xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
-		                         <xsl:call-template name="i18n">
-		                            <xsl:with-param name="word">figureWord</xsl:with-param>
-		                         </xsl:call-template>
-		                         <xsl:text> </xsl:text>
-		                         <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
-		                         <xsl:text>. </xsl:text>
-		                      </xsl:when>
-		                      <xsl:when test="ancestor::tei:body and $numberFigures='true'">
-		                         <xsl:call-template name="i18n">
-		                            <xsl:with-param name="word">figureWord</xsl:with-param>
-		                         </xsl:call-template>
-		                         <xsl:text> </xsl:text>
-		                         <xsl:number count="tei:figure[tei:head]" from="tei:body" level="any"/>
-		                         <xsl:text>. </xsl:text>
-		                      </xsl:when>
-	                    </xsl:choose>
-	                    <xsl:apply-templates select="tei:head" mode="ok"/>
-	                 </div>
-	              </xsl:if>
-	           </div>
-         </xsl:otherwise>
+	   <div>
+	     <xsl:choose>
+	       <xsl:when test="@rend">
+		 <xsl:attribute name="class">
+		   <xsl:value-of select="@rend"/>
+		 </xsl:attribute>
+	       </xsl:when>
+	       <xsl:when test="@rendition">
+		 <xsl:call-template name="applyRendition"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:attribute name="class">
+		   <xsl:text>figure</xsl:text>
+		 </xsl:attribute>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     
+	     <xsl:if test="@xml:id">
+	       <xsl:attribute name="id">
+		 <xsl:value-of select="@xml:id"/>
+	       </xsl:attribute>
+	     </xsl:if>
+	     <xsl:call-template name="figureHook"/>
+	     <xsl:apply-templates/>
+	     <xsl:if test="tei:head">
+	       <div class="caption">
+		 <xsl:choose>
+		   <xsl:when test="ancestor::tei:front and  $numberFrontFigures='true'">
+		     <xsl:call-template name="i18n">
+		       <xsl:with-param name="word">figureWord</xsl:with-param>
+		     </xsl:call-template>
+		     <xsl:text> </xsl:text>
+		     <xsl:number count="tei:figure[tei:head]" from="tei:front" level="any"/>
+		     <xsl:text>. </xsl:text>
+		   </xsl:when>
+		   <xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
+		     <xsl:call-template name="i18n">
+		       <xsl:with-param name="word">figureWord</xsl:with-param>
+		     </xsl:call-template>
+		     <xsl:text> </xsl:text>
+		     <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
+		     <xsl:text>. </xsl:text>
+		   </xsl:when>
+		   <xsl:when test="ancestor::tei:body and $numberFigures='true'">
+		     <xsl:call-template name="i18n">
+		       <xsl:with-param name="word">figureWord</xsl:with-param>
+		     </xsl:call-template>
+		     <xsl:text> </xsl:text>
+		     <xsl:number count="tei:figure[tei:head]" from="tei:body" level="any"/>
+		     <xsl:text>. </xsl:text>
+		   </xsl:when>
+		 </xsl:choose>
+		 <xsl:apply-templates select="tei:head" mode="ok"/>
+	       </div>
+	     </xsl:if>
+	   </div>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

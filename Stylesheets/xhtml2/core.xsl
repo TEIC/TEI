@@ -136,6 +136,16 @@
           <xsl:apply-templates/>
         </div>
       </xsl:when>
+      <xsl:when test="parent::tei:p">
+        <div class="citbibl">
+          <xsl:apply-templates/>
+        </div>
+      </xsl:when>
+      <xsl:when test="parent::tei:q[not(@rend='inline')]">
+        <div class="citbibl">
+          <xsl:apply-templates/>
+        </div>
+      </xsl:when>
       <xsl:when test="parent::tei:div">
 	<div class="biblfree">
 	  <xsl:apply-templates/>
@@ -950,7 +960,7 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="@place='marg' and tei:p">
+      <xsl:when test="@place='marg' and (tei:p or tei:q[tei:l])">
         <div class="margnote">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
@@ -1190,6 +1200,7 @@
 	<xsl:when test="tei:list">div</xsl:when>
 	<xsl:when test="tei:moduleSpec">div</xsl:when>
 	<xsl:when test="tei:note[@place='display']">div</xsl:when>
+	<xsl:when test="tei:note[@place='marg']">div</xsl:when>
 	<xsl:when test="tei:note[tei:q]">div</xsl:when>
 	<xsl:when test="tei:q/tei:figure">div</xsl:when>
 	<xsl:when test="tei:q/tei:list">div</xsl:when>
@@ -1248,13 +1259,13 @@
   </doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
-      <xsl:when test="parent::tei:div|parent::tei:body|tei:p|tei:floatingText|tei:lg|tei:l">
-        <div class="blockquote">
+      <xsl:when test="parent::tei:div|parent::tei:body|tei:p|tei:floatingText|tei:lg|tei:l|tei:note[tei:q/tei:l]">
+        <div class="blockquote {@rend}">
           <xsl:apply-templates/>
         </div>
       </xsl:when>
       <xsl:when test="@rend='display'">
-        <p class="blockquote">
+        <p class="blockquote {@rend}">
           <xsl:apply-templates/>
         </p>
       </xsl:when>

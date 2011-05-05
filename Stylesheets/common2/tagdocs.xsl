@@ -2371,18 +2371,6 @@
                      <xsl:value-of select="$name"/>
                   </a>
                </xsl:when>
-               <xsl:when test="$TEIC='true'">
-	                 <a xmlns="http://www.w3.org/1999/xhtml">
-	                    <xsl:attribute name="href">
-		                      <xsl:value-of select="$TEISERVER"/>
-		                      <xsl:text>tag.xql?name=</xsl:text>
-		                      <xsl:value-of select="$name"/>
-		                      <xsl:text>&amp;documentationLanguage=</xsl:text>
-		                      <xsl:value-of select="$documentationLanguage"/>
-	                    </xsl:attribute>
-                     <xsl:value-of select="$name"/>
-                  </a>
-	              </xsl:when>
                <xsl:otherwise>
 	                 <xsl:value-of select="$name"/>
                </xsl:otherwise>
@@ -2427,19 +2415,8 @@
                </xsl:apply-templates>
             </xsl:for-each>
          </xsl:when>
-         <xsl:otherwise>
-            <xsl:variable name="loc">
-               <xsl:value-of select="$TEISERVER"/>
-               <xsl:text>copytag.xql?name=</xsl:text>
-               <xsl:value-of select="$name"/>
-            </xsl:variable>
-            <xsl:if test="$verbose='true'">
-               <xsl:message>Accessing TEISERVER: <xsl:value-of select="$loc"/>
-               </xsl:message>
-            </xsl:if>
-            <xsl:apply-templates mode="show" select="document($loc)/tei:*">
-               <xsl:with-param name="atts" select="$atts"/>
-            </xsl:apply-templates>
+	 <xsl:otherwise>
+	   <xsl:text>UNKNOWN ELEMENT <xsl:value-of select="$name"/></xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
