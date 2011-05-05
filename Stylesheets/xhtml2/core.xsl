@@ -1192,16 +1192,20 @@
 	<xsl:when test="tei:note[@place='display']">div</xsl:when>
 	<xsl:when test="tei:note[tei:q]">div</xsl:when>
 	<xsl:when test="tei:q/tei:figure">div</xsl:when>
+	<xsl:when test="tei:q/tei:list">div</xsl:when>
 	<xsl:when test="tei:q[@rend='display']">div</xsl:when>
 	<xsl:when test="tei:q[tei:l]">div</xsl:when>
 	<xsl:when test="tei:q[tei:lg]">div</xsl:when>
 	<xsl:when test="tei:q[tei:p]">div</xsl:when>
+	<xsl:when test="tei:q[tei:floatingText]">div</xsl:when>
 	<xsl:when test="tei:quote">div</xsl:when>
 	<xsl:when test="tei:specGrp">div</xsl:when>
 	<xsl:when test="tei:specGrpRef">div</xsl:when>
 	<xsl:when test="tei:specList">div</xsl:when>
 	<xsl:when test="tei:table">div</xsl:when>
 	<xsl:when test="teix:egXML">div</xsl:when>
+        <xsl:when test="ancestor::tei:floatingText">div</xsl:when>
+        <xsl:when test="ancestor::tei:closer">div</xsl:when>
         <xsl:when test="parent::tei:p">
           <xsl:text>div</xsl:text>
         </xsl:when>
@@ -1244,7 +1248,7 @@
   </doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
-      <xsl:when test="tei:p|tei:floatingText|tei:lg|tei:l">
+      <xsl:when test="parent::tei:div|parent::tei:body|tei:p|tei:floatingText|tei:lg|tei:l">
         <div class="blockquote">
           <xsl:apply-templates/>
         </div>

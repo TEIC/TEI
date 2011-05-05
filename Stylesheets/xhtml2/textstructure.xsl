@@ -511,6 +511,11 @@
 	      <xsl:apply-templates/>
 	    </div>
 	  </xsl:when>
+	  <xsl:when test="tei:postscript">
+	    <div class="closer">
+	      <xsl:apply-templates/>
+	    </div>
+	  </xsl:when>
 	  <xsl:when test="tei:p">
 	    <blockquote class="closer">
 	      <xsl:apply-templates/>
