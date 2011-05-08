@@ -6,22 +6,10 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="hyphenation">
+<elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="hyphenation">
   <equiv/>
-  <gloss version="2009-04-27" xml:lang="fr">césurage</gloss>
   <desc>summarizes the way in which hyphenation in a source text has been treated in an encoded
     version of it.</desc>
-  <desc version="2009-01-05" xml:lang="fr">résume la façon dont les traits d'union sécants de fin de
-    ligne d’un texte source ont été traités dans sa version encodée.</desc>
-  <desc version="2007-12-20" xml:lang="kr">원본 텍스트의 하이픈이 부호화된 버전에서 처리된 방법을 요약한다.</desc>
-  <desc version="2007-05-02" xml:lang="zh-tw">概述來源文件裡的連字符號在電子化的版本中是如何被處理的。</desc>
-  <desc version="2008-04-05" xml:lang="ja"> 元資料にあるハイフンが，符号化される場合にどのように扱われたかを示す． </desc>
-  <desc version="2006-10-18" xml:lang="de">fasst zusammen, wie die Silbentrennung des Quelltextes in
-    der kodierten Fassung behandelt wurde. </desc>
-  <desc version="2007-05-04" xml:lang="es">indica el modo en que han sido tratados el uso del guión
-    presente en el texto fuente en la versión codificada de este.</desc>
-  <desc version="2007-01-21" xml:lang="it">riassume il modo in cui il trattino nell'originale sia
-    stato trattato nella versione codificata dello stesso testo.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declarable"/>
@@ -33,107 +21,155 @@ $Id$
     </oneOrMore>
   </content>
   <attList>
-    <attDef ident="eol" usage="opt">
-      <gloss>end-of-line</gloss>
-      <gloss version="2007-12-20" xml:lang="kr">행의 끝</gloss>
-      <gloss version="2008-04-06" xml:lang="es">fin de línea</gloss>
-      <gloss version="2008-03-30" xml:lang="fr">fin de ligne</gloss>
-      <gloss version="2007-11-06" xml:lang="it">fine riga</gloss>
-      <desc>indicates whether or not end-of-line hyphenation has been retained in a text.</desc>
-      <desc version="2009-01-05" xml:lang="fr">indique si des traits d'union sécants de fin de ligne
-        ont été conservés ou non dans un texte.</desc>
-      <desc version="2007-12-20" xml:lang="kr">텍스트에서 행의 끝 하이픈이 포함되었는지의 여부를 표시한다.</desc>
-      <desc version="2007-05-02" xml:lang="zh-tw">指出行末連字符號是否在文本中被保留。</desc>
-      <desc version="2008-04-05" xml:lang="ja"> 行末のハイフンをそのまま残したかどうかを示す． </desc>
-      <desc version="2006-10-18" xml:lang="de">gibt an, ob die Silbentrennung am Zeilenende im Text
-        beibehalten wurde.</desc>
-      <desc version="2007-05-04" xml:lang="es">indica si el uso del guión al final de la línea se ha
-        conservado en un texto.</desc>
-      <desc version="2007-01-21" xml:lang="it">indica se il trattino a fine riga sia stato mantenuto
-        o meno.</desc>
-      <defaultVal>some</defaultVal>
-      <valList type="closed">
-        <valItem ident="all">
-          <equiv/>
-          <desc>all end-of-line hyphenation has been retained, even though the lineation of the
-            original may not have been. </desc>
-          <desc version="2009-01-05" xml:lang="fr">tous les traits d'union sécants de fin de ligne ont été
-            conservés, même si la largeur des lignes de l’original peut ne pas l’avoir été.</desc>
-          <desc version="2007-12-20" xml:lang="kr">원본에는 없을 수도 있지만, 모든 행 끝 하이픈이 유지되었다.</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">保留所有行末連字符號，即使原文中的不被保留。</desc>
-          <desc version="2008-04-06" xml:lang="es">se ha conservado la separación de corte de
-            palabras mediante el guión al final de la línea, incluso cuando la lineación del
-            original puede que no se haya mantenido. </desc>
-          <desc version="2008-04-05" xml:lang="ja"> 元資料では改行がなかったが，行末にあるハイフンは残した． </desc>
-          <desc version="2007-01-21" xml:lang="it">tutti i trattini di fine riga sono stati
-            mantenuti, anche se l'allineamento dell'originale potrebbe non essere stato
-          conservato.</desc>
-        </valItem>
-        <valItem ident="some">
-          <equiv/>
-          <desc>end-of-line hyphenation has been retained in some cases. </desc>
-          <desc version="2009-01-05" xml:lang="fr">des traits d'union sécants de fin de ligne ont été
-            conservés dans certains cas.</desc>
-          <desc version="2007-12-20" xml:lang="kr">일부의 경우에 행 끝 하이픈이 유지되었다.</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">行末連字符號在某些情況下被保留。</desc>
-          <desc version="2008-04-06" xml:lang="es">la separación silábica mediante el guión al final
-            de línea se ha conservado en algunos casos. </desc>
-          <desc version="2008-04-05" xml:lang="ja"> 行末にあるハイフンは，場合によっては残した． </desc>
-          <desc version="2007-01-21" xml:lang="it">i trattini di fine riga sono stati mantenuti in
-            alcuni casi.</desc>
-        </valItem>
-        <valItem ident="hard">
-          <equiv/>
-          <desc>all soft end-of-line hyphenation has been removed: any remaining end-od-line
-            hyphenation should be retained. </desc>
-          <desc version="2009-01-05" xml:lang="fr">tous les traits d’union sécants générés par le césurage
-            en fin de ligne ont été supprimés : tout trait d’union sécant subsistant en fin de ligne doit
-            être conservé.</desc>
-          <desc version="2007-12-20" xml:lang="kr">복합어 표시아 아닌 행 끝 하이픈이 제거되었다: 남아있는 어떤 행 끝 하이픈은 유지되어야
-            한다.</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">所有軟音的行末連字符號皆被移除：任何剩下的行末連字符號應該被保留。</desc>
-          <desc version="2008-04-06" xml:lang="es">se ha suprimido todo el corte de sílabas mediante
-            guión al final de línea; pero se ha conservado cualquier otro corte de sílabas. </desc>
-          <desc version="2008-04-05" xml:lang="ja"> 行末にあるハイフンの殆どは除いた．いくらかは残した． </desc>
-          <desc version="2007-01-21" xml:lang="it">tutti i trattini deboli di fine riga sono stati
-            eliminati: i restanti trattini di fine riga dovrebbero essere conservati.</desc>
-        </valItem>
-        <valItem ident="none">
-          <equiv/>
-          <desc>all end-of-line hyphenation has been removed: any remaining hyphenation occurred
-            within the line. </desc>
-          <desc version="2009-01-05" xml:lang="fr">tous les traits d’union sécants en fin de ligne ont été
-            supprimés : tout trait d’union sécant présent se trouvait à l’intérieur d’une ligne.</desc>
-          <desc version="2007-12-20" xml:lang="kr">모든 행 끝 하이픈이 제거되었다: 남아있는 어떤 하이픈은 행 내부에 나타나는 것들이다.</desc>
-          <desc version="2007-05-02" xml:lang="zh-tw">所有行末連字符號皆被移除：剩下的是行中出現的行末連字符號。</desc>
-          <desc version="2008-04-06" xml:lang="es">se ha suprimido toda la separación silábica al
-            final de línea; cualquier separación de sílabas conservada ocurrió dentro de la línea. </desc>
-          <desc version="2008-04-05" xml:lang="ja"> 行末にあるハイフンは全て除いた．行中にはハイフンが残っている． </desc>
-          <desc version="2007-01-21" xml:lang="it">tutti i trattini di fine riga sono stati
-            eliminati: i restanti trattini si trovano all'interno di una riga.</desc>
-        </valItem>
+    <attDef ident="intraline" usage="opt">
+      <gloss>within a line</gloss>
+      <desc>indicates the character(s) used to encode hyphens that did
+      <emph>not</emph> occur at end-of-line in the source</desc>
+      <datatype minOccurs="1">
+	<rng:data type="string">
+	  <rng:param name="pattern">(U\+[0-9A-F]{4}|.)</rng:param>
+	</rng:data>
+      </datatype>
+      <defaultVal>-</defaultVal>
+      <valDesc>
+	A list of one or more characters, represented either by the
+	character itself (which, of course, may be represented as an
+	XML numeric character reference) or by listing its 4-digit
+	hexidecimal Unicode codepoint preceded by <code>U+</code>.
+      </valDesc>
+      <remarks>
+	<p>By far the most common character used for this is U+002D,
+	which is next to <q>0</q> on a typical QWERTY keyboard. The
+	most appropriate character, however, is U+2010. Many other
+	possibilities exist, including:
+	<table>
+	  <row role="label">
+	    <cell>codepoint</cell>
+	    <cell>character</cell>
+	    <cell>name</cell>
+	  </row>
+	  <row>
+	    <cell>U+2010</cell>
+	    <cell>&#x2010;</cell>
+	    <cell>HYPHEN</cell>
+	  </row>
+	  <row>
+	    <cell>U+2011</cell>
+	    <cell>&#x2011;</cell>
+	    <cell>NON-BREAKING HYPHEN</cell>
+	  </row>
+	  <row>
+	    <cell>U+002D</cell>
+	    <cell>&#x002D;</cell>
+	    <cell>HYPHEN-MINUS</cell>
+	  </row>
+	  <row>
+	    <cell>U+2043</cell>
+	    <cell>&#x2043;</cell>
+	    <cell>HYPHEN BULLET</cell>
+	  </row>
+	  <row>
+	    <cell>U+FF0D</cell>
+	    <cell>&#xFF0D;</cell>
+	    <cell>FULLWIDTH HYPHEN-MINUS</cell>
+	  </row>
+	  <row>
+	    <cell>U+FE63</cell>
+	    <cell>&#xFE63;</cell>
+	    <cell>SMALL HYPHEN-MINUS</cell>
+	  </row>
+	  <row>
+	    <cell>U+058A</cell>
+	    <cell>&#x058A;</cell>
+	    <cell>ARMENIAN HYPHEN</cell>
+	  </row>
+	  <row>
+	    <cell>U+1400</cell>
+	    <cell>&#x1400;</cell>
+	    <cell>CANADIAN SYLLABICS HYPHEN</cell>
+	  </row>
+	  <row>
+	    <cell>U+30A0</cell>
+	    <cell>&#x30A0;</cell>
+	    <cell>KATAKANA-HIRAGANA DOUBLE HYPHEN</cell>
+	  </row>
+	  <row>
+	    <cell>U+2E17</cell>
+	    <cell>&#x2E17;</cell>
+	    <cell>DOUBLE OBLIQUE HYPHEN</cell>
+	  </row>
+	  <row>
+	    <cell>U+2E1A</cell>
+	    <cell>&#x2E1A;</cell>
+	    <cell>HYPHEN WITH DIAERESIS</cell>
+	  </row>
+	  <row>
+	    <cell>U+00AD</cell>
+	    <cell>&#x00AD;</cell>
+	    <cell>SOFT HYPHEN</cell>
+	  </row>
+	  <row>
+	    <cell>U+1806</cell>
+	    <cell>&#x1806;</cell>
+	    <cell>MONGOLIAN TODO SOFT HYPHEN</cell>
+	  </row>
+	  <row>
+	    <cell>U+2027</cell>
+	    <cell>&#x2027;</cell>
+	    <cell>HYPHENATION POINT</cell>
+	  </row>
+	</table>
+	</p>
+      </remarks>
+    </attDef>
+    <attDef ident="interline" usage="opt">
+      <gloss>between lines (i.e., end-of-line)</gloss>
+      <desc>indicates the character(s) used to encode hyphens that
+      occured at end-of-line, or between lines, in the source</desc>
+      <datatype minOccurs="1" maxOccurs="3">
+	<rng:ref name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+	<valItem ident="intra">
+	  <gloss>same as for intraline</gloss>
+	  <desc>The same character used to indicate an intraline
+	  hyphen is used to indicate an interline hyphen; no attempt
+	  has been made to differentiate soft from hard hyphens. This
+	  is often used for encoding generated from OCR.</desc>
+	</valItem>
+	<valItem ident="intra-hard">
+	  <gloss>same as for intraline, hard hyphens only</gloss>
+	  <desc>Hard interline hyphens have been encoded using the
+	  same character as used to indicate an intraline hyphen. Soft
+	  hyphens have not been recorded at all, and words which were
+	  broken across a line break have been joined. If line breaks
+	  are encoded this one has either been moved or dropped as to
+	  not interupt the word.</desc>
+	</valItem>
+	<valItem ident="markup">
+	  <desc>Hard interline hyphens have been encoded using the
+	  same character as for intraline hyphens. Soft interline
+	  hyphen characters have not been encoded, but the fact that
+	  the line break interupts a word has been encoded using the
+	  <att>break</att> attribute of the element that encodes the
+	  intervening break (typically a <gi>cb</gi>, <gi>lb</gi>, or
+	  <gi>pb</gi>).</desc>
+	</valItem>
+	<valItem ident="markup-intra">
+	  <desc>End-of-line hyphens have been encoded using the same
+	  character as for intraline hyphens. In addition, when a word
+	  is interupted by a break (whether or not a hyphen was
+	  present), this has been encoded using the <att>break</att>
+	  attribute of the element that encodes the intervening break
+	  (typically a <gi>cb</gi>, <gi>lb</gi>, or
+	  <gi>pb</gi>).</desc>
+	</valItem>
       </valList>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <hyphenation eol="some">
-        <p>End-of-line hyphenation silently removed where appropriate</p>
-      </hyphenation>
-    </egXML>
-  </exemplum>
-  <exemplum version="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <hyphenation eol="some">
-        <p>Le cas échéant, suppression du tiret de coupure de mot en de fin de ligne.</p>
-      </hyphenation>
-    </egXML>
-  </exemplum>
-  <exemplum xml:lang="zh-tw">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <hyphenation eol="some">
-        <p>行末連字符號，必要時可以移除。</p>
-      </hyphenation>
+      <hyphenation intra="-" inter="markup"/>
     </egXML>
   </exemplum>
   <listRef>
