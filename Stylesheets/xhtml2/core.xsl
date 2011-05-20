@@ -137,9 +137,9 @@
         </div>
       </xsl:when>
       <xsl:when test="parent::tei:p">
-        <div class="citbibl">
+        <span class="citbibl">
           <xsl:apply-templates/>
-        </div>
+        </span>
       </xsl:when>
       <xsl:when test="parent::tei:q[not(@rend='inline')]">
         <div class="citbibl">
