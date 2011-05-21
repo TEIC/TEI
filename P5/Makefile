@@ -434,9 +434,9 @@ epub.stamp:
 	teitoepub --coverimage=Utilities/cover.jpg --profile=tei teip5.xml
 	mv teip5.epub Guidelines.epub
 	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
-	kindlegen Guidelines.epub
 	rm teip5.xml
 	touch epub.stamp
+	which kindlegen && kindlegen Guidelines.epub
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
