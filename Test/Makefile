@@ -81,6 +81,7 @@ special: $(TESTSPECIALFILES)
 %.xsd: %.rng
 	@echo Validate XSD using Jing ...
 	cp xml.xsd.w3c xml.xsd
+	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
 	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
 	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
 	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
