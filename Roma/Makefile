@@ -1,5 +1,6 @@
 PREFIX=
 LOCATION=/usr
+ETC=/etc
 
 FILES=ChangeLog \
 	g \
@@ -36,10 +37,10 @@ install: release-stamp
 	sed "s/VVVERSION/`cat VERSION`/" roma2.sh > ${PREFIX}${LOCATION}/bin/roma
 	sed "s/VVVERSION/`cat VERSION`/" roma2.sh > ${PREFIX}${LOCATION}/bin/roma2
 	chmod 755 ${PREFIX}${LOCATION}/bin/roma ${PREFIX}${LOCATION}/bin/roma2
-	mkdir -p ${PREFIX}/etc/tei-roma
-	cp ${PREFIX}/${LOCATION}/share/tei-roma/roma/config-dist.php ${PREFIX}/etc/tei-roma/config.php
-        perl -p -i -e 's+http://www.tei-c.org/release+/usr/share+' ${PREFIX}/etc/tei-roma/config.php
-	(cd ${PREFIX}/${LOCATION}/share/tei-roma/roma; rm config.php; ln -s /etc/tei-roma/config.php config.php)
+	mkdir -p ${PREFIX}${ETC}/tei-roma
+	cp ${PREFIX}/${LOCATION}/share/tei-roma/roma/config-dist.php ${PREFIX}${ETC}/tei-roma/config.php
+        perl -p -i -e 's+http://www.tei-c.org/release+/usr/share+' ${PREFIX}${ETC}/tei-roma/config.php
+	(cd ${PREFIX}/${LOCATION}/share/tei-roma/roma; rm config.php; ln -s ${PREFIX}${ETC}/tei-roma/config.php config.php)
 
 
 dist:  release-stamp
