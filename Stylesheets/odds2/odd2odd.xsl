@@ -37,7 +37,8 @@
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"></xsl:param>
-  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/current/</xsl:param>
+  <xsl:param name="defaultTEIVersion">current</xsl:param>
+  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
   <xsl:key name="odd2odd-CLASSREFS" match="tei:classRef" use="@key"/>
   <xsl:key name="odd2odd-ATTCLASSES" match="tei:classSpec[(tei:attList or @type='atts') and not(@ident='tei.TEIform')]" use="@ident"/>
   <xsl:key name="odd2odd-CHANGEATT" match="tei:attDef[@mode='change']" use="concat(../../@ident,'_',@ident)"/>
@@ -99,7 +100,8 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$defaultTEIServer"/>
-	<xsl:text>xml/tei/odd/p5subset.xml</xsl:text>
+        <xsl:value-of select="$defaultTEIVersion"/>
+	<xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
@@ -2254,7 +2256,7 @@ so that is only put back in if there is some content
 	<xsl:when test="starts-with($loc,'tei:')">
 	  <xsl:value-of
 	      select="replace($loc,'tei:',$defaultTEIServer)"/>
-	  <xsl:text>xml/tei/odd/p5subset.xml</xsl:text>
+	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:value-of select="$currentDirectory"/>
