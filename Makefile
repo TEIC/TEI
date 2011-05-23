@@ -307,7 +307,8 @@ dist-doc.stamp:
 	make pdf
 	@echo BUILD: make ePub and Kindle version of Guidelines
 	make epub
-	cp Guidelines.pdf Guidelines.epub Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
+	cp Guidelines.pdf Guidelines.epub release/tei-p5-doc/share/doc/tei-p5-doc/en
+	-test -f Guidelines.mobi  && cp Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
 	touch dist-doc.stamp
 
 dist-test.stamp:
