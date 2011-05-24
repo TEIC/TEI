@@ -38,7 +38,7 @@
   <xsl:param name="cssSecondaryFile">../profiles/tei/epub/odd.css</xsl:param>
   <xsl:param name="cssPrintFile">../profiles/tei/epub/guidelines-print.css</xsl:param>
 
-  <xsl:template name="copyrightStatement">Copyright TEI Consortium 2010</xsl:template>
+  <xsl:template name="copyrightStatement">Copyright TEI Consortium 2011</xsl:template>
   
   <xsl:template name="epubManifestHook">
     <item xmlns="http://www.idpf.org/2007/opf" media-type="application/xhtml+xml" id="index-toc" href="index-toc.html"/>

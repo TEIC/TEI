@@ -24,10 +24,8 @@ echo "  options, shown with defaults:"
 
 echo " --profile=default      profile family"
 echo " --odd                        perform ODD pre-processing"
-echo " --uid=XXX                supply unique URN for ebook"
 echo " --debug                    emit some diagnostics" 
 echo " --verbose                 be verbose"
-echo " --conversion=XXX                supply name of XSL conversion script"
 }
 
 conversion=
@@ -39,7 +37,6 @@ splitLevel=
 while test $# -gt 0; do
   case $1 in
     --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
-    --conversion=*)  conversion=`echo $1 | sed 's/.*=//'`;;
     --odd)       odd=true;;
     --debug)     debug=true;;
     --verbose)     verbose=true;;
@@ -90,11 +87,6 @@ case $DOCHOME/$F in
 esac
 cd $TEMPDIR
 
-# images
-saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$DOCHOME DIR=$TEMPDIR/media > fetch
-sh $TEMPDIR/fetch
-rm $TEMPDIR/fetch
-
 if $odd
 then
     saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
@@ -106,7 +98,7 @@ if $debug
 then
  echo $TOXSL  odd=$odd debug=$debug verbose=$verbose 
 fi
-saxon  -o:$DOCHOME/$B.html tmp2.xml $TOXSL odd=$odd debug=$debug verbose=$verbose fixgraphicsurl=true
+saxon  -o:$DOCHOME/$B.html tmp2.xml $TOXSL odd=$odd debug=$debug verbose=$verbose 
 if $debug 
 then
     echo leaving tmp[123].xml alone

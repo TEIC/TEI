@@ -86,7 +86,6 @@
                 </xsl:call-template>
             <xsl:text>: </xsl:text>
             <xsl:for-each select="tei:rdg[position()&gt;1]">
-     
                <xsl:text>\emph{</xsl:text>
                <xsl:value-of select="."/>
                <xsl:text>} </xsl:text>

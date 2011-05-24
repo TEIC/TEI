@@ -37,9 +37,8 @@
       </desc>
    </doc>
 
-<xsl:param name="cssFile">../profiles/oucs/epub/oucs.css</xsl:param>
+   <xsl:param name="cssFile">../profiles/oucs/epub/oucs.css</xsl:param>
     
-
     <xsl:template match="tei:w[@type and @lemma]">
       <span class="wordtype{@type}">
 	<xsl:apply-templates/>

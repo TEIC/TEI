@@ -245,6 +245,10 @@
 	    <xsl:call-template name="purgeCSS"/>
 	  </xsl:for-each>
 	  <xsl:if test="not($cssSecondaryFile='')">
+	    <xsl:if test="$debug='true'">
+	      <xsl:message>reading secondary file <xsl:value-of
+	      select="$cssSecondaryFile"/></xsl:message>
+	    </xsl:if>
 	    <xsl:for-each select="tokenize(unparsed-text($cssSecondaryFile),
 				  '\r?\n')">
 	      <xsl:call-template name="purgeCSS"/>
