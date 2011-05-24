@@ -116,6 +116,7 @@
       <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
       <xsl:choose>
 	<xsl:when test="$s=''">false</xsl:when>
+	<xsl:when test="starts-with($s,'heading')]">true</xsl:when>
 	<xsl:when test="$s='ITLP Anonymous Heading 1'">true</xsl:when>
 	<xsl:when test="$s='ITLP Anonymous Heading 2'">true</xsl:when>
 	<xsl:when test="$s='ITLP H1'">true</xsl:when>
