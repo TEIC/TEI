@@ -69,7 +69,7 @@
 
     <xsl:param name="preserveWordSections">true</xsl:param>
     <xsl:param name="preserveWordHeadersFooters">true</xsl:param>
-    <xsl:param name="preserveFontFamily">true</xsl:param>
+    <xsl:param name="preserveEffects">true</xsl:param>
 
     <xsl:output indent="no"/>
 
