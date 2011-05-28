@@ -33,7 +33,6 @@
         <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
         <xsl:when test="self::tei:cell and parent::tei:row[@role='label']">true</xsl:when>
-        <xsl:when test="self::tei:hi">true</xsl:when>
         <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
         <xsl:when test="self::tei:term">true</xsl:when>
         <xsl:when test="self::tei:unclear">true</xsl:when>
@@ -52,9 +51,13 @@
         <xsl:when test="contains(@rend,'italics')">true</xsl:when>
         <xsl:when test="contains(@rend,'italic')">true</xsl:when>
         <xsl:when test="self::tei:emph">true</xsl:when>
+        <xsl:when test="self::tei:hi[not(@rend)]">true</xsl:when>
         <xsl:when test="self::tbx:hi[@style='italics']">true</xsl:when>
+        <xsl:when test="@rend='italics'">true</xsl:when>
+        <xsl:when test="@rend='italic'">true</xsl:when>
         <xsl:when test="@rend='ital'">true</xsl:when>
         <xsl:when test="@rend='it'">true</xsl:when>
+        <xsl:when test="@rend='i'">true</xsl:when>
         <xsl:when test="@rend='att'">true</xsl:when>
         <xsl:when test="self::tei:att">true</xsl:when>
         <xsl:when test="self::tei:speaker">true</xsl:when>
