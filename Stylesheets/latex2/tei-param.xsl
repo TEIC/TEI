@@ -113,6 +113,8 @@ Use real name of graphics files rather than pointers
       <xsl:value-of select="$latexGeometryOptions"/>
       <xsl:text>]{geometry}
 \usepackage{framed}
+</xsl:text>
+<xsl:text>
 \definecolor{shadecolor}{gray}{0.95}
 \usepackage{longtable}
 \usepackage[normalem]{ulem}
@@ -527,10 +529,27 @@ capable of dealing with UTF-8 directly.
 \usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
  pdfauthor={<xsl:call-template name="generateAuthor"/>}]{hyperref}
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
+<xsl:if test="count(key('APP',1))&gt;0">
+\usepackage{ledmac}
+<xsl:call-template name="ledmacOptions"/>
+</xsl:if>
 \parskip<xsl:value-of select="$parSkip"/>
 \parindent<xsl:value-of select="$parIndent"/>
       <xsl:call-template name="latexPreambleHook"/>
    </xsl:template>
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
+      <desc>
+         <p>LaTeX setup commands for ledmac package</p>
+      </desc>
+   </doc>
+<xsl:template name="ledmacOptions">
+\renewcommand{\notenumfont}{\bfseries}
+\lineation{page}
+\linenummargin{inner}
+\footthreecol{A}
+\foottwocol{B}
+</xsl:template>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>

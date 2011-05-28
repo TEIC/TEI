@@ -34,7 +34,9 @@
   <xsl:include href="header.xsl"/>
   <xsl:include href="linking.xsl"/>
   <xsl:include href="figures.xsl"/>
+  <xsl:include href="textcrit.xsl"/>
   <xsl:include href="i18n.xsl"/>
+  <xsl:key name="APP" match="tei:app" use="1"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc> Uppercase letters.</desc>
    </doc>

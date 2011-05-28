@@ -538,6 +538,11 @@
 	  <xsl:apply-templates/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
+	<xsl:when test="count(key('APP',1))&gt;0">
+	  <xsl:text>\footnote{</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:when>
       <xsl:otherwise>
 	  <xsl:text>\footnote{</xsl:text>
 	  <xsl:if test="@xml:id">
@@ -555,17 +560,23 @@
     <desc>Process element &lt;p&gt;</desc>
    </doc>
   <xsl:template match="tei:p">
-      <xsl:choose>
-         <xsl:when test="parent::tei:note and not(preceding-sibling::tei:p)">
+    <xsl:choose>
+      <xsl:when test="parent::tei:note and not(preceding-sibling::tei:p)">
       </xsl:when>
-         <xsl:otherwise>
-	   <xsl:text>\par&#10;</xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:if test="$numberParagraphs='true'">
-         <xsl:call-template name="numberParagraph"/>
-      </xsl:if>
-      <xsl:apply-templates/>
+      <xsl:when test="count(key('APP',1))&gt;0">
+	<xsl:text>\pstart&#10;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>\par&#10;</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="$numberParagraphs='true'">
+      <xsl:call-template name="numberParagraph"/>
+    </xsl:if>
+    <xsl:apply-templates/>
+    <xsl:if test="count(key('APP',1))&gt;0">
+	<xsl:text>&#10;\pend&#10;</xsl:text>
+    </xsl:if>
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

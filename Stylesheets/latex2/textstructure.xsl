@@ -198,7 +198,13 @@
       <xsl:if test="not(ancestor::tei:floatingText) and not(preceding::tei:body) and preceding::tei:front">
          <xsl:text>\mainmatter </xsl:text>
       </xsl:if>
+      <xsl:if test="count(key('APP',1))&gt;0">
+\beginnumbering
+</xsl:if>
       <xsl:apply-templates/>
+      <xsl:if test="count(key('APP',1))&gt;0">
+\endnumbering
+</xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>

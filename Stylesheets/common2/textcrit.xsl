@@ -12,7 +12,7 @@
          <p>
     TEI stylesheet
     dealing with elements from the
-      textcrit module, making LaTeX output.
+      textcrit module.
       </p>
          <p>
     This library is free software; you can redistribute it and/or
@@ -37,22 +37,47 @@
       </desc>
    </doc>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+   <xsl:key name="APP" match="tei:app" use="1"/>
+   
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Process element app</p>
-         <p>Process tei:lem and tei:rdg within tei:app; first, first, rudimentary attempt. Sends lots of information
-    to a footnote. If a tei:lem is not found, the first tei:rdg is used as the base text. Witness sigils in attribute
-    wit are assumed all to start with # (this should be parametrized).</p>
+         <p>Process lem and rdg within app. Sends lots of information
+	 to a footnote. If a lem is not found, the first rdg is
+	 used as the base text. 
+	 </p>
       </desc>
    </doc>
-   <xsl:template name="appReading">
-     <xsl:param name="lemma"/>
-     <xsl:param name="lemmawitness"/>
-     <xsl:param name="readings"/>
-     <xsl:text>\edtext{</xsl:text>
-     <xsl:value-of select="$lemma"/>
-     <xsl:text>}{\Afootnote{</xsl:text>
-     <xsl:copy-of select="$readings"/>
-     <xsl:text>}}</xsl:text>
-   </xsl:template>
+  <xsl:template match="tei:app">
+    <xsl:call-template name="appReading">
+      <xsl:with-param name="lemma">
+	<xsl:choose>
+	  <xsl:when test="tei:lem">
+	    <xsl:value-of select="tei:lem"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="tei:rdg[1]"/>
+	</xsl:otherwise>
+      </xsl:choose>
+      </xsl:with-param>
+      <xsl:with-param name="lemmawitness">
+      <xsl:value-of select="@wit"/>
+      </xsl:with-param>
+      <xsl:with-param name="readings">
+	<xsl:for-each select="tei:rdg">
+	  <xsl:choose>
+	    <xsl:when test="not(../tei:lem) and position()=1"/>
+	    <xsl:otherwise>
+	      <xsl:value-of select="."/>
+	      <xsl:text>(</xsl:text>
+	      <xsl:value-of select="translate(substring-after(./@wit,'#'),' #',', ')"/>
+	      <xsl:text>)</xsl:text>
+	  </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:if test="following-sibling::tei:rdg">; </xsl:if>
+	</xsl:for-each>
+      </xsl:with-param>
+    </xsl:call-template>
+    </xsl:template>
+
 </xsl:stylesheet>
