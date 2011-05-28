@@ -72,6 +72,7 @@
   <xsl:include href="linking.xsl"/>
   <xsl:include href="namesdates.xsl"/>
   <xsl:include href="tagdocs.xsl"/>
+  <xsl:include href="textcrit.xsl"/>
   <xsl:include href="textstructure.xsl"/>
   <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>

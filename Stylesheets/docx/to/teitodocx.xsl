@@ -33,6 +33,7 @@
 
     <xsl:import href="placeholders.xsl"/>
 
+    <xsl:import href="../../common2/functions.xsl"/>
     <xsl:import href="../utils/functions.xsl"/>
     <xsl:import href="../utils/variables.xsl"/>
     <xsl:import href="../utils/identity/identity.xsl"/>
