@@ -412,9 +412,12 @@
       <xsl:choose>
          <xsl:when test="contains(.,'REF _Ref')"></xsl:when>
          <xsl:when test="starts-with(.,'HYPERLINK')"></xsl:when>
+         <xsl:when test="starts-with(.,' XE')">
+	 </xsl:when>
          <xsl:otherwise>
             <xsl:value-of select="."/>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
+
 </xsl:stylesheet>

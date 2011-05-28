@@ -120,7 +120,9 @@
 		<xsl:variable name="rends">
 		  <!-- collect all the rends for concatenation later -->
 		  <xsl:choose>
-		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'NOTEREF')"><r>noteref</r></xsl:when>
+		    <xsl:when
+			test="contains(following-sibling::w:r[w:instrText][1],'NOTEREF')"><r>noteref</r></xsl:when>
+		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'XE')"><r>index</r></xsl:when>
 		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'REF')"><r>ref</r></xsl:when>
 		  </xsl:choose>
 		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\r')"><r>instr_r</r></xsl:if>
@@ -128,6 +130,13 @@
 		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\n')"><r>instr_n</r></xsl:if>
 		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
 		</xsl:variable>
+		<xsl:choose>
+		  <xsl:when test="$rends/tei:r='index'">
+		    <indexTerm>
+		      <xsl:value-of select="current-group()//w:instrText[2]"/>
+		    </indexTerm>
+		  </xsl:when>
+		  <xsl:otherwise>
 		<ref>
 		  <xsl:if test="$rends/tei:r">
 		    <xsl:attribute name="rend">
@@ -166,6 +175,8 @@
 		    </xsl:choose>
 		  </xsl:for-each>
 		</ref>
+		  </xsl:otherwise>
+		</xsl:choose>
 	      </xsl:when>
 	      <xsl:when
 		  test="self::w:r[w:fldChar/@w:fldCharType[matches(.,'end')]]">
