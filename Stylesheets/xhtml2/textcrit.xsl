@@ -33,37 +33,41 @@
       </desc>
    </doc>
 
-   <xsl:template match="tei:app">
+   <xsl:template name="appReading">
+     <xsl:param name="lemma"/>
+     <xsl:param name="lemmawitness"/>
+     <xsl:param name="readings"/>
+     <xsl:value-of select="$lemma"/>
       <xsl:variable name="identifier">
          <xsl:text>App</xsl:text>
          <xsl:choose>
-	           <xsl:when test="@xml:id">
-	              <xsl:value-of select="@xml:id"/>
-	           </xsl:when>
-	           <xsl:when test="@n">
-	              <xsl:value-of select="@n"/>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:number count="tei:app" level="any"/>
-	           </xsl:otherwise>
+	   <xsl:when test="@xml:id">
+	     <xsl:value-of select="@xml:id"/>
+	   </xsl:when>
+	   <xsl:when test="@n">
+	     <xsl:value-of select="@n"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:number count="tei:app" level="any"/>
+	   </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
 
       <xsl:choose>
-         <xsl:when test="$footnoteFile='true'">
-	           <a class="notelink" href="{$masterFile}-notes.html#{$identifier}">
-	              <sup>
-	                 <xsl:call-template name="appN"/>
-	              </sup>
-	           </a>
-         </xsl:when>
-         <xsl:otherwise>
-	           <a class="notelink" href="#{$identifier}">
-	              <sup>
-	                 <xsl:call-template name="appN"/>
-	              </sup>
-	           </a>
-         </xsl:otherwise>
+       <xsl:when test="$footnoteFile='true'">
+	 <a class="notelink" href="{$masterFile}-notes.html#{$identifier}">
+	   <sup>
+	     <xsl:call-template name="appN"/>
+	   </sup>
+	 </a>
+       </xsl:when>
+       <xsl:otherwise>
+	 <a class="notelink" href="#{$identifier}">
+	   <sup>
+	     <xsl:call-template name="appN"/>
+	   </sup>
+	 </a>
+       </xsl:otherwise>
       </xsl:choose>
 
   </xsl:template>
@@ -108,26 +112,6 @@
          </span>
       </div>
   
-   </xsl:template>
-
-   <xsl:template match="tei:rdg">
-      <span class="rdg">
-         <xsl:apply-templates/>
-      </span>
-      <xsl:text> (</xsl:text>
-      <a href="{@wit}">
-         <xsl:choose>
-            <xsl:when test="starts-with(@wit,'#')">
-               <xsl:value-of select="substring-after(@wit,'#')"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:for-each select="document(@wit)">
-                  <xsl:value-of select="."/>
-               </xsl:for-each>
-            </xsl:otherwise>
-         </xsl:choose>
-      </a>
-      <xsl:text>)</xsl:text>
    </xsl:template>
 
 </xsl:stylesheet>
