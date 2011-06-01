@@ -75,7 +75,7 @@
    </doc>
    <xsl:template name="paragraph-wp">
      <p>
-       <xsl:if test="w:pPr/w:pStyle/@w:val">
+       <xsl:if test="w:pPr/w:pStyle/@w:val and not(w:pPr/w:pStyle/@w:val='Default')">
 	 <xsl:attribute name="rend">
 	   <xsl:value-of select="(w:pPr/w:pStyle/@w:val)"/>
 	 </xsl:attribute>
