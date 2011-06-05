@@ -89,6 +89,23 @@
       </xsl:call-template>
     </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        A block of verse
+    </desc>
+    </doc>
+    <xsl:template match="tei:lg">
+      <xsl:apply-templates/>
+      <w:p>
+	<w:pPr>
+	  <w:pStyle w:val="teilg"/>
+	</w:pPr>
+        <w:r>
+	  <w:br/>
+        </w:r>
+      </w:p>
+    </xsl:template>
+
 
 
 </xsl:stylesheet>
