@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="ANTProject">
+  <!--
+ Convert TEI documents into ePUB files.
+ -->
+  <!-- Path to TEI XML file. -->
+  <property name="inputFile" value=""/>
+
+  <!-- Path where the output ePUB file will be saved. -->
+  <property name="outputFile" value=""/>
+
+  <!-- which profile -->
+  <property name="profile" value="default"/>
+
+  <!-- where does oxygen keep stuff -->
+  <property name="oxygenlib" value=""/>
+
+  <!-- Stylesheet for transformation -->
+  <property name="stylesheetFile" value="../profiles/${profile}/epub/to.xsl"/>
+  <dirname property="inputFileDir" file="${inputFile}"/>
+  <dirname property="outputDir" file="${outputFile}"/>
+  <property name="outputTempDir" value="${outputDir}/temp"/>
+
+  <path id="classpath">
+    <pathelement path="${java.class.path}"/>
+  </path>
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+  
+  <target name="dist">
+    <!-- Recreate output directory -->
+    <delete dir="${outputTempDir}"/>
+    <mkdir dir="${outputTempDir}"/>
+    <!-- The transformation for EPUB output. -->
+    <echo level="info">XSLT generate files </echo>
+    <xslt force="yes" 
+	  style="${stylesheetFile}" in="${inputFile}" out="${outputFile}" classpath="classpath">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygyenlib}/saxon9ee.jar"/>
+      <param name="directory" expression="${outputTempDir}/"/>
+      <!-- perform ODD pre-processing-->
+      <param name="odd" expression="${odd}" if="odd"/>
+      <!-- supply unique URN for ebook-->
+      <param name="uid" expression="${uid}" if="uid"/>
+      <!-- set splitting level-->
+      <param name="splitLevel" expression="${splitLevel}" if="splitLevel"/>
+      <!-- supply name of publisher for ebook-->
+      <param name="publisher" expression="${publisher}" if="publisher"/>
+      <!-- supply subject/category for ebook-->
+      <param name="subject" expression="${subject}" if="subject"/>
+      <!-- supply name of JPEG file for ebook cover-->
+      <param name="coverimage" expression="${coverimage}" if="coverimage"/>
+      <!-- supply name of CSS file-->
+      <param name="css" expression="${css}" if="css"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <echo level="info">ZIP put files from ${outputTempDir} together into ${outputFile}</echo>
+    <zip 
+	destfile="${outputDir}/temp.zip" 
+	 basedir="${outputTempDir}"
+	 compress="true" 
+	 excludes="mimetype"/>
+    <zip destfile="${outputDir}/temp.zip" 
+	 basedir="${outputTempDir}"
+	 includes="mimetype" 
+	 update="true" 
+	 keepcompression="true" 
+	 compress="false"/>
+    <copy file="${outputDir}/temp.zip" tofile="${outputFile}" overwrite="true"/>
+    <delete file="${outputDir}/temp.zip"/> 
+    <delete dir="${outputTempDir}"/> 
+
+  </target>
+</project>
