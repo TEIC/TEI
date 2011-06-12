@@ -60,17 +60,19 @@
   </target>
   
   <scriptdef name="imagelist" language="javascript">
+    <attribute name="tdir"/>
     <element name="fileset" type="fileset"/>
     <![CDATA[
 	     importClass(java.io.File);
 	     files = elements.get("fileset").get(0);
 	     f= String(files).split(';');
-	     self.log("Look at images " + typeof(f) + " " +  f.length + " " + f );
-	     for (i=0; i<f.length; i++) {
-	     var filename = f[i];
+	     var tempdir = attributes.get("tdir");
+	     for (i=1; i<f.length+1; i++) {
+	     var filename = f[i-1];
+	     var ext = filename.substr(filename.lastIndexOf('.') + 1);
 	     mycopy = project.createTask("copy");
 	     mycopy.setFile(File(filename));
-	     mycopy.setTofile(File('OEBPS/media/images/image' + i));
+	     mycopy.setTofile(File(tempdir + '/OEBPS/media/image' + i + '.' + ext));
 	     mycopy.execute();
 	     }
     ]]>
@@ -107,7 +109,7 @@
       <!-- be verbose-->
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
-     <imagelist>
+     <imagelist tdir="${outputTempDir}">
        <fileset dir="${inputFileDir}" includesfile="IMAGES.txt"/>
      </imagelist>
       <!--
