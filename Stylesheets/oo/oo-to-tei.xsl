@@ -238,6 +238,9 @@
   <!-- sections -->
   <xsl:template match="text:h">
     <xsl:choose>
+      <xsl:when test="ancestor::text:note-body">
+          <xsl:apply-templates/>
+      </xsl:when>
       <xsl:when test="@text:style-name='ArticleInfo'"> </xsl:when>
       <xsl:when test="@text:style-name='Abstract'">
         <div type="abstract">
@@ -258,17 +261,34 @@
   </xsl:template>
 
   <xsl:template match="text:h[@text:outline-level]">
-    <HEAD level="{@text:outline-level}" >
-      <xsl:attribute name="style">
-	<xsl:choose>
-	  <xsl:when test="@text:style-name">
-	    <xsl:value-of select="@text:style-name"/>
-	  </xsl:when>
-	  <xsl:otherwise>nostyle</xsl:otherwise>
-	</xsl:choose>
-	</xsl:attribute>
-      <xsl:apply-templates/>
-    </HEAD>
+    <xsl:choose>
+      <xsl:when test="ancestor::text:note-body">
+	<p>
+	  <xsl:attribute name="rend">
+	    <xsl:choose>
+	      <xsl:when test="@text:style-name">
+		<xsl:value-of select="@text:style-name"/>
+	      </xsl:when>
+	      <xsl:otherwise>heading</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+          <xsl:apply-templates/>
+	</p>
+      </xsl:when>
+      <xsl:otherwise>
+	<HEAD level="{@text:outline-level}" >
+	  <xsl:attribute name="style">
+	    <xsl:choose>
+	      <xsl:when test="@text:style-name">
+		<xsl:value-of select="@text:style-name"/>
+	      </xsl:when>
+	      <xsl:otherwise>nostyle</xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	  <xsl:apply-templates/>
+	</HEAD>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <!-- special case paragraphs -->
@@ -1139,6 +1159,11 @@ These seem to have no obvious translation
 	<HEAD level="1" magic="true">Start</HEAD>
         <xsl:apply-templates/>
       </xsl:variable>
+      <!-- debug
+      <xsl:result-document href="/tmp/temp.xml">
+	<xsl:copy-of select="$Body"/>
+      </xsl:result-document>
+      -->
       <xsl:variable name="Body2">
 	<xsl:for-each select="$Body">
 	  <xsl:apply-templates mode="pass1"/>
