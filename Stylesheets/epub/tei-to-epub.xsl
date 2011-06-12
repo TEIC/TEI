@@ -4,13 +4,14 @@
 		xmlns="http://www.w3.org/1999/xhtml"
 		xmlns:html="http://www.w3.org/1999/xhtml"
 		xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:teix="http://www.tei-c.org/ns/Examples"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/"
-		version="2.0" exclude-result-prefixes="iso tei dc html ncx">
+		version="2.0" exclude-result-prefixes="iso tei teix dc html ncx">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="no"/>
-  <xsl:key name="GRAPHICS" use="1"
-	   match="tei:graphic"/>
+  <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
+  <xsl:key name="GRAPHICS" use="1"  match="tei:graphic"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>
@@ -178,7 +179,14 @@
   all relative, creating the extra output files, etc</desc>
   </doc>
   <xsl:template name="processTEI">
-    <xsl:variable name="stage1">
+
+  <xsl:result-document href="IMAGES.txt" method="text">
+    <xsl:for-each select="key('G',1)">
+	<xsl:value-of select="@url"/>
+	<xsl:text>&#10;</xsl:text>
+    </xsl:for-each>
+  </xsl:result-document>
+  <xsl:variable name="stage1">
       <xsl:apply-templates mode="fixgraphics"/>
     </xsl:variable>
     <xsl:for-each select="$stage1">
