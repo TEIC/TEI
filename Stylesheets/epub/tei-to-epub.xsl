@@ -50,14 +50,15 @@
   <xsl:param name="cssODDFile">../odd.css</xsl:param>
   <xsl:param name="cssPrintFile">../epub-print.css</xsl:param>
   <xsl:param name="debug">false</xsl:param>
-  <xsl:param name="directory"></xsl:param>
+  <xsl:param name="directory">.</xsl:param>
   <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
   <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
   <xsl:param name="fixgraphicsurl">false</xsl:param>
+  <xsl:param name="createanttask">false</xsl:param>
   <xsl:param name="institution"/>
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
-  <xsl:param name="outputDir">OEBPS</xsl:param>
+  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="subject"/>
@@ -180,12 +181,33 @@
   </doc>
   <xsl:template name="processTEI">
 
-  <xsl:result-document href="IMAGES.txt" method="text">
-    <xsl:for-each select="key('G',1)">
-	<xsl:value-of select="@url"/>
-	<xsl:text>&#10;</xsl:text>
-    </xsl:for-each>
-  </xsl:result-document>
+    <xsl:if test="$createanttask='true'">
+      <xsl:result-document href="{$directory}/copy.xml" method="xml">
+	<project basedir="." default="dist" name="imagecopy" xmlns="">
+	  <target name="dist">
+	    <xsl:for-each select="key('G',1)">
+	      <xsl:variable name="F">
+		<xsl:value-of select="@url"/>
+	      </xsl:variable>
+	      <xsl:variable name="target">
+		<xsl:text>${outputTempDir}/OEBPS/media/image</xsl:text>
+		<xsl:number level="any"/>
+		<xsl:text>.</xsl:text>
+		<xsl:value-of select="tokenize($F,'\.')[last()]"/>
+	      </xsl:variable>
+	      <xsl:choose>
+		<xsl:when test="starts-with($F,'http')">
+		  <get src="{@url}" dest="{$target}"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <copy toFile="{$target}" file="{@url}"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
+	  </target>
+	</project>
+      </xsl:result-document>
+    </xsl:if>
   <xsl:variable name="stage1">
       <xsl:apply-templates mode="fixgraphics"/>
     </xsl:variable>
