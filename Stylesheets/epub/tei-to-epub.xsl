@@ -58,6 +58,7 @@
   <xsl:param name="institution"/>
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
+  <xsl:param name="inputDir">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
@@ -182,7 +183,7 @@
   <xsl:template name="processTEI">
 
     <xsl:if test="$createanttask='true'">
-      <xsl:result-document href="{$directory}/copy.xml" method="xml">
+      <xsl:result-document href="{$directory}/copy.xml" indent="yes" method="xml">
 	<project basedir="." default="dist" name="imagecopy" xmlns="">
 	  <target name="dist">
 	    <xsl:for-each select="key('G',1)">
@@ -199,8 +200,11 @@
 		<xsl:when test="starts-with($F,'http')">
 		  <get src="{@url}" dest="{$target}"/>
 		</xsl:when>
-		<xsl:otherwise>
+		<xsl:when test="starts-with($F,'/')">
 		  <copy toFile="{$target}" file="{@url}"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <copy toFile="{$target}" file="{$inputDir}/{@url}"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:for-each>
