@@ -35,7 +35,7 @@
   <property name="odd2litexsl" value="../odds2/odd2lite.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
-  <property name="outputTempDir" value="${outputDir}/temp"/>
+  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
@@ -117,10 +117,10 @@
     <echo level="info">Copy image files</echo>
     <ant antfile="${outputTempDir}/copy.xml"/>
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
-    <zip destfile="${outputDir}/temp.zip" basedir="${outputTempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
-    <zip destfile="${outputDir}/temp.zip" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
-    <copy file="${outputDir}/temp.zip" tofile="${outputFile}" overwrite="true"/>
-    <delete file="${outputDir}/temp.zip"/>
+    <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+    <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+    <copy file="${outputDir}/temp-for-ant.zip" tofile="${outputFile}" overwrite="true"/>
+    <delete file="${outputDir}/temp-for-ant.zip"/>
     <delete dir="${outputTempDir}"/>
   </target>
 </project>
