@@ -1,492 +1,377 @@
-<?xml version="1.0"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-		xmlns="http://www.tei-c.org/ns/1.0" 
-		version="2.0"
-		xpath-default-namespace="http://www.w3.org/1999/xhtml">
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    exclude-result-prefixes="tei xs"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns="http://www.tei-c.org/ns/1.0" 
+    xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    version="2.0" 
+    xpath-default-namespace="http://www.w3.org/1999/xhtml">
+
   <xsl:output method="xml" indent="yes"/>
-<xsl:param name="NAME"/>
-<xsl:variable name="Q">'</xsl:variable>
-<xsl:template match="a">
-  <xsl:choose>
-    <xsl:when test="@href">
-      <ref target="{@href}">
-	<xsl:apply-templates/>
-      </ref>
-    </xsl:when>
-    <xsl:when test="@name">
-      <anchor>
-	<xsl:attribute name="xml:id" select="@name"/>
-      </anchor>
-      <xsl:apply-templates/>
-    </xsl:when>
-  </xsl:choose>
-</xsl:template>
 
-<xsl:template match="body">
-  <text>
-    <body>
+  <xsl:template match="html">
+    <TEI>
       <xsl:apply-templates/>
+    </TEI>
+  </xsl:template>
+
+  <xsl:template match="head">
+    <teiHeader>
+      <fileDesc>
+        <titleStmt>
+          <title>
+            <xsl:value-of select="title"/>
+          </title>
+          <author>
+            <xsl:value-of select="meta[@name='dc.Creator']/@content"/>
+          </author>
+        </titleStmt>
+        <publicationStmt>
+	  <p></p>
+        </publicationStmt>
+      </fileDesc>
+    </teiHeader>
+  </xsl:template>
+
+  <xsl:template match="body">
+    <text>
+      <body>
+      <xsl:variable name="Body">
+	<HEAD level="1" magic="true">Start</HEAD>
+        <xsl:apply-templates/>
+      </xsl:variable>
+
+      <xsl:variable name="Body2">
+	<xsl:for-each select="$Body">
+	  <xsl:apply-templates mode="pass1"/>
+	</xsl:for-each>
+      </xsl:variable>
+
+      <xsl:for-each select="$Body2">
+        <xsl:for-each-group select="tei:*" group-starting-with="tei:HEAD[@level='1']">
+          <xsl:choose>
+            <xsl:when test="self::tei:HEAD[@level='1']">
+	      <xsl:call-template name="group-by-section"/>
+            </xsl:when>
+            <xsl:otherwise>
+	      <xsl:call-template name="inSection"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each-group>
+      </xsl:for-each>
     </body>
-  </text>
-</xsl:template>
+    </text>
+  </xsl:template>
 
-<xsl:template match="br">
-  <lb/>
-</xsl:template>
 
-<xsl:template match="div[@class='colophon']"/>
-<xsl:template match="div[@class='titlepage']"/>
-<xsl:template match="div[@class='titleverso']"/>
-<xsl:template match="div[@class='contents']"/>
-<!--
-<div class="inscription">
-<div class="introduction"
-<div class="note">
-<div class="part"
-<div class="preface"
--->
-
-<xsl:template match="div[@class='section center c1']">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="div[@class='section center']">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="div[@class='section']">
-  <xsl:choose>
-    <xsl:when test="h3|h4|h5|h6">
-      <div>
-	<xsl:apply-templates select="@*|*|text()"/>
-      </div>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:apply-templates/>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template match="div[@class='c1']">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="div[@class='center' or @class=' center']">
-  <xsl:choose>
-    <xsl:when test="p">
-      <xsl:for-each select="p">
-	<p rend="center">
-	  <xsl:apply-templates/>
-	</p>
-      </xsl:for-each>
-    </xsl:when>
-    <xsl:otherwise>
-      <p rend="center">
-	<xsl:apply-templates/>
-      </p>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template match="div[@class='c2']">
-  <signed>
-      <xsl:apply-templates/>
-  </signed>
-</xsl:template>
-
-<xsl:template match="div[@class='epigraph']">
-  <xsl:choose>
-    <xsl:when test="preceding-sibling::p">
-      <quote rend="display">
-	<xsl:apply-templates/>
-      </quote>
-    </xsl:when>
-    <xsl:otherwise>
-      <epigraph>
-	<xsl:choose>
-	  <xsl:when test="count(p)>1">
-	    <cit>
-	      <quote>
-		<xsl:for-each select="p[not(position()=last())]">
-		  <p>
-		    <xsl:apply-templates/>
-		  </p>
-		</xsl:for-each>
-	      </quote>
-	      <bibl>
-		<xsl:for-each select="p[last()]">
-		  <xsl:apply-templates/>
-		</xsl:for-each>
-	      </bibl>
-	    </cit>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <quote rend="display">
-	      <xsl:apply-templates/>
-	    </quote>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </epigraph>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template match="div[@class='quote']">
-  <xsl:choose>
-    <xsl:when test="count(p)>1">
-      <cit>
-	<quote>
-	  <xsl:for-each select="p[not(last())]">
-	    <xsl:apply-templates/>
-	  </xsl:for-each>
-	</quote>
-	<bibl>
-	  <xsl:for-each select="p[last()]">
-	    <xsl:apply-templates/>
-	  </xsl:for-each>
-	</bibl>
-      </cit>
-    </xsl:when>
-    <xsl:when test="p/br and not(preceding-sibling::p or preceding-sibling::div) ">
-      <xsl:for-each select="p">
-	<epigraph>
-	  <xsl:call-template name="linesofverse"/>
-	</epigraph>
-      </xsl:for-each>
-    </xsl:when>
-    <xsl:when test="preceding-sibling::p or preceding-sibling::h3">
-      <quote rend="display">
-	<xsl:apply-templates/>
-      </quote>
-    </xsl:when>
-    <xsl:when test="p/br">
-      <xsl:for-each select="p">
-	<lg>
-	  <xsl:call-template name="linesofverse"/>
-	</lg>
-      </xsl:for-each>
-    </xsl:when>
-    <xsl:otherwise>
-      <quote rend="display">
-	<xsl:apply-templates/>
-      </quote>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template match="div[@class='stanza']">
-  <quote rend="display" type="stanza">
-    <xsl:for-each select="p">
-      <l>
-	<xsl:apply-templates/>
-      </l>
-    </xsl:for-each>
-  </quote>
-</xsl:template>
-
-<xsl:template match="div[@class='inscription']">
-  <quote rend="display" type="inscription">
-    <xsl:apply-templates/>
-  </quote>
-</xsl:template>
-
-<xsl:template match="div[@class='notice']">
-  <quote rend="display" type="notice">
-    <xsl:apply-templates/>
-  </quote>
-</xsl:template>
-
-<xsl:template match="div[@class='letter quote']">
-  <quote rend="display" type="letter">
-    <xsl:apply-templates/>
-  </quote>
-</xsl:template>
-
-<xsl:template match="div[@class='poem']">
-  <xsl:for-each select="p">
-    <lg>
-      <xsl:call-template name="linesofverse"/>    
-    </lg>
-  </xsl:for-each>
-</xsl:template>
-
-<xsl:template match="div[@class='illustration']">
-  <figure>
-      <xsl:apply-templates/>
-  </figure>
-</xsl:template>
-
-<xsl:template match="div">
-  <div>
-      <xsl:apply-templates/>
-  </div>
-</xsl:template>
-
-<xsl:template match="h1">
-  <head>
-      <xsl:apply-templates/>
-  </head>
-</xsl:template>
-
-<xsl:template match="h2">
-  <head>
-      <xsl:apply-templates/>
-  </head>
-</xsl:template>
-
-<xsl:template match="h3">
-  <head>
-      <xsl:apply-templates/>
-  </head>
-</xsl:template>
-
-<xsl:template match="h4|h5|h6">
-  <xsl:choose>
-    <xsl:when test="starts-with(.,'. .')">
-      <p><xsl:apply-templates/></p>
-    </xsl:when>
-    <xsl:when test="not(preceding-sibling::*)">
-      <head>
-	<xsl:apply-templates/>
-      </head>
-    </xsl:when>
-    <xsl:when test="not(preceding-sibling::p)">
-      <byline>
-	<xsl:apply-templates/>
-      </byline>
-    </xsl:when>
-    <xsl:otherwise>
-      <p rend="head">
-	<xsl:apply-templates/>
-      </p>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template match="head">
-  <xsl:variable name="T" select="replace(translate(title,$Q,''), ' / Rudyard Kipling','')"/>
-  <teiHeader>
-    <fileDesc>
-      <titleStmt>
-	<title>
-	  <xsl:value-of select="title"/>
-	</title>
-      <author>
-	<xsl:value-of select="meta[@name='dc.Creator']/@content"/>
-	</author>
-      </titleStmt>
-      <publicationStmt>
-	<distributor>
-	  <name>Oxford Text Archive</name>
-	  <address>
-	    <addrLine>Oxford University Computing Services</addrLine>
-	    <addrLine>13 Banbury Road</addrLine>
-	    <addrLine>Oxford</addrLine>
-	    <addrLine>OX2 6NN</addrLine>
-	  </address>
-	  <email>ota@oucs.ox.ac.uk</email>
-	</distributor>
-	<idno type="ota">http://ota.ox.ac.uk/id/3001</idno>
-	<availability status="restricted">
-	  <p>
-	    <ref type="license" target="http://creativecommons.org/licenses/by-nc-sa/3.0/">
-	      <graphic url="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png"/>
-	      Distributed by the University of Oxford under a Creative Commons
-	    Attribution-NonCommercial-ShareAlike 3.0 Unported License</ref>
-	  </p>
-	</availability>
-      </publicationStmt>
-      <sourceDesc>
-	<bibl>TEI XML version of  
-	<relatedItem type="otherVersion">
-	  <xsl:attribute name="target">
-	    <xsl:value-of
-		select="meta[@name='dc.Identifier']/@content"/>
-	  </xsl:attribute>
-	</relatedItem>
-	</bibl>
-      </sourceDesc>
-    </fileDesc>
-      <profileDesc>
-<creation>
-<date>
-</date>
-</creation>
-         <langUsage>
-            <language ident="eng">English</language>
-         </langUsage>
-      </profileDesc>
-  </teiHeader>
-</xsl:template>
-
-<xsl:template match="html">
-  <TEI>
-    <xsl:apply-templates/>
-  </TEI>
-</xsl:template>
-
-<xsl:template match="li">
-  <item>
-    <xsl:apply-templates/>
-  </item>
-</xsl:template>
-
-<xsl:template match="link">
-</xsl:template>
-
-<xsl:template match="meta">
-</xsl:template>
-
-<xsl:template match="p">
-  <p>
-    <xsl:apply-templates select="*|@*|text()|comment()"/>
-  </p>
-</xsl:template>
-
-<xsl:template match="p[@class='note']">
-  <note>
-    <xsl:apply-templates select="*|@*|text()|comment()"/>
-  </note>
-</xsl:template>
-
-<xsl:template match="title">
-</xsl:template>
-
-<xsl:template match="ul">
-  <list type="unordered">
-    <xsl:apply-templates/>
-  </list>
-</xsl:template>
-
-<xsl:template match="ol">
-  <list type="ordered">
-    <xsl:apply-templates/>
-  </list>
-</xsl:template>
-
-<xsl:template match="em">
-  <hi rend="italic">
-    <xsl:apply-templates/>
-  </hi>
-</xsl:template>
-
-<xsl:template match="img">
-  <graphic url="Graphics/{$NAME}/{substring-after(@src,'/')}">
-    <xsl:for-each select="@width">
-      <xsl:attribute name="width">
-	<xsl:value-of select="."/>
-	<xsl:analyze-string select="." regex="^[0-9]+$">
-	  <xsl:matching-substring>
-	    <xsl:text>px</xsl:text>
-	  </xsl:matching-substring>
-	</xsl:analyze-string>
-      </xsl:attribute>
-    </xsl:for-each>
-    <xsl:for-each select="@height">
-      <xsl:attribute name="height">
-	<xsl:value-of select="."/>
-	<xsl:analyze-string select="." regex="^[0-9]+$">
-	  <xsl:matching-substring>
-	    <xsl:text>px</xsl:text>
-	  </xsl:matching-substring>
-	</xsl:analyze-string>
-      </xsl:attribute>
-    </xsl:for-each>
-
-  </graphic>
-</xsl:template>
-
-<xsl:template match="pre">
-  <eg>
-    <xsl:apply-templates/>
-  </eg>
-</xsl:template>
-
-<xsl:template match="strong">
-  <hi rend="bold">
-    <xsl:apply-templates/>
-  </hi>
-</xsl:template>
-
-<xsl:template match="sup">
-  <hi rend="sup">
-    <xsl:apply-templates/>
-  </hi>
-</xsl:template>
-
-<xsl:template match="@class">
-  <xsl:attribute name="rend" select="."/>
-</xsl:template>
-
-<xsl:template match="@id">
-  <xsl:attribute name="xml:id" select="."/>
-</xsl:template>
-
-<xsl:template match="@title"/>
-
-<xsl:template match="@*|comment()|text()">
-  <xsl:copy-of select="."/>
-</xsl:template>
-
-<xsl:template match="div/text()">
-  <xsl:choose>
-    <xsl:when test="string-length(normalize-space(.))=0"/>
-    <xsl:when test="starts-with(.,'*')">
-      <p>
-	<xsl:value-of select="."/>
-      </p>
-    </xsl:when>
-    <xsl:when test="starts-with(.,'. .')">
-      <p>
-	<xsl:value-of select="."/>
-      </p>
-    </xsl:when>
-    <xsl:when test="parent::div[@class='c2']">
-	<xsl:value-of select="."/>
-    </xsl:when>
-    <xsl:when test="parent::div[@class='center']">
-	<xsl:value-of select="."/>
-    </xsl:when>
-    <xsl:when test="parent::div[@class='section center']">
-	<xsl:value-of select="."/>
-    </xsl:when>
-    <xsl:otherwise>
-      <head><xsl:value-of select="."/></head>
-    </xsl:otherwise>
+  <xsl:template name="group-by-section">
+    <xsl:variable name="ThisHeader" select="number(@level)"/>
+    <xsl:variable name="NextHeader" select="number(@level)+1"/>
+    <xsl:choose>
+      <xsl:when test="@magic">
+	  <xsl:for-each-group select="current-group() except ."
+			      group-starting-with="tei:HEAD[number(@level)=$NextHeader]">
+	    <xsl:choose>
+	      <xsl:when test="self::tei:HEAD">
+		<xsl:call-template name="group-by-section"/>
+	      </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:call-template name="inSection"/>
+	    </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each-group>
+      </xsl:when>
+      <xsl:otherwise>
+	<div>
+	  <xsl:if test="@style">
+	    <xsl:attribute name="rend" select="@style"/>
+	  </xsl:if>
+	  <xsl:if test="not(@interpolated='true')">
+	    <head>
+	      <xsl:apply-templates mode="pass1"/>
+	    </head>
+	  </xsl:if>
+	  <xsl:for-each-group select="current-group() except ."
+			      group-starting-with="tei:HEAD[number(@level)=$NextHeader]">
+	    <xsl:choose>
+	      <xsl:when test="self::tei:HEAD">
+		<xsl:call-template name="group-by-section"/>
+	      </xsl:when>
+	    <xsl:otherwise>
+		<xsl:call-template name="inSection"/>
+	    </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each-group>
+	</div>
+      </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+
+  <xsl:template name="inSection">
+    <xsl:for-each-group select="current-group()"
+			group-adjacent="if (self::tei:GLOSS)
+					then 1
+					else 2">      
+      <xsl:choose>
+	<xsl:when test="current-grouping-key()=1">
+	  <list type="gloss">
+	    <xsl:for-each select="current-group()">
+	      <xsl:element name="{@n}">
+		<xsl:apply-templates mode="pass2"/>
+	      </xsl:element>
+	    </xsl:for-each>
+	  </list>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="current-group()">
+	    <xsl:apply-templates select="." mode="pass2"/>
+	  </xsl:for-each>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each-group>
+  </xsl:template>
+
+  <xsl:template match="h1|h2|h3|h4|h5|h6|h7">
+    <HEAD level="{substring(local-name(),2,1)}">
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates/>
+    </HEAD>
+  </xsl:template>
+		
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass1">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="tei:p[not(node())]"
+		mode="pass1"/>
+
+  <xsl:template match="tei:HEAD" mode="pass1">
+    <xsl:if test="preceding-sibling::tei:HEAD">
+      <xsl:variable name="prev"
+		    select="xs:integer(number(preceding-sibling::tei:HEAD[1]/@level))"/>
+      <xsl:variable name="current"
+		    select="xs:integer(number(@level))"/>
+	<xsl:if test="($current - $prev) &gt;1 ">
+	  <!--<xsl:message>Walk from <xsl:value-of select="$prev"/> to <xsl:value-of select="$current"/></xsl:message>-->
+	  <xsl:for-each
+	      select="$prev + 1   to $current - 1 ">
+	    <HEAD interpolated='true' level="{.}"/>
+	  </xsl:for-each>
+	</xsl:if>
+    </xsl:if>
+    <xsl:copy>
+    <xsl:apply-templates
+	select="*|@*|processing-instruction()|comment()|text()"
+	mode="pass1"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="*" mode="pass1">
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass1"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass2">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="tei:p[not(*) and normalize-space(.)='']" mode="pass2"/>
+
+  <xsl:template match="*" mode="pass2">
+    <xsl:copy>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="br">
+    <lb/>
+  </xsl:template>
+
+  <xsl:template match="a">
+    <xsl:choose>
+      <xsl:when test="@href">
+        <ref target="{@href}">
+          <xsl:apply-templates/>
+        </ref>
+      </xsl:when>
+      <xsl:when test="@name">
+        <anchor>
+          <xsl:attribute name="xml:id" select="@name"/>
+        </anchor>
+        <xsl:apply-templates/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="li">
+    <item>
+      <xsl:apply-templates/>
+    </item>
+  </xsl:template>
+
+  <xsl:template match="div">
+      <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="link">
+</xsl:template>
+
+  <xsl:template match="meta">
+</xsl:template>
+
+  <xsl:template match="p">
+    <p>
+      <xsl:apply-templates select="*|@*|text()|comment()"/>
+    </p>
+  </xsl:template>
+  <xsl:template match="p[@class='note']">
+    <note>
+      <xsl:apply-templates select="*|@*|text()|comment()"/>
+    </note>
+  </xsl:template>
+  <xsl:template match="title">
+</xsl:template>
+  <xsl:template match="ul">
+    <list type="unordered">
+      <xsl:apply-templates/>
+    </list>
+  </xsl:template>
+  <xsl:template match="ol">
+    <list type="ordered">
+      <xsl:apply-templates/>
+    </list>
+  </xsl:template>
+  <xsl:template match="em">
+    <hi rend="italic">
+      <xsl:apply-templates/>
+    </hi>
+  </xsl:template>
+  <xsl:template match="img">
+    <graphic url="{@src}">
+      <xsl:for-each select="@width">
+        <xsl:attribute name="width">
+          <xsl:value-of select="."/>
+          <xsl:analyze-string select="." regex="^[0-9]+$">
+            <xsl:matching-substring>
+              <xsl:text>px</xsl:text>
+            </xsl:matching-substring>
+          </xsl:analyze-string>
+        </xsl:attribute>
+      </xsl:for-each>
+      <xsl:for-each select="@height">
+        <xsl:attribute name="height">
+          <xsl:value-of select="."/>
+          <xsl:analyze-string select="." regex="^[0-9]+$">
+            <xsl:matching-substring>
+              <xsl:text>px</xsl:text>
+            </xsl:matching-substring>
+          </xsl:analyze-string>
+        </xsl:attribute>
+      </xsl:for-each>
+    </graphic>
+  </xsl:template>
+
+  <xsl:template match="pre">
+    <eg>
+      <xsl:apply-templates/>
+    </eg>
+  </xsl:template>
+
+  <xsl:template match="strong">
+    <hi rend="bold">
+      <xsl:apply-templates/>
+    </hi>
+  </xsl:template>
+
+  <xsl:template match="sup">
+    <hi rend="sup">
+      <xsl:apply-templates/>
+    </hi>
+  </xsl:template>
+
+  <xsl:template match="@class">
+    <xsl:attribute name="rend" select="."/>
+  </xsl:template>
+
+  <xsl:template match="@id">
+    <xsl:attribute name="xml:id" select="."/>
+  </xsl:template>
+
+  <xsl:template match="@title"/>
+
+  <xsl:template match="@*|comment()|text()">
+    <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:template match="span">
     <hi>
+      <xsl:if test="@class">
+	<xsl:attribute name="rend" select="@class"/>
+      </xsl:if>
       <xsl:apply-templates select="@*|*|text()"/>
     </hi>
   </xsl:template>
 
-
   <xsl:template match="b">
     <hi rend="bold">
-	<xsl:apply-templates select="@*|*|text()"/>
+      <xsl:apply-templates select="@*|*|text()"/>
     </hi>
   </xsl:template>
 
   <xsl:template match="i">
     <hi rend="italic">
-	<xsl:apply-templates select="@*|*|text()"/>
+      <xsl:apply-templates select="@*|*|text()"/>
     </hi>
   </xsl:template>
 
+  <xsl:template match="font">
+      <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="blockquote">
+    <quote>
+      <xsl:apply-templates select="@*|*|text()"/>
+    </quote>
+  </xsl:template>
+
+  <xsl:template match="tt">
+    <code>
+      <xsl:apply-templates select="@*|*|text()"/>
+    </code>
+  </xsl:template>
+
+  <xsl:template match="code">
+    <eg>
+      <xsl:apply-templates select="@*|*|text()"/>
+    </eg>
+  </xsl:template>
+
+  <xsl:template match="table">
+    <table>
+      <xsl:apply-templates select="@*|*|text()"/>
+    </table>
+  </xsl:template>
+
+  <xsl:template match="td">
+    <cell>
+      <xsl:apply-templates select="@*|*|text()"/>
+    </cell>
+  </xsl:template>
+
+  <xsl:template match="tr">
+    <row>
+      <xsl:apply-templates select="@*|*|text()"/>
+    </row>
+  </xsl:template>
+
+  <xsl:template match="hr"/>
+
   <xsl:template match="*">
-    <xsl:message>UNKNOWN TAG <xsl:value-of    select="name()"/></xsl:message>
+    <xsl:message>UNKNOWN TAG <xsl:value-of select="name()"/></xsl:message>
     <xsl:apply-templates/>
   </xsl:template>
-  
-  <xsl:template name="linesofverse">
-    <xsl:for-each-group select="*|text()" group-ending-with="br">
-	<l>
-	  <xsl:apply-templates select="current-group()[not(self::br)]">
-	  </xsl:apply-templates>
-	</l>
-      </xsl:for-each-group>
-</xsl:template>
 
 </xsl:stylesheet>

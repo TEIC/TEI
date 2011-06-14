@@ -450,7 +450,7 @@
             </xsl:choose>
          </xsl:when>
          <xsl:otherwise>
-	   <xsl:variable name="target">
+	   <xsl:variable name="eventualtarget">
 	     <xsl:choose>
 	       <xsl:when test="starts-with($dest,'#') or  contains($dest,$outputSuffix) or contains($dest,'ID=')">
 		 <xsl:value-of select="$dest"/>
@@ -480,11 +480,11 @@
 	     </xsl:choose>
 	   </xsl:variable>
 	   <xsl:choose>
-	     <xsl:when test="$target=''">
+	     <xsl:when test="$eventualtarget=''">
 	       <xsl:copy-of select="$linktext"/>
 	     </xsl:when>
 	     <xsl:otherwise>
-	       <a href="{$target}">
+	       <a href="{$eventualtarget}">
 		 <xsl:call-template name="htmlAttributes"/>
 		 <xsl:choose>
 		   <xsl:when test="@rend">

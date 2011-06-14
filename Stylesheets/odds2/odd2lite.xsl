@@ -521,4 +521,10 @@
       </seg>
   </xsl:template>
 
+  <xsl:template name="appReading">
+     <xsl:param name="lemma"/>
+     <xsl:param name="lemmawitness"/>
+     <xsl:param name="readings"/>
+     <xsl:value-of select="$lemma"/>
+  </xsl:template>
 </xsl:stylesheet>

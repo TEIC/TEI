@@ -663,7 +663,6 @@
     </xsl:variable>
     <xsl:for-each select="$ns/all/names">
       <xsl:for-each-group select="ns" group-by="@name">
-        <xsl:sort select="@name"/>
 	<xsl:if test="key('NSUsed',@value)">
 	  <xsl:call-template name="verbatim-lineBreak">
 	    <xsl:with-param name="id">22</xsl:with-param>

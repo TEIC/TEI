@@ -33,7 +33,6 @@
   <xsl:param name="verbose"/>
   <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
-  <xsl:param name="defaultDirectory">/usr/share/xml/tei/</xsl:param>
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"></xsl:param>
