@@ -186,31 +186,34 @@
 	  </p>
         </sourceDesc>
       </fileDesc>
-      <xsl:if test="$META/office:meta/dc:language|$META/office:meta/meta:keyword">
-	<profileDesc>
-	  <xsl:if test="$META/office:meta/dc:language">
-	    <langUsage>
-	      <language>
-		<xsl:attribute name="ident">
-		  <xsl:value-of select="$META/office:meta/dc:language"/>
-		</xsl:attribute>
+      <xsl:variable name="pD">
+	<xsl:if test="$META/office:meta/dc:language">
+	  <langUsage>
+	    <language>
+	      <xsl:attribute name="ident">
 		<xsl:value-of select="$META/office:meta/dc:language"/>
-	      </language>
-	    </langUsage>
-	  </xsl:if>
-	  <xsl:if test="$META/office:meta/meta:keyword">
-	    <textClass>
-	      <keywords>
-		<list>
-		  <xsl:for-each select="$META/office:meta/meta:keyword">
-		    <item>
-		      <xsl:value-of select="."/>
-		    </item>
-		  </xsl:for-each>
-		</list>
-	      </keywords>
-	    </textClass>
-	  </xsl:if>
+	      </xsl:attribute>
+	      <xsl:value-of select="$META/office:meta/dc:language"/>
+	    </language>
+	  </langUsage>
+	</xsl:if>
+	<xsl:if test="$META/office:meta/meta:keyword">
+	  <textClass>
+	    <keywords>
+	      <list>
+		<xsl:for-each select="$META/office:meta/meta:keyword">
+		  <item>
+		    <xsl:value-of select="."/>
+		  </item>
+		</xsl:for-each>
+	      </list>
+	    </keywords>
+	  </textClass>
+	</xsl:if>
+      </xsl:variable>
+      <xsl:if test="$pD/*">
+	<profileDesc>
+	  <xsl:copy-of select="$pD"/>
 	</profileDesc>
       </xsl:if>
       <revisionDesc>
