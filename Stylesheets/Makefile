@@ -216,7 +216,6 @@ clean:
 	rm -f stylebear style.xml customize.xml teixsl.html
 	rm -rf release
 	rm -rf xhtml
-	rm -rf doc/xsltdoc
 	(cd Test; make clean)
 	(cd Test2; make clean)
 	rm -rf tei-p5-xsl_*
