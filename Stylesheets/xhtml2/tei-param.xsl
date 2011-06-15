@@ -583,7 +583,7 @@ Encoding of output file(s).
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>Output method for output file(s).</desc>
    </doc>
-  <xsl:param name="outputMethod">html</xsl:param>
+  <xsl:param name="outputMethod">xhtml</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>
 Suffix of output file(s).
