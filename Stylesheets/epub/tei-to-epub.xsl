@@ -249,7 +249,7 @@
         <xsl:if test="$debug='true'">
           <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'OEBPS/stylesheet.css')}">
+        <xsl:result-document method="text" href="{concat($directory,'/OEBPS/stylesheet.css')}">
           <xsl:if test="$debug='true'">
             <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
           </xsl:if>
@@ -284,7 +284,7 @@
         <xsl:if test="$debug='true'">
           <xsl:message>write file OEBPS/print.css</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'OEBPS/print.css')}">
+        <xsl:result-document method="text" href="{concat($directory,'/OEBPS/print.css')}">
           <xsl:if test="$debug='true'">
             <xsl:message>reading file <xsl:value-of select="$cssPrintFile"/></xsl:message>
           </xsl:if>
@@ -295,13 +295,13 @@
         <xsl:if test="$debug='true'">
           <xsl:message>write file mimetype</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'mimetype')}">
+        <xsl:result-document method="text" href="{concat($directory,'/mimetype')}">
           <xsl:text>application/epub+zip</xsl:text>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
           <xsl:message>write file META-INF/container.xml</xsl:message>
         </xsl:if>
-        <xsl:result-document method="xml" href="{concat($directory,'META-INF/container.xml')}">
+        <xsl:result-document method="xml" href="{concat($directory,'/META-INF/container.xml')}">
           <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
             <rootfiles>
               <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
@@ -311,7 +311,7 @@
         <xsl:if test="$debug='true'">
           <xsl:message>write file OEBPS/content.opf</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'OEBPS/content.opf')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OEBPS/content.opf')}" method="xml">
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
               <dc:title>
@@ -497,7 +497,7 @@
         <xsl:if test="$debug='true'">
           <xsl:message>write file OEBPS/titlepage.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'OEBPS/titlepage.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OEBPS/titlepage.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -529,7 +529,7 @@
           <xsl:if test="$debug='true'">
             <xsl:message>write file OEBPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
           </xsl:if>
-          <xsl:result-document href="{concat($directory,'OEBPS/titlepage',$N,'.html')}" method="xml">
+          <xsl:result-document href="{concat($directory,'/OEBPS/titlepage',$N,'.html')}" method="xml">
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
               <head>
                 <meta http-equiv="Content-Type" content="text/html;         charset=UTF-8"/>
@@ -548,7 +548,7 @@
         <xsl:if test="$debug='true'">
           <xsl:message>write file OEBPS/titlepageback.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'OEBPS/titlepageback.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OEBPS/titlepageback.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -567,7 +567,7 @@
         <xsl:if test="$debug='true'">
           <xsl:message>write file OEBPS/toc.ncx</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'OEBPS/toc.ncx')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OEBPS/toc.ncx')}" method="xml">
           <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
             <head>
               <meta name="dtb:uid">
@@ -659,7 +659,7 @@
         <xsl:if test="$debug='true'">
           <xsl:message>write file OEBPS/page-template.xpgt</xsl:message>
         </xsl:if>
-        <xsl:result-document method="xml" href="{concat($directory,'OEBPS/page-template.xpgt')}">
+        <xsl:result-document method="xml" href="{concat($directory,'/OEBPS/page-template.xpgt')}">
           <ade:template xmlns="http://www.w3.org/1999/xhtml" xmlns:ade="http://ns.adobe.com/2006/ade" xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:layout-master-set>
               <fo:simple-page-master master-name="single_column">

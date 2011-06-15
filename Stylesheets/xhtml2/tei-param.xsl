@@ -319,7 +319,7 @@ Width of left-hand column when $pageLayout is "Table"
       <meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
       <meta name="DC.Title">
 	<xsl:attribute name="content">
-	  <xsl:value-of select="$title"/>
+	  <xsl:value-of select="normalize-space(translate($title,'&lt;&gt;','&#x2329;&#x3009;'))"/>
 	</xsl:attribute>
       </meta>
       <meta name="DC.Type" content="Text"/>
