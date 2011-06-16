@@ -75,7 +75,7 @@
                     </edition>
                 </editionStmt>
                 <publicationStmt>
-                    <p></p>
+                    <p>unknown</p>
                 </publicationStmt>
                 <sourceDesc>
                     <p>Converted from a Word document </p>
