@@ -607,4 +607,9 @@
     <xsl:template match="w:rPr/w:ins"/>
  
     
+  <xsl:template match="w:noBreakHyphen">
+    <xsl:text>&#x2011;</xsl:text>
+  </xsl:template>
+
+
 </xsl:stylesheet>
