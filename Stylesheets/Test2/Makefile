@@ -33,6 +33,25 @@ test6:
 	saxon -o:test6.tex test6.xml ../slides2/teilatex-slides.xsl $(SAXONOPT)
 	diff test6.tex ok/test6.tex
 
+test9:
+	test -d $(OXY) || exit 1
+	java -Xmx256m \
+	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
+	-Dant.home=$(OXY)/tools/ant \
+	org.apache.tools.ant.launch.Launcher \
+	-f ../docx/build.xml \
+	-lib $(OXY)/lib/saxon9ee.jar \
+	-DoutputFile=`pwd`/test9.docx \
+	-DinputFile=`pwd`/test9.xml -Dprofile=default 
+	java -Xmx256m \
+	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
+	-Dant.home=$(OXY)/tools/ant \
+	org.apache.tools.ant.launch.Launcher \
+	-f ../oo/build.xml \
+	-lib $(OXY)/lib/saxon9ee.jar \
+	-DoutputFile=`pwd`/test9.odt \
+	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
+
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
 	localsource=`pwd`/p5subset.xml $(SAXONOPT) > testdrama.compiled.xml
@@ -71,26 +90,7 @@ clean:
 	rm -f  test7.zip
 	rm -f  test8.doc
 	rm -f  test8.out
-	rm -f test9.docx
+	rm -f test9.docx test9.odt
 	rm -f  test.xml.*.list
 	rm -f  test.aux test.log test.out test.pdf 
-
-test9:
-	test -d $(OXY) || exit 1
-	java -Xmx256m \
-	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
-	-Dant.home=$(OXY)/tools/ant \
-	org.apache.tools.ant.launch.Launcher \
-	-f ../docx/build.xml \
-	-lib $(OXY)/lib/saxon9ee.jar \
-	-DoutputFile=`pwd`/test9.docx \
-	-DinputFile=`pwd`/test9.xml -Dprofile=default 
-	java -Xmx256m \
-	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
-	-Dant.home=$(OXY)/tools/ant \
-	org.apache.tools.ant.launch.Launcher \
-	-f ../oo/build.xml \
-	-lib $(OXY)/lib/saxon9ee.jar \
-	-DoutputFile=`pwd`/test9.odt \
-	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
 
