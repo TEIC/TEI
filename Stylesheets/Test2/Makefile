@@ -1,5 +1,6 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=verbose=true useFixedDate=true
+OXY=/usr/share/oxygen
 default: general test test3 test4 test5 test6 oddbyexample test9
 
 test:
@@ -75,12 +76,13 @@ clean:
 	rm -f  test.aux test.log test.out test.pdf 
 
 test9:
+	test -d $(OXY) || exit 1
 	java -Xmx256m \
 	-classpath  "/Users/rahtz/oxygen/tools/ant/lib/ant-launcher.jar" \
-	-Dant.home=/Users/rahtz/oxygen/tools/ant \
+	-Dant.home=$(OXY)/tools/ant \
 	org.apache.tools.ant.launch.Launcher \
 	-f ../docx/build.xml \
-	-lib /Users/rahtz/oxygen/lib/saxon9ee.jar \
+	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test9.docx \
 	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
 
