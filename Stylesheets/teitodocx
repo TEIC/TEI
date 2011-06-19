@@ -2,10 +2,8 @@
 profile=default
 odd=false
 debug=false
-tables=cals
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
-TEMPDIR=/tmp/docx$$
 PROFILEDIR=$APPHOME/profiles
 while test $# -gt 0; do
   case $1 in
@@ -13,7 +11,6 @@ while test $# -gt 0; do
     --odd)         odd=true;;
     --debug)       debug=true;;
     --profiledir=*) PROFILEDIR=`echo $1 | sed 's/.*=//'`;;
-    --tables=*)    tables=`echo $1 | sed 's/.*=//'`;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
 	else
@@ -40,84 +37,17 @@ HERE=`pwd`
 D=`dirname "$1"`
 F=`basename "$1"`
 THERE=`(cd $D; pwd)`
-TEMPLATES=$PROFILEDIR/$profile/docx
-if ! test -d $TEMPLATES 
+if ! test -f $PROFILEDIR/$profile/docx/to.xsl
 then
-  echo No support for profile $profile: $PROFILEDIR/$profile/docx does not exist
+  echo No support for profile $profile: $PROFILEDIR/$profile/docx/to.xsl does not exist
   exit 1
 fi
-XSL=$APPHOME
-mkdir -p $TEMPDIR/word/media
-echo read $THERE/$F
-case $THERE/$F in 
-       *.zip)  (cd $TEMPDIR; unzip -q $THERE/"$F" ); F=`basename $F .zip`.xml;; 
-       *) cp $THERE/$F $TEMPDIR/$F  ;; 
-esac
-(cd $TEMPDIR; saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/word/media > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
-(cd $TEMPDIR/word
-if [ "$(ls -A media)" ]; then
-    cd media
-    for i in *
-    do 
-	case $i in
-	    *jpeg) exiftool -q -o $i.xmp $i;;
-	    *jpg) exiftool -q -o $i.xmp $i;;
-	    *tiff) exiftool -q -o $i.xmp $i;;
-	    *tif) exiftool -q -o $i.xmp $i;;
-	    *png) exiftool -q -o $i.xmp $i;;
-	esac
-    done
-fi
-)
-cd $TEMPDIR
-if $debug 
-then
-    echo unpack template $TEMPLATES/template.docx
-fi
-unzip -o -q $TEMPLATES/template.docx
-if $odd
-then
-    saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl verbose=$debug TEIC=true
-    saxon -o:$TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o:$TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
-else
-    saxon -o:$TEMPDIR/tmp3.xml  $F $XSL/docx/utils/graphics/fixgraphics.xsl DIR=`pwd`/word
-fi
-saxon -o:tmp4.xml tmp3.xml $PROFILEDIR/$profile/docx/to.xsl  \
-    debug=$debug isofreestanding=true styleDoc=$TEMPDIR/word/styles.xml word-directory=$TEMPDIR tei-directory=$TEMPDIR/ tableMethod=$tables
-
-if test -f $PROFILEDIR/$profile/docx/makecoverpages2.xsl 
-then
-   echo rewrite cover page
-   saxon -o:doctemp.xml word/document.xml $PROFILEDIR/$profile/docx/makecoverpages.xsl \
-       header-file=$TEMPDIR/tmp3.xml document-file=$TEMPDIR/tmp4.xml 
-   mv doctemp.xml word/document.xml
-else
-   mv tmp4.xml word/document.xml
-fi
-if $debug 
-then
-    echo leaving tmp[123].xml and xmp files alone
-    mv -f word/media/*.xmp .
-else
-    rm -f tmp3.xml tmp1.xml tmp2.xml
-    rm -f word/media/*.xmp
-fi
-if $debug 
-then
- echo rename docProps/newcore.xml docProps/core.xml 
- echo rename docProps/newcustom.xml docProps/custom.xml 
-fi
-mv docProps/newcore.xml docProps/core.xml 
-mv docProps/newcustom.xml docProps/custom.xml 
-rm -f $THERE/$F.docx
-zip -q -r $THERE/"$F.docx" word _rels docProps customXML \[Content_Types\].xml
-cd $HERE
-if $debug 
-then
-    echo Working files in $TEMPDIR
-else
-    rm -rf $TEMPDIR
-fi
+ant -q -f $APPHOME/docx/build.xml \
+	-lib /usr/share/saxon/saxon9.jar \
+        -Dodd=$odd \
+        -Ddebug=$debug  \
+	-DoutputFile="$THERE/$F.odt" \
+	-DinputFile="$THERE/$F" \
+        -Dprofile=$profile
 echo wrote $F.docx in $THERE
 

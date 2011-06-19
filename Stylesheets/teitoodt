@@ -4,7 +4,6 @@ odd=false
 debug=false
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
-TEMPDIR=/tmp/odt$$
 PROFILEDIR=$APPHOME/profiles
 while test $# -gt 0; do
   case $1 in
@@ -33,66 +32,21 @@ HERE=`pwd`
 D=`dirname "$1"`
 F=`basename "$1"`
 THERE=`(cd $D; pwd)`
-TEMPLATES=$PROFILEDIR/$profile/oo
-if ! test -d $TEMPLATES 
+TEMPLATES=
+if ! test -f $PROFILEDIR/$profile/oo/to.xsl
 then
-  echo No support for profile $profile: $PROFILEDIR/$profile/oo does not exist
+  echo No support for profile $profile: $PROFILEDIR/$profile/oo/to.xsl does not exist
   exit 1
 fi
 
-XSL=$APPHOME
-mkdir -p $TEMPDIR/Pictures
 echo read $THERE/$F
-case $THERE/$F in 
-       *.zip)  (cd $TEMPDIR; unzip -q $THERE/"$F" ); F=`basename $F .zip`.xml;; 
-       *) cp $THERE/$F $TEMPDIR/$F  ;; 
-esac
-(cd $TEMPDIR; saxon $F $XSL/oo/listgraphics.xsl ORIG=$THERE DIR=$TEMPDIR/pictures > fetch; sh $TEMPDIR/fetch; rm $TEMPDIR/fetch)
-(cd $TEMPDIR
-if [ "$(ls -A Pictures)" ]; then
-    cd Pictures
-    for i in *
-    do 
-	case $i in
-	    *jpeg) exiftool -q -o $i.xmp $i;;
-	    *jpg) exiftool -q -o $i.xmp $i;;
-	    *tiff) exiftool -q -o $i.xmp $i;;
-	    *tif) exiftool -q -o $i.xmp $i;;
-	    *png) exiftool -q -o $i.xmp $i;;
-	esac
-    done
-else
-    rmdir Pictures
-fi
-)
-cd $TEMPDIR
-unzip -o -q $TEMPLATES/template.odt
-if $odd
-then
-    saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds2/odd2odd.xsl defaultSource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
-    saxon -o:$TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds2/odd2lite.xsl displayMode=rnc 
-    saxon -o:$TEMPDIR/tmp3.xml $TEMPDIR/tmp2.xml $XSL/oo/fixgraphics.xsl DIR=`pwd`
-else
-    saxon -o:$TEMPDIR/tmp3.xml $F $XSL/oo/fixgraphics.xsl DIR=`pwd`
-fi
-saxon -o:newcontent.xml tmp3.xml $PROFILEDIR/$profile/oo/to.xsl  freestanding=true debug=$debug inputDir=$TEMPDIR 
-mv newcontent.xml content.xml
-if $debug 
-then
-    echo leaving tmp[123].xml alone
-else
-    rm -f tmp3.xml tmp1.xml tmp2.xml tmp4.xml
-fi
-rm -f Pictures/*.xmp
-rm -f $THERE/"$F.odt"
-rm -f $F
-zip -q -r $THERE/"$F.odt" .
-cd $HERE
-if $debug 
-then
-    echo Working files in $TEMPDIR
-else
-    rm -rf $TEMPDIR
-fi
+ant -q -f $APPHOME/oo/build.xml \
+	-lib /usr/share/saxon/saxon9.jar \
+        -Dodd=$odd \
+        -Ddebug=$debug  \
+	-DoutputFile="$THERE/$F.odt" \
+	-DinputFile="$THERE/$F" \
+        -Dprofile=$profile
+
 echo wrote $F.odt in $THERE
 
