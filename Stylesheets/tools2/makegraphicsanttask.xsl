@@ -52,7 +52,6 @@
 	 </xsl:for-each>
        </target>
      </project>
-   <xsl:apply-templates/>
  </xsl:template>
    
  </xsl:stylesheet>
