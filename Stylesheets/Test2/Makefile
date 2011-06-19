@@ -78,7 +78,7 @@ clean:
 test9:
 	test -d $(OXY) || exit 1
 	java -Xmx256m \
-	-classpath  "/Users/rahtz/oxygen/tools/ant/lib/ant-launcher.jar" \
+	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
 	-Dant.home=$(OXY)/tools/ant \
 	org.apache.tools.ant.launch.Launcher \
 	-f ../docx/build.xml \
