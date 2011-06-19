@@ -74,6 +74,7 @@
     <xsl:include href="docxfiles/numbering-definition.xsl"/>
     <xsl:include href="docxfiles/relationships.xsl"/>
     <xsl:include href="docxfiles/settings.xsl"/>
+    <xsl:param name="createanttask">false</xsl:param>
     <!--
         A4 is 210mm x 297mm; leaving 1in margin (25mm),
         gives 160 x 247 approx useable area.  In Microsoft speak, 
@@ -84,7 +85,7 @@
     <xsl:param name="pageHeight">889.1506</xsl:param>
     <xsl:param name="defaultHeaderFooterFile">templates/default.xml</xsl:param>
     <xsl:param name="postQuote">’</xsl:param>
-    <xsl:param name="preQuote">‘</xsl:param>
+    <xsl:param  name="preQuote">‘</xsl:param>
     <xsl:param name="bulletOne"></xsl:param>
     <xsl:param name="bulletTwo">•</xsl:param>
     <xsl:param name="bulletThree">*</xsl:param>
@@ -95,6 +96,7 @@
     <xsl:param name="bulletEight">•</xsl:param>
     
     <xsl:param name="word-directory">..</xsl:param>
+    <xsl:param name="inputDir">.</xsl:param>
     <xsl:param name="debug">false</xsl:param>
     <xsl:param name="styleDoc">
         <xsl:value-of select="concat($word-directory, '/word/styles.xml')"/>
@@ -139,6 +141,7 @@
     <xsl:output method="xml" version="1.0" encoding="UTF-8"/>
 
     <xsl:param name="isofreestanding">false</xsl:param>
+
 
     <xsl:key name="FOOTERS" match="tei:fw[@type='footer']" use="@xml:id"/>
     <xsl:key name="HEADERS" match="tei:fw[@type='header']" use="@xml:id"/>

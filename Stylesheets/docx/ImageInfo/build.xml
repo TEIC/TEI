@@ -1,0 +1,18 @@
+<project name="Image Size Reader" default='build'>
+
+	<target name="build">
+		<mkdir dir="bin" />
+		<javac srcdir='src' destdir='bin' includeantruntime='true' />
+		<copy file='antlib.xml' todir='bin' />
+	</target>
+
+	<target name='jar' depends='build'>
+		<jar destfile='ImageInfo.jar' basedir='bin' />
+	</target>
+
+	<target name='clean'>
+		<delete dir='bin' />
+		<delete dir='build' />
+	</target>
+
+</project>

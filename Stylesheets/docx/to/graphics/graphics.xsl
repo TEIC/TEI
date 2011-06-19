@@ -55,7 +55,11 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-    
+
+
+    <xsl:key name="W" match="image" use="@url"/>
+    <xsl:key name="H" match="image" use="@url"/>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
         Guides the identity transformation for graphics
@@ -145,9 +149,44 @@
     <xsl:template match="tei:graphic">
         <!-- perform some tests on the graphic -->
 	<xsl:variable name="maxWidth" select="number(number($pageWidth)*100) cast as xs:integer"/>
-	<xsl:variable name="maxHeight" select="number(number($pageHeight)*100) cast as xs:integer"/>
+	<xsl:variable name="maxHeight"
+		      select="number(number($pageHeight)*100) cast as
+			      xs:integer"/>
+	<xsl:variable name="filename">
+	  <xsl:text>media/image</xsl:text>
+	  <xsl:number level="any"/>
+	  <xsl:text>.</xsl:text>
+	  <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
+	</xsl:variable>
+	<xsl:variable name="origheight">
+	  <xsl:choose>
+	    <xsl:when test="@teidocx:height">
+	      <xsl:value-of select="@teidocx:height"/>
+	    </xsl:when>
+	    <xsl:when test="doc-available(concat($word-directory,'/image-size-info.xml'))">
+		<xsl:for-each select="document(concat($word-directory,'/image-size-info.xml'))">
+		  <xsl:value-of select="(number(key('H',$filename)/height) div 72) * 9144"/>
+		</xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>0</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+
+	<xsl:variable name="origwidth">
+	  <xsl:choose>
+	    <xsl:when test="@teidocx:width">
+	      <xsl:value-of select="@teidocx:width"/>
+	    </xsl:when>
+	    <xsl:when test="doc-available(concat($word-directory,'/image-size-info.xml'))">
+		<xsl:for-each select="document(concat($word-directory,'/image-size-info.xml'))">
+		  <xsl:value-of select="(number(key('W',$filename)/width) div 72) * 9144"/>
+		</xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>0</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
 	<xsl:choose>
-	  <xsl:when test="@url and  ( (@teidocx:width and @teidocx:height) or (@width and @height))">
+	  <xsl:when test="$filename and  ( ($origwidth &gt; 0 and $origheight &gt; 0) or (@width and @height))">
             
             <!--
                 
@@ -166,10 +205,10 @@
                     <xsl:when test="@width">
                         <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
                     </xsl:when>
-                    <xsl:when test="@scale and @teidocx:width">
-                        <xsl:value-of select="(@teidocx:width *  number(@scale)) cast as xs:integer"/>
+                    <xsl:when test="@scale and $origwidth">
+                        <xsl:value-of select="($origwidth *  number(@scale)) cast as xs:integer"/>
                     </xsl:when>
-                    <xsl:when test="@height and @teidocx:height and @teidocx:width">
+                    <xsl:when test="@height and $origheight and $origwidth">
 		      <xsl:variable name="h">
 			<xsl:choose>
 			  <xsl:when test="contains(@height,'%')">
@@ -181,14 +220,14 @@
 			  </xsl:otherwise>
 			</xsl:choose>
 		      </xsl:variable>
-		      <xsl:value-of select="number(($h * @teidocx:width) div @teidocx:height)    cast as xs:integer"/>
+		      <xsl:value-of select="number(($h * $origwidth) div $origheight)    cast as xs:integer"/>
                     </xsl:when>
-                    <xsl:when test="@teidocx:width">
-                        <xsl:value-of select="@teidocx:width"/>
+                    <xsl:when test="$origwidth">
+                        <xsl:value-of select="$origwidth"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:message terminate="yes">no way to work out image width for
-                            <xsl:value-of select="@url"/>
+                            <xsl:value-of select="$filename"/>
                         </xsl:message>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -202,18 +241,18 @@
                     <xsl:when test="@height">
                         <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
                     </xsl:when>
-                    <xsl:when test="@scale and @teidocx:height">
-                        <xsl:value-of select="(@teidocx:height * number(@scale)) cast as xs:integer"/>
+                    <xsl:when test="@scale and $origheight">
+                        <xsl:value-of select="($origheight * number(@scale)) cast as xs:integer"/>
                     </xsl:when>
-                    <xsl:when test="@width and @teidocx:height and @teidocx:width">
-                        <xsl:value-of select="number(  ($Width *  @teidocx:height) div @teidocx:width) cast as xs:integer"/>
+                    <xsl:when test="@width and $origheight and $origwidth">
+                        <xsl:value-of select="number(  ($Width *  $origheight) div $origwidth) cast as xs:integer"/>
                     </xsl:when>
-                    <xsl:when test="@teidocx:height">
-                        <xsl:value-of select="@teidocx:height"/>
+                    <xsl:when test="$origheight">
+                        <xsl:value-of select="$origheight"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:message terminate="yes">no way to work out image height for
-                            <xsl:value-of select="@url"/>
+                            <xsl:value-of select="$filename"/>
                         </xsl:message>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -250,23 +289,23 @@
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
-<!--
-
- <xsl:message>
-========================
- <xsl:for-each select="@*">
-    - @<xsl:value-of select="name(.)"/>: <xsl:value-of select="."/>
-</xsl:for-each>
-
-    - maxWidth: <xsl:value-of select="$maxWidth"/>
-    - maxHeight: <xsl:value-of select="$maxHeight"/>
-    - Width: <xsl:value-of select="$Width"/>
-    - Height: <xsl:value-of select="$Height"/>
-    * imageWidth: <xsl:value-of select="$imageWidth"/>
-    * imageHeight: <xsl:value-of select="$imageHeight"/>
-</xsl:message>
--->
-            <!-- prepare actual graphic -->
+	    <!--
+		
+		<xsl:message>
+		========================
+		<xsl:for-each select="@*">
+		- @<xsl:value-of select="name(.)"/>: <xsl:value-of select="."/>
+		</xsl:for-each>
+		
+		- maxWidth: <xsl:value-of select="$maxWidth"/>
+		- maxHeight: <xsl:value-of select="$maxHeight"/>
+		- Width: <xsl:value-of select="$Width"/>
+		- Height: <xsl:value-of select="$Height"/>
+		* imageWidth: <xsl:value-of select="$imageWidth"/>
+		* imageHeight: <xsl:value-of select="$imageHeight"/>
+		</xsl:message>
+	    -->
+	    <!-- prepare actual graphic -->
 	    <xsl:variable name="generatedID">
 	      <xsl:choose>
 		<xsl:when test="@n">
@@ -282,7 +321,7 @@
                     <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
                         <pic:pic>
                             <pic:nvPicPr>
-                                <pic:cNvPr name="{tokenize(@url, '/')[last()]}">
+                                <pic:cNvPr name="{tokenize($filename, '/')[last()]}">
                                     <xsl:attribute name="id">
                                         <xsl:number level="any"/>
                                     </xsl:attribute>
@@ -300,8 +339,7 @@
 						    + 300"/>
 				      </xsl:when>
 				      <xsl:otherwise>
-					<xsl:variable name="url" select="@url"/>
-					<xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$url]/@Id"/>
+					<xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$filename]/@Id"/>
 				      </xsl:otherwise>
 				    </xsl:choose>
 				  </xsl:attribute>
@@ -340,7 +378,7 @@
                     <!-- choose between inline and block -->
                     <xsl:choose>
 		      <xsl:when test="parent::tei:figure[@place='left'
-				      or @place='right' or @place='center']">
+				      or @place='centre' or @place='right' or @place='center']">
 			<wp:anchor simplePos="0" relativeHeight="10" behindDoc="0" locked="0" layoutInCell="1"
 				   allowOverlap="1">
 			  <wp:simplePos x="0" y="0"/>
@@ -357,7 +395,7 @@
 			    <wp:effectExtent l="50800" t="25400" r="101600" b="63500"/>
 			  </xsl:if>
 			  <wp:wrapSquare wrapText="bothSides"/>
-			  <wp:docPr  name="{tokenize(@url, '/')[last()]}">
+			  <wp:docPr  name="{tokenize($filename, '/')[last()]}">
 			    <xsl:attribute name="id">
 			      <xsl:value-of select="$generatedID"/>
 			    </xsl:attribute>
@@ -374,7 +412,7 @@
 			  <xsl:if test="$shadowGraphics='true'">
 			    <wp:effectExtent l="50800" t="25400" r="101600" b="63500"/>
 			  </xsl:if>
-			  <wp:docPr  name="{tokenize(@url, '/')[last()]}">
+			  <wp:docPr  name="{tokenize($filename, '/')[last()]}">
 			    <xsl:attribute name="id">
 			      <xsl:value-of select="$generatedID"/>
 			    </xsl:attribute>
@@ -390,7 +428,7 @@
             </w:r>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:message terminate="yes">ERROR. no image size info for  <xsl:value-of select="@url"/>, cannot proceed</xsl:message>
+	    <xsl:message terminate="yes">ERROR. no image size info for  <xsl:value-of select="$filename"/>, cannot proceed</xsl:message>
 
 	  </xsl:otherwise>
 	</xsl:choose>
