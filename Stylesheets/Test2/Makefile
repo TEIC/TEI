@@ -84,5 +84,13 @@ test9:
 	-f ../docx/build.xml \
 	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test9.docx \
+	-DinputFile=`pwd`/test9.xml -Dprofile=default 
+	java -Xmx256m \
+	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
+	-Dant.home=$(OXY)/tools/ant \
+	org.apache.tools.ant.launch.Launcher \
+	-f ../oo/build.xml \
+	-lib $(OXY)/lib/saxon9ee.jar \
+	-DoutputFile=`pwd`/test9.odt \
 	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
 

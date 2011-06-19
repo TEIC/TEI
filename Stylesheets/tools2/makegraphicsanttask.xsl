@@ -24,7 +24,7 @@
    </doc>
    <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
    <xsl:param name="inputDir">.</xsl:param>
-   
+   <xsl:param name="imageDir">word/media</xsl:param>
    <xsl:template match="/">
      <project xmlns="" basedir="." default="dist" name="imagecopy">
        <target name="dist">
@@ -33,7 +33,9 @@
 	     <xsl:value-of select="@url"/>
 	   </xsl:variable>
 	   <xsl:variable name="target">
-	     <xsl:text>${outputTempDir}/word/media/image</xsl:text>
+	     <xsl:text>${outputTempDir}/</xsl:text>
+	     <xsl:value-of select="$imageDir"/>
+	     <xsl:text>/image</xsl:text>
 	     <xsl:number level="any"/>
 	     <xsl:text>.</xsl:text>
 	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>

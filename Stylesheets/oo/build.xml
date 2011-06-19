@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitodocx">
+<project basedir="." default="dist" name="teitooo">
 <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -19,11 +19,11 @@
         Copyright: 2011, TEI Consortium<
 -->
   <!--
- Convert TEI documents into docx files.
+ Convert TEI documents into OO files.
  -->
   <!-- Path to TEI XML file. -->
   <property name="inputFile" value=""/>
-  <!-- Path where the output docx file will be saved. -->
+  <!-- Path where the output oo file will be saved. -->
   <property name="outputFile" value=""/>
   <!-- which profile -->
   <property name="profile" value="default"/>
@@ -32,7 +32,7 @@
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="stylesheetFile"  value="../profiles/${profile}/docx/to.xsl"/>
+  <property name="stylesheetFile"  value="../profiles/${profile}/oo/to.xsl"/>
   <property name="listgraphics"    value="../tools2/makegraphicsanttask.xsl"/>
   <property name="odd2oddxsl"      value="../odds2/odd2odd.xsl"/>
   <property name="odd2litexsl"     value="../odds2/odd2lite.xsl"/>
@@ -91,9 +91,9 @@
 
   <target name="dist" depends="setup,odd,notodd">
     <!-- Recreate temporary output directory -->
-    <!-- The transformation for DOCX output. -->
-    <echo level="info">unzip Word template</echo>
-    <unzip src="${xslDir}/template.docx" dest="${outputTempDir}"/>
+    <!-- The transformation for OO output. -->
+    <echo level="info">unzip ODT template</echo>
+    <unzip src="${xslDir}/template.odt" dest="${outputTempDir}"/>
     <echo level="info">Get names of graphics files and write an ant task</echo>
     <xslt force="yes" style="${listgraphics}" classpath="classpath" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
@@ -105,15 +105,15 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygyenlib}/saxon9ee.jar"/>
       <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="imageDir" expression="word/media"/>
+      <param name="imageDir" expression="Pictures"/>
     </xslt>
     <echo level="info">Copy image files by running ant task</echo>
     <ant antfile="${outputTempDir}/copy.xml"/>
     <echo level="info">Read dimensions of image files and write info file</echo>
     <images outputFile="${outputTempDir}/image-size-info.xml">
-      <fileset dir="${outputTempDir}/word" includes="media/*.*"/>
+      <fileset dir="${outputTempDir}" includes="Pictures/*.*"/>
     </images>
-    <echo level="info">XSLT generate files for docx </echo>
+    <echo level="info">XSLT generate files for oo </echo>
     <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
@@ -123,9 +123,8 @@
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygyenlib}/saxon9ee.jar"/>
-      <param name="word-directory" expression="file:///${outputTempDir}/"/>
-      <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="isofreestanding" expression="true"/>
+      <param name="outputDir" expression="file:///${outputTempDir}/"/>
+      <param name="freestanding" expression="true"/>
       <!-- supply name of language-->
       <param name="lang" expression="${lang}" if="lang"/>
       <!-- emit some diagnostics"-->
@@ -133,11 +132,9 @@
       <!-- be verbose-->
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
-    <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
-    <move file="${outputTempDir}/docProps/newcore.xml" tofile="${outputTempDir}/docProps/core.xml" overwrite="true"/>
-    <move file="${outputTempDir}/docProps/newcustom.xml" tofile="${outputTempDir}/docProps/custom.xml" overwrite="true"/>
+    <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/content.xml" overwrite="true"/>
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
-    <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,tmp3.xml,image-size-info.xml,copy.xml"/>
+    <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,image-size-info.xml,copy.xml"/>
     <copy file="${outputDir}/temp-for-ant.zip" tofile="${outputFile}" overwrite="true"/>
     <delete file="${outputDir}/temp-for-ant.zip"/>
     <delete dir="${outputTempDir}"/>

@@ -66,6 +66,9 @@
    </doc>
   
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
+    <xsl:key name="W" match="image" use="@url"/>
+    <xsl:key name="H" match="image" use="@url"/>
+
 
   <xsl:output method="xml" omit-xml-declaration="no"/>
 
@@ -74,7 +77,7 @@
   <xsl:param name="useHeaderFrontMatter">false</xsl:param>
   <xsl:param name="postQuote">’</xsl:param>
   <xsl:param name="preQuote">‘</xsl:param>
-  <xsl:param name="dir">.</xsl:param>
+  <xsl:param name="outputDir">.</xsl:param>
   <xsl:param name="freestanding">false</xsl:param>
   <xsl:key name='IDS' match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name='GRAPHICS' match="tei:graphic" use="1"/>
@@ -83,12 +86,12 @@
   <xsl:template match="/">
     <xsl:choose>
       <xsl:when test="$freestanding='true'">
-	<xsl:result-document href="{concat($dir,'/meta.xml')}">
+	<xsl:result-document href="{concat($outputDir,'/meta.xml')}">
 	  <xsl:call-template name="META"/>
 	</xsl:result-document>
 	<office:document-content>
 	  <xsl:if test="$freestanding='true'">
-	  <xsl:for-each select="document(concat($dir,'/content.xml'))/office:document-content">
+	  <xsl:for-each select="document(concat($outputDir,'/content.xml'))/office:document-content">
 	    <xsl:copy-of select="office:scripts"/>
 	    <xsl:copy-of select="office:font-face-decls"/>
 	    <xsl:copy-of select="office:automatic-styles"/>
@@ -112,7 +115,7 @@
 	</office:document>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:result-document href="{concat($dir,'/META-INF/manifest.xml')}">
+    <xsl:result-document href="{concat($outputDir,'/META-INF/manifest.xml')}">
       <manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0">
 	<manifest:file-entry manifest:media-type="application/vnd.oasis.opendocument.text" manifest:version="1.2" manifest:full-path="/"/>
 	<manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/statusbar/"/>
@@ -138,8 +141,14 @@
 	<manifest:file-entry manifest:media-type="" manifest:full-path="Pictures/"/>
 	<xsl:for-each select="key('GRAPHICS',1)">
 	  <xsl:variable name="imagetype"
-			select="tokenize(@url,'.')[last()]"/>
-	  <manifest:file-entry manifest:full-path="{@url}">
+			select="tokenize(@url,'\.')[last()]"/>
+	  <manifest:file-entry>
+	    <xsl:attribute name="manifest:full-path">
+	      <xsl:text>Pictures/image</xsl:text>
+	      <xsl:number level="any"/>
+	      <xsl:text>.</xsl:text>
+	      <xsl:value-of select="$imagetype"/>
+	    </xsl:attribute>
 	    <xsl:attribute name="manifest:media-type">
 	      <xsl:text>image/</xsl:text>
 	      <xsl:choose>
@@ -366,20 +375,55 @@
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+
+	<xsl:variable name="filename">
+	  <xsl:text>Pictures/image</xsl:text>
+	  <xsl:number level="any"/>
+	  <xsl:text>.</xsl:text>
+	  <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
+	</xsl:variable>
+	<xsl:variable name="origheight">
+	  <xsl:choose>
+	    <xsl:when test="@teidocx:height">
+	      <xsl:value-of select="@teidocx:height"/>
+	    </xsl:when>
+	    <xsl:when test="doc-available(concat($outputDir,'/image-size-info.xml'))">
+		<xsl:for-each select="document(concat($outputDir,'/image-size-info.xml'))">
+		  <xsl:value-of select="(number(key('H',$filename)/height) div 72) * 9144"/>
+		</xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>0</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+
+	<xsl:variable name="origwidth">
+	  <xsl:choose>
+	    <xsl:when test="@teidocx:width">
+	      <xsl:value-of select="@teidocx:width"/>
+	    </xsl:when>
+	    <xsl:when test="doc-available(concat($outputDir,'/image-size-info.xml'))">
+		<xsl:for-each select="document(concat($outputDir,'/image-size-info.xml'))">
+		  <xsl:value-of select="(number(key('W',$filename)/width) div 72) * 9144"/>
+		</xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>0</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+
     <xsl:choose>
-      <xsl:when test="@url and  ( (@teidocx:width and @teidocx:height) or (@width and @height))">
+      <xsl:when test="$filename and  ( ($origwidth and $origheight) or (@width and @height))">
 	
 	<!-- work out page width / height and subtract 1inch on all sides -->
 	<xsl:variable name="pageWidth">
 	  <xsl:for-each
-	      select="document(concat($dir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
+	      select="document(concat($outputDir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
 	    <xsl:value-of
 		select="number(teidocx:convert-dim-pt(@fo:page-width) - 144)"/>
 	  </xsl:for-each>
 	</xsl:variable>
 	<xsl:variable name="pageHeight">
 	  <xsl:for-each
-	      select="document(concat($dir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
+	      select="document(concat($outputDir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
 	    <xsl:value-of 
 		select="number(teidocx:convert-dim-pt(@fo:page-height) - 144)"/>
 	  </xsl:for-each>
@@ -393,21 +437,21 @@
 	    <xsl:when test="@width">
 	      <xsl:value-of select="teidocx:convert-dim-pt(@width)"/>
 	    </xsl:when>
-	    <xsl:when test="@scale and @teidocx:width">
-	      <xsl:value-of select="number(@teidocx:width * number(@scale)) div 127 cast as xs:integer"/>
+	    <xsl:when test="@scale and $origwidth">
+	      <xsl:value-of select="number($origwidth * number(@scale)) div 127 cast as xs:integer"/>
 	    </xsl:when>
-	    <xsl:when test="@height[not(contains(.,'%'))] and @teidocx:height">
+	    <xsl:when test="@height[not(contains(.,'%'))] and $origheight">
 	      <xsl:variable name="h">
 		<xsl:value-of select="number(teidocx:convert-dim-pt(@height))"/>
 	      </xsl:variable>
-	      <xsl:value-of select="($h * number(@teidocx:width)) div number(@teidocx:height)"/>
+	      <xsl:value-of select="($h * number($origwidth)) div number($origheight)"/>
 	    </xsl:when>
-	    <xsl:when test="@teidocx:width">
-	      <xsl:value-of select="number(@teidocx:width) div 127"/>
+	    <xsl:when test="$origwidth">
+	      <xsl:value-of select="number($origwidth) div 127"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:message terminate="yes">no way to work out image width for
-	      <xsl:value-of select="@url"/>
+	      <xsl:value-of select="$filename"/>
 	      </xsl:message>
 	    </xsl:otherwise>
 	  </xsl:choose>
@@ -421,22 +465,22 @@
 	    <xsl:when test="@height">
 	      <xsl:value-of select="teidocx:convert-dim-pt(@height)"/>
 	    </xsl:when>
-	    <xsl:when test="@scale and @teidocx:height">
-	      <xsl:value-of select="(@teidocx:height *
+	    <xsl:when test="@scale and $origheight">
+	      <xsl:value-of select="($origheight *
 				    number(@scale)) div 127 cast as xs:integer"/>
 	    </xsl:when>
-	    <xsl:when test="@width[not(contains(.,'%'))] and @teidocx:height and @teidocx:width">
+	    <xsl:when test="@width[not(contains(.,'%'))] and $origheight and $origwidth">
 	      <xsl:variable name="w">
 		<xsl:value-of select="number(teidocx:convert-dim-pt(@width))"/>
 	      </xsl:variable>
-	      <xsl:value-of select="($w * number(@teidocx:height)) div number(@teidocx:width)"/>
+	      <xsl:value-of select="($w * number($origheight)) div number($origwidth)"/>
 	    </xsl:when>
-	    <xsl:when test="@teidocx:height">
-	      <xsl:value-of select="number(@teidocx:height) div 127"/>
+	    <xsl:when test="$origheight">
+	      <xsl:value-of select="number($origheight) div 127"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:message terminate="yes">no way to work out image height for
-	      <xsl:value-of select="@url"/>
+	      <xsl:value-of select="$filename"/>
 	      </xsl:message>
 	    </xsl:otherwise>
 	  </xsl:choose>
@@ -505,7 +549,7 @@
 	    <xsl:text>pt</xsl:text>
 	  </xsl:attribute>
 	  <draw:image
-	      xlink:href="{@url}" 
+	      xlink:href="{$filename}" 
 	      xlink:type="simple" 
 	      xlink:show="embed"
 	      xlink:actuate="onLoad" 
@@ -513,7 +557,7 @@
 	</draw:frame>
       </xsl:when>	
       <xsl:otherwise>
-	<xsl:message terminate="yes">ERROR. no image size info for  <xsl:value-of select="@url"/>, cannot proceed</xsl:message>
+	<xsl:message terminate="yes">ERROR. no image size info for  <xsl:value-of select="$filename"/>, cannot proceed</xsl:message>
 	
       </xsl:otherwise>
     </xsl:choose>
