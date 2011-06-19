@@ -489,7 +489,7 @@
 	    </xsl:call-template>
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="@type='issue'">
+         <xsl:when test="@type='issue' or @type='nr'">
             <xsl:call-template name="tei:makeText">
 	      <xsl:with-param name="letters"> (</xsl:with-param>
 	    </xsl:call-template>
@@ -498,6 +498,14 @@
 	      <xsl:with-param name="letters">) </xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
+         <xsl:when test="@type='page_from'">
+	   <xsl:text>pp. </xsl:text>
+	   <xsl:apply-templates/>
+	 </xsl:when>
+         <xsl:when test="@type='page_to'">
+	   <xsl:text>-</xsl:text>
+	   <xsl:apply-templates/>
+	 </xsl:when>
          <xsl:when test="@type='pp' or @type='pages'">
             <xsl:choose>
                <xsl:when test="contains(.,'-')">
