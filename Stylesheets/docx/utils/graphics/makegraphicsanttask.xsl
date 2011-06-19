@@ -23,39 +23,36 @@
       </desc>
    </doc>
    <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
-   <xsl:param name="word-directory">..</xsl:param>
    <xsl:param name="inputDir">.</xsl:param>
    
    <xsl:template match="/">
-     <xsl:result-document href="{$word-directory}/copy.xml" indent="yes" method="xml">
-	 <project xmlns="" basedir="." default="dist" name="imagecopy">
-	   <target name="dist">
-	     <xsl:for-each select="key('G',1)">
-	       <xsl:variable name="F">
-		 <xsl:value-of select="@url"/>
-	       </xsl:variable>
-	       <xsl:variable name="target">
-		 <xsl:text>${outputTempDir}/word/media/image</xsl:text>
-		 <xsl:number level="any"/>
-		 <xsl:text>.</xsl:text>
-		 <xsl:value-of select="tokenize($F,'\.')[last()]"/>
-	       </xsl:variable>
-	       <xsl:choose>
-		 <xsl:when test="starts-with($F,'http')">
-		   <get src="{@url}" dest="{$target}"/>
-		 </xsl:when>
-		 <xsl:when test="starts-with($F,'/')">
-		   <copy toFile="{$target}" file="{@url}"/>
-		 </xsl:when>
-		 <xsl:otherwise>
-		   <copy toFile="{$target}" file="{$inputDir}/{@url}"/>
-		 </xsl:otherwise>
-	       </xsl:choose>
-	     </xsl:for-each>
-	   </target>
-	 </project>
-       </xsl:result-document>
-     <xsl:apply-templates/>
-   </xsl:template>
+     <project xmlns="" basedir="." default="dist" name="imagecopy">
+       <target name="dist">
+	 <xsl:for-each select="key('G',1)">
+	   <xsl:variable name="F">
+	     <xsl:value-of select="@url"/>
+	   </xsl:variable>
+	   <xsl:variable name="target">
+	     <xsl:text>${outputTempDir}/word/media/image</xsl:text>
+	     <xsl:number level="any"/>
+	     <xsl:text>.</xsl:text>
+	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="starts-with($F,'http')">
+	       <get src="{@url}" dest="{$target}"/>
+	     </xsl:when>
+	     <xsl:when test="starts-with($F,'/')">
+	       <copy toFile="{$target}" file="{@url}"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <copy toFile="{$target}" file="{$inputDir}/{@url}"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </xsl:for-each>
+       </target>
+     </project>
+   <xsl:apply-templates/>
+ </xsl:template>
    
-</xsl:stylesheet>
+ </xsl:stylesheet>
