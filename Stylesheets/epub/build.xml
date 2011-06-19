@@ -30,7 +30,9 @@
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="stylesheetFile" value="../profiles/${profile}/epub/to.xsl"/>
+  <property name="stylesheetFile"
+	    value="../profiles/${profile}/epub/to.xsl"/>
+  <property name="listgraphics" value="../tools2/makegraphicsanttask.xsl"/>
   <property name="odd2oddxsl" value="../odds2/odd2odd.xsl"/>
   <property name="odd2litexsl" value="../odds2/odd2lite.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
@@ -82,7 +84,7 @@
     <!-- Recreate temporary output directory -->
     <!-- The transformation for EPUB output. -->
     <echo level="info">XSLT generate ePub files </echo>
-    <xslt force="yes" style="${stylesheetFile}" in="${inputFile}" out="${outputFile}" classpath="classpath">
+    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputFile}" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -94,7 +96,6 @@
       <param name="directory" expression="file:///${outputTempDir}/"/>
       <param name="inputDir" expression="${inputFileDir}/"/>
       <param name="fixgraphicsurl" expression="true"/>
-      <param name="createanttask" expression="true"/>
       <!-- supply unique URN for ebook-->
       <param name="uid" expression="${uid}" if="uid"/>
       <!-- set splitting level-->
@@ -113,6 +114,17 @@
       <param name="debug" expression="${debug}" if="debug"/>
       <!-- be verbose-->
       <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <echo level="info">Get names of graphics files and write an ant task</echo>
+    <xslt force="yes" style="${listgraphics}" classpath="classpath" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygyenlib}/saxon9ee.jar"/>
     </xslt>
     <echo level="info">Copy image files</echo>
     <ant antfile="${outputTempDir}/copy.xml"/>

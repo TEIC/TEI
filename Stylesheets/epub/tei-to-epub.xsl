@@ -164,36 +164,6 @@
   all relative, creating the extra output files, etc</desc>
   </doc>
   <xsl:template name="processTEI">
-    <xsl:if test="$createanttask='true'">
-      <xsl:result-document href="{$directory}/copy.xml" indent="yes" method="xml">
-        <project xmlns="" basedir="." default="dist" name="imagecopy">
-          <target name="dist">
-            <xsl:for-each select="key('G',1)">
-              <xsl:variable name="F">
-                <xsl:value-of select="@url"/>
-              </xsl:variable>
-              <xsl:variable name="target">
-                <xsl:text>${outputTempDir}/OEBPS/media/image</xsl:text>
-                <xsl:number level="any"/>
-                <xsl:text>.</xsl:text>
-                <xsl:value-of select="tokenize($F,'\.')[last()]"/>
-              </xsl:variable>
-              <xsl:choose>
-                <xsl:when test="starts-with($F,'http')">
-                  <get src="{@url}" dest="{$target}"/>
-                </xsl:when>
-                <xsl:when test="starts-with($F,'/')">
-                  <copy toFile="{$target}" file="{@url}"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <copy toFile="{$target}" file="{$inputDir}/{@url}"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:for-each>
-          </target>
-        </project>
-      </xsl:result-document>
-    </xsl:if>
     <xsl:variable name="stage1">
       <xsl:apply-templates mode="fixgraphics"/>
     </xsl:variable>
