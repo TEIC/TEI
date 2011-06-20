@@ -266,9 +266,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>[common] Make a hypertext link</p>
-         <p>
-            <p xmlns=""> cross-referencing </p>
-         </p>
+         <p>cross-referencing </p>
          <param name="ptr">ptr</param>
       </desc>
    </doc>

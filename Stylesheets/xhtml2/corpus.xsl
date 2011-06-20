@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" 
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
@@ -9,7 +9,7 @@
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="#default a fo rng tei teix"
+                exclude-result-prefixes="a fo rng tei teix"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -56,7 +56,7 @@
       <desc>Process element teiCorpus</desc>
    </doc>
   <xsl:template match="tei:teiCorpus">
-      <html>
+      <xsl:element name="html" namespace="{$outputNamespace}">
          <xsl:call-template name="addLangAtt"/>
          <head>
             <title>
@@ -79,7 +79,7 @@
             <xsl:call-template name="stdfooter"/>
             <xsl:call-template name="bodyEndHook"/>
          </body>
-      </html>
+      </xsl:element>
   </xsl:template>
   <xsl:template match="tei:teiCorpus" mode="split">
       <xsl:variable name="BaseFile">
@@ -106,12 +106,13 @@
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+      <xsl:result-document doctype-public="{$doctypePublic}" 
+			   doctype-system="{$doctypeSystem}"
                            encoding="{$outputEncoding}"
                            href="{$outName}"
                            method="{$outputMethod}">
       
-         <html>
+         <xsl:element name="html" namespace="{$outputNamespace}">
 	   <xsl:call-template name="addLangAtt"/>
 	   <head>
 	     <title>
@@ -134,7 +135,7 @@
 	     <xsl:call-template name="stdfooter"/>
 	     <xsl:call-template name="bodyEndHook"/>
 	   </body>
-         </html>
+         </xsl:element>
       </xsl:result-document>
       <xsl:if test="$verbose='true'">
          <xsl:message>Closing file <xsl:value-of select="$outName"/>

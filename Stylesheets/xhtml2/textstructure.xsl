@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink"
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"  xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:its="http://www.w3.org/2005/11/its"
+                xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:dbk="http://docbook.org/ns/docbook"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
-                xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="#default a fo dbk xlink xhtml
-		rng tei teix its"
+                exclude-result-prefixes="a fo dbk xlink rng tei html teix its"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -88,11 +86,7 @@
       </desc>
    </doc>
   <xsl:template match="/">
-      <xsl:if test="contains($processor,'Clark')">
-         <xsl:message terminate="yes"> XT is not supported by the TEI stylesheets,
-        as it does not implement the "key" function </xsl:message>
-      </xsl:if>
-      <xsl:call-template name="processTEI"/>
+    <xsl:call-template name="processTEI"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -348,7 +342,7 @@
                   <html>
                      <xsl:call-template name="addLangAtt"/>
                      <xsl:call-template name="htmlFileTop"/>
-                     <body id="TOP">
+		     <body id="TOP">
                         <xsl:call-template name="bodyHook"/>
                         <xsl:call-template name="bodyJavascriptHook"/>
 			<div class="stdheader">
@@ -366,8 +360,8 @@
                         <xsl:call-template name="printNotes"/>
                         <xsl:call-template name="htmlFileBottom"/>
 			<xsl:call-template name="bodyEndHook"/>
-                     </body>
-                  </html>
+		     </body>
+		  </html>
                </xsl:otherwise>
             </xsl:choose>
          </xsl:otherwise>
@@ -874,10 +868,10 @@
       <xsl:variable name="documentationLanguage">
          <xsl:choose>
             <xsl:when test="string-length($doclang)&gt;0">
-	              <xsl:value-of select="$doclang"/>
+	      <xsl:value-of select="$doclang"/>
             </xsl:when>
             <xsl:when test="ancestor-or-self::tei:schemaSpec/@docLang">
-	              <xsl:value-of select="//tei:schemaSpec[1]/@docLang"/>
+	      <xsl:value-of select="//tei:schemaSpec[1]/@docLang"/>
             </xsl:when>
             <xsl:otherwise>
 	      <xsl:text>en</xsl:text>
@@ -886,21 +880,30 @@
       </xsl:variable>
 
       <xsl:variable name="supplied">
-         <xsl:choose>
-            <xsl:when test="ancestor-or-self::tei:*[@xml:lang]">
-               <xsl:value-of select="ancestor-or-self::tei:*[@xml:lang][1]/@xml:lang"/>
-            </xsl:when>
-            <xsl:when test="ancestor-or-self::tei:*[@lang]">
-               <xsl:value-of select="ancestor-or-self::tei:*[@lang][1]/@lang"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:value-of select="$documentationLanguage"/>
-            </xsl:otherwise>
-         </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="ancestor-or-self::tei:*[@xml:lang]">
+	    <xsl:value-of select="ancestor-or-self::tei:*[@xml:lang][1]/@xml:lang"/>
+	  </xsl:when>
+	  <xsl:when test="ancestor-or-self::tei:*[@lang]">
+	    <xsl:value-of select="ancestor-or-self::tei:*[@lang][1]/@lang"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$documentationLanguage"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:variable>
-      <xsl:attribute name="xml:lang">
-	<xsl:value-of select="$supplied"/>
-      </xsl:attribute>
+      <xsl:choose>
+	<xsl:when test="$outputTarget='html'">
+	  <xsl:attribute name="xml:lang">
+	    <xsl:value-of select="$supplied"/>
+	  </xsl:attribute>
+	</xsl:when>
+	<xsl:when test="$outputTarget='html5'">
+	  <xsl:attribute name="lang">
+	    <xsl:value-of select="$supplied"/>
+	  </xsl:attribute>
+	</xsl:when>
+      </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

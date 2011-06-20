@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron" xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="#default s html a fo rng tei teix" version="2.0">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"  xmlns:s="http://www.ascc.net/xml/schematron" xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="#default s html a fo rng tei teix" version="2.0">
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>
   <xsl:param name="summaryDoc">false</xsl:param>
@@ -119,7 +119,7 @@
           <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
         </xsl:variable>
         <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
-          <html>
+          <xsl:element name="html" namespace="{$outputNamespace}">
             <xsl:call-template name="addLangAtt"/>
             <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (7) </xsl:comment>
             <head>
@@ -133,8 +133,6 @@
                   <xsl:with-param name="langs" select="$langs"/>
                 </xsl:call-template>
               </title>
-              <xsl:call-template name="includeCSS"/>
-              <xsl:call-template name="generateLocalCSS"/>
               <xsl:call-template name="metaHTML">
                 <xsl:with-param name="title">
                   <xsl:value-of select="substring-before(local-name(),'Spec')"/>
@@ -148,6 +146,8 @@
                   <xsl:call-template name="generateTitle"/>
                 </xsl:with-param>
               </xsl:call-template>
+              <xsl:call-template name="includeCSS"/>
+              <xsl:call-template name="generateLocalCSS"/>
               <xsl:call-template name="includeJavascript"/>
               <xsl:call-template name="javascriptHook"/>
             </head>
@@ -170,7 +170,7 @@
               </xsl:call-template>
               <xsl:call-template name="bodyEndHook"/>
             </body>
-          </html>
+          </xsl:element>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/>

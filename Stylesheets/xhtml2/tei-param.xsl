@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
-                
-                xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="#default tei"
-                version="2.0">
+<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"                 
+    xmlns:html="http://www.w3.org/1999/xhtml"                
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="tei html"
+    version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>
@@ -42,10 +42,10 @@
   <xsl:key name="TAGREND" match="tei:tagUsage[@render]" use="@gi"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
-      <desc>
-CSS class for links derived from &lt;ptr&gt;
-</desc>
-   </doc>
+    <desc>
+      CSS class for links derived from &lt;ptr&gt;
+    </desc>
+  </doc>
   <xsl:param name="class_ptr">ptr</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
       <desc>
@@ -208,19 +208,19 @@ Display figures.
          <p>How to use the front/body/back matter in creating
 columns.</p>
          <p>
-The choice is between
-<ul xmlns="http://www.w3.org/1999/xhtml">
-               <li>
-                  <b>all</b>: use &lt;front&gt; for left-hand column,
-use &lt;body&gt; for centre column, and use &lt;back&gt; for
-right-hand column</li>
-               <li>
-                  <b>body</b>: use &lt;body&gt; for right-hand column,
- generate left-hand with a TOC or whatever</li>
-            </ul>
+	   The choice is between
+	   <ul xmlns="http://www.w3.org/1999/xhtml">
+	     <li>
+	       <b>all</b>: use &lt;front&gt; for left-hand column,
+	       use &lt;body&gt; for centre column, and use &lt;back&gt; for
+	     right-hand column</li>
+	     <li>
+	       <b>body</b>: use &lt;body&gt; for right-hand column,
+	     generate left-hand with a TOC or whatever</li>
+	   </ul>
          </p>
       </desc>
-   </doc>
+  </doc>
   <xsl:param name="contentStructure">body</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="integer">
       <desc>
@@ -317,16 +317,25 @@ Width of left-hand column when $pageLayout is "Table"
          </xsl:attribute>
       </meta>
       <meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
-      <meta name="DC.Title">
-	<xsl:attribute name="content">
-	  <xsl:value-of select="normalize-space(translate($title,'&lt;&gt;','&#x2329;&#x3009;'))"/>
-	</xsl:attribute>
-      </meta>
-      <meta name="DC.Type" content="Text"/>
-      <meta name="DC.Format" content="text/html"/>
-      <meta http-equiv="Content-Type" content="text/html; charset={$outputEncoding}"/>
+      <xsl:choose>
+	<xsl:when test="$outputTarget='html5'">
+	  <meta charset="utf-8" />
+	</xsl:when>
+	<xsl:otherwise>
+	  <meta http-equiv="Content-Type" content="text/html;
+						   charset={$outputEncoding}"/>
+	  <meta name="DC.Title">
+	    <xsl:attribute name="content">
+	      <xsl:value-of select="normalize-space(translate($title,'&lt;&gt;','&#x2329;&#x3009;'))"/>
+	    </xsl:attribute>
+	  </meta>
+	  <meta name="DC.Type" content="Text"/>
+	  <meta name="DC.Format" content="text/html"/>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
+
+	<doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
          <p>[html] Construction of navigation bar </p>
          <p>A file is looked for relative to the <i xmlns="http://www.w3.org/1999/xhtml">stylesheet</i> (the
@@ -427,7 +436,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <xsl:param name="class">title</xsl:param>
       <xsl:param name="level">1</xsl:param>
       <xsl:if test="not($text='')">
-         <xsl:element name="h{$level}" xmlns="http://www.w3.org/1999/xhtml">
+         <xsl:element name="h{$level}">
 	   <xsl:attribute name="class">
 	     <xsl:value-of select="$class"/>
 	   </xsl:attribute>
@@ -579,6 +588,7 @@ Encoding of output file(s).
       <desc>Type of output being generated</desc>
    </doc>
   <xsl:param name="outputTarget">html</xsl:param>
+  <xsl:param name="outputNamespace">http://www.w3.org/1999/xhtml</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>Output method for output file(s).</desc>
