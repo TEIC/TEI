@@ -2061,24 +2061,24 @@
     <xsl:param name="name"/>
     <xsl:choose>
       <xsl:when test="self::tei:anchor and $name">
-	<span id="{$name}">
+	<a id="{$name}">
 	  <xsl:comment>anchor</xsl:comment>
-	</span>
+	</a>
       </xsl:when>
       <xsl:when test="self::tei:anchor">
-	<span id="{@xml:id}">
+	<a id="{@xml:id}">
 	  <xsl:comment>anchor</xsl:comment>
-	</span>
+	</a>
       </xsl:when>
       <xsl:when test="self::tei:index and $name">
-	<span id="{$name}">
+	<a id="{$name}">
 	  <xsl:comment>index</xsl:comment>
-	</span>
+	</a>
       </xsl:when>
       <xsl:when test="self::tei:index">
-	<span id="{@xml:id}">
+	<a id="{@xml:id}">
 	  <xsl:comment>index</xsl:comment>
-	</span>
+	</a>
       </xsl:when>
       <xsl:when test="$name">
         <xsl:attribute name="id" select="$name"/>
