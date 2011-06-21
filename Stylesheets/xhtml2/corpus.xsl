@@ -66,7 +66,7 @@
             <xsl:call-template name="cssHook"/>
          </head>
          <body class="simple">
-            <xsl:call-template name="bodyHook"/>
+            <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
 	    <div class="stdheader">
 	      <xsl:call-template name="stdheader">
@@ -122,7 +122,7 @@
 	     <xsl:call-template name="cssHook"/>
 	   </head>
 	   <body class="simple">
-	     <xsl:call-template name="bodyHook"/>
+	     <xsl:call-template name="bodyMicroData"/>
 	     <xsl:call-template name="bodyJavascriptHook"/>
 	     <div class="stdheader">
 	       <xsl:call-template name="stdheader">
