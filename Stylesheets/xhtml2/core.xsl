@@ -2250,4 +2250,6 @@
     </xsl:element>
   </xsl:template>
 
+  <xsl:template name="microdata"/>
+
 </xsl:stylesheet>
