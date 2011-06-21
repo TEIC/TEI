@@ -127,4 +127,6 @@ Stylesheet constant setting the name of the main output file.
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
+  <xsl:template name="bodyMicroData"/>
 </xsl:stylesheet>

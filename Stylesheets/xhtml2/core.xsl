@@ -2143,16 +2143,6 @@
     <xsl:if test="$outputTarget='html5'">
       <xsl:call-template name="microdata"/>
     </xsl:if>
-    <xsl:choose>
-      <xsl:when test="not($outputTarget='html5')"/>
-      <xsl:when test="self::tei:docDate">
-	<xsl:attribute name="itemprop">date</xsl:attribute>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:attribute name="itemprop" select="local-name()"/>
-      </xsl:otherwise>
-    </xsl:choose>
-    
     <xsl:variable name="class1">
       <xsl:choose>
         <xsl:when test="$default=''"/>

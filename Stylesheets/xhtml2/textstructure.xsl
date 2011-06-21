@@ -317,7 +317,7 @@
                      <xsl:call-template name="addLangAtt"/>
                      <xsl:call-template name="htmlFileTop"/>
 		     <body id="TOP">
-                        <xsl:call-template name="bodyHook"/>
+                        <xsl:call-template name="bodyMicroData"/>
                         <xsl:call-template name="bodyJavascriptHook"/>
 			<div class="stdheader">
 			  <xsl:call-template name="stdheader">
@@ -370,7 +370,7 @@
             <xsl:call-template name="javascriptHook"/>
          </head>
          <body class="simple" id="TOP">
-            <xsl:call-template name="bodyHook"/>
+            <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
 	      <div class="stdheader">
@@ -684,6 +684,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:element name="{$container}">
+      <xsl:call-template name="microdata"/>
       <xsl:choose>
 	<xsl:when test="@rendition">
 	  <xsl:call-template name="applyRendition"/>
@@ -696,9 +697,6 @@
 	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="@when and $outputTarget='html5'">
-	<meta itemprop="when" content="{@when}"/>
-      </xsl:if>
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
@@ -877,6 +875,7 @@
 	<xsl:apply-templates mode="ident" select="."/>
       </xsl:variable>
       <xsl:element name="{$container}">
+	<xsl:call-template name="microdata"/>
 	<xsl:call-template name="divClassAttribute">
 	  <xsl:with-param name="depth" select="$Depth"/>
 	</xsl:call-template>	
@@ -1769,7 +1768,7 @@
          <body>
 	   <xsl:copy-of select="tei:text/tei:body/@unload"/>
 	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
-	   <xsl:call-template name="bodyHook"/>
+	   <xsl:call-template name="bodyMicroData"/>
 	   <xsl:call-template name="bodyJavascriptHook"/>
 	   <xsl:call-template name="mainPage">
 	     <xsl:with-param name="currentID">
@@ -1907,7 +1906,7 @@
          <body class="simple" id="TOP">
 	   <xsl:copy-of select="tei:text/tei:body/@unload"/>
 	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
-	   <xsl:call-template name="bodyHook"/>
+	   <xsl:call-template name="bodyMicroData"/>
 	   <xsl:call-template name="bodyJavascriptHook"/>
 	   <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
 	     <div class="stdheader">
@@ -2005,7 +2004,7 @@
             <xsl:call-template name="javascriptHook"/>
          </head>
          <body class="pagetable">
-            <xsl:call-template name="bodyHook"/>
+            <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <xsl:call-template name="pageHeader">
                <xsl:with-param name="mode">table</xsl:with-param>
@@ -2671,7 +2670,7 @@
             <xsl:call-template name="javascriptHook"/>
          </head>
          <body id="TOP">
-            <xsl:call-template name="bodyHook"/>
+            <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <div class="teidiv">
                <xsl:call-template name="divClassAttribute">

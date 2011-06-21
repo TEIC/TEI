@@ -7,13 +7,28 @@
   <xsl:template name="microdata">
     <xsl:choose>
       <xsl:when test="self::p"/>
-      <xsl:when test="self::docDate">
+      <xsl:when test="starts-with(local-name(),'div')">
+	<xsl:attribute name="itemscope">itemscope</xsl:attribute>
+	<xsl:attribute name="itemtype">http://www.tei-c.org/ns/1.0/</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="self::docDate|self::date">
 	<xsl:attribute name="itemprop">date</xsl:attribute>
+	<xsl:if test="@when">
+	  <xsl:attribute name="data-when">
+	    <xsl:value-of select="@when"/>
+	  </xsl:attribute>
+	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:attribute name="itemprop" select="local-name()"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="bodyMicroData">
+    <xsl:attribute name="itemscope">itemscope</xsl:attribute>
+    <xsl:attribute name="itemtype">http://www.tei-c.org/ns/1.0/</xsl:attribute>
+    <xsl:attribute name="itemscope">TEI</xsl:attribute>
   </xsl:template>
 
 </xsl:stylesheet>
