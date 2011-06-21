@@ -166,15 +166,6 @@
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element byline</desc>
-  </doc>
-  <xsl:template match="tei:byline">
-    <div>
-      <xsl:call-template name="rendToClass"/>
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element change</desc>
   </doc>
   <xsl:template match="tei:change">
@@ -1193,6 +1184,7 @@
   <xsl:template match="tei:p">
     <xsl:variable name="wrapperElement">
       <xsl:choose>
+	<xsl:when test="$outputTarget='$html5'">p</xsl:when>
 	<xsl:when test="tei:eg">div</xsl:when>
 	<xsl:when test="tei:figure">div</xsl:when>
 	<xsl:when test="tei:floatingText">div</xsl:when>
@@ -2148,6 +2140,16 @@
 	</xsl:when>
       </xsl:choose>
     </xsl:if>
+    <xsl:choose>
+      <xsl:when test="not($outputTarget='html5')"/>
+      <xsl:when test="self::tei:docDate">
+	<xsl:attribute name="itemprop">date</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:attribute name="itemprop" select="local-name()"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    
     <xsl:variable name="class1">
       <xsl:choose>
         <xsl:when test="$default=''"/>
@@ -2211,4 +2213,38 @@
     <desc>[html] allow for local extensions to rendToClass</desc>
   </doc>
   <xsl:template name="rendToClassHook"/>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] standard case of TEI element which produces a span</desc>
+  </doc>
+  
+  <xsl:template name="makeSpan">
+    <xsl:variable name="container">
+      <xsl:choose>
+	<xsl:when test="parent::tei:titlePage">
+	 <xsl:text>div</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	 <xsl:text>span</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:element name="{$container}">
+      <xsl:choose>
+	<xsl:when test="@rendition">
+	  <xsl:call-template name="applyRendition"/>
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>     
+	  <xsl:call-template name="rendToClass">
+	       <xsl:with-param name="default">
+		 <xsl:value-of select="local-name()"/>
+	       </xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:element>
+  </xsl:template>
+
 </xsl:stylesheet>

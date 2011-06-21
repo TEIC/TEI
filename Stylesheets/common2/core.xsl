@@ -416,19 +416,13 @@
       </xsl:if>
    </xsl:template>
 
+   <xsl:template match="tei:byline">
+     <xsl:call-template name="makeSpan"/>
+   </xsl:template>
+
    <xsl:template match="tei:pubPlace">
-      <xsl:choose>
-         <xsl:when test="@rendition">
-            <span>
-	      <xsl:call-template name="applyRendition"/>
-	      <xsl:apply-templates/>
-            </span>
-         </xsl:when>
-         <xsl:otherwise>     
-            <xsl:apply-templates/>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:choose>
+     <xsl:call-template name="makeSpan"/>
+     <xsl:choose>
          <xsl:when test="ancestor::tei:bibl"/>
          <xsl:when test="following-sibling::tei:pubPlace">
             <xsl:call-template name="tei:makeText">
@@ -449,17 +443,7 @@
    </xsl:template>
 
    <xsl:template match="tei:publisher">
-      <xsl:choose>
-         <xsl:when test="@rendition">
-            <span>
-	      <xsl:call-template name="applyRendition"/>
-	      <xsl:apply-templates/>
-	    </span>
-         </xsl:when>
-         <xsl:otherwise>     
-            <xsl:apply-templates/>
-         </xsl:otherwise>
-      </xsl:choose>
+     <xsl:call-template name="makeSpan"/>
       <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
          <xsl:call-template name="tei:makeText">
 	   <xsl:with-param name="letters">. </xsl:with-param>

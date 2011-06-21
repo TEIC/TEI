@@ -273,11 +273,11 @@
    </doc>
   <xsl:template match="tei:div/tei:docAuthor"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc> Omit if found outside front matter</desc>
+      <desc> Omit docAuthor found outside front matter</desc>
    </doc>
   <xsl:template match="tei:div/tei:docDate"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc> Omit docDate if found outside front matter</desc>
    </doc>
   <xsl:template match="tei:div/tei:docTitle"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -296,11 +296,6 @@
       </xsl:if>
       <xsl:apply-templates/>
   </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:docImprint"/>
 
    <xsl:template match="tei:idno[@type='url']">
       <xsl:text> &lt;</xsl:text>

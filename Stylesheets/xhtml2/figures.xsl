@@ -136,6 +136,12 @@
       <desc>Process element figure</desc>
    </doc>
   <xsl:template match="tei:figure">
+    <xsl:variable name="container">
+      <xsl:choose>
+	<xsl:when test="$outputTarget='html5'">figure</xsl:when>
+	<xsl:otherwise>div</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
       <xsl:choose>
          <xsl:when test="@rend='inline' or @place='inline'">
 	   <xsl:apply-templates/>
@@ -144,7 +150,7 @@
 	   <xsl:apply-templates/>
          </xsl:when>
          <xsl:otherwise>
-	   <div>
+	   <xsl:element name="{$container}">
 	     <xsl:choose>
 	       <xsl:when test="@rend">
 		 <xsl:attribute name="class">
@@ -169,7 +175,7 @@
 	     <xsl:call-template name="figureHook"/>
 	     <xsl:apply-templates/>
 	     <xsl:if test="tei:head">
-	       <div class="caption">
+	       <xsl:variable name="caption">
 		 <xsl:choose>
 		   <xsl:when test="ancestor::tei:front and  $numberFrontFigures='true'">
 		     <xsl:call-template name="i18n">
@@ -197,9 +203,21 @@
 		   </xsl:when>
 		 </xsl:choose>
 		 <xsl:apply-templates select="tei:head" mode="ok"/>
-	       </div>
+	       </xsl:variable>
+	       <xsl:choose>
+		 <xsl:when test="$outputTarget='html5'">
+		   <figcaption>
+		     <xsl:copy-of select="$caption"/>
+		   </figcaption>
+		 </xsl:when>
+		 <xsl:otherwise>
+		   <div class="caption">
+		     <xsl:copy-of select="$caption"/>
+		   </div>
+		 </xsl:otherwise>
+	       </xsl:choose>
 	     </xsl:if>
-	   </div>
+	   </xsl:element>
 	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

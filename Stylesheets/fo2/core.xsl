@@ -1326,4 +1326,8 @@ simple, bullets, ordered, gloss, unordered, or bibliography
 
   <xsl:template name="applyRendition"/>
 
+  <xsl:template name="makeSpan">
+    <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>

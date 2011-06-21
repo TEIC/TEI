@@ -699,14 +699,7 @@ HTML element to put around visible text of display URLs
 </desc>
    </doc>
   <xsl:param name="urlMarkup">span</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
-      <desc>
-Whether to make split pages appear virtually
-as layers in HTML, or physically as separate
-pages or server requests.
-</desc>
-   </doc>
-  <xsl:param name="virtualPages">false</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="boolean">
       <desc>
 Make an automatic table of contents
