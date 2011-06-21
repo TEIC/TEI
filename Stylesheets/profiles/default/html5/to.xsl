@@ -7,6 +7,7 @@
     <!-- import base conversion style -->
 
     <xsl:import href="../../../xhtml2/tei.xsl"/>
+    <xsl:import href="../../../html5/microdata.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -29,9 +30,9 @@
 
    <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
    <xsl:param name="outputTarget">html5</xsl:param>
-   <xsl:param name="outputNamespace"></xsl:param>
    <xsl:param name="doctype-system">about:legacy-compat</xsl:param>
-   <xsl:param name="doctype-public"></xsl:param>
+   <xsl:param name="doctype-public"/>
+
    <xsl:template match="/">
      <xsl:variable name="html">
        <xsl:call-template name="processTEI"/>

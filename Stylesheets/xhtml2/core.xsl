@@ -2140,6 +2140,9 @@
 	</xsl:when>
       </xsl:choose>
     </xsl:if>
+    <xsl:if test="$outputTarget='html5'">
+      <xsl:call-template name="microdata"/>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="not($outputTarget='html5')"/>
       <xsl:when test="self::tei:docDate">
