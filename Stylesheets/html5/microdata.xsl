@@ -13,16 +13,16 @@
       </xsl:when>
       <xsl:when test="self::docDate|self::date">
 	<xsl:attribute name="itemprop">date</xsl:attribute>
-	<xsl:if test="@when">
-	  <xsl:attribute name="data-when">
-	    <xsl:value-of select="@when"/>
-	  </xsl:attribute>
-	</xsl:if>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:attribute name="itemprop" select="local-name()"/>
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:if test="@when">
+      <xsl:attribute name="data-when">
+	<xsl:value-of select="@when"/>
+      </xsl:attribute>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="bodyMicroData">
