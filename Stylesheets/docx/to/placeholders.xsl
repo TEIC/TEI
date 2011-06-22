@@ -31,7 +31,9 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso      tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
-    
+       <xsl:import href="../../common2/header.xsl"/>
+       <xsl:import href="../../common2/i18n.xsl"/>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -50,6 +52,8 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
+
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
         A callback for any titlepages that belong to the front matter.
@@ -58,19 +62,10 @@
     <xsl:template name="titlepages">
     </xsl:template>
     
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        "Returns" the document's title (as plain string).
-    </desc>
-   </doc>
-    <xsl:template name="generateTitle">
-        Undefined Document
-    </xsl:template>
-    
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        
+Title of document        
     </desc>
    </doc>
     <xsl:template name="document-title">

@@ -75,6 +75,8 @@
     <xsl:include href="docxfiles/relationships.xsl"/>
     <xsl:include href="docxfiles/settings.xsl"/>
     <xsl:param name="createanttask">false</xsl:param>
+    <xsl:param name="useHeaderFrontMatter">false</xsl:param>
+    <xsl:param name="useFixedDate">false</xsl:param>
     <!--
         A4 is 210mm x 297mm; leaving 1in margin (25mm),
         gives 160 x 247 approx useable area.  In Microsoft speak, 
@@ -2448,6 +2450,12 @@
 
   <xsl:template name="makeSpan">
     <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template name="makeExternalLink">
+    <xsl:param name="ptr"/>
+    <xsl:param name="dest"/>
+    <xsl:value-of select="$dest"/>
   </xsl:template>
 
   

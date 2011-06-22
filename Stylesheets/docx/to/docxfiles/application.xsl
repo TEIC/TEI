@@ -91,12 +91,18 @@
         <xsl:result-document href="{concat($word-directory,'/docProps/newcore.xml')}" standalone="yes">
             <cp:coreProperties>
                 <dc:title>
+		  <xsl:variable name="t">
                     <xsl:call-template name="generateTitle"/>
+		  </xsl:variable>
+		  <xsl:value-of select="$t"/>
                 </dc:title>
                 <dc:creator>
-                    <xsl:call-template name="created-by"/>
+		  <xsl:variable name="a">
+                    <xsl:call-template name="generateAuthor"/>
+		  </xsl:variable>
+		  <xsl:value-of select="$a"/>
                 </dc:creator>
-                <cp:lastModifiedBy>TEIISO</cp:lastModifiedBy>
+                <cp:lastModifiedBy>TEI stylesheets</cp:lastModifiedBy>
                 <cp:revision>
                     <xsl:value-of select="$revision"/>
                 </cp:revision>
