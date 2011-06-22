@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
     version="2.0" 
-    xpath-default-namespace="http://www.tei-c.org/ns/1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    xmlns:dc="http://purl.org/dc/elements/1.1/" 
+    xmlns:iso="http://www.iso.org/ns/1.0" 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    xmlns:teix="http://www.tei-c.org/ns/Examples" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" 
+    exclude-result-prefixes="iso tei teix dc html ncx"
+    xpath-default-namespace="http://www.tei-c.org/ns/1.0">
+
   
 
   <xsl:import href="../html5/tei.xsl"/>
@@ -57,7 +66,7 @@
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
-  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
+  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/Content</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="subject"/>
@@ -131,9 +140,9 @@
 	    </xsl:result-document>
 	-->
         <xsl:if test="$debug='true'">
-          <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
+          <xsl:message>write file Content/stylesheet.css</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'/OEBPS/stylesheet.css')}">
+        <xsl:result-document method="text" href="{concat($directory,'/Content/stylesheet.css')}">
           <xsl:if test="$debug='true'">
             <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
           </xsl:if>
@@ -166,9 +175,9 @@
           </xsl:if>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file OEBPS/print.css</xsl:message>
+          <xsl:message>write file Content/print.css</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'/OEBPS/print.css')}">
+        <xsl:result-document method="text" href="{concat($directory,'/Content/print.css')}">
           <xsl:if test="$debug='true'">
             <xsl:message>reading file <xsl:value-of select="$cssPrintFile"/></xsl:message>
           </xsl:if>
@@ -188,14 +197,14 @@
         <xsl:result-document method="xml" href="{concat($directory,'/META-INF/container.xml')}">
           <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
             <rootfiles>
-              <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+              <rootfile full-path="Content/content.opf" media-type="application/oebps-package+xml"/>
             </rootfiles>
           </container>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file OEBPS/content.opf</xsl:message>
+          <xsl:message>write file Content/content.opf</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OEBPS/content.opf')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/Content/content.opf')}" method="xml">
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
               <dc:title>
@@ -379,9 +388,9 @@
           </package>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file OEBPS/titlepage.html</xsl:message>
+          <xsl:message>write file Content/titlepage.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OEBPS/titlepage.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/Content/titlepage.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -411,9 +420,9 @@
         <xsl:for-each select="tei:text/tei:front/tei:titlePage">
           <xsl:variable name="N" select="position()"/>
           <xsl:if test="$debug='true'">
-            <xsl:message>write file OEBPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
+            <xsl:message>write file Content/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
           </xsl:if>
-          <xsl:result-document href="{concat($directory,'/OEBPS/titlepage',$N,'.html')}" method="xml">
+          <xsl:result-document href="{concat($directory,'/Content/titlepage',$N,'.html')}" method="xml">
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
               <head>
                 <meta http-equiv="Content-Type" content="text/html;         charset=UTF-8"/>
@@ -430,9 +439,9 @@
           </xsl:result-document>
         </xsl:for-each>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file OEBPS/titlepageback.html</xsl:message>
+          <xsl:message>write file Content/titlepageback.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OEBPS/titlepageback.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/Content/titlepageback.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -449,9 +458,9 @@
           </html>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file OEBPS/toc.ncx</xsl:message>
+          <xsl:message>write file Content/toc.ncx</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OEBPS/toc.ncx')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/Content/toc.ncx')}" method="xml">
           <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
             <head>
               <meta name="dtb:uid">
@@ -539,49 +548,6 @@
               </xsl:for-each>
             </navMap>
           </ncx>
-        </xsl:result-document>
-        <xsl:if test="$debug='true'">
-          <xsl:message>write file OEBPS/page-template.xpgt</xsl:message>
-        </xsl:if>
-        <xsl:result-document method="xml" href="{concat($directory,'/OEBPS/page-template.xpgt')}">
-          <ade:template xmlns="http://www.w3.org/1999/xhtml" xmlns:ade="http://ns.adobe.com/2006/ade" xmlns:fo="http://www.w3.org/1999/XSL/Format">
-            <fo:layout-master-set>
-              <fo:simple-page-master master-name="single_column">
-                <fo:region-body margin-bottom="3pt" margin-top="0.5em" margin-left="3pt" margin-right="3pt"/>
-              </fo:simple-page-master>
-              <fo:simple-page-master master-name="single_column_head">
-                <fo:region-before extent="8.3em"/>
-                <fo:region-body margin-bottom="3pt" margin-top="6em" margin-left="3pt" margin-right="3pt"/>
-              </fo:simple-page-master>
-              <fo:simple-page-master master-name="two_column" margin-bottom="0.5em" margin-top="0.5em" margin-left="0.5em" margin-right="0.5em">
-                <fo:region-body column-count="2" column-gap="10pt"/>
-              </fo:simple-page-master>
-              <fo:simple-page-master master-name="two_column_head" margin-bottom="0.5em" margin-left="0.5em" margin-right="0.5em">
-                <fo:region-before extent="8.3em"/>
-                <fo:region-body column-count="2" margin-top="6em" column-gap="10pt"/>
-              </fo:simple-page-master>
-              <fo:simple-page-master master-name="three_column" margin-bottom="0.5em" margin-top="0.5em" margin-left="0.5em" margin-right="0.5em">
-                <fo:region-body column-count="3" column-gap="10pt"/>
-              </fo:simple-page-master>
-              <fo:simple-page-master master-name="three_column_head" margin-bottom="0.5em" margin-top="0.5em" margin-left="0.5em" margin-right="0.5em">
-                <fo:region-before extent="8.3em"/>
-                <fo:region-body column-count="3" margin-top="6em" column-gap="10pt"/>
-              </fo:simple-page-master>
-              <fo:page-sequence-master>
-                <fo:repeatable-page-master-alternatives>
-                  <fo:conditional-page-master-reference master-reference="three_column_head" page-position="first" ade:min-page-width="80em"/>
-                  <fo:conditional-page-master-reference master-reference="three_column" ade:min-page-width="80em"/>
-                  <fo:conditional-page-master-reference master-reference="two_column_head" page-position="first" ade:min-page-width="50em"/>
-                  <fo:conditional-page-master-reference master-reference="two_column" ade:min-page-width="50em"/>
-                  <fo:conditional-page-master-reference master-reference="single_column_head" page-position="first"/>
-                  <fo:conditional-page-master-reference master-reference="single_column"/>
-                </fo:repeatable-page-master-alternatives>
-              </fo:page-sequence-master>
-            </fo:layout-master-set>
-            <ade:style>
-              <ade:styling-rule selector=".title_box" display="adobe-other-region" adobe-region="xsl-region-before"/>
-            </ade:style>
-          </ade:template>
         </xsl:result-document>
       </xsl:for-each>
     </xsl:for-each>
