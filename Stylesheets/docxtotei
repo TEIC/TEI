@@ -1,19 +1,14 @@
-#!/bin/sh
+#!/bin/sh 
 profile=default
-odd=false
 debug=false
-header=
-conversion=
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 PROFILEDIR=$APPHOME/profiles
 while test $# -gt 0; do
   case $1 in
-    --profile=*)  profile=`echo $1 | sed 's/.*=//'`;;
-    --header=*)  header=`echo $1 | sed 's/.*=//'`;;
+    --profile=*)   profile=`echo $1 | sed 's/.*=//'`;;
+    --debug)       debug=true;;
     --profiledir=*) PROFILEDIR=`echo $1 | sed 's/.*=//'`;;
-    --conversion=*)  conversion=`echo $1 | sed 's/.*=//'`;;
-    --debug)     debug=true;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
 	else
@@ -22,53 +17,34 @@ while test $# -gt 0; do
   esac
   shift
 done
+FILE=${1:?"no TEI file supplied; for usage syntax $0 --help"}
+if test -f $FILLE
+then 
+     echo Read file $FILE
+else
+  echo File $FILE does not exist
+  die
+fi
 if ! test -f "$1"
 then
   echo Error: file $1 does not exist
   exit 1
 fi
-N=`basename "$1" .docx`
+
 HERE=`pwd`
 D=`dirname "$1"`
+F=`basename "$1" .docx`
 THERE=`(cd $D; pwd)`
-TEMPLATES=$PROFILEDIR/$profile/docx
-if ! test -d $TEMPLATES 
+if ! test -f $PROFILEDIR/$profile/docx/to.xsl
 then
-  echo No support for profile $profile: $PROFILEDIR/$profile/docx does not exist
+  echo No support for profile $profile: $PROFILEDIR/$profile/docx/to.xsl does not exist
   exit 1
 fi
-
-echo read input file $N from $THERE
-echo app home directory is $APPHOME
-if test "x$conversion" = "x"
-then
-  FROMXSL=$PROFILEDIR/$profile/docx/from.xsl
-else
-  FROMXSL=$conversion
-fi
-echo Using $FROMXSL as conversion XSL
-TEMPDIR=/tmp/docx$$
-mkdir $TEMPDIR
-cd $TEMPDIR
-unzip -q $THERE/"$N.docx"
-saxon word/document.xml $FROMXSL word-directory=`pwd` metadata-file=$header origfile="$N" origdir="$D" debug=$debug > "$N.xml"
-mkdir -p word/media
-if [ "$(ls -q -A word/media)" ]; then
- echo Found graphics files in document, so writing $N.zip in $THERE
- mv word/media .
- test -d word/embeddings && mv -f word/embeddings .
- test -f $THERE/"$N.zip" && rm $THERE/"$N.zip"
- zip -q -r $THERE/"$N.zip" "$N.xml" media embeddings
-else
- echo Writing $N.xml in $THERE
- mv "$N.xml" $THERE
-fi
-cd $HERE
-if $debug 
-then
-    echo Working files in $TEMPDIR
-else
-    rm -rf $TEMPDIR
-fi
-
+ant -q -f $APPHOME/docx/build-from.xml \
+	-lib /usr/share/saxon/saxon9he.jar \
+        -Ddebug=$debug  \
+	-DinputFile="$THERE/$F.docx" \
+	-DoutputFile="$THERE/$F.xml" \
+        -Dprofile=$profile
+echo wrote $F.xml in $THERE
 

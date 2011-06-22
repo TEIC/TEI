@@ -352,17 +352,19 @@
 		  <row>
 		    <xsl:for-each select="w:tc">
 		      <cell>
-			<xsl:attribute name="teidocx:align">
-			  <xsl:choose>
-			    <xsl:when test="w:p/w:pPr/w:jc">
-			      <xsl:value-of
+			<xsl:if test="preserveEffects='true'">
+			  <xsl:attribute name="teidocx:align">
+			    <xsl:choose>
+			      <xsl:when test="w:p/w:pPr/w:jc">
+				<xsl:value-of
 				  select="w:p[1]/w:pPr/w:jc/@w:val"/>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <xsl:text>left</xsl:text>
-			    </xsl:otherwise>
-			  </xsl:choose>
+			      </xsl:when>
+			      <xsl:otherwise>
+				<xsl:text>left</xsl:text>
+			      </xsl:otherwise>
+			    </xsl:choose>
 			  </xsl:attribute>
+			</xsl:if>
 			<xsl:variable name="val" select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
 			<xsl:choose>
 			  <xsl:when test="$val='[No Paragraph Style]'"/>

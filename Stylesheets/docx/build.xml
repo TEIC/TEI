@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitodocx">
+<project basedir="." default="dist" name="teidocx">
 <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -32,13 +32,13 @@
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="stylesheetFile"  value="../profiles/${profile}/docx/to.xsl"/>
+  <property name="teitoDocx"  value="../profiles/${profile}/docx/to.xsl"/>
   <property name="listgraphics"    value="../tools2/makegraphicsanttask.xsl"/>
   <property name="odd2oddxsl"      value="../odds2/odd2odd.xsl"/>
   <property name="odd2litexsl"     value="../odds2/odd2lite.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir"    file="${outputFile}"/>
-  <dirname property="xslDir"       file="${stylesheetFile}"/>
+  <dirname property="xslDir"       file="${teitoDocx}"/>
   <property name="outputTempDir"   value="${outputDir}/temp-dir-for-ant"/>
 
   <path id="classpath">
@@ -51,6 +51,7 @@
   </condition>
 
   <target name="setup">
+    <!-- Recreate temporary output directory -->
     <taskdef name="images" classname="ImageTask" classpath="../tools2/ImageInfo/ImageInfo.jar"/>
     <delete dir="${outputTempDir}"/>
     <mkdir  dir="${outputTempDir}"/>
@@ -89,8 +90,8 @@
     </xslt>
   </target>
 
+
   <target name="dist" depends="setup,odd,notodd">
-    <!-- Recreate temporary output directory -->
     <!-- The transformation for DOCX output. -->
     <echo level="info">unzip Word template</echo>
     <unzip src="${xslDir}/template.docx" dest="${outputTempDir}"/>
@@ -114,7 +115,7 @@
       <fileset dir="${outputTempDir}/word" includes="media/*.*"/>
     </images>
     <echo level="info">XSLT generate files for docx </echo>
-    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml" classpath="classpath">
+    <xslt force="yes" style="${teitoDocx}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>

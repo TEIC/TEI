@@ -42,7 +42,7 @@
     </desc>
   </doc>
     
-    <xsl:output indent="no"/>
+    <xsl:output indent="yes"/>
 
     <xsl:template match="@rend[.='Body Text']" mode="pass2"/>
     <xsl:template match="@rend[.='Body Text Indent']" mode="pass2"/>
