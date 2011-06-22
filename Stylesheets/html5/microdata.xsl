@@ -28,7 +28,7 @@
   <xsl:template name="bodyMicroData">
     <xsl:attribute name="itemscope">itemscope</xsl:attribute>
     <xsl:attribute name="itemtype">http://www.tei-c.org/ns/1.0/</xsl:attribute>
-    <xsl:attribute name="itemscope">TEI</xsl:attribute>
+    <xsl:attribute name="itemprop">TEI</xsl:attribute>
   </xsl:template>
 
 </xsl:stylesheet>
