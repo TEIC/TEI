@@ -883,8 +883,8 @@
             </xsl:choose>
 
 	    <!-- small caps -->
-            <xsl:if test="contains(@rend,'smallcaps')">
-                <w:smallCaps/>
+	    <xsl:if test="teidocx:render-smallcaps(.)">
+	      <w:smallCaps/>
             </xsl:if>
 
 	    <!-- all caps -->

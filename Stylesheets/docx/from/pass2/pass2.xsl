@@ -321,4 +321,14 @@
 	</anchor>
    </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Paragraphs in cells not allow</desc></doc>
+   
+    <xsl:template match="tei:cell/tei:p" mode="pass2">
+      <xsl:if test="preceding-sibling::tei:p">
+	<lb/>
+      </xsl:if>
+      <xsl:apply-templates mode="pass2"/>
+    </xsl:template>
+
 </xsl:stylesheet>

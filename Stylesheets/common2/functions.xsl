@@ -20,7 +20,22 @@
     </desc>
   </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Define special rendering for attributes.</desc>
+    <desc>Whether to render text in small caps.</desc>
+  </doc>
+  <xsl:function name="teidocx:render-smallcaps" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+        <xsl:when test="contains(@rend,'smallcaps')">true</xsl:when>
+        <xsl:when test="@rend='sc'">true</xsl:when>
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether to render text in bold.</desc>
   </doc>
   <xsl:function name="teidocx:render-bold" as="xs:boolean">
     <xsl:param name="element"/>
@@ -41,20 +56,17 @@
     </xsl:for-each>
   </xsl:function>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Whether to render something in italic code.</desc>
+    <desc>Whether to render something in italic.</desc>
   </doc>
   <xsl:function name="teidocx:render-italic" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
         <xsl:when test="self::tei:ref and teidocx:render-italic(..)">true</xsl:when>
-        <xsl:when test="contains(@rend,'italics')">true</xsl:when>
         <xsl:when test="contains(@rend,'italic')">true</xsl:when>
         <xsl:when test="self::tei:emph">true</xsl:when>
         <xsl:when test="self::tei:hi[not(@rend)]">true</xsl:when>
         <xsl:when test="self::tbx:hi[@style='italics']">true</xsl:when>
-        <xsl:when test="@rend='italics'">true</xsl:when>
-        <xsl:when test="@rend='italic'">true</xsl:when>
         <xsl:when test="@rend='ital'">true</xsl:when>
         <xsl:when test="@rend='it'">true</xsl:when>
         <xsl:when test="@rend='i'">true</xsl:when>
