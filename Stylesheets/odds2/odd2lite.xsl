@@ -527,4 +527,9 @@
      <xsl:param name="readings"/>
      <xsl:value-of select="$lemma"/>
   </xsl:template>
+
+  <xsl:template name="makeSpan">
+    <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>

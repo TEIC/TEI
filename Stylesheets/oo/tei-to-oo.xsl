@@ -1806,4 +1806,8 @@
     </xsl:for-each>
   </xsl:template>
 
+<xsl:template name="makeSpan">
+    <xsl:apply-templates/>
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -1,13 +1,14 @@
 #!/bin/sh 
 profile=default
 debug=false
+antflag=-q
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 PROFILEDIR=$APPHOME/profiles
 while test $# -gt 0; do
   case $1 in
     --profile=*)   profile=`echo $1 | sed 's/.*=//'`;;
-    --debug)       debug=true;;
+    --debug)       debug=true; antflag=-v;;
     --profiledir=*) PROFILEDIR=`echo $1 | sed 's/.*=//'`;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -40,7 +41,7 @@ then
   echo No support for profile $profile: $PROFILEDIR/$profile/docx/to.xsl does not exist
   exit 1
 fi
-ant -q -f $APPHOME/docx/build-from.xml \
+ant $antflag -f $APPHOME/docx/build-from.xml \
 	-lib /usr/share/saxon/saxon9he.jar \
         -Ddebug=$debug  \
 	-DinputFile="$THERE/$F.docx" \
