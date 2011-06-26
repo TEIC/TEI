@@ -25,6 +25,8 @@
   <property name="inputFile" value=""/>
   <!-- Path where the output docx file will be saved. -->
   <property name="outputFile" value=""/>
+  <!-- which profile directory-->
+  <property name="profileDir" value="../profiles"/>
   <!-- which profile -->
   <property name="profile" value="default"/>
   <!-- which language -->
@@ -32,7 +34,7 @@
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="teitoDocx"  value="../profiles/${profile}/docx/to.xsl"/>
+  <property name="teitoDocx"       value="${profileDir}/${profile}/docx/to.xsl"/>
   <property name="listgraphics"    value="../tools2/makegraphicsanttask.xsl"/>
   <property name="odd2oddxsl"      value="../odds2/odd2odd.xsl"/>
   <property name="odd2litexsl"     value="../odds2/odd2lite.xsl"/>
@@ -45,9 +47,12 @@
     <pathelement path="${java.class.path}"/>
   </path>
 
-  <!--  <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>-->
-  <condition property="processODD">
+   <condition property="processODD">
     <equals arg1="${odd}" arg2="true"/>
+  </condition>
+
+  <condition property="makecoverpages">
+    <available file="${profileDir}/${profile}/docx/makecoverpages.xsl"/>
   </condition>
 
   <target name="setup">
@@ -55,6 +60,30 @@
     <taskdef name="images" classname="ImageTask" classpath="../tools2/ImageInfo/ImageInfo.jar"/>
     <delete dir="${outputTempDir}"/>
     <mkdir  dir="${outputTempDir}"/>
+  </target>
+
+  <target name="nocoverpages" unless="makecoverpages">
+    <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
+  </target>
+
+  <target name="coverpages" if="makecoverpages">
+    <xslt force="yes"
+	  style="${profileDir}/${profile}/docx/makecoverpages.xsl" 
+	  in="${outputTempDir}/word/document.xml" 
+	  out="${outputTempDir}/tmp3.xml" 
+	  classpath="classpath">
+      <xmlcatalog>
+	<catalogpath>
+	  <pathelement location="../../../../catalog.xml"/>
+	  <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+	</catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygyenlib}/saxon9ee.jar"/>
+      <param name="header-file"   expression="${outputTempDir}/tmp2.xml"/>
+      <param name="document-file" expression="${outputTempDir}/newdocument.xml"/>
+    </xslt>
+    <move file="${outputTempDir}/tmp3.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
   </target>
 
   <target name="notodd" unless="processODD">
@@ -91,7 +120,7 @@
   </target>
 
 
-  <target name="dist" depends="setup,odd,notodd">
+  <target name="transform">
     <!-- The transformation for DOCX output. -->
     <echo level="info">unzip Word template</echo>
     <unzip src="${xslDir}/template.docx" dest="${outputTempDir}"/>
@@ -134,24 +163,15 @@
       <!-- be verbose-->
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
-    <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
     <move file="${outputTempDir}/docProps/newcore.xml" tofile="${outputTempDir}/docProps/core.xml" overwrite="true"/>
     <move file="${outputTempDir}/docProps/newcustom.xml" tofile="${outputTempDir}/docProps/custom.xml" overwrite="true"/>
+  </target>
+
+  <target name="dist" depends="setup,odd,notodd,transform,nocoverpages,coverpages">
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
-    <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,tmp3.xml,image-size-info.xml,copy.xml"/>
+    <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,image-size-info.xml,copy.xml"/>
     <copy file="${outputDir}/temp-for-ant.zip" tofile="${outputFile}" overwrite="true"/>
     <delete file="${outputDir}/temp-for-ant.zip"/>
     <delete dir="${outputTempDir}"/>
   </target>
-<!-- todo:
-if test -f $PROFILEDIR/$profile/docx/makecoverpages2.xsl 
-then
-   echo rewrite cover page
-   saxon -o:doctemp.xml word/document.xml $PROFILEDIR/$profile/docx/makecoverpages.xsl \
-       header-file=$TEMPDIR/tmp3.xml document-file=$TEMPDIR/tmp4.xml 
-   mv doctemp.xml word/document.xml
-else
-   mv tmp4.xml word/document.xml
-fi
--->
 </project>
