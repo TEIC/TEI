@@ -14,14 +14,10 @@
     <xsl:param name="doctype-public"/>
     
     <xsl:template match="/">
-      <xsl:variable name="html">
 	<xsl:call-template name="processTEI"/>
-      </xsl:variable>
-      <xsl:for-each select="$html">
-	<xsl:apply-templates mode="html5"/>
-      </xsl:for-each>
     </xsl:template>
 
+<!--
     <xsl:template match="@*|text()|comment()|processing-instruction()"  mode="html5">
       <xsl:copy-of select="."/>
     </xsl:template>
@@ -31,7 +27,6 @@
          <xsl:apply-templates
 	     select="*|@*|processing-instruction()|comment()|text()"  mode="html5"/>
       </xsl:element>
-
    </xsl:template>
-
+-->
 </xsl:stylesheet>
