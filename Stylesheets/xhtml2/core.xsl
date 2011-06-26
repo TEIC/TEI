@@ -1336,6 +1336,9 @@
         <blockquote>
           <xsl:call-template name="rendToClass"/>
           <xsl:choose>
+	    <xsl:when test="$outputTarget='html5'">
+              <xsl:apply-templates/>
+	    </xsl:when>
             <xsl:when test="tei:p|tei:l|tei:lg">
               <xsl:apply-templates/>
             </xsl:when>
