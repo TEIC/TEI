@@ -207,9 +207,39 @@
         <xsl:result-document href="{concat($directory,'/Content/content.opf')}" method="xml">
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
-              <dc:title>
+              <dc:title prefer="dcterms-title">
                 <xsl:call-template name="generateSimpleTitle"/>
               </dc:title>
+	      <meta property="dcterms:title" id="dcterms-title">
+                <xsl:call-template name="generateSimpleTitle"/>
+	      </meta>
+	      <meta about="#dcterms-title" property="title-type">primary</meta>	      
+              <xsl:variable name="A">
+                <xsl:call-template name="generateAuthor"/>
+              </xsl:variable>
+	      <xsl:variable name="printA">
+		<xsl:analyze-string select="$A" regex="([^,]+), ([^,]+), (.+)">
+		  <xsl:matching-substring>
+		    <xsl:value-of select="regex-group(1)"/>
+		    <xsl:text>, </xsl:text>
+		    <xsl:value-of select="regex-group(2)"/>
+		  </xsl:matching-substring>
+		  <xsl:non-matching-substring>
+		    <xsl:value-of select="."/>
+		  </xsl:non-matching-substring>
+		</xsl:analyze-string>
+	      </xsl:variable>
+              <dc:creator prefer="auth">
+		<xsl:value-of select="$printA"/>
+              </dc:creator>
+	      <meta property="dcterms:creator" id="auth">
+		<xsl:value-of select="$A"/>
+	      </meta>
+	      <meta about="#auth" property="file-as">
+		<xsl:value-of select="$printA"/>
+	      </meta>
+	      <meta about="#auth" property="role" id="auth-role">aut</meta>
+	      <meta about="#auth-role" property="scheme" datatype="xsd:anyURI">http://id.loc.gov/vocabulary/relators</meta>
               <dc:language xsi:type="dcterms:RFC3066">
                 <xsl:call-template name="generateLanguage"/>
               </dc:language>
@@ -217,32 +247,14 @@
               <dc:identifier id="dcidid" opf:scheme="URI">
                 <xsl:call-template name="generateID"/>
               </dc:identifier>
-              <xsl:variable name="A">
-                <xsl:call-template name="generateAuthor"/>
-              </xsl:variable>
               <dc:description>
                 <xsl:call-template name="generateSimpleTitle"/>
                 <xsl:text> / </xsl:text>
                 <xsl:value-of select="$A"/>
               </dc:description>
-              <dc:creator>
-                <xsl:variable name="printA">
-                  <xsl:analyze-string select="$A" regex="([^,]+), ([^,]+), (.+)">
-                    <xsl:matching-substring>
-                      <xsl:value-of select="regex-group(1)"/>
-                      <xsl:text>, </xsl:text>
-                      <xsl:value-of select="regex-group(2)"/>
-                    </xsl:matching-substring>
-                    <xsl:non-matching-substring>
-                      <xsl:value-of select="."/>
-                    </xsl:non-matching-substring>
-                  </xsl:analyze-string>
-                </xsl:variable>
-                <xsl:value-of select="$printA"/>
-              </dc:creator>
-              <dc:publisher>
+	      <meta property="dcterms:publisher">
                 <xsl:call-template name="generatePublisher"/>
-              </dc:publisher>
+	      </meta>
               <xsl:for-each select="tei:teiHeader/tei:profileDesc/tei:creation/tei:date[@notAfter]">
                 <dc:date opf:event="creation">
                   <xsl:value-of select="@notAfter"/>
@@ -262,6 +274,9 @@
               <xsl:if test="not($coverImageOutside='')">
                 <meta name="cover" content="cover-image"/>
               </xsl:if>
+	      <meta property="dcterms:modified">
+		<xsl:call-template name="lastRevisedDate"/>
+	      </meta>
             </metadata>
             <manifest>
               <xsl:if test="not($coverImageOutside='')">
@@ -278,7 +293,9 @@
               </xsl:for-each>
               <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>
               <item id="print.css" href="print.css" media-type="text/css"/>
-              <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
+              <item id="apt" href="page-template.xpgt"
+		    media-type="application/adobe-page-template+xml"/>
+	      <item id="toc" properties="nav" href="toc.html" media-type="application/xhtml+xml"/>
               <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
@@ -548,6 +565,63 @@
               </xsl:for-each>
             </navMap>
           </ncx>
+        </xsl:result-document>
+        <xsl:if test="$debug='true'">
+          <xsl:message>write file Content/toc.html</xsl:message>
+        </xsl:if>
+        <xsl:result-document href="{concat($directory,'/Content/toc.html')}" method="xml">
+	  <html xmlns="http://www.w3.org/1999/xhtml" profile="http://www.idpf.org/epub/30/profile/content/">
+	    <head>
+	      <title>
+		<xsl:call-template name="generateSimpleTitle"/>
+	      </title>
+	      <link rel="stylesheet" href="stylesheet.css" type="text/css"/>
+	      <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	    </head>
+	    <body>
+	      <section class="TableOfContents">
+		<header>
+		  <h1>Contents</h1>
+		</header>
+		<nav xmlns:epub="http://www.idpf.org/2007/ops" epub:type="toc" id="toc">
+		  <ol>
+		    <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
+		      <xsl:choose>
+			<xsl:when test="not(html:a)"/>
+			<xsl:when test="starts-with(html:a/@href,'#')"/>
+			<xsl:when test="contains(@class,'headless')"/>
+			<xsl:otherwise>
+			  <li>
+			    <a href="{html:a/@href}">
+			      <xsl:value-of select="html:span[@class='headingNumber']"/>
+			      <xsl:value-of select="normalize-space(html:a[1])"/>
+			    </a>
+			  </li>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>
+		  </ol>
+		</nav>
+		<nav xmlns:epub="http://www.idpf.org/2007/ops" epub:type="landmarks" id="guide">
+		  <h2>Guide</h2>
+		  <ol>
+		    <li>
+		      <a epub:type="toc" href="#toc">Table of Contents</a>
+		    </li>
+		    <li>
+		      <a epub:type="titlepage" href="titlepage.html">[Title page]</a>
+		    </li>
+		    <li>
+		      <a epub:type="bodymatter" href="index.html">[The book]</a>
+		    </li>
+		    <li>
+		      <a href="titlepageback.html">[About this book]</a>
+		    </li>
+		  </ol>
+		</nav>
+	      </section>
+	    </body>
+	  </html>
         </xsl:result-document>
       </xsl:for-each>
     </xsl:for-each>
