@@ -219,7 +219,7 @@
       <xsl:when test="@rend='display'">
         <blockquote>
           <xsl:call-template name="rendToClass"/>
-          <p>
+	  <xsl:variable name="contents">
             <xsl:if test="@n">
               <xsl:text>(</xsl:text>
               <xsl:value-of select="@n"/>
@@ -227,7 +227,17 @@
             </xsl:if>
             <xsl:apply-templates select="tei:q|tei:quote"/>
             <xsl:apply-templates select="tei:*[not(self::tei:q or self::tei:quote)]"/>
-          </p>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$outputTarget='html5'">
+	      <xsl:copy-of select="$contents"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <p>
+		<xsl:copy-of select="$contents"/>
+	      </p>
+	    </xsl:otherwise>
+	  </xsl:choose>
         </blockquote>
       </xsl:when>
       <xsl:when test="tei:bibl">
@@ -1029,6 +1039,9 @@
 	  </xsl:call-template>
           <xsl:call-template name="rendToClass"/>
 	  <xsl:choose>
+	    <xsl:when test="$outputTarget='html5'">
+	      <xsl:apply-templates/>
+	    </xsl:when>
 	    <xsl:when test="tei:q">
 	      <xsl:apply-templates/>
 	    </xsl:when>
@@ -1261,9 +1274,6 @@
           <xsl:apply-templates/>
         </p>
       </xsl:when>
-      <xsl:when test="tei:text">
-        <xsl:apply-templates/>
-      </xsl:when>
       <xsl:when test="tei:lg">
         <xsl:apply-templates/>
       </xsl:when>
@@ -1295,6 +1305,9 @@
         <xsl:when test="tei:p">
           <xsl:apply-templates/>
         </xsl:when>
+	<xsl:when test="$outputTarget='html5'">
+	  <xsl:apply-templates/>
+	</xsl:when>
         <xsl:otherwise>
           <p>
             <xsl:apply-templates/>
