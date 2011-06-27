@@ -48,9 +48,7 @@
     <mkdir  dir="${outputTempDir}"/>
   </target>
 
-  <target name="dist" depends="convert,mediadir.check,picturecopy">
-    <delete dir="${outputTempDir}"/>
-  </target>
+  <target name="dist" depends="convert,mediadir.check,picturecopy,cleanup"/>
 
   <target name="convert" depends="setup">
     <unzip src="${inputFile}" dest="${outputTempDir}"/>
@@ -81,4 +79,9 @@
       <fileset dir="${outputTempDir}/word/media"/>
     </move>
   </target>
+
+  <target name="cleanup" unless="debug">
+    <delete dir="${outputTempDir}"/>
+  </target>
+
 </project>

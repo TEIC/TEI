@@ -137,44 +137,44 @@
 		    </indexTerm>
 		  </xsl:when>
 		  <xsl:otherwise>
-		<ref>
-		  <xsl:if test="$rends/tei:r">
-		    <xsl:attribute name="rend">
-		      <xsl:value-of select="string-join(($rends/tei:r),' ')"/>
-		    </xsl:attribute>
-		  </xsl:if>
-		  <xsl:if test="following-sibling::w:r[w:rPr][1]/w:rStyle">
-		    <xsl:attribute name="iso:class">
-		      <xsl:value-of select="following-sibling::w:r[w:rPr][1]/w:rStyle/w:rPr/w:rStyle/@w:val"/>
-		    </xsl:attribute>
-		  </xsl:if> 
-		  <xsl:for-each select="current-group()">
-		    <xsl:if test="self::w:r[w:instrText]">			    
-			<xsl:variable name="ref">
-			  <xsl:choose>
-			    <xsl:when test="contains(w:instrText,'REF _')"> <!-- this will also catch NOTEREF _ -->
-			      <xsl:text>#</xsl:text>
-			      <xsl:value-of select="substring-before(substring-after(w:instrText,'_'),'&#32;')"/>
-			    </xsl:when>
-			    <xsl:when test="contains(w:instrText,'HYPERLINK')">
-			      <xsl:value-of select="substring-before(substring-after(w:instrText,'&#x0022;'),'&#x0022;')"/>
-			    </xsl:when>
-			  </xsl:choose>
-			</xsl:variable>
-			<xsl:attribute name="target" select="$ref"/>
-		    </xsl:if>
-		  </xsl:for-each>
-		  <xsl:for-each select="current-group()">
-		    <xsl:choose>
-		      <xsl:when  test="self::w:bookmarkStart">
-			<xsl:apply-templates select="."/>
-		      </xsl:when>
-		      <xsl:otherwise>
-			<xsl:apply-templates select="."/>
-		      </xsl:otherwise>
-		    </xsl:choose>
-		  </xsl:for-each>
-		</ref>
+		    <ref>
+		      <xsl:if test="$rends/tei:r">
+			<xsl:attribute name="rend">
+			  <xsl:value-of select="string-join(($rends/tei:r),' ')"/>
+			</xsl:attribute>
+		      </xsl:if>
+		      <xsl:if test="following-sibling::w:r[w:rPr][1]/w:rStyle">
+			<xsl:attribute name="iso:class">
+			  <xsl:value-of select="following-sibling::w:r[w:rPr][1]/w:rStyle/w:rPr/w:rStyle/@w:val"/>
+			</xsl:attribute>
+		      </xsl:if> 
+		      <xsl:for-each select="current-group()">
+			<xsl:if test="self::w:r[w:instrText]">			    
+			  <xsl:variable name="ref">
+			    <xsl:choose>
+			      <xsl:when test="contains(w:instrText,'REF _')"> <!-- this will also catch NOTEREF _ -->
+				<xsl:text>#</xsl:text>
+				<xsl:value-of select="substring-before(substring-after(w:instrText,'_'),'&#32;')"/>
+			      </xsl:when>
+			      <xsl:when test="contains(w:instrText,'HYPERLINK')">
+				<xsl:value-of select="substring-before(substring-after(w:instrText,'&#x0022;'),'&#x0022;')"/>
+			      </xsl:when>
+			    </xsl:choose>
+			  </xsl:variable>
+			  <xsl:attribute name="target" select="$ref"/>
+			</xsl:if>
+		      </xsl:for-each>
+		      <xsl:for-each select="current-group()">
+			<xsl:choose>
+			  <xsl:when  test="self::w:bookmarkStart">
+			    <xsl:apply-templates select="."/>
+			  </xsl:when>
+			  <xsl:otherwise>
+			    <xsl:apply-templates select="."/>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:for-each>
+		    </ref>
 		  </xsl:otherwise>
 		</xsl:choose>
 	      </xsl:when>

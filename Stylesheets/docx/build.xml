@@ -167,11 +167,14 @@
     <move file="${outputTempDir}/docProps/newcustom.xml" tofile="${outputTempDir}/docProps/custom.xml" overwrite="true"/>
   </target>
 
-  <target name="dist" depends="setup,odd,notodd,transform,nocoverpages,coverpages">
+  <target name="dist" depends="setup,odd,notodd,transform,nocoverpages,coverpages,cleanup">
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
     <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,image-size-info.xml,copy.xml"/>
     <copy file="${outputDir}/temp-for-ant.zip" tofile="${outputFile}" overwrite="true"/>
     <delete file="${outputDir}/temp-for-ant.zip"/>
+  </target>
+
+  <target name="cleanup" unless="debug">
     <delete dir="${outputTempDir}"/>
   </target>
 </project>
