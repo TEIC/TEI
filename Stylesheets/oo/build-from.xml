@@ -32,7 +32,7 @@
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="docxtoTEI"  value="../profiles/${profile}/docx/from.xsl"/>
+  <property name="odttotei"  value="../profiles/${profile}/docx/from.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir"    file="${outputFile}"/>
   <property name="outputTempDir"   value="${outputDir}/temp-dir-for-ant"/>
@@ -51,7 +51,7 @@
 
   <target name="convert" depends="setup">
     <unzip src="${inputFile}" dest="${outputTempDir}"/>
-    <xslt force="yes" style="${docxtoTEI}" classpath="classpath" in="${outputTempDir}/word/document.xml" out="${outputFile}">
+    <xslt force="yes" style="${odttotei}" classpath="classpath" in="${outputTempDir}/content.xml" out="${outputFile}">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -62,20 +62,19 @@
       <classpath location="${oxygyenlib}/saxon9ee.jar"/>
       <param name="word-directory" expression="${outputTempDir}"/>
       <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="imageDir" expression="word/media"/>
+      <param name="imageDir" expression="Pictures"/>
     </xslt>
   </target>
 
   <target name="mediadir.check">
     <condition property="mediadir.exists">
-      <available file="${outputTempDir}/word/media" type="dir"/>
+      <available file="${outputTempDir}/Pictures" type="dir"/>
     </condition>
   </target>
 
   <target name="picturecopy" if="${mediadir.exists}">
-    <mkdir dir="${outputDir}/media"/>
-    <move todir="${outputDir}/media"  overwrite="true">
-      <fileset dir="${outputTempDir}/word/media"/>
+    <move todir="${outputDir}"  overwrite="true">
+      <fileset dir="${outputTempDir}/Pictures"/>
     </move>
   </target>
 
