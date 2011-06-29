@@ -73,7 +73,8 @@
       </desc>
     </doc>
  
-   <xsl:template match="tei:p[not(*) and string-length(.)=0]" mode="pass2"/>
+   <xsl:template match="tei:p[not(*) and string-length(.)=0]"
+		 mode="pass2" priority="99"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

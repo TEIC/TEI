@@ -1221,8 +1221,8 @@
                             <w:left w:val="nil" w:space="0" w:color="auto"/>
                             <w:bottom w:val="nil" w:space="0" w:color="auto"/>
                             <w:right w:val="nil" w:space="0" w:color="auto"/>
-                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
                             <w:insideH w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
                         </w:tblBorders>
                     </w:tblPr>
 		</xsl:when>
@@ -1235,8 +1235,8 @@
                             <w:left w:val="nil" w:space="0" w:color="auto"/>
                             <w:bottom w:val="nil" w:space="0" w:color="auto"/>
                             <w:right w:val="nil" w:space="0" w:color="auto"/>
-                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
                             <w:insideH w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
                         </w:tblBorders>
                     </w:tblPr>
 		</xsl:when>
@@ -1249,8 +1249,8 @@
                             <w:left w:val="nil" w:space="0" w:color="auto"/>
                             <w:bottom w:val="nil" w:space="0" w:color="auto"/>
                             <w:right w:val="nil" w:space="0" w:color="auto"/>
-                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
                             <w:insideH w:val="nil" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="nil" w:space="0" w:color="auto"/>
                         </w:tblBorders>
                     </w:tblPr>
 		</xsl:when>
@@ -1263,8 +1263,8 @@
                             <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                         </w:tblBorders>
                     </w:tblPr>
 		</xsl:when>
@@ -1277,8 +1277,8 @@
                             <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
-                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                             <w:insideH w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="single" w:sz="6" w:space="0" w:color="auto"/>
                         </w:tblBorders>
                     </w:tblPr>
                 </xsl:otherwise>

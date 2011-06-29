@@ -81,19 +81,19 @@
     </xsl:template>
 
     <xsl:template name="getDocTitle">
-        <xsl:for-each select="document(concat($word-directory, '/docProps/core.xml'),/)">
+        <xsl:for-each select="document(concat($word-directory, '/docProps/core.xml'))">
             <xsl:value-of select="cp:coreProperties/dc:title"/>
         </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="getDocAuthor">
-        <xsl:for-each select="document(concat($word-directory, '/docProps/core.xml'),/)">
+        <xsl:for-each select="document(concat($word-directory, '/docProps/core.xml'))">
             <xsl:value-of select="cp:coreProperties/dc:creator"/>
         </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="getDocDate">
-        <xsl:for-each select="document(concat($word-directory, '/docProps/core.xml'),/)">
+        <xsl:for-each select="document(concat($word-directory, '/docProps/core.xml'))">
             <xsl:value-of select="substring-before(cp:coreProperties/dcterms:created,'T')"/>
         </xsl:for-each>
     </xsl:template>
