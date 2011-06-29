@@ -256,11 +256,8 @@
       <xsl:value-of select="count(ancestor::tei:div)"/>
     </xsl:variable>
     <text:h>
-      <xsl:attribute name="text:level">
+      <xsl:attribute name="text:outline-level">
 	<xsl:value-of select="$depth + 1"/>
-      </xsl:attribute>
-      <xsl:attribute name="text:style-name">
-	<xsl:text>Heading </xsl:text><xsl:value-of select="$depth + 1"/>
       </xsl:attribute>
       <xsl:call-template name="test.id"/>
       <xsl:apply-templates select="tei:head" mode="show"/>
@@ -273,11 +270,8 @@
       <xsl:value-of select="substring-after(name(.),'div')"/>
     </xsl:variable>
     <text:h>
-      <xsl:attribute name="text:level">
+      <xsl:attribute name="text:outline-level">
 	<xsl:value-of select="$depth + 1"/>
-      </xsl:attribute>
-      <xsl:attribute name="text:style-name">
-	<xsl:text>Heading </xsl:text><xsl:value-of select="$depth + 1"/>
       </xsl:attribute>
       <xsl:call-template name="test.id"/>
       <xsl:apply-templates select="tei:head" mode="show"/>
@@ -298,18 +292,28 @@
 	<xsl:when test="ancestor::tei:note[@place='foot']">
 	    <xsl:text>Footnote</xsl:text>
 	</xsl:when>
-	<xsl:when test="ancestor::tei:row[@role='label']">
-	  <xsl:text>Table Heading</xsl:text>
-	</xsl:when>
-	<xsl:when test="ancestor::tei:row">
-	  <xsl:text>Table Contents</xsl:text>
-	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:text>Text body</xsl:text>
+	  <xsl:text>Text_20_body</xsl:text>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
+      <xsl:when test="tei:pb">
+	<xsl:for-each-group select="node()" group-adjacent="boolean(self::tei:pb)">
+	  <xsl:choose>
+	    <xsl:when test="current-grouping-key()">
+	      <!-- curiously, no apparent direct markup for a page break -->
+		<text:p text:style-name="P1"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	    <text:p text:style-name="{$style}">
+	      <xsl:call-template name="test.id"/>
+	      <xsl:apply-templates select="current-group()"/>
+	    </text:p>
+	  </xsl:otherwise>  
+        </xsl:choose>
+	</xsl:for-each-group>
+      </xsl:when>
       <xsl:when test="tei:list">
 	<xsl:for-each-group select="node()" group-adjacent="boolean(self::tei:list)">
 	  <xsl:choose>
@@ -597,13 +601,13 @@
   </xsl:template>
 
   <xsl:template match="tei:list[@type='gloss']/tei:item">
-    <text:p text:style-name="List Contents">
+    <text:p text:style-name="List_20_Contents">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
 
   <xsl:template match="tei:list[@type='gloss']/tei:label">
-    <text:p text:style-name="List Heading">
+    <text:p text:style-name="List_20_Heading">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
@@ -741,26 +745,41 @@
     <text:span>
       <xsl:attribute name="text:style-name">
 	<xsl:choose>
-	  <xsl:when test="@rend='sup'">
-	    <xsl:text>SuperScript</xsl:text>
+	  <xsl:when test="@rend='code' or @rend='typewriter'">
+	    <xsl:text>Source_20_Text</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@rend='sub'">
-	    <xsl:text>SubScript</xsl:text>
+	  <xsl:when test="@rend='sup' or @rend='superscript'">
+	    <xsl:text>Superscript</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="@rend='sub' or @rend='subscript'">
+	    <xsl:text>Subscript</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="@rend='bold'">
 	    <xsl:text>Highlight</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@rend='it'">
+	  <xsl:when test="@rend='it' or @rend='i' or @rend='italic'">
 	    <xsl:text>Emphasis</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@rend='i'">
-	    <xsl:text>Emphasis</xsl:text>
-	  </xsl:when>
-	  <xsl:when test="@rend='ul'">
+	  <xsl:when test="@rend='underline'">
 	    <xsl:text>Underline</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@rend='sc'">
+	  <xsl:when test="@rend='sc' or @rend='smallcaps'">
 	    <xsl:text>SmallCaps</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="@rend='sc' or @rend='capsall'">
+	    <xsl:text>AllCaps</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="@rend='strikethrough'">
+	    <xsl:text>StrikeThrough</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="@rend='strikedoublethrough'">
+	    <xsl:text>StrikeDoubleThrough</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="@rend='underline'">
+	    <xsl:text>UnderLine</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="@rend='underdoubleline'">
+	    <xsl:text>UnderDoubleLine</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:text>Emphasis</xsl:text>
@@ -818,13 +837,8 @@
     <text:line-break/>
   </xsl:template>
 
-  <!-- curiously, no apparent direct markup for a page break -->
-  <xsl:template match="tei:pb">
-    <text:p text:style-name="P3"/>
-  </xsl:template>
-
-  <xsl:template match="tei:bibl|tei:signed">
-    <text:p text:style-name="{name(.)}">
+  <xsl:template match="tei:bibl|tei:signed|tei:docTitle|tei:byline|tei:docImprint">
+    <text:p text:style-name="tei_{local-name(.)}">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
@@ -837,6 +851,10 @@
 
   <xsl:template match="tei:l">
     <xsl:choose>
+      <xsl:when test="parent::tei:q">
+	<xsl:apply-templates/>
+	<text:line-break/>
+      </xsl:when>
       <xsl:when test="parent::tei:lg">
 	<xsl:apply-templates/>
 	<text:line-break/>
@@ -946,6 +964,7 @@
 
   <xsl:template match="tei:cell">
     <table:table-cell>
+<!--
       <xsl:choose>
 	<xsl:when test="parent::tei:row[@role='label']">
 	  <xsl:attribute name="text:style-name">Table1.cellheading</xsl:attribute>
@@ -957,20 +976,10 @@
 	  <xsl:attribute name="text:style-name">Table1.cellcontents</xsl:attribute>
 	</xsl:otherwise>
       </xsl:choose>
+-->
       <xsl:choose>
 	<xsl:when test="not(child::tei:p)">
 	  <text:p>
-	    <xsl:choose>
-	      <xsl:when test="parent::tei:row[@role='label']">
-		<xsl:attribute name="text:style-name">Table Heading</xsl:attribute>
-	      </xsl:when>
-	      <xsl:when test="@role='label'">
-		<xsl:attribute name="text:style-name">Table Heading</xsl:attribute>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:attribute name="text:style-name">Table Contents</xsl:attribute>
-	      </xsl:otherwise>
-	    </xsl:choose>
 	    <xsl:apply-templates/>
 	  </text:p>
 	</xsl:when>
@@ -1810,4 +1819,5 @@
     <xsl:apply-templates/>
   </xsl:template>
 
+ 
 </xsl:stylesheet>
