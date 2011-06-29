@@ -1206,9 +1206,12 @@ These seem to have no obvious translation
       </xsl:when>
       <xsl:otherwise>
 	<div>
-	  <xsl:if test="@style">
-	    <xsl:attribute name="rend" select="@style"/>
-	  </xsl:if>
+	  <xsl:choose>
+	    <xsl:when test="starts-with(@style,'Heading')"/>
+	    <xsl:when test="@style">
+	      <xsl:attribute name="rend" select="@style"/>
+	    </xsl:when>
+	  </xsl:choose>
 	  <xsl:if test="not(@interpolated='true')">
 	    <head>
 	      <xsl:apply-templates mode="pass1"/>
