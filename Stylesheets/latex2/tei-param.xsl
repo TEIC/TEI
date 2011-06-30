@@ -49,6 +49,10 @@ the beginning of the document</desc>
    <xsl:template name="beginDocumentHook"/>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
+      <desc>[latex] Hook where LaTeX commands can be at start of setup</desc>
+   </doc>
+   <xsl:template name="latexSetupHook"/>
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[latex] Hook where LaTeX commands can be inserted in the
     preamble before the beginning of the document</desc>
    </doc>
@@ -218,6 +222,7 @@ capable of dealing with UTF-8 directly.
       </desc>
    </doc>
    <xsl:template name="latexSetup">
+   <xsl:call-template name="latexSetupHook"/>
 \IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
