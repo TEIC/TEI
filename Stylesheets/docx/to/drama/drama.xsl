@@ -63,7 +63,17 @@
    </doc>
     <xsl:template match="tei:sp/tei:speaker" >
       <xsl:call-template name="block-element">
-            <xsl:with-param name="style">teispeaker</xsl:with-param>
+	<xsl:with-param name="style">teispeaker</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        A bit of speech name
+    </desc>
+   </doc>
+    <xsl:template match="tei:sp/tei:p" >
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style">teispeech</xsl:with-param>
       </xsl:call-template>
     </xsl:template>
 

@@ -283,6 +283,7 @@
 		group-adjacent="if       (teidocx:is-list(.))  then 1
 				else  if (teidocx:is-toc(.))   then 2
 				else  if (teidocx:is-figure(.)) then 3
+				else  if (teidocx:is-line(.)) then 4
 				else position() + 100">
 	      
 	      <!-- For each defined grouping call a specific template. If there is no
@@ -296,6 +297,9 @@
 		</xsl:when>
 		<xsl:when test="current-grouping-key()=3">
 		  <xsl:call-template name="figureSection"/>
+		</xsl:when>
+		<xsl:when test="current-grouping-key()=4">
+		  <xsl:call-template name="lineSection"/>
 		</xsl:when>
 		<!-- it is not a defined grouping .. apply templates -->
 		<xsl:otherwise>
@@ -316,6 +320,33 @@
 	  <xsl:apply-templates select="." mode="paragraph"/>
 	</xsl:for-each>
       </figure>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	Creating a gloss list
+      </desc>
+   </doc>
+
+    <xsl:template name="glossListSection">
+      <list type="gloss">
+	<xsl:for-each select="current-group()">
+	  <xsl:apply-templates select="." mode="paragraph"/>
+	</xsl:for-each>
+      </list>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	Creating a group of a figure
+      </desc>
+   </doc>
+    <xsl:template name="lineSection">
+      <lg>
+	<xsl:for-each select="current-group()">
+	  <xsl:apply-templates select="." mode="paragraph"/>
+	</xsl:for-each>
+      </lg>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -411,7 +442,7 @@
 
    <xsl:template match="w:instrText">
       <xsl:choose>
-         <xsl:when test="contains(.,'REF _Ref')"></xsl:when>
+         <xsl:when test="contains(.,'REF _')"></xsl:when>
          <xsl:when test="starts-with(.,'HYPERLINK')"></xsl:when>
          <xsl:when test="starts-with(.,' XE')">
 	 </xsl:when>

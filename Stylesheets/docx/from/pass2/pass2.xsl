@@ -181,6 +181,33 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
+         <p>  Gloss list from tei to docx</p>
+      </desc>
+    </doc>
+    <!-- <GLOSSITEM>
+	 <hi rend="bold">100</hi>
+	 <lb/>first item </GLOSSITEM>
+    -->
+    <xsl:template match="tei:GLOSSITEM" mode="pass2">
+      <label>
+	<xsl:for-each select="tei:hi">
+	  <xsl:apply-templates/>
+	</xsl:for-each>
+      </label>
+      <item>
+	<xsl:apply-templates mode="inglossitem"/>
+      </item>
+    </xsl:template>
+
+    <xsl:template match="*" mode="inglossitem">
+      <xsl:apply-templates select="." mode="pass2"/>
+    </xsl:template>
+
+    <xsl:template match="tei:lb" mode="inglossitem"/>
+    <xsl:template match="tei:hi[@rend='bold']" mode="inglossitem"/>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
          <p>     Top of a weird gloss list </p>
       </desc>
     </doc>
@@ -332,4 +359,18 @@
       <xsl:apply-templates mode="pass2"/>
     </xsl:template>
 
+    <xsl:template match="tei:speech" mode="pass2"/>
+    <xsl:template match="tei:speech" mode="keep">
+      <p>
+	<xsl:apply-templates mode="pass2"/>
+      </p>
+    </xsl:template>
+
+    <xsl:template match="tei:speaker" mode="pass2">
+      <sp>
+	<xsl:copy-of select="."/>
+	<xsl:apply-templates
+	      select="following-sibling::tei:speech[1]" mode="keep"/>
+      </sp>
+    </xsl:template>
 </xsl:stylesheet>

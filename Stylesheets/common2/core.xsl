@@ -400,7 +400,8 @@
       <xsl:apply-templates/>
    </xsl:template>
 
-   <xsl:template match="tei:date">
+   <xsl:template match="tei:biblStruct//tei:date|tei:biblFull//tei:date">
+<!--
      <xsl:choose>
        <xsl:when test="starts-with(.,'$Date:')">
 	 <xsl:value-of select="substring-before(substring-after(.,'$Date:'),'$')"/>
@@ -409,11 +410,10 @@
 	 <xsl:apply-templates/>
        </xsl:otherwise>
      </xsl:choose>
-      <xsl:if test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
+-->
          <xsl:call-template name="tei:makeText">
 	   <xsl:with-param name="letters">. </xsl:with-param>
 	 </xsl:call-template>
-      </xsl:if>
    </xsl:template>
 
    <xsl:template match="tei:byline">

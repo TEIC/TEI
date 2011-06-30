@@ -62,7 +62,48 @@
       </desc>
    </doc>
     <xsl:template match="w:p" mode="paragraph">
-        <xsl:call-template name="paragraph-wp"/>
+      <xsl:variable name="style" select="w:pPr/w:pStyle/@w:val"/>
+      <xsl:choose>
+	<xsl:when test="$style='tei_lg'"/>
+	<xsl:when test="$style='GeneratedTitle'"/>
+	<xsl:when test="$style='GeneratedSubTitle'"/>
+
+	<xsl:when test="$style='tei_l'">
+	  <l>
+	    <xsl:apply-templates/>
+	  </l>
+	</xsl:when>
+	<xsl:when test="$style='Tabletitle'">
+	  <head>
+	    <xsl:apply-templates/>
+	  </head>
+	</xsl:when>
+	<xsl:when test="$style='dl'">
+	  <GLOSSITEM>
+	    <xsl:apply-templates/>
+	  </GLOSSITEM>
+	</xsl:when>
+	<xsl:when test="$style='tei_signed'">
+	  <signed>
+	    <xsl:apply-templates/>
+	  </signed>
+	</xsl:when>
+	<xsl:when test="$style='tei_speaker'">
+	  <speaker>
+	    <xsl:apply-templates/>
+	  </speaker>
+	</xsl:when>
+	<xsl:when test="$style='tei_speech'">
+	  <speech>
+	    <xsl:apply-templates/>
+	  </speech>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="paragraph-wp">
+	    <xsl:with-param name="style" select="$style"/>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
     
     
@@ -74,10 +115,11 @@
     </desc>
    </doc>
    <xsl:template name="paragraph-wp">
-     <p>
-       <xsl:if test="w:pPr/w:pStyle/@w:val and not(w:pPr/w:pStyle/@w:val='Default')">
+     <xsl:param name="style"/>
+     <xsl:element name="p">
+       <xsl:if test="$style and not($style='Default')">
 	 <xsl:attribute name="rend">
-	   <xsl:value-of select="(w:pPr/w:pStyle/@w:val)"/>
+	   <xsl:value-of select="$style"/>
 	 </xsl:attribute>
        </xsl:if>
        <xsl:if test="w:pPr/w:pStyle/w:rPr/w:rtl">
@@ -101,7 +143,7 @@
 	   <xsl:call-template name="process-checking-for-crossrefs"/>
 	 </xsl:otherwise>
        </xsl:choose>
-     </p>
+     </xsl:element>
    </xsl:template>
    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

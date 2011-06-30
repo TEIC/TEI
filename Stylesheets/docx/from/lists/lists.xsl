@@ -58,36 +58,37 @@
             <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
         </xsl:variable>
         <list>
-            <xsl:call-template name="listType"/>
-            
-            <!-- ISO Notes are be handled by a specific handler -->
-            <xsl:for-each-group select="current-group()"
-                             group-adjacent="if(w:pPr/w:pStyle/@w:val=$level)    then 0 else
-                 if(w:pPr/w:pStyle/@w:val='Note') then 0                 
-		 else 1">
-                <xsl:choose>
-                    <!-- we are still on the same level -->
-                    <xsl:when test="current-grouping-key()=0">
-                        <xsl:for-each select="current-group()">
-                            <!-- put items and notes as siblings  for now -->
-                            <xsl:choose>
-                                <xsl:when test="contains(w:pPr/w:pStyle/@w:val,'List')">
-                                    <item>
-                                        <xsl:apply-templates/>
-                                    </item>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:apply-templates select="." mode="paragraph"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:for-each>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="listSection"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-                
-            </xsl:for-each-group>
+	  <xsl:call-template name="listType"/>
+	  
+	  <!-- ISO Notes are be handled by a specific handler -->
+	  <xsl:for-each-group select="current-group()"
+			      group-adjacent="if(w:pPr/w:pStyle/@w:val=$level)  then 0 
+					      else if(w:pPr/w:pStyle/@w:val='Note') then 0                 
+					      else if(w:pPr/w:pStyle/@w:val='dl') then 1                
+					      else 1">
+	    <xsl:choose>
+	      <!-- we are still on the same level -->
+	      <xsl:when test="current-grouping-key()=0">
+		<xsl:for-each select="current-group()">
+		  <!-- put items and notes as siblings  for now -->
+		  <xsl:choose>
+		    <xsl:when test="contains(w:pPr/w:pStyle/@w:val,'List')">
+		      <item>
+			<xsl:apply-templates/>
+		      </item>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:apply-templates select="." mode="paragraph"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:call-template name="listSection"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    
+	  </xsl:for-each-group>
         </list>
     </xsl:template>
     
@@ -145,6 +146,7 @@
                     
                     <!-- figure out what numbering scheme to use -->
                     <xsl:choose>
+		        <xsl:when test="$style='dl'">gloss</xsl:when>
                         <xsl:when test="string-length($numfmt)=0">unordered</xsl:when>
                         <xsl:when test="$numfmt='bullet'">unordered</xsl:when>
                         <xsl:otherwise>ordered</xsl:otherwise>

@@ -506,7 +506,8 @@
                 <!-- we encountered an inline element. This means that the current group only
                      contains inline elements -->
                 <xsl:otherwise>
-<!--	  <xsl:message>+@@ <xsl:value-of select="name()"/>: pPr:	  <xsl:if test="not(empty($pPr))"><xsl:copy-of
+<!--
+	  <xsl:message>+@@ <xsl:value-of select="name()"/>: pPr:	  <xsl:if test="not(empty($pPr))"><xsl:copy-of
 	  select="$pPr"/></xsl:if>; style: <xsl:if
 	  test="not(empty($style))"><xsl:copy-of
 	  select="$style"/></xsl:if></xsl:message>
@@ -2437,12 +2438,24 @@
       </w:r>
     </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+        A signature block
+    </desc>
+   </doc>
+    <xsl:template match="tei:signed" >
+      <xsl:call-template name="block-element">
+	<xsl:with-param name="style">teisigned</xsl:with-param>
+      </xsl:call-template>
+    </xsl:template>
+
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	If you meet an inline element with a link inside it, pass by
 	on the other side
       </desc>
     </doc>
+
 
     <xsl:template match="tei:title[tei:ref]|tei:hi[tei:ref]" priority="-1">
       <xsl:apply-templates/>

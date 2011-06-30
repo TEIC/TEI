@@ -65,31 +65,31 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-Title of document        
+	Title of document        
     </desc>
    </doc>
     <xsl:template name="document-title">
         <xsl:choose>
-            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"> </xsl:when>
+            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"/>
             <xsl:when
 		test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
                 <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
                     <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Title</xsl:with-param>
+                        <xsl:with-param name="style">GeneratedTitle</xsl:with-param>
                     </xsl:call-template>
                 </xsl:for-each>
                 <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
                     <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Subtitle</xsl:with-param>
+                        <xsl:with-param name="style">GeneratedSubtitle</xsl:with-param>
                     </xsl:call-template>
                 </xsl:for-each>
 	    </xsl:when>
 	    <xsl:otherwise>
-                <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">Title</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
+	      <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title">
+		<xsl:call-template name="block-element">
+		  <xsl:with-param name="style">GeneratedTitle</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
 	    </xsl:otherwise>  
         </xsl:choose>
     </xsl:template>
@@ -114,7 +114,6 @@ Title of document
         <xsl:param name="style"/>
         <xsl:param name="pPr"/>
         <xsl:param name="nop"/>
-
         <!-- calculate style definition -->
         <xsl:variable name="newStyle">
             <xsl:apply-templates select="." mode="get-style"/>
@@ -137,9 +136,6 @@ Title of document
             <xsl:with-param name="nop" select="$nop"/>
         </xsl:call-template>
     </xsl:template>
-    <!-- end template simple block elements: *[not(teidocx:is-inline(.))] -->
-
-
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -150,9 +146,11 @@ Title of document
         
     </desc>
    </doc>
+
     <xsl:template match="*[teidocx:is-inline(.)]" priority="-10">
         <xsl:param name="character-style"/>
-
+        <xsl:param name="style"/>
+        <xsl:param name="pPr"/>
         <xsl:variable name="style">
             <xsl:apply-templates select="." mode="get-style"/>
         </xsl:variable>
@@ -176,8 +174,9 @@ Title of document
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+
         <xsl:apply-templates>
-            <xsl:with-param name="character-style" select="$use-style"/>
+	  <xsl:with-param name="character-style" select="$use-style"/>
         </xsl:apply-templates>
     </xsl:template>
 </xsl:stylesheet>

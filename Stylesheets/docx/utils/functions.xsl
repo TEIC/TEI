@@ -148,6 +148,7 @@
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'List')]">true</xsl:when>
+            <xsl:when test="$p[w:pPr/w:pStyle/@w:val='dl']">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
@@ -169,6 +170,27 @@
         <xsl:choose>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Figure')]">true</xsl:when>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Caption')]">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
+
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Defines whether or not a word paragraph is a line of poetry.</desc></doc>
+    <xsl:function name="teidocx:is-line" as="xs:boolean">
+        <xsl:param name="p"/>        
+        <xsl:choose>
+            <xsl:when test="$p[w:pPr/w:pStyle/@w:val='tei_l']">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Defines whether or not a word paragraph is gloss list.</desc></doc>
+    <xsl:function name="teidocx:is-glosslist" as="xs:boolean">
+        <xsl:param name="p"/>        
+        <xsl:choose>
+            <xsl:when test="$p[w:pPr/w:pStyle/@w:val='dl']">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
