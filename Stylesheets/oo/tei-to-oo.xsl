@@ -223,9 +223,9 @@
       <xsl:when test="parent::tei:div3"/>
       <xsl:when test="parent::tei:div4"/>
       <xsl:when test="parent::tei:div5"/>
-      <xsl:when test="parent::tei:table">
-	<xsl:apply-templates/>
-      </xsl:when>
+      <xsl:when test="parent::tei:div6"/>
+      <xsl:when test="parent::tei:table"/>
+
       <xsl:otherwise>
 	<xsl:choose>
 	  <xsl:when test="parent::tei:appendix">
@@ -286,6 +286,10 @@
     <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="tei:pb">
+    <text:soft-page-break/>
+  </xsl:template>
+
   <xsl:template match="tei:p">
     <xsl:variable name="style">
       <xsl:choose>
@@ -298,11 +302,11 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="tei:pb">
+<!--      
+     <xsl:when test="tei:pb">
 	<xsl:for-each-group select="node()" group-adjacent="boolean(self::tei:pb)">
 	  <xsl:choose>
 	    <xsl:when test="current-grouping-key()">
-	      <!-- curiously, no apparent direct markup for a page break -->
 		<text:p text:style-name="P1"/>
 	    </xsl:when>
 	    <xsl:otherwise>
@@ -314,6 +318,7 @@
         </xsl:choose>
 	</xsl:for-each-group>
       </xsl:when>
+-->
       <xsl:when test="tei:list">
 	<xsl:for-each-group select="node()" group-adjacent="boolean(self::tei:list)">
 	  <xsl:choose>
@@ -938,7 +943,7 @@
       <xsl:apply-templates/>
     </table:table>
     <xsl:if test="tei:head">
-      <text:p text:style-name="Table">
+      <text:p text:style-name="Caption">
 	<xsl:apply-templates select="tei:head" mode="show"/>
       </text:p>
     </xsl:if>

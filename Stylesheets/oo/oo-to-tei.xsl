@@ -113,7 +113,12 @@
   </xsl:template>
 
   <xsl:template match="/">
+    <xsl:variable name="pass1">
       <xsl:apply-templates/>
+    </xsl:variable>
+    <xsl:for-each select="$pass1">
+      <xsl:apply-templates mode="pass2"/>
+    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="office:document-content|office:body">
@@ -1303,5 +1308,38 @@ These seem to have no obvious translation
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
     </xsl:copy>
   </xsl:template>
+
+  <!-- second pass -->
+
+    <xsl:template match="@*|comment()|processing-instruction()" mode="pass2">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    
+    <xsl:template match="*" mode="pass2">
+        <xsl:copy>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    
+    <xsl:template match="text()" mode="pass2">
+        <xsl:value-of select="."/>
+    </xsl:template>
+
+
+    <xsl:template match="tei:title" mode="pass2">
+      <xsl:choose>
+	<xsl:when test="parent::tei:div|parent::tei:body">
+	  <head>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+	  </head>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:copy>
+	    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+	  </xsl:copy>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
 
 </xsl:stylesheet>

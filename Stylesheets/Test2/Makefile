@@ -76,6 +76,10 @@ general:
 	unzip -t test.xml.docx 
 	unzip -t test.xml.odt 
 	unzip -t test.epub  
+	../teitoodt test10.xml 
+	unzip -t test10.xml.odt 
+	../odttotei test7.odt
+	xmllint --noout test7.xml
 
 clean:
 	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
