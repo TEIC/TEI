@@ -80,6 +80,8 @@ general:
 	unzip -t test10.xml.odt 
 	../odttotei test7.odt
 	xmllint --noout test7.xml
+	../docxtotei test11.docx
+	xmllint --noout test11.xml
 
 clean:
 	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
@@ -89,7 +91,7 @@ clean:
 	rm -f  test8.log
 	rm -f  test5.xml.odt
 	rm -f  test8.aux
-	rm -f  test7.xml
+	rm -f  test7.xml test11.xml
 	rm -f  test8.tex
 	rm -f  test7.zip
 	rm -f  test8.doc
