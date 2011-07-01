@@ -456,22 +456,20 @@
             </img>
          </xsl:when>
          <xsl:otherwise>
-            <hr/>
-            <p>
-               <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">figureWord</xsl:with-param>
-               </xsl:call-template>
-	              <xsl:text> </xsl:text>
-	              <xsl:for-each select="self::tei:figure|parent::tei:figure">
-	                 <xsl:number count="tei:figure[tei:head]" level="any"/>
-	              </xsl:for-each>
-	              <xsl:text> </xsl:text>
-	              <xsl:value-of select="$File"/>
-	              <xsl:text> [</xsl:text>
-	              <xsl:value-of select="$Alt"/>
-	              <xsl:text>] </xsl:text>
-	           </p>
-            <hr/>
+            <div class="altfigure">
+	      <xsl:call-template name="i18n">
+		<xsl:with-param name="word">figureWord</xsl:with-param>
+	      </xsl:call-template>
+	      <xsl:text> </xsl:text>
+	      <xsl:for-each select="self::tei:figure|parent::tei:figure">
+		<xsl:number count="tei:figure[tei:head]" level="any"/>
+	      </xsl:for-each>
+	      <xsl:text> </xsl:text>
+	      <xsl:value-of select="$File"/>
+	      <xsl:text> [</xsl:text>
+	      <xsl:value-of select="$Alt"/>
+	      <xsl:text>] </xsl:text>
+	    </div>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

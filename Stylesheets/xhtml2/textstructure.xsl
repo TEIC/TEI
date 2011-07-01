@@ -1294,7 +1294,6 @@
                </a>
             </p>
          </xsl:for-each>
-         <hr/>
       </xsl:for-each>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2044,7 +2043,6 @@
                <xsl:call-template name="leftHandFrame">
                   <xsl:with-param name="currentID" select="$requestedID"/>
                </xsl:call-template>
-               <hr/>
             </td>
          </tr>
          <tr>
@@ -2135,7 +2133,6 @@
          <xsl:call-template name="generateAuthor"/>
       </xsl:variable>
       <div class="stdfooter">
-         <hr/>
          <xsl:if test="$linkPanel='true'">
             <div class="footer">
                <xsl:if test="not($parentURL='')">
@@ -2160,7 +2157,6 @@
 	     </a>
                </xsl:if>
             </div>
-            <hr/>
          </xsl:if>
          <xsl:call-template name="preAddressHook"/>
          <address>
@@ -2197,7 +2193,6 @@
    </doc>
   <xsl:template name="stdfooterFrame">
       <xsl:param name="style" select="'plain'"/>
-      <hr/>
       <xsl:variable name="BaseFile">
          <xsl:value-of select="$masterFile"/>
          <xsl:call-template name="addCorpusID"/>
@@ -2212,7 +2207,6 @@
 	      <xsl:call-template name="singleFileLabel"/>
             </a>
          </div>
-         <hr/>
          <div class="footer">
             <xsl:if test="$searchURL">
                <a class="{$style}" href="{$searchURL}">
