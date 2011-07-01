@@ -5,11 +5,13 @@ antflag=-q
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
 PROFILEDIR=$APPHOME/profiles
+SAXONJAR=/usr/share/saxon/saxon9he.jar
 while test $# -gt 0; do
   case $1 in
     --profile=*)   profile=`echo $1 | sed 's/.*=//'`;;
     --debug)       debug=true; antflag=-v;;
     --profiledir=*) PROFILEDIR=`echo $1 | sed 's/.*=//'`;;
+    --saxonjar=*)  SAXONJAR=`echo $1 | sed 's/.*=//'`;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
 	else
@@ -42,10 +44,9 @@ then
   exit 1
 fi
 ant $antflag -f $APPHOME/docx/build-from.xml \
-	-lib /usr/share/saxon/saxon9he.jar \
+	-lib ${SAXONJAR} \
         -Ddebug=$debug  \
 	-DinputFile="$THERE/$F.docx" \
 	-DoutputFile="$THERE/$F.xml" \
         -Dprofile=$profile
 echo wrote $F.xml in $THERE
-
