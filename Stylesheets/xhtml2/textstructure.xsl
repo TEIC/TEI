@@ -533,12 +533,14 @@
       </desc>
    </doc>
   <xsl:template match="tei:divGen[@type='toc']">
+    <div class="tei_toc">
       <h2>
          <xsl:call-template name="i18n">
             <xsl:with-param name="word">tocWords</xsl:with-param>
          </xsl:call-template>
       </h2>
       <xsl:call-template name="mainTOC"/>
+    </div>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
