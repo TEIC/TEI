@@ -259,7 +259,7 @@
     <p><i><xsl:value-of select="tei:resp"/></i>:
       <xsl:value-of select="tei:name"/></p>
   </xsl:template>
-  <xsl:template match="tei:relatedItem[@target]" mode="metadata">
+  <xsl:template match="tei:relatedItem[@target]" mode="metadata" priority="10">
     <a href="{@target}">
       <xsl:value-of select="@target"/>
     </a>
@@ -318,7 +318,7 @@
       </xsl:for-each>
     </dd>
   </xsl:template>
-  <xsl:template match="tei:bibl/tei:title" mode="metadata">
+  <xsl:template match="tei:bibl/tei:title" mode="metadata" priority="99">
     <i>
       <xsl:apply-templates/>
     </i>

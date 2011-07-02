@@ -23,6 +23,12 @@ echo "  options, shown with defaults:"
 echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
 echo "  --profile=$profile    # which transformation profile to use"
 echo "  --profiledir=$profiledir    # where to find profile directory"
+echo "  --uid=XXX               # unique URN for ebook (epub output only)"
+echo "  --splitLevel=$splitLevel        # splitting level (epub output only)"
+echo "  --publisher=XXX         # name of publisher for ebook (epub output only)"
+echo "  --subject=XXX           # subject/category for ebook (epub output only)"
+echo "  --coverimage=XXX        # name of JPEG file for ebook cover (epub output only)"
+echo "  --css=XXX               # supply name of CSS file (epub output only)"
 echo
 echo "  options, binary switches:"
 echo "  --odd              # perform processing of ODD (if appropriate)"
@@ -31,12 +37,23 @@ echo "  --debug            # be verbose, do not delete intermediate files"
 }
 
 #-------------------------------------------------
+debug=false
 profile=default
 debug=false
 odd=false
 verbose=false
 antflag=-q
 X=`dirname $0`
+# epub only
+splitLevel=0
+publisher=
+coverimage=
+cover=
+cssFile=
+conversion=
+subject=
+uid=
+# ---
 APPHOME=`(cd $X; pwd)`
 profiledir=$APPHOME/profiles
 SAXONJAR=/usr/share/saxon/saxon9he.jar
@@ -58,6 +75,12 @@ while test $# -gt 0; do
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
     --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
+    --uid=*)  uid=`echo $1 | sed 's/.*=//'`;;
+    --splitLevel=*)  splitLevel=`echo $1 | sed 's/.*=//'`;;
+    --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
+    --subject=*)  subject="`echo $1 | sed 's/.*=//'`";;
+    --css=*)  cssFile=`echo $1 | sed 's/.*=//'`;;
+    --coverimage=*)  cover=`echo $1 | sed 's/.*=//'`;;
     --odd)          odd=true;;
     --debug)        debug=true; antflag=-v;;
     --verbose)      verbose=true; antflag=-v;;
@@ -105,4 +128,10 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-DinputFile="$indir/$infile" \
 	-DoutputFile="$outdir/$outfile" \
         -Dprofiledir=$profiledir \
-        -Dprofile=$profile
+        -Dprofile=$profile \
+	-Dpublisher=$publisher \
+	-Duid=$uid \
+	-DcssFile=$cssFile \
+	-Dsubject=$subject \
+	-Dcoverimage=$coverimage \
+	-DsplitLevel=$splitLevel 
