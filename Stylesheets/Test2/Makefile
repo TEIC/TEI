@@ -47,7 +47,7 @@ test9:
 	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
 	-Dant.home=$(OXY)/tools/ant \
 	org.apache.tools.ant.launch.Launcher \
-	-f ../oo/build-to.xml \
+	-f ../odt/build-to.xml \
 	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test9.odt \
 	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 

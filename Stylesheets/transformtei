@@ -47,9 +47,11 @@ if [ $to = "tei" ]
 then
    direction=from
    format=$from
+   outsuffix=.xml
 else
    direction=to
    format=$to
+   outsuffix=.$to
 fi
 while test $# -gt 0; do
   case $1 in
@@ -73,7 +75,7 @@ D=`dirname "$infile"`
 indir=`(cd $D; pwd)`
 if [ $# -eq 1 ]
 then
-   outfile=`basename "$1" .$from`.$to
+   outfile=`basename "$1" .$from`$outsuffix
    outdir=$indir
 else
    outfile=$2
