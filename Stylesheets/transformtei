@@ -1,0 +1,90 @@
+#!/bin/sh 
+die()
+{
+    echo "ERROR: $@."
+    D=`date "+%Y-%m-%d %H:%M:%S"`
+    echo "This was a fatal error. $D"
+    exit 1
+}
+
+usageMsg()
+{
+echo "TEI conversion: from $from to $to"
+echo ""
+echo "  Usage: $0 [options] inputfile"
+}
+
+#-------------------------------------------------
+profile=default
+debug=false
+odd=false
+verbose=false
+antflag=-q
+X=`dirname $0`
+APPHOME=`(cd $X; pwd)`
+profiledir=$APPHOME/profiles
+SAXONJAR=/usr/share/saxon/saxon9he.jar
+name=`basename $0`
+from=`echo $name | sed 's/to.*//'`
+to=`echo $name | sed 's/.*to//'`
+if [ $to = "tei" ]
+then
+   direction=from
+   format=$from
+else
+   direction=to
+   format=$to
+fi
+while test $# -gt 0; do
+  case $1 in
+    --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
+    --odd)          odd=true;;
+    --debug)        debug=true; antflag=-v;;
+    --verbose)      verbose=true; antflag=-v;;
+    --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
+    --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
+    --help)         usageMsg;;
+     *) if test "$1" = "${1#--}" ; then 
+	   break
+	else
+	   echo "WARNING: Unrecognized option '$1' ignored"
+	fi ;;
+  esac
+  shift
+done
+infile=${1:?"no input file supplied; for usage syntax $0 --help"}
+D=`dirname "$infile"`
+indir=`(cd $D; pwd)`
+if [ $# -eq 1 ]
+then
+   outfile=`basename "$1" .$from`.$to
+   outdir=$indir
+else
+   outfile=$2
+   O=`dirname $2`
+   outdir=`(cd $O; pwd)`
+fi
+if ! test -f $infile
+then 
+    die "Input file $infile does not exist"
+fi
+
+if ! test -f $APPHOME/$format/build-$direction.xml 
+then
+    die "No support for $from to $to: ant task $APPHOME/$format/build-$direction.xml does not exist"
+fi
+if ! test -f $profiledir/$profile/$format/$direction.xsl
+then
+    die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
+fi
+echo Convert $infile to $outfile \($from to $to\) using profile $profile
+
+ant $antflag -f $APPHOME/$format/build-$direction.xml \
+	-lib ${SAXONJAR} \
+        -Ddebug=$debug  \
+        -Dodd=$odd \
+        -Dverbose=$verbose  \
+	-DinputFile="$indir/$infile" \
+	-DoutputFile="$outdir/$outfile" \
+        -Dprofiledir=$profiledir \
+        -Dprofile=$profile
