@@ -6,7 +6,7 @@
 		>
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../oo/oo-to-tei.xsl"/>
+    <xsl:import href="../../../odt/odttotei.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>

@@ -6,7 +6,7 @@
 		>
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../oo/tei-to-oo.xsl"/>
+    <xsl:import href="../../../odt/teitoodt.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
