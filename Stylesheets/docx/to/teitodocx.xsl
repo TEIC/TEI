@@ -473,10 +473,6 @@
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
 
-        <!-- bookmark -->
-        <xsl:if test="string-length($bookmark-name) &gt; 0 and string-length($bookmark-id) &gt; 0">
-            <w:bookmarkStart w:id="{$bookmark-id}" w:name="{$bookmark-name}"/>
-        </xsl:if>
 
         <!-- Process Child elements -->
         <xsl:for-each-group select="current-group()"
@@ -530,7 +526,11 @@
                                 </xsl:when>
                             </xsl:choose>
                         </xsl:if>
-
+			<!-- bookmark start -->
+			<xsl:if test="string-length($bookmark-name) &gt; 0 and string-length($bookmark-id) &gt; 0">
+			  <w:bookmarkStart w:id="{$bookmark-id}" w:name="{$bookmark-name}"/>
+			</xsl:if>
+			
                         <!-- Create text runs -->
                         <xsl:for-each select="current-group()">
                             <xsl:apply-templates select=".">
@@ -538,6 +538,12 @@
 			      <xsl:with-param name="pPr" select="$pPr"/>
                             </xsl:apply-templates>
                         </xsl:for-each>
+			
+			<!-- bookmark end-->
+			<xsl:if test="string-length($bookmark-name) &gt; 0 and string-length($bookmark-id) &gt; 0">
+			  <w:bookmarkEnd w:id="{$bookmark-id}"/>
+			</xsl:if>
+
                     </xsl:variable>
 
                     <!-- write out text runs.
@@ -557,10 +563,6 @@
         </xsl:for-each-group>
         <!-- end process children -->
 
-        <!-- bookmark end-->
-        <xsl:if test="string-length($bookmark-name) &gt; 0 and string-length($bookmark-id) &gt; 0">
-            <w:bookmarkEnd w:id="{$bookmark-id}"/>
-        </xsl:if>
 
     </xsl:template>
     <!-- end template _process-blockelement -->
@@ -1044,8 +1046,16 @@
                 <xsl:value-of select="1000+$number"/>
             </xsl:with-param>
             <xsl:with-param name="bookmark-name">
-                <xsl:text>_SECTION_</xsl:text>
-                <xsl:value-of select="1000+$number"/>
+	      <xsl:choose>
+		<xsl:when test="parent::tei:div/@xml:id">
+		  <xsl:text>_</xsl:text>
+		  <xsl:value-of select="parent::tei:div/@xml:id"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:text>_SECTION_</xsl:text>
+		  <xsl:value-of select="1000+$number"/>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:with-param>
 
             <!-- find the correct header style -->
@@ -1420,15 +1430,15 @@
             </xsl:choose>
             <!-- If we have no children, put an empty p here -->
             <xsl:if test="not(descendant::text())">
-	           <w:p>
-		             <w:pPr>
-		                <w:pStyle w:val="Tabletext9"/>
-		             </w:pPr>
-		             <w:r>
-		                <w:t/>
-		             </w:r>
-	           </w:p>
-	        </xsl:if>
+	      <w:p>
+		<w:pPr>
+		  <w:pStyle w:val="Tabletext9"/>
+		</w:pPr>
+		<w:r>
+		  <w:t/>
+		</w:r>
+	      </w:p>
+	    </xsl:if>
         </w:tc>
     </xsl:template>
 

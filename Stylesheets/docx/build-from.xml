@@ -50,6 +50,7 @@
   <target name="dist" depends="convert,mediadir.check,picturecopy,cleanup"/>
 
   <target name="convert" depends="setup">
+    <echo>Convert using ${docxtoTEI}</echo>
     <unzip src="${inputFile}" dest="${outputTempDir}"/>
     <xslt force="yes" style="${docxtoTEI}" classpath="classpath" in="${outputTempDir}/word/document.xml" out="${outputFile}">
       <xmlcatalog>

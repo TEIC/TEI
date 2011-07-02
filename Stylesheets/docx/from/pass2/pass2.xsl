@@ -299,6 +299,10 @@
   <xsl:template match="tei:hi[@rend]" mode="pass2">
     <xsl:variable name="r" select="@rend"/>
     <xsl:choose>
+      <xsl:when test="count(parent::tei:speaker/*)=1 and not
+		      (parent::tei:speaker/text())">
+	<xsl:apply-templates/>
+      </xsl:when>
       <xsl:when test="parent::tei:head and .=' '"/>
       <!--
       <xsl:when test="count(*)=1 and not(text()) and tei:lb">
@@ -341,6 +345,16 @@
       </xsl:for-each>
    </xsl:template>
 
+   <xsl:template match="tei:div[tei:head/tei:ANCHOR]" mode="pass2">
+     <xsl:copy>
+       <xsl:attribute name="xml:id"
+		      select="tei:head/tei:ANCHOR/@xml:id"/>
+       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+     </xsl:copy>
+   </xsl:template>
+
+   <xsl:template match="tei:ANCHOR" mode="pass2"/>
+
    <xsl:template match="w:bookmarkStart" mode="pass2">
        <anchor>
         <xsl:attribute name="xml:id">
@@ -350,7 +364,7 @@
    </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Paragraphs in cells not allow</desc></doc>
+    <desc>Paragraphs in cells not allowed</desc></doc>
    
     <xsl:template match="tei:cell/tei:p" mode="pass2">
       <xsl:if test="preceding-sibling::tei:p">
@@ -368,9 +382,21 @@
 
     <xsl:template match="tei:speaker" mode="pass2">
       <sp>
-	<xsl:copy-of select="."/>
+	<speaker>
+	  <xsl:choose>	
+	    <xsl:when test="count(*)=1 and not(text()) and tei:hi[@rend]">
+	      <xsl:attribute name="rend" select="tei:hi/@rend"/>
+	      <xsl:for-each select="tei:hi">
+	      <xsl:apply-templates mode="pass2"/>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates mode="pass2"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</speaker>
 	<xsl:apply-templates
-	      select="following-sibling::tei:speech[1]" mode="keep"/>
+	    select="following-sibling::tei:speech[1]" mode="keep"/>
       </sp>
     </xsl:template>
 </xsl:stylesheet>

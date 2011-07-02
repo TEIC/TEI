@@ -149,7 +149,7 @@
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$part1"/>
 	 </xsl:result-document>
-     -->
+-     -->
      <!-- Do the final parse and create valid TEI -->
      <xsl:apply-templates select="$part1" mode="pass2"/>
      
@@ -188,7 +188,7 @@
 	      <body>
 		<xsl:call-template name="mainProcess"/>
 	      </body>
-		    </text>
+	    </text>
 	  </xsl:template>
 
 	  
@@ -232,18 +232,20 @@
 	    <desc>
 	      <p>Bookmarks in section mode</p>
 	      <p>
-		There are certain elements, that we don't really care about, but that
+		There are certain elements that we don't really care about, but that
 		force us to regroup everything from the next sibling on.
 		
 		@see grouping in construction of headline outline.
 	      </p>
 	    </desc>
 	  </doc>
-	  <xsl:template match="w:bookmarkStart|w:bookmarkEnd" mode="inSectionGroup">
+	  <xsl:template match="w:bookmarkStart|w:bookmarkEnd"
+			mode="inSectionGroup">
 	    <xsl:for-each-group select="current-group() except ." group-adjacent="1">
 	      <xsl:apply-templates select="." mode="inSectionGroup"/>
 	    </xsl:for-each-group>
 	  </xsl:template>
+
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
 	    <desc>
@@ -251,10 +253,18 @@
 	      <p>Copy bookmarks for processing in pass 2</p>
 	    </desc>
 	  </doc>
-	  <xsl:template match="w:bookmarkStart|w:bookmarkEnd">
-	    <xsl:if test="starts-with(@w:name,'_Ref')">
+	  <xsl:template match="w:bookmarkStart|w:bookmarkEnd" >
+	    <xsl:choose>
+	    <xsl:when test="starts-with(@w:name,'_Ref')">
 	      <xsl:copy-of select="."/>
-	    </xsl:if>
+	    </xsl:when>
+	    <xsl:when test="self::w:bookmarkEnd"/>
+	    <xsl:otherwise>
+	      <ANCHOR>
+		<xsl:attribute name="xml:id" select="substring(@w:name,2)"/>
+	      </ANCHOR>
+	    </xsl:otherwise>
+	    </xsl:choose>
 	  </xsl:template>
 	  
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
