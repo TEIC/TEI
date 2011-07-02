@@ -3,9 +3,9 @@ JING=jing
 TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
-DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx oo nlm tite rdf
+DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx odt nlm tite rdf
 OLDDIRS=slides fo html common latex
-SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub teitohtml
+SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub teitohtml teitransform
 PREFIX=/usr
 OXY=/usr/share/oxygen/stylesheetDocumentation.sh
 TARGETS= \
@@ -25,7 +25,7 @@ TARGETS= \
 	profiles/default/html/to.xsl \
 	profiles/default/latex/to.xsl \
 	profiles/default/lite/to.xsl \
-	profiles/default/oo/to.xsl \
+	profiles/default/odt/to.xsl \
 	profiles/default/relaxng/to.xsl	\
 	profiles/enrich/docx/to.xsl \
 	profiles/enrich/fo/to.xsl \
@@ -38,7 +38,7 @@ TARGETS= \
 	profiles/default/docx/from.xsl \
 	profiles/enrich/docx/from.xsl \
 	profiles/default/csv/from.xsl		\
-	profiles/default/oo/from.xsl \
+	profiles/default/odt/from.xsl \
 	profiles/default/docbook/from.xsl	\
 	profiles/default/p4/from.xsl\
 	profiles/default/docx/from.xsl
@@ -130,7 +130,7 @@ oxygendoc:
 	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 teioo.jar:
-	(cd oo; jar cf ../teioo.jar META-INF/manifest.xml mimetype TypeDetection.xcu *xsl *ott teilite.dtd )
+	(cd odt; jar cf ../teioo.jar META-INF/manifest.xml mimetype TypeDetection.xcu *xsl *ott teilite.dtd )
 
 test: clean p4 p5 p5-2 common
 	@echo BUILD Run tests
