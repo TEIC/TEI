@@ -70,7 +70,7 @@ general:
 	../teitolatex test.xml
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
 	diff test.tex ok/test.tex
-	../teitoepub  test.xml 
+	../teitoepub  test.xml test.epub
 	../teitoodt test.xml 
 	../teitodocx test.xml 
 	unzip -t test.xml.docx 
