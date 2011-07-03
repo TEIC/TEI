@@ -53,7 +53,7 @@
   <xsl:template match="w:pStyle/@w:val|w:rStyle/@w:val" mode="pass0">
       <xsl:variable name="old" select="."/>
       <xsl:variable name="new">
-	<xsl:for-each select="document(concat($word-directory,'/word/styles.xml'))">
+	<xsl:for-each select="$styledoc">
 	  <xsl:value-of select="key('STYLES',$old)/w:name/@w:val"/>
 	</xsl:for-each>
       </xsl:variable>

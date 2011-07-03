@@ -67,4 +67,6 @@
 
     <xsl:param name="preserveEffects">false</xsl:param>
 
+    <xsl:param name="verbose">false</xsl:param>
+
 </xsl:stylesheet>

@@ -197,7 +197,7 @@
                 <w:pPr>
                     <w:pStyle>
                         <xsl:attribute name="w:val">
-                            <xsl:value-of select="concat(translate(substring(parent::tei:div/@type,1,1),$lowercase,$uppercase),substring(parent::tei:div/@type,2))"/>
+                            <xsl:value-of select="concat(upper-case(substring(parent::tei:div/@type,1,1)),substring(parent::tei:div/@type,2))"/>
                         </xsl:attribute>
                     </w:pStyle>
                 </w:pPr>

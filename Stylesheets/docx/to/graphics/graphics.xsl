@@ -163,8 +163,8 @@
 	    <xsl:when test="@teidocx:height">
 	      <xsl:value-of select="@teidocx:height"/>
 	    </xsl:when>
-	    <xsl:when test="doc-available(concat($word-directory,'/image-size-info.xml'))">
-		<xsl:for-each select="document(concat($word-directory,'/image-size-info.xml'))">
+	    <xsl:when test="doc-available(concat($wordDirectory,'/image-size-info.xml'))">
+		<xsl:for-each select="document(concat($wordDirectory,'/image-size-info.xml'))">
 		  <xsl:value-of select="(number(key('H',$filename)/height) div 72) * 9144"/>
 		</xsl:for-each>
 	    </xsl:when>
@@ -177,8 +177,8 @@
 	    <xsl:when test="@teidocx:width">
 	      <xsl:value-of select="@teidocx:width"/>
 	    </xsl:when>
-	    <xsl:when test="doc-available(concat($word-directory,'/image-size-info.xml'))">
-		<xsl:for-each select="document(concat($word-directory,'/image-size-info.xml'))">
+	    <xsl:when test="doc-available(concat($wordDirectory,'/image-size-info.xml'))">
+		<xsl:for-each select="document(concat($wordDirectory,'/image-size-info.xml'))">
 		  <xsl:value-of select="(number(key('W',$filename)/width) div 72) * 9144"/>
 		</xsl:for-each>
 	    </xsl:when>
@@ -339,7 +339,7 @@
 						    + 300"/>
 				      </xsl:when>
 				      <xsl:otherwise>
-					<xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$filename]/@Id"/>
+					<xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$filename]/@Id"/>
 				      </xsl:otherwise>
 				    </xsl:choose>
 				  </xsl:attribute>

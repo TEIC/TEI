@@ -101,10 +101,10 @@
     <xsl:param name="inputDir">.</xsl:param>
     <xsl:param name="debug">false</xsl:param>
     <xsl:param name="styleDoc">
-        <xsl:value-of select="concat($word-directory, '/word/styles.xml')"/>
+        <xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/>
     </xsl:param>
     <xsl:param name="docDoc">
-        <xsl:value-of select="concat($word-directory, '/word/document.xml')"/>
+        <xsl:value-of select="concat($wordDirectory, '/word/document.xml')"/>
     </xsl:param> 
     <xsl:param name="shadowGraphics">false</xsl:param>
     <xsl:param name="alignFigures">center</xsl:param>
@@ -160,9 +160,11 @@
     <xsl:key name="Styles" match="w:style/w:name" use="@w:val"/>
 
     <xsl:variable name="align">right</xsl:variable>
-    <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
-    <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
 
+    <xsl:variable name="wordDirectory">
+      <xsl:value-of
+	  select="translate($word-directory,'\\','/')"/>
+    </xsl:variable>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

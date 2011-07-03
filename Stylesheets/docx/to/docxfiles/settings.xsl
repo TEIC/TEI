@@ -62,11 +62,11 @@
    </doc>
     <xsl:template name="write-docxfile-settings">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/settings.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/settings.xml')"/>
          </xsl:message>
 	     </xsl:if>
 
-        <xsl:result-document href="{concat($word-directory,'/word/settings.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/word/settings.xml')}" standalone="yes">
             
             <w:settings xmlns:sl="http://schemas.openxmlformats.org/schemaLibrary/2006/main">
                 <w:zoom w:percent="100"/>

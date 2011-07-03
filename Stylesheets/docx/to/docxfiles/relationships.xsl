@@ -64,11 +64,11 @@
    </doc>
     <xsl:template name="write-docxfile-main-relationships">
       <xsl:if test="$debug='true'">
-	<xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/_rels/.rels')"/>
+	<xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/_rels/.rels')"/>
 	</xsl:message>
       </xsl:if>
 
-        <xsl:result-document href="{concat($word-directory,'/_rels/.rels')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/_rels/.rels')}" standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
                 <Relationship Id="rId1"
                           Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
@@ -94,11 +94,11 @@
    </doc>
     <xsl:template name="write-docxfile-relationships">
       <xsl:if test="$debug='true'">
-	<xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/_rels/document.xml.rels')"/>
+	<xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
 	</xsl:message>
       </xsl:if>
 
-        <xsl:result-document href="{concat($word-directory,'/word/_rels/document.xml.rels')}"
+        <xsl:result-document href="{concat($wordDirectory,'/word/_rels/document.xml.rels')}"
                            standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
                 

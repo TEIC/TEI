@@ -37,8 +37,8 @@
 	  <xsl:import href="../utils/functions.xsl"/>
 	  <xsl:import href="../utils/variables.xsl"/>
 	  <xsl:import href="../utils/identity/identity.xsl"/>
-	  <xsl:import href="parameters.xsl"/>
 
+	  <xsl:import href="parameters.xsl"/>
 	  <xsl:include href="pass2/pass2.xsl"/>
 	  <xsl:include href="pass0/pass0.xsl"/>
 	
@@ -77,14 +77,16 @@
 	  <xsl:variable name="processor">
 		    <xsl:value-of select="system-property('xsl:vendor')"/>
 	  </xsl:variable>
-	  <xsl:variable name="lowercase">abcdefghijklmnopqrstuvwxyz</xsl:variable>
-	  <xsl:variable name="uppercase">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
 	  <xsl:variable name="digits">1234567890</xsl:variable>
 	  <xsl:variable name="characters">~!@#$%^&amp;*()&lt;&gt;{}[]|:;,.?`'"=+-_</xsl:variable>
 
 
-
-
+	  <xsl:variable name="wordDirectory">
+	    <xsl:value-of
+		select="translate($word-directory,'\\','/')"/>
+	  </xsl:variable>
+	  <xsl:variable name="docProps" select="doc(concat($wordDirectory,'/docProps/core.xml'))"/>
+	  <xsl:variable name="styledoc" select="doc(concat($wordDirectory,'/word/styles.xml'))"/>
 
 	<xsl:strip-space elements="*"/>
 	  <xsl:preserve-space elements="w:t"/>
@@ -415,12 +417,12 @@
 
 				        <xsl:variable name="rid" select="@r:id"/>
 				        <xsl:variable name="h-file">
-					          <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+					          <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
 				        </xsl:variable>
 
 				        <!-- for the moment, just copy content -->
-				<xsl:if test="doc-available(concat($word-directory,'/word/', $h-file))">
-					          <xsl:for-each-group select="document(concat($word-directory,'/word/', $h-file))/*[1]/w:*"
+				<xsl:if test="doc-available(concat($wordDirectory,'/word/', $h-file))">
+					          <xsl:for-each-group select="document(concat($wordDirectory,'/word/', $h-file))/*[1]/w:*"
                                    group-adjacent="1">
 						            <xsl:apply-templates select="." mode="inSectionGroup"/>
 					          </xsl:for-each-group>
@@ -438,11 +440,11 @@
 	  <xsl:choose>
 	    <xsl:when test="ancestor::w:endnote">
 	      <xsl:value-of
-		  select="document(concat($word-directory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+		  select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:value-of
-		  select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+		  select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:attribute>

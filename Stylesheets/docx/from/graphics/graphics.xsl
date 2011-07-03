@@ -88,7 +88,7 @@
 					 select="concat(number(descendant::wp:extent[1]/@cy) div 360000,'cm')"/>
 			  <xsl:attribute name="url">
 			    <xsl:variable name="rid" select="descendant::a:blip[1]/@r:embed"/>
-			    <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+			    <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
 			  </xsl:attribute>
 			  
 			  <!-- inline or block -->
@@ -107,7 +107,7 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <graphic> Linked Graphic: <xsl:variable name="rid" select="@r:link"/>
-                            <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+                            <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
                         </graphic>
                     </xsl:otherwise>
                 </xsl:choose>
@@ -131,13 +131,13 @@
                 <xsl:when test="@r:embed">
                     <xsl:variable name="rid" select="@r:embed"/>
                     <xsl:attribute name="r:embed">
-                        <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+                        <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
                     </xsl:attribute>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="rid" select="@r:link"/>
                     <xsl:attribute name="r:link">
-                        <xsl:value-of select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+                        <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
                     </xsl:attribute>
                 </xsl:otherwise>
             </xsl:choose>

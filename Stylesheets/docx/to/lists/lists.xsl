@@ -148,7 +148,7 @@
 				    <xsl:text>2</xsl:text>
 				  </xsl:when>
 				  <xsl:otherwise>
-				    <xsl:for-each select="document(concat($word-directory,'/word/numbering.xml'))">
+				    <xsl:for-each select="document(concat($wordDirectory,'/word/numbering.xml'))">
 				      <xsl:variable name="abstractNumId"
 						    select="key('AN',$listStyle)/@w:abstractNumId"/>
 				      <xsl:value-of select="key('NUMS',$abstractNumId)/@w:numId"/>

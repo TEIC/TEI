@@ -146,7 +146,7 @@
             <xsl:variable name="rid" select="@r:id"/>
             <xsl:variable name="file">
                 <xsl:value-of
-		    select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+		    select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
 	    </xsl:variable>
 	    <v:imagedata r:id="{$file}"/>
     </xsl:template>
@@ -162,7 +162,7 @@
             <xsl:variable name="rid" select="@r:id"/>
             <xsl:variable name="file">
                 <xsl:value-of
-		    select="document(concat($word-directory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+		    select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
 	    </xsl:variable>
             <xsl:attribute name="r:id">
                 <xsl:value-of select="$file"/>

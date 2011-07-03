@@ -58,11 +58,11 @@
    </doc>
     <xsl:template name="write-docxfile-endnotes-file">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/endnotes.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/endnotes.xml')"/>
          </xsl:message>
 	     </xsl:if>
 
-        <xsl:result-document href="{concat($word-directory,'/word/endnotes.xml')}">
+        <xsl:result-document href="{concat($wordDirectory,'/word/endnotes.xml')}">
             <w:endnotes>
                 <w:endnote w:type="separator" w:id="-1">
                     <w:p>

@@ -31,7 +31,7 @@
     
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="styleDoc">
-        <xsl:value-of select="concat($word-directory, '/word/styles.xml')"/>
+        <xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/>
     </xsl:param>
     
     <xsl:key name="Styles" match="w:style/w:name" use="@w:val"/>
@@ -41,11 +41,11 @@
             <xsl:apply-templates mode="comments"/>
         </xsl:variable>
         <xsl:variable name="relations">
-            <xsl:apply-templates select="doc(concat($word-directory,'/word/_rels/document.xml.rels'))"
+            <xsl:apply-templates select="doc(concat($wordDirectory,'/word/_rels/document.xml.rels'))"
                               mode="relations"/>
         </xsl:variable>
         <xsl:variable name="content-types">
-            <xsl:apply-templates mode="content-types" select="doc(concat($word-directory,'/Content_Types.xml'))"/>
+            <xsl:apply-templates mode="content-types" select="doc(concat($wordDirectory,'/Content_Types.xml'))"/>
         </xsl:variable>
         
         <xsl:message>produce actual document</xsl:message>
@@ -167,10 +167,10 @@
     <xsl:template name="write-out-content-types">
         <xsl:param name="types"/>
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/Content_Types_new.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/Content_Types_new.xml')"/>
          </xsl:message>
 	     </xsl:if>
-        <xsl:result-document href="{concat($word-directory,'/Content_Types_new.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/Content_Types_new.xml')}" standalone="yes">
             <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
                 <xsl:for-each select="$types/child::node()/*">
                     <xsl:copy-of select="."/>
@@ -186,10 +186,10 @@
     <xsl:template name="write-out-relations">
         <xsl:param name="relations"/>
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/_rels/document_new.xml.rels')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'word/_rels/document_new.xml.rels')"/>
          </xsl:message>
 	     </xsl:if>
-        <xsl:result-document href="{concat($word-directory,'/word/_rels/document_new.xml.rels')}"
+        <xsl:result-document href="{concat($wordDirectory,'/word/_rels/document_new.xml.rels')}"
                            standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
                 <xsl:for-each select="$relations/child::node()/*">
@@ -206,10 +206,10 @@
     <xsl:template name="write-out-comments">
         <xsl:param name="comments"/>
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'word/_rels/comments.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'word/_rels/comments.xml')"/>
          </xsl:message>
 	     </xsl:if>
-        <xsl:result-document href="{concat($word-directory,'/word/comments.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/word/comments.xml')}" standalone="yes">
             <w:comments xmlns:mv="urn:schemas-microsoft-com:mac:vml"
                      xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main">
                 <xsl:copy-of select="$comments"/>
@@ -219,7 +219,7 @@
     
     <!-- writes settings.xml and app.xml to lock down the document -->
     <xsl:template name="lock-down-document">
-        <xsl:result-document href="{concat($word-directory,'/docProps/app.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/docProps/app.xml')}" standalone="yes">
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
                      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <Template>STD_3_0_0.dotx</Template>
@@ -230,7 +230,7 @@
             </Properties>
         </xsl:result-document>
         
-        <xsl:result-document href="{concat($word-directory,'/word/settings.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/word/settings.xml')}" standalone="yes">
             <w:settings xmlns:sl="http://schemas.openxmlformats.org/schemaLibrary/2006/main">
                 <w:zoom w:percent="100"/>
                 <w:attachedTemplate r:id="rId1"/>

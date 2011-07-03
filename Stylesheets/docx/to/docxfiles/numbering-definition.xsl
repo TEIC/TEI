@@ -54,11 +54,11 @@
     
      <xsl:template name="write-docxfile-numbering-definition">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/numbering.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/numbering.xml')"/>
          </xsl:message>
 	     </xsl:if>
 
-        <xsl:result-document href="{concat($word-directory,'/word/numbering.xml')}">
+        <xsl:result-document href="{concat($wordDirectory,'/word/numbering.xml')}">
             <w:numbering>
 
                 <!-- for headlines -->

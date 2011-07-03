@@ -77,11 +77,11 @@
     <xsl:template name="write-docxfile-specific-header-file">
         <xsl:for-each select="key('ALLHEADERS',1)">
 	        <xsl:if test="$debug='true'">
-	           <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/word/header',position(),'.xml')"/>
+	           <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/header',position(),'.xml')"/>
             </xsl:message>
 	        </xsl:if>
 
-            <xsl:result-document href="{concat($word-directory,'/word/header',position(),'.xml')}">
+            <xsl:result-document href="{concat($wordDirectory,'/word/header',position(),'.xml')}">
                 <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
                    xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main">
                     <xsl:apply-templates select="."/>

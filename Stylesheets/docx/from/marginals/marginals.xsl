@@ -60,7 +60,7 @@
     <xsl:template match="w:footnoteReference">
         <note place="foot">
             <xsl:variable name="referenced-id" select="@w:id"/>
-            <xsl:for-each select="document(concat($word-directory,'/word/footnotes.xml'))//w:footnote[@w:id=$referenced-id]">
+            <xsl:for-each select="document(concat($wordDirectory,'/word/footnotes.xml'))//w:footnote[@w:id=$referenced-id]">
                 <xsl:apply-templates mode="paragraph"/>
             </xsl:for-each>
         </note>
@@ -75,7 +75,7 @@
     <xsl:template match="w:endnoteReference">
         <note place="end">
             <xsl:variable name="referenced-id" select="@w:id"/>
-            <xsl:for-each select="document(concat($word-directory,'/word/endnotes.xml'))//w:endnote[@w:id=$referenced-id]">
+            <xsl:for-each select="document(concat($wordDirectory,'/word/endnotes.xml'))//w:endnote[@w:id=$referenced-id]">
                 <xsl:apply-templates mode="paragraph"/>
             </xsl:for-each>
         </note>

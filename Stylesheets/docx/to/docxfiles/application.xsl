@@ -53,7 +53,7 @@
         <xsl:variable name="now" select="teidocx:whatsTheDate()"/>
 
         <xsl:variable name="coreFile">
-            <xsl:value-of select="$word-directory"/>
+            <xsl:value-of select="$wordDirectory"/>
             <xsl:text>/docProps/core.xml</xsl:text>
         </xsl:variable>
 
@@ -84,11 +84,11 @@
         <!-- after opening core.xml, we cannot write back to it; so save
             under new name -->
 	<xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/docProps/newcore.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/newcore.xml')"/>
          </xsl:message>
 	     </xsl:if>
 
-        <xsl:result-document href="{concat($word-directory,'/docProps/newcore.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/docProps/newcore.xml')}" standalone="yes">
             <cp:coreProperties>
                 <dc:title>
 		  <xsl:variable name="t">
@@ -119,11 +119,11 @@
 
     <xsl:template name="write-docxfile-docprops-app">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/docProps/app.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/app.xml')"/>
          </xsl:message>
 	     </xsl:if>
 
-        <xsl:result-document href="{concat($word-directory,'/docProps/app.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/docProps/app.xml')}" standalone="yes">
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
                      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <Template>STD_3_0_0.dotx</Template>
@@ -139,9 +139,9 @@
 	 under new name -->
     <xsl:template name="write-docxfile-docprops-custom">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($word-directory,'/docProps/newcustom.xml')"/>    </xsl:message>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/newcustom.xml')"/>    </xsl:message>
 	     </xsl:if>
-        <xsl:result-document href="{concat($word-directory,'/docProps/newcustom.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/docProps/newcustom.xml')}" standalone="yes">
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
                      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <property pid="1001" name="TEI_toDOCX">
