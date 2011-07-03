@@ -340,7 +340,7 @@
 		<xsl:number level="any"/>
 	      </xsl:variable>
 	      <xsl:for-each select="$TABLE">
-		<xsl:apply-templates mode="innerTable">
+		<xsl:apply-templates mode="insideCalsTable">
 		  <xsl:with-param name="n" select="$n" tunnel="yes"/>
 		</xsl:apply-templates>
 	      </xsl:for-each>
@@ -400,14 +400,14 @@
 	  </xsl:choose>
 	</xsl:template>
 	
-	  <xsl:template match="*" mode="innerTable">
+	  <xsl:template match="*" mode="insideCalsTable">
 	     <xsl:copy>
 	        <xsl:copy-of select="@*"/>
-	        <xsl:apply-templates mode="innerTable"/>	    
+	        <xsl:apply-templates mode="insideCalsTable"/>	    
 	     </xsl:copy>
 	  </xsl:template>
 
-	  <xsl:template match="w:tr" mode="innerTable">
+	  <xsl:template match="w:tr" mode="insideCalsTable">
 	     <row xmlns="http://www.oasis-open.org/specs/tm9901">
 	        <xsl:for-each select="w:tc[not(@DUMMY='yes')]">
 		  <xsl:variable name="cellBorderStyles">
