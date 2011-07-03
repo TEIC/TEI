@@ -365,6 +365,9 @@
 			    </xsl:choose>
 			  </xsl:attribute>
 			</xsl:if>
+			<xsl:if test="w:tcPr/w:gridSpan">
+			  <xsl:attribute name="cols" select="w:tcPr/w:gridSpan/@w:val"/>
+			</xsl:if>
 			<xsl:variable name="val" select="w:p[1]/w:pPr/w:pStyle/@w:val"/>
 			<xsl:choose>
 			  <xsl:when test="$val='[No Paragraph Style]'"/>
