@@ -2669,9 +2669,6 @@
             <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
             <div class="teidiv">
-               <xsl:call-template name="divClassAttribute">
-                  <xsl:with-param name="depth">0</xsl:with-param>
-               </xsl:call-template>
                <xsl:call-template name="stdheader">
                   <xsl:with-param name="title">
 		    <xsl:call-template name="header"/>
