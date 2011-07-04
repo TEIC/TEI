@@ -72,12 +72,9 @@
   <!--  <xsl:strip-space elements="text:span"/>-->
   
   <xsl:variable name="META">
-    <xsl:if test="$debug='true'">
-      <xsl:message>Look for metadata in <xsl:value-of select="concat($dir,'/meta.xml')"/></xsl:message>
-    </xsl:if>
     <xsl:choose>
       <xsl:when test="doc-available(concat($dir,'/meta.xml'))">
-        <xsl:copy-of select="document(concat($dir,'/meta.xml'))/office:document-meta/office:meta"/>
+        <xsl:copy-of select="document(concat($dir,'/meta.xml'))//office:meta"/>
       </xsl:when>
       <xsl:when test="/office:document/office:meta">
         <xsl:copy-of select="/office:document/office:meta"/>
@@ -113,6 +110,9 @@
   </xsl:template>
 
   <xsl:template match="/">
+    <xsl:if test="$debug='true'">
+      <xsl:message>Look for metadata in <xsl:value-of select="concat($dir,'/meta.xml')"/></xsl:message>
+    </xsl:if>
     <xsl:variable name="pass1">
       <xsl:apply-templates/>
     </xsl:variable>
@@ -181,7 +181,7 @@
           </edition>
         </editionStmt>
         <publicationStmt>
-          <p></p>
+          <p>no publication statement available</p>
         </publicationStmt>
         <sourceDesc>
           <p>
@@ -341,7 +341,10 @@
 
       <xsl:when test="@text:style-name='lg'">
         <lg>
-          <xsl:apply-templates/>
+	  <xsl:for-each-group select="node()"
+			      group-ending-with="text:line-break">
+	    <l><xsl:apply-templates select="current-group()"/></l>
+	  </xsl:for-each-group>
         </lg>
       </xsl:when>
       <xsl:when test="@text:style-name='Title'">
@@ -911,9 +914,13 @@
   </xsl:template>
 
   <xsl:template match="text:line-break">
-    <xsl:if test="not(parent::text:span[@text:style-name='l'])">
-      <lb/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="parent::text:span[@text:style-name='l']"/>
+      <xsl:when test="parent::text:p[@text:style-name='lg']"/>
+      <xsl:otherwise>
+	<lb/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="text:tab">
