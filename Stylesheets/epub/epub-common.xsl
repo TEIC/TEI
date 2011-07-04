@@ -432,6 +432,9 @@
       <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date[@when]">
         <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date/@when"/>
       </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
