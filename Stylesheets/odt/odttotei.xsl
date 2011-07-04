@@ -1267,8 +1267,7 @@ These seem to have no obvious translation
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="tei:p[not(node())]"
-		mode="pass1"/>
+  <xsl:template match="tei:p[not(node())]" mode="pass1"/>
 
   <xsl:template match="tei:HEAD" mode="pass1">
     <xsl:if test="preceding-sibling::tei:HEAD">
@@ -1297,19 +1296,11 @@ These seem to have no obvious translation
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass2">
-    <xsl:copy-of select="."/>
-  </xsl:template>
-
-  <xsl:template match="tei:p[not(*) and normalize-space(.)='']" mode="pass2"/>
-
-  <xsl:template match="*" mode="pass2">
-    <xsl:copy>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
-    </xsl:copy>
-  </xsl:template>
 
   <!-- second pass -->
+
+
+  <xsl:template match="tei:p[not(*) and normalize-space(.)='']" mode="pass2"/>
 
     <xsl:template match="@*|comment()|processing-instruction()" mode="pass2">
         <xsl:copy-of select="."/>
