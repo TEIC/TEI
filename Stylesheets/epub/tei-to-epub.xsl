@@ -127,12 +127,14 @@
           <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/OEBPS/stylesheet.css')}">
-          <xsl:if test="$debug='true'">
-            <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
-          </xsl:if>
-          <xsl:for-each select="tokenize(unparsed-text($cssFile),     '\r?\n')">
-            <xsl:call-template name="purgeCSS"/>
-          </xsl:for-each>
+	  <xsl:if test="not($cssFile='')">
+	    <xsl:if test="$debug='true'">
+	      <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
+	    </xsl:if>
+	    <xsl:for-each select="tokenize(unparsed-text($cssFile),     '\r?\n')">
+	      <xsl:call-template name="purgeCSS"/>
+	    </xsl:for-each>
+	  </xsl:if>
           <xsl:if test="not($cssSecondaryFile='')">
             <xsl:if test="$debug='true'">
               <xsl:message>reading secondary file <xsl:value-of select="$cssSecondaryFile"/></xsl:message>

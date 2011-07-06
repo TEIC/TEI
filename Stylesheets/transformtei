@@ -78,7 +78,7 @@ while test $# -gt 0; do
     --splitLevel=*) splitLevel=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
     --subject=*)    subject="`echo $1 | sed 's/.*=//'`";;
-    --css=*)        cssFile=`echo $1 | sed 's/.*=//'`;;
+    --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
     --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
     --odd)          odd=true;;
     --debug)        debug="-Ddebug=true"; antflag=-v;;
@@ -122,7 +122,7 @@ if ! test -f $profiledir/$profile/$format/$direction.xsl
 then
     die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
 fi
-echo Convert $infile to $outfile \($from to $to\) using profile $profile
+echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug
 
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-lib ${SAXONJAR} $debug \
@@ -134,7 +134,7 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
         -Dprofile=$profile \
 	-Dpublisher=$publisher \
 	-Duid=$uid \
-	-DcssFile=$cssFile \
+	$cssFile \
 	-Dsubject=$subject \
 	-Dcoverimage=$coverimage \
 	-DsplitLevel=$splitLevel 

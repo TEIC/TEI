@@ -80,7 +80,9 @@
       <param name="summaryDoc" expression="true"/>
     </xslt>
   </target>
-  <target name="dist" depends="setup,odd,notodd">
+  <target name="dist" depends="setup,odd,notodd,convert,cleanup"/>
+
+  <target name="convert">
     <!-- Recreate temporary output directory -->
     <!-- The transformation for EPUB output. -->
     <echo level="info">XSLT generate ePub files </echo>
@@ -133,7 +135,11 @@
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
     <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
     <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
-    <copy file="${outputDir}/temp-for-ant.zip" tofile="${outputFile}" overwrite="true"/>
+    <copy file="${outputDir}/temp-for-ant.zip" tofile="${outputFile}"
+	  overwrite="true"/>
+  </target>
+
+  <target name="cleanup" unless="debug">  
     <delete file="${outputDir}/temp-for-ant.zip"/>
     <delete dir="${outputTempDir}"/>
   </target>
