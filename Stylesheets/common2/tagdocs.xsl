@@ -91,6 +91,10 @@
          <xsl:element namespace="{$outputNS}" name="{$cellName}">
             <xsl:attribute name="{$rendName}">
                <xsl:text>odd_label</xsl:text>
+	       <xsl:if test="@status">
+		 <xsl:text> status_</xsl:text>
+		 <xsl:value-of select="@status"/>
+	       </xsl:if>
             </xsl:attribute>
 	           <xsl:value-of select="$name"/>
          </xsl:element>
