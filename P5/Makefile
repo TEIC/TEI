@@ -184,13 +184,13 @@ valid: check
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-#	 $(JING) -t p5odds.rng ${DRIVER} 
+#	$(JING) -t p5odds.rng ${DRIVER} 
 #
+	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
+	./run-onvdl p5.nvdl ${DRIVER} 
 	@echo BUILD: Check validity with rnv
 	xmllint --noent --xinclude ${DRIVER} > Source.xml
 	rnv -v p5odds.rnc Source.xml
-	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
-	./run-onvdl p5.nvdl ${DRIVER} 
 	@echo BUILD: Check full validity of relevant examples with nvdl
 	${SAXON} ${DRIVER} Utilities/extractegXML.xsl > v.body
 	echo "<!DOCTYPE p [" > v.header
