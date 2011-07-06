@@ -93,8 +93,9 @@ while test $# -gt 0; do
   esac
   shift
 done
-infile=${1:?"no input file supplied; for usage syntax $0 --help"}
-D=`dirname "$infile"`
+in=${1:?"no input file supplied; for usage syntax $0 --help"}
+infile=`basename $in`
+D=`dirname "$in"`
 indir=`(cd $D; pwd)`
 if [ $# -eq 1 ]
 then
@@ -105,9 +106,13 @@ else
    O=`dirname $2`
    outdir=`(cd $O; pwd)`
 fi
-if ! test -f $infile
+if ! test -f $indir/$infile
 then 
     die "Input file $infile does not exist"
+fi
+if ! test -f $SAXONJAR
+then 
+    die "Saxon jar file $SAXONJAR does not exist"
 fi
 
 if ! test -f $APPHOME/$format/build-$direction.xml 
