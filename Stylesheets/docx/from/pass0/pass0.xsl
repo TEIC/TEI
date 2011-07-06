@@ -3,6 +3,7 @@
                 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:o="urn:schemas-microsoft-com:office:office"
                 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:v="urn:schemas-microsoft-com:vml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
@@ -14,7 +15,8 @@
                 
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="ve o r m v wp w10 w wne mml tbx">
+                exclude-result-prefixes="ve o r m v wp w10 w wne mml
+					 teidocx tbx">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -43,6 +45,28 @@
       <xsl:copy-of select="."/>
   </xsl:template>
   
+  <xsl:template match="w:body">
+    <xsl:copy>
+      <xsl:choose>
+	<xsl:when test="w:p[teidocx:is-firstlevel-heading(.)]"/>
+	<xsl:otherwise>
+	  <w:p>
+	    <w:pPr>
+	      <w:pStyle w:val="Heading 1"/>
+	    </w:pPr>
+	    <w:r>
+	      <w:rPr>
+		<w:sz w:val="36"/>
+	      </w:rPr>
+	      <w:t/>
+	    </w:r>
+	  </w:p>
+	</xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
+    </xsl:copy>
+  </xsl:template>
+
   
   <xsl:template match="*" mode="pass0">
       <xsl:copy>

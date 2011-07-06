@@ -45,6 +45,10 @@
     <xsl:output indent="yes"/>
 
     <xsl:template match="@rend[.='Body Text']" mode="pass2"/>
+    <xsl:template match="@rend[.='Body Text 2']" mode="pass2"/>
+    <xsl:template match="@rend[.='Body Text 3']" mode="pass2"/>
+    <xsl:template match="@rend[.='Text Body']" mode="pass2"/>
+    <xsl:template match="@rend[.='Text body']" mode="pass2"/>
     <xsl:template match="@rend[.='Body Text Indent']" mode="pass2"/>
 
 </xsl:stylesheet>

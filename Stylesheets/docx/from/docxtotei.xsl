@@ -166,13 +166,13 @@
      </desc>
    </doc>
 	  <xsl:template match="w:document">
-		    <TEI>
-			<!-- create teiHeader -->
-			<xsl:call-template name="create-tei-header"/>
-
-			      <!-- convert main and back matter -->
-			<xsl:apply-templates select="w:body"/>
-		    </TEI>
+	    <TEI>
+	      <!-- create teiHeader -->
+	      <xsl:call-template name="create-tei-header"/>
+	      
+	      <!-- convert main and back matter -->
+	      <xsl:apply-templates select="w:body"/>
+	    </TEI>
 	  </xsl:template>
 
 
@@ -299,7 +299,8 @@
 				else position() + 100">
 	      
 	      <!-- For each defined grouping call a specific template. If there is no
-		   grouping defined, apply templates with mode paragraph -->
+		   grouping defined, apply templates with mode
+		   paragraph -->
 	      <xsl:choose>
 		<xsl:when test="current-grouping-key()=1">
 		  <xsl:call-template name="listSection"/>
