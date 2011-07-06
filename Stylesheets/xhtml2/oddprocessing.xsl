@@ -475,7 +475,14 @@
   <xsl:template name="makeSectionHead">
     <xsl:param name="name"/>
     <xsl:param name="id"/>
-    <h3 class="oddSpec">
+    <h3>
+      <xsl:attribute name="class">>
+      <xsl:text>oddSpec</xsl:text>
+      <xsl:if test="@status">
+	<xsl:text> status_</xsl:text>
+	<xsl:value-of select="@status"/>
+      </xsl:if>
+      </xsl:attribute>
       <xsl:call-template name="makeAnchor">
         <xsl:with-param name="name">
           <xsl:value-of select="$id"/>
