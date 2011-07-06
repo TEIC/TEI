@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="FT" n="22"><head>Tables, Formulæ, and Graphics</head>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="FT" n="22"><head>Tables, Formulæ, Graphics and Notated Music</head>
 <p>Many documents, both historical and contemporary, include not only
 text, but also graphics, artwork, and other images.  Although some
 types of images can be represented directly with markup, 
@@ -20,17 +20,20 @@ significance or complexity than they are for running text. Indeed, it
 may often be difficult to make a clear distinction between details
 relating purely to the rendition of information and those relating to
 the information itself.</p>
-<p>Finally, documents may contain mathematical formulæ or
+<p>Documents may also contain mathematical formulæ or
 expressions in other formulaic notations, for which no notation is
 defined in these Guidelines.</p>
+  
+  <p>Finally, documents may contain musical notation, embedded in a manner similar to 
+    tables, graphs and formulæ.</p>
 
 <p>These areas (graphics, tabular material, and mathematical or other
-formulæ) have in common that they have received considerable attention
+formulæ, and music) have in common that they have received considerable attention
 from many other standards bodies or similar professional groups.  In
 part because of this, they may frequently be most conveniently encoded
 and processed using some notation not defined by these Guidelines.
-For these reasons, and others, we consider tables, formulæ, and
-graphics together in this chapter.</p>
+For these reasons, and others, we consider tables, formulæ,
+graphics and notated music together in this chapter.</p>
 
 <p>As with text markup in general, many incompatible formats have been
 proposed for the representation of graphics, formulæ, and tables in
@@ -43,11 +46,13 @@ data formats convey independently of the way it is rendered.</p>
 purpose <soCalled>container</soCalled> elements that can be used to
 encapsulate occurrences of such data within a TEI-conformant document in
 a portable way.  Specific recommendations for the encoding of tables are
-provided in section <ptr target="#FTTAB"/> and recommendations for
-mathematical or other formulæ in section <ptr target="#FTFOR"/>.
+provided in section <ptr target="#FTTAB"/>, recommendations for
+  mathematical or other formulæ in section <ptr target="#FTFOR"/>, and for the encoding of
+  musical notation in section <ptr target="FTNM"/>.
 Specific recommendations for the encoding of graphic figures may be
 found in section <ptr target="#FTGRA"/>.  The rest of the chapter is
 devoted to general problems of encoding graphic information.</p>
+  
 <p>There is at the time of writing no consensus on formats for graphical
 images, and such formats vary in many ways.  We therefore provide (in
 section <ptr target="#FTGROV"/>) a brief discussion of the ways in which
@@ -562,6 +567,158 @@ which is readily calculated.</p>
 
 </specGrp>
 </div>
+  
+  <div type="div2" xml:id="FTNM">
+    <head>Notated music in written text</head>
+    
+    <p>Music, like many other art forms, is often mentioned, discussed and described in
+      writings of various kinds. This applies to both historical and contemporary
+      documents, even though methods of notating music have changed considerably in
+      western history. In most cases, music notation enters the text flow in a way
+      similar to figures, images or graphs. On other occasions, elements of music
+      notation are treated as inline characters in running text.</p>
+    
+    <p><ref target="#notatedMusic">notatedMusic</ref>provides a way to
+      signal the presence of music notation in text, but defer to other
+      representations, which are not covered by
+      the TEI guidelines, to describe the music notation itself. In fact, several 
+      commercial, academic and standard bodies
+      have developed digital representations of music notation, and given the topic's
+      complexity, these representations often focus on different aspects and adopt
+      different methodologies. Therefore, <ref target="#notatedMusic">notatedMusic</ref> only defines a container element to encode the occurrence
+      of music notation and allows linking to the data format preferred by the
+      encoder.</p>
+    
+    <p>The following elements can be used for encoding music notation in text:
+      <specList>
+        <specDesc key="notatedMusic"/>
+        <specDesc key="ptr"/>
+        <specDesc key="desc"/>
+        <specDesc key="graphic"/>
+        <specDesc key="binaryObject"/>
+      </specList>
+    </p>
+    
+    
+    <list rend="specList">
+      <item>
+        <label><gi>notatedMusic</gi></label> groups elements representing or
+        containing music notation.</item>
+      <item>
+        <label><gi>ptr</gi></label> can be used to indicate the location of a
+        representation of the music notation.
+        <list type="specDesc">
+          <item><label>@mimeType</label> supplies the MIME type of the data
+            format, when available.</item>
+        </list>
+      </item>
+      <item>
+        <label><gi>desc</gi></label> can be used to give a prose description of the
+        notated music.</item>
+      <item>
+        <label><gi>graphic</gi></label> can be used to indicate the location of a
+        graphical representation of the music notation.</item>
+      <item>
+        <label><gi>binaryObject</gi></label> provides encoded binary data
+        which constitutes another representation of the music notation (e.g. audio).</item>
+    </list>
+    
+    <p>The <ref target="#notatedMusic">notatedMusic</ref> element may contain a
+      textual description and pointers to various representations of the music
+      notation in different media. An external representation of the notated music is
+      specified using the <gi>ptr</gi> element, whose <att>target</att> attribute provides its
+      electronically-accessible location.
+      The attribute <att>mimeType</att> supplies the MIME type of the data format when
+      available.
+      For example:</p>
+    
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve"><notatedMusic>
+  <ptr target="bar1.xml"/>
+</notatedMusic></egXML>
+    
+    <p>A textual description of the notation can be provided within the <gi>desc</gi> element;
+      alternatively, a <gi>label</gi> may be supplied. For example:</p>
+    
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve"><notatedMusic>
+  <ptr target="bar1.xml"/>
+  <desc>First bar of Chopin's Scherzo No.3 Op.39</desc>
+</notatedMusic></egXML>
+    
+    <p>It is possible to link to any kind of music notation data format.
+      However, when a
+      MIME type is not available, it is
+      recommended that the format be specified in the description. See the following examples.</p>
+    
+    <p>MIME type available:</p>
+    
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve"><notatedMusic>
+  <ptr target="bar1.xml" mimeType="application/vnd.recordare.musicxml"/>
+  <desc>First bar of Chopin's Scherzo No.3 Op.39. Encoded in MusicXML.</desc>
+</notatedMusic></egXML>
+    
+    <p>MIME type not available:</p>
+    
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve"><notatedMusic>
+  <ptr target="bar1.ly"/>
+  <desc>First bar of Chopin's Scherzo No.3 Op.39. Encoded in Lilypond.</desc>
+</notatedMusic></egXML>
+    
+    <p>Application format:</p>
+    
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve"><notatedMusic>
+  <ptr target="bar1.mscz" mimeType="application/x-musescore"/>
+  <desc>First bar of Chopin's Scherzo No.3 Op.39. MuseScore Notation Software format.</desc>
+</notatedMusic></egXML>
+    
+    <p>It is possible to specify the location of digital objects representing the
+      notated music in other media such as images or audio-visual files. The
+      interpretation of the correspondence between the notated music and these digital
+      objects is not encoded explicitly. We recommend the use of <gi>graphic</gi> and
+      <gi>binaryObject</gi> mainly as a fallback mechanism when the notated music format is not
+      displayable by the application using the encoding. The alignment of encoded
+      notated music, images carrying the notation, and audio files is a complex matter
+      for which we refer the reader to other formats and specifications such as <ref
+        target="http://www.interactivemusicnetwork.org/mpeg-ahg/">MPEG-SMR</ref>.</p>
+    
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve"><notatedMusic>
+  <ptr target="bar1.xml"/>
+  <graphic url="bar1.jpg"/>
+  <desc>First bar of Chopin's Scherzo No.3 Op.39</desc>
+</notatedMusic></egXML>
+    
+    
+    <p>In modern printing, music notation positioned between blocks of text for
+      illustrative purposes is usually referred to as a "figure" or "example". In this
+      cases, we recommend the inclusion of <gi>notatedMusic</gi> in <gi>figure</gi> 
+      in order to encode possible captions and headers. For
+      example:</p>
+    
+    <figure>
+      <figDesc>Example from: <bibl>
+        <author>Prout, E.</author> (<date when="1899">1899</date>). <title>The
+          orchestra.</title>
+      </bibl></figDesc>
+      <graphic url="Images/prout-ex1.jpg"/>
+    </figure>
+    
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:space="preserve"><div n="67">
+   <p>
+      We now give some examples, from the works of the great masters, 
+      of some of the most frequently used bowings.
+   </p>
+							
+   <figure>
+      <head><label>Ex. 3</label>SCHUBERT: Symphony in B minor.</head>
+	  <notatedMusic>
+         <ptr ref="example_schubert.xml"/>
+      </notatedMusic>
+   </figure>
+ </div>
+    </egXML>
+    
+    
+  </div>
+  
 <div type="div2" xml:id="FTGRA"><head>Specific Elements for Graphic Images</head>
 <p>The following special purpose elements are used to indicate the presence of graphic images within a document:
 <specList>
