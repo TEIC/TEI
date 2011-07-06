@@ -37,9 +37,8 @@ echo "  --debug            # be verbose, do not delete intermediate files"
 }
 
 #-------------------------------------------------
-debug=false
+debug=
 profile=default
-debug=false
 odd=false
 verbose=false
 antflag=-q
@@ -82,7 +81,7 @@ while test $# -gt 0; do
     --css=*)        cssFile=`echo $1 | sed 's/.*=//'`;;
     --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
     --odd)          odd=true;;
-    --debug)        debug=true; antflag=-v;;
+    --debug)        debug="-Ddebug=true"; antflag=-v;;
     --verbose)      verbose=true; antflag=-v;;
     --help)         usageMsg; exit 1;;
      *) if test "$1" = "${1#--}" ; then 
@@ -126,8 +125,7 @@ fi
 echo Convert $infile to $outfile \($from to $to\) using profile $profile
 
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
-	-lib ${SAXONJAR} \
-        -Ddebug=$debug  \
+	-lib ${SAXONJAR} $debug \
         -Dodd=$odd \
         -Dverbose=$verbose  \
 	-DinputFile="$indir/$infile" \
