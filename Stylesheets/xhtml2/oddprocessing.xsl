@@ -476,7 +476,7 @@
     <xsl:param name="name"/>
     <xsl:param name="id"/>
     <h3>
-      <xsl:attribute name="class">>
+      <xsl:attribute name="class">
       <xsl:text>oddSpec</xsl:text>
       <xsl:if test="@status">
 	<xsl:text> status_</xsl:text>
