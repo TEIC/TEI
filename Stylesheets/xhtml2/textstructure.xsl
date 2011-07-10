@@ -552,9 +552,11 @@
    </doc>
   <xsl:template match="tei:index">
     <xsl:if test="@xml:id">
-      <span style="display:none">
+      <span>
 	<xsl:attribute name="id" select="@xml:id"/>
-	<xsl:value-of select="tei:term"/>
+	<span style="display:none">
+	  <xsl:value-of select="tei:term"/>
+	</span>
       </span>
     </xsl:if>
   </xsl:template>
