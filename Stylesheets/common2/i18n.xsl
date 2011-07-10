@@ -35,6 +35,10 @@
    </doc>
   <xsl:key match="entry" name="KEYS" use="key"/>
   <xsl:param name="documentationLanguage">en</xsl:param>
+
+  <xsl:variable name="i18n"
+		select="document('../i18n.xml',document(''))"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] give language-specific version of a word or phrase<param name="word">the word(s) to translate</param>
       </desc>
@@ -56,7 +60,7 @@
             <xsl:value-of select="$local"/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:for-each select="document('../i18n.xml',document(''))">
+            <xsl:for-each select="$i18n">
 	      <xsl:choose>
 		<xsl:when test="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]">
 		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]"/>
