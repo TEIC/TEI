@@ -213,6 +213,10 @@
 		 <xsl:apply-templates mode="plain"/>
 	       </xsl:for-each>
             </xsl:when>
+	    <xsl:when test="not(tei:head)">
+	      <xsl:value-of select="substring(.,1,10)"/>
+	      <xsl:text>…</xsl:text>
+	    </xsl:when>
             <xsl:otherwise>
                <xsl:apply-templates select="tei:head" mode="makeheading"/>
             </xsl:otherwise>

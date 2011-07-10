@@ -20,6 +20,26 @@
     </desc>
   </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether a section is "identifiable"</desc>
+  </doc>
+  <xsl:function name="teidocx:is-identifiable" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+        <xsl:when test="self::tei:div">true</xsl:when>
+        <xsl:when test="self::tei:div1">true</xsl:when>
+        <xsl:when test="self::tei:div2">true</xsl:when>
+        <xsl:when test="self::tei:div3">true</xsl:when>
+        <xsl:when test="self::tei:div4">true</xsl:when>
+        <xsl:when test="self::tei:div5">true</xsl:when>
+        <xsl:when test="self::tei:div6">true</xsl:when>
+        <xsl:when test="self::tei:p[@xml:id]">true</xsl:when>
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in small caps.</desc>
   </doc>
   <xsl:function name="teidocx:render-smallcaps" as="xs:boolean">

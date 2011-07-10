@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"  xmlns:xlink="http://www.w3.org/1999/xlink"
+		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
 		xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:dbk="http://docbook.org/ns/docbook"
@@ -9,7 +10,8 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="a fo dbk xlink rng tei html teix its"
+                exclude-result-prefixes="a fo dbk xlink rng tei html
+					 teix its teidocx"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -555,7 +557,7 @@
          <p>Simplistic processing of element divGen[@type='index']</p>
          <p>
             <p xmlns="http://www.w3.org/1999/xhtml">make an index;
-	    does not take sortKey, indexName, or nested index into account </p>
+	    does not take indexName or nested index into account </p>
          </p>
       </desc>
    </doc>
@@ -565,8 +567,8 @@
       <xsl:variable name="index">
 	<xsl:for-each select="key('INDEX',1)">
 	  <tei:REF>
-	    <tei:copy-of select="tei:term"/>
-	    <xsl:for-each select="ancestor::tei:div[1]">
+	    <xsl:copy-of select="tei:term"/>
+	    <xsl:for-each select="ancestor::*[teidocx:is-identifiable(.)][1]">
 	      <a>
 		<xsl:attribute name="href">
 		  <xsl:apply-templates mode="generateLink" select="."/>
