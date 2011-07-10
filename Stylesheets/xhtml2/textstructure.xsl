@@ -552,9 +552,10 @@
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process element divGen[@type='index']</p>
+         <p>Simplistic processing of element divGen[@type='index']</p>
          <p>
-            <p xmlns="http://www.w3.org/1999/xhtml">make an index </p>
+            <p xmlns="http://www.w3.org/1999/xhtml">make an index;
+	    does not take sortKey, indexName, or nested index into account </p>
          </p>
       </desc>
    </doc>
@@ -564,9 +565,7 @@
       <xsl:variable name="index">
 	<xsl:for-each select="key('INDEX',1)">
 	  <tei:REF>
-	    <tei:term>
-	      <xsl:apply-templates select="tei:term"/>
-	    </tei:term>
+	    <tei:copy-of select="tei:term"/>
 	    <xsl:for-each select="ancestor::tei:div[1]">
 	      <a>
 		<xsl:attribute name="href">
