@@ -327,9 +327,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:index">
-      <xsl:apply-templates/>
-  </xsl:template>
+  <xsl:template match="tei:index"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
