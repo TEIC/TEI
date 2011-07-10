@@ -32,6 +32,8 @@
          <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
+  <xsl:key name="INDEX" use="1" match="tei:index"/>
+
   <xsl:key name="NOTES" use="1"
 	   match="tei:note[@place='foot' or @place='bottom' or @place='end'
 		  and not(parent::tei:bibl or ancestor::tei:teiHeader)]"/>

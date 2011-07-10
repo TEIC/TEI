@@ -544,6 +544,58 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>index element, by default does nothing</p>
+      </desc>
+   </doc>
+  <xsl:template match="tei:index"/>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Process element divGen[@type='index']</p>
+         <p>
+            <p xmlns="http://www.w3.org/1999/xhtml">make an index </p>
+         </p>
+      </desc>
+   </doc>
+  <xsl:template match="tei:divGen[@type='index']">
+    <div class="tei_index">
+      <h2>Index</h2>
+      <xsl:variable name="index">
+	<xsl:for-each select="key('INDEX',1)">
+	  <tei:REF>
+	    <tei:term>
+	      <xsl:apply-templates select="tei:term"/>
+	    </tei:term>
+	    <xsl:for-each select="ancestor::tei:div[1]">
+	      <a>
+		<xsl:attribute name="href">
+		  <xsl:apply-templates mode="generateLink" select="."/>
+		</xsl:attribute>
+		<xsl:call-template name="header"/>
+	      </a>
+	    </xsl:for-each>
+	  </tei:REF>
+	</xsl:for-each>
+      </xsl:variable>
+      <dl>
+	<xsl:for-each-group select="$index/tei:REF" group-by="tei:term">
+	  <xsl:sort select="tei:term"/>
+	  <dt><xsl:value-of select="current-grouping-key()"/></dt>
+	  <dd>
+	    <xsl:for-each-group select="current-group()" group-by="html:a">
+	      <xsl:for-each select="current-group()[1]">
+		<xsl:copy-of select="html:a"/>
+	      </xsl:for-each>
+	      <xsl:value-of select="$spaceCharacter"/>
+	    </xsl:for-each-group>
+	  </dd>
+	</xsl:for-each-group>
+      </dl>
+    </div>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process elements
       tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6</desc>
    </doc>
