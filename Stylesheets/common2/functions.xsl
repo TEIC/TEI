@@ -34,6 +34,7 @@
         <xsl:when test="self::tei:div5">true</xsl:when>
         <xsl:when test="self::tei:div6">true</xsl:when>
         <xsl:when test="self::tei:p[@xml:id]">true</xsl:when>
+        <xsl:when test="self::tei:index[@xml:id]">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>

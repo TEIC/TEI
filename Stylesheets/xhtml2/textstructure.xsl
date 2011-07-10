@@ -547,10 +547,17 @@
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>index element, by default does nothing</p>
+         <p>index element, by default does nothing, unless it has an xml:id</p>
       </desc>
    </doc>
-  <xsl:template match="tei:index"/>
+  <xsl:template match="tei:index">
+    <xsl:if test="@xml:id">
+      <span style="display:none">
+	<xsl:attribute name="id" select="@xml:id"/>
+	<xsl:value-of select="tei:term"/>
+      </span>
+    </xsl:if>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -567,26 +574,31 @@
       <xsl:variable name="index">
 	<xsl:for-each select="key('INDEX',1)">
 	  <tei:REF>
-	    <xsl:copy-of select="tei:term"/>
-	    <xsl:for-each select="ancestor::*[teidocx:is-identifiable(.)][1]">
-	      <a>
-		<xsl:attribute name="href">
-		  <xsl:apply-templates mode="generateLink" select="."/>
-		</xsl:attribute>
+	    <tei:TERM>
+	      <xsl:value-of select="tei:term"/>
+	    </tei:TERM>	    
+	    <xsl:for-each select="ancestor-or-self::*[teidocx:is-identifiable(.)][1]">
+	      <tei:LINK>
+		  <xsl:apply-templates mode="generateLink"
+				       select="."/>
+	      </tei:LINK>
+	      <tei:TARGET>
 		<xsl:call-template name="header"/>
-	      </a>
+	      </tei:TARGET>
 	    </xsl:for-each>
 	  </tei:REF>
 	</xsl:for-each>
       </xsl:variable>
       <dl>
-	<xsl:for-each-group select="$index/tei:REF" group-by="tei:term">
-	  <xsl:sort select="tei:term"/>
+	<xsl:for-each-group select="$index/tei:REF" group-by="tei:TERM">
+	  <xsl:sort select="tei:TERM"/>
 	  <dt><xsl:value-of select="current-grouping-key()"/></dt>
 	  <dd>
-	    <xsl:for-each-group select="current-group()" group-by="html:a">
+	    <xsl:for-each-group select="current-group()" group-by="tei:LINK">
 	      <xsl:for-each select="current-group()[1]">
-		<xsl:copy-of select="html:a"/>
+		<a href="{tei:LINK}">
+		  <xsl:value-of select="tei:TARGET"/>
+		</a>
 	      </xsl:for-each>
 	      <xsl:value-of select="$spaceCharacter"/>
 	    </xsl:for-each-group>
