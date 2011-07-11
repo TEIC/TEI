@@ -87,7 +87,7 @@
      <xsl:choose>
        <!-- there are various choices of how to proceed, driven by
 	    
-	    $pageLayout: Simple, CSS, Table, Frames
+	    $pageLayout: Simple, CSS, Table
 	    
 	    $STDOUT: true or false
 	    
@@ -110,14 +110,6 @@
 	   <xsl:call-template name="doDivs"/>
 	 </xsl:if>
        </xsl:when>
-       <!-- we are making a frame-based system -->
-       <xsl:when test="$pageLayout='Frames'">
-	 <xsl:if test="$verbose='true'">
-	   <xsl:message>case 2: pageLayout <xsl:value-of select="$pageLayout"/>
-	   </xsl:message>
-	 </xsl:if>
-	 <xsl:call-template name="doFrames"/>
-       </xsl:when>
        <!-- we have been asked for a particular section of the document -->
        <xsl:when test="not($requestedID='')">
 	 <xsl:if test="$verbose='true'">
@@ -126,9 +118,6 @@
 	   </xsl:message>
 	 </xsl:if>
 	 <xsl:choose>
-	   <xsl:when test="$requestedID='frametoc___'">
-	     <xsl:call-template name="writeFrameToc"/>
-	   </xsl:when>
 	   <xsl:when test="$requestedID='prelim___'">
 	     <xsl:apply-templates/>
 	   </xsl:when>
@@ -946,11 +935,8 @@
       <xsl:variable name="ident">
 	<xsl:apply-templates mode="ident" select="."/>
       </xsl:variable>
-      <xsl:element name="{$container}">
-	<xsl:call-template name="microdata"/>
-	<xsl:call-template name="divClassAttribute">
-	  <xsl:with-param name="depth" select="$Depth"/>
-	</xsl:call-template>	
+      
+      <xsl:variable name="contents">
 	<xsl:call-template name="startDivHook"/>
 
 	<xsl:choose>
@@ -1022,7 +1008,21 @@
 		 </xsl:if>
          </xsl:otherwise>
 	</xsl:choose>
-      </xsl:element>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="$filePerPage='true'">
+	  <xsl:copy-of select="$contents"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:element name="{$container}">
+	    <xsl:call-template name="microdata"/>
+	    <xsl:call-template name="divClassAttribute">
+	      <xsl:with-param name="depth" select="$Depth"/>
+	    </xsl:call-template>	
+	    <xsl:copy-of select="$contents"/>      
+	  </xsl:element>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1041,77 +1041,6 @@
             </xsl:for-each>
          </xsl:for-each>
       </xsl:for-each>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
-   </doc>
-  <xsl:template name="doFrames">
-      <xsl:variable name="BaseFile">
-         <xsl:value-of select="$masterFile"/>
-         <xsl:call-template name="addCorpusID"/>
-      </xsl:variable>
-      <xsl:choose>
-         <xsl:when test="$requestedID='toclist___'">
-            <xsl:call-template name="writeFrameToc"/>
-         </xsl:when>
-         <xsl:when test="$STDOUT='true'">
-            <xsl:call-template name="pageLayoutSimple"/>
-         </xsl:when>
-         <xsl:otherwise>
-
-	
-	           <xsl:variable name="outName">
-	              <xsl:call-template name="outputChunkName">
-	                 <xsl:with-param name="ident">
-	                    <xsl:value-of select="concat($BaseFile,'-menubar')"/>
-	                 </xsl:with-param>
-	              </xsl:call-template>
-	           </xsl:variable>
-	
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>Opening file <xsl:value-of select="$outName"/>
-               </xsl:message>
-	           </xsl:if>
-	           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-                                 encoding="{$outputEncoding}"
-                                 href="{$outName}"
-                                 method="{$outputMethod}">
-	  
-               <xsl:call-template name="writeFrameToc"/>
-	           </xsl:result-document>
-	
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>Closing file <xsl:value-of select="$outName"/>
-               </xsl:message>
-	           </xsl:if>
-
-	           <xsl:variable name="outName2">
-	              <xsl:call-template name="outputChunkName">
-	                 <xsl:with-param name="ident">
-                     <xsl:value-of select="concat($BaseFile,'-frames')"/>
-	                 </xsl:with-param>
-	              </xsl:call-template>
-	           </xsl:variable>
-	
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>Opening file <xsl:value-of select="$outName2"/>
-               </xsl:message>
-	           </xsl:if>
-	           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-                                 encoding="{$outputEncoding}"
-                                 href="{$outName2}"
-                                 method="{$outputMethod}">
-               <xsl:call-template name="pageLayoutSimple"/>	  
-	           </xsl:result-document>
-	
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>Closing file <xsl:value-of select="$outName"/>
-               </xsl:message>
-	           </xsl:if>
-
-            <xsl:apply-templates mode="split" select="tei:TEI"/>
-         </xsl:otherwise>
-      </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] <param name="currentID">currentID</param>
@@ -2184,6 +2113,30 @@
       <xsl:when test="tei:text/tei:group">
 	<xsl:apply-templates select="tei:text/tei:group"/>
       </xsl:when>
+       <xsl:when test="$filePerPage='true'">
+	 <xsl:variable name="pass1">	 
+	   <xsl:apply-templates select="tei:text/tei:body"/>
+	 </xsl:variable>
+	 <xsl:for-each-group select="$pass1/*"
+			     group-starting-with="html:PAGEBREAK">
+	   <xsl:choose>
+	     <xsl:when test="self::html:PAGEBREAK">
+	       <xsl:message>PAGE <xsl:value-of select="self::html:PAGEBREAK/@n"/></xsl:message>
+	       <xsl:result-document href="page_{self::html:PAGEBREAK/@n}.html">
+		   <html>
+		     <head></head>
+		     <body>
+		       <xsl:apply-templates select="current-group()" mode="copy"/>
+		     </body>
+		   </html>
+	       </xsl:result-document>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:copy-of select="current-group()"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </xsl:for-each-group>
+       </xsl:when>
       <xsl:otherwise>
 	<xsl:apply-templates select="tei:text/tei:body"/>
       </xsl:otherwise>
@@ -2192,6 +2145,12 @@
     <xsl:apply-templates select="tei:text/tei:back"/>
       <xsl:call-template name="printNotes"/>
   </xsl:template>
+
+  <xsl:template match="html:PAGEBREAK" mode="copy"/>
+  <xsl:template match="html:*" mode="copy">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] </desc>
    </doc>
@@ -2258,56 +2217,6 @@
             </xsl:comment>
          </address>
       </div>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] <param name="style">CSS style</param>
-      </desc>
-   </doc>
-  <xsl:template name="stdfooterFrame">
-      <xsl:param name="style" select="'plain'"/>
-      <xsl:variable name="BaseFile">
-         <xsl:value-of select="$masterFile"/>
-         <xsl:call-template name="addCorpusID"/>
-      </xsl:variable>
-      <xsl:if test="$linkPanel='true'">
-         <div class="footer">
-            <a class="{$style}">
-	      <xsl:attribute name="href">
-		<xsl:value-of select="concat($BaseFile,$standardSuffix)"/>
-		<xsl:text>?style=printable</xsl:text>
-	      </xsl:attribute>
-	      <xsl:call-template name="singleFileLabel"/>
-            </a>
-         </div>
-         <div class="footer">
-            <xsl:if test="$searchURL">
-               <a class="{$style}" href="{$searchURL}">
-		 <xsl:call-template name="i18n">
-		   <xsl:with-param name="word">searchWords</xsl:with-param>
-		 </xsl:call-template>
-               </a>
-            </xsl:if>
-            <xsl:if test="$feedbackURL">
-               <br/>
-               <xsl:text>&#10;</xsl:text>
-               <br/>
-               <xsl:text>&#10;</xsl:text>
-               <a class="{$style}" href="{$feedbackURL}">
-		 <xsl:call-template name="feedbackWords"/>
-               </a>
-            </xsl:if>
-         </div>
-      </xsl:if>
-      <xsl:call-template name="preAddressHook"/>
-      <address>
-         <xsl:comment>
-            <xsl:text>
-	Generated using an XSLT version </xsl:text>
-            <xsl:value-of select="system-property('xsl:version')"/> stylesheet
-	based on <xsl:value-of select="$teixslHome"/>
-	processed using: <xsl:value-of select="system-property('xsl:vendor')"/>
-         </xsl:comment>
-      </address>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] <param name="title">title</param>
@@ -2798,33 +2707,6 @@
       <xsl:attribute name="id">
          <xsl:value-of select="$ident"/>
       </xsl:attribute>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
-   </doc>
-  <xsl:template name="writeFrameToc">
-      <html>
-         <xsl:call-template name="addLangAtt"/>
-         <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (3)</xsl:comment>
-         <head>
-            <title>
-               <xsl:call-template name="generateTitle"/>
-            </title>
-            <xsl:call-template name="includeCSS"/>
-            <xsl:call-template name="cssHook"/>
-            <base target="framemain"/>
-         </head>
-         <body class="framemenu">
-            <xsl:call-template name="logoPicture"/>
-            <br/>
-            <xsl:text>&#10;</xsl:text>
-            <xsl:call-template name="linkListContents">
-               <xsl:with-param name="style" select="'toclist'"/>
-            </xsl:call-template>
-            <xsl:call-template name="stdfooterFrame"/>
-            <xsl:call-template name="bodyEndHook"/>
-         </body>
-      </html>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] <param name="homepage">homepage</param>

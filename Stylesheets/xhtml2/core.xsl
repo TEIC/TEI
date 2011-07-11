@@ -1154,6 +1154,17 @@
   </doc>
   <xsl:template match="tei:pb">
     <xsl:choose>
+      <xsl:when test="$filePerPage='true'">
+	<PAGEBREAK>
+	  <xsl:copy-of select="@*"/>
+	  <xsl:if test="not(@n)">
+	    <xsl:attribute name="n">
+	      <xsl:text>P.</xsl:text>
+	      <xsl:number level="any"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	</PAGEBREAK>
+      </xsl:when>
       <xsl:when test="$pagebreakStyle='active'">
         <div class="pagebreak">
           <xsl:call-template name="rendToClass"/>

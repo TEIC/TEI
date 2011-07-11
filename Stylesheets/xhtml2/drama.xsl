@@ -3,13 +3,11 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:teix="http://www.tei-c.org/ns/Examples"
-                
+                xmlns:teix="http://www.tei-c.org/ns/Examples"                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes=" a fo rng tei teix"
+                exclude-result-prefixes=" a fo rng tei teix html"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -158,23 +156,28 @@
       </desc>
    </doc>
   <xsl:template match="tei:sp">
-      <dl>
-         <dt class="speaker">
-	   <xsl:call-template name="makeAnchor"/>
-            <xsl:apply-templates select="tei:speaker"/>
-         </dt>
-         <dd>
-            <xsl:apply-templates select="tei:*[not(self::tei:speaker)]"/>
-         </dd>
-      </dl>
+    <div class="speaker">
+      <xsl:call-template name="makeAnchor"/>
+      <xsl:apply-templates select="tei:speaker"/>
+    </div>
+    <xsl:apply-templates select="tei:*[not(self::tei:speaker)]"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element sp/tei:p</desc>
    </doc>
   <xsl:template match="tei:sp/tei:p">
-    <div class="p-in-sp">
-      <xsl:apply-templates/>
-    </div>
+    <xsl:for-each-group select="node()" group-starting-with="tei:pb">
+      <xsl:choose>
+	<xsl:when test="self::html:PAGEBREAK">
+	  <xsl:apply-templates select="."/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <div class="p-in-sp">
+	    <xsl:apply-templates select="current-group()"/>
+	  </div>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each-group>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
