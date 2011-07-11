@@ -168,7 +168,7 @@
   <xsl:template match="tei:sp/tei:p">
     <xsl:for-each-group select="node()" group-starting-with="tei:pb">
       <xsl:choose>
-	<xsl:when test="self::html:PAGEBREAK">
+	<xsl:when test="self::tei:pb">
 	  <xsl:apply-templates select="."/>
 	</xsl:when>
 	<xsl:otherwise>
