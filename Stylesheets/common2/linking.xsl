@@ -213,6 +213,10 @@
 		 <xsl:apply-templates mode="plain"/>
 	       </xsl:for-each>
             </xsl:when>
+	    <xsl:when test="self::tei:index">
+	      <xsl:value-of select="substring(tei:term,1,10)"/>
+	      <xsl:text>…</xsl:text>
+	    </xsl:when>
 	    <xsl:when test="not(tei:head)">
 	      <xsl:value-of select="substring(.,1,10)"/>
 	      <xsl:text>…</xsl:text>

@@ -555,7 +555,7 @@
       <span>
 	<xsl:attribute name="id" select="@xml:id"/>
 	<span style="display:none">
-	  <xsl:value-of select="tei:term"/>
+	  <xsl:value-of select="normalize-space(tei:term)"/>
 	</span>
       </span>
     </xsl:if>
@@ -576,6 +576,9 @@
       <xsl:variable name="index">
 	<xsl:for-each select="key('INDEX',1)">
 	  <tei:REF>
+	    <tei:SORT>
+	      <xsl:value-of select="lower-case(translate(normalize-unicode(tei:term,'NFD'),'^[A-z0-9]',''))"/>
+	    </tei:SORT>	    
 	    <tei:TERM>
 	      <xsl:value-of select="tei:term"/>
 	    </tei:TERM>	    
@@ -593,7 +596,7 @@
       </xsl:variable>
       <dl>
 	<xsl:for-each-group select="$index/tei:REF" group-by="tei:TERM">
-	  <xsl:sort select="tei:TERM"/>
+	  <xsl:sort select="tei:SORT"/>
 	  <dt><xsl:value-of select="current-grouping-key()"/></dt>
 	  <dd>
 	    <xsl:for-each-group select="current-group()" group-by="tei:LINK">
