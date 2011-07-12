@@ -580,33 +580,6 @@
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element l</desc>
-  </doc>
-  <xsl:template match="tei:l" mode="Copying">
-    <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>Process element l[@copyOf]|lg[@copyOf]</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> copyOf handling </p>
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:l[@copyOf]|lg[@copyOf]">
-    <xsl:variable name="W">
-      <xsl:choose>
-        <xsl:when test="starts-with(@copyof,'#')">
-          <xsl:value-of select="substring-after(@copyof,'#')"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@copyof"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:apply-templates mode="Copying" select="key('IDS',$W)"/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element label</desc>
   </doc>
   <xsl:template match="tei:label">
@@ -679,8 +652,9 @@
   </doc>
   <xsl:template match="tei:l">
     <div>
-      <xsl:call-template name="rendToClass"/>
-      
+      <xsl:call-template name="rendToClass">      
+	<xsl:with-param name="default">l identifiable</xsl:with-param>
+      </xsl:call-template>	    
       <xsl:choose>
 	<xsl:when
 	    test="ancestor::tei:div[contains(@rend,'linenumber')]">
@@ -751,12 +725,6 @@
         </xsl:choose>
       <xsl:apply-templates/>
     </div>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element lg</desc>
-  </doc>
-  <xsl:template match="tei:lg" mode="Copying">
-    <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
@@ -1156,12 +1124,16 @@
   <xsl:template match="tei:pb" mode="ident">
     <xsl:text>page_</xsl:text>
     <xsl:choose>
-      <xsl:when test="@n">
-	<xsl:value-of select="@n"/>
+      <xsl:when test="@xml:id">
+	<xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:text>P.</xsl:text>
-	<xsl:number level="any"/>
+	<xsl:text>Page_</xsl:text>
+	<xsl:for-each select="ancestor::tei:div[1]">
+	  <xsl:number level="multiple" format="1.1.1.1.1"/>
+	  <xsl:text>_</xsl:text>
+	</xsl:for-each>
+	<xsl:number from="tei:div" level="any"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

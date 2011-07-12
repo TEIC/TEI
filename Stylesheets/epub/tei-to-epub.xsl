@@ -433,6 +433,9 @@
         <xsl:result-document href="{concat($directory,'/OEBPS/titlepage.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
+	      <xsl:call-template name="metaHTML">
+                <xsl:with-param name="title">Title page</xsl:with-param>
+	      </xsl:call-template>
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
               <meta name="calibre:cover" content="true"/>
               <title>Title page</title>
@@ -465,7 +468,9 @@
           <xsl:result-document href="{concat($directory,'/OEBPS/titlepage',$N,'.html')}" method="xml">
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
               <head>
-                <meta http-equiv="Content-Type" content="text/html;         charset=UTF-8"/>
+		<xsl:call-template name="metaHTML">
+                <xsl:with-param name="title">Title page</xsl:with-param>
+		</xsl:call-template>
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
                 <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
                 <title>Title page</title>

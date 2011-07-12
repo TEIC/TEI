@@ -172,7 +172,10 @@
 	  <xsl:apply-templates select="."/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <div class="p-in-sp">
+	  <div>
+	    <xsl:call-template name="rendToClass">      
+	      <xsl:with-param name="default">p-in-sp identifiable</xsl:with-param>
+	    </xsl:call-template>
 	    <xsl:apply-templates select="current-group()"/>
 	  </div>
 	</xsl:otherwise>
