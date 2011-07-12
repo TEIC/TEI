@@ -167,6 +167,13 @@
               <xsl:call-template name="purgeCSS"/>
             </xsl:for-each>
           </xsl:if>
+	  <xsl:if test="$filePerPage='true'">
+	    <xsl:text>body { width: </xsl:text>
+	    <xsl:value-of select="$viewPortWidth"/>
+	    <xsl:text>; height: </xsl:text>
+	    <xsl:value-of select="$viewPortHeight"/>
+	    <xsl:text>} </xsl:text>
+	  </xsl:if>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
           <xsl:message>write file OEBPS/print.css</xsl:message>
@@ -624,7 +631,20 @@
               <ade:styling-rule selector=".title_box" display="adobe-other-region" adobe-region="xsl-region-before"/>
             </ade:style>
           </ade:template>
-        </xsl:result-document>
+	</xsl:result-document>
+	<xsl:if test="$filePerPage='true'">
+        <xsl:if test="$debug='true'">
+          <xsl:message>write file META-INF/com.apple.ibooks.display-options.xml</xsl:message>
+        </xsl:if>
+	<xsl:result-document
+	    href="{concat($directory,'META-INF/com.apple.ibooks.display-options.xml')}">
+	  <display_options>
+	    <platform name="*">
+	      <option name="fixed-layout">true</option>
+	    </platform>
+	  </display_options>	  
+	</xsl:result-document>
+	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>

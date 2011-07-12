@@ -57,6 +57,14 @@
       (based on page breaks)</desc>
    </doc>
   <xsl:param name="filePerPage">false</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="number">
+      <desc>When making fixed format epub, width of viewport</desc>
+  </doc>
+  <xsl:param name="viewPortWidth">1000</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="number">
+      <desc>When making fixed format epub, height of viewport</desc>
+  </doc>
+  <xsl:param name="viewPortHeight">1000</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Number footnotes consecutively</desc>
@@ -291,6 +299,9 @@ will generate an &lt;h2&gt;</p>
             <xsl:call-template name="generateAuthor"/>
          </xsl:attribute>
       </meta>
+      <xsl:if test="$filePerPage='true'">
+	<meta name="viewport" content="width={$viewPortWidth}, height={$viewPortHeight}"/>
+      </xsl:if>
       <meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5'">
