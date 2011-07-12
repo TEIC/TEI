@@ -638,7 +638,7 @@
         </xsl:if>
 	<xsl:result-document
 	    href="{concat($directory,'META-INF/com.apple.ibooks.display-options.xml')}">
-	  <display_options>
+	  <display_options xmlns="">
 	    <platform name="*">
 	      <option name="fixed-layout">true</option>
 	    </platform>
