@@ -43,12 +43,11 @@
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
     <xsl:param name="subject">Oxford Text Archive</xsl:param>
+    <xsl:param name="pagebreakStyle">none</xsl:param>
 
     <xsl:template match="tei:title[@type='main']/text()">
       <xsl:value-of select="replace(.,' \[Electronic resource\]','')"/>
     </xsl:template>
-
-    <xsl:template match="tei:pb"/>
 
     <!--
       <div class="pagebreak">
@@ -92,6 +91,9 @@
 	    </xsl:for-each>
 	  </div>
 	</xsl:when>
+	<xsl:when test="$filePerPage='true'">
+	  <xsl:apply-templates/>
+	</xsl:when>
 	<xsl:when test="tei:ab and tei:speaker">
 	  <div class="spProse">
 	    <xsl:for-each select="tei:speaker">
@@ -114,9 +116,18 @@
   </xsl:template>
 
   <xsl:template match="tei:speaker">
-    <span class="speaker">
-      <xsl:apply-templates/>
-    </span>
+    <xsl:choose>
+      <xsl:when test="$filePerPage='true'">
+	<div class="speaker">
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
+      <xsl:otherwise>
+	<span class="speaker">
+	  <xsl:apply-templates/>
+	</span>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="tei:stage">
