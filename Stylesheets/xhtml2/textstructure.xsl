@@ -1455,6 +1455,23 @@
    </doc>
   <xsl:template name="mainTOC">
       <xsl:choose>
+	<xsl:when test="$filePerPage='true'">
+	  <ul>
+	    <xsl:for-each select="key('PB',1)">
+	      <li>
+		<a>
+		<xsl:attribute name="href">
+		  <xsl:apply-templates select="." mode="ident"/>
+		  <xsl:text>.html</xsl:text>
+		</xsl:attribute>		
+		<xsl:text>page </xsl:text>
+	      <xsl:number level="any"/>
+		</a>
+	      </li>
+	    </xsl:for-each>
+	  </ul>
+	</xsl:when>
+
 	<xsl:when test="self::tei:teiCorpus">
 	  <ul class="toc toc_corpus">
 	    <xsl:for-each select="tei:TEI">
@@ -2121,10 +2138,38 @@
 			     group-starting-with="html:PAGEBREAK">
 	   <xsl:choose>
 	     <xsl:when test="self::html:PAGEBREAK">
-	       <xsl:message>PAGE <xsl:value-of select="self::html:PAGEBREAK/@n"/></xsl:message>
-	       <xsl:result-document href="page_{self::html:PAGEBREAK/@n}.html">
+	       <xsl:variable name="outName">
+	       <xsl:call-template name="outputChunkName">
+		 <xsl:with-param name="ident">
+		   <xsl:value-of select="self::html:PAGEBREAK/@name"/>
+		 </xsl:with-param>
+	       </xsl:call-template>
+	       </xsl:variable>
+	       <xsl:if test="$verbose='true'">
+		 <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+	       </xsl:if>
+
+	       <xsl:result-document href="{$outName}">
 		   <html>
-		     <head></head>
+		     <xsl:call-template name="addLangAtt"/>
+		     <head>
+		       <xsl:variable name="pagetitle">
+			 <xsl:call-template name="generateTitle"/>
+			 <xsl:text> page </xsl:text>
+			 <xsl:value-of select="self::html:PAGEBREAK/@n"/>
+		       </xsl:variable>
+		       <title>
+			 <xsl:value-of select="$pagetitle"/>
+		       </title>
+		       <xsl:call-template name="headHook"/>
+		       <xsl:call-template name="metaHTML">
+			 <xsl:with-param name="title" select="$pagetitle"/>
+		       </xsl:call-template>
+		       <xsl:call-template name="includeCSS"/>
+		       <xsl:call-template name="cssHook"/>
+		       <xsl:call-template name="includeJavascript"/>
+		       <xsl:call-template name="javascriptHook"/>
+		     </head>
 		     <body>
 		       <xsl:apply-templates select="current-group()" mode="copy"/>
 		     </body>

@@ -59,6 +59,7 @@
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
   <xsl:param name="outputTarget">epub</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>(extensible) wrapper for root element</desc>
   </doc>
@@ -111,7 +112,14 @@
           </xsl:when>
         </xsl:choose>
       </xsl:variable>
-      <xsl:apply-templates mode="split"/>
+      <xsl:choose>
+	<xsl:when test="$splitLevel='-1'">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates mode="split"/>
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:for-each select="*">
         <xsl:variable name="TOC">
           <TOC xmlns="http://www.w3.org/1999/xhtml">
@@ -265,32 +273,51 @@
               <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>
               <item id="print.css" href="print.css" media-type="text/css"/>
               <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
-              <item id="start" href="index.html" media-type="application/xhtml+xml"/>
-              <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                <xsl:choose>
-                  <xsl:when test="not(html:a)"/>
-                  <xsl:when test="starts-with(html:a/@href,'#')"/>
-                  <xsl:otherwise>
-                    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
-                      <xsl:attribute name="id">
-                        <xsl:text>section</xsl:text>
-                        <xsl:number count="html:li" level="any"/>
-                      </xsl:attribute>
-                    </item>
-                  </xsl:otherwise>
-                </xsl:choose>
-                <xsl:if test="html:ul">
-                  <xsl:for-each select="html:ul//html:li[html:a and not(contains(html:a/@href,'#'))]">
-                    <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
-                      <xsl:attribute name="id">
-                        <xsl:text>section</xsl:text>
-                        <xsl:number count="html:li" level="any"/>
-                      </xsl:attribute>
-                    </item>
-                  </xsl:for-each>
-                </xsl:if>
-              </xsl:for-each>
-              <!-- images -->
+              <item id="start" href="index.html"
+		    media-type="application/xhtml+xml"/>
+	      <xsl:choose>
+		<xsl:when test="$filePerPage='true'">
+		  <xsl:for-each select="key('PB',1)">
+		    <item media-type="application/xhtml+xml">
+		      <xsl:attribute name="id">
+			<xsl:text>page</xsl:text>
+			<xsl:number level="any"/>
+		      </xsl:attribute>	
+		      <xsl:attribute name="href">
+			<xsl:apply-templates select="." mode="ident"/>
+			<xsl:text>.html</xsl:text>
+		      </xsl:attribute>
+		    </item>
+		  </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
+		    <xsl:choose>
+		      <xsl:when test="not(html:a)"/>
+		      <xsl:when test="starts-with(html:a/@href,'#')"/>
+		      <xsl:otherwise>
+			<item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
+			  <xsl:attribute name="id">
+			    <xsl:text>section</xsl:text>
+			    <xsl:number count="html:li" level="any"/>
+			  </xsl:attribute>
+			</item>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		    <xsl:if test="html:ul">
+		      <xsl:for-each select="html:ul//html:li[html:a and not(contains(html:a/@href,'#'))]">
+			<item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
+			  <xsl:attribute name="id">
+			    <xsl:text>section</xsl:text>
+			    <xsl:number count="html:li" level="any"/>
+			  </xsl:attribute>
+			</item>
+		      </xsl:for-each>
+		    </xsl:if>
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
+		  <!-- images -->
               <xsl:for-each select="key('GRAPHICS',1)">
                 <xsl:if test="not(@url=$coverImageOutside)">
                   <xsl:variable name="ID">
@@ -319,56 +346,76 @@
                 <itemref idref="titlepage{$N}" linear="yes"/>
               </xsl:for-each>
               <itemref idref="start" linear="yes"/>
-              <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                <xsl:choose>
-                  <xsl:when test="not(html:a)"/>
-                  <xsl:when test="starts-with(html:a/@href,'#')"/>
-                  <xsl:otherwise>
-                    <itemref linear="yes">
-                      <xsl:attribute name="idref">
-                        <xsl:text>section</xsl:text>
-                        <xsl:number count="html:li" level="any"/>
-                      </xsl:attribute>
-                    </itemref>
-                  </xsl:otherwise>
-                </xsl:choose>
-                <xsl:if test="html:ul">
-                  <xsl:for-each select="html:ul//html:li[html:a and not(contains(html:a/@href,'#'))]">
-                    <itemref linear="yes">
-                      <xsl:attribute name="idref">
-                        <xsl:text>section</xsl:text>
-                        <xsl:number count="html:li" level="any"/>
-                      </xsl:attribute>
-                    </itemref>
-                  </xsl:for-each>
-                </xsl:if>
-              </xsl:for-each>
-              <itemref idref="titlepageback" linear="no"/>
-              <xsl:call-template name="epubSpineHook"/>
-            </spine>
+	      <xsl:choose>
+		<xsl:when test="$filePerPage='true'">
+		  <xsl:for-each select="key('PB',1)">
+		    <itemref linear="yes">
+		      <xsl:attribute name="idref">
+			<xsl:text>page</xsl:text>
+			<xsl:number level="any"/>
+		      </xsl:attribute>
+		    </itemref>
+		    </xsl:for-each>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
+		    <xsl:choose>
+		      <xsl:when test="not(html:a)"/>
+		      <xsl:when test="starts-with(html:a/@href,'#')"/>
+		      <xsl:otherwise>
+			<itemref linear="yes">
+			  <xsl:attribute name="idref">
+			    <xsl:text>section</xsl:text>
+			    <xsl:number count="html:li" level="any"/>
+			  </xsl:attribute>
+			</itemref>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		    <xsl:if test="html:ul">
+		      <xsl:for-each select="html:ul//html:li[html:a and not(contains(html:a/@href,'#'))]">
+			<itemref linear="yes">
+			  <xsl:attribute name="idref">
+			    <xsl:text>section</xsl:text>
+			    <xsl:number count="html:li" level="any"/>
+			  </xsl:attribute>
+			</itemref>
+		      </xsl:for-each>
+		    </xsl:if>
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <itemref idref="titlepageback" linear="no"/>
+	      <xsl:call-template name="epubSpineHook"/>
+	    </spine>
             <guide>
               <reference type="text" href="titlepage.html" title="Cover"/>
               <reference type="text" title="Start" href="index.html"/>
-              <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                <xsl:if test="html:a">
-                  <reference type="text" href="{html:a[1]/@href}">
-                    <xsl:attribute name="title">
-                      <xsl:value-of select="normalize-space(html:a[1])"/>
-                    </xsl:attribute>
-                  </reference>
-                </xsl:if>
-                <!--
-		      <xsl:if test="html:ul">
-		      <xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
-                      <reference type="text" href="{html:a/@href}">
-		      <xsl:attribute name="title">
-		      <xsl:value-of select="normalize-space(html:a[1])"/>
-		      </xsl:attribute>
-                      </reference>
-		      </xsl:for-each>
-		      </xsl:if>
-		  -->
-              </xsl:for-each>
+	      <xsl:choose>
+		<xsl:when test="$filePerPage='true'">
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
+		    <xsl:if test="html:a">
+		      <reference type="text" href="{html:a[1]/@href}">
+			<xsl:attribute name="title">
+			  <xsl:value-of select="normalize-space(html:a[1])"/>
+			</xsl:attribute>
+		      </reference>
+		    </xsl:if>
+		    <!--
+			<xsl:if test="html:ul">
+			<xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
+			<reference type="text" href="{html:a/@href}">
+			<xsl:attribute name="title">
+			<xsl:value-of select="normalize-space(html:a[1])"/>
+			</xsl:attribute>
+			</reference>
+			</xsl:for-each>
+			</xsl:if>
+		    -->
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
               <reference href="titlepageback.html" type="text" title="About this book"/>
             </guide>
           </package>

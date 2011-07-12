@@ -1152,19 +1152,30 @@
       make it an anchor if it has an ID.</p>
     </desc>
   </doc>
+
+  <xsl:template match="tei:pb" mode="ident">
+    <xsl:text>page_</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@n">
+	<xsl:value-of select="@n"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>P.</xsl:text>
+	<xsl:number level="any"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="tei:pb">
     <xsl:choose>
-      <xsl:when test="$filePerPage='true'">
+      <xsl:when test="$filePerPage='true' and ancestor::tei:body">
 	<PAGEBREAK>
-	  <xsl:copy-of select="@*"/>
-	  <xsl:if test="not(@n)">
-	    <xsl:attribute name="n">
-	      <xsl:text>P.</xsl:text>
-	      <xsl:number level="any"/>
-	    </xsl:attribute>
-	  </xsl:if>
+	  <xsl:attribute name="name">
+	    <xsl:apply-templates select="." mode="ident"/>
+	  </xsl:attribute>
 	</PAGEBREAK>
       </xsl:when>
+      <xsl:when test="$filePerPage='true'"/>
       <xsl:when test="$pagebreakStyle='active'">
         <div class="pagebreak">
           <xsl:call-template name="rendToClass"/>
