@@ -173,9 +173,11 @@
 	</xsl:when>
 	<xsl:otherwise>
 	  <div>
-	    <xsl:call-template name="rendToClass">      
-	      <xsl:with-param name="default">p-in-sp identifiable</xsl:with-param>
-	    </xsl:call-template>
+	    <xsl:for-each select="..">
+	      <xsl:call-template name="rendToClass">      
+		<xsl:with-param name="default">p-in-sp identifiable</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
 	    <xsl:apply-templates select="current-group()"/>
 	  </div>
 	</xsl:otherwise>
