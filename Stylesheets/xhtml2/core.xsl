@@ -1230,20 +1230,41 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:element name="{$wrapperElement}">
-      <xsl:call-template name="rendToClass">
-        <xsl:with-param name="id">true</xsl:with-param>
-        <xsl:with-param name="default">
-          <xsl:if test="$wrapperElement='div'">p</xsl:if>
-        </xsl:with-param>
-      </xsl:call-template>
-      <xsl:if test="$numberParagraphs='true'">
-        <xsl:text>[</xsl:text>
-        <xsl:number/>
-        <xsl:text>] </xsl:text>
-      </xsl:if>
-      <xsl:apply-templates/>
-    </xsl:element>
+    <xsl:choose>
+      <xsl:when test="$filePerPage='true'">
+	<xsl:for-each-group select="node()" group-starting-with="tei:pb">
+	  <xsl:choose>
+	    <xsl:when test="self::tei:pb">
+	      <xsl:apply-templates select="."/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:element name="{$wrapperElement}">
+		<xsl:for-each select="..">
+		  <xsl:call-template name="rendToClass"/>
+		</xsl:for-each>
+		<xsl:apply-templates select="current-group()"/>
+	      </xsl:element>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:element name="{$wrapperElement}">
+	  <xsl:call-template name="rendToClass">
+	    <xsl:with-param name="id">true</xsl:with-param>
+	    <xsl:with-param name="default">
+	      <xsl:if test="$wrapperElement='div'">p</xsl:if>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:if test="$numberParagraphs='true'">
+	    <xsl:text>[</xsl:text>
+	    <xsl:number/>
+	    <xsl:text>] </xsl:text>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	</xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element p[@rend='box']</desc>

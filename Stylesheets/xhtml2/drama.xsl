@@ -166,23 +166,35 @@
       <desc>Process element sp/tei:p</desc>
    </doc>
   <xsl:template match="tei:sp/tei:p">
-    <xsl:for-each-group select="node()" group-starting-with="tei:pb">
-      <xsl:choose>
-	<xsl:when test="self::tei:pb">
-	  <xsl:apply-templates select="."/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <div>
-	    <xsl:for-each select="..">
-	      <xsl:call-template name="rendToClass">      
-		<xsl:with-param name="default">p-in-sp identifiable</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:for-each>
-	    <xsl:apply-templates select="current-group()"/>
-	  </div>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each-group>
+    <xsl:choose>
+      <xsl:when test="$filePerPage='true'">
+	<xsl:for-each-group select="node()" group-starting-with="tei:pb">
+	  <xsl:choose>
+	    <xsl:when test="self::tei:pb">
+	      <xsl:apply-templates select="."/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <div>
+		<xsl:for-each select="..">
+		  <xsl:call-template name="rendToClass">      
+		    <xsl:with-param name="default">p-in-sp identifiable</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:for-each>
+		<xsl:apply-templates select="current-group()"/>
+	      </div>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
+      </xsl:when>
+      <xsl:otherwise>
+	<div>
+	  <xsl:call-template name="rendToClass">      
+	    <xsl:with-param name="default">p-in-sp identifiable</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:apply-templates select="current-group()"/>
+	</div>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
