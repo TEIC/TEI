@@ -71,13 +71,25 @@ general:
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
 	diff test.tex ok/test.tex
 	../teitoepub  test.xml test.epub
+	unzip -t test.epub> test.epub.listing
+	diff test.epub.listing ok/test.epub.listing
+	rm test.epub.listing
+	../teitoepub  --fileperpage test.xml test.epub
+	unzip -t test.epub > test.epub.listing2
+	diff test.epub.listing2 ok/test.epub.listing2
+	rm test.epub.listing2
 	../teitoodt test.xml 
+	unzip -t test.xml.odt > test.xml.odt.listing
+	diff test.xml.odt.listing ok/test.xml.odt.listing
+	rm test.xml.odt.listing
 	../teitodocx test.xml 
-	unzip -t test.xml.docx 
-	unzip -t test.xml.odt 
-	unzip -t test.epub  
+	unzip -t test.xml.docx > test.xml.docx.listing
+	diff test.xml.docx.listing ok/test.xml.docx.listing
+	rm test.xml.docx.listing
 	../teitoodt test10.xml 
-	unzip -t test10.xml.odt 
+	unzip -t test10.xml.odt > test10.xml.odt.listing
+	diff test10.xml.odt.listing ok/test10.xml.odt.listing
+	rm test10.xml.odt.listing
 	../odttotei test7.odt
 	xmllint --noout test7.xml
 	../docxtotei test11.docx
@@ -100,3 +112,4 @@ clean:
 	rm -f  test.xml.*.list
 	rm -f  test.aux test.log test.out test.pdf 
 	rm -rf temp-dir-for-ant Pictures
+	rm -rf *.listing
