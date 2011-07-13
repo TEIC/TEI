@@ -50,7 +50,7 @@
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
-  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>OEBPS</xsl:param>
+  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="subject"/>
