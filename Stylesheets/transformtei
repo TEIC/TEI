@@ -83,8 +83,8 @@ while test $# -gt 0; do
     --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
     --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
     --odd)          odd=true;;
-    --fileperpage)  fileperpage="-DfilePerPage=true";;
-    --debug)        debug="-Ddebug=true"; antflag=-v;;
+    --fileperpage)  splitLevel=-1; fileperpage="-DfilePerPage=true";;
+    --debug)        debug="-Ddebug=true"; verbose=true; antflag=-v;;
     --verbose)      verbose=true; antflag=-v;;
     --help)         usageMsg; exit 1;;
      *) if test "$1" = "${1#--}" ; then 

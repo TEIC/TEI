@@ -50,7 +50,7 @@
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
-  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
+  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>OEBPS</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="subject"/>
@@ -131,12 +131,12 @@
 	    <xsl:copy-of select="$TOC"/>
 	    </xsl:result-document>
 	-->
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/OEBPS/stylesheet.css')}">
 	  <xsl:if test="not($cssFile='')">
-	    <xsl:if test="$debug='true'">
+	    <xsl:if test="$verbose='true'">
 	      <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
 	    </xsl:if>
 	    <xsl:for-each select="tokenize(unparsed-text($cssFile),     '\r?\n')">
@@ -144,7 +144,7 @@
 	    </xsl:for-each>
 	  </xsl:if>
           <xsl:if test="not($cssSecondaryFile='')">
-            <xsl:if test="$debug='true'">
+            <xsl:if test="$verbose='true'">
               <xsl:message>reading secondary file <xsl:value-of select="$cssSecondaryFile"/></xsl:message>
             </xsl:if>
             <xsl:for-each select="tokenize(unparsed-text($cssSecondaryFile),       '\r?\n')">
@@ -152,7 +152,7 @@
             </xsl:for-each>
           </xsl:if>
           <xsl:if test="$odd='true'">
-            <xsl:if test="$debug='true'">
+            <xsl:if test="$verbose='true'">
               <xsl:message>reading file <xsl:value-of select="$cssODDFile"/></xsl:message>
             </xsl:if>
             <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
@@ -160,7 +160,7 @@
             </xsl:for-each>
           </xsl:if>
           <xsl:if test="$odd='true'">
-            <xsl:if test="$debug='true'">
+            <xsl:if test="$verbose='true'">
               <xsl:message>reading file <xsl:value-of select="$cssODDFile"/></xsl:message>
             </xsl:if>
             <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
@@ -175,24 +175,24 @@
 	    <xsl:text>} </xsl:text>
 	  </xsl:if>
         </xsl:result-document>
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/print.css</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/OEBPS/print.css')}">
-          <xsl:if test="$debug='true'">
+          <xsl:if test="$verbose='true'">
             <xsl:message>reading file <xsl:value-of select="$cssPrintFile"/></xsl:message>
           </xsl:if>
           <xsl:for-each select="tokenize(unparsed-text($cssPrintFile),     '\r?\n')">
             <xsl:call-template name="purgeCSS"/>
           </xsl:for-each>
         </xsl:result-document>
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file mimetype</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/mimetype')}">
           <xsl:text>application/epub+zip</xsl:text>
         </xsl:result-document>
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file META-INF/container.xml</xsl:message>
         </xsl:if>
         <xsl:result-document method="xml" href="{concat($directory,'/META-INF/container.xml')}">
@@ -202,7 +202,7 @@
             </rootfiles>
           </container>
         </xsl:result-document>
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/content.opf</xsl:message>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/content.opf')}" method="xml">
@@ -427,7 +427,7 @@
             </guide>
           </package>
         </xsl:result-document>
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/titlepage.html</xsl:message>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/titlepage.html')}" method="xml">
@@ -462,7 +462,7 @@
         </xsl:result-document>
         <xsl:for-each select="tei:text/tei:front/tei:titlePage">
           <xsl:variable name="N" select="position()"/>
-          <xsl:if test="$debug='true'">
+          <xsl:if test="$verbose='true'">
             <xsl:message>write file OEBPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
           </xsl:if>
           <xsl:result-document href="{concat($directory,'/OEBPS/titlepage',$N,'.html')}" method="xml">
@@ -483,7 +483,7 @@
             </html>
           </xsl:result-document>
         </xsl:for-each>
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/titlepageback.html</xsl:message>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/titlepageback.html')}" method="xml">
@@ -502,7 +502,7 @@
             </body>
           </html>
         </xsl:result-document>
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/toc.ncx</xsl:message>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/toc.ncx')}" method="xml">
@@ -594,7 +594,7 @@
             </navMap>
           </ncx>
         </xsl:result-document>
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/page-template.xpgt</xsl:message>
         </xsl:if>
         <xsl:result-document method="xml" href="{concat($directory,'/OEBPS/page-template.xpgt')}">
@@ -638,7 +638,7 @@
           </ade:template>
 	</xsl:result-document>
 	<xsl:if test="$filePerPage='true'">
-        <xsl:if test="$debug='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file META-INF/com.apple.ibooks.display-options.xml</xsl:message>
         </xsl:if>
 	<xsl:result-document
