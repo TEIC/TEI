@@ -1465,7 +1465,7 @@
 		  <xsl:text>.html</xsl:text>
 		</xsl:attribute>		
 		<xsl:text>page </xsl:text>
-	      <xsl:number level="any"/>
+		<xsl:number level="any"/>
 		</a>
 	      </li>
 	    </xsl:for-each>
@@ -2130,6 +2130,20 @@
       <xsl:when test="tei:text/tei:group">
 	<xsl:apply-templates select="tei:text/tei:group"/>
       </xsl:when>
+       <xsl:when test="$filePerPage='true' and not(html:PAGEBREAK)">
+	 <xsl:variable name="pass1">	 
+	   <xsl:apply-templates select="tei:text/tei:body"/>
+	 </xsl:variable>
+	 <xsl:for-each-group select="$pass1/*"
+			     group-ending-with="*[(position() mod 40) = 0]">
+	   <xsl:call-template name="pageperfile">
+	     <xsl:with-param name="page">
+	       <xsl:text>page</xsl:text>
+	       <xsl:value-of select="position()"/>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	 </xsl:for-each-group>
+       </xsl:when>
        <xsl:when test="$filePerPage='true'">
 	 <xsl:variable name="pass1">	 
 	   <xsl:apply-templates select="tei:text/tei:body"/>
@@ -2138,43 +2152,9 @@
 			     group-starting-with="html:PAGEBREAK">
 	   <xsl:choose>
 	     <xsl:when test="self::html:PAGEBREAK">
-	       <xsl:variable name="outName">
-	       <xsl:call-template name="outputChunkName">
-		 <xsl:with-param name="ident">
-		   <xsl:value-of select="self::html:PAGEBREAK/@name"/>
-		 </xsl:with-param>
+	       <xsl:call-template name="pageperfile">
+		 <xsl:with-param name="page" select="self::html:PAGEBREAK/@name"/>
 	       </xsl:call-template>
-	       </xsl:variable>
-	       <xsl:if test="$verbose='true'">
-		 <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
-	       </xsl:if>
-
-	       <xsl:result-document href="{$outName}">
-		   <html>
-		     <xsl:call-template name="addLangAtt"/>
-		     <head>
-		       <xsl:variable name="pagetitle">
-			 <xsl:call-template name="generateTitle"/>
-			 <xsl:text> page </xsl:text>
-			 <xsl:value-of select="self::html:PAGEBREAK/@n"/>
-		       </xsl:variable>
-		       <title>
-			 <xsl:value-of select="$pagetitle"/>
-		       </title>
-		       <xsl:call-template name="headHook"/>
-		       <xsl:call-template name="metaHTML">
-			 <xsl:with-param name="title" select="$pagetitle"/>
-		       </xsl:call-template>
-		       <xsl:call-template name="includeCSS"/>
-		       <xsl:call-template name="cssHook"/>
-		       <xsl:call-template name="includeJavascript"/>
-		       <xsl:call-template name="javascriptHook"/>
-		     </head>
-		     <body>
-		       <xsl:apply-templates select="current-group()" mode="copy"/>
-		     </body>
-		   </html>
-	       </xsl:result-document>
 	     </xsl:when>
 	     <xsl:otherwise>
 	       <xsl:copy-of select="current-group()"/>
@@ -2189,6 +2169,47 @@
     <!-- back matter -->
     <xsl:apply-templates select="tei:text/tei:back"/>
       <xsl:call-template name="printNotes"/>
+  </xsl:template>
+
+  <xsl:template name="pageperfile">
+    <xsl:param name="page"/>
+    <xsl:variable name="outName">
+      <xsl:call-template name="outputChunkName">
+	<xsl:with-param name="ident">
+	  <xsl:value-of select="$page"/>
+	</xsl:with-param>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
+    </xsl:if>
+    
+    <xsl:result-document href="{$outName}">
+      <html>
+	<xsl:call-template name="addLangAtt"/>
+	<head>
+	  <xsl:variable name="pagetitle">
+	    <xsl:call-template name="generateTitle"/>
+	    <xsl:text> page </xsl:text>
+	    <xsl:value-of select="$page"/>
+	  </xsl:variable>
+	  <title>
+	    <xsl:value-of select="$pagetitle"/>
+	  </title>
+	  <xsl:call-template name="headHook"/>
+	  <xsl:call-template name="metaHTML">
+	    <xsl:with-param name="title" select="$pagetitle"/>
+	  </xsl:call-template>
+	  <xsl:call-template name="includeCSS"/>
+	  <xsl:call-template name="cssHook"/>
+	  <xsl:call-template name="includeJavascript"/>
+	  <xsl:call-template name="javascriptHook"/>
+	</head>
+	<body>
+	  <xsl:apply-templates select="current-group()" mode="copy"/>
+	</body>
+      </html>
+    </xsl:result-document>
   </xsl:template>
 
   <xsl:template match="html:PAGEBREAK" mode="copy"/>
