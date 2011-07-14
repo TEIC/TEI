@@ -71,7 +71,7 @@ general:
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
 	diff test.tex ok/test.tex
 	../teitoepub  test.xml test.epub
-	unzip -t test.epub> test.epub.listing
+	unzip -t test.epub > test.epub.listing
 	diff test.epub.listing ok/test.epub.listing
 	rm test.epub.listing
 	../teitoepub  --fileperpage test.xml test.epub
