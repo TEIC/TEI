@@ -2130,37 +2130,38 @@
       <xsl:when test="tei:text/tei:group">
 	<xsl:apply-templates select="tei:text/tei:group"/>
       </xsl:when>
-       <xsl:when test="$filePerPage='true' and not(html:PAGEBREAK)">
-	 <xsl:variable name="pass1">	 
-	   <xsl:apply-templates select="tei:text/tei:body"/>
-	 </xsl:variable>
-	 <xsl:for-each-group select="$pass1/*"
-			     group-ending-with="*[(position() mod 40) = 0]">
-	   <xsl:call-template name="pageperfile">
-	     <xsl:with-param name="page">
-	       <xsl:text>page</xsl:text>
-	       <xsl:value-of select="position()"/>
-	     </xsl:with-param>
-	   </xsl:call-template>
-	 </xsl:for-each-group>
-       </xsl:when>
        <xsl:when test="$filePerPage='true'">
 	 <xsl:variable name="pass1">	 
 	   <xsl:apply-templates select="tei:text/tei:body"/>
 	 </xsl:variable>
-	 <xsl:for-each-group select="$pass1/*"
-			     group-starting-with="html:PAGEBREAK">
-	   <xsl:choose>
-	     <xsl:when test="self::html:PAGEBREAK">
+	 <xsl:choose>
+	   <xsl:when test="not($pass1/html:PAGEBREAK)">
+	     <xsl:for-each-group select="$pass1/*"
+				 group-ending-with="*[(position() mod 40) = 0]">
 	       <xsl:call-template name="pageperfile">
-		 <xsl:with-param name="page" select="self::html:PAGEBREAK/@name"/>
+		 <xsl:with-param name="page">
+		   <xsl:text>page</xsl:text>
+		   <xsl:value-of select="position()"/>
+		 </xsl:with-param>
 	       </xsl:call-template>
-	     </xsl:when>
-	     <xsl:otherwise>
-	       <xsl:copy-of select="current-group()"/>
-	     </xsl:otherwise>
-	   </xsl:choose>
-	 </xsl:for-each-group>
+	     </xsl:for-each-group>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:for-each-group select="$pass1/*"
+				 group-starting-with="html:PAGEBREAK">
+	       <xsl:choose>
+		 <xsl:when test="self::html:PAGEBREAK">
+		   <xsl:call-template name="pageperfile">
+		     <xsl:with-param name="page" select="self::html:PAGEBREAK/@name"/>
+		   </xsl:call-template>
+		 </xsl:when>
+		 <xsl:otherwise>
+		   <xsl:copy-of select="current-group()"/>
+		 </xsl:otherwise>
+	       </xsl:choose>
+	     </xsl:for-each-group>
+	   </xsl:otherwise>
+	 </xsl:choose>
        </xsl:when>
       <xsl:otherwise>
 	<xsl:apply-templates select="tei:text/tei:body"/>

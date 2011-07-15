@@ -1122,13 +1122,12 @@
   </doc>
 
   <xsl:template match="tei:pb" mode="ident">
-    <xsl:text>page</xsl:text>
     <xsl:choose>
       <xsl:when test="@xml:id">
 	<xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:text>Page</xsl:text>
+	<xsl:text>page</xsl:text>
 	<xsl:for-each select="ancestor::tei:div[1]">
 	  <xsl:number level="multiple" format="1.1.1.1.1"/>
 	  <xsl:text>-</xsl:text>
