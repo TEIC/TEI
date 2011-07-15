@@ -932,13 +932,41 @@
 	  <xsl:otherwise>div</xsl:otherwise>
 	</xsl:choose>
       </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="$filePerPage='true'">
+	    <xsl:call-template name="startDivHook"/>
+	    <xsl:call-template name="divContents">
+	      <xsl:with-param name="Depth" select="$Depth"/>
+	      <xsl:with-param name="nav" select="$nav"/>
+	    </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:element name="{$container}">
+	    <xsl:call-template name="microdata"/>
+	    <xsl:call-template name="divClassAttribute">
+	      <xsl:with-param name="depth" select="$Depth"/>
+	    </xsl:call-template>	
+	    <xsl:call-template name="startDivHook"/>
+	    <xsl:call-template name="divContents">
+	      <xsl:with-param name="Depth" select="$Depth"/>
+	      <xsl:with-param name="nav" select="$nav"/>
+	    </xsl:call-template>
+	  </xsl:element>
+	</xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[html] doing the contents of a div</desc>
+   </doc>
+
+  <xsl:template name="divContents">
+      <xsl:param name="Depth"/>
+      <xsl:param name="nav">false</xsl:param>
       <xsl:variable name="ident">
 	<xsl:apply-templates mode="ident" select="."/>
       </xsl:variable>
       
-      <xsl:variable name="contents">
-	<xsl:call-template name="startDivHook"/>
-
 	<xsl:choose>
 	  <xsl:when test="parent::tei:*/@rend='multicol'">
 	    <td valign="top">
@@ -1008,25 +1036,10 @@
 		 </xsl:if>
          </xsl:otherwise>
 	</xsl:choose>
-      </xsl:variable>
-      <xsl:choose>
-	<xsl:when test="$filePerPage='true'">
-	  <xsl:copy-of select="$contents"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:element name="{$container}">
-	    <xsl:call-template name="microdata"/>
-	    <xsl:call-template name="divClassAttribute">
-	      <xsl:with-param name="depth" select="$Depth"/>
-	    </xsl:call-template>	
-	    <xsl:copy-of select="$contents"/>      
-	  </xsl:element>
-	</xsl:otherwise>
-      </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>[html] process divisions</desc>
    </doc>
   <xsl:template name="doDivs">
       <xsl:for-each select="tei:TEI/tei:text">
