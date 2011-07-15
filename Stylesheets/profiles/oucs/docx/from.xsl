@@ -98,9 +98,13 @@
     
     <xsl:function name="teidocx:is-firstlevel-heading" as="xs:boolean">
       <xsl:param name="p"/>      
+      <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
       <xsl:choose>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='ITLP H1']">true</xsl:when>
-	<xsl:when test="$p[w:pPr/w:pStyle/@w:val='ITLP Anonymous Heading 1']">true</xsl:when>
+	<xsl:when test="$s='heading 1'">true</xsl:when>
+	<xsl:when test="$s='Heading 1'">true</xsl:when>
+	<xsl:when test="$s='Heading1'">true</xsl:when>
+	<xsl:when test="$s='ITLP H1'">true</xsl:when>
+	<xsl:when test="$s='ITLP Anonymous Heading 1'">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:function>
@@ -116,7 +120,8 @@
       <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
       <xsl:choose>
 	<xsl:when test="$s=''">false</xsl:when>
-	<xsl:when test="starts-with($s,'heading')]">true</xsl:when>
+	<xsl:when test="starts-with($s,'heading')">true</xsl:when>
+	<xsl:when test="starts-with($s,'Heading')">true</xsl:when>
 	<xsl:when test="$s='ITLP Anonymous Heading 1'">true</xsl:when>
 	<xsl:when test="$s='ITLP Anonymous Heading 2'">true</xsl:when>
 	<xsl:when test="$s='ITLP H1'">true</xsl:when>

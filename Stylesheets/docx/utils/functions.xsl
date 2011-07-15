@@ -136,10 +136,11 @@
       <desc>Defines whether or not a word paragraph is a  heading.</desc></doc>
     <xsl:function name="teidocx:is-heading" as="xs:boolean">
         <xsl:param name="p"/>
-        
+	<xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
+      
         <xsl:choose>
-            <xsl:when test="$p[starts-with(w:pPr/w:pStyle/@w:val,'Heading')]">true</xsl:when>
-            <xsl:when test="$p[starts-with(w:pPr/w:pStyle/@w:val,'heading')]">true</xsl:when>
+            <xsl:when test="starts-with($s,'Heading')">true</xsl:when>
+            <xsl:when test="starts-with($s,'heading')">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>

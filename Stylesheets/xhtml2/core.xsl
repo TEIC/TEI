@@ -1059,7 +1059,7 @@
   </doc>
   <xsl:template match="tei:note" mode="printallnotes">
     <xsl:choose>
-      <xsl:when test="$splitLevel=-1">
+      <xsl:when test="number($splitLevel)=-1">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
       <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
@@ -1073,7 +1073,7 @@
   <xsl:template match="tei:note" mode="printnotes">
     <xsl:choose>
       <xsl:when test="ancestor::tei:bibl"/>
-      <xsl:when test="$splitLevel=-1"/>
+      <xsl:when test="number($splitLevel)=-1"/>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
