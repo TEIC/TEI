@@ -1092,7 +1092,7 @@
 
     <!-- quoted text; if it surrounds egXML, just pass on -->
     
-    <xsl:template match="tei:q">
+    <xsl:template match="tei:q|tei:said">
       <xsl:choose>
 	<xsl:when test="tei:l">
 	  <xsl:apply-templates/>
