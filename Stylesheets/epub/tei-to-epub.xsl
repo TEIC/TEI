@@ -292,7 +292,7 @@
 		</xsl:if>
 	      </xsl:variable>
               <xsl:if test="not($mediaoverlay='')">
-		<item id="mediaoverlay" href="overlay.smil" media-type="application/smil+xml" media-overlay="audio"/>
+		<item id="audio" href="overlay.smil" media-type="application/smil+xml"/>
 		<xsl:for-each select="document(concat($directory,'/OEBPS/overlay.smil'))">
 		  <xsl:for-each-group select="key('SMIL-Audio',1)"
 				      group-by="@src">
