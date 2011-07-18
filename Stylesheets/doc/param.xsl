@@ -2,7 +2,11 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
-    exclude-result-prefixes="XSL xd" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+    xmlns:m="http://www.w3.org/1998/Math/MathML"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    exclude-result-prefixes="XSL xd xsi sch tei m" 
     xmlns="http://www.tei-c.org/ns/1.0"
     xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl"
     version="2.0">
@@ -169,9 +173,11 @@
 		</row>
 		<row>
 		  <cell cols="4">
-		    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-		      <xsl:apply-templates select="*|text()"/>
-		    </egXML>
+		    <xsl:if test="*|text()">
+		      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+			<xsl:apply-templates select="*|text()"/>
+		      </egXML>
+		    </xsl:if>
 		  </cell>
 		</row>
 	      </xsl:when>
@@ -179,7 +185,7 @@
 		<row>
 		  <xsl:copy-of select="$row"/>
 		  <cell>
-		  <xsl:value-of select="."/>
+		    <xsl:value-of select="."/>
 		  </cell>
 		</row>
 	      </xsl:otherwise>

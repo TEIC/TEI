@@ -406,7 +406,7 @@ capable of dealing with UTF-8 directly.
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for gothic</desc>   </doc>
 <xsl:param name="gothicFont">Lucida Blackletter</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for calligraphic</desc>   </doc>
-<xsl:param name="calligraphicFont">Lucida Calligraphhy</xsl:param>
+<xsl:param name="calligraphicFont">Lucida Calligraphy</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
