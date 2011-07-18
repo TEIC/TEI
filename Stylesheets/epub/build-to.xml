@@ -45,11 +45,14 @@
   <condition property="processODD">
     <equals arg1="${odd}" arg2="true"/>
   </condition>
+  <condition property="nooverlay">
+    <equals arg1="${mediaoverlay}" arg2=""/>
+  </condition>
   <target name="setup">
     <delete dir="${outputTempDir}"/>
     <mkdir dir="${outputTempDir}"/>
   </target>
-  <target name="overlay" if="mediaoverlay">
+  <target name="overlay" unless="nooverlay">
     <copy file="${inputFileDir}/${mediaoverlay}" tofile="${outputTempDir}/OEBPS/overlay.smil" overwrite="true"/>
   </target>
   <target name="notodd" unless="processODD">
