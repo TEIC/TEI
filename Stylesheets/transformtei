@@ -20,16 +20,17 @@ echo "TEI conversion: from $from to $to"
 echo ""
 echo "  Usage: $0 [options] inputfile [outputfile]"
 echo "  options, shown with defaults:"
-echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
-echo "  --profile=$profile    # which transformation profile to use"
-echo "  --profiledir=$profiledir    # where to find profile directory"
-echo "  --fileperpage           # create output files one per page (epub only)"
-echo "  --uid=XXX               # unique URN for ebook (epub output only)"
-echo "  --splitLevel=$splitLevel        # splitting level (epub output only)"
-echo "  --publisher=XXX         # name of publisher for ebook (epub output only)"
-echo "  --subject=XXX           # subject/category for ebook (epub output only)"
 echo "  --coverimage=XXX        # name of JPEG file for ebook cover (epub output only)"
 echo "  --css=XXX               # supply name of CSS file (epub output only)"
+echo "  --fileperpage           # create output files one per page (epub output only)"
+echo "  --profile=$profile    # which transformation profile to use"
+echo "  --mediaoverlay=$overlayfile    # media overlay file (epub output only)"
+echo "  --profiledir=$profiledir    # where to find profile directory"
+echo "  --publisher=XXX         # name of publisher for ebook (epub output only)"
+echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
+echo "  --splitLevel=$splitLevel        # splitting level (epub output only)"
+echo "  --subject=XXX           # subject/category for ebook (epub output only)"
+echo "  --uid=XXX               # unique URN for ebook (epub output only)"
 echo
 echo "  options, binary switches:"
 echo "  --odd              # perform processing of ODD (if appropriate)"
@@ -46,6 +47,7 @@ verbose=false
 antflag=-q
 X=`dirname $0`
 # epub only
+overlayfile=
 splitLevel=0
 publisher=
 coverimage=
@@ -73,17 +75,18 @@ else
 fi
 while test $# -gt 0; do
   case $1 in
+    --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
+    --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
+    --fileperpage)  splitLevel=-1; fileperpage="-DfilePerPage=true";;
+    --odd)          odd=true;;
+    --mediaoverlay=*)    overlayfile=`echo $1 | sed 's/.*=//'`;;
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
-    --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
-    --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
-    --splitLevel=*) splitLevel=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
+    --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
+    --splitLevel=*) splitLevel=`echo $1 | sed 's/.*=//'`;;
     --subject=*)    subject="`echo $1 | sed 's/.*=//'`";;
-    --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
-    --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
-    --odd)          odd=true;;
-    --fileperpage)  splitLevel=-1; fileperpage="-DfilePerPage=true";;
+    --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
     --debug)        debug="-Ddebug=true"; verbose=true; antflag=-v;;
     --verbose)      verbose=true; antflag=-v;;
     --help)         usageMsg; exit 1;;
@@ -139,4 +142,5 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	$cssFile \
 	-Dsubject=$subject \
 	-Dcoverimage=$coverimage \
+	-Dmediaoverlay=$overlayfile \
 	-DsplitLevel=$splitLevel 

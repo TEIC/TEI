@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:iso="http://www.iso.org/ns/1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" version="2.0" exclude-result-prefixes="iso tei teix dc html ncx">
+<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" 
+		xmlns:smil="http://www.w3.org/ns/SMIL"
+		xmlns:opf="http://www.idpf.org/2007/opf" 
+		xmlns:iso="http://www.iso.org/ns/1.0" 
+		xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:html="http://www.w3.org/1999/xhtml" 
+		xmlns:tei="http://www.tei-c.org/ns/1.0" 
+		xmlns:teix="http://www.tei-c.org/ns/Examples" 
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" 
+		version="2.0" exclude-result-prefixes="iso tei teix dc
+						       html opf ncx smil">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="epub-common.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="no"/>
@@ -48,6 +59,7 @@
   <xsl:param name="createanttask">false</xsl:param>
   <xsl:param name="institution"/>
   <xsl:param name="linkPanel">false</xsl:param>
+  <xsl:param name="mediaoverlay"/>
   <xsl:param name="odd">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
@@ -59,6 +71,9 @@
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
   <xsl:param name="outputTarget">epub</xsl:param>
+
+  <xsl:key name="SMIL-Audio" match="smil:audio" use="1"/>
+  <xsl:key name="SMIL-Text" match="smil:text" use="1"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>(extensible) wrapper for root element</desc>
@@ -265,6 +280,26 @@
               </xsl:if>
             </metadata>
             <manifest>
+	      <xsl:variable name="overlayfiles">
+		<xsl:if test="not($mediaoverlay='')">
+		  <xsl:for-each
+		      select="document(concat($directory,'/OEBPS/overlay.smil'))">
+		    <xsl:for-each-group select="key('SMIL-Text',1)"
+					group-by="substring-before(@src,'#')">
+		      <file n="{current-grouping-key()}"/>
+		    </xsl:for-each-group>
+		  </xsl:for-each>
+		</xsl:if>
+	      </xsl:variable>
+              <xsl:if test="not($mediaoverlay='')">
+		<item id="mediaoverlay" href="overlay.smil" media-type="application/smil+xml" media-overlay="audio"/>
+		<xsl:for-each select="document(concat($directory,'/OEBPS/overlay.smil'))">
+		  <xsl:for-each-group select="key('SMIL-Audio',1)"
+				      group-by="@src">
+		    <item id="audio{position()}" href="{current-grouping-key()}" media-type="audio/mp4"/>
+		  </xsl:for-each-group>
+		</xsl:for-each>
+	      </xsl:if>
               <xsl:if test="not($coverImageOutside='')">
                 <item href="{$coverImageOutside}" id="cover-image" media-type="image/jpeg"/>
               </xsl:if>
@@ -285,15 +320,20 @@
 	      <xsl:choose>
 		<xsl:when test="$filePerPage='true'">
 		  <xsl:for-each select="key('PB',1)">
-		    <item media-type="application/xhtml+xml">
+		    <xsl:variable name="target">
+		      <xsl:apply-templates select="." mode="ident"/>
+		      <xsl:text>.html</xsl:text>
+		    </xsl:variable>
+		    <item href="{$target}"
+			  media-type="application/xhtml+xml">
+		      <xsl:if
+			  test="$overlayfiles/opf:file[@n=$target]">
+			<xsl:attribute name="media-overlay">audio</xsl:attribute>
+		      </xsl:if>
 		      <xsl:attribute name="id">
 			<xsl:text>page</xsl:text>
 			<xsl:number level="any"/>
 		      </xsl:attribute>	
-		      <xsl:attribute name="href">
-			<xsl:apply-templates select="." mode="ident"/>
-			<xsl:text>.html</xsl:text>
-		      </xsl:attribute>
 		    </item>
 		  </xsl:for-each>
 		</xsl:when>

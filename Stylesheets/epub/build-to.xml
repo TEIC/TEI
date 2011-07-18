@@ -49,6 +49,9 @@
     <delete dir="${outputTempDir}"/>
     <mkdir dir="${outputTempDir}"/>
   </target>
+  <target name="overlay" if="mediaoverlay">
+    <copy file="${inputFileDir}/${mediaoverlay}" tofile="${outputTempDir}/OEBPS/overlay.smil" overwrite="true"/>
+  </target>
   <target name="notodd" unless="processODD">
     <copy file="${inputFile}" tofile="${outputTempDir}/tmp2.xml" overwrite="true"/>
   </target>
@@ -80,7 +83,7 @@
       <param name="summaryDoc" expression="true"/>
     </xslt>
   </target>
-  <target name="dist" depends="setup,odd,notodd,convert,cleanup"/>
+  <target name="dist" depends="setup,odd,notodd,overlay,convert,cleanup"/>
 
   <target name="convert">
     <!-- Recreate temporary output directory -->
@@ -110,6 +113,8 @@
       <param name="coverimage" expression="${coverimage}" if="coverimage"/>
       <!-- supply name of CSS file-->
       <param name="cssFile" expression="${cssFile}" if="cssFile"/>
+      <!-- name of media overlay file -->
+      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
       <!-- file per page -->
       <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
       <!-- supply name of language-->

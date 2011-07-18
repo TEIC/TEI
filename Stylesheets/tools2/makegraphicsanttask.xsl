@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
+		xmlns:smil="http://www.w3.org/ns/SMIL"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -22,7 +23,8 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
+   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1"   name="G"/>
+  <xsl:key name="SMIL-Audio" match="smil:audio" use="1"/>
    <xsl:param name="inputDir">.</xsl:param>
    <xsl:param name="imageDir">word/media</xsl:param>
    <xsl:template match="/">
@@ -34,6 +36,21 @@
 	     <xsl:value-of select="$imageDir"/>
 	   </xsl:attribute>
 	 </mkdir>
+	 <xsl:variable name="overlay" select="concat($inputDir,'/overlay.smil')"/>
+	 <xsl:if test="doc-available($overlay)">
+	   <xsl:for-each select="document($overlay)">
+	     <xsl:for-each-group select="key('SMIL-Audio',1)"
+				 group-by="@src">
+	       <xsl:variable name="target">
+		 <xsl:text>${outputTempDir}/</xsl:text>
+		 <xsl:value-of select="$imageDir"/>
+		 <xsl:text>/</xsl:text>
+		 <xsl:value-of select="@src"/>
+	       </xsl:variable>
+		 <copy toFile="{$target}" file="{$inputDir}/{@src}"/>
+	     </xsl:for-each-group>
+	   </xsl:for-each>
+	 </xsl:if>
 	 <xsl:for-each select="key('G',1)">
 	   <xsl:variable name="F">
 	     <xsl:value-of select="@url"/>
