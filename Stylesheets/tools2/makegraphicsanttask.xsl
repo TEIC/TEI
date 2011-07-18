@@ -26,6 +26,7 @@
    <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1"   name="G"/>
   <xsl:key name="SMIL-Audio" match="smil:audio" use="1"/>
    <xsl:param name="inputDir">.</xsl:param>
+   <xsl:param name="audioDir">.</xsl:param>
    <xsl:param name="imageDir">word/media</xsl:param>
    <xsl:template match="/">
      <project xmlns="" basedir="." default="dist" name="imagecopy">
@@ -43,7 +44,7 @@
 				 group-by="@src">
 	       <xsl:variable name="target">
 		 <xsl:text>${outputTempDir}/</xsl:text>
-		 <xsl:value-of select="$imageDir"/>
+		 <xsl:value-of select="$audioDir"/>
 		 <xsl:text>/</xsl:text>
 		 <xsl:value-of select="@src"/>
 	       </xsl:variable>
