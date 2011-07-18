@@ -87,6 +87,21 @@
       </xsl:variable>
 
       <xsl:choose>
+	<xsl:when test="$filePerPage='true'">
+	  <xsl:choose>
+	    <xsl:when test="ancestor::tei:front">
+	      <xsl:text>index</xsl:text>
+	    </xsl:when>	      
+	    <xsl:when test="preceding::tei:pb">
+	      <xsl:apply-templates select="preceding::tei:pb[1]"
+				   mode="ident"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>index</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:value-of select="$standardSuffix"/>
+	</xsl:when>
          <xsl:when test="$STDOUT='true' and number($depth) &lt;= number($splitLevel)">
             <xsl:value-of select="$masterFile"/>
             <xsl:value-of select="$standardSuffix"/>

@@ -1468,23 +1468,6 @@
    </doc>
   <xsl:template name="mainTOC">
       <xsl:choose>
-	<xsl:when test="$filePerPage='true'">
-	  <ul>
-	    <xsl:for-each select="key('PB',1)">
-	      <li>
-		<a>
-		<xsl:attribute name="href">
-		  <xsl:apply-templates select="." mode="ident"/>
-		  <xsl:text>.html</xsl:text>
-		</xsl:attribute>		
-		<xsl:text>page </xsl:text>
-		<xsl:number level="any"/>
-		</a>
-	      </li>
-	    </xsl:for-each>
-	  </ul>
-	</xsl:when>
-
 	<xsl:when test="self::tei:teiCorpus">
 	  <ul class="toc toc_corpus">
 	    <xsl:for-each select="tei:TEI">

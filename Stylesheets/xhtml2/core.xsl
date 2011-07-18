@@ -1128,11 +1128,13 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>page</xsl:text>
+<!--
 	<xsl:for-each select="ancestor::tei:div[1]">
 	  <xsl:number level="multiple" format="1.1.1.1.1"/>
 	  <xsl:text>-</xsl:text>
 	</xsl:for-each>
-	<xsl:number from="tei:div" level="any"/>
+-->
+	<xsl:number level="any"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
