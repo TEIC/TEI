@@ -1174,7 +1174,6 @@
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:when>
-    </xsl:choose>
 
       <xsl:when test="$pagebreakStyle='active'">
         <div class="pagebreak">
