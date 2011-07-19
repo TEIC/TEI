@@ -536,6 +536,9 @@
         <xsl:result-document href="{concat($directory,'/OEBPS/titlepageback.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
+	      <xsl:call-template name="metaHTML">
+                <xsl:with-param name="title">About this book</xsl:with-param>
+	      </xsl:call-template>
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
               <title>About this book</title>
             </head>
