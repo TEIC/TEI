@@ -578,12 +578,14 @@
                     <content src="titlepage{$N}.html"/>
                   </navPoint>
                 </xsl:for-each>
-                <navPoint>
-                  <navLabel>
-                    <text>[The book]</text>
-                  </navLabel>
-                  <content src="index.html"/>
-                </navPoint>
+		<xsl:if test="not($TOC/html:TOC/html:ul/html:li)">
+		  <navPoint>
+		    <navLabel>
+		      <text>[The book]</text>
+		    </navLabel>
+		    <content src="index.html"/>
+		  </navPoint>
+		</xsl:if>
                 <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                   <xsl:choose>
                     <xsl:when test="not(html:a)"/>
