@@ -2207,6 +2207,43 @@
 	</body>
       </html>
     </xsl:result-document>
+    <xsl:if test="@facs">
+      <xsl:variable name="outNameFacs">
+	<xsl:call-template name="outputChunkName">
+	  <xsl:with-param name="ident">
+	    <xsl:value-of select="$page"/>
+	    <xsl:text>-facs</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:variable>
+      <xsl:result-document href="{$outNameFacs}">
+	<html>
+	  <xsl:call-template name="addLangAtt"/>
+	  <head>
+	    <xsl:variable name="pagetitle">
+	      <xsl:call-template name="generateTitle"/>
+	      <xsl:text> page </xsl:text>
+	      <xsl:value-of select="$page"/>
+	      <xsl:text> (facsimile) </xsl:text>
+	    </xsl:variable>
+	    <title>
+	      <xsl:value-of select="$pagetitle"/>
+	    </title>
+	    <xsl:call-template name="headHook"/>
+	    <xsl:call-template name="metaHTML">
+	      <xsl:with-param name="title" select="$pagetitle"/>
+	    </xsl:call-template>
+	    <xsl:call-template name="includeCSS"/>
+	    <xsl:call-template name="cssHook"/>
+	    <xsl:call-template name="includeJavascript"/>
+	    <xsl:call-template name="javascriptHook"/>
+	  </head>
+	  <body>
+	    <img src="{@facs}"/>
+	  </body>
+	</html>
+      </xsl:result-document>      
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="html:PAGEBREAK" mode="copy"/>

@@ -66,7 +66,7 @@
       </span>
     </xsl:template>
 
-  <xsl:template match="tei:sp">
+    <xsl:template match="tei:sp">
       <xsl:choose>
 	<xsl:when test="tei:ab and tei:speaker and ancestor::tei:text/@rend='firstfolio'">
 	  <div class="spProseFirstFolio">

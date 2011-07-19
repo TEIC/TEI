@@ -1146,9 +1146,36 @@
 	  <xsl:attribute name="name">
 	    <xsl:apply-templates select="." mode="ident"/>
 	  </xsl:attribute>
+	  <xsl:copy-of select="@facs"/>
 	</PAGEBREAK>
       </xsl:when>
       <xsl:when test="$filePerPage='true'"/>
+      <xsl:when test="@facs">
+	<xsl:variable name="IMG">
+	  <xsl:choose>
+	    <xsl:when test="starts-with(@facs,'#')">
+	      <xsl:for-each select="key('IDS',substring(@facs,2))">
+		<xsl:value-of select="tei:graphic[1]/@url"/>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="@facs"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="parent::tei:div | parent::tei:body">
+	    <div>
+	      <img src="{$IMG}" alt="page image"/>
+	    </div>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <img width="600" height="860" src="{$IMG}" alt="page image"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:when>
+    </xsl:choose>
+
       <xsl:when test="$pagebreakStyle='active'">
         <div class="pagebreak">
           <xsl:call-template name="rendToClass"/>
@@ -1237,6 +1264,14 @@
 	  <xsl:choose>
 	    <xsl:when test="self::tei:pb">
 	      <xsl:apply-templates select="."/>
+	      <xsl:element name="{$wrapperElement}">
+		<xsl:for-each select="..">
+		  <xsl:call-template name="rendToClass">
+		    <xsl:with-param name="id"/>
+		  </xsl:call-template>
+		</xsl:for-each>
+		<xsl:apply-templates select="current-group() except ."/>
+	      </xsl:element>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:element name="{$wrapperElement}">

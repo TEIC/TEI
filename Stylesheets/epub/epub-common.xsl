@@ -196,23 +196,7 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template name="addLangAtt"/>
-  <xsl:template match="tei:pb[@facs]">
-    <xsl:variable name="IMG">
-      <xsl:for-each select="key('IDS',substring(@facs,2))">
-        <xsl:value-of select="tei:graphic[1]/@url"/>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="parent::tei:div | parent::tei:body">
-        <div>
-          <img src="{$IMG}" alt="page image"/>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
-        <img width="600" height="860" src="{$IMG}" alt="page image"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+
   <xsl:template match="tei:lb[@rend='space']">
     <xsl:text> </xsl:text>
   </xsl:template>

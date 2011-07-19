@@ -172,6 +172,15 @@
 	  <xsl:choose>
 	    <xsl:when test="self::tei:pb">
 	      <xsl:apply-templates select="."/>
+	      <div>
+		<xsl:for-each select="..">
+		  <xsl:call-template name="rendToClass">      
+		    <xsl:with-param name="default">p-in-sp  identifiable</xsl:with-param>
+		    <xsl:with-param name="id"/>
+		  </xsl:call-template>
+		</xsl:for-each>
+		<xsl:apply-templates select="current-group() except ."/>
+	      </div>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <div>

@@ -48,7 +48,7 @@ antflag=-q
 X=`dirname $0`
 # epub only
 overlayfile=
-splitLevel=0
+splitLevel=
 publisher=
 coverimage=
 cover=
@@ -77,14 +77,14 @@ while test $# -gt 0; do
   case $1 in
     --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
     --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
-    --fileperpage)  splitLevel=-1; fileperpage="-DfilePerPage=true";;
+    --fileperpage)  splitLevel="-DsplitLevel-1"; fileperpage="-DfilePerPage=true";;
     --odd)          odd=true;;
     --mediaoverlay=*)    overlayfile=`echo $1 | sed 's/.*=//'`;;
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
     --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
-    --splitLevel=*) splitLevel=`echo $1 | sed 's/.*=//'`;;
+    --splitLevel=*) splitLevel="-DsplitLevel=`echo $1 | sed 's/.*=//'`";;
     --subject=*)    subject="`echo $1 | sed 's/.*=//'`";;
     --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
     --debug)        debug="-Ddebug=true"; verbose=true; antflag=-v;;
@@ -130,7 +130,7 @@ then
 fi
 echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
-	-lib ${SAXONJAR} $debug $fileperpage \
+	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel \
         -Dodd=$odd \
         -Dverbose=$verbose  \
 	-DinputFile="$indir/$infile" \
@@ -139,8 +139,7 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
         -Dprofile=$profile \
 	-Dpublisher=$publisher \
 	-Duid=$uid \
-	$cssFile \
 	-Dsubject=$subject \
 	-Dcoverimage=$coverimage \
-	-Dmediaoverlay=$overlayfile \
-	-DsplitLevel=$splitLevel 
+	-Dmediaoverlay=$overlayfile 
+	
