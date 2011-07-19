@@ -1266,7 +1266,17 @@
 	      <xsl:element name="{$wrapperElement}">
 		<xsl:for-each select="..">
 		  <xsl:call-template name="rendToClass">
-		    <xsl:with-param name="id"/>
+		    <xsl:with-param name="id">
+		      <xsl:choose>
+			<xsl:when test="@xml:id">
+			  <xsl:value-of select="@xml:id"/>
+			  <xsl:text>continued</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:text>false</xsl:text>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:with-param>
 		  </xsl:call-template>
 		</xsl:for-each>
 		<xsl:apply-templates select="current-group() except ."/>
@@ -1286,7 +1296,6 @@
       <xsl:otherwise>
 	<xsl:element name="{$wrapperElement}">
 	  <xsl:call-template name="rendToClass">
-	    <xsl:with-param name="id">true</xsl:with-param>
 	    <xsl:with-param name="default">
 	      <xsl:if test="$wrapperElement='div'">p</xsl:if>
 	    </xsl:with-param>
@@ -2195,20 +2204,24 @@
   <xsl:template name="rendToClass">
     <xsl:param name="id">true</xsl:param>
     <xsl:param name="default">.</xsl:param>
-    <xsl:if test="$id='true'">
-      <xsl:choose>
-	<xsl:when test="@xml:id">
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:attribute>
-	</xsl:when>
-	<xsl:when test="self::tei:p and $generateParagraphIDs='true'">
-	  <xsl:attribute name="id">
-	    <xsl:value-of select="generate-id()"/>
-	  </xsl:attribute>
-	</xsl:when>
-      </xsl:choose>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$id='false'"/>
+      <xsl:when test="$id=''"/>
+      <xsl:when test="$id='true' and @xml:id">
+	<xsl:attribute name="id">
+	  <xsl:value-of select="@xml:id"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$id='true' and self::tei:p and $generateParagraphIDs='true'">
+	<xsl:attribute name="id">
+	  <xsl:value-of select="generate-id()"/>
+	</xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:attribute name="id" select="$id"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    
     <xsl:if test="$outputTarget='html5'">
       <xsl:call-template name="microdata"/>
     </xsl:if>

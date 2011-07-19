@@ -176,7 +176,17 @@
 		<xsl:for-each select="..">
 		  <xsl:call-template name="rendToClass">      
 		    <xsl:with-param name="default">p-in-sp  identifiable</xsl:with-param>
-		    <xsl:with-param name="id"/>
+		    <xsl:with-param name="id">
+		      <xsl:choose>
+			<xsl:when test="@xml:id">
+			  <xsl:value-of select="@xml:id"/>
+			  <xsl:text>continued</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:text>false</xsl:text>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:with-param>
 		  </xsl:call-template>
 		</xsl:for-each>
 		<xsl:apply-templates select="current-group() except ."/>
