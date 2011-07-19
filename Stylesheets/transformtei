@@ -31,6 +31,8 @@ echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
 echo "  --splitLevel=$splitLevel        # splitting level (epub output only)"
 echo "  --subject=XXX           # subject/category for ebook (epub output only)"
 echo "  --uid=XXX               # unique URN for ebook (epub output only)"
+echo "  --viewportwidth=XXX     # viewport width for epub fixed-size pages (epub output only)"
+echo "  --viewportheight=XXX    # viewport height for epub fixed-size pages (epub output only)"
 echo
 echo "  options, binary switches:"
 echo "  --odd              # perform processing of ODD (if appropriate)"
@@ -56,6 +58,8 @@ cssFile=
 conversion=
 subject=
 uid=
+viewportwidth=
+viewportheight=
 # ---
 APPHOME=`(cd $X; pwd)`
 profiledir=$APPHOME/profiles
@@ -89,6 +93,8 @@ while test $# -gt 0; do
     --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
     --debug)        debug="-Ddebug=true"; verbose=true; antflag=-v;;
     --verbose)      verbose=true; antflag=-v;;
+    --viewportwidth=*)   viewportwidth="-DviewPortWidth=`echo $1 | sed 's/.*=//'`";;
+    --viewportheight=*)   viewportheight="-DviewPortHeight=`echo $1 | sed 's/.*=//'`";;
     --help)         usageMsg; exit 1;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -128,9 +134,9 @@ if ! test -f $profiledir/$profile/$format/$direction.xsl
 then
     die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
 fi
-echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel
+echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
-	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel \
+	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight \
         -Dodd=$odd \
         -Dverbose=$verbose  \
 	-DinputFile="$indir/$infile" \

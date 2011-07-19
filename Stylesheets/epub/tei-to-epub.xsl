@@ -307,7 +307,11 @@
                 <item href="{$coverimage}" id="cover-image-extra" media-type="image/jpeg"/>
               </xsl:if>
               <item href="stylesheet.css" id="css" media-type="text/css"/>
-              <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>
+              <item href="titlepage.html" id="titlepage"
+		    media-type="application/xhtml+xml"/>
+	      <xsl:if test="$filePerPage='true'">
+		<item href="titlepageverso.html" id="titlepageverso"  media-type="application/xhtml+xml"/>
+	      </xsl:if>
               <xsl:for-each select="tei:text/tei:front/tei:titlePage">
                 <xsl:variable name="N" select="position()"/>
                 <item href="titlepage{$N}.html" id="titlepage{$N}" media-type="application/xhtml+xml"/>
@@ -402,6 +406,9 @@
             </manifest>
             <spine toc="ncx">
               <itemref idref="titlepage" linear="yes"/>
+	      <xsl:if test="$filePerPage='true'">
+		<itemref idref="titlepageverso" linear="yes"/>
+	      </xsl:if>
               <xsl:for-each select="tei:text/tei:front/tei:titlePage">
                 <xsl:variable name="N" select="position()"/>
                 <itemref idref="titlepage{$N}" linear="yes"/>
@@ -552,9 +559,29 @@
             </html>
           </xsl:result-document>
         </xsl:for-each>
-        <xsl:if test="$verbose='true'">
-          <xsl:message>write file OEBPS/titlepageback.html</xsl:message>
-        </xsl:if>
+	<xsl:if test="$filePerPage='true'">
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>write file OEBPS/titlepageverso.html</xsl:message>
+	  </xsl:if>
+	  <xsl:result-document href="{concat($directory,'/OEBPS/titlepageverso.html')}" method="xml">
+	    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	      <head>
+		<xsl:call-template name="metaHTML">
+		  <xsl:with-param name="title">title page verso</xsl:with-param>
+		</xsl:call-template>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>title page verso</title>
+	      </head>
+	      <body>
+		<p></p>
+	      </body>
+	    </html>
+	  </xsl:result-document>
+	</xsl:if>
+	
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>write file OEBPS/titlepageback.html</xsl:message>
+	</xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/titlepageback.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
