@@ -2217,6 +2217,7 @@
 	  <xsl:value-of select="generate-id()"/>
 	</xsl:attribute>
       </xsl:when>
+      <xsl:when test="$id='true'"/>
       <xsl:otherwise>
 	<xsl:attribute name="id" select="$id"/>
       </xsl:otherwise>
