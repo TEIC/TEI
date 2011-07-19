@@ -325,7 +325,7 @@
 		      <xsl:text>.html</xsl:text>
 		    </xsl:variable>
 		    <item href="{$target}"
-			  media-type="application/xhtml+xml">
+			  media-type="application/xhtml+xml">		      
 		      <xsl:if
 			  test="$overlayfiles/opf:file[@n=$target]">
 			<xsl:attribute name="media-overlay">audio</xsl:attribute>
@@ -335,6 +335,19 @@
 			<xsl:number level="any"/>
 		      </xsl:attribute>	
 		    </item>
+		    <xsl:if test="@facs">
+		      <xsl:variable name="facstarget">
+			<xsl:apply-templates select="." mode="ident"/>
+			<xsl:text>-facs.html</xsl:text>
+		      </xsl:variable>
+		      <item href="{$facstarget}"
+			    media-type="application/xhtml+xml">
+			<xsl:attribute name="id">
+			  <xsl:text>pagefacs</xsl:text>
+			  <xsl:number level="any"/>
+			</xsl:attribute>	
+		      </item>
+		    </xsl:if>
 		  </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>
@@ -366,21 +379,22 @@
 	      </xsl:choose>
 		  <!-- images -->
               <xsl:for-each select="key('GRAPHICS',1)">
-                <xsl:if test="not(@url=$coverImageOutside)">
+		<xsl:variable name="img" select="@url|@facs"/>
+                <xsl:if test="not($img=$coverImageOutside)">
                   <xsl:variable name="ID">
                     <xsl:number level="any"/>
                   </xsl:variable>
                   <xsl:variable name="mimetype">
                     <xsl:choose>
-                      <xsl:when test="contains(@url,'.gif')">image/gif</xsl:when>
-                      <xsl:when test="contains(@url,'.png')">image/png</xsl:when>
-                      <xsl:when test="contains(@url,'.mpeg')">video/mpeg4</xsl:when>
-                      <xsl:when test="contains(@url,'.mp4')">video/mpeg4</xsl:when>
-                      <xsl:when test="contains(@url,'.m4v')">video/mpeg4</xsl:when>
+                      <xsl:when test="contains($img,'.gif')">image/gif</xsl:when>
+                      <xsl:when test="contains($img,'.png')">image/png</xsl:when>
+                      <xsl:when test="contains($img,'.mpeg')">video/mpeg4</xsl:when>
+                      <xsl:when test="contains($img,'.mp4')">video/mpeg4</xsl:when>
+                      <xsl:when test="contains($img,'.m4v')">video/mpeg4</xsl:when>
                       <xsl:otherwise>image/jpeg</xsl:otherwise>
                     </xsl:choose>
                   </xsl:variable>
-                  <item href="{@url}" id="image-{$ID}" media-type="{$mimetype}"/>
+                  <item href="{$img}" id="image-{$ID}" media-type="{$mimetype}"/>
                 </xsl:if>
               </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
@@ -402,6 +416,14 @@
 			<xsl:number level="any"/>
 		      </xsl:attribute>
 		    </itemref>
+		    <xsl:if test="@facs">
+		      <itemref linear="yes">
+			<xsl:attribute name="idref">
+			  <xsl:text>pagefacs</xsl:text>
+			  <xsl:number level="any"/>
+			</xsl:attribute>
+		      </itemref>
+		    </xsl:if>
 		    </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>
@@ -601,6 +623,7 @@
                     <xsl:when test="not(html:a)"/>
                     <xsl:when test="starts-with(html:a/@href,'#')"/>
                     <xsl:when test="contains(@class,'headless')"/>
+                    <xsl:when test="html:a/@href=preceding-sibling::html:li/html:a/@href"/>
                     <xsl:otherwise>
                       <navPoint>
                         <navLabel>

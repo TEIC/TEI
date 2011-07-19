@@ -681,10 +681,49 @@
     <desc>Process element lg</desc>
   </doc>
   <xsl:template match="tei:lg">
-    <div>
-      <xsl:call-template name="rendToClass"/>
-      <xsl:apply-templates/>
-    </div>
+    <xsl:choose>
+      <xsl:when test="$filePerPage='true'">
+	<xsl:for-each-group select="node()" group-starting-with="tei:pb">
+	  <xsl:choose>
+	    <xsl:when test="self::tei:pb">
+	      <xsl:apply-templates select="."/>
+	      <div>
+		<xsl:for-each select="..">
+		  <xsl:call-template name="rendToClass">
+		    <xsl:with-param name="id">
+		      <xsl:choose>
+			<xsl:when test="@xml:id">
+			  <xsl:value-of select="@xml:id"/>
+			  <xsl:text>continued</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:text>false</xsl:text>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</xsl:for-each>
+		<xsl:apply-templates select="current-group() except ."/>
+	      </div>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <div>
+		<xsl:for-each select="..">
+		  <xsl:call-template name="rendToClass"/>
+		</xsl:for-each>
+		<xsl:apply-templates select="current-group()"/>
+	      </div>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
+      </xsl:when>
+      <xsl:otherwise>
+	<div>
+	  <xsl:call-template name="rendToClass"/>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element lg/tei:l</desc>

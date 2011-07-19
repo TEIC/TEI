@@ -28,6 +28,7 @@
   </doc>
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
   <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
+  <xsl:key name="GRAPHICS" use="1" match="tei:pb[@facs]"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[epub] Suppress normal page footer      </desc>
@@ -163,6 +164,27 @@
             <xsl:value-of select="$newName"/>
           </xsl:attribute>
           <xsl:copy-of select="@*[not(local-name()='url')]"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="@*"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="tei:pb[@facs]" mode="fixgraphics">
+    <xsl:copy>
+      <xsl:choose>
+        <xsl:when test="$fixgraphicsurl='true'">
+          <xsl:variable name="newName">
+            <xsl:text>media/pageimage</xsl:text>
+            <xsl:number level="any"/>
+            <xsl:text>.</xsl:text>
+            <xsl:value-of select="tokenize(@facs,'\.')[last()]"/>
+          </xsl:variable>
+          <xsl:attribute name="facs">
+            <xsl:value-of select="$newName"/>
+          </xsl:attribute>
+          <xsl:copy-of select="@*[not(local-name()='facs')]"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:copy-of select="@*"/>

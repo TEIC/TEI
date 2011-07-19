@@ -23,8 +23,9 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1"   name="G"/>
-  <xsl:key name="SMIL-Audio" match="smil:audio" use="1"/>
+   <xsl:key name="G" match="tei:graphic[not(ancestor::teix:egXML)]"  use="1"/>
+   <xsl:key name="PB" match="tei:pb[@facs]" use="1"/>
+   <xsl:key name="SMIL-Audio" match="smil:audio" use="1"/>
    <xsl:param name="inputDir">.</xsl:param>
    <xsl:param name="audioDir">.</xsl:param>
    <xsl:param name="imageDir">word/media</xsl:param>
@@ -52,6 +53,40 @@
 	     </xsl:for-each-group>
 	   </xsl:for-each>
 	 </xsl:if>
+	 <xsl:for-each select="key('PB',1)">
+	   <xsl:variable name="F">
+	     <xsl:choose>
+	       <xsl:when test="starts-with(@facs,'#')">
+		 <xsl:for-each select="key('IDS',substring(@facs,2))">
+		   <xsl:value-of select="tei:graphic[1]/@url"/>
+		 </xsl:for-each>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:value-of select="@facs"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:variable>
+	   <xsl:variable name="target">
+	     <xsl:text>${outputTempDir}/</xsl:text>
+	     <xsl:value-of select="$imageDir"/>
+	     <xsl:text>/pageimage</xsl:text>
+	     <xsl:number level="any"/>
+	     <xsl:text>.</xsl:text>
+	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="starts-with($F,'http')">
+	       <get src="{@url}" dest="{$target}"/>
+	     </xsl:when>
+	     <xsl:when test="starts-with($F,'/')">
+	       <copy toFile="{$target}" file="{@url}"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <copy toFile="{$target}" file="{$inputDir}/{$F}"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+
+	 </xsl:for-each>
 	 <xsl:for-each select="key('G',1)">
 	   <xsl:variable name="F">
 	     <xsl:value-of select="@url"/>
