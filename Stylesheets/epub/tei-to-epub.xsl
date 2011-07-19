@@ -540,7 +540,7 @@
               <title>About this book</title>
             </head>
             <body>
-              <div style="text-align: left; font-size: smaller">
+              <div style="text-align: left; font-size: 85%">
                 <h2>Information about this book</h2>
                 <xsl:for-each select="/*/tei:teiHeader/tei:fileDesc">
                   <xsl:apply-templates mode="metadata"/>
