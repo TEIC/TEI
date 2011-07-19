@@ -433,8 +433,10 @@
 	      </xsl:choose>
 	      <itemref idref="titlepageback">
 		<xsl:attribute name="linear">
-		  <xsl:when test="$filePerPage='true'">yes</xsl:when>
-		  <xsl:otherwise>no</xsl:otherwise>
+		  <xsl:choose>
+		    <xsl:when test="$filePerPage='true'">yes</xsl:when>
+		    <xsl:otherwise>no</xsl:otherwise>
+		  </xsl:choose>
 		</xsl:attribute>
 	      </itemref>
 	      <xsl:call-template name="epubSpineHook"/>
