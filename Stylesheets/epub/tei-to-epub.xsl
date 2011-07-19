@@ -185,9 +185,9 @@
 	  <xsl:if test="$filePerPage='true'">
 	    <xsl:text>body { width: </xsl:text>
 	    <xsl:value-of select="$viewPortWidth"/>
-	    <xsl:text>; height: </xsl:text>
+	    <xsl:text>px; height: </xsl:text>
 	    <xsl:value-of select="$viewPortHeight"/>
-	    <xsl:text>} </xsl:text>
+	    <xsl:text>px } </xsl:text>
 	  </xsl:if>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
@@ -324,17 +324,6 @@
 		      <xsl:apply-templates select="." mode="ident"/>
 		      <xsl:text>.html</xsl:text>
 		    </xsl:variable>
-		    <item href="{$target}"
-			  media-type="application/xhtml+xml">		      
-		      <xsl:if
-			  test="$overlayfiles/opf:file[@n=$target]">
-			<xsl:attribute name="media-overlay">audio</xsl:attribute>
-		      </xsl:if>
-		      <xsl:attribute name="id">
-			<xsl:text>page</xsl:text>
-			<xsl:number level="any"/>
-		      </xsl:attribute>	
-		    </item>
 		    <xsl:if test="@facs">
 		      <xsl:variable name="facstarget">
 			<xsl:apply-templates select="." mode="ident"/>
@@ -348,6 +337,17 @@
 			</xsl:attribute>	
 		      </item>
 		    </xsl:if>
+		    <item href="{$target}"
+			  media-type="application/xhtml+xml">		      
+		      <xsl:if
+			  test="$overlayfiles/opf:file[@n=$target]">
+			<xsl:attribute name="media-overlay">audio</xsl:attribute>
+		      </xsl:if>
+		      <xsl:attribute name="id">
+			<xsl:text>page</xsl:text>
+			<xsl:number level="any"/>
+		      </xsl:attribute>	
+		    </item>
 		  </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>
@@ -410,12 +410,6 @@
 	      <xsl:choose>
 		<xsl:when test="$filePerPage='true'">
 		  <xsl:for-each select="key('PB',1)">
-		    <itemref linear="yes">
-		      <xsl:attribute name="idref">
-			<xsl:text>page</xsl:text>
-			<xsl:number level="any"/>
-		      </xsl:attribute>
-		    </itemref>
 		    <xsl:if test="@facs">
 		      <itemref linear="yes">
 			<xsl:attribute name="idref">
@@ -424,6 +418,12 @@
 			</xsl:attribute>
 		      </itemref>
 		    </xsl:if>
+		    <itemref linear="yes">
+		      <xsl:attribute name="idref">
+			<xsl:text>page</xsl:text>
+			<xsl:number level="any"/>
+		      </xsl:attribute>
+		    </itemref>
 		    </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>

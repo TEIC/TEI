@@ -60,11 +60,11 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="number">
       <desc>When making fixed format epub, width of viewport</desc>
   </doc>
-  <xsl:param name="viewPortWidth">768</xsl:param>
+  <xsl:param name="viewPortWidth">1200</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="number">
       <desc>When making fixed format epub, height of viewport</desc>
   </doc>
-  <xsl:param name="viewPortHeight">1024</xsl:param>
+  <xsl:param name="viewPortHeight">1700</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Number footnotes consecutively</desc>
