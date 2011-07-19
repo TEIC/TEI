@@ -2122,6 +2122,10 @@
          <xsl:call-template name="mainTOC"/>
       </xsl:if>
       <!-- main text -->
+      <xsl:message>Making output files one per page</xsl:message>
+
+
+
     <xsl:choose>
       <xsl:when test="tei:text/tei:group">
 	<xsl:apply-templates select="tei:text/tei:group"/>

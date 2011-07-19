@@ -77,7 +77,7 @@ while test $# -gt 0; do
   case $1 in
     --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
     --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
-    --fileperpage)  splitLevel="-DsplitLevel-1"; fileperpage="-DfilePerPage=true";;
+    --fileperpage)  splitLevel="-DsplitLevel=-1"; fileperpage="-DfilePerPage=true";;
     --odd)          odd=true;;
     --mediaoverlay=*)    overlayfile=`echo $1 | sed 's/.*=//'`;;
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
@@ -128,7 +128,7 @@ if ! test -f $profiledir/$profile/$format/$direction.xsl
 then
     die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
 fi
-echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug
+echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel \
         -Dodd=$odd \
