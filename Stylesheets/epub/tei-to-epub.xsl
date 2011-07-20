@@ -185,9 +185,12 @@
 	  <xsl:if test="$filePerPage='true'">
 	    <xsl:text>body { width: </xsl:text>
 	    <xsl:value-of select="$viewPortWidth"/>
-	    <xsl:text>px; height: </xsl:text>
+	    <xsl:text>px;&#10; height: </xsl:text>
 	    <xsl:value-of select="$viewPortHeight"/>
-	    <xsl:text>px } </xsl:text>
+	    <xsl:text>px }&#10; img.fullpage {&#10;position: absolute;
+	    height: </xsl:text>
+	    <xsl:value-of select="$viewPortHeight"/>
+	    <xsl:text>; }</xsl:text>
 	  </xsl:if>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">

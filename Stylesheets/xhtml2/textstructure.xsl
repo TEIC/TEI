@@ -2239,7 +2239,7 @@
 	    <xsl:call-template name="javascriptHook"/>
 	  </head>
 	  <body>
-	    <p><img src="{@facs}" alt="page facsimile"/></p>
+	    <p><img src="{@facs}" class="fullpage" alt="page facsimile"/></p>
 	  </body>
 	</html>
       </xsl:result-document>      
