@@ -2238,7 +2238,7 @@
 	    <xsl:call-template name="includeJavascript"/>
 	    <xsl:call-template name="javascriptHook"/>
 	  </head>
-	  <body>
+	  <body style="margin:0;padding:0">
 	    <p><img src="{@facs}" class="fullpage" alt="page facsimile"/></p>
 	  </body>
 	</html>
