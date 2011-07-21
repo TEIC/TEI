@@ -315,12 +315,12 @@ XSL LaTeX stylesheet to make slides
   <xsl:template name="makeFigureEnd">
       <xsl:choose>
          <xsl:when test="tei:head">
-            <xsl:text>&#10;\leftline{\textit{</xsl:text>
+            <xsl:text>&#10;\par\noindent\textit{</xsl:text>
             <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
             <xsl:for-each select="tei:head">
 	      <xsl:apply-templates/>
 	    </xsl:for-each>
-            <xsl:text>}}</xsl:text>
+            <xsl:text>}\par</xsl:text>
          </xsl:when>
       </xsl:choose>
 
