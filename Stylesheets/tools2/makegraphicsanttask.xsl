@@ -32,12 +32,14 @@
    <xsl:template match="/">
      <project xmlns="" basedir="." default="dist" name="imagecopy">
        <target name="dist">
-	 <mkdir>
-	   <xsl:attribute name="dir">
-	     <xsl:text>${outputTempDir}/</xsl:text>
-	     <xsl:value-of select="$imageDir"/>
-	   </xsl:attribute>
-	 </mkdir>
+	 <xsl:if test="key('PB',1) or key('G',1)">
+	   <mkdir>
+	     <xsl:attribute name="dir">
+	       <xsl:text>${outputTempDir}/</xsl:text>
+	       <xsl:value-of select="$imageDir"/>
+	     </xsl:attribute>
+	   </mkdir>
+	 </xsl:if>
 	 <xsl:variable name="overlay" select="concat($inputDir,'/overlay.smil')"/>
 	 <xsl:if test="doc-available($overlay)">
 	   <xsl:for-each select="document($overlay)">

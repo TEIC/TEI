@@ -31,7 +31,6 @@
   <xsl:param name="homeLabel">TEI P5 Guidelines</xsl:param>
   <xsl:param name="homeWords">TEI P5</xsl:param>
   <xsl:param name="institution">Text Encoding Initiative</xsl:param>
-  <xsl:param name="outputDir">OEBPS</xsl:param>
   <xsl:param name="parentURL">http://www.tei-c.org/Consortium/</xsl:param>
   <xsl:param name="parentWords">TEI Consortium</xsl:param>
   <xsl:param name="cssFile">../profiles/tei/epub/guidelines.css</xsl:param>
