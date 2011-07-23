@@ -432,8 +432,7 @@ epub: epub.stamp
 epub.stamp:
 	@echo BUILD: Make epub version of Guidelines
 	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
-	teitoepub --coverimage=Utilities/cover.jpg --profile=tei teip5.xml teip5.epub
-	mv teip5.epub Guidelines.epub
+	teitoepub --coverimage=Utilities/cover.jpg --profile=tei teip5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
 	rm teip5.xml
 	touch epub.stamp
