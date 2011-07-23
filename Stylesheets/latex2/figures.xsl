@@ -108,14 +108,7 @@
    </doc>
   <xsl:template match="tei:figure">
       <xsl:call-template name="makeFigureStart"/>
-      <xsl:choose>
-         <xsl:when test="@url or @entity">
-            <xsl:call-template name="makePic"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:apply-templates/>
-         </xsl:otherwise>
-      </xsl:choose>
+      <xsl:apply-templates/>
       <xsl:call-template name="makeFigureEnd"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
