@@ -74,10 +74,13 @@ general:
 	unzip -t test.epub > test.epub.listing
 	diff test.epub.listing ok/test.epub.listing
 	rm test.epub.listing
-	../teitoepub  --fileperpage test.xml test.epub
-	unzip -t test.epub > test.epub.listing2
+	../teitoepub  --fileperpage test.xml test-pages.epub
+	unzip -t test-pages.epub > test.epub.listing2
 	diff test.epub.listing2 ok/test.epub.listing2
 	rm test.epub.listing2
+	../teitoepub  test8.xml test8.epub
+	unzip -t test8.epub > test8.epub.listing
+	diff test8.epub.listing ok/test8.epub.listing
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
 	diff test.xml.odt.listing ok/test.xml.odt.listing
@@ -101,7 +104,8 @@ clean:
 	rm -f  test.tex test.xml.odt test.xml.docx test.epub
 	rm -f  test8.pdf
 	rm -f  test8.log
-	rm -f  test5.xml.odt
+	rm -f  test5.odt
+	rm -f  test10.xml.odt
 	rm -f  test8.aux
 	rm -f  test7.xml test11.xml
 	rm -f  test8.tex
@@ -109,7 +113,8 @@ clean:
 	rm -f  test8.doc
 	rm -f  test8.out
 	rm -f  test9.docx test9.odt
-	rm -f  test.xml.*.list
+	rm -f  test*listing*
+	rm -f test*epub
 	rm -f  test.aux test.log test.out test.pdf 
-	rm -rf temp-dir-for-ant Pictures
-	rm -rf *.listing
+	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
+
