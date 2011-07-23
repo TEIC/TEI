@@ -45,15 +45,9 @@
   <condition property="processODD">
     <equals arg1="${odd}" arg2="true"/>
   </condition>
-  <condition property="nooverlay">
-    <equals arg1="${mediaoverlay}" arg2=""/>
-  </condition>
   <target name="setup">
     <delete dir="${outputTempDir}"/>
     <mkdir dir="${outputTempDir}"/>
-  </target>
-  <target name="overlay" unless="nooverlay">
-    <copy file="${inputFileDir}/${mediaoverlay}" tofile="${outputTempDir}/OEBPS/overlay.smil" overwrite="true"/>
   </target>
   <target name="notodd" unless="processODD">
     <copy file="${inputFile}" tofile="${outputTempDir}/tmp2.xml" overwrite="true"/>
@@ -86,7 +80,7 @@
       <param name="summaryDoc" expression="true"/>
     </xslt>
   </target>
-  <target name="dist" depends="setup,odd,notodd,overlay,convert,cleanup"/>
+  <target name="dist" depends="setup,odd,notodd,convert,cleanup"/>
 
   <target name="convert">
     <!-- Recreate temporary output directory -->
@@ -141,8 +135,8 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygyenlib}/saxon9ee.jar"/>
       <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="imageDir" expression="OEBPS/media"/>
-      <param name="audioDir" expression="OEBPS"/>
+      <param name="mediaDir" expression="OEBPS/media"/>
+      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
     </xslt>
     <echo level="info">Copy image files</echo>
     <ant antfile="${outputTempDir}/copy.xml"/>

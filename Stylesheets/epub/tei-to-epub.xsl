@@ -282,26 +282,70 @@
               </xsl:if>
             </metadata>
             <manifest>
-	      <xsl:variable name="overlayfiles">
+	      <!-- deal with intricacies of overlay files -->
+	      <xsl:if test="not($mediaoverlay='')">
+		<item id="audio" href="overlay.smil" media-type="application/smil+xml"/>
+	      </xsl:if>
+	      <xsl:variable name="overlay">
 		<xsl:if test="not($mediaoverlay='')">
-		  <xsl:for-each
-		      select="document(concat($directory,'/OEBPS/overlay.smil'))">
-		    <xsl:for-each-group select="key('SMIL-Text',1)"
-					group-by="substring-before(@src,'#')">
-		      <file n="{current-grouping-key()}"/>
-		    </xsl:for-each-group>
-		  </xsl:for-each>
+		  <xsl:copy-of select="document(concat($inputDir,'/',$mediaoverlay))"/>
 		</xsl:if>
 	      </xsl:variable>
-              <xsl:if test="not($mediaoverlay='')">
-		<item id="audio" href="overlay.smil" media-type="application/smil+xml"/>
-		<xsl:for-each select="document(concat($directory,'/OEBPS/overlay.smil'))">
-		  <xsl:for-each-group select="key('SMIL-Audio',1)"
-				      group-by="@src">
-		    <item id="audio{position()}" href="{current-grouping-key()}" media-type="audio/mp4"/>
+	      <xsl:variable name="audiofiles">
+		<xsl:for-each select="$overlay">
+		  <xsl:for-each-group select="key('SMIL-Audio',1)"  group-by="@src">
+		    <file old="{@src}">
+		      <xsl:attribute name="new">
+			<xsl:text>audio</xsl:text>
+			<xsl:number/>
+			<xsl:text>.</xsl:text>
+			<xsl:value-of select="tokenize(@src,'\.')[last()]"/>
+		      </xsl:attribute>
+		    </file>
 		  </xsl:for-each-group>
 		</xsl:for-each>
+	      </xsl:variable>
+
+	      <xsl:variable name="textfiles">
+		<xsl:for-each select="$overlay">
+		  <xsl:for-each-group select="key('SMIL-Text',1)"  group-by="substring-before(@src,'#')">
+		    <file n="{current-grouping-key()}"/>
+		  </xsl:for-each-group>
+		</xsl:for-each>
+	      </xsl:variable>
+
+	      <xsl:for-each select="$audiofiles/opf:file">
+		<item id="audio{position()}" href="media/{@new}" media-type="audio/mp4"/>
+	      </xsl:for-each>
+
+	      <xsl:if test="not($mediaoverlay='')">
+		<xsl:if test="$verbose='true'">
+		  <xsl:message>write file OEBPS/overlay.smil</xsl:message>
+		</xsl:if>
+		<xsl:result-document href="{concat($directory,'/OEBPS/overlay.smil')}" method="xml">
+		  <smil xmlns="http://www.w3.org/ns/SMIL" version="3.0" profile="http://www.ipdf.org/epub/30/profile/content/">
+		    <body> 
+		      <xsl:for-each select="$overlay//smil:par">
+			<par>
+			  <xsl:copy-of select="@id"/>
+			  <text>
+			    <xsl:copy-of select="smil:text/@src"/>
+			  </text>
+			  <audio>
+			    <xsl:variable name="src" select="smil:audio/@src"/>
+			    <xsl:copy-of select="smil:audio/@clipBegin"/>
+			    <xsl:copy-of select="smil:audio/@clipEnd"/>
+			    <xsl:attribute name="src">
+			      <xsl:value-of select="$audiofiles/opf:file[@old=$src]/@new"/>
+			    </xsl:attribute>
+			  </audio>
+			</par>
+		      </xsl:for-each>
+		    </body>
+		</smil>
+		</xsl:result-document>
 	      </xsl:if>
+
               <xsl:if test="not($coverImageOutside='')">
                 <item href="{$coverImageOutside}" id="cover-image" media-type="image/jpeg"/>
               </xsl:if>
@@ -346,7 +390,7 @@
 		    <item href="{$target}"
 			  media-type="application/xhtml+xml">		      
 		      <xsl:if
-			  test="$overlayfiles/opf:file[@n=$target]">
+			  test="$textfiles/opf:file[@n=$target]">
 			<xsl:attribute name="media-overlay">audio</xsl:attribute>
 		      </xsl:if>
 		      <xsl:attribute name="id">
