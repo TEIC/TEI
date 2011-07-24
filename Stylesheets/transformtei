@@ -6,6 +6,11 @@
 # license: GPL
 # $Id$
 
+script=`basename $0`
+scriptdir=`dirname $0`
+APPHOME=`(cd $scriptdir; pwd)`
+version=`cat $APPHOME/VERSION`
+
 die()
 {
     echo "ERROR: $@."
@@ -19,25 +24,31 @@ usageMsg()
 echo "TEI conversion: from $from to $to"
 echo ""
 echo "  Usage: $0 [options] inputfile [outputfile]"
-echo "  options, shown with defaults:"
+echo
+echo "  Options, binary switches:"
+echo "  --odd              # perform processing of ODD (if appropriate)"
+echo "  --verbose          # be verbose"
+echo "  --debug            # be verbose, do not delete intermediate files"
+echo 
+echo "  Options, shown with defaults:"
+echo "  --profile=$profile    # which transformation profile to use"
+echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
+if [ $script = "teitoepub" ]
+then
+echo "  --profiledir=$profiledir    # where to find profile directory"
 echo "  --coverimage=XXX        # name of JPEG file for ebook cover (epub output only)"
 echo "  --css=XXX               # supply name of CSS file (epub output only)"
 echo "  --fileperpage           # create output files one per page (epub output only)"
-echo "  --profile=$profile    # which transformation profile to use"
-echo "  --mediaoverlay=$overlayfile    # media overlay file (epub output only)"
-echo "  --profiledir=$profiledir    # where to find profile directory"
+echo "  --mediaoverlay=$overlayfile         # media overlay file (epub output only)"
 echo "  --publisher=XXX         # name of publisher for ebook (epub output only)"
-echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
-echo "  --splitLevel=$splitLevel        # splitting level (epub output only)"
+echo "  --splitLevel=$splitLevel           # splitting level (epub output only)"
 echo "  --subject=XXX           # subject/category for ebook (epub output only)"
 echo "  --uid=XXX               # unique URN for ebook (epub output only)"
 echo "  --viewportwidth=XXX     # viewport width for epub fixed-size pages (epub output only)"
 echo "  --viewportheight=XXX    # viewport height for epub fixed-size pages (epub output only)"
+fi
 echo
-echo "  options, binary switches:"
-echo "  --odd              # perform processing of ODD (if appropriate)"
-echo "  --verbose          # be verbose"
-echo "  --debug            # be verbose, do not delete intermediate files"
+echo "Stylesheet version: $version"
 }
 
 #-------------------------------------------------
@@ -47,7 +58,7 @@ profile=default
 odd=false
 verbose=false
 antflag=-q
-X=`dirname $0`
+
 # epub only
 overlayfile=
 splitLevel=
@@ -61,12 +72,10 @@ uid=
 viewportwidth=
 viewportheight=
 # ---
-APPHOME=`(cd $X; pwd)`
 profiledir=$APPHOME/profiles
 SAXONJAR=/usr/share/saxon/saxon9he.jar
-name=`basename $0`
-from=`echo $name | sed 's/to.*//'`
-to=`echo $name | sed 's/.*to//'`
+from=`echo $script | sed 's/to.*//'`
+to=`echo $script | sed 's/.*to//'`
 if [ $to = "tei" ]
 then
    direction=from
