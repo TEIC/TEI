@@ -2176,7 +2176,7 @@
 		<xsl:text>NOTEREF _</xsl:text>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:text> REF _</xsl:text>
+		<xsl:text>REF _</xsl:text>
 	      </xsl:otherwise>
 	    </xsl:choose>
 	    <xsl:value-of select="substring(@target,2)"/>
@@ -2192,7 +2192,7 @@
 	    <xsl:if test="not(@rend)">
 	      <xsl:text> \n</xsl:text>
 	    </xsl:if>
-	    <xsl:text> \h </xsl:text>
+	    <xsl:text> \h</xsl:text>
 	    <xsl:if test="contains(@rend,'mergeformat')">
 	      <xsl:text> \* MERGEFORMAT</xsl:text>
 	    </xsl:if>
