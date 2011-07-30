@@ -12,7 +12,7 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
       02111-1307 USA 
 
-$Id: processpb.xsl 4549 2008-04-23 16:40:01Z rahtz $
+$Id$
 
 -->
   <xsl:output indent="yes"/>
@@ -56,7 +56,6 @@ $Id: processpb.xsl 4549 2008-04-23 16:40:01Z rahtz $
 	  <xsl:apply-templates/>
 	</xsl:for-each>
       </xsl:otherwise>
-
     </xsl:choose>
   </xsl:template>
 
@@ -71,6 +70,7 @@ $Id: processpb.xsl 4549 2008-04-23 16:40:01Z rahtz $
             <xsl:for-each select="..">
               <xsl:if test="@xml:id">
                 <xsl:attribute name="prev">
+		  <xsl:text>#</xsl:text>
                   <xsl:value-of select="@xml:id"/>
                 </xsl:attribute>
               </xsl:if>
@@ -79,7 +79,6 @@ $Id: processpb.xsl 4549 2008-04-23 16:40:01Z rahtz $
             <xsl:apply-templates select="current-group() except ."/>
           </xsl:element>
         </xsl:when>
-
         <xsl:otherwise>
           <xsl:element name="{$Name}">
             <xsl:for-each select="..">

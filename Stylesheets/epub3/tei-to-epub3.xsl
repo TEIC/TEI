@@ -43,7 +43,7 @@
 	
       </p>
       <p>Author: See AUTHORS</p>
-      <p>Id: $Id: tei-to-epub.xsl 8960 2011-06-19 00:54:29Z rahtz $</p>
+      <p>Id: $Id$</p>
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
