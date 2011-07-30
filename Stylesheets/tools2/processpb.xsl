@@ -12,8 +12,11 @@
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
       02111-1307 USA 
 
-$Id$
+     $Id$
 
+    Take an arbitrary TEI file and move page breaks (<pb>) up in the
+    hierarchy, splitting containers as needed, until <pb>s are at the
+    same level as <div>
 -->
   <xsl:output indent="yes"/>
 
@@ -23,11 +26,7 @@ $Id$
     </pb>
   </xsl:template>
 
-  <xsl:template match="comment()|@*|processing-instruction()">
-    <xsl:copy-of select="."/>
-  </xsl:template>
-
-  <xsl:template match="text()">
+  <xsl:template match="comment()|@*|processing-instruction()|text()">
     <xsl:copy-of select="."/>
   </xsl:template>
 
