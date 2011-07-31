@@ -19,20 +19,18 @@
     same level as <div>
 -->
   <xsl:output indent="yes"/>
-  <xsl:template match="pb">
-    <pb>
-      <xsl:copy-of select="@*"/>
-    </pb>
-  </xsl:template>
+
   <xsl:template match="teiHeader">
     <xsl:copy-of select="."/>
   </xsl:template>
+
   <xsl:template match="TEI">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="text">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
@@ -44,11 +42,15 @@
       </xsl:for-each>
     </xsl:copy>
   </xsl:template>
+
+  <!-- second pass. group by <pb> (now all at top level) and wrap groups
+       in <page> -->
   <xsl:template match="*" mode="pass2">
     <xsl:copy>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="pass2"/>
     </xsl:copy>
   </xsl:template>
+
   <xsl:template match="*[pb]" mode="pass2">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
@@ -67,14 +69,28 @@
       </xsl:for-each-group>
     </xsl:copy>
   </xsl:template>
+
+  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="pass2">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+ <!-- first (recursive) pass. look for <pb> elements and group on them -->
   <xsl:template match="comment()|@*|processing-instruction()|text()">
     <xsl:copy-of select="."/>
   </xsl:template>
+
   <xsl:template match="*">
     <xsl:call-template name="checkpb">
       <xsl:with-param name="eName" select="local-name()"/>
     </xsl:call-template>
   </xsl:template>
+
+  <xsl:template match="pb">
+    <pb>
+      <xsl:copy-of select="@*"/>
+    </pb>
+  </xsl:template>
+
   <xsl:template name="checkpb">
     <xsl:param name="eName"/>
     <xsl:choose>
@@ -86,7 +102,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="pass">
-          <xsl:call-template name="findpb">
+          <xsl:call-template name="groupbypb">
             <xsl:with-param name="Name" select="$eName"/>
           </xsl:call-template>
         </xsl:variable>
@@ -96,13 +112,16 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template name="findpb">
+
+  <xsl:template name="groupbypb">
     <xsl:param name="Name"/>
     <xsl:for-each-group select="node()" group-starting-with="pb">
       <xsl:choose>
         <xsl:when test="self::pb">
           <xsl:copy-of select="."/>
           <xsl:element name="{$Name}">
+	    <xsl:attribute name="rend">CONTINUED</xsl:attribute>
+	    <!--
             <xsl:for-each select="..">
               <xsl:if test="@xml:id">
                 <xsl:attribute name="prev">
@@ -112,6 +131,7 @@
               </xsl:if>
               <xsl:copy-of select="@*[not(name()='xml:id')]"/>
             </xsl:for-each>
+	    -->
             <xsl:apply-templates select="current-group() except ."/>
           </xsl:element>
         </xsl:when>
