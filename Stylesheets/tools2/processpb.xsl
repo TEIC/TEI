@@ -121,17 +121,6 @@
           <xsl:copy-of select="."/>
           <xsl:element name="{$Name}">
 	    <xsl:attribute name="rend">CONTINUED</xsl:attribute>
-	    <!--
-            <xsl:for-each select="..">
-              <xsl:if test="@xml:id">
-                <xsl:attribute name="prev">
-                  <xsl:text>#</xsl:text>
-                  <xsl:value-of select="@xml:id"/>
-                </xsl:attribute>
-              </xsl:if>
-              <xsl:copy-of select="@*[not(name()='xml:id')]"/>
-            </xsl:for-each>
-	    -->
             <xsl:apply-templates select="current-group() except ."/>
           </xsl:element>
         </xsl:when>
