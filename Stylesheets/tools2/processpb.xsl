@@ -16,7 +16,7 @@
 
     Take an arbitrary TEI file and move page breaks (<pb>) up in the
     hierarchy, splitting containers as needed, until <pb>s are at the
-    same level as <div>
+    same level as <div>. Wrap the resulting pages on <page> element.
 -->
   <xsl:output indent="yes"/>
 
@@ -24,7 +24,7 @@
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="TEI">
+  <xsl:template match="TEI|teiCorpus|group">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
@@ -43,36 +43,6 @@
     </xsl:copy>
   </xsl:template>
 
-  <!-- second pass. group by <pb> (now all at top level) and wrap groups
-       in <page> -->
-  <xsl:template match="*" mode="pass2">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="pass2"/>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="*[pb]" mode="pass2">
-    <xsl:copy>
-      <xsl:apply-templates select="@*"/>
-      <xsl:for-each-group select="*" group-starting-with="pb">
-        <xsl:choose>
-          <xsl:when test="self::pb">
-            <page>
-              <xsl:copy-of select="@*"/>
-              <xsl:copy-of select="current-group() except ."/>
-            </page>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:copy-of select="current-group()"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:for-each-group>
-    </xsl:copy>
-  </xsl:template>
-
-  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="pass2">
-    <xsl:copy-of select="."/>
-  </xsl:template>
 
  <!-- first (recursive) pass. look for <pb> elements and group on them -->
   <xsl:template match="comment()|@*|processing-instruction()|text()">
@@ -135,4 +105,36 @@
       </xsl:choose>
     </xsl:for-each-group>
   </xsl:template>
+
+  <!-- second pass. group by <pb> (now all at top level) and wrap groups
+       in <page> -->
+  <xsl:template match="*" mode="pass2">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="pass2"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="*[pb]" mode="pass2">
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <xsl:for-each-group select="*" group-starting-with="pb">
+        <xsl:choose>
+          <xsl:when test="self::pb">
+            <page>
+              <xsl:copy-of select="@*"/>
+              <xsl:copy-of select="current-group() except ."/>
+            </page>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="current-group()"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each-group>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="pass2">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
 </xsl:stylesheet>
