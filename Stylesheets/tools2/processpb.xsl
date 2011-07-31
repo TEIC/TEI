@@ -120,7 +120,7 @@
       <xsl:for-each-group select="*" group-starting-with="pb">
         <xsl:choose>
           <xsl:when test="self::pb">
-            <page>
+            <page xmlns="http://www.tei-c.org/ns/notTEI"> 
               <xsl:copy-of select="@*"/>
               <xsl:copy-of select="current-group() except ."/>
             </page>
