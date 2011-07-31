@@ -67,6 +67,8 @@ oddbyexample:
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
 general:
+	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
+	diff test12.rdf ok/test12.rdf
 	../teitolatex test.xml
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
 	diff test.tex ok/test.tex

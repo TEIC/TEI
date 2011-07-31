@@ -163,13 +163,15 @@
   </xsl:template>
 
   <xsl:template name="E53">
-    <E53_Place><xsl:call-template name="makeID"/>
+    <E53_Place>
+      <xsl:call-template name="makeID"/>
       <xsl:apply-templates/>
     </E53_Place>
   </xsl:template>
 
   <xsl:template name="E21">
-    <E21_Person><xsl:call-template name="makeID"/>
+    <E21_Person>
+      <xsl:call-template name="makeID"/>
       <xsl:apply-templates/>
     </E21_Person>
   </xsl:template>
@@ -372,5 +374,36 @@
       </xsl:choose>
     </rdf:value>
   </xsl:template>
+
+
+  <xsl:function name="tei:makeID" as="xs:string*">
+    <xsl:param name="here"/>
+      <xsl:for-each select="$here">
+	<xsl:variable name="id">
+        <xsl:choose>
+          <xsl:when test="ancestor-or-self::*/@xml:base">
+            <xsl:value-of select="ancestor-or-self::*[@xml:base][1]/@xml:base"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>http://www.example.com/id</xsl:text>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:choose>
+	  <xsl:when test="@ref">
+	    <xsl:value-of select="@ref"/>
+	  </xsl:when>
+          <xsl:when test="@xml:id">
+            <xsl:value-of select="@xml:id"/>
+          </xsl:when>
+          <xsl:otherwise>
+	    <xsl:text>/</xsl:text>
+            <xsl:number level="any"/>
+          </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+      <xsl:value-of select="$id"/>
+      </xsl:for-each>
+  </xsl:function>
+
 
 </xsl:stylesheet>
