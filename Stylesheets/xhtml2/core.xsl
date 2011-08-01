@@ -2279,6 +2279,9 @@
         </xsl:otherwise>
       </xsl:choose>
       <xsl:call-template name="rendToClassHook"/>
+      <xsl:if test="teidocx:is-transcribable(.)">
+	<xsl:text> transcribable</xsl:text>
+      </xsl:if>
     </xsl:variable>
     <xsl:variable name="class2">
       <xsl:choose>
