@@ -175,7 +175,7 @@
 	      <div>
 		<xsl:for-each select="..">
 		  <xsl:call-template name="rendToClass">      
-		    <xsl:with-param name="default">p-in-sp  identifiable</xsl:with-param>
+		    <xsl:with-param name="default">p-in-sp</xsl:with-param>
 		    <xsl:with-param name="id">
 		      <xsl:choose>
 			<xsl:when test="@xml:id">
@@ -196,7 +196,7 @@
 	      <div>
 		<xsl:for-each select="..">
 		  <xsl:call-template name="rendToClass">      
-		    <xsl:with-param name="default">p-in-sp identifiable</xsl:with-param>
+		    <xsl:with-param name="default">p-in-sp</xsl:with-param>
 		  </xsl:call-template>
 		</xsl:for-each>
 		<xsl:apply-templates select="current-group()"/>
@@ -208,7 +208,7 @@
       <xsl:otherwise>
 	<div>
 	  <xsl:call-template name="rendToClass">      
-	    <xsl:with-param name="default">p-in-sp identifiable</xsl:with-param>
+	    <xsl:with-param name="default">p-in-sp</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:apply-templates select="current-group()"/>
 	</div>

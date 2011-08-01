@@ -41,6 +41,20 @@
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether a section is "transcribable"</desc>
+  </doc>
+  <xsl:function name="teidocx:is-transcribable" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+	<xsl:when test="self::tei:p and parent::tei:sp">true</xsl:when>
+        <xsl:when test="self::tei:l">true</xsl:when>
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in small caps.</desc>
   </doc>
   <xsl:function name="teidocx:render-smallcaps" as="xs:boolean">

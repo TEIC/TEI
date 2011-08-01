@@ -653,7 +653,7 @@
   <xsl:template match="tei:l">
     <div>
       <xsl:call-template name="rendToClass">      
-	<xsl:with-param name="default">l identifiable</xsl:with-param>
+	<xsl:with-param name="default">l</xsl:with-param>
       </xsl:call-template>	    
       <xsl:choose>
 	<xsl:when

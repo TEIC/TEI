@@ -2203,6 +2203,10 @@
 	  <xsl:value-of select="local-name()"/>
 	</xsl:otherwise>
       </xsl:choose>
+      <xsl:if test="teidocx:is-transcribable(.)">
+	<xsl:text> transcribable</xsl:text>
+      </xsl:if>
+
     </xsl:variable>
 
     <xsl:variable name="rend">
@@ -2215,7 +2219,6 @@
 	</xsl:when>
       </xsl:choose>
     </xsl:variable>
-
 
     <xsl:choose>
       <xsl:when test="concat($class,$rend)=''"/>
