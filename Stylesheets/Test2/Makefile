@@ -1,27 +1,14 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=verbose=true useFixedDate=true
 OXY=/usr/share/oxygen
-default: general test test3 test4 test5 test6 oddbyexample test9
+default: conversions-from conversions-to test-html test-latex oddbyexample
 
-test:
+test-html:
 	saxon -o:dummy  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
-
-testsplit:
-	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
-
-test3:
 	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
 	-diff dummy dummy4
-
-test4:
-	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	echo differences:
-	-diff dummy dummy4
-
-test5:
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
 	diff test5.xhtml ok/test5.xhtml
 	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
@@ -29,28 +16,13 @@ test5:
 	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
 	diff test5.fo ok/test5.fo
 
-test6:
+testsplit:
+	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
+
+
+test-latex:
 	saxon -o:test6.tex test6.xml ../slides2/teilatex-slides.xsl $(SAXONOPT)
 	diff test6.tex ok/test6.tex
-
-test9:
-	test -d $(OXY) || exit 1
-	java -Xmx256m \
-	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
-	-Dant.home=$(OXY)/tools/ant \
-	org.apache.tools.ant.launch.Launcher \
-	-f ../docx/build-to.xml \
-	-lib $(OXY)/lib/saxon9ee.jar \
-	-DoutputFile=`pwd`/test9.docx \
-	-DinputFile=`pwd`/test9.xml -Dprofile=default 
-	java -Xmx256m \
-	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
-	-Dant.home=$(OXY)/tools/ant \
-	org.apache.tools.ant.launch.Launcher \
-	-f ../odt/build-to.xml \
-	-lib $(OXY)/lib/saxon9ee.jar \
-	-DoutputFile=`pwd`/test9.odt \
-	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
 
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
@@ -66,7 +38,8 @@ oddbyexample:
 	jing oddbyexample.xsd bare/test.xml
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
-general:
+conversions-from:
+	roma2 --nodtd --noxsd test.odd .
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf ok/test12.rdf
 	../teitolatex test.xml
@@ -95,10 +68,31 @@ general:
 	unzip -t test10.xml.odt > test10.xml.odt.listing
 	diff test10.xml.odt.listing ok/test10.xml.odt.listing
 	rm test10.xml.odt.listing
+	test -d $(OXY) || exit 1
+	java -Xmx256m \
+	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
+	-Dant.home=$(OXY)/tools/ant \
+	org.apache.tools.ant.launch.Launcher \
+	-f ../docx/build-to.xml \
+	-lib $(OXY)/lib/saxon9ee.jar \
+	-DoutputFile=`pwd`/test9.docx \
+	-DinputFile=`pwd`/test9.xml -Dprofile=default 
+	java -Xmx256m \
+	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
+	-Dant.home=$(OXY)/tools/ant \
+	org.apache.tools.ant.launch.Launcher \
+	-f ../odt/build-to.xml \
+	-lib $(OXY)/lib/saxon9ee.jar \
+	-DoutputFile=`pwd`/test9.odt \
+	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
+
+conversions-to:
+	roma2 --nodtd --noxsd test.odd .
 	../odttotei test7.odt
-	xmllint --noout test7.xml
+	jing test.rng test7.xml
 	../docxtotei test11.docx
-	xmllint --noout test11.xml
+	jing test.rng test11.xml
+	rm test.rng test.rnc
 
 clean:
 	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*

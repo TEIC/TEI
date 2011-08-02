@@ -204,7 +204,7 @@
 	</xsl:if>
 	<xsl:if test="$META/office:meta/meta:keyword">
 	  <textClass>
-	    <keywords>
+	    <keywords scheme="unknown">
 	      <list>
 		<xsl:for-each select="$META/office:meta/meta:keyword">
 		  <item>
