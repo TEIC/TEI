@@ -29,6 +29,8 @@ echo "  Options, binary switches:"
 echo "  --odd                # perform processing of ODD (if appropriate)"
 echo "  --verbose            # be verbose"
 echo "  --debug              # be verbose, do not delete intermediate files"
+echo "  --summaryDoc         # only make summary, when doing ODD processing"
+
 if [ $script = "teitoepub" ]
 then
 echo "  --fileperpage        # create output files one per page "
@@ -60,6 +62,7 @@ debug=
 profile=default
 odd=false
 verbose=false
+summaryDoc=""
 antflag=-q
 
 # epub only
@@ -105,6 +108,7 @@ while test $# -gt 0; do
     --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
     --debug)        debug="-Ddebug=true"; verbose=true; antflag=-v;;
     --verbose)      verbose=true; antflag=-v;;
+    --summaryDoc)      summaryDoc="-DsummaryDoc=true";;
     --viewportwidth=*)   viewportwidth="-DviewPortWidth=`echo $1 | sed 's/.*=//'`";;
     --viewportheight=*)   viewportheight="-DviewPortHeight=`echo $1 | sed 's/.*=//'`";;
     --help)         usageMsg; exit 1;;
@@ -146,11 +150,11 @@ if ! test -f $profiledir/$profile/$format/$direction.xsl
 then
     die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
 fi
-echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight
+echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
-	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight \
+	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc \
         -Dodd=$odd \
-        -Dverbose=$verbose  \
+        -Dverbose=$verbose \
 	-DinputFile="$indir/$infile" \
 	-DoutputFile="$outdir/$outfile" \
         -Dprofiledir=$profiledir \
