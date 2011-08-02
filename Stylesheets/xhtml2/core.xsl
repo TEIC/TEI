@@ -2295,7 +2295,7 @@
     <xsl:variable name="class2">
       <xsl:choose>
         <xsl:when test="@rend">
-          <xsl:value-of select="translate(@rend,' /','_-')"/>
+          <xsl:value-of select="translate(@rend,'/','-')"/>
         </xsl:when>
         <xsl:when test="@rendition">
 	  <xsl:call-template name="findRendition">
@@ -2324,8 +2324,10 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:attribute name="class">
-          <xsl:value-of select="$class1"/>
-          <xsl:text> </xsl:text>
+	  <xsl:if test="not($class1='')">
+	    <xsl:value-of select="$class1"/>
+	    <xsl:text> </xsl:text>
+	  </xsl:if>
           <xsl:value-of select="$class2"/>
         </xsl:attribute>
       </xsl:otherwise>
