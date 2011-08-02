@@ -11,10 +11,7 @@ test-html:
 	-diff dummy dummy4
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
 	diff test5.xhtml ok/test5.xhtml
-	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
-	diff test5.tex ok/test5.tex
-	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
-	diff test5.fo ok/test5.fo
+	jing -c xhtml.rnc test5.xhtml
 
 testsplit:
 	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
@@ -23,6 +20,10 @@ testsplit:
 test-latex:
 	saxon -o:test6.tex test6.xml ../slides2/teilatex-slides.xsl $(SAXONOPT)
 	diff test6.tex ok/test6.tex
+	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
+	diff test5.tex ok/test5.tex
+	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
+	diff test5.fo ok/test5.fo
 
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
