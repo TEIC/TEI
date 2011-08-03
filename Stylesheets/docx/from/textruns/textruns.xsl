@@ -92,7 +92,7 @@
 	 <xsl:call-template name="basicStyles"/>
        </xsl:when>
        
-       <xsl:when test="$style='Hyperlink'">
+       <xsl:when test="$style='Hyperlink' and preceding-sibling::w:r[w:instrText][1]/w:instrText">
 	 <ref>
 	   <xsl:attribute name="target">
 	     <xsl:for-each

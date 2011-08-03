@@ -348,7 +348,7 @@
    <xsl:template match="tei:div[tei:head/tei:ANCHOR]" mode="pass2">
      <xsl:copy>
        <xsl:attribute name="xml:id"
-		      select="tei:head/tei:ANCHOR/@xml:id"/>
+		      select="tei:head/tei:ANCHOR[1]/@xml:id"/>
        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
      </xsl:copy>
    </xsl:template>
