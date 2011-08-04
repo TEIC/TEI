@@ -31,7 +31,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="text">
+  <xsl:template match="text|body|back|front">
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:variable name="pages">
@@ -64,7 +64,7 @@
   <xsl:template name="checkpb">
     <xsl:param name="eName"/>
     <xsl:choose>
-      <xsl:when test="not(pb)">
+      <xsl:when test="not(.//pb)">
         <xsl:copy>
           <xsl:apply-templates select="@*"/>
           <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
