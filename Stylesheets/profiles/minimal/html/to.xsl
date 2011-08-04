@@ -13,6 +13,13 @@
     <xsl:param name="filePerPage">true</xsl:param>
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
     
-   <xsl:template match="tei:speaker"/>
+   <xsl:template match="tei:hi|tei:emph">
+       <xsl:apply-templates/>
+   </xsl:template>
+
+   <xsl:template match="tei:sp">
+     <xsl:apply-templates select="tei:*[not(self::tei:speaker)]"/>
+   </xsl:template>
+
 
 </xsl:stylesheet>
