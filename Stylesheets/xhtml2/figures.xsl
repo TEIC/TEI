@@ -374,25 +374,6 @@
                   <xsl:value-of select="$graphicsSuffix"/>
                </xsl:if>
             </xsl:when>
-            <xsl:when test="@file">
-               <xsl:value-of select="@file"/>
-               <xsl:if test="not(contains(@file,'.'))">
-                  <xsl:value-of select="$graphicsSuffix"/>
-               </xsl:if>
-            </xsl:when>
-            <xsl:when test="@entity">
-               <xsl:variable name="entity">
-                  <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-               </xsl:variable>
-               <xsl:choose>
-                  <xsl:when test="starts-with($entity,'file:')">
-                     <xsl:value-of select="substring-after($entity,'file:')"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                     <xsl:value-of select="$entity"/>
-                  </xsl:otherwise>
-               </xsl:choose>
-            </xsl:when>
             <xsl:otherwise>
                <xsl:message terminate="yes">Cannot work out how to do a graphic
           </xsl:message>

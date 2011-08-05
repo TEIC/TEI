@@ -10,9 +10,15 @@
 
     <xsl:import href="../../../xhtml2/tei.xsl"/>
 
-    <xsl:param name="filePerPage">true</xsl:param>
+    <xsl:param name="filePerPage">false</xsl:param>
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
     
+   <xsl:template name="stdheader">
+     <xsl:param name="title"/>
+   </xsl:template>
+
+   <xsl:template name="stdfooter"/>
+
    <xsl:template match="tei:hi|tei:emph">
        <xsl:apply-templates/>
    </xsl:template>
