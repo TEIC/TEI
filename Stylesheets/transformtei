@@ -40,11 +40,11 @@ echo "  Options, shown with defaults:"
 echo "  --saxonjar=$SAXONJAR  # location of Saxon jar file"
 if [ $script = "teitoepub" ]
 then
+echo "  --mediaoverlay       # create media overlays from timeline data "
 echo "  --profiledir=$profiledir    # where to find profile directory"
 echo "  --profile=$profile    # which transformation profile to use"
 echo "  --coverimage=        # name of JPEG file for ebook cover"
 echo "  --css=               # supply name of CSS file "
-echo "  --mediaoverlay=$overlayfile      # media overlay file "
 echo "  --publisher=         # name of publisher for ebook "
 echo "  --splitLevel=$splitLevel        # splitting level "
 echo "  --subject=           # subject/category for ebook "
@@ -77,6 +77,7 @@ subject=
 uid=
 viewportwidth=
 viewportheight=
+medioverlay=
 # ---
 profiledir=$APPHOME/profiles
 SAXONJAR=/usr/share/saxon/saxon9he.jar
@@ -98,7 +99,7 @@ while test $# -gt 0; do
     --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
     --fileperpage)  splitLevel="-DsplitLevel=-1"; fileperpage="-DfilePerPage=true";;
     --odd)          odd=true;;
-    --mediaoverlay=*)    overlayfile=`echo $1 | sed 's/.*=//'`;;
+    --mediaoverlay) mediaoverlay="-Dmediaoverlay=true";;
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
@@ -152,7 +153,7 @@ then
 fi
 echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
-	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc \
+	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay \
         -Dodd=$odd \
         -Dverbose=$verbose \
 	-DinputFile="$indir/$infile" \
@@ -162,6 +163,6 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-Dpublisher=$publisher \
 	-Duid=$uid \
 	-Dsubject=$subject \
-	-Dcoverimage=$coverimage \
-	-Dmediaoverlay=$overlayfile 
+	-Dcoverimage=$coverimage 
+
 	

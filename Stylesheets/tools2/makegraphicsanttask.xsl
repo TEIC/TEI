@@ -25,8 +25,8 @@
    </doc>
    <xsl:key name="G" match="tei:graphic[not(ancestor::teix:egXML)]"  use="1"/>
    <xsl:key name="PB" match="tei:pb[@facs]" use="1"/>
-   <xsl:key name="SMIL-Audio" match="smil:audio" use="1"/>
-   <xsl:param name="mediaoverlay"/>
+   <xsl:key name="Timeline" match="tei:timeline" use="1"/>
+   <xsl:param name="mediaoverlay">true</xsl:param>
    <xsl:param name="inputDir">.</xsl:param>
    <xsl:param name="mediaDir">word/media</xsl:param>
    <xsl:template match="/">
@@ -40,31 +40,18 @@
 	     </xsl:attribute>
 	   </mkdir>
 	 </xsl:if>
-	 <xsl:if test="not($mediaoverlay='')">
-	   <xsl:variable name="overlay"
-		       select="concat($inputDir,'/',$mediaoverlay)"/>
-	   <xsl:choose>
-	     <xsl:when test="doc-available($overlay)">
-	       <xsl:for-each select="document($overlay)">
-		 <xsl:for-each-group select="key('SMIL-Audio',1)"
-				     group-by="@src">
-		   <xsl:variable name="target">
-		     <xsl:text>${outputTempDir}/</xsl:text>
-		     <xsl:value-of select="$mediaDir"/>
-		     <xsl:text>/audio</xsl:text>
-		     <xsl:number/>
-		     <xsl:text>.</xsl:text>
-		     <xsl:value-of select="tokenize(@src,'\.')[last()]"/>
-		   </xsl:variable>
-		   <copy toFile="{$target}" file="{$inputDir}/{@src}"/>
-		 </xsl:for-each-group>
-	       </xsl:for-each>
-	     </xsl:when>
-	     <xsl:otherwise>
-	       <xsl:message terminate="yes">Overlay file <xsl:value-of
-	       select="$overlay"/> not found</xsl:message>
-	     </xsl:otherwise>
-	   </xsl:choose>
+	 <xsl:if test="$mediaoverlay='true' and key('Timeline',1)">
+	   <xsl:for-each select="key('Timeline',1)">
+	     <xsl:variable name="target">
+	       <xsl:text>${outputTempDir}/</xsl:text>
+	       <xsl:value-of select="$mediaDir"/>
+	       <xsl:text>/audio</xsl:text>
+	       <xsl:number level="any"/>
+	       <xsl:text>.</xsl:text>
+	       <xsl:value-of select="tokenize(@corresp,'\.')[last()]"/>
+	     </xsl:variable>
+	     <copy toFile="{$target}" file="{$inputDir}/{@corresp}"/>
+	   </xsl:for-each>
 	 </xsl:if>
 	 <xsl:for-each select="key('PB',1)">
 	   <xsl:variable name="F">
