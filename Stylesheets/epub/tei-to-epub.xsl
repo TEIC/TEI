@@ -308,10 +308,13 @@
 		    <xsl:result-document href="{concat($directory,'/OEBPS/',$target,'-overlay.smil')}" method="xml">
 		    <smil xmlns="http://www.w3.org/ns/SMIL" version="3.0" profile="http://www.ipdf.org/epub/30/profile/content/">
 		      <body> 
-			<xsl:for-each select="key('objectOnPage',$page)">
+			      <xsl:for-each select="key('objectOnPage',$page)">
+				      objectOnPage
 			  <xsl:variable name="object" select="@xml:id"/>
 			  <xsl:for-each select="$TL">
-			    <xsl:for-each select="key('Object',$object)">
+				  TL
+				  <xsl:for-each select="key('Object',$object)">
+					  Object
 			      <par id="{@xml:id}">
 				<text src="{$target}.html{@corresp}"/>
 				<audio src="{$audio}"
@@ -557,7 +560,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                   <div>
-                    <img width="600" height="860" alt="cover picture" src="{$coverImageInside}"/>
+                    <img width="1200" height="1700" alt="cover picture" src="{$coverImageInside}"/>
                   </div>
                 </xsl:otherwise>
               </xsl:choose>
