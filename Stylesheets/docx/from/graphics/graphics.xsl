@@ -86,12 +86,27 @@
 					 select="concat(number(descendant::wp:extent[1]/@cx) div 360000,'cm')"/>
 			  <xsl:attribute name="height"
 					 select="concat(number(descendant::wp:extent[1]/@cy) div 360000,'cm')"/>
-			  <xsl:attribute name="url">
-			    <xsl:variable name="rid" select="descendant::a:blip[1]/@r:embed"/>
-			    <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
-			  </xsl:attribute>
-			  
-			  <!-- inline or block -->
+				 <xsl:variable name="media-url" select="descendant::pic:cNvPr/@descr"/>
+			 <xsl:choose>
+				 <xsl:when test="starts-with($media-url,'movie::' )">
+					 <xsl:attribute name="url">
+						 <!-- The proper way to do it would be to extract the name from this
+						      <xsl:value-of select="substring-after($media-url, 'movie::')"/>
+						-->
+						 <xsl:value-of select="descendant::pic:cNvPr/@name"/>
+					 </xsl:attribute>
+					 <xsl:attribute name="mimeType">video/x-something</xsl:attribute>
+				 </xsl:when>
+
+				 <xsl:otherwise>
+					 <xsl:attribute name="url">
+						 <xsl:variable name="rid" select="descendant::a:blip[1]/@r:embed"/>
+						 <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+					 </xsl:attribute>
+				 </xsl:otherwise>
+			 </xsl:choose>
+
+				 <!-- inline or block -->
 			  <xsl:attribute name="rend">
                                 <xsl:choose>
                                     <xsl:when test="wp:anchor">block</xsl:when>

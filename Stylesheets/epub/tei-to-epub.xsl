@@ -419,8 +419,9 @@
                   <xsl:variable name="ID">
                     <xsl:number level="any"/>
                   </xsl:variable>
-                  <xsl:variable name="mimetype">
-                    <xsl:choose>
+		  <xsl:variable name="mimetype">
+			  <xsl:choose>
+		  <xsl:when test="@mimeType != ''"><xsl:value-of select="@mimeType"/></xsl:when>
                       <xsl:when test="contains($img,'.gif')">image/gif</xsl:when>
                       <xsl:when test="contains($img,'.png')">image/png</xsl:when>
                       <xsl:when test="contains($img,'.mpeg')">video/mpeg4</xsl:when>
@@ -623,7 +624,7 @@
               <title>About this book</title>
             </head>
             <body>
-              <div style="text-align: left; font-size: 85%">
+              <div style="text-align: left; font-size: larger">
                 <h2>Information about this book</h2>
                 <xsl:for-each select="/*/tei:teiHeader/tei:fileDesc">
                   <xsl:apply-templates mode="metadata"/>
