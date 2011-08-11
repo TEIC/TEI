@@ -33,7 +33,7 @@
       </desc>
    </doc>
 
-    <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
+    <xsl:param name="publisher">Oxford Digital Library, Oxford University</xsl:param>
     <xsl:param name="numberHeadings">false</xsl:param>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
     <xsl:param name="numberBackHeadings"></xsl:param>
@@ -44,8 +44,8 @@
     <xsl:param name="splitLevel">-1</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="mediaoverlay">true</xsl:param>
-    <xsl:param name="cssFile">../profiles/otapages/epub/ota.css</xsl:param>
-    <xsl:param name="subject">Oxford Text Archive</xsl:param>
+    <xsl:param name="cssFile">../profiles/godwindiaries/epub/ota.css</xsl:param>
+    <xsl:param name="subject">William Godwin's Diaries</xsl:param>
     <xsl:param name="pagebreakStyle">none</xsl:param>
 
     <xsl:template match="tei:title[@type='main']/text()">
@@ -60,7 +60,16 @@
 	<xsl:text>]✁</xsl:text>
       </div>
       -->
-	
+
+	<xsl:template match="tei:persName">
+		<a class="persName">
+			<xsl:attribute name="href">
+				<xsl:value-of select="@ref"/>
+			</xsl:attribute>
+		<xsl:apply-templates/>
+		</a>
+	</xsl:template>
+
     <xsl:template match="tei:w[@type and @lemma]">
       <span class="wordtype{@type}">
 	<xsl:apply-templates/>
