@@ -818,21 +818,22 @@ or with more elaboration:
  </p>
 <p>When the header describes a text derived from some pre-existing
 TEI-conformant or other digital document, it may be simpler to use the
-following element:
+following element, which is designed specifically for documents
+derived from texts which were <soCalled>born digital</soCalled>:
 <specList>
 <specDesc key="biblFull"/>
 </specList>
-since this is designed specifically for documents derived from texts
-which were <soCalled>born digital</soCalled>, as further discussed in
+For further discussion sdee
 section <ptr target="#HD31"/>.</p>
 <p>When the module for manuscript description is included in a schema,
 this class also makes available the following element:
 <specList>
 <specDesc key="msDesc"/>
 </specList>
-which enables the encoder to record very detailed information about
+This element enables the encoder to record very detailed information about
 one or more manuscript or analogous sources, as further discussed in
-<ptr target="#MS"/>.</p><p>The <ident type="class">model.sourceDescPart</ident> class also makes
+<ptr target="#MS"/>.</p>
+<p>The <ident type="class">model.sourceDescPart</ident> class also makes
 available additional elements when additional modules are
 included. For example, when the <ident type="module">spoken</ident>
 module is included, the
@@ -1355,9 +1356,12 @@ with the number of such elements present in the document.<specGrp xml:id="DHD57"
 <div type="div3" xml:id="HD54"><head>The Reference System Declaration</head>
 <p>The <gi>refsDecl</gi> element is  used to
 document the way in which any standard referencing scheme built into
-the encoding works. It may contain either  a series of prose paragraphs or the following specialized elements:
+the encoding works.
 <specList>
 <specDesc key="refsDecl"/>
+</specList>
+ It may contain either  a series of prose paragraphs or the following specialized elements:
+<specList>
 <specDesc key="cRefPattern"/>
 <specDesc key="refState"/>
 </specList>
@@ -1689,8 +1693,8 @@ elsewhere in the TEI header.
 </p>
 <p>The <gi>profileDesc</gi> element contains an optional
 <gi>creation</gi> element, followed by any number of additional
-elements taken from the <ident>model.profileDesc</ident> class. In the
-simplest case, this means it may contain the following elements:
+elements taken from the <ident>model.profileDesc</ident> class. The
+default members of this class are the following :
 <specList>
   <specDesc key="creation"/>
   <specDesc key="langUsage"/>
@@ -1759,8 +1763,7 @@ location for this information:
 registers, dialects, etc. represented within a text.  It contains one
 or more <gi>language</gi> elements, each of which provides information
 about a single language, notably the quantity of that language present
-in the text.  <!-- Alternatively, it may contain paragraphs of prose
-description specifying further relevant information. -->Note that this
+in the text.  Note that this
 element should <emph>not</emph> be used to supply information about
 any non-standard characters or glyphs used by this language; such
 information should be recorded in the <gi>charDecl</gi> element in
@@ -1777,28 +1780,6 @@ important if extended language identifiers have been used as the
 value of <att>xml:lang</att> attributes elsewhere in the
 document. </p>
 <p>Here is an example of the use of this element:
-<!--links the document to the formal
-writing system declaration defining that language and its script; for
-that reason, its use is recommended.
-The <att>wsd</att> attribute must give the name of an entity containing a
-writing system declaration; typically, this will be an external file
-declared in the document type declaration. 
-</p>
-<p>When two sublanguages share the same language code and writing
-system declaration but are distinguished in the <gi>langUsage</gi>
-element, only one of the <gi>language</gi> elements should bear the
-<att>xml:id</att> attribute:-->
-<!-- I'm a bit hazy about the implications of that too: presumably -->
-	<!-- all will be made clear in the wsd chapter? -->
-	<!-- if not clear here, i doubt it will be clearer then. -msm -->
-	<!-- The only implications I see are 1 that nothing in the    -->
-	<!-- declarations can point at an individual sublanguage,     -->
-	<!-- only to something that has its own WSD, 2 that any       -->
-	<!-- processor which cares about identifying languages        -->
-	<!-- (wsds) in use must be aware that some LANGUAGE           -->
-	<!-- elements don't have IDs, and these must be ignored or    -->
-	<!-- 'merged' somehow with LANGUAGE elements which do have    -->
-	<!-- IDs and which use the same wsd.  -msm                    -->
 <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples"><langUsage>
    <language ident="fr-CA" usage="60">Québecois</language>
    <language ident="en-CA" usage="20">Canadian business English</language>
@@ -1808,8 +1789,13 @@ element, only one of the <gi>language</gi> elements should bear the
 <specGrp xml:id="D2241" n="Language usage">&langUsage;&language;
 </specGrp></div>
 <div type="div3" xml:id="HD43"><head>The Text Classification</head>
-<p>The second component of the core <gi>profileDesc</gi> element is the
-<gi>textClass</gi> element. This element is used to classify a text
+<p>The 
+<gi>textClass</gi> element is used to classify a text in some way.
+<specList>
+<specDesc key="textClass" />
+</specList></p>
+<p>
+Text classification may be carried out
 according to one or more of the following methods:
 <list type="simple">
 <item>by reference to a recognized international classification such as
@@ -1928,21 +1914,30 @@ Here the same text has been classified as of categories <val>b.a4</val> and
 available from <ident type="file">http://www.example.com/browncorpus</ident>), and as of category
 <q>A45</q> within the SUC classification scheme documented at the URL given.</p><p>The distinction between the <gi>catRef</gi> and <gi>classCode</gi>
 elements is that the values used as identifying codes are exhaustively
-enumerated, typically with  the header, for the former, while the
-latter may be used to indicate a more open ended or descriptive
+enumerated for the former, typically within the TEI header. In the
+latter case, however, the values use any
+externally-defined scheme, and therefore may be taken from
+ a more open-ended descriptive
 classification system.</p>
 <specGrp xml:id="D2243" n="Text Classification">&textClass;&keywords;&classCode;&catRef;
 </specGrp></div>
 <div type="div3" xml:id="HD44"><head>Calendar Description</head>
-  <p>The <gi>calendarDesc</gi> element is used within the <gi>profileDesc</gi>
-    describe and document calendars refered to in the <att>calendar</att> attribute on <gi>date</gi>
-    or dating schemes pointed to by the <att>dateScheme</att> attribute on databale elements.
-  </p>
-  <p>This element may contain one or more of:
+  <p>The <gi>calendarDesc</gi> element is used within the
+  <gi>profileDesc</gi> element to document objects referenced by means of 
+either the <att>calendar</att> attribute on <gi>date</gi> or the
+<att>dateScheme</att> attribute on any member of the <ident
+type="class">datable</ident> class.
+    <specList>
+      <specDesc key="calendarDesc"/>
+    </specList></p>
+
+  <p>This element may contain one or more <gi>calendar</gi> elements:
     <specList>
       <specDesc key="calendar"/>
     </specList></p>
-  <p>
+  <p>Each such element contains one or more paragraphs of description
+  for the calendar system concerned, and also supplies an identifying
+  code for it as the value of its <att>xml:id</att> attribute. 
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <calendarDesc>
         <calendar xml:id="Gregorian"><p>Gregorian calendar</p></calendar>
@@ -1951,6 +1946,13 @@ classification system.</p>
       </calendarDesc>
     </egXML>
   </p>
+<p>This identifying code may then be referenced from any element
+supplying  a date
+expressed using that calendar system:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<p>Captain's log <date calendar="#Stardate">stardate 23.9 rounded off
+    to the nearest decimal point</date>...</p></egXML>
+</p>
   <specGrp xml:id="D2242" n="Calendar Description">&calendarDesc;&calendar;
   </specGrp>
 </div>
