@@ -1,0 +1,530 @@
+<body>
+
+<!-- insert this para following 22nd <p> #PHFAX -->
+<p xml:id="GEN1">
+If, as is more often the case, a transcription of the zone identified
+in this way is to be included in the encoded document, this may be done in two ways. If the
+transcription is regarded as a text in its own right, organized
+and structured independently of its physical realization in the
+document or documents represented by the facsimile, then the
+recommended practice is to use the traditional <gi>text</gi> element,
+provided as a sibling of the <gi>facsimile</gi> element. This approach
+is illustrated in the brief example following. Alternatively, if the
+transcription is intended to do no more than represent the physicality
+of the document itself, it may be preferable to use the elements
+<gi>patch</gi>, <gi>line</gi>, and <gi>ab</gi>, embedded within the
+<gi>zone</gi>  element, as further described in section <ptr
+target="#PHZLAB"/> below.</p>
+
+<!-- add new section combining the Bovelles example with the
+following? -->
+
+<div xml:id="PH-ZLAB"><head>Embedded transcription</head>
+<p>An <term>embedded transcription</term> is one in which words
+and other written traces are encoded as subcomponents of elements
+representing the physical  surfaces carrying them rather than
+independently of them. </p>
+<p>The following elements are provided for this purpose:
+<specList>
+<specDesc key="surface"/>
+<specDesc key="zone"/>
+<specDesc key="patch" atts="binder type height width"/>
+<specDesc key="line" />
+<specDesc key="ab" atts="type"/>
+</specList>
+</p>
+<p>The elements <gi>surface</gi> and <gi>zone</gi> were introduced
+above, in section <ptr target="#PHFAX"/>. The element <gi>patch</gi>
+is useful in cases where the written surfaces constituting a document
+are not homogenous. In the following example, taken from the Walt
+Whitman archive, two pieces of newsprint have been glued to a piece of
+blue paper on which a poem is being drafted:
+<figure>
+                     <graphic url="examples/whitman01.jpg" width="400px"/>
+                     <head rend="it">Image from
+                        http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg</head>
+                  </figure> 
+The two pieces of newsprint might perhaps be regarded as special kinds
+of zone, but they are effectively new surfaces, since they might
+contain additional written zones themselves (such as the numbers in
+this case). We therefore propose a distinct element,
+<gi>patch</gi>, which can appear within a <gi>surface</gi>, and
+behaves effectively like one, except that it contains specialized
+attributes to provide additional information.</p>
+
+<p>Most writing is linear, in the sense that it is composed of
+discrete tokens organized physically into groups, typically organized
+in a sequence corresponding with the way they are intended to be
+read. Depending on the the directionality of the writing system used,
+this might be any combination of top-down and left to right, or vice
+versa. It thus seems convenient to introduce a unit <gi>line</gi> to
+hold a complete group of such tokens. Where, however, the lineation is
+not considered useful or significant, groups of tokens may be
+indicated using the neutral <gi>ab</gi> (anonymous block) element
+described in section     <ptr target="#SASE"/>
+</p>
+<p>Using these elements, the Whitman draft above might be encoded as
+follows: <!-- whitman01.xml --><egXML
+xmlns="http://www.tei-c.org/ns/Examples">
+                     <surface>
+                        <zone>
+                           <line>Poem</line>
+                           <line>As in Visions of — at</line>
+                           <line>night —</line>
+                           <line>All sorts of fancies running through</line>
+                           <line>the head</line>
+                        </zone>
+                        <patch type="newsprint" binder="glue"
+			       height="40" width="90"> 
+			  <ab>Spring has
+                           just set in here, and the weather.... a
+			   steamer </ab>
+                              <metaMark function="sequence">2</metaMark>
+                        </patch>
+                        <patch type="newsprint" binder="glue"
+			       height="35" width="90"> 
+			  <ab>"The shores on either side of the Sound are... The In-                            </ab>   
+			   <metaMark function="sequence">3</metaMark>
+                        </patch>
+                     </surface>
+                  </egXML> The <gi>metaMark</gi> element used in this example is further
+                  discussed below (<ptr target="#mm"/>)</p>
+
+</div>
+
+
+<div><head>Transcribing the process</head>
+
+<p>The elements described in this chapter may also be used for digital
+transcriptions in which the object is not to represent a finished
+text, but rather to represent the creative process, as evidenced by
+different <q>layers</q> or <q>traces</q> of writing in one or more
+documents. Such transcriptions are closely focussed on the physical
+appearance of specific documents, needing to distinguish the traces of
+different writing activities on them, such as additions,
+and deletions but also other indications of how the writing is to be
+read, such as indications of transposition, re-affirmation of writing
+which has been deleted, and so on.  Such distinctions are considered of
+particular importance when dealing with authorial manuscripts, but are
+also relevant in the case of historical sources such as charters or
+other legal documents.</p>
+
+<p>To encode such transcriptions, we propose a simple model in which
+writing traces are marked with an appropriate tag such as
+<gi>mod</gi>, <gi>del</gi>, etc. to indicate their function in the
+document, as described in the remainder of this chapter. Each such
+element can be assigned to one or more editorially-defined
+modification groups, termed a <term>layer</term>, by means of a global
+<att>layer</att> attribute, which references a definition for the
+layer concerned, typically provided within the TEI Header
+<gi>creation</gi> element; see further <ptr target="#PH-layers"/>. The
+transcription itself is provided within a <gi>facsimile</gi> element,
+using the elements <gi>surface</gi> and <gi>zone</gi> described
+in section <ptr target="#PHFAX"/>. Within a <gi>zone</gi>, the transcription may be organized in terms
+of lines of writing, using the <gi>line</gi> element, or in terms of
+blocks of writing, using the <gi>ab</gi> (anonymous block) element,
+or as a combination of the two; see further <ptr target="#PH-ZLAB"/>.
+</p>
+
+<div xml:id="PH-layers"><head>Layers</head>
+<p>A major purpose of genetic editing is the identification of
+<soCalled>revision campaigns</soCalled> or, more generally, <term>layers</term>. An editor
+may wish to assign a set of alterations (deletions, additions,
+substitutions, transpositions, etc.) or any other act of writing to a particular
+layer, to indicate both that one or more of such phenomena preceded or followed
+another and also to indicate that they are related in some way, for example that
+one is a consequence of the other. To document this we need: <list>
+   <item>a system to assign phenomena to a
+   particular layer</item>
+   <item>a way to characterize a layer, in itself and in relation to
+   other layers.</item>
+</list></p>
+<p>The existing element <gi>creation</gi> (within the TEI Header profile description)
+is defined as the appropriate location for all information relating to the genesis
+or production of a text. We modify it slightly to permit a new
+<gi>listLayer</gi> element which contains a number of <gi>layer</gi>
+elements, one for each identified layer:
+<listSpec>
+<specDesc key="listLayer" atts="ordered"/>
+<specDesc key="layer"/>
+</listSpec>
+	       </p>
+               <p>In the following example taken from the genetic edition of Goethe’s
+Faust, the editor has identified four distinct layers:</p>
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<profileDesc>
+   <creation>
+      <listLayer ordered="true">
+         <layer xml:id="ST-1">First stage, written in ink by a
+            writer</layer>
+         <layer xml:id="ST-2">Second stage, written in Goethe's hand using
+            pencil</layer>
+         <layer xml:id="ST-3">Fixation of the revised passages and
+            further revisions by Goethe using ink</layer>
+         <layer xml:id="ST-4">Addition of another stanza in a
+         different hand, probably at a later stage</layer>
+      </listLayer>
+   </creation>
+</profileDesc>
+               </egXML>
+               
+<p>The <gi>listLayer</gi> element carries an attribute
+<att>ordered</att>, which can take the values <code>true</code> or
+<code>false</code> (the default). The attribute specifies whether the
+order of child elements signifies a temporal order for the revision
+campaigns which they document. In the Faust example above, the editor
+has asserted that the four stages distinguished are ordered
+chronologically according to the order of the <gi>layer</gi>
+elements. Note that asserting a specific order early on, though
+probably one of the hardest tasks in a genetic analysis, can
+considerably reduce the encoding effort in assigning textual
+alterations to stages during the transcription, as we will see
+below. For instance deletions can only be assigned to a stage that
+follows the one in which the passage being deleted was written
+down. Hence, having a certain order of stages put in place before
+transcription begins, will allow the encoder to reduce verbose
+tagging, where default assumptions based on the natural order of
+actions can be made.</p>
+               
+<p>If necessary, <gi>listLayer</gi> elements can be nested hierarchically. This may
+be helpful in two cases. Firstly one can build up hypotheses about related
+revisions step-by-step, starting with stages of smaller coverage, whose members
+are certainly related, and then in a subsequent pass grouping these stages in
+turn, thereby extending their reach.</p>
+               <!-- stages.xml -->
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<profileDesc>
+   <creation>
+      <listLayer>
+<layer xml:id="o">An unrelated stage note</layer>
+<listLayer xml:id="m" cert="low"> 
+<layer xml:id="m1">Alterations on one manuscript page, certainly related</layer>
+           <layer xml:id="m2">Alterations on another manuscript page, certainly related</layer>
+      </listLayer>
+<layer xml:id="p">Another unrelated stage note</layer>
+</listLayer>			
+   </creation>
+</profileDesc>
+               </egXML>
+               <p>A nested <gi>listLayer</gi> elements is also useful
+	       to indicate a  <emph>partial</emph> ordering of revision campaigns.</p>
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<listLayer ordered="true">
+   <layer xml:id="ST1">The first stage</layer>
+   <listLayer> 
+<!-- We have no information about the order of these layers, except
+     that they both followed ST1 and prececeded STX  -->.
+      <layer xml:id="ST-rev1">A revision of the first stage</layer>
+      <layer xml:id="ST-rev2">Another revision of the first
+         stage</layer>
+</listLayer>
+   <layer xml:id="STX">The last stage</layer>
+		  </listLayer>
+               </egXML>
+               <p>In addition to the possibility of ordering text stages in relation to each other,
+   <gi>layer</gi> elements may carry a number of attributes from the
+   <ident>att.datable</ident> class (<att>period</att>, <att>when</att>,
+   <att>notBefore</att>, <att>notAfter</att>, <att>from</att>, and <att>to</att>)
+which allow each stage to be dated as exactly or inexactly as necessary, in the
+same way as is currently possible for the TEI <gi>date</gi> element.</p>
+
+<!-- Maybe note that absolute dates and relative order can conflict -->
+             
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<profileDesc>
+   <creation>
+      <date notAfter="1816-07-18"/>
+      <listLayer ordered="true">
+         <layer xml:id="mod1" when="1816-07-16">The first draft of
+               <title>Persuasion</title> is completed by the <date>July 16
+               1816</date> written after the word <q>Finis</q> at <ref
+               target="#pers-30">page 30</ref>.</layer>
+         <layer xml:id="mod2" notBefore="1816-07-16">After the <date>16th
+               of July</date> Austen starts revision of the two final chapters, by
+            rewriting the end and adding a new block (<ref target="#transp-1"
+               >pages 32-35</ref>) to be inserted at <ref target="#insertion-p1"
+               >page 19</ref>. This stage is documented by the deletion of the
+            date (<date>July 16 1816</date>) at <ref target="#pers-30">page
+               30</ref>, and the addition of more text and of a new date
+               (<date>July 18. 1816</date>) at <ref target="#pers-31">page
+               31</ref></layer>
+         <layer notBefore="1816-07-18">Before publication, after <date>July
+               18th, 1816</date> chapters 10-11 were broken into three chapters,
+            10, 11, 12, as witnessed by the print.</layer>
+      </listLayer>
+   </creation>
+</profileDesc>
+               </egXML>
+               
+<p>Each <gi>layer</gi> element, apart from declaring a distinct layer
+in the creation of the document, may
+also contain references to other annotations contained within the
+<gi>teiHeader</gi> or in the document (as shown in the previous
+example). Such references, along with the textual content are purely
+documentary and do not affect the textual stage associated with any
+element thus referred to. The association of a textual component with
+a layer is always made explicitly, either by pointing from the
+<gi>layer</gi> attribute <att>target</att> to one or more elements, or
+(for preference) by pointing from the element concerned to the
+<gi>layer</gi> element by means of its <att>layer</att> attribute:</p>
+
+               
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line layer="#firstStage">This is a <subst layer="#secondStage">
+      <del>house</del>
+      <add>mouse</add>
+   </subst>.</line>
+               </egXML>
+               
+<p>This simple example shows the latter of the two options: The
+relevant layers are
+declared in the header; then textual alterations and acts of writing
+are associated with. The above markup indicates that the whole sentence was realized in the first stage, while the
+substitution of “house” with “mouse” happened at the second stage. </p>
+               <p>A more complex and complete example:</p>
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<profileDesc>
+   <creation>
+      <listLayer type="ordered">
+         <layer xml:id="firstStage">First stage, written in ink by a
+            writer</layer>
+         <layer xml:id="secondStage">Revised by Goethe using
+            pencil</layer>
+         <layer xml:id="thirdStage">Fixation of the revised passages and
+            further revisions by Goethe using ink</layer>
+         <layer xml:id="fourthStage">Addition of another stanza, probably
+            at a later stage</layer>
+      </listLayer>
+   </creation>
+</profileDesc> [...] <div layer="#firstStage">
+   <l n="11656">
+      <subst>
+         <del>Ihr</del>
+         <add>
+            <rewrite layer="#thirdStage">
+               <seg layer="#secondStage">Nun</seg>
+            </rewrite>
+         </add>
+      </subst> wanſtige Schuften mit den Feuerbacken</l>
+   <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst
+         layer="#secondStage
+         #thirdStage">
+         <del>ſatt</del>
+         <add>feiſt</add>
+      </subst>.</l>
+   <l n="11658">
+      <delSpan spanTo="#anchor_delSpan_1" layer="#thirdStage"/>Ihr hagren,
+      triſten, krummgezog<subst>
+         <del>nen</del>
+         <add>ener</add>
+      </subst> Nacken</l>
+   <l>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor
+         xml:id="anchor_delSpan_1"/></l>
+</div>
+               </egXML>
+               
+<p>Note first, that a layer, once assigned to an element, is inherited by all
+descendents of that element unless overridden by a subsequent assignment. So in
+the example above the three verses are assigned to the first stage initially. The
+writing of <mentioned>Nun</mentioned> (as part of the substitution in the first verse) takes place in
+the second stage and is repeated or fixated in the third. Also the
+substitution in the second verse is done repeatedly: initially it takes place in
+the second stage, but is fixated as a whole in the third.</p>
+               
+<p>The interpretation of layer assignments
+for a particular text passage is
+based on a number of implicit assumptions and constraints which have
+the effect of minimizing the amount of tagging necessary. The system
+is also flexible enough to support an explicit distinction between
+acts of writing and textual alterations, since either of these can be
+associated with layers described in the encoding. The following
+example shows an encoding in which the same passage is transcribed
+twice, once from a documentary perspective, and once from a textual one :</p>
+               <!-- faust_2.xml -->
+               <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<profileDesc>
+   <creation>
+      <listLayer type="ordered">
+         <layer target="#zone_1 #subst_3">First stage, written in ink by a
+            scribe</layer>
+         <layer
+            target="#zone_2 #mod_1 #line_1 #line_2 #subst_1 #subst_2
+            #subst_4 #delSpan_1"
+            >Revised by Goethe using pencil</layer>
+         <layer
+            target="#redo_1 #redo_2 #redo_3 #subst_1 #subst_2
+            #delSpan_1 #add_1"
+            >Fixation of the revised passages and further revisions by Goethe
+            using ink</layer>
+      </listLayer>
+   </creation>
+</profileDesc> [...] <document>
+   <surface>
+      <zone xml:id="zone_1">
+         <line xml:id="line_1">
+            <handShift new="#g_bl"/>
+            <rewrite hand="#g_t" xml:id="redo_1">Nun</rewrite>
+         </line>
+         <line><handShift new="#jo_t"/>Ihr wanſtige Schuften mit den
+            Feuerbacken</line>
+         <line xml:id="line_2">
+            <handShift new="#g_bl"/>
+            <rewrite hand="#g_t" xml:id="redo_2">feiſt</rewrite>
+         </line>
+         <line>Ihr glüht ſo recht vom Höllen Schwefel ſatt.</line> [...]
+      </zone>
+   </surface>
+</document>
+<text>
+   <body>
+      <l n="11656">
+         <subst xml:id="subst_1">
+            <del>Ihr</del>
+            <add>Nun</add>
+         </subst> wanſtige Schuften mit den Feuerbacken</l>
+      <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst xml:id="subst_2">
+            <del>ſatt</del>
+            <add>feiſt</add>
+         </subst>.</l>
+   </body>
+</text>
+               </egXML>
+               
+<p>The 
+documentary transcription stresses the writing process, while 
+the textual transcription emphasizes textual alterations. In either
+case, the layer of writing activity associated with a particular
+feature in the transcript is explicitly indicated. From the
+documentary perspective, the  stage assignments describe the writing
+process, in that they specify, which segment has been written when and
+how often. From the textual perspective, the markup concentrates on
+the order of textual alterations and makes no assumptions about the
+order of writing.  In this example,
+the association is  made by pointing from the <gi>layer</gi> element
+to all the passages and alterations in question in either perspective, which has the
+merit of not confusing the presentation of the interventions concerned
+with writing sequence information, at the price of requiring a
+distinct identifier on each intervention. </p>
+            </div>
+
+
+
+</div>
+
+
+
+
+
+
+<div><head>Formal specifications</head>
+
+<!-- existing specs needing change -->
+               <classSpec type="atts" ident="att.global" mode="change" module="tei">
+<classes>
+   <memberOf key="att.global.linking"/>
+   <memberOf key="att.global.analytic"/>
+   <memberOf key="att.global.facs"/>
+   <memberOf key="att.layered" mode="add"/>
+</classes>
+               </classSpec>
+
+               <elementSpec ident="creation" module="header" mode="change">
+<content>
+   <rng:ref name="macro.phraseSeq.limited"/>
+   <rng:optional>
+      <rng:ref name="layers"/>
+   </rng:optional>
+</content>
+               </elementSpec>
+
+
+<!-- new specs -->
+
+               <classSpec ident="att.layered" type="atts" mode="add" module="tei">
+<desc>groups elements which can be assigned to a specific text layer by means of
+   the attributes it provides.</desc>
+<attList>
+   <attDef ident="layer" >
+      <desc>points to one or more <gi>layer</gi> elements which contain a
+         description of a text-layer to which the editors think the alteration/
+         text passage marked by the element bearing this attribute (and its
+         children) belongs.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+         <rng:ref name="data.pointer"/>
+      </datatype>
+   </attDef>
+</attList>
+               </classSpec>
+
+
+               <elementSpec ident="listLayer" module="header"
+mode="add">
+<desc>contains one or more descriptions of the layers which have been identified
+   in the genesis of a text.</desc>
+<classes>
+   <memberOf key="att.global"/>
+   <memberOf key="att.typed"/>
+</classes>
+<content>
+   <rng:oneOrMore>
+		       <rng:choice>
+			 <rng:ref name="listLayer"/>
+      <rng:ref name="layer"/>
+		       </rng:choice>
+   </rng:oneOrMore>
+</content>
+<attList>
+<attDef ident="ordered" mode="add">
+      <desc>indicates whether or not the order in which the children
+      of this element are presented is significant</desc>
+      <datatype>
+         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+      </datatype>
+<defaultVal>false</defaultVal>
+   </attDef>
+</attList>
+               </elementSpec>
+
+               <elementSpec ident="layer" ns="http://www.tei-c.org/ns/geneticEditions"
+mode="add">
+<desc>documents a particular layer in the genesis of a text.</desc>
+<classes>
+   <memberOf key="att.datable"/>
+   <memberOf key="att.editLike"/>
+   <memberOf key="att.global"/>
+   <memberOf key="att.typed"/>
+</classes>
+<content>
+         <rng:ref name="macro.specialPara"/>
+</content>
+<attList>
+   <attDef ident="target" mode="add">
+      <desc>points to one or more elements that belong to this layer.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+         <rng:ref name="data.pointer"/>
+      </datatype>
+   </attDef>
+</attList>
+               </elementSpec>
+
+               <elementSpec ident="line" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+<desc>contains the transcription of a topographic line in the source
+   document</desc>
+<classes>
+   <memberOf key="model.zonePart"/>
+   <memberOf key="att.typed"/>
+   <memberOf key="att.global"/>
+</classes>
+<content>
+   <rng:zeroOrMore>
+      <rng:choice>
+         <rng:text/>
+         <rng:ref name="model.global"/>
+         <rng:ref name="model.linePart"/>
+      </rng:choice>
+   </rng:zeroOrMore>
+</content>
+               </elementSpec>
+
+
+</div></body>
