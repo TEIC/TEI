@@ -131,8 +131,8 @@ see further <ptr target="#PH-ZLAB"/>.
 <!-- insert following as new subsections of PHST -->
 
 <div xml:id="alterations">
-   <head>Textual alterations</head>
-   <p>Traces of authorial alteration (correction, addition, deletion,
+   <head>Textual modifications</head>
+   <p>Modifications of various kinds (correction, addition, deletion,
    etc.) are frequently found within a single document, and may also
    be inferred when different documents are compared, although it may be
    an open question as to whether inter-document discrepancies at the
@@ -143,206 +143,73 @@ see further <ptr target="#PH-ZLAB"/>.
    was deleted from the other. 
    </p>
 
-   
-<p>In this section we discuss some further elements useful for the
-recording of textual alteration : <specList>
+<p>In this section we discuss  elements which may be used to 
+record various kinds of textual modification detected in a document. 
+<specList>
          <specDesc key="mod" atts="rend type spanTo"/>
-         <specDesc key="metaMark" atts="function  targets"/>
-         <specDesc key="used" atts="spanTo"/>
-         <specDesc key="undo" atts="spanTo"/>
-         <specDesc key="redo" atts="spanTo"/>
-         <specDesc key="rewrite" atts="cause"/>
-         <specDesc key="transposeGrp"/>
-         <specDesc key="transpose"/>
-      </specList> .</p>
+</specList>
    <p>Most of these elements imply a certain level of semantic
-      interpretation; for instance the usage of the <gi>add</gi> element to encode, say,
-      interlinear insertions involves a decision that the
-		  interlinear text has been deliberately inserted rather
-		  than simply misplaced. As discussed
-above (see <ptr target="#act_vs_state"/>), the use of these elements
-      when transcribing from a documentary perspective is
-		  a pragmatic shortcut. In cases where it is felt
-       desirable to keep the recording of
-		  <soCalled>what is on the page</soCalled> entirely separate from
-      <soCalled>what is the editor’s
-		  interpretation</soCalled> (see <ptr
-		  target="#deutung"/>), we provide  two generic elements, <gi>ge:mod</gi> and
-         <gi>ge:modSpan</gi>, which can  be used to
-		     record any kind of modification identified in
-		     the document. These elements can be
-		     categorised by means of their <att>type</att>
-		     attribute, and visual aspects of their appearance
-		     can be described by means of  the <att>rend</att>
-		     attribute, but they provide no further
-		     interpretation of the function or intention of
-		     the passage so marked up.</p>
-<p> Whether such a modification, for instance a struck-out passage, is
-      to be interpreted as a deletion or as some other
-		  phenomenon (e.g. as being already used) should be
-be expressed using the other, more semantically motivated, elements,
-which function at a  different level of description.</p>
-   <div>
-      <head>Additions, fixations and clarifications</head>
-      <p>A writer may sometimes rewrite material a second time without significant
-         change and in the same place. We consider this a distinct activity from
-         addition as usually defined because no new textual material results but the
-         status of existing material changes. We distinguish two variants of this:
-<term>fixation</term> where the first version was a tentative draft which is
-         subsequently fixed, for example by inking it over; and
-<term>clarification</term>, where the first version was badly written and
-         has been rewritten for clarity. The element <gi>ge:rewrite</gi> is provided to
-         cover both cases. </p>
-      <p>In this simple example, taken from the papers of Henrik Ibsen, the writer wrote
-         the word <mentioned>skuldren</mentioned> hastily, and then returned to it to
-         make the letter <mentioned>l</mentioned> larger and clearer: <figure>
-<graphic url="examples/skuldren.jpg" width="400px"/>
-<head rend="it">Image from a ms of Peer Gynt, Collin 2869, 4°, I.1.1, the
-   Royal Library of Copenhagen</head>
-         </figure> We might transcribe this word as follows: <!-- skuldren.xml --><egXML
-xmlns="http://www.tei-c.org/ns/Examples">
-<line>... Sku<rewrite cause="unclear">l</rewrite>dren </line>
-         </egXML>
-      </p>
-      <p>The following example, taken from a manuscript of Jane Austen's
-<title>Sanditon</title>, shows a rewriting where a pencilled passage has
-         been fixed with ink, with some modification: <figure>
-<graphic url="examples/AusSand70.png" width="400px"/>
-<head rend="it">Image from page 70 of the Sanditon manuscript</head>
-         </figure> In this example, Austen sees in the fixation an opportunity to
-         manipulate the text previously written, and thus changes the pencilled
-<mentioned> could but get a young</mentioned> to the inked <mentioned>could
-get a young</mentioned>, writing the inky <mentioned>get</mentioned> on top
-         of pencilled <mentioned>but</mentioned> and striking over with black ink the
-         pencilled <mentioned>but</mentioned>. A simple way of encoding this might be as
-         follows: <!-- AusSand70.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
-<rewrite cause="fix" hand="#ja2" stage="#s1">Now, if we could <subst
-      stage="#s1">
-      <add>get</add>
-      <del>but</del>
-   </subst>
-   <del stage="#s1" rend="overstrike">get</del> a young Heiress</rewrite>
-         </egXML> where the <att>stage</att> attribute groups the operations that belong
-         to the rewriting stage, assuming an implied previous stage (the first layer of
-         writing). If the first layer need to be addressed independently, another
-         pointer can be added to the <att>stage</att> attribute:
-<!-- AusSand70.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
-<line stage="#s0"> <rewrite cause="fix" hand="#ja2" stage="#s1">Now...</rewrite></line>
-         </egXML> 
-where <val>#s0</val> and <val>#s1</val> both point to the declaration
-         of such stages in the header, the first one conventionally representing the
-         first layer of writing and the second the rewriting stage. </p>
-      <!-- note that the  hand specified for the rewrite is the second one -->
-      <p>A single rewrite may not be sufficient, and it may be that the document becomes
-         almost unreadable as a result of repeated clarification. In the following
-         example, we can distinguish at least two attempts to write the letters
-<mentioned>er</mentioned> in the word <mentioned>bægerklang</mentioned>: <figure>
-<graphic url="examples/munch01.jpg" width="400px"/>
-<head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
-         </figure> We might encode this by nesting the <gi>rewrite</gi> element as
-         follows: <!-- munch01.jpg --><egXML xmlns="http://www.tei-c.org/ns/Examples">
-<line>ved Bæg<rewrite cause="unclear" stage="#stage2">
-      <rewrite cause="unclear" stage="#stage1">er</rewrite>
-   </rewrite> ...</line>
-         </egXML> The <att>stage</att> attribute used here is discussed further below
-(<ptr target="#stages"/>). </p>
-      <p>Metamarks and other markup-like strokes can also
-		  be inked over with the same purpose as the fixation
-		  or clarification of text passages. For
-         instance, in a draft version of Goethe’s Faust, a passage was struck through
-         once in pencil during one revision and then again
-		     with ink during a later revision, supposedly to fixate the deletion.</p>
-      <figure>
-         <graphic url="examples/faust_redo.jpg"/>
-         <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
-      </figure>
-      <p>We propose an element <gi>redo</gi> (the opposite
-		  of  <gi>undo</gi>, see
-<ptr target="#undo"/>), which can be used to encode this process as follows:</p>
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-         <line><redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"
-   /><modSpan xml:id="mod_1" rend="strikethrough" spanTo="#anchor_1"
-   hand="#g_bl"/>Ihr hagren, triſten, krummgezog<mod rend="strikethrough"
-   >nen</mod>ener Nacken</line>
-         <line>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_1"
-/></line>
-      </egXML>
-   </div>
-   <div>
-      <head>Deletions and marked as used</head>
-      <p>In general, deletion in a source is marked using the <gi>del</gi> or
-<gi>delSpan</gi> element. However, it is useful to distinguish cases where a
-         passage has been <q>indicated as superfluous or spurious in the copy text by an
-author, scribe, annotator, or corrector</q> (TEI P5, s.v. <gi>del</gi>) from
-         cases where a passage has been struck through or otherwise marked as having
-         been used or copied to another location. In this latter case, the author does
-         not intend to suppress the content, but only to mark that it has been
-         transferred or reused. The element <gi>used</gi> is provided to mark this
-         kind of <soCalled>deletion</soCalled>.</p>
-      <p>The following page from the Walt Whitman archive has been crossed through to
-         indicate used material: <figure>
-<graphic url="examples/whitman02.jpg" width="400px"/>
-<head>Page from
-   http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head>
-         </figure> This page contains many internal deletions, but these should be
-         distinguished from the <soCalled>deletion</soCalled> signalled by the large
-         cross, which actually shows that the page has been transferred or re-used, not
-         deleted. </p>
-      <p>Material marked as re-used in this way often spans more than one zone or line.
-         For that reason, the <gi>used</gi> element is a spanning element, indicating
-         the end of the used area by means of a <att>spanTo</att> attribute. We might
-         encode the above page as follows: <!-- whitman02.xml --><egXML
-xmlns="http://www.tei-c.org/ns/Examples">
-<surface>
-   <used rend="cross" spanTo="#X2"/>
-   <zone>
-      <line rend="underline">The Poet</line>
-      <line><del rend="strikethrough">I think</del> His sight is
-         the</line>
-      <line> sight of the ? and</line>
-      <line>has sent the instinct of the</line>
-      <line>? dog</line>
-   </zone>
-   <zone>
-      <line>I think <rewrite>ten</rewrite> million</line>
-      <!-- ... -->
-      <line>well; those <subst>
-<del rend="strikethrough">supple-fingered gods</del>
-<add>journeymen divine.</add>
-         </subst></line>
-      <anchor xml:id="X2"/>
-   </zone>
-</surface>
-         </egXML>
-      </p>
-   </div>
+   interpretation. For instance, using the <gi>add</gi> element to
+   encode interlinear insertions implies a decision that the
+   interlinear text has been deliberately inserted rather than simply
+   written between the lines.  Where it is felt desirable to
+   keep the recording of <soCalled>what is on the page</soCalled>
+   entirely separate from <soCalled>what is the editor’s
+   interpretation</soCalled>, the generic <gi>mod</gi> element
+   may be preferred. This element simply indicates any kind of
+   modification that has been identified in the document, without
+   prejudice as to its function. Occurrences of the <gi>mod</gi>
+   element may be
+   categorised by means of their <att>type</att> attribute, and visual
+   aspects of their appearance can be described by means of the
+   <att>rend</att> attribute, but they provide no further
+   interpretation of the function or intention of the passage so
+   marked up. The <att>spanTo</att> may be used to indicate the end of
+   a modified  passage if this extends across the boundaries of
+   some other XML element, for example from the middle of one line tagged
+   as a <gi>line</gi> to the middle of another <gi>line</gi> some distance further
+   on in the document. </p> 
+<!-- example needed -->
+
    <div xml:id="mm">
       <head>Metamarks</head>
       <p>By <term>metamark</term> we mean marks such as numbers, arrows, crosses, or
          other symbols introduced by the writer into a document expressly for the
          purpose of indicating how the text is to be read. Such marks thus constitute a
-         kind of markup of the document, rather than forming part of the text. </p>
-      <p>Unlike marginal notes or other additions to the text, meta-marks indicate a
-         deliberate alteration of the writing (e.g. <q>move this passage over
-         there</q>). We also consider as metamarks dates introduced to mark the
-         beginning of a manuscript or a revision, but not forming part of it.</p>
-      <p>The <gi>metaMark</gi> element carries a <att>function</att> attribute which
-         specifies the function of the meta-mark and a <att>target</att> attribute which
-         points to the element or elements concerned. </p>
-      <p>The following example is taken from <title>Kundige bok 2</title>, a 15th
-         century legal book from the city of Göttingen, containing regulations of
-         everyday life issued by the city council <figure>
+         kind of markup of the document, rather than forming part of
+	 the text. <specList>
+   <specList>         
+<specDesc key="metaMark" atts="function target"/>
+</specList>
+      
+<p>Unlike marginal notes or other additions to the text, meta-marks
+indicate a deliberate alteration of the writing (e.g. <q>move this
+passage over there</q>). We also consider as metamarks dates
+introduced to mark the beginning of a manuscript or a revision, but
+not forming part of it. A metamark may contain text, or some other
+graphic which the encoder wishes to preserve, or it may simply consist
+of arrows, dots, lines etc. </p>
+
+<p>The <gi>metaMark</gi> element carries a <att>function</att>
+attribute which specifies the function of the meta-mark and a
+<att>target</att> attribute which points to the element or elements
+concerned. </p>
+      
+<p>The following example is taken from <title>Kundige bok 2</title>, a
+15th century legal book from the city of Göttingen, containing
+regulations of everyday life issued by the city council <figure>
 <graphic url="examples/ka04_1v-dtl.jpg" width="400px"/>
 <head>Malte's example</head>
          </figure>
       </p>
-      <p>In the second paragraph, the sentence beginning <q>Ock en schullen de
-bruwere...</q> was first written along with the word <mentioned
+      
+<p>In the second paragraph, the sentence beginning <q>Ock en schullen
+de bruwere...</q> was first written along with the word <mentioned
 xml:lang="lat">lege</mentioned> ("read") in the left hand margin,
-         functioning as a metamark to indicate that this sentence forms part of the
-         regulations. A further sentence was then added, while at some later stage or
-         stages the text and also the metamark were deleted. We might encode this as
-         follows: <!-- ka04_1v-dtl.xml --><egXML
+functioning as a metamark to indicate that this sentence forms part of
+the regulations. A further sentence was then added, while at some
+later stage or stages the text and also the metamark were deleted. We
+might encode this as follows: <!-- ka04_1v-dtl.xml --><egXML
 xmlns="http://www.tei-c.org/ns/Examples">
 <del>
    <metaMark function="flag" target="#s1">lege</metaMark>
@@ -357,9 +224,10 @@ xmlns="http://www.tei-c.org/ns/Examples">
 </del>
          </egXML>
       </p>
+<!--
       <p>Here are some further examples showing the use of this element, taken from the
          manuscript drafts of Thomas Moore's <title>Lalla Rookh</title>
-         (1817)<!--, provided by Justin Tonra, NUIG-->. The first shows a simple use of
+         (1817). The first shows a simple use of
          a metamark used to take stock of the progress of composition: <figure>
 <graphic url="examples/moore02.jpg" width="400px"/>
 <head>Lalla Rookh</head>
@@ -371,11 +239,9 @@ xmlns="http://www.tei-c.org/ns/Examples">
          point, and are not part of the text, but represent a stage at which Moore is
          taking stock of the progress of his composition. </p>
       <p>
-         <!-- moore02.xml -->
          <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <surface>
    <zone>
-      <!-- main zone -->
       <line>Be this she cried &amp; wing’d her flight</line>
       <line>My offering at the Gates of Bliss</line>
       <line>
@@ -408,7 +274,6 @@ function="count">100</metaMark></line>
       <line>Now reach’d &amp; pass’d the gates before her</line>
    </zone>
    <zone>
-      <!-- left zone -->
       <line> Tho foul too oft the</line>
       <line>tears that still</line>
       <line>Tho foul the droppings <add>weepings</add></line>
@@ -420,7 +285,8 @@ function="count">100</metaMark></line>
 </surface>
          </egXML>
       </p>
-      <p><figure>
+-->
+<p><figure>
 <graphic url="examples/moore03.png" width="400px"/>
 <head>Lalla Rookh 2</head>
          </figure> This example demonstrates the use of a common proof-correction mark:
@@ -465,6 +331,125 @@ is thine</del>
 <graphic url="examples/moore04.png" width="400px"/>
 <head>http://www.whitmanarchive.org/resources/sleepers/loc.00295.jpg</head>
          </figure></p>
+
+
+   <div>
+      <head>Deletions and marked as used</head>
+      <p>In general, deletion in a source is marked using the <gi>del</gi> or
+<gi>delSpan</gi> element. However, it is useful to distinguish cases where a
+         passage has been <q>indicated as superfluous or spurious in the copy text by an
+author, scribe, annotator, or corrector</q> (TEI P5, s.v. <gi>del</gi>) from
+         cases where a passage has been struck through or otherwise marked as having
+         been used or copied to another location. In this latter case, the author does
+         not intend to suppress the content, but only to mark that it has been
+         transferred or reused. The element <gi>used</gi> is provided to mark this
+         kind of <soCalled>deletion</soCalled>.</p>
+
+<p>
+   </p>   <p>The following page from the Walt Whitman archive has been crossed through to
+         indicate used material: <figure>
+<graphic url="examples/whitman02.jpg" width="400px"/>
+<head>Page from
+   http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head>
+         </figure> This page contains many internal deletions, but these should be
+         distinguished from the <soCalled>deletion</soCalled> signalled by the large
+         cross, which actually shows that the page has been transferred or re-used, not
+         deleted. </p>
+      <p>Material marked as re-used in this way often spans more than one zone or line.
+         For that reason, the <gi>used</gi> element is a spanning element, indicating
+         the end of the used area by means of a <att>spanTo</att> attribute. We might
+         encode the above page as follows: <!-- whitman02.xml --><egXML
+xmlns="http://www.tei-c.org/ns/Examples">
+<surface>
+   <used rend="cross" spanTo="#X2"/>
+   <zone>
+      <line rend="underline">The Poet</line>
+      <line><del rend="strikethrough">I think</del> His sight is
+         the</line>
+      <line> sight of the ? and</line>
+      <line>has sent the instinct of the</line>
+      <line>? dog</line>
+   </zone>
+   <zone>
+      <line>I think <rewrite>ten</rewrite> million</line>
+      <!-- ... -->
+      <line>well; those <subst>
+<del rend="strikethrough">supple-fingered gods</del>
+<add>journeymen divine.</add>
+         </subst></line>
+      <anchor xml:id="X2"/>
+   </zone>
+</surface>
+         </egXML>
+      </p>
+   </div>
+
+
+   </div>
+
+   <div>
+      <head>Additions, fixations and clarifications</head>
+      <p>A writer may sometimes rewrite material a second time without significant
+         change and in the same place. We consider this a distinct activity from
+         addition as usually defined because no new textual material results but the
+         status of existing material changes. We distinguish two variants of this:
+<term>fixation</term> where the first version was a tentative draft which is
+         subsequently fixed, for example by inking it over; and
+<term>clarification</term>, where the first version was badly written and
+         has been rewritten for clarity. The element <gi>retrace</gi> is provided to
+         cover both cases. </p>
+<p><specList>
+         <specDesc key="retrace" atts="cause"/>
+      </specList></p>
+
+      <p>In this simple example, taken from the papers of Henrik Ibsen, the writer wrote
+         the word <mentioned>skuldren</mentioned> hastily, and then returned to it to
+         make the letter <mentioned>l</mentioned> larger and clearer: <figure>
+<graphic url="examples/skuldren.jpg" width="400px"/>
+<head rend="it">Image from a ms of Peer Gynt, Collin 2869, 4°, I.1.1, the
+   Royal Library of Copenhagen</head>
+         </figure> We might transcribe this word as follows: <!-- skuldren.xml --><egXML
+xmlns="http://www.tei-c.org/ns/Examples">
+<line>... Sku<retrace cause="unclear">l</retrace>dren </line>
+         </egXML>
+      </p>
+      <p>A single rewrite may not be sufficient, and it may be that
+      the document becomes almost unreadable as a result of repeated
+      clarification. In the following example, we can distinguish at
+      least two attempts to write the letters
+      <mentioned>er</mentioned> in the word
+      <mentioned>bægerklang</mentioned>: <figure>
+<graphic url="examples/munch01.jpg" width="400px"/>
+<head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
+         </figure> We might encode this by nesting the <gi>rewrite</gi> element as
+         follows: <!-- munch01.jpg --><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>ved Bæg<retrace cause="unclear" layer="#stage2">
+      <retrace cause="unclear" layer="#stage1">er</retrace>
+   </retrace> ...</line>
+         </egXML> The <att>layer</att> attribute used here is discussed further below
+(<ptr target="#PH-layers"/>). </p>
+      <p>The <gi>retrace</gi> element is used only for cases where
+      text has been written multiple times. Metamarks and other markup-like strokes can also be inked
+      over with the same purpose as the fixation or clarification of
+      text passages. For instance, in a draft version of Goethe’s
+      Faust, a passage was struck through once in pencil during one
+      revision and then again with ink during a later revision,
+      supposedly to fixate the deletion.</p>
+      <figure>
+         <graphic url="examples/faust_redo.jpg"/>
+         <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
+      </figure>
+      <p>We propose an element <gi>redo</gi> (the opposite
+		  of  <gi>undo</gi>, see
+<ptr target="#undo"/>), which can be used to encode this process as follows:</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <line><redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"
+   /><mod xml:id="mod_1" rend="strikethrough" spanTo="#anchor_1"
+   hand="#g_bl"/>Ihr hagren, triſten, krummgezog<mod rend="strikethrough"
+   >nen</mod>ener Nacken</line>
+         <line>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_1"
+/></line>
+      </egXML>
    </div>
    <div>
       <head>Alternative Readings</head>
@@ -541,7 +526,11 @@ is thine</del>
          of substitution, and actually to represent the result of the transposition
          indicated by the metamarks in the encoding, for example by considering the
          segment previous to the transposition as deleted, and substituted by the one
-         after the transposition. </p>
+         after the transposition. 
+<specList>
+<specDesc key="transposeGrp"/>
+<specDesc key="transpose"/>
+</specList></p>
       <p>Our recommendation is to record the actual state of the witness, but in such a
          way as to facilitate its reorganization as a distinct processing step. We
          propose to represent the re-alignment of transposed blocks or segments by means
@@ -1130,5 +1119,18 @@ mode="add">
 </content>
    </elementSpec>
 
+               <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+                  <desc>represents any kind of modification identified within a text at a documentary level.</desc>
+                  <classes>
+                     <memberOf key="model.pPart.transcriptional"/>
+                     <memberOf key="att.global"/>
+                     <memberOf key="att.transcriptional"/>
+                     <memberOf key="att.typed"/>
+                     <memberOf key="att.spanning"/>
+                  </classes>
+                  <content>
+                     <rng:ref name="macro.paraContent"/>
+                  </content>
+               </elementSpec>
 
 </div></body>
