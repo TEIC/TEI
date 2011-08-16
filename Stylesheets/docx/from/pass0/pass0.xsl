@@ -45,7 +45,7 @@
       <xsl:copy-of select="."/>
   </xsl:template>
   
-  <xsl:template match="w:body" mode="pass0">
+  <xsl:template match="w:body">
     <xsl:copy>
       <xsl:choose>
 	<xsl:when test="w:p[teidocx:is-firstlevel-heading(.)]"/>
