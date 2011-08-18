@@ -22,7 +22,7 @@ following -->
 <div xml:id="PHZLAB"><head>Embedded transcription</head>
 <p>An <term>embedded transcription</term> is one in which words
 and other written traces are encoded as subcomponents of elements
-representing the physical  surfaces carrying them rather than
+representing the physical surfaces carrying them rather than
 independently of them. </p>
 <p>The following elements are provided for this purpose:
 <specList>
@@ -89,7 +89,13 @@ xmlns="http://www.tei-c.org/ns/Examples">
                      </surface>
                   </egXML> The <gi>metaMark</gi> element used in this example is further
                   discussed below (<ptr target="#mm"/>)</p>
-
+<p>Note that in this example we have not included any <gi>graphic</gi> element
+corresponding with the <gi>zone</gi> or <gi>surface</gi> elements 
+identified in the transcription. The encoder may choose to combine
+graphics with the transcription at whatever level is considered
+effective, or not at all. Equally, the encoder may choose to provide
+only graphics without transcription, or with a structured
+(non-embedded) transcription, or any combination of the three. </p>
 </div>
 
 <!-- insert this before PHST -->
@@ -131,7 +137,7 @@ see further <ptr target="#PH-ZLAB"/>.
 <!-- insert following as new subsections of PHST -->
 
 <div xml:id="alterations">
-   <head>Textual modifications</head>
+   <head>Marking up the writing process</head>
    <p>Modifications of various kinds (correction, addition, deletion,
    etc.) are frequently found within a single document, and may also
    be inferred when different documents are compared, although it may be
@@ -143,57 +149,70 @@ see further <ptr target="#PH-ZLAB"/>.
    was deleted from the other. 
    </p>
 
-<p>In this section we discuss  elements which may be used to 
-record various kinds of textual modification detected in a document. 
+<p>In this section we discuss a number of elements which may be used to 
+record traces of the writing process within a document. 
+</p>
+
+
+<div><head>Generic modification</head>
+
 <specList>
          <specDesc key="mod" atts="rend type spanTo"/>
 </specList>
+
+
    <p>Most of these elements imply a certain level of semantic
    interpretation. For instance, using the <gi>add</gi> element to
    encode interlinear insertions implies a decision that the
    interlinear text has been deliberately inserted rather than simply
-   written between the lines.  Where it is felt desirable to
-   keep the recording of <soCalled>what is on the page</soCalled>
-   entirely separate from <soCalled>what is the editor’s
-   interpretation</soCalled>, the generic <gi>mod</gi> element
-   may be preferred. This element simply indicates any kind of
-   modification that has been identified in the document, without
-   prejudice as to its function. Occurrences of the <gi>mod</gi>
-   element may be
+   written between the lines.  Where it is felt desirable to keep the
+   recording of <soCalled>what is on the page</soCalled> entirely
+   separate from <soCalled>what is the editor’s
+   interpretation</soCalled>, the generic <gi>mod</gi> element may be
+   preferred. This element simply indicates any kind of modification
+   that has been identified in the document, without prejudice as to
+   its function. Occurrences of the <gi>mod</gi> element may be
    categorised by means of their <att>type</att> attribute, and visual
    aspects of their appearance can be described by means of the
    <att>rend</att> attribute, but they provide no further
    interpretation of the function or intention of the passage so
    marked up. The <att>spanTo</att> may be used to indicate the end of
-   a modified  passage if this extends across the boundaries of
-   some other XML element, for example from the middle of one line tagged
-   as a <gi>line</gi> to the middle of another <gi>line</gi> some distance further
-   on in the document. </p> 
+   a modified passage if this extends across the boundaries of some
+   other XML element, for example from the middle of one line tagged
+   as a <gi>line</gi> to the middle of another <gi>line</gi> some
+   distance further on in the document. </p>
 <!-- example needed -->
+</div>
 
    <div xml:id="mm">
       <head>Metamarks</head>
-      <p>By <term>metamark</term> we mean marks such as numbers, arrows, crosses, or
-         other symbols introduced by the writer into a document expressly for the
-         purpose of indicating how the text is to be read. Such marks thus constitute a
-         kind of markup of the document, rather than forming part of
-	 the text. <specList>
-   <specList>         
-<specDesc key="metaMark" atts="function target"/>
+      <p>By <term>metamark</term> we mean marks such as
+      numbers, arrows, crosses, or other symbols introduced by the
+      writer into a document expressly for the purpose of indicating
+      how the text is to be read. Such marks thus constitute a kind of
+      markup of the document, rather than forming part of the
+      text.
+ <specList>         
+<specDesc key="metaMark" atts="function target spanTo"/>
 </specList>
-      
+</p>      
 <p>Unlike marginal notes or other additions to the text, meta-marks
-indicate a deliberate alteration of the writing (e.g. <q>move this
-passage over there</q>). We also consider as metamarks dates
-introduced to mark the beginning of a manuscript or a revision, but
-not forming part of it. A metamark may contain text, or some other
-graphic which the encoder wishes to preserve, or it may simply consist
-of arrows, dots, lines etc. </p>
+are used to indicate a deliberate alteration of the writing itself,
+such as <q>move this passage over there</q>. An addition or annotation
+by contrast would typically concern some property of the passage other
+than its intended location or status within the text flow.  A metamark
+may however contain text, or some other graphic which the encoder
+wishes to preserve, or it may simply consist of arrows, dots, lines
+etc. </p>
 
 <p>The <gi>metaMark</gi> element carries a <att>function</att>
-attribute which specifies the function of the meta-mark and a
-<att>target</att> attribute which points to the element or elements
-concerned. </p>
+attribute which specifies the function of the meta-mark, using values
+such as "reorder flag delete insert used". The passage to which the
+metamark applies may be indicated in either of two ways: either the
+<att>target</att> attribute may be used to  point to the element or elements
+concerned, or the <att>spanTo</att> element may be used to point to a
+position in the document at which the passage concerned finishes. Both
+attributes should not be supplied. </p>
       
 <p>The following example is taken from <title>Kundige bok 2</title>, a
 15th century legal book from the city of Göttingen, containing
@@ -208,14 +227,14 @@ de bruwere...</q> was first written along with the word <mentioned
 xml:lang="lat">lege</mentioned> ("read") in the left hand margin,
 functioning as a metamark to indicate that this sentence forms part of
 the regulations. A further sentence was then added, while at some
-later stage or stages the text and also the metamark were deleted. We
+later stage the text and also the metamark were deleted. We
 might encode this as follows: <!-- ka04_1v-dtl.xml --><egXML
 xmlns="http://www.tei-c.org/ns/Examples">
-<del>
-   <metaMark function="flag" target="#s1">lege</metaMark>
-   <s xml:id="s1">Ock en schullen de bruwere des hilgen dages nicht over
+<del layer="#L3">
+   <metaMark function="flag" target="#s1" layer="#L2">lege</metaMark>
+   <s xml:id="s1" layer="#L1">Ock en schullen de bruwere des hilgen dages nicht over
       <lb/>setten noch uppe den stillen fridach bruwen.</s>
-   <add>
+   <add layer="#L2">
       <s>Noch nymande <lb/>over setten, se en sehin denne erst, dat uppe den
          bonen <lb/>neyn stro noch, huw noch flaß ligghe, by pine eyner
          halven <lb/>roden, deme bruwere so wol alse dem bruwheren to
@@ -224,144 +243,40 @@ xmlns="http://www.tei-c.org/ns/Examples">
 </del>
          </egXML>
       </p>
-<!--
-      <p>Here are some further examples showing the use of this element, taken from the
-         manuscript drafts of Thomas Moore's <title>Lalla Rookh</title>
-         (1817). The first shows a simple use of
-         a metamark used to take stock of the progress of composition: <figure>
-<graphic url="examples/moore02.jpg" width="400px"/>
-<head>Lalla Rookh</head>
-         </figure>
-      </p>
-      <p>At regular points throughout the various drafts of the work, a number occurs,
-         usually in the right margin (in this instance, "100"). These numbers result
-         from the author counting the number of verse lines he has composed to the given
-         point, and are not part of the text, but represent a stage at which Moore is
-         taking stock of the progress of his composition. </p>
-      <p>
-         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<surface>
-   <zone>
-      <line>Be this she cried &amp; wing’d her flight</line>
-      <line>My offering at the Gates of Bliss</line>
-      <line>
-         <del>Fully to know the odours <gap extent="1" unit="word"
-   reason="illegible"/></del>
-      </line>
-      <line>
-         <del>Tho foul to heaven the vapour went</del>
-      </line>
-      <line>
-         <del>From vulgar</del>
-         <add>common</add>
-         <del>victors</del>, blood like this</line>
-      <line> Shed out for freedom, flows so bright. <metaMark
-function="count">100</metaMark></line>
-      <line> It would not stain the purest <subst>
-<del>fount</del>
-<add>rill</add>
-         </subst> .</line>
-      <line>“That sparkles thro the fields of light. <del>
-<metaMark function="count">100</metaMark>
-         </del></line>
-      <line> Behold her in the skies again —</line>
-      <line>
-         <subst>
-<del>But</del>
-<add>And</add>
-         </subst>, tho so fleet her pinions bore</line>
-      <line> The spirit of the Warriors slain,</line>
-      <line>Now reach’d &amp; pass’d the gates before her</line>
-   </zone>
-   <zone>
-      <line> Tho foul too oft the</line>
-      <line>tears that still</line>
-      <line>Tho foul the droppings <add>weepings</add></line>
-      <line>that distil</line>
-      <line>Tho foul the tears that</line>
-      <line>oft distil</line>
-      <line>From glory’s faulchion’</line>
-   </zone>
-</surface>
-         </egXML>
-      </p>
--->
-<p><figure>
-<graphic url="examples/moore03.png" width="400px"/>
-<head>Lalla Rookh 2</head>
-         </figure> This example demonstrates the use of a common proof-correction mark:
-         in the left margin of the page, adjacent to a group of three cancelled lines of
-         verse, the word "stet" is written. "Stet", a Latin word meaning "let it stand"
-         is commonly used by authors, editors, and proofreaders where a previous action
-         should be disregarded. In this instance, Moore is indicating that the three
-         deleted verse lines should be let stand, as evidenced by their appearance in
-         the first printed edition of <title>Lalla Rookh</title>. The word, "stet" does
-         not form part of the text, but rather declares that a certain function be
-         performed upon the text. <!-- moore03.xml --><egXML
-xmlns="http://www.tei-c.org/ns/Examples">
-<surface>
-   <zone>
-      <line><gap extent="1" unit="word" reason="illegible"/>
-         <del>in his light</del>
-         <add>within</add> eyelids, within the spray</line>
-      <line>From Eden’s fountain, when it lies</line>
-      <line><hi rend="underline">On that blue</hi>
-         <del>before that</del> flower, which, Brahmins say</line>
-      <line> Can only <add>blooms nowhere but</add> bloom in
-         Paradise,</line>
-      <line>
-         <del xml:id="del1">“Nymph of a bright, fair but erring line!</del>
-      </line>
-      <line>
-         <metaMark function="undo" target="#del1 #del2 #del3"
->stet</metaMark>
-         <del xml:id="del2">(He gently <add>gently</add> he said) one hope
-is thine</del>
-      </line>
-      <line>
-         <del xml:id="del3">One hope (he gently said) is thine</del>
-      </line>
-   </zone>
-</surface>
-         </egXML>
-      </p>
-      <p>Other examples of <gi>metaMark</gi> can be seen in marked-up proofs such as
-         the following, taken from the Walt Whitman archive: <!-- wrong example -->
+<p>The <att>layer</att> attribute used here to indicate the sequencing
+of these various interventions is discussed below, in section <ptr
+target="#PH-layers"/>.</p>
+      <p>The  <gi>metaMark</gi> element may also be used to encode the
+      symbols etc. often found in  marked-up proofs such as
+         the following, taken from the Walt Whitman archive: 
          <figure>
-<graphic url="examples/moore04.png" width="400px"/>
-<head>http://www.whitmanarchive.org/resources/sleepers/loc.00295.jpg</head>
+<graphic url="examples/loc.00295.jpg" width="400px"/>
+<head>http://www.whitmanarchive.org/resources/sleepers/</head>
          </figure></p>
-
-
-   <div>
-      <head>Deletions and marked as used</head>
-      <p>In general, deletion in a source is marked using the <gi>del</gi> or
-<gi>delSpan</gi> element. However, it is useful to distinguish cases where a
-         passage has been <q>indicated as superfluous or spurious in the copy text by an
-author, scribe, annotator, or corrector</q> (TEI P5, s.v. <gi>del</gi>) from
-         cases where a passage has been struck through or otherwise marked as having
-         been used or copied to another location. In this latter case, the author does
-         not intend to suppress the content, but only to mark that it has been
-         transferred or reused. The element <gi>used</gi> is provided to mark this
-         kind of <soCalled>deletion</soCalled>.</p>
-
-<p>
+<p>In this example, the whole of what was originally the 14th section
+has been marked for deletion, both by horizontal and vertical lines,
+and by the metamarks resembling the <q>delta</q> deletion symbol to
+left and right of the section. This might be encoded more economically
+by using the normal <gi>del</gi> or <gi>delSpan</gi> element. However,
+it may also be useful to distinguish cases like this from cases the
+writer does not intend to suppress the content, but only to mark that
+it has been transferred or reused. An appropriate value (such as
+<val>used</val>) should be provided for the <att>function</att>
+attribute in the latter case. 
    </p>   <p>The following page from the Walt Whitman archive has been crossed through to
          indicate used material: <figure>
 <graphic url="examples/whitman02.jpg" width="400px"/>
 <head>Page from
    http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head>
-         </figure> This page contains many internal deletions, but these should be
-         distinguished from the <soCalled>deletion</soCalled> signalled by the large
-         cross, which actually shows that the page has been transferred or re-used, not
-         deleted. </p>
-      <p>Material marked as re-used in this way often spans more than one zone or line.
-         For that reason, the <gi>used</gi> element is a spanning element, indicating
-         the end of the used area by means of a <att>spanTo</att> attribute. We might
-         encode the above page as follows: <!-- whitman02.xml --><egXML
-xmlns="http://www.tei-c.org/ns/Examples">
+         </figure> 
+This page contains many internal deletions, but these should be
+distinguished from the <soCalled>deletion</soCalled> signalled by the large
+cross, which actually shows that the page has been transferred or re-used, not
+deleted. </p>
+<egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
 <surface>
-   <used rend="cross" spanTo="#X2"/>
+   <metamark function="used" rend="cross" spanTo="#X2"/>
    <zone>
       <line rend="underline">The Poet</line>
       <line><del rend="strikethrough">I think</del> His sight is
@@ -371,7 +286,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
       <line>? dog</line>
    </zone>
    <zone>
-      <line>I think <rewrite>ten</rewrite> million</line>
+      <line>I think <retrace>ten</retrace> million</line>
       <!-- ... -->
       <line>well; those <subst>
 <del rend="strikethrough">supple-fingered gods</del>
@@ -381,30 +296,28 @@ xmlns="http://www.tei-c.org/ns/Examples">
    </zone>
 </surface>
          </egXML>
-      </p>
    </div>
 
+<div><head>Fixation and clarification</head>
 
-   </div>
-
-   <div>
-      <head>Additions, fixations and clarifications</head>
-      <p>A writer may sometimes rewrite material a second time without significant
-         change and in the same place. We consider this a distinct activity from
-         addition as usually defined because no new textual material results but the
-         status of existing material changes. We distinguish two variants of this:
-<term>fixation</term> where the first version was a tentative draft which is
-         subsequently fixed, for example by inking it over; and
-<term>clarification</term>, where the first version was badly written and
-         has been rewritten for clarity. The element <gi>retrace</gi> is provided to
-         cover both cases. </p>
+<p>A writer may sometimes rewrite material a second time without
+significant change and in the same place. We consider this a distinct
+activity from addition as usually defined because no new textual
+material results but the status of existing material changes. We may
+distinguish two variants of this: <term>fixation</term> where the
+first version was a tentative draft which is subsequently fixed, for
+example by inking it over; and <term>clarification</term>, where the
+first version was badly written and has been rewritten for
+clarity. The element <gi>retrace</gi> is provided for both cases; its
+<att>cause</att> attribute may be used to distinguish them. </p>
 <p><specList>
          <specDesc key="retrace" atts="cause"/>
       </specList></p>
 
-      <p>In this simple example, taken from the papers of Henrik Ibsen, the writer wrote
-         the word <mentioned>skuldren</mentioned> hastily, and then returned to it to
-         make the letter <mentioned>l</mentioned> larger and clearer: <figure>
+      <p>In this simple example, taken from the papers of Henrik
+      Ibsen, the writer wrote the word <mentioned>skuldren</mentioned>
+      hastily, and then returned to it to make the letter
+      <mentioned>l</mentioned> larger and clearer: <figure>
 <graphic url="examples/skuldren.jpg" width="400px"/>
 <head rend="it">Image from a ms of Peer Gynt, Collin 2869, 4°, I.1.1, the
    Royal Library of Copenhagen</head>
@@ -422,26 +335,26 @@ xmlns="http://www.tei-c.org/ns/Examples">
 <graphic url="examples/munch01.jpg" width="400px"/>
 <head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
          </figure> We might encode this by nesting the <gi>rewrite</gi> element as
-         follows: <!-- munch01.jpg --><egXML xmlns="http://www.tei-c.org/ns/Examples">
+         follows: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line>ved Bæg<retrace cause="unclear" layer="#stage2">
       <retrace cause="unclear" layer="#stage1">er</retrace>
    </retrace> ...</line>
          </egXML> The <att>layer</att> attribute used here is discussed further below
 (<ptr target="#PH-layers"/>). </p>
       <p>The <gi>retrace</gi> element is used only for cases where
-      text has been written multiple times. Metamarks and other markup-like strokes can also be inked
-      over with the same purpose as the fixation or clarification of
-      text passages. For instance, in a draft version of Goethe’s
-      Faust, a passage was struck through once in pencil during one
-      revision and then again with ink during a later revision,
-      supposedly to fixate the deletion.</p>
+      text has been written multiple times. Metamarks and other
+      markup-like strokes can also be inked over with the same purpose
+      as the fixation or clarification of text passages. For instance,
+      in a draft version of Goethe’s Faust, a passage was struck
+      through once in pencil during one revision and then again with
+      ink during a later revision, supposedly to fixate the
+      deletion.</p>
       <figure>
          <graphic url="examples/faust_redo.jpg"/>
          <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
       </figure>
-      <p>We propose an element <gi>redo</gi> (the opposite
-		  of  <gi>undo</gi>, see
-<ptr target="#undo"/>), which can be used to encode this process as follows:</p>
+      <p>The empty element <gi>redo</gi> element can be used to encode this process as follows:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <line><redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"
    /><mod xml:id="mod_1" rend="strikethrough" spanTo="#anchor_1"
@@ -451,99 +364,79 @@ xmlns="http://www.tei-c.org/ns/Examples">
 /></line>
       </egXML>
    </div>
-   <div>
-      <head>Alternative Readings</head>
-      <p><figure>
-<graphic url="examples/moore04.png" width="400px"/>
-<head>Lalla Rookh 3</head>
-         </figure> In this example two alternative readings are provided, without either
-         one being prioritised or subordinated. While the author apparently first
-         composed the line "Alone before his native river -", at some later point, he
-         entertained the possibility of using the word "beside" instead of "before." In
-         the context of this manuscript, there is no indication of which word the Moore
-         favours, so the status of these words as possible alternative readings needs to
-         be encoded. The evidence of the first edition of <title>Lalla Rookh</title>
-         shows that the word "beside" was chosen, but for the purposes of encoding this
-         manuscript, the facility to encode two equally-possible alternative readings
-         needs to be available. </p>
-      <!-- moore04.xml -->
-      <egXML xmlns="http://www.tei-c.org/ns/Examples">
-         <zone>
-<line>Alone <seg type="alternative" xml:id="alt1">before</seg>
-   <add place="above" type="alternative" xml:id="alt2">beside</add> his
-   native river ­—</line>
-<alt targets="#alt1 #alt2" mode="excl" weights="0 1"/>
-         </zone>
-      </egXML>
-      <!--<p>As a further example, consider the manuscript of a poem by Emily Dickinson discussed by   Vetter and McDonald
-         2003 <note place="foot">
-         <bibl>
-         <author>Lara Vetter and Jarom McDonald</author>
-         <title level="a">Witnessing Dickinson's Witnesses</title>
-         <title level="j">Literary Linguistic Computing</title>
-         <biblScope type="vol">18</biblScope>
-         <biblScope type="issue">2</biblScope>
-         <biblScope type="pp">151-165</biblScope>
-         <date>2003</date>
-         <ptr
-         target="http://llc.oxfordjournals.org/cgi/reprint/18/2/151?maxtoshow=&amp;HITS=10&amp;hits=10&amp;RESULTFORMAT=&amp;fulltext=vetter&amp;searchid=1&amp;FIRSTINDEX=0&amp;resourcetype=HWCIT"
-         />
-         </bibl>
-         </note>. In this case, a plus sign is used to indicate that there are two
-         possible alternatives for the word following it, concerning which the
-         writer remains undecided. We can mark this up as follows: <egXML
-         xmlns="http://www.tei-c.org/ns/Examples">
-         <line>        <metaMark function="alternative" targets="#alt01">+<alt
-         targets="#alt01 #alt02 #alt03" mode="excl" weights="1 0 0"
-         /></metaMark>
-         <hi rend="underlined" xml:id="alt01">estranged</hi> -
-         <metaMark function="alternative" targets="#alt2"
-         >+</metaMark>
-         <add type="alternative" xml:id="alt02" place="inline"
-         >alarmed</add>
-         </line>
-         <line>
-         <metaMark function="alternative" targets="#alt03">+</metaMark>
-         <add type="alternative" xml:id="alt03">submerged</add> - </line>
-         </egXML> 
-         Note here the use of the existing TEI element <gi>alt</gi> to indicate
-         that the three elements indicated are mutually exclusive alternates:  the word
-         <mentioned>estranged</mentioned> can be alternated with
-         <mentioned>alarmed</mentioned> (written in-line, aster
-         <mentioned>estranged</mentioned>) and <mentioned>submerged</mentioned>
-         written at the bottom of the page. Since <mentioned>estranged</mentioned> is
-         underlined, the editors argue  (loc cit pp. 155-162)
-         that  this possibility is to be preferred to the others and hence give it a
-         weight of 1.</p>
-      -->
+
+  <div xml:id="undo">
+      <head>Cancellation of modifications</head>
+      <p>In some cases an author indicates that an alteration is itself to be altered:
+         for example, a struck through passage may be restored via a dotted underlining,
+         or the underlining of a passage may be deleted by a wavy line. </p>
+      <!-- need a simpler example first, need to discuss relation with restore -->
+      <p>The TEI provides an element <gi>restore</gi> for one specific kind of
+         alteration to an alteration, namely the undoing of a deletion. We propose a
+         more general element, <gi>undo</gi>. This is an empty
+<gi>undo</gi> element, which points to the
+			element the effect of which is being  cancelled. If
+         more than one (not coherent) part of the deletion
+		     is undone, more than one <gi>undo</gi> element
+		     will be needed, and each part undone must be
+		     given an identifier.</p>
+      <p>Consider the following imaginary example : 
+<figure>
+      <graphic url="examples/undoing1.jpg" width="400px"/>
+   </figure>
+Three text layers can be identified here : 
+<list type="ordered">
+<item>This is just some sample text, we need a real example. </item>
+<item>This is not a real example.</item>
+<item>This is just some text, not a real example.</item>
+         </list>
+</p>
+      <p>This can be encoded using empty <gi>undo</gi> elements as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>This is <del stage="#s2" xml:id="del_1" rend="overstrike"><undo
+target="#del_1" spanTo="#X02" rend="dotted" layer="#s3"/>just some
+<anchor xml:id="X02"/>sample <undo target="#del_1" spanTo="#x4"
+rend="dotted" layer="#s3"/>text,<anchor xml:id="x4"/> we need
+</del><add layer="#s2">not </add>a real example.</line> </egXML> The
+<att>target</att> attributes on <gi>undo</gi> point to the elements
+representing the initial acts (the deletions) which are undone. The
+<att>rend</att> attribute indicates the way this reversion is
+indicated. The <att>spanTo</att> attributes points to the
+<gi>anchor</gi> which marks the point in the text where this reversion
+finishes.  Since two non-contiguous parts of the deletion are undone,
+there are two <gi>undo</gi> elements, each with the appropriate
+attribute values.  If <att>spanTo</att> is not supplied, the
+<gi>undo</gi> is understood to refer to the whole of the text
+contained by the element indicated by its <att>target</att>
+attribute. </p>
    </div>
-   <div>
+ 
+ 
+   <div xml:id="transpo">
       <head>Transpositions</head>
-      <p>Metamarks are commonly used in the context of <term>transposition</term>, that
-         is, the moving of words or blocks by the author to a different position using
-         arrows, asterisks or numbers, or other metamarks. One possible approach (used,
-         for instance in HNML) would be to regard such transpositions as a special kind
-         of substitution, and actually to represent the result of the transposition
-         indicated by the metamarks in the encoding, for example by considering the
-         segment previous to the transposition as deleted, and substituted by the one
-         after the transposition. 
+      <p>A <term>transposition</term> occurs when metamarks are used
+      to indicate that passages should be moved
+      to a different position using arrows, asterisks or numbers, or
+      other means. By definition the result of a transposition is
+      not present in the document, and should not
+      therefore be encoded, if the intention is to record its actual
+      state. Instead, the following elements may be used to indicate
+      the intended reordering:
 <specList>
 <specDesc key="transposeGrp"/>
 <specDesc key="transpose"/>
 </specList></p>
-      <p>Our recommendation is to record the actual state of the witness, but in such a
-         way as to facilitate its reorganization as a distinct processing step. We
-         propose to represent the re-alignment of transposed blocks or segments by means
-         of a stand-off mechanism. The elements <gi>transposeGrp</gi> and
-<gi>transpose</gi> are provided for this purpose. For example, in the
+<p>Consider for example, the
          following extract from an Ibsen manuscript <figure>
 <graphic url="examples/ibsen01.jpg" width="400px"/>
 <head>Extracted from
    <ref>http://www.emunch.no/tei-mm-2008/ms.html</ref></head>
-         </figure>, the underlined numbers 1 and 2 indicate that, although the word
+         </figure>
+The underlined numbers 1 and 2 here indicate that, although the word
 <mentioned>bör</mentioned> precedes the word <mentioned>hör</mentioned> in
          the text, the order of the two words should be reversed. We may encode this as
-         follows: <!-- ibsen01.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
+         follows: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line><seg xml:id="ib01">bör</seg><metaMark rend="underline"
       function="transposition" target="#ib1" place="above">2.</metaMark>
    og <seg xml:id="ib02">hör</seg><metaMark rend="underline"
@@ -589,7 +482,35 @@ xmlns="http://www.tei-c.org/ns/Examples">
 <gi>transpose</gi> elements, each of which defines a single
          transposition.</p>
    </div>
-   <div>
+
+   <div xml:id="alter">
+      <head>Alternative Readings</head>
+      <p><figure>
+<graphic url="examples/moore04.png" width="400px"/>
+<head>Lalla Rookh 3</head>
+         </figure> 
+In this example two alternative readings are provided, without either
+one being prioritised or subordinated. While the author apparently
+first composed the line "Alone before his native river -", at some
+later point, he entertained the possibility of using the word "beside"
+instead of "before." In the context of this manuscript, there is no
+indication of which word the Moore favours, so the status of these
+words as possible alternative readings needs to be encoded. The
+evidence of the first edition of <title>Lalla Rookh</title> shows that
+the word "beside" was chosen, but for the purposes of encoding this
+manuscript, the facility to encode two equally-possible alternative
+readings needs to be available. </p>
+      <!-- moore04.xml -->
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <zone>
+<line>Alone <seg type="alternative" xml:id="alt1">before</seg>
+   <add place="above" type="alternative" xml:id="alt2">beside</add> his
+   native river ­—</line>
+<alt targets="#alt1 #alt2" mode="excl" weights="0 1"/>
+         </zone>
+      </egXML>
+   </div>
+   <div xml:id="subst">
       <head>Substitution</head>
       <p>In the current model for the TEI <gi>subst</gi> element, one or more additions
          and deletions may be combined if they are considered as representing a single
@@ -598,7 +519,8 @@ xmlns="http://www.tei-c.org/ns/Examples">
 <title>Lalla Rooke</title>
          <figure>
 <graphic url="examples/moore01.png" width="400px"/>
-         </figure> Here the word <mentioned>pondering</mentioned> is deleted, and the
+         </figure>
+</p><p> Here the word <mentioned>pondering</mentioned> is deleted, and the
          phrase <mentioned>she mus'd</mentioned> are added, while the word
 <mentioned>thus</mentioned> remains unchanged. It seems appropriate to treat
          all of this as a single substitution. This would require a modification to the
@@ -610,71 +532,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
    mus'd</add></subst>, her pinions fann'd</line>
          </egXML></p>
    </div>
-   <div xml:id="undo">
-      <head>Undoing alterations</head>
-      <p>In some cases an author indicates that an alteration is itself to be altered:
-         for example, a struck through passage may be restored via a dotted underlining,
-         or the underlining of a passage may be deleted by a wavy line. </p>
-      <!-- need a simpler example first, need to discuss relation with restore -->
-      <p>The TEI provides an element <gi>restore</gi> for one specific kind of
-         alteration to an alteration, namely the undoing of a deletion. We propose a
-         more general element, <gi>undo</gi>. The element <gi>undo</gi> usually
-         encloses the element (e.g. the <gi>add</gi>, <gi>del</gi> etc.) to be undone.
-         If it appears within such an element, the implication is that only this part of
-         the parent element has been cancelled. For example, in this passage taken from
-         Giacomo Leopardi's <title>Zibaldone</title> (p. 3595), the phrase <mentioned>si
-rechi á</mentioned> was underlined word by word, and then the underlining of
-         the word <mentioned>si</mentioned> was cancelled. <figure>
-<graphic url="examples/leop01.png" width="400px"/>
-         </figure>This could be encoded as follows: <!-- leop01.xml --><egXML
-xmlns="http://www.tei-c.org/ns/Examples">
-<line> che e’ <hi rend="underline"><undo spanTo="#x2"/>si <anchor
-         xml:id="x2"/> rechi a’</hi>
-   <del rend="overstrike">dotti</del>
-   <hi rend="underline">denti</hi> l’un d’essi cibi</line>
-         </egXML></p>
-      <!-- not sure I remember what we said but it seems to me we decided to 
-      point from the undo to the element to be undone-->
-      <p>To make explicit the relation between the undoing act and the initial act, we
-         propose an alternative way of encoding these scribal acts, namely an empty
-<gi>undo</gi> element, which points to the
-			element the effect of which is being  cancelled. If
-         more than one (not coherent) part of the deletion
-		     is undone, more than one <gi>undo</gi> element
-		     will be needed, and each part undone must be
-		     given an identifier.</p>
-      <p>In the following example, three text stages can be identified: <list>
-<item>s1 (initial): This is just some sample text, we need a real example. <figure>
-      <graphic url="examples/undoing1.jpg" width="400px"/>
-   </figure></item>
-<item>s2: This is not a real example.</item>
-<item>s3: This is just some text, not a real example.</item>
-         </list></p>
-      <p>This can be encoded using empty <gi>undo</gi> elements as follows:
-<!-- undoing1.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
-<line>This is <del stage="#s2" xml:id="del_1" rend="overstrike"><undo
-         target="#del_1" spanTo="#X02" rend="dotted" stage="#s3"/>just some
-         <anchor xml:id="X02"/>sample <undo target="#del_1" spanTo="#x4"
-         rend="dotted" stage="#s3"/>text,<anchor xml:id="x4"/> we need
-      </del><add stage="#s2">not </add>a real example.</line>
-         </egXML> The <att>target</att> attributes on <gi>undo</gi> point to
-         the elements representing the initial acts  (the
-		     deletions) which are undone. The <att>rend</att>
-		     attribute indicates the way this reversion is
-		     indicated. The <att>spanTo</att> attributes
-		     points to the <gi>anchor</gi> which marks the
-		     point in the text where this reversion
-		     finishes.  Since two non-contiguous parts
-         of the deletion are undone, there are two
-		     <gi>undo</gi> elements, each with the
-		     appropriate attribute values.  If
-		     <att>spanTo</att> is not supplied, the
-		  <gi>undo</gi> is understood to refer to the
-		  whole of the text contained by the element indicated
-		  by its <att>target</att> attribute. </p>
-   </div>
-   <!-- my version in talk is different -->
-   <div>
+   <div xml:id="instant">
       <head>Instant corrections</head>
       <p>The use of tags such as <gi>del</gi> and <gi>add</gi> necessarily implies that
          the modification concerned was made at some time after the original writing. An
@@ -715,6 +573,7 @@ type="ordered">
          </egXML>
       </p>
    </div>
+
 </div>
 
 
