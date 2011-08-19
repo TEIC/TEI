@@ -31,6 +31,7 @@ independently of them. </p>
 <specDesc key="patch" atts="binder type height width"/>
 <specDesc key="line" />
 <specDesc key="ab" atts="type"/>
+<specDesc key="seg" atts="type"/>
 </specList>
 </p>
 
@@ -63,7 +64,8 @@ versa. It thus seems convenient to introduce a unit <gi>line</gi> to
 hold a complete group of such tokens. Where, however, the lineation is
 not considered useful or significant, groups of tokens may be
 indicated using the neutral <gi>ab</gi> (anonymous block) element or
-<gi>seg</gi> elements described in section <ptr target="#SASE"/>
+<gi>seg</gi> elements described in section <ptr
+target="#SASE"/>. 
 </p>
 <!-- QUERY do we need both seg and ab? if so, why? and how do you
      choose?
@@ -231,15 +233,16 @@ etc. which the encoder simply describes.</p>
 
 <p>The <gi>metaMark</gi> element carries a <att>function</att>
 attribute which specifies the function of the meta-mark, using values
-such as <val>reorder flag delete insert used</val>. The passage to which the
-metamark applies may be indicated in either of two ways: the
-<att>target</att> attribute may be used to  point to the element or elements
-containing the passage concerned, or the <att>spanTo</att> element may be used to point to a
-position in the document at which the passage concerned finishes. In
-the latter case, the <gi>metaMark</gi> itself must be supplied at the
-position in the document where the passage concerned begins; in the
-former case it may be supplied at any convenient point. Both
-attributes should not be supplied. </p>
+such as <val>reorder flag delete insert used</val>. The passage to
+which the metamark applies may be indicated in either of two ways: the
+<att>target</att> attribute may be used to point to the element or
+elements containing the passage concerned, or the <att>spanTo</att>
+element may be used to point to a position in the document at which
+the passage concerned finishes. In the latter case, the
+<gi>metaMark</gi> itself must be supplied at the position in the
+document where the passage concerned begins; in the former case it may
+be supplied at any convenient point. Both attributes should not be
+supplied. </p>
       
 <p>The following example is taken from  an
 15th century legal book from the city of Göttingen, containing
@@ -345,7 +348,6 @@ clarity. The element <gi>retrace</gi> is provided for both cases; its
          <specDesc key="retrace" atts="cause"/>
       </specList>
 </p>
-
       
 <p>In this simple example, taken from the papers of Henrik Ibsen, the
 writer wrote the word <mentioned>skuldren</mentioned> hastily, and
@@ -367,7 +369,7 @@ two attempts to write the letters <mentioned>er</mentioned> in the
 word <mentioned>bægerklang</mentioned>: <figure>
 <graphic url="examples/munch01.jpg" width="400px"/>
 <head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
-         </figure> We might encode this by nesting the <gi>rewrite</gi> element as
+</figure> We might encode this by nesting the <gi>rewrite</gi> element as
          follows: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line>ved Bæg<retrace cause="unclear" layer="#stage2">
@@ -384,7 +386,7 @@ the next section should be used in preference.
 </p>   </div>
 
  <div xml:id="undo">
-<head>Fixation, cancellation and reinstatement of modifications</head>
+<head>Fixation, cancellation, and reinstatement of modifications</head>
 
 <p>In a draft version of Goethe’s Faust, a passage was struck through
 once in pencil during one revision and then again with ink during a
@@ -393,14 +395,15 @@ later revision, supposedly to fixate the deletion.
          <graphic url="examples/faust_redo.jpg"/>
          <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
       </figure>
-A writer may also indicates that an alteration is itself to be altered:
-         for example, a struck through passage may be restored via a dotted underlining,
-         or the underlining of a passage may be deleted by a wavy line.</p>
+A writer may also indicate that an alteration is itself to be altered:
+for example, a struck-through passage may be restored via a dotted
+underlining, or the underlining of a passage may be deleted by a wavy
+line.</p>
 
 <p>The following elements are provided to represent these situations:
 <specList>
-<specDesc key="redo"/>
-<specDesc key="undo"/>
+<specDesc key="redo" atts="target cause spanTo"/>
+<specDesc key="undo" atts="target cause spanTo"/>
 </specList>
 </p>
 
@@ -414,59 +417,78 @@ as follows:</p>
          <line>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_1"
 /></line>
       </egXML>
-<!-- insert narrative explanation -->
 
-      <p>The TEI provides an element <gi>restore</gi> for one specific kind of
-         alteration to an alteration, namely the undoing of a deletion. We propose a
-         more general element, <gi>undo</gi>. This is an empty
-<gi>undo</gi> element, which points to the
-			element the effect of which is being  cancelled. If
-         more than one (not coherent) part of the deletion
-		     is undone, more than one <gi>undo</gi> element
-		     will be needed, and each part undone must be
-		     given an identifier.</p>
+<!-- NOTE insert narrative explanation -->
+
+      
+<p>The element <gi>restore</gi> (<ptr target="#PH-wherever"/>) is
+provided for the comparatively simple case where a simple deletion is
+marked as having been subsequently cancelled. The <gi>undo</gi>
+element discussed here is more widely applicable and may be used for
+any kind of cancellation. It points to the element or elements which
+are being cancelled. These components need not be contiguous, provided
+that the cancellation is clearly a single act; each distinct act of
+cancellation requires a distinct <gi>undo</gi> element, however. Either
+of the attributes <att>target</att> or <gi>spanTo</gi> may be used to
+indicate the passages concerned. </p>
+
       <p>Consider the following imaginary example : 
 <figure>
       <graphic url="examples/undoing1.jpg" width="400px"/>
    </figure>
-Three text layers can be identified here : 
+We hypothesize that the text has gone through three states or layers,
+as follows:
 <list type="ordered">
 <item>This is just some sample text, we need a real example. </item>
 <item>This is not a real example.</item>
 <item>This is just some text, not a real example.</item>
          </list>
 </p>
-      <p>This can be encoded using empty <gi>undo</gi> elements as follows:
+      
+<p>This sequence of events might be encoded as follows:
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<line>This is <del stage="#s2" xml:id="del_1" rend="overstrike"><undo
-target="#del_1" spanTo="#X02" rend="dotted" layer="#s3"/>just some
-<anchor xml:id="X02"/>sample <undo target="#del_1" spanTo="#x4"
-rend="dotted" layer="#s3"/>text,<anchor xml:id="x4"/> we need
-</del><add layer="#s2">not </add>a real example.</line> </egXML> The
-<att>target</att> attributes on <gi>undo</gi> point to the elements
-representing the initial acts (the deletions) which are undone. The
-<att>rend</att> attribute indicates the way this reversion is
-indicated. The <att>spanTo</att> attributes points to the
-<gi>anchor</gi> which marks the point in the text where this reversion
-finishes.  Since two non-contiguous parts of the deletion are undone,
-there are two <gi>undo</gi> elements, each with the appropriate
-attribute values.  If <att>spanTo</att> is not supplied, the
-<gi>undo</gi> is understood to refer to the whole of the text
-contained by the element indicated by its <att>target</att>
-attribute. </p>
+<line>This is <del layer="#s2"  rend="overstrike"> 
+<undo spanTo="#Xa" rend="dotted" layer="#s3"/>just some
+<anchor xml:id="Xa"/> sample <undo spanTo="#Xb" rend="dotted" layer="#s3"/>text,
+<anchor xml:id="Xb"/> we need</del>
+<add layer="#s2">not</add>
+a real example.</line> 
+</egXML> 
+using <att>spanTo</att> to delimit the parts of the deletion which
+have been reverted at layer s2. </p>
+
+<p>Alternatively, we might use the generic <gi>seg</gi> element within
+the <gi>line</gi> to delimit the two sequences whose
+deletion is being reverted, and then use the <gi>target</gi> attribute
+on <gi>undo</gi> :
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>This is <del layer="#s2"  rend="overstrike"> 
+<seg xml:id="X-a">just some</seg>
+sample <seg xml:id="X-b">text</seg>,
+we need</del>
+<add layer="#s2">not</add>
+a real example.</line> 
+<undo target="#X-a #X-b" rend="dotted" layer="#s3"/>
+</egXML> 
+
+
+<!-- NOTE maybe add a third example doing this with xpath to pick out
+individual tokens. Or one from a real doc -->
+</p>
    </div>
  
- 
-   <div xml:id="transpo">
-      <head>Transpositions</head>
-      <p>A <term>transposition</term> occurs when metamarks are used
-      to indicate that passages should be moved
-      to a different position using arrows, asterisks or numbers, or
-      other means. By definition the result of a transposition is
-      not present in the document, and should not
-      therefore be encoded, if the intention is to record its actual
-      state. Instead, the following elements may be used to indicate
-      the intended reordering:
+<div xml:id="transpo"><head>Transpositions</head>
+      
+<p>A <term>transposition</term> occurs when metamarks are found in a
+document indicating that passages should be moved to a different
+position. Typically this may be done  using
+arrows, asterisks or numbers, or other means. By definition the result
+of a transposition is not present in the document, and should not
+therefore be encoded, if the intention is to record its actual
+state. Instead, the following elements may be used to indicate the
+intended reordering:
 <specList>
 <specDesc key="transposeGrp"/>
 <specDesc key="transpose"/>
@@ -478,9 +500,9 @@ attribute. </p>
    <ref>http://www.emunch.no/tei-mm-2008/ms.html</ref></head>
          </figure>
 The underlined numbers 1 and 2 here indicate that, although the word
-<mentioned>bör</mentioned> precedes the word <mentioned>hör</mentioned> in
-         the text, the order of the two words should be reversed. We may encode this as
-         follows: 
+<mentioned>bör</mentioned> precedes the word
+<mentioned>hör</mentioned> in the text, the order of the two words
+should be reversed. We may encode this as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line><seg xml:id="ib01">bör</seg><metaMark rend="underline"
       function="transposition" target="#ib1" place="above">2.</metaMark>
@@ -495,9 +517,11 @@ The underlined numbers 1 and 2 here indicate that, although the word
 </transposeGrp>
          </egXML>
       </p>
-      <p>Note the use of the generic <gi>seg</gi> element to identify the sections of
-         text being transposed. When (as in the following example) the whole of line is
-         to be transposed, there is no need to delimit the sections concerned: <figure>
+      
+<p>Note the use of the generic <gi>seg</gi> element to identify the
+sections of text being transposed. When (as in the following example)
+the whole of line is to be transposed, there is no need to delimit the
+sections concerned: <figure>
 <graphic url="examples/ibsen04.jpg" width="400px"/>
 <head>Extracted from
    <ref>http://www.emunch.no/tei-mm-2008/ms3.html</ref></head>
@@ -507,8 +531,7 @@ The underlined numbers 1 and 2 here indicate that, although the word
       place="margin-left">2.)</metaMark> thi da er du med Himmelen i
    Pagt; — </line>
 <line xml:id="ib4">
-   <metaMark function="transposition" place="margin-left"
-      >1.)</metaMark> da kan du Folkets Jøkelhjerter tine;</line>
+   <metaMark function="transposition" place="margin-left">1.)</metaMark> da kan du Folkets Jøkelhjerter tine;</line>
 <transposeGrp>
    <transpose>
       <ptr target="#ib4"/>
