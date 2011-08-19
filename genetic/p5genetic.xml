@@ -1,4 +1,4 @@
-<body>
+<body >
 
 <!-- insert this para following 22nd <p> #PHFAX -->
 <p xml:id="GEN1">
@@ -33,19 +33,26 @@ independently of them. </p>
 <specDesc key="ab" atts="type"/>
 </specList>
 </p>
-<p>The elements <gi>surface</gi> and <gi>zone</gi> were introduced above, in section <ptr
-            target="#PHFAX"/>. The element <gi>patch</gi> is useful in cases where the written
-         surfaces constituting a document are not homogeneous. In the following example, taken from
-         the Walt Whitman archive, two pieces of newsprint have been glued to a piece of blue paper
-         on which a poem is being drafted: <figure>
+
+<p>The elements <gi>surface</gi> and <gi>zone</gi> were introduced
+above, in section <ptr target="#PHFAX"/>. The element <gi>patch</gi>
+is useful in cases where the written surfaces constituting a document
+are not homogeneous. In the following example, taken from the Walt
+Whitman archive, two pieces of newsprint have been glued to a piece of
+blue paper on which a poem is being drafted: 
+
+<figure>
             <graphic url="examples/whitman01.jpg" width="400px"/>
             <head rend="it">Image from
                http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg</head>
-         </figure>  The two pieces of newsprint might perhaps be regarded as special kinds of zone,
-         but they are effectively new surfaces, since they might contain additional written zones
-         themselves (such as the numbers in this case). We therefore propose a distinct element,
-            <gi>patch</gi>, which can appear within a <gi>surface</gi>, and behaves effectively like
-         one, except that it contains specialized attributes to provide additional information.</p>
+         </figure>  
+The two pieces of newsprint might perhaps be regarded as special kinds
+of zone, but they are effectively new surfaces, since they might
+contain additional written zones themselves (such as the numbers in
+this case). We therefore propose a distinct element, <gi>patch</gi>,
+which can appear within a <gi>surface</gi>, and behaves effectively
+like one, except that it contains specialized attributes to provide
+additional information.</p>
 
 <p>Most writing is linear, in the sense that it is composed of
 discrete tokens organized physically into groups, typically organized
@@ -55,35 +62,42 @@ this might be any combination of top-down and left to right, or vice
 versa. It thus seems convenient to introduce a unit <gi>line</gi> to
 hold a complete group of such tokens. Where, however, the lineation is
 not considered useful or significant, groups of tokens may be
-indicated using the neutral <gi>ab</gi> (anonymous block) element
-described in section     <ptr target="#SASE"/>
+indicated using the neutral <gi>ab</gi> (anonymous block) element or
+<gi>seg</gi> elements described in section <ptr target="#SASE"/>
 </p>
+<!-- QUERY do we need both seg and ab? if so, why? and how do you
+     choose?
+-->
+
 <p>Using these elements, the Whitman draft above might be encoded as
-follows: <!-- whitman01.xml --><egXML
-xmlns="http://www.tei-c.org/ns/Examples">
-                     <surface>
-                        <zone>
-                           <line>Poem</line>
-                           <line>As in Visions of — at</line>
-                           <line>night —</line>
-                           <line>All sorts of fancies running through</line>
-                           <line>the head</line>
-                        </zone>
-                        <patch type="newsprint" binder="glue"
+follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<surface>
+   <zone>
+      <line>Poem</line>
+      <line>As in Visions of — at</line>
+      <line>night —</line>
+      <line>All sorts of fancies running through</line>
+      <line>the head</line>
+   </zone>
+   <patch type="newsprint" binder="glue"
 			       height="40" width="90"> 
 			  <ab>Spring has
-                           just set in here, and the weather.... a
+      just set in here, and the weather.... a
 			   steamer </ab>
-                              <metaMark function="sequence">2</metaMark>
-                        </patch>
-                        <patch type="newsprint" binder="glue"
+         <metaMark function="sequence">2</metaMark>
+   </patch>
+   <patch type="newsprint" binder="glue"
 			       height="35" width="90"> 
-			  <ab>"The shores on either side of the Sound are... The In-                            </ab>   
+			  <ab>"The shores on either side of the Sound are... The In-       </ab>   
 			   <metaMark function="sequence">3</metaMark>
-                        </patch>
-                     </surface>
-                  </egXML> The <gi>metaMark</gi> element used in this example is further
-                  discussed below (<ptr target="#mm"/>)</p>
+   </patch>
+</surface>
+</egXML> 
+</p>
+
+<p>The <gi>metaMark</gi> element used in this example is further
+discussed below (<ptr target="#PH-meta"/>)</p>
+
 <p>Note that in this example we have not included any <gi>graphic</gi> element
 corresponding with the <gi>zone</gi> or <gi>surface</gi> elements 
 identified in the transcription. The encoder may choose to combine
@@ -94,6 +108,7 @@ only graphics without transcription, or with a structured
 </div>
 
 <!-- insert this before PHST -->
+
 <div xml:id="PH-summ"><head>Transcribing the process</head>
 
 <p>The elements described in this chapter may also be used for digital
@@ -120,6 +135,9 @@ modification groups, termed a <term>layer</term>, by means of a global
 layer concerned, typically provided within the TEI Header
 <gi>creation</gi> element; see further <ptr target="#PH-layers"/>. The
 transcription itself is provided within a <gi>facsimile</gi> element,
+
+<!-- QUERY how about transcript as elephant name ?-->
+
 using the elements <gi>surface</gi> and <gi>zone</gi> described in
 section <ptr target="#PHFAX"/>. Within a <gi>zone</gi>, the
 transcription may be organized in terms of lines of writing, using the
@@ -176,74 +194,91 @@ record traces of the writing process within a document.
    other XML element, for example from the middle of one line tagged
    as a <gi>line</gi> to the middle of another <gi>line</gi> some
    distance further on in the document. </p>
-<!-- example needed -->
-</div>
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples">
+<ab>words words words <mod rend="wavy-underlining" spanTo="#enduw"/>words with wavy underline</ab>
+<ab>wavy underlining finishes here<anchor xml:id="enduw"/> more words    </ab>
+</egXML>
+<!-- QUERY real example needed -->
+<p>The distinction between an example such as that above and the simple
+use of <gi>hi</gi> to mark the visual salience of the underlining
+(apart from  the use of the <att>spanTo</att> attribute) is that
+<gi>hi</gi> does not imply that the visual effect being recorded is
+understood to represent some kind of modification. 
+</p></div>
 
-   <div xml:id="mm">
-      <head>Metamarks</head>
-      <p>By <term>metamark</term> we mean marks such as
-      numbers, arrows, crosses, or other symbols introduced by the
-      writer into a document expressly for the purpose of indicating
-      how the text is to be read. Such marks thus constitute a kind of
-      markup of the document, rather than forming part of the
-      text.
+   <div xml:id="PH-meta"><head>Metamarks</head>
+
+<p>By <term>metamark</term> we mean marks such as numbers, arrows,
+crosses, or other symbols introduced by the writer into a document
+expressly for the purpose of indicating how the text is to be
+read. Such marks thus constitute a kind of markup of the document,
+rather than forming part of the text.
  <specList>         
-<specDesc key="metaMark" atts="function target spanTo"/>
-</specList>
+<specDesc key="metaMark" atts="function target spanTo"/></specList>
 </p>      
+
 <p>Unlike marginal notes or other additions to the text, meta-marks
-are used to indicate a deliberate alteration of the writing itself,
+are used by the writer to indicate a deliberate alteration of the writing itself,
 such as <q>move this passage over there</q>. An addition or annotation
 by contrast would typically concern some property of the passage other
 than its intended location or status within the text flow.  A metamark
 may however contain text, or some other graphic which the encoder
 wishes to preserve, or it may simply consist of arrows, dots, lines
-etc. </p>
+etc. which the encoder simply describes.</p>
+
+<!-- QUERY should it contain <desc> as a child? -->
 
 <p>The <gi>metaMark</gi> element carries a <att>function</att>
 attribute which specifies the function of the meta-mark, using values
-such as "reorder flag delete insert used". The passage to which the
-metamark applies may be indicated in either of two ways: either the
+such as <val>reorder flag delete insert used</val>. The passage to which the
+metamark applies may be indicated in either of two ways: the
 <att>target</att> attribute may be used to  point to the element or elements
-concerned, or the <att>spanTo</att> element may be used to point to a
-position in the document at which the passage concerned finishes. Both
+containing the passage concerned, or the <att>spanTo</att> element may be used to point to a
+position in the document at which the passage concerned finishes. In
+the latter case, the <gi>metaMark</gi> itself must be supplied at the
+position in the document where the passage concerned begins; in the
+former case it may be supplied at any convenient point. Both
 attributes should not be supplied. </p>
       
-<p>The following example is taken from <title>Kundige bok 2</title>, a
+<p>The following example is taken from  an
 15th century legal book from the city of Göttingen, containing
 regulations of everyday life issued by the city council <figure>
 <graphic url="examples/ka04_1v-dtl.jpg" width="400px"/>
-<head>Malte's example</head>
+<head><title>Kundige bok 2</title>, fol 1v. </head>
          </figure>
       </p>
-      
-<p>In the second paragraph, the sentence beginning <q>Ock en schullen
-de bruwere...</q> was first written along with the word <mentioned
-xml:lang="lat">lege</mentioned> ("read") in the left hand margin,
-functioning as a metamark to indicate that this sentence forms part of
+<!-- QUERY : proper reference needed   -->
+    
+<p>In the second paragraph,  the word <mentioned
+xml:lang="lat">lege</mentioned> ("read") was written in the left hand
+margin, next to the sentence beginning <q>Ock en schullen
+de bruwere...</q>. It is thought to
+function as a metamark,  indicating that this sentence forms part of
 the regulations. A further sentence was then added, while at some
 later stage the text and also the metamark were deleted. We
 might encode this as follows: <!-- ka04_1v-dtl.xml --><egXML
 xmlns="http://www.tei-c.org/ns/Examples">
-<del layer="#L3">
+<delSpan target="#endDel" layer="#L3"/>
    <metaMark function="flag" target="#s1" layer="#L2">lege</metaMark>
-   <s xml:id="s1" layer="#L1">Ock en schullen de bruwere des hilgen dages nicht over
-      <lb/>setten noch uppe den stillen fridach bruwen.</s>
-   <add layer="#L2">
-      <s>Noch nymande <lb/>over setten, se en sehin denne erst, dat uppe den
+   <ab xml:id="s1" layer="#L1">Ock en schullen de bruwere des hilgen dages nicht over
+      <lb/>setten noch uppe den stillen fridach bruwen.</ab>
+   <addSpan target="#endDel" layer="#L2"/>
+      <ab>Noch nymande <lb/>over setten, se en sehin denne erst, dat uppe den
          bonen <lb/>neyn stro noch, huw noch flaß ligghe, by pine eyner
          halven <lb/>roden, deme bruwere so wol alse dem bruwheren to
-         murende.</s>
-   </add>
-</del>
+         murende.</ab>
+   <anchor xml:id="endDel"/>
          </egXML>
       </p>
 <p>The <att>layer</att> attribute used here to indicate the sequencing
 of these various interventions is discussed below, in section <ptr
-target="#PH-layers"/>.</p>
-      <p>The  <gi>metaMark</gi> element may also be used to encode the
-      symbols etc. often found in  marked-up proofs such as
-         the following, taken from the Walt Whitman archive: 
+target="#PH-layers"/>. The elements <gi>addSpan</gi> and
+<gi>delSpan</gi> are discussed in section <ptr target="PH-xxx"/>. </p>
+      
+<p>The <gi>metaMark</gi> element may also be used to encode the
+symbols etc. often found in marked-up proofs such as the following,
+taken from the Walt Whitman archive:
          <figure>
 <graphic url="examples/loc.00295.jpg" width="400px"/>
 <head>http://www.whitmanarchive.org/resources/sleepers/</head>
@@ -258,8 +293,9 @@ writer does not intend to suppress the content, but only to mark that
 it has been transferred or reused. An appropriate value (such as
 <val>used</val>) should be provided for the <att>function</att>
 attribute in the latter case. 
-   </p>   <p>The following page from the Walt Whitman archive has been crossed through to
-         indicate used material: <figure>
+</p>   
+<p>The following page from the Walt Whitman archive has been crossed through to
+indicate used material: <figure>
 <graphic url="examples/whitman02.jpg" width="400px"/>
 <head>Page from
    http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head>
@@ -298,35 +334,37 @@ deleted. </p>
 <p>A writer may sometimes rewrite material a second time without
 significant change and in the same place. We consider this a distinct
 activity from addition as usually defined because no new textual
-material results but the status of existing material changes. We may
+material results; instead the status of existing material changes. We may
 distinguish two variants of this: <term>fixation</term> where the
 first version was a tentative draft which is subsequently fixed, for
 example by inking it over; and <term>clarification</term>, where the
 first version was badly written and has been rewritten for
 clarity. The element <gi>retrace</gi> is provided for both cases; its
-<att>cause</att> attribute may be used to distinguish them. </p>
-<p><specList>
+<att>cause</att> attribute may be used to distinguish them. 
+<specList>
          <specDesc key="retrace" atts="cause"/>
-      </specList></p>
+      </specList>
+</p>
 
-      <p>In this simple example, taken from the papers of Henrik
-      Ibsen, the writer wrote the word <mentioned>skuldren</mentioned>
-      hastily, and then returned to it to make the letter
-      <mentioned>l</mentioned> larger and clearer: <figure>
+      
+<p>In this simple example, taken from the papers of Henrik Ibsen, the
+writer wrote the word <mentioned>skuldren</mentioned> hastily, and
+then returned to it to make the letter <mentioned>l</mentioned> larger
+and clearer: <figure>
 <graphic url="examples/skuldren.jpg" width="400px"/>
 <head rend="it">Image from a ms of Peer Gynt, Collin 2869, 4°, I.1.1, the
    Royal Library of Copenhagen</head>
-         </figure> We might transcribe this word as follows: <!-- skuldren.xml --><egXML
-xmlns="http://www.tei-c.org/ns/Examples">
+         </figure> We might transcribe this word as follows: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line>... Sku<retrace cause="unclear">l</retrace>dren </line>
          </egXML>
-      </p>
-      <p>A single rewrite may not be sufficient, and it may be that
-      the document becomes almost unreadable as a result of repeated
-      clarification. In the following example, we can distinguish at
-      least two attempts to write the letters
-      <mentioned>er</mentioned> in the word
-      <mentioned>bægerklang</mentioned>: <figure>
+</p>
+
+<p>A single rewrite may not be sufficient, and it may be that the
+document becomes almost unreadable as a result of repeated
+clarification. In the following example, we can distinguish at least
+two attempts to write the letters <mentioned>er</mentioned> in the
+word <mentioned>bægerklang</mentioned>: <figure>
 <graphic url="examples/munch01.jpg" width="400px"/>
 <head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
          </figure> We might encode this by nesting the <gi>rewrite</gi> element as
@@ -337,19 +375,37 @@ xmlns="http://www.tei-c.org/ns/Examples">
    </retrace> ...</line>
          </egXML> The <att>layer</att> attribute used here is discussed further below
 (<ptr target="#PH-layers"/>). </p>
-      <p>The <gi>retrace</gi> element is used only for cases where
-      text has been written multiple times. Metamarks and other
-      markup-like strokes can also be inked over with the same purpose
-      as the fixation or clarification of text passages. For instance,
-      in a draft version of Goethe’s Faust, a passage was struck
-      through once in pencil during one revision and then again with
-      ink during a later revision, supposedly to fixate the
-      deletion.</p>
+
+<p>The <gi>retrace</gi> element is used only for cases where text has
+been written multiple times. When metamarks and other markup-like strokes
+are inked over with the same purpose as the fixation or
+clarification of text passages, the <gi>redo</gi> element described in
+the next section should be used in preference.
+</p>   </div>
+
+ <div xml:id="undo">
+<head>Fixation, cancellation and reinstatement of modifications</head>
+
+<p>In a draft version of Goethe’s Faust, a passage was struck through
+once in pencil during one revision and then again with ink during a
+later revision, supposedly to fixate the deletion.
       <figure>
          <graphic url="examples/faust_redo.jpg"/>
          <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
       </figure>
-      <p>The empty element <gi>redo</gi> element can be used to encode this process as follows:</p>
+A writer may also indicates that an alteration is itself to be altered:
+         for example, a struck through passage may be restored via a dotted underlining,
+         or the underlining of a passage may be deleted by a wavy line.</p>
+
+<p>The following elements are provided to represent these situations:
+<specList>
+<specDesc key="redo"/>
+<specDesc key="undo"/>
+</specList>
+</p>
+
+<p>The <gi>redo</gi> element might be used to encode the Faust example above
+as follows:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <line><redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"
    /><mod xml:id="mod_1" rend="strikethrough" spanTo="#anchor_1"
@@ -358,14 +414,8 @@ xmlns="http://www.tei-c.org/ns/Examples">
          <line>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_1"
 /></line>
       </egXML>
-   </div>
+<!-- insert narrative explanation -->
 
-  <div xml:id="undo">
-      <head>Cancellation of modifications</head>
-      <p>In some cases an author indicates that an alteration is itself to be altered:
-         for example, a struck through passage may be restored via a dotted underlining,
-         or the underlining of a passage may be deleted by a wavy line. </p>
-      <!-- need a simpler example first, need to discuss relation with restore -->
       <p>The TEI provides an element <gi>restore</gi> for one specific kind of
          alteration to an alteration, namely the undoing of a deletion. We propose a
          more general element, <gi>undo</gi>. This is an empty
@@ -602,9 +652,9 @@ type="ordered">
                   <layer xml:id="ST-1">First stage, written in ink by a writer</layer>
                   <layer xml:id="ST-2">Second stage, written in Goethe's hand using pencil</layer>
                   <layer xml:id="ST-3">Fixation of the revised passages and further revisions by
-                     Goethe using ink</layer>
+Goethe using ink</layer>
                   <layer xml:id="ST-4">Addition of another stanza in a          different hand,
-                     probably at a later stage</layer>
+probably at a later stage</layer>
                </listLayer>
             </creation>
          </profileDesc>
@@ -632,10 +682,10 @@ type="ordered">
                <listLayer>
                   <layer xml:id="o">An unrelated layer note</layer>
                   <listLayer xml:id="m" cert="low">
-                     <layer xml:id="m1">Alterations on one manuscript page, certainly
-                        related</layer>
-                     <layer xml:id="m2">Alterations on another manuscript page, certainly
-                        related</layer>
+<layer xml:id="m1">Alterations on one manuscript page, certainly
+   related</layer>
+<layer xml:id="m2">Alterations on another manuscript page, certainly
+   related</layer>
                   </listLayer>
                   <layer xml:id="p">Another unrelated layer note</layer>
                </listLayer>
@@ -669,19 +719,19 @@ type="ordered">
                <date notAfter="1816-07-18"/>
                <listLayer ordered="true">
                   <layer xml:id="mod1" when="1816-07-16">The first draft of
-                        <title>Persuasion</title> is completed by the <date>July 16    1816</date>
-                     written after the word <q>Finis</q> at <ref target="#pers-30">page
-                     30</ref>.</layer>
+   <title>Persuasion</title> is completed by the <date>July 16    1816</date>
+written after the word <q>Finis</q> at <ref target="#pers-30">page
+30</ref>.</layer>
                   <layer xml:id="mod2" notBefore="1816-07-16">After the <date>16th    of July</date>
-                     Austen starts revision of the two final chapters, by rewriting the end and
-                     adding a new block (<ref target="#transp-1">pages 32-35</ref>) to be inserted
-                     at <ref target="#insertion-p1">page 19</ref>. This stage is documented by the
-                     deletion of the date (<date>July 16 1816</date>) at <ref target="#pers-30">page
-                        30</ref>, and the addition of more text and of a new date    (<date>July 18.
-                        1816</date>) at <ref target="#pers-31">page    31</ref></layer>
+Austen starts revision of the two final chapters, by rewriting the end and
+adding a new block (<ref target="#transp-1">pages 32-35</ref>) to be inserted
+at <ref target="#insertion-p1">page 19</ref>. This stage is documented by the
+deletion of the date (<date>July 16 1816</date>) at <ref target="#pers-30">page
+   30</ref>, and the addition of more text and of a new date    (<date>July 18.
+   1816</date>) at <ref target="#pers-31">page    31</ref></layer>
                   <layer notBefore="1816-07-18">Before publication, after <date>July    18th,
-                        1816</date> chapters 10-11 were broken into three chapters, 10, 11, 12, as
-                     witnessed by the print.</layer>
+   1816</date> chapters 10-11 were broken into three chapters, 10, 11, 12, as
+witnessed by the print.</layer>
                </listLayer>
             </creation>
          </profileDesc>
@@ -713,9 +763,9 @@ type="ordered">
                   <layer xml:id="firstStage">First stage, written in ink by a writer</layer>
                   <layer xml:id="secondStage">Revised by Goethe using pencil</layer>
                   <layer xml:id="thirdStage">Fixation of the revised passages and further revisions
-                     by Goethe using ink</layer>
+by Goethe using ink</layer>
                   <layer xml:id="fourthStage">Addition of another stanza, probably at a later
-                     stage</layer>
+stage</layer>
                </listLayer>
             </creation>
          </profileDesc> [...] <div layer="#firstStage">
@@ -723,9 +773,9 @@ type="ordered">
                <subst>
                   <del>Ihr</del>
                   <add>
-                     <rewrite layer="#thirdStage">
-                        <seg layer="#secondStage">Nun</seg>
-                     </rewrite>
+<rewrite layer="#thirdStage">
+   <seg layer="#secondStage">Nun</seg>
+</rewrite>
                   </add>
                </subst> wanſtige Schuften mit den Feuerbacken</l>
             <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst
@@ -735,7 +785,7 @@ type="ordered">
                   <add>feiſt</add>
                </subst>.</l>
             <l n="11658">
-               <delSpan spanTo="#anchor_delSpan_1" layer="#thirdStage"/>Ihr hagren,       triſten, krummgezog<subst>
+               <delSpan spanTo="#anchor_delSpan_1" layer="#thirdStage"/>Ihr hagren,  triſten, krummgezog<subst>
                   <del>nen</del>
                   <add>ener</add>
                </subst> Nacken</l>
@@ -763,26 +813,26 @@ type="ordered">
                <listLayer type="ordered">
                   <layer target="#zone_1 #subst_3">First stage, written in ink by a scribe</layer>
                   <layer
-                     target="#zone_2 #mod_1 #line_1 #line_2 #subst_1 #subst_2
+target="#zone_2 #mod_1 #line_1 #line_2 #subst_1 #subst_2
 #subst_4 #delSpan_1"
-                     >Revised by Goethe using pencil</layer>
+>Revised by Goethe using pencil</layer>
                   <layer target="#redo_1 #redo_2 #redo_3 #subst_1 #subst_2
 #delSpan_1 #add_1"
-                     >Fixation of the revised passages and further revisions by Goethe using
-                     ink</layer>
+>Fixation of the revised passages and further revisions by Goethe using
+ink</layer>
                </listLayer>
             </creation>
          </profileDesc> [...] <document>
             <surface>
                <zone xml:id="zone_1">
                   <line xml:id="line_1">
-                     <handShift new="#g_bl"/>
-                     <rewrite hand="#g_t" xml:id="redo_1">Nun</rewrite>
+<handShift new="#g_bl"/>
+<rewrite hand="#g_t" xml:id="redo_1">Nun</rewrite>
                   </line>
                   <line><handShift new="#jo_t"/>Ihr wanſtige Schuften mit den Feuerbacken</line>
                   <line xml:id="line_2">
-                     <handShift new="#g_bl"/>
-                     <rewrite hand="#g_t" xml:id="redo_2">feiſt</rewrite>
+<handShift new="#g_bl"/>
+<rewrite hand="#g_t" xml:id="redo_2">feiſt</rewrite>
                   </line>
                   <line>Ihr glüht ſo recht vom Höllen Schwefel ſatt.</line> [...]       </zone>
             </surface>
@@ -791,12 +841,12 @@ type="ordered">
             <body>
                <l n="11656">
                   <subst xml:id="subst_1">
-                     <del>Ihr</del>
-                     <add>Nun</add>
+<del>Ihr</del>
+<add>Nun</add>
                   </subst> wanſtige Schuften mit den Feuerbacken</l>
                <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst xml:id="subst_2">
-                     <del>ſatt</del>
-                     <add>feiſt</add>
+<del>ſatt</del>
+<add>feiſt</add>
                   </subst>.</l>
             </body>
          </text>
@@ -823,7 +873,7 @@ type="ordered">
 
 
 
-<div><head>Formal specifications</head>
+<div xmlns:rng="http://relaxng.org"><head>Formal specifications</head>
 
 <!-- existing specs needing change -->
    <classSpec type="atts" ident="att.global" mode="change" module="tei">
@@ -936,14 +986,14 @@ mode="add">
                <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
                   <desc>represents any kind of modification identified within a text at a documentary level.</desc>
                   <classes>
-                     <memberOf key="model.pPart.transcriptional"/>
-                     <memberOf key="att.global"/>
-                     <memberOf key="att.transcriptional"/>
-                     <memberOf key="att.typed"/>
-                     <memberOf key="att.spanning"/>
+<memberOf key="model.pPart.transcriptional"/>
+<memberOf key="att.global"/>
+<memberOf key="att.transcriptional"/>
+<memberOf key="att.typed"/>
+<memberOf key="att.spanning"/>
                   </classes>
                   <content>
-                     <rng:ref name="macro.paraContent"/>
+<rng:ref name="macro.paraContent"/>
                   </content>
                </elementSpec>
 
