@@ -1,5 +1,24 @@
-<body >
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+	<title><!-- title --></title>
+	<author><!-- author --></author>
+      </titleStmt>
+      <publicationStmt>
+	<p> </p>
+      </publicationStmt>
+      <sourceDesc>
+	<p> </p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
 
+<body >
 <!-- insert this para following 22nd <p> #PHFAX -->
 <p xml:id="GEN1">
 If, as is more often the case, a transcription of the zone identified
@@ -24,12 +43,12 @@ following -->
 and other written traces are encoded as subcomponents of elements
 representing the physical surfaces carrying them rather than
 independently of them. </p>
-<p>The following elements are provided for this purpose:
+<p>The following elements are available for this purpose:
 <specList>
 <specDesc key="surface"/>
 <specDesc key="zone"/>
-<specDesc key="patch" atts="binder type height width"/>
-<specDesc key="line" />
+<specDesc key="patch" atts="binder height width flipping"/>
+<specDesc key="line" atts="type" />
 <specDesc key="ab" atts="type"/>
 <specDesc key="seg" atts="type"/>
 </specList>
@@ -67,8 +86,7 @@ indicated using the neutral <gi>ab</gi> (anonymous block) element or
 <gi>seg</gi> elements described in section <ptr
 target="#SASE"/>. 
 </p>
-<!-- QUERY do we need both seg and ab? if so, why? and how do you
-     choose?
+<!-- QUERY some usage notes for choosing between seg and ab would be useful
 -->
 
 <p>Using these elements, the Whitman draft above might be encoded as
@@ -172,7 +190,7 @@ record traces of the writing process within a document.
 <div><head>Generic modification</head>
 
 <specList>
-         <specDesc key="mod" atts="rend type spanTo"/>
+<specDesc key="mod" atts="rend type spanTo"/>
 </specList>
 
 
@@ -906,15 +924,17 @@ ink</layer>
    </div>
 
 
+<div xmlns:rng="http://relaxng.org/ns/structure/1.0"><head>Formal specifications</head>
+
+<schemaSpec ident="testgenetic"
+	    source="/home/lou/Public/TEI-SF/P5/p5subset.xml" start="facsimile">
+<moduleRef key="core" include="add del "/>
+<moduleRef key="tei"/>
+<moduleRef key="linking" include="alt ab"/>
+<moduleref key="analytic" include="seg"/>
+<moduleRef key="transcr"/>
 
 
-
-
-
-
-
-
-<div xmlns:rng="http://relaxng.org"><head>Formal specifications</head>
 
 <!-- existing specs needing change -->
    <classSpec type="atts" ident="att.global" mode="change" module="tei">
@@ -926,19 +946,85 @@ ink</layer>
 </classes>
    </classSpec>
 
-   <elementSpec ident="creation" module="header" mode="change">
+ <elementSpec ident="creation" module="header" mode="change">
 <content>
    <rng:ref name="macro.phraseSeq.limited"/>
    <rng:optional>
       <rng:ref name="layers"/>
    </rng:optional>
 </content>
-   </elementSpec>
+ </elementSpec>
+
+<elementSpec ident="surface" module="physdesc" mode="change">
+   <classes mode="change">
+      <memberOf key="att.typed" mode="add"/>
+   </classes>
+   <content>
+      <rng:zeroOrMore>
+         <rng:choice>
+            <rng:ref name="model.global"/>
+            <rng:ref name="model.glossLike"/>
+            <rng:ref name="model.graphicLike"/>
+            <rng:ref name="zone"/>
+            <rng:ref name="patch"/>
+         </rng:choice>
+      </rng:zeroOrMore>
+   </content>
+</elementSpec>
+
+<elementSpec ident="zone" module="physdesc" mode="change">
+   <classes mode="change">
+      <memberOf key="att.coordinated" mode="add"/>
+      <memberOf key="model.zonePart" mode="add"/>
+   </classes>
+   <content>
+      <rng:zeroOrMore>
+         <rng:choice>
+            <rng:text/>
+            <rng:ref name="model.zonePart"/>
+            <rng:ref name="model.global"/>
+         </rng:choice>
+      </rng:zeroOrMore>
+   </content>
+   <attList>
+      <attDef ident="rotate" mode="add">
+         <desc>indicates the amount by which this zone has been rotated clockwise,
+            with respect to the normal orientation of the parent <gi>surface</gi>
+            element as implied by the dimensions given in the <gi>msDesc</gi> element
+            or by the coordinates of the <gi>surface</gi> itself. The orientation is
+            expressed in arc degrees.</desc>
+         <datatype minOccurs="1" maxOccurs="1">
+            <rng:ref name="data.count"/>
+         </datatype>
+         <defaultVal>0</defaultVal>
+      </attDef>
+   </attList>
+</elementSpec>
+
+<classSpec type="atts" ident="att.editLike" mode="change">
+   <attList>
+      <attDef ident="instant" mode="add">
+         <desc>Is this an instant revision?</desc>
+         <datatype>
+            <rng:ref name="data.xTruthValue"/>
+         </datatype>
+         <defaultVal>false</defaultVal>
+      </attDef>
+   </attList>
+</classSpec>
 
 
 <!-- new specs -->
 
-   <classSpec ident="att.layered" type="atts" mode="add" module="tei">
+<classSpec ident="model.zonePart" type="model" mode="add">
+   <desc>elements which can form part of a zone</desc>
+</classSpec>
+<classSpec ident="model.linePart" type="model" mode="add">
+   <desc>elements which can form part of a line</desc>
+</classSpec>
+
+
+<classSpec ident="att.layered" type="atts" mode="add" module="tei">
 <desc>groups elements which can be assigned to a specific text layer by means of
    the attributes it provides.</desc>
 <attList>
@@ -952,11 +1038,66 @@ ink</layer>
       </datatype>
    </attDef>
 </attList>
-   </classSpec>
+</classSpec>
+
+<elementSpec ident="patch"  mode="add">
+ <desc>contains a part of a written surface which was originally
+ physically distinct but became attached to it at the time that one or
+ more written zones were created.</desc>
+   <classes>
+      <memberOf key="att.coordinated"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.typed"/>
+   </classes>
+   <content>
+      <rng:zeroOrMore>
+         <rng:choice>
+            <rng:text/>
+            <rng:ref name="model.global"/>
+            <rng:ref name="zone"/>
+         </rng:choice>
+      </rng:zeroOrMore>
+   </content>
+   <attList>
+      <attDef ident="binder" mode="add">
+         <desc>describes the method by which a patch is or was connected to the main
+            surface</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+         </datatype>
+         <valList type="open">
+            <valItem ident="glued"><desc>patch is glued in place</desc>
+            </valItem>
+            <valItem ident="pinned"><desc>patch is pinned or stapled in place</desc>
+            </valItem>
+            <valItem ident="sewn"><desc>patch is sewn in place</desc>
+            </valItem>
+         </valList>
+      </attDef>
+      <attDef ident="flipping" mode="add"><desc>indicates whether the patch is attached and folded in such a way as to
+            provide two writing surfaces</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+         </datatype>
+      </attDef>
+      <attDef ident="height">
+         <desc>height of the patch</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+         </datatype>
+      </attDef>
+      <attDef ident="width">
+         <desc>width of the patch</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+         </datatype>
+      </attDef>
+   </attList>
+</elementSpec>
 
 
-   <elementSpec ident="listLayer" module="header"
-mode="add">
+   
+<elementSpec ident="listLayer" module="header" mode="add">
 <desc>contains one or more descriptions of the layers which have been identified
    in the genesis of a text.</desc>
 <classes>
@@ -964,11 +1105,11 @@ mode="add">
    <memberOf key="att.typed"/>
 </classes>
 <content>
-   <rng:oneOrMore>
-		       <rng:choice>
-			 <rng:ref name="listLayer"/>
-      <rng:ref name="layer"/>
-		       </rng:choice>
+<rng:oneOrMore>
+<rng:choice>
+<rng:ref name="listLayer"/>
+<rng:ref name="layer"/>
+</rng:choice>
    </rng:oneOrMore>
 </content>
 <attList>
@@ -981,9 +1122,9 @@ mode="add">
 <defaultVal>false</defaultVal>
    </attDef>
 </attList>
-   </elementSpec>
+ </elementSpec>
 
-   <elementSpec ident="layer" ns="http://www.tei-c.org/ns/geneticEditions"
+<elementSpec ident="layer" 
 mode="add">
 <desc>documents a particular layer in the genesis of a text.</desc>
 <classes>
@@ -1005,7 +1146,7 @@ mode="add">
 </attList>
    </elementSpec>
 
-   <elementSpec ident="line" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
+<elementSpec ident="line"  mode="add">
 <desc>contains the transcription of a topographic line in the source
    document</desc>
 <classes>
@@ -1022,20 +1163,185 @@ mode="add">
       </rng:choice>
    </rng:zeroOrMore>
 </content>
-   </elementSpec>
+</elementSpec>
 
-               <elementSpec ident="mod" ns="http://www.tei-c.org/ns/geneticEditions" mode="add">
-                  <desc>represents any kind of modification identified within a text at a documentary level.</desc>
-                  <classes>
-<memberOf key="model.pPart.transcriptional"/>
+
+<elementSpec ident="mod"  mode="add">
+<desc>represents any kind of modification identified within a text at a documentary level.</desc>
+<classes>
+<!--memberOf key="model.pPart.transcriptional"/-->
+<memberOf key="model.linePart"/>
 <memberOf key="att.global"/>
 <memberOf key="att.transcriptional"/>
 <memberOf key="att.typed"/>
 <memberOf key="att.spanning"/>
-                  </classes>
-                  <content>
-<rng:ref name="macro.paraContent"/>
-                  </content>
-               </elementSpec>
+</classes>
+<content>
+<rng:ref name="macro.paraContent"/><!-- NOTE not probably appropriate -->
+</content>
+</elementSpec>
+
+<elementSpec ident="transposeGrp" 
+   mode="add">
+   <desc>supplies a list of transpositions indicated at some point in the text,
+      typically by means of metamarks.</desc>
+   <classes>
+      <memberOf key="model.profileDescPart"/>
+      <memberOf key="model.global.meta"/>
+      <memberOf key="att.global"/>
+   </classes>
+   <content>
+      <rng:oneOrMore>
+         <rng:ref name="transpose"/>
+      </rng:oneOrMore>
+   </content>
+</elementSpec>
+<elementSpec ident="transpose" 
+   mode="add">
+   <desc> describes a single textual transposition as an ordered list of at least two
+      pointers specifying the order in which the elements indicated should be
+      re-combined. </desc>
+   <classes>
+      <memberOf key="att.global"/>
+   </classes>
+   <content>
+      <rng:group>
+         <rng:ref name="ptr"/>
+         <rng:oneOrMore>
+            <rng:ref name="ptr"/>
+         </rng:oneOrMore>
+      </rng:group>
+   </content>
+</elementSpec>
+<!-- =============== Undo/Redo/Rewrite =============== -->
+<elementSpec ident="undo"  mode="add">
+   <desc>points to any marked-up intervention in a
+		  text which has subsequently been
+		  marked as to be cancelled or undone.</desc>
+   <classes>
+      <memberOf key="model.pPart.transcriptional"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.spanning"/>
+      <memberOf key="att.transcriptional"/>
+   </classes>
+   <content>
+      <rng:empty/>
+   </content>
+   <attList>
+      <attDef ident="target" mode="add">
+         <desc>points to the element representing the intervention to be undone.</desc>
+         <datatype minOccurs="1" maxOccurs="1">
+            <rng:ref name="data.pointer"/>
+         </datatype>
+      </attDef>
+   </attList>
+</elementSpec>
+
+
+<classSpec type="atts" ident="att.repeatable">
+   <attList>
+      <attDef ident="cause">
+         <desc>documents the presumed cause of the repeated act of writing.</desc>
+         <datatype>
+            <rng:ref name="data.enumerated"/>
+         </datatype>
+         <valList type="closed">
+            <valItem ident="fix">
+<desc>repeated for the purpose of fixation</desc>
+            </valItem>
+            <valItem ident="unclear">
+<desc>repeated to clarify a previously illegible or badly written text
+   or mark</desc>
+            </valItem>
+         </valList>
+      </attDef>
+   </attList>
+</classSpec>
+
+<elementSpec ident="redo"  mode="add">
+<desc>points to a marked-up intervention in a
+		  text which  has subsequently been
+		  marked for a second time in a different way. </desc>
+   <classes>
+      <memberOf key="model.pPart.transcriptional"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.repeatable"/>
+      <memberOf key="att.spanning"/>
+      <memberOf key="att.transcriptional"/>
+   </classes>
+   <content>
+      <rng:empty/>
+   </content>
+   <attList>
+      <attDef ident="target" mode="add">
+         <desc>points to the element representing
+			the intervention which is to be repeated.</desc>
+         <datatype minOccurs="1" maxOccurs="1">
+            <rng:ref name="data.pointer"/>
+         </datatype>
+      </attDef>
+   </attList>
+</elementSpec>
+
+<elementSpec ident="rewrite"  mode="add">
+   <desc>contains a sequence of text which has been rewritten by the author, for
+      example by over-inking, to clarify or fix it.</desc>
+   <classes>
+      <memberOf key="model.pPart.transcriptional"/>
+      <memberOf key="model.global"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.repeatable"/>
+      <memberOf key="att.spanning"/>
+      <memberOf key="att.transcriptional"/>
+   </classes>
+   <content>
+      <rng:ref name="macro.paraContent"/>
+   </content>
+   <remarks>
+      <p>Multiple rewritings are indicated by nesting one <gi>rewrite</gi> within
+         another. In principle, a rewriting differs from a substitution in that
+         second and subsequent rewrites do not materially alter the content of an
+         element. Where there are minor changes made during the rewriting however
+         these may be marked up using <gi>del</gi>, <gi>add</gi>, etc. with an
+         appropriate value for the <att>stage</att> attribute.</p>
+   </remarks>
+</elementSpec>
+<!-- =============== Authorial changes =============== -->
+<elementSpec ident="metaMark"  mode="add">
+   <desc>contains any textual or graphical mark in a written text
+   intended to signal how the text should be read and not forming part
+   of the text itself.</desc>
+   <classes>
+      <memberOf key="model.pPart.transcriptional"/>
+      <memberOf key="att.spanning"/>
+      <memberOf key="att.placement"/>
+      <memberOf key="att.global"/>
+   </classes>
+   <content>
+      <rng:ref name="macro.specialPara"/>
+   </content>
+   <attList>
+      <attDef ident="function" mode="add">
+         <desc>describes the function (e.g. add, delete, alternate) of the
+            mark.</desc>
+         <datatype minOccurs="1">
+            <rng:ref name="data.word"/>
+         </datatype>
+      </attDef>
+      <attDef ident="target">
+         <desc>indicates the element(s) to which the function of the meta-mark
+            refers. Pointers are separated by a white space</desc>
+         <datatype minOccurs="1" maxOccurs="unbounded">
+            <rng:ref name="data.pointer"/>
+         </datatype>
+      </attDef>
+   </attList>
+</elementSpec>
+</schemaSpec>
 
 </div></body>
+  </text>
+</TEI>
+
+
+
