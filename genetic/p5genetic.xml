@@ -531,54 +531,65 @@ sections concerned: <figure>
       place="margin-left">2.)</metaMark> thi da er du med Himmelen i
    Pagt; — </line>
 <line xml:id="ib4">
-   <metaMark function="transposition" place="margin-left">1.)</metaMark> da kan du Folkets Jøkelhjerter tine;</line>
+   <metaMark function="transposition"
+	     place="margin-left">1.)</metaMark> 
+da kan du Folkets Jøkelhjerter tine;</line>
 <transposeGrp>
    <transpose>
       <ptr target="#ib4"/>
       <ptr target="#ib3"/>
    </transpose>
 </transposeGrp>
-         </egXML> When transposition is made, the whole element indicated is understood
-         to be moved, not just its contents. In the above example, the metamarks are
-         thus understood to be moved along with the lines to which they apply. </p>
-      <p>In case the area to be transposed is overlapping with some other kind of
-         markup, the generic <gi>milestone</gi> can be used instead of <gi>seg</gi> or
-         any other existing elements.</p>
-      <p>One or more <gi>transposeGrp</gi> elements may be supplied either embedded
-         within the text or in the <gi>profileDesc</gi> of the header, depending on
-         local preference. Each <gi>transposeGrp</gi> can contain one or more
-<gi>transpose</gi> elements, each of which defines a single
-         transposition.</p>
-   </div>
+         </egXML> 
+When transposition is made, the whole element indicated is understood
+to be moved, not just its contents. In the above example, the
+metamarks are thus understood to be moved along with the lines to
+which they apply. </p>
+      
+<!-- <p>In case the area to be transposed is overlapping with some other
+kind of markup, the generic <gi>milestone</gi> can be used instead of
+<gi>seg</gi> or any other existing elements.</p>
+-->      
 
-   <div xml:id="alter">
+<p>One or more <gi>transposeGrp</gi> elements may be supplied either
+embedded within the text or in the <gi>profileDesc</gi> of the header,
+depending on local preference. Each <gi>transposeGrp</gi> can contain
+one or more <gi>transpose</gi> elements, each of which defines a
+single transposition.</p>
+</div>
+
+ <div xml:id="alter">
       <head>Alternative Readings</head>
       <p><figure>
 <graphic url="examples/moore04.png" width="400px"/>
 <head>Lalla Rookh 3</head>
          </figure> 
-In this example two alternative readings are provided, without either
-one being prioritised or subordinated. While the author apparently
-first composed the line "Alone before his native river -", at some
-later point, he entertained the possibility of using the word "beside"
-instead of "before." In the context of this manuscript, there is no
-indication of which word the Moore favours, so the status of these
-words as possible alternative readings needs to be encoded. The
-evidence of the first edition of <title>Lalla Rookh</title> shows that
-the word "beside" was chosen, but for the purposes of encoding this
-manuscript, the facility to encode two equally-possible alternative
-readings needs to be available. </p>
-      <!-- moore04.xml -->
+In this example two alternative readings are provided, but no
+preference is indicated. While the author apparently
+first composed the line <q>Alone before his native river -</q>, at some
+later point, he entertained the possibility of using the word <mentioned>beside</mentioned>
+instead of <mentioned>before</mentioned>. The manuscript supplies no
+indication of which word Moore favours at this point, although in
+fact, in the first printed
+edition of <title>Lalla Rookh</title> the word
+<mentioned>beside</mentioned> was chosen. </p>
+<p>The element <gi>alt</gi> provided by the <ident
+type="module">linking</ident> module gives a simple  way of
+encoding the state of this manuscript, as  follows: 
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <zone>
-<line>Alone <seg type="alternative" xml:id="alt1">before</seg>
-   <add place="above" type="alternative" xml:id="alt2">beside</add> his
+<line>Alone <seg xml:id="alt1">before</seg>
+   <add place="above" xml:id="alt2">beside</add> his
    native river ­—</line>
 <alt targets="#alt1 #alt2" mode="excl" weights="0 1"/>
          </zone>
       </egXML>
-   </div>
-   <div xml:id="subst">
+</p><p>The <gi>alt</gi> element is further discussed in section <ptr
+target="#SA-whatever"/>. </p>
+ </div>
+<!-- NOTE next section on ice, pending further council discussion -->
+<!--   
+<div xml:id="subst">
       <head>Substitution</head>
       <p>In the current model for the TEI <gi>subst</gi> element, one or more additions
          and deletions may be combined if they are considered as representing a single
@@ -594,39 +605,40 @@ readings needs to be available. </p>
          all of this as a single substitution. This would require a modification to the
          content model of <gi>subst</gi> so as to permit text along with other members
          of <ident type="class">model.pPart.transcriptional</ident>, so that this
-         example could be encoded as follows: <!-- moore01.xml --><egXML
+         example could be encoded as follows: <egXML
 xmlns="http://www.tei-c.org/ns/Examples">
 <line>While <subst><del>pondering</del> thus <add>she
    mus'd</add></subst>, her pinions fann'd</line>
          </egXML></p>
-   </div>
-   <div xml:id="instant">
-      <head>Instant corrections</head>
-      <p>The use of tags such as <gi>del</gi> and <gi>add</gi> necessarily implies that
-         the modification concerned was made at some time after the original writing. An
-         exception to this is where a false start or <soCalled>instant</soCalled>
-         correction has been identified: the author starts to write, and then
-         immediately corrects what has been written. A special mechanism is provided for
-         this case: an <att>instant</att> attribute has been introduced to
-<ident>att.editLike</ident>, whose datatype is
-<ident>data.xTruthValue</ident> and <code>false</code> is the default value.
-         When the value of <att>instant</att> is <code>true</code> this indicates that
-         the addition or deletion is considered to belong to the same writing stage as
-         the rest of the unmodified document, while <code>false</code> means some stage
-         later than the current stage.</p>
+   </div>-->
+
+<div xml:id="instant"><head>Instant corrections</head>
+<p>The use of elements such as <gi>del</gi> and <gi>add</gi>
+necessarily implies that the modifications they indicate were made at
+some time after the original writing. An exception to this is where a
+false start or <soCalled>instant</soCalled> correction has been
+identified: the author starts to write, and then immediately corrects
+what has been written. </p>
+<p>The  <att>instant</att> attribute defined by this module may be
+used on any element which is a member of the <ident
+type="class">att.editLike</ident> class to modify this default assumption.
+         When the value of <att>instant</att> is set to <val>true</val>, 
+         the addition or deletion is considered to belong to the same layer as
+         its parent element, while <code>false</code> means some layer
+         later than that of its parent.</p>
       <p> An example of false start can be seen in the following line: <figure>
 <graphic url="examples/whitman03a.jpg" width="400px"/>
 <head>http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg</head>
          </figure> in which we can detect the following sequence of events: <list
 type="ordered">
-<item>The letter T is written and then immediately deleted</item>
-<item>The word The is written, deleted, and replaced by the word His</item>
-<item>The added word His is then deleted</item>
-<item>The initial letter i of the words iron necklace is overwritten with a
+<item>The letter <val>T</val> is written and then immediately deleted</item>
+<item>The word <val>The</val> is written, deleted, and replaced by the word <val>His</val></item>
+<item>The added word <val>His</val> is then deleted</item>
+<item>The initial letter <val>i</val> of the words <mentioned>iron necklace</mentioned> is overwritten with a
    capital I</item>
          </list> To indicate that the first of these acts must have taken place before
          the others, we might encode this revision campaign as follows:
-<!-- whitman03a.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line><del instant="true">T</del>
    <subst>
       <del>The</del>
@@ -648,26 +660,32 @@ type="ordered">
 
 <!-- insert following before PHTRXX -->
 <div xml:id="PH-layers"><head>Layers</head>
-      <p>A major purpose of genetic editing is the identification of <soCalled>revision
-            campaigns</soCalled> or, more generally, <term>layers</term>. An editor may wish to
-         assign a set of alterations (deletions, additions, substitutions, transpositions, etc.) or
-         any other act of writing to a particular layer, to indicate both that one or more of such
-         phenomena preceded or followed another and also to indicate that they are related in some
-         way, for example that one is a consequence of the other. To document this we need: <list>
-            <item>a system to assign phenomena to a    particular layer</item>
-            <item>a way to characterize a layer, in itself and in relation to    other
-               layers.</item>
-         </list></p>
-      <p>The existing element <gi>creation</gi> (within the TEI Header profile description) is
-         defined as the appropriate location for all information relating to the genesis or
-         production of a text. We modify it slightly to permit a new <gi>listLayer</gi> element
-         which contains a number of <gi>layer</gi> elements, one for each identified layer: <listSpec>
+<p>A major purpose of genetic editing is the identification of
+<soCalled>revision campaigns</soCalled> or, more generally,
+<term>layers</term>. An editor may wish to assign a set of alterations
+(deletions, additions, substitutions, transpositions, etc.) or any
+other act of writing to a particular layer, to indicate both that one
+or more of such phenomena preceded or followed another and also to
+indicate that they are related in some way, for example that one is a
+consequence of the other. To document this we need:
+<list><item>a system to assign phenomena to a particular layer</item>
+<item>a way to characterize a layer, in itself and in relation to
+other layers.</item>
+</list></p>
+      
+<p>The existing element <gi>creation</gi> (within the TEI Header
+profile description) is defined as the appropriate location for all
+information relating to the genesis or production of a text. We modify
+it slightly to permit a new <gi>listLayer</gi> element which contains
+a number of <gi>layer</gi> elements, one for each identified layer:
+<listSpec>
             <specDesc key="listLayer" atts="ordered"/>
             <specDesc key="layer"/>
          </listSpec>
       </p>
-      <p>In the following example taken from the genetic edition of Goethe’s Faust, the editor has
-         identified four distinct layers:</p>
+      
+<p>In the following example taken from the genetic edition of Goethe’s
+Faust, the editor has identified four distinct layers:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <profileDesc>
             <creation>
