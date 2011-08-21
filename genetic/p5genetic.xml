@@ -18,25 +18,35 @@
   </teiHeader>
   <text>
 
+
 <body >
-<!-- insert this para following 22nd <p> #PHFAX -->
-<p xml:id="GEN1">
-If, as is more often the case, a transcription of the zone identified
+
+<note rend="it">insert the following para following 22nd para in
+#PHFAX</note>
+<p>If, as is more often the case, a transcription of the zone identified
 in this way is to be included in the encoded document, this may be
 done in two ways. If the transcription is regarded as a text in its
 own right, organized and structured independently of its physical
 realization in the document or documents represented by the facsimile,
 then the recommended practice is to use the traditional <gi>text</gi>
 element, provided as a sibling of the <gi>facsimile</gi> element. This
-approach is illustrated in the brief example following. Alternatively,
-if the transcription is intended to do no more than represent the
-physicality of the document itself, it may be preferable to use the
-elements <gi>patch</gi>, <gi>line</gi>, and <gi>ab</gi>, embedded
-within the <gi>zone</gi> element, as further described in section <ptr
-target="#PHZLAB"/> below.</p>
+approach is illustrated in section <ptr target="#PH-bov"/>
+below. Alternatively, if the transcription is intended to do no more
+than represent the physicality of the document itself, it may be
+preferable to use the elements <gi>patch</gi>, <gi>line</gi>, and
+<gi>ab</gi>, embedded within the <gi>zone</gi> element, as further
+described in section <ptr target="#PHZLAB"/> below.</p>
 
-<!-- then add new section combining the Bovelles example with the
-following -->
+<div><head>Combining transcription with facsimile</head>
+
+<p>A digitized source document may contain nothing more than page images and a
+small amount of metadata. It may also contain an encoded transcription
+of the pages represented, which may either be <q>embedded</q> within
+the <gi>facsimile</gi> structure, or given in parallel to it. </p>
+
+<div><head>Parallel transcription</head>
+<note rend="it">Remainder of section PHFAX (the Bovelles example) goes here</note>
+</div>
 
 <div xml:id="PHZLAB"><head>Embedded transcription</head>
 <p>An <term>embedded transcription</term> is one in which words
@@ -86,6 +96,7 @@ indicated using the neutral <gi>ab</gi> (anonymous block) element or
 <gi>seg</gi> elements described in section <ptr
 target="#SASE"/>. 
 </p>
+
 <!-- QUERY some usage notes for choosing between seg and ab would be useful
 -->
 
@@ -126,16 +137,19 @@ effective, or not at all. Equally, the encoder may choose to provide
 only graphics without transcription, or with a structured
 (non-embedded) transcription, or any combination of the three. </p>
 </div>
-
-<!-- insert this before PHST -->
+</div>
 
 <div xml:id="PH-summ"><head>Transcribing the process</head>
 
-<p>The elements described in this chapter may also be used for digital
+<note rend="ital">Insert the following into the first para of #PHST
+("Scope of Transcriptions"), following the second sentence. Some
+readjustment of the list in that para will also be needed. </note>
+
+<p>Such elements may also be used for digital
 transcriptions in which the object is not to represent a finished
 text, but rather to represent the creative process, as evidenced by
 different <q>layers</q> or <q>traces</q> of writing in one or more
-documents. Such transcriptions are closely focussed on the physical
+documents. Transcriptions of this kind are closely focussed on the physical
 appearance of specific documents, needing to distinguish the traces of
 different writing activities on them, such as additions,
 and deletions but also other indications of how the writing is to be
@@ -167,9 +181,9 @@ see further <ptr target="#PH-ZLAB"/>.
 </p>
 </div>
 
-<!-- insert following as new subsections of PHST -->
 
 <div xml:id="alterations">
+<note rend="ital">Insert this section into PHST, probably at the end.</note>
    <head>Marking up the writing process</head>
    <p>Modifications of various kinds (correction, addition, deletion,
    etc.) are frequently found within a single document, and may also
@@ -387,7 +401,7 @@ two attempts to write the letters <mentioned>er</mentioned> in the
 word <mentioned>bægerklang</mentioned>: <figure>
 <graphic url="examples/munch01.jpg" width="400px"/>
 <head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
-</figure> We might encode this by nesting the <gi>rewrite</gi> element as
+</figure> We might encode this by nesting the <gi>retrace</gi> element as
          follows: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line>ved Bæg<retrace cause="unclear" layer="#stage2">
@@ -676,8 +690,10 @@ type="ordered">
 
 
 
-<!-- insert following before PHTRXX -->
+
 <div xml:id="PH-layers"><head>Layers</head>
+<note rend="ital">Add this as a new section before  PHTRXX ("Other
+Primary Source Features not Covered")</note>
 <p>A major purpose of genetic editing is the identification of
 <soCalled>revision campaigns</soCalled> or, more generally,
 <term>layers</term>. An editor may wish to assign a set of alterations
@@ -832,9 +848,9 @@ stage</layer>
                <subst>
                   <del>Ihr</del>
                   <add>
-<rewrite layer="#thirdStage">
+<retrace layer="#thirdStage">
    <seg layer="#secondStage">Nun</seg>
-</rewrite>
+</retrace>
                   </add>
                </subst> wanſtige Schuften mit den Feuerbacken</l>
             <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst
@@ -886,12 +902,12 @@ ink</layer>
                <zone xml:id="zone_1">
                   <line xml:id="line_1">
 <handShift new="#g_bl"/>
-<rewrite hand="#g_t" xml:id="redo_1">Nun</rewrite>
+<retrace hand="#g_t" xml:id="redo_1">Nun</retrace>
                   </line>
                   <line><handShift new="#jo_t"/>Ihr wanſtige Schuften mit den Feuerbacken</line>
                   <line xml:id="line_2">
 <handShift new="#g_bl"/>
-<rewrite hand="#g_t" xml:id="redo_2">feiſt</rewrite>
+<retrace hand="#g_t" xml:id="redo_2">feiſt</retrace>
                   </line>
                   <line>Ihr glüht ſo recht vom Höllen Schwefel ſatt.</line> [...]       </zone>
             </surface>
@@ -928,7 +944,7 @@ ink</layer>
 
 <schemaSpec ident="testgenetic"
 	    source="/home/lou/Public/TEI-SF/P5/p5subset.xml" start="facsimile">
-<moduleRef key="core" include="add del "/>
+<moduleRef key="core" include="add del graphic figure gloss desc"/>
 <moduleRef key="tei"/>
 <moduleRef key="linking" include="alt ab"/>
 <moduleref key="analytic" include="seg"/>
@@ -1283,7 +1299,7 @@ mode="add">
    </attList>
 </elementSpec>
 
-<elementSpec ident="rewrite"  mode="add">
+<elementSpec ident="retrace"  mode="add">
    <desc>contains a sequence of text which has been rewritten by the author, for
       example by over-inking, to clarify or fix it.</desc>
    <classes>
@@ -1298,12 +1314,12 @@ mode="add">
       <rng:ref name="macro.paraContent"/>
    </content>
    <remarks>
-      <p>Multiple rewritings are indicated by nesting one <gi>rewrite</gi> within
+      <p>Multiple rewritings are indicated by nesting one <gi>retrace</gi> within
          another. In principle, a rewriting differs from a substitution in that
          second and subsequent rewrites do not materially alter the content of an
          element. Where there are minor changes made during the rewriting however
          these may be marked up using <gi>del</gi>, <gi>add</gi>, etc. with an
-         appropriate value for the <att>stage</att> attribute.</p>
+         appropriate value for the <att>layer</att> attribute.</p>
    </remarks>
 </elementSpec>
 <!-- =============== Authorial changes =============== -->
