@@ -38,11 +38,13 @@
         <w:rStyle w:val="tei{local-name()}"/>
 	<w:b/>
       </w:rPr>
-      <w:t xml:preserve="yes"> 
+      <w:t>
+	<xsl:attribute name="xml:space">preserve</xsl:attribute>
 	<xsl:text> </xsl:text>
       </w:t>
-      <w:t xml:preserve="yes"> 
-	<xsl:apply-templates/>
+      <w:t>
+	<xsl:attribute name="xml:space">preserve</xsl:attribute>
+	<xsl:value-of select="."/>
       </w:t>
     </w:r>
    </xsl:template>
