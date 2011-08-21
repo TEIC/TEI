@@ -310,6 +310,7 @@
 		     <body id="TOP">
                         <xsl:call-template name="bodyMicroData"/>
                         <xsl:call-template name="bodyJavascriptHook"/>
+			<xsl:call-template name="bodyHook"/>
 			<div class="stdheader">
 			  <xsl:call-template name="stdheader">
 			    <xsl:with-param name="title">
@@ -363,6 +364,7 @@
          <body class="simple" id="TOP">
             <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
+	    <xsl:call-template name="bodyHook"/>
             <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
 	      <div class="stdheader">
 		<xsl:call-template name="stdheader">
@@ -1783,6 +1785,7 @@
 	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
 	   <xsl:call-template name="bodyMicroData"/>
 	   <xsl:call-template name="bodyJavascriptHook"/>
+	   <xsl:call-template name="bodyHook"/>
 	   <xsl:call-template name="mainPage">
 	     <xsl:with-param name="currentID">
 	       <xsl:value-of select="$currentID"/>
@@ -1921,6 +1924,7 @@
 	   <xsl:copy-of select="tei:text/tei:body/@onunload"/>
 	   <xsl:call-template name="bodyMicroData"/>
 	   <xsl:call-template name="bodyJavascriptHook"/>
+	   <xsl:call-template name="bodyHook"/>
 	   <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
 	     <div class="stdheader">
 	       <xsl:call-template name="stdheader">
@@ -2019,6 +2023,7 @@
          <body class="pagetable">
             <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
+	    <xsl:call-template name="bodyHook"/>
             <xsl:call-template name="pageHeader">
                <xsl:with-param name="mode">table</xsl:with-param>
             </xsl:call-template>
@@ -2747,6 +2752,7 @@
          <body id="TOP">
             <xsl:call-template name="bodyMicroData"/>
             <xsl:call-template name="bodyJavascriptHook"/>
+	    <xsl:call-template name="bodyHook"/>
             <div class="teidiv">
                <xsl:call-template name="stdheader">
                   <xsl:with-param name="title">

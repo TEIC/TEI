@@ -112,9 +112,7 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
    </doc>
   <xsl:param name="showFigures">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
-      <desc>     <p>[html] Hook where HTML can be inserted just after &lt;body&gt;</p>
-         <p>  </p>
-      </desc>
+      <desc>[html] Hook where HTML can be inserted just after &lt;body&gt;</desc>
    </doc>
   <xsl:template name="bodyHook"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
@@ -136,7 +134,7 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
   <xsl:template name="cssHook"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>     <p>[html] Hook where code can be added to the HTML &lt;head&gt;.</p>
-         <p>This would be used insert &lt;meta&gt; tags.</p>
+         <p>This would be used to insert &lt;meta&gt; tags.</p>
       </desc>
    </doc>
   <xsl:template name="headHook"/>

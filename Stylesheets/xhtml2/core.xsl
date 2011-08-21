@@ -1826,6 +1826,7 @@
               <body>
                 <xsl:call-template name="bodyMicroData"/>
                 <xsl:call-template name="bodyJavascriptHook"/>
+		<xsl:call-template name="bodyHook"/>
                 <div class="stdheader">
                   <xsl:call-template name="stdheader">
                     <xsl:with-param name="title">
