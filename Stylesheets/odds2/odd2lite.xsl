@@ -109,7 +109,7 @@
   </xsl:template>
 
   <xsl:template name="showSpaceBetweenItems">
-    <c xml:space="preserve"> </c>
+      <c xml:space="preserve"> </c>
   </xsl:template>
 
   <xsl:template name="makeInternalLink">

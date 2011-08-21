@@ -184,11 +184,10 @@
                 </xsl:choose>
             </w:pPr>
         </xsl:variable>
-        <!--
-        <xsl:message>List item <xsl:value-of select="."/>, <xsl:value-of
-        select="$nop"/>, <xsl:value-of select="$listStyle"/></xsl:message>
-    -->
-
+	<!--
+	    <xsl:message>List item <xsl:value-of select="."/>, <xsl:value-of
+	    select="$nop"/>, <xsl:value-of select="$listStyle"/></xsl:message>
+	-->
         <xsl:call-template name="block-element">
             <xsl:with-param name="pPr" select="$pPr"/>
             <xsl:with-param name="nop" select="$nop"/>

@@ -867,7 +867,7 @@
         </xsl:for-each>
       </xsl:element>
     </xsl:element>
-    <xsl:text> </xsl:text>
+    <xsl:call-template name="showSpace"/>
     <xsl:call-template name="makeDescription"/>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
@@ -1806,7 +1806,7 @@
         </xsl:attribute>
         <xsl:if test="$depth &gt; 1"> [</xsl:if>
         <xsl:variable name="list">
-          <List>
+          <ClassList>
             <xsl:for-each select="key('CLASSMEMBERS',$this)">
               <Item type="local-name()" ident="@ident">
                 <xsl:call-template name="linkTogether">
@@ -1833,9 +1833,9 @@
                 </xsl:call-template>
               </Item>
             </xsl:for-each>
-          </List>
+          </ClassList>
         </xsl:variable>
-        <xsl:for-each select="$list/List/Item">
+        <xsl:for-each select="$list/ClassList/Item">
           <xsl:sort select="@type"/>
           <xsl:sort select="@ident"/>
           <xsl:copy-of select="*|text()"/>
@@ -1849,10 +1849,31 @@
   </xsl:template>
   <xsl:template name="generateParentsByAttribute">
     <xsl:variable name="this" select="@ident"/>
-    <xsl:if test="count(key('ATTREFS-CLASS',$this))&gt;0">
-      <!--
-	<xsl:message>example in <xsl:value-of select="$this"/></xsl:message>
-	-->
+    <xsl:variable name="list">
+      <PattList>
+	<xsl:for-each select="key('ATTREFS-CLASS',$this)">
+	  <xsl:sort select="ancestor::tei:classSpec/@ident"/>
+	  <xsl:sort select="@ident"/>
+	  <xsl:element namespace="{$outputNS}" name="{$itemName}">
+	    <xsl:for-each select="ancestor::tei:classSpec">
+	      <Item>
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="@ident"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="class">
+		    <xsl:text>link_odd_classSpec</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </Item>
+	    </xsl:for-each>
+	    <xsl:text>/@</xsl:text>
+	    <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	  </xsl:element>
+	</xsl:for-each>
+      </PattList>
+    </xsl:variable>
+    <xsl:if test="count($list/PattList/Item)&gt;0">
       <xsl:element namespace="{$outputNS}" name="{$segName}">
         <xsl:attribute name="xml:lang">
           <xsl:value-of select="$documentationLanguage"/>
@@ -1865,91 +1886,61 @@
       </xsl:element>
       <xsl:text>: </xsl:text>
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
-        <xsl:variable name="list">
-          <List>
-            <xsl:for-each select="key('ATTREFS-CLASS',$this)">
-              <xsl:sort select="ancestor::tei:classSpec/@ident"/>
-              <xsl:sort select="@ident"/>
-              <xsl:element namespace="{$outputNS}" name="{$itemName}">
-                <xsl:for-each select="ancestor::tei:classSpec">
-                  <Item>
-                    <xsl:call-template name="linkTogether">
-                      <xsl:with-param name="name">
-                        <xsl:value-of select="@ident"/>
-                      </xsl:with-param>
-                      <xsl:with-param name="class">
-                        <xsl:text>link_odd_classSpec</xsl:text>
-                      </xsl:with-param>
-                    </xsl:call-template>
-                  </Item>
-                </xsl:for-each>
-                <xsl:text>/@</xsl:text>
-                <xsl:value-of select="ancestor::tei:attDef/@ident"/>
-              </xsl:element>
-            </xsl:for-each>
-          </List>
-        </xsl:variable>
-        <xsl:for-each select="$list/List/Item">
+        <xsl:for-each select="$list/PattList/Item">
           <xsl:copy-of select="*|text()"/>
-          <xsl:if test="following-sibling::Item">
-            <xsl:call-template name="showSpaceBetweenItems"/>
-          </xsl:if>
         </xsl:for-each>
       </xsl:element>
     </xsl:if>
-    <xsl:if test="count(key('ATTREFS-ELEMENT',$this))&gt;0">
+    <xsl:variable name="list2">
+      <PattList>
+	<xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
+	  <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
+	  <xsl:sort select="@ident"/>
+	  <Item>
+	    <xsl:element namespace="{$outputNS}" name="{$itemName}">
+	      <xsl:for-each select="ancestor::tei:elementSpec">
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="@ident"/>
+		  </xsl:with-param>
+		  <xsl:with-param name="reftext">
+		    <xsl:choose>
+		      <xsl:when test="tei:altIdent">
+			<xsl:value-of select="tei:altIdent"/>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:value-of select="@ident"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:with-param>
+		  <xsl:with-param name="class">
+		    <xsl:text>link_odd_elementSpec</xsl:text>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	      <xsl:text>/@</xsl:text>
+	      <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	    </xsl:element>
+	  </Item>
+	</xsl:for-each>
+      </PattList>
+    </xsl:variable>
+    <xsl:if test="count($list2/PattList/Item)&gt;0">
       <xsl:element namespace="{$outputNS}" name="{$segName}">
-        <xsl:attribute name="xml:lang">
-          <xsl:value-of select="$documentationLanguage"/>
-        </xsl:attribute>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">
-            <xsl:text>Element</xsl:text>
-          </xsl:with-param>
-        </xsl:call-template>
+	<xsl:attribute name="xml:lang">
+	  <xsl:value-of select="$documentationLanguage"/>
+	</xsl:attribute>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">
+	    <xsl:text>Element</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:element>
       <xsl:text>: </xsl:text>
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
-        <xsl:variable name="list">
-          <List>
-            <xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
-              <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
-              <xsl:sort select="@ident"/>
-              <Item>
-                <xsl:element namespace="{$outputNS}" name="{$itemName}">
-                  <xsl:for-each select="ancestor::tei:elementSpec">
-                    <xsl:call-template name="linkTogether">
-                      <xsl:with-param name="name">
-                        <xsl:value-of select="@ident"/>
-                      </xsl:with-param>
-                      <xsl:with-param name="reftext">
-                        <xsl:choose>
-                          <xsl:when test="tei:altIdent">
-                            <xsl:value-of select="tei:altIdent"/>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:value-of select="@ident"/>
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </xsl:with-param>
-                      <xsl:with-param name="class">
-                        <xsl:text>link_odd_elementSpec</xsl:text>
-                      </xsl:with-param>
-                    </xsl:call-template>
-                  </xsl:for-each>
-                  <xsl:text>/@</xsl:text>
-                  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
-                </xsl:element>
-              </Item>
-            </xsl:for-each>
-          </List>
-        </xsl:variable>
-        <xsl:for-each select="$list/List/Item">
-          <xsl:copy-of select="*|text()"/>
-          <xsl:if test="following-sibling::Item">
-            <xsl:call-template name="showSpaceBetweenItems"/>
-          </xsl:if>
-        </xsl:for-each>
+	<xsl:for-each select="$list2/PattList/Item">
+	  <xsl:copy-of select="*|text()"/>
+	</xsl:for-each>
       </xsl:element>
     </xsl:if>
   </xsl:template>

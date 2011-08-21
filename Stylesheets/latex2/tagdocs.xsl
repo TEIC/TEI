@@ -149,7 +149,7 @@
 
    <xsl:template match="tei:seg[@rend='specChildModule']">
     \item[<xsl:apply-templates/>]
-</xsl:template>
+   </xsl:template>
 
    <xsl:template match="tei:seg[@rend='specChildElements']">
       <xsl:apply-templates/>

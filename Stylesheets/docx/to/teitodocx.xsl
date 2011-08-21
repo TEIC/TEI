@@ -60,6 +60,9 @@
     <!-- Templates transforming math elements -->
     <xsl:include href="maths/maths.xsl"/>
 
+    <!-- Templates transforming ODD-related elements -->
+    <xsl:include href="odds/tagdocs.xsl"/>
+
     <!-- Templates transforming tei milestones into sectPr -->
     <xsl:include href="wordsections/wordsections.xsl"/>
 
