@@ -70,7 +70,7 @@
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="idPrefix">teispec_</xsl:param>
+  <xsl:param name="idPrefix">TEI.</xsl:param>
   <xsl:template name="identifyElement">
       <xsl:param name="id"/>
       <xsl:attribute name="xml:id">

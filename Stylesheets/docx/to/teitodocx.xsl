@@ -583,7 +583,7 @@
       <xsl:variable name="N">
 	<xsl:number level="any"/>
       </xsl:variable>
-      <w:bookmarkStart w:id="{number($N) + 20000}" w:name="_{@xml:id}"/>
+      <w:bookmarkStart w:id="{number($N) + 20000}" w:name="{@xml:id}"/>
       <w:bookmarkEnd  w:id="{number($N) + 20000}"/>
     </xsl:template>
 
@@ -604,7 +604,7 @@
 	    <xsl:variable name="N">
 	      <xsl:number level="any"/>
 	    </xsl:variable>
-	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="{@xml:id}"/>
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:when test="../@xml:id">
@@ -612,7 +612,7 @@
 	    <xsl:variable name="N">
 	      <xsl:number level="any"/>
 	    </xsl:variable>
-	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="_{@xml:id}"/>
+	    <w:bookmarkStart w:id="{number($N) + 10000}" w:name="{@xml:id}"/>
 	  </xsl:for-each>
 	</xsl:when>
       </xsl:choose>
@@ -1053,7 +1053,6 @@
             <xsl:with-param name="bookmark-name">
 	      <xsl:choose>
 		<xsl:when test="parent::tei:div/@xml:id">
-		  <xsl:text>_</xsl:text>
 		  <xsl:value-of select="parent::tei:div/@xml:id"/>
 		</xsl:when>
 		<xsl:otherwise>
@@ -1126,13 +1125,7 @@
     -->
 
     <xsl:template match="tei:hi[@rend='specList-elementSpec']">
-        <w:r>
-            <w:t>&lt;</w:t>
-        </w:r>
         <xsl:apply-templates/>
-        <w:r>
-            <w:t>&gt;</w:t>
-        </w:r>
     </xsl:template>
 
     <xsl:template match="tei:gi">
@@ -1342,7 +1335,6 @@
 		    <xsl:value-of select="1000+$number"/>
 		  </xsl:with-param>
 		  <xsl:with-param name="bookmark-name">
-		    <xsl:text>_</xsl:text>
 		    <xsl:value-of select="../@xml:id"/>
 		  </xsl:with-param>
 		</xsl:call-template>
@@ -2174,27 +2166,36 @@
       <xsl:variable name="instrText">
 	<xsl:choose>
 	  <xsl:when test="starts-with(@target,'#')">
+	    <xsl:variable name="target" select="substring(@target,2)"/>
+	    <xsl:variable name="rend" select="@rend"/>
 	    <xsl:choose>
 	      <xsl:when test="contains(@rend,'noteref')">
-		<xsl:text>NOTEREF _</xsl:text>
+		<xsl:text>NOTEREF </xsl:text>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:text>REF _</xsl:text>
+		<xsl:text>REF </xsl:text>
 	      </xsl:otherwise>
 	    </xsl:choose>
-	    <xsl:value-of select="substring(@target,2)"/>
-	    <xsl:if test="contains(@rend,'instr_f')">
-	      <xsl:text> \f</xsl:text>
-	    </xsl:if>
-	    <xsl:if test="contains(@rend,'instr_r')">
-	      <xsl:text> \r</xsl:text>
-	    </xsl:if>
-	    <xsl:if test="contains(@rend,'instr_n')">
-	      <xsl:text> \n</xsl:text>
-	    </xsl:if>
-	    <xsl:if test="not(@rend)">
-	      <xsl:text> \n</xsl:text>
-	    </xsl:if>
+	    <xsl:value-of select="$target"/>
+	    <xsl:for-each select="key('IDS',$target)">
+	      <xsl:choose>
+		<xsl:when test="contains($rend,'instr_')">
+		  <xsl:if test="contains($rend,'instr_f')">
+		    <xsl:text> \f</xsl:text>
+		  </xsl:if>
+		  <xsl:if test="contains($rend,'instr_r')">
+		    <xsl:text> \r</xsl:text>
+		  </xsl:if>
+		  <xsl:if test="contains($rend,'instr_n')">
+		    <xsl:text> \n</xsl:text>
+		  </xsl:if>
+		</xsl:when>
+		<xsl:when test="@type='refdoc'"/>
+		<xsl:otherwise>
+		  <xsl:text> \n</xsl:text>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
 	    <xsl:text> \h</xsl:text>
 	    <xsl:if test="contains(@rend,'mergeformat')">
 	      <xsl:text> \* MERGEFORMAT</xsl:text>
@@ -2418,7 +2419,6 @@
 		<xsl:value-of select="9000+$number"/>
 	      </xsl:with-param>
 	      <xsl:with-param name="bookmark-name">
-		<xsl:text>_</xsl:text>
 		<xsl:value-of select="@xml:id"/>
 	      </xsl:with-param>
 	    </xsl:call-template>
