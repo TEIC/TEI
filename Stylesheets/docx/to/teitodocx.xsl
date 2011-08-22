@@ -2084,9 +2084,10 @@
 	    <xsl:when test="@type='table'">Table </xsl:when>
 	  </xsl:choose>
 	  <xsl:choose>
-	    <xsl:when test="starts-with(@target,'#')">
+	    <xsl:when test="starts-with(@target,'#')  and key('IDS',substring(@target,2))">	  
+	      <xsl:variable name="target" select="substring(@target,2)"/>
 	      <xsl:apply-templates
-		  select="key('IDS',substring-after(@target,'#'))"
+		  select="key('IDS',$target)"
 		  mode="xref"/>
 	    </xsl:when>
 	    <xsl:otherwise>
@@ -2101,11 +2102,18 @@
     </xsl:template>
 
     <xsl:template match="tei:ref[@target]">
-      <xsl:call-template name="linkMe">
-	<xsl:with-param name="anchor">
+      <xsl:choose>
+	<xsl:when test="starts-with(@target,'#') and key('IDS',substring(@target,2))">	  
+	  <xsl:call-template name="linkMe">
+	    <xsl:with-param name="anchor">
+	      <xsl:apply-templates/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
 	  <xsl:apply-templates/>
-	</xsl:with-param>
-      </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template name="linkMeUsingHyperlink">
@@ -2169,7 +2177,7 @@
 	    <xsl:variable name="target" select="substring(@target,2)"/>
 	    <xsl:variable name="rend" select="@rend"/>
 	    <xsl:choose>
-	      <xsl:when test="contains(@rend,'noteref')">
+	      <xsl:when test="contains($rend,'noteref')">
 		<xsl:text>NOTEREF </xsl:text>
 	      </xsl:when>
 	      <xsl:otherwise>
