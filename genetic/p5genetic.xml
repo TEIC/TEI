@@ -70,7 +70,7 @@ independently of them. </p>
 <specDesc key="zone"/>
 <specDesc key="patch" atts="binder height width flipping"/>
 <specDesc key="line" atts="type" />
-<specDesc key="ab" atts="type"/>
+<specDesc key="block" atts="type"/>
 <specDesc key="seg" atts="type"/>
 </specList>
 </p>
@@ -121,14 +121,14 @@ follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
    </zone>
    <patch type="newsprint" binder="glue"
 			       height="40" width="90"> 
-			  <ab>Spring has
+			  <block>Spring has
       just set in here, and the weather.... a
-			   steamer </ab>
+			   steamer </block>
          <metaMark function="sequence">2</metaMark>
    </patch>
    <patch type="newsprint" binder="glue"
 			       height="35" width="90"> 
-			  <ab>"The shores on either side of the Sound are... The In-       </ab>   
+			  <block>"The shores on either side of the Sound are... The In-       </block>   
 			   <metaMark function="sequence">3</metaMark>
    </patch>
 </surface>
@@ -186,7 +186,7 @@ section <ptr target="#PHFAX"/>, or provided in parallel within a
 <gi>text</gi> element. Within a <gi>zone</gi>, the
 transcription may be organized  topographically in terms of lines of writing, using the
 <gi>line</gi> element, or in terms of blocks of writing,  using the
-<gi>ab</gi> (anonymous block) element, or as a combination of the two;
+<gi>block</gi> element, or as a combination of the two;
 see further <ptr target="#PHZLAB"/>.
 </p>
 </div>
@@ -242,8 +242,9 @@ record traces of the writing process within a document.
    distance further on in the document. </p>
 <egXML
 xmlns="http://www.tei-c.org/ns/Examples">
-<ab>words words words <mod rend="wavy-underlining" spanTo="#enduw"/>words with wavy underline</ab>
-<ab>wavy underlining finishes here<anchor xml:id="enduw"/> more words    </ab>
+<line>words words words <mod rend="wavy-underlining" spanTo="#enduw"/>words with wavy underline</line>
+&lt;!-- more lines here -->
+<line>wavy underlining finishes here<anchor xml:id="enduw"/> more words</line>
 </egXML>
 <!-- QUERY real example needed -->
 <!-- also more discussion of spanTO -->
@@ -976,7 +977,7 @@ ink</layer>
 	    start="facsimile">
 <moduleRef key="core" include="add del graphic figure gloss desc"/>
 <moduleRef key="tei"/>
-<moduleRef key="linking" include="alt ab seg"/>
+<moduleRef key="linking" include="alt seg"/>
 <moduleRef key="transcr"/>
 
 
@@ -1204,6 +1205,26 @@ mode="add">
       <rng:choice>
          <rng:text/>
          <rng:ref name="model.global"/>
+         <rng:ref name="model.linePart"/>
+      </rng:choice>
+   </rng:zeroOrMore>
+</content>
+</elementSpec>
+
+<elementSpec ident="block"  mode="add">
+<desc>contains the transcription of any arbitrary text passage in the source
+   document</desc>
+<classes>
+   <memberOf key="model.zonePart"/>
+   <memberOf key="att.typed"/>
+   <memberOf key="att.global"/>
+</classes>
+<content>
+   <rng:zeroOrMore>
+      <rng:choice>
+         <rng:text/>
+         <rng:ref name="model.global"/>
+         <rng:ref name="line"/>
          <rng:ref name="model.linePart"/>
       </rng:choice>
    </rng:zeroOrMore>
