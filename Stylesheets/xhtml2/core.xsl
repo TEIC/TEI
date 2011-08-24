@@ -1080,10 +1080,13 @@
 	</span>
       </xsl:when>
       <xsl:otherwise>
-	<div class="note">
+	<div>
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
-	  </xsl:call-template>
+    </xsl:call-template>
+    <xsl:attribute name="class">
+	    <xsl:text>note </xsl:text><xsl:value-of select="@type"/>
+	</xsl:attribute>
 	  <span class="noteLabel">
 	    <xsl:choose>
 	      <xsl:when test="@n">
