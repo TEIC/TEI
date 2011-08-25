@@ -1158,6 +1158,9 @@ select="$makeDecls"/></xsl:message>
 
 
   <xsl:template match="tei:moduleRef" mode="tangle">
+    <!-- save a reference to myself so I can access my attrs and -->
+    <!-- generated node ID later -->
+    <xsl:variable name="me-the-moduleRef" select="."/>
     <xsl:variable name="This" select="@key"/>
     <xsl:if test="$verbose='true'">
       <xsl:message> .... import module [<xsl:value-of select="$This"/>
@@ -1178,8 +1181,25 @@ select="$makeDecls"/></xsl:message>
               </xsl:comment>
               <div xmlns="http://relaxng.org/ns/structure/1.0">
                 <xsl:for-each select="document(@url)/rng:grammar">
-                  <xsl:apply-templates mode="expandRNG"
-                    select="*|@*|text()|comment()|processing-instruction()"/>
+                  <!-- the "expandRNG" processing changed 2011-08-25 by Syd Bauman: -->
+                  <!-- added a 'prefix' parameter which value is prefixed to pattern -->
+                  <!-- names in the included schema. This prevents collisions in the -->
+                  <!-- output RNG. -->
+                  <xsl:apply-templates mode="expandRNG" select="@*|node()">
+                    <xsl:with-param name="prefix">
+                      <xsl:choose>
+                        <xsl:when test="$me-the-moduleRef/@prefix">
+                          <xsl:value-of select="$me-the-moduleRef/@prefix"/>
+                        </xsl:when>
+                        <xsl:when test="$me-the-moduleRef/@n">
+                          <xsl:value-of select="$me-the-moduleRef/@n"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="concat( generate-id( $me-the-moduleRef ), '_')"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:with-param>
+                  </xsl:apply-templates>
                 </xsl:for-each>
                 <xsl:apply-templates mode="justcopy"  select="tei:content/*"/>
               </div>
@@ -1208,40 +1228,62 @@ select="$makeDecls"/></xsl:message>
     </xsl:call-template>
   </xsl:template>
 
+  <!-- begin expand RELAX NG section -->
 
   <xsl:template match="@*|text()|comment()|processing-instruction" mode="expandRNG">
     <xsl:copy-of select="."/>
   </xsl:template>
-
-
+  
+  <xsl:template match="rng:start" mode="expandRNG"/>
+  
+  <xsl:template match="rng:include" mode="expandRNG">
+    <xsl:param name="prefix">erng_</xsl:param>
+    <xsl:if test="$verbose='true'">
+      <xsl:message> .... import <xsl:value-of select="@href"/></xsl:message>
+    </xsl:if>
+    <xsl:comment>Start of import of <xsl:value-of select="@href"/></xsl:comment>
+    <div xmlns="http://relaxng.org/ns/structure/1.0">
+      <xsl:for-each select="document(@href)/rng:grammar">
+        <xsl:apply-templates mode="expandRNG" select="@*|node()">
+          <xsl:with-param name="prefix" select="$prefix"/>
+        </xsl:apply-templates>
+      </xsl:for-each>
+    </div>
+    <xsl:comment>End of import of <xsl:value-of select="@href"/>
+    </xsl:comment>
+  </xsl:template>
+  
+  <xsl:template match="rng:define | rng:ref" mode="expandRNG">
+    <xsl:param name="prefix">erng_</xsl:param>
+    <xsl:if test="$verbose='true'">
+      <xsl:message>expanding rng:<xsl:value-of select="local-name(.)"/> name=<xsl:value-of select="@name"/>, giving it a prefix of '<xsl:value-of select="$prefix"/>'.</xsl:message>
+    </xsl:if>
+    <!-- generate a copy of this <define> or <ref> -->
+    <xsl:copy>
+      <!-- copy over all attributes (including @name) -->
+      <xsl:apply-templates select="@*" mode="expandRNG"/>
+      <xsl:if test="@name">
+        <!-- then replace the copied @name with our own that is the same -->
+        <!-- except has our prefix in the value -->
+        <xsl:attribute name="name" select="concat( $prefix, @name )"/>
+      </xsl:if>
+      <!-- then copy over any content -->
+      <xsl:apply-templates select="node()" mode="expandRNG">
+        <xsl:with-param name="prefix" select="$prefix"/>
+      </xsl:apply-templates>
+    </xsl:copy>
+  </xsl:template>
+  
   <xsl:template match="*" mode="expandRNG">
-    <xsl:choose>
-      <xsl:when test="local-name(.)='start'"/>
-      <xsl:when test="local-name(.)='include'">
-        <xsl:if test="$verbose='true'">
-          <xsl:message> .... import <xsl:value-of select="@href"/>
-          </xsl:message>
-        </xsl:if>
-        <xsl:comment>Start of import of <xsl:value-of select="@href"/>
-        </xsl:comment>
-        <div xmlns="http://relaxng.org/ns/structure/1.0">
-          <xsl:for-each select="document(@href)/rng:grammar">
-            <xsl:apply-templates mode="expandRNG"
-              select="*|@*|text()|comment()|processing-instruction()"/>
-          </xsl:for-each>
-        </div>
-        <xsl:comment>End of import of <xsl:value-of select="@href"/>
-        </xsl:comment>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy>
-          <xsl:apply-templates mode="expandRNG"
-            select="*|@*|text()|comment()|processing-instruction()"/>
-        </xsl:copy>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:param name="prefix">erng_</xsl:param>
+    <xsl:copy>
+      <xsl:apply-templates mode="expandRNG" select="@*|node()">
+        <xsl:with-param name="prefix" select="$prefix"/>
+      </xsl:apply-templates>
+    </xsl:copy>
   </xsl:template>
 
+  <!-- end expand RELAX NG section -->
 
   <xsl:template match="tei:remarks" mode="tangle"/>
 
