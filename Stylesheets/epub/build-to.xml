@@ -141,9 +141,9 @@
     <ant antfile="${outputTempDir}/copy.xml"/>
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
     <delete file="${outputFile}"/>
-    <zip destfile="${outputFile}" basedir="${outputTempDir}"
-	 compress="true" excludes="OEBPS/media/**,mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
-    <zip destfile="${outputFile}" basedir="${outputTempDir}" includes="mimetype,OEBPS/media/**" update="true" keepcompression="true" compress="false"/>
+    <zip destfile="${outputFile}" basedir="${outputTempDir}" includes="OEBPS/media/**" keepcompression="true" compress="false"/>
+    <zip destfile="${outputFile}" basedir="${outputTempDir}" update="true" compress="true" excludes="OEBPS/media/**,mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+    <zip destfile="${outputFile}" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
   </target>
 
   <target name="cleanup" unless="debug">  
