@@ -287,7 +287,7 @@
 	      <xsl:if test="$mediaoverlay='true' and
 			    key('Timeline',1)">
 		<xsl:if test="$verbose='true'">
-		  <xsl:message>write file SMIL files</xsl:message>
+		  <xsl:message>write SMIL files</xsl:message>
 		</xsl:if>
 		<xsl:for-each select="key('Timeline',1)">
 		  <xsl:variable name="TL" select="."/>
