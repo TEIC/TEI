@@ -160,7 +160,7 @@
 		  </xsl:variable>
                     <Relationship Id="rId{$n + 300}"
                              Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
-                             Target="media/image{$n}.{tokenize(@url,'\.')[last()]}"/>
+                             Target="media/resource{$n}.{tokenize(@url,'\.')[last()]}"/>
                 </xsl:for-each>
                 
                 <!-- hyperlinks -->
