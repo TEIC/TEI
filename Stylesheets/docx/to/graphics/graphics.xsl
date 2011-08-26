@@ -153,7 +153,7 @@
 		      select="number(number($pageHeight)*100) cast as
 			      xs:integer"/>
 	<xsl:variable name="filename">
-	  <xsl:text>media/image</xsl:text>
+	  <xsl:text>media/resource</xsl:text>
 	  <xsl:number level="any"/>
 	  <xsl:text>.</xsl:text>
 	  <xsl:value-of select="tokenize(@url,'\.')[last()]"/>

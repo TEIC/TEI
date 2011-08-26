@@ -144,7 +144,7 @@
 			select="tokenize(@url,'\.')[last()]"/>
 	  <manifest:file-entry>
 	    <xsl:attribute name="manifest:full-path">
-	      <xsl:text>Pictures/image</xsl:text>
+	      <xsl:text>Pictures/resource</xsl:text>
 	      <xsl:number level="any"/>
 	      <xsl:text>.</xsl:text>
 	      <xsl:value-of select="$imagetype"/>
@@ -386,7 +386,7 @@
     </xsl:variable>
 
 	<xsl:variable name="filename">
-	  <xsl:text>Pictures/image</xsl:text>
+	  <xsl:text>Pictures/resource</xsl:text>
 	  <xsl:number level="any"/>
 	  <xsl:text>.</xsl:text>
 	  <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
