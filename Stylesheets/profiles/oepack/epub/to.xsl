@@ -167,5 +167,17 @@
       <xsl:value-of select="."/>
    </xsl:template>
 
-
+   <xsl:template name="javascriptHook">
+	   <script type="text/javascript" src="../jquery-1.6.1.min.js"></script>
+	   <script type="text/javascript" src="../popup.js"></script>
+	   <script type="text/javascript" src="../jquery-css-transform.js"></script>
+	   <script type="text/javascript" src="../rotate3Di.js"></script>
+   </xsl:template>
+   
+   <xsl:template name="bodyHook">
+	   <div id="popup"></div>   
+	   <input type="checkbox" id="no-gloss"></input><label for="no-gloss" id="no-gloss-label">No gloss</label>
+	   <a href="" id="version-switch">Translation</a>
+	   <div id="holder">Contents</div>
+   </xsl:template>
 </xsl:stylesheet>
