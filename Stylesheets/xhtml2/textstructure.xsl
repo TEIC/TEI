@@ -2116,24 +2116,13 @@
       </xsl:choose>
   </xsl:template>
   <xsl:template name="simpleBody">
-    <!-- front matter -->
-    <xsl:apply-templates select="tei:text/tei:front"/>
-      <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
-         <h2>
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">tocWords</xsl:with-param>
-            </xsl:call-template>
-         </h2>
-         <xsl:call-template name="mainTOC"/>
-      </xsl:if>
-      <!-- main text -->
     <xsl:choose>
       <xsl:when test="tei:text/tei:group">
 	<xsl:apply-templates select="tei:text/tei:group"/>
       </xsl:when>
        <xsl:when test="$filePerPage='true'">
 	 <xsl:variable name="pass1">	 
-	   <xsl:apply-templates select="tei:text/tei:body"/>
+	   <xsl:apply-templates select="tei:text/*"/>
 	 </xsl:variable>
 	 <xsl:choose>
 	   <xsl:when test="not($pass1/html:PAGEBREAK)">
@@ -2165,6 +2154,17 @@
 	 </xsl:choose>
        </xsl:when>
       <xsl:otherwise>
+    <!-- front matter -->
+    <xsl:apply-templates select="tei:text/tei:front"/>
+      <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
+         <h2>
+            <xsl:call-template name="i18n">
+               <xsl:with-param name="word">tocWords</xsl:with-param>
+            </xsl:call-template>
+         </h2>
+         <xsl:call-template name="mainTOC"/>
+      </xsl:if>
+      <!-- main text -->
 	<xsl:apply-templates select="tei:text/tei:body"/>
       </xsl:otherwise>
     </xsl:choose>

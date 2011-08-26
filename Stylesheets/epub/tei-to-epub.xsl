@@ -315,17 +315,15 @@
 		    <xsl:variable name="target">
 		      <xsl:apply-templates select="." mode="ident"/>
 		    </xsl:variable>		    
+		    <xsl:if test="count(key('objectOnPage',$page))&gt;0">
 		    <item id="{$target}-audio" href="{$target}-overlay.smil" media-type="application/smil+xml"/>
 		    <xsl:result-document href="{concat($directory,'/OEBPS/',$target,'-overlay.smil')}" method="xml">
 		    <smil xmlns="http://www.w3.org/ns/SMIL" version="3.0" profile="http://www.ipdf.org/epub/30/profile/content/">
 		      <body> 
-			      <xsl:for-each select="key('objectOnPage',$page)">
-				      objectOnPage
+			<xsl:for-each select="key('objectOnPage',$page)">
 			  <xsl:variable name="object" select="@xml:id"/>
 			  <xsl:for-each select="$TL">
-				  TL
-				  <xsl:for-each select="key('Object',$object)">
-					  Object
+			    <xsl:for-each select="key('Object',$object)">
 			      <par id="{@xml:id}">
 				<text src="{$target}.html{@corresp}"/>
 				<audio src="{$audio}"
@@ -337,6 +335,7 @@
 		      </body>
 		    </smil>
 		    </xsl:result-document>
+		    </xsl:if>
 		  </xsl:for-each>
 		</xsl:for-each>
 	      </xsl:if>

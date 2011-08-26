@@ -402,7 +402,7 @@
     <xsl:apply-templates/>
     <xsl:text> (alternative title)</xsl:text>
   </xsl:template>
-  <xsl:template match="tei:front/tei:titlePage"/>
+
   <xsl:template name="autoMakeHead">
     <xsl:param name="display"/>
     <xsl:choose>

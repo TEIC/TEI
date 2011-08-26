@@ -1192,7 +1192,7 @@
 
   <xsl:template match="tei:pb">
     <xsl:choose>
-      <xsl:when test="$filePerPage='true' and ancestor::tei:body">
+      <xsl:when test="$filePerPage='true'">
 	<PAGEBREAK>
 	  <xsl:attribute name="name">
 	    <xsl:apply-templates select="." mode="ident"/>

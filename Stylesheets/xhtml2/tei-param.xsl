@@ -32,7 +32,7 @@
       </desc>
    </doc>
   <xsl:key name="INDEX" use="1" match="tei:index"/>
-  <xsl:key name="PB" match="tei:pb[ancestor::tei:body]" use="1"/>
+  <xsl:key name="PB" match="tei:pb" use="1"/>
   <xsl:key name="NOTES" use="1"
 	   match="tei:note[@place='foot' or @place='bottom' or @place='end'
 		  and not(parent::tei:bibl or ancestor::tei:teiHeader)]"/>
