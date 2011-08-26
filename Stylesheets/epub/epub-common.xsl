@@ -155,7 +155,7 @@
       <xsl:choose>
         <xsl:when test="$fixgraphicsurl='true'">
           <xsl:variable name="newName">
-            <xsl:text>media/image</xsl:text>
+            <xsl:text>media/resource</xsl:text>
             <xsl:number level="any"/>
             <xsl:text>.</xsl:text>
             <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
@@ -424,9 +424,7 @@
       <xsl:otherwise> </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:graphic[@mimeType='video/mp4']">
-    <video src="{@url}" controls="controls"/>
-  </xsl:template>
+
   <xsl:template name="generateDate">
     <xsl:choose>
       <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate[@when]">

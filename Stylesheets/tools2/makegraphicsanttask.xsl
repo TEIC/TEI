@@ -94,7 +94,7 @@
 	   <xsl:variable name="target">
 	     <xsl:text>${outputTempDir}/</xsl:text>
 	     <xsl:value-of select="$mediaDir"/>
-	     <xsl:text>/image</xsl:text>
+	     <xsl:text>/resource</xsl:text>
 	     <xsl:number level="any"/>
 	     <xsl:text>.</xsl:text>
 	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>

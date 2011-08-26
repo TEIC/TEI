@@ -406,43 +406,50 @@
          </xsl:choose>
       </xsl:variable>
       <xsl:choose>
-	      <xsl:when test="$showFigures='true'">
-		      <xsl:choose>
-			      <xsl:when test="starts-with(@mimeType, 'video')">
-				      <video src="{$graphicsPrefix}{$File}" controls="controls"></video>
-			      </xsl:when>
-			      <xsl:otherwise>
-				      <img src="{$graphicsPrefix}{$File}">
-					      <xsl:attribute name="alt">
-						      <xsl:value-of select="$Alt"/>
-					      </xsl:attribute>
-					      <xsl:call-template name="imgHook"/>
-					      <xsl:if test="@xml:id">
-						      <xsl:attribute name="id">
-							      <xsl:value-of select="@xml:id"/>
-						      </xsl:attribute>
-					      </xsl:if>
-					      <xsl:call-template name="rendToClass"/>
-					      <xsl:if test="@width">
-						      <xsl:call-template name="setDimension">
-							      <xsl:with-param name="value">
-								      <xsl:value-of select="@width"/>
-							      </xsl:with-param>
-							      <xsl:with-param name="name">width</xsl:with-param>
-						      </xsl:call-template>
-					      </xsl:if>
-					      <xsl:if test="@height">
-						      <xsl:call-template name="setDimension">
-							      <xsl:with-param name="value">
-								      <xsl:value-of select="@height"/>
-							      </xsl:with-param>
-							      <xsl:with-param name="name">height</xsl:with-param>
-						      </xsl:call-template>
-					      </xsl:if>
-				      </img>
-			      </xsl:otherwise>
-		      </xsl:choose>
-
+	<xsl:when test="$showFigures='true'">
+	  <xsl:choose>
+	    <xsl:when test="@type='thumbnail'"/>
+	    <xsl:when test="starts-with(@mimeType, 'video')">
+	      <video src="{$graphicsPrefix}{$File}"
+		     controls="controls">
+		<xsl:if test="../tei:graphic[@type='thumbnail']">
+		  <xsl:attribute name="poster">
+		    <xsl:value-of select="../tei:graphic[@type='thumbnail']/@url"/>
+		  </xsl:attribute>
+		</xsl:if>
+	      </video>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <img src="{$graphicsPrefix}{$File}">
+		<xsl:attribute name="alt">
+		  <xsl:value-of select="$Alt"/>
+		</xsl:attribute>
+		<xsl:call-template name="imgHook"/>
+		<xsl:if test="@xml:id">
+		  <xsl:attribute name="id">
+		    <xsl:value-of select="@xml:id"/>
+		  </xsl:attribute>
+		</xsl:if>
+		<xsl:call-template name="rendToClass"/>
+		<xsl:if test="@width">
+		  <xsl:call-template name="setDimension">
+		    <xsl:with-param name="value">
+		      <xsl:value-of select="@width"/>
+		    </xsl:with-param>
+		    <xsl:with-param name="name">width</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:if>
+		<xsl:if test="@height">
+		  <xsl:call-template name="setDimension">
+		    <xsl:with-param name="value">
+		      <xsl:value-of select="@height"/>
+		    </xsl:with-param>
+		    <xsl:with-param name="name">height</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:if>
+	      </img>
+	    </xsl:otherwise>
+	  </xsl:choose>	  
          </xsl:when>
          <xsl:otherwise>
             <div class="altfigure">

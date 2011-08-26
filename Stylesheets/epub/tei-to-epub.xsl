@@ -291,12 +291,23 @@
 		</xsl:if>
 		<xsl:for-each select="key('Timeline',1)">
 		  <xsl:variable name="TL" select="."/>
+		  <xsl:variable name="TLnumber">
+		    <xsl:number level="any"/>
+		  </xsl:variable>
 		  <xsl:variable name="audio">
 		    <xsl:text>media/audio</xsl:text>
 		    <xsl:number level="any"/>
 		    <xsl:text>.</xsl:text>
 		    <xsl:value-of select="tokenize(@corresp,'\.')[last()]"/>
 		  </xsl:variable>
+		  <item id="timeline-audio{$TLnumber}" href="{$audio}">
+		    <xsl:attribute name="media-type">
+		      <xsl:choose>
+			<xsl:when test="contains($audio,'.m4a')">audio/m4a</xsl:when>
+			<xsl:otherwise>audio/m4a</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:attribute>
+		  </item>
 		  <xsl:for-each select="key('PB',1)">
 		    <xsl:variable name="page">
 		      <xsl:value-of select="generate-id()"/>
@@ -420,19 +431,21 @@
                     <xsl:number level="any"/>
                   </xsl:variable>
 		  <xsl:variable name="mimetype">
-			  <xsl:choose>
-		  <xsl:when test="@mimeType != ''"><xsl:value-of select="@mimeType"/></xsl:when>
-                      <xsl:when test="contains($img,'.gif')">image/gif</xsl:when>
-                      <xsl:when test="contains($img,'.png')">image/png</xsl:when>
-                      <xsl:when test="contains($img,'.mpeg')">video/mpeg4</xsl:when>
-                      <xsl:when test="contains($img,'.mp4')">video/mpeg4</xsl:when>
-                      <xsl:when test="contains($img,'.m4v')">video/mpeg4</xsl:when>
-                      <xsl:otherwise>image/jpeg</xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:variable>
-                  <item href="{$img}" id="image-{$ID}" media-type="{$mimetype}"/>
-                </xsl:if>
-              </xsl:for-each>
+		    <xsl:choose>
+		      <xsl:when test="@mimeType != ''">
+			<xsl:value-of select="@mimeType"/>
+		      </xsl:when>
+		      <xsl:when test="contains($img,'.gif')">image/gif</xsl:when>
+		      <xsl:when test="contains($img,'.png')">image/png</xsl:when>
+		      <xsl:when test="contains($img,'.mpeg')">video/mpeg4</xsl:when>
+		      <xsl:when test="contains($img,'.mp4')">video/mpeg4</xsl:when>
+		      <xsl:when test="contains($img,'.m4v')">video/mpeg4</xsl:when>
+		      <xsl:otherwise>image/jpeg</xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:variable>
+		  <item href="{$img}" id="image-{$ID}" media-type="{$mimetype}"/>
+		</xsl:if>
+	      </xsl:for-each>
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
               <xsl:call-template name="epubManifestHook"/>
             </manifest>
