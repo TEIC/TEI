@@ -33,7 +33,7 @@ what it will be in the final version. </p>
 target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHFAX">section
 11.1</ref></note>
 <p>If, as is more often the case, a transcription of the zone
-identified in this way is to be included in the encoded document, this
+identified in this way is to be included in the encoded TEI document, this
 may be done in two ways. If the transcription is regarded as a text in
 its own right, organized and structured independently of its physical
 realization in the document or documents represented by the facsimile,
@@ -76,11 +76,12 @@ independently of them. </p>
 </p>
 
 <p>The elements <gi>surface</gi> and <gi>zone</gi> were introduced
-above, <!-- in section <ptr target="#PHFAX"/>-->. The element <gi>patch</gi>
-is useful in cases where the written surfaces constituting a document
-are not homogeneous. In the following example, taken from the Walt
-Whitman archive, two pieces of newsprint have been glued to a piece of
-blue paper on which a poem is being drafted: 
+above, <!-- in section <ptr target="#PHFAX"/>-->. The element
+<gi>patch</gi> is useful in cases where some or all of the written
+surfaces are composed of physically distinct scraps. In the following
+example, taken from the Walt Whitman archive, two pieces of newsprint
+have been glued to a piece of blue paper on which a poem is being
+drafted:
 
 <figure>
             <graphic url="examples/whitman01.jpg" width="400px"/>
@@ -100,10 +101,11 @@ read. Depending on the directionality of the writing system used,
 this might be any combination of top-down and left to right, or vice
 versa. It thus seems convenient to introduce an element <gi>line</gi> to
 hold a complete group of such tokens. Where, however, the lineation is
-not considered useful or significant, groups of tokens may be
-indicated using the neutral <gi>ab</gi> (anonymous block) element or
-<gi>seg</gi> elements described in section <ptr
-target="#SASE"/>. 
+not considered significant, large groups of tokens may be
+indicated using the <gi>block</gi> element. The
+<gi>seg</gi> element described in section <ptr
+target="#SASE"/> may be used to indicate smaller sequences of tokens
+within <gi>zone</gi>, <gi>line</gi>, or <gi>block</gi> as appropriate. 
 </p>
 
 <!-- QUERY some usage notes for choosing between seg and ab would be useful
@@ -119,32 +121,33 @@ follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <line>All sorts of fancies running through</line>
       <line>the head</line>
    </zone>
-   <patch type="newsprint" binder="glue"
+   <patch type="newsprint" binder="glue" flipping="false"
 			       height="40" width="90"> 
 			  <block>Spring has
       just set in here, and the weather.... a
 			   steamer </block>
-         <metaMark function="sequence">2</metaMark>
+         <metamark function="sequence">2</metamark>
    </patch>
-   <patch type="newsprint" binder="glue"
+   <patch type="newsprint" binder="glue" flipping="false"
 			       height="35" width="90"> 
 			  <block>"The shores on either side of the Sound are... The In-       </block>   
-			   <metaMark function="sequence">3</metaMark>
+			   <metamark function="sequence">3</metamark>
    </patch>
 </surface>
 </egXML> 
 </p>
 
-<p>The <gi>metaMark</gi> element used in this example is further
+<p>The <gi>metamark</gi> element used in this example is further
 discussed below (<ptr target="#PH-meta"/>)</p>
 
-<p>Note that in this example we have not included any <gi>graphic</gi> element
-corresponding with the <gi>zone</gi> or <gi>surface</gi> elements 
-identified in the transcription. The encoder may choose to combine
-graphics with the transcription at whatever level is considered
-effective, or not at all. Equally, the encoder may choose to provide
-only graphics without transcription, or with a structured
-(non-embedded) transcription, or any combination of the three. </p>
+<p>Note that in this example we have not included any <gi>graphic</gi>
+element corresponding with the <gi>zone</gi> or <gi>surface</gi>
+elements identified in the transcription. The encoder may choose to
+complement a transcription with graphic representations of its source
+at whatever level is considered effective, or not at all. Equally, the
+encoder may choose to provide only graphics without transcription, or
+with a structured (non-embedded) transcription, or any combination of
+the three. </p>
 </div>
 </div>
 
@@ -171,23 +174,22 @@ particular importance when dealing with authorial manuscripts, but are
 also relevant in the case of historical sources such as charters or
 other legal documents.</p>
 
-<p>To encode such transcriptions, we propose a simple model in which
-writing traces are marked within a transcription, using an appropriate
-tag such as <gi>mod</gi>, <gi>del</gi>, etc. to indicate their
-function in the document, as described in the remainder of this
-chapter. Each such element can be assigned to one or more
+<p>The remainder of this chapter describes a model for encoding such
+transcriptions, in which elements such as <gi>mod</gi>, <gi>del</gi>,
+etc are used to mark writing traces and their functions within the
+document. Each such element can be assigned to one or more
 editorially-defined modification groups, termed a <term>layer</term>,
 by means of a global <att>layer</att> attribute, which references a
 definition for the layer concerned, typically provided within the TEI
 Header <gi>creation</gi> element; see further <ptr
-target="#PH-layers"/>. The  transcription itself may be embedded
-within the elements <gi>surface</gi> and <gi>zone</gi> described in
-section <ptr target="#PHFAX"/>, or provided in parallel within a
-<gi>text</gi> element. Within a <gi>zone</gi>, the
-transcription may be organized  topographically in terms of lines of writing, using the
-<gi>line</gi> element, or in terms of blocks of writing,  using the
-<gi>block</gi> element, or as a combination of the two;
-see further <ptr target="#PHZLAB"/>.
+target="#PH-layers"/>. The transcription itself may be embedded within
+the elements <gi>surface</gi> and <gi>zone</gi> described in section
+<ptr target="#PHFAX"/>, or provided in parallel within a <gi>text</gi>
+element. Within a <gi>zone</gi>, the transcription may be organized
+topographically in terms of lines of writing, using the <gi>line</gi>
+element, or in terms of blocks of writing, using the <gi>block</gi>
+element, or as a combination of the two; see further <ptr
+target="#PHZLAB"/>.
 </p>
 </div>
 
@@ -201,8 +203,8 @@ target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#index-body.1
    <p>Modifications of various kinds (correction, addition, deletion,
    etc.) are frequently found within a single document, and may also
    be inferred when different documents are compared, although it may be
-   an open question as to whether inter-document discrepancies at the
-   dossier level should be regarded in the same way as intra-document
+   an open question as to whether inter-document discrepancies <!-- at the
+   dossier level --> should be regarded in the same way as intra-document
    alterations. When two witnesses are collated, we may observe that a
    word present in one is missing from the other: this does not necessarily
    imply that the word was added to the first witness, nor that it
@@ -222,21 +224,22 @@ record traces of the writing process within a document.
 
    <p>Most, if not all, transcriptional elements imply a certain level
    of semantic interpretation. For instance, using the <gi>add</gi>
-   element to encode interlinear insertions implies a decision that
-   the interlinear text has been deliberately inserted rather than
-   simply written between the lines.  Where it is felt desirable to
-   keep the recording of <soCalled>what is on the page</soCalled>
-   entirely separate from <soCalled>what is the editor’s
-   interpretation</soCalled>, the generic <gi>mod</gi> element may be
-   preferred. This element simply indicates any kind of modification
-   that has been identified in the document, without prejudice as to
-   its function. Occurrences of the <gi>mod</gi> element may be
-   categorised by means of their <att>type</att> attribute, and visual
-   aspects of their appearance can be described by means of the
-   <att>rend</att> attribute, but they provide no further
-   interpretation of the function or intention of the passage so
-   marked up. The <att>spanTo</att> may be used to indicate the end of
-   a modified passage if this extends across the boundaries of some
+   element to encode a word or phrase that occupies interlinear space
+   involves a decision that it has been deliberately inserted as an
+   addition rather than an alternative, and indeed a judgment that it
+   was written after, rather than before, the other lines. Where it is
+   felt desirable to keep the recording of <soCalled>what is on the
+   page</soCalled> entirely separate from <soCalled>what is the
+   editor’s interpretation</soCalled>, the generic <gi>mod</gi>
+   element may be preferred. This element simply indicates any kind of
+   modification that has been identified in the document, without
+   prejudice as to its function. Occurrences of the <gi>mod</gi>
+   element may be categorised by means of their <att>type</att>
+   attribute, and visual aspects of their appearance can be described
+   by means of the <att>rend</att> attribute, but they provide no
+   further interpretation of the function or intention of the passage
+   so marked up. The <att>spanTo</att> attribute may be used to indicate the end
+   of a modified passage if this extends across the boundaries of some
    other XML element, for example from the middle of one line tagged
    as a <gi>line</gi> to the middle of another <gi>line</gi> some
    distance further on in the document. </p>
@@ -264,22 +267,22 @@ expressly for the purpose of indicating how the text is to be
 read. Such marks thus constitute a kind of markup of the document,
 rather than forming part of the text.
  <specList>         
-<specDesc key="metaMark" atts="function target spanTo"/></specList>
+<specDesc key="metamark" atts="function target spanTo"/></specList>
 </p>      
 
-<p>Unlike marginal notes or other additions to the text, meta-marks
+<p>Unlike marginal notes or other additions to the text, metamarks
 are used by the writer to indicate a deliberate alteration of the writing itself,
 such as <q>move this passage over there</q>. An addition or annotation
 by contrast would typically concern some property of the passage other
 than its intended location or status within the text flow.  A metamark
 may contain text, or some other graphic which the encoder
-wishes to preserve, or it may simply consist of arrows, dots, lines
+wishes to represent, or it may simply consist of arrows, dots, lines
 etc. which the encoder simply describes.</p>
 
 <!-- QUERY should it contain <desc> as a child? -->
 
-<p>The <gi>metaMark</gi> element carries a <att>function</att>
-attribute which specifies the function of the meta-mark, using values
+<p>The <gi>metamark</gi> element carries a <att>function</att>
+attribute which specifies the function of the metamark, using values
 such as <val>reorder</val>,  <val>flag</val>,  <val>delete</val>,
 <val>insert</val> or  <val>used</val>. The passage to
 which the metamark applies may be indicated in either of two ways: the
@@ -287,7 +290,7 @@ which the metamark applies may be indicated in either of two ways: the
 elements containing the passage concerned, or the <att>spanTo</att>
 element may be used to point to a position in the document at which
 the passage concerned finishes. In the latter case, the
-<gi>metaMark</gi> itself must be supplied at the position in the
+<gi>metamark</gi> itself must be supplied at the position in the
 document where the passage concerned begins; in the former case it may
 be supplied at any convenient point. Both attributes should not be
 supplied. </p>
@@ -311,14 +314,14 @@ later stage the text and also the metamark were deleted. We
 might encode this as follows: <!-- ka04_1v-dtl.xml --><egXML
 xmlns="http://www.tei-c.org/ns/Examples">
 <delSpan target="#endDel" layer="#L3"/>
-   <metaMark function="flag" target="#s1" layer="#L2">lege</metaMark>
-   <ab xml:id="s1" layer="#L1">Ock en schullen de bruwere des hilgen dages nicht over
-      <lb/>setten noch uppe den stillen fridach bruwen.</ab>
+   <metamark function="flag" target="#s1" layer="#L2">lege</metamark>
+   <block xml:id="s1" layer="#L1">Ock en schullen de bruwere des hilgen dages nicht over
+   setten noch uppe den stillen fridach bruwen.</block>
    <addSpan target="#endDel" layer="#L2"/>
-      <ab>Noch nymande <lb/>over setten, se en sehin denne erst, dat uppe den
-         bonen <lb/>neyn stro noch, huw noch flaß ligghe, by pine eyner
-         halven <lb/>roden, deme bruwere so wol alse dem bruwheren to
-         murende.</ab>
+      <block>Noch nymande over setten, se en sehin denne erst, dat uppe den
+         bonen neyn stro noch, huw noch flaß ligghe, by pine eyner
+         halven roden, deme bruwere so wol alse dem bruwheren to
+         murende.</block>
    <anchor xml:id="endDel"/>
          </egXML>
       </p>
@@ -327,7 +330,7 @@ of these various interventions is discussed below, in section <ptr
 target="#PH-layers"/>. The elements <gi>addSpan</gi> and
 <gi>delSpan</gi> are discussed in section <ptr target="#PHAD"/>. </p>
       
-<p>The <gi>metaMark</gi> element may also be used to encode the
+<p>The <gi>metamark</gi> element may also be used to encode the
 symbols etc. often found in marked-up proofs such as the following,
 taken from the Walt Whitman archive:
          <figure>
@@ -339,22 +342,20 @@ has been marked for deletion, both by horizontal and vertical lines,
 and by the metamarks resembling the <q>delta</q> deletion symbol to
 left and right of the section. The deletion itself might be encoded 
 by using the normal <gi>del</gi> or <gi>delSpan</gi> element. 
-Such cases should be distinguished from cases where the
+This is quite a different case from that of the next example, in which the
 writer does not intend to suppress the content, but only to mark that
-it has been transferred or reused. An appropriate value (such as
-<val>used</val>) should be provided for the <att>function</att>
-attribute in the latter case. 
-</p>   
-<p>The following page from the Walt Whitman archive has been crossed through to
-indicate used material: <figure>
+it has been transferred or reused. </p>
+<p>
+<figure>
 <graphic url="examples/whitman02.jpg" width="70%"/>
 <head>Page from
    http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head>
          </figure> 
-This page contains many internal deletions, but these should be
-distinguished from the <soCalled>deletion</soCalled> signalled by the large
-cross, which actually shows that the page has been transferred or re-used, not
-deleted. </p>
+</p>   
+<p>This page contains many internal deletions, but these are
+semantically quite different from the apparent <soCalled>deletion</soCalled>
+signalled by the large X, which actually shows that the page has been
+transferred or re-used, not deleted. </p>
 <egXML
       xmlns="http://www.tei-c.org/ns/Examples">
 <surface>
@@ -395,13 +396,14 @@ has identifier <val>z2</val>.
 <p>A writer may sometimes rewrite material a second time without
 significant change and in the same place. We consider this a distinct
 activity from addition as usually defined because no new textual
-material results; instead the status of existing material changes. We may
-distinguish two variants of this: <term>fixation</term> where the
-first version was a tentative draft which is subsequently fixed, for
-example by inking it over; and <term>clarification</term>, where the
-first version was badly written and has been rewritten for
-clarity. The element <gi>retrace</gi> is provided for both cases; its
-<att>cause</att> attribute may be used to distinguish them. 
+material results; instead the status of existing material 
+is reaffirmed. We may distinguish two variants of this:
+<term>fixation</term> where the first version was a tentative draft
+which is subsequently reaffirmed, for example by inking it over; and
+<term>clarification</term>, where the first version was badly written
+and has been rewritten for clarity. The element <gi>retrace</gi> is
+provided for both cases; its <att>cause</att> attribute may be used to
+distinguish them.
 <specList>
          <specDesc key="retrace" atts="cause"/>
       </specList>
@@ -423,7 +425,7 @@ and clearer: <figure>
 <p>A single rewrite may not be sufficient, and it may be that the
 document becomes almost unreadable as a result of repeated
 clarification. In the following example, we can distinguish at least
-two attempts to write the letters <mentioned>er</mentioned> in the
+three attempts to write the letters <mentioned>er</mentioned> in the
 word <mentioned>bægerklang</mentioned>: <figure>
 <graphic url="examples/munch01.jpg" width="400px"/>
 <head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
@@ -438,8 +440,7 @@ word <mentioned>bægerklang</mentioned>: <figure>
 
 <p>The <gi>retrace</gi> element is used only for cases where text has
 been written multiple times. When metamarks and other markup-like strokes
-are inked over with the same purpose as the fixation or
-clarification of text passages, the <gi>redo</gi> element described in
+have been rewritten multiple times, the <gi>redo</gi> element described in
 the next section should be used in preference.
 </p>   </div>
 
@@ -514,8 +515,10 @@ as follows:
 a real example.</line> 
 </egXML> 
 using two <gi>undo</gi> elements, each with a <att>spanTo</att>
-attribute, to delimit the two parts of the deletion which
-were reverted at layer s3. </p>
+attribute, to delimit the two parts of the deletion which were
+reverted at layer s3. Note that in this case, since <att>target</att>
+is not supplied, it is the effect of the parent element (the
+<gi>del</gi>) which is assumed to be undone. </p>
 
 <p>Alternatively, we might more economically use the generic <gi>seg</gi> element within
 the <gi>line</gi> to delimit the two sequences whose
@@ -563,11 +566,11 @@ The underlined numbers 1 and 2 here indicate that, although the word
 <mentioned>hör</mentioned> in the text, the order of the two words
 should be reversed. We may encode this as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<line><seg xml:id="ib01">bör</seg><metaMark rend="underline"
-      function="transposition" target="#ib1" place="above">2.</metaMark>
-   og <seg xml:id="ib02">hör</seg><metaMark rend="underline"
+<line><seg xml:id="ib01">bör</seg><metamark rend="underline"
+      function="transposition" target="#ib1" place="above">2.</metamark>
+   og <seg xml:id="ib02">hör</seg><metamark rend="underline"
       function="transposition" target="#ib02" place="above"
-   >1.</metaMark></line>
+   >1.</metamark></line>
 <transposeGrp>
    <transpose>
       <ptr target="#ib02"/>
@@ -586,12 +589,12 @@ sections concerned: <figure>
    <ref>http://www.emunch.no/tei-mm-2008/ms3.html</ref></head>
          </figure>
          <!-- ibsen04.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
-<line xml:id="ib3"><metaMark function="transposition"
-      place="margin-left">2.)</metaMark> thi da er du med Himmelen i
+<line xml:id="ib3"><metamark function="transposition"
+      place="margin-left">2.)</metamark> thi da er du med Himmelen i
    Pagt; — </line>
 <line xml:id="ib4">
-   <metaMark function="transposition"
-	     place="margin-left">1.)</metaMark> 
+   <metamark function="transposition"
+	     place="margin-left">1.)</metamark> 
 da kan du Folkets Jøkelhjerter tine;</line>
 <transposeGrp>
    <transpose>
@@ -1233,7 +1236,7 @@ mode="add">
 
 
 <elementSpec ident="mod"  mode="add">
-<desc>represents any kind of modification identified within a text at a documentary level.</desc>
+<desc>represents any kind of modification identified within a single  document.</desc>
 <classes>
 <!--memberOf key="model.pPart.transcriptional"/-->
 <memberOf key="model.linePart"/>
@@ -1281,7 +1284,7 @@ mode="add">
 </elementSpec>
 <!-- =============== Undo/Redo/Rewrite =============== -->
 <elementSpec ident="undo"  mode="add">
-   <desc>points to any marked-up intervention in a
+   <desc>indicates a marked-up intervention in a
 		  text which has subsequently been
 		  marked as to be cancelled or undone.</desc>
    <classes>
@@ -1373,10 +1376,10 @@ mode="add">
    </remarks>
 </elementSpec>
 <!-- =============== Authorial changes =============== -->
-<elementSpec ident="metaMark"  mode="add">
-   <desc>contains any textual or graphical mark in a written text
-   intended to signal how the text should be read and not forming part
-   of the text itself.</desc>
+<elementSpec ident="metamark"  mode="add">
+   <desc>contains or describes any kind of graphic or written signal
+   within a document intended to signal how it should be read but not
+   forming part of the text itself.</desc>
    <classes>
       <memberOf key="model.pPart.transcriptional"/>
       <memberOf key="att.spanning"/>
@@ -1395,7 +1398,7 @@ mode="add">
          </datatype>
       </attDef>
       <attDef ident="target">
-         <desc>indicates the element(s) to which the function of the meta-mark
+         <desc>indicates the element(s) to which the function of the metamark
             refers. Pointers are separated by a white space</desc>
          <datatype minOccurs="1" maxOccurs="unbounded">
             <rng:ref name="data.pointer"/>
