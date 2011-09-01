@@ -47,7 +47,7 @@
       ../profiles/oepack/epub/popup.js,
       ../profiles/oepack/epub/jquery-css-transform.js,
       ../profiles/oepack/epub/rotate3Di.js
-</xsl:param>
+    </xsl:param>
     <xsl:param name="subject">Oxford Text Archive</xsl:param>
     <xsl:param name="pagebreakStyle">none</xsl:param>
 
@@ -174,11 +174,49 @@
    </xsl:template>
 
    <xsl:template name="bodyHook">
-	   <div id="popup"></div>   
-	   <input type="checkbox" id="no-gloss"></input><label for="no-gloss" id="no-gloss-label">No gloss</label>
-	   <a href="" id="version-switch">Translation</a>
-	   <div id="holder">Contents</div>
+     <div id="popup"></div>   
+     <div>
+       <input type="checkbox" id="no-gloss"></input><label for="no-gloss" id="no-gloss-label">No gloss</label>
+       <a href="" id="version-switch">Translation</a>
+     </div>
+     <div id="holder">Contents</div>
    </xsl:template>
 
+  <xsl:template match="tei:note[@type='gloss']"/>
+  <xsl:template match="tei:note[@type='editorial']"/>
+
+   <xsl:template match="tei:l">
+     <div class="l">
+       <xsl:apply-templates/>
+       <xsl:for-each
+	   select="tei:seg[@type='annotated']/tei:note[@type='gloss']">
+	 <span class="glossnote">
+	   <a href="#{generate-id(..)}">
+	     <xsl:apply-templates/>
+	   </a>
+	 </span>
+       </xsl:for-each>
+     </div>
+   </xsl:template>
+
+   <xsl:template match="tei:lg">
+     <div class="lg">
+       <xsl:apply-templates/>
+	 <xsl:for-each
+	     select="tei:l/tei:seg[@type='annotated']/tei:note[@type='editorial']">
+	   <span class="editorialnote">
+	     <a href="#{generate-id(..)}">
+	       <xsl:apply-templates/>
+	     </a>
+	   </span>
+	 </xsl:for-each>
+       </div>
+   </xsl:template>
+
+   <xsl:template match="tei:seg[@type='annotated']">
+     <span id="{generate-id()}">
+       <xsl:apply-templates/>
+     </span>
+   </xsl:template>
 
 </xsl:stylesheet>

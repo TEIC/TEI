@@ -148,12 +148,12 @@
 	    </xsl:result-document>
 	-->
         <xsl:if test="$verbose='true'">
-          <xsl:message>write Javascript files</xsl:message>
 	  <xsl:for-each select="tokenize($javascriptFiles,',')">
 	    <xsl:variable name="file" select="normalize-space(.)"/>
 	    <xsl:variable name="name" select="tokenize($file,'/')[last()]"/>
+	    <xsl:message>write Javascript file <xsl:value-of select="$name"/></xsl:message>
 	    <xsl:result-document method="text"
-				 href="{concat($directory,'/OEBPS/media/',$name)}">
+				 href="{concat($directory,'/OEBPS/',$name)}">
 	      <xsl:for-each select="unparsed-text($file)">
 		<xsl:copy-of select="."/>
 	      </xsl:for-each>
@@ -821,7 +821,7 @@
    <xsl:template name="javascriptHook">   
     <xsl:for-each select="tokenize($javascriptFiles,',')">
       <xsl:variable name="name" select="tokenize(normalize-space(.),'/')[last()]"/>      
-      <script type="text/javascript" src="media/{$name}">
+      <script type="text/javascript" src="{$name}">
       <xsl:comment>JS library</xsl:comment>
     </script>
     </xsl:for-each>
