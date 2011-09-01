@@ -150,10 +150,11 @@
         <xsl:if test="$verbose='true'">
           <xsl:message>write Javascript files</xsl:message>
 	  <xsl:for-each select="tokenize($javascriptFiles,',')">
-	    <xsl:variable name="name" select="tokenize(.,'/')[last()]"/>
+	    <xsl:variable name="file" select="normalize-space(.)"/>
+	    <xsl:variable name="name" select="tokenize($file,'/')[last()]"/>
 	    <xsl:result-document method="text"
 				 href="{concat($directory,'/OEBPS/media/',$name)}">
-	      <xsl:for-each select="unparsed-text(.)">
+	      <xsl:for-each select="unparsed-text($file)">
 		<xsl:copy-of select="."/>
 	      </xsl:for-each>
 	    </xsl:result-document>
@@ -360,7 +361,7 @@
               </xsl:if>
 	      <xsl:for-each select="tokenize($javascriptFiles,',')">
 		<xsl:variable name="name"
-			      select="tokenize(.,'/')[last()]"/>
+			      select="tokenize(normalize-space(.),'/')[last()]"/>
 		<item href="{$name}" id="javascript{position()}" media-type="text/javascript"/>
 	      </xsl:for-each>
               <item href="stylesheet.css" id="css" media-type="text/css"/>
@@ -816,7 +817,19 @@
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
+
+   <xsl:template name="javascriptHook">   
+    <xsl:for-each select="tokenize($javascriptFiles,',')">
+      <xsl:variable name="name" select="tokenize(normalize-space(.),'/')[last()]"/>      
+      <script type="text/javascript" src="media/{$name}">
+      <xsl:comment>JS library</xsl:comment>
+    </script>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template name="epubSpineHook"/>
   <xsl:template name="epubManifestHook"/>
   <xsl:template name="processTEIHook"/>
+
+
 </xsl:stylesheet>
