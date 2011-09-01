@@ -178,7 +178,7 @@
    <xsl:template name="javascriptHook">   
     <xsl:for-each select="tokenize($javascriptFiles,',')">
       <xsl:variable name="name" select="tokenize(.,'/')[last()]"/>      
-      <script type="text/javascript" src="{$name}">
+      <script type="text/javascript" src="media/{$name}">
       <xsl:comment>JS library</xsl:comment>
     </script>
     </xsl:for-each>
