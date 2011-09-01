@@ -68,6 +68,20 @@
     </xsl:for-each>
   </xsl:function>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether to render text in smart quotes.</desc>
+  </doc>
+  <xsl:function name="teidocx:render-quotes" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+        <xsl:when test="self::tei:soCalled">true</xsl:when>
+        <xsl:when test="contains(@rend,'quotes')">true</xsl:when>
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in bold.</desc>
@@ -111,7 +125,6 @@
         <xsl:when test="self::tei:gloss">true</xsl:when>
         <xsl:when test="self::tei:title">true</xsl:when>
         <xsl:when test="self::tei:name">true</xsl:when>
-        <xsl:when test="self::tei:soCalled">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
