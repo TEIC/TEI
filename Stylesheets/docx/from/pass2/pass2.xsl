@@ -399,4 +399,9 @@
 	    select="following-sibling::tei:speech[1]" mode="keep"/>
       </sp>
     </xsl:template>
+
+    <xsl:template match="tei:hi[.=' ']" mode="pass2">
+      <xsl:text> </xsl:text>
+    </xsl:template>
+
 </xsl:stylesheet>
