@@ -50,5 +50,7 @@
     <xsl:template match="@rend[.='Text Body']" mode="pass2"/>
     <xsl:template match="@rend[.='Text body']" mode="pass2"/>
     <xsl:template match="@rend[.='Body Text Indent']" mode="pass2"/>
-
+    <xsl:template match="tei:hi[.=' ']" mode="pass2">
+      <xsl:text> </xsl:text>
+    </xsl:template>
 </xsl:stylesheet>
