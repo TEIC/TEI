@@ -442,4 +442,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <!-- its inserted explicitly -->
+  <xsl:template match="tei:front/tei:titlePage"/>
 </xsl:stylesheet>
