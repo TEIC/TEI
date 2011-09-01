@@ -148,6 +148,18 @@
 	    </xsl:result-document>
 	-->
         <xsl:if test="$verbose='true'">
+          <xsl:message>write Javascript files</xsl:message>
+	  <xsl:for-each select="tokenize($javascriptFiles,',')">
+	    <xsl:variable name="name" select="tokenize(.,'/')[last()]"/>
+	    <xsl:result-document method="text"
+				 href="{concat($directory,'/OEBPS/media/',$name)}">
+	      <xsl:for-each select="unparsed-text(.)">
+		<xsl:copy-of select="."/>
+	      </xsl:for-each>
+	    </xsl:result-document>
+	  </xsl:for-each>
+        </xsl:if>
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/OEBPS/stylesheet.css')}">
@@ -346,6 +358,11 @@
               <xsl:if test="not($coverimage='') and not($coverimage=$coverImageOutside)">
                 <item href="{$coverimage}" id="cover-image-extra" media-type="image/jpeg"/>
               </xsl:if>
+	      <xsl:for-each select="tokenize($javascriptFiles,',')">
+		<xsl:variable name="name"
+			      select="tokenize(.,'/')[last()]"/>
+		<item href="{$name}" id="javascript{position()}" media-type="text/javascript"/>
+	      </xsl:for-each>
               <item href="stylesheet.css" id="css" media-type="text/css"/>
               <item href="titlepage.html" id="titlepage"
 		    media-type="application/xhtml+xml"/>
