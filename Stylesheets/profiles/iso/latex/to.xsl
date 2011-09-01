@@ -281,9 +281,9 @@
 
 
    <xsl:template name="egXMLEndHook">
-      <xsl:if test="@corresp and id(substring-after(@corresp,'#'))">
+      <xsl:if test="@corresp and id(substring(corresp,2))">
          <xsl:text>\egxmlcite{</xsl:text>
-         <xsl:for-each select="id(substring-after(@corresp,'#'))">
+         <xsl:for-each select="id(substring(corresp,2))">
             <xsl:text>Source: \cite{</xsl:text>
             <xsl:value-of select="@xml:id"/>
             <xsl:text>}</xsl:text>

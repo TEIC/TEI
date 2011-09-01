@@ -89,7 +89,7 @@
                <xsl:value-of select="$target"/>
             </xsl:when>
             <xsl:when test="contains($dest,'#')">
-               <xsl:value-of select="substring-after($dest,'#')"/>
+               <xsl:value-of select="substring($dest,2)"/>
             </xsl:when>
             <xsl:otherwise>
                <xsl:value-of select="$dest"/>

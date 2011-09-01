@@ -321,7 +321,7 @@
       </xsl:if>
       <xsl:choose>
          <xsl:when test="starts-with(@target,'#')">
-            <xsl:for-each select="id(substring-after(@target,'#'))">
+            <xsl:for-each select="id(substring(target,2))">
                <xsl:apply-templates mode="ok" select=".">
                   <xsl:with-param name="filename" select="$filename"/>
                </xsl:apply-templates>

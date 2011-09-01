@@ -186,7 +186,7 @@
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#')">
 	<xsl:for-each
-	    select="id(substring-after(@target,'#'))">
+	    select="id(substring(target,2))">
 	  <xsl:if test="*">
 	    <specGrpRef target="#{@xml:id}"/>
 	  </xsl:if>

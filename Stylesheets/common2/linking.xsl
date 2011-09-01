@@ -285,12 +285,12 @@
       <!-- If there is a target attribute starting with #, it is always a local reference -->
       <xsl:when test="@target and starts-with(@target,'#')">
             <xsl:call-template name="makeInternalLink">
-               <xsl:with-param name="target" select="substring-after(@target,'#')"/>
+               <xsl:with-param name="target" select="substring(@target,2)"/>
                <xsl:with-param name="ptr" select="$ptr"/>
                <xsl:with-param name="dest">
                   <xsl:call-template name="generateEndLink">
                      <xsl:with-param name="where">
-                        <xsl:value-of select="substring-after(@target,'#')"/>
+                        <xsl:value-of select="substring(@target,2)"/>
                      </xsl:with-param>
                   </xsl:call-template>
                </xsl:with-param>
@@ -323,12 +323,12 @@
        reference -->
       <xsl:when test="@url and starts-with(@url,'#')">
             <xsl:call-template name="makeInternalLink">
-               <xsl:with-param name="target" select="substring-after(@url,'#')"/>
+               <xsl:with-param name="target" select="substring(@url,2)"/>
                <xsl:with-param name="ptr" select="$ptr"/>
                <xsl:with-param name="dest">
                   <xsl:call-template name="generateEndLink">
                      <xsl:with-param name="where">
-                        <xsl:value-of select="substring-after(@url,'#')"/>
+                        <xsl:value-of select="substring(@url,2)"/>
                      </xsl:with-param>
                   </xsl:call-template>
                </xsl:with-param>

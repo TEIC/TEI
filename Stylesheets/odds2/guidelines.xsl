@@ -3,8 +3,8 @@
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
   <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
-  <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]" use="substring-after(@corresp,'#')"/>
-  <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']" use="substring-after(@target,'#')"/>
+  <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]" use="substring(@corresp,2)"/>
+  <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']" use="substring(@target,2)"/>
   <heads xmlns="http://www.tei-c.org/ns/1.0">
     <head xml:lang="fr" corresp="AB">À propos des Principes directeurs</head>
     <head xml:lang="fr" corresp="AI">Mécanismes analytiques simples</head>
@@ -1032,11 +1032,11 @@ glyphes non standard</head>
   </xsl:template>
 
   <xsl:template name="egXMLEndHook">
-    <xsl:if test="@corresp and id(substring-after(@corresp,'#'))">
+    <xsl:if test="@corresp and id(substring(@corresp,2))">
       <div style="float: right;">
         <a>
           <xsl:attribute name="href">
-            <xsl:apply-templates mode="generateLink" select="id(substring-after(@corresp,'#'))"/>
+            <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
           </xsl:attribute>
           <xsl:text>bibliography</xsl:text>
           <!--	  <span class="citLink">&#x270d;</span>-->
@@ -1056,11 +1056,11 @@ glyphes non standard</head>
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="figureHook">
-    <xsl:if test="@corresp and id(substring-after(@corresp,'#'))">
+    <xsl:if test="@corresp and id(substring(@corresp,2))">
       <div style="float: right;">
         <a>
           <xsl:attribute name="href">
-            <xsl:apply-templates mode="generateLink" select="id(substring-after(@corresp,'#'))"/>
+            <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
           </xsl:attribute>
           <xsl:text>bibliography</xsl:text>
         </a>

@@ -70,7 +70,7 @@
 	    <xsl:otherwise>
 	      <xsl:value-of select="."/>
 	      <xsl:text>(</xsl:text>
-	      <xsl:value-of select="translate(substring-after(./@wit,'#'),' #',', ')"/>
+	      <xsl:value-of select="translate(substring(@wit,2),' #',', ')"/>
 	      <xsl:text>)</xsl:text>
 	  </xsl:otherwise>
 	  </xsl:choose>
