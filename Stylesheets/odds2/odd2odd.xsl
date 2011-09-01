@@ -104,10 +104,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  <xsl:variable name="AnonymousModule">
-    <xsl:text>derived-module-</xsl:text>
-    <xsl:value-of select="$selectedSchema"/>
-  </xsl:variable>
   
   <xsl:variable name="ODD">
     <xsl:for-each select="/tei:TEI">
@@ -658,12 +654,18 @@ How can a class be ok?
   </xsl:template>
   <xsl:template match="tei:elementSpec" mode="odd2odd-copy">
     <xsl:copy>
-      <xsl:if test="not(@module)">
-        <xsl:attribute name="module">
-	  <xsl:text>derived-module-</xsl:text>
-          <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
-        </xsl:attribute>
-      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="@module"/>
+	<xsl:when test="ancestor::tei:schemaSpec/@module">
+	  <xsl:copy-of select="ancestor::tei:schemaSpec/@module"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="module">
+	    <xsl:text>derived-module-</xsl:text>
+	    <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
+	  </xsl:attribute>
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="odd2odd-copyElementSpec">
 	<xsl:with-param name="n" select="'1'"/>
       </xsl:call-template>
@@ -2093,12 +2095,18 @@ so that is only put back in if there is some content
       <xsl:message>Create <xsl:value-of select="local-name()"/> named <xsl:value-of select="@ident"/>            </xsl:message>
     </xsl:if>
     <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
-      <xsl:if test="not(@module)">
-        <xsl:attribute name="module">
-	  <xsl:text>derived-module-</xsl:text>
-          <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
-        </xsl:attribute>
-      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="@module"/>
+	<xsl:when test="ancestor::tei:schemaSpec/@module">
+	  <xsl:copy-of select="ancestor::tei:schemaSpec/@module"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="module">
+	    <xsl:text>derived-module-</xsl:text>
+	    <xsl:value-of select="ancestor::tei:schemaSpec/@ident"/>
+	  </xsl:attribute>
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:choose>
 	<xsl:when test="local-name()='classSpec'">
 	  <xsl:if test="@type='model' and not(@predeclare)">
