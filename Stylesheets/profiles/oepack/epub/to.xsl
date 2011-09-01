@@ -43,9 +43,11 @@
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="cssFile">../profiles/oepack/epub/oepack.css</xsl:param>
     <xsl:param name="javascriptFiles">
-      ../profiles/oepack/epub/popup.js,
       ../profiles/oepack/epub/jquery-1.6.1.min.js,
-    ../profiles/oepack/epub/jquery-css-transform.js</xsl:param>
+      ../profiles/oepack/epub/popup.js,
+      ../profiles/oepack/epub/jquery-css-transform.js,
+      ../profiles/oepack/epub/rotate3Di.js
+</xsl:param>
     <xsl:param name="subject">Oxford Text Archive</xsl:param>
     <xsl:param name="pagebreakStyle">none</xsl:param>
 
