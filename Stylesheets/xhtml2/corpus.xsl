@@ -50,7 +50,7 @@
       </xsl:if>
       <em>
          <xsl:value-of select="@scheme"/>
-      </em>: <xsl:apply-templates select="key('IDS',$W)/catDesc"/>
+      </em>: <xsl:apply-templates select="id($W)/catDesc"/>
    </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element teiCorpus</desc>

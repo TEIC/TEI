@@ -68,7 +68,7 @@
   <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS"
     use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec" name="IDENTS" use="@ident"/>
-  <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
+
   <xsl:key match="tei:macroSpec[@type='dt']" name="DATATYPES" use="1"/>
   <xsl:key match="tei:macroSpec" name="MACRODOCS" use="1"/>
   <xsl:key match="tei:attDef" name="ATTDOCS" use="1"/>
@@ -1608,17 +1608,17 @@ select="$makeDecls"/></xsl:message>
     <xsl:param name="type"/>
     <xsl:choose>
       <xsl:when test="$type='macro'">
-        <xsl:for-each select="key('IDS','REFENT')">
+        <xsl:for-each select="id('REFENT')">
           <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:for-each>
       </xsl:when>
       <xsl:when test="$type='element'">
-        <xsl:for-each select="key('IDS','REFTAG')">
+        <xsl:for-each select="id('REFTAG')">
           <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:for-each>
       </xsl:when>
       <xsl:when test="$type='class'">
-        <xsl:for-each select="key('IDS','REFCLA')">
+        <xsl:for-each select="id('REFCLA')">
           <xsl:apply-templates mode="generateLink" select="."/>
         </xsl:for-each>
       </xsl:when>
@@ -2026,7 +2026,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:specGrpRef" mode="expandSpecs">
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#')">
-        <xsl:for-each select="key('IDS',substring-after(@target,'#'))">
+        <xsl:for-each select="id(substring-after(@target,'#'))">
           <xsl:apply-templates mode="expandSpecs"/>
         </xsl:for-each>
       </xsl:when>

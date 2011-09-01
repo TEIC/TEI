@@ -121,8 +121,8 @@
 	   <xsl:when test="$requestedID='prelim___'">
 	     <xsl:apply-templates/>
 	   </xsl:when>
-	   <xsl:when test="count(key('IDS',$requestedID))&gt;0">
-	     <xsl:for-each select="key('IDS',$requestedID)">
+	   <xsl:when test="count(id($requestedID))&gt;0">
+	     <xsl:for-each select="id($requestedID)">
 	       <xsl:call-template name="writeDiv"/>
 	     </xsl:for-each>
 	   </xsl:when>
@@ -1277,8 +1277,8 @@
          </xsl:when>
          <xsl:otherwise>
             <xsl:choose>
-               <xsl:when test="count(key('IDS',$currentID))&gt;0">
-                  <xsl:for-each select="key('IDS',$currentID)">
+               <xsl:when test="count(id($currentID))&gt;0">
+                  <xsl:for-each select="id($currentID)">
                      <xsl:call-template name="linkListContents">
                         <xsl:with-param name="style" select="'toclist'"/>
                      </xsl:call-template>
@@ -1414,8 +1414,8 @@
          </xsl:when>
          <xsl:otherwise>
             <xsl:choose>
-               <xsl:when test="count(key('IDS',$currentID))&gt;0">
-                  <xsl:for-each select="key('IDS',$currentID)">
+               <xsl:when test="count(id($currentID))&gt;0">
+                  <xsl:for-each select="id($currentID)">
                      <h2>
                         <xsl:apply-templates mode="xref" select="."/>
 			<xsl:call-template name="sectionHeadHook"/>
@@ -1747,8 +1747,8 @@
 		   <xsl:when test="$currentID='current'">
 		     <xsl:apply-templates mode="xref" select="."/>
 		   </xsl:when>
-		   <xsl:when test="count(key('IDS',$currentID))&gt;0">
-		     <xsl:for-each select="key('IDS',$currentID)">
+		   <xsl:when test="count(id($currentID))&gt;0">
+		     <xsl:for-each select="id($currentID)">
 		       <xsl:apply-templates mode="xref" select="."/>
 		     </xsl:for-each>
 		   </xsl:when>
@@ -1990,8 +1990,8 @@
                   </xsl:when>
                   <xsl:otherwise>
                      <xsl:call-template name="generateTitle"/>: <xsl:choose>
-                        <xsl:when test="count(key('IDS',$currentID))&gt;0">
-                           <xsl:for-each select="key('IDS',$currentID)">
+                        <xsl:when test="count(id($currentID))&gt;0">
+                           <xsl:for-each select="id($currentID)">
                               <xsl:apply-templates mode="xref" select="."/>
                            </xsl:for-each>
                         </xsl:when>

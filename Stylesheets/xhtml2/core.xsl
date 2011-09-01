@@ -1200,12 +1200,12 @@
 	  <xsl:copy-of select="@facs"/>
 	</PAGEBREAK>
       </xsl:when>
-      <xsl:when test="$filePerPage='true'"/>
+
       <xsl:when test="@facs">
 	<xsl:variable name="IMG">
 	  <xsl:choose>
 	    <xsl:when test="starts-with(@facs,'#')">
-	      <xsl:for-each select="key('IDS',substring(@facs,2))">
+	      <xsl:for-each select="id(substring(@facs,2))">
 		<xsl:value-of select="tei:graphic[1]/@url"/>
 	      </xsl:for-each>
 	    </xsl:when>
@@ -1775,8 +1775,8 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
-          <xsl:when test="count(key('IDS',$currentID))&gt;0">
-            <xsl:for-each select="key('IDS',$currentID)">
+          <xsl:when test="count(id($currentID))&gt;0">
+            <xsl:for-each select="id($currentID)">
               <xsl:call-template name="printNotes"/>
             </xsl:for-each>
           </xsl:when>

@@ -97,7 +97,7 @@
         <xsl:choose>
           <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs]">
             <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs][1]">
-              <xsl:for-each select="key('IDS',substring(@facs,2))">
+              <xsl:for-each select="id(substring(@facs,2))">
                 <xsl:choose>
                   <xsl:when test="count(tei:graphic)=1">
                     <xsl:value-of select="tei:graphic/@url"/>
@@ -118,7 +118,7 @@
         <xsl:choose>
           <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs]">
             <xsl:for-each select="/tei:TEI/tei:text/tei:front/tei:titlePage[@facs][1]">
-              <xsl:for-each select="key('IDS',substring(@facs,2))">
+              <xsl:for-each select="id(substring(@facs,2))">
                 <xsl:value-of select="tei:graphic[1]/@url"/>
               </xsl:for-each>
             </xsl:for-each>

@@ -57,7 +57,7 @@
 	   <xsl:variable name="F">
 	     <xsl:choose>
 	       <xsl:when test="starts-with(@facs,'#')">
-		 <xsl:for-each select="key('IDS',substring(@facs,2))">
+		 <xsl:for-each select="id(substring(@facs,2))">
 		   <xsl:value-of select="tei:graphic[1]/@url"/>
 		 </xsl:for-each>
 	       </xsl:when>

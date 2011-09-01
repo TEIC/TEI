@@ -103,7 +103,7 @@
                <xsl:value-of select="$body"/>
             </xsl:when>
             <xsl:when test="$ptr='true'">
-               <xsl:apply-templates mode="xref" select="key('IDS',$W)">
+               <xsl:apply-templates mode="xref" select="id($W)">
                   <xsl:with-param name="minimal" select="$minimalCrossRef"/>
                </xsl:apply-templates>
             </xsl:when>

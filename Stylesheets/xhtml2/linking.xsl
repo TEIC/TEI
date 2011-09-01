@@ -239,8 +239,8 @@
       <xsl:param name="where"/>
 
     <xsl:choose>
-      <xsl:when test="key('IDS',$where)">
-	<xsl:apply-templates mode="generateLink" select="key('IDS',$where)"/>
+      <xsl:when test="id($where)">
+	<xsl:apply-templates mode="generateLink" select="id($where)"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:text>[[undefined </xsl:text>
@@ -452,7 +452,7 @@
                   <xsl:value-of select="$body"/>
                </xsl:when>
                <xsl:when test="$ptr='true'">
-                  <xsl:apply-templates mode="xref" select="key('IDS',$W)">
+                  <xsl:apply-templates mode="xref" select="id($W)">
                      <xsl:with-param name="minimal" select="$minimalCrossRef"/>
                   </xsl:apply-templates>
                </xsl:when>
@@ -467,9 +467,9 @@
 	       <xsl:when test="starts-with($dest,'#') or  contains($dest,$outputSuffix) or contains($dest,'ID=')">
 		 <xsl:value-of select="$dest"/>
 	       </xsl:when>
-	       <xsl:when test="key('IDS',$W)"/>
+	       <xsl:when test="id($W)"/>
 	       <xsl:otherwise>
-		 <xsl:apply-templates mode="generateLink" select="key('IDS',$W)"/>
+		 <xsl:apply-templates mode="generateLink" select="id($W)"/>
 	       </xsl:otherwise>
 	     </xsl:choose>
 	   </xsl:variable>
@@ -478,8 +478,8 @@
 	       <xsl:when test="not($body='')">
 		 <xsl:value-of select="$body"/>
 	       </xsl:when>
-	       <xsl:when test="$ptr='true' and count(key('IDS',$W))&gt;0">
-		 <xsl:apply-templates mode="xref" select="key('IDS',$W)">
+	       <xsl:when test="$ptr='true' and count(id($W))&gt;0">
+		 <xsl:apply-templates mode="xref" select="id($W)">
 		   <xsl:with-param name="minimal" select="$minimalCrossRef"/>
 		 </xsl:apply-templates>
 	       </xsl:when>
@@ -515,7 +515,7 @@
 		   </xsl:otherwise>
 		 </xsl:choose>
 		 
-		 <xsl:for-each select="key('IDS',$W)">
+		 <xsl:for-each select="id($W)">
 		     <xsl:choose>
 		       <xsl:when test="starts-with(local-name(.),'div')">
 			 <xsl:attribute name="title">

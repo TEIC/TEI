@@ -79,7 +79,7 @@
       <xsl:param name="dest"/>
       <xsl:param name="body"/>
       <xsl:choose>
-         <xsl:when test="key('IDS',$dest)">
+         <xsl:when test="id($dest)">
             <xsl:choose>
                <xsl:when test="not($body='')">
 		 <xsl:text>\hyperlink{</xsl:text>
@@ -89,7 +89,7 @@
 		 <xsl:text>}</xsl:text>
                </xsl:when>
                <xsl:when test="$ptr='true'">
-		 <xsl:for-each select="key('IDS',$dest)">
+		 <xsl:for-each select="id($dest)">
 		   <xsl:choose>
 		     <xsl:when test="$class='pageref'">
 		       <xsl:text>\pageref{</xsl:text>

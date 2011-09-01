@@ -156,7 +156,7 @@
     <xsl:key name="ENDNOTES" match="tei:note[@place='end']" use="1"/>
     <xsl:key name="FOOTNOTES" match="tei:note[@place='foot' or @place='bottom' ]" use="1"/>
 
-    <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
+
 
     <xsl:key name="OL" match="tei:list[@type='ordered']" use="1"/>
     <xsl:key name="BLIP" match="a:blip" use="1"/>
@@ -2084,10 +2084,10 @@
 	    <xsl:when test="@type='table'">Table </xsl:when>
 	  </xsl:choose>
 	  <xsl:choose>
-	    <xsl:when test="starts-with(@target,'#')  and key('IDS',substring(@target,2))">	  
+	    <xsl:when test="starts-with(@target,'#')  and id(substring(@target,2))">	  
 	      <xsl:variable name="target" select="substring(@target,2)"/>
 	      <xsl:apply-templates
-		  select="key('IDS',$target)"
+		  select="id($target)"
 		  mode="xref"/>
 	    </xsl:when>
 	    <xsl:otherwise>
@@ -2103,7 +2103,7 @@
 
     <xsl:template match="tei:ref[@target]">
       <xsl:choose>
-	<xsl:when test="starts-with(@target,'#') and key('IDS',substring(@target,2))">	  
+	<xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">	  
 	  <xsl:call-template name="linkMe">
 	    <xsl:with-param name="anchor">
 	      <xsl:apply-templates/>
@@ -2185,7 +2185,7 @@
 	      </xsl:otherwise>
 	    </xsl:choose>
 	    <xsl:value-of select="$target"/>
-	    <xsl:for-each select="key('IDS',$target)">
+	    <xsl:for-each select="id($target)">
 	      <xsl:choose>
 		<xsl:when test="contains($rend,'instr_')">
 		  <xsl:if test="contains($rend,'instr_f')">

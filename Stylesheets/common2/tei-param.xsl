@@ -19,7 +19,7 @@
       <p>Copyright: 2011, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:key match="tei:*[@xml:id]" name="IDS" use="@xml:id"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
     <desc>CSS class for TOC entries</desc>
   </doc>

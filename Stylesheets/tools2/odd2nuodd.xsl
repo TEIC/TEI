@@ -20,7 +20,7 @@
   <!-- do you want moduleRef generated with @include or @except? -->
   <xsl:param name="method">include</xsl:param>
 
-  <xsl:key name="IDS" match="*" use="@xml:id"/>
+
 
   <xsl:key name="EbyM" match="elementSpec" use="@module"/>
 
@@ -186,7 +186,7 @@
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#')">
 	<xsl:for-each
-	    select="key('IDS',substring-after(@target,'#'))">
+	    select="id(substring-after(@target,'#'))">
 	  <xsl:if test="*">
 	    <specGrpRef target="#{@xml:id}"/>
 	  </xsl:if>

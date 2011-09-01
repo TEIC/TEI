@@ -726,7 +726,7 @@ glyphes non standard</head>
   <xsl:template name="showHead">
     <xsl:param name="ID"/>
     <xsl:variable name="Here" select="/"/>
-    <xsl:for-each select="key('IDS',$ID)">
+    <xsl:for-each select="id($ID)">
       <xsl:choose>
         <xsl:when test="ancestor::tei:front">
           <xsl:number format="i"/>
@@ -749,7 +749,7 @@ glyphes non standard</head>
         </xsl:when>
         <xsl:otherwise>
           <xsl:for-each select="$Here">
-            <xsl:for-each select="key('IDS',$ID)">
+            <xsl:for-each select="id($ID)">
               <xsl:value-of select="tei:head"/>
             </xsl:for-each>
           </xsl:for-each>
@@ -1032,11 +1032,11 @@ glyphes non standard</head>
   </xsl:template>
 
   <xsl:template name="egXMLEndHook">
-    <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
+    <xsl:if test="@corresp and id(substring-after(@corresp,'#'))">
       <div style="float: right;">
         <a>
           <xsl:attribute name="href">
-            <xsl:apply-templates mode="generateLink" select="key('IDS',substring-after(@corresp,'#'))"/>
+            <xsl:apply-templates mode="generateLink" select="id(substring-after(@corresp,'#'))"/>
           </xsl:attribute>
           <xsl:text>bibliography</xsl:text>
           <!--	  <span class="citLink">&#x270d;</span>-->
@@ -1056,11 +1056,11 @@ glyphes non standard</head>
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="figureHook">
-    <xsl:if test="@corresp and key('IDS',substring-after(@corresp,'#'))">
+    <xsl:if test="@corresp and id(substring-after(@corresp,'#'))">
       <div style="float: right;">
         <a>
           <xsl:attribute name="href">
-            <xsl:apply-templates mode="generateLink" select="key('IDS',substring-after(@corresp,'#'))"/>
+            <xsl:apply-templates mode="generateLink" select="id(substring-after(@corresp,'#'))"/>
           </xsl:attribute>
           <xsl:text>bibliography</xsl:text>
         </a>
