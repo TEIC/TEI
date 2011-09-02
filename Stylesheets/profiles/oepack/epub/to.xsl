@@ -179,7 +179,7 @@
        <a href="#no-gloss" id="no-gloss">Show gloss</a>
        <a href="#version-switch" id="version-switch">Translation</a>
      </div>
-     <div id="holder">Contents</div>
+     <div id="holder"></div>
    </xsl:template>
 
   <xsl:template match="tei:note[@type='gloss']"/>
