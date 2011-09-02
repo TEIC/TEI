@@ -176,8 +176,8 @@
    <xsl:template name="bodyHook">
      <div id="popup"></div>   
      <div>
-       <a href="" id="no-gloss">Show gloss</a>
-       <a href="" id="version-switch">Translation</a>
+       <a href="no-gloss" id="no-gloss">Show gloss</a>
+       <a href="version-switch" id="version-switch">Translation</a>
      </div>
      <div id="holder">Contents</div>
    </xsl:template>
