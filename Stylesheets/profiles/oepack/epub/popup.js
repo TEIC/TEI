@@ -5,8 +5,12 @@
 			annotated = $(this).attr('href');
 			$(annotated).addClass('annotated');
 		});
-		
-		$('.note').fadeOut();
+
+		/* Make all glossed words have a 'degree' symbol*/
+		$('.note.gloss > a').each(function() {
+			annotated = $(this).attr('href');
+			$(annotated).html($(annotated).html() + '<sup>o</sup>'); /*This should be a degree symbol*/
+		});
 
 		/* Show popup at the position of 'element', with the contents 'contents'*/
 		function popup(element, contents) {
@@ -35,7 +39,7 @@
 		};
 	
 		function make_clickable() {
-		$('span').click(function(event)
+		$('span.annotated').click(function(event)
 			{
 				id = $(this).attr('id');
 				glossnote = ($('.gloss.note [href="#' + id + '"]'));
@@ -43,7 +47,16 @@
 				popup($(this), editorialnote.text());
 		
 			});
+	/* Doesn't work in touch interfaces, but still nice*/
+		$('.gloss > a').mouseover(function(event) {
+			id = $(this).attr('href');
+			$(id).css('background', 'yellow');
+		});			
 
+		$('.gloss > a').mouseleave(function(event) {
+			id = $(this).attr('href');
+			$(id).css('background', '');
+		});			
 
 		}
 
