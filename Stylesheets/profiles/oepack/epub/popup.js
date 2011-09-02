@@ -62,16 +62,19 @@
 
 		make_clickable();
 
-		$('#no-gloss').click(function() {
-			if ($(this).html() == 'Hide gloss') 
+		$('#no-gloss').html('Hide gloss');
+
+		$('#no-gloss').click(function(event) {
+			event.preventDefault();
+			if ($(this).text() == 'Hide gloss') 
 			{
-				$('.gloss-real').fadeOut();
-				$('#no-gloss').html('Show gloss');
+				$('.gloss').fadeOut();
+				$('#no-gloss').text('Show gloss');
 			}
 			else 
 			{
-				$('.gloss-real').fadeIn();
-				$('#no-gloss').html('Hide gloss');
+				$('.gloss').fadeIn();
+				$('#no-gloss').text('Hide gloss');
 			}
 			});
 
