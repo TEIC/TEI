@@ -82,16 +82,27 @@
 				$('#popup').fadeOut();
 				});
 
+		$('#holder').html($('div .original[id]').html());
+
+		$('#version-switch').text('Translation 1');
 		$('#version-switch').click(function(event){
 			
 		function change_sides(front) {
-			if (front) {
-				$('#holder').html($('.original').html());
-				make_clickable();
-			}
-			else {
-				$('#holder').html($('.translation').html());
-			}
+			switch ($('#version-switch').text()) {
+				case 'Original':
+					$('#holder').html($('div .original[id]').html());
+					make_clickable();
+					$('#version-switch').text('Translation 1');
+					break;
+				case 'Translation 1':
+					$('#holder').html($('div .translation[id]').filter(':first').html());
+					$('#version-switch').text('Translation 2');
+					break;
+				case 'Translation 2':
+					$('#holder').html($('div .translation[id]').filter(':last').html());
+					$('#version-switch').text('Original');
+					break;
+				}
 			}
 
 			event.preventDefault();
