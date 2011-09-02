@@ -514,6 +514,24 @@
       </xsl:choose>			   
   </xsl:template>
 
+  <xsl:template match="rng:zeroOrMore" mode="pass3">
+      <xsl:choose>
+	<xsl:when test="rng:zeroOrMore and count(*)=1">
+	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+	</xsl:when>
+	<xsl:when test="count(*)=1 and rng:group[count(*)=1 and	rng:zeroOrMore]">
+	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	     <xsl:apply-templates
+		 select="*|@*|processing-instruction()|comment()|text()"
+		 mode="pass3"/>
+	  </zeroOrMore>
+	</xsl:otherwise>
+      </xsl:choose>			   
+  </xsl:template>
+
   <xsl:template match="@*|text()|comment()" mode="pass3">
       <xsl:copy-of select="."/>
   </xsl:template>
