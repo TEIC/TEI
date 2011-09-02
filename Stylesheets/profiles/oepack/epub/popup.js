@@ -1,45 +1,46 @@
 	$(document).ready(function(){
-
-		/* Insert gloss at end of line */
-		$('.l').each(function(index) {
-			gloss_text = $(this).find('.gloss').contents().eq(1).text();
-				$(this).html($(this).html() + '<span class="gloss-real">' + gloss_text + "</span>");
+		/* Show popup when span with an editorial annotation is clicked */
+		
+		$('span').click(function(event)
+			{
+				id = $(this).attr('id');
+				glossnote = ($('.gloss.note [href="#' + id + '"]'));
+				editorialnote = ($('.editorial.note [href="#' + id + '"]'));
+				popup($(this), editorialnote);
+		
 			});
 
-		/* Set glossed words to look like links */
-		editorial_annotated = $('.annotated:has(div.editorial)');
-		editorial_annotated.addClass("editorial_annotated");
+		/* Make all annotated words look like links*/
+		$('.note > a').each(function() {
+			annotated = $(this).attr('href');
+			$(annotated).addClass('annotated');
+		});
 
-		/* Transfer content of original text to container */
-		$('#holder').html($('.original').html());
+		$('.note').fadeOut();
 
-		/* Show popup when span with an editorial annotation is clicked */
-
-		function make_clickable() {
-		$('.editorial_annotated').click(function(event){ 
+		function popup(element, contents) {
 			event.preventDefault();
-			$('#popup').html($(this).children('.editorial').html());
+			$('#popup').html(contents);
 			$('#popup').fadeIn(0);
 			$('#popup').css({left: '100%', top: '100%'}); /* Establish where the corner of the page is*/
-			if ($('#popup').offset().top > ($(this).offset().top + $('#popup').height()))
+			if ($('#popup').offset().top > (element.offset().top + $('#popup').height()))
 			{
-				$('#popup').css({left: $(this).offset().left, top: $(this).offset().top + $(this).height()});
+				$('#popup').css({left: element.offset().left, top: element.offset().top + element.height()});
 			}
 			else 
 			{
-				if ($(0 < ($(this).offset().top - $('#popup').height()))) 
+				if ($(0 < (element.offset().top - $('#popup').height()))) 
 				{
-					$('#popup').css({left: $(this).offset().left, top: $(this).offset().top - $('#popup').height()});
+					$('#popup').css({left: element.offset().left, top: element.offset().top - $('#popup').height()});
 				}
 			
 				else 
 				{
-					$('#popup').css({left: $(this).offset().left, top: 0});
+					$('#popup').css({left: element.offset().left, top: 0});
 				}
 			};
 			
 
-		});
 		};
 		make_clickable();
 		

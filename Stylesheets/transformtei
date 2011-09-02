@@ -30,6 +30,7 @@ echo "  --odd                # perform processing of ODD (if appropriate)"
 echo "  --verbose            # be verbose"
 echo "  --debug              # be verbose, do not delete intermediate files"
 echo "  --summaryDoc         # only make summary, when doing ODD processing"
+echo "  --nocompress	     # disable compression of epub output file"
 
 if [ $script = "teitoepub" ]
 then
@@ -78,6 +79,7 @@ uid=
 viewportwidth=
 viewportheight=
 medioverlay=
+nocompress=
 # ---
 profiledir=$APPHOME/profiles
 SAXONJAR=/usr/share/saxon/saxon9he.jar
@@ -112,6 +114,7 @@ while test $# -gt 0; do
     --summaryDoc)      summaryDoc="-DsummaryDoc=true";;
     --viewportwidth=*)   viewportwidth="-DviewPortWidth=`echo $1 | sed 's/.*=//'`";;
     --viewportheight=*)   viewportheight="-DviewPortHeight=`echo $1 | sed 's/.*=//'`";;
+    --nocompress)	nocompress="-DnoCompress=true";;
     --help)         usageMsg; exit 1;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -153,7 +156,7 @@ then
 fi
 echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
-	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay \
+	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress\
         -Dodd=$odd \
         -Dverbose=$verbose \
 	-DinputFile="$indir/$infile" \
@@ -163,6 +166,6 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-Dpublisher=$publisher \
 	-Duid=$uid \
 	-Dsubject=$subject \
-	-Dcoverimage=$coverimage 
+	-Dcoverimage=$coverimage
 
 	

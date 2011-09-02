@@ -190,7 +190,7 @@
        <xsl:apply-templates/>
        <xsl:for-each
 	   select="tei:seg[@type='annotated']/tei:note[@type='gloss']">
-	 <span class="glossnote">
+	 <span class="gloss note">
 	   <a href="#{generate-id(..)}">
 	     <xsl:apply-templates/>
 	   </a>
@@ -204,7 +204,7 @@
        <xsl:apply-templates/>
 	 <xsl:for-each
 	     select="tei:l/tei:seg[@type='annotated']/tei:note[@type='editorial']">
-	   <span class="editorialnote">
+	   <span class="editorial note">
 	     <a href="#{generate-id(..)}">
 	       <xsl:apply-templates/>
 	     </a>

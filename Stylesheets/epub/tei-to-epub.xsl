@@ -147,11 +147,12 @@
 	    <xsl:copy-of select="$TOC"/>
 	    </xsl:result-document>
 	-->
-        <xsl:if test="$verbose='true'">
 	  <xsl:for-each select="tokenize($javascriptFiles,',')">
 	    <xsl:variable name="file" select="normalize-space(.)"/>
 	    <xsl:variable name="name" select="tokenize($file,'/')[last()]"/>
+        <xsl:if test="$verbose='true'">
 	    <xsl:message>write Javascript file <xsl:value-of select="$name"/></xsl:message>
+        </xsl:if>
 	    <xsl:result-document method="text"
 				 href="{concat($directory,'/OEBPS/',$name)}">
 	      <xsl:for-each select="unparsed-text($file)">
@@ -159,7 +160,6 @@
 	      </xsl:for-each>
 	    </xsl:result-document>
 	  </xsl:for-each>
-        </xsl:if>
         <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
         </xsl:if>
