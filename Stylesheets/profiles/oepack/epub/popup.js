@@ -44,15 +44,15 @@
 		make_clickable();
 		
 		$('#no-gloss').click(function() {
-			if ($(this).is(':checked')) 
+			if ($(this).html() == 'Hide gloss') 
 			{
 				$('.gloss-real').fadeOut();
-				$('#no-gloss-label').html('Show gloss');
+				$('#no-gloss').html('Show gloss');
 			}
 			else 
 			{
 				$('.gloss-real').fadeIn();
-				$('#no-gloss-label').html('Hide gloss');
+				$('#no-gloss').html('Hide gloss');
 			}
 			});
 

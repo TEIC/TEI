@@ -176,7 +176,7 @@
    <xsl:template name="bodyHook">
      <div id="popup"></div>   
      <div>
-       <input type="checkbox" id="no-gloss"></input><label for="no-gloss" id="no-gloss-label">No gloss</label>
+       <a href="" id="no-gloss">Show gloss</a>
        <a href="" id="version-switch">Translation</a>
      </div>
      <div id="holder">Contents</div>
