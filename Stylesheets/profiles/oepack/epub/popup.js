@@ -1,23 +1,14 @@
 	$(document).ready(function(){
-		/* Show popup when span with an editorial annotation is clicked */
 		
-		$('span').click(function(event)
-			{
-				id = $(this).attr('id');
-				glossnote = ($('.gloss.note [href="#' + id + '"]'));
-				editorialnote = ($('.editorial.note [href="#' + id + '"]'));
-				popup($(this), editorialnote);
-		
-			});
-
 		/* Make all annotated words look like links*/
-		$('.note > a').each(function() {
+		$('.note.editorial > a').each(function() {
 			annotated = $(this).attr('href');
 			$(annotated).addClass('annotated');
 		});
-
+		
 		$('.note').fadeOut();
 
+		/* Show popup at the position of 'element', with the contents 'contents'*/
 		function popup(element, contents) {
 			event.preventDefault();
 			$('#popup').html(contents);
@@ -42,8 +33,22 @@
 			
 
 		};
-		make_clickable();
+	
+		function make_clickable() {
+		$('span').click(function(event)
+			{
+				id = $(this).attr('id');
+				glossnote = ($('.gloss.note [href="#' + id + '"]'));
+				editorialnote = ($('.editorial.note [href="#' + id + '"]'));
+				popup($(this), editorialnote.text());
 		
+			});
+
+
+		}
+
+		make_clickable();
+
 		$('#no-gloss').click(function() {
 			if ($(this).html() == 'Hide gloss') 
 			{
