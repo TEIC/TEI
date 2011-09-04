@@ -125,7 +125,7 @@ while test $# -gt 0; do
   shift
 done
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
-infile=`basename $in`
+infile=`basename "$in"`
 D=`dirname "$in"`
 indir=`(cd $D; pwd)`
 if [ $# -eq 1 ]
@@ -137,7 +137,7 @@ else
    O=`dirname $2`
    outdir=`(cd $O; pwd)`
 fi
-if ! test -f $indir/$infile
+if ! test -f "$indir/$infile"
 then 
     die "Input file $infile does not exist"
 fi
