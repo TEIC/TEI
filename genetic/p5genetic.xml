@@ -40,8 +40,10 @@ realization in the document or documents represented by the facsimile,
 then the recommended practice is to use the traditional <gi>text</gi>
 element, provided as a sibling of the <gi>facsimile</gi> element. This
 approach is illustrated in section <ptr target="#PH-bov"/>
-below. Alternatively, if the transcription is intended to do no more
-than represent the physicality of the document itself, it may be
+below. Alternatively, if the transcription is intended to prioritize
+representation of the process by which the document came to take its
+present form over representation of the final text <!--do no more
+than represent the physicality of the document itself-->, it may be
 preferable to use a subset of the available elements and to embed them
 within the <gi>zone</gi> element, as further described in section <ptr
 target="#PHZLAB"/> below.</p>
@@ -334,9 +336,9 @@ target="#PH-layers"/>. The elements <gi>addSpan</gi> and
 symbols etc. often found in marked-up proofs such as the following,
 taken from the Walt Whitman archive:
          <figure>
-<graphic url="examples/loc.00295.jpg" width="400px"/>
+<graphic url="examples/whitman-03.jpg" width="400px"/>
 <head>http://www.whitmanarchive.org/resources/sleepers/</head>
-         </figure></p>
+         </figure></p>   <!-- loc.00295 detail -->
 <p>In this example, the whole of what was originally the 14th section
 has been marked for deletion, both by horizontal and vertical lines,
 and by the metamarks resembling the <q>delta</q> deletion symbol to
@@ -347,46 +349,45 @@ writer does not intend to suppress the content, but only to mark that
 it has been transferred or reused. </p>
 <p>
 <figure>
-<graphic url="examples/whitman02.jpg" width="70%"/>
+<graphic url="examples/whitman-02.jpg" width="70%"/>
 <head>Page from
    http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head>
          </figure> 
 </p>   
-<p>This page contains many internal deletions, but these are
-semantically quite different from the apparent <soCalled>deletion</soCalled>
-signalled by the large X, which actually shows that the page has been
+<p>This page contains internal deletions, additions, and retracings
+but these are semantically quite different from the apparent
+<soCalled>deletion</soCalled> signalled by the largere of the two
+single vertical lines, which shows that the written material has been
 transferred or re-used, not deleted. </p>
 <egXML
       xmlns="http://www.tei-c.org/ns/Examples">
 <surface>
-   <metamark function="used" rend="cross" spanTo="#X2"/>
-   <metamark function="separator" target="#z2" rend="line" />
-   <zone>
-      <line rend="underline">The Poet</line>
-      <line><del rend="strikethrough">I think</del> His sight is
-         the</line>
-      <line> sight of the ? and</line>
-      <line>has sent the instinct of the</line>
-      <line>? dog</line>
+   <metamark function="used" rend="line" target="#X2"/>
+   <zone xml:id="X2">
+      <line>I am that halfgrown <add>angry</add> boy, fallen asleep</line>
+      <line>The tears of foolish passion yet undried</line>
+      <line>upon my cheeks.</line>
+<!-- ... -->
+<line>I pass through <add>the</add> travels and <del>fortunes</del> of
+<retrace>thirty</retrace></line>
+<line>years and become old,</line>
+<line>Each in its due order comes and goes,</line>
+<line>And thus a message for me comes.</line>
+<line>The</line>
    </zone>
-   <zone xml:id="z2">
-      <line>I think <retrace>ten</retrace> million</line>
-      &lt;!-- ... -->
-      <line>well; those <subst>
-<del rend="strikethrough">supple-fingered gods</del>
-<add>journeymen divine.</add>
-         </subst></line>
-   </zone>
-<anchor xml:id="X2"/>
+<metamark function="used" target="#X2">Entered - Yes</metamark>
 </surface>
          </egXML>
-<p>In this example, we identify two metamarks. The first indicates
+<p>In this example, we class as  metamarks both the long vertical line
+and the annotation <q>Entered - yes</q>. <!--The first indicates
 that all of the writing between its own position and that of the
 <gi>anchor</gi> element with identifier <val>X2</val> is marked as
 having been used. This metamark takes the form of a cross.  The second
 indicates that there is a mark in the form of a wavy line and that its
 function is to separate the second writing zone on the surface, which
-has identifier <val>z2</val>. 
+has identifier <val>z2</val>. --> Both metamarks are assumed to
+indicate that the whole of the written zone with identifier
+<code>X2</code> is marked as having been used. 
 </p>
 
    </div>
@@ -567,7 +568,7 @@ The underlined numbers 1 and 2 here indicate that, although the word
 should be reversed. We may encode this as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line><seg xml:id="ib01">bör</seg><metamark rend="underline"
-      function="transposition" target="#ib1" place="above">2.</metamark>
+      function="transposition" target="#ib01" place="above">2.</metamark>
    og <seg xml:id="ib02">hör</seg><metamark rend="underline"
       function="transposition" target="#ib02" place="above"
    >1.</metamark></line>
@@ -582,9 +583,9 @@ should be reversed. We may encode this as follows:
       
 <p>Note the use of the generic <gi>seg</gi> element to identify the
 sections of text being transposed. When (as in the following example)
-the whole of line is to be transposed, there is no need to delimit the
+the whole of a line is to be transposed, there is no need to delimit the
 sections concerned: <figure>
-<graphic url="examples/ibsen04.jpg" width="400px"/>
+<graphic url="examples/ibsen04.jpg" width="600px"/>
 <head>Extracted from
    <ref>http://www.emunch.no/tei-mm-2008/ms3.html</ref></head>
          </figure>
@@ -850,7 +851,7 @@ witnessed by the print.</layer>
          references, along with the textual content are purely documentary and do not affect the
          textual stage associated with any element thus referred to. The association of a textual
          component with a layer is always made explicitly, either by pointing from the
-            <gi>layer</gi> attribute <att>target</att> to one or more elements, or (for preference)
+            <gi>layer</gi> attribute <att>target</att> to one or more elements, or (preferably)
          by pointing from the element concerned to the <gi>layer</gi> element by means of its
             <att>layer</att> attribute:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -860,7 +861,8 @@ witnessed by the print.</layer>
             </subst>.</line>
       </egXML>
       <p>This simple example shows the latter of the two options: The relevant layers are declared
-         in the header; then textual alterations and acts of writing are associated with. The above
+         in the header; then textual alterations and acts of writing
+	 are associated with them. The above
          markup indicates that the whole sentence was realized in the first stage, while the
          substitution of “house” with “mouse” happened at the second stage. </p>
       <p>A more complex and complete example:</p>
@@ -1090,9 +1092,9 @@ ink</layer>
 </classSpec>
 
 <elementSpec ident="patch"  mode="add">
- <desc>contains a part of a written surface which was originally
- physically distinct but became attached to it at the time that one or
- more written zones were created.</desc>
+ <desc> a part of a surface which was originally
+ physically distinct but was combined with it at some time prior to
+ some or all of the writing on the surface.</desc>
    <classes>
       <memberOf key="att.coordinated"/>
       <memberOf key="att.global"/>
