@@ -125,6 +125,18 @@ Use real name of graphics files rather than pointers
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
+\def\textxi{\ensuremath{\xi}}
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\gdef\arraybackslash{\let\\=\@arraycr}
+</xsl:text>
+<xsl:text disable-output-escaping="yes">
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
+\definecolor{label}{gray}{0.75}
 </xsl:text>
 <xsl:if test="key('ENDNOTES',1)">
   \usepackage{endnotes}
@@ -154,6 +166,14 @@ Use real name of graphics files rather than pointers
       <xsl:text>
   \pagestyle{fancy} 
 </xsl:text>
+\usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
+ pdfauthor={<xsl:call-template name="generateAuthor"/>}]{hyperref}
+\hyperbaseurl{<xsl:value-of select="$baseURL"/>}
+<xsl:if test="count(key('APP',1))&gt;0">
+\usepackage{ledmac}
+<xsl:call-template name="ledmacOptions"/>
+</xsl:if>
+
    </xsl:template>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="float">
@@ -305,49 +325,6 @@ capable of dealing with UTF-8 directly.
    \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
 
 \gdef\arraybackslash{\let\\=\@arraycr}
-\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
-\gdef\arraybackslash{\let\\=\@arraycr}
-<xsl:text disable-output-escaping="yes">
-\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
-\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
-\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
-\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
-\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
-\definecolor{label}{gray}{0.75}
-\newenvironment{reflist}{%
-  \begin{raggedright}\begin{list}{}
-  {%
-   \setlength{\topsep}{0pt}%
-   \setlength{\rightmargin}{0.25in}%
-   \setlength{\itemsep}{0pt}%
-   \setlength{\itemindent}{0pt}%
-   \setlength{\parskip}{0pt}%
-   \setlength{\parsep}{2pt}%
-   \def\makelabel##1{\itshape ##1}}%
-  }
-  {\end{list}\end{raggedright}}
-\newenvironment{sansreflist}{%
-  \begin{raggedright}\begin{list}{}
-  {%
-   \setlength{\topsep}{0pt}%
-   \setlength{\rightmargin}{0.25in}%
-   \setlength{\itemindent}{0pt}%
-   \setlength{\parskip}{0pt}%
-   \setlength{\itemsep}{0pt}%
-   \setlength{\parsep}{2pt}%
-   \def\makelabel##1{\upshape\sffamily ##1}}%
-  }
-  {\end{list}\end{raggedright}}
-\newenvironment{specHead}[2]%
- {\vspace{20pt}\hrule\vspace{10pt}%
-  \hypertarget{#1}{}%
-  \markright{#2}%
-  \pdfbookmark[</xsl:text>
-      <xsl:value-of select="$specLinkDepth"/>
-      <xsl:text>]{#2}{#1}%
-  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
-  }{}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
@@ -357,7 +334,7 @@ capable of dealing with UTF-8 directly.
 \endgroup
 \mathcode`\_=\string"8000
 \catcode`\_=12\relax
-</xsl:text>
+
    </xsl:template>
 
    <xsl:template name="exampleFontSet">
@@ -531,15 +508,52 @@ capable of dealing with UTF-8 directly.
     \endlist}
 
 \def\tableofcontents{\section*{\contentsname}\@starttoc{toc}}
-\usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
- pdfauthor={<xsl:call-template name="generateAuthor"/>}]{hyperref}
-\hyperbaseurl{<xsl:value-of select="$baseURL"/>}
-<xsl:if test="count(key('APP',1))&gt;0">
-\usepackage{ledmac}
-<xsl:call-template name="ledmacOptions"/>
-</xsl:if>
 \parskip<xsl:value-of select="$parSkip"/>
 \parindent<xsl:value-of select="$parIndent"/>
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\gdef\arraybackslash{\let\\=\@arraycr}
+<xsl:text disable-output-escaping="yes">
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
+\definecolor{label}{gray}{0.75}
+\newenvironment{reflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\itshape ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{sansreflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\upshape\sffamily ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{specHead}[2]%
+ {\vspace{20pt}\hrule\vspace{10pt}%
+  \hypertarget{#1}{}%
+  \markright{#2}%
+  \pdfbookmark[</xsl:text>
+      <xsl:value-of select="$specLinkDepth"/>
+      <xsl:text>]{#2}{#1}%
+  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
+  }{}
+      </xsl:text>   
       <xsl:call-template name="latexPreambleHook"/>
    </xsl:template>
 

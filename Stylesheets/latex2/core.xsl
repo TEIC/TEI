@@ -309,11 +309,18 @@
          </xsl:choose>
       </xsl:variable>
       <xsl:value-of select="$cmd"/>
-      <xsl:if test="starts-with(@rend,'color')">
+      <xsl:choose>
+	<xsl:when test="starts-with(@rend,'color(')">
+	        <xsl:text>{</xsl:text>
+	        <xsl:value-of select="substring-before(substring-after(@rend,'color('),')')"/>
+	        <xsl:text>}</xsl:text>
+	</xsl:when>
+	<xsl:when test="starts-with(@rend,'color')">
 	        <xsl:text>{</xsl:text>
 	        <xsl:value-of select="substring-after(@rend,'color')"/>
 	        <xsl:text>}</xsl:text>
-      </xsl:if>
+	</xsl:when>
+      </xsl:choose>
       <xsl:text>{</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>

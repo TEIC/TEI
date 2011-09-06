@@ -55,47 +55,6 @@
    \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
 
 \gdef\arraybackslash{\let\\=\@arraycr}
-\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
-\gdef\arraybackslash{\let\\=\@arraycr}
-
-\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
-\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
-\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
-\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
-\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
-\definecolor{label}{gray}{0.75}
-\newenvironment{reflist}{%
-  \begin{raggedright}\begin{list}{}
-  {%
-   \setlength{\topsep}{0pt}%
-   \setlength{\rightmargin}{0.25in}%
-   \setlength{\itemsep}{0pt}%
-   \setlength{\itemindent}{0pt}%
-   \setlength{\parskip}{0pt}%
-   \setlength{\parsep}{2pt}%
-   \def\makelabel##1{\itshape ##1}}%
-  }
-  {\end{list}\end{raggedright}}
-\newenvironment{sansreflist}{%
-  \begin{raggedright}\begin{list}{}
-  {%
-   \setlength{\topsep}{0pt}%
-   \setlength{\rightmargin}{0.25in}%
-   \setlength{\itemindent}{0pt}%
-   \setlength{\parskip}{0pt}%
-   \setlength{\itemsep}{0pt}%
-   \setlength{\parsep}{2pt}%
-   \def\makelabel##1{\upshape\sffamily ##1}}%
-  }
-  {\end{list}\end{raggedright}}
-\newenvironment{specHead}[2]%
- {\vspace{20pt}\hrule\vspace{10pt}%
-  \hypertarget{#1}{}%
-  \markright{#2}%
-  \pdfbookmark[2]{#2}{#1}%
-  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
-  }{}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
@@ -106,6 +65,7 @@
 \mathcode`\_=\string"8000
 \catcode`\_=12\relax
 
+   
 \usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
 \usepackage{framed}
 
@@ -115,10 +75,25 @@
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
+\def\textxi{\ensuremath{\xi}}
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\gdef\arraybackslash{\let\\=\@arraycr}
+
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
+\definecolor{label}{gray}{0.75}
 
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 
   \pagestyle{fancy} 
+
+\usepackage[pdftitle={A Christmas Carol},
+ pdfauthor={Dickens, Charles, 1812-1870}]{hyperref}
+\hyperbaseurl{}
 
 	 \paperwidth210mm
 	 \paperheight297mm
@@ -219,12 +194,50 @@
     \endlist}
 
 \def\tableofcontents{\section*{\contentsname}\@starttoc{toc}}
-\usepackage[pdftitle={A Christmas Carol},
- pdfauthor={Dickens, Charles, 1812-1870}]{hyperref}
-\hyperbaseurl{}
-
 \parskip0pt
 \parindent1em
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\gdef\arraybackslash{\let\\=\@arraycr}
+
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
+\definecolor{label}{gray}{0.75}
+\newenvironment{reflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\itshape ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{sansreflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\upshape\sffamily ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{specHead}[2]%
+ {\vspace{20pt}\hrule\vspace{10pt}%
+  \hypertarget{#1}{}%
+  \markright{#2}%
+  \pdfbookmark[2]{#2}{#1}%
+  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
+  }{}
+      
 \@ifundefined{chapter}{%
     \def\DivI{\section}
     \def\DivII{\subsection}
@@ -307,7 +320,7 @@ I have endeavoured in this Ghostly little book, to raise the 	Ghost of an Idea, 
 \end{description} \mainmatter 
 \DivI[A CHRISTMAS CAROL.]{A CHRISTMAS CAROL.}
 \DivI[General tests]{General tests} \par 
-\begin{longtable}{P{0.22917505030181085\textwidth}P{0.6208249496981891\textwidth}}
+\begin{longtable}{P{0.2301010101010101\textwidth}P{0.61989898989899\textwidth}}
  \hline\endfoot\hline\endlastfoot \rowcolor{label}Effect\tabcellsep Example\\\hline 
 typewriter\tabcellsep This is {typewriter} effect\\
 bold\tabcellsep This is \textbf{bold} effect\\
@@ -316,7 +329,7 @@ smallcaps\tabcellsep This is {smallcaps} effect\\
 capsall\tabcellsep This is {capsall} effect\\
 strikethrough\tabcellsep This is {strikethrough} effect\\
 strikedoublethrough\tabcellsep This is {strikedoublethrough} effect\\
-color(red)\tabcellsep This is \textcolor{(red)}{color(red)} effect\\
+color(red)\tabcellsep This is \textcolor{red}{color(red)} effect\\
 underline\tabcellsep This is {underline} effect\\
 underdoubleline\tabcellsep This is {underdoubleline} effect\\
 subscript\tabcellsep This is {subscript} effect\\

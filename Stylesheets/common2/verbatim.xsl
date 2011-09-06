@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:i="http://www.iso.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:dbk="http://docbook.org/ns/docbook" exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl         m atom xlink xhtml dbk" version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
-      <desc>
-         <p> TEI stylesheet dealing with elements from the core module. </p>
-         <p> This library is free software; you can redistribute it and/or
+    <desc>
+      <p> TEI stylesheet dealing with elements from the core module. </p>
+      <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
       License, or (at your option) any later version. This library is
@@ -13,12 +13,11 @@
       details. You should have received a copy of the GNU Lesser General Public
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
-         <p>Author: See AUTHORS</p>
-         <p>Id: $Id$</p>
-         <p>Copyright: 2011, TEI Consortium</p>
-      </desc>
-   </doc>
-
+      <p>Author: See AUTHORS</p>
+      <p>Id: $Id$</p>
+      <p>Copyright: 2011, TEI Consortium</p>
+    </desc>
+  </doc>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
   <xsl:param name="useNSPrefixes">true</xsl:param>
   <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
@@ -54,7 +53,9 @@
     <xsl:variable name="ns" select="namespace-uri()"/>
     <xsl:variable name="prefix" select="tei:getPrefix($ns,ancestor-or-self::*[1])[1]"/>
     <xsl:choose>
-      <xsl:when test="$prefix !=''"><xsl:value-of select="$prefix"/></xsl:when>
+      <xsl:when test="$prefix !=''">
+        <xsl:value-of select="$prefix"/>
+      </xsl:when>
       <xsl:when test="$ns='http://docbook.org/ns/docbook'">dbk</xsl:when>
       <xsl:when test="$ns='http://earth.google.com/kml/2.1'">kml</xsl:when>
       <xsl:when test="$ns='http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0'">nvdl</xsl:when>
@@ -84,7 +85,8 @@
   </doc>
   <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
-    <xsl:text>&#10;</xsl:text>
+    <xsl:text>
+</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
@@ -138,7 +140,8 @@
           </xsl:for-each>
         </xsl:variable>
         <xsl:if test="string-length(.)&gt;$wrapLength or parent::sch:assert">
-          <xsl:text>&#10;</xsl:text>
+          <xsl:text>
+</xsl:text>
           <xsl:value-of select="$indent"/>
         </xsl:if>
         <xsl:call-template name="verbatim-reformatText">
@@ -151,7 +154,8 @@
           </xsl:with-param>
         </xsl:call-template>
         <xsl:if test="string-length(.)&gt;$wrapLength or parent::sch:assert">
-          <xsl:text>&#10;</xsl:text>
+          <xsl:text>
+</xsl:text>
           <xsl:value-of select="$indent"/>
         </xsl:if>
       </xsl:when>
@@ -209,7 +213,8 @@
     <xsl:param name="sofar"/>
     <xsl:choose>
       <xsl:when test="number($sofar) &gt; $wrapLength">
-        <xsl:text>&#10;</xsl:text>
+        <xsl:text>
+</xsl:text>
         <xsl:value-of select="$indent"/>
         <xsl:call-template name="verbatim-reformatText">
           <xsl:with-param name="text">
@@ -540,7 +545,6 @@
 	       <xsl:call-template name="verbatim-makeIndent"/>
 	  -->
         </xsl:if>
-
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
@@ -628,9 +632,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xsl:template match="text()|comment()|processing-instruction()" mode="ns"/>
-
   <xsl:template match="*" mode="ns">
     <xsl:for-each select="namespace::*">
       <xsl:variable name="ns" select="."/>
@@ -649,46 +651,43 @@
     </xsl:for-each>
     <xsl:apply-templates mode="ns"/>
   </xsl:template>
-
   <xsl:template name="nsList">
     <xsl:variable name="ns">
       <all>
-	<names>
-	  <xsl:apply-templates select="." mode="ns"/>
-	</names>
-	<text>
-	  <xsl:copy-of select="."/>
-	</text>
+        <names>
+          <xsl:apply-templates select="." mode="ns"/>
+        </names>
+        <text>
+          <xsl:copy-of select="."/>
+        </text>
       </all>
     </xsl:variable>
     <xsl:for-each select="$ns/all/names">
       <xsl:for-each-group select="ns" group-by="@name">
-	<xsl:if test="key('NSUsed',@value)">
-	  <xsl:call-template name="verbatim-lineBreak">
-	    <xsl:with-param name="id">22</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:text>   </xsl:text>
-	  <xsl:text>xmlns:</xsl:text>
-	  <xsl:value-of select="@name"/>
-	  <xsl:text>="</xsl:text>
-	  <xsl:value-of select="@value"/>
-	  <xsl:text>"</xsl:text>
-	</xsl:if>
-	</xsl:for-each-group>
+        <xsl:if test="key('NSUsed',@value)">
+          <xsl:call-template name="verbatim-lineBreak">
+            <xsl:with-param name="id">22</xsl:with-param>
+          </xsl:call-template>
+          <xsl:text>   </xsl:text>
+          <xsl:text>xmlns:</xsl:text>
+          <xsl:value-of select="@name"/>
+          <xsl:text>="</xsl:text>
+          <xsl:value-of select="@value"/>
+          <xsl:text>"</xsl:text>
+        </xsl:if>
+      </xsl:for-each-group>
     </xsl:for-each>
   </xsl:template>
-
   <xsl:function name="tei:getPrefix" as="xs:string*">
-    <xsl:param name="ns"/>  
-    <xsl:param name="here"/>  
+    <xsl:param name="ns"/>
+    <xsl:param name="here"/>
     <xsl:for-each select="in-scope-prefixes($here)">
       <xsl:choose>
-	<xsl:when test=".=''"/>
-	<xsl:when test="$ns=namespace-uri-for-prefix(.,$here)">
-	  <xsl:value-of select="."/>
-	</xsl:when>
+        <xsl:when test=".=''"/>
+        <xsl:when test="$ns=namespace-uri-for-prefix(.,$here)">
+          <xsl:value-of select="."/>
+        </xsl:when>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
 </xsl:stylesheet>
