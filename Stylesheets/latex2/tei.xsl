@@ -147,7 +147,7 @@
   <xsl:function name="tei:escapeChars" as="xs:string">
     <xsl:param name="letters"/>
       <xsl:value-of
-	  select="replace(replace(replace(translate($letters,'&#10;','  '), '\\','\\textbackslash '),'\{','\\{'),'\}','\\}')"/>
+	  select="replace(replace(replace(replace(translate($letters,'&#10;','  '), '\\','\\textbackslash '),'\{','\\{'),'\}','\\}'),'~','\\~')"/>
   </xsl:function>
 
 

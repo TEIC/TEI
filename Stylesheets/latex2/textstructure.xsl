@@ -166,7 +166,6 @@
       <!-- certainly don't touch the next few lines -->
       <xsl:text>&#10;\catcode`\$=12\relax&#10;</xsl:text>
       <xsl:text>\catcode`\^=12\relax&#10;</xsl:text>
-      <xsl:text>\catcode`\~=12\relax&#10;</xsl:text>
       <xsl:text>\catcode`\#=12\relax&#10;</xsl:text>
       <xsl:text>\catcode`\%=12\relax&#10;</xsl:text>
       <xsl:apply-templates/>
