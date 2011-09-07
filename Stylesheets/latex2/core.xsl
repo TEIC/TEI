@@ -294,6 +294,8 @@
             <xsl:when test="@rend='quoted'">\textquoted</xsl:when>
             <xsl:when test="@rend='sup'">\textsuperscript</xsl:when>
             <xsl:when test="@rend='sub'">\textsubscript</xsl:when>
+            <xsl:when test="@rend='superscript'">\textsuperscript</xsl:when>
+            <xsl:when test="@rend='subscript'">\textsubscript</xsl:when>
             <xsl:when test="@rend='important'">\textbf</xsl:when>
             <xsl:when test="@rend='ul'">\uline</xsl:when>
             <xsl:when test="@rend='overbar'">\textoverbar</xsl:when>

@@ -37,7 +37,7 @@
       <xsl:variable name="W">
          <xsl:choose>
             <xsl:when test="starts-with(@target,'#')">
-               <xsl:value-of select="substring(target,2)"/>
+               <xsl:value-of select="substring(@target,2)"/>
             </xsl:when>
             <xsl:otherwise>
                <xsl:value-of select="@target"/>

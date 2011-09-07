@@ -213,13 +213,13 @@
     </xsl:if>
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#')">
-        <xsl:for-each select="key('odd2odd-IDS',substring(target,2))">
+        <xsl:for-each select="key('odd2odd-IDS',substring(@target,2))">
           <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
         </xsl:for-each>
       </xsl:when>
       <xsl:when test="matches( @target, '#\i\c*$' )">
         <xsl:variable name="sgrDoc" select="substring-before(@target,'#')"/>
-        <xsl:variable name="sgrID" select="substring(target,2)"/>
+        <xsl:variable name="sgrID" select="substring(@target,2)"/>
         <!-- sgr = specification group reference :-) -->
         <xsl:for-each select="id( $sgrID, document( $sgrDoc, $top ) )">
           <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>

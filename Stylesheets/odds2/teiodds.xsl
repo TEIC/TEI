@@ -2026,7 +2026,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="tei:specGrpRef" mode="expandSpecs">
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#')">
-        <xsl:for-each select="id(substring(target,2))">
+        <xsl:for-each select="id(substring(@target,2))">
           <xsl:apply-templates mode="expandSpecs"/>
         </xsl:for-each>
       </xsl:when>

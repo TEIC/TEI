@@ -705,7 +705,7 @@
     <text:a xlink:type="simple" xlink:href="{@target}">
       <xsl:choose>
 	<xsl:when test="starts-with(@target,'#')">
-	  <xsl:for-each select="id(substring(target,2))">
+	  <xsl:for-each select="id(substring(@target,2))">
 	    <xsl:apply-templates select="." mode="crossref"/>
 	  </xsl:for-each>
 	</xsl:when>

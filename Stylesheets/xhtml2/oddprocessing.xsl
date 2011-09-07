@@ -732,14 +732,14 @@
     <xsl:choose>
       <xsl:when test="parent::tei:listRef">
         <xsl:choose>
-          <xsl:when test="starts-with(@target,'#') and id(substring(target,2))">
+          <xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
             <xsl:call-template name="makeInternalLink">
-              <xsl:with-param name="target" select="substring(target,2)"/>
+              <xsl:with-param name="target" select="substring(@target,2)"/>
               <xsl:with-param name="ptr">true</xsl:with-param>
               <xsl:with-param name="dest">
                 <xsl:call-template name="generateEndLink">
                   <xsl:with-param name="where">
-                    <xsl:value-of select="substring(target,2)"/>
+                    <xsl:value-of select="substring(@target,2)"/>
                   </xsl:with-param>
                 </xsl:call-template>
               </xsl:with-param>
@@ -784,7 +784,7 @@
   <xsl:template match="a:documentation" mode="verbatim"/>
   <xsl:template match="tei:ptr[@type='cit']">
     <a class="citlink">
-      <xsl:for-each select="id(substring(target,2))">
+      <xsl:for-each select="id(substring(@target,2))">
         <xsl:attribute name="href">
           <xsl:apply-templates select="." mode="generateLink"/>
         </xsl:attribute>
