@@ -18,7 +18,7 @@
 	  <xsl:when test="not(analytic)">
 	    <xsl:text>book</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="analytic/imprint/biblScope[@type='volume']">
+	  <xsl:when test="monogr/imprint/biblScope[@type='volume']">
 	    <xsl:text>article</xsl:text>	    
 	  </xsl:when>
 	  <xsl:otherwise>
@@ -83,7 +83,7 @@
 <xsl:template match="title">
   <xsl:variable name="name">
     <xsl:choose>
-      <xsl:when test="@level='a' or not(analytic)">title</xsl:when>
+      <xsl:when test="@level='a' or not(ancestor::biblStruct/analytic)">title</xsl:when>
       <xsl:when test="@level='j' or parent::monogr/imprint/biblScope[@type='volume']">journal</xsl:when>
       <xsl:when test="@level='m' or parent::monogr">booktitle</xsl:when>
       <xsl:when test="@level='s'">series</xsl:when>
@@ -123,6 +123,12 @@
 
 <xsl:template match="biblScope[@type='issue']">
   <xsl:text>@issue={</xsl:text>
+  <xsl:apply-templates/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template match="edition">
+  <xsl:text>@edition={</xsl:text>
   <xsl:apply-templates/>
   <xsl:text>}</xsl:text>
 </xsl:template>
