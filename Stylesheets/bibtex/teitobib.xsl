@@ -59,7 +59,7 @@
 </xsl:template>
 
 <xsl:template match="idno[@type='url']">
-  <xsl:text>@howpublished={</xsl:text>
+  <xsl:text>@url={</xsl:text>
   <xsl:value-of select="."/>
   <xsl:text>}</xsl:text>
 </xsl:template>
@@ -92,9 +92,9 @@
   </xsl:variable>
   <xsl:text>@</xsl:text>
   <xsl:value-of select="$name"/>
-  <xsl:text>={</xsl:text>
+  <xsl:text>={{</xsl:text>
   <xsl:apply-templates/>
-  <xsl:text>}</xsl:text>
+  <xsl:text>}}</xsl:text>
 </xsl:template>
 
 <xsl:template match="q">
