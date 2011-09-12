@@ -1012,6 +1012,10 @@
 
   <xsl:template match="tei:cell">
     <table:table-cell>
+      <xsl:if test="@cols">
+	<xsl:attribute name="table:number-columns-spanned"
+		       select="@cols"/>
+      </xsl:if>
       <xsl:variable name="cellContents">
 	<xsl:apply-templates/>
       </xsl:variable>
@@ -1031,6 +1035,11 @@
 	</xsl:choose>
       </xsl:for-each-group>
     </table:table-cell>
+    <xsl:if test="@cols">
+      <xsl:for-each select="2 to @cols">
+	<table:covered-table-cell/>
+      </xsl:for-each>
+    </xsl:if>
   </xsl:template>
 
   <xsl:param name="startComment"></xsl:param>
