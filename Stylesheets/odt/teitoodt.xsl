@@ -939,12 +939,11 @@
     <table:table
 	table:name="{$tablenum}"
 	table:style-name="Table1">
-      <table:table-column
-	  table:style-name="Table1.col1">
-	<xsl:attribute name="table:number-columns-repeated">
-	  <xsl:value-of select="count(tei:row[last()]/tei:cell)"/>
-	</xsl:attribute>
-      </table:table-column>
+      <xsl:for-each select="1 to max(for $i in tei:row return count($i/tei:cell))">
+	<table:table-column
+	    table:style-name="Table{.}.col{.}">
+	</table:table-column>
+      </xsl:for-each>
       <xsl:apply-templates/>
     </table:table>
     <xsl:if test="tei:head">
