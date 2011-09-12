@@ -601,17 +601,17 @@
 
 
 
-  <xsl:template match="tei:list[@type='gloss']" priority="10">
+  <xsl:template match="tei:list[@type='gloss' or @rend='valList']" priority="10">
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:list[@type='gloss']/tei:item">
+  <xsl:template match="tei:list[@type='gloss' or @rend='valList']/tei:item">
     <text:p text:style-name="List_20_Contents">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
 
-  <xsl:template match="tei:list[@type='gloss']/tei:label">
+  <xsl:template match="tei:list[@type='gloss' or @rend='valList']/tei:label">
     <text:p text:style-name="List_20_Heading">
       <xsl:apply-templates/>
     </text:p>
@@ -802,6 +802,14 @@
       </xsl:attribute>
       <xsl:apply-templates/>
     </text:span>
+</xsl:template>
+
+  <xsl:template match="tei:index/tei:index"/>
+
+  <xsl:template match="tei:div/tei:index">
+    <text:p>
+      <xsl:apply-templates/>
+    </text:p>
   </xsl:template>
 
   <xsl:template match="tei:date">
@@ -876,7 +884,7 @@
     <xsl:param name="Text"/>
     <xsl:choose>
       <xsl:when test="contains($Text,'&#10;')">
-	<text:p text:style-name="Preformatted Text">
+	<text:p text:style-name="Preformatted_20_Text">
 	  <xsl:value-of
 	      select="translate(substring-before($Text,'&#10;'),' ','&#160;')"/>
 	</text:p>
@@ -887,7 +895,7 @@
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<text:p text:style-name="Preformatted Text">
+	<text:p text:style-name="Preformatted_20_Text">
 	  <xsl:value-of select="translate($Text,' ','&#160;')"/>
 	</text:p>
       </xsl:otherwise>
@@ -967,42 +975,63 @@
   </xsl:template>
 
 
-  <xsl:template match="tei:cell">
-    <table:table-cell>
-<!--
-      <xsl:choose>
-	<xsl:when test="parent::tei:row[@role='label']">
-	  <xsl:attribute name="text:style-name">Table1.cellheading</xsl:attribute>
-	</xsl:when>
-	<xsl:when test="@role='label'">
-	  <xsl:attribute name="text:style-name">Table1.cellheading</xsl:attribute>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:attribute name="text:style-name">Table1.cellcontents</xsl:attribute>
-	</xsl:otherwise>
-      </xsl:choose>
--->
-      <xsl:choose>
-	<xsl:when test="not(child::tei:p)">
-	  <text:p>
-	    <xsl:apply-templates/>
-	  </text:p>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:apply-templates/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </table:table-cell>
+
+  <xsl:template match="tei:seg">
+    <text:span>
+      <xsl:apply-templates/>
+    </text:span>
   </xsl:template>
 
-<xsl:template match="code">
-  <text:span text:style-name="User Entry">
-    <xsl:apply-templates/>
-  </text:span>
-</xsl:template>
+  <xsl:template match="tei:seg[@rend='parent']">
+      <xsl:apply-templates/>
+  </xsl:template>
 
+  <xsl:template match="tei:ident">
+    <text:span>
+      <xsl:apply-templates/>
+    </text:span>
+  </xsl:template>
 
+  <xsl:template match="tei:cit[@rend='display']">
+    <text:p>
+      <xsl:apply-templates/>
+    </text:p>
+  </xsl:template>
 
+  <xsl:template match="tei:mentioned">
+    <text:span>
+      <xsl:apply-templates/>
+    </text:span>
+  </xsl:template>
+
+  <xsl:template match="tei:code">
+    <text:span text:style-name="User_20_Entry">
+      <xsl:apply-templates/>
+    </text:span>
+  </xsl:template>
+
+  <xsl:template match="tei:cell">
+    <table:table-cell>
+      <xsl:variable name="cellContents">
+	<xsl:apply-templates/>
+      </xsl:variable>
+      <xsl:for-each-group select="$cellContents/node()"			  
+			  group-adjacent="if (self::text:span or self::text() or self::text:a)
+					  then 1
+					  else 2">      
+      <xsl:choose>
+	<xsl:when test="current-grouping-key()=1">
+	    <text:p>
+	      <xsl:copy-of select="current-group()"/>
+	    </text:p>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:copy-of select="current-group()"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each-group>
+    </table:table-cell>
+  </xsl:template>
 
   <xsl:param name="startComment"></xsl:param>
   <xsl:param name="endComment"></xsl:param>
@@ -1662,9 +1691,11 @@
   <xsl:template name="italicize"/>
 
   <xsl:template match="tei:soCalled">
-    <xsl:value-of select="$preQuote"/>
-    <xsl:apply-templates/>
-    <xsl:value-of select="$postQuote"/>
+    <text:span>
+      <xsl:value-of select="$preQuote"/>
+      <xsl:apply-templates/>
+      <xsl:value-of select="$postQuote"/>
+    </text:span>
   </xsl:template>
 
   <xsl:function name="teidocx:convert-dim-pt" as="xs:integer">
@@ -1820,7 +1851,7 @@
     </xsl:for-each>
   </xsl:template>
 
-<xsl:template name="makeSpan">
+  <xsl:template name="makeSpan">
     <xsl:apply-templates/>
   </xsl:template>
 

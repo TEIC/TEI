@@ -1935,8 +1935,8 @@
 	    <xsl:text>Element</xsl:text>
 	  </xsl:with-param>
 	</xsl:call-template>
+	<xsl:text>: </xsl:text>
       </xsl:element>
-      <xsl:text>: </xsl:text>
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
 	<xsl:for-each select="$list2/PattList/Item">
 	  <xsl:copy-of select="*|text()"/>
