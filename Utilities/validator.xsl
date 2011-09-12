@@ -13,9 +13,6 @@
 	 match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec"   
 	 use="@ident"/>
 
-<xsl:key name="IDS"
-	 match="tei:*"   
-	 use="@xml:id"/>
 
 <xsl:key name="EXIDS"
 	 match="teix:*"   
@@ -71,7 +68,7 @@
 
 <!-- corresp on egXML must point to something -->
 <xsl:template match="teix:egXML[@corresp]">
-     <xsl:if test="not(key('IDS',substring-after(@corresp,'#')))">
+     <xsl:if test="not(id(substring(@corresp,2)))">
        <xsl:call-template name="Error">
 	 <xsl:with-param name="value" select="@corresp"/>
        </xsl:call-template>
@@ -148,7 +145,7 @@
   <xsl:choose>
     <xsl:when test="starts-with($What,'#')">
       <xsl:choose>
-	<xsl:when test="key('IDS',substring-after($What,'#'))"/>
+	<xsl:when test="id(substring($What,2))"/>
 	<xsl:otherwise>
 	  <xsl:call-template name="Error">
 	    <xsl:with-param name="value" select="$What"/>
@@ -159,7 +156,7 @@
     <xsl:when test="starts-with($What,'mailto:')"/>
     <xsl:when test="starts-with($What,'http:')"/>
       <xsl:when test="not(contains($What,'/')) and
-		      not(key('IDS',$What))">
+		      not(id($What))">
 	<xsl:call-template name="Error">
 	  <xsl:with-param name="value" select="$What"/>
        </xsl:call-template>
@@ -251,7 +248,7 @@ select="$value"/> (<xsl:call-template name="loc"/>)
       </xsl:variable>
       <xsl:choose>
 	<xsl:when test="key('EXIDS',$N)"/>
-	<xsl:when test="key('IDS',$N)">
+	<xsl:when test="id($N)">
 	  <xsl:call-template name="Remark">
 	    <xsl:with-param name="value" select="$What"/>
 	  </xsl:call-template>

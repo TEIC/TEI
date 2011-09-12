@@ -28,7 +28,7 @@
   <xsl:template name="startDivHook">
     <xsl:for-each select="@facs">
       <xsl:for-each
-	  select="key('IDS',substring-after(.,'#'))">
+	  select="id(substring(.,2))">
 	<xsl:variable name="width">
 	  <xsl:value-of select="number(@lrx) -  number(@ulx)"/>
 	</xsl:variable>

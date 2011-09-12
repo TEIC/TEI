@@ -267,7 +267,6 @@ dist-source.stamp: p5subset.xml
 	run-onvdl \
 	*.css \
 	webnav \
-	validator.xsl \
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	touch dist-source.stamp
