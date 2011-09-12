@@ -3,7 +3,7 @@ JING=jing
 TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
-DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx odt nlm tite rdf
+DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx odt nlm tite rdf dtd relaxng
 OLDDIRS=slides fo html common latex
 SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub teitoepub3 teitohtml transformtei
 PREFIX=/usr
@@ -110,9 +110,9 @@ p5: p4
 common: 
 	@echo BUILD Build for P5, common files and documentation
 	test -d release/common/xml/teip4/stylesheet || mkdir -p release/common/xml/teip4/stylesheet
-	cp *.css i18n.xml release/common/xml/teip4/stylesheet
+	cp VERSION *.css i18n.xml release/common/xml/teip4/stylesheet
 	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
-	cp *.css i18n.xml release/common/xml/tei/stylesheet
+	cp VERSION *.css i18n.xml release/common/xml/tei/stylesheet
 
 doc:
 	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common

@@ -1104,7 +1104,7 @@
               </xsl:attribute>
               <xsl:value-of select="$name"/>
             </xsl:element>
-            <xsl:text> </xsl:text>
+            <xsl:text> </xsl:text>
             <xsl:call-template name="makeDescription"/>
             <xsl:if test="tei:listRef">
               <xsl:for-each select="tei:listRef/tei:ptr">
