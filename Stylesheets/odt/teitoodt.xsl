@@ -945,7 +945,7 @@
       <table:table-column
 	  table:style-name="Table1.col1">
 	<xsl:attribute name="table:number-columns-repeated">
-	  <xsl:value-of select="count(tei:row[1]/tei:cell)"/>
+	  <xsl:value-of select="count(tei:row[last()]/tei:cell)"/>
 	</xsl:attribute>
       </table:table-column>
       <xsl:apply-templates/>
