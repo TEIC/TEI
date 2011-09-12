@@ -762,6 +762,9 @@
 	  <xsl:when test="@rend='bold'">
 	    <xsl:text>Highlight</xsl:text>
 	  </xsl:when>
+	  <xsl:when test="@rend='label'">
+	    <xsl:text>Highlight</xsl:text>
+	  </xsl:when>
 	  <xsl:when test="@rend='it' or @rend='i' or @rend='italic'">
 	    <xsl:text>Emphasis</xsl:text>
 	  </xsl:when>
@@ -804,13 +807,7 @@
     </text:span>
 </xsl:template>
 
-  <xsl:template match="tei:index/tei:index"/>
-
-  <xsl:template match="tei:div/tei:index">
-    <text:p>
-      <xsl:apply-templates/>
-    </text:p>
-  </xsl:template>
+  <xsl:template match="tei:index"/>
 
   <xsl:template match="tei:date">
     <text:span text:style-name="{name(.)}">
