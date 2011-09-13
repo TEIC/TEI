@@ -10,7 +10,7 @@ script=`basename $0`
 scriptdir=`dirname $0`
 APPHOME=`(cd $scriptdir; pwd)`
 version=`cat $APPHOME/VERSION`
-
+oxygenlib=/usr/share/oxygen/lib
 die()
 {
     echo "ERROR: $@."
@@ -30,11 +30,17 @@ echo "  --verbose            # be verbose"
 echo "  --debug              # be verbose, do not delete intermediate files"
 echo "  --profiledir=$profiledir    # where to find profile directory"
 echo "  --profile=$profile    # which transformation profile to use"
-if [ $script != "teitorelaxng" ]
-then
-echo "  --odd                # perform processing of ODD (if appropriate)"
-echo "  --summaryDoc         # only make summary, when doing ODD processing"
-fi
+echo "  --oxygenlib=$oxygenlib    # where is oxygenlib"
+case $format in
+      teitorelaxng) ;;
+      teitornc) ;;
+      teitoxsd) ;;
+    *) 
+	echo "  --odd                # perform processing of ODD (if appropriate)"
+	echo "  --summaryDoc         # only make summary, when doing ODD processing"
+	;;
+esac
+
 if [ $script = "teitoepub" ]
 then
 echo "  --fileperpage        # create output files one per page "
@@ -105,6 +111,7 @@ while test $# -gt 0; do
     --odd)          odd=true;;
     --mediaoverlay) mediaoverlay="-Dmediaoverlay=true";;
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
+    --oxygenlib=*)  oxygenlib=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
     --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
@@ -152,10 +159,16 @@ if ! test -f $APPHOME/$format/build-$direction.xml
 then
     die "No support for $from to $to: ant task $APPHOME/$format/build-$direction.xml does not exist"
 fi
-if ! test -f $profiledir/$profile/$format/$direction.xsl
-then
-    die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
-fi
+case $format in
+      rnc) ;;
+      xsd) ;;
+      *) if ! test -f $profiledir/$profile/$format/$direction.xsl
+	  then
+	  die "No support for profile $profile: $profiledir/$profile/$format/$direction.xsl does not exist"
+	 fi
+	  ;;
+esac
+
 echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress\
@@ -168,6 +181,7 @@ ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-Dpublisher=$publisher \
 	-Duid=$uid \
 	-Dsubject=$subject \
-	-Dcoverimage=$coverimage
+	-Dcoverimage=$coverimage \
+	-Doxygenlib=$oxygenlib
 
 	
