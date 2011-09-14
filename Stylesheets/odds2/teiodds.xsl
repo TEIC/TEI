@@ -1163,8 +1163,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:variable name="me-the-moduleRef" select="."/>
     <xsl:variable name="This" select="@key"/>
     <xsl:if test="$verbose='true'">
-      <xsl:message> .... import module [<xsl:value-of select="$This"/>
-        <xsl:value-of select="@url"/>] </xsl:message>
+      <xsl:message> .... import module [<xsl:value-of select="$This"/> <xsl:value-of select="@url"/>] </xsl:message>
     </xsl:if>
     <xsl:call-template name="bitOut">
       <xsl:with-param name="grammar">true</xsl:with-param>
