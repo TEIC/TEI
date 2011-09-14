@@ -125,18 +125,6 @@ Use real name of graphics files rather than pointers
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
-\def\textxi{\ensuremath{\xi}}
-\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
-\gdef\arraybackslash{\let\\=\@arraycr}
-</xsl:text>
-<xsl:text disable-output-escaping="yes">
-\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
-\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
-\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
-\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
-\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
-\definecolor{label}{gray}{0.75}
 </xsl:text>
 <xsl:if test="key('ENDNOTES',1)">
   \usepackage{endnotes}
@@ -325,6 +313,16 @@ capable of dealing with UTF-8 directly.
    \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
 
 \gdef\arraybackslash{\let\\=\@arraycr}
+\def\textxi{\ensuremath{\xi}}
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+<xsl:text disable-output-escaping="yes">
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
+\definecolor{label}{gray}{0.75}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
 \def\Div[#1]#2{\section*{#2}}
@@ -334,7 +332,7 @@ capable of dealing with UTF-8 directly.
 \endgroup
 \mathcode`\_=\string"8000
 \catcode`\_=12\relax
-
+</xsl:text>
    </xsl:template>
 
    <xsl:template name="exampleFontSet">
@@ -511,15 +509,6 @@ capable of dealing with UTF-8 directly.
 \parskip<xsl:value-of select="$parSkip"/>
 \parindent<xsl:value-of select="$parIndent"/>
 \def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
-\gdef\arraybackslash{\let\\=\@arraycr}
-<xsl:text disable-output-escaping="yes">
-\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
-\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
-\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
-\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
-\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
-\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
-\definecolor{label}{gray}{0.75}
 \newenvironment{reflist}{%
   \begin{raggedright}\begin{list}{}
   {%
@@ -548,6 +537,7 @@ capable of dealing with UTF-8 directly.
  {\vspace{20pt}\hrule\vspace{10pt}%
   \hypertarget{#1}{}%
   \markright{#2}%
+<xsl:text>
   \pdfbookmark[</xsl:text>
       <xsl:value-of select="$specLinkDepth"/>
       <xsl:text>]{#2}{#1}%
