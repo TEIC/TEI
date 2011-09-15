@@ -238,7 +238,10 @@
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/content.opf')}" method="xml">
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
-            <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
+            <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" 
+		      xmlns:dcterms="http://purl.org/dc/terms/" 
+		      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		      xmlns:opf="http://www.idpf.org/2007/opf">
               <dc:title>
                 <xsl:call-template name="generateSimpleTitle"/>
               </dc:title>
@@ -443,10 +446,10 @@
 		  <!-- images -->
               <xsl:for-each select="key('GRAPHICS',1)">
 		<xsl:variable name="img" select="@url|@facs"/>
-                <xsl:if test="not($img=$coverImageOutside)">
-                  <xsl:variable name="ID">
-                    <xsl:number level="any"/>
-                  </xsl:variable>
+		<xsl:if test="not($img=$coverImageOutside)">
+		  <xsl:variable name="ID">
+		    <xsl:number level="any"/>
+		  </xsl:variable>
 		  <xsl:variable name="mimetype">
 		    <xsl:choose>
 		      <xsl:when test="@mimeType != ''">
@@ -463,11 +466,31 @@
 		  <item href="{$img}" id="image-{$ID}" media-type="{$mimetype}"/>
 		</xsl:if>
 	      </xsl:for-each>
-              <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
-              <xsl:call-template name="epubManifestHook"/>
-            </manifest>
-            <spine toc="ncx">
-              <itemref idref="titlepage" linear="yes"/>
+	      <xsl:if test="$filePerPage='true'">
+		<!-- page images -->
+		<xsl:for-each select="key('PBGRAPHICS',1)">
+		  <xsl:variable name="img" select="@facs"/>
+		  <xsl:variable name="ID">
+		    <xsl:number level="any"/>
+		  </xsl:variable>
+		  <xsl:variable name="mimetype">
+		    <xsl:choose>
+		      <xsl:when test="@mimeType != ''">
+			<xsl:value-of select="@mimeType"/>
+		      </xsl:when>
+		      <xsl:when test="contains($img,'.gif')">image/gif</xsl:when>
+		      <xsl:when test="contains($img,'.png')">image/png</xsl:when>
+		      <xsl:otherwise>image/jpeg</xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:variable>
+		  <item href="{$img}" id="pbimage-{$ID}" media-type="{$mimetype}"/>
+		</xsl:for-each>
+	      </xsl:if>
+	      <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+	      <xsl:call-template name="epubManifestHook"/>
+	    </manifest>
+	    <spine toc="ncx">
+	      <itemref idref="titlepage" linear="yes"/>
 	      <xsl:if test="$filePerPage='true'">
 		<itemref idref="titlepageverso" linear="yes"/>
 	      </xsl:if>

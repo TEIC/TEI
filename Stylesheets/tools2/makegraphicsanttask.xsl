@@ -26,7 +26,8 @@
    <xsl:key name="G" match="tei:graphic[not(ancestor::teix:egXML)]"  use="1"/>
    <xsl:key name="PB" match="tei:pb[@facs]" use="1"/>
    <xsl:key name="Timeline" match="tei:timeline" use="1"/>
-   <xsl:param name="mediaoverlay">true</xsl:param>
+   <xsl:param name="mediaoverlay">false</xsl:param>
+   <xsl:param name="filePerPage">false</xsl:param>
    <xsl:param name="inputDir">.</xsl:param>
    <xsl:param name="mediaDir">word/media</xsl:param>
    <xsl:template match="/">
@@ -53,9 +54,10 @@
 	     <copy toFile="{$target}" file="{$inputDir}/{@corresp}"/>
 	   </xsl:for-each>
 	 </xsl:if>
-	 <xsl:for-each select="key('PB',1)">
-	   <xsl:variable name="F">
-	     <xsl:choose>
+	 <xsl:if test="$filePerPage='true'">
+	   <xsl:for-each select="key('PB',1)">
+	     <xsl:variable name="F">
+	       <xsl:choose>
 	       <xsl:when test="starts-with(@facs,'#')">
 		 <xsl:for-each select="id(substring(@facs,2))">
 		   <xsl:value-of select="tei:graphic[1]/@url"/>
@@ -85,8 +87,8 @@
 	       <copy toFile="{$target}" file="{$inputDir}/{$F}"/>
 	     </xsl:otherwise>
 	   </xsl:choose>
-
 	 </xsl:for-each>
+	 </xsl:if>
 	 <xsl:for-each select="key('G',1)">
 	   <xsl:variable name="F">
 	     <xsl:value-of select="@url"/>

@@ -28,7 +28,7 @@
   </doc>
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
   <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
-  <xsl:key name="GRAPHICS" use="1" match="tei:pb[@facs]"/>
+  <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs]"/>
   <xsl:param name="javascriptFiles"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
