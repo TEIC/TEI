@@ -466,7 +466,7 @@
 		  <item href="{$img}" id="image-{$ID}" media-type="{$mimetype}"/>
 		</xsl:if>
 	      </xsl:for-each>
-	      <xsl:if test="$filePerPage='true'">
+
 		<!-- page images -->
 		<xsl:for-each select="key('PBGRAPHICS',1)">
 		  <xsl:variable name="img" select="@facs"/>
@@ -485,7 +485,7 @@
 		  </xsl:variable>
 		  <item href="{$img}" id="pbimage-{$ID}" media-type="{$mimetype}"/>
 		</xsl:for-each>
-	      </xsl:if>
+
 	      <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
 	      <xsl:call-template name="epubManifestHook"/>
 	    </manifest>

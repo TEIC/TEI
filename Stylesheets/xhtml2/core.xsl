@@ -1201,7 +1201,7 @@
 	</PAGEBREAK>
       </xsl:when>
 
-      <xsl:when test="@facs">
+      <xsl:when test="@facs and not(@rend='none')">
 	<xsl:variable name="IMG">
 	  <xsl:choose>
 	    <xsl:when test="starts-with(@facs,'#')">

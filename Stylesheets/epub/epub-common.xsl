@@ -28,7 +28,7 @@
   </doc>
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
   <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
-  <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs]"/>
+  <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs and not(@rend='none')]"/>
   <xsl:param name="javascriptFiles"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -175,6 +175,9 @@
   <xsl:template match="tei:pb[@facs]" mode="fixgraphics">
     <xsl:copy>
       <xsl:choose>
+	<xsl:when test="@rend='none'">
+          <xsl:copy-of select="@*"/>
+	</xsl:when>
         <xsl:when test="$fixgraphicsurl='true'">
           <xsl:variable name="newName">
             <xsl:text>media/pageimage</xsl:text>
