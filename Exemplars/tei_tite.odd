@@ -32,7 +32,11 @@
    </sourceDesc>
   </fileDesc>
   <revisionDesc>
-   <change when="2011-04-15" who="PJT">Removed unwanted elements &amp; attributes, as described in ticket 3136934; added handShift, described in 3164403.</change>
+   <change when="2011-09-18" who="KSH">Updated metadata, including version number to 1.1, and added 
+    some background on what Tite is. Copyedited section comparing Tite and the Best Practices for 
+    TEI in Libraries</change>
+   <change when="2011-04-15" who="PJT">Removed unwanted elements &amp; attributes, as described in 
+    ticket 3136934; added handShift, described in 3164403.</change>
    <change when="2010-12-14" who="LB">Revised to use new syntax </change>
    <change when="2009-05-03" who="DPOD">Added prose indicating that the absence of
      <gi>teiHeader</gi> breaks the abstract model as a convenience to transcribers but needs to be
@@ -64,15 +68,33 @@
      <titlePart type="main">TEI Tite</titlePart>
      <titlePart type="sub">A recommendation for off-site text encoding</titlePart>
     </docTitle>
-    <docAuthor>Perry Trolard, for TEI Consortium</docAuthor>
-    <docDate>Version 1.0 — May 2009</docDate>
+    <docAuthor>Perry Trolard, for the TEI Consortium</docAuthor>
+    <docDate>Version 1.1 — September 2011</docDate>
    </titlePage>
   </front>
   <body>
    <div type="section" xml:id="intro">
     <head>Introduction</head>
+    
+    <p>TEI Tite is a constrained customization of TEI designed for use when outsourcing production 
+     of TEI documents to vendors, who use some combination of OCR and keyboarding to produce encoded 
+     text. While the canonical version of Tite is maintained by the TEI Council, a derived version 
+     is used in the AccessTEI program.</p>
+    
+    <p>TEI Tite is meant to express a trasitional format for documents, not an archival one. A 
+     project outsourcing encoding of documents using Tite should convert Tite documents created by 
+     vendors into a more suitable format for long-term preservation, such as one of the encoding 
+     levels of <title>Best Practices for TEI in Libraries</title> or a project-specific TEI 
+     customization.</p>
+    
+    <p>While Tite includes only a limited set of all of the elements in TEI, it should not be 
+     confused with <title>TEI Lite</title>, which also contains a subset of elements. What 
+     distinguishes Tite from other TEI customizations that is that Tite is meant to prescribe 
+     <emph>exactly one</emph> way of encoding a particular feature of a document in as many cases 
+     as possible, ensuring that any two encoders would produce the same XML document for a 
+     source document.</p>
 
-    <p> This document specifies how TEI Tite should be applied. Its organizing model is roughly the
+    <p>This document specifies how a source document should be encoded using TEI Tite. Its organizing model is roughly the
      structure of a TEI document itself, and it proceeds from high-level features to low, starting
      with general requirements, text structure, directions on when to group texts, considerations
      about type of text (genre and format), continuing down to instructions on marking phrase-level
@@ -655,18 +677,14 @@ some say, "No."
   <back>
    <head>Appendices</head>
    <div xml:id="tei-in-lib-bpg">
-    <head>TEI Tite and <title>TEI Text Encoding in Libraries</title> Guidelines</head>
-    <p>As of May 2009, the <ref target="http://wiki.tei-c.org/index.php/SIG:Libraries">TEI Special
-      Interest Group (SIG) on Libraries</ref> is in the process of revising its <title>TEI Text
-      Encoding in Libraries: Guidelines for Best Encoding Practices</title> (GBP) document, which
-     creates common definitions of <q>levels of encoding</q> based on depth of markup applied. A
-      <ref target="http://wiki.tei-c.org/index.php/TEI_in_Libraries:_Guidelines_for_Best_Practices"
-      >draft</ref> of this document is available at the Libraries SIG's wiki. Because the levels of
-     encoding provide a tremendously useful common set of terms, it's helpful to situate TEI Tite
-     according to them. </p>
-    <p>Mapped to GBP levels, TEI Tite would sit between three and four: it requires use of all the
-     elements from level three plus additional ones, but requires fewer elements than level four.
-     Relative to level three, <q>Simple Analysis,</q> Tite <list>
+    <head>TEI Tite and the <title>Best Practices for TEI in Libraries</title></head>
+    <p>The <title><ref target="http://purl.oclc.org/NET/teiinlibraries">Best Practices for TEI in 
+    Libraries</ref></title> creates common definitions of <q>levels of encoding</q> based on depth 
+     of markup applied. Because the levels of encoding provide a tremendously useful common set of 
+     terms, it's helpful to situate TEI Tite according to them.</p>
+    <p>Mapped to BP levels, TEI Tite would sit between Level 3 and Level 4: it requires use of all the
+     elements from Level 3 plus additional ones, but requires fewer elements than Level 4.
+     Relative to Level 3, <q>Simple Analysis,</q> Tite <list>
       <item>encourages the use of the <att>rend</att> attribute on typographically distinct text
        (marked with <gi>hi</gi>), implicitly, through the provision of convenience elements
         (<gi>i</gi>, <gi>b</gi>, etc.), and it provides the <gi>title</gi> and <gi>foreign</gi>
@@ -678,9 +696,9 @@ some say, "No."
        for drama, the <gi>cols</gi> element especially for newspapers. </item>
      </list>
     </p>
-    <p>Because Tite is closer to it, it's level four (<q>Basic Content Analysis</q>) that provides
+    <p>The most useful comparison for Tite is to Level 4 (<q>Basic Content Analysis</q>), provides
      the most useful comparison. The folowing items represent instances where Tite is
-      <emph>less</emph> ambitious than level four: <list>
+      <emph>less</emph> ambitious than Level 4: <list>
       <item>except in the case of the <gi>foreign</gi> and <gi>title</gi> elements, it is preferred
        in Tite to describe typographical changes physically, rather than semantically; Tite uses
         <gi>i</gi>, <gi>b</gi>, etc. where level four uses <gi>emph</gi>, <gi>gloss</gi>,
@@ -695,12 +713,12 @@ some say, "No."
       <item>Tite doesn't provide entity-specific naming elements, like <gi>persName</gi>,
         <gi>placeName</gi>, <gi>orgName</gi> and their list- (<gi>listPerson</gi>, etc.) forms
       </item>
-     </list> As of this point, it seems that bringing Tite-encoded documents up to GBP level four
-     would simply require additional application of markup, not significant reworking of markup, and
-     in that way Tite seems compatible with the GBP. </p>
-    <p>Not mentioned above is one key but purposeful incompatibility: Tite's lack of a header. A TEI
-     header must be added, and the root <gi>TEI</gi> element used for compatibility with the GBP,
-     and with the TEI abstract model in general. </p>
+      </list> Bringing Tite-encoded documents up to BP Level 4 would simply require additional 
+     application of markup, not significant reworking of markup, and in that way Tite is
+     compatible with the BP.</p>
+    <p>Do keep in mind one key but purposeful incompatibility: Tite's lack of a header. A TEI
+     header and the root <gi>TEI</gi> element must be added to a Tite document for compatibility 
+     with the BP and with the TEI abstract model in general.</p>
    </div>
 
    <div xmlns="http://www.tei-c.org/ns/1.0">
