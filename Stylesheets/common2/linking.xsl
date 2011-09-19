@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
-                
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="tei"
+                exclude-result-prefixes="tei xs"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -74,7 +74,7 @@
    </doc>
   <xsl:template match="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"
                  mode="xref">
-      <xsl:param name="minimal">false</xsl:param>
+      <xsl:param name="minimal"  as="xs:boolean" select="false()"/>
       <xsl:call-template name="header">
          <xsl:with-param name="minimal" select="$minimal"/>
          <xsl:with-param name="display">plain</xsl:with-param>
@@ -85,7 +85,7 @@
    </doc>
   <xsl:template match="tei:ptr">
       <xsl:call-template name="makeTEILink">
-         <xsl:with-param name="ptr">true</xsl:with-param>
+         <xsl:with-param name="ptr" as="xs:boolean" select="true()"/>
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -93,7 +93,7 @@
    </doc>
   <xsl:template match="tei:ref">
       <xsl:call-template name="makeTEILink">
-         <xsl:with-param name="ptr">false</xsl:with-param>
+         <xsl:with-param name="ptr" as="xs:boolean" select="false()"/>
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -105,7 +105,7 @@
       </desc>
    </doc>
   <xsl:template name="header">
-      <xsl:param name="minimal">false</xsl:param>
+      <xsl:param name="minimal"  as="xs:boolean" select="false()"/>
       <xsl:param name="toc"/>
       <xsl:param name="display">full</xsl:param>
       <xsl:variable name="depth">
@@ -124,19 +124,19 @@
 		 <xsl:call-template name="headingNumberSuffix"/>
 	       </xsl:when>
                <xsl:when test="ancestor::tei:back">
-                  <xsl:if test="$numberBackHeadings='true'">
+                  <xsl:if test="$numberBackHeadings">
                      <xsl:call-template name="i18n">
                         <xsl:with-param name="word">appendixWords</xsl:with-param>
                      </xsl:call-template>
                      <xsl:text> </xsl:text>
                      <xsl:call-template name="numberBackDiv"/>
-                     <xsl:if test="$minimal='false'">
+                     <xsl:if test="not($minimal)">
                         <xsl:value-of select="$numberSpacer"/>
                      </xsl:if>
                   </xsl:if>
                </xsl:when>
                <xsl:when test="ancestor::tei:front">
-                  <xsl:if test="$numberFrontHeadings='true'">
+                  <xsl:if test="$numberFrontHeadings">
                      <xsl:call-template name="numberFrontDiv">
 		       <xsl:with-param name="minimal">
 			 <xsl:value-of select="$minimal"/>
@@ -144,23 +144,23 @@
 		     </xsl:call-template>
                   </xsl:if>
                </xsl:when>
-               <xsl:when test="$numberHeadings ='true'">
+               <xsl:when test="$numberHeadings ">
                   <xsl:choose>
-                     <xsl:when test="$prenumberedHeadings='true'">
+                     <xsl:when test="$prenumberedHeadings">
                         <xsl:value-of select="@n"/>
                      </xsl:when>
                      <xsl:otherwise>
                         <xsl:call-template name="numberBodyDiv"/>
                      </xsl:otherwise>
                   </xsl:choose>
-                  <xsl:if test="$minimal='false'">
+                  <xsl:if test="not($minimal)">
                      <xsl:call-template name="headingNumberSuffix"/>
                   </xsl:if>
                </xsl:when>
             </xsl:choose>
          </xsl:with-param>
       </xsl:call-template>
-      <xsl:if test="$minimal='false'">
+      <xsl:if test="not($minimal)">
          <xsl:choose>
             <xsl:when test="local-name(.) = 'TEI'">
                <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[1]"/>
@@ -186,7 +186,7 @@
 		    <xsl:when test="tei:head">
 			<xsl:apply-templates mode="plain" select="tei:head"/>
 		    </xsl:when>
-		    <xsl:when test="$autoHead='true'">
+		    <xsl:when test="$autoHead">
 		      <xsl:call-template name="autoMakeHead">
 			<xsl:with-param name="display" select="$display"/>
 		      </xsl:call-template>
@@ -198,7 +198,7 @@
 		</xsl:with-param>
 	      </xsl:call-template>
             </xsl:when>
-            <xsl:when test="$autoHead='true'">
+            <xsl:when test="$autoHead">
                <xsl:call-template name="autoMakeHead">
 		 <xsl:with-param name="display" select="$display"/>
 	       </xsl:call-template>
@@ -253,7 +253,7 @@
       </desc>
    </doc>
   <xsl:template name="headerLink">
-      <xsl:param name="minimal">false</xsl:param>
+      <xsl:param name="minimal"  as="xs:boolean" select="false()"/>
       <xsl:variable name="Text">
          <xsl:call-template name="header">
             <xsl:with-param name="minimal" select="$minimalCrossRef"/>
@@ -297,7 +297,7 @@
             </xsl:call-template>
          </xsl:when>
          <!-- if we are doing TEI P4, all targets are local -->
-      <xsl:when test="@target and $teiP4Compat='true'">
+      <xsl:when test="@target and $teiP4Compat">
             <xsl:call-template name="makeInternalLink">
                <xsl:with-param name="target" select="@target"/>
                <xsl:with-param name="ptr" select="$ptr"/>

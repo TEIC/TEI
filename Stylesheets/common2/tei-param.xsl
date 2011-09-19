@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="m tei xsi sch" version="2.0">
+<xsl:stylesheet     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+xmlns:m="http://www.w3.org/1998/Math/MathML"
+xmlns:tei="http://www.tei-c.org/ns/1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+exclude-result-prefixes="m tei xsi sch xs" version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>TEI stylesheet customization module, common for all output
@@ -37,7 +43,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="decimal">
     <desc> Scaling of imported graphics</desc>
   </doc>
-  <xsl:param name="standardScale">1</xsl:param>
+  <xsl:param name="standardScale" as="xs:integer">1</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="headings" type="boolean">
     <desc> Construct a heading 
@@ -128,24 +134,24 @@
     <desc> Process elements according to assumptions
     of TEI P4</desc>
   </doc>
-  <xsl:param name="teiP4Compat">false</xsl:param>
+  <xsl:param name="teiP4Compat"  as="xs:boolean" select="false()"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
     <desc> Title, author and date is taken from the
     &lt;teiHeader&gt; rather than looked for in the front matter</desc>
   </doc>
-  <xsl:param name="useHeaderFrontMatter">false</xsl:param>
+  <xsl:param name="useHeaderFrontMatter"  as="xs:boolean" select="false()"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
     <desc>Whether to attempt to work out a current date (set to true
     for test results which won't differ</desc>
   </doc>
-  <xsl:param name="useFixedDate">false</xsl:param>
+  <xsl:param name="useFixedDate"  as="xs:boolean" select="false()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering">
     <desc>[common] How to number sections in back matter</desc>
   </doc>
   <xsl:template name="numberBackDiv">
-    <xsl:if test="not($numberBackHeadings='')">
+    <xsl:if test="$numberBackHeadings">
       <xsl:number count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" format="A.1.1.1.1.1" level="multiple"/>
     </xsl:if>
   </xsl:template>
@@ -153,22 +159,22 @@
     <desc> Automatically number figures in back
     matter</desc>
   </doc>
-  <xsl:param name="numberBackFigures">false</xsl:param>
+  <xsl:param name="numberBackFigures"  as="xs:boolean" select="false()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="string">
     <desc> How to construct heading numbering in
     back matter</desc>
   </doc>
-  <xsl:param name="numberBackHeadings">A.1</xsl:param>
+  <xsl:param name="numberBackHeadings"  as="xs:boolean" select="false()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
     <desc> Automatically number tables in back
     matter</desc>
   </doc>
-  <xsl:param name="numberBackTables">true</xsl:param>
+  <xsl:param name="numberBackTables"  as="xs:boolean" select="true()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering">
     <desc>[common] How to number sections in main matter</desc>
   </doc>
   <xsl:template name="numberBodyDiv">
-    <xsl:if test="$numberHeadings='true'">
+    <xsl:if test="$numberHeadings">
       <xsl:number count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" level="multiple"/>
     </xsl:if>
   </xsl:template>
@@ -180,14 +186,14 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
     <desc> Automatically number figures</desc>
   </doc>
-  <xsl:param name="numberFigures">true</xsl:param>
+  <xsl:param name="numberFigures"  as="xs:boolean" select="true()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering">
     <desc>[common] How to number sections in front matter</desc>
   </doc>
   <xsl:template name="numberFrontDiv">
     <xsl:param name="minimal"/>
     <xsl:number count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" level="multiple"/>
-    <xsl:if test="$minimal='false'">
+    <xsl:if test="not($minimal)">
       <xsl:value-of select="$numberSpacer"/>
     </xsl:if>
   </xsl:template>
@@ -195,30 +201,30 @@
     <desc> Automatically number figures in
     front matter</desc>
   </doc>
-  <xsl:param name="numberFrontFigures">false</xsl:param>
+  <xsl:param name="numberFrontFigures"  as="xs:boolean" select="false()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="string">
     <desc> How to construct heading numbering in
     front matter</desc>
   </doc>
-  <xsl:param name="numberFrontHeadings"/>
+  <xsl:param name="numberFrontHeadings"  as="xs:boolean" select="false()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
     <desc> Automatically number tables in front
     matter</desc>
   </doc>
-  <xsl:param name="numberFrontTables">true</xsl:param>
+  <xsl:param name="numberFrontTables"  as="xs:boolean" select="true()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
     <desc> Automatically number sections</desc>
   </doc>
-  <xsl:param name="numberHeadings">true</xsl:param>
+  <xsl:param name="numberHeadings"  as="xs:boolean" select="true()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="integer">
     <desc> Depth to which sections should be
     numbered</desc>
   </doc>
-  <xsl:param name="numberHeadingsDepth">9</xsl:param>
+  <xsl:param name="numberHeadingsDepth" as="xs:integer">9</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
     <desc> Automatically number tables</desc>
   </doc>
-  <xsl:param name="numberTables">true</xsl:param>
+  <xsl:param name="numberTables"  as="xs:boolean" select="true()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
     <desc> Use value of "n" attribute to number
     sections</desc>
@@ -228,8 +234,8 @@
     Automatically number paragraphs.
   </desc>
   </doc>
-  <xsl:param name="numberParagraphs">false</xsl:param>
-  <xsl:param name="prenumberedHeadings">false</xsl:param>
+  <xsl:param name="numberParagraphs"  as="xs:boolean" select="false()"/>
+  <xsl:param name="prenumberedHeadings"  as="xs:boolean" select="false()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
     <desc> The complete URL when the document is
     being delivered from a web server (normally set by Apache or Cocoon)</desc>
@@ -238,7 +244,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
     <desc> Write to standard output channel</desc>
   </doc>
-  <xsl:param name="STDOUT">true</xsl:param>
+  <xsl:param name="STDOUT"  as="xs:boolean" select="true()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
     <desc> Display of &lt;pb&gt; element.
     Choices are "visible", "active" and "none".</desc>
@@ -252,7 +258,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="boolean">
     <desc> Provide minimal context for a link</desc>
   </doc>
-  <xsl:param name="minimalCrossRef">false</xsl:param>
+  <xsl:param name="minimalCrossRef"  as="xs:boolean" select="false()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
     <desc> Character to insert at end of quote.</desc>
   </doc>
@@ -274,7 +280,7 @@
 Whether to make simplified display of ODD
 </desc>
   </doc>
-  <xsl:param name="oddWeaveLite">false</xsl:param>
+  <xsl:param name="oddWeaveLite"  as="xs:boolean" select="false()"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
     <desc>
 Paragraph indentation

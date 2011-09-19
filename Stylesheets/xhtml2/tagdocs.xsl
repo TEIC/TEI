@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet  xmlns:s="http://www.ascc.net/xml/schematron" xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="s html a fo rng tei teix" version="2.0">
+<xsl:stylesheet  xmlns:s="http://www.ascc.net/xml/schematron" xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples"     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+exclude-result-prefixes="s xs html a fo rng tei teix" version="2.0">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -25,7 +27,7 @@
     <desc>Process elements teix:egXML</desc>
   </doc>
   <xsl:template match="teix:egXML">
-    <xsl:param name="simple">false</xsl:param>
+    <xsl:param name="simple"  as="xs:boolean" select="false()"/>
     <xsl:param name="highlight"/>
     <div>
       <xsl:attribute name="id">
@@ -40,7 +42,7 @@
 	  <xsl:when test="@valid='feasible'">
 	    <xsl:text> egXML_feasible</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@valid='false'">
+	  <xsl:when test="@valid=false">
 	    <xsl:text> egXML_invalid</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
@@ -49,7 +51,7 @@
 	</xsl:choose>
       </xsl:attribute>
       <xsl:choose>
-        <xsl:when test="$simple='true'">
+        <xsl:when test="$simple">
           <xsl:apply-templates mode="verbatim">
             <xsl:with-param name="highlight">
               <xsl:value-of select="$highlight"/>

@@ -31,27 +31,22 @@
       </desc>
    </doc>
   <xsl:output method="text"/>
-  <xsl:param name="autoGlobal">false</xsl:param>
-  <xsl:param name="verbose"/>
+  <xsl:param name="autoGlobal"  as="xs:boolean" select="false()"/>
+  <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"> </xsl:param>
   <xsl:param name="filesuffix"/>
   <xsl:template name="headingNumberSuffix">
       <xsl:text> </xsl:text>
   </xsl:template>
-  <xsl:param name="numberBackHeadings"> </xsl:param>
-  <xsl:param name="numberFrontHeadings"> </xsl:param>
-  <xsl:param name="numberHeadings"> </xsl:param>
-  <xsl:param name="numberHeadingsDepth"> </xsl:param>
   <xsl:param name="oddmode">dtd</xsl:param>
-  <xsl:param name="prenumberedHeadings">false</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="generateNamespacePrefix">false</xsl:param>
+  <xsl:param name="generateNamespacePrefix"  as="xs:boolean" select="false()"/>
   <xsl:param name="namespacePrefix"/>
   <xsl:key match="tei:moduleSpec" name="Modules" use="1"/>
   <xsl:variable name="nsPrefix">
       <xsl:choose>
-         <xsl:when test="generateNamespacePrefix='false'"/>
+         <xsl:when test="not($generateNamespacePrefix)"/>
          <xsl:when test="not($namespacePrefix='')">
             <xsl:value-of select="$namespacePrefix"/>
          </xsl:when>
@@ -79,7 +74,7 @@
   <xsl:template name="byModule">
       <xsl:for-each select="key('Modules',1)">
          <xsl:sort order="descending" select="@ident"/>
-         <xsl:if test="$verbose='true'">
+         <xsl:if test="$verbose">
             <xsl:message> File [<xsl:value-of select="@ident"/>] </xsl:message>
          </xsl:if>
          <xsl:call-template name="generateOutput">
@@ -107,12 +102,12 @@
 			<xsl:text>list of element names</xsl:text>
                         </xsl:with-param>
 		    </xsl:call-template>
-		    <xsl:if test="$parameterize='true' and count(key('NSELEMENTS',1))&gt;0">
+		    <xsl:if test="$parameterize and count(key('NSELEMENTS',1))&gt;0">
 		      <xsl:text>&lt;!ENTITY % NS '</xsl:text>
 		      <xsl:value-of select="$nsPrefix"/>
 		      <xsl:text>' &gt;&#10;</xsl:text>
 		    </xsl:if>
-		    <xsl:if test="$parameterize='true'">
+		    <xsl:if test="$parameterize">
 		      <xsl:call-template name="NameList"/>
 		    </xsl:if>
 		    <xsl:call-template name="datatypeMacros"/>
@@ -282,7 +277,7 @@
          <xsl:choose>
             <xsl:when test="@type='atts'">
                <xsl:call-template name="classAtt">
-                  <xsl:with-param name="declare">false</xsl:with-param>
+                  <xsl:with-param name="declare" select="false()"/>
                </xsl:call-template>
             </xsl:when>
             <xsl:when test="@type='model'">
@@ -333,7 +328,7 @@
       </xsl:call-template>
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>schemaSpec <xsl:value-of select="@ident"/>
 			      </xsl:message>
       </xsl:if>
@@ -381,29 +376,29 @@
       </xsl:choose>
   </xsl:template>
   <xsl:template name="schemaSpecBody">
-      <xsl:if test="$parameterize='true' and      count(key('NSELEMENTS',1))&gt;0">
+      <xsl:if test="$parameterize and      count(key('NSELEMENTS',1))&gt;0">
          <xsl:text>&lt;!ENTITY % NS '</xsl:text>
          <xsl:value-of select="$nsPrefix"/>
          <xsl:text>' &gt;&#10;</xsl:text>
       </xsl:if>
-      <xsl:if test="$parameterize='true'">
+      <xsl:if test="$parameterize">
          <xsl:call-template name="NameList"/>
       </xsl:if>
       <xsl:text>&#10;&lt;!-- start datatypes --&gt;&#10;</xsl:text>
       <xsl:apply-templates mode="tangle" select="tei:macroSpec[@type='dt']"/>
       <xsl:text>&#10;&lt;!-- end datatypes --&gt;&#10;</xsl:text>
-      <xsl:if test="tei:classSpec[@predeclare='true']">
+      <xsl:if test="tei:classSpec[@predeclare]">
          <xsl:text>&#10;&lt;!--predeclared classes --&gt;&#10;</xsl:text>
-         <xsl:for-each select="tei:classSpec[@predeclare='true']">
+         <xsl:for-each select="tei:classSpec[@predeclare]">
 	   <xsl:choose>
 	     <xsl:when test="@type='atts'">
 	       <xsl:call-template name="classAtt">
-		 <xsl:with-param name="declare">true</xsl:with-param>
+		 <xsl:with-param name="declare" select="true()"/>
 	       </xsl:call-template>
 	     </xsl:when>
-	     <xsl:when test="@type='model' and $parameterize='false'">
+	     <xsl:when test="@type='model' and not($parameterize)">
 	       <xsl:call-template name="classModel">
-		 <xsl:with-param name="declare">true</xsl:with-param>
+		 <xsl:with-param name="declare" select="true()"/>
 	       </xsl:call-template>
 	     </xsl:when>
 	   </xsl:choose>
@@ -429,7 +424,7 @@
 	</xsl:choose>
       </xsl:for-each>
       <xsl:text>&#10;&lt;!-- end patterns --&gt;&#10;</xsl:text>
-      <xsl:if test="not(tei:classSpec[@predeclare='true'])">
+      <xsl:if test="not(tei:classSpec[@predeclare])">
          <xsl:text>&#10;&lt;!-- start classes --&gt;&#10;</xsl:text>
          <xsl:apply-templates mode="tangle" select="tei:classSpec[@type='atts']"/>
          <xsl:apply-templates mode="tangle" select="tei:classSpec[@type='model']"/>
@@ -465,7 +460,7 @@
          <xsl:text>&lt;!ENTITY % n.</xsl:text>
          <xsl:value-of select="@ident"/>
          <xsl:text> "</xsl:text>
-         <xsl:if test="$parameterize='true' and (@ns)">
+         <xsl:if test="$parameterize and (@ns)">
             <xsl:text>%NS;</xsl:text>
          </xsl:if>
          <xsl:choose>
@@ -580,7 +575,7 @@
                         <xsl:when test="self::processing-instruction()">
                            <xsl:apply-templates select="."/>
                         </xsl:when>
-                        <xsl:when test="self::rng:ref and $parameterize='false'">
+                        <xsl:when test="self::rng:ref and not($parameterize)">
                            <xsl:choose>
                               <xsl:when test="key('CLASSES',@name)">
                                  <xsl:variable name="exists">
@@ -872,7 +867,7 @@
   <xsl:template name="refbody">
       <xsl:variable name="R">
          <xsl:choose>
-            <xsl:when test="$parameterize='false'">
+            <xsl:when test="not($parameterize)">
                <xsl:choose>
                   <xsl:when test="key('CLASSES',@name)">
                      <xsl:variable name="exists">
@@ -977,8 +972,8 @@
   </xsl:template>
   <xsl:template match="tei:macroSpec" mode="tangle">
       <xsl:choose>
-         <xsl:when test="@depend and $parameterize='true'">
-            <xsl:if test="$verbose='true'">
+         <xsl:when test="@depend and $parameterize">
+            <xsl:if test="$verbose">
                <xsl:message>Dependency on <xsl:value-of select="@depend"/> for <xsl:value-of select="@ident"/>
                </xsl:message>
             </xsl:if>
@@ -987,7 +982,7 @@
             <xsl:text>&#10;]]&gt;</xsl:text>
          </xsl:when>
          <xsl:when test="@depend and count(key('ElementModule',@depend))=0">
-            <xsl:if test="$verbose='true'">
+            <xsl:if test="$verbose">
                <xsl:message>Dependency on <xsl:value-of select="@depend"/>, but not used in
 						this schema </xsl:message>
             </xsl:if>
@@ -1019,7 +1014,7 @@
       <xsl:text>' &gt;&#10;</xsl:text>
   </xsl:template>
   <xsl:template match="tei:elementSpec" mode="tangle">
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message> .... elementSpec <xsl:value-of select="@ident"/>
          </xsl:message>
       </xsl:if>
@@ -1027,7 +1022,7 @@
          <xsl:when test="starts-with(@ident,'%')">
             <xsl:call-template name="elementBody"/>
          </xsl:when>
-         <xsl:when test="$parameterize='false'">
+         <xsl:when test="not($parameterize)">
             <xsl:call-template name="elementBody"/>
          </xsl:when>
          <xsl:otherwise>
@@ -1044,7 +1039,7 @@
   <xsl:template name="elementBody">
       <xsl:variable name="ename">
          <xsl:choose>
-            <xsl:when test="$parameterize='false'">
+            <xsl:when test="not($parameterize)">
                <xsl:choose>
                   <xsl:when test="@ns='http://www.w3.org/1999/xhtml'">
                      <xsl:text>html:</xsl:text>
@@ -1073,13 +1068,13 @@
       </xsl:variable>
       <xsl:text>&#10;&lt;!--doc:</xsl:text>
       <xsl:call-template name="makeDescription">
-         <xsl:with-param name="includeValList">true</xsl:with-param>
-         <xsl:with-param name="coded">false</xsl:with-param>
+         <xsl:with-param name="includeValList" select="true()"/>
+         <xsl:with-param name="coded" select="false()"/>
       </xsl:call-template>
       <xsl:text> --&gt;&#10;</xsl:text>
       <xsl:text>&lt;!ELEMENT </xsl:text>
       <xsl:value-of select="$ename"/>
-      <xsl:if test="$parameterize='true'">
+      <xsl:if test="$parameterize">
          <xsl:text> %om.RR;</xsl:text>
       </xsl:if>
       <xsl:text> </xsl:text>
@@ -1140,10 +1135,10 @@
          </xsl:otherwise>
       </xsl:choose>
       <xsl:variable name="maybeatts">
-         <xsl:if test="$parameterize='true' and $autoGlobal='true'">
+         <xsl:if test="$parameterize and $autoGlobal">
             <xsl:text>&#10; %att.global.attributes;</xsl:text>
          </xsl:if>
-         <xsl:if test="$parameterize='true'">
+         <xsl:if test="$parameterize">
             <xsl:apply-templates mode="tangleAtts" select="tei:classes/tei:memberOf"/>
          </xsl:if>
          <xsl:call-template name="attributeList"/>
@@ -1172,15 +1167,15 @@
       </xsl:for-each>
   </xsl:template>
   <xsl:template name="classAtt">
-      <xsl:param name="declare">true</xsl:param>
-      <xsl:if test="$verbose='true'">
+      <xsl:param name="declare"  as="xs:boolean" select="true()"/>
+      <xsl:if test="$verbose">
          <xsl:message> .... <xsl:value-of select="@ident"/>.attributes</xsl:message>
       </xsl:if>
       <xsl:variable name="thisclass">
          <xsl:value-of select="@ident"/>
       </xsl:variable>
       <xsl:choose>
-         <xsl:when test="$declare='false'">
+         <xsl:when test="not($declare)">
             <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
             <xsl:value-of select="$thisclass"/>
             <xsl:text>.attributes</xsl:text>
@@ -1188,7 +1183,7 @@
          </xsl:when>
          <xsl:otherwise>
             <xsl:choose>
-               <xsl:when test="$parameterize='true'">
+               <xsl:when test="$parameterize">
                   <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
                   <xsl:value-of select="$thisclass"/>
                   <xsl:text>.attributes '</xsl:text>
@@ -1219,7 +1214,7 @@
   </xsl:template>
   <xsl:template match="tei:classSpec" mode="tagatts">
       <xsl:if test="@type='atts'">
-         <xsl:if test="$verbose='true'">
+         <xsl:if test="$verbose">
             <xsl:message> .... added contents of [%<xsl:value-of select="@ident"/>.attributes;]</xsl:message>
          </xsl:if>
          <xsl:text>&#10; %</xsl:text>
@@ -1228,7 +1223,7 @@
       </xsl:if>
   </xsl:template>
   <xsl:template match="tei:moduleRef[@key]" mode="tangle">
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message> moduleRef to <xsl:value-of select="@key"/>
 			      </xsl:message>
       </xsl:if>
@@ -1248,7 +1243,7 @@
       <xsl:text>;&#10;</xsl:text>
   </xsl:template>
   <xsl:template match="tei:classSpec" mode="tangle">
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message> .. classSpec <xsl:value-of select="@ident"/>,<xsl:value-of select="@type"/></xsl:message>
       </xsl:if>
       <xsl:choose>
@@ -1271,7 +1266,7 @@
       </xsl:choose>
   </xsl:template>
   <xsl:template name="classModel">
-      <xsl:param name="declare">false</xsl:param>
+      <xsl:param name="declare"  as="xs:boolean" select="false()"/>
       <xsl:call-template name="processClassDefinition">
          <xsl:with-param name="type">
             <xsl:choose>
@@ -1292,7 +1287,7 @@
   </xsl:template>
   <xsl:template name="makeClassDefinition">
       <xsl:param name="type">alternation</xsl:param>
-      <xsl:param name="declare"/>
+      <xsl:param name="declare" as="xs:boolean"/>
       <xsl:variable name="IDENT">
          <xsl:value-of select="@ident"/>
          <xsl:choose>
@@ -1303,11 +1298,11 @@
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message> .... ... generate model <xsl:value-of select="$type"/> for <xsl:value-of select="@ident"/>
 			      </xsl:message>
       </xsl:if>
-      <xsl:if test="$parameterize='true'">
+      <xsl:if test="$parameterize">
          <xsl:text>&#10;&lt;!ENTITY % x.</xsl:text>
          <xsl:value-of select="$IDENT"/>
          <xsl:text> "" &gt;</xsl:text>
@@ -1315,7 +1310,7 @@
       <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
       <xsl:value-of select="$IDENT"/>
       <xsl:text> "</xsl:text>
-      <xsl:if test="$parameterize='true'">
+      <xsl:if test="$parameterize">
          <xsl:text>%x.</xsl:text>
          <xsl:value-of select="$IDENT"/>
          <xsl:text>; </xsl:text>
@@ -1326,7 +1321,7 @@
             <xsl:for-each select="key('CLASSMEMBERS',@ident)">
                <xsl:variable name="N">
                   <xsl:choose>
-                     <xsl:when test="$parameterize='false'">
+                     <xsl:when test="not($parameterize)">
                         <xsl:choose>
                            <xsl:when test="key('CLASSES',@ident)">
                               <xsl:variable name="exists">
@@ -1361,11 +1356,11 @@
                         </xsl:choose>
                      </xsl:when>
                      <xsl:when test="self::tei:elementSpec">
-                        <xsl:if test="$parameterize='true'">
+                        <xsl:if test="$parameterize">
                            <xsl:text>%n.</xsl:text>
                         </xsl:if>
                         <xsl:value-of select="@ident"/>
-                        <xsl:if test="$parameterize='true'">
+                        <xsl:if test="$parameterize">
                            <xsl:text>;</xsl:text>
                         </xsl:if>
                      </xsl:when>
@@ -1454,7 +1449,7 @@
          <xsl:when test="@ns='http://www.w3.org/1999/xlink'">
             <xsl:text>xlink:</xsl:text>
          </xsl:when>
-         <xsl:when test="$parameterize='true' and (@ns) and not($nsPrefix='') and not(starts-with(@ident,'xmlns'))">
+         <xsl:when test="$parameterize and (@ns) and not($nsPrefix='') and not(starts-with(@ident,'xmlns'))">
             <xsl:text>%NS;</xsl:text>
          </xsl:when>
       </xsl:choose>

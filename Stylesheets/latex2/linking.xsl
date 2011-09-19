@@ -3,9 +3,9 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
-                
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="a rng tei teix"
+                exclude-result-prefixes="a rng tei teix xs"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -51,7 +51,7 @@
       <xsl:param name="ptr"/>
       <xsl:param name="dest"/>
       <xsl:choose>
-         <xsl:when test="$ptr='true'">
+         <xsl:when test="$ptr">
             <xsl:text>\url{</xsl:text>
             <xsl:value-of select="$dest"/>
             <xsl:text>}</xsl:text>
@@ -75,7 +75,7 @@
   <xsl:template name="makeInternalLink">
       <xsl:param name="target"/>
       <xsl:param name="class"/>
-      <xsl:param name="ptr"/>
+      <xsl:param name="ptr" as="xs:boolean"/>
       <xsl:param name="dest"/>
       <xsl:param name="body"/>
       <xsl:choose>
@@ -88,7 +88,7 @@
 		 <xsl:value-of select="$body"/>
 		 <xsl:text>}</xsl:text>
                </xsl:when>
-               <xsl:when test="$ptr='true'">
+               <xsl:when test="$ptr">
 		 <xsl:for-each select="id($dest)">
 		   <xsl:choose>
 		     <xsl:when test="$class='pageref'">
@@ -148,7 +148,7 @@
 	     <xsl:when test="not($body='')">
 	       <xsl:value-of select="$body"/>
 	     </xsl:when>
-	     <xsl:when test="$ptr='true'">
+	     <xsl:when test="$ptr">
 	       <xsl:value-of select="$dest"/>
 	     </xsl:when>
 	     <xsl:otherwise>

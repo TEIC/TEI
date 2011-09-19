@@ -36,7 +36,7 @@
     <xsl:template name="msSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
-      <xsl:param name="implicitBlock">false</xsl:param>
+      <xsl:param name="implicitBlock"  as="xs:boolean" select="false()"/>
       <xsl:element name="h{$level}">
 	        <xsl:value-of select="$heading"/>
       </xsl:element>

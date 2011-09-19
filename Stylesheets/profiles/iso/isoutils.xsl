@@ -36,7 +36,7 @@
   <xsl:key name="ALLMETA" match="*[@iso:meta]" use="1"/>
   
   <xsl:param name="doclang">en</xsl:param>
-  <xsl:param name="showTBXMarkup">false</xsl:param>   
+  <xsl:param name="showTBXMarkup"  as="xs:boolean" select="false()"/>   
 
   <xsl:template name="whatsTheDate">
     <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
@@ -394,7 +394,7 @@
       <xsl:with-param name="text">
 	<xsl:apply-templates/>
       </xsl:with-param>
-      <xsl:with-param name="italic">true</xsl:with-param>
+      <xsl:with-param name="italic" select="true()"/>
     </xsl:call-template>
   </xsl:template>
   

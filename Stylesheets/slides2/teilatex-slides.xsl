@@ -49,7 +49,7 @@ XSL LaTeX stylesheet to make slides
   <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
-  <xsl:param name="pause">true</xsl:param>
+  <xsl:param name="pause"  as="xs:boolean" select="true()"/>
 
   <xsl:template name="verbatim-lineBreak">
       <xsl:param name="id"/>
@@ -82,7 +82,7 @@ XSL LaTeX stylesheet to make slides
 <xsl:if test="not($latexLogo='')">
          <xsl:text>\pgfdeclareimage[height=1cm]{logo}{</xsl:text>
          <xsl:choose>
-            <xsl:when test="$realFigures='true'">
+            <xsl:when test="$realFigures">
                <xsl:value-of select="$latexLogo"/>
             </xsl:when>
             <xsl:otherwise>
@@ -228,7 +228,7 @@ XSL LaTeX stylesheet to make slides
    </xsl:template>
 
    <xsl:template match="tei:item[@rend='pause' or parent::tei:list/@rend='pause']">
-      <xsl:if test="$pause='true'">
+      <xsl:if test="$pause">
          <xsl:text>\pause </xsl:text>
       </xsl:if>
       <xsl:text>\item </xsl:text>
@@ -253,7 +253,7 @@ XSL LaTeX stylesheet to make slides
   </xsl:template>
 
   <xsl:template match="teix:egXML">
-      <xsl:param name="simple">false</xsl:param>
+      <xsl:param name="simple"  as="xs:boolean" select="false()"/>
       <xsl:param name="highlight"/>
       <xsl:variable name="fontsize">
          <xsl:choose>

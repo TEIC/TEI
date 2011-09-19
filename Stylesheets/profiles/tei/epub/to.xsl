@@ -21,11 +21,11 @@
   <xsl:param name="outputMethod">xhtml</xsl:param>
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
-  <xsl:param name="STDOUT">false</xsl:param>
-  <xsl:param name="splitLevel">0</xsl:param>
-  <xsl:param name="footnoteFile">false</xsl:param>
-  <xsl:param name="auto">false</xsl:param>
-  <xsl:param name="numberFrontHeadings">true</xsl:param>
+  <xsl:param name="STDOUT"  as="xs:boolean" select="false()"/>
+  <xsl:param name="splitLevel" as="xs:integer">0</xsl:param>
+  <xsl:param name="footnoteFile"  as="xs:boolean" select="false()"/>
+  <xsl:param name="auto"  as="xs:boolean" select="false()"/>
+  <xsl:param name="numberFrontHeadings"  as="xs:boolean" select="true()"/>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="feedbackURL">http://www.tei-c.org/Consortium/contact.xml</xsl:param>
   <xsl:param name="homeLabel">TEI P5 Guidelines</xsl:param>

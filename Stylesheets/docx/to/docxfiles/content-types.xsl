@@ -52,7 +52,7 @@
    </doc>
     
     <xsl:template name="write-docxfile-content-types">
-	     <xsl:if test="$debug='true'">
+	     <xsl:if test="$debug">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/%5BContent_Types%5D.xml')"/>
          </xsl:message>
 	     </xsl:if>

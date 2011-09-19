@@ -71,14 +71,14 @@
                 <w:ind w:left="567" w:hanging="567"/>
             </w:pPr>
             <xsl:apply-templates>
-                <xsl:with-param name="nop">true</xsl:with-param>
+                <xsl:with-param name="nop" select="true()"/>
             </xsl:apply-templates>
             <w:r>
                 <w:tab/>
             </w:r>
             <xsl:for-each select="following-sibling::tei:item[1]">
                 <xsl:apply-templates>
-                    <xsl:with-param name="nop">true</xsl:with-param>
+                    <xsl:with-param name="nop" select="true()"/>
                 </xsl:apply-templates>
             </xsl:for-each>
         </w:p>
@@ -87,7 +87,7 @@
     <xsl:template match="tei:item/tei:list">
         <xsl:param name="nop"/>
         <xsl:apply-templates>
-            <xsl:with-param name="nop">false</xsl:with-param>
+            <xsl:with-param name="nop" select="false()"/>
         </xsl:apply-templates>
     </xsl:template>
 
@@ -144,7 +144,7 @@
 			      <xsl:attribute name="w:val">
 				<xsl:choose>
 				  <xsl:when
-				      test="$isofreestanding='true'">
+				      test="$isofreestanding">
 				    <xsl:text>2</xsl:text>
 				  </xsl:when>
 				  <xsl:otherwise>

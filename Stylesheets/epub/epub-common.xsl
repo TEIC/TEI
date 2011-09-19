@@ -154,7 +154,7 @@
   <xsl:template match="tei:graphic" mode="fixgraphics">
     <xsl:copy>
       <xsl:choose>
-        <xsl:when test="$fixgraphicsurl='true'">
+        <xsl:when test="$fixgraphicsurl">
           <xsl:variable name="newName">
             <xsl:text>media/resource</xsl:text>
             <xsl:number level="any"/>
@@ -178,7 +178,7 @@
 	<xsl:when test="@rend='none'">
           <xsl:copy-of select="@*"/>
 	</xsl:when>
-        <xsl:when test="$fixgraphicsurl='true'">
+        <xsl:when test="$fixgraphicsurl">
           <xsl:variable name="newName">
             <xsl:text>media/pageimage</xsl:text>
             <xsl:number level="any"/>
@@ -431,7 +431,7 @@
 
   <xsl:template name="generateDate">
     <xsl:choose>
-      <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate[@when]">
+      <xsl:when test="$useHeaderFrontMatter and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate[@when]">
         <xsl:apply-templates mode="date" select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate/@when"/>
       </xsl:when>
       <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[@when]">

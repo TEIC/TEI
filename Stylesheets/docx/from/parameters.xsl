@@ -49,9 +49,9 @@
       </desc>
    </doc>
     
-    <xsl:param name="convert-graphics">true</xsl:param>
+    <xsl:param name="convert-graphics"  as="xs:boolean" select="true()"/>
     
-    <xsl:param name="convert-headers">true</xsl:param>
+    <xsl:param name="convert-headers"  as="xs:boolean" select="true()"/>
     
     <xsl:param name="mathMethod">mml</xsl:param>
     
@@ -61,12 +61,12 @@
     
     <xsl:param name="word-directory">.</xsl:param>
     
-    <xsl:param name="preserveWordSections">false</xsl:param>
+    <xsl:param name="preserveWordSections"  as="xs:boolean" select="false()"/>
 
-    <xsl:param name="preserveWordHeadersFooters">false</xsl:param>    
+    <xsl:param name="preserveWordHeadersFooters"  as="xs:boolean" select="false()"/>    
 
-    <xsl:param name="preserveEffects">false</xsl:param>
+    <xsl:param name="preserveEffects"  as="xs:boolean" select="false()"/>
 
-    <xsl:param name="verbose">false</xsl:param>
+    <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
 
 </xsl:stylesheet>

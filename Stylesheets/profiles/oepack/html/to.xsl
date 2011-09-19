@@ -31,7 +31,7 @@
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
     
   <xsl:param name="splitLevel">-1</xsl:param>
-  <xsl:param name="numberHeadings">true</xsl:param>
+  <xsl:param name="numberHeadings"  as="xs:boolean" select="true()"/>
   <xsl:param name="googlestylesheet">oxford</xsl:param>
   <xsl:param name="cssPrintFile">/ota-print.css</xsl:param>
   <xsl:param name="ROOT">http://www.oucs.ox.ac.uk</xsl:param>
@@ -108,7 +108,7 @@
 	  <xsl:otherwise>
 	    <xsl:call-template name="mainFrame">
 	      <xsl:with-param name="currentID" select="$currentID"/>
-	      <xsl:with-param name="minimal">true</xsl:with-param>
+	      <xsl:with-param name="minimal" select="true()"/>
 	    </xsl:call-template>
 	  </xsl:otherwise>
 	</xsl:choose>

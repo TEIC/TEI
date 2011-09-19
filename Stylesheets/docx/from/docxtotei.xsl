@@ -404,7 +404,7 @@
      </desc>
    </doc>
 	  <xsl:template name="extract-forme-work">
-	    <xsl:if test="preserveWordHeadersFooters='true'">
+	    <xsl:if test="preserveWordHeadersFooters>
 		    <xsl:for-each-group select="//w:headerReference|//w:footerReference" group-by="@r:id">
 			      <fw>
 				        <xsl:attribute name="xml:id">

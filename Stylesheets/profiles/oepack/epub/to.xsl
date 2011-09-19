@@ -34,13 +34,13 @@
    </doc>
 
     <xsl:param name="publisher">Oxford Text Archive, Oxford University</xsl:param>
-    <xsl:param name="numberHeadings">false</xsl:param>
+    <xsl:param name="numberHeadings"  as="xs:boolean" select="false()"/>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
-    <xsl:param name="numberBackHeadings"></xsl:param>
-    <xsl:param name="numberFrontHeadings"></xsl:param>
-    <xsl:param name="numberFigures">false</xsl:param>
-    <xsl:param name="numberTables">false</xsl:param>
-    <xsl:param name="autoToc">true</xsl:param>
+    <xsl:param name="numberBackHeadings"  as="xs:boolean" select="false()"/>
+    <xsl:param name="numberFrontHeadings"  as="xs:boolean" select="false()"/>
+    <xsl:param name="numberFigures"  as="xs:boolean" select="false()"/>
+    <xsl:param name="numberTables"  as="xs:boolean" select="false()"/>
+    <xsl:param name="autoToc"  as="xs:boolean" select="true()"/>
     <xsl:param name="cssFile">../profiles/oepack/epub/oepack.css</xsl:param>
     <xsl:param name="javascriptFiles">
       ../profiles/oepack/epub/jquery-1.6.1.min.js,

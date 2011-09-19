@@ -34,10 +34,10 @@
    </doc>
 
     <xsl:param name="publisher">Bodleian Library, University of Oxford</xsl:param>
-    <xsl:param name="numberHeadings"></xsl:param>
-    <xsl:param name="numberBackHeadings"></xsl:param>
-    <xsl:param name="numberFrontHeadings"></xsl:param>
-    <xsl:param name="autoToc">true</xsl:param>
+    <xsl:param name="numberHeadings"  as="xs:boolean" select="false()"/>
+    <xsl:param name="numberBackHeadings"  as="xs:boolean" select="false()"/>
+    <xsl:param name="numberFrontHeadings"  as="xs:boolean" select="false()"/>
+    <xsl:param name="autoToc"  as="xs:boolean" select="true()"/>
     <xsl:param name="cssFile">../profiles/bodley/epub/bodley.css</xsl:param>
 
   <xsl:template name="myi18n">

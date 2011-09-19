@@ -66,7 +66,7 @@ Stylesheet constant setting the name of the main output file.
       <xsl:choose>
          <xsl:when test="not($outputName ='')">
             <xsl:choose>
-               <xsl:when test="$STDOUT='true'">
+               <xsl:when test="$STDOUT">
                   <xsl:value-of select="$outputName"/>
                </xsl:when>
                <xsl:when test="contains($outputName,'.xml')">
@@ -91,7 +91,7 @@ Stylesheet constant setting the name of the main output file.
                </xsl:with-param>
             </xsl:call-template>
          </xsl:when>
-         <xsl:when test="$STDOUT='true'">
+         <xsl:when test="$STDOUT">
             <xsl:text>index.xml</xsl:text>
          </xsl:when>
          <xsl:otherwise>
@@ -115,7 +115,7 @@ Stylesheet constant setting the name of the main output file.
          </xsl:when>
          <xsl:otherwise>
             <xsl:choose>
-               <xsl:when test="$STDOUT='true'">
+               <xsl:when test="$STDOUT">
                   <xsl:value-of select="$file"/>
                </xsl:when>
                <xsl:when test="contains($file,'.xml')">

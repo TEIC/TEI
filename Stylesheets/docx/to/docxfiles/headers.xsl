@@ -76,7 +76,7 @@
    </doc>
     <xsl:template name="write-docxfile-specific-header-file">
         <xsl:for-each select="key('ALLHEADERS',1)">
-	        <xsl:if test="$debug='true'">
+	        <xsl:if test="$debug">
 	           <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/header',position(),'.xml')"/>
             </xsl:message>
 	        </xsl:if>

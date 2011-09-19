@@ -185,7 +185,7 @@
 						</xsl:choose>
 					      </xsl:variable>
 					      <xsl:choose>
-						<xsl:when test="$sideBorders='true'
+						<xsl:when test="$sideBorders
 								and(w:bottom/@w:val='single' or w:top/@w:val='single')">all</xsl:when>
 						<xsl:otherwise>
 						  <xsl:text>none</xsl:text>
@@ -352,7 +352,7 @@
 		  <row>
 		    <xsl:for-each select="w:tc">
 		      <cell>
-			<xsl:if test="preserveEffects='true'">
+			<xsl:if test="preserveEffects>
 			  <xsl:attribute name="teidocx:align">
 			    <xsl:choose>
 			      <xsl:when test="w:p/w:pPr/w:jc">

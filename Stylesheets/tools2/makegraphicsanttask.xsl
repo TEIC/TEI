@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
 		xmlns:smil="http://www.w3.org/ns/SMIL"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -26,8 +27,8 @@
    <xsl:key name="G" match="tei:graphic[not(ancestor::teix:egXML)]"  use="1"/>
    <xsl:key name="PB" match="tei:pb[@facs and not(@rend='none')]" use="1"/>
    <xsl:key name="Timeline" match="tei:timeline" use="1"/>
-   <xsl:param name="mediaoverlay">false</xsl:param>
-   <xsl:param name="filePerPage">false</xsl:param>
+   <xsl:param name="mediaoverlay"  as="xs:boolean" select="false()"/>
+   <xsl:param name="filePerPage"  as="xs:boolean" select="false()"/>
    <xsl:param name="inputDir">.</xsl:param>
    <xsl:param name="mediaDir">word/media</xsl:param>
    <xsl:template match="/">
@@ -41,7 +42,7 @@
 	     </xsl:attribute>
 	   </mkdir>
 	 </xsl:if>
-	 <xsl:if test="$mediaoverlay='true' and key('Timeline',1)">
+	 <xsl:if test="$mediaoverlay=true and key('Timeline',1)">
 	   <xsl:for-each select="key('Timeline',1)">
 	     <xsl:variable name="target">
 	       <xsl:text>${outputTempDir}/</xsl:text>

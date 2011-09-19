@@ -14,7 +14,7 @@ XSL stylesheet to process TEI documents using ODD markup
                 exclude-result-prefixes="tei"
                 version="2.0">
   <xsl:output method="xml" indent="yes" encoding="utf-8"/>
-  <xsl:param name="verbose"/>
+  <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
   <xsl:param name="lang">es</xsl:param>
   <xsl:key name="ELEMENTS" match="element" use="@ident"/>
   <xsl:key name="ATTRIBUTES" match="attribute" use="@ident"/>
@@ -32,7 +32,7 @@ XSL stylesheet to process TEI documents using ODD markup
       </xsl:choose>
   </xsl:variable>
   <xsl:template match="/">
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>Translate database: <xsl:value-of select="$i18n"/>
          </xsl:message>
       </xsl:if>
@@ -53,7 +53,7 @@ XSL stylesheet to process TEI documents using ODD markup
          <xsl:if test="not(tei:altIdent)">
             <xsl:for-each select="document($i18n)">
                <xsl:for-each select="key('ELEMENTS',$me)/equiv[@xml:lang=$lang][not(@value='')]">
-                  <xsl:if test="$verbose='true'">
+                  <xsl:if test="$verbose">
                      <xsl:message>
                         <xsl:value-of select="$me"/> ... <xsl:value-of select="@value"/>
                      </xsl:message>
@@ -74,7 +74,7 @@ XSL stylesheet to process TEI documents using ODD markup
       <xsl:for-each select="document($i18n)">
         <xsl:for-each select="key('ELEMENTS',$me)/desc[@xml:lang=$lang]">
           <xsl:if test="not(.='.')">
-            <xsl:if test="$verbose='true'">
+            <xsl:if test="$verbose">
               <xsl:message><xsl:value-of select="$me"/> ... <xsl:value-of select="."/></xsl:message>
             </xsl:if>
             <desc xmlns="http://www.tei-c.org/ns/1.0">
@@ -101,7 +101,7 @@ XSL stylesheet to process TEI documents using ODD markup
          <xsl:if test="not(tei:altIdent)">
             <xsl:for-each select="document($i18n)">
                <xsl:for-each select="key('ATTRIBUTES',$me)/equiv[@xml:lang=$lang][not(@value='')]">
-                  <xsl:if test="$verbose='true'">
+                  <xsl:if test="$verbose">
                      <xsl:message>
                         <xsl:value-of select="$me"/> ... <xsl:value-of select="@value"/>
                      </xsl:message>

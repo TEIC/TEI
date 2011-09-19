@@ -22,39 +22,38 @@
   </doc>
   <xsl:output method="xml" encoding="utf-8"/>
   <xsl:param name="BITS">Bits</xsl:param>
-  <xsl:param name="STDOUT">true</xsl:param>
+  <xsl:param name="STDOUT"  as="xs:boolean" select="true()"/>
   <xsl:param name="TAG"/>
   <xsl:param name="alignNavigationPanel">left</xsl:param>
   <xsl:param name="authorWord"/>
-  <xsl:param name="autoToc">true</xsl:param>
-  <xsl:param name="bottomNavigationPanel">true</xsl:param>
+  <xsl:param name="autoToc"  as="xs:boolean" select="true()"/>
+  <xsl:param name="bottomNavigationPanel"  as="xs:boolean" select="true()"/>
   <xsl:param name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
   <xsl:param name="cssSecondaryFile">http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
   <xsl:param name="dateWord"/>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="feedbackWords">Contact</xsl:param>
-  <xsl:param name="footnoteBackLink">true</xsl:param>
-  <xsl:param name="footnoteFile">false</xsl:param>
+  <xsl:param name="footnoteBackLink"  as="xs:boolean" select="true()"/>
+  <xsl:param name="footnoteFile"  as="xs:boolean" select="false()"/>
   <xsl:param name="homeURL">index.html</xsl:param>
   <xsl:param name="indent-width" select="3"/>
   <xsl:param name="line-width" select="80"/>
   <xsl:param name="numberBackHeadings">A.1</xsl:param>
-  <xsl:param name="numberFrontHeadings"/>
   <xsl:param name="pageLayout">Simple</xsl:param>
-  <xsl:param name="prenumberedHeadings">false</xsl:param>
+  <xsl:param name="prenumberedHeadings"  as="xs:boolean" select="false()"/>
   <xsl:param name="searchURL"/>
   <xsl:param name="searchWords"/>
-  <xsl:param name="showNamespaceDecls">false</xsl:param>
-  <xsl:param name="showTitleAuthor">1</xsl:param>
+  <xsl:param name="showNamespaceDecls"  as="xs:boolean" select="false()"/>
+  <xsl:param name="showTitleAuthor" as="xs:integer">1</xsl:param>
   <xsl:param name="splitBackmatter">yes</xsl:param>
   <xsl:param name="splitFrontmatter">yes</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="subTocDepth">-1</xsl:param>
-  <xsl:param name="tocDepth">3</xsl:param>
+  <xsl:param name="tocDepth" as="xs:integer">3</xsl:param>
   <xsl:param name="tocElement">div</xsl:param>
   <xsl:param name="topNavigationPanel"/>
-  <xsl:param name="useHeaderFrontMatter">true</xsl:param>
-  <xsl:param name="verbose">false</xsl:param>
+  <xsl:param name="useHeaderFrontMatter"  as="xs:boolean" select="true()"/>
+  <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
   <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
   <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
 
@@ -82,7 +81,7 @@
   <xsl:template name="oddTocEntry">
     <xsl:variable name="loc">
       <xsl:choose>
-        <xsl:when test="number($splitLevel)=-1 or $STDOUT='true'">
+        <xsl:when test="number($splitLevel)=-1 or $STDOUT>
           <xsl:text>#</xsl:text>
           <xsl:value-of select="@ident"/>
         </xsl:when>
@@ -119,7 +118,7 @@
   <xsl:template name="makeHTMLHeading">
     <xsl:param name="text"/>
     <xsl:param name="class">title</xsl:param>
-    <xsl:param name="level">1</xsl:param>
+    <xsl:param name="level" as="xs:integer">1</xsl:param>
     <xsl:if test="not($text='')">
       <xsl:choose>
         <xsl:when test="$level='1'">

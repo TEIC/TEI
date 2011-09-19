@@ -51,15 +51,15 @@
    <xsl:param name="cssFile">http://tei.oucs.ox.ac.uk/TEIISO/iso.css</xsl:param>
    <xsl:param name="cssSecondaryFile">http://tei.oucs.ox.ac.uk/TEIISO/iso-odd.css</xsl:param>
    <xsl:param name="cssPrintFile">http://tei.oucs.ox.ac.uk/TEIISO/iso-print.css</xsl:param>
-   <xsl:param name="TEIC">false</xsl:param>
-   <xsl:param name="wrapLength">65</xsl:param>
-   <xsl:param name="attLength">60</xsl:param>
-   <xsl:param name="forceWrap">true</xsl:param>
+   <xsl:param name="TEIC"  as="xs:boolean" select="false()"/>
+   <xsl:param name="wrapLength" as="xs:integer">65</xsl:param>
+   <xsl:param name="attLength" as="xs:integer">60</xsl:param>
+   <xsl:param name="forceWrap"  as="xs:boolean" select="true()"/>
   
-   <xsl:param name="autoHead">false</xsl:param>
+   <xsl:param name="autoHead"  as="xs:boolean" select="false()"/>
    <xsl:param name="outputDir">OEBPS</xsl:param>
-   <xsl:param name="splitLevel">0</xsl:param>
-   <xsl:param name="STDOUT">false</xsl:param>
+   <xsl:param name="splitLevel" as="xs:integer">0</xsl:param>
+   <xsl:param name="STDOUT"  as="xs:boolean" select="false()"/>
 
    <xsl:template match="/">
      <xsl:variable name="All">

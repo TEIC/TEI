@@ -47,8 +47,8 @@
   <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
   <xsl:param name="cssFile">http://www.tei-c.org/stylesheet/teislides.css</xsl:param>
   <xsl:param name="logoFile">logo.png</xsl:param>
-  <xsl:param name="logoWidth">60</xsl:param>
-  <xsl:param name="logoHeight">60</xsl:param>
+  <xsl:param name="logoWidth" as="xs:integer">60</xsl:param>
+  <xsl:param name="logoHeight" as="xs:integer">60</xsl:param>
   <xsl:param name="spaceCharacter"> </xsl:param>
   <xsl:template name="lineBreak">
       <xsl:param name="id"/>
@@ -60,14 +60,14 @@
 <xsl:text>)</xsl:text>
 -->
   <xsl:param name="numberHeadings"/>
-  <xsl:param name="splitLevel">0</xsl:param>
-  <xsl:param name="STDOUT">false</xsl:param>
+  <xsl:param name="splitLevel" as="xs:integer">0</xsl:param>
+  <xsl:param name="STDOUT"  as="xs:boolean" select="false()"/>
   <xsl:param name="subTocDepth">-1</xsl:param>
   <xsl:param name="topNavigationPanel"/>
-  <xsl:param name="bottomNavigationPanel">true</xsl:param>
+  <xsl:param name="bottomNavigationPanel"  as="xs:boolean" select="true()"/>
   <xsl:param name="linkPanel"/>
   <xsl:template name="copyrightStatement"/>
-  <xsl:param name="makingSlides">true</xsl:param>
+  <xsl:param name="makingSlides"  as="xs:boolean" select="true()"/>
 
   <xsl:template match="tei:div" mode="number">
       <xsl:number level="any"/>
@@ -104,7 +104,7 @@
 
   <xsl:template match="/tei:TEI">
       <xsl:param name="slidenum">
-         <xsl:value-of select="$masterFile"/>0</xsl:param>
+         <xsl:value-of select="$masterFile"/ as="xs:integer">0</xsl:param>
 
       <xsl:variable name="outName">
          <xsl:call-template name="outputChunkName">
@@ -114,7 +114,7 @@
          </xsl:call-template>
       </xsl:variable>
 
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
@@ -124,7 +124,7 @@
                            method="{$outputMethod}">
          <xsl:call-template name="mainslide"/>
       </xsl:result-document>
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>Closing file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
@@ -344,7 +344,7 @@
          </xsl:call-template>
       </xsl:variable>
 
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
@@ -370,7 +370,7 @@
             </body>
         </html>
       </xsl:result-document>
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>Closing file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
@@ -394,7 +394,7 @@
 	              </xsl:call-template>
 	           </xsl:variable>
 	
-	           <xsl:if test="$verbose='true'">
+	           <xsl:if test="$verbose">
 	              <xsl:message>Opening file <xsl:value-of select="$outName"/>
                </xsl:message>
 	           </xsl:if>
@@ -404,7 +404,7 @@
                                  method="{$outputMethod}">
 	              <xsl:call-template name="slideout"/>
 	           </xsl:result-document>
-	           <xsl:if test="$verbose='true'">
+	           <xsl:if test="$verbose">
 	              <xsl:message>Closing file <xsl:value-of select="$outName"/>
                </xsl:message>
 	           </xsl:if>
@@ -491,7 +491,7 @@
   </xsl:template>
 
   <xsl:template match="teix:egXML">
-      <xsl:param name="simple">false</xsl:param>
+      <xsl:param name="simple"  as="xs:boolean" select="false()"/>
       <xsl:param name="highlight"/>
     
       <div class="pre">

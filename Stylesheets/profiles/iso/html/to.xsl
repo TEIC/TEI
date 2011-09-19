@@ -49,20 +49,20 @@
                doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
                indent="yes"/>
 
-   <xsl:param name="STDOUT">true</xsl:param>
-   <xsl:param name="xhtml">true</xsl:param>
+   <xsl:param name="STDOUT"  as="xs:boolean" select="true()"/>
+   <xsl:param name="xhtml"  as="xs:boolean" select="true()"/>
    <xsl:param name="splitLevel">-1</xsl:param>
-   <xsl:param name="autoToc">true</xsl:param>
-   <xsl:param name="tocDepth">3</xsl:param>
+   <xsl:param name="autoToc"  as="xs:boolean" select="true()"/>
+   <xsl:param name="tocDepth" as="xs:integer">3</xsl:param>
    <xsl:param name="institution">ISO</xsl:param>
    <xsl:param name="department"/>
    <xsl:param name="cssFile">http://tei.oucs.ox.ac.uk/TEIISO/iso.css</xsl:param>
    <xsl:param name="cssSecondaryFile">http://tei.oucs.ox.ac.uk/TEIISO/iso-odd.css</xsl:param>
    <xsl:param name="cssPrintFile">http://tei.oucs.ox.ac.uk/TEIISO/iso-print.css</xsl:param>
-   <xsl:param name="TEIC">false</xsl:param>
-   <xsl:param name="wrapLength">65</xsl:param>
-   <xsl:param name="attLength">60</xsl:param>
-   <xsl:param name="forceWrap">true</xsl:param>
+   <xsl:param name="TEIC"  as="xs:boolean" select="false()"/>
+   <xsl:param name="wrapLength" as="xs:integer">65</xsl:param>
+   <xsl:param name="attLength" as="xs:integer">60</xsl:param>
+   <xsl:param name="forceWrap"  as="xs:boolean" select="true()"/>
 
    <xsl:template match="/">
      <xsl:variable name="All">

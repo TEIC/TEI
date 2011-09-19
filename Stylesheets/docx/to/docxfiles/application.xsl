@@ -83,7 +83,7 @@
 
         <!-- after opening core.xml, we cannot write back to it; so save
             under new name -->
-	<xsl:if test="$debug='true'">
+	<xsl:if test="$debug">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/newcore.xml')"/>
          </xsl:message>
 	     </xsl:if>
@@ -118,7 +118,7 @@
 
 
     <xsl:template name="write-docxfile-docprops-app">
-	     <xsl:if test="$debug='true'">
+	     <xsl:if test="$debug">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/app.xml')"/>
          </xsl:message>
 	     </xsl:if>
@@ -138,7 +138,7 @@
     <!-- after opening custom.xml, we cannot write back to it; so save
 	 under new name -->
     <xsl:template name="write-docxfile-docprops-custom">
-	     <xsl:if test="$debug='true'">
+	     <xsl:if test="$debug">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/newcustom.xml')"/>    </xsl:message>
 	     </xsl:if>
         <xsl:result-document href="{concat($wordDirectory,'/docProps/newcustom.xml')}" standalone="yes">

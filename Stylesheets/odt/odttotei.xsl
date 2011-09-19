@@ -63,7 +63,7 @@
 
   <xsl:key match="text:h" name="Headings" use="text:outline-level"/>
 
-  <xsl:param name="debug">false</xsl:param>
+  <xsl:param name="debug"  as="xs:boolean" select="false()"/>
 
   <xsl:param name="dir">.</xsl:param>
 

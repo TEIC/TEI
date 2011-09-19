@@ -61,7 +61,7 @@
     </desc>
    </doc>
     <xsl:template name="write-docxfile-settings">
-	     <xsl:if test="$debug='true'">
+	     <xsl:if test="$debug">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/settings.xml')"/>
          </xsl:message>
 	     </xsl:if>

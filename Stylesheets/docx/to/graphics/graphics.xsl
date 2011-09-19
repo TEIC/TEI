@@ -332,7 +332,7 @@
                                 <a:blip>
 				  <xsl:attribute name="r:embed">
 				    <xsl:choose>
-				      <xsl:when test="$isofreestanding='true'">
+				      <xsl:when test="$isofreestanding">
 					<xsl:text>rId</xsl:text>
 					<xsl:value-of
 					    select="number($generatedID)
@@ -356,7 +356,7 @@
                                 <a:prstGeom prst="rect">
                                     <a:avLst/>
                                 </a:prstGeom>
-				<xsl:if test="$shadowGraphics='true'
+				<xsl:if test="$shadowGraphics
 					      and parent::tei:figure">
 				  <a:effectLst>
 				    <a:outerShdw blurRad="50800" dist="88900" dir="2700000" algn="tl" rotWithShape="0">
@@ -391,7 +391,7 @@
 			    <wp:align>center</wp:align>
 			  </wp:positionV>
 			  <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
-			  <xsl:if test="$shadowGraphics='true'">
+			  <xsl:if test="$shadowGraphics">
 			    <wp:effectExtent l="50800" t="25400" r="101600" b="63500"/>
 			  </xsl:if>
 			  <wp:wrapSquare wrapText="bothSides"/>
@@ -400,7 +400,7 @@
 			      <xsl:value-of select="$generatedID"/>
 			    </xsl:attribute>
 			  </wp:docPr>                                
-			  <xsl:if test="$shadowGraphics='true'">
+			  <xsl:if test="$shadowGraphics">
 			    <wp:cNvGraphicFramePr/>
 			  </xsl:if>
 			  <xsl:copy-of select="$graphic-element"/>
@@ -409,7 +409,7 @@
 		      <xsl:otherwise>
 			<wp:inline distT="0" distB="0" distL="0" distR="0">
 			  <wp:extent cx="{$imageWidth}00" cy="{$imageHeight}00"/>
-			  <xsl:if test="$shadowGraphics='true'">
+			  <xsl:if test="$shadowGraphics">
 			    <wp:effectExtent l="50800" t="25400" r="101600" b="63500"/>
 			  </xsl:if>
 			  <wp:docPr  name="{tokenize($filename, '/')[last()]}">
@@ -417,7 +417,7 @@
 			      <xsl:value-of select="$generatedID"/>
 			    </xsl:attribute>
 			  </wp:docPr>                                
-			  <xsl:if test="$shadowGraphics='true'">
+			  <xsl:if test="$shadowGraphics">
 			    <wp:cNvGraphicFramePr/>
 			  </xsl:if>
 			  <xsl:copy-of select="$graphic-element"/>

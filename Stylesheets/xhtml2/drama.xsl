@@ -167,7 +167,7 @@
    </doc>
   <xsl:template match="tei:sp/tei:p">
     <xsl:choose>
-      <xsl:when test="$filePerPage='true'">
+      <xsl:when test="$filePerPage">
 	<xsl:for-each-group select="node()" group-starting-with="tei:pb">
 	  <xsl:choose>
 	    <xsl:when test="self::tei:pb">

@@ -149,7 +149,7 @@
 	<xsl:if test="w:rPr/w:rFonts//@w:ascii">
 	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
 			not(w:rPr/w:rFonts/@w:ascii = parent::w:p/w:pPr/w:rPr/w:rFonts/@w:ascii)">
-	    <xsl:if test="$preserveEffects='true'">
+	    <xsl:if test="$preserveEffects">
 	      <s n="font-family">
 		<xsl:value-of select="w:rPr/w:rFonts/@w:ascii"/>
 	      </s>
@@ -250,9 +250,9 @@
       </xsl:variable>
 
 	<xsl:choose>
-	<xsl:when test="$effects/* or ($styles/* and $preserveEffects='true')">
+	<xsl:when test="$effects/* or ($styles/* and $preserveEffects)">
 	  <hi>
-	    <xsl:if test="$dir!='' and $preserveEffects='true'">
+	    <xsl:if test="$dir!='' and $preserveEffects>
 	      <xsl:attribute name="dir"
 			     xmlns="http://www.w3.org/2005/11/its"
 			     select="$dir"/>
@@ -268,13 +268,13 @@
 		  </xsl:for-each>
 		</xsl:attribute>
 	      </xsl:when>
-	      <xsl:when test="$preserveEffects='true'">
+	      <xsl:when test="$preserveEffects">
 		<xsl:attribute name="rend">
 		  <xsl:text>isoStyle</xsl:text>
 		</xsl:attribute>
 	      </xsl:when>
 	    </xsl:choose>
-	    <xsl:if test="$styles/* and $preserveEffects='true'">
+	    <xsl:if test="$styles/* and $preserveEffects>
 	      <xsl:attribute name="html:style">
 		<xsl:for-each select="$styles/*">
 		  <xsl:value-of select="@n"/>

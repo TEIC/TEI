@@ -54,7 +54,7 @@
       </xsl:variable>
 
       <xsl:choose>
-       <xsl:when test="$footnoteFile='true'">
+       <xsl:when test="$footnoteFile">
 	 <a class="notelink" href="{$masterFile}-notes.html#{$identifier}">
 	   <sup>
 	     <xsl:call-template name="appN"/>

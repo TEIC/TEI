@@ -36,8 +36,8 @@
    </doc>
   <xsl:output encoding="utf-8" indent="yes" method="text"/>
   <xsl:strip-space elements="*"/>
-  <xsl:param name="TEIC">false</xsl:param>
-  <xsl:param name="verbose"/>
+  <xsl:param name="TEIC"  as="xs:boolean" select="false()"/>
+  <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"/>
   <xsl:template name="makeAnchor">
@@ -194,7 +194,7 @@
 
   <xsl:template name="atts">
     <xsl:call-template name="listAtts"/>
-    <xsl:if test="$TEIC='true'">
+    <xsl:if test="$TEIC">
       <xsl:call-template name="classA">
 	<xsl:with-param name="i">att.global</xsl:with-param>
       </xsl:call-template>

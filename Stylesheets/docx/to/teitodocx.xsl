@@ -77,9 +77,9 @@
     <xsl:include href="docxfiles/numbering-definition.xsl"/>
     <xsl:include href="docxfiles/relationships.xsl"/>
     <xsl:include href="docxfiles/settings.xsl"/>
-    <xsl:param name="createanttask">false</xsl:param>
-    <xsl:param name="useHeaderFrontMatter">false</xsl:param>
-    <xsl:param name="useFixedDate">false</xsl:param>
+    <xsl:param name="createanttask"  as="xs:boolean" select="false()"/>
+    <xsl:param name="useHeaderFrontMatter"  as="xs:boolean" select="false()"/>
+    <xsl:param name="useFixedDate"  as="xs:boolean" select="false()"/>
     <!--
         A4 is 210mm x 297mm; leaving 1in margin (25mm),
         gives 160 x 247 approx useable area.  In Microsoft speak, 
@@ -102,16 +102,16 @@
     
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="inputDir">.</xsl:param>
-    <xsl:param name="debug">false</xsl:param>
+    <xsl:param name="debug"  as="xs:boolean" select="false()"/>
     <xsl:param name="styleDoc">
         <xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/>
     </xsl:param>
     <xsl:param name="docDoc">
         <xsl:value-of select="concat($wordDirectory, '/word/document.xml')"/>
     </xsl:param> 
-    <xsl:param name="shadowGraphics">false</xsl:param>
+    <xsl:param name="shadowGraphics"  as="xs:boolean" select="false()"/>
     <xsl:param name="alignFigures">center</xsl:param>
-    <xsl:param name="renderAddDel">true</xsl:param>
+    <xsl:param name="renderAddDel"  as="xs:boolean" select="true()"/>
     <xsl:param name="addColour">red</xsl:param>
 
 
@@ -145,7 +145,7 @@
     <xsl:preserve-space elements="tei:text"/>
     <xsl:output method="xml" version="1.0" encoding="UTF-8"/>
 
-    <xsl:param name="isofreestanding">false</xsl:param>
+    <xsl:param name="isofreestanding"  as="xs:boolean" select="false()"/>
 
 
     <xsl:key name="FOOTERS" match="tei:fw[@type='footer']" use="@xml:id"/>
@@ -211,7 +211,7 @@
             <w:b/>
           </xsl:when>
         </xsl:choose>
-	<xsl:if test="$renderAddDel='true' and ancestor-or-self::tei:del">
+	<xsl:if test="$renderAddDel and ancestor-or-self::tei:del">
 	  <w:strike/>
 	</xsl:if>
       </w:rPr>
@@ -410,12 +410,12 @@
         <xsl:choose>
             <xsl:when test="tei:text/tei:milestone">
                 <xsl:apply-templates select="tei:text/tei:milestone[1]">
-                    <xsl:with-param name="final-section">true</xsl:with-param>
+                    <xsl:with-param name="final-section" select="true()"/>
                 </xsl:apply-templates>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="document($defaultHeaderFooterFile)/tei:TEI/tei:text/tei:milestone">
-                    <xsl:with-param name="final-section">true</xsl:with-param>
+                    <xsl:with-param name="final-section" select="true()"/>
                 </xsl:apply-templates>
             </xsl:otherwise>
         </xsl:choose>
@@ -437,7 +437,7 @@
         <xsl:param name="style"/>
         <xsl:param name="select" select="."/>
         <xsl:param name="pPr"/>
-        <xsl:param name="nop">false</xsl:param>
+        <xsl:param name="nop"  as="xs:boolean" select="false()"/>
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
 
@@ -517,7 +517,7 @@
                          on decide whether we are grouping them together in a w:p or not. -->
                     <xsl:variable name="innerRuns">
                         <!-- add paragraph properties (if nobody else created a w:p ($nop)) -->
-                        <xsl:if test="$nop!='true'">
+                        <xsl:if test="$nop">
                             <xsl:choose>
                                 <xsl:when test="not($style='')">
                                     <w:pPr>
@@ -554,7 +554,7 @@
                     <!-- write out text runs.
                          if someone has already created a w:p ($nop) we may not create another one. -->
                     <xsl:choose>
-                        <xsl:when test="$nop='true'">
+                        <xsl:when test="$nop">
                             <xsl:copy-of select="$innerRuns"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -659,7 +659,7 @@
 	</xsl:if>
       </xsl:variable>	
       <xsl:choose>
-	<xsl:when test="$renderAddDel='true'">
+	<xsl:when test="$renderAddDel">
 	  <w:r>
 	    <xsl:copy-of select="$rProps"/>
 	    <w:t>
@@ -902,7 +902,7 @@
 
 	    <!-- strikethrough -->
 	    <xsl:choose>
-	      <xsl:when test="$renderAddDel='true' and ancestor-or-self::tei:del">
+	      <xsl:when test="$renderAddDel and ancestor-or-self::tei:del">
 		<w:strike/>
 	      </xsl:when>
 	      <xsl:when test="contains(@rend,'strikethrough')">
@@ -915,7 +915,7 @@
 	    
 	    <!-- colour -->
 	    <xsl:choose>
-	      <xsl:when test="$renderAddDel='true' and ancestor-or-self::tei:add">
+	      <xsl:when test="$renderAddDel and ancestor-or-self::tei:add">
 		<w:color w:val="{$addColour}"/>
 	      </xsl:when>
 	      <xsl:when test="contains(@rend,'color(')">
@@ -1149,7 +1149,7 @@
         Handle examples
     -->
     <xsl:template match="teix:egXML|tei:p[@rend='eg']">
-        <xsl:param name="simple">false</xsl:param>
+        <xsl:param name="simple"  as="xs:boolean" select="false()"/>
         <xsl:param name="highlight"/>
         <xsl:call-template name="block-element">
             <xsl:with-param name="select">
@@ -1885,7 +1885,7 @@
 		    <xsl:when test="parent::cals:row/preceding-sibling::cals:row[1]/cals:entry[@colname=$colname]/@rowsep=0">
 		      <w:top w:val="nil"/>
 		    </xsl:when>
-		    <xsl:when test="$topEdge='true'">
+		    <xsl:when test="$topEdge">
 		      <!-- HERE -->
 		      <xsl:if test="$tableBorders/w:top[@w:sz]">
 			<w:top w:val="single" w:sz="{$tableBorders/w:top/@w:sz}" w:space="0" w:color="auto"/>
@@ -1900,7 +1900,7 @@
 		  </xsl:choose>
 		  <!-- left border -->
 		  <xsl:choose>
-		    <xsl:when test="$leftEdge='true'">
+		    <xsl:when test="$leftEdge">
 		      <xsl:if test="$tableBorders/w:left[@w:sz]">
 			<w:left w:val="single" w:sz="{$tableBorders/w:left/@w:sz}" w:space="0" w:color="auto"/>
 		      </xsl:if>
@@ -1911,7 +1911,7 @@
 		  </xsl:choose>
 		  <!-- bottom border -->
 		  <xsl:choose>
-		    <xsl:when test="$bottomEdge='true'">
+		    <xsl:when test="$bottomEdge">
 		      <xsl:if test="$tableBorders/w:bottom[@w:sz]">
 			<w:bottom w:val="single" w:sz="{$tableBorders/w:bottom/@w:sz}" w:space="0" w:color="auto"/>
 		      </xsl:if>
@@ -1935,7 +1935,7 @@
 		    <xsl:when test="following-sibling::cals:entry[1]/@colsep=0">
 		      <w:right w:val="nil"/>
 		    </xsl:when>
-		    <xsl:when test="$rightEdge='true'">
+		    <xsl:when test="$rightEdge">
 		      <xsl:if test="$tableBorders/w:right[@w:sz]">
 			<w:right w:val="single" w:sz="{$tableBorders/w:right/@w:sz}" w:space="0" w:color="auto"/>
 		      </xsl:if>
@@ -2489,7 +2489,7 @@
   </xsl:template>
 
   <xsl:template name="makeExternalLink">
-    <xsl:param name="ptr"/>
+    <xsl:param name="ptr" as="xs:boolean"/>
     <xsl:param name="dest"/>
     <xsl:value-of select="$dest"/>
   </xsl:template>

@@ -87,11 +87,11 @@
          <xsl:value-of select="$masterFile"/>
          <xsl:call-template name="addCorpusID"/>
       </xsl:variable>
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>TEI HTML: run start hook template teiStartHook</xsl:message>
       </xsl:if>
       <xsl:call-template name="teiStartHook"/>
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>TEI HTML in corpus splitting mode, base file is <xsl:value-of select="$BaseFile"/>
          </xsl:message>
       </xsl:if>
@@ -103,7 +103,7 @@
          </xsl:call-template>
       </xsl:variable>
     
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>Opening file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
@@ -139,11 +139,11 @@
 	   </body>
          </xsl:element>
       </xsl:result-document>
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>Closing file <xsl:value-of select="$outName"/>
          </xsl:message>
       </xsl:if>
-      <xsl:if test="$verbose='true'">
+      <xsl:if test="$verbose">
          <xsl:message>TEI HTML: run end hook template teiEndHook</xsl:message>
       </xsl:if>
       <xsl:call-template name="teiEndHook"/>

@@ -5,13 +5,13 @@
                 version="2.0"
                 exclude-result-prefixes="n tei xs">
 
-  <xsl:param name="debug">false</xsl:param>
+  <xsl:param name="debug"  as="xs:boolean" select="false()"/>
   <xsl:param name="corpus"/>
   <xsl:param name="suffix">xml</xsl:param>
   <xsl:param name="corpusList"/>
-  <xsl:param name="processP4">false</xsl:param>
-  <xsl:param name="processP5">true</xsl:param>
-  <xsl:param name="verbose">false</xsl:param>
+  <xsl:param name="processP4"  as="xs:boolean" select="false()"/>
+  <xsl:param name="processP5"  as="xs:boolean" select="true()"/>
+  <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
   <xsl:key name="All" match="*" use="1"/>
   <xsl:key name="AllTEI" match="tei:*" use="1"/>
   <xsl:key name="E" match="*" use="local-name()"/>
@@ -31,15 +31,15 @@
 	           </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-      <xsl:if test="$debug='true'">
+      <xsl:if test="$debug">
 	<xsl:message>Process <xsl:value-of select="$pathlist"/></xsl:message>
       </xsl:if>
       <xsl:variable name="docs" select="collection($pathlist)"/> 
       <xsl:variable name="all">
          <n:ROOT>
-	           <xsl:if test="$processP4='true'">
+	           <xsl:if test="$processP4>
 	              <xsl:for-each select="$docs/TEI.2">
-	                 <xsl:if test="$verbose='true'">
+	                 <xsl:if test="$verbose">
 	                    <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
                      </xsl:message>
 	                 </xsl:if>
@@ -48,9 +48,9 @@
 	                 </TEI.2>
 	              </xsl:for-each>
 	           </xsl:if>
-	           <xsl:if test="$processP5='true'">
+	           <xsl:if test="$processP5>
 	              <xsl:for-each select="$docs/tei:*">
-	                 <xsl:if test="$verbose='true'">
+	                 <xsl:if test="$verbose">
 	                    <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
                      </xsl:message>
 	                 </xsl:if>
@@ -59,7 +59,7 @@
 	                 </tei:TEI>
 	              </xsl:for-each>
 	              <xsl:for-each select="$docs/tei:teiCorpus">
-	                 <xsl:if test="$verbose='true'">
+	                 <xsl:if test="$verbose">
 	                    <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
                      </xsl:message>
 	                 </xsl:if>

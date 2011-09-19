@@ -87,7 +87,7 @@
 	  <xsl:if test="@style">
 	    <xsl:attribute name="rend" select="@style"/>
 	  </xsl:if>
-	  <xsl:if test="not(@interpolated='true')">
+	  <xsl:if test="not(@interpolated)">
 	    <head>
 	      <xsl:apply-templates mode="pass1"/>
 	    </head>
@@ -157,7 +157,7 @@
 	  <!--<xsl:message>Walk from <xsl:value-of select="$prev"/> to <xsl:value-of select="$current"/></xsl:message>-->
 	  <xsl:for-each
 	      select="$prev + 1   to $current - 1 ">
-	    <HEAD interpolated='true' level="{.}"/>
+	    <HEAD interpolated=true level="{.}"/>
 	  </xsl:for-each>
 	</xsl:if>
     </xsl:if>

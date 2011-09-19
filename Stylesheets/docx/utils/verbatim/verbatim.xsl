@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:sch="http://www.ascc.net/xml/schematron" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:dbk="http://docbook.org/ns/docbook" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
+<xsl:stylesheet     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:sch="http://www.ascc.net/xml/schematron" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:dbk="http://docbook.org/ns/docbook" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="xlink xhtml dbk rng sch m tei teix atom">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for creating verbatim XML </p>
@@ -32,11 +33,11 @@
   <xsl:param name="startNamespace">&lt;span class="namespace"&gt;</xsl:param>
   <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
   <xsl:param name="spaceCharacter"> </xsl:param>
-  <xsl:param name="showNamespaceDecls">true</xsl:param>
-  <xsl:param name="forceWrap">false</xsl:param>
-  <xsl:param name="wrapLength">65</xsl:param>
-  <xsl:param name="attLength">40</xsl:param>
-  <xsl:param name="attsOnSameLine">3</xsl:param>
+  <xsl:param name="showNamespaceDecls"  as="xs:boolean" select="true()"/>
+  <xsl:param name="forceWrap"  as="xs:boolean" select="false()"/>
+  <xsl:param name="wrapLength" as="xs:integer">65</xsl:param>
+  <xsl:param name="attLength" as="xs:integer">40</xsl:param>
+  <xsl:param name="attsOnSameLine" as="xs:integer">3</xsl:param>
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
   <xsl:template name="verbatim-newLine"/>
@@ -77,7 +78,7 @@
         <xsl:value-of disable-output-escaping="yes" select="$startComment"/>
         <xsl:text>&lt;!--</xsl:text>
         <xsl:choose>
-          <xsl:when test="$forceWrap='true'">
+          <xsl:when test="$forceWrap">
             <xsl:call-template name="verbatim-reformatText">
               <xsl:with-param name="sofar">0</xsl:with-param>
               <xsl:with-param name="indent">
@@ -99,7 +100,7 @@
   </xsl:template>
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
-      <xsl:when test="$forceWrap='true'">
+      <xsl:when test="$forceWrap">
         <xsl:variable name="indent">
           <xsl:for-each select="parent::*">
             <xsl:call-template name="verbatim-makeIndent"/>
@@ -228,7 +229,7 @@
   <xsl:template name="verbatim-wraptext">
     <xsl:param name="indent"/>
     <xsl:param name="text"/>
-    <xsl:param name="count">0</xsl:param>
+    <xsl:param name="count" as="xs:integer">0</xsl:param>
     <xsl:variable name="finalSpace">
       <xsl:choose>
         <xsl:when test="substring($text,string-length($text),1)=' '">
@@ -348,10 +349,10 @@
     <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
     <xsl:text>&lt;</xsl:text>
     <xsl:call-template name="verbatim-makeElementName">
-      <xsl:with-param name="start">true</xsl:with-param>
+      <xsl:with-param name="start" select="true()"/>
     </xsl:call-template>
     <xsl:apply-templates select="@*" mode="verbatim"/>
-    <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
+    <xsl:if test="$showNamespaceDecls or parent::teix:egXML[@rend='full']">
       <!--
 	  <xsl:variable name="me" select="."/>
 	  <xsl:message><xsl:value-of select="name()"/>: </xsl:message>
@@ -405,7 +406,7 @@
         <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
         <xsl:text>&lt;/</xsl:text>
         <xsl:call-template name="verbatim-makeElementName">
-          <xsl:with-param name="start">false</xsl:with-param>
+          <xsl:with-param name="start" select="false()"/>
         </xsl:call-template>
         <xsl:text>&gt;</xsl:text>
         <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
@@ -463,7 +464,7 @@
           <xsl:with-param name="name" select="local-name(.)"/>
           <xsl:with-param name="special"/>
         </xsl:call-template>
-        <xsl:if test="$start='true'">
+        <xsl:if test="$start">
           <xsl:text> xmlns="</xsl:text>
           <xsl:value-of select="namespace-uri()"/>
           <xsl:text>"</xsl:text>

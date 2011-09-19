@@ -53,11 +53,11 @@
       </desc>
    </doc>
   <xsl:template name="makeExternalLink">
-      <xsl:param name="ptr"/>
+      <xsl:param name="ptr"  as="xs:boolean"/>
       <xsl:param name="dest"/>
       <basic-link external-destination="url({$dest})">
          <xsl:choose>
-            <xsl:when test="$ptr='true'">
+            <xsl:when test="$ptr">
                <xsl:call-template name="showXrefURL">
                   <xsl:with-param name="dest">
                      <xsl:value-of select="$dest"/>
@@ -78,7 +78,7 @@
       </desc>
    </doc>
   <xsl:template name="makeInternalLink">
-      <xsl:param name="ptr"/>
+      <xsl:param name="ptr" as="xs:boolean"/>
       <xsl:param name="class"/>
       <xsl:param name="target"/>
       <xsl:param name="dest"/>
@@ -102,7 +102,7 @@
             <xsl:when test="not($body='')">
                <xsl:value-of select="$body"/>
             </xsl:when>
-            <xsl:when test="$ptr='true'">
+            <xsl:when test="$ptr">
                <xsl:apply-templates mode="xref" select="id($W)">
                   <xsl:with-param name="minimal" select="$minimalCrossRef"/>
                </xsl:apply-templates>

@@ -69,8 +69,8 @@ echo "Stylesheet family version: $version"
 fileperpage=
 debug=
 profile=default
-odd=false
-verbose=false
+odd=0
+verbose=0
 summaryDoc=""
 antflag=-q
 
@@ -107,9 +107,9 @@ while test $# -gt 0; do
   case $1 in
     --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
     --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
-    --fileperpage)  splitLevel="-DsplitLevel=-1"; fileperpage="-DfilePerPage=true";;
-    --odd)          odd=true;;
-    --mediaoverlay) mediaoverlay="-Dmediaoverlay=true";;
+    --fileperpage)  splitLevel="-DsplitLevel=-1"; fileperpage="-DfilePerPage=1";;
+    --odd)          odd=1;;
+    --mediaoverlay) mediaoverlay="-Dmediaoverlay=1";;
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
     --oxygenlib=*)  oxygenlib=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
@@ -118,12 +118,12 @@ while test $# -gt 0; do
     --splitLevel=*) splitLevel="-DsplitLevel=`echo $1 | sed 's/.*=//'`";;
     --subject=*)    subject="`echo $1 | sed 's/.*=//'`";;
     --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
-    --debug)        debug="-Ddebug=true"; verbose=true; antflag=-v;;
-    --verbose)      verbose=true; antflag=-v;;
-    --summaryDoc)      summaryDoc="-DsummaryDoc=true";;
+    --debug)        debug="-Ddebug=1"; verbose=1; antflag=-v;;
+    --verbose)      verbose=1 ;antflag=-v;;
+    --summaryDoc)      summaryDoc="-DsummaryDoc=1";;
     --viewportwidth=*)   viewportwidth="-DviewPortWidth=`echo $1 | sed 's/.*=//'`";;
     --viewportheight=*)   viewportheight="-DviewPortHeight=`echo $1 | sed 's/.*=//'`";;
-    --nocompress)	nocompress="-DnoCompress=true";;
+    --nocompress)	nocompress="-DnoCompress=1";;
     --help)         usageMsg; exit 1;;
      *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -169,7 +169,7 @@ case $format in
 	  ;;
 esac
 
-echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
+echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress\
         -Dodd=$odd \

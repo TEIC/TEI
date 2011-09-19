@@ -57,7 +57,7 @@
     <xsl:template match="w:drawing">
       <xsl:param name="n" tunnel="yes"/>
         <xsl:choose>
-            <xsl:when test="$convert-graphics='true'">
+            <xsl:when test="$convert-graphics>
                 <xsl:choose>
                     <xsl:when test="descendant::a:blip[1]/@r:embed">
                         <graphic>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
 		xmlns:fo="http://www.w3.org/1999/XSL/Format"
 		xmlns:html="http://www.w3.org/1999/xhtml"
@@ -8,7 +9,7 @@
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-		exclude-result-prefixes="a fo html rng tei teix teidocx" version="2.0">
+		exclude-result-prefixes="a xs fo html rng tei teix teidocx" version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module, making
@@ -42,7 +43,7 @@
     <xsl:variable name="myName">
       <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
-    <xsl:if test="tei:head or $autoHead='true'">
+    <xsl:if test="tei:head or $autoHead">
       <xsl:variable name="Depth">
         <xsl:choose>
           <xsl:when test="not($forcedepth='')">
@@ -70,11 +71,11 @@
       <li>
 	<xsl:attribute name="class">
 	  <xsl:text>toc</xsl:text>
-	  <xsl:if test="not($autoHead='true') and not(tei:head or @n)"> headless</xsl:if>
+	  <xsl:if test="not($autoHead) and not(tei:head or @n)"> headless</xsl:if>
 	</xsl:attribute>
         <xsl:call-template name="header">
           <xsl:with-param name="toc" select="$pointer"/>
-          <xsl:with-param name="minimal">false</xsl:with-param>
+          <xsl:with-param name="minimal" select="false()"/>
           <xsl:with-param name="display">plain</xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$thislevel &lt; $Depth">
@@ -546,7 +547,7 @@
             </xsl:with-param>
           </xsl:call-template>
         </xsl:when>
-        <xsl:when test="$generateParagraphIDs='true'">
+        <xsl:when test="$generateParagraphIDs">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name">
               <xsl:value-of select="generate-id()"/>
@@ -691,7 +692,7 @@
   </doc>
   <xsl:template match="tei:lg">
     <xsl:choose>
-      <xsl:when test="$filePerPage='true'">
+      <xsl:when test="$filePerPage">
 	<xsl:for-each-group select="node()" group-starting-with="tei:pb">
 	  <xsl:choose>
 	    <xsl:when test="self::tei:pb">
@@ -1003,13 +1004,13 @@
 	  <xsl:text>)</xsl:text>
 	</span>
       </xsl:when>
-      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
+      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes">
         <span>
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
 	  <xsl:choose>
-          <xsl:when test="$footnoteFile='true'">
+          <xsl:when test="$footnoteFile">
             <a class="notelink" title="Go to note" href="{$masterFile}-notes.html#{$identifier}">
               <sup>
                 <xsl:call-template name="noteN"/>
@@ -1125,7 +1126,7 @@
     <xsl:choose>
       <xsl:when test="ancestor::tei:bibl"/>
       <xsl:when test="number($splitLevel)=-1"/>
-      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
+      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
     </xsl:choose>
@@ -1137,7 +1138,7 @@
     <xsl:variable name="identifier">
       <xsl:call-template name="noteID"/>
     </xsl:variable>
-    <xsl:if test="$verbose='true'">
+    <xsl:if test="$verbose">
       <xsl:message>Make note <xsl:value-of select="$identifier"/></xsl:message>
     </xsl:if>
     <div class="note">
@@ -1151,7 +1152,7 @@
       <div class="noteBody">
         <xsl:apply-templates/>
       </div>
-      <xsl:if test="$footnoteBackLink= 'true'">
+      <xsl:if test="$footnoteBackLink">
         <xsl:text> </xsl:text>
         <a class="link_return" title="Go back to text" href="#{concat($identifier,'_return')}">↵</a>
       </xsl:if>
@@ -1192,7 +1193,7 @@
 
   <xsl:template match="tei:pb">
     <xsl:choose>
-      <xsl:when test="$filePerPage='true'">
+      <xsl:when test="$filePerPage">
 	<PAGEBREAK>
 	  <xsl:attribute name="name">
 	    <xsl:apply-templates select="." mode="ident"/>
@@ -1309,7 +1310,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$filePerPage='true'">
+      <xsl:when test="$filePerPage">
 	<xsl:for-each-group select="node()" group-starting-with="tei:pb">
 	  <xsl:choose>
 	    <xsl:when test="self::tei:pb">
@@ -1351,7 +1352,7 @@
 	      <xsl:if test="$wrapperElement='div'">p</xsl:if>
 	    </xsl:with-param>
 	  </xsl:call-template>
-	  <xsl:if test="$numberParagraphs='true'">
+	  <xsl:if test="$numberParagraphs">
 	    <xsl:text>[</xsl:text>
 	    <xsl:number/>
 	    <xsl:text>] </xsl:text>
@@ -1699,7 +1700,7 @@
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:when test="not(@place) and $consecutiveFNs='true'">
+      <xsl:when test="not(@place) and $consecutiveFNs">
         <xsl:number count="tei:note[not(@place)]" level="any"/>
       </xsl:when>
       <xsl:when test="not(@place)">
@@ -1717,7 +1718,7 @@
       </xsl:when>
       <xsl:when test="@place='end'">
         <xsl:choose>
-          <xsl:when test="$consecutiveFNs = 'true'">
+          <xsl:when test="$consecutiveFNs">
             <xsl:number count="tei:note[./@place='end']" level="any"/>
           </xsl:when>
           <xsl:otherwise>
@@ -1737,7 +1738,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
-          <xsl:when test="$consecutiveFNs = 'true'">
+          <xsl:when test="$consecutiveFNs">
             <xsl:number count="tei:note[@place='foot' or @place='bottom']" level="any"/>
           </xsl:when>
           <xsl:otherwise>
@@ -1794,9 +1795,9 @@
     <desc>[html] </desc>
   </doc>
   <xsl:template name="printNotes">
-    <xsl:if test="count(key('NOTES',1)) or ($autoEndNotes='true' and count(key('ALLNOTES',1)))">
+    <xsl:if test="count(key('NOTES',1)) or ($autoEndNotes and count(key('ALLNOTES',1)))">
       <xsl:choose>
-        <xsl:when test="$footnoteFile='true'">
+        <xsl:when test="$footnoteFile">
           <xsl:variable name="BaseFile">
             <xsl:value-of select="$masterFile"/>
             <xsl:call-template name="addCorpusID"/>
@@ -1808,7 +1809,7 @@
               </xsl:with-param>
             </xsl:call-template>
           </xsl:variable>
-          <xsl:if test="$verbose='true'">
+          <xsl:if test="$verbose">
             <xsl:message>Opening file <xsl:value-of select="$outName"/>
                </xsl:message>
           </xsl:if>
@@ -1848,7 +1849,7 @@
                     </xsl:call-template>
                   </div>
 		  <xsl:choose>
-		    <xsl:when test="$autoEndNotes='true'">
+		    <xsl:when test="$autoEndNotes">
 		      <xsl:apply-templates mode="printnotes"
 					     select="key('ALLNOTES',1)"/>
 		    </xsl:when>
@@ -1863,7 +1864,7 @@
               </body>
 	    </html>
           </xsl:result-document>
-          <xsl:if test="$verbose='true'">
+          <xsl:if test="$verbose">
             <xsl:message>Closing file <xsl:value-of select="$outName"/>
                </xsl:message>
           </xsl:if>
@@ -1873,7 +1874,7 @@
             <xsl:choose>
               <xsl:when test="self::tei:TEI">
 		  <xsl:choose>
-		    <xsl:when test="$autoEndNotes='true'">
+		    <xsl:when test="$autoEndNotes">
 		      <xsl:apply-templates mode="printallnotes"
 					     select="key('ALLNOTES',1)"/>
 		    </xsl:when>
@@ -2254,7 +2255,7 @@
     <desc>[html] convert rend attribute to HTML class</desc>
   </doc>
   <xsl:template name="rendToClass">
-    <xsl:param name="id">true</xsl:param>
+    <xsl:param name="id"/>
     <xsl:param name="default">.</xsl:param>
     <xsl:choose>
       <xsl:when test="$id='false'"/>
@@ -2264,7 +2265,7 @@
 	  <xsl:value-of select="@xml:id"/>
 	</xsl:attribute>
       </xsl:when>
-      <xsl:when test="$id='true' and self::tei:p and $generateParagraphIDs='true'">
+      <xsl:when test="$id='true' and self::tei:p and $generateParagraphIDs">
 	<xsl:attribute name="id">
 	  <xsl:value-of select="generate-id()"/>
 	</xsl:attribute>

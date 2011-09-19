@@ -60,7 +60,7 @@
    </doc>
 
 	  <xsl:param name="header-doc" as="item()+" required="yes"/>
-	  <xsl:param name="debug">true</xsl:param>
+	  <xsl:param name="debug"  as="xs:boolean" select="true()"/>
 
 	  <!-- identity transform -->
 	<xsl:template match="@*|text()|comment()|processing-instruction()">

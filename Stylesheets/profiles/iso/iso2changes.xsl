@@ -30,7 +30,7 @@
       </desc>
    </doc>
 
-   <xsl:param name="dpi">72</xsl:param>
+   <xsl:param name="dpi" as="xs:integer">72</xsl:param>
    <xsl:key name="frontDiv" match="tei:div[ancestor::tei:front]" use="1"/>
    <xsl:key name="bodyDiv" match="tei:div[ancestor::tei:body]" use="1"/>
    <xsl:key name="backDiv" match="tei:div[ancestor::tei:back]" use="1"/>
