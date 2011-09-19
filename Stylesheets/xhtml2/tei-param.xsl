@@ -502,13 +502,12 @@ be specified.</p>
 
    </doc>
   <xsl:param name="showTitleAuthor"  as="xs:boolean" select="false()"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
       <desc>Be talkative while working.</desc>
-
    </doc>
-
   <xsl:param name="verbose"  as="xs:boolean">0</xsl:param>
-  <param name="verbose" expression="${verbose}" if="verbose"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Make all notes into endnotes
   </desc>
