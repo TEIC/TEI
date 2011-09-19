@@ -32,6 +32,7 @@
    </sourceDesc>
   </fileDesc>
   <revisionDesc>
+   <change when="2011-09-19" who="KSH">Corrected typos and clarified TEI conformance.</change>
    <change when="2011-09-18" who="KSH">Updated metadata, including version number to 1.1, and added 
     some background on what Tite is. Copyedited section comparing Tite and the Best Practices for 
     TEI in Libraries</change>
@@ -81,15 +82,16 @@
      text. While the canonical version of Tite is maintained by the TEI Council, a derived version 
      is used in the AccessTEI program.</p>
     
-    <p>TEI Tite is meant to express a trasitional format for documents, not an archival one. A 
+    <p>TEI Tite is meant to express a transitional format for documents, not an archival one. A 
      project outsourcing encoding of documents using Tite should convert Tite documents created by 
      vendors into a more suitable format for long-term preservation, such as one of the encoding 
      levels of <title>Best Practices for TEI in Libraries</title> or a project-specific TEI 
      customization.</p>
     
     <p>While Tite includes only a limited set of all of the elements in TEI, it should not be 
-     confused with <title>TEI Lite</title>, which also contains a subset of elements. What 
-     distinguishes Tite from other TEI customizations that is that Tite is meant to prescribe 
+     confused with <title><ref target="http://www.tei-c.org/Guidelines/Customization/Lite/">
+     TEI Lite</ref></title>, which also contains a subset of elements. What 
+     distinguishes Tite from other TEI customizations is that Tite is meant to prescribe 
      <emph>exactly one</emph> way of encoding a particular feature of a document in as many cases 
      as possible, ensuring that any two encoders would produce the same XML document for a 
      source document.</p>
@@ -105,10 +107,11 @@
      including the <ref target="http://www.tei-c.org/Roma/">Roma web tool</ref>, can generate
      these.</p>
 
-    <p> Tite-encoded documents are TEI documents, and TEI Tite, with the exception of convenience
-     elements (<gi>b</gi>, <gi>i</gi>, <gi>ul</gi>, <gi>sup</gi>, <gi>sub</gi>, <gi>smcap</gi>,
-      <gi>cols</gi> and <gi>ornament</gi>, all of which can be converted back to canonical TEI), is
-     a pure subset of the TEI. That is, it was created primarily by <emph>removing</emph> elements
+    <p>Tite uses a subset of the TEI's elements, except for a few renamed for the convenience of 
+     use by vendors (<gi>b</gi>, <gi>i</gi>, <gi>ul</gi>, <gi>sup</gi>, <gi>sub</gi>, <gi>smcap</gi>,
+      <gi>cols</gi> and <gi>ornament</gi>). However, Tite is not a TEI-conformant customization 
+     since it breaks the TEI Abstract Model by omitting <gi>teiHeader</gi> for encoder convenience. 
+     That is, Tite was created primarily by <emph>removing</emph> elements
      and attributes from the TEI, and not from extensive <emph>modification</emph>. As a TEI
      customization, Tite inherits TEI semantics, and ambiguity in this specification should be
      resolved with reference to the <ref target="http://www.tei-c.org/Guidelines">TEI
@@ -196,7 +199,7 @@
      <p>Tite omits the <gi>teiHeader</gi> element as a convenience to transcribers. This departs
       from normal TEI practice, which requires <gi>TEI</gi> as the root element, containing
        <gi>teiHeader</gi> and <gi>text</gi> elements. In order to bring a document encoded in TEI
-      Tite into adherence with the TEI abstract model, projects should add a teiHeader before
+      Tite into adherence with the TEI Abstract Model, projects should add a teiHeader before
       engaging in post-transcription processing.
       <!-- Shd say more? : May 09 PJT
         (Note that this simplification breaks with the TEI abstract model.)
@@ -679,7 +682,7 @@ some say, "No."
    <div xml:id="tei-in-lib-bpg">
     <head>TEI Tite and the <title>Best Practices for TEI in Libraries</title></head>
     <p>The <title><ref target="http://purl.oclc.org/NET/teiinlibraries">Best Practices for TEI in 
-    Libraries</ref></title> creates common definitions of <q>levels of encoding</q> based on depth 
+    Libraries</ref></title> ("BP") creates common definitions of <q>levels of encoding</q> based on depth 
      of markup applied. Because the levels of encoding provide a tremendously useful common set of 
      terms, it's helpful to situate TEI Tite according to them.</p>
     <p>Mapped to BP levels, TEI Tite would sit between Level 3 and Level 4: it requires use of all the
@@ -713,12 +716,11 @@ some say, "No."
       <item>Tite doesn't provide entity-specific naming elements, like <gi>persName</gi>,
         <gi>placeName</gi>, <gi>orgName</gi> and their list- (<gi>listPerson</gi>, etc.) forms
       </item>
-      </list> Bringing Tite-encoded documents up to BP Level 4 would simply require additional 
-     application of markup, not significant reworking of markup, and in that way Tite is
+      </list> Bringing Tite-encoded documents up to BP Level 4 would simply require application 
+     of additional markup, not significant reworking of markup, and in that way Tite is
      compatible with the BP.</p>
-    <p>Do keep in mind one key but purposeful incompatibility: Tite's lack of a header. A TEI
-     header and the root <gi>TEI</gi> element must be added to a Tite document for compatibility 
-     with the BP and with the TEI abstract model in general.</p>
+    <p>Do also keep in mind that Tite lacks both the <gi>teiHeader</gi> and root <gi>TEI</gi> 
+     element used in TEI-conformant documents.</p>
    </div>
 
    <div xmlns="http://www.tei-c.org/ns/1.0">
