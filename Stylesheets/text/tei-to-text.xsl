@@ -35,6 +35,24 @@
 
    <xsl:template match="note"/>
 
+   <xsl:template match="speaker"/>
+
    <xsl:template match="facsimile"/>
 
+   <!-- for when we need some context 
+   <xsl:template match="text()">
+     <xsl:if test="not(normalize-space()='')">
+     <xsl:text>"</xsl:text>
+     <xsl:value-of select="normalize-space()"/>
+     <xsl:text>","</xsl:text>
+     <xsl:for-each select="ancestor::*">
+       <xsl:value-of select="name()"/>
+       <xsl:text>[</xsl:text>
+       <xsl:number/>
+       <xsl:text>]/</xsl:text>
+     </xsl:for-each>
+     <xsl:text>"&#10;</xsl:text>
+     </xsl:if>
+   </xsl:template>
+   -->
 </xsl:stylesheet>

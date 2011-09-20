@@ -2357,6 +2357,9 @@
 	<xsl:when test="parent::tei:titlePage">
 	 <xsl:text>div</xsl:text>
 	</xsl:when>
+	<xsl:when test="parent::tei:body">
+	 <xsl:text>div</xsl:text>
+	</xsl:when>
 	<xsl:otherwise>
 	 <xsl:text>span</xsl:text>
 	</xsl:otherwise>
