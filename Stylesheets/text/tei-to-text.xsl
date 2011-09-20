@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     version="2.0">
 
@@ -18,13 +20,18 @@
       License along with this library; if not, write to the Free Software
       Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
          <p>Author: See AUTHORS</p>
-         <p>Id: $Id: to.xsl 8923 2011-05-25 13:11:45Z rahtz $</p>
+         <p>Id: $Id$</p>
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
-   <xsl:variable name="q">"</xsl:variable>
 
    <xsl:output method="text"/>
+   <xsl:param name="makeCSV">false</xsl:param>
+   <xsl:variable name="q">"</xsl:variable>
+
+   <xsl:template match="/">
+     <xsl:apply-templates select="tei:preflight(*)"/>
+   </xsl:template>
 
    <xsl:template match="teiHeader"/>
 
@@ -40,20 +47,45 @@
 
    <xsl:template match="facsimile"/>
 
-   <!-- for when we need some context 
+   <!-- for when we need some context -->
    <xsl:template match="text()">
-     <xsl:if test="not(normalize-space()='')">
-     <xsl:text>"</xsl:text>
-     <xsl:value-of select="replace(normalize-space(),'$q','$q$q')"/>
-     <xsl:text>","</xsl:text>
-     <xsl:for-each select="ancestor::*">
-       <xsl:value-of select="name()"/>
-       <xsl:text>[</xsl:text>
-       <xsl:number/>
-       <xsl:text>]/</xsl:text>
-     </xsl:for-each>
-     <xsl:text>"&#10;</xsl:text>
-     </xsl:if>
+     <xsl:choose>
+       <xsl:when test="normalize-space()=''"/>
+       <xsl:when test="$makeCSV='true'">
+	 <xsl:text>"</xsl:text>
+	 <xsl:value-of select="replace(normalize-space(),'$q','$q$q')"/>
+	 <xsl:text>","</xsl:text>
+	 <xsl:for-each select="ancestor::*">
+	   <xsl:value-of select="name()"/>
+	   <xsl:text>[</xsl:text>
+	   <xsl:number/>
+	   <xsl:text>]/</xsl:text>
+	 </xsl:for-each>
+	 <xsl:text>"&#10;</xsl:text>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:value-of select="normalize-space()"/>
+	 <xsl:text>&#10;</xsl:text>
+       </xsl:otherwise>
+       </xsl:choose>
    </xsl:template>
-   -->
+
+   
+   <xsl:function name="tei:preflight" as="element()+">
+     <xsl:param name="n" as="element()"/>
+     <xsl:apply-templates select="$n" mode="preflight"/>
+   </xsl:function>
+   
+   <xsl:template match="@*|text()" mode="preflight">
+     <xsl:copy-of select="."/>
+   </xsl:template>
+   
+   <xsl:template match="lb|pb" mode="preflight"/>
+
+   <xsl:template match="*" mode="preflight">
+     <xsl:copy>
+       <xsl:apply-templates select="@*|*|text()" mode="preflight"/>
+     </xsl:copy>
+   </xsl:template>
+   
 </xsl:stylesheet>
