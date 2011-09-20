@@ -199,6 +199,12 @@ deb:
 sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
 
+profile:
+	saxon -o:/dev/null 	-TP Test2/test.xml xhtml2/tei.xsl >& profile.xml
+	saxon profile.xml timing-profile.xsl  > profile1.html
+	saxon -o:/dev/null 	-TP Test2/test.xml latex2/tei.xsl >& profile.xml
+	saxon profile.xml timing-profile.xsl  > profile2.html
+
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \
 	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
@@ -208,6 +214,7 @@ log:
 
 clean:
 	echo "" > test~
+	rm profile1.html profile2.html profile.xml
 	find . -name "*~"  | xargs rm
 	rm -f tei-xsl-*.zip	
 	rm -rf tei-p5-xsl_*

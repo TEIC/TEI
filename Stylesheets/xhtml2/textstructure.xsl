@@ -1229,20 +1229,28 @@
       <desc>[html] </desc>
    </doc>
   <xsl:template name="includeCSS">
+
       <xsl:choose>
-         <xsl:when test="$cssFile = ''"/>
+         <xsl:when test="string-length($cssFile)=0"/>
          <xsl:otherwise>
-	           <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
+	   <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="not($cssSecondaryFile='')">
+
+      <xsl:if test="string-length($cssSecondaryFile)&gt;1">
          <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
       </xsl:if>
-      <xsl:if test="not($cssPrintFile='')">
-         <link rel="stylesheet" media="print" type="text/css" href="{$cssPrintFile}"/>
+
+      <xsl:if test="string-length($cssPrintFile)&gt;1">
+         <link rel="stylesheet" media="print" type="text/css">
+	   <xsl:attribute name="href" select="$cssPrintFile"/>
+	 </link>
       </xsl:if>
-      <xsl:call-template name="generateLocalCSS"/>
+
+<!--      <xsl:call-template name="generateLocalCSS"/>-->
+
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] Javascript functions to be declared in HTML header</desc>
    </doc>

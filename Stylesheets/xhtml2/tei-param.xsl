@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"                 
     xmlns:html="http://www.w3.org/1999/xhtml"                
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"                
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="tei html"
+    exclude-result-prefixes="tei html xs"
     version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>     <p>
@@ -88,18 +89,18 @@
       <desc>CSS style file to be associated with output file(s)</desc>
 
    </doc>
-  <xsl:param name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
+  <xsl:param name="cssFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>CSS style file for print; this will be given a media=print attribute.
     </desc>
    </doc>
-  <xsl:param name="cssPrintFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei-print.css</xsl:param>
+  <xsl:param name="cssPrintFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei-print.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>Secondary CSS style file; this will be given a media=screen attribute,
 so that it does not affect printing. It should be used for screen layout.
   </desc>
    </doc>
-    <xsl:param name="cssSecondaryFile"/>
+    <xsl:param name="cssSecondaryFile"  as="xs:string" select="''"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="integer">
       <desc>Resolution of images. This is needed to calculate
 HTML width and height (in pixels) from supplied dimensions.</desc>
