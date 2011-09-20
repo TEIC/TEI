@@ -214,7 +214,7 @@
   <xsl:template match="tei:extent">
     <xsl:call-template name="msSection">
       <xsl:with-param name="level">4</xsl:with-param>
-      <xsl:with-param name="implicitBlock" select="true()"/>
+      <xsl:with-param name="implicitBlock">true</xsl:with-param>
       <xsl:with-param name="heading">
         <xsl:text>Extent</xsl:text>
       </xsl:with-param>

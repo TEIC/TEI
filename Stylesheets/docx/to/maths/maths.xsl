@@ -98,7 +98,7 @@
 	    <!-- override r:id -->
             <xsl:attribute name="r:id">
 	      <xsl:choose>
-		<xsl:when test="$isofreestanding">
+		<xsl:when test="$isofreestanding='true'">
 		  <xsl:variable name="me" select="generate-id()"/>
 		  <xsl:for-each select="key('IMAGEDATA',1)">
 		    <xsl:if test="generate-id()=$me">
@@ -127,7 +127,7 @@
             <!-- set rId -->
             <xsl:attribute name="r:id">
 	      <xsl:choose>
-		<xsl:when test="$isofreestanding">
+		<xsl:when test="$isofreestanding='true'">
 		  <xsl:variable name="me" select="generate-id()"/>
 		  <xsl:for-each select="key('OLEOBJECTS',1)">
 		    <xsl:if test="generate-id()=$me">

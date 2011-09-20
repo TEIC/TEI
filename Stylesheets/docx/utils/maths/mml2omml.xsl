@@ -3657,10 +3657,10 @@
            4)  The nAry is not accented.
            -->
       <xsl:when test="$fNaryOper = 'true'                       and $fAccent=0                       and $ndCur/descendant-or-self::*[last()]/self::mml:mo                       and not($ndCur/descendant-or-self::*[not(self::mml:mo or                                                          self::mml:mstyle or                                                          self::mml:mrow)])">
-            <xsl:value-of  as="xs:boolean" select="true()"/>
+            <xsl:value-of select="true()"/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:value-of  as="xs:boolean" select="false()"/>
+            <xsl:value-of select="false()"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

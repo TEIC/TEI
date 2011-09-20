@@ -72,7 +72,7 @@
     
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="tei-directory">./</xsl:param>
-    <xsl:param name="debug"  as="xs:boolean" select="false()"/>   
+    <xsl:param name="debug">false</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
     <xsl:variable name="orig" select="/"/>
@@ -215,7 +215,7 @@
                   <w:pStyle w:val="Formula"/>
                </w:pPr>
                <xsl:call-template name="block-element">                   
-                  <xsl:with-param name="nop" select="true()"/>
+                  <xsl:with-param name="nop">true</xsl:with-param>
                </xsl:call-template>
                <xsl:if test="@n">
                   <w:r>
@@ -430,7 +430,7 @@
 		</w:pStyle>
 	      </w:pPr>
 	    </xsl:with-param>
-	    <xsl:with-param name="nop" select="false()"/>
+	    <xsl:with-param name="nop">false</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
@@ -469,7 +469,7 @@
 	      </w:pStyle>
 	    </w:pPr>
 	  </xsl:with-param>
-	  <xsl:with-param name="nop" select="false()"/>
+	  <xsl:with-param name="nop">false</xsl:with-param>
 	</xsl:call-template>
     </xsl:template>
 
@@ -537,7 +537,7 @@
 	<xsl:when test="$pPr/*">
 	  <xsl:call-template name="block-element">
 	    <xsl:with-param name="pPr" select="$pPr"/>
-	    <xsl:with-param name="nop" select="false()"/>
+	    <xsl:with-param name="nop">false</xsl:with-param>
 	  </xsl:call-template>
 	</xsl:when>
 	<xsl:otherwise>
@@ -577,7 +577,7 @@
       
       <xsl:call-template name="block-element">
 	        <xsl:with-param name="pPr" select="$pPr"/>
-	        <xsl:with-param name="nop" select="false()"/>
+	        <xsl:with-param name="nop">false</xsl:with-param>
       </xsl:call-template>
     </xsl:template>
     
@@ -642,14 +642,14 @@
                 </w:tabs>
             </w:pPr>
     	       <xsl:apply-templates>
-    	          <xsl:with-param name="nop" select="true()"/>
+    	          <xsl:with-param name="nop">true</xsl:with-param>
     	       </xsl:apply-templates>
             <w:r>
                 <w:tab/>
             </w:r>
             <xsl:for-each select="following-sibling::tei:item[1]">
                 <xsl:apply-templates>
-                    <xsl:with-param name="nop" select="true()"/>
+                    <xsl:with-param name="nop">true</xsl:with-param>
                 </xsl:apply-templates> 
             </xsl:for-each>
         </w:p>
@@ -1175,7 +1175,7 @@
     <xsl:template name="simpleRun">
       <xsl:param name="text"/>
       <xsl:param name="prefix"/>
-      <xsl:param name="italic"  as="xs:boolean" select="false()"/>
+      <xsl:param name="italic">false</xsl:param>
       <xsl:if test="not($prefix='')">
 	<w:r>
 	  <w:t>

@@ -249,7 +249,7 @@
       </xsl:call-template>
       <xsl:text>]{</xsl:text>
       <xsl:choose>
-         <xsl:when test="$realFigures">
+         <xsl:when test="$realFigures='true'">
             <xsl:choose>
                <xsl:when test="@url">
                   <xsl:value-of select="@url"/>

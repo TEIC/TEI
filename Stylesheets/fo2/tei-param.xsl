@@ -45,7 +45,7 @@ How to scale figures if no width and height specified (pass to XSL FO content-wi
 Put captions on inline figures
 </desc>
    </doc>
-  <xsl:param name="captionInlineFigures"  as="xs:boolean" select="false()"/>
+  <xsl:param name="captionInlineFigures">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures">
       <desc>[fo] Set attributes for display of figures</desc>
    </doc>
@@ -64,19 +64,19 @@ Put captions on inline figures
 Show the contents of &lt;head&gt; in a cross-reference to table or figure
 </desc>
    </doc>
-  <xsl:param name="showFloatHead"  as="xs:boolean" select="false()"/>
+  <xsl:param name="showFloatHead">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="boolean">
       <desc>
 Show a title for figures or tables (eg Table or Figure) in a cross-reference
 </desc>
    </doc>
-  <xsl:param name="showFloatLabel"  as="xs:boolean" select="false()"/>
+  <xsl:param name="showFloatLabel">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="boolean">
       <desc>
 Show the page number in a cross-reference to table or figure
 </desc>
    </doc>
-  <xsl:param name="xrefShowPage"  as="xs:boolean" select="false()"/>
+  <xsl:param name="xrefShowPage">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[fo] Hook where extra material can be inserted after the
     &lt;body&gt; has been processed</desc>
@@ -95,7 +95,7 @@ Show the page number in a cross-reference to table or figure
 Put back matter in multiple columns
 </desc>
    </doc>
-  <xsl:param name="backMulticolumns"  as="xs:boolean" select="false()"/>
+  <xsl:param name="backMulticolumns">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 Margin at bottom of text body
@@ -113,7 +113,7 @@ Margin at top of text body
 Put body matter in multiple columns
 </desc>
    </doc>
-  <xsl:param name="bodyMulticolumns"  as="xs:boolean" select="false()"/>
+  <xsl:param name="bodyMulticolumns">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 Symbol for 4th level itemized list
@@ -143,7 +143,7 @@ Symbol for 2nd level itemized list
 Number of columns, when multiple-column work is requested
 </desc>
    </doc>
-  <xsl:param name="columnCount" as="xs:integer">1</xsl:param>
+  <xsl:param name="columnCount">1</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 XSL FO "provisional-distance-between starts"
@@ -167,7 +167,7 @@ XSL FO "provisional-distance-between starts" for bibliographies
 Display section headings in running heads
 </desc>
    </doc>
-  <xsl:param name="divRunningheads"  as="xs:boolean" select="false()"/>
+  <xsl:param name="divRunningheads">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 Space below examples
@@ -203,13 +203,13 @@ Which named page master name to use
 How to format page numbers in back matter (use XSLT number format)
 </desc>
    </doc>
-  <xsl:param name="formatBackpage" as="xs:integer">1</xsl:param>
+  <xsl:param name="formatBackpage">1</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 How to format page numbers in main matter (use XSLT number format)
 </desc>
    </doc>
-  <xsl:param name="formatBodypage" as="xs:integer">1</xsl:param>
+  <xsl:param name="formatBodypage">1</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 How to format page numbers in front matter (use XSLT number format)
@@ -221,7 +221,7 @@ How to format page numbers in front matter (use XSLT number format)
 Put front matter in multiple columns
 </desc>
    </doc>
-  <xsl:param name="frontMulticolumns"  as="xs:boolean" select="false()"/>
+  <xsl:param name="frontMulticolumns">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 XSL FO "provisional-label-separation"
@@ -372,7 +372,7 @@ Region before
 Construct running headers from page number and section headings
 </desc>
    </doc>
-  <xsl:param name="sectionHeaders"  as="xs:boolean" select="true()"/>
+  <xsl:param name="sectionHeaders">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 Space after bibliography
@@ -402,13 +402,13 @@ Space below caption of figure or table
 Make title page
 </desc>
    </doc>
-  <xsl:param name="titlePage"  as="xs:boolean" select="true()"/>
+  <xsl:param name="titlePage">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>
 Make 2-page spreads
 </desc>
    </doc>
-  <xsl:param name="twoSided"  as="xs:boolean" select="true()"/>
+  <xsl:param name="twoSided">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>
 Language (for hyphenation)
@@ -436,7 +436,7 @@ there are no bookmarks or other such features. Possible values are
 Make &lt;lb&gt; active (ie cause a line break)
 </desc>
    </doc>
-  <xsl:param name="activeLinebreaks"  as="xs:boolean" select="true()"/>
+  <xsl:param name="activeLinebreaks">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
 Alignment of text (ie justified or ragged)
@@ -466,7 +466,7 @@ Default font for body
 Default font size for body (without dimension)
 </desc>
    </doc>
-  <xsl:param name="bodyMaster" as="xs:integer">10</xsl:param>
+  <xsl:param name="bodyMaster">10</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
 Calculation of normal body font size (add dimension)
@@ -550,7 +550,7 @@ Indentation of headings
 Hyphenate text
 </desc>
    </doc>
-  <xsl:param name="hyphenate"  as="xs:boolean" select="true()"/>
+  <xsl:param name="hyphenate">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
 Colour for display of &lt;ident&gt; values
@@ -729,13 +729,13 @@ or columns</desc>
 Force tables to appear inline
 </desc>
    </doc>
-  <xsl:param name="inlineTables"  as="xs:boolean" select="false()"/>
+  <xsl:param name="inlineTables">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="tables" type="boolean">
       <desc>
 Put a caption on tables  
 </desc>
    </doc>
-  <xsl:param name="makeTableCaption"  as="xs:boolean" select="true()"/>
+  <xsl:param name="makeTableCaption">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="tables" type="string">
       <desc>
 Alignment of table captions
@@ -809,13 +809,13 @@ Indentation for level 4 TOC entries
 Make TOC for sections in &lt;back&gt;
 </desc>
    </doc>
-  <xsl:param name="tocBack"  as="xs:boolean" select="true()"/>
+  <xsl:param name="tocBack">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="boolean">
       <desc>
 Make TOC for sections in &lt;front&gt;
 </desc>
    </doc>
-  <xsl:param name="tocFront"  as="xs:boolean" select="true()"/>
+  <xsl:param name="tocFront">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="string">
       <desc>
 Punctuation to insert after a section number in a TOC
@@ -827,5 +827,5 @@ Punctuation to insert after a section number in a TOC
 Page number on which TOC should start
 </desc>
    </doc>
-  <xsl:param name="tocStartPage" as="xs:integer">1</xsl:param>
+  <xsl:param name="tocStartPage">1</xsl:param>
 </xsl:stylesheet>

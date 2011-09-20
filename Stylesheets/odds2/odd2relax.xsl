@@ -38,7 +38,7 @@
   <xsl:key name="REFED" match="rng:ref" use="@name"/>
   <xsl:key name="DEFED" match="rng:define" use="@name"/>
   <xsl:key name="EDEF" match="rng:define[rng:element]" use="1"/>
-  <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
+  <xsl:param name="verbose"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="appendixWords"/>
   <xsl:template name="makeAnchor">
@@ -69,7 +69,7 @@
       <xsl:variable name="documentationLanguage">
          <xsl:call-template name="generateDoc"/>
       </xsl:variable>
-      <xsl:if test="$verbose">
+      <xsl:if test="$verbose='true'">
          <xsl:message> 
 	           <xsl:text>I18N setup: Pattern prefix: </xsl:text>
 	           <xsl:value-of select="$generalPrefix"/> 
@@ -80,7 +80,7 @@
          </xsl:message>
       </xsl:if>
       <xsl:variable name="filename" select="@ident"/>
-      <xsl:if test="$verbose">
+      <xsl:if test="$verbose='true'">
          <xsl:message> process schemaSpec [<xsl:value-of select="@ident"/>] </xsl:message>
       </xsl:if>
       <xsl:call-template name="generateOutput">
@@ -137,7 +137,7 @@
   <xsl:template name="schemaSpecBody">
       <xsl:variable name="pass1">
          <root>
-	   <xsl:if test="$verbose">
+	   <xsl:if test="$verbose='true'">
 	     <xsl:message>start importing moduleRef components</xsl:message>
 	   </xsl:if>
 	   <xsl:apply-templates mode="tangle" select="tei:moduleRef"/>
@@ -304,7 +304,7 @@
          <xsl:choose>
             <xsl:when test="@type='model'">
                <xsl:apply-templates mode="processModel" select=".">
-                  <xsl:with-param name="declare" select="true()"/>
+                  <xsl:with-param name="declare">true</xsl:with-param>
                </xsl:apply-templates>
             </xsl:when>
             <xsl:when test="@type='atts'">
@@ -315,7 +315,7 @@
   </xsl:template>
   <xsl:template match="tei:specGrpRef" mode="tangle">
       <xsl:param name="filename"/>
-      <xsl:if test="$verbose">
+      <xsl:if test="$verbose='true'">
          <xsl:message> specGrpRef to <xsl:value-of select="@target"/>
          </xsl:message>
       </xsl:if>
@@ -405,7 +405,7 @@
 	   </define>
 	 </xsl:when>
 	 <xsl:otherwise>
-	   <xsl:if test="$verbose">
+	   <xsl:if test="$verbose='true'">
 	     <xsl:message>ZAP definition of unused pattern <xsl:value-of select="@name"/></xsl:message>
 	   </xsl:if>
 	 </xsl:otherwise>
@@ -428,17 +428,17 @@
          <xsl:when test="key('DEFED',@name)">
 	   <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
          </xsl:when>
-	 <xsl:when test="ancestor::tei:content[@autoPrefix=false]">
+	 <xsl:when test="ancestor::tei:content[@autoPrefix='false']">
 	   <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{@name}"/>
          </xsl:when>
          <xsl:when test="count(parent::*/*)=1">
-	   <xsl:if test="$verbose">
+	   <xsl:if test="$verbose='true'">
 	     <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>] and leave empty behind</xsl:message>
 	   </xsl:if>
 	   <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
          </xsl:when>
          <xsl:otherwise>
-	   <xsl:if test="$verbose">
+	   <xsl:if test="$verbose='true'">
 	     <xsl:message>ZAP reference to undefined [<xsl:value-of select="@name"/>]</xsl:message>
 	   </xsl:if>
          </xsl:otherwise>
@@ -450,7 +450,7 @@
   <xsl:template match="processing-instruction()" mode="pass3">
     <xsl:choose>
       <xsl:when test="name()='NameList'">
-	<xsl:if test="$verbose">
+	<xsl:if test="$verbose='true'">
 	  <xsl:message>Expand 'NameList' processing-instruction</xsl:message>
 	</xsl:if>
 	<choice xmlns="http://relaxng.org/ns/structure/1.0">
@@ -470,7 +470,7 @@
 	   </choice>
 	</xsl:when>
 	<xsl:otherwise>
-      <xsl:if test="$verbose">
+      <xsl:if test="$verbose='true'">
         <xsl:message>KILLED <xsl:copy-of select="."/></xsl:message>
       </xsl:if>
 	  <empty xmlns="http://relaxng.org/ns/structure/1.0"/>

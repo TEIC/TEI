@@ -27,7 +27,7 @@
    </doc>
   <xsl:template match="tei:figure" mode="xref">
       <xsl:choose>
-         <xsl:when test="$numberFigures">
+         <xsl:when test="$numberFigures='true'">
             <xsl:call-template name="i18n">
                <xsl:with-param name="word">figureWord</xsl:with-param>
             </xsl:call-template>
@@ -58,7 +58,7 @@
    </doc>
   <xsl:template match="tei:table" mode="xref">
       <xsl:choose>
-         <xsl:when test="$numberTables">
+         <xsl:when test="$numberTables='true'">
             <xsl:call-template name="i18n">
                <xsl:with-param name="word">tableWord</xsl:with-param>
             </xsl:call-template>

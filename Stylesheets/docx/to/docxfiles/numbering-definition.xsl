@@ -53,7 +53,7 @@
     
     
      <xsl:template name="write-docxfile-numbering-definition">
-	     <xsl:if test="$debug">
+	     <xsl:if test="$debug='true'">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/numbering.xml')"/>
          </xsl:message>
 	     </xsl:if>

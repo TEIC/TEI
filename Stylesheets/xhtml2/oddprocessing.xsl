@@ -13,7 +13,7 @@
 
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>
-  <xsl:param name="summaryDoc"  as="xs:boolean" select="false()"/>
+  <xsl:param name="summaryDoc">false</xsl:param>
   <xsl:include href="../common2/tagdocs.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -69,7 +69,7 @@
     <desc>[odds] Document an element, macro, or class</desc>
   </doc>
   <xsl:template name="refdoc">
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message> refdoc for <xsl:value-of select="name(.)"/> - <xsl:value-of select="@ident"/>
          </xsl:message>
     </xsl:if>
@@ -88,12 +88,12 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="self::tei:classSpec and not(@ident='att.global') and         count(key('CLASSMEMBERS',@ident))=0">
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
       </xsl:message>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="number($splitLevel)=-1 or $STDOUT>
+      <xsl:when test="number($splitLevel)=-1 or $STDOUT='true'">
         <xsl:apply-templates mode="weavebody" select="."/>
       </xsl:when>
       <xsl:otherwise>
@@ -119,7 +119,7 @@
             </xsl:with-param>
           </xsl:call-template>
         </xsl:variable>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Opening file <xsl:value-of select="$outName"/>
                </xsl:message>
         </xsl:if>
@@ -183,7 +183,7 @@
             </body>
           </xsl:element>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/>
                </xsl:message>
         </xsl:if>
@@ -208,7 +208,7 @@
             <xsl:text>#</xsl:text>
             <xsl:value-of select="$name"/>
           </xsl:when>
-          <xsl:when test="$STDOUT">
+          <xsl:when test="$STDOUT='true'">
             <xsl:for-each select="key('IDENTS',$name)">
               <xsl:call-template name="getSpecURL">
                 <xsl:with-param name="name">
@@ -284,7 +284,7 @@
     <desc>Process elements teix:egXML</desc>
   </doc>
   <xsl:template match="teix:egXML">
-    <xsl:param name="simple"  as="xs:boolean" select="false()"/>
+    <xsl:param name="simple">false</xsl:param>
     <xsl:param name="highlight"/>
     <div>
       <xsl:attribute name="id">
@@ -299,7 +299,7 @@
 	  <xsl:when test="@valid='feasible'">
 	    <xsl:text> egXML_feasible</xsl:text>
 	  </xsl:when>
-	  <xsl:when test="@valid=false">
+	  <xsl:when test="@valid='false'">
 	    <xsl:text> egXML_invalid</xsl:text>
 	  </xsl:when>
 	  <xsl:otherwise>
@@ -308,7 +308,7 @@
 	</xsl:choose>
       </xsl:attribute>
       <xsl:choose>
-        <xsl:when test="$simple">
+        <xsl:when test="$simple='true'">
           <xsl:apply-templates mode="verbatim">
             <xsl:with-param name="highlight">
               <xsl:value-of select="$highlight"/>
@@ -419,12 +419,12 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template name="schemaSpecWeave">
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message>Processing schemaSpec <xsl:value-of select="@ident"/>, summaryDoc=<xsl:value-of select="$summaryDoc"/>
          </xsl:message>
     </xsl:if>
     <xsl:choose>
-      <xsl:when test="$summaryDoc">
+      <xsl:when test="$summaryDoc='true'">
         <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
         <xsl:for-each select="tei:classSpec[@mode or @rend='change']        | tei:macroSpec[(@mode or @rend='change')]        | tei:elementSpec[(@mode or @rend='change')]">
           <xsl:sort select="@ident"/>
@@ -735,7 +735,7 @@
           <xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
             <xsl:call-template name="makeInternalLink">
               <xsl:with-param name="target" select="substring(@target,2)"/>
-              <xsl:with-param name="ptr" as="xs:boolean" select="true()"/>
+              <xsl:with-param name="ptr">true</xsl:with-param>
               <xsl:with-param name="dest">
                 <xsl:call-template name="generateEndLink">
                   <xsl:with-param name="where">
@@ -752,7 +752,7 @@
             <xsl:choose>
               <xsl:when test="$Chapter='AB' or        $Chapter='AI' or        $Chapter='CC' or        $Chapter='CE' or        $Chapter='CH' or        $Chapter='CO' or        $Chapter='DI' or        $Chapter='DR' or        $Chapter='DS' or        $Chapter='FS' or        $Chapter='FT' or        $Chapter='GD' or        $Chapter='HD' or        $Chapter='MS' or        $Chapter='ND' or        $Chapter='NH' or        $Chapter='PH' or        $Chapter='SA' or        $Chapter='SG' or        $Chapter='ST' or        $Chapter='TC' or        $Chapter='TD' or        $Chapter='TS' or        $Chapter='USE' or        $Chapter='VE' or        $Chapter='WD'">
                 <xsl:call-template name="makeExternalLink">
-                  <xsl:with-param name="ptr" select="true()"/>
+                  <xsl:with-param name="ptr">true</xsl:with-param>
                   <xsl:with-param name="dest">
                     <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
                     <xsl:value-of select="$documentationLanguage"/>

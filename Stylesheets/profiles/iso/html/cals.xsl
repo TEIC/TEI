@@ -332,10 +332,10 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template name="generate.col">
-    <xsl:param name="countcol" as="xs:integer">1</xsl:param>
+    <xsl:param name="countcol">1</xsl:param>
     <xsl:param name="colspecs" select="./cals:colspec"/>
-    <xsl:param name="count" as="xs:integer">1</xsl:param>
-    <xsl:param name="colnum" as="xs:integer">1</xsl:param>
+    <xsl:param name="count">1</xsl:param>
+    <xsl:param name="colnum">1</xsl:param>
     <xsl:choose>
       <xsl:when test="$count&gt;count($colspecs)">
         <col/>
@@ -398,7 +398,7 @@
     <xsl:param name="colname"/>
     <!-- .. = row, ../.. = thead|tbody, ../../.. = cals:tgroup -->
     <xsl:param name="colspecs" select="../../../../cals:tgroup/cals:colspec"/>
-    <xsl:param name="count" as="xs:integer">1</xsl:param>
+    <xsl:param name="count">1</xsl:param>
     <xsl:choose>
       <xsl:when test="$count&gt;count($colspecs)"/>
       <xsl:otherwise>

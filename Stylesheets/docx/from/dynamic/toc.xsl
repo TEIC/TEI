@@ -121,7 +121,7 @@ in the document are listed. Enclose the range numbers in quotation marks.
 \p "Separators" 
 Specifies the characters that separate an entry and its page number. For 
 example, the field { TOC \p "— " }, with an em dash, displays a result such 
-as "selecting Text— 53." The default is a tab with leader dots. You can use 
+as "Selecting Text— 53." The default is a tab with leader dots. You can use 
 up to five characters, which must be enclosed in quotation marks. 
 \s Identifier 
 Includes a number such as a chapter number before the page number. The 

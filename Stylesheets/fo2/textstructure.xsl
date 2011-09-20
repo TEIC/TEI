@@ -79,7 +79,7 @@
                </xsl:call-template>
                <!-- static areas -->
           <xsl:choose>
-                  <xsl:when test="$twoSided">
+                  <xsl:when test="$twoSided='true'">
                      <xsl:call-template name="headers-footers-twoside-back"/>
                   </xsl:when>
                   <xsl:otherwise>
@@ -121,7 +121,7 @@
                </xsl:call-template>
                <!-- static areas -->
           <xsl:choose>
-                  <xsl:when test="$twoSided">
+                  <xsl:when test="$twoSided='true'">
                      <xsl:call-template name="headers-footers-twoside"/>
                   </xsl:when>
                   <xsl:otherwise>
@@ -136,7 +136,7 @@
                      </xsl:attribute>
                   </xsl:if>
                   <!--include front matter if there is no separate titlepage -->
-            <xsl:if test="not($titlePage) and not(preceding-sibling::tei:front)">
+            <xsl:if test="not($titlePage='true') and not(preceding-sibling::tei:front)">
                      <xsl:call-template name="Header"/>
                   </xsl:if>
                   <xsl:apply-templates/>
@@ -316,7 +316,7 @@
             <xsl:apply-templates/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:if test="$titlePage">
+            <xsl:if test="$titlePage='true'">
                <page-sequence format="{$formatFrontpage}" force-page-count="end-on-even"
                               hyphenate="{$hyphenate}"
                               language="{$language}">
@@ -346,7 +346,7 @@
                </xsl:call-template>
                <!-- static areas -->
           <xsl:choose>
-                  <xsl:when test="$twoSided">
+                  <xsl:when test="$twoSided='true'">
                      <xsl:call-template name="headers-footers-twoside"/>
                   </xsl:when>
                   <xsl:otherwise>
@@ -648,7 +648,7 @@
          </xsl:choose>
          <xsl:call-template name="blockStartHook"/>
          <xsl:variable name="Number">
-            <xsl:if test="$numberHeadings and $numberHeadingsDepth &gt; $level">
+            <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $level">
                <xsl:call-template name="calculateNumber">
                   <xsl:with-param name="numbersuffix">
 	                    <xsl:call-template name="headingNumberSuffix"/>
@@ -661,7 +661,7 @@
 -->
       <xsl:value-of select="$Number"/>
          <xsl:apply-templates mode="section" select="tei:head"/>
-         <xsl:if test="$divRunningheads">
+         <xsl:if test="$divRunningheads='true'">
 <!-- markers for use in running heads -->
         <xsl:choose>
                <xsl:when test="$level=0">
@@ -692,7 +692,7 @@
                <xsl:when test="$level=5"/>                     
             </xsl:choose>
             <marker marker-class-name="section{$level}">
-               <xsl:if test="$numberHeadings">
+               <xsl:if test="$numberHeadings='true'">
                   <xsl:value-of select="$Number"/>
                   <xsl:call-template name="headingNumberSuffix"/>
                </xsl:if>
@@ -703,7 +703,7 @@
             <xsl:when test="$foEngine='passivetex'">
 <!-- Passive TeX extension, to get PDF bookmarks -->
           <fotex:bookmark fotex-bookmark-level="{$level}" fotex-bookmark-label="{$divid}">
-                  <xsl:if test="$numberHeadings">
+                  <xsl:if test="$numberHeadings='true'">
                      <xsl:value-of select="$Number"/>
                   </xsl:if>
                   <xsl:value-of select="tei:head"/>
@@ -755,13 +755,13 @@
             </xsl:when>
             <xsl:when test="not($where='')">
                <xsl:choose>
-                  <xsl:when test="$twoSided">twoside2</xsl:when>
+                  <xsl:when test="$twoSided='true'">twoside2</xsl:when>
                   <xsl:otherwise>oneside2</xsl:otherwise>
                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                <xsl:choose>
-                  <xsl:when test="$twoSided">twoside1</xsl:when>
+                  <xsl:when test="$twoSided='true'">twoside1</xsl:when>
                   <xsl:otherwise>oneside1</xsl:otherwise>
                </xsl:choose>
             </xsl:otherwise>
@@ -826,7 +826,7 @@
       <static-content flow-name="xsl-region-before">
          <block font-size="{$bodySize}">
             <xsl:choose>
-               <xsl:when test="$runhead">
+               <xsl:when test="$runhead='true'">
                   <xsl:value-of select="$runhead"/>
                </xsl:when>
                <xsl:otherwise>
@@ -874,9 +874,9 @@
                <xsl:when test="$runodd">
                   <xsl:value-of select="$runodd"/>
                </xsl:when>
-               <xsl:when test="$sectionHeaders">
+               <xsl:when test="$sectionHeaders='true'">
                   <block>
-                     <xsl:if test="$divRunningheads">
+                     <xsl:if test="$divRunningheads='true'">
                         <inline>
                            <retrieve-marker retrieve-class-name="section2"/>
                         </inline>
@@ -899,13 +899,13 @@
                <xsl:when test="$runeven">
                   <xsl:value-of select="$runeven"/>
                </xsl:when>
-               <xsl:when test="$sectionHeaders">
+               <xsl:when test="$sectionHeaders='true'">
                   <block>
                      <inline>
                         <page-number/>
                      </inline>
                      <leader rule-thickness="0pt"/>
-                     <xsl:if test="$divRunningheads">
+                     <xsl:if test="$divRunningheads='true'">
                         <inline>
                            <retrieve-marker retrieve-class-name="section1"/>
                         </inline>
@@ -987,7 +987,7 @@
             </xsl:for-each>
          </xsl:when>
          <xsl:when test="ancestor::tei:text/tei:body/tei:div1">
-            <xsl:if test="$tocFront">
+            <xsl:if test="$tocFront='true'">
                <xsl:for-each select="ancestor::tei:text/tei:front/tei:div1|ancestor::tei:text/tei:front//tei:div2|ancestor::tei:text/tei:front//tei:div3">
                   <xsl:apply-templates mode="toc" select="(.)"/>
                </xsl:for-each>
@@ -995,7 +995,7 @@
             <xsl:for-each select="ancestor::tei:text/tei:body/tei:div1|ancestor::tei:text/tei:body//tei:div2|ancestor::tei:text/tei:body//tei:div3">
                <xsl:apply-templates mode="toc" select="(.)"/>
             </xsl:for-each>
-            <xsl:if test="$tocBack">
+            <xsl:if test="$tocBack='true'">
                <xsl:for-each select="ancestor::tei:text/tei:back/tei:div1|ancestor::tei:text/tei:back//tei:div2|ancestor::tei:text/tei:back//tei:div3">
                   <xsl:apply-templates mode="toc" select="(.)"/>
                </xsl:for-each>
@@ -1207,7 +1207,7 @@
                </xsl:choose>
             </xsl:attribute>
             <bookmark-label>
-               <xsl:if test="$numberHeadings and $numberHeadingsDepth &gt; $depth">
+               <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $depth">
                   <xsl:call-template name="calculateNumber">
                      <xsl:with-param name="numbersuffix">
 		                      <xsl:call-template name="headingNumberSuffix"/>
@@ -1241,7 +1241,7 @@
                </xsl:choose>
             </xsl:attribute>
             <bookmark-label>
-               <xsl:if test="$numberHeadings and $numberHeadingsDepth &gt; $depth">
+               <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $depth">
                   <xsl:call-template name="calculateNumber">
                      <xsl:with-param name="numbersuffix">
 		                      <xsl:call-template name="headingNumberSuffix"/>
@@ -1290,7 +1290,7 @@
       <desc>[fo] </desc>
    </doc>
   <xsl:template name="tocBits">
-      <xsl:if test="$tocFront">
+      <xsl:if test="$tocFront='true'">
          <xsl:for-each select="ancestor::tei:text/tei:front//tei:div">
             <xsl:apply-templates mode="toc" select="(.)"/>
          </xsl:for-each>
@@ -1298,7 +1298,7 @@
       <xsl:for-each select="ancestor::tei:text/tei:body//tei:div">
          <xsl:apply-templates mode="toc" select="(.)"/>
       </xsl:for-each>
-      <xsl:if test="$tocBack">
+      <xsl:if test="$tocBack='true'">
          <xsl:for-each select="ancestor::tei:text/tei:back//tei:div">
             <xsl:apply-templates mode="toc" select="(.)"/>
          </xsl:for-each>
@@ -1343,7 +1343,7 @@
             <xsl:value-of select="$tocindent"/>
          </xsl:attribute>
          <xsl:variable name="Number">
-            <xsl:if test="$numberHeadings and $numberHeadingsDepth &gt; $level">
+            <xsl:if test="$numberHeadings='true' and $numberHeadingsDepth &gt; $level">
                <xsl:call-template name="calculateNumber">
                   <xsl:with-param name="numbersuffix" select="$tocNumberSuffix"/>
                </xsl:call-template>
@@ -1379,7 +1379,7 @@
    </doc>
   <xsl:template name="xheading">
       <xsl:param name="level"/>
-      <xsl:if test="$numberHeadings">
+      <xsl:if test="$numberHeadings='true'">
          <xsl:call-template name="calculateNumber"/>
       </xsl:if>
       <xsl:call-template name="divXRefHeading"/>
@@ -1392,12 +1392,12 @@
   <xsl:template name="calculateNumber">
       <xsl:param name="numbersuffix"/>
       <xsl:choose>
-         <xsl:when test="$prenumberedHeadings and @n">
+         <xsl:when test="$prenumberedHeadings='true' and @n">
             <xsl:value-of select="@n"/>
             <xsl:value-of select="$numbersuffix"/>
          </xsl:when>
          <xsl:when test="ancestor::tei:front">
-            <xsl:if test="not($numberFrontHeadings)">
+            <xsl:if test="not($numberFrontHeadings='')">
                <xsl:number count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4"
                            format="{$numberFrontHeadings}"
                            from="tei:front"
@@ -1406,7 +1406,7 @@
             </xsl:if>
          </xsl:when>
          <xsl:when test="ancestor::tei:back">
-            <xsl:if test="not($numberBackHeadings)">
+            <xsl:if test="not($numberBackHeadings='')">
                <xsl:call-template name="i18n">
                   <xsl:with-param name="word">appendixWords</xsl:with-param>
                </xsl:call-template>

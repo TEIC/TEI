@@ -415,7 +415,7 @@ glyphes non standard</head>
                         </xsl:choose>
                       </p>
                       <xsl:apply-templates select="ancestor::teix:egXML">
-                        <xsl:with-param name="simple" select="true()"/>
+                        <xsl:with-param name="simple">true</xsl:with-param>
                         <xsl:with-param name="highlight">
                           <xsl:value-of select="$me"/>
                         </xsl:with-param>
@@ -541,7 +541,7 @@ glyphes non standard</head>
     <div id="onecol" class="main-content">
       <xsl:call-template name="mainFrame">
         <xsl:with-param name="currentID" select="$currentID"/>
-        <xsl:with-param name="minimal" select="true()"/>
+        <xsl:with-param name="minimal">true</xsl:with-param>
       </xsl:call-template>
       <xsl:if test="$currentID=''">
         <div style="float:left; margin:4%;">
@@ -684,7 +684,7 @@ glyphes non standard</head>
             </xsl:with-param>
           </xsl:call-template>
         </xsl:variable>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
         </xsl:if>
         <xsl:result-document 
@@ -717,7 +717,7 @@ glyphes non standard</head>
             </body>
           </html>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
         </xsl:if>
       </xsl:if>
@@ -761,7 +761,7 @@ glyphes non standard</head>
     <xsl:param name="minimal"/>
     <xsl:if test="count(ancestor::tei:div)&lt;2">
       <xsl:number count="tei:div" format="i.1.1." level="multiple"/>
-      <xsl:if test="not($minimal)">
+      <xsl:if test="$minimal='false'">
         <xsl:value-of select="$numberSpacer"/>
       </xsl:if>
     </xsl:if>
@@ -812,7 +812,7 @@ glyphes non standard</head>
     <xsl:variable name="myName">
       <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
-    <xsl:if test="tei:head or $autoHead>
+    <xsl:if test="tei:head or $autoHead='true'">
       <xsl:variable name="Depth">
         <xsl:choose>
           <xsl:when test="not($forcedepth='')">
@@ -856,7 +856,7 @@ glyphes non standard</head>
         </xsl:choose>
         <xsl:call-template name="header">
           <xsl:with-param name="toc" select="$pointer"/>
-          <xsl:with-param name="minimal" select="false()"/>
+          <xsl:with-param name="minimal">false</xsl:with-param>
           <xsl:with-param name="display">plain</xsl:with-param>
         </xsl:call-template>
         <xsl:if test="$thislevel &lt; $Depth">
@@ -1090,7 +1090,7 @@ glyphes non standard</head>
 	</p>
       </xsl:if>
       <hr/>
-      <xsl:if test="$linkPanel">
+      <xsl:if test="$linkPanel='true'">
         <div class="footer">
           <xsl:if test="not($parentURL='')">
             <a class="{$style}" href="{$parentURL}">

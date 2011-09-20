@@ -6,11 +6,10 @@
 		xmlns="http://www.w3.org/1999/xhtml" 
 		xmlns:html="http://www.w3.org/1999/xhtml" 
 		xmlns:tei="http://www.tei-c.org/ns/1.0" 
-		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:teix="http://www.tei-c.org/ns/Examples" 
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" 
-		version="2.0" exclude-result-prefixes="iso tei teix dc xs
+		version="2.0" exclude-result-prefixes="iso tei teix dc
 						       html opf ncx smil">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="epub-common.xsl"/>
@@ -43,33 +42,33 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:param name="useHeaderFrontMatter"  as="xs:boolean" select="false()"/>
-  <xsl:param name="STDOUT"  as="xs:boolean" select="false()"/>
-  <xsl:param name="autoHead"  as="xs:boolean" select="true()"/>
-  <xsl:param name="autoToc"  as="xs:boolean" select="true()"/>
-  <xsl:param name="bottomNavigationPanel"  as="xs:boolean" select="false()"/>
+  <xsl:param name="useHeaderFrontMatter">false</xsl:param>
+  <xsl:param name="STDOUT">false</xsl:param>
+  <xsl:param name="autoHead">true</xsl:param>
+  <xsl:param name="autoToc">true</xsl:param>
+  <xsl:param name="bottomNavigationPanel">false</xsl:param>
   <xsl:param name="coverimage"/>
   <xsl:param name="cssFile">../tei.css</xsl:param>
   <xsl:param name="cssODDFile">../odd.css</xsl:param>
   <xsl:param name="cssPrintFile">../epub-print.css</xsl:param>
-  <xsl:param name="debug"  as="xs:boolean" select="false()"/>
+  <xsl:param name="debug">false</xsl:param>
   <xsl:param name="directory">.</xsl:param>
   <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
   <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
-  <xsl:param name="fixgraphicsurl"  as="xs:boolean" select="false()"/>
-  <xsl:param name="createanttask"  as="xs:boolean" select="false()"/>
+  <xsl:param name="fixgraphicsurl">false</xsl:param>
+  <xsl:param name="createanttask">false</xsl:param>
   <xsl:param name="institution"/>
-  <xsl:param name="linkPanel"  as="xs:boolean" select="false()"/>
-  <xsl:param name="mediaoverlay"  as="xs:boolean" select="false()"/>
-  <xsl:param name="odd"  as="xs:boolean" select="false()"/>
+  <xsl:param name="linkPanel">false</xsl:param>
+  <xsl:param name="mediaoverlay">false</xsl:param>
+  <xsl:param name="odd">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
   <xsl:param name="publisher"/>
-  <xsl:param name="splitLevel" as="xs:integer">0</xsl:param>
+  <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="subject"/>
-  <xsl:param name="tocDepth" as="xs:integer">5</xsl:param>
-  <xsl:param name="tocFront"  as="xs:boolean" select="true()"/>
-  <xsl:param name="topNavigationPanel"  as="xs:boolean" select="false()"/>
+  <xsl:param name="tocDepth">5</xsl:param>
+  <xsl:param name="tocFront">true</xsl:param>
+  <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
   <xsl:param name="outputTarget">epub</xsl:param>
 
@@ -130,7 +129,7 @@
         </xsl:choose>
       </xsl:variable>
       <xsl:choose>
-	<xsl:when test="$splitLevel=-1">
+	<xsl:when test="$splitLevel='-1'">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -151,7 +150,7 @@
 	  <xsl:for-each select="tokenize($javascriptFiles,',')">
 	    <xsl:variable name="file" select="normalize-space(.)"/>
 	    <xsl:variable name="name" select="tokenize($file,'/')[last()]"/>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
 	    <xsl:message>write Javascript file <xsl:value-of select="$name"/></xsl:message>
         </xsl:if>
 	    <xsl:result-document method="text"
@@ -161,12 +160,12 @@
 	      </xsl:for-each>
 	    </xsl:result-document>
 	  </xsl:for-each>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/OEBPS/stylesheet.css')}">
 	  <xsl:if test="not($cssFile='')">
-	    <xsl:if test="$verbose">
+	    <xsl:if test="$verbose='true'">
 	      <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
 	    </xsl:if>
 	    <xsl:for-each select="tokenize(unparsed-text($cssFile),     '\r?\n')">
@@ -174,30 +173,30 @@
 	    </xsl:for-each>
 	  </xsl:if>
           <xsl:if test="not($cssSecondaryFile='')">
-            <xsl:if test="$verbose">
+            <xsl:if test="$verbose='true'">
               <xsl:message>reading secondary file <xsl:value-of select="$cssSecondaryFile"/></xsl:message>
             </xsl:if>
             <xsl:for-each select="tokenize(unparsed-text($cssSecondaryFile),       '\r?\n')">
               <xsl:call-template name="purgeCSS"/>
             </xsl:for-each>
           </xsl:if>
-          <xsl:if test="$odd">
-            <xsl:if test="$verbose">
+          <xsl:if test="$odd='true'">
+            <xsl:if test="$verbose='true'">
               <xsl:message>reading file <xsl:value-of select="$cssODDFile"/></xsl:message>
             </xsl:if>
             <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
               <xsl:call-template name="purgeCSS"/>
             </xsl:for-each>
           </xsl:if>
-          <xsl:if test="$odd">
-            <xsl:if test="$verbose">
+          <xsl:if test="$odd='true'">
+            <xsl:if test="$verbose='true'">
               <xsl:message>reading file <xsl:value-of select="$cssODDFile"/></xsl:message>
             </xsl:if>
             <xsl:for-each select="tokenize(unparsed-text($cssODDFile),         '\r?\n')">
               <xsl:call-template name="purgeCSS"/>
             </xsl:for-each>
           </xsl:if>
-	  <xsl:if test="$filePerPage">
+	  <xsl:if test="$filePerPage='true'">
 	    <xsl:text>body { width: </xsl:text>
 	    <xsl:value-of select="$viewPortWidth"/>
 	    <xsl:text>px;&#10; height: </xsl:text>
@@ -207,24 +206,24 @@
 	    <xsl:text>px; left:0px; top:0px;}&#10;</xsl:text>
 	  </xsl:if>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/print.css</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/OEBPS/print.css')}">
-          <xsl:if test="$verbose">
+          <xsl:if test="$verbose='true'">
             <xsl:message>reading file <xsl:value-of select="$cssPrintFile"/></xsl:message>
           </xsl:if>
           <xsl:for-each select="tokenize(unparsed-text($cssPrintFile),     '\r?\n')">
             <xsl:call-template name="purgeCSS"/>
           </xsl:for-each>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file mimetype</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/mimetype')}">
           <xsl:text>application/epub+zip</xsl:text>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file META-INF/container.xml</xsl:message>
         </xsl:if>
         <xsl:result-document method="xml" href="{concat($directory,'/META-INF/container.xml')}">
@@ -234,7 +233,7 @@
             </rootfiles>
           </container>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/content.opf</xsl:message>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/content.opf')}" method="xml">
@@ -301,9 +300,9 @@
             </metadata>
             <manifest>
 	      <!-- deal with intricacies of overlay files -->
-	      <xsl:if test="$mediaoverlay and
+	      <xsl:if test="$mediaoverlay='true' and
 			    key('Timeline',1)">
-		<xsl:if test="$verbose">
+		<xsl:if test="$verbose='true'">
 		  <xsl:message>write file SMIL files</xsl:message>
 		</xsl:if>
 		<xsl:for-each select="key('Timeline',1)">
@@ -371,7 +370,7 @@
               <item href="stylesheet.css" id="css" media-type="text/css"/>
               <item href="titlepage.html" id="titlepage"
 		    media-type="application/xhtml+xml"/>
-	      <xsl:if test="$filePerPage">
+	      <xsl:if test="$filePerPage='true'">
 		<item href="titlepageverso.html" id="titlepageverso"  media-type="application/xhtml+xml"/>
 	      </xsl:if>
               <xsl:for-each select="tei:text/tei:front/tei:titlePage">
@@ -384,7 +383,7 @@
               <item id="start" href="index.html"
 		    media-type="application/xhtml+xml"/>
 	      <xsl:choose>
-		<xsl:when test="$filePerPage">
+		<xsl:when test="$filePerPage='true'">
 		  <xsl:for-each select="key('PB',1)">
 		    <xsl:variable name="target">
 		      <xsl:apply-templates select="." mode="ident"/>
@@ -404,7 +403,7 @@
 		    </xsl:if>
 		    <item href="{$target}.html"
 			  media-type="application/xhtml+xml">		      
-		      <xsl:if test="$mediaoverlay">
+		      <xsl:if test="$mediaoverlay='true'">
 			<xsl:attribute  name="media-overlay">
 			  <xsl:value-of select="$target"/>
 			  <xsl:text>-audio</xsl:text>
@@ -492,7 +491,7 @@
 	    </manifest>
 	    <spine toc="ncx">
 	      <itemref idref="titlepage" linear="yes"/>
-	      <xsl:if test="$filePerPage">
+	      <xsl:if test="$filePerPage='true'">
 		<itemref idref="titlepageverso" linear="yes"/>
 	      </xsl:if>
               <xsl:for-each select="tei:text/tei:front/tei:titlePage">
@@ -501,7 +500,7 @@
               </xsl:for-each>
               <itemref idref="start" linear="yes"/>
 	      <xsl:choose>
-		<xsl:when test="$filePerPage">
+		<xsl:when test="$filePerPage='true'">
 		  <xsl:for-each select="key('PB',1)">
 		    <xsl:if test="@facs">
 		      <itemref linear="yes">
@@ -549,7 +548,7 @@
 	      <itemref idref="titlepageback">
 		<xsl:attribute name="linear">
 		  <xsl:choose>
-		    <xsl:when test="$filePerPage">yes</xsl:when>
+		    <xsl:when test="$filePerPage='true'">yes</xsl:when>
 		    <xsl:otherwise>no</xsl:otherwise>
 		  </xsl:choose>
 		</xsl:attribute>
@@ -560,7 +559,7 @@
               <reference type="text" href="titlepage.html" title="Cover"/>
               <reference type="text" title="Start" href="index.html"/>
 	      <xsl:choose>
-		<xsl:when test="$filePerPage">
+		<xsl:when test="$filePerPage='true'">
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
@@ -589,7 +588,7 @@
             </guide>
           </package>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/titlepage.html</xsl:message>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/titlepage.html')}" method="xml">
@@ -624,7 +623,7 @@
         </xsl:result-document>
         <xsl:for-each select="tei:text/tei:front/tei:titlePage">
           <xsl:variable name="N" select="position()"/>
-          <xsl:if test="$verbose">
+          <xsl:if test="$verbose='true'">
             <xsl:message>write file OEBPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
           </xsl:if>
           <xsl:result-document href="{concat($directory,'/OEBPS/titlepage',$N,'.html')}" method="xml">
@@ -645,8 +644,8 @@
             </html>
           </xsl:result-document>
         </xsl:for-each>
-	<xsl:if test="$filePerPage">
-	  <xsl:if test="$verbose">
+	<xsl:if test="$filePerPage='true'">
+	  <xsl:if test="$verbose='true'">
 	    <xsl:message>write file OEBPS/titlepageverso.html</xsl:message>
 	  </xsl:if>
 	  <xsl:result-document href="{concat($directory,'/OEBPS/titlepageverso.html')}" method="xml">
@@ -665,7 +664,7 @@
 	  </xsl:result-document>
 	</xsl:if>
 	
-	<xsl:if test="$verbose">
+	<xsl:if test="$verbose='true'">
 	  <xsl:message>write file OEBPS/titlepageback.html</xsl:message>
 	</xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/titlepageback.html')}" method="xml">
@@ -687,7 +686,7 @@
             </body>
           </html>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/toc.ncx</xsl:message>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OEBPS/toc.ncx')}" method="xml">
@@ -782,7 +781,7 @@
             </navMap>
           </ncx>
         </xsl:result-document>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file OEBPS/page-template.xpgt</xsl:message>
         </xsl:if>
         <xsl:result-document method="xml" href="{concat($directory,'/OEBPS/page-template.xpgt')}">
@@ -825,8 +824,8 @@
             </ade:style>
           </ade:template>
 	</xsl:result-document>
-	<xsl:if test="$filePerPage">
-        <xsl:if test="$verbose">
+	<xsl:if test="$filePerPage='true'">
+        <xsl:if test="$verbose='true'">
           <xsl:message>write file META-INF/com.apple.ibooks.display-options.xml</xsl:message>
         </xsl:if>
 	<xsl:result-document

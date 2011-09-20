@@ -58,7 +58,7 @@
     </desc>
    </doc>
     <xsl:template match="tei:milestone">
-        <xsl:param name="final-section"  as="xs:boolean" select="false()"/>
+        <xsl:param name="final-section">false</xsl:param>
         
         
         <!-- construct sectPr -->
@@ -125,7 +125,7 @@
         
         <!-- write out sectPr -->
         <xsl:choose>
-            <xsl:when test="$final-section=false">
+            <xsl:when test="$final-section='false'">
                 <w:p>
                     <w:pPr>
                         <xsl:copy-of select="$sectPr"/>

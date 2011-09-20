@@ -5,7 +5,7 @@
 
    <xsl:param name="newfile"/>
    <xsl:param name="newlang"/>
-   <xsl:param name="overwrite"  as="xs:boolean" select="true()"/>
+   <xsl:param name="overwrite">true</xsl:param>
 
    <xsl:key name="K" match="entry" use="key"/>
 
@@ -18,7 +18,7 @@
          <xsl:when test="not(@xml:lang) or not(@xml:lang=$newlang)">
             <xsl:copy-of select="."/>
          </xsl:when>
-         <xsl:when test="not($overwrite) and @xml:lang=$newlang">
+         <xsl:when test="$overwrite='false' and @xml:lang=$newlang">
             <xsl:copy-of select="."/>
          </xsl:when>
       </xsl:choose>

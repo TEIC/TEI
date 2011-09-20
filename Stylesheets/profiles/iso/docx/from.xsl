@@ -67,9 +67,9 @@
     <xsl:key name="Sdt" match="w:sdt" use="w:sdtPr/w:tag/@w:val"/>
     <xsl:key name="AllSdt" match="w:sdtPr/w:tag/@w:val" use="1"/>
 
-    <xsl:param name="preserveWordSections"  as="xs:boolean" select="true()"/>
-    <xsl:param name="preserveWordHeadersFooters"  as="xs:boolean" select="true()"/>
-    <xsl:param name="preserveEffects"  as="xs:boolean" select="true()"/>
+    <xsl:param name="preserveWordSections">true</xsl:param>
+    <xsl:param name="preserveWordHeadersFooters">true</xsl:param>
+    <xsl:param name="preserveEffects">true</xsl:param>
 
     <xsl:output indent="no"/>
 

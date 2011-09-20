@@ -194,7 +194,7 @@
       <desc/>
    </doc>
   <xsl:template match="teix:egXML">
-      <xsl:param name="simple"  as="xs:boolean" select="false()"/>
+      <xsl:param name="simple">false</xsl:param>
       <xsl:param name="highlight"/>
       <block font-family="{$typewriterFont}" background-color="{$exampleBackgroundColor}"
              color="{$exampleColor}"
@@ -439,7 +439,7 @@
    </doc>
   <xsl:template match="tei:lb">
       <xsl:choose>
-	<xsl:when test="$activeLinebreaks">
+	<xsl:when test="$activeLinebreaks='true'">
 	  <xsl:choose>
 	    <!-- this is a *visible* linebreak character 
 		 PassiveTeX implements it as a real line break

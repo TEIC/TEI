@@ -38,9 +38,9 @@
 
   
 
-   <xsl:param name="reencode"  as="xs:boolean" select="false()"/>
-   <xsl:param name="numberBackHeadings"  as="xs:boolean" select="true()"/>
-   <xsl:param name="numberFrontHeadings"  as="xs:boolean" select="true()"/>
+   <xsl:param name="reencode">false</xsl:param>
+   <xsl:param name="numberBackHeadings">true</xsl:param>
+   <xsl:param name="numberFrontHeadings">true</xsl:param>
    <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
    <xsl:param name="classParameters">11pt,twoside</xsl:param>
    <xsl:param name="startNamespace"/>

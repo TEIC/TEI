@@ -177,7 +177,7 @@
 	     <xsl:if test="tei:head">
 	       <xsl:variable name="caption">
 		 <xsl:choose>
-		   <xsl:when test="ancestor::tei:front and  $numberFrontFigures">
+		   <xsl:when test="ancestor::tei:front and  $numberFrontFigures='true'">
 		     <xsl:call-template name="i18n">
 		       <xsl:with-param name="word">figureWord</xsl:with-param>
 		     </xsl:call-template>
@@ -185,7 +185,7 @@
 		     <xsl:number count="tei:figure[tei:head]" from="tei:front" level="any"/>
 		     <xsl:text>. </xsl:text>
 		   </xsl:when>
-		   <xsl:when test="ancestor::tei:back and $numberBackFigures">
+		   <xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
 		     <xsl:call-template name="i18n">
 		       <xsl:with-param name="word">figureWord</xsl:with-param>
 		     </xsl:call-template>
@@ -193,7 +193,7 @@
 		     <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
 		     <xsl:text>. </xsl:text>
 		   </xsl:when>
-		   <xsl:when test="ancestor::tei:body and $numberFigures">
+		   <xsl:when test="ancestor::tei:body and $numberFigures='true'">
 		     <xsl:call-template name="i18n">
 		       <xsl:with-param name="word">figureWord</xsl:with-param>
 		     </xsl:call-template>
@@ -270,8 +270,8 @@
 	 </xsl:if>
          <table>
             <xsl:call-template name="rendToClass">
-	      <xsl:with-param name="id">false</xsl:with-param>
-	    </xsl:call-template>
+	              <xsl:with-param name="id">false</xsl:with-param>
+	           </xsl:call-template>
             <xsl:if test="@rend='frame' or @rend='rules'">
                <xsl:attribute name="rules">all</xsl:attribute>
                <xsl:attribute name="border">1</xsl:attribute>
@@ -406,7 +406,7 @@
          </xsl:choose>
       </xsl:variable>
       <xsl:choose>
-	<xsl:when test="$showFigures">
+	<xsl:when test="$showFigures='true'">
 	  <xsl:choose>
 	    <xsl:when test="@type='thumbnail'"/>
 	    <xsl:when test="starts-with(@mimeType, 'video')">

@@ -46,10 +46,10 @@
       </desc>
    </doc>
 
-    <xsl:param name="shadowGraphics"  as="xs:boolean" select="true()"/>
-    <xsl:param name="useNSPrefixes"  as="xs:boolean" select="false()"/>    
+    <xsl:param name="shadowGraphics">true</xsl:param>
+    <xsl:param name="useNSPrefixes">false</xsl:param>    
     <xsl:template match="teix:egXML|tei:p[@rend='eg']">
-        <xsl:param name="simple"  as="xs:boolean" select="false()"/>
+        <xsl:param name="simple">false</xsl:param>
         <xsl:param name="highlight"/>
         <xsl:call-template name="block-element">
             <xsl:with-param name="select">

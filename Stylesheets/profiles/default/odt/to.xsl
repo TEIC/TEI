@@ -24,7 +24,7 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
-<xsl:param name="freestanding"  as="xs:boolean" select="true()"/>
+<xsl:param name="freestanding">true</xsl:param>
     
     
 </xsl:stylesheet>

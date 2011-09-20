@@ -381,7 +381,7 @@
                 <xsl:text>wovenodd-col2</xsl:text>
               </xsl:attribute>
               <xsl:call-template name="generateModelParents">
-                <xsl:with-param name="showElements" select="true()"/>
+                <xsl:with-param name="showElements">true</xsl:with-param>
               </xsl:call-template>
             </xsl:element>
           </xsl:element>
@@ -639,7 +639,7 @@
               <xsl:text>wovenodd-col2</xsl:text>
             </xsl:attribute>
             <xsl:call-template name="generateModelParents">
-              <xsl:with-param name="showElements" select="false()"/>
+              <xsl:with-param name="showElements">false</xsl:with-param>
             </xsl:call-template>
           </xsl:element>
         </xsl:element>
@@ -873,7 +873,7 @@
       <xsl:when test="$atts='-'"/>
       <xsl:when test="$atts='+'">
         <xsl:call-template name="showAttClasses">
-          <xsl:with-param name="minimal" select="true()"/>
+          <xsl:with-param name="minimal">true</xsl:with-param>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$atts=''"/>
@@ -901,7 +901,7 @@
           </xsl:element>
         </xsl:if>
         <xsl:call-template name="showAttClasses">
-          <xsl:with-param name="minimal" select="true()"/>
+          <xsl:with-param name="minimal">true</xsl:with-param>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -1141,7 +1141,7 @@
                   <xsl:text>wovenodd-col2</xsl:text>
                 </xsl:attribute>
                 <xsl:call-template name="generateModelParents">
-                  <xsl:with-param name="showElements" select="true()"/>
+                  <xsl:with-param name="showElements">true</xsl:with-param>
                 </xsl:call-template>
               </xsl:element>
             </xsl:element>
@@ -1177,7 +1177,7 @@
           <xsl:text>wovenodd-col2</xsl:text>
         </xsl:attribute>
         <xsl:call-template name="bitOut">
-          <xsl:with-param name="grammar" select="true()"/>
+          <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
               <xsl:variable name="entCont">
@@ -1794,7 +1794,7 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="generateMembers">
-    <xsl:param name="depth" as="xs:integer">1</xsl:param>
+    <xsl:param name="depth">1</xsl:param>
     <xsl:param name="me"/>
     <xsl:variable name="here" select="."/>
     <xsl:variable name="this" select="@ident"/>
@@ -2271,7 +2271,7 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template name="attClassDetails">
-    <xsl:param name="depth" as="xs:integer">1</xsl:param>
+    <xsl:param name="depth">1</xsl:param>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:choose>
         <xsl:when test="key('CLASSES',@key)">
@@ -2436,7 +2436,7 @@
       <xsl:text> — </xsl:text>
       <xsl:call-template name="makeInternalLink">
         <xsl:with-param name="target" select="@xml:id"/>
-	<xsl:with-param name="ptr" as="xs:boolean" select="true()"/>
+        <xsl:with-param name="ptr">true</xsl:with-param>
         <xsl:with-param name="dest">
           <xsl:value-of select="tei:head"/>
         </xsl:with-param>

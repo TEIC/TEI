@@ -28,7 +28,7 @@
     <!-- import functions -->
     <xsl:import href="default-functions.xsl"/>
     
-    <xsl:param name="renderAddDel"  as="xs:boolean" select="true()"/>
+    <xsl:param name="renderAddDel">true</xsl:param>
     <xsl:param name="addColour">red</xsl:param>
 
     
@@ -55,7 +55,7 @@
     <xsl:param name="bulletTwo"></xsl:param>
 
     <xsl:param name="word-directory">..</xsl:param>
-    <xsl:param name="debug"  as="xs:boolean" select="false()"/>
+    <xsl:param name="debug">false</xsl:param>
     <xsl:param name="styleDoc">
         <xsl:value-of select="concat($word-directory, '/word/styles.xml')"/>
     </xsl:param>
@@ -152,7 +152,7 @@
                 <w:pStyle w:val="Formula"/>
             </w:pPr>
             <xsl:call-template name="block-element">                   
-                <xsl:with-param name="nop" select="true()"/>
+                <xsl:with-param name="nop">true</xsl:with-param>
             </xsl:call-template>
             <xsl:if test="@n">
                 <w:r>

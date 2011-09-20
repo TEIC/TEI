@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:s="http://www.ascc.net/xml/schematron"
-		xmlns:xs="http://www.w3.org/2001/XMLSchema"                
+                
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="xs s a rng tei teix"
+                exclude-result-prefixes="s a rng tei teix"
                 version="2.0">
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -86,7 +86,7 @@ process the UTF-8 characters. Set to "false" if you are
 using XeTeX or similar.
 </desc>
    </doc>
-   <xsl:param name="reencode"  as="xs:boolean" select="true()"/>
+   <xsl:param name="reencode">true</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
       <desc>
@@ -100,7 +100,7 @@ The name of a LaTeX style package which should be loaded
 Use real name of graphics files rather than pointers
 </desc>
    </doc>
-   <xsl:param name="realFigures"  as="xs:boolean" select="true()"/>
+   <xsl:param name="realFigures">true</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
@@ -141,7 +141,7 @@ Use real name of graphics files rather than pointers
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
 </xsl:text>
 <xsl:choose>
-      <xsl:when test="$reencode">
+      <xsl:when test="$reencode='true'">
          <xsl:text>
 \IfFileExists{tipa.sty}{\usepackage{tipa}}{}
 \usepackage{times}
@@ -184,14 +184,14 @@ as a proportion of the page width.
 Whether to number lines of poetry
 </desc>
    </doc>
-   <xsl:param name="verseNumbering"  as="xs:boolean" select="false()"/>
+   <xsl:param name="verseNumbering">false</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="integer">
       <desc>
 When numbering poetry, how often to put in a line number
 </desc>
    </doc>
-   <xsl:param name="everyHowManyLines" as="xs:integer">5</xsl:param>
+   <xsl:param name="everyHowManyLines">5</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
@@ -213,7 +213,7 @@ Options to pass to the geometry package to set margins etc
 Depth of nesting of reference documentation when processing ODD
 </desc>
    </doc>
-   <xsl:param name="specLinkDepth" as="xs:integer">2</xsl:param>
+   <xsl:param name="specLinkDepth">2</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
@@ -236,7 +236,7 @@ capable of dealing with UTF-8 directly.
   {\RequirePackage{color}}
 \usepackage{colortbl}
       <xsl:choose>
-         <xsl:when test="$reencode">
+         <xsl:when test="$reencode='true'">
 \IfFileExists{utf8x.def}%
  {\usepackage[utf8x]{inputenc}}%
  {\usepackage[utf8]{inputenc}}
@@ -337,7 +337,7 @@ capable of dealing with UTF-8 directly.
 
    <xsl:template name="exampleFontSet">
       <xsl:choose>
-         <xsl:when test="$reencode">
+         <xsl:when test="$reencode='true'">
             <xsl:text>\ttfamily\small\selectfont </xsl:text>
          </xsl:when>
          <xsl:when test="../@xml:lang='zh-tw' or       @xml:lang='zh-tw'">

@@ -52,7 +52,7 @@
   </xsl:template>
 
   <xsl:template name="mainDocument">
-      <xsl:if test="not($realFigures)">
+      <xsl:if test="not($realFigures='true')">
          <xsl:text>%BEGINFIGMAP</xsl:text>
          <xsl:if test="not($latexLogo='')">
 	   <xsl:text>&#10;%FIGMAP </xsl:text>
@@ -275,7 +275,7 @@
    </doc>
   <xsl:template match="tei:l">
       <xsl:choose>
-         <xsl:when test="$verseNumbering">
+         <xsl:when test="$verseNumbering='true'">
             <xsl:variable name="id" select="generate-id()"/>
             <xsl:variable name="pos">
                <xsl:for-each select="ancestor::*[name()=$resetVerseLineNumbering]//l">

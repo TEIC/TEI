@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:tei="http://www.tei-c.org/ns/1.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	exclude-result-prefixes="tei xs"
-	version="2.0">
+                xmlns:m="http://www.w3.org/1998/Math/MathML"
+                xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="tei m"
+                version="2.0">
     <!-- import base conversion style -->
 
     <xsl:import href="../../../latex2/tei.xsl"/>
@@ -27,6 +27,6 @@
       </desc>
    </doc>
 
-  <xsl:param name="reencode"  as="xs:boolean" select="false()"/>
+  <xsl:param name="reencode">false</xsl:param>
     
 </xsl:stylesheet>

@@ -34,16 +34,16 @@
    </doc>
 
     <xsl:param name="publisher">Oxford Digital Library, Oxford University</xsl:param>
-    <xsl:param name="numberHeadings"  as="xs:boolean" select="false()"/>
+    <xsl:param name="numberHeadings">false</xsl:param>
     <xsl:param name="numberHeadingsDepth">-1</xsl:param>
-    <xsl:param name="numberBackHeadings"  as="xs:boolean" select="false()"/>
-    <xsl:param name="numberFrontHeadings"  as="xs:boolean" select="false()"/>
-    <xsl:param name="numberFigures"  as="xs:boolean" select="false()"/>
-    <xsl:param name="numberTables"  as="xs:boolean" select="false()"/>
-    <xsl:param name="filePerPage"  as="xs:boolean" select="true()"/>
+    <xsl:param name="numberBackHeadings"></xsl:param>
+    <xsl:param name="numberFrontHeadings"></xsl:param>
+    <xsl:param name="numberFigures">false</xsl:param>
+    <xsl:param name="numberTables">false</xsl:param>
+    <xsl:param name="filePerPage">true</xsl:param>
     <xsl:param name="splitLevel">-1</xsl:param>
-    <xsl:param name="autoToc"  as="xs:boolean" select="true()"/>
-    <xsl:param name="mediaoverlay"  as="xs:boolean" select="true()"/>
+    <xsl:param name="autoToc">true</xsl:param>
+    <xsl:param name="mediaoverlay">true</xsl:param>
     <xsl:param name="cssFile">../profiles/godwindiaries/epub/ota.css</xsl:param>
     <xsl:param name="subject">William Godwin's Diaries</xsl:param>
     <xsl:param name="pagebreakStyle">none</xsl:param>

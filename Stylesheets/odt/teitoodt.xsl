@@ -42,7 +42,7 @@
   <xsl:import href="../common2/header.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
 -->
-  <xsl:param name="useFixedDate"  as="xs:boolean" select="false()"/>
+  <xsl:param name="useFixedDate">false</xsl:param>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -74,11 +74,11 @@
 
   <xsl:decimal-format name="staff" digit="D"/>
   <xsl:variable name="doc_type">TEI</xsl:variable>
-  <xsl:param name="useHeaderFrontMatter"  as="xs:boolean" select="false()"/>
+  <xsl:param name="useHeaderFrontMatter">false</xsl:param>
   <xsl:param name="postQuote">’</xsl:param>
   <xsl:param name="preQuote">‘</xsl:param>
   <xsl:param name="outputDir">.</xsl:param>
-  <xsl:param name="freestanding"  as="xs:boolean" select="false()"/>
+  <xsl:param name="freestanding">false</xsl:param>
   <xsl:key name='IDS' match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name='GRAPHICS' match="tei:graphic" use="1"/>
   <xsl:key name="Page" match="style:page-layout-properties" use="1"/>
@@ -1052,11 +1052,11 @@
   <xsl:param name="endNamespace"></xsl:param>
 
   <xsl:param name="spaceCharacter">&#160;</xsl:param>
-  <xsl:param name="showNamespaceDecls"  as="xs:boolean" select="true()"/>
+  <xsl:param name="showNamespaceDecls">true</xsl:param>
 
-  <xsl:param name="wrapLength" as="xs:integer">65</xsl:param>
+  <xsl:param name="wrapLength">65</xsl:param>
 
-  <xsl:param name="attsOnSameLine" as="xs:integer">3</xsl:param>
+  <xsl:param name="attsOnSameLine">3</xsl:param>
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
 
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
@@ -1155,7 +1155,7 @@
   <xsl:template name="wraptext">
     <xsl:param name="indent"/>
     <xsl:param name="text"/>
-    <xsl:param name="count" as="xs:integer">0</xsl:param>
+    <xsl:param name="count">0</xsl:param>
     <xsl:choose>
       <xsl:when test="normalize-space($text)=''"/>
       <xsl:when test="contains($text,'&#10;')">
@@ -1264,7 +1264,7 @@
     <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
     <xsl:text>&lt;</xsl:text>
     <xsl:call-template name="makeElementName">
-      <xsl:with-param name="start" select="true()"/>
+      <xsl:with-param name="start">true</xsl:with-param>
     </xsl:call-template>
     <xsl:apply-templates select="@*" mode="verbatim"/>
     <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
@@ -1313,7 +1313,7 @@
         <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
         <xsl:text>&lt;/</xsl:text>
 	<xsl:call-template name="makeElementName">
-	  <xsl:with-param name="start" select="false()"/>
+	  <xsl:with-param name="start">false</xsl:with-param>
 	</xsl:call-template>
         <xsl:text>&gt;</xsl:text>
         <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
@@ -1730,7 +1730,7 @@
   </xsl:function>
 
   <xsl:template name="makeExternalLink">
-    <xsl:param name="ptr"  as="xs:boolean"/>
+    <xsl:param name="ptr"/>
     <xsl:param name="dest"/>
     <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
     <text:a xlink:type="simple" xlink:href="{$dest}">

@@ -39,7 +39,7 @@
 
   <xsl:key name="STYLES" match="w:style" use="@w:styleId"/>
   <xsl:param name="word-directory">..</xsl:param>
-  <xsl:param name="debug"  as="xs:boolean" select="false()"/>  
+  <xsl:param name="debug">false</xsl:param>  
   
   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="pass0">
       <xsl:copy-of select="."/>
@@ -85,12 +85,12 @@
          <xsl:choose>
 	   <xsl:when test="$new=''">
 	     <xsl:value-of select="$old"/>
-	     <xsl:if test="$debug">
+	     <xsl:if test="$debug='true'">
 	       <xsl:message>! style <xsl:value-of select="$old"/> ... NOT FOUND    </xsl:message>
 	     </xsl:if>
 	   </xsl:when>
 	   <xsl:when test="not($new=$old)">
-	     <xsl:if test="$debug">
+	     <xsl:if test="$debug='true'">
 	       <xsl:message>! style <xsl:value-of select="$old"/> ... CHANGED ...  <xsl:value-of select="$new"/>
 	       </xsl:message>
 	     </xsl:if>

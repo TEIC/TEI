@@ -57,7 +57,7 @@
 
     <xsl:param name="header-file"/>
     <xsl:param name="document-file"/>
-    <xsl:param name="debug"  as="xs:boolean" select="false()"/>   
+    <xsl:param name="debug">false</xsl:param>   
     
    <!-- identity transform -->
 

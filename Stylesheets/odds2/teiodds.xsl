@@ -34,7 +34,7 @@
   <xsl:include href="RngToRnc.xsl"/>
   <xsl:param name="idPrefix"/>
   <xsl:param name="oddmode">tei</xsl:param>
-  <xsl:param name="STDOUT"  as="xs:boolean" select="true()"/>
+  <xsl:param name="STDOUT">true</xsl:param>
   <xsl:param name="outputSuffix">.html</xsl:param>
   <xsl:param name="selectedSchema"/>
   <xsl:param name="outputDir"/>
@@ -43,10 +43,10 @@
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
   <xsl:param name="patternPrefix"/>
-  <xsl:param name="TEIC"  as="xs:boolean" select="false()"/>
-  <xsl:param name="autoGlobal"  as="xs:boolean" select="false()"/>
-  <xsl:param name="lookupDatabase"  as="xs:boolean" select="false()"/>
-  <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
+  <xsl:param name="TEIC">false</xsl:param>
+  <xsl:param name="autoGlobal">false</xsl:param>
+  <xsl:param name="lookupDatabase">false</xsl:param>
+  <xsl:param name="verbose">false</xsl:param>
   <xsl:param name="schemaBaseURL">http://localhost/schema/relaxng/</xsl:param>
   <xsl:key match="tei:*" name="LOCALIDENTS" use="@ident"/>
   <xsl:key match="tei:macroSpec" name="MACROS" use="@ident"/>
@@ -393,14 +393,14 @@
       <xsl:value-of select="@ident"/>
     </xsl:variable>
 
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message> classSpec <xsl:value-of select="@ident"/> (type <xsl:value-of select="@type"
         />)</xsl:message>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="@type='model'">
         <xsl:apply-templates mode="processModel" select=".">
-          <xsl:with-param name="declare" select="false()"/>
+          <xsl:with-param name="declare">false</xsl:with-param>
           <!--	    <xsl:choose>
 	      <xsl:when test="@module='tei'">true</xsl:when>
 	      <xsl:otherwise>false</xsl:otherwise>
@@ -411,7 +411,7 @@
       </xsl:when>
       <xsl:when test="@type='atts'">
         <xsl:call-template name="bitOut">
-          <xsl:with-param name="grammar" select="true()"/>
+          <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
               <xsl:variable name="contents">
@@ -469,13 +469,13 @@
   </xsl:template>
 
   <xsl:template match="tei:classSpec" mode="processModel">
-    <xsl:param name="declare"  as="xs:boolean" select="false()"/>
-    <xsl:if test="$verbose">
+    <xsl:param name="declare">false</xsl:param>
+    <xsl:if test="$verbose='true'">
       <xsl:message> .... model class <xsl:value-of select="@ident"/>
       </xsl:message>
     </xsl:if>
     <xsl:call-template name="bitOut">
-      <xsl:with-param name="grammar" select="true()"/>
+      <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
         <Wrapper>
           <xsl:call-template name="processClassDefinition">
@@ -504,7 +504,7 @@
 
   <xsl:template name="processClassDefinition">
     <xsl:param name="type"/>
-    <xsl:param name="declare" as="xs:boolean"/>
+    <xsl:param name="declare"/>
     <xsl:variable name="Type">
       <xsl:value-of select="normalize-space($type)"/>
     </xsl:variable>
@@ -539,7 +539,7 @@
 
   <xsl:template name="makeClassDefinition">
     <xsl:param name="type"/>
-    <xsl:param name="declare" as="xs:boolean"/>
+    <xsl:param name="declare"/>
     <!--
       alternation
       sequence
@@ -573,7 +573,7 @@
     </xsl:variable>
 
     <xsl:choose>
-      <xsl:when test="$declare">
+      <xsl:when test="$declare='true'">
         <xsl:apply-templates mode="tangleModel" select="tei:classes/tei:memberOf"/>
         <define xmlns="http://relaxng.org/ns/structure/1.0"
           name="{$localprefix}{$thisClass}{$suffix}">
@@ -600,14 +600,14 @@ select="$makeDecls"/></xsl:message>
         <xsl:choose>
           <!--
                <xsl:when test="$makeDecls=''">
-                  <xsl:if test="$verbose">
+                  <xsl:if test="$verbose='true'">
                      <xsl:message>Do NOT generate <xsl:value-of select="$thisClass"/>
                         <xsl:value-of select="$suffix"/> (<xsl:value-of select="$type"/>)                     </xsl:message>
                   </xsl:if>
                </xsl:when>
 -->
           <xsl:when test="count(key('CLASSMEMBERS',$thisClass))&gt;0">
-            <xsl:if test="$verbose">
+            <xsl:if test="$verbose='true'">
               <xsl:message> .... ... generate model <xsl:value-of select="$thisClass"/>
                 <xsl:value-of select="$suffix"/> (<xsl:value-of select="$type"/>) </xsl:message>
             </xsl:if>
@@ -787,7 +787,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message> elementSpec [<xsl:value-of select="$elementPrefix"/>]<xsl:value-of select="@ident"/>
         <xsl:if test="@xml:id">: <xsl:value-of select="@xml:id"/>
         </xsl:if>
@@ -830,8 +830,8 @@ select="$makeDecls"/></xsl:message>
                   <xsl:if test="not($oddmode='tei')">
                     <a:documentation>
                       <xsl:call-template name="makeDescription">
-                        <xsl:with-param name="includeValList" as="xs:boolean" select="true()"/>
-                        <xsl:with-param name="coded" as="xs:boolean" select="false()"/>
+                        <xsl:with-param name="includeValList">true</xsl:with-param>
+                        <xsl:with-param name="coded">false</xsl:with-param>
                       </xsl:call-template>
                     </a:documentation>
                   </xsl:if>
@@ -839,7 +839,7 @@ select="$makeDecls"/></xsl:message>
                     <xsl:when test="$parameterize='true'">
                       <ref name="{$elementPrefix}{@ident}.content"/>
                       <xsl:if test="not($Attributes='')">
-			<xsl:if test="$verbose">
+			<xsl:if test="$verbose='true'">
 			  <xsl:message>   refer to attributes: </xsl:message>
 			</xsl:if>
                         <ref name="{$elementPrefix}{@ident}.localattributes"/>
@@ -905,12 +905,12 @@ select="$makeDecls"/></xsl:message>
       </xsl:choose>
       <xsl:value-of select="@ident"/>
     </xsl:variable>
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message>   now define attributes for <xsl:value-of
       select="@ident"/> (parameterize=<xsl:value-of select="$parameterize"/>)</xsl:message>
     </xsl:if>
-    <xsl:if test="$parameterize">
-      <xsl:if test="$autoGlobal">
+    <xsl:if test="$parameterize='true'">
+      <xsl:if test="$autoGlobal='true'">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="att.global.attributes"/>
       </xsl:if>
       <xsl:for-each select="tei:classes/tei:memberOf">
@@ -1003,8 +1003,8 @@ select="$makeDecls"/></xsl:message>
         <xsl:if test="not($oddmode='tei')">
           <a:documentation>
             <xsl:call-template name="makeDescription">
-              <xsl:with-param name="includeValList" as="xs:boolean" select="true()"/>
-              <xsl:with-param name="coded" as="xs:boolean" select="false()"/>
+              <xsl:with-param name="includeValList">true</xsl:with-param>
+              <xsl:with-param name="coded">false</xsl:with-param>
             </xsl:call-template>
           </a:documentation>
         </xsl:if>
@@ -1077,28 +1077,28 @@ select="$makeDecls"/></xsl:message>
     <xsl:choose>
       <xsl:when test="@ident=&#34;TEI.singleBase&#34;"/>
       <xsl:when test="starts-with($entityContent,&#34;'&#34;)">
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of select="@ident"/>
           </xsl:message>
         </xsl:if>
       </xsl:when>
       <xsl:when test="starts-with($entityContent,&#34;-&#34;)">
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of select="@ident"/>
           </xsl:message>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message> macroSpec <xsl:value-of select="@ident"/>
           </xsl:message>
         </xsl:if>
         <xsl:call-template name="bitOut">
-          <xsl:with-param name="grammar" select="true()"/>
+          <xsl:with-param name="grammar">true</xsl:with-param>
           <xsl:with-param name="content">
             <Wrapper>
               <define xmlns="http://relaxng.org/ns/structure/1.0" name="{$macroPrefix}{@ident}">
-                <xsl:if test="$parameterize">
+                <xsl:if test="$parameterize='true'">
                   <xsl:if test="starts-with(@ident,'macro.component')     or @predeclare='true'">
                     <xsl:attribute name="combine">choice</xsl:attribute>
                   </xsl:if>
@@ -1162,15 +1162,15 @@ select="$makeDecls"/></xsl:message>
     <!-- generated node ID later -->
     <xsl:variable name="me-the-moduleRef" select="."/>
     <xsl:variable name="This" select="@key"/>
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message> .... import module [<xsl:value-of select="$This"/> <xsl:value-of select="@url"/>] </xsl:message>
     </xsl:if>
     <xsl:call-template name="bitOut">
-      <xsl:with-param name="grammar" select="true()"/>
+      <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
         <Wrapper>
           <xsl:choose>
-            <xsl:when test="@url and $parameterize">
+            <xsl:when test="@url and $parameterize='true'">
               <include xmlns="http://relaxng.org/ns/structure/1.0" href="{@url}">
                 <xsl:apply-templates mode="justcopy"  select="tei:content/*"/>
               </include>
@@ -1237,7 +1237,7 @@ select="$makeDecls"/></xsl:message>
   
   <xsl:template match="rng:include" mode="expandRNG">
     <xsl:param name="prefix">erng_</xsl:param>
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message> .... import <xsl:value-of select="@href"/></xsl:message>
     </xsl:if>
     <xsl:comment>Start of import of <xsl:value-of select="@href"/></xsl:comment>
@@ -1254,7 +1254,7 @@ select="$makeDecls"/></xsl:message>
   
   <xsl:template match="rng:define | rng:ref" mode="expandRNG">
     <xsl:param name="prefix">erng_</xsl:param>
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message>expanding rng:<xsl:value-of select="local-name(.)"/> name=<xsl:value-of select="@name"/>, giving it a prefix of '<xsl:value-of select="$prefix"/>'.</xsl:message>
     </xsl:if>
     <!-- generate a copy of this <define> or <ref> -->
@@ -1289,7 +1289,7 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template match="tei:specGrp" mode="ok">
     <xsl:param name="filename"/>
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message> processing specGrp <xsl:value-of select="@xml:id"/>
       </xsl:message>
     </xsl:if>
@@ -1365,8 +1365,8 @@ select="$makeDecls"/></xsl:message>
             <xsl:if test="not($oddmode='tei')">
               <a:documentation>
                 <xsl:call-template name="makeDescription">
-                  <xsl:with-param name="includeValList" select="true()"/>
-                  <xsl:with-param name="coded" select="false()"/>
+                  <xsl:with-param name="includeValList">true</xsl:with-param>
+                  <xsl:with-param name="coded">false</xsl:with-param>
                 </xsl:call-template>
               </a:documentation>
             </xsl:if>
@@ -1392,8 +1392,8 @@ select="$makeDecls"/></xsl:message>
             <xsl:if test="not($oddmode='tei')">
               <a:documentation>
                 <xsl:call-template name="makeDescription">
-                  <xsl:with-param name="includeValList" select="true()"/>
-                  <xsl:with-param name="coded" select="false()"/>
+                  <xsl:with-param name="includeValList">true</xsl:with-param>
+                  <xsl:with-param name="coded">false</xsl:with-param>
                 </xsl:call-template>
               </a:documentation>
             </xsl:if>
@@ -1447,8 +1447,8 @@ select="$makeDecls"/></xsl:message>
       <xsl:if test="not($oddmode='tei')">
         <a:documentation>
           <xsl:call-template name="makeDescription">
-            <xsl:with-param name="includeValList" select="true()"/>
-            <xsl:with-param name="coded" select="false()"/>
+            <xsl:with-param name="includeValList">true</xsl:with-param>
+            <xsl:with-param name="coded">false</xsl:with-param>
           </xsl:call-template>
         </a:documentation>
       </xsl:if>
@@ -1665,7 +1665,7 @@ select="$makeDecls"/></xsl:message>
           <xsl:value-of select="$link"/>
         </a>
       </xsl:when>
-      <xsl:when test="$oddmode='html' and $STDOUT">
+      <xsl:when test="$oddmode='html' and $STDOUT='true'">
         <a xmlns="http://www.w3.org/1999/xhtml" class="{$class}">
           <xsl:attribute name="href">
             <xsl:for-each select="key('IDENTS',$partialname)">
@@ -1741,12 +1741,12 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <xsl:template match="tei:classSpec" mode="processDefaultAtts">
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message> .. default attribute settings for <xsl:value-of select="@ident"/>
       </xsl:message>
     </xsl:if>
     <xsl:call-template name="bitOut">
-      <xsl:with-param name="grammar" select="true()"/>
+      <xsl:with-param name="grammar">true</xsl:with-param>
       <xsl:with-param name="content">
         <Wrapper>
 	  <xsl:variable name="c">
@@ -1799,7 +1799,7 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="showDate">
     <xsl:choose>
-      	<xsl:when test="$useFixedDate">1970-01-01</xsl:when>
+      	<xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
 	<xsl:otherwise>
     <xsl:value-of
 	select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
@@ -1808,8 +1808,8 @@ select="$makeDecls"/></xsl:message>
 </xsl:template>
 
   <xsl:template name="makeDescription">
-    <xsl:param name="includeValList"  as="xs:boolean" select="false()"/>
-    <xsl:param name="coded"  as="xs:boolean" select="true()"/>
+    <xsl:param name="includeValList">false</xsl:param>
+    <xsl:param name="coded">true</xsl:param>
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
@@ -1853,7 +1853,7 @@ select="$makeDecls"/></xsl:message>
               <xsl:apply-templates select="." mode="inLanguage"/>
             </xsl:for-each>
           </xsl:when>
-          <xsl:when test="$coded">
+          <xsl:when test="$coded='false'">
             <xsl:value-of select="$D"/>
           </xsl:when>
           <xsl:otherwise>
@@ -1863,7 +1863,7 @@ select="$makeDecls"/></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:choose>
-      <xsl:when test="$includeValList"/>
+      <xsl:when test="$includeValList='false'"/>
       <xsl:when test="tei:valList[@type='open']">
         <xsl:text>&#10;</xsl:text>
         <xsl:call-template name="i18n">

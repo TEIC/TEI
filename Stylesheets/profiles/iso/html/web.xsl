@@ -277,7 +277,7 @@
   <xsl:template name="makeHTMLHeading">
     <xsl:param name="text"/>
     <xsl:param name="class">title</xsl:param>
-    <xsl:param name="level" as="xs:integer">1</xsl:param>
+    <xsl:param name="level">1</xsl:param>
     <xsl:if test="$class = 'maintitle'">
       <div class="healthwarning">This extract from an ISO document has been created for test purposes only. The design and layout are subject to change by ISO.</div>
      <xsl:element name="h{$level}">
@@ -290,7 +290,7 @@
   </xsl:template>
 
   <xsl:template name="rendToClass">
-    <xsl:param name="id"/>
+    <xsl:param name="id">true</xsl:param>
     <xsl:param name="default">.</xsl:param>
     <xsl:if test="$id='true' and @xml:id">
       <xsl:attribute name="id">

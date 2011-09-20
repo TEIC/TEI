@@ -33,7 +33,7 @@
          <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:param name="summaryDoc"  as="xs:boolean" select="false()"/>
+  <xsl:param name="summaryDoc">false</xsl:param>
 
   <xsl:param name="cellName">cell</xsl:param>
   <xsl:param name="xrefName">ref</xsl:param>
@@ -88,7 +88,7 @@
   </xsl:template>
 
   <xsl:template match="teix:egXML">
-      <xsl:param name="simple"  as="xs:boolean" select="false()"/>
+      <xsl:param name="simple">false</xsl:param>
       <xsl:param name="highlight"/>
       <xsl:copy>
          <xsl:if test="not(@xml:lang)">
@@ -113,7 +113,7 @@
   </xsl:template>
 
   <xsl:template name="makeInternalLink">
-      <xsl:param name="ptr"  as="xs:boolean"/>
+      <xsl:param name="ptr"/>
       <xsl:param name="target"/>
       <xsl:param name="dest"/>
       <xsl:param name="class"/>
@@ -134,7 +134,7 @@
                <xsl:value-of select="$body"/>
             </tei:ref>
          </xsl:when>
-         <xsl:when test="$ptr">
+         <xsl:when test="$ptr='true'">
             <tei:ptr target="#{$W}"/>
          </xsl:when>
          <xsl:otherwise>
@@ -146,7 +146,7 @@
       <xsl:param name="ptr"/>
       <xsl:param name="dest"/>
       <xsl:choose>
-         <xsl:when test="$ptr">
+         <xsl:when test="$ptr='true'">
             <tei:ptr target="{$dest}"/>
          </xsl:when>
          <xsl:otherwise>
@@ -164,7 +164,7 @@
       <desc>[odds] Document an element, macro, or class</desc>
    </doc>
   <xsl:template name="refdoc">
-      <xsl:if test="$verbose">
+      <xsl:if test="$verbose='true'">
          <xsl:message> refdoc for <xsl:value-of select="name(.)"/> - <xsl:value-of select="@ident"/>
          </xsl:message>
       </xsl:if>
@@ -182,11 +182,11 @@
          <xsl:value-of select="$objectname"/>
       </xsl:variable>
       <xsl:choose>
-         <xsl:when test="$TEIC and @ident='att.global'">
+         <xsl:when test="$TEIC='true' and @ident='att.global'">
             <xsl:apply-templates mode="weavebody" select="."/>
 	 </xsl:when>
          <xsl:when test="self::tei:classSpec and  count(key('CLASSMEMBERS',@ident))=0">
-            <xsl:if test="$verbose">
+            <xsl:if test="$verbose='true'">
                <xsl:message> class <xsl:value-of select="@ident"/> omitted as it has no members
           </xsl:message>
             </xsl:if>
@@ -227,7 +227,7 @@
                   <xsl:text>#</xsl:text>
                   <xsl:value-of select="$name"/>
                </xsl:when>
-               <xsl:when test="$STDOUT">
+               <xsl:when test="$STDOUT='true'">
                   <xsl:for-each select="key('IDENTS',$name)">
                      <xsl:call-template name="getSpecURL">
                         <xsl:with-param name="name">
@@ -431,12 +431,12 @@
   </xsl:template>
 
   <xsl:template match="tei:schemaSpec">
-      <xsl:if test="$verbose">
+      <xsl:if test="$verbose='true'">
          <xsl:message>Processing schemaSpec <xsl:value-of select="@ident"/>, summaryDoc=<xsl:value-of select="$summaryDoc"/>
          </xsl:message>
       </xsl:if>
       <xsl:choose>
-         <xsl:when test="$summaryDoc">
+         <xsl:when test="$summaryDoc='true'">
 	   <div>
 	     <head>Schema <xsl:value-of select="@ident"/>: changed components</head>
 	     <xsl:for-each select="tei:classSpec[@mode or @rend='change']  

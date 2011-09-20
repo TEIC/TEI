@@ -10,7 +10,7 @@
 
     <xsl:import href="../../../xhtml2/tei.xsl"/>
 
-    <xsl:param name="filePerPage"  as="xs:boolean" select="false()"/>
+    <xsl:param name="filePerPage">false</xsl:param>
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
     
    <xsl:template name="stdheader">

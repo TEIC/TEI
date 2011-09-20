@@ -128,7 +128,7 @@
 	              </xsl:choose>
 	           </block>
             <xsl:choose>
-               <xsl:when test="$captionInlineFigures">
+               <xsl:when test="$captionInlineFigures='true'">
                   <block>
                      <xsl:call-template name="figureCaptionstyle"/>
                      <xsl:text>Figure </xsl:text>
@@ -159,12 +159,12 @@
          <xsl:text> </xsl:text>
       </xsl:if>
       <xsl:call-template name="calculateFigureNumber"/>
-      <xsl:if test="$showFloatHead and tei:head">
+      <xsl:if test="$showFloatHead='true' and tei:head">
          <xsl:text> (</xsl:text>
          <xsl:apply-templates select="tei:head"/>
          <xsl:text>)</xsl:text>
       </xsl:if>
-      <xsl:if test="$xrefShowPage">
+      <xsl:if test="$xrefShowPage='true'">
     on page
     <page-number-citation>
             <xsl:attribute name="ref-id">
@@ -240,7 +240,7 @@
          </xsl:call-template>
          <xsl:text> </xsl:text>
       </xsl:if>
-      <xsl:if test="$showFloatHead and tei:head">
+      <xsl:if test="$showFloatHead='true' and tei:head">
          <xsl:text> (</xsl:text>
          <xsl:apply-templates select="tei:head"/>
          <xsl:text>)</xsl:text>
@@ -267,7 +267,7 @@
                <block>
                   <xsl:call-template name="tableCaptionstyle"/>
                   <xsl:call-template name="addID"/>
-                  <xsl:if test="$makeTableCaption">
+                  <xsl:if test="$makeTableCaption='true'">
                      <xsl:call-template name="i18n">
                         <xsl:with-param name="word">tableWord</xsl:with-param>
                      </xsl:call-template>

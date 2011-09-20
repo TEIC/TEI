@@ -70,7 +70,7 @@
 		</xsl:when>
 		<xsl:otherwise>
 		  <!--
-		      <xsl:if test="$verbose">
+		      <xsl:if test="$verbose='true'">
 		      <xsl:message>NO TRANSLATION for <xsl:value-of 
 		      select="$word"/> in <xsl:value-of select="$documentationLanguage"/></xsl:message>
 		      </xsl:if>

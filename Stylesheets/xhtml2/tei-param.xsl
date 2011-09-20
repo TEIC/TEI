@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"                 
     xmlns:html="http://www.w3.org/1999/xhtml"                
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="tei html xs"
+    exclude-result-prefixes="tei html"
     version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>     <p>
@@ -57,33 +56,33 @@
       <desc>Whether we should construct a separate file for each page
       (based on page breaks)</desc>
    </doc>
-  <xsl:param name="filePerPage"  as="xs:boolean" select="false()"/>
+  <xsl:param name="filePerPage">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="number">
       <desc>When making fixed format epub, width of viewport</desc>
   </doc>
-  <xsl:param name="viewPortWidth" as="xs:integer">1200</xsl:param>
+  <xsl:param name="viewPortWidth">1200</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="number">
       <desc>When making fixed format epub, height of viewport</desc>
   </doc>
-  <xsl:param name="viewPortHeight" as="xs:integer">1700</xsl:param>
+  <xsl:param name="viewPortHeight">1700</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Number footnotes consecutively</desc>
    </doc>
-  <xsl:param name="consecutiveFNs"  as="xs:boolean" select="false()"/>
+  <xsl:param name="consecutiveFNs">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Link back from footnotes to reference</desc>
 
    </doc>
-  <xsl:param name="footnoteBackLink"  as="xs:boolean" select="false()"/>
+  <xsl:param name="footnoteBackLink">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="cssFileInclude"
         type="boolean">
       <desc>Whether to include CSS by reference or by XInclusion</desc>
 
    </doc>
-  <xsl:param name="cssFileInclude"  as="xs:boolean" select="false()"/>
+  <xsl:param name="cssFileInclude">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>CSS style file to be associated with output file(s)</desc>
@@ -106,12 +105,12 @@ so that it does not affect printing. It should be used for screen layout.
 HTML width and height (in pixels) from supplied dimensions.</desc>
 
    </doc>
-  <xsl:param name="dpi" as="xs:integer">96</xsl:param>
+  <xsl:param name="dpi">96</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="boolean">
       <desc>Display figures.</desc>
 
    </doc>
-  <xsl:param name="showFigures"  as="xs:boolean" select="true()"/>
+  <xsl:param name="showFigures">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[html] Hook where HTML can be inserted just after &lt;body&gt;</desc>
    </doc>
@@ -216,12 +215,12 @@ upwards; this offset is added to that number to produce an HTML
 will generate an &lt;h2&gt;</p>
       </desc>
    </doc>
-  <xsl:param name="divOffset" as="xs:integer">2</xsl:param>
+  <xsl:param name="divOffset">2</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Make a separate file for footnotes</desc>
 
    </doc>
-  <xsl:param name="footnoteFile"  as="xs:boolean" select="false()"/>
+  <xsl:param name="footnoteFile">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>[html] Header section across top of page </desc>
    </doc>
@@ -298,7 +297,7 @@ will generate an &lt;h2&gt;</p>
             <xsl:call-template name="generateAuthor"/>
          </xsl:attribute>
       </meta>
-      <xsl:if test="$filePerPage">
+      <xsl:if test="$filePerPage='true'">
 	<meta name="viewport" content="width={$viewPortWidth}, height={$viewPortHeight}"/>
       </xsl:if>
       <meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
@@ -417,7 +416,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
   <xsl:template name="makeHTMLHeading">
       <xsl:param name="text"/>
       <xsl:param name="class">title</xsl:param>
-      <xsl:param name="level" as="xs:integer">1</xsl:param>
+      <xsl:param name="level">1</xsl:param>
       <xsl:if test="not($text='')">
          <xsl:element name="h{$level}">
 	   <xsl:attribute name="class">
@@ -467,7 +466,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <desc>Display navigation panel at bottom of pages</desc>
 
    </doc>
-  <xsl:param name="bottomNavigationPanel"  as="xs:boolean" select="true()"/>
+  <xsl:param name="bottomNavigationPanel">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
       <desc>Link for feedback</desc>
 
@@ -483,12 +482,12 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <desc>Make a panel with next page/previous page links.</desc>
 
    </doc>
-  <xsl:param name="linkPanel"  as="xs:boolean" select="true()"/>
+  <xsl:param name="linkPanel">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
       <desc>Generate a unique ID for all paragraphs</desc>
 
    </doc>
-  <xsl:param name="generateParagraphIDs"  as="xs:boolean" select="false()"/>
+  <xsl:param name="generateParagraphIDs">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="string">
       <desc>     <p>Character separating values in a rend attribute.</p>
          <p>Some projects use multiple values in <tt xmlns="http://www.w3.org/1999/xhtml">rend</tt>
@@ -501,18 +500,19 @@ be specified.</p>
       <desc>Show a title and author at start of document</desc>
 
    </doc>
-  <xsl:param name="showTitleAuthor"  as="xs:boolean" select="false()"/>
-
+  <xsl:param name="showTitleAuthor">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
       <desc>Be talkative while working.</desc>
+
    </doc>
-  <xsl:param name="verbose"  as="xs:boolean">0</xsl:param>
+
+  <xsl:param name="verbose">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Make all notes into endnotes
   </desc>
    </doc>
-  <xsl:param name="autoEndNotes"  as="xs:boolean" select="false()"/>
+  <xsl:param name="autoEndNotes">false</xsl:param>
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
@@ -598,12 +598,12 @@ layout</li>
       <desc>Break back matter into separate HTML pages (if splitting enabled).</desc>
 
    </doc>
-  <xsl:param name="splitBackmatter"  as="xs:boolean" select="true()"/>
+  <xsl:param name="splitBackmatter">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
       <desc>Break front matter into separate HTML pages (if splitting enabled).</desc>
 
    </doc>
-  <xsl:param name="splitFrontmatter"  as="xs:boolean" select="true()"/>
+  <xsl:param name="splitFrontmatter">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="integer">
       <desc>     <p>Level at which to split sections.</p>
          <p>When processing a &lt;div&gt; or &lt;div[0-5]&gt;, compare
@@ -622,7 +622,7 @@ all.
   <xsl:param name="standardSuffix">
       <xsl:choose>
          <xsl:when test="tei:teiCorpus">.html</xsl:when>
-         <xsl:when test="$STDOUT=true"/>
+         <xsl:when test="$STDOUT='true'"/>
          <xsl:otherwise>
 	           <xsl:value-of select="$outputSuffix"/>
          </xsl:otherwise>
@@ -632,7 +632,7 @@ all.
       <desc>Display navigation panel at top of pages.</desc>
 
    </doc>
-  <xsl:param name="topNavigationPanel"  as="xs:boolean" select="true()"/>
+  <xsl:param name="topNavigationPanel">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>How to specify infra-document links. When a document is split,
 links need to be constructed between parts of the document. 
@@ -647,7 +647,7 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 	  can let the system choose names.</p>
       </desc>
    </doc>
-  <xsl:param name="useIDs"  as="xs:boolean" select="true()"/>
+  <xsl:param name="useIDs">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>HTML element to put around visible text of display URLs</desc>
 
@@ -658,7 +658,7 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
       <desc>Make an automatic table of contents</desc>
 
    </doc>
-  <xsl:param name="autoToc"  as="xs:boolean" select="true()"/>
+  <xsl:param name="autoToc">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="string">
       <desc>CSS class for second-level TOC entries</desc>
 
@@ -677,18 +677,18 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
       <desc>Include the back matter in the table of contents.</desc>
 
    </doc>
-  <xsl:param name="tocBack"  as="xs:boolean" select="true()"/>
+  <xsl:param name="tocBack">true</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="string">
       <desc>Depth to which table of contents is constructed.</desc>
 
    </doc>
-  <xsl:param name="tocDepth" as="xs:integer">5</xsl:param>
+  <xsl:param name="tocDepth">5</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="boolean">
       <desc>Include the front matter in the table of contents.</desc>
 
    </doc>
-  <xsl:param name="tocFront"  as="xs:boolean" select="true()"/>
+  <xsl:param name="tocFront">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="string">
       <desc>Which HTML element to wrap each TOCs entry in.</desc>
 

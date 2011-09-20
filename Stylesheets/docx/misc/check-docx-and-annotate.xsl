@@ -166,7 +166,7 @@
     <!-- write out content-types -->
     <xsl:template name="write-out-content-types">
         <xsl:param name="types"/>
-	     <xsl:if test="$debug">
+	     <xsl:if test="$debug='true'">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/Content_Types_new.xml')"/>
          </xsl:message>
 	     </xsl:if>
@@ -185,7 +185,7 @@
     <!-- write out relations -->
     <xsl:template name="write-out-relations">
         <xsl:param name="relations"/>
-	     <xsl:if test="$debug">
+	     <xsl:if test="$debug='true'">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'word/_rels/document_new.xml.rels')"/>
          </xsl:message>
 	     </xsl:if>
@@ -205,7 +205,7 @@
     <!-- write out comments -->
     <xsl:template name="write-out-comments">
         <xsl:param name="comments"/>
-	     <xsl:if test="$debug">
+	     <xsl:if test="$debug='true'">
 	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'word/_rels/comments.xml')"/>
          </xsl:message>
 	     </xsl:if>

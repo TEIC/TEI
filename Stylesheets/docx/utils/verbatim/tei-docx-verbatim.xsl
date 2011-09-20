@@ -50,7 +50,7 @@
     <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
     
     <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
-    <xsl:param name="showNamespaceDecls"  as="xs:boolean" select="true()"/> -->
+    <xsl:param name="showNamespaceDecls">true</xsl:param> -->
     
     <xsl:param name="startComment"/>
     <xsl:param name="endComment"/>
@@ -66,7 +66,7 @@
     <xsl:param name="endNamespace"/>
     
     <xsl:param name="spaceCharacter"> </xsl:param>
-    <xsl:param name="showNamespaceDecls"  as="xs:boolean" select="true()"/>
+    <xsl:param name="showNamespaceDecls">true</xsl:param>
     
     <xsl:template name="verbatim-lineBreak">
         <xsl:param name="id"/>

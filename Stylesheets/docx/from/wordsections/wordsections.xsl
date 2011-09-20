@@ -70,7 +70,7 @@
     </desc>
    </doc>
     <xsl:template name="paragraph-sectpr">
-      <xsl:if test="$preserveWordSections">
+      <xsl:if test="$preserveWordSections='true'">
         <xsl:for-each select="descendant-or-self::w:sectPr">
             <milestone unit="section">
                 <xsl:for-each select="w:headerReference">

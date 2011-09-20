@@ -30,16 +30,16 @@ of the TEI you need to validate that corpus
   <!-- name of odd -->
   <xsl:param name="schema">oddbyexample</xsl:param>
   <!-- whether to do all the global attributes -->
-  <xsl:param name="keepGlobals"  as="xs:boolean" select="false()"/>
+  <xsl:param name="keepGlobals">false</xsl:param>
   <!-- the document corpus -->
   <xsl:param name="corpus">./</xsl:param>
   <!-- the source of the TEI (just needs *Spec)-->
   <xsl:param name="tei">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
   <!-- should we make valList for @rend -->
-  <xsl:param name="enumerateRend"  as="xs:boolean" select="false()"/>
-  <xsl:param name="enumerateType"  as="xs:boolean" select="false()"/>
+  <xsl:param name="enumerateRend">false</xsl:param>
+  <xsl:param name="enumerateType">false</xsl:param>
   <!-- should we deal with non-TEI namespaces -->
-  <xsl:param name="processNonTEI"  as="xs:boolean" select="false()"/>
+  <xsl:param name="processNonTEI">false</xsl:param>
   <!-- which attributes should be make valLists for, regardless -->
   <xsl:param name="attributeList"/>
   <xsl:variable name="checkAtts">
@@ -162,13 +162,13 @@ valList
                   </xsl:for-each>
                 </xsl:variable>
                 <xsl:choose>
-                  <xsl:when test="$keepGlobals=true and $this='n'"/>
-                  <xsl:when test="$keepGlobals=true and $this='rendition'"/>
-                  <xsl:when test="$keepGlobals=true and $this='xml:id'"/>
-                  <xsl:when test="$keepGlobals=true and $this='xml:base'"/>
-                  <xsl:when test="$keepGlobals=true and $this='xml:space'"/>
-                  <xsl:when test="$keepGlobals=true and $this='xml:lang'"/>
-                  <xsl:when test="$keepGlobals=true and $this='rend'"/>
+                  <xsl:when test="$keepGlobals='true' and $this='n'"/>
+                  <xsl:when test="$keepGlobals='true' and $this='rendition'"/>
+                  <xsl:when test="$keepGlobals='true' and $this='xml:id'"/>
+                  <xsl:when test="$keepGlobals='true' and $this='xml:base'"/>
+                  <xsl:when test="$keepGlobals='true' and $this='xml:space'"/>
+                  <xsl:when test="$keepGlobals='true' and $this='xml:lang'"/>
+                  <xsl:when test="$keepGlobals='true' and $this='rend'"/>
                   <xsl:when test="$used=''">
                     <attDef ident="{$this}" mode="delete"/>
                   </xsl:when>
@@ -190,7 +190,7 @@ valList
             </xsl:otherwise>
           </xsl:choose>
         </xsl:for-each>
-        <xsl:if test="$processNonTEI">
+        <xsl:if test="$processNonTEI='true'">
           <xsl:for-each-group select="key('All',1)" group-by="local-name()">
             <xsl:sort/>
             <xsl:choose>
@@ -304,19 +304,19 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
                           <xsl:when test="not($class='')      and      $stage2/stage2/classSpec[@ident=$class]/attList/attDef[@ident=$ident]">
 			 
 		       </xsl:when>
-		       <xsl:when test="$keepGlobals=true and $ident='xml:id'"/>
-		       <xsl:when test="$keepGlobals=true and $ident='xml:base'"/>
-		       <xsl:when test="$keepGlobals=true and $ident='xml:space'"/>
-		       <xsl:when test="$keepGlobals=true and $ident='xml:lang'"/>
-		       <xsl:when test="$keepGlobals=true and $ident='n'"/>
-		       <xsl:when test="$keepGlobals=true and $ident='rendition'"/>
-		       <xsl:when test="$keepGlobals=true and
+		       <xsl:when test="$keepGlobals='true' and $ident='xml:id'"/>
+		       <xsl:when test="$keepGlobals='true' and $ident='xml:base'"/>
+		       <xsl:when test="$keepGlobals='true' and $ident='xml:space'"/>
+		       <xsl:when test="$keepGlobals='true' and $ident='xml:lang'"/>
+		       <xsl:when test="$keepGlobals='true' and $ident='n'"/>
+		       <xsl:when test="$keepGlobals='true' and $ident='rendition'"/>
+		       <xsl:when test="$keepGlobals='true' and
 				       $ident='rend'"/>
-		       <xsl:when test="$keepGlobals=true and $ident='facs'"/>
+		       <xsl:when test="$keepGlobals='true' and $ident='facs'"/>
 		       <xsl:when test="not(key('UsedAtt',concat($e,$ident)))">
 			 <attDef ident="{$ident}" mode="delete"/>
 		       </xsl:when>
-		       <xsl:when test="$enumerated">
+		       <xsl:when test="$enumerated='true'">
 			 <attDef ident="{$ident}" mode="change">
 			   <xsl:apply-templates select="key('UsedAtt',concat($e,$ident))/valList"/>
 			 </attDef>
@@ -393,8 +393,8 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
       <xsl:choose>
         <xsl:when test="contains($checkAtts,concat(',',@ident,','))">true</xsl:when>
         <xsl:when test="@ident='n'">false</xsl:when>
-        <xsl:when test="@ident='rend' and $enumerateRend>true</xsl:when>
-        <xsl:when test="@ident='type' and $enumerateType>true</xsl:when>
+        <xsl:when test="@ident='rend' and $enumerateRend='true'">true</xsl:when>
+        <xsl:when test="@ident='type' and $enumerateType='true'">true</xsl:when>
         <xsl:when test="valList[@type='closed']">true</xsl:when>
         <xsl:when test="datatype/rng:ref[@name='data.enumerated']">true</xsl:when>
         <!--

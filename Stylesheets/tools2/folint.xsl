@@ -135,7 +135,7 @@ with the correct validation of conformant XSL FO documents.
    <xsl:output method="xml" omit-xml-declaration="yes"/>
 
    <!-- Strictness level. Currently used levels: 0 (loose), 1 (normal), 2 (pedantic) -->
-<xsl:param name="strictness" as="xs:integer">1</xsl:param>
+<xsl:param name="strictness">1</xsl:param>
 
    <!-- =================================== -->
 <!-- Match topmost node - must be <root> -->

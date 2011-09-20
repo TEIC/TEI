@@ -233,9 +233,9 @@
             <xsl:choose>
                <xsl:when test="ancestor::tei:floatingText">Star</xsl:when>
                <xsl:when test="parent::tei:div/@rend='nonumber'">Star</xsl:when>
-               <xsl:when test="ancestor::tei:back and not($numberBackHeadings)">Star</xsl:when>
-	       <xsl:when test="not($numberHeadings) and ancestor::tei:body">Star</xsl:when>
-               <xsl:when test="ancestor::tei:front and not($numberFrontHeadings)">Star</xsl:when>
+               <xsl:when test="ancestor::tei:back and not($numberBackHeadings='true')">Star</xsl:when>
+	              <xsl:when test="not($numberHeadings='true') and      ancestor::tei:body">Star</xsl:when>
+               <xsl:when test="ancestor::tei:front and not($numberFrontHeadings='true')">Star</xsl:when>
             </xsl:choose>
 	           <xsl:text>[</xsl:text>
 	           <xsl:value-of select="normalize-space(.)"/>
@@ -579,7 +579,7 @@
 	<xsl:text>\par&#10;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="$numberParagraphs">
+    <xsl:if test="$numberParagraphs='true'">
       <xsl:call-template name="numberParagraph"/>
     </xsl:if>
     <xsl:apply-templates/>

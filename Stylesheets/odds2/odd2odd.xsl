@@ -28,11 +28,11 @@
     </desc>
   </doc>
   <xsl:output encoding="utf-8" indent="no"/>
-  <xsl:param name="autoGlobal"  as="xs:boolean" select="false()"/>
+  <xsl:param name="autoGlobal">false</xsl:param>
   <xsl:param name="selectedSchema"/>
-  <xsl:param name="verbose"  as="xs:boolean" select="false()"/>
-  <xsl:param name="useVersionFromTEI"  as="xs:boolean" select="true()"/>
-  <xsl:param name="stripped"  as="xs:boolean" select="false()"/>
+  <xsl:param name="verbose"/>
+  <xsl:param name="useVersionFromTEI">true</xsl:param>
+  <xsl:param name="stripped">false</xsl:param>
   <xsl:param name="configDirectory"/>
   <xsl:param name="currentDirectory"/>
   <xsl:param name="defaultSource"></xsl:param>
@@ -110,7 +110,7 @@
       <xsl:copy>
 	<xsl:attribute name="xml:base" select="document-uri(/)"/>
         <xsl:copy-of select="@*"/>
-        <xsl:if test="$useVersionFromTEI">
+        <xsl:if test="$useVersionFromTEI='true'">
           <xsl:processing-instruction name="TEIVERSION">
             <xsl:call-template name="odd2odd-getversion"/>
           </xsl:processing-instruction>
@@ -123,7 +123,7 @@
   <xsl:variable name="top" select="/"/>
 
   <xsl:template match="/">
-    <xsl:if test="$autoGlobal">
+    <xsl:if test="$autoGlobal='true'">
       <xsl:message>NOTE: all TEI elements will have global attributes added automatically</xsl:message>
     </xsl:if>
     <xsl:for-each select="$ODD">
@@ -133,7 +133,7 @@
 
   <!-- ******************* Pass 0, follow and expand specGrp ********************************* -->
   <xsl:template match="tei:specGrp" mode="odd2odd-pass0">
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message>Phase 0: summarize specGrp <xsl:value-of select="@xml:id"/>
       </xsl:message>
     </xsl:if>
@@ -189,12 +189,12 @@
 	<xsl:copy-of select="@*"/>
 	<xsl:choose>
 	<xsl:when test="@source">
-	<xsl:if test="$verbose">
+	<xsl:if test="$verbose='true'">
 	  <xsl:message>Source for TEI is<xsl:value-of select="@source"/> </xsl:message>
 	</xsl:if>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:if test="$verbose">
+	  <xsl:if test="$verbose='true'">
 	    <xsl:message>Source for TEI will be set to <xsl:value-of select="$DEFAULTSOURCE"/> </xsl:message>
 	  </xsl:if>
 	  <xsl:attribute name="source">
@@ -208,7 +208,7 @@
   </xsl:template>
 
   <xsl:template match="tei:specGrpRef" mode="odd2odd-pass0">
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message>Phase 0: expand specGrpRef <xsl:value-of select="@target"/>
          </xsl:message>
     </xsl:if>
@@ -270,7 +270,7 @@
     <xsl:variable name="oddsource">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Schema <xsl:value-of select="@ident"/></xsl:message>
         </xsl:if>
         <!-- 
@@ -441,7 +441,7 @@
       <xsl:value-of select="@name"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="starts-with($N,'macro.') and $stripped">
+      <xsl:when test="starts-with($N,'macro.') and $stripped='true'">
         <xsl:for-each select="key('odd2odd-MACROS',$N)/tei:content/*">
           <xsl:call-template name="odd2odd-simplifyRelax"/>
         </xsl:for-each>
@@ -456,7 +456,7 @@
 
   <xsl:template match="tei:valDesc|tei:equiv|tei:gloss|tei:desc|tei:remarks|tei:exemplum|tei:listRef" mode="odd2odd-pass2">
     <xsl:choose>
-      <xsl:when test="$stripped"> </xsl:when>
+      <xsl:when test="$stripped='true'"> </xsl:when>
       <xsl:otherwise>
         <xsl:copy>
 	  <xsl:apply-templates select="@*|*|text()|processing-instruction()" mode="odd2odd-pass2"/>
@@ -494,7 +494,7 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$used=''">
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Reject unused class <xsl:value-of select="@ident"/>
                </xsl:message>
         </xsl:if>
@@ -516,8 +516,8 @@ How can a class be ok?
 -->
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
-      <xsl:when test="$autoGlobal and starts-with(@ident,'att.global')">y</xsl:when>
-      <xsl:when test="self::tei:classSpec and $stripped">y</xsl:when>
+      <xsl:when test="$autoGlobal='true' and starts-with(@ident,'att.global')">y</xsl:when>
+      <xsl:when test="self::tei:classSpec and $stripped='true'">y</xsl:when>
       <xsl:when test="key('odd2odd-ELEMENT_MEMBERED',$k)">y</xsl:when>
       <xsl:when test="key('odd2odd-REFED',$k)">y</xsl:when>
       <xsl:when test="key('odd2odd-CLASS_MEMBERED',$k)">
@@ -533,7 +533,7 @@ How can a class be ok?
       <xsl:value-of select="@ident"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="$stripped and starts-with($k,'macro.')"/>
+      <xsl:when test="$stripped='true' and starts-with($k,'macro.')"/>
       <xsl:when test="key('odd2odd-REFED',$k)">
 	<macroSpec xmlns="http://www.tei-c.org/ns/1.0" >
           <xsl:copy-of select="@*"/>
@@ -541,7 +541,7 @@ How can a class be ok?
 	</macroSpec>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:if test="$verbose">
+        <xsl:if test="$verbose='true'">
           <xsl:message>Reject unused macro <xsl:value-of select="$k"/>
 	              </xsl:message>
         </xsl:if>
@@ -577,24 +577,24 @@ How can a class be ok?
       <xsl:for-each select="$ODD">
         <xsl:choose>
           <xsl:when test="key('odd2odd-DELETE',$specName)">
-            <xsl:if test="$verbose">
+            <xsl:if test="$verbose='true'">
               <xsl:message>Phase 1: remove <xsl:value-of select="$specName"/></xsl:message>
             </xsl:if>
           </xsl:when>
 	  <xsl:when test="key('odd2odd-REPLACE',$specName)">
-            <xsl:if test="$verbose">
+            <xsl:if test="$verbose='true'">
               <xsl:message>Phase 1: replace <xsl:value-of select="$specName"/></xsl:message>
             </xsl:if>
             <xsl:apply-templates mode="odd2odd-copy" select="key('odd2odd-REPLACE',$specName)"/>
           </xsl:when>
           <xsl:when test="key('odd2odd-CHANGE',$specName)">
-            <xsl:if test="$verbose">
+            <xsl:if test="$verbose='true'">
               <xsl:message>Phase 1: change <xsl:value-of select="$specName"/></xsl:message>
             </xsl:if>
             <xsl:apply-templates mode="odd2odd-change" select="$Current"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:if test="$verbose">
+            <xsl:if test="$verbose='true'">
 	      <xsl:message>Phase 1: include <xsl:value-of
 	      select="$specName"/> from <xsl:value-of
 	      select="$Source"/> (<xsl:value-of select="$why"/>)</xsl:message>
@@ -679,7 +679,7 @@ How can a class be ok?
       <xsl:variable name="orig" select="."/>
       <xsl:apply-templates mode="odd2odd-copy" select="@*"/>
       <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
-      <xsl:if test="not($stripped)">
+      <xsl:if test="$stripped='false'">
         <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
         <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
         <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
@@ -707,7 +707,7 @@ How can a class be ok?
           </xsl:otherwise>
         </xsl:choose>
       </attList>
-      <xsl:if test="not($stripped)">
+      <xsl:if test="$stripped='false'">
         <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
         <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
         <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
@@ -715,7 +715,7 @@ How can a class be ok?
   </xsl:template>
 
   <xsl:template name="odd2odd-addClassAttsToCopy">
-    <xsl:if test="$autoGlobal and (not(@ns) or @ns='http://www.tei-c.org/ns/1.0' or @ns='http://www.tei-c.org/ns/Examples')">
+    <xsl:if test="$autoGlobal='true' and (not(@ns) or @ns='http://www.tei-c.org/ns/1.0' or @ns='http://www.tei-c.org/ns/Examples')">
       <xsl:call-template name="odd2odd-classAttributes">
         <xsl:with-param name="whence">1</xsl:with-param>
         <xsl:with-param name="elementName" select="@ident"/>
@@ -772,7 +772,7 @@ for change individually.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
-            <xsl:when test="$stripped"/>
+            <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
             </xsl:when>
@@ -879,7 +879,7 @@ for change individually.
           </attList>
           <!-- exemplum, remarks and listRef are either replacements or not -->
           <xsl:choose>
-            <xsl:when test="$stripped"/>
+            <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:exemplum">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
             </xsl:when>
@@ -890,7 +890,7 @@ for change individually.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
-            <xsl:when test="$stripped"/>
+            <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:remarks">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
             </xsl:when>
@@ -933,7 +933,7 @@ for change individually.
           <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
           <!-- equiv, gloss, desc trio -->
           <xsl:choose>
-            <xsl:when test="$stripped"/>
+            <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:equiv">
               <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
             </xsl:when>
@@ -954,7 +954,7 @@ for change individually.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
-            <xsl:when test="$stripped"/>
+            <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
             </xsl:when>
@@ -990,7 +990,7 @@ for change individually.
           </xsl:choose>
           <!-- exemplum, remarks and listRef are either replacements or not -->
           <xsl:choose>
-            <xsl:when test="$stripped"/>
+            <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:exemplum">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
             </xsl:when>
@@ -1011,7 +1011,7 @@ for change individually.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
-            <xsl:when test="$stripped"/>
+            <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:listRef">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
             </xsl:when>
@@ -1041,7 +1041,7 @@ for change individually.
           <!-- context is now a classSpec in change mode in the ODD spec -->
           <!-- description -->
           <xsl:choose>
-            <xsl:when test="$stripped"/>
+            <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
             </xsl:when>
@@ -1177,7 +1177,7 @@ so that is only put back in if there is some content
               <xsl:variable name="N" select="@name"/>
               <xsl:for-each select="$ODD">
                 <xsl:choose>
-                  <xsl:when test="$stripped">
+                  <xsl:when test="$stripped='true'">
                     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$N}"/>
                   </xsl:when>
                   <xsl:when test="key('odd2odd-DELETE',$N)"/>
@@ -1216,7 +1216,7 @@ so that is only put back in if there is some content
           </oneOrMore>
         </xsl:when>
         <xsl:when test="self::rng:zeroOrMore/rng:ref/@name='model.global'        and preceding-sibling::rng:*[1][self::rng:zeroOrMore/rng:ref/@name='model.global']"/>
-        <xsl:when test="$entCount&gt;0 or $stripped">
+        <xsl:when test="$entCount&gt;0 or $stripped='true'">
           <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{$element}">
             <xsl:copy-of select="*|@*|text()|processing-instruction()"/>
           </xsl:element>
@@ -1247,7 +1247,7 @@ so that is only put back in if there is some content
               <xsl:with-param name="elementName" select="$elementName"/>
               <xsl:with-param name="className" select="$className"/>
               <xsl:with-param name="whence" select="$whence"/>
-              <xsl:with-param name="fromODD" select="true()"/>
+              <xsl:with-param name="fromODD">true</xsl:with-param>
             </xsl:call-template>
           </xsl:for-each>
         </xsl:when>
@@ -1258,7 +1258,7 @@ so that is only put back in if there is some content
               <xsl:with-param name="elementName" select="$elementName"/>
               <xsl:with-param name="className" select="$className"/>
               <xsl:with-param name="whence" select="$whence"/>
-              <xsl:with-param name="fromODD" select="true()"/>
+              <xsl:with-param name="fromODD">true</xsl:with-param>
             </xsl:call-template>
           </xsl:for-each>
         </xsl:when>
@@ -1272,7 +1272,7 @@ so that is only put back in if there is some content
                 <xsl:with-param name="elementName" select="$elementName"/>
                 <xsl:with-param name="className" select="$className"/>
                 <xsl:with-param name="whence" select="$whence"/>
-                <xsl:with-param name="fromODD" select="false()"/>
+                <xsl:with-param name="fromODD">false</xsl:with-param>
               </xsl:call-template>
             </xsl:for-each>
           </xsl:for-each>
@@ -1284,7 +1284,7 @@ so that is only put back in if there is some content
   <xsl:template name="odd2odd-processClassAttributes">
     <xsl:param name="elementName"/>
     <xsl:param name="className"/>
-    <xsl:param name="fromODD"  as="xs:boolean" select="false()"/>
+    <xsl:param name="fromODD">false</xsl:param>
     <xsl:param name="whence"/>
     <xsl:param name="Source" tunnel="yes"/>
 
@@ -1297,7 +1297,7 @@ so that is only put back in if there is some content
     we can bypass it now.-->
     <xsl:variable name="use">
       <xsl:choose>
-        <xsl:when test="$fromODD and (not(@mode) or @mode='add')">
+        <xsl:when test="$fromODD='true' and (not(@mode) or @mode='add')">
           <xsl:text>true</xsl:text>
         </xsl:when>
         <xsl:when test="not(@module)">
@@ -1323,7 +1323,7 @@ so that is only put back in if there is some content
     select="$className"/> [<xsl:value-of select="$M"/>] + <xsl:value-of
     select="$fromODD"/>, so use=<xsl:value-of select="$use"/></xsl:message>
     -->
-    <xsl:if test="$use">
+    <xsl:if test="$use='true'">
       <!-- 
 	   We need to put in the class attributes. We'll 
 	   use the value of $fromODD to see whether this is in the
@@ -1344,7 +1344,7 @@ so that is only put back in if there is some content
       -->
       <xsl:variable name="anyChanged">
         <xsl:choose>
-          <xsl:when test="not($fromODD)">
+          <xsl:when test="$fromODD='false'">
             <xsl:call-template name="odd2odd-checkClassAttribute">
               <xsl:with-param name="element" select="$elementName"/>
             </xsl:call-template>
@@ -1367,7 +1367,7 @@ so that is only put back in if there is some content
       -->
       <xsl:choose>
         <!-- a) new class in ODD -->
-        <xsl:when test="$fromODD and (not(@mode) or @mode='add')">
+        <xsl:when test="$fromODD='true' and (not(@mode) or @mode='add')">
           <attRef xmlns="http://www.tei-c.org/ns/1.0" n="1" name="{$className}.attributes"/>
         </xsl:when>
         <!-- b) its deleted -->
@@ -1403,7 +1403,7 @@ so that is only put back in if there is some content
         <!-- d) there are changes to attributes in the class spec itself,
 	but the element makes no override -->
         <xsl:when test="@mode='change' and tei:attList and not (contains($anyChanged,':element-'))">
-          <xsl:if test="$verbose">
+          <xsl:if test="$verbose='true'">
             <xsl:message>Phase 1 check d) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes in element, refer by name</xsl:message>
           </xsl:if>
           <attRef xmlns="http://www.tei-c.org/ns/1.0" n="5" name="{$className}.attributes"/>
@@ -1432,13 +1432,13 @@ so that is only put back in if there is some content
         </xsl:when>
         <!-- there are no changes to the attributes in the odd-->
         <xsl:when test="$anyChanged=''">
-          <xsl:if test="$verbose">
+          <xsl:if test="$verbose='true'">
             <xsl:message>Phase 1 check f) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has no changes, refer by name</xsl:message>
           </xsl:if>
           <attRef xmlns="http://www.tei-c.org/ns/1.0" n="4" name="{$className}.attributes"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:if test="$verbose">
+          <xsl:if test="$verbose='true'">
             <xsl:message>Phase 1 check g) Class <xsl:value-of select="$className"/> for <xsl:value-of select="$elementName"/> has changes in odd, refer by values</xsl:message>
           </xsl:if>
           <!-- attributes here -->
@@ -1483,9 +1483,9 @@ so that is only put back in if there is some content
 -->
       <xsl:choose>
         <xsl:when test="@mode='change' and tei:attList and not (contains($anyChanged,':element-'))"/>
-        <xsl:when test="not($fromODD) and $anyChanged =''"/>
-        <xsl:when test="$fromODD and not(.//tei:attDef)"/>
-        <xsl:when test="$fromODD and tei:classes[@mode='replace']">
+        <xsl:when test="$fromODD='false' and $anyChanged =''"/>
+        <xsl:when test="$fromODD='true' and not(.//tei:attDef)"/>
+        <xsl:when test="$fromODD='true' and tei:classes[@mode='replace']">
           <xsl:for-each select="tei:classes/tei:memberOf">
             <xsl:call-template name="odd2odd-classAttributes">
               <xsl:with-param name="whence">3</xsl:with-param>
@@ -1495,7 +1495,7 @@ so that is only put back in if there is some content
           </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:if test="$fromODD and tei:classes[@mode='change']">
+          <xsl:if test="$fromODD='true' and tei:classes[@mode='change']">
             <xsl:for-each select="tei:classes/tei:memberOf[@mode='add']">
               <xsl:call-template name="odd2odd-classAttributes">
                 <xsl:with-param name="whence">4</xsl:with-param>
@@ -1584,7 +1584,7 @@ so that is only put back in if there is some content
         </xsl:when>
         <xsl:otherwise>
           <xsl:choose>
-            <xsl:when test="not($fromODD)">
+            <xsl:when test="$fromODD='false'">
               <xsl:for-each select="$wherefrom">
                 <xsl:call-template name="odd2odd-unChangedAtt">
                   <xsl:with-param name="debug">1</xsl:with-param>
@@ -1762,7 +1762,7 @@ so that is only put back in if there is some content
     <xsl:choose>
       <xsl:when test="$elementName=''"/>
       <xsl:otherwise>
-	<xsl:if test="$autoGlobal">
+	<xsl:if test="$autoGlobal='true'">
 	  <xsl:call-template name="odd2odd-classAttributes">
 	    <xsl:with-param name="whence">7</xsl:with-param>
 	    <xsl:with-param name="elementName" select="$elementName"/>
@@ -1829,7 +1829,7 @@ so that is only put back in if there is some content
         </xsl:if>
         <!-- equiv, gloss, desc trio -->
         <xsl:choose>
-          <xsl:when test="$stripped"/>
+          <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:equiv">
             <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
           </xsl:when>
@@ -1850,7 +1850,7 @@ so that is only put back in if there is some content
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="$stripped"/>
+          <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:desc">
             <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
           </xsl:when>
@@ -1934,7 +1934,7 @@ so that is only put back in if there is some content
                           </xsl:otherwise>
                         </xsl:choose>
                         <xsl:choose>
-                          <xsl:when test="$stripped"/>
+                          <xsl:when test="$stripped='true'"/>
                           <xsl:when test="tei:desc">
                             <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
                           </xsl:when>
@@ -1958,7 +1958,7 @@ so that is only put back in if there is some content
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="$stripped"/>
+          <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:exemplum">
             <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
           </xsl:when>
@@ -1969,7 +1969,7 @@ so that is only put back in if there is some content
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="$stripped"/>
+          <xsl:when test="$stripped='true'"/>
           <xsl:when test="tei:remarks">
             <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
           </xsl:when>
@@ -2007,7 +2007,7 @@ so that is only put back in if there is some content
       <xsl:copy>
         <xsl:apply-templates mode="odd2odd-copy" select="@*"/>
         <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
-        <xsl:if test="not($stripped)">
+        <xsl:if test="$stripped='false'">
           <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
           <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
           <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
@@ -2016,7 +2016,7 @@ so that is only put back in if there is some content
         <xsl:apply-templates mode="odd2odd-copy" select="tei:content"/>
         <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
         <attList xmlns="http://www.tei-c.org/ns/1.0">
-	  <xsl:if test="$autoGlobal and not(tei:classes/tei:memberOf[@key='att.global'])">
+	  <xsl:if test="$autoGlobal='true' and not(tei:classes/tei:memberOf[@key='att.global'])">
 	    <xsl:comment>1.</xsl:comment>
 	    <xsl:call-template name="odd2odd-classAttributesSimple">
 	      <xsl:with-param name="whence">9</xsl:with-param>
@@ -2038,7 +2038,7 @@ so that is only put back in if there is some content
           <xsl:apply-templates select="tei:attList"/>
           <xsl:comment>5.</xsl:comment>
         </attList>
-        <xsl:if test="not($stripped)">
+        <xsl:if test="$stripped='false'">
           <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
           <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
           <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
@@ -2092,7 +2092,7 @@ so that is only put back in if there is some content
 
   <xsl:template name="odd2odd-createCopy">
     <xsl:param name="Source"  tunnel="yes"/>
-    <xsl:if test="$verbose">
+    <xsl:if test="$verbose='true'">
       <xsl:message>Create <xsl:value-of select="local-name()"/> named <xsl:value-of select="@ident"/>            </xsl:message>
     </xsl:if>
     <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
@@ -2110,7 +2110,7 @@ so that is only put back in if there is some content
       </xsl:choose>
       <xsl:choose>
 	<xsl:when test="local-name()='classSpec'">
-	  <xsl:if test="@type='model' and not(@predeclare='true')">
+	  <xsl:if test="@type='model' and not(@predeclare)">
 	    <xsl:attribute name="predeclare">true</xsl:attribute>
 	  </xsl:if>
 	  <xsl:apply-templates mode="odd2odd-copy" select="@*|*|processing-instruction()|text()"/>
@@ -2283,7 +2283,7 @@ so that is only put back in if there is some content
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:if test="$verbose">
+	<xsl:if test="$verbose='true'">
 	  <xsl:message>
 	    <xsl:text>Setting source document to </xsl:text>
 	    <xsl:value-of  select="$source"/>

@@ -41,7 +41,7 @@
                         -->
                         <!-- <xsl:call-template name="addID"/> -->
                         <!-- oXygen end change -->
-                        <xsl:if test="$makeTableCaption">
+                        <xsl:if test="$makeTableCaption='true'">
                             <xsl:call-template name="i18n">
                                 <xsl:with-param name="word">tableWord</xsl:with-param>
                             </xsl:call-template>

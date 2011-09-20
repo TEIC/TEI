@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
-		xmlns:xs="http://www.w3.org/2001/XMLSchema"                
+                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="tei xs"
+                exclude-result-prefixes="tei"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -25,7 +25,7 @@
    </doc>
   <xsl:template name="generateAuthor">
       <xsl:choose>
-         <xsl:when test="$useHeaderFrontMatter and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
             <xsl:apply-templates mode="author"
                                  select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
          </xsl:when>
@@ -146,8 +146,8 @@
    </doc>
   <xsl:template name="generateDate">
       <xsl:choose>
-	 <xsl:when test="$useFixedDate">1970-01-01</xsl:when>
-         <xsl:when test="$useHeaderFrontMatter and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate">
+	 <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate">
             <xsl:apply-templates mode="date" select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate"/>
          </xsl:when>
          <xsl:when
@@ -194,11 +194,11 @@
    </doc>
   <xsl:template name="generateTitle">
       <xsl:choose>
-         <xsl:when test="$useHeaderFrontMatter and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
             <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
          </xsl:when>
 
-         <xsl:when test="$useHeaderFrontMatter and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
             <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
          </xsl:when>
 
@@ -229,7 +229,7 @@
    </doc>
   <xsl:template name="generateSimpleTitle">
       <xsl:choose>
-         <xsl:when test="$useHeaderFrontMatter and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
             <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"
                                  mode="simple"/>
          </xsl:when>
@@ -255,10 +255,10 @@
    </doc>
   <xsl:template name="generateSubTitle">
       <xsl:choose>
-         <xsl:when test="$useHeaderFrontMatter and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
             <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
          </xsl:when>
-         <xsl:when test="$useHeaderFrontMatter and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
             <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle"/>
          </xsl:when>
          <xsl:otherwise>
@@ -300,7 +300,7 @@
    <xsl:template match="tei:idno[@type='url']">
       <xsl:text> &lt;</xsl:text>
       <xsl:call-template name="makeExternalLink">
-         <xsl:with-param name="ptr"  as="xs:boolean" select="true()"/>
+         <xsl:with-param name="ptr">true</xsl:with-param>
          <xsl:with-param name="dest">
             <xsl:value-of select="normalize-space(.)"/>
          </xsl:with-param>

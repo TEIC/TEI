@@ -61,7 +61,7 @@
     <xsl:template name="write-docxfile-comments-file">
 
       <xsl:if test="count(key('COMMENTS',1))&gt;0">
-	<xsl:if test="$debug">
+	<xsl:if test="$debug='true'">
 	  <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'word/comments.xml')"/>
 	  </xsl:message>
 	</xsl:if>

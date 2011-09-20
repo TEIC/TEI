@@ -19,7 +19,7 @@
     </desc>
   </doc>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
-  <xsl:param name="useNSPrefixes"  as="xs:boolean" select="true()"/>
+  <xsl:param name="useNSPrefixes">true</xsl:param>
   <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
   <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
   <xsl:param name="startElement">&lt;span class="element"&gt;</xsl:param>
@@ -35,11 +35,11 @@
   <xsl:param name="startNamespace">&lt;span class="namespace"&gt;</xsl:param>
   <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
   <xsl:param name="spaceCharacter"> </xsl:param>
-  <xsl:param name="showNamespaceDecls"  as="xs:boolean" select="true()"/>
-  <xsl:param name="forceWrap"  as="xs:boolean" select="false()"/>
-  <xsl:param name="wrapLength" as="xs:integer">65</xsl:param>
-  <xsl:param name="attLength" as="xs:integer">40</xsl:param>
-  <xsl:param name="attsOnSameLine" as="xs:integer">3</xsl:param>
+  <xsl:param name="showNamespaceDecls">true</xsl:param>
+  <xsl:param name="forceWrap">false</xsl:param>
+  <xsl:param name="wrapLength">65</xsl:param>
+  <xsl:param name="attLength">40</xsl:param>
+  <xsl:param name="attsOnSameLine">3</xsl:param>
   <xsl:param name="omitNSDecls">http://www.tei-c.org/ns/1.0</xsl:param>
   <xsl:key name="NSUsed" match="*" use="namespace-uri()"/>
   <xsl:key name="NSUsed" match="@*" use="namespace-uri()"/>
@@ -105,8 +105,7 @@
         <xsl:value-of disable-output-escaping="yes" select="$startComment"/>
         <xsl:text>&lt;!--</xsl:text>
         <xsl:choose>
-
-          <xsl:when test="$forceWrap">
+          <xsl:when test="$forceWrap='true'">
             <xsl:call-template name="verbatim-reformatText">
               <xsl:with-param name="sofar">0</xsl:with-param>
               <xsl:with-param name="indent">
@@ -134,7 +133,7 @@
   </doc>
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
-      <xsl:when test="$forceWrap">
+      <xsl:when test="$forceWrap='true'">
         <xsl:variable name="indent">
           <xsl:for-each select="parent::*">
             <xsl:call-template name="verbatim-makeIndent"/>
@@ -263,7 +262,7 @@
   <xsl:template name="verbatim-wraptext">
     <xsl:param name="indent"/>
     <xsl:param name="text"/>
-    <xsl:param name="count" as="xs:integer">0</xsl:param>
+    <xsl:param name="count">0</xsl:param>
     <xsl:variable name="finalSpace">
       <xsl:choose>
         <xsl:when test="substring($text,string-length($text),1)=' '">
@@ -404,13 +403,13 @@
     <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
     <xsl:text>&lt;</xsl:text>
     <xsl:call-template name="verbatim-makeElementName">
-      <xsl:with-param name="start" select="true()"/>
+      <xsl:with-param name="start">true</xsl:with-param>
       <xsl:with-param name="highlight">
         <xsl:value-of select="$highlight"/>
       </xsl:with-param>
     </xsl:call-template>
     <xsl:apply-templates select="@*" mode="verbatim"/>
-    <xsl:if test="$showNamespaceDecls or parent::teix:egXML[@rend='full']">
+    <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
       <xsl:choose>
         <xsl:when test="not(parent::*)">
           <xsl:call-template name="nsList"/>
@@ -458,7 +457,7 @@
         <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
         <xsl:text>&lt;/</xsl:text>
         <xsl:call-template name="verbatim-makeElementName">
-          <xsl:with-param name="start" select="false()"/>
+          <xsl:with-param name="start">false</xsl:with-param>
           <xsl:with-param name="highlight">
             <xsl:value-of select="$highlight"/>
           </xsl:with-param>
@@ -476,7 +475,7 @@
     <xsl:param name="name"/>
     <xsl:param name="special"/>
     <xsl:choose>
-      <xsl:when test="$special">
+      <xsl:when test="$special='true'">
         <xsl:value-of disable-output-escaping="yes" select="$highlightStartElementName"/>
         <xsl:value-of select="$name"/>
         <xsl:value-of disable-output-escaping="yes" select="$highlightEndElementName"/>
@@ -520,7 +519,7 @@
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="$useNSPrefixes and string-length($ns-prefix) &gt; 0">
+      <xsl:when test="$useNSPrefixes='true' and string-length($ns-prefix) &gt; 0">
         <xsl:call-template name="verbatim-createElement">
           <xsl:with-param name="name" select="concat($ns-prefix,':',local-name(.))"/>
           <xsl:with-param name="special">
@@ -535,7 +534,7 @@
             <xsl:value-of select="$highlightMe"/>
           </xsl:with-param>
         </xsl:call-template>
-        <xsl:if test="$start and not(namespace-uri()=namespace-uri(..))">
+        <xsl:if test="$start='true' and not(namespace-uri()=namespace-uri(..))">
           <xsl:text> xmlns="</xsl:text>
           <xsl:value-of select="namespace-uri()"/>
           <xsl:text>"</xsl:text>
