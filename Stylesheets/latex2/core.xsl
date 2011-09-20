@@ -228,26 +228,26 @@
                <xsl:when test="$depth=2">III</xsl:when>
                <xsl:when test="$depth=3">IV</xsl:when>
                <xsl:when test="$depth=4">V</xsl:when>
-	              <xsl:otherwise>I</xsl:otherwise>
+	       <xsl:otherwise>I</xsl:otherwise>
             </xsl:choose>
             <xsl:choose>
                <xsl:when test="ancestor::tei:floatingText">Star</xsl:when>
                <xsl:when test="parent::tei:div/@rend='nonumber'">Star</xsl:when>
                <xsl:when test="ancestor::tei:back and not($numberBackHeadings='true')">Star</xsl:when>
-	              <xsl:when test="not($numberHeadings='true') and      ancestor::tei:body">Star</xsl:when>
+	       <xsl:when test="not($numberHeadings='true') and ancestor::tei:body">Star</xsl:when>
                <xsl:when test="ancestor::tei:front and not($numberFrontHeadings='true')">Star</xsl:when>
             </xsl:choose>
-	           <xsl:text>[</xsl:text>
-	           <xsl:value-of select="normalize-space(.)"/>
-	           <xsl:text>]</xsl:text>
-	           <xsl:text>{</xsl:text>
-	           <xsl:apply-templates/>
-	           <xsl:text>}</xsl:text>
-	           <xsl:if test="../@xml:id">
-	              <xsl:text>\label{</xsl:text>
-	              <xsl:value-of select="../@xml:id"/>
-	              <xsl:text>}</xsl:text>
-	           </xsl:if>
+	    <xsl:text>[</xsl:text>
+	    <xsl:value-of select="normalize-space(.)"/>
+	    <xsl:text>]</xsl:text>
+	    <xsl:text>{</xsl:text>
+	    <xsl:apply-templates/>
+	    <xsl:text>}</xsl:text>
+	    <xsl:if test="../@xml:id">
+	      <xsl:text>\label{</xsl:text>
+	      <xsl:value-of select="../@xml:id"/>
+	      <xsl:text>}</xsl:text>
+	    </xsl:if>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

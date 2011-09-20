@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
-                
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="tei"
+                exclude-result-prefixes="tei xs"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -85,7 +85,7 @@
    </doc>
   <xsl:template match="tei:ptr">
       <xsl:call-template name="makeTEILink">
-         <xsl:with-param name="ptr">true</xsl:with-param>
+         <xsl:with-param name="ptr" select="true()"/>
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -93,7 +93,7 @@
    </doc>
   <xsl:template match="tei:ref">
       <xsl:call-template name="makeTEILink">
-         <xsl:with-param name="ptr">false</xsl:with-param>
+         <xsl:with-param name="ptr" select="false()"/>
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -279,7 +279,7 @@
       </desc>
    </doc>
   <xsl:template name="makeTEILink">
-      <xsl:param name="ptr"/>
+      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
       <!-- is this a ptr or a ref? -->
     <xsl:choose>
       <!-- If there is a target attribute starting with #, it is always a local reference -->

@@ -735,7 +735,7 @@
           <xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
             <xsl:call-template name="makeInternalLink">
               <xsl:with-param name="target" select="substring(@target,2)"/>
-              <xsl:with-param name="ptr">true</xsl:with-param>
+              <xsl:with-param name="ptr" select="true()"/>
               <xsl:with-param name="dest">
                 <xsl:call-template name="generateEndLink">
                   <xsl:with-param name="where">
@@ -752,7 +752,7 @@
             <xsl:choose>
               <xsl:when test="$Chapter='AB' or        $Chapter='AI' or        $Chapter='CC' or        $Chapter='CE' or        $Chapter='CH' or        $Chapter='CO' or        $Chapter='DI' or        $Chapter='DR' or        $Chapter='DS' or        $Chapter='FS' or        $Chapter='FT' or        $Chapter='GD' or        $Chapter='HD' or        $Chapter='MS' or        $Chapter='ND' or        $Chapter='NH' or        $Chapter='PH' or        $Chapter='SA' or        $Chapter='SG' or        $Chapter='ST' or        $Chapter='TC' or        $Chapter='TD' or        $Chapter='TS' or        $Chapter='USE' or        $Chapter='VE' or        $Chapter='WD'">
                 <xsl:call-template name="makeExternalLink">
-                  <xsl:with-param name="ptr">true</xsl:with-param>
+                  <xsl:with-param name="ptr" select="true()"/>
                   <xsl:with-param name="dest">
                     <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
                     <xsl:value-of select="$documentationLanguage"/>

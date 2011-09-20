@@ -303,7 +303,7 @@
                <xsl:text>Global pre-declared macros</xsl:text>
             </xsl:with-param>
          </xsl:call-template>
-         <xsl:for-each select="key('PredeclareAllMacros','1')">
+         <xsl:for-each select="key('PredeclareAllMacros',1)">
             <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
             <xsl:value-of select="@ident"/>
             <xsl:text> ''</xsl:text>

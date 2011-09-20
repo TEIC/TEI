@@ -300,7 +300,7 @@
    <xsl:template match="tei:idno[@type='url']">
       <xsl:text> &lt;</xsl:text>
       <xsl:call-template name="makeExternalLink">
-         <xsl:with-param name="ptr">true</xsl:with-param>
+         <xsl:with-param name="ptr" select="true()"/>
          <xsl:with-param name="dest">
             <xsl:value-of select="normalize-space(.)"/>
          </xsl:with-param>

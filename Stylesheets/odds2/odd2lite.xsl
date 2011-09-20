@@ -113,7 +113,7 @@
   </xsl:template>
 
   <xsl:template name="makeInternalLink">
-      <xsl:param name="ptr"/>
+      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
       <xsl:param name="target"/>
       <xsl:param name="dest"/>
       <xsl:param name="class"/>
@@ -134,7 +134,7 @@
                <xsl:value-of select="$body"/>
             </tei:ref>
          </xsl:when>
-         <xsl:when test="$ptr='true'">
+         <xsl:when test="$ptr">
             <tei:ptr target="#{$W}"/>
          </xsl:when>
          <xsl:otherwise>
@@ -143,10 +143,10 @@
       </xsl:choose>
   </xsl:template>
   <xsl:template name="makeExternalLink">
-      <xsl:param name="ptr"/>
+      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
       <xsl:param name="dest"/>
       <xsl:choose>
-         <xsl:when test="$ptr='true'">
+         <xsl:when test="$ptr">
             <tei:ptr target="{$dest}"/>
          </xsl:when>
          <xsl:otherwise>

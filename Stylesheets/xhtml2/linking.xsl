@@ -3,14 +3,13 @@
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:html="http://www.w3.org/1999/xhtml"
-
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"                
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:teix="http://www.tei-c.org/ns/Examples"
-                
+                xmlns:teix="http://www.tei-c.org/ns/Examples"                
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="a fo rng tei html teix">
+                exclude-result-prefixes="a fo rng tei html teix xs">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the linking module,
@@ -340,7 +339,7 @@
       </desc>
    </doc>
   <xsl:template name="makeExternalLink">
-      <xsl:param name="ptr"/>
+      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
       <xsl:param name="dest"/>
       <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/>
       </xsl:param>
@@ -393,7 +392,7 @@
          <xsl:call-template name="xrefHook"/>
          <xsl:choose>
 	   <xsl:when test="$dest=''">??</xsl:when>
-            <xsl:when test="$ptr='true'">
+            <xsl:when test="$ptr">
                <xsl:element name="{$urlMarkup}">
                   <xsl:choose>
                      <xsl:when test="starts-with($dest,'mailto:')">
@@ -424,7 +423,7 @@
    </doc>
   <xsl:template name="makeInternalLink">
       <xsl:param name="target"/>
-      <xsl:param name="ptr"/>
+      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
       <xsl:param name="dest"/>
       <xsl:param name="body"/>
       <xsl:param name="class">
@@ -451,7 +450,7 @@
                <xsl:when test="not($body='')">
                   <xsl:value-of select="$body"/>
                </xsl:when>
-               <xsl:when test="$ptr='true'">
+               <xsl:when test="$ptr">
                   <xsl:apply-templates mode="xref" select="id($W)">
                      <xsl:with-param name="minimal" select="$minimalCrossRef"/>
                   </xsl:apply-templates>
@@ -478,12 +477,12 @@
 	       <xsl:when test="not($body='')">
 		 <xsl:value-of select="$body"/>
 	       </xsl:when>
-	       <xsl:when test="$ptr='true' and count(id($W))&gt;0">
+	       <xsl:when test="$ptr and count(id($W))&gt;0">
 		 <xsl:apply-templates mode="xref" select="id($W)">
 		   <xsl:with-param name="minimal" select="$minimalCrossRef"/>
 		 </xsl:apply-templates>
 	       </xsl:when>
-	       <xsl:when test="$ptr='true'">
+	       <xsl:when test="$ptr">
 		 <xsl:text>??</xsl:text>
 	       </xsl:when>
 	       <xsl:otherwise>

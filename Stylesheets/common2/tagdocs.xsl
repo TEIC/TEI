@@ -2436,7 +2436,7 @@
       <xsl:text> — </xsl:text>
       <xsl:call-template name="makeInternalLink">
         <xsl:with-param name="target" select="@xml:id"/>
-        <xsl:with-param name="ptr">true</xsl:with-param>
+        <xsl:with-param name="ptr" select="true()"/>
         <xsl:with-param name="dest">
           <xsl:value-of select="tei:head"/>
         </xsl:with-param>

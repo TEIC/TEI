@@ -1730,12 +1730,12 @@
   </xsl:function>
 
   <xsl:template name="makeExternalLink">
-    <xsl:param name="ptr"/>
+    <xsl:param name="ptr" as="xs:boolean" select="false()"/>
     <xsl:param name="dest"/>
     <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/></xsl:param>
     <text:a xlink:type="simple" xlink:href="{$dest}">
       <xsl:choose>
-	<xsl:when test="$ptr='true'">
+	<xsl:when test="$ptr">
 	  <xsl:value-of select="$dest"/>
 	</xsl:when>
 	<xsl:otherwise>

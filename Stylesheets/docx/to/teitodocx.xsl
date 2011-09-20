@@ -2489,7 +2489,7 @@
   </xsl:template>
 
   <xsl:template name="makeExternalLink">
-    <xsl:param name="ptr"/>
+    <xsl:param name="ptr" as="xs:boolean" select="false()"/>
     <xsl:param name="dest"/>
     <xsl:value-of select="$dest"/>
   </xsl:template>
