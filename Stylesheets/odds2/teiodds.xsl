@@ -1228,7 +1228,7 @@ select="$makeDecls"/></xsl:message>
   <xsl:template match="rng:start" mode="expandRNG"/>
   
   <xsl:template match="rng:include" mode="expandRNG">
-    <xsl:param name="prefix">erng_</xsl:param>
+    <xsl:param name="prefix"/>
     <xsl:if test="$verbose='true'">
       <xsl:message> .... import <xsl:value-of select="@href"/></xsl:message>
     </xsl:if>
@@ -1245,7 +1245,7 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
   
   <xsl:template match="rng:define | rng:ref" mode="expandRNG">
-    <xsl:param name="prefix">erng_</xsl:param>
+    <xsl:param name="prefix"/>
     <xsl:if test="$verbose='true'">
       <xsl:message>expanding rng:<xsl:value-of select="local-name(.)"/> name=<xsl:value-of select="@name"/>, giving it a prefix of '<xsl:value-of select="$prefix"/>'.</xsl:message>
     </xsl:if>
