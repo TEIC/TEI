@@ -22,6 +22,7 @@
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
+   <xsl:variable name="q">"</xsl:variable>
 
    <xsl:output method="text"/>
 
@@ -43,7 +44,7 @@
    <xsl:template match="text()">
      <xsl:if test="not(normalize-space()='')">
      <xsl:text>"</xsl:text>
-     <xsl:value-of select="normalize-space()"/>
+     <xsl:value-of select="replace(normalize-space(),'$q','$q$q')"/>
      <xsl:text>","</xsl:text>
      <xsl:for-each select="ancestor::*">
        <xsl:value-of select="name()"/>
