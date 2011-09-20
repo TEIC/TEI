@@ -113,7 +113,7 @@ clean:
 	rm -f  test8.out
 	rm -f  test9.docx test9.odt
 	rm -f  test*listing*
-	rm -f test*epub
+	rm -f test*epub test*text
 	rm -f  test.aux test.log test.out test.pdf 
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
 
