@@ -40,7 +40,6 @@ oddbyexample:
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
 conversions-from:
-	roma2 --nodtd --noxsd test.odd .
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf ok/test12.rdf
 	../teitotext test14.xml test.text
@@ -91,10 +90,13 @@ conversions-from:
 
 conversions-to:
 	roma2 --nodtd --noxsd test.odd .
-	../odttotei test7.odt
+	../odttotei test7.odt test7.xml
 	jing test.rng test7.xml
-	../docxtotei test11.docx
+	diff test7.xml ok/test7.xml
+	../docxtotei test11.docx test11.xml
+	perl -p -i -e 's/Date:[^<]+</</' test11.xml
 	jing test.rng test11.xml
+	diff test11.xml ok/test11.xml
 	rm test.rng test.rnc
 
 clean:
