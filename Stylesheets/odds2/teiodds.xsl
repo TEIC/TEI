@@ -1186,17 +1186,9 @@ select="$makeDecls"/></xsl:message>
                   <!-- output RNG. -->
                   <xsl:apply-templates mode="expandRNG" select="@*|node()">
                     <xsl:with-param name="prefix">
-                      <xsl:choose>
-                        <xsl:when test="$me-the-moduleRef/@prefix">
-                          <xsl:value-of select="$me-the-moduleRef/@prefix"/>
-                        </xsl:when>
-                        <xsl:when test="$me-the-moduleRef/@n">
-                          <xsl:value-of select="$me-the-moduleRef/@n"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                          <xsl:value-of select="concat( generate-id( $me-the-moduleRef ), '_')"/>
-                        </xsl:otherwise>
-                      </xsl:choose>
+		      <xsl:if test="$me-the-moduleRef/@prefix">
+			<xsl:value-of select="$me-the-moduleRef/@prefix"/>
+		      </xsl:if>
                     </xsl:with-param>
                   </xsl:apply-templates>
                 </xsl:for-each>

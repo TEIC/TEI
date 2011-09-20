@@ -43,6 +43,8 @@ conversions-from:
 	roma2 --nodtd --noxsd test.odd .
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf ok/test12.rdf
+	../teitotext test.xml test.text
+	diff test.text ok/test.text
 	../teitolatex test.xml
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
 	diff test.tex ok/test.tex
