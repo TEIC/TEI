@@ -51,12 +51,11 @@ $Id$
       </datatype>
       <constraintSpec scheme="isoschematron" ident="not-same-prefix">
         <constraint>
-          <rule context="tei:moduleRef/@prefix" xmlns="http://purl.oclc.org/dsdl/schematron">
-            <report test="//*[not( generate-id(.) eq
-                              generate-id( current()/.. ) ) ]/@prefix = .">
-              The prefix attribute of a moduleRef element should not
-              match that of any other element (it would defeat the
-              purpose)</report>
+          <rule context="tei:moduleRef" xmlns="http://purl.oclc.org/dsdl/schematron">
+	    <report test="//*[ not( generate-id(.) eq generate-id(
+	    current() ) ) ]/@prefix = @prefix">The prefix attribute
+	    of a moduleRef element should not match that of any other
+	    element (it would defeat the purpose)</report>
           </rule>
         </constraint>
       </constraintSpec>
