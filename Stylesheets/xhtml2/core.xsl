@@ -150,6 +150,11 @@
           <xsl:apply-templates/>
         </span>
       </xsl:when>
+      <xsl:when test="parent::tei:q[not(@rend)]">
+        <span class="citbibl">
+          <xsl:apply-templates/>
+        </span>
+      </xsl:when>
       <xsl:when test="parent::tei:q[not(@rend='inline')]">
         <div class="citbibl">
           <xsl:apply-templates/>
@@ -378,7 +383,8 @@
     <desc>Process element gap</desc>
   </doc>
   <xsl:template match="tei:gap">
-    <span class="gap">
+    <xsl:element name="{if (parent::tei:body or parent::tei:div) then 'div' else 'span'}">
+      <xsl:attribute name="class">gap</xsl:attribute>
       <xsl:if test="tei:desc">
         <xsl:attribute name="title">
           <xsl:value-of select="tei:desc"/>
@@ -392,7 +398,7 @@
 	  <xsl:text> [...]</xsl:text>
 	</xsl:otherwise>
       </xsl:choose>
-    </span>
+    </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
@@ -1374,6 +1380,11 @@
   </doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
+      <xsl:when test="@rend='inline'">
+        <span class="inlineq">
+          <xsl:apply-templates/>
+	</span>
+      </xsl:when>
       <xsl:when test="parent::tei:div|parent::tei:body|tei:p|tei:floatingText|tei:lg|tei:l|tei:note[tei:q/tei:l]">
         <div class="blockquote {@rend}">
           <xsl:apply-templates/>
@@ -1500,9 +1511,16 @@
     <desc>Process element salute</desc>
   </doc>
   <xsl:template match="tei:salute">
-    <div class="left">
-      <xsl:apply-templates/>
-    </div>
+    <xsl:choose>
+      <xsl:when test="parent::tei:closer">
+	  <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<div class="left">
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element seg</desc>
@@ -2352,20 +2370,7 @@
   </doc>
   
   <xsl:template name="makeSpan">
-    <xsl:variable name="container">
-      <xsl:choose>
-	<xsl:when test="parent::tei:titlePage">
-	 <xsl:text>div</xsl:text>
-	</xsl:when>
-	<xsl:when test="parent::tei:body">
-	 <xsl:text>div</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	 <xsl:text>span</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:element name="{$container}">
+    <xsl:element name="{if (parent::tei:titlePage or parent::tei:body) then 'div' else 'span'}">
       <xsl:choose>
 	<xsl:when test="@rendition">
 	  <xsl:call-template name="applyRendition"/>

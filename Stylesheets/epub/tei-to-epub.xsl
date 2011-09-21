@@ -13,6 +13,7 @@
 						       html opf ncx smil">
   <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="epub-common.xsl"/>
+  <xsl:import href="epub-preflight.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="no"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -89,7 +90,7 @@
   </doc>
   <xsl:template name="processTEI">
     <xsl:variable name="stage1">
-      <xsl:apply-templates mode="fixgraphics"/>
+      <xsl:apply-templates mode="preflight"/>
     </xsl:variable>
     <xsl:for-each select="$stage1">
       <xsl:call-template name="processTEIHook"/>

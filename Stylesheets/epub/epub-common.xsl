@@ -134,69 +134,6 @@
     <br/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[epub] Local mode to rewrite names of graphics inclusions;
-      default is identity transform
-      </desc>
-  </doc>
-  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="fixgraphics">
-    <xsl:copy-of select="."/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[epub] Local mode to rewrite names of graphics inclusions;
-      default is identifty transform
-      </desc>
-  </doc>
-  <xsl:template match="*" mode="fixgraphics">
-    <xsl:copy>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="fixgraphics"/>
-    </xsl:copy>
-  </xsl:template>
-  <xsl:template match="tei:graphic" mode="fixgraphics">
-    <xsl:copy>
-      <xsl:choose>
-        <xsl:when test="$fixgraphicsurl='true'">
-          <xsl:variable name="newName">
-            <xsl:text>media/resource</xsl:text>
-            <xsl:number level="any"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
-          </xsl:variable>
-          <xsl:attribute name="url">
-            <xsl:value-of select="$newName"/>
-          </xsl:attribute>
-          <xsl:copy-of select="@*[not(local-name()='url')]"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:copy-of select="@*"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:copy>
-  </xsl:template>
-  <xsl:template match="tei:pb[@facs]" mode="fixgraphics">
-    <xsl:copy>
-      <xsl:choose>
-	<xsl:when test="@rend='none'">
-          <xsl:copy-of select="@*"/>
-	</xsl:when>
-        <xsl:when test="$fixgraphicsurl='true'">
-          <xsl:variable name="newName">
-            <xsl:text>media/pageimage</xsl:text>
-            <xsl:number level="any"/>
-            <xsl:text>.</xsl:text>
-            <xsl:value-of select="tokenize(@facs,'\.')[last()]"/>
-          </xsl:variable>
-          <xsl:attribute name="facs">
-            <xsl:value-of select="$newName"/>
-          </xsl:attribute>
-          <xsl:copy-of select="@*[not(local-name()='facs')]"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:copy-of select="@*"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:copy>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[epub] Remove unwanted things from CSS
       </desc>
   </doc>
@@ -216,8 +153,7 @@
 -->
       <xsl:otherwise>
         <xsl:value-of select="."/>
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
