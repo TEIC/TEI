@@ -163,6 +163,7 @@
         <xsl:when test="self::tei:bibl and not(parent::tei:div)">true</xsl:when>
         <xsl:when test="self::tei:biblScope">true</xsl:when>
         <xsl:when test="self::tei:br">true</xsl:when>
+        <xsl:when test="self::tei:byline">true</xsl:when>
         <xsl:when test="self::tei:c">true</xsl:when>
         <xsl:when test="self::tei:caesura">true</xsl:when>
         <xsl:when test="self::tei:choice">true</xsl:when>

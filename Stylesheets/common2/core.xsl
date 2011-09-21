@@ -401,19 +401,19 @@
    </xsl:template>
 
    <xsl:template match="tei:biblStruct//tei:date|tei:biblFull//tei:date">
-<!--
-     <xsl:choose>
-       <xsl:when test="starts-with(.,'$Date:')">
+     <!--
+	 <xsl:choose>
+	 <xsl:when test="starts-with(.,'$Date:')">
 	 <xsl:value-of select="substring-before(substring-after(.,'$Date:'),'$')"/>
-       </xsl:when>
-       <xsl:otherwise>
+	 </xsl:when>
+	 <xsl:otherwise>
 	 <xsl:apply-templates/>
-       </xsl:otherwise>
-     </xsl:choose>
--->
-         <xsl:call-template name="tei:makeText">
-	   <xsl:with-param name="letters">. </xsl:with-param>
-	 </xsl:call-template>
+	 </xsl:otherwise>
+	 </xsl:choose>
+     -->
+     <xsl:call-template name="tei:makeText">
+       <xsl:with-param name="letters">. </xsl:with-param>
+     </xsl:call-template>
    </xsl:template>
 
    <xsl:template match="tei:byline">
