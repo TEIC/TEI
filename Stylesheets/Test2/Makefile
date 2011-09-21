@@ -42,7 +42,7 @@ oddbyexample:
 conversions-from:
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf ok/test12.rdf
-	../teitotext test14.xml test.text
+	../teitotxt test14.xml test.text
 	diff test.text ok/test.text
 	../teitolatex test.xml
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
