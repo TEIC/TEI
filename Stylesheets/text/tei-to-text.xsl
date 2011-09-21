@@ -41,8 +41,6 @@
      <xsl:apply-templates select="*[1]"/>
    </xsl:template>
 
-   <xsl:template match="note"/>
-
    <xsl:template match="speaker"/>
 
    <xsl:template match="facsimile"/>
