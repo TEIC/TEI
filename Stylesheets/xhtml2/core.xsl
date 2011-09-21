@@ -150,6 +150,11 @@
           <xsl:apply-templates/>
         </span>
       </xsl:when>
+      <xsl:when test="parent::tei:q[not(@rend) and tei:l]">
+        <div class="citbibl">
+          <xsl:apply-templates/>
+        </div>
+      </xsl:when>
       <xsl:when test="parent::tei:q[not(@rend)]">
         <span class="citbibl">
           <xsl:apply-templates/>
@@ -968,12 +973,12 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="@place='none'"/>
-      <xsl:when test="parent::tei:head">
+      <xsl:when test="parent::tei:head and not(@place)">
 	<xsl:text> [</xsl:text>
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="ancestor::tei:bibl">
+      <xsl:when test="ancestor::tei:bibl and not(@place)">
 	<xsl:text> [</xsl:text>
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
@@ -983,7 +988,7 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="@place='marg' and (tei:p or tei:q[tei:l])">
+      <xsl:when test="@place='marg' and (tei:p or tei:q//tei:l)">
         <div class="margnote">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
@@ -1288,6 +1293,7 @@
 	<xsl:when test="tei:q/tei:figure">div</xsl:when>
 	<xsl:when test="tei:q/tei:list">div</xsl:when>
 	<xsl:when test="tei:q[@rend='display']">div</xsl:when>
+	<xsl:when test="tei:q[@rend='inline' and tei:note/@place]">div</xsl:when>
 	<xsl:when test="tei:q[tei:l]">div</xsl:when>
 	<xsl:when test="tei:q[tei:lg]">div</xsl:when>
 	<xsl:when test="tei:q[tei:p]">div</xsl:when>
@@ -1376,9 +1382,9 @@
   </doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
-      <xsl:when test="@rend='inline' and tei:p">
+      <xsl:when test="@rend='inline' and (tei:p or tei:note[@place])">
         <div class="inlineq">
-          <xsl:apply-templates/>
+	  <xsl:call-template name="makeQuote"/>
 	</div>
       </xsl:when>
       <xsl:when test="@rend='inline'">
