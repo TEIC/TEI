@@ -978,12 +978,8 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="ancestor::tei:bibl and not(@place)">
-	<xsl:text> [</xsl:text>
-	<xsl:apply-templates/>
-	<xsl:text>]</xsl:text>
-      </xsl:when>
-      <xsl:when test="ancestor::tei:biblFull">
+      <xsl:when test="ancestor::tei:listBibl or ancestor::tei:biblFull
+		      or ancestor::tei:biblStruct">
 	<xsl:text> [</xsl:text>
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
@@ -1134,7 +1130,7 @@
   </doc>
   <xsl:template match="tei:note" mode="printnotes">
     <xsl:choose>
-      <xsl:when test="ancestor::tei:bibl"/>
+      <xsl:when test="ancestor::tei:listBibl"/>
       <xsl:when test="number($splitLevel)=-1"/>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
         <xsl:call-template name="makeaNote"/>
