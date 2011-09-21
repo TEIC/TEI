@@ -7,12 +7,10 @@
     exclude-result-prefixes="tei html"
     version="2.0">
     <!-- import base conversion style -->
-
-    <xsl:import href="../../../text/tei-to-text.xsl"/>
+    <xsl:import href="../../../txt/tei-to-text.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-
          <p> This library is free software; you can redistribute it and/or
       modify it under the terms of the GNU Lesser General Public License as
       published by the Free Software Foundation; either version 2.1 of the
