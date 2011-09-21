@@ -19,7 +19,7 @@ $Id$
   スキーマに組み入れられるモジュールを参照する．
   </desc>
   <desc version="2007-06-12" xml:lang="fr">référence un module qui doit être incorporé dans
-			un schéma.</desc>
+                        un schéma.</desc>
   <desc version="2007-05-04" xml:lang="es">indica un módulo que se ha de incluir al interno de un esquema.</desc>
   <desc version="2007-01-21" xml:lang="it">indica un modulo da includere all'interno di uno schema</desc>
   <classes>
@@ -36,18 +36,37 @@ $Id$
     <constraint>
       <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
         <report test="* and @key">
-	  child elements of moduleRef are only allowed when an external module
-	  is being loaded
-	</report>
+          child elements of moduleRef are only allowed when an external module
+          is being loaded
+        </report>
       </rule>
     </constraint>
   </constraintSpec>
   <attList>
     <attDef ident="prefix" usage="opt">
-      <equiv/>
-      <desc>specifies a prefix which will be prepended to all patterns
-      created for this module.
-      </desc>
+      <desc>specifies a default prefix which will be
+      prepended to all patterns from the imported module</desc>
+      <datatype minOccurs="0" maxOccurs="1">
+        <data type="NCName" xmlns="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+      <constraintSpec scheme="isoschematron" ident="not-same-prefix">
+        <constraint>
+          <rule context="tei:moduleRef/@prefix" xmlns="http://purl.oclc.org/dsdl/schematron">
+            <report test="//*[not( generate-id(.) eq
+                              generate-id( current()/.. ) ) ]/@prefix = .">
+              The prefix attribute of a moduleRef element should not
+              match that of any other element (it would defeat the
+              purpose)</report>
+          </rule>
+        </constraint>
+      </constraintSpec>
+      <remarks>
+        <p>Use of this attribute avoids name collisions (and
+        thus invalid schemas) when the external schema being
+        mixed in with TEI uses a name the TEI or some other
+        included external schema already uses for a
+        pattern.</p>
+      </remarks>
     </attDef>
     <attList org="choice">
       <attDef ident="include">
