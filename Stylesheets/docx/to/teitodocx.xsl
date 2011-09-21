@@ -2352,6 +2352,10 @@
         </xsl:call-template>
     </xsl:template>
 
+    <xsl:template match="tei:titlePage/tei:byline" priority="99">
+        <xsl:call-template name="block-element"/>
+    </xsl:template>
+
     <xsl:template match="tei:titlePage/tei:docDate" priority="99">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Docdate</xsl:with-param>
