@@ -13,8 +13,6 @@
 <!-- Used by the Roma shell script to ascertain the schema name             -->
 <!--                                                                        -->
 <!-- Written 2005-01-18 by Syd Bauman                                       -->
-<!-- Copyright 2005 Brown University & TEI Consortium                       -->
-<!-- Licence: GPL                                                           -->
 <!--                                                                        -->
 <!-- ********************************************************************** -->
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
