@@ -69,6 +69,7 @@
   </target>
 
   <target name="coverpages" if="makecoverpages">
+    <echo>Make cover pages</echo>
     <xslt force="yes"
 	  style="${profileDir}/${profile}/docx/makecoverpages.xsl" 
 	  in="${outputTempDir}/word/document.xml" 
@@ -86,6 +87,7 @@
       <param name="document-file" expression="${outputTempDir}/newdocument.xml"/>
     </xslt>
     <move file="${outputTempDir}/tmp3.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
+    <delete file="${outputTempDir}/newdocument.xml"/>
   </target>
 
   <target name="notodd" unless="processODD">
@@ -156,7 +158,6 @@
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="word-directory" expression="file:///${outputTempDir}"/>
       <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="isofreestanding" expression="true"/>
       <!-- supply name of language-->
       <param name="lang" expression="${lang}" if="lang"/>
       <!-- emit some diagnostics"-->
