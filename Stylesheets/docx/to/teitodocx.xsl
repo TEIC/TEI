@@ -145,7 +145,7 @@
     <xsl:preserve-space elements="tei:text"/>
     <xsl:output method="xml" version="1.0" encoding="UTF-8"/>
 
-    <xsl:param name="isofreestanding">false</xsl:param>
+    <xsl:param name="isofreestanding">true</xsl:param>
 
 
     <xsl:key name="FOOTERS" match="tei:fw[@type='footer']" use="@xml:id"/>
@@ -980,9 +980,9 @@
     -->
     <xsl:template name="create-footnote">
         <xsl:variable name="num">
-            <xsl:number count="tei:note[@place='foot' or @place='bottom' ]" level="any"/>
+	  <xsl:number count="tei:note[@place='foot' or @place='bottom' ]" level="any"/>
         </xsl:variable>
-        <xsl:variable name="id" select="$num+1"/>
+        <xsl:variable name="id" select="number($num)+1"/>
         <w:r>
             <w:rPr>
                 <w:rStyle w:val="FootnoteReference"/>

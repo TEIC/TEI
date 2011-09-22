@@ -307,7 +307,9 @@
 	    -->
 	    <!-- prepare actual graphic -->
 	    <xsl:variable name="generatedID">
-	      <xsl:choose>
+	      <xsl:number level="any"/>
+	    <!--
+		<xsl:choose>
 		<xsl:when test="@n">
 		  <xsl:value-of select="@n"/>
 		</xsl:when>
@@ -315,7 +317,9 @@
 		  <xsl:number level="any"/>
 		</xsl:otherwise>
 	      </xsl:choose>
+	      -->
 	    </xsl:variable>
+
             <xsl:variable name="graphic-element">
                 <a:graphic>
                     <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">

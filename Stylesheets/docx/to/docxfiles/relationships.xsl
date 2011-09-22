@@ -149,14 +149,17 @@
                 <xsl:for-each select="key('GRAPHICS',1)">
 
 		  <xsl:variable name="n">
+		    <xsl:number level="any"/>
+		  <!--
 		    <xsl:choose>
 		      <xsl:when test="@n">
-			<xsl:value-of select="@n"/>
+			<xsl:number level="any"/>
 		      </xsl:when>
 		      <xsl:otherwise>
 			<xsl:number level="any"/>
 		      </xsl:otherwise>
 		    </xsl:choose>
+		    -->
 		  </xsl:variable>
                     <Relationship Id="rId{$n + 300}"
                              Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
