@@ -43,7 +43,7 @@
     <xsl:param name="filePerPage">true</xsl:param>
     <xsl:param name="splitLevel">-1</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
-    <xsl:param name="mediaoverlay">true</xsl:param>
+    <xsl:param name="mediaoverlay">false</xsl:param>
     <xsl:param name="cssFile">../profiles/godwindiaries/epub/ota.css</xsl:param>
     <xsl:param name="subject">William Godwin's Diaries</xsl:param>
     <xsl:param name="pagebreakStyle">none</xsl:param>

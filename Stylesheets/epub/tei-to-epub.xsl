@@ -74,7 +74,7 @@
   <xsl:param name="outputTarget">epub</xsl:param>
 
   <xsl:key name="Timeline" match="tei:timeline" use="1"/>
-  <xsl:key name="Object" match="tei:when" use="substring(corresp,2)"/>
+  <xsl:key name="Object" match="tei:when" use="substring(@corresp,2)"/>
   <xsl:key name="objectOnPage" match="tei:*[@xml:id]" use="generate-id(preceding::tei:pb[1])"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -301,13 +301,13 @@
             </metadata>
             <manifest>
 	      <!-- deal with intricacies of overlay files -->
+	      <xsl:variable name="TL" select="key('Timeline',1)"/>
 	      <xsl:if test="$mediaoverlay='true' and
 			    key('Timeline',1)">
 		<xsl:if test="$verbose='true'">
 		  <xsl:message>write file SMIL files</xsl:message>
 		</xsl:if>
 		<xsl:for-each select="key('Timeline',1)">
-		  <xsl:variable name="TL" select="."/>
 		  <xsl:variable name="TLnumber">
 		    <xsl:number level="any"/>
 		  </xsl:variable>
@@ -340,7 +340,8 @@
 			<xsl:for-each select="key('objectOnPage',$page)">
 			  <xsl:variable name="object" select="@xml:id"/>
 			  <xsl:for-each select="$TL">
-			    <xsl:for-each select="key('Object',$object)">
+			    <xsl:for-each
+				select="key('Object',$object)">
 			      <par id="{@xml:id}">
 				<text src="{$target}.html{@corresp}"/>
 				<audio src="{$audio}"
