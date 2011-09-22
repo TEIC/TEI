@@ -574,19 +574,18 @@
 	  <w:pStyle w:val="Tablenote"/>
 	</w:pPr>
       </xsl:variable>
-      
       <xsl:call-template name="block-element">
-	        <xsl:with-param name="pPr" select="$pPr"/>
-	        <xsl:with-param name="nop">false</xsl:with-param>
+	<xsl:with-param name="pPr" select="$pPr"/>
+	<xsl:with-param name="nop">true</xsl:with-param>
       </xsl:call-template>
     </xsl:template>
     
     
-       <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	Paragraphs in the front matter 
       </desc>
-       </doc>
+    </doc>
     <xsl:template match="tei:front/tei:div/tei:p[@type='foreword']">
         <xsl:call-template name="block-element">
             <xsl:with-param name="pPr">
