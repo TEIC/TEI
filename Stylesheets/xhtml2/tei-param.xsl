@@ -419,12 +419,21 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
       <xsl:param name="class">title</xsl:param>
       <xsl:param name="level">1</xsl:param>
       <xsl:if test="not($text='')">
+	<xsl:choose>
+	<xsl:when test="$level &gt; 6">
+	  <div class="h{$level}">
+            <xsl:copy-of select="$text"/>
+	  </div>
+	</xsl:when>
+	<xsl:otherwise>
          <xsl:element name="h{$level}">
 	   <xsl:attribute name="class">
 	     <xsl:value-of select="$class"/>
 	   </xsl:attribute>
 	   <xsl:copy-of select="$text"/>
          </xsl:element>
+	</xsl:otherwise>
+	</xsl:choose>
       </xsl:if>
   </xsl:template>
 

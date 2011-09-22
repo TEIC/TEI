@@ -1134,7 +1134,7 @@
       <desc>plain text version of title for div [html] </desc>
    </doc>
   <xsl:template name="generateDivtitle">
-      <xsl:apply-templates select="tei:head/text()"/>
+      <xsl:apply-templates select="tei:head" mode="plain"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

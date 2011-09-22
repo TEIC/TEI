@@ -143,7 +143,7 @@
       </xsl:choose>
     </xsl:variable>
       <xsl:choose>
-         <xsl:when test="@rend='inline' or @place='inline'">
+         <xsl:when test="parent::tei:head or @rend='inline' or @place='inline'">
 	   <xsl:apply-templates/>
          </xsl:when>
          <xsl:when test="parent::tei:ref">

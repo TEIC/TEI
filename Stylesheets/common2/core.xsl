@@ -47,6 +47,8 @@
   <xsl:template match="tei:app" mode="plain"/>
   <xsl:template match="tei:pb" mode="plain"/>
   <xsl:template match="tei:lb" mode="plain"/>
+  <xsl:template match="tei:figure" mode="plain"/>
+  <xsl:template match="tei:figDesc" mode="plain"/>
   <xsl:template match="tei:ptr" mode="plain"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process tei:sic</desc>

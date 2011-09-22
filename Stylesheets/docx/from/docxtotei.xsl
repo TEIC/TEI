@@ -39,8 +39,8 @@
 	  <xsl:import href="../utils/identity/identity.xsl"/>
 
 	  <xsl:import href="parameters.xsl"/>
-	  <xsl:include href="pass2/pass2.xsl"/>
 	  <xsl:include href="pass0/pass0.xsl"/>
+	  <xsl:include href="pass2/pass2.xsl"/>
 	
 	  <xsl:include href="dynamic/fields.xsl"/>
 	  <xsl:include href="dynamic/toc.xsl"/>

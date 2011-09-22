@@ -155,12 +155,12 @@
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="parent::tei:q[not(@rend)]">
+      <xsl:when test="parent::tei:q[not(@rend) or contains(@rend,'inline')]">
         <span class="citbibl">
           <xsl:apply-templates/>
         </span>
       </xsl:when>
-      <xsl:when test="parent::tei:q[not(@rend='inline')]">
+      <xsl:when test="parent::tei:q[not(contains(@rend,'inline'))]">
         <div class="citbibl">
           <xsl:apply-templates/>
         </div>
@@ -671,7 +671,8 @@
     <desc>Process element l</desc>
   </doc>
   <xsl:template match="tei:l">
-    <div>
+    <xsl:element name="{if (ancestor::tei:q[@rend='inline']) then
+      'span' else 'div'}">
       <xsl:call-template name="rendToClass">      
 	<xsl:with-param name="default">l</xsl:with-param>
       </xsl:call-template>	    
@@ -695,7 +696,7 @@
 	  <xsl:apply-templates/>
 	</xsl:otherwise>
       </xsl:choose>
-    </div>
+    </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element lg</desc>
@@ -1276,7 +1277,9 @@
   <xsl:template match="tei:p">
     <xsl:variable name="wrapperElement">
       <xsl:choose>
-	<xsl:when test="$outputTarget='$html5'">p</xsl:when>
+	<xsl:when test="$outputTarget='html5'">p</xsl:when>
+        <xsl:when test="parent::tei:figure">span</xsl:when>
+	<xsl:when test="$outputTarget='epub'">div</xsl:when>
 	<xsl:when test="tei:eg">div</xsl:when>
 	<xsl:when test="tei:figure">div</xsl:when>
 	<xsl:when test="tei:floatingText">div</xsl:when>
@@ -1378,6 +1381,11 @@
   </doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
+      <xsl:when test="contains(@rend,'marg')">
+	<span class="margnote">
+	  <xsl:call-template name="makeQuote"/>
+	</span>
+      </xsl:when>
       <xsl:when test="@rend='inline' and (tei:p or tei:note[@place])">
         <div class="inlineq">
 	  <xsl:call-template name="makeQuote"/>
@@ -1387,6 +1395,11 @@
         <span class="inlineq">
           <xsl:apply-templates/>
 	</span>
+      </xsl:when>
+      <xsl:when test="parent::tei:q[@rend='inline']">
+        <span class="blockquote {@rend}">
+          <xsl:apply-templates/>
+        </span>
       </xsl:when>
       <xsl:when test="parent::tei:div|parent::tei:body|tei:sp|tei:p|tei:floatingText|tei:lg|tei:l|tei:note[tei:q/tei:l]">
         <div class="blockquote {@rend}">

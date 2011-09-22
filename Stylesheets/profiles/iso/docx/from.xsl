@@ -26,7 +26,7 @@
                 exclude-result-prefixes="a pic rel ve o teidocx r m v wp w10 w wne mml vt cals tbx iso custprops">
 
     <!-- import conversion style -->
-    <xsl:import href="../../../docx/utils/functions.xsl"/>
+
     <xsl:import href="../../../docx/from/docxtotei.xsl"/>
 
     <!-- import special iso functions -->
@@ -1671,6 +1671,7 @@
     </doc>
 
     <xsl:template name="paragraph-wp">
+      <xsl:param name="style"/>
         <p>
             <!-- put style in rend, if there is a style -->
             <xsl:if test="w:pPr/w:pStyle/@w:val and teidocx:is-supported-style(w:pPr/w:pStyle/@w:val)">
