@@ -196,6 +196,13 @@
   </q>
 </xsl:template>
 
+<xsl:template match="chapter">
+  <div>  
+    <xsl:call-template name="ID"/>
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
+
 <xsl:template match="citation">
   <cit>  
     <xsl:apply-templates/>
