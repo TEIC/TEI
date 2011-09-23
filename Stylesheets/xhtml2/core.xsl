@@ -857,7 +857,7 @@
           <xsl:apply-templates mode="glosstable" select="tei:item"/>
         </table>
       </xsl:when>
-      <xsl:when test="@type='inline'">
+      <xsl:when test="@type='inline' or parent::tei:head">
         <!--<xsl:if test="not(tei:item)">None</xsl:if>-->
         <xsl:apply-templates mode="inline" select="tei:item"/>
       </xsl:when>
@@ -1381,11 +1381,6 @@
   </doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
-      <xsl:when test="contains(@rend,'marg')">
-	<span class="margnote">
-	  <xsl:call-template name="makeQuote"/>
-	</span>
-      </xsl:when>
       <xsl:when test="@rend='inline' and (tei:p or tei:note[@place])">
         <div class="inlineq">
 	  <xsl:call-template name="makeQuote"/>

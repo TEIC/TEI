@@ -139,13 +139,14 @@
     <xsl:variable name="container">
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5'">figure</xsl:when>
+	<xsl:when test="$outputTarget='epub'">span</xsl:when>
 	<xsl:otherwise>div</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-      <xsl:choose>
-         <xsl:when test="parent::tei:head or @rend='inline' or @place='inline'">
-	   <xsl:apply-templates/>
-         </xsl:when>
+    <xsl:choose>
+      <xsl:when test="parent::tei:head or @rend='inline' or @place='inline'">
+	<xsl:apply-templates/>
+      </xsl:when>
          <xsl:when test="parent::tei:ref">
 	   <xsl:apply-templates/>
          </xsl:when>
@@ -154,6 +155,7 @@
 	     <xsl:choose>
 	       <xsl:when test="@rend">
 		 <xsl:attribute name="class">
+		   <xsl:text>figure </xsl:text>
 		   <xsl:value-of select="@rend"/>
 		 </xsl:attribute>
 	       </xsl:when>
@@ -211,9 +213,9 @@
 		   </figcaption>
 		 </xsl:when>
 		 <xsl:otherwise>
-		   <div class="caption">
+		   <span class="caption">
 		     <xsl:copy-of select="$caption"/>
-		   </div>
+		   </span>
 		 </xsl:otherwise>
 	       </xsl:choose>
 	     </xsl:if>
