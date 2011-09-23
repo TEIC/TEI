@@ -210,7 +210,7 @@
 	  <xsl:call-template name="rendToClass">      
 	    <xsl:with-param name="default">p-in-sp</xsl:with-param>
 	  </xsl:call-template>
-	  <xsl:apply-templates select="current-group()"/>
+	  <xsl:apply-templates/>
 	</div>
       </xsl:otherwise>
     </xsl:choose>

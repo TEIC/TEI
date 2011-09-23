@@ -60,7 +60,6 @@
   <xsl:param name="createanttask">false</xsl:param>
   <xsl:param name="institution"/>
   <xsl:param name="linkPanel">false</xsl:param>
-  <xsl:param name="mediaoverlay">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>

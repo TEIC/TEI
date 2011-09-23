@@ -2326,7 +2326,7 @@
         </xsl:otherwise>
       </xsl:choose>
       <xsl:call-template name="rendToClassHook"/>
-      <xsl:if test="teidocx:is-transcribable(.)">
+      <xsl:if test="teidocx:is-transcribable(.) and $mediaoverlay='true'">
 	<xsl:text> transcribable</xsl:text>
       </xsl:if>
     </xsl:variable>

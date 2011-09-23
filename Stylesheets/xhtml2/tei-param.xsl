@@ -752,6 +752,7 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
       </xsl:choose>
    </xsl:template>
 
+  <xsl:param name="mediaoverlay">false</xsl:param>
 
 
 </xsl:stylesheet>
