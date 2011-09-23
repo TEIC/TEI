@@ -44,21 +44,20 @@
       <html>
          <head>
             <title>Report on 
-      <xsl:value-of select="$isotitle"/>:
-      <xsl:value-of select="$isoyear"/>:
-      <xsl:value-of select="$isonumber"/>:
-      <xsl:value-of select="$isopart"/>
+	    <xsl:value-of select="$isotitle"/>:
+	    <xsl:value-of select="$isoyear"/>:
+	    <xsl:value-of select="$isonumber"/>:
+	    <xsl:value-of select="$isopart"/>
             </title>
             <link href="iso.css" rel="stylesheet" type="text/css"/>
 
          </head>
          <body>
-            <h1 class="maintitle">
-    
-	              <xsl:value-of select="$isotitle"/>:
-	<xsl:value-of select="$isoyear"/>:
-	<xsl:value-of select="$isonumber"/>:
-	<xsl:value-of select="$isopart"/>
+            <h1 class="maintitle">	      
+	      <xsl:value-of select="$isotitle"/>:
+	      <xsl:value-of select="$isoyear"/>:
+	      <xsl:value-of select="$isonumber"/>:
+	      <xsl:value-of select="$isopart"/>
             </h1>
 
             <xsl:for-each select="tei:text/tei:front">
