@@ -3,7 +3,7 @@
                 xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:o="urn:schemas-microsoft-com:office:office"
                 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+		xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
                 xmlns:v="urn:schemas-microsoft-com:vml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
@@ -16,7 +16,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
                 exclude-result-prefixes="ve o r m v wp w10 w wne mml
-					 teidocx tbx">
+					 tei tbx">
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
