@@ -138,15 +138,16 @@
       </xsl:choose>
       <xsl:for-each select="*">
         <xsl:variable name="TOC">
+
           <TOC xmlns="http://www.w3.org/1999/xhtml">
             <xsl:call-template name="mainTOC"/>
           </TOC>
         </xsl:variable>
-        <!--
+<!--
 	    <xsl:result-document href="/tmp/TOC">
 	    <xsl:copy-of select="$TOC"/>
 	    </xsl:result-document>
-	-->
+-->
 	  <xsl:for-each select="tokenize($javascriptFiles,',')">
 	    <xsl:variable name="file" select="normalize-space(.)"/>
 	    <xsl:variable name="name" select="tokenize($file,'/')[last()]"/>
@@ -504,18 +505,20 @@
 		<xsl:when test="$filePerPage='true'">
 		  <xsl:for-each select="key('PB',1)">
 		    <xsl:if test="@facs">
-		      <itemref linear="yes">
+		      <itemref>
 			<xsl:attribute name="idref">
 			  <xsl:text>pagefacs</xsl:text>
 			  <xsl:number level="any"/>
 			</xsl:attribute>
+			<xsl:attribute name="linear">yes</xsl:attribute>
 		      </itemref>
 		    </xsl:if>
-		    <itemref linear="yes">
+		    <itemref>
 		      <xsl:attribute name="idref">
 			<xsl:text>page</xsl:text>
 			<xsl:number level="any"/>
 		      </xsl:attribute>
+		      <xsl:attribute name="linear">yes</xsl:attribute>
 		    </itemref>
 		    </xsl:for-each>
 		</xsl:when>
@@ -525,21 +528,24 @@
 		      <xsl:when test="not(html:a)"/>
 		      <xsl:when test="starts-with(html:a/@href,'#')"/>
 		      <xsl:otherwise>
-			<itemref linear="yes">
+			<itemref>
 			  <xsl:attribute name="idref">
 			    <xsl:text>section</xsl:text>
 			    <xsl:number count="html:li" level="any"/>
 			  </xsl:attribute>
+			<xsl:attribute
+			    name="linear">yes</xsl:attribute>
 			</itemref>
 		      </xsl:otherwise>
 		    </xsl:choose>
 		    <xsl:if test="html:ul">
 		      <xsl:for-each select="html:ul//html:li[html:a and not(contains(html:a/@href,'#'))]">
-			<itemref linear="yes">
+			<itemref>
 			  <xsl:attribute name="idref">
 			    <xsl:text>section</xsl:text>
 			    <xsl:number count="html:li" level="any"/>
 			  </xsl:attribute>
+			  <xsl:attribute name="linear">yes</xsl:attribute>
 			</itemref>
 		      </xsl:for-each>
 		    </xsl:if>
@@ -723,32 +729,28 @@
                     <content src="titlepage{$N}.html"/>
                   </navPoint>
                 </xsl:for-each>
-		<xsl:if test="not($TOC/html:TOC/html:ul/html:li)">
-		  <navPoint>
-		    <navLabel>
-		      <text>[The book]</text>
-		    </navLabel>
-		    <content src="index.html"/>
-		  </navPoint>
-		</xsl:if>
-                <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                  <xsl:choose>
-                    <xsl:when test="not(html:a)"/>
-                    <xsl:when test="starts-with(html:a/@href,'#')"/>
-                    <xsl:when test="contains(@class,'headless')"/>
-                    <xsl:when test="html:a/@href=preceding-sibling::html:li/html:a/@href"/>
-                    <xsl:otherwise>
-                      <navPoint>
-                        <navLabel>
-                          <text>
-                            <xsl:value-of select="html:span[@class='headingNumber']"/>
-                            <xsl:value-of select="normalize-space(html:a[1])"/>
-                          </text>
-                        </navLabel>
-                        <content src="{html:a/@href}"/>
-                      </navPoint>
-                    </xsl:otherwise>
-                  </xsl:choose>
+		<xsl:choose>
+		  <xsl:when test="not($TOC/html:TOC/html:ul[@class='toc toc_body']/html:li)">
+		    <xsl:for-each
+			select="$TOC/html:TOC/html:ul[@class='toc toc_front']">
+		      <xsl:apply-templates select="html:li"/>
+		    </xsl:for-each>
+		    <navPoint>
+		      <navLabel>
+			<text>[The book]</text>
+		      </navLabel>
+		      <content src="index.html"/>
+		    </navPoint>
+		    <xsl:for-each
+			select="$TOC/html:TOC/html:ul[@class='toc toc_back']">
+		      <xsl:apply-templates select="html:li"/>
+		    </xsl:for-each>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:apply-templates
+			select="$TOC/html:TOC/html:ul/html:li"/>
+		  </xsl:otherwise>
+		</xsl:choose>
                   <!--		<xsl:if test="html:ul">
                     <xsl:for-each select="html:ul/html:li">
 		    <xsl:variable name="pos">
@@ -765,7 +767,6 @@
                     </xsl:for-each>
 		    </xsl:if>
 		-->
-                </xsl:for-each>
                 <navPoint>
                   <navLabel>
                     <text>[About this book]</text>
@@ -840,6 +841,26 @@
 	</xsl:if>
       </xsl:for-each>
     </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="html:li">
+    <xsl:choose>
+      <xsl:when test="not(html:a)"/>
+      <xsl:when test="starts-with(html:a/@href,'#')"/>
+      <xsl:when test="contains(@class,'headless')"/>
+      <xsl:when test="html:a/@href=preceding-sibling::html:li/html:a/@href"/>
+      <xsl:otherwise>
+	<navPoint xmlns="http://www.daisy.org/z3986/2005/ncx/">
+	  <navLabel>
+	    <text>
+	      <xsl:value-of select="html:span[@class='headingNumber']"/>
+	      <xsl:value-of select="normalize-space(html:a[1])"/>
+	    </text>
+	  </navLabel>
+	  <content src="{html:a/@href}"/>
+	</navPoint>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
    <xsl:template name="javascriptHook">   

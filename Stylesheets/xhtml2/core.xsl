@@ -127,6 +127,14 @@
     </address>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element argument</desc>
+  </doc>
+  <xsl:template match="tei:argument">
+    <div class="argument">
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element author</desc>
   </doc>
   <xsl:template match="tei:author">
@@ -151,9 +159,9 @@
         </span>
       </xsl:when>
       <xsl:when test="parent::tei:q[not(@rend) and tei:l]">
-        <div class="citbibl">
+        <span class="citbibl">
           <xsl:apply-templates/>
-        </div>
+        </span>
       </xsl:when>
       <xsl:when test="parent::tei:q[not(@rend) or
 		      contains(@rend,'inline') or contains(@rend,'marg')]">
@@ -439,12 +447,17 @@
     <xsl:choose>
       <xsl:when test="parent::tei:body or parent::tei:front or parent::tei:back">
         <h1>
-          <xsl:call-template name="rendToClass"/>
-          <xsl:apply-templates/>
-        </h1>
+	  <xsl:apply-templates/>
+	</h1>
+      </xsl:when>
+      <xsl:when test="parent::tei:argument">
+	<div>
+	  <xsl:call-template name="rendToClass"/>
+	  <xsl:apply-templates/>
+	</div>
       </xsl:when>
       <xsl:when test="not(starts-with($parent,'div'))">
-        <xsl:apply-templates/>
+	  <xsl:apply-templates/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
