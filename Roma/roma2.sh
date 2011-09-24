@@ -36,7 +36,7 @@ makeODD()
 makeRelax() 
 {
     echo "2. make RELAX NG from compiled ODD"
-    saxon   -s-$RESULTS/$ODD.compiled $TEIXSLDIR/odds2/odd2relax.xsl \
+    saxon   -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds2/odd2relax.xsl \
     $PATTERN $DEBUG $LANGUAGE $DOCLANG  $SELECTEDSCHEMA \
 	     parameterize=$parameterize \
              autoGlobal=$AUTOGLOBAL \
