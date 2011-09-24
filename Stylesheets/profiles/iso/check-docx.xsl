@@ -47,7 +47,7 @@
     
     
     <!-- use only iso styles for paragraphs-->
-    <xsl:template match="w:p[w:pPr/w:pStyle and not(teidocx:is-supported-style(w:pPr/w:pStyle/@w:val))]"
+    <xsl:template match="w:p[w:pPr/w:pStyle and not(tei:is-supported-style(w:pPr/w:pStyle/@w:val))]"
                  mode="document">
         <xsl:variable name="number">
             <xsl:number select="." level="any"/>
@@ -67,7 +67,7 @@
         </w:p>
     </xsl:template>
     
-    <xsl:template match="w:p[w:pPr/w:pStyle and not(teidocx:is-supported-style(w:pPr/w:pStyle/@w:val))]"
+    <xsl:template match="w:p[w:pPr/w:pStyle and not(tei:is-supported-style(w:pPr/w:pStyle/@w:val))]"
                  mode="comments">
         <xsl:variable name="number">
             <xsl:number select="." level="any"/>
@@ -83,7 +83,7 @@
     </xsl:template>
     
     <!-- use only iso styles for runs-->
-    <xsl:template match="w:p/w:r[w:rPr/w:rStyle and not(teidocx:is-supported-style(w:rPr/w:rStyle/@w:val))]"
+    <xsl:template match="w:p/w:r[w:rPr/w:rStyle and not(tei:is-supported-style(w:rPr/w:rStyle/@w:val))]"
                  mode="document">
         <xsl:variable name="number">
             <xsl:number select="." level="any"/>
@@ -99,7 +99,7 @@
         </w:r>
     </xsl:template>
     
-    <xsl:template match="w:p/w:r[w:rPr/w:rStyle and not(teidocx:is-supported-style(w:rPr/w:rStyle/@w:val))]"
+    <xsl:template match="w:p/w:r[w:rPr/w:rStyle and not(tei:is-supported-style(w:rPr/w:rStyle/@w:val))]"
                  mode="comments">
         <xsl:variable name="number">
             <xsl:number select="." level="any"/>

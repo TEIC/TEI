@@ -78,7 +78,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:get-listtype" as="xs:string">
+    <xsl:function name="tei:get-listtype" as="xs:string">
       <xsl:param name="style"/>
       <xsl:choose>
 	<xsl:when test="$style='ITLP BodyText Bulletted'">
@@ -96,7 +96,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:is-firstlevel-heading" as="xs:boolean">
+    <xsl:function name="tei:is-firstlevel-heading" as="xs:boolean">
       <xsl:param name="p"/>      
       <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
       <xsl:choose>
@@ -115,7 +115,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:is-heading" as="xs:boolean">
+    <xsl:function name="tei:is-heading" as="xs:boolean">
       <xsl:param name="p"/>
       <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
       <xsl:choose>
@@ -149,7 +149,7 @@
       </xsl:choose>
     </xsl:function>
 
-    <xsl:function name="teidocx:heading-level" as="xs:string">
+    <xsl:function name="tei:heading-level" as="xs:string">
       <xsl:param name="p"/>
       <xsl:analyze-string select="$p/w:pPr/w:pStyle/@w:val" regex="[^0-9]*([0-9])">
 	<xsl:matching-substring>
@@ -168,7 +168,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:get-nextlevel-header" as="xs:string">
+    <xsl:function name="tei:get-nextlevel-header" as="xs:string">
       <xsl:param name="current-header"/>
       <xsl:value-of select="translate($current-header,'12345678','23456789')"/>
     </xsl:function>
@@ -177,7 +177,7 @@
       <desc>Defines whether or not a word paragraph is a list element.</desc>
     </doc>
    
-    <xsl:function name="teidocx:is-list" as="xs:boolean">
+    <xsl:function name="tei:is-list" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when

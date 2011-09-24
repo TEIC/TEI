@@ -99,7 +99,7 @@
         <xsl:variable name="style">
             <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
         </xsl:variable>
-        <xsl:variable name="type" select="teidocx:get-listtype($style)"/>
+        <xsl:variable name="type" select="tei:get-listtype($style)"/>
         
         <xsl:attribute name="type">
             <xsl:choose>

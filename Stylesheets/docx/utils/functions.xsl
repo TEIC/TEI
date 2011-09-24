@@ -44,12 +44,12 @@
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Converts a dimension into the 20th of a ps point.</desc></doc>
-    <xsl:function name="teidocx:convert-dim-pt20" as="xs:integer">
+    <xsl:function name="tei:convert-dim-pt20" as="xs:integer">
         <xsl:param name="dim"/>
 	     <xsl:value-of select="number(substring($dim,0,string-length($dim)-1)) * 20"/>
     </xsl:function>
     
-    <xsl:function name="teidocx:convert-dim-pt" as="xs:integer">
+    <xsl:function name="tei:convert-dim-pt" as="xs:integer">
         <xsl:param name="dim"/>
         <xsl:choose>
             <xsl:when test="ends-with($dim,'cm')">
@@ -77,7 +77,7 @@
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Convert a dimension into english metric unit.</desc></doc>
-    <xsl:function name="teidocx:convert-dim-emu" as="xs:integer">
+    <xsl:function name="tei:convert-dim-emu" as="xs:integer">
         <xsl:param name="dim"/>
 	<xsl:variable name="result">
 	  <xsl:choose>
@@ -106,14 +106,14 @@
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Returns a listtype for a given stylename (return empty string to figure it out dynamically).</desc></doc>
-    <xsl:function name="teidocx:get-listtype" as="xs:string">
+    <xsl:function name="tei:get-listtype" as="xs:string">
         <xsl:param name="style"/>
         <xsl:text/>
     </xsl:function>
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Returns the correct heading style (return empty string to figure it out dynamically).</desc></doc>
-    <xsl:function name="teidocx:get-headingstyle" as="xs:string">
+    <xsl:function name="tei:get-headingstyle" as="xs:string">
         <xsl:param name="element"/>
         <xsl:param name="level"/>
 
@@ -122,7 +122,7 @@
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a first level heading.</desc></doc>
-    <xsl:function name="teidocx:is-firstlevel-heading" as="xs:boolean">
+    <xsl:function name="tei:is-firstlevel-heading" as="xs:boolean">
         <xsl:param name="p"/>
         
         <xsl:choose>
@@ -134,7 +134,7 @@
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a  heading.</desc></doc>
-    <xsl:function name="teidocx:is-heading" as="xs:boolean">
+    <xsl:function name="tei:is-heading" as="xs:boolean">
         <xsl:param name="p"/>
 	<xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
       
@@ -147,7 +147,7 @@
 
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a list element.</desc></doc>
-    <xsl:function name="teidocx:is-list" as="xs:boolean">
+    <xsl:function name="tei:is-list" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'List')]">true</xsl:when>
@@ -158,7 +158,7 @@
 
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a table of contents.</desc></doc>
-    <xsl:function name="teidocx:is-toc" as="xs:boolean">
+    <xsl:function name="tei:is-toc" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'toc')]">true</xsl:when>
@@ -168,7 +168,7 @@
 
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a figure element.</desc></doc>
-    <xsl:function name="teidocx:is-figure" as="xs:boolean">
+    <xsl:function name="tei:is-figure" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Figure')]">true</xsl:when>
@@ -180,7 +180,7 @@
 
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is a line of poetry.</desc></doc>
-    <xsl:function name="teidocx:is-line" as="xs:boolean">
+    <xsl:function name="tei:is-line" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[w:pPr/w:pStyle/@w:val='tei_l']">true</xsl:when>
@@ -190,7 +190,7 @@
 
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Defines whether or not a word paragraph is gloss list.</desc></doc>
-    <xsl:function name="teidocx:is-glosslist" as="xs:boolean">
+    <xsl:function name="tei:is-glosslist" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[w:pPr/w:pStyle/@w:val='dl']">true</xsl:when>
@@ -200,7 +200,7 @@
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Is given a header style and returns the style for the next level header.</desc></doc>
-    <xsl:function name="teidocx:get-nextlevel-header" as="xs:string">
+    <xsl:function name="tei:get-nextlevel-header" as="xs:string">
         <xsl:param name="current-header"/>
         <xsl:value-of select="translate($current-header,'12345678','23456789')"/>
     </xsl:function>
@@ -210,12 +210,12 @@
       <desc>
 		Returns the current date.</desc></doc>
 
-	  <xsl:function name="teidocx:whatsTheDate">
+	  <xsl:function name="tei:whatsTheDate">
         <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
     </xsl:function>
 
    <!--
-    <xsl:function name="teidocx:getColNum">
+    <xsl:function name="tei:getColNum">
       <xsl:param name="col"/>
       <xsl:value-of
 	  select="ancestor::cals:table/cals:tgroup/cals:colspec[@colname=$col]/@colnum"/>

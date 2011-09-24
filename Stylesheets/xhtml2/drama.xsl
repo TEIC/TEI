@@ -220,11 +220,17 @@
       <desc>Process element stage</desc>
    </doc>
   <xsl:template match="tei:stage">
-    <xsl:element name="{if (parent::tei:head or parent::tei:l or
-		       parent::tei:p or parent::tei:ab or
+    <xsl:element name="{if (ancestor::tei:head or parent::tei:l or
+		       tei:q[not(@place)] or parent::tei:p or parent::tei:ab or
 		       parent::tei:hi) then 'span' else 'div'}">
       <xsl:call-template name="rendToClass">
-	<xsl:with-param name="default">stage it</xsl:with-param>
+	<xsl:with-param name="default">
+	  <xsl:choose>
+	    <xsl:when
+		test="ancestor::tei:text/@rend='firstfolio'">stage</xsl:when>
+	    <xsl:otherwise>stage it</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:with-param>
       </xsl:call-template>
       <xsl:apply-templates/>
     </xsl:element>

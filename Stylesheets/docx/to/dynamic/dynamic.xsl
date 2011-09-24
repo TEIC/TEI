@@ -56,7 +56,7 @@
         dynamic content
     </desc>
    </doc>    
-    <xsl:template match="teidocx:dynamicContent">
+    <xsl:template match="tei:dynamicContent">
         <xsl:choose>
             <xsl:when test="@type='pagenumber'">
                 <w:fldSimple w:instr=" PAGE \* MERGEFORMAT ">

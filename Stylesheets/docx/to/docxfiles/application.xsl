@@ -50,7 +50,7 @@
    </doc>
 
     <xsl:template name="write-docxfile-docprops-core">
-        <xsl:variable name="now" select="teidocx:whatsTheDate()"/>
+        <xsl:variable name="now" select="tei:whatsTheDate()"/>
 
         <xsl:variable name="coreFile">
             <xsl:value-of select="$wordDirectory"/>

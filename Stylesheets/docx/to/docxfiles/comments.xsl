@@ -75,7 +75,7 @@
 		    <xsl:value-of select="tei:date/@when"/>
 		  </xsl:when>
 		  <xsl:otherwise>
-		    <xsl:value-of select="teidocx:whatsTheDate()"/>
+		    <xsl:value-of select="tei:whatsTheDate()"/>
 		  </xsl:otherwise>
 		  </xsl:choose>
 		</xsl:attribute>

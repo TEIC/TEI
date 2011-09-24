@@ -74,23 +74,23 @@
         <xsl:for-each select="descendant-or-self::w:sectPr">
             <milestone unit="section">
                 <xsl:for-each select="w:headerReference">
-                    <teidocx:header type="{@w:type}" ref="{@r:id}"/>
+                    <tei:header type="{@w:type}" ref="{@r:id}"/>
                 </xsl:for-each>
                 <xsl:for-each select="w:footerReference">
-                    <teidocx:footer type="{@w:type}" ref="{@r:id}"/>
+                    <tei:footer type="{@w:type}" ref="{@r:id}"/>
                 </xsl:for-each>
                 <xsl:if test="w:pgSz/@w:orient='landscape'">
-                    <teidocx:orientation type="landscape"/>
+                    <tei:orientation type="landscape"/>
                 </xsl:if>
                 <xsl:if test="w:pgNumType">
-                    <teidocx:pageNumbering>
+                    <tei:pageNumbering>
                         <xsl:if test="w:pgNumType/@w:start">
                             <xsl:attribute name="start" select="w:pgNumType/@w:start"/>
                         </xsl:if>
                         <xsl:if test="w:pgNumType/@w:fmt">
                             <xsl:attribute name="type" select="w:pgNumType/@w:fmt"/>
                         </xsl:if>
-                    </teidocx:pageNumbering>
+                    </tei:pageNumbering>
                 </xsl:if>
             </milestone>
         </xsl:for-each>

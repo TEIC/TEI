@@ -64,7 +64,7 @@
         <!-- construct sectPr -->
         <xsl:variable name="sectPr">
             <w:sectPr>
-	      <xsl:for-each select="teidocx:footer">
+	      <xsl:for-each select="tei:footer">
 		<xsl:variable name="ref" select="@ref"/>
 		<xsl:if test="count(key('FOOTERS',$ref))&gt;0">
 		  <xsl:variable name="footernum">
@@ -76,7 +76,7 @@
 		</xsl:if>
 	      </xsl:for-each>
 	      
-	      <xsl:for-each select="teidocx:header">
+	      <xsl:for-each select="tei:header">
 		<xsl:variable name="ref" select="@ref"/>
 		<xsl:if test="count(key('HEADERS',$ref))&gt;0">
 		  <xsl:variable name="headernum">
@@ -91,7 +91,7 @@
 	      <w:pgSz>
 		<xsl:choose>
 		  <!-- landscape -->
-		  <xsl:when test="teidocx:orientation/@type='landscape'">
+		  <xsl:when test="tei:orientation/@type='landscape'">
 		    <xsl:attribute name="w:orient">landscape</xsl:attribute>
 		    <xsl:attribute name="w:w">15840</xsl:attribute>
 		    <xsl:attribute name="w:h">12240</xsl:attribute>
@@ -106,17 +106,17 @@
 	      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:gutter="0"
 		       w:footer="720"
 		       w:header="720"/>
-	      <xsl:if test="teidocx:pageNumbering">
+	      <xsl:if test="tei:pageNumbering">
 		<w:pgNumType>
-		  <xsl:if test="teidocx:pageNumbering/@start">
-		    <xsl:attribute name="w:start" select="teidocx:pageNumbering/@start"/>
+		  <xsl:if test="tei:pageNumbering/@start">
+		    <xsl:attribute name="w:start" select="tei:pageNumbering/@start"/>
 		  </xsl:if>
-		  <xsl:if test="teidocx:pageNumbering/@type">
-		    <xsl:attribute name="w:fmt" select="teidocx:pageNumbering/@type"/>
+		  <xsl:if test="tei:pageNumbering/@type">
+		    <xsl:attribute name="w:fmt" select="tei:pageNumbering/@type"/>
 		  </xsl:if>
 		</w:pgNumType>
 	      </xsl:if>
-	      <xsl:if test="teidocx:header/@type='first' or teidocx:footer/@type='first'">
+	      <xsl:if test="tei:header/@type='first' or tei:footer/@type='first'">
 		<w:titlePg/>
 	      </xsl:if>
 	      <w:docGrid w:linePitch="360"/>

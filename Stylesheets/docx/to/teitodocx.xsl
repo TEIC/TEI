@@ -481,12 +481,12 @@
 
         <!-- Process Child elements -->
         <xsl:for-each-group select="current-group()"
-			    group-starting-with="*[not(teidocx:is-inline(.))]">
+			    group-starting-with="*[not(tei:is-inline(.))]">
             <xsl:choose>
                 <!-- if the current item is a block element, we process that one,
                      and then take call this function recursively was all the other
                      elements -->
-                <xsl:when test="self::*[not(teidocx:is-inline(.))]">
+                <xsl:when test="self::*[not(tei:is-inline(.))]">
                     <!-- process block element -->
                     <xsl:apply-templates select=".">
                         <xsl:with-param name="style" select="$style"/>
@@ -840,7 +840,7 @@
 			  w:hAnsi="{@iso:font}"/>
 	      </xsl:when>
 	      <!-- typewriter font -->
-	      <xsl:when test="contains(@rend,'typewriter') or teidocx:render-typewriter(.)">
+	      <xsl:when test="contains(@rend,'typewriter') or tei:render-typewriter(.)">
 		<w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
 	      </xsl:when>
 	      <xsl:when test="contains(@rend, 'Special') or matches(@iso:style,'font-family')">
@@ -857,7 +857,7 @@
 
             <!-- bold -->
             <xsl:choose>
-                <xsl:when test="teidocx:render-bold(.)">
+                <xsl:when test="tei:render-bold(.)">
                     <w:b/>
                 </xsl:when>
                 <xsl:when test="self::tei:hi[not(@rend)]">
@@ -876,7 +876,7 @@
 
             <!-- italic -->
             <xsl:choose>
-                <xsl:when test="teidocx:render-italic(.)">
+                <xsl:when test="tei:render-italic(.)">
                     <w:i/>
                 </xsl:when>
                 <xsl:when test="self::tei:emph">
@@ -891,7 +891,7 @@
             </xsl:choose>
 
 	    <!-- small caps -->
-	    <xsl:if test="teidocx:render-smallcaps(.)">
+	    <xsl:if test="tei:render-smallcaps(.)">
 	      <w:smallCaps/>
             </xsl:if>
 
@@ -1043,7 +1043,7 @@
             <xsl:number level="any"/>
         </xsl:variable>
 
-       <xsl:variable name="getstyle" select="teidocx:get-headingstyle(.,$level)"/>
+       <xsl:variable name="getstyle" select="tei:get-headingstyle(.,$level)"/>
 
         <xsl:call-template name="block-element">
             <!-- we want a bookmark for referencing this section -->
@@ -1297,7 +1297,7 @@
                     <w:tblGrid>
                         <xsl:for-each select="html:colgroup/html:col">
                             <w:gridCol>
-                                <xsl:attribute name="w:w" select="teidocx:convert-dim-pt20(@width)"/>
+                                <xsl:attribute name="w:w" select="tei:convert-dim-pt20(@width)"/>
                             </w:gridCol>
                         </xsl:for-each>
                     </w:tblGrid>
@@ -1655,7 +1655,7 @@
 				    </xsl:when>
 				    <xsl:otherwise>
 				      <xsl:value-of
-					  select="teidocx:convert-dim-pt20(@colwidth)"/>
+					  select="tei:convert-dim-pt20(@colwidth)"/>
 				    </xsl:otherwise>
 				  </xsl:choose>
 				</xsl:attribute>

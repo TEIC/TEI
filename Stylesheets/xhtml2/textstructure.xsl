@@ -573,7 +573,7 @@
 	    <tei:TERM>
 	      <xsl:value-of select="tei:term"/>
 	    </tei:TERM>	    
-	    <xsl:for-each select="ancestor-or-self::*[teidocx:is-identifiable(.)][1]">
+	    <xsl:for-each select="ancestor-or-self::*[tei:is-identifiable(.)][1]">
 	      <tei:LINK>
 		  <xsl:apply-templates mode="generateLink"
 				       select="."/>

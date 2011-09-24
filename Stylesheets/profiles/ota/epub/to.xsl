@@ -130,30 +130,6 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:stage">
-    <xsl:variable name="e">
-      <xsl:choose>
-      <xsl:when test="parent::tei:head">span</xsl:when>
-      <xsl:when test="parent::tei:l">span</xsl:when>
-      <xsl:when test="parent::tei:p">span</xsl:when>
-      <xsl:when test="parent::tei:ab">span</xsl:when>
-      <xsl:otherwise>div</xsl:otherwise>
-    </xsl:choose>
-    </xsl:variable>
-    <xsl:element name="{$e}">
-      <xsl:call-template name="rendToClass">
-	<xsl:with-param name="default">
-	<xsl:choose>
-	  <xsl:when
-	      test="ancestor::tei:text/@rend='firstfolio'">stage</xsl:when>
-	  <xsl:otherwise>stage it</xsl:otherwise>
-	</xsl:choose>
-	</xsl:with-param>
-      </xsl:call-template>
-      <xsl:apply-templates/>
-    </xsl:element>
-  </xsl:template>
-
   <xsl:template match="tei:cell/tei:lb"/>
 
   <xsl:template match="tei:body/tei:lb"/>

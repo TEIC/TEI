@@ -427,14 +427,14 @@
 	  <xsl:for-each
 	      select="document(concat($outputDir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
 	    <xsl:value-of
-		select="number(teidocx:convert-dim-pt(@fo:page-width) - 144)"/>
+		select="number(tei:convert-dim-pt(@fo:page-width) - 144)"/>
 	  </xsl:for-each>
 	</xsl:variable>
 	<xsl:variable name="pageHeight">
 	  <xsl:for-each
 	      select="document(concat($outputDir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
 	    <xsl:value-of 
-		select="number(teidocx:convert-dim-pt(@fo:page-height) - 144)"/>
+		select="number(tei:convert-dim-pt(@fo:page-height) - 144)"/>
 	  </xsl:for-each>
 	</xsl:variable>
 	
@@ -444,14 +444,14 @@
 	      <xsl:value-of select="(($pageWidth div 100) * number(substring-before(@width,'%'))) cast as xs:integer"/>
 	    </xsl:when>
 	    <xsl:when test="@width">
-	      <xsl:value-of select="teidocx:convert-dim-pt(@width)"/>
+	      <xsl:value-of select="tei:convert-dim-pt(@width)"/>
 	    </xsl:when>
 	    <xsl:when test="@scale and $origwidth">
 	      <xsl:value-of select="number($origwidth * number(@scale)) div 127 cast as xs:integer"/>
 	    </xsl:when>
 	    <xsl:when test="@height[not(contains(.,'%'))] and $origheight">
 	      <xsl:variable name="h">
-		<xsl:value-of select="number(teidocx:convert-dim-pt(@height))"/>
+		<xsl:value-of select="number(tei:convert-dim-pt(@height))"/>
 	      </xsl:variable>
 	      <xsl:value-of select="($h * number($origwidth)) div number($origheight)"/>
 	    </xsl:when>
@@ -472,7 +472,7 @@
 	      <xsl:value-of select="(($pageHeight div 100) * (number(substring-before(@height,'%')))) cast as xs:integer"/>
 	    </xsl:when>
 	    <xsl:when test="@height">
-	      <xsl:value-of select="teidocx:convert-dim-pt(@height)"/>
+	      <xsl:value-of select="tei:convert-dim-pt(@height)"/>
 	    </xsl:when>
 	    <xsl:when test="@scale and $origheight">
 	      <xsl:value-of select="($origheight *
@@ -480,7 +480,7 @@
 	    </xsl:when>
 	    <xsl:when test="@width[not(contains(.,'%'))] and $origheight and $origwidth">
 	      <xsl:variable name="w">
-		<xsl:value-of select="number(teidocx:convert-dim-pt(@width))"/>
+		<xsl:value-of select="number(tei:convert-dim-pt(@width))"/>
 	      </xsl:variable>
 	      <xsl:value-of select="($w * number($origheight)) div number($origwidth)"/>
 	    </xsl:when>
@@ -1703,7 +1703,7 @@
     </text:span>
   </xsl:template>
 
-  <xsl:function name="teidocx:convert-dim-pt" as="xs:integer">
+  <xsl:function name="tei:convert-dim-pt" as="xs:integer">
     <xsl:param name="dim"/>
     <xsl:choose>
       <xsl:when test="ends-with($dim,'cm')">

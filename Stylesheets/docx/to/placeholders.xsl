@@ -110,7 +110,7 @@
         
     </desc>
    </doc>
-    <xsl:template match="*[not(teidocx:is-inline(.))]" priority="-10">
+    <xsl:template match="*[not(tei:is-inline(.))]" priority="-10">
         <xsl:param name="style"/>
         <xsl:param name="pPr"/>
         <xsl:param name="nop"/>
@@ -147,7 +147,7 @@
     </desc>
    </doc>
 
-    <xsl:template match="*[teidocx:is-inline(.)]" priority="-10">
+    <xsl:template match="*[tei:is-inline(.)]" priority="-10">
         <xsl:param name="character-style"/>
         <xsl:param name="style"/>
         <xsl:param name="pPr"/>

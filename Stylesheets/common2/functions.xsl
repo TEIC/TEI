@@ -22,7 +22,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether a section is "identifiable"</desc>
   </doc>
-  <xsl:function name="teidocx:is-identifiable" as="xs:boolean">
+  <xsl:function name="tei:is-identifiable" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -43,7 +43,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether a section is "transcribable"</desc>
   </doc>
-  <xsl:function name="teidocx:is-transcribable" as="xs:boolean">
+  <xsl:function name="tei:is-transcribable" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -57,7 +57,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in small caps.</desc>
   </doc>
-  <xsl:function name="teidocx:render-smallcaps" as="xs:boolean">
+  <xsl:function name="tei:render-smallcaps" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -71,7 +71,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in smart quotes.</desc>
   </doc>
-  <xsl:function name="teidocx:render-quotes" as="xs:boolean">
+  <xsl:function name="tei:render-quotes" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -86,7 +86,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in bold.</desc>
   </doc>
-  <xsl:function name="teidocx:render-bold" as="xs:boolean">
+  <xsl:function name="tei:render-bold" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -107,11 +107,11 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render something in italic.</desc>
   </doc>
-  <xsl:function name="teidocx:render-italic" as="xs:boolean">
+  <xsl:function name="tei:render-italic" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="self::tei:ref and teidocx:render-italic(..)">true</xsl:when>
+        <xsl:when test="self::tei:ref and tei:render-italic(..)">true</xsl:when>
         <xsl:when test="contains(@rend,'italic')">true</xsl:when>
         <xsl:when test="self::tei:emph">true</xsl:when>
         <xsl:when test="self::tei:hi[not(@rend)]">true</xsl:when>
@@ -132,7 +132,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render something in typewriter-like code.</desc>
   </doc>
-  <xsl:function name="teidocx:render-typewriter" as="xs:boolean">
+  <xsl:function name="tei:render-typewriter" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -147,7 +147,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Is given an element and defines whether or not this element is to be rendered inline.</desc>
   </doc>
-  <xsl:function name="teidocx:is-inline" as="xs:boolean">
+  <xsl:function name="tei:is-inline" as="xs:boolean">
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
@@ -242,17 +242,34 @@
         <xsl:when test="self::tei:unclear">true</xsl:when>
         <xsl:when test="self::tei:val">true</xsl:when>
         <xsl:when test="self::tei:width">true</xsl:when>
-        <xsl:when test="self::teidocx:dynamicContent">true</xsl:when>
+        <xsl:when test="self::tei:dynamicContent">true</xsl:when>
         <xsl:when test="self::w:drawing">true</xsl:when>
         <xsl:when test="self::m:oMath">true</xsl:when>
         <xsl:otherwise>
           <xsl:choose>
             <xsl:when test="empty($element/..)">false</xsl:when>
-            <xsl:when test="teidocx:is-inline($element/..)">true</xsl:when>
+            <xsl:when test="tei:is-inline($element/..)">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
           </xsl:choose>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Is given an element and says whether the context is at the
+    level of a block</desc>
+  </doc>
+  <xsl:function name="tei:blockContext" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+	<xsl:when test="parent::tei:body">true</xsl:when>
+	<xsl:when test="parent::tei:div">true</xsl:when>
+	<xsl:when test="parent::tei:titlePage">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
 </xsl:stylesheet>

@@ -205,7 +205,7 @@
 		 group all paragraphs that form a first level section.
 	    -->
 	    <xsl:for-each-group select="w:sdt|w:p|w:tbl"
-				group-starting-with="w:p[teidocx:is-firstlevel-heading(.)]">
+				group-starting-with="w:p[tei:is-firstlevel-heading(.)]">
 	      
 	      <xsl:choose>
 		
@@ -213,7 +213,7 @@
 		     to further divide the section into subsections that we can then
 		     finally work on -->
 		
-		<xsl:when test="teidocx:is-heading(.)">
+		<xsl:when test="tei:is-heading(.)">
 		  <xsl:call-template name="group-by-section"/>
 		</xsl:when>
 		
@@ -293,10 +293,10 @@
 	    -->
 	    <xsl:for-each-group 
 		select="current-group()"
-		group-adjacent="if       (teidocx:is-list(.))  then 1
-				else  if (teidocx:is-toc(.))   then 2
-				else  if (teidocx:is-figure(.)) then 3
-				else  if (teidocx:is-line(.)) then 4
+		group-adjacent="if       (tei:is-list(.))  then 1
+				else  if (tei:is-toc(.))   then 2
+				else  if (tei:is-figure(.)) then 3
+				else  if (tei:is-line(.)) then 4
 				else position() + 100">
 	      
 	      <!-- For each defined grouping call a specific template. If there is no
@@ -370,7 +370,7 @@
    </doc>
    <xsl:template name="group-by-section">
      <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
-     <xsl:variable name="NextHeader" select="teidocx:get-nextlevel-header($Style)"/>
+     <xsl:variable name="NextHeader" select="tei:get-nextlevel-header($Style)"/>
      <div>
        <!-- generate the head -->
        <xsl:call-template name="generate-section-heading">
@@ -380,7 +380,7 @@
        <xsl:for-each-group select="current-group() except ."
 			   group-starting-with="w:p[w:pPr/w:pStyle/@w:val=$NextHeader]">
 	 <xsl:choose>
-	   <xsl:when test="teidocx:is-heading(.)">
+	   <xsl:when test="tei:is-heading(.)">
 	     <xsl:call-template name="group-by-section"/>
 	   </xsl:when>
 	   <xsl:otherwise>

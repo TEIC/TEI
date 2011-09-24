@@ -139,7 +139,6 @@
     <xsl:variable name="container">
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5'">figure</xsl:when>
-	<xsl:when test="$outputTarget='epub'">span</xsl:when>
 	<xsl:otherwise>div</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>

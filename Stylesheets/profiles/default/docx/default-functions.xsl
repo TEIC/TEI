@@ -43,7 +43,7 @@
    </doc>
     
     <!-- returns a listtype for a given stylename (return empty string to figure it out dynamically)-->
-    <xsl:function name="teidocx:get-listtype" as="xs:string">
+    <xsl:function name="tei:get-listtype" as="xs:string">
         <xsl:param name="style"/>
         <xsl:choose>
             <xsl:when test="starts-with($style,'dl')">
@@ -67,7 +67,7 @@
         </xsl:choose>
     </xsl:function>
     
-    <xsl:function name="teidocx:render-bold" as="xs:boolean">
+    <xsl:function name="tei:render-bold" as="xs:boolean">
         <xsl:param name="element"/>
         <xsl:for-each select="$element">
             <xsl:choose>

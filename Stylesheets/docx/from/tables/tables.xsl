@@ -353,7 +353,7 @@
 		    <xsl:for-each select="w:tc">
 		      <cell>
 			<xsl:if test="preserveEffects='true'">
-			  <xsl:attribute name="teidocx:align">
+			  <xsl:attribute name="tei:align">
 			    <xsl:choose>
 			      <xsl:when test="w:p/w:pPr/w:jc">
 				<xsl:value-of

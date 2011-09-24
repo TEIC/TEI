@@ -48,7 +48,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:get-listtype" as="xs:string">
+    <xsl:function name="tei:get-listtype" as="xs:string">
       <xsl:param name="style"/>
       <xsl:choose>
 	<xsl:when test="$style=$Terms">
@@ -82,7 +82,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:get-headingstyle" as="xs:string">
+    <xsl:function name="tei:get-headingstyle" as="xs:string">
       <xsl:param name="element"/>
       <xsl:param name="level"/>
       <xsl:choose>
@@ -118,7 +118,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:is-firstlevel-heading" as="xs:boolean">
+    <xsl:function name="tei:is-firstlevel-heading" as="xs:boolean">
       <xsl:param name="p"/>
       
       <xsl:choose>
@@ -138,7 +138,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:is-heading" as="xs:boolean">
+    <xsl:function name="tei:is-heading" as="xs:boolean">
       <xsl:param name="p"/>
       <xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
       <xsl:choose>
@@ -190,7 +190,7 @@
       </xsl:choose>
     </xsl:function>
 
-    <xsl:function name="teidocx:heading-level" as="xs:string">
+    <xsl:function name="tei:heading-level" as="xs:string">
       <xsl:param name="p"/>
       <xsl:analyze-string select="$p/w:pPr/w:pStyle/@w:val" regex="[^0-9]*([0-9])">
 	<xsl:matching-substring>
@@ -209,7 +209,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:get-nextlevel-header" as="xs:string">
+    <xsl:function name="tei:get-nextlevel-header" as="xs:string">
       <xsl:param name="current-header"/>
       <xsl:choose>
 	<xsl:when test="$current-header=$ANNEX">
@@ -227,7 +227,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:render-bold" as="xs:boolean">
+    <xsl:function name="tei:render-bold" as="xs:boolean">
       <xsl:param name="element"/>
       <xsl:for-each select="$element">
 	<xsl:choose>
@@ -248,7 +248,7 @@
       </desc>
     </doc>
     
-    <xsl:function name="teidocx:render-italic" as="xs:boolean">
+    <xsl:function name="tei:render-italic" as="xs:boolean">
       <xsl:param name="element"/>
       <xsl:for-each select="$element">
 	<xsl:choose>
@@ -266,7 +266,7 @@
     
     
     <!-- whether an element is block-level or inline -->
-    <xsl:function name="teidocx:is-inline" as="xs:boolean">
+    <xsl:function name="tei:is-inline" as="xs:boolean">
       <xsl:param name="element"/>
       <xsl:for-each select="$element">
 	<xsl:choose>
@@ -278,7 +278,7 @@
 	  <xsl:when test="self::m:oMath">true</xsl:when>
 	  <xsl:when test="self::mml:math">true</xsl:when>
 	  <xsl:when
-	      test="self::teidocx:dynamicContent">true</xsl:when>
+	      test="self::tei:dynamicContent">true</xsl:when>
 	  <xsl:when test="self::w:drawing">true</xsl:when>
 	  <xsl:when
 	      test="self::tei:formula[parent::cals:entry]">true</xsl:when>
@@ -348,7 +348,7 @@
 	  <xsl:otherwise>
 	    <xsl:choose>
 	      <xsl:when test="empty($element/..)">false</xsl:when>
-	      <xsl:when test="teidocx:is-inline($element/..)">true</xsl:when>
+	      <xsl:when test="tei:is-inline($element/..)">true</xsl:when>
 	      <xsl:otherwise>false</xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:otherwise>
@@ -357,7 +357,7 @@
     </xsl:function>
     
     <!-- whether a Word style is supported -->
-    <xsl:function name="teidocx:is-supported-style" as="xs:boolean">
+    <xsl:function name="tei:is-supported-style" as="xs:boolean">
       <xsl:param name="style"/>
       <xsl:variable name="styles" select="document('styles.xml')"/>
       

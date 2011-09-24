@@ -143,7 +143,7 @@
         <w:r>
             <w:rPr>
                 <w:rStyle w:val="isonumber"/>
-		<xsl:if test="teidocx:render-bold(.)">
+		<xsl:if test="tei:render-bold(.)">
 		  <w:b/>
 		</xsl:if>
             </w:rPr>
@@ -1076,12 +1076,12 @@
     </doc>
     <xsl:template match="cals:table">
       <xsl:choose>
-	<xsl:when test="@tei:corresp and $tableMethod='word'">
+	<xsl:when test="@teidocx:corresp and $tableMethod='word'">
         <xsl:call-template name="tableheading-from-cals"/>
 	  <xsl:if test="$debug='true'">
-	    <xsl:message>read table from <xsl:value-of select="@tei:corresp"/></xsl:message>
+	    <xsl:message>read table from <xsl:value-of select="@teidocx:corresp"/></xsl:message>
 	  </xsl:if>
-	  <xsl:for-each select="document(concat($tei-directory,@tei:corresp))">
+	  <xsl:for-each select="document(concat($tei-directory,@teidocx:corresp))">
 	    <xsl:apply-templates 	mode="copytable"/>
 	  </xsl:for-each>
 	</xsl:when>

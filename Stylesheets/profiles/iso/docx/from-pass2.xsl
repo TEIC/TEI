@@ -451,7 +451,7 @@
       <note place="comment" resp="ISO_validator">
 	<date>
 	  <xsl:attribute name="when">
-	    <xsl:value-of select="teidocx:whatsTheDate()"/>
+	    <xsl:value-of select="tei:whatsTheDate()"/>
 	  </xsl:attribute>
 	</date>
 	<xsl:value-of select="."/>

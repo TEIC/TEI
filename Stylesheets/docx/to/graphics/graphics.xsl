@@ -203,7 +203,7 @@
                         <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>
                     </xsl:when>
                     <xsl:when test="@width">
-                        <xsl:value-of select="teidocx:convert-dim-emu(@width)"/>
+                        <xsl:value-of select="tei:convert-dim-emu(@width)"/>
                     </xsl:when>
                     <xsl:when test="@scale and $origwidth">
                         <xsl:value-of select="($origwidth *  number(@scale)) cast as xs:integer"/>
@@ -216,7 +216,7 @@
 			  </xsl:when>
 			  <xsl:otherwise>
 			    <xsl:value-of
-				select="teidocx:convert-dim-emu(@height)"/>
+				select="tei:convert-dim-emu(@height)"/>
 			  </xsl:otherwise>
 			</xsl:choose>
 		      </xsl:variable>
@@ -239,7 +239,7 @@
                         <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
                     </xsl:when>
                     <xsl:when test="@height">
-                        <xsl:value-of select="teidocx:convert-dim-emu(@height)"/>
+                        <xsl:value-of select="tei:convert-dim-emu(@height)"/>
                     </xsl:when>
                     <xsl:when test="@scale and $origheight">
                         <xsl:value-of select="($origheight * number(@scale)) cast as xs:integer"/>

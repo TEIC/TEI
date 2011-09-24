@@ -100,7 +100,7 @@
 	  </ref>	    
 	</xsl:when>
 	<xsl:when test="contains(@w:instr,'PAGE')"><!-- Page number -->
-	  <teidocx:dynamicContent type="pagenumber"/>
+	  <tei:dynamicContent type="pagenumber"/>
 	</xsl:when>
 	<xsl:when test="contains(@w:instr,'SEQ')"/><!-- not sure -->
 	<xsl:otherwise>

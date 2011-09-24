@@ -155,7 +155,8 @@
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="parent::tei:q[not(@rend) or contains(@rend,'inline')]">
+      <xsl:when test="parent::tei:q[not(@rend) or
+		      contains(@rend,'inline') or contains(@rend,'marg')]">
         <span class="citbibl">
           <xsl:apply-templates/>
         </span>
@@ -165,7 +166,7 @@
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="parent::tei:div">
+      <xsl:when test="tei:blockContext(.)">
 	<div class="biblfree">
 	  <xsl:apply-templates/>
 	</div>
@@ -388,7 +389,7 @@
     <desc>Process element gap</desc>
   </doc>
   <xsl:template match="tei:gap">
-    <xsl:element name="{if (parent::tei:body or parent::tei:div) then 'div' else 'span'}">
+    <xsl:element name="{if (tei:blockContext(.)) then 'div' else 'span'}">
       <xsl:attribute name="class">gap</xsl:attribute>
       <xsl:if test="tei:desc">
         <xsl:attribute name="title">
@@ -671,7 +672,7 @@
     <desc>Process element l</desc>
   </doc>
   <xsl:template match="tei:l">
-    <xsl:element name="{if (ancestor::tei:q[@rend='inline']) then
+    <xsl:element name="{if (parent::tei:stage or ancestor::tei:q[@rend='inline']) then
       'span' else 'div'}">
       <xsl:call-template name="rendToClass">      
 	<xsl:with-param name="default">l</xsl:with-param>
@@ -1012,7 +1013,7 @@
 	</span>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <span>
+        <xsl:element name="{if (tei:blockContext(.)) then 'div' else 'span' }">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
@@ -1032,7 +1033,7 @@
             </a>
           </xsl:otherwise>
         </xsl:choose>
-	</span>
+	</xsl:element>
       </xsl:when>
       <xsl:when test="(@place='display' or tei:q) 
 		      and (parent::tei:div or parent::tei:p or parent::tei:body)">
@@ -1278,8 +1279,8 @@
     <xsl:variable name="wrapperElement">
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5'">p</xsl:when>
-        <xsl:when test="parent::tei:figure">span</xsl:when>
 	<xsl:when test="$outputTarget='epub'">div</xsl:when>
+        <xsl:when test="parent::tei:figure">span</xsl:when>
 	<xsl:when test="tei:eg">div</xsl:when>
 	<xsl:when test="tei:figure">div</xsl:when>
 	<xsl:when test="tei:floatingText">div</xsl:when>
@@ -1381,15 +1382,10 @@
   </doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
-      <xsl:when test="@rend='inline' and (tei:p or tei:note[@place])">
+      <xsl:when test="contains(@rend,'inline')">
         <div class="inlineq">
 	  <xsl:call-template name="makeQuote"/>
 	</div>
-      </xsl:when>
-      <xsl:when test="@rend='inline'">
-        <span class="inlineq">
-          <xsl:apply-templates/>
-	</span>
       </xsl:when>
       <xsl:when test="parent::tei:q[@rend='inline']">
         <span class="blockquote {@rend}">
@@ -2321,7 +2317,7 @@
         </xsl:otherwise>
       </xsl:choose>
       <xsl:call-template name="rendToClassHook"/>
-      <xsl:if test="teidocx:is-transcribable(.) and $mediaoverlay='true'">
+      <xsl:if test="tei:is-transcribable(.) and $mediaoverlay='true'">
 	<xsl:text> transcribable</xsl:text>
       </xsl:if>
     </xsl:variable>
@@ -2381,7 +2377,7 @@
   </doc>
   
   <xsl:template name="makeSpan">
-    <xsl:element name="{if (parent::tei:titlePage or parent::tei:body) then 'div' else 'span'}">
+    <xsl:element name="{if (tei:blockContext(.)) then 'div' else 'span'}">
       <xsl:choose>
 	<xsl:when test="@rendition">
 	  <xsl:call-template name="applyRendition"/>

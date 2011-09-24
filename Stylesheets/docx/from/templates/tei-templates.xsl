@@ -88,7 +88,7 @@
 	           <change>
 		             <date>
 		                <xsl:text>$LastChangedDate: </xsl:text>
-		                <xsl:value-of select="teidocx:whatsTheDate()"/>
+		                <xsl:value-of select="tei:whatsTheDate()"/>
 		                <xsl:text>$</xsl:text>
 		             </date>
 			     <name>
