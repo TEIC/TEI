@@ -1001,7 +1001,7 @@
 	 </xsl:when>
          <xsl:otherwise>
 	   <xsl:if test="not($Depth = '')">
-	     <xsl:element name="{if (number($Depth) &gt;5) then 'div'
+	     <xsl:element name="{if (number($Depth)+$divOffset &gt;6) then 'div'
 				else concat('h',number($Depth) + $divOffset)}">
 	       <xsl:choose>
 		 <xsl:when test="@rend">
@@ -1014,7 +1014,7 @@
 		   <xsl:for-each select="tei:head[1]">
 		     <xsl:call-template name="rendToClass">
 		       <xsl:with-param name="default">
-			 <xsl:if test="number($Depth)&gt;6">
+			 <xsl:if test="number($Depth)&gt;5">
 			   <xsl:text>div</xsl:text>
 			   <xsl:value-of select="$Depth"/>
 			 </xsl:if>
