@@ -426,7 +426,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 	  </div>
 	</xsl:when>
 	<xsl:otherwise>
-         <xsl:element name="hh{$level}">
+         <xsl:element name="h{$level}">
 	   <xsl:attribute name="class">
 	     <xsl:value-of select="$class"/>
 	   </xsl:attribute>

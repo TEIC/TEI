@@ -132,6 +132,7 @@
             </a>
           </xsl:element>
         </xsl:when>
+
         <xsl:otherwise>
           <xsl:element name="h{$level}">
             <xsl:attribute name="class">
