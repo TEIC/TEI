@@ -88,7 +88,7 @@
   </doc>
   <xsl:template match="tei:ab">
     <xsl:choose>
-      <xsl:when test="parent::tei:title or parent::tei:stage">
+      <xsl:when test="ancestor::tei:head or parent::tei:title or parent::tei:stage">
 	<xsl:apply-templates/>
 	<xsl:if test="following-sibling::tei:ab">
 	  <br/>
@@ -685,7 +685,8 @@
     <desc>Process element l</desc>
   </doc>
   <xsl:template match="tei:l">
-    <xsl:element name="{if (parent::tei:stage or ancestor::tei:q[@rend='inline']) then
+    <xsl:element name="{if (parent::tei:stage or ancestor::tei:head
+		       or ancestor::tei:q[@rend='inline']) then
       'span' else 'div'}">
       <xsl:call-template name="rendToClass">      
 	<xsl:with-param name="default">l</xsl:with-param>
@@ -813,9 +814,9 @@
   </doc>
   <xsl:template match="tei:list">
     <xsl:if test="tei:head">
-      <p class="listhead">
+      <span class="listhead">
         <xsl:apply-templates select="tei:head"/>
-      </p>
+      </span>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="@type='catalogue'">
@@ -871,7 +872,7 @@
           <xsl:apply-templates mode="glosstable" select="tei:item"/>
         </table>
       </xsl:when>
-      <xsl:when test="@type='inline' or parent::tei:head">
+      <xsl:when test="@type='inline' or parent::tei:head or parent::tei:label">
         <!--<xsl:if test="not(tei:item)">None</xsl:if>-->
         <xsl:apply-templates mode="inline" select="tei:item"/>
       </xsl:when>
@@ -999,7 +1000,7 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="@place='marg' and (tei:p or tei:q//tei:l)">
+      <xsl:when test="@place='marg' and (parent::tei:l or tei:p or tei:q//tei:l)">
         <div class="margnote">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
@@ -1292,8 +1293,10 @@
     <xsl:variable name="wrapperElement">
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5'">p</xsl:when>
-	<xsl:when test="$outputTarget='epub'">div</xsl:when>
+	<xsl:when test="parent::tei:figure and tei:figure">div</xsl:when>
         <xsl:when test="parent::tei:figure">span</xsl:when>
+        <xsl:when test="ancestor::tei:head">span</xsl:when>
+	<xsl:when test="$outputTarget='epub'">div</xsl:when>
 	<xsl:when test="tei:eg">div</xsl:when>
 	<xsl:when test="tei:figure">div</xsl:when>
 	<xsl:when test="tei:floatingText">div</xsl:when>
@@ -1395,15 +1398,20 @@
   </doc>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
+      <xsl:when test="parent::tei:hi or ancestor::tei:head">
+        <span class="inlineq">
+	  <xsl:call-template name="makeQuote"/>
+	</span>
+      </xsl:when>
       <xsl:when test="contains(@rend,'inline')">
         <div class="inlineq">
 	  <xsl:call-template name="makeQuote"/>
 	</div>
       </xsl:when>
-      <xsl:when test="parent::tei:q[@rend='inline']">
-        <span class="blockquote {@rend}">
+      <xsl:when test="parent::tei:q[contains(@rend,'inline')]">
+        <div class="blockquote {@rend}">
           <xsl:apply-templates/>
-        </span>
+        </div>
       </xsl:when>
       <xsl:when test="parent::tei:div|parent::tei:body|tei:sp|tei:p|tei:floatingText|tei:lg|tei:l|tei:note[tei:q/tei:l]">
         <div class="blockquote {@rend}">

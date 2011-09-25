@@ -221,7 +221,7 @@
    </doc>
   <xsl:template match="tei:stage">
     <xsl:element name="{if (ancestor::tei:head or parent::tei:l or
-		       parent::tei:q or parent::tei:p or parent::tei:ab or
+		       parent::tei:note or parent::tei:q or parent::tei:p or parent::tei:ab or
 		       parent::tei:hi) then 'span' else 'div'}">
       <xsl:call-template name="rendToClass">
 	<xsl:with-param name="default">
