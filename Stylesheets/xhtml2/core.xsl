@@ -1399,6 +1399,12 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element q and tei:said</desc>
   </doc>
+
+  <xsl:template match="tei:q[@rend='inline margQuotes' or
+		       @rend='inline margSglQuotes']">
+    <xsl:apply-templates/>
+  </xsl:template>
+
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
       <xsl:when test="parent::tei:hi or ancestor::tei:head">
