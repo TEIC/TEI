@@ -684,8 +684,15 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element l</desc>
   </doc>
+  <xsl:template match="tei:q[not(@place) and tei:l]">
+    <xsl:apply-templates/>
+  </xsl:template>
+
   <xsl:template match="tei:l">
-    <xsl:element name="{if (parent::tei:stage or ancestor::tei:head
+    <xsl:element name="{if (parent::tei:stage 
+		       or ancestor::tei:head 
+		       or parent::tei:q[not(@place)]
+		       or parent::tei:note[@place='marg']
 		       or ancestor::tei:q[@rend='inline']) then
       'span' else 'div'}">
       <xsl:call-template name="rendToClass">      
