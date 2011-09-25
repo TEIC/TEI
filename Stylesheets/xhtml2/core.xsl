@@ -872,7 +872,7 @@
           <xsl:apply-templates mode="glosstable" select="tei:item"/>
         </table>
       </xsl:when>
-      <xsl:when test="@type='inline' or parent::tei:head or parent::tei:label">
+      <xsl:when test="@type='inline' or ancestor::tei:head or parent::tei:label">
         <!--<xsl:if test="not(tei:item)">None</xsl:if>-->
         <xsl:apply-templates mode="inline" select="tei:item"/>
       </xsl:when>
@@ -1000,7 +1000,9 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="@place='marg' and (parent::tei:l or tei:p or tei:q//tei:l)">
+      <xsl:when test="@place='marg' and (parent::tei:cell or
+		      parent::tei:p or
+		      parent::tei:item or parent::tei:l or tei:p or tei:q//tei:l)">
         <div class="margnote">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
@@ -1295,6 +1297,7 @@
 	<xsl:when test="$outputTarget='html5'">p</xsl:when>
 	<xsl:when test="parent::tei:figure and tei:figure">div</xsl:when>
         <xsl:when test="parent::tei:figure">span</xsl:when>
+        <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
         <xsl:when test="ancestor::tei:head">span</xsl:when>
 	<xsl:when test="$outputTarget='epub'">div</xsl:when>
 	<xsl:when test="tei:eg">div</xsl:when>
