@@ -821,9 +821,10 @@
   </doc>
   <xsl:template match="tei:list">
     <xsl:if test="tei:head">
-      <span class="listhead">
+      <xsl:element name="{if (tei:blockContext(.)) then 'div' else 'span' }">
+      <xsl:attribute name="class">listhead</xsl:attribute>
         <xsl:apply-templates select="tei:head"/>
-      </span>
+      </xsl:element>
     </xsl:if>
     <xsl:choose>
       <xsl:when test="@type='catalogue'">
