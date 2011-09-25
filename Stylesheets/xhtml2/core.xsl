@@ -1000,6 +1000,14 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
+      <xsl:when test="@place='marg' and parent::tei:head">
+        <span class="margnote">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+        </span>
+      </xsl:when>
       <xsl:when test="@place='marg' and (parent::tei:cell or
 		      parent::tei:p or
 		      parent::tei:item or parent::tei:l or tei:p or tei:q//tei:l)">
