@@ -153,27 +153,6 @@
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="parent::tei:p">
-        <span class="citbibl">
-          <xsl:apply-templates/>
-        </span>
-      </xsl:when>
-      <xsl:when test="parent::tei:q[not(@rend) and tei:l]">
-        <span class="citbibl">
-          <xsl:apply-templates/>
-        </span>
-      </xsl:when>
-      <xsl:when test="parent::tei:q[not(@rend) or
-		      contains(@rend,'inline') or contains(@rend,'marg')]">
-        <span class="citbibl">
-          <xsl:apply-templates/>
-        </span>
-      </xsl:when>
-      <xsl:when test="parent::tei:q[not(contains(@rend,'inline'))]">
-        <div class="citbibl">
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
       <xsl:when test="tei:blockContext(.)">
 	<div class="biblfree">
 	  <xsl:apply-templates/>
@@ -684,17 +663,9 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element l</desc>
   </doc>
-  <xsl:template match="tei:q[not(@place) and tei:l]">
-    <xsl:apply-templates/>
-  </xsl:template>
 
   <xsl:template match="tei:l">
-    <xsl:element name="{if (parent::tei:stage 
-		       or ancestor::tei:head 
-		       or parent::tei:q[not(@place)]
-		       or parent::tei:note[@place='marg']
-		       or ancestor::tei:q[@rend='inline']) then
-      'span' else 'div'}">
+    <div>
       <xsl:call-template name="rendToClass">      
 	<xsl:with-param name="default">l</xsl:with-param>
       </xsl:call-template>	    
@@ -718,7 +689,7 @@
 	  <xsl:apply-templates/>
 	</xsl:otherwise>
       </xsl:choose>
-    </xsl:element>
+    </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element lg</desc>
@@ -1008,31 +979,13 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="@place='marg' and parent::tei:head">
-        <span class="margnote">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
-          </xsl:call-template>
-          <xsl:apply-templates/>
-        </span>
-      </xsl:when>
-      <xsl:when test="@place='marg' and (parent::tei:cell or
-		      parent::tei:p or
-		      parent::tei:item or parent::tei:l or tei:p or tei:q//tei:l)">
+      <xsl:when test="@place='marg' or *[not(tei:is-inline(.)]">
         <div class="margnote">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
         </div>
-      </xsl:when>
-      <xsl:when test="@place='marg'">
-        <span class="margnote">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
-          </xsl:call-template>
-          <xsl:apply-templates/>
-        </span>
       </xsl:when>
       <xsl:when test="@place='inline'">
 	<span>
@@ -1045,7 +998,7 @@
 	</span>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:element name="{if (tei:blockContext(.)) then 'div' else 'span' }">
+        <xsl:element name="{if (*[not(tei:is-inline(.)]) then 'div' else 'span' }">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
@@ -1124,10 +1077,10 @@
 	<div>
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
-    </xsl:call-template>
-    <xsl:attribute name="class">
+	  </xsl:call-template>
+	  <xsl:attribute name="class">
 	    <xsl:text>note </xsl:text><xsl:value-of select="@type"/>
-	</xsl:attribute>
+	  </xsl:attribute>
 	  <span class="noteLabel">
 	    <xsl:choose>
 	      <xsl:when test="@n">
@@ -1421,6 +1374,19 @@
     <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="tei:q[not(@place) and tei:l]">
+    <xsl:choose>
+      <xsl:when test="tei:blockContext(.)">
+	<div class="blockquote">
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
       <xsl:when test="parent::tei:hi or ancestor::tei:head">
@@ -1428,17 +1394,7 @@
 	  <xsl:call-template name="makeQuote"/>
 	</span>
       </xsl:when>
-      <xsl:when test="contains(@rend,'inline')">
-        <div class="inlineq">
-	  <xsl:call-template name="makeQuote"/>
-	</div>
-      </xsl:when>
-      <xsl:when test="parent::tei:q[contains(@rend,'inline')]">
-        <div class="blockquote {@rend}">
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
-      <xsl:when test="parent::tei:div|parent::tei:body|tei:sp|tei:p|tei:floatingText|tei:lg|tei:l|tei:note[tei:q/tei:l]">
+      <xsl:when test="*[not(tei:is-inline(.)]">
         <div class="blockquote {@rend}">
           <xsl:apply-templates/>
         </div>
