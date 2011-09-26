@@ -148,7 +148,7 @@
   </doc>
   <xsl:template match="tei:bibl">
     <xsl:choose>
-      <xsl:when test="parent::tei:cit">
+      <xsl:when test="parent::tei:cit | parent::tei:q">
         <div class="citbibl">
           <xsl:apply-templates/>
         </div>
@@ -665,7 +665,7 @@
   </doc>
 
   <xsl:template match="tei:l">
-    <div>
+    <xsl:element name="{if (ancestor::tei:head) then 'span' else 'div'}">
       <xsl:call-template name="rendToClass">      
 	<xsl:with-param name="default">l</xsl:with-param>
       </xsl:call-template>	    
@@ -689,7 +689,7 @@
 	  <xsl:apply-templates/>
 	</xsl:otherwise>
       </xsl:choose>
-    </div>
+    </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element lg</desc>
@@ -968,11 +968,6 @@
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="@place='none'"/>
-      <xsl:when test="parent::tei:head and not(@place)">
-	<xsl:text> [</xsl:text>
-	<xsl:apply-templates/>
-	<xsl:text>]</xsl:text>
-      </xsl:when>
       <xsl:when test="ancestor::tei:listBibl or ancestor::tei:biblFull
 		      or ancestor::tei:biblStruct">
 	<xsl:text> [</xsl:text>
@@ -980,7 +975,7 @@
 	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:element name="{if (*[not(tei:is-inline(.))]) then 'div' else 'span' }">
+        <xsl:element name="{if (not(parent::tei:head) and *[not(tei:is-inline(.))]) then 'div' else 'span' }">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
@@ -1001,6 +996,11 @@
           </xsl:otherwise>
         </xsl:choose>
 	</xsl:element>
+      </xsl:when>
+      <xsl:when test="parent::tei:head">
+	<xsl:text> [</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="(@place='display' or tei:q) 
 		      and (parent::tei:div or parent::tei:p or parent::tei:body)">
@@ -1063,7 +1063,7 @@
 	  <xsl:text>)</xsl:text>
 	</span>
       </xsl:when>
-      <xsl:when test="parent::tei:p or parent::tei:hi">
+      <xsl:when test="parent::tei:p or parent::tei:hi or parent::tei:head">
 	<span class="note">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
@@ -1267,7 +1267,6 @@
 	<xsl:when test="parent::tei:figure and tei:figure">div</xsl:when>
         <xsl:when test="parent::tei:figure">span</xsl:when>
         <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
-        <xsl:when test="ancestor::tei:head">span</xsl:when>
 	<xsl:when test="$outputTarget='epub'">div</xsl:when>
 	<xsl:when test="tei:eg">div</xsl:when>
 	<xsl:when test="tei:figure">div</xsl:when>
@@ -1394,7 +1393,12 @@
 	  <xsl:call-template name="makeQuote"/>
 	</span>
       </xsl:when>
-      <xsl:when test="*[not(tei:is-inline(.))] or tei:note">
+      <xsl:when test="tei:blockContext(.)">
+        <div class="blockquote {@rend}">
+          <xsl:apply-templates/>
+        </div>
+      </xsl:when>
+      <xsl:when test="*[not(tei:is-inline(.))] or tei:note or tei:bibl">
         <div class="blockquote {@rend}">
           <xsl:apply-templates/>
         </div>
