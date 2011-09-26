@@ -38,7 +38,7 @@
 	   match="tei:note[@place='foot' or @place='bottom' or @place='end'
 		  and not(parent::tei:bibl or ancestor::tei:teiHeader)]"/>
   <xsl:key name="ALLNOTES" use="1"
-	   match="tei:note[not(@place='marg' or @place='inline' or @place='display')
+	   match="tei:note[not(@place='margin' or @place='inline' or @place='display')
 		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)]"/>
 
   <xsl:key name="TAGREND" match="tei:tagUsage[@render]" use="@gi"/>

@@ -979,26 +979,8 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="@place='marg' or *[not(tei:is-inline(.)]">
-        <div class="margnote">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
-          </xsl:call-template>
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
-      <xsl:when test="@place='inline'">
-	<span>
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name" select="$identifier"/>
-	  </xsl:call-template>
-	  <xsl:text> (</xsl:text>
-	  <xsl:apply-templates/>
-	  <xsl:text>)</xsl:text>
-	</span>
-      </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:element name="{if (*[not(tei:is-inline(.)]) then 'div' else 'span' }">
+        <xsl:element name="{if (*[not(tei:is-inline(.))]) then 'div' else 'span' }">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
@@ -1062,6 +1044,24 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
         </blockquote>
+      </xsl:when>
+      <xsl:when test="@place='margin' or *[not(tei:is-inline(.))]">
+        <div class="margnote">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+        </div>
+      </xsl:when>
+      <xsl:when test="@place='inline'">
+	<span>
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <xsl:text> (</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>)</xsl:text>
+	</span>
       </xsl:when>
       <xsl:when test="parent::tei:p or parent::tei:hi">
 	<span class="note">
@@ -1276,7 +1276,7 @@
 	<xsl:when test="tei:list">div</xsl:when>
 	<xsl:when test="tei:moduleSpec">div</xsl:when>
 	<xsl:when test="tei:note[@place='display']">div</xsl:when>
-	<xsl:when test="tei:note[@place='marg']">div</xsl:when>
+	<xsl:when test="tei:note[@place='margin']">div</xsl:when>
 	<xsl:when test="tei:note[tei:q]">div</xsl:when>
 	<xsl:when test="tei:q/tei:figure">div</xsl:when>
 	<xsl:when test="tei:q/tei:list">div</xsl:when>
@@ -1394,7 +1394,7 @@
 	  <xsl:call-template name="makeQuote"/>
 	</span>
       </xsl:when>
-      <xsl:when test="*[not(tei:is-inline(.)]">
+      <xsl:when test="*[not(tei:is-inline(.))] or tei:note">
         <div class="blockquote {@rend}">
           <xsl:apply-templates/>
         </div>
@@ -1416,7 +1416,7 @@
         <xsl:call-template name="makeQuote"/>
       </xsl:when>
       <xsl:when test="@rend">
-	<span class="{@rend}">
+	<span class="q {@rend}">
 	  <xsl:apply-templates/>
 	</span>
       </xsl:when>

@@ -221,8 +221,8 @@
         <xsl:when test="self::tei:ptr">true</xsl:when>
         <xsl:when test="self::tei:publisher">true</xsl:when>
         <xsl:when test="self::tei:pubPlace">true</xsl:when>
-        <xsl:when test="self::tei:q[tei:l]">false</xsl:when>
-        <xsl:when test="self::tei:q[not(parent::tei:div)]">true</xsl:when>
+        <xsl:when test="self::tei:q[*]">false</xsl:when>
+        <xsl:when test="self::tei:q">true</xsl:when>
         <xsl:when test="self::tei:said">true</xsl:when>
         <xsl:when test="self::tei:ref">true</xsl:when>
         <xsl:when test="self::tei:region">true</xsl:when>

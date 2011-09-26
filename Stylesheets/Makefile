@@ -233,3 +233,7 @@ clean:
 	(cd debian-tei-p5-xsl2/debian;     rm -rf tei-p5-xsl2)
 	rm -f teioo.jar
 	rm -rf docx/ImageInfo/bin
+
+tags:
+	etags `find . -name "*.xsl" | grep -v "slides/" | grep -v "latex/" | grep -v "html/" | grep -v "fo/" | grep -v "common/" | grep -v "doc/" `
+
