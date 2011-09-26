@@ -975,7 +975,8 @@
 	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:element name="{if (not(parent::tei:head) and *[not(tei:is-inline(.))]) then 'div' else 'span' }">
+        <xsl:element name="{if (not(parent::tei:head) and
+			   (parent::tei:body or *[not(tei:is-inline(.))])) then 'div' else 'span' }">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
@@ -1264,7 +1265,7 @@
     <xsl:variable name="wrapperElement">
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5'">p</xsl:when>
-	<xsl:when test="parent::tei:figure and tei:figure">div</xsl:when>
+	<xsl:when test="parent::tei:figure and (tei:figure or parent::tei:figure/parent::tei:div)">div</xsl:when>
         <xsl:when test="parent::tei:figure">span</xsl:when>
         <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
 	<xsl:when test="$outputTarget='epub'">div</xsl:when>
@@ -1342,9 +1343,7 @@
       <xsl:otherwise>
 	<xsl:element name="{$wrapperElement}">
 	  <xsl:call-template name="rendToClass">
-	    <xsl:with-param name="default">
-	      <xsl:if test="$wrapperElement='div'">p</xsl:if>
-	    </xsl:with-param>
+	    <xsl:with-param name="default">p</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:if test="$numberParagraphs='true'">
 	    <xsl:text>[</xsl:text>
