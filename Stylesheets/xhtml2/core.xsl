@@ -1265,7 +1265,7 @@
     <xsl:variable name="wrapperElement">
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5'">p</xsl:when>
-	<xsl:when test="parent::tei:figure and (tei:figure or parent::tei:figure/parent::tei:div)">div</xsl:when>
+	<xsl:when test="parent::tei:figure and (tei:q/tei:l or tei:figure or parent::tei:figure/parent::tei:div)">div</xsl:when>
         <xsl:when test="parent::tei:figure">span</xsl:when>
         <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
 	<xsl:when test="$outputTarget='epub'">div</xsl:when>
@@ -1387,15 +1387,15 @@
 
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
-      <xsl:when test="parent::tei:hi or ancestor::tei:head">
-        <span class="inlineq">
-	  <xsl:call-template name="makeQuote"/>
-	</span>
-      </xsl:when>
       <xsl:when test="tei:blockContext(.)">
         <div class="blockquote {@rend}">
           <xsl:apply-templates/>
         </div>
+      </xsl:when>
+      <xsl:when test="parent::tei:hi or ancestor::tei:head">
+        <span class="inlineq">
+	  <xsl:call-template name="makeQuote"/>
+	</span>
       </xsl:when>
       <xsl:when test="*[not(tei:is-inline(.))] or tei:note or tei:bibl">
         <div class="blockquote {@rend}">

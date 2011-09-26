@@ -264,6 +264,7 @@
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
+	<xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">true</xsl:when>
 	<xsl:when test="parent::tei:body">true</xsl:when>
 	<xsl:when test="parent::tei:div">true</xsl:when>
 	<xsl:when test="parent::tei:titlePage">true</xsl:when>
