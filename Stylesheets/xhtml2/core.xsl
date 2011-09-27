@@ -1343,7 +1343,11 @@
       <xsl:otherwise>
 	<xsl:element name="{$wrapperElement}">
 	  <xsl:call-template name="rendToClass">
-	    <xsl:with-param name="default">p</xsl:with-param>
+	    <xsl:with-param name="default">
+	    <xsl:if test="not($wrapperElement ='p')">
+	      <xsl:text>p</xsl:text>
+	    </xsl:if>
+	  </xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:if test="$numberParagraphs='true'">
 	    <xsl:text>[</xsl:text>
