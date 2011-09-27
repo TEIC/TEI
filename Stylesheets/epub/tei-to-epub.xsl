@@ -274,7 +274,12 @@
                     </xsl:non-matching-substring>
                   </xsl:analyze-string>
                 </xsl:variable>
-                <xsl:value-of select="$printA"/>
+		<xsl:choose>
+		  <xsl:when test="$printA=''">Anonymous/Unknown</xsl:when>
+		  <xsl:otherwise>
+		    <xsl:value-of select="$printA"/>
+		  </xsl:otherwise>
+		</xsl:choose>
               </dc:creator>
               <dc:publisher>
                 <xsl:call-template name="generatePublisher"/>

@@ -980,8 +980,11 @@
 	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:element name="{if (not(parent::tei:head or parent::tei:hi) and
-			   (parent::tei:body or *[not(tei:is-inline(.))])) then 'div' else 'span' }">
+        <xsl:element 
+	    name="{if (parent::tei:head or parent::tei:hi)  then 'span'
+		  else if (parent::tei:l) then 'span'
+		  else if (parent::tei:stage/parent::tei:q) then 'span'
+		  else if  (parent::tei:body or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
 	  </xsl:call-template>
@@ -1152,7 +1155,10 @@
       </xsl:call-template>
       <span class="noteLabel">
         <xsl:call-template name="noteN"/>
-        <xsl:text>. </xsl:text>
+	<xsl:if test="matches(@n,'[0-9]')">
+	  <xsl:text>.</xsl:text>
+	</xsl:if>
+        <xsl:text> </xsl:text>
       </span>
       <div class="noteBody">
         <xsl:apply-templates/>
@@ -1403,6 +1409,16 @@
 
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
+      <xsl:when test="parent::tei:q/tei:note[@place='bottom']">
+        <span class="inlineq">
+	  <xsl:call-template name="makeQuote"/>
+	</span>
+      </xsl:when>
+      <xsl:when test="parent::tei:note[@place='bottom'] and not(*)">
+        <span class="inlineq">
+	  <xsl:call-template name="makeQuote"/>
+	</span>
+      </xsl:when>
       <xsl:when test="tei:blockContext(.)">
         <div class="blockquote {@rend}">
           <xsl:apply-templates/>
