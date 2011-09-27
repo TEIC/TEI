@@ -195,6 +195,17 @@
     <h3>Source</h3>
     <xsl:apply-templates mode="metadata"/>
   </xsl:template>
+
+  <xsl:template match="tei:projectDesc" mode="metadata">
+    <h3>Creation</h3>
+    <xsl:apply-templates mode="metadata"/>
+  </xsl:template>
+
+  <xsl:template match="tei:editorialDecl" mode="metadata">
+    <h3>Editorial practices</h3>
+    <xsl:apply-templates mode="metadata"/>
+  </xsl:template>
+
   <xsl:template match="tei:sourceDesc/tei:bibl" mode="metadata">
     <p> — <xsl:apply-templates mode="metadata"/></p>
   </xsl:template>
@@ -259,9 +270,7 @@
   <xsl:template match="tei:availability" mode="metadata">
     <dt>Availability</dt>
     <dd>
-      <xsl:for-each select="tei:p">
-        <xsl:apply-templates/>
-      </xsl:for-each>
+        <xsl:apply-templates mode="metadata"/>
     </dd>
   </xsl:template>
   <xsl:template match="tei:bibl/tei:title" mode="metadata" priority="99">
@@ -359,7 +368,9 @@
         <xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="@type">
+	<xsl:text>[</xsl:text>
         <xsl:value-of select="@type"/>
+	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:otherwise> </xsl:otherwise>
     </xsl:choose>

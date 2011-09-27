@@ -66,7 +66,9 @@
 	<xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:when test="@type">
+	<xsl:text>[</xsl:text>
         <xsl:value-of select="@type"/>
+	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>➤</xsl:text>

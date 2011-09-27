@@ -615,8 +615,18 @@
             <body>
               <xsl:choose>
                 <xsl:when test="$coverImageInside=''">
-                  <div style="font-family: serif; height:860;          font-size:36pt; border: bold red 1pt; text-align:center">
-                    <xsl:call-template name="generateTitle"/>
+                  <div>
+		    <xsl:attribute name="style">
+		      font-family: serif; 
+		      height:860;          
+		      font-size:30pt; 
+		      font-weight: bold;
+		      padding-top: 15pt;
+		      margin: 12pt;
+		      border: solid red 1pt; 
+		      text-align:center;
+		    </xsl:attribute>
+                   <xsl:call-template name="generateTitle"/>
                   </div>
                 </xsl:when>
                 <xsl:otherwise>
@@ -687,6 +697,9 @@
               <div style="text-align: left; font-size: larger">
                 <h2>Information about this book</h2>
                 <xsl:for-each select="/*/tei:teiHeader/tei:fileDesc">
+                  <xsl:apply-templates mode="metadata"/>
+                </xsl:for-each>
+                <xsl:for-each select="/*/tei:teiHeader/tei:encodingDesc">
                   <xsl:apply-templates mode="metadata"/>
                 </xsl:for-each>
               </div>

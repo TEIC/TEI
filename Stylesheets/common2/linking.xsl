@@ -199,9 +199,15 @@
 	      </xsl:call-template>
             </xsl:when>
             <xsl:when test="$autoHead='true'">
-               <xsl:call-template name="autoMakeHead">
-		 <xsl:with-param name="display" select="$display"/>
-	       </xsl:call-template>
+	      <xsl:choose>
+		<xsl:when test="$outputTarget='epub' and
+				not(tei:head)"/>
+		<xsl:otherwise>
+		  <xsl:call-template name="autoMakeHead">
+		    <xsl:with-param name="display" select="$display"/>
+		  </xsl:call-template>
+		</xsl:otherwise>
+	      </xsl:choose>
             </xsl:when>
             <xsl:when test="$display='plain'">
                <xsl:for-each select="tei:head">

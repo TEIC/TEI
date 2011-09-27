@@ -61,10 +61,10 @@
          </head>
          <body>
             <h1 class="maintitle">
-               <xsl:value-of select="$isotitle"/>:
-      <xsl:value-of select="$isoyear"/>:
-      <xsl:value-of select="$isonumber"/>:
-      <xsl:value-of select="$isopart"/>
+	      <xsl:value-of select="$isotitle"/>:
+	      <xsl:value-of select="$isoyear"/>:
+	      <xsl:value-of select="$isonumber"/>:
+	      <xsl:value-of select="$isopart"/>
             </h1>
     
             <xsl:for-each select="key('DIV','termsAndDefinitions')">
