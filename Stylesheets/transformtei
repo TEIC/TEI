@@ -28,6 +28,7 @@ echo
 echo "  Options, binary switches:"
 echo "  --verbose            # be verbose"
 echo "  --debug              # be verbose, do not delete intermediate files"
+echo "  --apphome=$APPHOME   # where to find app directory"
 echo "  --profiledir=$profiledir    # where to find profile directory"
 echo "  --profile=$profile    # which transformation profile to use"
 echo "  --oxygenlib=$oxygenlib    # where is oxygenlib"
@@ -113,6 +114,7 @@ while test $# -gt 0; do
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
     --oxygenlib=*)  oxygenlib=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
+    --apphome=*) APPHOME=`echo $1 | sed 's/.*=//'`;;
     --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
     --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
     --splitLevel=*) splitLevel="-DsplitLevel=`echo $1 | sed 's/.*=//'`";;
