@@ -70,5 +70,8 @@
      </xsl:for-each>
    </xsl:template>
 
+  <xsl:template name="generateSubjectHook">
+    <subject xmlns="http://purl.org/dc/elements/1.1/">ECCO</subject>
+  </xsl:template>
 
 </xsl:stylesheet>

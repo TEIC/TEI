@@ -78,7 +78,11 @@
         <xsl:value-of select="."/>
       </dc:subject>
     </xsl:for-each>
+    <xsl:call-template name="generateSubjectHook"/>
   </xsl:template>
+
+  <xsl:template name="generateSubjectHook"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[epub] Set name of publisher</desc>
   </doc>

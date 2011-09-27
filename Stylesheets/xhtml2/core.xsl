@@ -980,7 +980,7 @@
 	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:element name="{if (not(parent::tei:head) and
+        <xsl:element name="{if (not(parent::tei:head or parent::tei:hi) and
 			   (parent::tei:body or *[not(tei:is-inline(.))])) then 'div' else 'span' }">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="concat($identifier,'_return')"/>
