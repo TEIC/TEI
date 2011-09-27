@@ -1046,7 +1046,15 @@
 	  </xsl:choose>
         </blockquote>
       </xsl:when>
-      <xsl:when test="@place='margin' or *[not(tei:is-inline(.))]">
+      <xsl:when test="@place='margin' and parent::tei:hi and not(*)">
+        <span class="margnote">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+        </span>
+      </xsl:when>
+      <xsl:when test="@place='margin' and *[not(tei:is-inline(.))]">
         <div class="margnote">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
@@ -1054,17 +1062,15 @@
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@place='inline'">
-	<span>
-	  <xsl:call-template name="makeAnchor">
-	    <xsl:with-param name="name" select="$identifier"/>
-	  </xsl:call-template>
-	  <xsl:text> (</xsl:text>
-	  <xsl:apply-templates/>
-	  <xsl:text>)</xsl:text>
-	</span>
+      <xsl:when test="@place='margin'">
+        <span class="margnote">
+          <xsl:call-template name="makeAnchor">
+            <xsl:with-param name="name" select="$identifier"/>
+          </xsl:call-template>
+          <xsl:apply-templates/>
+        </span>
       </xsl:when>
-      <xsl:when test="parent::tei:p or parent::tei:hi or parent::tei:head">
+      <xsl:when test="@place='inline' or (parent::tei:p or parent::tei:hi or parent::tei:head)">
 	<span class="note">
 	  <xsl:call-template name="makeAnchor">
 	    <xsl:with-param name="name" select="$identifier"/>
