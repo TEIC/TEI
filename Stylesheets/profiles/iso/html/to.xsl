@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 		xmlns:iso="http://www.iso.org/ns/1.0"
+		xmlns:its="http://www.w3.org/2005/11/its"
 		xmlns:cals="http://www.oasis-open.org/specs/tm9901"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
@@ -11,7 +12,7 @@
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
+                exclude-result-prefixes="tei html t its a rng s iso tbx cals teix"
                 version="2.0">
    <xsl:import href="../../../xhtml2/tei.xsl"/>
    <xsl:import href="../../../xhtml2/oddprocessing.xsl"/>
