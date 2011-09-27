@@ -560,10 +560,6 @@ be specified.</p>
    </doc>
   <xsl:param name="outputEncoding">utf-8</xsl:param>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
-      <desc>Type of output being generated</desc>
-   </doc>
-  <xsl:param name="outputTarget">html</xsl:param>
   <xsl:param name="outputNamespace">http://www.w3.org/1999/xhtml</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">

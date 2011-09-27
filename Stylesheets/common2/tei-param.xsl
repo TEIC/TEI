@@ -20,6 +20,11 @@
     </desc>
   </doc>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
+      <desc>Type of output being generated</desc>
+   </doc>
+  <xsl:param name="outputTarget">html</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
     <desc>CSS class for TOC entries</desc>
   </doc>
