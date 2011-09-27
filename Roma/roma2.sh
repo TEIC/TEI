@@ -258,7 +258,7 @@ test -d $TEIXSLDIR/odds2 || \
      die "stylesheet location $TEIXSLDIR is not accessible"
 if test "x$schema" = "x"
 then
- schema=$(saxon -s:$1 -xsl:$TEIXSLDIR/odds2/extract-schemaSpec-ident.xsl | head -1)
+ schema=$(xmllint --xinclude $1 | saxon - $TEIXSLDIR/odds2/extract-schemaSpec-ident.xsl | head -1)
  schema=${schema:?"Unable to ascertain ident= of <schemaSpec>"}
 fi
 echo "Results to: $RESULTS"
