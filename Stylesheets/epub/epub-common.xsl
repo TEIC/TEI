@@ -68,6 +68,7 @@
         <xsl:value-of select="$subject"/>
       </dc:subject>
     </xsl:if>
+    <xsl:call-template name="generateSubjectHook"/>
     <xsl:for-each select="tei:teiHeader/tei:profileDesc/tei:textClass/tei:keywords/tei:term">
       <dc:subject>
         <xsl:value-of select="."/>
@@ -78,7 +79,6 @@
         <xsl:value-of select="."/>
       </dc:subject>
     </xsl:for-each>
-    <xsl:call-template name="generateSubjectHook"/>
   </xsl:template>
 
   <xsl:template name="generateSubjectHook"/>
