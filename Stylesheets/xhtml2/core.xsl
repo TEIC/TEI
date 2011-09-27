@@ -148,6 +148,11 @@
   </doc>
   <xsl:template match="tei:bibl">
     <xsl:choose>
+      <xsl:when test="parent::tei:q/parent::tei:head or parent::tei:q[@rend='inline']">
+        <span class="citbibl">
+          <xsl:apply-templates/>
+        </span>
+      </xsl:when>
       <xsl:when test="parent::tei:cit | parent::tei:q">
         <div class="citbibl">
           <xsl:apply-templates/>
@@ -1273,6 +1278,7 @@
 	<xsl:when test="$outputTarget='html5'">p</xsl:when>
 	<xsl:when test="parent::tei:figure and (tei:q/tei:l or tei:figure or parent::tei:figure/parent::tei:div)">div</xsl:when>
         <xsl:when test="parent::tei:figure">span</xsl:when>
+        <xsl:when test="parent::tei:head or parent::tei:q/parent::tei:head">span</xsl:when>
         <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
 	<xsl:when test="$outputTarget='epub'">div</xsl:when>
 	<xsl:when test="tei:eg">div</xsl:when>

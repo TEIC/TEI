@@ -160,7 +160,7 @@
         <xsl:when test="self::tei:am">true</xsl:when>
         <xsl:when test="self::tei:att">true</xsl:when>
         <xsl:when test="self::tei:author">true</xsl:when>
-        <xsl:when test="self::tei:bibl and not(parent::tei:div)">true</xsl:when>
+        <xsl:when test="self::tei:bibl and tei:is-inline($element/..)">true</xsl:when>
         <xsl:when test="self::tei:biblScope">true</xsl:when>
         <xsl:when test="self::tei:br">true</xsl:when>
         <xsl:when test="self::tei:byline">true</xsl:when>
@@ -203,10 +203,12 @@
         <xsl:when test="self::tei:series">true</xsl:when>
         <xsl:when test="self::tei:msName">true</xsl:when>
         <xsl:when test="self::tei:name">true</xsl:when>
+        <xsl:when test="self::tei:note[@place='margin']">false</xsl:when>
         <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
+        <xsl:when test="self::tei:note[@place='inline']">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:biblStruct]">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:bibl]">true</xsl:when>
         <xsl:when test="self::tei:num">true</xsl:when>
