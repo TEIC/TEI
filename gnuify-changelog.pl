@@ -13,13 +13,15 @@ require 5.0;
 use strict;
 
 my %hackers = (
-    "rahtz"           => 'Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>',
-    "louBurnard"      => 'Lou Burnard <lou.burnard@oucs.ox.ac.uk>',
-    "louburnard"      => 'Lou Burnard <lou.burnard@oucs.ox.ac.uk>',
-    "sbauman"         => 'Syd Bauman  <sbauman@brown.edu>',
-    "mlforcada"       => 'Mikel L. Forcada <mlf@ua.es>',
-    "dsew"            => 'David Sewell <dsewell@virginia.edu>',
-    "ge8"             => 'J-L Benoit <jean-luc.benoit@atilf.fr>',
+	       "romary" => 'Laurent Romary <laurent.romary@inria.fr>',
+	       "kshawkin" => 'Kevin Hawkins <kevin.s.hawkins@ultraslavonic.info>',
+	       "rahtz"           => 'Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>',
+	       "louBurnard"      => 'Lou Burnard <lou.burnard@retired.ox.ac.uk>',
+	       "louburnard"      => 'Lou Burnard <lou.burnard@retired.ox.ac.uk>',
+	       "sbauman"         => 'Syd Bauman  <sbauman@brown.edu>',
+	       "mlforcada"       => 'Mikel L. Forcada <mlf@ua.es>',
+	       "dsew"            => 'David Sewell <dsewell@virginia.edu>',
+	       "ge8"             => 'J-L Benoit <jean-luc.benoit@atilf.fr>',
 );
 
 my $parse_next_line = 0;
