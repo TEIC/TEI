@@ -760,12 +760,12 @@
   <xsl:template match="tei:pb">
       <xsl:variable name="e">
          <xsl:choose>
-	           <xsl:when test="parent::tei:body or parent::tei:front or    parent::tei:back or parent::tei:div">
-	              <xsl:text>block</xsl:text>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:text>inline</xsl:text>
-	           </xsl:otherwise>
+	   <xsl:when test="parent::tei:body or parent::tei:front or    parent::tei:back or parent::tei:div">
+	     <xsl:text>block</xsl:text>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:text>inline</xsl:text>
+	   </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
       <xsl:choose>
