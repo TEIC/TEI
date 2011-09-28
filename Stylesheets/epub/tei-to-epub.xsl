@@ -438,7 +438,9 @@
 		      </xsl:otherwise>
 		    </xsl:choose>
 		    <xsl:if test="html:ul">
-		      <xsl:for-each select="html:ul//html:li[html:a and not(contains(html:a/@href,'#'))]">
+		      <xsl:for-each select="html:ul//html:li[html:a
+					    and
+					    not(contains(html:a/@href,'#'))]">
 			<item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
 			  <xsl:attribute name="id">
 			    <xsl:text>section</xsl:text>
@@ -582,17 +584,22 @@
 			</xsl:attribute>
 		      </reference>
 		    </xsl:if>
-		    <!--
-			<xsl:if test="html:ul">
-			<xsl:for-each select="html:ul//html:li[not(contains(html:a/@href,'#'))]">
-			<reference type="text" href="{html:a/@href}">
-			<xsl:attribute name="title">
-			<xsl:value-of select="normalize-space(html:a[1])"/>
-			</xsl:attribute>
-			</reference>
-			</xsl:for-each>
-			</xsl:if>
-		    -->
+		    <xsl:if
+			test="contains(parent::html:ul/@class,'group')">
+		      <xsl:for-each select="html:ul//html:li">
+			<xsl:choose>
+			  <xsl:when test="not(html:a)"/>
+			  <xsl:when test="contains(html:a/@href,'#')"/>
+			  <xsl:otherwise>
+			    <reference type="text" href="{html:a/@href}">
+			      <xsl:attribute name="title">
+				<xsl:value-of select="normalize-space(html:a[1])"/>
+			      </xsl:attribute>
+			    </reference>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:for-each>
+		    </xsl:if>
 		  </xsl:for-each>
 		</xsl:otherwise>
 	      </xsl:choose>
@@ -760,32 +767,22 @@
 		      <content src="index.html"/>
 		    </navPoint>
 		    <xsl:for-each
+			select="$TOC/html:TOC/html:ul[contains(@class,'group')]">
+		      <xsl:apply-templates select=".//html:li[not(contains(html:a/@href,'#'))]"/>
+		    </xsl:for-each>
+		    <xsl:for-each
 			select="$TOC/html:TOC/html:ul[@class='toc toc_back']">
 		      <xsl:apply-templates select="html:li"/>
 		    </xsl:for-each>
 		  </xsl:when>
 		  <xsl:otherwise>
-		    <xsl:apply-templates
-			select="$TOC/html:TOC/html:ul/html:li"/>
+		    <xsl:for-each select="$TOC/html:TOC/html:ul">
+		      <xsl:apply-templates select="html:li"/>
+		    </xsl:for-each>
 		  </xsl:otherwise>
 		</xsl:choose>
-                  <!--		<xsl:if test="html:ul">
-                    <xsl:for-each select="html:ul/html:li">
-		    <xsl:variable name="pos">
-		    <xsl:number level="any"/>
-		    </xsl:variable>
-		    <navPoint id="navPoint-{$pos+1}" playOrder="{$pos+1}">
-		    <navLabel>
-		    <text>
-		    <xsl:value-of select="normalize-space(html:a[1])"/>
-		    </text>
-		    </navLabel>
-		    <content src="{html:a/@href}"/>
-		    </navPoint>
-                    </xsl:for-each>
-		    </xsl:if>
-		-->
-                <navPoint>
+		
+		<navPoint>
                   <navLabel>
                     <text>[About this book]</text>
                   </navLabel>
