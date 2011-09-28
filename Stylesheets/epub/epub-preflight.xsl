@@ -98,14 +98,15 @@
     <xsl:for-each-group select="node()" group-starting-with="tei:pb">
         <xsl:choose>
           <xsl:when test="self::tei:pb">
-            <xsl:copy>
-              <xsl:copy-of select="@*"/>
-              <xsl:copy-of select="current-group() except ."/>
-	    </xsl:copy>
+	      <tei:pb>
+		<xsl:copy-of select="@*"/>
+	      </tei:pb>
+	      <tei:hi>
+		<xsl:copy-of select="$atts"/>
+		<xsl:copy-of select="current-group() except ."/>
+	      </tei:hi>
           </xsl:when>
-          <xsl:otherwise><!--
-	    <xsl:message>Gonna split, 	      <xsl:value-of
-	    select="$atts"/>, <xsl:value-of select="."/></xsl:message>-->
+          <xsl:otherwise>
 	    <tei:hi>
 	      <xsl:copy-of select="$atts"/>
 	      <xsl:copy-of select="current-group()"/>
