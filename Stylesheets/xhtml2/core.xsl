@@ -1122,6 +1122,7 @@
       <xsl:when test="number($splitLevel)=-1">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
+      <xsl:when test="ancestor::tei:group"/>
       <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
@@ -1876,6 +1877,7 @@
           </xsl:if>
           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
             <html>
+	      <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (11)</xsl:comment>
               <xsl:call-template name="addLangAtt"/>
               <head>
                 <title>
