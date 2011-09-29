@@ -535,7 +535,7 @@
           <xsl:call-template name="linkTogether">
             <xsl:with-param name="class">gi</xsl:with-param>
             <xsl:with-param name="name">
-              <xsl:value-of select="@ident"/>
+              <xsl:value-of select="tei:altIdent|@ident"/>
             </xsl:with-param>
             <xsl:with-param name="reftext">
               <xsl:choose>
@@ -545,7 +545,7 @@
                   </span>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="@ident"/>
+                  <xsl:value-of select="tei:altIdent|@ident"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:with-param>
