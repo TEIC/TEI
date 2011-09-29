@@ -1219,7 +1219,9 @@ glyphes non standard</head>
                 </xsl:call-template>
               </xsl:for-each>
               <xsl:text>/@</xsl:text>
-              <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	      <xsl:for-each select="ancestor::tei:attDef">
+		<xsl:value-of select="(tei:altIdent|@ident)[last()]"/>
+	      </xsl:for-each>
               <xsl:call-template name="showSpace"/>
             </li>
           </xsl:for-each>
