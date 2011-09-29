@@ -51,7 +51,7 @@
   <xsl:key match="tei:*" name="LOCALIDENTS" use="@ident"/>
   <xsl:key match="tei:macroSpec" name="MACROS" use="@ident"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTS" use="@ident"/>
-  <xsl:key match="tei:elementSpec" name="ELEMENTS" use="altIdent"/>
+  <xsl:key match="tei:elementSpec" name="ELEMENTS" use="tei:altIdent"/>
   <xsl:key match="tei:classSpec" name="CLASSES" use="@ident"/>
   <xsl:key match="rng:ref" name="REFS"  use="@name"/>
   <xsl:key match="rng:ref[contains(@name,'_')]" name="REFS" use="substring-before(@name,'_')"/>

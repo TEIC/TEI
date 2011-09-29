@@ -332,7 +332,7 @@
             <xsl:apply-templates/>
             <xsl:text>&gt;</xsl:text>
          </xsl:when>
-         <xsl:when test="key('ELEMENTS',.)">
+         <xsl:when test="key('ELEMENTS',.)[last()]">
             <xsl:for-each select="key('ELEMENTS',.)">
                <ref target="#{@ident}">
                   <xsl:text>&lt;</xsl:text>
@@ -340,12 +340,12 @@
                      <xsl:when test="tei:content/rng:empty">
                         <xsl:call-template name="emptySlash">
                            <xsl:with-param name="name">
-                              <xsl:value-of select="@ident"/>
+                              <xsl:value-of select="(tei:altIdent|@ident)[last()]"/>
                            </xsl:with-param>
                         </xsl:call-template>
                      </xsl:when>
                      <xsl:otherwise>
-                        <xsl:value-of select="@ident"/>
+                        <xsl:value-of select="(tei:altIdent|@ident)[last()]"/>
                      </xsl:otherwise>
                   </xsl:choose>
                   <xsl:text>&gt;</xsl:text>

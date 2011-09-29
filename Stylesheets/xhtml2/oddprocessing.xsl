@@ -522,6 +522,7 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:gi">
+    <xsl:variable name="lookup" select="."/>
     <xsl:choose>
       <xsl:when test="parent::tei:ref or parent::tei:head or string-length(@scheme)&gt;0">
         <span class="gi">
@@ -530,22 +531,22 @@
           <xsl:text>&gt;</xsl:text>
         </span>
       </xsl:when>
-      <xsl:when test="key('ELEMENTS',.)">
-        <xsl:for-each select="key('ELEMENTS',.)">
+      <xsl:when test="key('ELEMENTS',$lookup)">
+        <xsl:for-each select="key('ELEMENTS',$lookup)[last()]">
           <xsl:call-template name="linkTogether">
             <xsl:with-param name="class">gi</xsl:with-param>
             <xsl:with-param name="name">
-              <xsl:value-of select="tei:altIdent|@ident"/>
+              <xsl:value-of select="@ident"/>
             </xsl:with-param>
             <xsl:with-param name="reftext">
               <xsl:choose>
                 <xsl:when test="tei:content/rng:empty">
                   <span class="emptySlash">
-                    <xsl:value-of select="@ident"/>
+                    <xsl:value-of select="(tei:altIdent|@ident)[last()]"/>
                   </span>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="tei:altIdent|@ident"/>
+                  <xsl:value-of select="(tei:altIdent|@ident)[last()]"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:with-param>
