@@ -429,7 +429,7 @@
   <xsl:template match="tei:head">
     <xsl:variable name="parent" select="local-name(..)"/>
     <xsl:choose>
-      <xsl:when test="parent::tei:body or parent::tei:front or parent::tei:back">
+      <xsl:when test="parent::tei:group or parent::tei:body or parent::tei:front or parent::tei:back">
         <h1>
 	  <xsl:apply-templates/>
 	</h1>
