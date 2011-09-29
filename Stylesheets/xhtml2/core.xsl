@@ -670,7 +670,7 @@
   </doc>
 
   <xsl:template match="tei:l">
-    <xsl:element name="{if (ancestor::tei:head) then 'span' else 'div'}">
+    <xsl:element name="{if (ancestor::tei:head or ancestor::tei:hi) then 'span' else 'div'}">
       <xsl:call-template name="rendToClass">      
 	<xsl:with-param name="default">l</xsl:with-param>
       </xsl:call-template>	    
