@@ -983,6 +983,7 @@
         <xsl:element 
 	    name="{if (parent::tei:head or parent::tei:hi)  then 'span'
 		  else if (parent::tei:l) then 'span'
+		  else if (parent::tei:bibl/parent::tei:head) then 'span'
 		  else if (parent::tei:stage/parent::tei:q) then 'span'
 		  else if  (parent::tei:body or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
 	  <xsl:call-template name="makeAnchor">
@@ -1011,6 +1012,7 @@
 	  <xsl:apply-templates/>
 	</span>
       </xsl:when>
+
       <xsl:when test="parent::tei:head">
 	<xsl:text> [</xsl:text>
 	<xsl:apply-templates/>
