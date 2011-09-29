@@ -40,6 +40,8 @@ oddbyexample:
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
 conversions-from:
+	../teitohtml --odd test.odd test.odd.html
+	diff test.odd.html ok/test.odd.html
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf ok/test12.rdf
 	../teitotxt test14.xml test.text
