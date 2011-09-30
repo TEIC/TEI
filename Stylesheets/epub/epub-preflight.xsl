@@ -95,7 +95,7 @@
 
   <xsl:template match="tei:hi[tei:pb]" mode="preflight">
     <xsl:variable name="atts" select="@*"/>
-    <xsl:for-each-group select="node()" group-starting-with="tei:pb">
+    <xsl:for-each-group select="node()" group-starting-with="tei:pb|tei:figure">
         <xsl:choose>
           <xsl:when test="self::tei:pb">
 	      <tei:pb>
@@ -105,6 +105,13 @@
 		<xsl:copy-of select="$atts"/>
 		<xsl:copy-of select="current-group() except ."/>
 	      </tei:hi>
+          </xsl:when>
+          <xsl:when test="self::tei:figure">
+	    <xsl:copy-of select="."/>
+	    <tei:hi>
+	      <xsl:copy-of select="$atts"/>
+	      <xsl:copy-of select="current-group() except ."/>
+	    </tei:hi>
           </xsl:when>
           <xsl:otherwise>
 	    <tei:hi>
