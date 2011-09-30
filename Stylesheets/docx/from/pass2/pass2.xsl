@@ -286,15 +286,22 @@
     <xsl:template match="tei:list[@type='gloss']/tei:item/tei:g[@ref='x:tab']" mode="pass2"/>
     
 
+    <xsl:template match="tei:hi[@rend='footnote_reference' and
+			 count(*)=1 and tei:note]" mode="pass2" priority="99">
+          <xsl:apply-templates mode="pass2"/>
+    </xsl:template>
+
   <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="pass2">
   </xsl:template>
 
   <xsl:template match="tei:hi[@rend='Endnote_anchor']" mode="pass2" priority="99">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
+
   <xsl:template match="tei:hi[@rend='EndnoteReference']" mode="pass2"  priority="99">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
+
   <xsl:template match="tei:hi[@rend='EndnoteCharacters']" mode="pass2"
 		 priority="99">
     <xsl:apply-templates mode="pass2"/>
