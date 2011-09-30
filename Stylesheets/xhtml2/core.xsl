@@ -1955,6 +1955,8 @@
 		    </xsl:otherwise>
 		  </xsl:choose>
               </xsl:when>
+	      <xsl:when test="parent::tei:group and tei:group">
+	      </xsl:when>
               <xsl:otherwise>
                 <xsl:apply-templates mode="printnotes" select=".//tei:note"/>
               </xsl:otherwise>
