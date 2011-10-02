@@ -27,7 +27,9 @@ ROMAOPTS= --localsource=../p5subset.xml --xsl=${XSL}
 
 %.rng: %.odd
 	@echo "BUILD: Test schema from $<"
-	rnv ../p5odds.rnc $*.odd
+	xmllint --xinclude $*.odd > $*.xi
+	@echo Validate $< itself
+	rnv ../p5odds.rnc $*.xi
 	${ROMA} ${ROMAOPTS} $*.odd .
 	@echo Test schema built from $<
 	jing $*.rng $*.xml && echo $* validates OK
