@@ -122,6 +122,7 @@
 
   <xsl:variable name="top" select="/"/>
 
+
   <xsl:template match="/">
     <xsl:if test="$autoGlobal='true'">
       <xsl:message>NOTE: all TEI elements will have global attributes added automatically</xsl:message>
@@ -209,61 +210,20 @@
 
   <xsl:template match="tei:specGrpRef" mode="odd2odd-pass0">
     <xsl:if test="$verbose='true'">
-      <xsl:message>Phase 0: expand specGrpRef <xsl:value-of select="@target"/>
-         </xsl:message>
+      <xsl:message>Phase 0: expand specGrpRef <xsl:value-of
+      select="@target"/> (<xsl:value-of select="resolve-uri(@target,base-uri(/tei:TEI))"/></xsl:message>
     </xsl:if>
-    <xsl:choose>
-      <!-- To do this right, I (Syd) think we should be using something like-->
-      <!-- doc(resolve-uri(@target,base-uri(.))), and thus process pretty much-->
-      <!-- any URI regardless of absolute vs relative, whether fragment identifier-->
-      <!-- is complex or not, and of base URI. However, we can't do this because-->
-      <!-- we have no access to a base URI. I think this is because we are called-->
-      <!-- *before* the root of the input document is matched.-->
-      <!-- So for now, I'm parsing the URI by hand, and just managing the most-->
-      <!-- obvious cases.-->
-      <xsl:when test="matches( @target, '^#\i\c*$' )">
-	<!-- just a bare name identifier, presumably pointing within current file -->
-	<!-- (although we really should check xml:base= to be sure, we can't) -->
-        <xsl:choose>
-          <xsl:when test="key('odd2odd-IDS',substring(@target,2))">
-            <xsl:for-each select="key('odd2odd-IDS',substring(@target,2))">
-              <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
-            </xsl:for-each>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:message>Warning: unable to find target=<xsl:value-of select="@target"/> of &lt;specGrpRef></xsl:message>
-          </xsl:otherwise>
-        </xsl:choose> 
-      </xsl:when>
-      <xsl:when test="matches( @target, '#\i\c*$' )">
-	<!-- ends in a bare name identifier, so it should point to an external  -->
-	<!-- document, hopefully one we can easily find with document(); again, -->
-	<!-- to really do this right, we should be checking xml:base= -->
-        <xsl:variable name="sgrDoc" select="substring-before(@target,'#')"/>
-        <xsl:variable name="sgrID" select="substring-after(@target,'#')"/>
-        <!-- sgr = specification group reference :-) -->
-	<xsl:choose>
-	  <xsl:when test="id( $sgrID, document( $sgrDoc, $top ) )">
-	    <xsl:for-each select="id( $sgrID, document( $sgrDoc, $top ) )">
-	      <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
-	    </xsl:for-each>
-	  </xsl:when>
-	  <xsl:otherwise>
-            <xsl:message>Warning: unable to find target=<xsl:value-of select="@target"/> of &lt;specGrpRef></xsl:message>
-          </xsl:otherwise>
-        </xsl:choose> 
-      </xsl:when>
-      <xsl:when test="contains(@target,'#')">
-	<!-- ends in something more complex than a bare name reference -->
-        <xsl:message>WARNING: Sorry, I don't know how to process the target=<xsl:value-of select="@target"/> of &lt;specGrpRef></xsl:message>
-      </xsl:when>
-      <xsl:otherwise>
-	<!-- doesn't have a fragment identifier at all -->
-        <xsl:for-each select="document(@target)/tei:specGrp">
-          <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
-        </xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:for-each 
+	select="doc(resolve-uri(@target,base-uri(/tei:TEI)))">
+      <xsl:choose>
+	<xsl:when test="tei:specGrp">
+	  <xsl:apply-templates select="tei:specGrp/*" mode="odd2odd-pass0"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates  mode="odd2odd-pass0"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
   
   <xsl:template match="text()|@*" mode="odd2odd-pass0">
