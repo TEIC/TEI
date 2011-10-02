@@ -45,6 +45,7 @@ conversions-from:
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
 	diff test.odd.html ok/test.odd.html
 	../teitornc  test15.odd test15.odd.rnc
+	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
 	diff test15.odd.rnc ok/test15.odd.rnc 
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf ok/test12.rdf
