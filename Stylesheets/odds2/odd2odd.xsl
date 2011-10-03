@@ -67,7 +67,7 @@
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:classSpec"  use="@module"/>
   <xsl:key name="odd2odd-MODULE_MEMBERS" match="tei:elementSpec" use="@module"/>
 
-  <xsl:key name="odd2odd-MODULE_MEMBERS_MODEL" match="tei:classSpec[@type='model']" use="@module"/>
+  <xsl:key name="odd2odd-MODULE_MEMBERS_MODEL" match="tei:classSpec" use="@module"/>
 
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
 
@@ -531,8 +531,7 @@ How can a class be ok?
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="$verbose='true'">
-          <xsl:message>Reject unused macro <xsl:value-of select="$k"/>
-	              </xsl:message>
+          <xsl:message>Reject unused macro <xsl:value-of select="$k"/></xsl:message>
         </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
