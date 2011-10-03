@@ -458,17 +458,23 @@
 
   <xsl:template match="tei:ptr" mode="odd2odd-pass2">
     <xsl:choose>
-      <xsl:when test="(ancestor::tei:remarks or ancestor::tei:listRef
-		      or ancestor::tei:valDesc) and
+      <xsl:when test="starts-with(@target,'#') and 
+		      (ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc) and
 		      not(id(substring(@target,2)))">
 	<xsl:variable name="target" select="substring(@target,2)"/>
-	<xsl:for-each
-	    select="document($DEFAULTSOURCE)">
-	  <xsl:for-each select="id($target)">
-	    <xsl:number format="1.1.1." level="multiple"/>	  
-	    <xsl:text> of TEI Guidelines</xsl:text>
-	</xsl:for-each>
-	</xsl:for-each>
+	<xsl:choose>
+	  <xsl:when test="document($DEFAULTSOURCE)/id($target)">
+	    <xsl:for-each select="document($DEFAULTSOURCE)/id($target)">
+	      <xsl:number format="1.1.1." level="multiple"/>	  
+	      <xsl:text> of TEI Guidelines</xsl:text>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:copy>
+	      <xsl:apply-templates select="@*|*|text()|processing-instruction()" mode="odd2odd-pass2"/>
+	    </xsl:copy>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:copy>
