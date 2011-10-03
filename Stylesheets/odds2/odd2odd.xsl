@@ -346,12 +346,13 @@
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:when test="exists($inc)">
-	  <!-- get model classes regardless -->
+	  <!-- get model and attribute classes regardless -->
 	  <xsl:for-each select="document($SourceDoc,$top)">
-	    <xsl:for-each select="key('odd2odd-MODULE_MEMBERS_MODEL',$name)">
+	    <xsl:for-each
+		select="key('odd2odd-MODULE_MEMBERS_MODEL',$name)">
 	      <xsl:call-template name="odd2odd-checkObject">
 		<xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
-		<xsl:with-param name="why"> module (auto from include) <xsl:value-of select="$name"/></xsl:with-param>
+		<xsl:with-param name="why">module (auto from include) <xsl:value-of select="$name"/></xsl:with-param>
 	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:for-each>
@@ -361,10 +362,12 @@
 	      <xsl:choose>
 		<xsl:when test="key('odd2odd-IDENTS',$i)">
 		  <xsl:for-each select="key('odd2odd-IDENTS',$i)">
-		    <xsl:call-template name="odd2odd-checkObject">
-		      <xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
-		      <xsl:with-param name="why">(inclusion) module <xsl:value-of select="$name"/></xsl:with-param>
-		    </xsl:call-template>
+		    <xsl:if test="not(self::tei:classSpec)">
+		      <xsl:call-template name="odd2odd-checkObject">
+			<xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
+			<xsl:with-param name="why">(inclusion) module <xsl:value-of select="$name"/></xsl:with-param>
+		      </xsl:call-template>
+		    </xsl:if>
 		  </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>
@@ -395,7 +398,6 @@
 	    </xsl:for-each>
 	</xsl:otherwise>
       </xsl:choose>
-
   </xsl:template>
 
   <xsl:template name="odd2odd-followRef">
