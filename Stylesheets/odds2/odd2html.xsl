@@ -184,7 +184,7 @@
 	  <xsl:apply-templates mode="generateLink" select="id($where)"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:text>[anchor </xsl:text>
+	  <xsl:text>[ID </xsl:text>
 	  <xsl:value-of select="$where"/>
 	  <xsl:text> in TEI Guidelines]</xsl:text>
 	</xsl:otherwise>
