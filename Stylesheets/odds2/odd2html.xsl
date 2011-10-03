@@ -176,4 +176,19 @@
     <xsl:apply-templates select="."/>
   </xsl:template>
 
+
+  <xsl:template name="generateEndLink">
+      <xsl:param name="where"/>
+      <xsl:choose>
+	<xsl:when test="id($where)">
+	  <xsl:apply-templates mode="generateLink" select="id($where)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>[anchor </xsl:text>
+	  <xsl:value-of select="$where"/>
+	  <xsl:text> in TEI Guidelines]</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -236,17 +236,16 @@
    </doc>
   <xsl:template name="generateEndLink">
       <xsl:param name="where"/>
-
-    <xsl:choose>
-      <xsl:when test="id($where)">
-	<xsl:apply-templates mode="generateLink" select="id($where)"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:text>[[undefined </xsl:text>
-	<xsl:value-of select="$where"/>
-	<xsl:text>]]</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+      <xsl:choose>
+	<xsl:when test="id($where)">
+	  <xsl:apply-templates mode="generateLink" select="id($where)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>[[undefined </xsl:text>
+	  <xsl:value-of select="$where"/>
+	  <xsl:text>]]</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -477,13 +476,13 @@
 	       <xsl:when test="not($body='')">
 		 <xsl:value-of select="$body"/>
 	       </xsl:when>
-	       <xsl:when test="$ptr and count(id($W))&gt;0">
+	       <xsl:when test="$ptr and id($W)">
 		 <xsl:apply-templates mode="xref" select="id($W)">
 		   <xsl:with-param name="minimal" select="$minimalCrossRef"/>
 		 </xsl:apply-templates>
 	       </xsl:when>
 	       <xsl:when test="$ptr">
-		 <xsl:text>??</xsl:text>
+		 <xsl:value-of select="$dest"/>
 	       </xsl:when>
 	       <xsl:otherwise>
 		 <xsl:apply-templates/>
