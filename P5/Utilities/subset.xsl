@@ -14,10 +14,22 @@
   <xsl:template match="/">
     <TEI xmlns="http://www.tei-c.org/ns/1.0">
       <xsl:apply-templates select="tei:TEI/tei:teiHeader"/>
-      <xsl:for-each select="tei:TEI/tei:text/tei:*">
-	<xsl:call-template name="subdivs"/>
+      <xsl:for-each select="tei:TEI/tei:text/tei:front">
+	<xsl:copy>
+	  <xsl:call-template name="subdivs"/>
+	</xsl:copy>
       </xsl:for-each>
-      <xsl:apply-templates select="key('ALL',1)"/>
+      <xsl:for-each select="tei:TEI/tei:text/tei:body">
+	<xsl:copy>
+	  <xsl:call-template name="subdivs"/>
+	</xsl:copy>
+      </xsl:for-each>
+      <xsl:for-each select="tei:TEI/tei:text/tei:back">
+	<xsl:copy>
+	  <xsl:call-template name="subdivs"/>
+	</xsl:copy>
+	<xsl:apply-templates select="key('ALL',1)"/>
+      </xsl:for-each>
     </TEI>
   </xsl:template>
 
