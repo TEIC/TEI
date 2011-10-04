@@ -464,10 +464,13 @@
 	<xsl:variable name="target" select="substring(@target,2)"/>
 	<xsl:choose>
 	  <xsl:when test="document($DEFAULTSOURCE)/id($target)">
-	    <xsl:for-each select="document($DEFAULTSOURCE)/id($target)">
-	      <xsl:number format="1.1.1." level="multiple"/>	  
-	      <xsl:text> of TEI Guidelines</xsl:text>
-	    </xsl:for-each>
+	    <ref  xmlns="http://www.tei-c.org/ns/1.0"
+		  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{substring($target,1,2)}.html#{$target}">
+	      <xsl:for-each select="document($DEFAULTSOURCE)/id($target)">
+		<xsl:text>TEI </xsl:text>
+		<xsl:number count="tei:div" format="1.1.1." level="multiple"/>	  
+	      </xsl:for-each>
+	    </ref>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:copy>

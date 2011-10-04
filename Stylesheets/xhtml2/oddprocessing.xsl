@@ -731,7 +731,7 @@
   <xsl:template match="tei:listRef" mode="weave"/>
   <xsl:template match="tei:ptr" mode="weave">
     <xsl:choose>
-      <xsl:when test="parent::tei:listRef">
+      <xsl:when test="ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc">
         <xsl:choose>
           <xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
             <xsl:call-template name="makeInternalLink">

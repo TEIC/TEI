@@ -176,7 +176,6 @@
     <xsl:apply-templates select="."/>
   </xsl:template>
 
-
   <xsl:template name="generateEndLink">
       <xsl:param name="where"/>
       <xsl:choose>
