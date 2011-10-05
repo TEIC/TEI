@@ -83,12 +83,6 @@
   </xsl:template>
 
 
-   <xsl:template match="tei:note[@place='foot']">
-     <span class="footnote">
-       <xsl:number level="any"/>
-       <xsl:apply-templates/>
-     </span>
-   </xsl:template>
 
    <xsl:template match="tei:note[@place='foot']/tei:p">
      <xsl:apply-templates/>
