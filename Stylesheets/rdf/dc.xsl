@@ -17,7 +17,7 @@
 
   <xsl:template name="dc_header">
     <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/"
-	rdf:about="{.//idno[@type='ota'][1]}">
+	rdf:about="{.//idno[1]}">
       <xsl:apply-templates/>
     </rdf:Description>
   </xsl:template>
