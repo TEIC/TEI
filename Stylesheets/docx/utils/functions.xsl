@@ -150,6 +150,7 @@
     <xsl:function name="tei:is-list" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
+            <xsl:when test="$p[w:pPr/w:numPr]">true</xsl:when>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'List')]">true</xsl:when>
             <xsl:when test="$p[w:pPr/w:pStyle/@w:val='dl']">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>

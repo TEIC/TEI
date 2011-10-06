@@ -466,4 +466,6 @@
       </xsl:choose>
    </xsl:template>
 
+    <xsl:template match="@rend[.='Body_Text']" mode="pass2"/>
+
 </xsl:stylesheet>

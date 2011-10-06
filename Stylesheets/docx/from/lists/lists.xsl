@@ -72,7 +72,7 @@
 		<xsl:for-each select="current-group()">
 		  <!-- put items and notes as siblings  for now -->
 		  <xsl:choose>
-		    <xsl:when test="contains(w:pPr/w:pStyle/@w:val,'List')">
+		    <xsl:when test="tei:is-list(.)">
 		      <item>
 			<xsl:apply-templates/>
 		      </item>
