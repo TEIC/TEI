@@ -164,6 +164,8 @@
 		  <xsl:choose>
 		    <xsl:when
 			test="contains(following-sibling::w:r[w:instrText][1],'NOTEREF')"><r>noteref</r></xsl:when>
+		    <xsl:when
+			test="contains(following-sibling::w:r[w:instrText][1],'SEQ')"><r>SEQ</r></xsl:when>
 		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'XE')"><r>index</r></xsl:when>
 		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'REF')"><r>ref</r></xsl:when>
 		  </xsl:choose>
@@ -177,6 +179,11 @@
 		    <indexTerm>
 		      <xsl:value-of select="current-group()//w:instrText[2]"/>
 		    </indexTerm>
+		  </xsl:when>
+		  <xsl:when test="$rends/tei:r='SEQ'">
+		    <xsl:variable name="What"
+				  select="following-sibling::w:r/w:instrText[1]"/>
+		    <xsl:number level="any" count="w:r[w:fldChar/@w:fldCharType='begin'][following-sibling::w:r/w:instrText=$What]"/>
 		  </xsl:when>
 		  <xsl:otherwise>
 		    <ref>
