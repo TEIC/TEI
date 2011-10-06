@@ -127,6 +127,9 @@
     <xsl:if test="$autoGlobal='true'">
       <xsl:message>NOTE: all TEI elements will have global attributes added automatically</xsl:message>
     </xsl:if>
+    <xsl:result-document href="/tmp/foo.xml">
+      <xsl:copy-of select="$ODD"/>
+    </xsl:result-document>
     <xsl:for-each select="$ODD">
       <xsl:apply-templates mode="odd2odd-pass1"/>
     </xsl:for-each>
@@ -767,8 +770,11 @@ for change individually.
  -->
       <xsl:for-each select="$ODD">
         <xsl:for-each select="key('odd2odd-CHANGE',$elementName)">
-          <!-- if there is an altIdent, use it -->
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>Change <xsl:value-of select="$elementName"/></xsl:message>
+	  </xsl:if>
           <xsl:copy-of select="@ns"/>
+          <!-- if there is an altIdent, use it -->
           <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
           <!-- equiv, gloss, desc trio -->
           <xsl:choose>
