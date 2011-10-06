@@ -37,6 +37,8 @@
 
    <xsl:template match="figDesc"/>
 
+   <xsl:template match="gap/desc"/>
+
    <xsl:template match="choice">
      <xsl:apply-templates select="*[1]"/>
    </xsl:template>
