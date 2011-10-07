@@ -6,8 +6,9 @@ compile:
 	rm rdf.xml
 
 run:
-	saxon diary.xml tei2crm.xsl > diary.rdf
-	saxon test.xml tei2crm.xsl > test.rdf
+	saxon diary.xml tei2rdf.xsl > diary.rdf
+	saxon test.xml tei2rdf.xsl > test.rdf
+	saxon testota.xml tei2rdf.xsl > testota.rdf
 
 talk:
 	saxon talk.xml ../../Talks/2010-11-10_TEIMM_ODD/slides.xsl latexLogo=logo > talk.tex

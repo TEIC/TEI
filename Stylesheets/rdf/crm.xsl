@@ -23,6 +23,14 @@
     </rdf:RDF>
   </xsl:template>
 
+  <xsl:template name="E31">
+    <E31_Document
+	rdf:about="{.//idno[@type='ota'][1]}">
+      <xsl:apply-templates/>
+    </E31_Document>
+  </xsl:template>
+
+
   <xsl:template name="teiname">
     <xsl:choose>
       <xsl:when test="@type='place'">
@@ -55,6 +63,9 @@
   <xsl:template name="E5">
     <P11i_participated_in>
       <E5_Event>
+	<rdf:value>
+	  <xsl:value-of select="."/>
+	</rdf:value>
       </E5_Event>
     </P11i_participated_in>
   </xsl:template>
@@ -191,32 +202,75 @@
     </P74_has_current_or_former_residence>
   </xsl:template>
 
+  <xsl:template name="E35">
+    <P102_has_title>
+      <E35_Title>
+	<rdf:value>
+	  <xsl:value-of select="normalize-space(.)"/>
+	</rdf:value>
+      </E35_Title>
+    </P102_has_title>
+  </xsl:template>
+
+  <xsl:template name="E65">
+    <P94i_was_created_by>
+      <E65_Creation>
+	<P11_had_participant>
+	  <E21_Person rdf:about="{tei:makeID(.)}">
+	    <P131_is_identified_by>
+	      <E82_Actor_Appellation>
+		<rdf:value>
+		  <xsl:value-of select="normalize-space(.)"/>
+		</rdf:value>
+	      </E82_Actor_Appellation>
+	    </P131_is_identified_by>
+	  </E21_Person>
+	</P11_had_participant>
+      </E65_Creation>
+    </P94i_was_created_by>
+  </xsl:template>
+
+<!-- general templates -->
   <xsl:function name="tei:makeID" as="xs:string*">
     <xsl:param name="here"/>
       <xsl:for-each select="$here">
 	<xsl:variable name="id">
-        <xsl:choose>
-          <xsl:when test="ancestor-or-self::*/@xml:base">
-            <xsl:value-of select="ancestor-or-self::*[@xml:base][1]/@xml:base"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>http://www.example.com/id</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:choose>
-	  <xsl:when test="@ref">
-	    <xsl:value-of select="@ref"/>
-	  </xsl:when>
-          <xsl:when test="@xml:id">
-            <xsl:value-of select="@xml:id"/>
-          </xsl:when>
-          <xsl:otherwise>
-	    <xsl:text>/</xsl:text>
-            <xsl:number level="any"/>
-          </xsl:otherwise>
-        </xsl:choose>
-    </xsl:variable>
-      <xsl:value-of select="$id"/>
+	  <xsl:choose>
+	    <xsl:when
+		test="/TEI/teiHeader/fileDesc/publicationStmt/idno[starts-with(.,'http')]">
+	      <xsl:for-each
+		  select="/TEI/teiHeader/fileDesc/publicationStmt/idno[starts-with(.,'http')][1]">
+		    <xsl:value-of select="."/>
+	      </xsl:for-each>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:choose>
+		<xsl:when test="ancestor-or-self::*/@xml:base">
+		  <xsl:value-of select="ancestor-or-self::*[@xml:base][1]/@xml:base"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:text>http://www.example.com/id/</xsl:text>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:choose>
+		<xsl:when test="@ref">
+		  <xsl:value-of select="@ref"/>
+		</xsl:when>
+		<xsl:when test="@xml:id">
+		  <xsl:value-of select="@xml:id"/>
+		</xsl:when>
+		<xsl:when
+		    test="/TEI/teiHeader/fileDesc/publicationStmt/idno">
+		  <xsl:value-of select="/TEI/teiHeader/fileDesc/publicationStmt/idno[1]"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:number level="any"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+	<xsl:value-of select="$id"/>
       </xsl:for-each>
   </xsl:function>
 
