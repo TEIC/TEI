@@ -46,13 +46,6 @@
       <xsl:choose>
 	<xsl:when test="ancestor::state"/>	
 	<xsl:when test="ancestor::trait"/>
-	<xsl:when test="self::name or ancestor::event">
-	  <P7_took_place_at>
-	    <xsl:attribute name="rdf:resource"
-			   select="tei:makeID(.,'place')">
-	    </xsl:attribute>
-	  </P7_took_place_at>
-	</xsl:when>
 	<xsl:otherwise>
 	  <E53_Place>
 	  <xsl:attribute name="rdf:about" select="tei:makeID(.,'place')"/>
@@ -169,6 +162,14 @@
 	  </E82_Actor_Appellation>
 	</P131_is_identified_by>
       </xsl:when>
+      <xsl:when test="self::name or ancestor::event">
+	<P11_had_participant>
+	  <xsl:attribute name="rdf:resource"
+			 select="tei:makeID(.,'person')">
+	  </xsl:attribute>
+	</P11_had_participant>
+      </xsl:when>
+
       <xsl:when test="parent::label"/>
       <xsl:when test="parent::desc"/>
       <xsl:when test="not(@ref)">
@@ -215,6 +216,13 @@
 	</P87_is_identified_by>
       </xsl:when>
       <xsl:when test="settlement|region|country">
+      </xsl:when>
+      <xsl:when test="self::name or ancestor::event">
+	<P7_took_place_at>
+	  <xsl:attribute name="rdf:resource"
+			 select="tei:makeID(.,'place')">
+	  </xsl:attribute>
+	</P7_took_place_at>
       </xsl:when>
       <xsl:otherwise>
 	<E53_Place rdf:about="{tei:makeID(.,'place')}">
