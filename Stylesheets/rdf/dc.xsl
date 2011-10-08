@@ -35,17 +35,19 @@
   </xsl:template>
   
   <xsl:template name="dc_publisher">
-    <dc:publisher>
-      <xsl:value-of select="publisher"/>
-      <xsl:if test="pubPlace">
-	<xsl:text>, </xsl:text>
-	<xsl:value-of select="pubPlace"/>
-      </xsl:if>
-      <xsl:if test="date">
-	<xsl:text>, </xsl:text>
-	<xsl:value-of select="date"/>
-      </xsl:if>
-    </dc:publisher>
+    <xsl:if test="publisher">
+      <dc:publisher>
+	<xsl:value-of select="publisher"/>
+	<xsl:if test="pubPlace">
+	  <xsl:text>, </xsl:text>
+	  <xsl:value-of select="pubPlace"/>
+	</xsl:if>
+	<xsl:if test="date">
+	  <xsl:text>, </xsl:text>
+		<xsl:value-of select="date"/>
+	</xsl:if>
+      </dc:publisher>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="dc_date">
