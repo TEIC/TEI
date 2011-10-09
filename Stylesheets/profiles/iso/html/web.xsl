@@ -290,8 +290,13 @@
 	   <xsl:copy-of select="$text"/>
 	 </xsl:otherwise>
        </xsl:choose>
-
   </xsl:template>
+
+   <xsl:template match="tei:titleStmt/tei:title" priority="99">
+     <h1 class="maintitle">
+       <xsl:apply-templates/>
+     </h1>
+   </xsl:template>
 
   <xsl:template name="rendToClass">
     <xsl:param name="id">true</xsl:param>
