@@ -55,16 +55,16 @@
    <xsl:param name="splitLevel">-1</xsl:param>
    <xsl:param name="autoToc">true</xsl:param>
    <xsl:param name="tocDepth">3</xsl:param>
-   <xsl:param name="institution">ISO</xsl:param>
+   <xsl:param name="institution"></xsl:param>
    <xsl:param name="department"/>
-   <xsl:param name="cssFile">http://tei.oucs.ox.ac.uk/TEIISO/iso.css</xsl:param>
+   <xsl:param name="cssFile">iso.css</xsl:param>
    <xsl:param name="cssSecondaryFile">http://tei.oucs.ox.ac.uk/TEIISO/iso-odd.css</xsl:param>
    <xsl:param name="cssPrintFile">http://tei.oucs.ox.ac.uk/TEIISO/iso-print.css</xsl:param>
    <xsl:param name="TEIC">false</xsl:param>
    <xsl:param name="wrapLength">65</xsl:param>
    <xsl:param name="attLength">60</xsl:param>
    <xsl:param name="forceWrap">true</xsl:param>
-
+   <xsl:param name="numberBackHeadings">true</xsl:param>
    <xsl:template match="/">
      <xsl:variable name="All">
        <xsl:apply-templates mode="checkSchematron"/>
@@ -73,6 +73,5 @@
       <xsl:call-template name="processTEI"/>
      </xsl:for-each>
    </xsl:template>
-
 
 </xsl:stylesheet>

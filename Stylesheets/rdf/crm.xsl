@@ -262,7 +262,7 @@
   </xsl:template>
 
   <xsl:template name="E35">
-    <xsl:if test="not(ancestor::biblFull)">
+    <xsl:if test="not(ancestor::biblFull or ancestor::bibl)">
     <P102_has_title>
       <E35_Title>
 	<rdf:value>
@@ -274,7 +274,7 @@
   </xsl:template>
 
   <xsl:template name="E65">
-    <xsl:if test="not(ancestor::biblFull)">
+    <xsl:if test="not(ancestor::biblFull or ancestor::bibl)">
     <P94i_was_created_by>
       <E65_Creation>
 	<P11_had_participant>
