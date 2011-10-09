@@ -418,4 +418,7 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
       <xsl:copy-of select="."/>
     </xsl:if>
   </xsl:template>
+
+  <xsl:template match="text()"/>
+
 </xsl:stylesheet>

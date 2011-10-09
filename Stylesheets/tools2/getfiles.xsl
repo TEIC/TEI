@@ -16,19 +16,15 @@
   <xsl:key name="AllTEI" match="tei:*" use="1"/>
   <xsl:key name="E" match="*" use="local-name()"/>
 
-  <xsl:template match="/">
-      <xsl:call-template name="main"/>
-  </xsl:template>
-
   <xsl:template name="main">
       <xsl:variable name="pathlist">
          <xsl:choose>
-	           <xsl:when test="$corpusList=''">
-	              <xsl:value-of select="concat($corpus,         '?select=*.',$suffix,';recurse=yes;on-error=warning')"/>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:value-of select="$corpusList"/>
-	           </xsl:otherwise>
+	   <xsl:when test="$corpusList=''">
+	     <xsl:value-of select="concat($corpus,'?select=*.',$suffix,';recurse=yes;on-error=warning')"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:value-of select="$corpusList"/>
+	   </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
       <xsl:if test="$debug='true'">
@@ -37,72 +33,75 @@
       <xsl:variable name="docs" select="collection($pathlist)"/> 
       <xsl:variable name="all">
          <n:ROOT>
-	           <xsl:if test="$processP4='true'">
-	              <xsl:for-each select="$docs/TEI.2">
-	                 <xsl:if test="$verbose='true'">
-	                    <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
-                     </xsl:message>
-	                 </xsl:if>
-	                 <TEI.2 xn="{base-uri(.)}">
-	                    <xsl:apply-templates select="*|@*" mode="copy"/>
-	                 </TEI.2>
-	              </xsl:for-each>
-	           </xsl:if>
-	           <xsl:if test="$processP5='true'">
-	              <xsl:for-each select="$docs/tei:*">
-	                 <xsl:if test="$verbose='true'">
-	                    <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
-                     </xsl:message>
-	                 </xsl:if>
-	                 <tei:TEI xn="{base-uri(.)}">
-	                    <xsl:apply-templates select="*|@*" mode="copy"/>
-	                 </tei:TEI>
-	              </xsl:for-each>
-	              <xsl:for-each select="$docs/tei:teiCorpus">
-	                 <xsl:if test="$verbose='true'">
-	                    <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
-                     </xsl:message>
-	                 </xsl:if>
-	                 <tei:teiCorpus xn="{base-uri(.)}">
-	                    <xsl:copy-of select="@*|*"/>
-	                 </tei:teiCorpus>
-	              </xsl:for-each>
-	           </xsl:if>
+	   <xsl:if test="$processP4='true'">
+	     <xsl:for-each select="$docs/TEI.2">
+	       <xsl:if test="$verbose='true'">
+		 <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
+		 </xsl:message>
+	       </xsl:if>
+	       <TEI.2 xn="{base-uri(.)}">
+		 <xsl:apply-templates select="*|@*" mode="copy"/>
+	       </TEI.2>
+	     </xsl:for-each>
+	   </xsl:if>
+	   <xsl:if test="$processP5='true'">
+	     <xsl:for-each select="$docs/tei:*">
+	       <xsl:if test="$verbose='true'">
+		 <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
+		 </xsl:message>
+	       </xsl:if>
+	       <tei:TEI xn="{base-uri(.)}">
+		 <xsl:apply-templates select="*|@*" mode="copy"/>
+	       </tei:TEI>
+	     </xsl:for-each>
+	     <xsl:for-each select="$docs/tei:teiCorpus">
+	       <xsl:if test="$verbose='true'">
+		 <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
+		 </xsl:message>
+	       </xsl:if>
+	       <tei:teiCorpus xn="{base-uri(.)}">
+		 <xsl:copy-of select="@*|*"/>
+	       </tei:teiCorpus>
+	     </xsl:for-each>
+	   </xsl:if>
          </n:ROOT>
       </xsl:variable>
-      <xsl:for-each select="$all">
-         <xsl:call-template name="processAll"/>
+    <xsl:result-document href="/tmp/foo.xml">
+      <xsl:copy-of select="$all"/>
+    </xsl:result-document>
+
+      <xsl:for-each select="$all/*">
+	<xsl:call-template name="processAll"/>
       </xsl:for-each>
   </xsl:template>
 
   <xsl:template name="processAll">
       <html>
          <body>
-	           <table border="1">
-	              <xsl:for-each-group select="key('All',1)" group-by="local-name()">
-	                 <xsl:sort select="current-grouping-key()"/>
-	                 <tr valign="top">
-	                    <td> 
-		                      <xsl:value-of select="current-grouping-key()"/>
-	                    </td> 
-	                    <td> 
-		                      <xsl:value-of select="count(current-group())"/>
-	                    </td> 
-	                 </tr>
-	              </xsl:for-each-group>
-	           </table>
+	   <table border="1">
+	     <xsl:for-each-group select="key('All',1)" group-by="local-name()">
+	       <xsl:sort select="current-grouping-key()"/>
+	       <tr valign="top">
+		 <td> 
+		   <xsl:value-of select="current-grouping-key()"/>
+		 </td> 
+		 <td> 
+		   <xsl:value-of select="count(current-group())"/>
+		 </td> 
+	       </tr>
+	     </xsl:for-each-group>
+	   </table>
          </body>
       </html>
   </xsl:template>
 
-  <xsl:template match="@*" mode="copy">
+  <xsl:template match="text()|@*" mode="copy">
       <xsl:copy-of select="."/>
   </xsl:template>
 
-
   <xsl:template match="*" mode="copy">
       <xsl:copy>
-         <xsl:apply-templates select="*|@*" mode="copy"/>
+         <xsl:apply-templates select="*|@*|text()" mode="copy"/>
       </xsl:copy>
   </xsl:template>
   

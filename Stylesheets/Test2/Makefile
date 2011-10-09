@@ -30,7 +30,7 @@ odd:
 	localsource=`pwd`/p5subset.xml $(SAXONOPT) > testdrama.compiled.xml
 
 oddbyexample:
-	saxon -o:oddbyexample.odd ../tools2/oddbyexample.xsl ../tools2/oddbyexample.xsl corpus=`pwd`/bare 
+	saxon -it:main -o:oddbyexample.odd  -xsl:../tools2/oddbyexample.xsl corpus=`pwd`/bare 
 	roma2 oddbyexample.odd .
 	jing -c oddbyexample.rnc bare/test2.xml
 	jing oddbyexample.xsd bare/test2.xml
