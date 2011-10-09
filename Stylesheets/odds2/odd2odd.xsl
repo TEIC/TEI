@@ -127,9 +127,11 @@
     <xsl:if test="$autoGlobal='true'">
       <xsl:message>NOTE: all TEI elements will have global attributes added automatically</xsl:message>
     </xsl:if>
+    <!--
     <xsl:result-document href="/tmp/foo.xml">
       <xsl:copy-of select="$ODD"/>
     </xsl:result-document>
+    -->
     <xsl:for-each select="$ODD">
       <xsl:apply-templates mode="odd2odd-pass1"/>
     </xsl:for-each>
