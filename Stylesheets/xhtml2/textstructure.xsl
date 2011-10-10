@@ -568,7 +568,7 @@
 	<xsl:for-each select="key('INDEX',1)">
 	  <tei:REF>
 	    <tei:SORT>
-	      <xsl:value-of select="lower-case(translate(normalize-unicode(tei:term,'NFD'),'^[A-z0-9]',''))"/>
+	      <xsl:value-of select="lower-case(normalize-unicode(tei:term,'NFD'))"/>
 	    </tei:SORT>	    
 	    <tei:TERM>
 	      <xsl:value-of select="tei:term"/>
