@@ -17,6 +17,13 @@
 
   <xsl:key name="persons" match="persName" use="@ref"/>
   <xsl:key name="Places" match="place[placeName]" use="placeName"/>
+  <xsl:key name="Idents" 
+	   match="crm:P131_is_identified_by"
+	   use="crm:E82_Actor_Appellation/@rdf:about"/>
+
+  <xsl:key name="Idents" 
+	   match="crm:P87_is_identified_by"
+	   use="crm:E48_Place_Name/@rdf:about"/>
 
   <xsl:template name="TEI">
     <xsl:choose>
@@ -48,16 +55,56 @@
 
   <!-- clean up pass -->
 
-  <xsl:template match="crm:E53_Place[position()&gt;1]" mode="rdf2"/>
+  <xsl:template match="crm:P131_is_identified_by" mode="rdf2">
+    <xsl:copy>
+      <xsl:choose>
+	<xsl:when
+	    test="generate-id(.)=generate-id(key('Idents',crm:E82_Actor_Appellation/@rdf:about)[1])">
+	  <xsl:apply-templates
+	      select="*|@*|processing-instruction()|comment()|text()"
+	      mode="rdf2"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="rdf:resource"
+			 select="crm:E82_Actor_Appellation/@rdf:about"/>
+      </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="crm:P87_is_identified_by" mode="rdf2">
+    <xsl:copy>
+      <xsl:choose>
+	<xsl:when
+	    test="generate-id(.)=generate-id(key('Idents',crm:E48_Place_Name/@rdf:about)[1])">
+	  <xsl:apply-templates
+	      select="*|@*|processing-instruction()|comment()|text()"
+	      mode="rdf2"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:attribute name="rdf:resource"
+			 select="crm:E48_Place_Name/@rdf:about"/>
+      </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
 
+  <xsl:template match="crm:E53_Place[not(parent::rdf:RDF) and position()&gt;1]" mode="rdf2"/>
+
+  <xsl:template match="crm:E53_Place" mode="rdf3">
+     <xsl:copy>
+      <xsl:apply-templates  select="@*"	  mode="rdf2"/>
+      <xsl:apply-templates  select="*|@*|processing-instruction()|comment()|text()"
+	  mode="rdf2"/>
+     </xsl:copy>    
+  </xsl:template>
 
   <xsl:template match="crm:E21_Person" mode="rdf2">
      <xsl:copy>
-      <xsl:apply-templates
-	  select="*|@*|processing-instruction()|comment()|text()"
+      <xsl:apply-templates  select="@*"	  mode="rdf2"/>
+      <xsl:apply-templates  select="*|@*|processing-instruction()|comment()|text()"
 	  mode="rdf2"/>
      </xsl:copy>
-     <xsl:copy-of select=".//crm:E53_Place[position()&gt;1]"/>
+     <xsl:apply-templates select=".//crm:E53_Place[position()&gt;1]" mode="rdf3"/>
   </xsl:template>
 
   <xsl:template match="*" mode="rdf2">
@@ -185,6 +232,8 @@
   <xsl:template name="E52">
     <xsl:choose>
       <xsl:when test="parent::residence">
+      </xsl:when>
+      <xsl:when test="parent::creation">
       </xsl:when>
       <xsl:otherwise>
 	<P4_has_time-span  xmlns="http://purl.org/NET/crm-owl#" >
@@ -446,15 +495,19 @@
   </xsl:template>
 
   <xsl:template name="E35">
-    <xsl:if test="not(ancestor::biblFull or ancestor::bibl)">
-    <P102_has_title  xmlns="http://purl.org/NET/crm-owl#" >
-      <E35_Title>
-	<rdf:value>
-	  <xsl:value-of select="normalize-space(.)"/>
-	</rdf:value>
-      </E35_Title>
-    </P102_has_title>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="ancestor::biblFull or ancestor::bibl"/>
+      <xsl:when test="parent::p"/>
+      <xsl:otherwise>
+	<P102_has_title  xmlns="http://purl.org/NET/crm-owl#" >
+	  <E35_Title>
+	    <rdf:value>
+	      <xsl:value-of select="normalize-space(.)"/>
+	    </rdf:value>
+	  </E35_Title>
+	</P102_has_title>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="E65">
