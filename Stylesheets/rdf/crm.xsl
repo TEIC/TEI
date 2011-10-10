@@ -77,8 +77,9 @@
   <xsl:template name="E31">
     <E31_Document xmlns="http://purl.org/NET/crm-owl#" 
 	rdf:about="{tei:makeID(.,'id')}">
-      <xsl:apply-templates/>
+      <xsl:apply-templates select="fileDesc"/>
     </E31_Document>
+    <xsl:apply-templates select="*[not(self::fileDesc)]"/>
   </xsl:template>
 
   <xsl:template name="anonblock">
