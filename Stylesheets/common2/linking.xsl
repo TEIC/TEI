@@ -224,7 +224,7 @@
 	      <xsl:text>…</xsl:text>
 	    </xsl:when>
 	    <xsl:when test="not(tei:head)">
-	      <xsl:value-of select="substring(.,1,10)"/>
+	      <xsl:value-of select="substring(normalize-space(.),1,10)"/>
 	      <xsl:text>…</xsl:text>
 	    </xsl:when>
             <xsl:otherwise>
