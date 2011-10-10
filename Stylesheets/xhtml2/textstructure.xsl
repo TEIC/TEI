@@ -587,7 +587,7 @@
       </xsl:variable>
       <dl>
 	<xsl:for-each-group select="$index/tei:REF" group-by="tei:TERM">
-	  <xsl:sort select="tei:SORT"/>
+	  <xsl:sort select="tei:SORT" lang="{$doclang}"/>
 	  <dt><xsl:value-of select="current-grouping-key()"/></dt>
 	  <dd>
 	    <xsl:for-each-group select="current-group()" group-by="tei:LINK">
