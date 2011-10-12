@@ -2378,8 +2378,8 @@
 	       <xsl:message>displaying author and date</xsl:message>
 	     </xsl:if>
 	     <xsl:call-template name="generateAuthorList"/>
-	     <xsl:text> </xsl:text>
 	     <xsl:call-template name="generateDate"/>
+	     <xsl:call-template name="generateEdition"/>
 	   </xsl:if>
 	 </xsl:when>
 	 <xsl:otherwise>
@@ -2404,8 +2404,8 @@
 	       <xsl:message>displaying author and date</xsl:message>
 	     </xsl:if>
 	     <xsl:call-template name="generateAuthorList"/>
-	     <xsl:text> </xsl:text>
 	     <xsl:call-template name="generateDate"/>
+	     <xsl:call-template name="generateEdition"/>
 	   </xsl:if>
 	 </xsl:otherwise>
       </xsl:choose>

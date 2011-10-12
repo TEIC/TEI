@@ -442,6 +442,10 @@
         </table>
       </xsl:when>
       <xsl:otherwise>
+        <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
+        <xsl:apply-templates mode="weave" select="tei:elementSpec">
+          <xsl:sort select="@ident"/>
+        </xsl:apply-templates>
         <xsl:if test="tei:classSpec[@type='model']">
           <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>
           <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
@@ -460,10 +464,6 @@
             <xsl:sort select="@ident"/>
           </xsl:apply-templates>
         </xsl:if>
-        <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
-        <xsl:apply-templates mode="weave" select="tei:elementSpec">
-          <xsl:sort select="@ident"/>
-        </xsl:apply-templates>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
