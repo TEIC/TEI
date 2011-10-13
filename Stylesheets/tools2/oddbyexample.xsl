@@ -419,6 +419,6 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="text()"/>
+  <xsl:template match="text()" mode="copy"/>
 
 </xsl:stylesheet>

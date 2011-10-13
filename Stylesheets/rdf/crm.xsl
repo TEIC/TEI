@@ -55,7 +55,7 @@
 
   <!-- clean up pass -->
 
-  <xsl:template match="crm:P131_is_identified_by" mode="rdf2">
+  <xsl:template match="crm:P131_is_identified_by[crm:E82_Actor_Appellation]" mode="rdf2">
     <xsl:copy>
       <xsl:choose>
 	<xsl:when
@@ -88,7 +88,7 @@
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="crm:E53_Place[not(parent::rdf:RDF) and position()&gt;1]" mode="rdf2"/>
+  <xsl:template match="crm:E53_Place[parent::P87_is_identified_by and position()&gt;1]" mode="rdf2"/>
 
   <xsl:template match="crm:E53_Place" mode="rdf3">
      <xsl:copy>
@@ -158,6 +158,7 @@
       <xsl:choose>
 	<xsl:when test="ancestor::state"/>	
 	<xsl:when test="ancestor::trait"/>
+	<xsl:when test="parent::p"/>
 	<xsl:otherwise>
 	  <E53_Place  xmlns="http://purl.org/NET/crm-owl#" >
 	    <xsl:attribute name="rdf:about" select="tei:makeID(.,'place')"/>
@@ -173,8 +174,9 @@
 
   <xsl:template name="E21">
     <xsl:choose>
+      <xsl:when test="parent::p"/>
       <xsl:when test="self::name">
-	<P131_is_identified_by  xmlns="http://purl.org/NET/crm-owl#" 
+	<P131_is_identified_by  xmlns="http://purl.org/NET/crm-owl#"
 	      rdf:resource="{tei:makeID(.,'persname')}"/>
       </xsl:when>
       <xsl:otherwise>
@@ -231,10 +233,12 @@
 
   <xsl:template name="E52">
     <xsl:choose>
-      <xsl:when test="parent::residence">
-      </xsl:when>
-      <xsl:when test="parent::creation">
-      </xsl:when>
+      <xsl:when test="parent::residence"/>
+
+      <xsl:when test="parent::creation"/>
+
+      <xsl:when test="parent::p"/>
+
       <xsl:otherwise>
 	<P4_has_time-span  xmlns="http://purl.org/NET/crm-owl#" >
 	  <E52_Time-Span>
