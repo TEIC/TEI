@@ -41,70 +41,42 @@
   </xsl:template>
 
   <xsl:template name="doit">
-    <rdf:RDF
-	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-	>
-      <xsl:call-template name="typology"/>
       <xsl:variable name="rdf1">
-	<xsl:apply-templates/>
+	<rdf:RDF
+	    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+	    >
+	  <xsl:call-template name="typology"/>
+	  <xsl:apply-templates/>
+	</rdf:RDF>
       </xsl:variable>
       <xsl:apply-templates select="$rdf1" mode="rdf2"/>
-    </rdf:RDF>
   </xsl:template>
 
   <!-- clean up pass -->
 
-  <xsl:template match="crm:P131_is_identified_by[crm:E82_Actor_Appellation]" mode="rdf2">
+  <xsl:template match="crm:*[crm:E53_Place]" mode="rdf2">
     <xsl:copy>
-      <xsl:choose>
-	<xsl:when
-	    test="generate-id(.)=generate-id(key('Idents',crm:E82_Actor_Appellation/@rdf:about)[1])">
-	  <xsl:apply-templates
-	      select="*|@*|processing-instruction()|comment()|text()"
-	      mode="rdf2"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:attribute name="rdf:resource"
-			 select="crm:E82_Actor_Appellation/@rdf:about"/>
-      </xsl:otherwise>
-      </xsl:choose>
-    </xsl:copy>
-  </xsl:template>
-  <xsl:template match="crm:P87_is_identified_by" mode="rdf2">
-    <xsl:copy>
-      <xsl:choose>
-	<xsl:when
-	    test="generate-id(.)=generate-id(key('Idents',crm:E48_Place_Name/@rdf:about)[1])">
-	  <xsl:apply-templates
-	      select="*|@*|processing-instruction()|comment()|text()"
-	      mode="rdf2"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:attribute name="rdf:resource"
-			 select="crm:E48_Place_Name/@rdf:about"/>
-      </xsl:otherwise>
-      </xsl:choose>
+      <xsl:attribute name="rdf:resource"
+			 select="crm:E53_Place/@rdf:about"/>
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="crm:E53_Place[parent::P87_is_identified_by and position()&gt;1]" mode="rdf2"/>
+  <xsl:template match="crm:E53_Place" mode="rdf2"/>
 
   <xsl:template match="crm:E53_Place" mode="rdf3">
      <xsl:copy>
-      <xsl:apply-templates  select="@*"	  mode="rdf2"/>
       <xsl:apply-templates  select="*|@*|processing-instruction()|comment()|text()"
 	  mode="rdf2"/>
      </xsl:copy>    
   </xsl:template>
 
-  <xsl:template match="crm:E21_Person" mode="rdf2">
+  <xsl:template match="rdf:RDF" mode="rdf2">
      <xsl:copy>
-      <xsl:apply-templates  select="@*"	  mode="rdf2"/>
       <xsl:apply-templates  select="*|@*|processing-instruction()|comment()|text()"
 	  mode="rdf2"/>
+     <xsl:apply-templates select=".//crm:E53_Place" mode="rdf3"/>
      </xsl:copy>
-     <xsl:apply-templates select=".//crm:E53_Place[position()&gt;1]" mode="rdf3"/>
   </xsl:template>
 
   <xsl:template match="*" mode="rdf2">
@@ -174,7 +146,6 @@
 
   <xsl:template name="E21">
     <xsl:choose>
-      <xsl:when test="parent::p"/>
       <xsl:when test="self::name">
 	<P131_is_identified_by  xmlns="http://purl.org/NET/crm-owl#"
 	      rdf:resource="{tei:makeID(.,'persname')}"/>
@@ -189,7 +160,7 @@
   </xsl:template>
 
   <xsl:template name="E74">
-    <E74_Group   xmlns="http://purl.org/NET/crm-owl#" rdf:about="{tei:makeID(.,'org')}">
+    <E74_Group xmlns="http://purl.org/NET/crm-owl#" rdf:about="{tei:makeID(.,'org')}">
       <xsl:apply-templates/>
     </E74_Group>
   </xsl:template>

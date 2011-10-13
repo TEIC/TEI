@@ -40,6 +40,8 @@ oddbyexample:
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
 conversions-from:
+	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
+	diff test12.rdf ok/test12.rdf
 	../teitohtml --odd test15.odd test.odd.html
 	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
@@ -47,8 +49,6 @@ conversions-from:
 	../teitornc  test15.odd test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
 	diff test15.odd.rnc ok/test15.odd.rnc 
-	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
-	diff test12.rdf ok/test12.rdf
 	../teitotxt test14.xml test.text
 	diff test.text ok/test.text
 	../teitolatex test.xml
