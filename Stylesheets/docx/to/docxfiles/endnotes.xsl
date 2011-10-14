@@ -103,7 +103,8 @@
                                     </w:rPr>
                                     <w:endnoteRef/>
                                 </w:r>
-                            </xsl:with-param>
+				<w:r><w:t xml:space="preserve"> </w:t></w:r>
+			    </xsl:with-param>
                         </xsl:call-template>
                     </w:endnote>
                 </xsl:for-each>
