@@ -71,6 +71,7 @@
     <xsl:template name="document-title">
         <xsl:choose>
             <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"/>
+            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:docTitle"/>
             <xsl:when
 		test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
                 <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">

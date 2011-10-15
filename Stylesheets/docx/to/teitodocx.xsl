@@ -2316,13 +2316,13 @@
 	<xsl:apply-templates/>
     </xsl:template>
 
-    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[@type='main']">
+    <xsl:template match="tei:docTitle/tei:titlePart[@type='main']">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Title</xsl:with-param>
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[not(@type)]">
+    <xsl:template match="tei:docTitle/tei:titlePart[not(@type)]">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Title</xsl:with-param>
         </xsl:call-template>
@@ -2334,19 +2334,19 @@
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[@type='sub']">
+    <xsl:template match="tei:docTitle/tei:titlePart[@type='sub']">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Subtitle</xsl:with-param>
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:titlePage/tei:docTitle/tei:titlePart[2]" priority="99">
+    <xsl:template match="tei:docTitle/tei:titlePart[2]" priority="99">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Subtitle</xsl:with-param>
         </xsl:call-template>
     </xsl:template>
 
-    <xsl:template match="tei:titlePage/tei:docAuthor" priority="99">
+    <xsl:template match="tei:docAuthor" priority="99">
         <xsl:call-template name="block-element">
             <xsl:with-param name="style">Author</xsl:with-param>
         </xsl:call-template>

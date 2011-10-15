@@ -413,6 +413,7 @@
 	 </xsl:otherwise>
 	 </xsl:choose>
      -->
+      <xsl:apply-templates/>
      <xsl:call-template name="tei:makeText">
        <xsl:with-param name="letters">. </xsl:with-param>
      </xsl:call-template>

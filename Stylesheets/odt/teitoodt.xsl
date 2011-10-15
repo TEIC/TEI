@@ -42,6 +42,7 @@
   <xsl:import href="../common2/header.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
 -->
+  <xsl:import href="../common2/core.xsl"/>
   <xsl:param name="useFixedDate">false</xsl:param>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -282,10 +283,6 @@
 
 
 <!-- paragraphs -->
-  <xsl:template match="tei:author">
-    <xsl:apply-templates/>
-  </xsl:template>
-
   <xsl:template match="tei:pb">
     <text:soft-page-break/>
   </xsl:template>
@@ -847,7 +844,7 @@
     <text:line-break/>
   </xsl:template>
 
-  <xsl:template match="tei:bibl|tei:signed|tei:docTitle|tei:byline|tei:docImprint">
+  <xsl:template match="tei:biblStruct|tei:bibl|tei:signed|tei:docTitle|tei:byline|tei:docImprint">
     <text:p text:style-name="tei_{local-name(.)}">
       <xsl:apply-templates/>
     </text:p>
@@ -988,8 +985,8 @@
     </text:span>
   </xsl:template>
 
-  <xsl:template match="tei:cit[@rend='display']">
-    <text:p>
+  <xsl:template match="tei:cit[@rend='display' or not(@rend)]">
+    <text:p text:style-name="tei_cit">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
@@ -1860,5 +1857,46 @@
     <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template name="tei:makeText">
+    <xsl:param name="letters"/>
+    <xsl:value-of select="$letters"/>
+  </xsl:template>
+
+
+    <xsl:template name="emphasize">
+      <xsl:param name="class"/>
+      <xsl:param name="content"/>
+      <text:span>
+	<xsl:choose>
+	  <xsl:when test="$class='titlem'">
+	    <xsl:attribute name="text:style-name">Emphasis</xsl:attribute>
+	  </xsl:when>
+	  <xsl:when test="$class='titlej'">
+	    <xsl:attribute name="text:style-name">Emphasis</xsl:attribute>
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:attribute name="xml:space">preserve</xsl:attribute>
+	  <xsl:choose>
+	    <xsl:when test="$class='titles'">
+	      <xsl:text>, </xsl:text>
+	    </xsl:when>
+	    <xsl:when test="$class='titleu'">
+	      <xsl:text>‘</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="$class='titlea'">
+	      <xsl:text>‘</xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
+	  <xsl:value-of select="$content"/>
+	  <xsl:choose>
+	    <xsl:when test="$class='titleu'">
+	      <xsl:text>’</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="$class='titlea'">
+	      <xsl:text>’</xsl:text>
+	    </xsl:when>
+	  </xsl:choose>
+      </text:span>
+    </xsl:template>
  
 </xsl:stylesheet>

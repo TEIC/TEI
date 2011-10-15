@@ -911,7 +911,15 @@
       <xsl:when test="tei:biblStruct">
         <dl class="listBibl">
           <xsl:for-each select="tei:biblStruct">
-            <xsl:sort select="translate((tei:*/tei:author/tei:surname|          tei:*[1]/tei:author/tei:orgName|  tei:*[1]/tei:author/tei:name|  tei:*[1]/tei:editor/tei:surname|  tei:*[1]/tei:editor/tei:name|  tei:*[1]/tei:title[1])[1],  $uc,$lc)"/>
+            <xsl:sort select="translate((
+			      tei:*/tei:author/tei:surname|
+			      tei:*[1]/tei:author/tei:orgName|  
+			      tei:*[1]/tei:author/tei:name|  
+			      tei:*[1]/tei:author|  
+			      tei:*[1]/tei:editor/tei:surname|  
+			      tei:*[1]/tei:editor/tei:name|  
+			      tei:*[1]/tei:editor|  
+			      tei:*[1]/tei:title[1])[1],  $uc,$lc)"/>
             <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
             <dt>
               <xsl:call-template name="makeAnchor"/>
