@@ -161,7 +161,7 @@ XSL FO "provisional-distance-between starts" for gloss lists
 XSL FO "provisional-distance-between starts" for bibliographies
 </desc>
    </doc>
-  <xsl:param name="betweenBiblStarts">50pt</xsl:param>
+  <xsl:param name="betweenBiblStarts">14pt</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>
 Display section headings in running heads
@@ -523,16 +523,29 @@ Calculation of font size for examples (add dimension)
   </xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
+Calculation of font size for quotations
+</desc>
+   </doc>
+  <xsl:param name="quoteSize">
+      <xsl:value-of select="$bodyMaster * 0.9"/>
+      <xsl:text>pt</xsl:text>
+  </xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
+      <desc>
 Font size for footnotes
 </desc>
    </doc>
-  <xsl:param name="footnoteSize">8pt</xsl:param>
+  <xsl:param name="footnoteSize">
+      <xsl:value-of select="$bodyMaster * 0.8"/>
+  </xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
 Font size for footnote numbers
 </desc>
    </doc>
-  <xsl:param name="footnotenumSize">7pt</xsl:param>
+  <xsl:param name="footnotenumSize">
+    <xsl:value-of select="$bodyMaster * 0.7"/>
+  </xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
 Colour for display of element names

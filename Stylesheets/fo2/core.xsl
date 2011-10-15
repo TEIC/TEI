@@ -608,7 +608,7 @@
    </doc>
   <xsl:template match="tei:note">
       <xsl:choose>
-         <xsl:when test="ancestor::tei:p or ancestor::tei:item">
+         <xsl:when test="ancestor::tei:p or ancestor::tei:item or ancestor::tei:cit">
             <xsl:apply-templates select="." mode="real"/>
          </xsl:when>
          <xsl:otherwise>
@@ -624,7 +624,7 @@
   <xsl:template match="tei:note" mode="real">
       <xsl:choose>
          <xsl:when test="@place='end'">
-            <simple-link>
+            <basic-link>
                <xsl:attribute name="internal-destination">
                   <xsl:value-of select="generate-id()"/>
                </xsl:attribute>
@@ -638,7 +638,7 @@
                      </xsl:otherwise>
                   </xsl:choose>
                </inline>
-            </simple-link>
+            </basic-link>
          </xsl:when>
          <xsl:when test="@place='inline'">
             <inline>
@@ -803,7 +803,7 @@
   <xsl:template match="tei:quote">
       <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}"
              start-indent="{$exampleMargin}"
-             font-size="{$exampleSize}"
+             font-size="{$quoteSize}"
              space-before.optimum="{$exampleBefore}"
              space-after.optimum="{$exampleAfter}">
          <xsl:apply-templates/>
@@ -822,7 +822,7 @@
          <xsl:when test="@rend='display' or tei:p or tei:lg">
             <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}"
                    start-indent="{$exampleMargin}"
-                   font-size="{$exampleSize}"
+                   font-size="{$quoteSize}"
                    space-before.optimum="{$exampleBefore}"
                    space-after.optimum="{$exampleAfter}">
                <xsl:apply-templates/>
@@ -1108,8 +1108,7 @@ simple, bullets, ordered, gloss, unordered, or bibliography
                   <xsl:value-of select="@xml:id"/>
                </xsl:attribute>
             </xsl:if>
-            <xsl:text>
-</xsl:text>
+            <xsl:text>&#10;</xsl:text>
             <block>
                <xsl:choose>
                   <xsl:when test="@n">
@@ -1125,78 +1124,76 @@ simple, bullets, ordered, gloss, unordered, or bibliography
                      <xsl:apply-templates mode="xref" select="."/>
                      <xsl:text>.</xsl:text>
                   </xsl:when>
-                  <xsl:when test="../@type='gloss' or self::tei:biblStruct">
+                  <xsl:when test="../@type='gloss'">
                      <xsl:attribute name="text-align">start</xsl:attribute>
                      <xsl:attribute name="font-weight">bold</xsl:attribute>
                      <xsl:choose>
-		                      <xsl:when test="self::tei:biblStruct">
-                           <xsl:apply-templates mode="xref" select="."/>
-		                      </xsl:when>
-                        <xsl:when test="tei:label">
-                           <xsl:apply-templates mode="print" select="tei:label"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                           <xsl:apply-templates mode="print" select="preceding-sibling::tei:*[1]"/>
-                        </xsl:otherwise>
+		       <xsl:when test="tei:label">
+			 <xsl:apply-templates mode="print" select="tei:label"/>
+		       </xsl:when>
+		       <xsl:otherwise>
+			 <xsl:apply-templates mode="print" select="preceding-sibling::tei:*[1]"/>
+		       </xsl:otherwise>
                      </xsl:choose>
                   </xsl:when>
-                  <xsl:when test="../@type='numbered'">
-<!-- numbered support added rbl 26.3.2005 -->
-              <xsl:attribute name="text-align">end</xsl:attribute>
+                  <xsl:when test="../@type='numbered' or
+				  self::tei:biblStruct or self::tei:bibl">
+		    <!-- numbered support added rbl 26.3.2005 -->
+		    <xsl:attribute name="text-align">end</xsl:attribute>
                      <xsl:number/>
                      <xsl:text>.</xsl:text>
                   </xsl:when>
                   <xsl:when test="../@type='ordered'">
-<!-- numbered support added rbl 26.3.2005 -->
-              <xsl:attribute name="text-align">end</xsl:attribute>
-                     <xsl:number/>
-                     <xsl:text>.</xsl:text>
+		    <!-- numbered support added rbl 26.3.2005 -->
+		    <xsl:attribute name="text-align">end</xsl:attribute>
+		    <xsl:number/>
+		    <xsl:text>.</xsl:text>
                   </xsl:when>
                   <xsl:otherwise>
-                     <xsl:attribute name="text-align">end</xsl:attribute>
-                     <xsl:choose>
-                        <xsl:when test="$listdepth=0">
-                           <xsl:value-of select="$bulletOne"/>
-                        </xsl:when>
-                        <xsl:when test="$listdepth=1">
-                           <xsl:value-of select="$bulletOne"/>
-                        </xsl:when>
-                        <xsl:when test="$listdepth=2">
-                           <xsl:value-of select="$bulletTwo"/>
-                        </xsl:when>
-                        <xsl:when test="$listdepth=3">
-                           <xsl:value-of select="$bulletThree"/>
-                        </xsl:when>
-                        <xsl:when test="$listdepth=4">
-                           <xsl:value-of select="$bulletFour"/>
-                        </xsl:when>
-                     </xsl:choose>
+		    <xsl:attribute name="text-align">end</xsl:attribute>
+		    <xsl:choose>
+		      <xsl:when test="$listdepth=0">
+			<xsl:value-of select="$bulletOne"/>
+		      </xsl:when>
+		      <xsl:when test="$listdepth=1">
+			<xsl:value-of select="$bulletOne"/>
+		      </xsl:when>
+		      <xsl:when test="$listdepth=2">
+			<xsl:value-of select="$bulletTwo"/>
+		      </xsl:when>
+		      <xsl:when test="$listdepth=3">
+			<xsl:value-of select="$bulletThree"/>
+		      </xsl:when>
+		      <xsl:when test="$listdepth=4">
+			<xsl:value-of select="$bulletFour"/>
+		      </xsl:when>
+		    </xsl:choose>
                   </xsl:otherwise>
                </xsl:choose>
             </block>
          </list-item-label>
          <list-item-body start-indent="body-start()">
-	           <xsl:choose>
-	              <xsl:when test="*">
-	                 <xsl:for-each select="*">
-	                    <xsl:choose>
-		                      <xsl:when test="self::tei:list">
-		                         <xsl:apply-templates select="."/>
-		                      </xsl:when>
-		                      <xsl:otherwise>
-		                         <block font-weight="normal">
-		                            <xsl:apply-templates/>
-		                         </block>
-		                      </xsl:otherwise>
-	                    </xsl:choose>
-	                 </xsl:for-each>
-	              </xsl:when>
-               <xsl:otherwise>
-                  <block font-weight="normal">
-                     <xsl:apply-templates/>
-                  </block>
-               </xsl:otherwise>
-            </xsl:choose>
+	   <xsl:choose>
+	     <xsl:when test="* and tei:list">
+	       <xsl:for-each select="*">
+		 <xsl:choose>
+		   <xsl:when test="self::tei:list">
+		     <xsl:apply-templates select="."/>
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <block font-weight="normal">
+		       <xsl:apply-templates/>
+		     </block>
+		   </xsl:otherwise>
+		 </xsl:choose>
+	       </xsl:for-each>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <block font-weight="normal">
+		 <xsl:apply-templates/>
+	       </block>
+	     </xsl:otherwise>
+	   </xsl:choose>
          </list-item-body>
       </list-item>
   </xsl:template>
@@ -1307,13 +1304,13 @@ simple, bullets, ordered, gloss, unordered, or bibliography
       <xsl:choose>
          <xsl:when test="$class='titlem'">
             <inline>
-	              <xsl:attribute name="font-style">italic</xsl:attribute>
-	              <xsl:copy-of select="$content"/>
+	      <xsl:attribute name="font-style">italic</xsl:attribute>
+	      <xsl:copy-of select="$content"/>
             </inline>
          </xsl:when>
          <xsl:when test="$class='titlea'">
             <xsl:text>‘</xsl:text>
-	           <xsl:copy-of select="$content"/>
+	    <xsl:copy-of select="$content"/>
             <xsl:text>’</xsl:text>
          </xsl:when>
          <xsl:otherwise>
