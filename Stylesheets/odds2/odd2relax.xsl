@@ -543,9 +543,22 @@
   </xsl:template>
 
   <xsl:template name="copyright">
-    <xsl:apply-templates mode="copyrighttext"
-      select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
+    <xsl:for-each
+	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+      <xsl:if test="count(tei:licence)&gt;1">
+	<xsl:text>This material is dual-licensed.&#10;</xsl:text>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </xsl:for-each>
   </xsl:template>
 
+  <xsl:template match="tei:licence">
+    <xsl:if test="@target">
+      <xsl:text>[</xsl:text>
+      <xsl:value-of select="@target"/>
+      <xsl:text>] </xsl:text>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </xsl:template>
 
 </xsl:stylesheet>

@@ -78,8 +78,22 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>rendition elements in the header</desc>
-   </doc>
+    <desc>[html] processing licence</desc>
+  </doc>
+  <xsl:template match="tei:availability"  mode="copyrighttext">
+<xsl:message>Got here (1)</xsl:message>
+    <xsl:apply-templates mode="copyrighttext"/>
+  </xsl:template>
+
+  <xsl:template match="tei:licence"  mode="copyrighttext">
+<xsl:message>Got here (2)</xsl:message>
+    <xsl:if test="@target">
+      <xsl:text>[</xsl:text>
+      <xsl:value-of select="@target"/>
+      <xsl:text>] </xsl:text>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </xsl:template>
   
 
 
