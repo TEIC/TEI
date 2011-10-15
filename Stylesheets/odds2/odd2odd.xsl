@@ -668,16 +668,6 @@ How can a class be ok?
 
   <xsl:template match="tei:listRef" mode="odd2odd-copy"/>
 
-  <xsl:template match="tei:elementSpec/@mode" mode="odd2odd-copy">
-    <xsl:copy/>
-  </xsl:template>
-
-  <xsl:template match="tei:macroSpec/@mode" mode="odd2odd-copy">
-    <xsl:copy/>
-  </xsl:template>
-  <xsl:template match="tei:classSpec/@mode" mode="odd2odd-copy">
-    <xsl:copy/>
-  </xsl:template>
   <xsl:template match="tei:elementSpec" mode="odd2odd-copy">
     <xsl:copy>
       <xsl:choose>
