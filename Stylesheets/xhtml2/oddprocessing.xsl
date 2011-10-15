@@ -809,12 +809,7 @@
           </h3>
           <xsl:for-each select="key('MACRO-MODULE',@module)">
             <xsl:sort select="@ident"/>
-            <span class="refDocLink">
-              <a href="ref-{@ident}{$outputSuffix}">
-                <xsl:value-of select="@ident"/>
-              </a>
-              <xsl:text> </xsl:text>
-            </span>
+            <xsl:call-template name="refDocLink"/>
           </xsl:for-each>
         </div>
       </xsl:if>
@@ -842,12 +837,7 @@
               <xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
                 <xsl:sort select="@ident"/>
                 <li>
-                  <span class="refDocLink">
-                    <a href="ref-{@ident}{$outputSuffix}">
-                      <xsl:value-of select="@ident"/>
-                    </a>
-                    <xsl:text> </xsl:text>
-                  </span>
+		  <xsl:call-template name="refDocLink"/>
                 </li>
               </xsl:for-each>
             </ul>
@@ -869,14 +859,10 @@
               </xsl:for-each>
             </h3>
             <xsl:for-each select="key('ELEMENT-MODULE',@module)">
-              <xsl:sort select="@ident"/>
-              <span class="refDocLink">
-                <a href="ref-{@ident}{$outputSuffix}">
-                  <xsl:value-of select="@ident"/>
-                </a>
-                <xsl:text> </xsl:text>
-              </span>
-            </xsl:for-each>
+              <xsl:sort
+		  select="@ident"/>
+	      <xsl:call-template name="refDocLink"/>
+	    </xsl:for-each>
           </div>
         </xsl:if>
       </xsl:for-each>
@@ -885,6 +871,32 @@
       <xsl:apply-templates mode="weave" select="."/>
     </xsl:for-each>
   </xsl:template>
+
+
+  <xsl:template name="refDocLink">
+    <span
+	class="refDocLink">
+      <a>
+	<xsl:attribute name="href">
+	  <xsl:choose>
+	    <xsl:when test="number($splitLevel)=-1 or $STDOUT='true'">
+	      <xsl:text>#</xsl:text>
+	      <xsl:value-of select="@ident"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>ref-</xsl:text>
+	      <xsl:value-of
+		  select="@ident"/>
+	      <xsl:value-of select="$outputSuffix"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:attribute>
+	<xsl:value-of select="@ident"/>
+      </a>
+      <xsl:text> </xsl:text>
+    </span>
+  </xsl:template>
+
   <xsl:template match="tei:divGen[@type='modelclasscat']"  priority="100">
     <div class="atozwrapper">
       <xsl:call-template name="atozHeader">
@@ -904,12 +916,7 @@
               <xsl:for-each select="key('MODEL-CLASS-ALPHA',$letter)">
                 <xsl:sort select="translate(substring-after(@ident,'model.'),$lc,$uc)"/>
                 <li>
-                  <span class="refDocLink">
-                    <a href="ref-{@ident}{$outputSuffix}">
-                      <xsl:value-of select="@ident"/>
-                    </a>
-                    <xsl:text> </xsl:text>
-                  </span>
+		  <xsl:call-template name="refDocLink"/>
                 </li>
               </xsl:for-each>
             </ul>
@@ -931,13 +938,9 @@
               </xsl:for-each>
             </h3>
             <xsl:for-each select="key('MODEL-CLASS-MODULE',@module)">
-              <xsl:sort select="@ident"/>
-              <span class="refDocLink">
-                <a href="ref-{@ident}{$outputSuffix}">
-                  <xsl:value-of select="@ident"/>
-                </a>
-                <xsl:text> </xsl:text>
-              </span>
+              <xsl:sort
+		  select="@ident"/>
+	      <xsl:call-template name="refDocLink"/>
             </xsl:for-each>
           </div>
         </xsl:if>
@@ -966,13 +969,8 @@
               <xsl:for-each select="key('ATT-CLASS-ALPHA',$letter)">
                 <xsl:sort select="translate(substring-after(@ident,'att.'),$lc,$uc)"/>
                 <li>
-                  <span class="refDocLink">
-                    <a href="ref-{@ident}{$outputSuffix}">
-                      <xsl:value-of select="@ident"/>
-                    </a>
-                    <xsl:text> </xsl:text>
-                  </span>
-                </li>
+		  <call-template name="refDocLink"/>
+		</li>
               </xsl:for-each>
             </ul>
           </div>
@@ -992,13 +990,9 @@
                 <xsl:call-template name="makeDescription"/>
               </xsl:for-each>
             </h3>
-            <xsl:for-each select="key('ATT-CLASS-MODULE',@module)">
-              <span class="refDocLink">
-                <a href="ref-{@ident}{$outputSuffix}">
-                  <xsl:value-of select="@ident"/>
-                </a>
-                <xsl:text> </xsl:text>
-              </span>
+            <xsl:for-each
+		select="key('ATT-CLASS-MODULE',@module)">
+	      <call-template name="refDocLink"/>
             </xsl:for-each>
           </div>
         </xsl:if>
