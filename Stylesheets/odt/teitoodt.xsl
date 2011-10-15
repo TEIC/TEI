@@ -572,7 +572,7 @@
 
 
 <!-- lists -->
-  <xsl:template match="tei:list">
+  <xsl:template match="tei:list|tei:listBibl">
     <xsl:if test="tei:head">
       <text:p>
 	<xsl:attribute name="text:style-name">
@@ -587,8 +587,9 @@
     <text:list>
       <xsl:attribute name="text:style-name">
 	<xsl:choose>
+	    <xsl:when test="self::tei:listBibl">L2</xsl:when>
             <xsl:when test="not(@type)">L1</xsl:when>
-            <xsl:when test="@type='ordered'">L3</xsl:when>
+            <xsl:when test="@type='ordered'">L2</xsl:when>
             <xsl:when test="@type='unordered'">L1</xsl:when>
 	</xsl:choose>
       </xsl:attribute>
@@ -806,13 +807,6 @@
 
   <xsl:template match="tei:index"/>
 
-  <xsl:template match="tei:date">
-    <text:span text:style-name="{name(.)}">
-      <xsl:apply-templates/>
-    </text:span>
-  </xsl:template>
-
-
   <xsl:template match="tei:eg">
     <xsl:call-template name="startHook"/>
     <xsl:call-template name="Literal">
@@ -844,7 +838,15 @@
     <text:line-break/>
   </xsl:template>
 
-  <xsl:template match="tei:biblStruct|tei:bibl|tei:signed|tei:docTitle|tei:byline|tei:docImprint">
+  <xsl:template match="tei:biblStruct">
+    <text:list-item>
+      <text:p text:style-name="P2">
+	<xsl:apply-templates/>
+      </text:p>
+    </text:list-item>
+  </xsl:template>
+
+  <xsl:template match="tei:bibl|tei:signed|tei:docTitle|tei:byline|tei:docImprint">
     <text:p text:style-name="tei_{local-name(.)}">
       <xsl:apply-templates/>
     </text:p>
