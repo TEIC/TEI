@@ -255,9 +255,9 @@ got to find a way to set a trigger for closing div if no headers -->
   <xsl:apply-templates/>
    </xsl:template>
    <xsl:template match="h:span[@class]"><!-- just continue -->
-  <hi rend="{@class}">
-         <xsl:apply-templates/>
-      </hi>
+     <hi rend="{@class}">
+       <xsl:apply-templates/>
+     </hi>
    </xsl:template>
    <!-- links -->
 

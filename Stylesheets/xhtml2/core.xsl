@@ -1589,7 +1589,7 @@
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element seg</desc>
+    <desc>Process element seg, pass through @type and @rend as @class</desc>
   </doc>
   <xsl:template match="tei:seg">
     <span>

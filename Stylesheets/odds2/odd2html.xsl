@@ -28,8 +28,8 @@
   <xsl:param name="authorWord"/>
   <xsl:param name="autoToc">true</xsl:param>
   <xsl:param name="bottomNavigationPanel">true</xsl:param>
-  <xsl:param name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
-  <xsl:param name="cssSecondaryFile">http://www.tei-c.org/release/xml/tei/stylesheet/odd.css</xsl:param>
+  <xsl:param
+      name="cssFile">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
   <xsl:param name="dateWord"/>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="feedbackWords">Contact</xsl:param>

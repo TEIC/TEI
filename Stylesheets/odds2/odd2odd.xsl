@@ -472,8 +472,10 @@
 	    <ref  xmlns="http://www.tei-c.org/ns/1.0"
 		  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{substring($target,1,2)}.html#{$target}">
 	      <xsl:for-each select="document($DEFAULTSOURCE)/id($target)">
-		<xsl:text>TEI </xsl:text>
-		<xsl:number count="tei:div" format="1.1.1." level="multiple"/>	  
+		<xsl:number count="tei:div" format="1.1.1."
+			    level="multiple"/>	  
+		<xsl:text> </xsl:text>
+		<xsl:value-of select="tei:head"/>
 	      </xsl:for-each>
 	    </ref>
 	  </xsl:when>

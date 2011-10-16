@@ -101,6 +101,10 @@ so that it does not affect printing. It should be used for screen layout.
   </desc>
    </doc>
     <xsl:param name="cssSecondaryFile"  as="xs:string" select="''"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
+      <desc>CSS file to include in the output file directly</desc>
+   </doc>
+    <xsl:param name="cssInlineFile"  as="xs:string" select="''"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="integer">
       <desc>Resolution of images. This is needed to calculate
 HTML width and height (in pixels) from supplied dimensions.</desc>

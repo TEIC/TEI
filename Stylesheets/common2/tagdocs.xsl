@@ -21,6 +21,64 @@
     </desc>
   </doc>
   <xsl:key name="CHILDMOD" match="Element" use="@module"/>
+
+
+  <xsl:template match="tei:ptr|tei:ref" mode="weave">
+<xsl:message>weave weave the sunlight in her hair</xsl:message>
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc">
+        <xsl:choose>
+          <xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
+            <xsl:call-template name="makeInternalLink">
+              <xsl:with-param name="target" select="substring(@target,2)"/>
+              <xsl:with-param name="ptr" select="if (self::tei:ptr)
+						 then true() else false()"/>
+              <xsl:with-param name="dest">
+                <xsl:call-template name="generateEndLink">
+                  <xsl:with-param name="where">
+                    <xsl:value-of select="substring(@target,2)"/>
+                  </xsl:with-param>
+                </xsl:call-template>
+              </xsl:with-param>
+            </xsl:call-template>
+          </xsl:when>
+          <xsl:when test="starts-with(@target,'#')">
+            <xsl:variable name="Chapter">
+              <xsl:value-of select="substring(@target,2,2)"/>
+            </xsl:variable>
+            <xsl:choose>
+              <xsl:when test="$Chapter='AB' or        $Chapter='AI' or        $Chapter='CC' or        $Chapter='CE' or        $Chapter='CH' or        $Chapter='CO' or        $Chapter='DI' or        $Chapter='DR' or        $Chapter='DS' or        $Chapter='FS' or        $Chapter='FT' or        $Chapter='GD' or        $Chapter='HD' or        $Chapter='MS' or        $Chapter='ND' or        $Chapter='NH' or        $Chapter='PH' or        $Chapter='SA' or        $Chapter='SG' or        $Chapter='ST' or        $Chapter='TC' or        $Chapter='TD' or        $Chapter='TS' or        $Chapter='USE' or        $Chapter='VE' or        $Chapter='WD'">
+                <xsl:call-template name="makeExternalLink">
+		  <xsl:with-param name="ptr" select="if (self::tei:ptr)
+						 then true() else false()"/>
+                  <xsl:with-param name="dest">
+                    <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
+                    <xsl:value-of select="$documentationLanguage"/>
+                    <xsl:text>/html/</xsl:text>
+                    <xsl:value-of select="$Chapter"/>
+                    <xsl:text>.html</xsl:text>
+                    <xsl:value-of select="@target"/>
+                  </xsl:with-param>
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>«</xsl:text>
+                <xsl:value-of select="@target"/>
+                <xsl:text>»</xsl:text>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-imports/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-imports/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="tei:attDef" mode="summary">
     <xsl:variable name="name">
       <xsl:choose>
@@ -322,12 +380,6 @@
             </xsl:call-template>
             <xsl:text> </xsl:text>
             <xsl:call-template name="makeDescription"/>
-            <xsl:if test="tei:listRef">
-              <xsl:for-each select="tei:listRef/tei:ptr">
-                <xsl:text> </xsl:text>
-                <xsl:apply-templates select="." mode="weave"/>
-              </xsl:for-each>
-            </xsl:if>
           </xsl:element>
         </xsl:element>
         <xsl:if test="@generate">
@@ -548,12 +600,6 @@
               <xsl:text>&gt; </xsl:text>
             </xsl:element>
             <xsl:call-template name="makeDescription"/>
-            <xsl:if test="tei:listRef">
-              <xsl:for-each select="tei:listRef/tei:ptr">
-                <xsl:text> </xsl:text>
-                <xsl:apply-templates mode="weave" select="."/>
-              </xsl:for-each>
-            </xsl:if>
           </xsl:element>
         </xsl:element>
         <xsl:if test="@module">
@@ -1106,12 +1152,6 @@
             </xsl:element>
             <xsl:text> </xsl:text>
             <xsl:call-template name="makeDescription"/>
-            <xsl:if test="tei:listRef">
-              <xsl:for-each select="tei:listRef/tei:ptr">
-                <xsl:text> </xsl:text>
-                <xsl:apply-templates select="." mode="weave"/>
-              </xsl:for-each>
-            </xsl:if>
           </xsl:element>
         </xsl:element>
         <xsl:if test="@module">

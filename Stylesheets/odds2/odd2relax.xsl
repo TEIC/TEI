@@ -44,11 +44,6 @@
   <xsl:template name="makeAnchor">
       <xsl:param name="name"/>
   </xsl:template>
-  <xsl:template name="makeLink">
-      <xsl:param name="name"/>
-      <xsl:param name="class"/>
-      <xsl:param name="text"/>
-  </xsl:template>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:variable name="oddmode">dtd</xsl:variable>
   <xsl:variable name="filesuffix"/>

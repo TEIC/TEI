@@ -156,6 +156,12 @@
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>
+    <xsl:if test="tei:listRef">
+      <xsl:for-each select="tei:listRef/tei:*">
+	<xsl:text> </xsl:text>
+	<xsl:apply-templates select="." mode="weave"/>
+      </xsl:for-each>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="makeGloss">
