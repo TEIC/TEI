@@ -302,8 +302,8 @@
       <xsl:for-each select="tei:term">
          <xsl:text>\index{</xsl:text>
          <xsl:choose>
-            <xsl:when test="@sortBy">
-	              <xsl:value-of select="@sortBy"/>
+            <xsl:when test="@sortKey">
+	              <xsl:value-of select="@sortKey"/>
 	              <xsl:text>=</xsl:text>
 	              <xsl:value-of select="."/>
             </xsl:when>
@@ -317,8 +317,8 @@
       <xsl:for-each select="tei:index/tei:term">
          <xsl:text>\index{</xsl:text>
          <xsl:choose>
-            <xsl:when test="@sortBy">
-	              <xsl:value-of select="@sortBy"/>
+            <xsl:when test="@sortKey">
+	              <xsl:value-of select="@sortKey"/>
 	              <xsl:text>=</xsl:text>
 	              <xsl:value-of select="."/>
             </xsl:when>
