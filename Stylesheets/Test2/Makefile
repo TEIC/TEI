@@ -41,41 +41,41 @@ oddbyexample:
 
 conversions-from:
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
-	diff test12.rdf ok/test12.rdf
+	diff test12.rdf expected-results/test12.rdf
 	../teitohtml --odd test15.odd test.odd.html
 	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
-	diff test.odd.html ok/test.odd.html
+	diff test.odd.html expected-results/test.odd.html
 	../teitornc  test15.odd test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
-	diff test15.odd.rnc ok/test15.odd.rnc 
+	diff test15.odd.rnc expected-results/test15.odd.rnc 
 	../teitotxt test14.xml test.text
-	diff test.text ok/test.text
+	diff test.text expected-results/test.text
 	../teitolatex test.xml
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
-	diff test.tex ok/test.tex
+	diff test.tex expected-results/test.tex
 	../teitoepub  test.xml test.epub
 	unzip -t test.epub > test.epub.listing
-	diff test.epub.listing ok/test.epub.listing
+	diff test.epub.listing expected-results/test.epub.listing
 	rm test.epub.listing
 	../teitoepub  --fileperpage test.xml test-pages.epub
 	unzip -t test-pages.epub > test.epub.listing2
-	diff test.epub.listing2 ok/test.epub.listing2
+	diff test.epub.listing2 expected-results/test.epub.listing2
 	rm test.epub.listing2
 	../teitoepub  test8.xml test8.epub
 	unzip -t test8.epub > test8.epub.listing
-	diff test8.epub.listing ok/test8.epub.listing
+	diff test8.epub.listing expected-results/test8.epub.listing
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
-	diff test.xml.odt.listing ok/test.xml.odt.listing
+	diff test.xml.odt.listing expected-results/test.xml.odt.listing
 	rm test.xml.odt.listing
 	../teitodocx test.xml 
 	unzip -t test.xml.docx > test.xml.docx.listing
-	diff test.xml.docx.listing ok/test.xml.docx.listing
+	diff test.xml.docx.listing expected-results/test.xml.docx.listing
 	rm test.xml.docx.listing
 	../teitoodt test10.xml 
 	unzip -t test10.xml.odt > test10.xml.odt.listing
-	diff test10.xml.odt.listing ok/test10.xml.odt.listing
+	diff test10.xml.odt.listing expected-results/test10.xml.odt.listing
 	rm test10.xml.odt.listing
 	test -d $(OXY) || exit 1
 	java -Xmx256m \
@@ -99,11 +99,11 @@ conversions-to:
 	roma2 --nodtd --noxsd test.odd .
 	../odttotei test7.odt test7.xml
 	jing test.rng test7.xml
-	diff test7.xml ok/test7.xml
+	diff test7.xml expected-results/test7.xml
 	../docxtotei test11.docx test11.xml
 	perl -p -i -e 's/Date:[^<]+</</' test11.xml
 	jing test.rng test11.xml
-	diff test11.xml ok/test11.xml
+	diff test11.xml expected-results/test11.xml
 	rm test.rng test.rnc
 
 clean:
