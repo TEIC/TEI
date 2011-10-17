@@ -248,7 +248,7 @@
         <w:br w:type="page"/>
       </w:r>
       <w:r>
-        <w:t> </w:t>
+        <w:t>&#160;</w:t>
       </w:r>
     </w:p>
     <w:tbl>
@@ -310,7 +310,7 @@
   <xsl:template name="roomtable">
    <w:p>
       <w:r>
-        <w:t> </w:t>
+        <w:t>&#160;</w:t>
       </w:r>
     </w:p>
     <w:tbl>

@@ -199,39 +199,30 @@ valList
               <xsl:otherwise>
                 <!-- build new 'add' elementSpec -->
                 <elementSpec ident="{current-grouping-key()}" mode="add" ns="{namespace-uri()}">
-                  <xsl:text>
-</xsl:text>
+                  <xsl:text>&#10;</xsl:text>
                   <xsl:comment>add an &lt;equiv/&gt; to point to an named  template
 in an XSLT file which will transform this to pure TEI</xsl:comment>
-                  <xsl:text>
-</xsl:text>
+                  <xsl:text>&#10;</xsl:text>
                   <equiv filter="somefile.xsl" mimeType="text/xsl" name="{current-grouping-key()}"/>
                   <desc>
-                    <xsl:text>
-</xsl:text>
+                    <xsl:text>&#10;</xsl:text>
                     <xsl:comment> Describe the <xsl:value-of select="current-grouping-key()"/> element  here</xsl:comment>
-                    <xsl:text>
-</xsl:text>
+                    <xsl:text>&#10;</xsl:text>
                   </desc>
                   <classes>
-                    <xsl:text>
-</xsl:text>
+                    <xsl:text>&#10;</xsl:text>
                     <xsl:comment> Add a 'memberOf key="model.className"' stanza for whatever classes it belongs to  here</xsl:comment>
-                    <xsl:text>
-</xsl:text>
+                    <xsl:text>&#10;</xsl:text>
                   </classes>
                   <content>
-                    <xsl:text>
-</xsl:text>
+                    <xsl:text>&#10;</xsl:text>
                     <xsl:comment>Add RNG content model here</xsl:comment>
-                    <xsl:text>
-</xsl:text>
+                    <xsl:text>&#10;</xsl:text>
                   </content>
                   <xsl:if test="key('Atts',local-name())">
                     <attList>
                       <xsl:comment>Add attDefs:</xsl:comment>
-                      <xsl:text>
-</xsl:text>
+                      <xsl:text>&#10;</xsl:text>
                       <xsl:for-each-group select="key('Atts',local-name())" group-by="local-name()">
                         <xsl:sort/>
                         <attDef ident="{local-name()}" mode="add"/>

@@ -49,7 +49,7 @@
   <xsl:param name="logoFile">logo.png</xsl:param>
   <xsl:param name="logoWidth">60</xsl:param>
   <xsl:param name="logoHeight">60</xsl:param>
-  <xsl:param name="spaceCharacter"> </xsl:param>
+  <xsl:param name="spaceCharacter">&#160;</xsl:param>
   <xsl:template name="lineBreak">
       <xsl:param name="id"/>
       <xhtml:br/>

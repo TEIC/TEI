@@ -224,8 +224,7 @@
       <desc/>
    </doc>
   <xsl:template match="tei:row[@role='header']">
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
       <table-header>
          <xsl:apply-templates select="tei:cell"/>
       </table-header>
@@ -316,8 +315,7 @@
          <xsl:apply-templates select="tei:row[@role='header']"/>
          <table-body text-indent="0pt">
             <xsl:for-each select="tei:row[not(@role='header')]">
-               <xsl:text>
-</xsl:text>
+               <xsl:text>&#10;</xsl:text>
                <table-row>
                   <xsl:apply-templates select="tei:cell"/>
                </table-row>

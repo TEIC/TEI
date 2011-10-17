@@ -65,7 +65,8 @@
    </doc>
   <xsl:template match="tei:item" mode="runin">
       <xsl:text> • </xsl:text>
-      <xsl:apply-templates/> 
+      <xsl:apply-templates/>
+      <xsl:text>&#160;</xsl:text>
   </xsl:template>
 
 

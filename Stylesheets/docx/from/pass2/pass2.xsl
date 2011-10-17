@@ -112,7 +112,7 @@
             <xsl:when test="starts-with(.,'— ')">
                 <xsl:value-of select="substring(.,3)"/>
             </xsl:when>
-            <xsl:when test="starts-with(.,' — ')">
+            <xsl:when test="starts-with(.,'&#160;— ')">
                 <xsl:value-of select="substring(.,4)"/>
             </xsl:when>
             <xsl:when test="starts-with(.,' — ')">
@@ -318,7 +318,7 @@
 		      (parent::tei:speaker/text())">
 	<xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="parent::tei:head and .=' '"/>
+      <xsl:when test="parent::tei:head and .='&#160;'"/>
       <xsl:when test ="not(*) and string-length(.)=0"/>
       <xsl:when test="parent::tei:item/parent::tei:list[@type='gloss']
 		      and tei:g[@ref='x:tab']"/>

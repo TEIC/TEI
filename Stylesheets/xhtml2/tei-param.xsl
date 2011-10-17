@@ -133,7 +133,7 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
   <xsl:template name="bodyJavascriptHook"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>     <p>[html] Hook where extra CSS can be inserted</p>
-         <p>  </p>
+         <p>&#160; </p>
       </desc>
    </doc>
   <xsl:template name="cssHook"/>

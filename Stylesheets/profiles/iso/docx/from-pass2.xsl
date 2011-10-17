@@ -69,7 +69,7 @@
             </xsl:when>
 
             <xsl:otherwise>
-                <xsl:analyze-string select="." regex="((\d+ \d+)+,?\d*|\d+,\d+)">
+                <xsl:analyze-string select="." regex="((\d+&#160;\d+)+,?\d*|\d+,\d+)">
                     <xsl:matching-substring>
                         <num>
                             <xsl:value-of select="regex-group(1)"/>

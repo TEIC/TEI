@@ -178,8 +178,7 @@
       </desc>
    </doc>
   <xsl:template match="tei:div">
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
       <xsl:choose>
          <xsl:when test="@type='bibliog'">
             <xsl:apply-templates/>
@@ -719,7 +718,7 @@
       <page-sequence format="1" initial-page-number="{$tocStartPage}" master-reference="twoside1">
          <xsl:call-template name="headers-footers-twoside">
             <xsl:with-param name="runeven">even page running head</xsl:with-param>
-            <xsl:with-param name="runodd"> odd page running head</xsl:with-param>
+            <xsl:with-param name="runodd">&#160;odd page running head</xsl:with-param>
          </xsl:call-template>
          <flow flow-name="xsl-region-body" font-family="{$bodyFont}">
             <block text-align="center">

@@ -375,7 +375,7 @@
     <desc>Process element caesura</desc>
   </doc>
   <xsl:template match="tei:caesura">
-    <span class="caesura">    </span>
+    <span class="caesura">&#160;&#160;&#160;&#160;</span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element gap</desc>
@@ -1637,7 +1637,7 @@
         <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text> </xsl:text>
+        <xsl:text>&#160;</xsl:text>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2214,7 +2214,7 @@
     <xsl:choose>
       <xsl:when test="$extent &lt; 1"> </xsl:when>
       <xsl:otherwise>
-        <xsl:text> </xsl:text>
+        <xsl:text>&#160;</xsl:text>
         <xsl:variable name="newextent">
           <xsl:value-of select="$extent - 1"/>
         </xsl:variable>

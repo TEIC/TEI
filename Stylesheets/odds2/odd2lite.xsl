@@ -66,7 +66,7 @@
   <xsl:param name="endElementName"/>
   <xsl:param name="startNamespace"/>
   <xsl:param name="endNamespace"/>
-  <xsl:param name="spaceCharacter"> </xsl:param>
+  <xsl:param name="spaceCharacter">&#160;</xsl:param>
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>

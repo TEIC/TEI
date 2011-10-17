@@ -66,10 +66,6 @@
 	   </xsl:if>
          </n:ROOT>
       </xsl:variable>
-    <xsl:result-document href="/tmp/foo.xml">
-      <xsl:copy-of select="$all"/>
-    </xsl:result-document>
-
       <xsl:for-each select="$all/*">
 	<xsl:call-template name="processAll"/>
       </xsl:for-each>

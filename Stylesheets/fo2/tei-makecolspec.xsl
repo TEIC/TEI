@@ -64,8 +64,7 @@
             <xsl:variable name="len">
                <xsl:value-of select="sum(following-sibling::cell[$c=@col]) + current()"/>
             </xsl:variable>
-            <xsl:text>
-</xsl:text>
+            <xsl:text>&#10;</xsl:text>
             <table-column column-number="{@col}" column-width="{$len div $total * 100}%">
                <xsl:if test="$foEngine='passivetex'">
                   <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">L</xsl:attribute>
@@ -73,8 +72,7 @@
             </table-column>
          </xsl:if>
       </xsl:for-each>
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[fo] </desc>

@@ -65,7 +65,7 @@
     <xsl:param name="startNamespace"/>
     <xsl:param name="endNamespace"/>
     
-    <xsl:param name="spaceCharacter"> </xsl:param>
+    <xsl:param name="spaceCharacter">&#160;</xsl:param>
     <xsl:param name="showNamespaceDecls">true</xsl:param>
     
     <xsl:template name="verbatim-lineBreak">

@@ -378,7 +378,7 @@
                 <xsl:value-of select="$name"/>
               </xsl:with-param>
             </xsl:call-template>
-            <xsl:text> </xsl:text>
+            <xsl:text>&#160;</xsl:text>
             <xsl:call-template name="makeDescription"/>
           </xsl:element>
         </xsl:element>
@@ -1150,7 +1150,7 @@
               </xsl:attribute>
               <xsl:value-of select="$name"/>
             </xsl:element>
-            <xsl:text> </xsl:text>
+            <xsl:text>&#160;</xsl:text>
             <xsl:call-template name="makeDescription"/>
           </xsl:element>
         </xsl:element>
@@ -1427,7 +1427,7 @@
           <xsl:attribute name="{$rendName}">
             <xsl:text>wovenodd-col2</xsl:text>
           </xsl:attribute>
-          <xsl:comment> </xsl:comment>
+          <xsl:comment>&#160;</xsl:comment>
           <xsl:apply-templates/>
         </xsl:element>
       </xsl:element>
@@ -2189,7 +2189,7 @@
     </xsl:call-template>
   </xsl:template>
   <xsl:template match="op" mode="keep">
-    <xsl:value-of select="translate (., ' ', ' ')"/>
+    <xsl:value-of select="translate (., ' ', '&#160;')"/>
   </xsl:template>
   <xsl:template match="atom" mode="keep">
     <xsl:call-template name="showRNC">

@@ -126,8 +126,7 @@
       <xsl:if test="following-sibling::tei:row">
          <xsl:text>\\</xsl:text>
          <xsl:if test="@role='label' or parent::tei:table/@rend='rules'">\hline </xsl:if>
-         <xsl:text>
-</xsl:text>
+         <xsl:text>&#10;</xsl:text>
       </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

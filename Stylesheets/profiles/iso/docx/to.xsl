@@ -153,7 +153,7 @@
                         <xsl:value-of select="."/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="translate(.,', ','.,')"/>
+                        <xsl:value-of select="translate(.,',&#160;','.,')"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </w:t>

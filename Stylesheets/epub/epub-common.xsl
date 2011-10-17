@@ -376,7 +376,7 @@
         <xsl:value-of select="@type"/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:otherwise> </xsl:otherwise>
+      <xsl:otherwise>&#160;</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 

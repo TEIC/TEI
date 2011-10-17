@@ -100,8 +100,7 @@
                   <xsl:value-of select="@xml:id"/>
                </xsl:attribute>
             </xsl:if>
-            <xsl:text>
-</xsl:text>
+            <xsl:text>&#10;</xsl:text>
             <block/>
          </list-item-label>
          <list-item-body start-indent="body-start()">

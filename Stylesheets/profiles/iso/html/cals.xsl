@@ -222,7 +222,7 @@
       </xsl:if>
       <xsl:choose>
         <xsl:when test="$empty.cell">
-          <xsl:text> </xsl:text>
+          <xsl:text>&#160;</xsl:text>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates/>
@@ -235,7 +235,7 @@
     <xsl:choose>
       <xsl:when test="$number &lt;= 0"/>
       <xsl:otherwise>
-        <td> </td>
+        <td>&#160;</td>
         <xsl:call-template name="add-empty-entries">
           <xsl:with-param name="number" select="$number - 1"/>
         </xsl:call-template>

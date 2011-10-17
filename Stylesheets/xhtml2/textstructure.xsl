@@ -1236,32 +1236,29 @@
    </doc>
   <xsl:template name="includeCSS">
 
-      <xsl:choose>
-         <xsl:when test="string-length($cssFile)=0"/>
-         <xsl:otherwise>
-	   <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
-         </xsl:otherwise>
-      </xsl:choose>
-
-      <xsl:if test="string-length($cssSecondaryFile)&gt;1">
-         <link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
+      <xsl:if test="string-length($cssFile)&gt;0">
+	<link href="{$cssFile}" rel="stylesheet" type="text/css"/>
       </xsl:if>
 
-      <xsl:if test="string-length($cssPrintFile)&gt;1">
-         <link rel="stylesheet" media="print" type="text/css">
-	   <xsl:attribute name="href" select="$cssPrintFile"/>
-	 </link>
+      <xsl:if test="string-length($cssSecondaryFile)&gt;0">
+	<link href="{$cssSecondaryFile}" rel="stylesheet" type="text/css"/>
       </xsl:if>
-
+      
+      <xsl:if test="string-length($cssPrintFile)&gt;0">
+	<link rel="stylesheet" media="print" type="text/css">
+	  <xsl:attribute name="href" select="$cssPrintFile"/>
+	</link>
+      </xsl:if>
+      
       <xsl:if test="$cssInlineFile">
 	<style type="text/css" title="local_css">
-	<xsl:for-each select="tokenize(unparsed-text($cssInlineFile),
-			      '\r?\n')">
-	  <xsl:value-of select="."/>
-	</xsl:for-each>
+	  <xsl:for-each select="tokenize(unparsed-text($cssInlineFile),
+				'\r?\n')">
+	    <xsl:value-of select="."/>
+	  </xsl:for-each>
 	</style>
       </xsl:if>
-
+      
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2500,7 +2497,7 @@
                   <td class="link" valign="top">
                      <xsl:for-each select=".//xref|.//xptr">
                         <xsl:if test="position() &gt; 1">
-                           <xsl:text> </xsl:text>
+                           <xsl:text>&#160;</xsl:text>
                            <img alt="*" src="/images/dbluball.gif"/>
                            <xsl:text> </xsl:text>
                         </xsl:if>

@@ -31,7 +31,7 @@
   <xsl:param name="endAttributeValue">&lt;/span&gt;</xsl:param>
   <xsl:param name="startNamespace">&lt;span class="namespace"&gt;</xsl:param>
   <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
-  <xsl:param name="spaceCharacter"> </xsl:param>
+  <xsl:param name="spaceCharacter">&#160;</xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
   <xsl:param name="forceWrap">false</xsl:param>
   <xsl:param name="wrapLength">65</xsl:param>
@@ -63,8 +63,7 @@
   </xsl:template>
   <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
-    <xsl:text>
-</xsl:text>
+    <xsl:text>&#10;</xsl:text>
   </xsl:template>
   <xsl:template match="comment()" mode="verbatim">
     <xsl:choose>
@@ -106,8 +105,7 @@
           </xsl:for-each>
         </xsl:variable>
         <xsl:if test="string-length(.)&gt;$wrapLength or parent::sch:assert">
-          <xsl:text>
-</xsl:text>
+          <xsl:text>&#10;</xsl:text>
           <xsl:value-of select="$indent"/>
         </xsl:if>
         <xsl:call-template name="verbatim-reformatText">
@@ -120,8 +118,7 @@
           </xsl:with-param>
         </xsl:call-template>
         <xsl:if test="string-length(.)&gt;$wrapLength or parent::sch:assert">
-          <xsl:text>
-</xsl:text>
+          <xsl:text>&#10;</xsl:text>
           <xsl:value-of select="$indent"/>
         </xsl:if>
       </xsl:when>
@@ -179,8 +176,7 @@
     <xsl:param name="sofar"/>
     <xsl:choose>
       <xsl:when test="$sofar&gt;$wrapLength">
-        <xsl:text>
-</xsl:text>
+        <xsl:text>&#10;</xsl:text>
         <xsl:value-of select="$indent"/>
         <xsl:call-template name="verbatim-reformatText">
           <xsl:with-param name="text">
@@ -575,7 +571,7 @@
     <xsl:call-template name="verbatim-lineBreak">
       <xsl:with-param name="id">22</xsl:with-param>
     </xsl:call-template>
-    <xsl:text>   </xsl:text>
+    <xsl:text>&#160;&#160;&#160;</xsl:text>
     <xsl:text>xmlns:</xsl:text>
     <xsl:value-of select="name(.)"/>
     <xsl:text>="</xsl:text>

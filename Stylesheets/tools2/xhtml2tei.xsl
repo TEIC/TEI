@@ -106,8 +106,7 @@ created by converting an HTML file to TEI XML on TODAYSDATE.</p>
             <xsl:apply-templates/>
          </text>
       </TEI.2>
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
    </xsl:template>
 
    <xsl:template match="h:head"/>
@@ -413,7 +412,7 @@ got to find a way to set a trigger for closing div if no headers -->
                   <xsl:value-of select="."/>
                </xsl:when>
                <xsl:otherwise>
-                  <xsl:value-of select="translate(.,' ',' ')"/>      
+                  <xsl:value-of select="translate(.,'&#160;',' ')"/>      
                </xsl:otherwise>
             </xsl:choose>
          </xsl:otherwise>

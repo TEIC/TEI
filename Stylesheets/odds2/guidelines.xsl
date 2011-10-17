@@ -850,7 +850,7 @@ glyphes non standard</head>
               <xsl:text>toc</xsl:text>
             </xsl:attribute>
             <span class="notshowhide">
-              <xsl:text>  </xsl:text>
+              <xsl:text>&#160;&#160;</xsl:text>
             </span>
           </xsl:otherwise>
         </xsl:choose>
@@ -1133,10 +1133,10 @@ glyphes non standard</head>
     <xsl:if test="$outputTarget='html'">
       <xsl:if test="not($googleAnalytics='')">
         <script type="text/javascript" src="udm-dom.js">
-          <xsl:comment> </xsl:comment>
+          <xsl:comment>&#160;</xsl:comment>
         </script>
         <script type="text/javascript" src="udm-mod-keyboard.js">
-          <xsl:comment> </xsl:comment>
+          <xsl:comment>&#160;</xsl:comment>
         </script>
       </xsl:if>
       <div id="container">
@@ -1150,9 +1150,9 @@ glyphes non standard</head>
       </div>
       <div id="searchbox" style="float:left;">
         <form action="http://www.google.com/search" method="get">
-          <fieldset><input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/> <select name="sitesearch"><option value="http://www.tei-c.org/">Entire site</option><option value="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
+          <fieldset><input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/>&#160;<select name="sitesearch"><option value="http://www.tei-c.org/">Entire site</option><option value="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
 	    <xsl:choose><xsl:when test="$documentationLanguage='en'"> — English</xsl:when><xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when><xsl:when test="$documentationLanguage='es'"> — Español</xsl:when><xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when><xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when><xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when><xsl:when test="$documentationLanguage='kr'"> — 한국어</xsl:when><xsl:when test="$documentationLanguage='zh-tw'"> — 中文</xsl:when></xsl:choose>
-	    </option><option value="http://www.tei-c.org/Guidelines/P4/html/">P4 Guidelines</option></select> <input style="font-size:100%; font-weight:bold;      color:#FFFFFF; background-color:#225588; height: 2em;" value="Search" type="submit"/></fieldset>
+	    </option><option value="http://www.tei-c.org/Guidelines/P4/html/">P4 Guidelines</option></select>&#160;<input style="font-size:100%; font-weight:bold;      color:#FFFFFF; background-color:#225588; height: 2em;" value="Search" type="submit"/></fieldset>
         </form>
       </div>
     </xsl:if>

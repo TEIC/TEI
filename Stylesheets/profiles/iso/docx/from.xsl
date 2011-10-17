@@ -1970,7 +1970,7 @@
 		  ["/" suppltitle] -->
 	      <xsl:analyze-string
 		  regex="{$ISOPATT}"
-		  select="translate(.,' ',' ')">
+		  select="translate(.,'&#160;',' ')">
 		<xsl:matching-substring>
 		  <xsl:variable name="Part" select="regex-group(4)"/>
 		  <xsl:variable name="Suppltype" select="regex-group(9)"/>

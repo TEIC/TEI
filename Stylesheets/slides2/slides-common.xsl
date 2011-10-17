@@ -114,7 +114,7 @@
       </xsl:choose>
       <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
       <xsl:for-each select="@*">
-         <xsl:text> </xsl:text>
+         <xsl:text>&#160;</xsl:text>
          <xsl:value-of disable-output-escaping="yes" select="$startAttribute"/>
          <xsl:if test="namespace-uri()='http://relaxng.org/ns/structure/1.0'">
             <xsl:text>xml:</xsl:text>

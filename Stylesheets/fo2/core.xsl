@@ -97,8 +97,7 @@
          <xsl:when test="$foEngine='passivetex'">&#8232;</xsl:when>
          <xsl:otherwise>
             <inline linefeed-treatment="preserve">
-               <xsl:text>
-</xsl:text>
+               <xsl:text>&#10;</xsl:text>
             </inline>
          </xsl:otherwise>
       </xsl:choose>
@@ -183,10 +182,9 @@
             </xsl:attribute>
          </xsl:if>
          <xsl:if test="parent::tei:exemplum">
-            <xsl:text>
-</xsl:text>
+            <xsl:text>&#10;</xsl:text>
          </xsl:if>
-         <xsl:value-of select="translate(.,' ',' ')"/>
+         <xsl:value-of select="translate(.,' ','&#160;')"/>
       </block>
   </xsl:template>
 

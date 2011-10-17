@@ -1797,7 +1797,7 @@
 * section </xsl:text>
       <xsl:for-each select="ancestor-or-self::tei:div">/<xsl:number level="multiple"/>
          <xsl:text> - </xsl:text>
-         <xsl:value-of select="translate(substring(tei:head,1,20),' ',' ')"/>
+         <xsl:value-of select="translate(substring(tei:head,1,20),'&#160;',' ')"/>
       </xsl:for-each>
       <xsl:text> (element </xsl:text>
       <xsl:value-of select="local-name()"/>

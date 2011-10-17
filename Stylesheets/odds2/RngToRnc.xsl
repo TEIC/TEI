@@ -1440,8 +1440,7 @@
   <xsl:variable name="spaces"
                  select="concat (     '                                        ',     '                                        '     )"/>
   <xsl:template match="nl" mode="keep">
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
       <xsl:variable name="level" select="count (ancestor::indent)"/>
       <xsl:variable name="following-op" select="following-sibling::*[1][self::op]"/>
       <xsl:choose>

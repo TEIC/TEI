@@ -206,8 +206,7 @@
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
       <xsl:param name="implicitBlock">false</xsl:param>
-      <xsl:text>
-</xsl:text>
+      <xsl:text>&#10;</xsl:text>
       <xsl:choose>
 	        <xsl:when test="$level=1">\section</xsl:when>
 	        <xsl:when test="$level=2">\subsection</xsl:when>
