@@ -46,6 +46,9 @@ install: release-stamp
 dist:  release-stamp
 	(cd release; zip -r ../tei-roma-`cat ../VERSION`.zip tei-roma)
 
+debversion:
+	(cd debian-tei-roma;  dch -v `cat ../VERSION` new release)
+
 deb:	
 	rm -f tei-roma*_*changes
 	rm -f tei-roma*_*build
