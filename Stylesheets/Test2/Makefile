@@ -10,7 +10,7 @@ test-html:
 	echo differences:
 	-diff dummy dummy4
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
-	diff test5.xhtml ok/test5.xhtml
+	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
 
 testsplit:
@@ -19,11 +19,11 @@ testsplit:
 
 test-latex:
 	saxon -o:test6.tex test6.xml ../slides2/teilatex-slides.xsl $(SAXONOPT)
-	diff test6.tex ok/test6.tex
+	diff test6.tex expected-results/test6.tex
 	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
-	diff test5.tex ok/test5.tex
+	diff test5.tex expected-results/test5.tex
 	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
-	diff test5.fo ok/test5.fo
+	diff test5.fo expected-results/test5.fo
 
 odd:
 	saxon testdrama.odd ../odds2/odd2odd.xsl \
