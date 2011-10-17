@@ -24,7 +24,6 @@
 
 
   <xsl:template match="tei:ptr|tei:ref" mode="weave">
-<xsl:message>weave weave the sunlight in her hair</xsl:message>
     <xsl:choose>
       <xsl:when test="ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc">
         <xsl:choose>
