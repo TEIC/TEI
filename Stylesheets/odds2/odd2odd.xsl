@@ -259,7 +259,7 @@
   </xsl:template>
 
   <xsl:template match="tei:schemaSpec" mode="odd2odd-pass1">
-    <xsl:variable name="SourceDoc" select="tei:workOutSource(.)"/>
+    <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
 
     <xsl:variable name="oddsource">
       <xsl:copy>
@@ -273,13 +273,13 @@
 	-->
 	<xsl:for-each select="tei:moduleRef[@key='tei']">
 	  <xsl:call-template name="odd2odd-expandModule">
-	    <xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
+	    <xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 	  </xsl:call-template>
 	</xsl:for-each>
 	
 	<xsl:for-each select="tei:moduleRef[@key='core']">
 	  <xsl:call-template name="odd2odd-expandModule">
-	    <xsl:with-param name="Source" select="$SourceDoc"
+	    <xsl:with-param name="Source" select="$sourceDoc"
 			tunnel="yes"/>
 	  </xsl:call-template>
 	</xsl:for-each>
@@ -287,7 +287,7 @@
 	<xsl:for-each select="tei:moduleRef[@key]">
 	  <xsl:if test="not(@key='tei' or @key='core')">
 	    <xsl:call-template name="odd2odd-expandModule">
-	    <xsl:with-param name="Source" select="$SourceDoc"
+	    <xsl:with-param name="Source" select="$sourceDoc"
 			tunnel="yes"/>
 	  </xsl:call-template>
 	  </xsl:if>
@@ -300,21 +300,21 @@
 
 	<xsl:for-each select="tei:classSpec[@mode='add' or not(@mode)]">
 	  <xsl:call-template name="odd2odd-createCopy">
-	    <xsl:with-param name="Source" select="$SourceDoc"
+	    <xsl:with-param name="Source" select="$sourceDoc"
 			tunnel="yes"/>
 	  </xsl:call-template>
 	</xsl:for-each>
 
 	<xsl:for-each select="tei:macroSpec[@mode='add' or not(@mode)]">
 	  <xsl:call-template name="odd2odd-createCopy">
-	    <xsl:with-param name="Source" select="$SourceDoc"
+	    <xsl:with-param name="Source" select="$sourceDoc"
 			tunnel="yes"/>
 	  </xsl:call-template>
 	</xsl:for-each>
 
 	<xsl:for-each select="tei:elementSpec[@mode='add' or not(@mode)]">
 	  <xsl:call-template name="odd2odd-createCopy">
-	    <xsl:with-param name="Source" select="$SourceDoc"
+	    <xsl:with-param name="Source" select="$sourceDoc"
 			tunnel="yes"/>
 	  </xsl:call-template>
 	</xsl:for-each>
@@ -333,7 +333,7 @@
 
 
   <xsl:template name="odd2odd-expandModule">
-    <xsl:variable name="SourceDoc" select="tei:workOutSource(.)"/>
+    <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
     <xsl:variable name="name" select="@key"/>
     <xsl:variable name="exc"
 		  select="concat(' ',normalize-space(@except),' ')"/>
@@ -341,10 +341,10 @@
 		  select="tokenize(normalize-space(@include),' ')"/>
       <xsl:choose>
 	<xsl:when test="not(@except) and not(@include)">
-	  <xsl:for-each select="document($SourceDoc,$top)">
+	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each select="key('odd2odd-MODULE_MEMBERS',$name)">
 	      <xsl:call-template name="odd2odd-checkObject">
-		<xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
+		<xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 		<xsl:with-param name="why"> module <xsl:value-of select="$name"/></xsl:with-param>
 	      </xsl:call-template>
 	    </xsl:for-each>
@@ -352,24 +352,24 @@
 	</xsl:when>
 	<xsl:when test="exists($inc)">
 	  <!-- get model and attribute classes regardless -->
-	  <xsl:for-each select="document($SourceDoc,$top)">
+	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS_MODEL',$name)">
 	      <xsl:call-template name="odd2odd-checkObject">
-		<xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
+		<xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 		<xsl:with-param name="why">module (auto from include) <xsl:value-of select="$name"/></xsl:with-param>
 	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:for-each>
 	  <xsl:for-each select="$inc">
 	    <xsl:variable name="i" select="."/>
-	    <xsl:for-each select="document($SourceDoc,$top)">
+	    <xsl:for-each select="document($sourceDoc,$top)">
 	      <xsl:choose>
 		<xsl:when test="key('odd2odd-IDENTS',$i)">
 		  <xsl:for-each select="key('odd2odd-IDENTS',$i)">
 		    <xsl:if test="not(self::tei:classSpec)">
 		      <xsl:call-template name="odd2odd-checkObject">
-			<xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
+			<xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 			<xsl:with-param name="why">(inclusion) module <xsl:value-of select="$name"/></xsl:with-param>
 		      </xsl:call-template>
 		    </xsl:if>
@@ -391,11 +391,11 @@
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:for-each select="document($SourceDoc,$top)">
+	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each select="key('odd2odd-MODULE_MEMBERS',$name)">
 	      <xsl:if test="not(contains($exc,concat(' ',@ident,' ')))">
 		<xsl:call-template name="odd2odd-checkObject">
-		  <xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
+		  <xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 		  <xsl:with-param name="why">(exclusion) module <xsl:value-of select="$name"/></xsl:with-param>
 		</xsl:call-template>
 	      </xsl:if>
@@ -406,14 +406,14 @@
   </xsl:template>
 
   <xsl:template name="odd2odd-followRef">
-    <xsl:variable name="SourceDoc" select="tei:workOutSource(.)"/>
+    <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
     <xsl:variable name="name" select="@key"/>
-    <xsl:for-each select="document($SourceDoc,$top)">
+    <xsl:for-each select="document($sourceDoc,$top)">
       <xsl:choose>
 	<xsl:when test="key('odd2odd-IDENTS',$name)">
 	  <xsl:for-each select="key('odd2odd-IDENTS',$name)">
 	    <xsl:call-template name="odd2odd-checkObject">
-		<xsl:with-param name="Source" select="$SourceDoc" tunnel="yes"/>
+		<xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 		<xsl:with-param name="why">direct reference</xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:for-each>
@@ -467,8 +467,10 @@
 		      (ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc) and
 		      not(id(substring(@target,2)))">
 	<xsl:variable name="target" select="substring(@target,2)"/>
+	<xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
+
 	<xsl:choose>
-	  <xsl:when test="document($DEFAULTSOURCE)/id($target)">
+	  <xsl:when test="document($sourceDoc)/id($target)">
 	    <ref  xmlns="http://www.tei-c.org/ns/1.0"
 		  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{substring($target,1,2)}.html#{$target}">
 	      <xsl:for-each select="document($DEFAULTSOURCE)/id($target)">
@@ -2259,8 +2261,8 @@ so that is only put back in if there is some content
 	<xsl:when test="$e/@source">
 	  <xsl:value-of select="$e/@source"/>
 	</xsl:when>
-	<xsl:when test="$e/parent::tei:schemaSpec/@source">
-	  <xsl:value-of select="$e/parent::tei:schemaSpec/@source"/>
+	<xsl:when test="$e/ancestor::tei:schemaSpec/@source">
+	  <xsl:value-of select="$e/ancestor::tei:schemaSpec/@source"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:value-of select="$DEFAULTSOURCE"/>
