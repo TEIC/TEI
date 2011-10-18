@@ -1251,13 +1251,15 @@
       </xsl:if>
       
       <xsl:if test="$cssInlineFile">
-	<style type="text/css" title="local_css">
+	<style type="text/css" title="inline_css">
 	  <xsl:for-each select="tokenize(unparsed-text($cssInlineFile),
 				'\r?\n')">
 	    <xsl:value-of select="."/>
 	  </xsl:for-each>
 	</style>
       </xsl:if>
+
+      <xsl:call-template name="generateLocalCSS"/>
       
   </xsl:template>
 
