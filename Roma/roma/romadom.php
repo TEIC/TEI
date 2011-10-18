@@ -2243,7 +2243,7 @@ class romaDom extends domDocument
 
     public function outputHTML ( &$szHTML )
       {
-	$target="oddhtml%3Aapplication%3Axhtml%2Bxml";
+	$target="TEI%3Atext%3Axml/xhtml%3Aapplication%3Axhtml%2Bxml/";
 	$this->callGarage($szHTML, $target);
       }
 
