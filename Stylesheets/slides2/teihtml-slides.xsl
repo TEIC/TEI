@@ -74,7 +74,7 @@
   </xsl:template>
 
 
-  <xsl:template name="locateParentdiv">
+  <xsl:template name="locateParentDiv">
     <xsl:choose>
       <xsl:when test="ancestor-or-self::tei:div">
 	<xsl:apply-templates mode="genid" select="ancestor::tei:div[last()]"/>

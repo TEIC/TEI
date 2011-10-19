@@ -141,7 +141,7 @@
          </xsl:when>
          <xsl:otherwise>
             <xsl:variable name="parent">
-               <xsl:call-template name="locateParentdiv"/>
+               <xsl:call-template name="locateParentDiv"/>
             </xsl:variable>
             <xsl:choose>
                <xsl:when test="$STDOUT='true'">
@@ -252,7 +252,7 @@
       <desc>[html] Find the name of the outermost container for the
       current object which would create an output file</desc>
    </doc>
-  <xsl:template name="locateParentdiv">
+  <xsl:template name="locateParentDiv">
 
       <xsl:choose>
 
@@ -274,25 +274,33 @@
          </xsl:when>
 
          <xsl:when test="ancestor-or-self::tei:div">
-            <xsl:apply-templates mode="ident" select="ancestor::tei:div[last() - number($splitLevel)]"/>
+            <xsl:apply-templates mode="ident"
+				 select="ancestor-or-self::tei:div[last() -
+					 number($splitLevel) + 1]"/>
          </xsl:when>
 
          <xsl:otherwise>
             <xsl:choose>
                <xsl:when test="number($splitLevel) = 0">
-                  <xsl:apply-templates mode="ident" select="ancestor::tei:div1"/>
+                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div1"/>
                </xsl:when>
                <xsl:when test="number($splitLevel) = 1">
-                  <xsl:apply-templates mode="ident" select="(ancestor::tei:div2|ancestor::tei:div1)[last()]"/>
+                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div2"/>
                </xsl:when>
                <xsl:when test="number($splitLevel) = 2">
-                  <xsl:apply-templates mode="ident" select="(ancestor::tei:div3|ancestor::tei:div2)[last()]"/>
+                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div3"/>
                </xsl:when>
                <xsl:when test="number($splitLevel) = 3">
-                  <xsl:apply-templates mode="ident" select="(ancestor::tei:div4|ancestor::tei:div3)[last()]"/>
+                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div4"/>
                </xsl:when>
                <xsl:when test="number($splitLevel) = 4">
-                  <xsl:apply-templates mode="ident" select="(ancestor::tei:div5|ancestor::tei:div4)[last()]"/>
+                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div5"/>
+               </xsl:when>
+               <xsl:when test="number($splitLevel) = 5">
+                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div6"/>
+               </xsl:when>
+               <xsl:when test="number($splitLevel) = 6">
+                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div7"/>
                </xsl:when>
             </xsl:choose>
          </xsl:otherwise>

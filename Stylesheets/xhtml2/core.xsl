@@ -1149,14 +1149,22 @@
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Check whether a note should be processed</desc>
+    <desc>Check whether a note should be processed. If we are
+    splitting, check that we are in the correct file</desc>
   </doc>
   <xsl:template match="tei:note" mode="printnotes">
+    <xsl:param name="whence" select="."/>
     <xsl:choose>
       <xsl:when test="ancestor::tei:listBibl"/>
       <xsl:when test="number($splitLevel)=-1"/>
-      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:call-template name="makeaNote"/>
+      <xsl:when test="@place='foot' or @place='bottom' or @place='end'
+		      or $autoEndNotes='true'">
+	<xsl:variable name="parent">
+	  <xsl:call-template name="locateParentDiv"/>
+	</xsl:variable>
+	<xsl:if test="$whence = $parent">
+	  <xsl:call-template name="makeaNote"/>
+	</xsl:if>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -1954,6 +1962,10 @@
           </xsl:if>
         </xsl:when>
         <xsl:otherwise>
+	  <xsl:variable name="me">
+	    <xsl:apply-templates select="." mode="ident"/>
+	  </xsl:variable>
+
           <xsl:variable name="NOTES">
             <xsl:choose>
               <xsl:when test="self::tei:TEI">
@@ -1971,7 +1983,10 @@
 	      <xsl:when test="parent::tei:group and tei:group">
 	      </xsl:when>
               <xsl:otherwise>
-                <xsl:apply-templates mode="printnotes" select=".//tei:note"/>
+                <xsl:apply-templates mode="printnotes"
+				     select=".//tei:note">
+		  <xsl:with-param name="whence" select="$me"/>
+		</xsl:apply-templates>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:variable>

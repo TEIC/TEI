@@ -1155,19 +1155,14 @@
          <xsl:value-of select="$standardSuffix"/>
          <xsl:call-template name="addCorpusID"/>
       </xsl:variable>
-<xsl:message><xsl:value-of select="@xml:id"/>: <xsl:value-of
-select="$myName"/>: <xsl:value-of select="normalize-space(tei:head)"/></xsl:message>
-
       <xsl:choose>
          <xsl:when test="$myName = 'div' and not(ancestor::tei:div)">
-<xsl:message> .... 1</xsl:message>
             <xsl:call-template name="upLink">
 	              <xsl:with-param name="up" select="$BaseFile"/>
 	              <xsl:with-param name="title" select="$homeLabel"/>
             </xsl:call-template>
          </xsl:when>
          <xsl:when test="$myName = 'div'">
-<xsl:message> .... 2</xsl:message>
             <xsl:call-template name="upLink">
                <xsl:with-param name="up" select="ancestor::tei:div[1]"/>
             </xsl:call-template>
@@ -1199,7 +1194,6 @@ select="$myName"/>: <xsl:value-of select="normalize-space(tei:head)"/></xsl:mess
 	           </xsl:call-template>
          </xsl:when>
          <xsl:otherwise>
-<xsl:message> .... 3</xsl:message>
 	           <xsl:call-template name="upLink">
 	              <xsl:with-param name="up" select="(ancestor::tei:div1|ancestor::tei:div)[1]"/>
 	           </xsl:call-template>
