@@ -1155,14 +1155,19 @@
          <xsl:value-of select="$standardSuffix"/>
          <xsl:call-template name="addCorpusID"/>
       </xsl:variable>
+<xsl:message><xsl:value-of select="@xml:id"/>: <xsl:value-of
+select="$myName"/>: <xsl:value-of select="normalize-space(tei:head)"/></xsl:message>
+
       <xsl:choose>
          <xsl:when test="$myName = 'div' and not(ancestor::tei:div)">
+<xsl:message> .... 1</xsl:message>
             <xsl:call-template name="upLink">
 	              <xsl:with-param name="up" select="$BaseFile"/>
 	              <xsl:with-param name="title" select="$homeLabel"/>
             </xsl:call-template>
          </xsl:when>
          <xsl:when test="$myName = 'div'">
+<xsl:message> .... 2</xsl:message>
             <xsl:call-template name="upLink">
                <xsl:with-param name="up" select="ancestor::tei:div[1]"/>
             </xsl:call-template>
@@ -1194,6 +1199,7 @@
 	           </xsl:call-template>
          </xsl:when>
          <xsl:otherwise>
+<xsl:message> .... 3</xsl:message>
 	           <xsl:call-template name="upLink">
 	              <xsl:with-param name="up" select="(ancestor::tei:div1|ancestor::tei:div)[1]"/>
 	           </xsl:call-template>
@@ -1254,7 +1260,8 @@
 	<style type="text/css" title="inline_css">
 	  <xsl:for-each select="tokenize(unparsed-text($cssInlineFile),
 				'\r?\n')">
-	    <xsl:value-of select="."/>
+	    <xsl:value-of select="normalize-space(.)"/>
+	    <xsl:text>&#10;</xsl:text>
 	  </xsl:for-each>
 	</style>
       </xsl:if>
@@ -2843,27 +2850,11 @@
       <xsl:param name="homepage"/>
       <xsl:param name="mode"/>
       <p class="{$alignNavigationPanel}">
-         <xsl:variable name="Parent">
-            <xsl:call-template name="locateParent"/>
-            <xsl:value-of select="$standardSuffix"/>
-         </xsl:variable>
-         <xsl:choose>
-            <xsl:when test="$Parent = $standardSuffix">
-               <xsl:call-template name="upLink">
-                  <xsl:with-param name="up" select="$homepage"/>
-                  <xsl:with-param name="title">
-                     <xsl:call-template name="contentsWord"/>
-                  </xsl:with-param>
-               </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:call-template name="generateUpLink"/>
-            </xsl:otherwise>
-         </xsl:choose>
-         <xsl:if test="not(ancestor-or-self::tei:TEI[@rend='nomenu'])">
-            <xsl:call-template name="previousLink"/>
-            <xsl:call-template name="nextLink"/>
-         </xsl:if>
+	<xsl:call-template name="generateUpLink"/>
+	<xsl:if test="not(ancestor-or-self::tei:TEI[@rend='nomenu'])">
+	  <xsl:call-template name="previousLink"/>
+	  <xsl:call-template name="nextLink"/>
+	</xsl:if>
       </p>
   </xsl:template>
 

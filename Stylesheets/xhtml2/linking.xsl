@@ -249,38 +249,6 @@
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
-   </doc>
-  <xsl:template name="locateParent">
-      <xsl:choose>
-         <xsl:when test="self::tei:div">
-            <xsl:apply-templates mode="ident" select="ancestor::tei:div[last() - number($splitLevel) + 1]"/>
-         </xsl:when>
-         <xsl:when test="ancestor::tei:div">
-            <xsl:apply-templates mode="ident" select="ancestor::tei:div[last() - number($splitLevel)]"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:choose>
-               <xsl:when test="number($splitLevel) = 0">
-                  <xsl:apply-templates mode="ident" select="ancestor::tei:div1"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 1">
-                  <xsl:apply-templates mode="ident" select="ancestor::tei:div2|ancestor::tei:div1"/>
-	       </xsl:when>
-               <xsl:when test="number($splitLevel) = 2">
-                  <xsl:apply-templates mode="ident" select="ancestor::tei:div3|ancestor::tei:div2"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 3">
-                  <xsl:apply-templates mode="ident" select="ancestor::tei:div4|ancestor::tei:div3"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 4">
-                  <xsl:apply-templates mode="ident" select="ancestor::tei:div5|ancestor::tei:div4"/>
-               </xsl:when>
-            </xsl:choose>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] Find the name of the outermost container for the
       current object which would create an output file</desc>
    </doc>
