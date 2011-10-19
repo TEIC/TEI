@@ -274,13 +274,11 @@
          </xsl:when>
 
          <xsl:when test="ancestor-or-self::tei:div">
-	   <xsl:variable name="what"
-			 select="if (count(ancestor-or-self::tei:div)
-				 &lt; number($splitLevel)) then 1 else
-				 count(ancestor-or-self::tei:div) -
-				 number($splitLevel) + 1"/>
-            <xsl:apply-templates mode="ident"
-				 select="ancestor-or-self::tei:div[$what]"/>
+	   <xsl:variable name="ancestors" select="count(ancestor-or-self::tei:div)"/>
+	   <xsl:variable name="diff" select="$ancestors - number($splitLevel)"/>
+	   <xsl:variable name="what" select="if ($diff &lt;= 1) then 1
+					     else $diff "/>
+	   <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div[$what]"/>
          </xsl:when>
 
          <xsl:otherwise>

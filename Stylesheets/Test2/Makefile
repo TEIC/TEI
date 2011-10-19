@@ -10,6 +10,9 @@ test-html:
 	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
 	diff -r -x .svn files expected-results/testnotes
 	rm -rf files
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false)
+	diff -r -x .svn files expected-results/testnotes2
+	rm -rf files
 	saxon -o:dummy  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
