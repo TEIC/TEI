@@ -4,11 +4,18 @@ OXY=/usr/share/oxygen
 default: conversions-from conversions-to test-html test-latex oddbyexample
 
 test-html:
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
+	diff -r -x .svn files expected-results/testnotes
+	rm -rf files
+	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
+	diff -r -x .svn files expected-results/testnotes
+	rm -rf files
 	saxon -o:dummy  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
-	-diff dummy dummy4
+	diff dummy dummy4
+	diff dummy expected-results/dummy
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml

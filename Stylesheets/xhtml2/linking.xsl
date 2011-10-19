@@ -274,35 +274,33 @@
          </xsl:when>
 
          <xsl:when test="ancestor-or-self::tei:div">
+	   <xsl:variable name="what"
+			 select="if (count(ancestor-or-self::tei:div)
+				 &lt; number($splitLevel)) then 1 else
+				 count(ancestor-or-self::tei:div) -
+				 number($splitLevel) + 1"/>
             <xsl:apply-templates mode="ident"
-				 select="ancestor-or-self::tei:div[last() -
-					 number($splitLevel) + 1]"/>
+				 select="ancestor-or-self::tei:div[$what]"/>
          </xsl:when>
 
          <xsl:otherwise>
-            <xsl:choose>
-               <xsl:when test="number($splitLevel) = 0">
-                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div1"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 1">
-                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div2"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 2">
-                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div3"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 3">
-                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div4"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 4">
-                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div5"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 5">
-                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div6"/>
-               </xsl:when>
-               <xsl:when test="number($splitLevel) = 6">
-                  <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div7"/>
-               </xsl:when>
-            </xsl:choose>
+	   <xsl:variable name="ancestors" select="count(ancestor-or-self::tei:*[local-name()='div1'
+				 or local-name()='div2'
+				 or local-name()='div3'
+				 or local-name()='div4'
+				 or local-name()='div5'
+				 or local-name()='div6'])"/>
+	   <xsl:variable name="what"
+			 select="if
+				 ($ancestors &lt; number($splitLevel)) then 1 else
+				 $ancestors - number($splitLevel) + 1"/>
+            <xsl:apply-templates mode="ident"
+				 select="ancestor-or-self::tei:*[local-name()='div1'
+				 or local-name()='div2'
+				 or local-name()='div3'
+				 or local-name()='div4'
+				 or local-name()='div5'
+				 or local-name()='div6'][$what]"/>
          </xsl:otherwise>
       </xsl:choose>
 
