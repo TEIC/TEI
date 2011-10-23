@@ -9,9 +9,6 @@
 script=`basename $0`
 scriptdir=`dirname $0`
 APPHOME=`(cd $scriptdir; pwd)`
-
-APPLOC=$APPHOME
-version=`cat $APPHOME/VERSION`
 oxygenlib=/usr/share/oxygen/lib
 die()
 {
@@ -30,7 +27,7 @@ echo
 echo "  Options, binary switches:"
 echo "  --verbose            # be verbose"
 echo "  --debug              # be verbose, do not delete intermediate files"
-echo "  --apphome=$APPLOC   # where to find app directory"
+echo "  --apphome=$APPHOME   # where to find app directory"
 echo "  --profiledir=$profiledir    # where to find profile directory"
 echo "  --profile=$profile    # which transformation profile to use"
 echo "  --oxygenlib=$oxygenlib    # where is oxygenlib"
@@ -92,7 +89,6 @@ viewportheight=
 medioverlay=
 nocompress=
 # ---
-profiledir=$APPLOC/profiles
 SAXONJAR=/usr/share/saxon/saxon9he.jar
 from=`echo $script | sed 's/to.*//'`
 to=`echo $script | sed 's/.*to//'`
@@ -116,8 +112,8 @@ while test $# -gt 0; do
     --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
     --oxygenlib=*)  oxygenlib=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
-    --apphome=*) APPLOC=`echo $1 | sed 's/.*=//'`;;
-    --publisher=*)  publisher=publisher=`echo $1 | sed 's/.*=//'`;;
+      --apphome=*)  APPHOME=`echo $1 | sed 's/.*=//'`;;
+    --publisher=*)  publisher=`echo $1 | sed 's/.*=//'`;;
     --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
     --splitLevel=*) splitLevel="-DsplitLevel=`echo $1 | sed 's/.*=//'`";;
     --subject=*)    subject="`echo $1 | sed 's/.*=//'`";;
@@ -137,6 +133,9 @@ while test $# -gt 0; do
   esac
   shift
 done
+
+profiledir=$APPHOME/profiles
+version=`cat $APPHOME/VERSION`
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
 infile=`basename "$in"`
 D=`dirname "$in"`
@@ -158,8 +157,7 @@ if ! test -f $SAXONJAR
 then 
     die "Saxon jar file $SAXONJAR does not exist"
 fi
-
-if ! test -f $APPLOC/$format/build-$direction.xml 
+if ! test -f $APPHOME/$format/build-$direction.xml 
 then
     die "No support for $from to $to: ant task $APPLOC/$format/build-$direction.xml does not exist"
 fi
@@ -174,7 +172,7 @@ case $format in
 esac
 
 echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
-ant $antflag -f $APPLOC/$format/build-$direction.xml \
+ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress\
         -Dodd=$odd \
         -Dverbose=$verbose \
