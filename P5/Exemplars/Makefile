@@ -22,7 +22,7 @@ ROMA=roma2
 LANGUAGE=en
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS= --localsource=../p5subset.xml --xsl=${XSL}
+ROMAOPTS= --localsource=`pwd`/../p5subset.xml --xsl=${XSL}
 
 
 %.rng: %.odd
