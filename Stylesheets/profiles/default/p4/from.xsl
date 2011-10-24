@@ -532,6 +532,18 @@
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
+
+  <xsl:template match="xptr/@to">
+      <xsl:attribute name="target">
+	<xsl:value-of select="."/>
+      </xsl:attribute>
+  </xsl:template>
+  
+  <xsl:template match="interp/@value">
+      <xsl:attribute name="inst">
+	<xsl:value-of select="."/>
+      </xsl:attribute>
+  </xsl:template>
   
   
   <xsl:template match="@default">
