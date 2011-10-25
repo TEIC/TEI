@@ -216,19 +216,27 @@
   <xsl:template match="tei:specGrpRef" mode="odd2odd-pass0">
     <xsl:if test="$verbose='true'">
       <xsl:message>Phase 0: expand specGrpRef <xsl:value-of
-      select="@target"/> (<xsl:value-of select="resolve-uri(@target,base-uri(/tei:TEI))"/></xsl:message>
+      select="@target"/> </xsl:message>
     </xsl:if>
-    <xsl:for-each 
-	select="doc(resolve-uri(@target,base-uri(/tei:TEI)))">
-      <xsl:choose>
-	<xsl:when test="tei:specGrp">
-	  <xsl:apply-templates select="tei:specGrp/*" mode="odd2odd-pass0"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:apply-templates  mode="odd2odd-pass0"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:choose>
+      <xsl:when test="starts-with(@target,'#')">
+	<xsl:apply-templates  mode="odd2odd-pass0"
+			      select="id(substring(@target,2))/*"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each 
+	    select="doc(resolve-uri(@target,base-uri(/tei:TEI)))">
+	  <xsl:choose>
+	    <xsl:when test="tei:specGrp">
+	      <xsl:apply-templates select="tei:specGrp/*" mode="odd2odd-pass0"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates  mode="odd2odd-pass0"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="text()|@*" mode="odd2odd-pass0">
