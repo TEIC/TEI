@@ -20,9 +20,10 @@ ODDS= \
 DOCODDS=tei_tite.doc.pdf teilite.doc.pdf
 ROMA=roma2
 LANGUAGE=en
+P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS= --localsource=`pwd`/../p5subset.xml --xsl=${XSL}
+ROMAOPTS= --localsource=${P5}/p5subset.xml --xsl=${XSL}
 
 
 %.rng: %.odd
