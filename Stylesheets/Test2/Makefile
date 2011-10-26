@@ -38,7 +38,7 @@ test-latex:
 odd2odd:
 	saxon -s:testdrama.odd -xsl:../odds2/odd2odd.xsl -o:testdrama.compiled.xml \
 	localsource=`pwd`/p5subset.xml $(SAXONOPT) 
-	perl -p -i -e 's+ xml:base=".*testdrama.odd"++'
+	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	diff testdrama.compiled.xml expected-results/testdrama.compiled.xml
 
 oddbyexample:
