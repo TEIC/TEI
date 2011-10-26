@@ -1,7 +1,7 @@
 VERSION=`cat ../VERSION`
-SAXONOPT=verbose=true useFixedDate=true
+SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: conversions-from conversions-to test-html test-latex oddbyexample
+default: conversions-from conversions-to test-html test-latex oddbyexample odd2odd
 
 test-html:
 	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
@@ -35,9 +35,10 @@ test-latex:
 	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
 	diff test5.fo expected-results/test5.fo
 
-odd:
-	saxon testdrama.odd ../odds2/odd2odd.xsl \
-	localsource=`pwd`/p5subset.xml $(SAXONOPT) > testdrama.compiled.xml
+odd2odd:
+	saxon -s:testdrama.odd -xsl:../odds2/odd2odd.xsl -o:testdrama.compiled.xml \
+	localsource=`pwd`/p5subset.xml $(SAXONOPT) 
+	diff testdrama.compiled.xml expected-results/testdrama.compiled.xml
 
 oddbyexample:
 	saxon -it:main -o:oddbyexample.odd  -xsl:../tools2/oddbyexample.xsl corpus=`pwd`/bare 

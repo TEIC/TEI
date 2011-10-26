@@ -224,6 +224,10 @@
 			      select="id(substring(@target,2))/*"/>
       </xsl:when>
       <xsl:otherwise>
+    <xsl:if test="$verbose='true'">
+      <xsl:message> ... read from <xsl:value-of select="resolve-uri(@target,base-uri(/tei:TEI))"/></xsl:message>
+    </xsl:if>
+
 	<xsl:for-each 
 	    select="doc(resolve-uri(@target,base-uri(/tei:TEI)))">
 	  <xsl:choose>
