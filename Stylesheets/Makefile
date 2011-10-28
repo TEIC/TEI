@@ -159,7 +159,7 @@ installp5-2: p5-2 teioo.jar
 	for i in $(SCRIPTS); do \
 	  cp $$i ${PREFIX}/bin/$$i; \
 	  chmod 755 ${PREFIX}/bin/$$i; \
-	  perl -p -i -e 's+APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i; \
+	  perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i; \
 	done
 
 installp5: p5
