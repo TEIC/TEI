@@ -1,0 +1,42 @@
+<elementSpec ident="undo"  module="transcr"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <desc>indicates one or more marked-up interventions in a document
+   which have subsequently been marked for cancellation.</desc>
+   <classes>
+      <memberOf key="model.pPart.transcriptional"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.spanning"/>
+      <memberOf key="att.transcriptional"/>
+   </classes>
+   <content>
+      <rng:empty/>
+   </content>
+   <attList>
+      <attDef ident="target" mode="add">
+         <desc>points to one or more elements representing the
+	 interventions which are to be reverted or undone.</desc>
+         <datatype minOccurs="1" maxOccurs="unbounded">
+            <rng:ref name="data.pointer"/>
+         </datatype>
+      </attDef>
+   </attList>
+<exemplum>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>This is <del change="#s2"  rend="overstrike"> 
+<seg xml:id="X-a">just some</seg>
+sample <seg xml:id="X-b">text</seg>,
+we need</del>
+<add change="#s2">not</add>
+a real example.</line> 
+<undo target="#X-a #X-b" rend="dotted" change="#s3"/>
+</egXML> 
+</exemplum>
+<p>This encoding represents the following sequence of events:
+<list><item>"This is just some sample text, we need a real example" is written</item>
+<item>At stage s2, "just some sample text, we need" is deleted by
+overstriking, and "not" is added </item>
+<item>At stage s3, parts of the deletion are cancelled by
+underdotting, thus reinstating the words "just some" and
+"text".</item>
+</list></p>
+</elementSpec>

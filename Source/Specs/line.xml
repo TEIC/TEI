@@ -1,33 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--Copyright TEI Consortium. 
-Licensed under the GNU General Public License. 
-See the file COPYING for details
-$Date$
-
-$Id$
--->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent" ident="line">
-  <equiv/>
-  <desc>contains one line of a reference edition.</desc>
-  <desc version="2008-04-05" xml:lang="ja">
-参照版中の1行を示す．
-</desc>
-  <classes>
-    <memberOf key="att.global"/>
-  </classes>
-  <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/>
-  </content>
-  <exemplum xml:lang="en">
-    <eg>&lt;(La)page n="32"&gt;
- &lt;(La)line n="1"&gt;&lt;!-- text of edition La, p. 32, l. 1--&gt; &lt;/(La)line&gt;
- &lt;(La)line n="2"&gt;&lt;!-- text of edition La, p. 32, l. 2 --&gt;&lt;/(La)line&gt;
- &lt;(La)line n="3"&gt;&lt;!-- text of edition La, p. 32, l. 3 --&gt; &lt;/(La)line&gt;
- &lt;(La)line n="4"&gt;&lt;!-- text of edition La, p. 32, l. 4 --&gt; &lt;/(La)line&gt;
- &lt;/(La)page&gt;</eg>
-  </exemplum>
-  <remarks/>
-  <listRef>
-    <ptr target="#NHRS" type="div3"/>
-  </listRef>
+<elementSpec ident="line"  module="transcr"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<desc>contains the transcription of a topographic line in the source
+   document</desc>
+<classes>
+   <memberOf key="model.zonePart"/>
+   <memberOf key="att.typed"/>
+   <memberOf key="att.global"/>
+</classes>
+<content>
+   <rng:zeroOrMore>
+      <rng:choice>
+         <rng:text/>
+         <rng:ref name="model.global"/>
+         <rng:ref name="choice"/><!-- added under protest -->
+	 <rng:ref name="model.pPart.transcriptional"/>
+	 <rng:ref name="model.segLike"/>
+	 <rng:ref name="model.hiLike"/> <!-- I hate doing this, but
+	 it seems necessary -->
+      </rng:choice>
+   </rng:zeroOrMore>
+</content>
 </elementSpec>

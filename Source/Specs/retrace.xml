@@ -1,0 +1,32 @@
+<elementSpec ident="retrace"  module="transcr"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <desc>contains a sequence of writing which has been retraced, for
+      example by over-inking, to clarify or fix it.</desc>
+   <classes>
+      <memberOf key="model.pPart.transcriptional"/>
+      <memberOf key="model.global"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.repeatable"/>
+      <memberOf key="att.spanning"/>
+      <memberOf key="att.transcriptional"/>
+   </classes>
+   <content>
+      <rng:ref name="macro.paraContent"/>
+   </content>
+   <remarks>
+      <p>Multiple retraces are indicated by nesting one
+      <gi>retrace</gi> within another. In principle, a retrace
+      differs from a substitution in that second and subsequent
+      rewrites do not materially alter the content of an
+      element. Where minor changes have been made during the retracing action
+      however these may be marked up using <gi>del</gi>, <gi>add</gi>,
+      etc. with an appropriate value for the <att>change</att>
+      attribute.</p>
+<!-- need an example for the latter case -->
+   </remarks>
+<exemplum>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>... Sku<retrace cause="unclear">l</retrace>dren </line>
+         </egXML>
+</exemplum>
+</elementSpec>

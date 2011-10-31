@@ -1,0 +1,40 @@
+<elementSpec ident="metamark"  module="transcr"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <desc>contains or describes any kind of graphic or written signal
+   within a document the function of which is to determine how it
+   should be read rather than forming part of the actual content of
+   the document.</desc>
+   <classes>
+      <memberOf key="model.global"/><!-- was pPart.transcriptional-->
+      <memberOf key="att.spanning"/>
+      <memberOf key="att.placement"/>
+      <memberOf key="att.global"/>
+   </classes>
+   <content>
+      <rng:ref name="macro.specialPara"/>
+   </content>
+   <attList>
+      <attDef ident="function" mode="add">
+         <desc>describes the function (for example  status, insertion,
+	 deletion, transposition) of the mark.</desc>
+         <datatype minOccurs="1">
+            <rng:ref name="data.word"/>
+         </datatype>
+      </attDef>
+      <attDef ident="target">
+         <desc>identifies one or more elements to which the function
+	 indicated by the metamark applies. </desc>
+         <datatype minOccurs="1" maxOccurs="unbounded">
+            <rng:ref name="data.pointer"/>
+         </datatype>
+      </attDef>
+   </attList>
+<exemplum><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line><seg xml:id="ib01">bör</seg><metamark rend="underline"
+      function="transposition" target="#ib01" place="above">2.</metamark>
+   og <seg xml:id="ib02">hör</seg><metamark rend="underline"
+      function="transposition" target="#ib02" place="above"
+   >1.</metamark></line></egXML></exemplum>
+
+</elementSpec>
+
