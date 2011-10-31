@@ -6,7 +6,11 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.transcriptional">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei"
+	   type="atts" 
+	   ident="att.transcriptional"
+	   xmlns:rng="http://relaxng.org/ns/structure/1.0" >
+
   <desc>provides attributes specific to elements encoding authorial or
   scribal intervention in a text when
   transcribing manuscript or similar sources.</desc>
@@ -201,6 +205,22 @@ erronée.</desc>
       </p>
       </remarks>
     </attDef>
+      <attDef ident="cause">
+         <desc>documents the presumed cause for the intervention.</desc>
+         <datatype>
+            <rng:ref name="data.enumerated"/>
+         </datatype>
+         <valList type="closed">
+            <valItem ident="fix">
+<desc>repeated for the purpose of fixation</desc>
+            </valItem>
+            <valItem ident="unclear">
+<desc>repeated to clarify a previously illegible or badly written text
+   or mark</desc>
+            </valItem>
+         </valList>
+      </attDef>
+
     <attDef ident="seq" usage="mwa">
       <gloss>sequence</gloss>
       <gloss version="2007-12-20" xml:lang="kr">연쇄</gloss>

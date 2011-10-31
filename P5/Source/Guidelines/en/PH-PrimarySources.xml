@@ -22,6 +22,7 @@ elements defined by the manuscript description module discussed in
 chapter <ptr target="#MS"/>, but again the present module may be used
 independently if such data is not required.
 </p>
+<!-- following para may need revision? -->
 <p>It should be noted that, as elsewhere in these Guidelines,  this
 chapter places more emphasis on the problems of representing the
 textual components of a document than on those relating to the
@@ -71,14 +72,17 @@ associated mechanisms provided by these Guidelines.</p>
 
 
 <p>When this module is included in a schema, the class
-<ident type="class">att.global</ident> is extended to include a new pointer
-attribute <att>facs</att>:
+<ident type="class">att.global</ident> is extended to include two new pointer
+attributes,  <att>facs</att> and <att>change</att>:
 <specList>
 <specDesc key="att.global.facs" atts="facs"/>
+<specDesc key="att.global.change" atts="change"/>
 </specList>
-This attribute may be used to associate any
-element in a transcribed text with an image of it, by means of the
-usual URI pointing mechanism. <!-- i.e. URI reference? --> </p>
+The <att>change</att> attribute is discussed further below in section
+<ptr target="#PH-changes"/>. The <att>facs</att> attribute is used to
+associate any element in a transcription with an image of the
+corresponding part of the source, by means of the usual URI pointing
+mechanism. <!-- i.e. URI reference? --> </p>
 
 <p>If a digital text contains one image per page or column (or similar
 unit), and no more complex mapping between text and image is
@@ -100,13 +104,14 @@ directly to a graphic resource:
 By convention, this encoding indicates that the image indicated by
 <att>facs</att> attribute represents the whole of the text following
 the <gi>pb</gi> (pagebreak) element, up to the next <gi>pb</gi>
-element. Any convenient milestone element (see further <ptr target="#CORS5"/>) could be used in the same way; for example if the
+element. Any convenient milestone element (see further <ptr
+target="#CORS5"/>) could be used in the same way; for example if the
 images represent individual columns, the <gi>cb</gi> element might be
 used.  Though simple, this method has some drawbacks. It does not
-scale well to more complex cases where, for example, the images do
-not correspond exactly with transcribed pages, or where the intention
-is to align specific marked up elements with detailed images, or parts
-of images. And it makes the management of the information about the
+scale well to more complex cases where, for example, the images do not
+correspond exactly with transcribed pages, or where the intention is
+to align specific marked up elements with detailed images, or parts of
+images. And it makes the management of the information about the
 images more difficult by scattering references to them through the
 file. Nevertheless, this solution may be adequate for many
 straightforward <soCalled>digital library</soCalled>
@@ -416,6 +421,25 @@ follows:
   </zone>
 </egXML>
 </p>
+<p>If, as is often the case, a transcription of the zone
+identified in this way is to be included in the encoded TEI document, this
+may be done in two ways. If the transcription is regarded as a text in
+its own right, organized and structured independently of its physical
+realization in the document or documents represented by the facsimile,
+then the recommended practice is to use the  <gi>text</gi>
+element, provided as a sibling of the <gi>facsimile</gi> element. This
+approach is illustrated in section <ptr target="#PH-bov"/>
+below. Alternatively, if the transcription is intended to prioritize
+representation of the process by which the document came to take its
+present form over representation of the final text <!--do no more
+than represent the physicality of the document itself-->, it may be
+preferable to use a subset of the available elements and to embed them
+within the <gi>zone</gi> element, as further described in section <ptr
+target="#PHZLAB"/> below.</p>
+
+
+<div xml:id="PH-bov"><head>Parallel transcription</head>
+
 <p>Now suppose that we wish to align a transcription of this page
 with the zones identified above. The first step is to give each
 relevant part of the facsimile an identifier:
@@ -489,16 +513,117 @@ with its transcription would be simply <egXML xml:lang="und" xmlns="http://www.t
 
 <specGrp xml:id="DPFACS">
 &facsimile;
+&sourceDoc;
 &att.global.facs;
+&att.global.change;
 &surface;
 &att.coordinated;
 &zone;
 &model.resourceLike;
 </specGrp>
 
-
 </div>
 
+<div xml:id="PH-transcr"><head>Combining transcription with facsimile</head>
+
+<p>A digitized source document may contain nothing more than page images and a
+small amount of metadata. It may also contain an encoded transcription
+of the pages represented, which may either be <q>embedded</q> within
+the <gi>facsimile</gi> structure, or given in parallel to it. </p>
+</div>
+
+<div xml:id="PHZLAB"><head>Embedded transcription</head>
+<p>An <term>embedded transcription</term> is one in which words
+and other written traces are encoded as subcomponents of elements
+representing the physical surfaces carrying them rather than
+independently of them. </p>
+<p>The following elements are available for this purpose:
+<specList>
+<specDesc key="surface"/>
+<specDesc key="zone"/>
+<specDesc key="patch" atts="binder height width flipping"/>
+<specDesc key="line" atts="type" />
+<!--specDesc key="block" atts="type"/-->
+<specDesc key="seg" atts="type"/>
+</specList>
+</p>
+
+<p>The elements <gi>surface</gi> and <gi>zone</gi> were introduced
+above, <!-- in section <ptr target="#PHFAX"/>-->. The element
+<gi>patch</gi> is useful in cases where some or all of the written
+surfaces are composed of physically distinct scraps. In the following
+example, taken from the Walt Whitman archive, two pieces of newsprint
+have been glued to a piece of blue paper on which a poem is being
+drafted:
+
+<figure><graphic url="Images/whitman01.jpg" width="400px"/>
+            <head rend="it">Image from
+               http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg</head>
+         </figure>  
+The two pieces of newsprint might perhaps be regarded as special kinds
+of zone, but they are effectively new surfaces, since they might
+contain additional written zones themselves (such as the numbers in
+this case). The <gi>patch</gi> element may be used to represent such
+<q>sub-surfaces</q>. </p>
+
+<p>Most writing is linear, in the sense that it is composed of
+discrete tokens organized physically into groups, typically organized
+in a sequence corresponding with the way they are intended to be
+read. Depending on the directionality of the writing system used,
+this might be any combination of top-down and left to right, or vice
+versa. It thus seems convenient to introduce an element <gi>line</gi> to
+hold a complete group of such tokens. 
+Where, however, the lineation is
+not considered significant, any group of tokens may be
+indicated using the <gi>zone</gi> element. The
+<gi>seg</gi> element described in section <ptr
+target="#SASE"/> may also be used to indicate smaller sequences of tokens
+within <gi>zone</gi>, or <gi>line</gi> as appropriate. 
+</p>
+
+
+<p>Using these elements, the Whitman draft above might be encoded as
+follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<surface>
+   <zone>
+      <line>Poem</line>
+      <line>As in Visions of — at</line>
+      <line>night —</line>
+      <line>All sorts of fancies running through</line>
+      <line>the head</line>
+   </zone>
+   <patch type="newsprint" binder="glue" flipping="false"
+			       height="40cm" width="90cm"> 
+			  <zone>Spring has
+      just set in here, and the weather.... a
+			   steamer </zone>
+         <metamark function="sequence">2</metamark>
+   </patch>
+   <patch type="newsprint" binder="glue" flipping="false"
+			       height="35cm" width="90cm"> 
+			  <zone>"The shores on either side of the Sound are... The In-       </zone>   
+			   <metamark function="sequence">3</metamark>
+   </patch>
+</surface>
+</egXML> 
+</p>
+
+<p>The <gi>metamark</gi> element used in this example is further
+discussed below (<ptr target="#PH-meta"/>)</p>
+
+<p>Note that in this example we have not included any <gi>graphic</gi>
+element corresponding with the <gi>zone</gi> or <gi>surface</gi>
+elements identified in the transcription. The encoder may choose to
+complement a transcription with graphic representations of its source
+at whatever level is considered effective, or not at all. Equally, the
+encoder may choose to provide only graphics without transcription, or
+with a structured (non-embedded) transcription, or any combination of
+the three. </p>
+</div>
+
+
+
+</div>
 
 <div xml:id="PHST"><head>Scope of Transcriptions</head>
 
@@ -508,7 +633,24 @@ units, whether the object is simply a <soCalled>neutral</soCalled>
 transcription or a critical edition.  In either case they  may also
 wish to include other editorial material, such
 as comments on the status or possible origin of particular readings,
-corrections, or text supplied to fill lacunae.  Further, it is
+corrections, or text supplied to fill lacunae.  
+</p>
+
+<p>Such elements may also be used for digital
+transcriptions in which the object is not to represent a finished
+text, but rather to represent the creative process, as evidenced by
+different <q>layers</q> or <q>traces</q> of writing in one or more
+documents. Transcriptions of this kind are closely focussed on the physical
+appearance of specific documents, needing to distinguish the traces of
+different writing activities on them, such as additions,
+and deletions but also other indications of how the writing is to be
+read, such as indications of transposition, re-affirmation of writing
+which has been deleted, and so on.  Such distinctions are considered of
+particular importance when dealing with authorial manuscripts, but are
+also relevant in the case of historical sources such as charters or
+other legal documents.</p>
+
+<p>In either case, it is
 customary in transcriptions to register certain features of the
 source, such as ornamentation, underlining, deletion, areas of damage
 and lacunae. This chapter provides ways of encoding such information:
@@ -521,6 +663,27 @@ in the source: unusual spaces, lines, page and line breaks, change of
 manuscript hand, etc. (section <ptr target="#PHPH"/>)</item>
 <item>finally, a method of recording material such as running heads,
 catch-words, and the like (section <ptr target="#PHSK"/>)</item></list></p>
+
+
+<p>The remainder of this chapter describes a model for encoding such
+transcriptions, in which elements such as <gi>mod</gi>, <gi>del</gi>,
+etc are used to mark writing traces and their functions within the
+document. Each such element can be assigned to one or more
+editorially-defined modification groups, termed a <term>change</term>,
+by means of a global <att>change</att> attribute, which references a
+definition for the set of changes concerned, typically provided within
+the TEI Header <gi>creation</gi> element; see further <ptr
+target="#PH-changes"/>. The transcription itself may be embedded
+within the elements <gi>surface</gi> and <gi>zone</gi> described in
+section <ptr target="#PHFAX"/>, or provided in parallel within a
+<gi>text</gi> element. Within a <gi>zone</gi>, the transcription may
+be organized topographically in terms of lines of writing, using the
+<gi>line</gi> element, or in terms of further nested zones, or as a
+combination of the two; see further <ptr target="#PHZLAB"/>.
+</p>
+
+
+
 <p>These recommendations are not intended to meet every
 transcriptional circumstance likely to be faced by any scholar.
 Rather, they should be regarded as a base which can be elaborated if necessary by different scholars in different disciplines<!-- , with
@@ -1972,6 +2135,528 @@ deletion was made from  a passage which had earlier been added:
 </list></p></div>
 </div>
 
+<div xml:id="alterations">
+   <head>Marking up the writing process</head>
+   <p>Modifications of various kinds (correction, addition, deletion,
+   etc.) are frequently found within a single document, and may also
+   be inferred when different documents are compared, although it may be
+   an open question as to whether inter-document discrepancies <!-- at the
+   dossier level --> should be regarded in the same way as intra-document
+   alterations. When two witnesses are collated, we may observe that a
+   word present in one is missing from the other: this does not necessarily
+   imply that the word was added to the first witness, nor that it
+   was deleted from the other. 
+   </p>
+
+<p>In this section we discuss a number of elements which may be used to 
+record traces of the writing process within a document. 
+</p>
+
+<div><head>Generic modification</head>
+
+
+   <p>Most, if not all, transcriptional elements imply a certain level
+   of semantic interpretation. For instance, using the <gi>add</gi>
+   element to encode a word or phrase that occupies interlinear space
+   involves a decision that it has been deliberately inserted as an
+   addition rather than an alternative, and indeed a judgment that it
+   was written after, rather than before, the other lines. Where it is
+   felt desirable to keep the recording of <soCalled>what is on the
+   page</soCalled> entirely separate from <soCalled>what is the
+   editor’s interpretation</soCalled>, the generic <gi>mod</gi>
+   element may be preferred. 
+   
+      <specList>
+         <specDesc key="mod" atts="rend type spanTo"/>
+      </specList>
+      
+      This element simply indicates any kind of
+   modification that has been identified in the document, without
+   prejudice as to its function. Occurrences of the <gi>mod</gi>
+   element may be categorised by means of their <att>type</att>
+   attribute, and visual aspects of their appearance can be described
+   by means of the <att>rend</att> attribute, but they provide no
+   further interpretation of the function or intention of the passage
+   so marked up. The <att>spanTo</att> attribute may be used to indicate the end
+   of a modified passage if this extends across the boundaries of some
+   other XML element, for example from the middle of one line tagged
+   as a <gi>line</gi> to the middle of another <gi>line</gi> some
+   distance further on in the document. </p>
+<egXML
+xmlns="http://www.tei-c.org/ns/Examples">
+<line>words words words <mod rend="wavy-underlining" spanTo="#enduw"/>words with wavy underline</line>
+&lt;!-- more lines here -->
+<line>wavy underlining finishes here<anchor xml:id="enduw"/> more words</line>
+</egXML>
+<!-- QUERY real example needed -->
+<!-- also more discussion of spanTo -->
+
+<p>The distinction between an example such as that above and the simple
+use of <gi>hi</gi> to mark the visual salience of the underlining
+(apart from  the use of the <att>spanTo</att> attribute) is that
+<gi>hi</gi> does not imply that the visual effect being recorded is
+understood to represent some kind of modification. 
+</p></div>
+
+   <div xml:id="PH-meta"><head>Metamarks</head>
+
+<p>By <term>metamark</term> we mean marks such as numbers, arrows,
+crosses, or other symbols introduced by the writer into a document
+expressly for the purpose of indicating how the text is to be
+read. Such marks thus constitute a kind of markup of the document,
+rather than forming part of the text.
+ <specList>         
+<specDesc key="metamark" atts="function target spanTo"/></specList>
+</p>      
+
+<p>Unlike marginal notes or other additions to the text, metamarks
+are used by the writer to indicate a deliberate alteration of the writing itself,
+such as <q>move this passage over there</q>. An addition or annotation
+by contrast would typically concern some property of the passage other
+than its intended location or status within the text flow.  A metamark
+may contain text, or some other graphic which the encoder
+wishes to represent, or it may simply consist of arrows, dots, lines
+etc. which the encoder simply describes.</p>
+
+<!-- QUERY should it contain <desc> as a child? -->
+
+<p>The <gi>metamark</gi> element carries a <att>function</att>
+attribute which specifies the function of the metamark, using values
+such as <val>reorder</val>,  <val>flag</val>,  <val>delete</val>,
+<val>insert</val> or  <val>used</val>. The passage to
+which the metamark applies may be indicated in either of two ways: the
+<att>target</att> attribute may be used to point to the element or
+elements containing the passage concerned, or the <att>spanTo</att>
+element may be used to point to a position in the document at which
+the passage concerned finishes. In the latter case, the
+<gi>metamark</gi> itself must be supplied at the position in the
+document where the passage concerned begins; in the former case it may
+be supplied at any convenient point. Both attributes should not be
+supplied. </p>
+      
+<p>The following example is taken from  an
+15th century legal book from the city of Göttingen, containing
+regulations of everyday life issued by the city council <figure>
+<graphic url="Images/ka04_1v-dtl.jpg" width="70%"/>
+<head><title>Kundige bok 2</title>, fol 1v. </head>
+         </figure>
+      </p>
+<!-- QUERY : proper reference needed   -->
+    
+<p>In the second paragraph,  the word <mentioned
+xml:lang="lat">lege</mentioned> ("read") was written in the left hand
+margin, next to the sentence beginning <q>Ock en schullen
+de bruwere...</q>. It is thought to
+function as a metamark,  indicating that this sentence forms part of
+the regulations. A further sentence was then added, while at some
+later stage the text and also the metamark were deleted. We
+might encode this as follows: <!-- ka04_1v-dtl.xml --><egXML
+xmlns="http://www.tei-c.org/ns/Examples">
+<delSpan spanTo="#endDel" change="#L3"/>
+   <metamark function="flag" target="#s1" change="#L2">lege</metamark>
+   <zone xml:id="s1" change="#L1">Ock en schullen de bruwere des hilgen dages nicht over
+   setten noch uppe den stillen fridach bruwen.</zone>
+   <addSpan spanTo="#endDel" change="#L2"/>
+      <zone>Noch nymande over setten, se en sehin denne erst, dat uppe den
+         bonen neyn stro noch, huw noch flaß ligghe, by pine eyner
+         halven roden, deme bruwere so wol alse dem bruwheren to
+         murende.</zone>
+   <anchor xml:id="endDel"/>
+         </egXML>
+      </p>
+<p>The <att>change</att> attribute used here to indicate the sequencing
+of these various interventions is discussed below, in section <ptr
+target="#PH-changes"/>. The elements <gi>addSpan</gi> and
+<gi>delSpan</gi> are discussed in section <ptr target="#PHAD"/>. </p>
+      
+<p>The <gi>metamark</gi> element may also be used to encode the
+symbols etc. often found in marked-up proofs such as the following,
+taken from the Walt Whitman archive:
+         <figure>
+<graphic url="Images/whitman-03.jpg" width="400px"/>
+<head>http://www.whitmanarchive.org/resources/sleepers/</head>
+         </figure></p>   <!-- loc.00295 detail -->
+<p>In this example, the whole of what was originally the 14th section
+has been marked for deletion, both by horizontal and vertical lines,
+and by the metamarks resembling the <q>delta</q> deletion symbol to
+left and right of the section. The deletion itself might be encoded 
+by using the normal <gi>del</gi> or <gi>delSpan</gi> element. 
+This is quite a different case from that of the next example, in which the
+writer does not intend to suppress the content, but only to mark that
+it has been transferred or reused. </p>
+<p>
+<figure>
+<graphic url="examples/whitman-02.jpg" width="70%"/>
+<head>Page from
+   http://www.whitmanarchive.org/resources/sleepers/20051105_0650.jpg</head>
+         </figure> 
+</p>   
+<p>This page contains internal deletions, additions, and retracings
+but these are semantically quite different from the apparent
+<soCalled>deletion</soCalled> signalled by the largere of the two
+single vertical lines, which shows that the written material has been
+transferred or re-used, not deleted. </p>
+<egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+<surface>
+   <metamark function="used" rend="line" target="#X2"/>
+   <zone xml:id="X2">
+      <line>I am that halfgrown <add>angry</add> boy, fallen asleep</line>
+      <line>The tears of foolish passion yet undried</line>
+      <line>upon my cheeks.</line>
+<!-- ... -->
+<line>I pass through <add>the</add> travels and <del>fortunes</del> of
+<retrace>thirty</retrace></line>
+<line>years and become old,</line>
+<line>Each in its due order comes and goes,</line>
+<line>And thus a message for me comes.</line>
+<line>The</line>
+   </zone>
+<metamark function="used" target="#X2">Entered - Yes</metamark>
+</surface>
+         </egXML>
+<p>In this example, we class as  metamarks both the long vertical line
+and the annotation <q>Entered - yes</q>. <!--The first indicates
+that all of the writing between its own position and that of the
+<gi>anchor</gi> element with identifier <val>X2</val> is marked as
+having been used. This metamark takes the form of a cross.  The second
+indicates that there is a mark in the form of a wavy line and that its
+function is to separate the second writing zone on the surface, which
+has identifier <val>z2</val>. --> Both metamarks are assumed to
+indicate that the whole of the written zone with identifier
+<code>X2</code> is marked as having been used. 
+</p>
+
+   </div>
+
+<div><head>Fixation and clarification</head>
+
+<p>A writer may sometimes rewrite material a second time without
+significant change and in the same place. We consider this a distinct
+activity from addition as usually defined because no new textual
+material results; instead the status of existing material 
+is reaffirmed. We may distinguish two variants of this:
+<term>fixation</term> where the first version was a tentative draft
+which is subsequently reaffirmed, for example by inking it over; and
+<term>clarification</term>, where the first version was badly written
+and has been rewritten for clarity. The element <gi>retrace</gi> is
+provided for both cases; its <att>cause</att> attribute may be used to
+distinguish them.
+<specList>
+         <specDesc key="retrace" atts="cause"/>
+      </specList>
+</p>
+      
+<p>In this simple example, taken from the papers of Henrik Ibsen, the
+writer wrote the word <mentioned>skuldren</mentioned> hastily, and
+then returned to it to make the letter <mentioned>l</mentioned> larger
+and clearer: <figure>
+<graphic url="Images/skuldren.jpg" width="400px"/>
+<head rend="it">Image from a ms of Peer Gynt, Collin 2869, 4°, I.1.1, the
+   Royal Library of Copenhagen</head>
+         </figure> We might transcribe this word as follows: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>... Sku<retrace cause="unclear">l</retrace>dren </line>
+         </egXML>
+</p>
+
+<p>A single rewrite may not be sufficient, and it may be that the
+document becomes almost unreadable as a result of repeated
+clarification. In the following example, we can distinguish at least
+three attempts to write the letters <mentioned>er</mentioned> in the
+word <mentioned>bægerklang</mentioned>: <figure>
+<graphic url="Images/munch01.jpg" width="400px"/>
+<head rend="it">Image from http://www.emunch.no/tei-mm-2008/ms.html </head>
+</figure> We might encode this by nesting the <gi>retrace</gi> element as
+         follows: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>ved Bæg<retrace cause="unclear" change="#stage2">
+      <retrace cause="unclear" change="#stage1">er</retrace>
+   </retrace> ...</line>
+         </egXML> The <att>change</att> attribute used here is discussed further below
+(<ptr target="#PH-changes"/>). </p>
+
+<p>The <gi>retrace</gi> element is used only for cases where text has
+been written multiple times. When metamarks and other markup-like strokes
+have been rewritten multiple times, the <gi>redo</gi> element described in
+the next section should be used in preference.
+</p>   </div>
+
+ <div xml:id="undo">
+<head>Fixation, cancellation, and reinstatement of modifications</head>
+
+<p>In a draft version of Goethe’s Faust, a passage was struck through
+once in pencil during one revision and then again with ink during a
+later revision, supposedly to fixate the deletion.
+      <figure>
+         <graphic url="examples/faust_redo.jpg" width="90%"/>
+         <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
+      </figure>
+A writer may also indicate that an alteration is itself to be altered:
+for example, a struck-through passage may be restored via a dotted
+underlining, or the underlining of a passage may be deleted by a wavy
+line.</p>
+
+<p>The following elements are provided to represent these situations:
+<specList>
+<specDesc key="redo" atts="target cause spanTo"/>
+<specDesc key="undo" atts="target cause spanTo"/></specList>
+</p>
+
+<p>The <gi>redo</gi> element might be used to encode the Faust example above
+as follows:</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <line><redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"
+   /><mod xml:id="mod_1" rend="strikethrough" spanTo="#anchor_1"
+   hand="#g_bl"/>Ihr hagren, triſten, krummgezog<mod rend="strikethrough"
+   >nen</mod>ener Nacken</line>
+         <line>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_1"
+/></line>
+      </egXML>
+
+<!-- NOTE insert narrative explanation -->
+
+      
+<p>The element <gi>restore</gi> (<ptr target="#PHCD"/>) is
+provided for the comparatively simple case where a simple deletion is
+marked as having been subsequently cancelled. The <gi>undo</gi>
+element discussed here is more widely applicable and may be used for
+any kind of cancellation. It points to the element or elements which
+are being cancelled. These components need not be contiguous, provided
+that the cancellation is clearly a single act; each distinct act of
+cancellation requires a distinct <gi>undo</gi> element, however. Either
+of the attributes <att>target</att> or <gi>spanTo</gi> may be used to
+indicate the passages concerned. </p>
+
+      <p>Consider the following imaginary example : 
+<figure>
+      <graphic url="Images/undoing1.jpg" width="80%"/>
+   </figure>
+We hypothesize that the text has gone through three states or changes,
+as follows:
+<list type="ordered">
+<item>This is just some sample text, we need a real example. </item>
+<item>This is not a real example.</item>
+<item>This is just some text, not a real example.</item>
+         </list>
+</p>
+      
+<p>This sequence of events might be encoded as follows:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>This is <del change="#s2"  rend="overstrike"> 
+<undo spanTo="#Xa" rend="dotted" change="#s3"/>just some
+<anchor xml:id="Xa"/> sample <undo spanTo="#Xb" rend="dotted" change="#s3"/>text,
+<anchor xml:id="Xb"/> we need</del>
+<add change="#s2">not</add>
+a real example.</line> 
+</egXML> 
+using two <gi>undo</gi> elements, each with a <att>spanTo</att>
+attribute, to delimit the two parts of the deletion which were
+reverted at change s3. Note that in this case, since <att>target</att>
+is not supplied, it is the effect of the parent element (the
+<gi>del</gi>) which is assumed to be undone. </p>
+
+<p>Alternatively, we might more economically use the generic <gi>seg</gi> element within
+the <gi>line</gi> to delimit the two sequences whose
+deletion is being reverted, and then use the <gi>target</gi> attribute
+on a single <gi>undo</gi> element:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line>This is <del change="#s2"  rend="overstrike"> 
+<seg xml:id="X-a">just some</seg>
+sample <seg xml:id="X-b">text</seg>,
+we need</del>
+<add change="#s2">not</add>
+a real example.</line> 
+<undo target="#X-a #X-b" rend="dotted" change="#s3"/>
+</egXML> 
+
+
+<!-- NOTE maybe add a third example doing this with xpath to pick out
+individual tokens. Or one from a real doc -->
+</p>
+   </div>
+ 
+<div xml:id="transpo"><head>Transpositions</head>
+      
+<p>A <term>transposition</term> occurs when metamarks are found in a
+document indicating that passages should be moved to a different
+position. Typically this may be done  using
+arrows, asterisks or numbers, or other means. By definition the result
+of a transposition is not present in the document, and should not
+therefore be encoded, if the intention is to record its actual
+state. Instead, the following elements may be used to indicate the
+intended reordering:
+<specList>
+<specDesc key="transposeGrp"/>
+<specDesc key="transpose"/>
+</specList></p>
+<p>Consider for example, the
+         following extract from an Ibsen manuscript <figure>
+<graphic url="Images/ibsen01.jpg" width="400px"/>
+<head>Extracted from
+   <ref>http://www.emunch.no/tei-mm-2008/ms.html</ref></head>
+         </figure>
+The underlined numbers 1 and 2 here indicate that, although the word
+<mentioned>bör</mentioned> precedes the word
+<mentioned>hör</mentioned> in the text, the order of the two words
+should be reversed. We may encode this as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line><seg xml:id="ib01">bör</seg><metamark rend="underline"
+      function="transposition" target="#ib01" place="above">2.</metamark>
+   og <seg xml:id="ib02">hör</seg><metamark rend="underline"
+      function="transposition" target="#ib02" place="above"
+   >1.</metamark></line>
+<transposeGrp>
+   <transpose>
+      <ptr target="#ib02"/>
+      <ptr target="#ib01"/>
+   </transpose>
+</transposeGrp>
+         </egXML>
+      </p>
+      
+<p>Note the use of the generic <gi>seg</gi> element to identify the
+sections of text being transposed. When (as in the following example)
+the whole of a line is to be transposed, there is no need to delimit the
+sections concerned: <figure>
+<graphic url="Images/ibsen04.jpg" width="600px"/>
+<head>Extracted from
+   <ref>http://www.emunch.no/tei-mm-2008/ms3.html</ref></head>
+         </figure>
+         <!-- ibsen04.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line xml:id="ib3"><metamark function="transposition"
+      place="margin-left">2.)</metamark> thi da er du med Himmelen i
+   Pagt; — </line>
+<line xml:id="ib4">
+   <metamark function="transposition"
+	     place="margin-left">1.)</metamark> 
+da kan du Folkets Jøkelhjerter tine;</line>
+<transposeGrp>
+   <transpose>
+      <ptr target="#ib4"/>
+      <ptr target="#ib3"/>
+   </transpose>
+</transposeGrp>
+         </egXML> 
+When transposition is made, the whole element indicated is understood
+to be moved, not just its contents. In the above example, the
+metamarks are thus understood to be moved along with the lines to
+which they apply. </p>
+      
+<!-- <p>In case the area to be transposed is overlapping with some other
+kind of markup, the generic <gi>milestone</gi> can be used instead of
+<gi>seg</gi> or any other existing elements.</p>
+-->      
+
+<p>One or more <gi>transposeGrp</gi> elements may be supplied either
+embedded within the text or in the <gi>profileDesc</gi> of the header,
+depending on local preference. Each <gi>transposeGrp</gi> can contain
+one or more <gi>transpose</gi> elements, each of which defines a
+single transposition.</p>
+</div>
+
+ <div xml:id="alter">
+      <head>Alternative Readings</head>
+      <p><figure>
+<graphic url="Images/moore04.png" width="400px"/>
+<head>Lalla Rookh 3</head>
+         </figure> 
+In this example two alternative readings are provided, but no
+preference is indicated. While the author apparently
+first composed the line <q>Alone before his native river -</q>, at some
+later point, he entertained the possibility of using the word <mentioned>beside</mentioned>
+instead of <mentioned>before</mentioned>. The manuscript supplies no
+indication of which word Moore favours at this point, although in
+fact, in the first printed
+edition of <title>Lalla Rookh</title> the word
+<mentioned>beside</mentioned> was chosen. </p>
+<p>The element <gi>alt</gi> provided by the <ident
+type="module">linking</ident> module gives a simple  way of
+encoding the state of this manuscript, as  follows: 
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <zone>
+<line>Alone <seg xml:id="alt1">before</seg>
+   <add place="above" xml:id="alt2">beside</add> his
+   native river ­—</line>
+<alt targets="#alt1 #alt2" mode="excl" weights="0 1"/>
+         </zone>
+      </egXML>
+</p><p>The <gi>alt</gi> element is further discussed in section <ptr
+target="#SA-whatever"/>. </p>
+ </div>
+<!-- NOTE next section on ice, pending further council discussion -->
+<!--   
+<div xml:id="subst">
+      <head>Substitution</head>
+      <p>In the current model for the TEI <gi>subst</gi> element, one or more additions
+         and deletions may be combined if they are considered as representing a single
+         editorial act, a substitution. Without extension, this model could not
+         therefore include cases such as the following example taken from Thomas Moore's
+<title>Lalla Rooke</title>
+         <figure>
+<graphic url="examples/moore01.png" width="400px"/>
+         </figure>
+</p><p> Here the word <mentioned>pondering</mentioned> is deleted, and the
+         phrase <mentioned>she mus'd</mentioned> are added, while the word
+<mentioned>thus</mentioned> remains unchanged. It seems appropriate to treat
+         all of this as a single substitution. This would require a modification to the
+         content model of <gi>subst</gi> so as to permit text along with other members
+         of <ident type="class">model.pPart.transcriptional</ident>, so that this
+         example could be encoded as follows: <egXML
+xmlns="http://www.tei-c.org/ns/Examples">
+<line>While <subst><del>pondering</del> thus <add>she
+   mus'd</add></subst>, her pinions fann'd</line>
+         </egXML></p>
+   </div>-->
+
+<div xml:id="instant"><head>Instant corrections</head>
+<p>The use of elements such as <gi>del</gi> and <gi>add</gi>
+necessarily implies that the modifications they indicate were made at
+some time after the original writing. An exception to this is where a
+false start or <soCalled>instant</soCalled> correction has been
+identified: the author starts to write, and then immediately corrects
+what has been written. </p>
+<p>The  <att>instant</att> attribute defined by this module may be
+used on any element which is a member of the <ident
+type="class">att.editLike</ident> class to modify this default assumption.
+         When the value of <att>instant</att> is set to <val>true</val>, 
+         the addition or deletion is considered to belong to the same change as
+         its parent element, while <code>false</code> means some change
+         later than that of its parent.</p>
+      <p> An example of false start can be seen in the following line: <figure>
+<graphic url="Images/whitman03a.jpg" width="70%"/>
+<head>http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg</head>
+         </figure> in which we can detect the following sequence of events: <list
+type="ordered">
+<item>The letter <val>T</val> is written and then immediately deleted</item>
+<item>The word <val>The</val> is written, deleted, and replaced by the word <val>His</val></item>
+<item>The added word <val>His</val> is then deleted</item>
+<item>The initial letter <val>i</val> of the words <mentioned>iron necklace</mentioned> is overwritten with a
+   capital I</item>
+         </list> To indicate that the first of these acts must have taken place before
+         the others, we might encode this revision campaign as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<line><del instant="true">T</del>
+   <mod type="subst">
+      <del>The</del>
+      <add place="above">
+         <del rend="overstrike">His</del>
+      </add>
+   </mod>
+   <mod type="subst">
+      <del rend="overwritten">i</del>
+      <add place="superimposed">I</add>
+   </mod>ron necklace</line>
+         </egXML>
+      </p>
+   </div>
+
+</div>
+
+
+
 
 <div><head>Aspects of Layout</head>
 <p>Finally in this chapter we present elements which may be used to
@@ -2143,6 +2828,282 @@ respectively.</p>
 	<!-- [Need several examples, all fuller than this one.     -->
 	<!-- Take from DOSL materials? -MSM]                          --></p>
 </div>
+
+
+
+<div xml:id="PH-changes"><head>Changes</head>
+<p>A major purpose of genetic editing is the identification of
+<soCalled>revision campaigns</soCalled> or, more generally,
+<term>changes</term>. An editor may wish to assign a set of alterations
+(deletions, additions, substitutions, transpositions, etc.) or any
+other act of writing to a particular change, to indicate both that one
+or more of such phenomena preceded or followed another and also to
+indicate that they are related in some way, for example that one is a
+consequence of the other. To document this we need:
+<list><item>a system to assign phenomena to a particular change</item>
+<item>a way to characterize a change, in itself and in relation to
+other changes.</item>
+</list></p>
+      
+<p>The existing element <gi>creation</gi> (within the TEI Header
+profile description) is defined as the appropriate location for all
+information relating to the genesis or production of a text. We modify
+it slightly to permit a new <gi>listChange</gi> element which contains
+a number of <gi>change</gi> elements, one for each identified change:
+<specList>
+            <specDesc key="listChange" atts="ordered"/>
+            <specDesc key="change"/>
+         </specList>
+      </p>
+      
+<p>In the following example taken from the genetic edition of Goethe’s
+Faust, the editor has identified four distinct changes:</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <profileDesc>
+            <creation>
+               <listChange ordered="true">
+                  <change xml:id="ST-1">First stage, written in ink by a writer</change>
+                  <change xml:id="ST-2">Second stage, written in Goethe's hand using pencil</change>
+                  <change xml:id="ST-3">Fixation of the revised passages and further revisions by
+Goethe using ink</change>
+                  <change xml:id="ST-4">Addition of another stanza in a          different hand,
+probably at a later stage</change>
+               </listChange>
+            </creation>
+         </profileDesc>
+      </egXML>
+      <p>The <gi>listChange</gi> element carries an attribute
+      <att>ordered</att>, which can take the values <code>true</code>
+      or <code>false</code> (the default). The attribute specifies
+      whether the order of child elements signifies a temporal order
+      for the revision campaigns which they document. In the Faust
+      example above, the editor has asserted that the four stages
+      distinguished are ordered chronologically according to the order
+      of the <gi>change</gi> elements. Note that asserting a specific
+      order early on, though probably one of the hardest tasks in a
+      genetic analysis, can considerably reduce the encoding effort in
+      assigning textual alterations to stages during the
+      transcription, as we will see below.  For instance deletions can
+      only be assigned to a stage that follows the one in which the
+      passage being deleted was written down. Hence, having a certain
+      order of stages put in place before transcription begins, will
+      allow the encoder to reduce verbose tagging, where default
+      assumptions based on the natural order of actions can be
+      made.</p>
+      <p>If necessary, <gi>listChange</gi> elements can be nested
+      hierarchically. This may be helpful in two cases. Firstly one
+      can build up hypotheses about related revisions step-by-step,
+      starting with stages of smaller coverage, whose members are
+      certainly related, and then in a subsequent pass grouping these
+      stages in turn, thereby extending their reach.</p>
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <profileDesc>
+            <creation>
+               <listChange>
+                  <change xml:id="o">An unrelated change note</change>
+                  <listChange xml:id="m">
+<change xml:id="m1">Alterations on one manuscript page, certainly
+   related</change>
+<change xml:id="m2">Alterations on another manuscript page, certainly
+   related</change>
+                  </listChange>
+                  <change xml:id="p">Another unrelated change note</change>
+               </listChange>
+            </creation>
+         </profileDesc>
+      </egXML>
+      <p>A nested <gi>listChange</gi> elements is also useful         to indicate a
+            <emph>partial</emph> ordering of revision campaigns.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <listChange ordered="true">
+            <change xml:id="ST1">The first stage</change>
+            <listChange>
+               <!-- We have no information about the order of these changes, except
+     that they both followed ST1 and prececeded STX  -->
+                  <change xml:id="ST-rev1">A revision of the first stage</change>
+               <change xml:id="ST-rev2">Another revision of the first          stage</change>
+            </listChange>
+            <change xml:id="STX">The last stage</change>
+         </listChange>
+      </egXML>
+      <p>In addition to the possibility of ordering text stages in relation to each other,
+            <gi>change</gi> elements may carry a number of attributes from the
+            <ident>att.datable</ident> class (<att>period</att>, <att>when</att>,
+            <att>notBefore</att>, <att>notAfter</att>, <att>from</att>, and <att>to</att>) which
+         allow each stage to be dated as exactly or inexactly as necessary, in the same way as is
+         currently possible for the TEI <gi>date</gi> element.</p>
+      <!-- Maybe note that absolute dates and relative order can conflict -->
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <profileDesc>
+            <creation>
+               <date notAfter="1816-07-18"/>
+               <listChange ordered="true">
+                  <change xml:id="mod1" when="1816-07-16">The first draft of
+   <title>Persuasion</title> is completed by the <date>July 16    1816</date>
+written after the word <q>Finis</q> at <ref target="#pers-30">page
+30</ref>.</change>
+                  <change xml:id="mod2" notBefore="1816-07-16">After the <date>16th    of July</date>
+Austen starts revision of the two final chapters, by rewriting the end and
+adding a new zone (<ref target="#transp-1">pages 32-35</ref>) to be inserted
+at <ref target="#insertion-p1">page 19</ref>. This stage is documented by the
+deletion of the date (<date>July 16 1816</date>) at <ref target="#pers-30">page
+   30</ref>, and the addition of more text and of a new date    (<date>July 18.
+   1816</date>) at <ref target="#pers-31">page    31</ref></change>
+                  <change notBefore="1816-07-18">Before publication, after <date>July    18th,
+   1816</date> chapters 10-11 were broken into three chapters, 10, 11, 12, as
+witnessed by the print.</change>
+               </listChange>
+            </creation>
+         </profileDesc>
+      </egXML>
+      <p>Each <gi>change</gi> element, apart from declaring a distinct
+      change in the creation of the document, may also contain
+      references to other annotations contained within the
+      <gi>teiHeader</gi> or in the document (as shown in the previous
+      example). Such references, along with the textual content are
+      purely documentary and do not affect the textual stage
+      associated with any element thus referred to. The association of
+      a textual component with a change is always made explicitly,
+      either by pointing from the <gi>change</gi> attribute
+      <att>target</att> to one or more elements, or (preferably) by
+      pointing from the element concerned to the <gi>change</gi>
+      element by means of its <att>change</att> attribute:</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <line change="#firstStage">This is a <mod type="subst" change="#secondStage">
+               <del>house</del>
+               <add>mouse</add>
+            </mod>.</line>
+      </egXML>
+      <p>This simple example shows the latter of the two options: The
+      relevant changes are declared in the header; then textual
+      alterations and acts of writing are associated with them. The
+      above markup indicates that the whole sentence was realized in
+      the first stage, while the substitution of “house” with “mouse”
+      happened at the second stage. </p>
+      <p>A more complex and complete example:</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <profileDesc>
+            <creation>
+               <listChange ordered="true">
+                  <change xml:id="firstStage">First stage, written in ink by a writer</change>
+                  <change xml:id="secondStage">Revised by Goethe using pencil</change>
+                  <change xml:id="thirdStage">Fixation of the revised passages and further revisions
+by Goethe using ink</change>
+                  <change xml:id="fourthStage">Addition of another stanza, probably at a later
+stage</change>
+               </listChange>
+            </creation>
+         </profileDesc> [...] <div change="#firstStage">
+            <l n="11656">
+               <subst>
+                  <del>Ihr</del>
+                  <add>
+<retrace change="#thirdStage">
+   <seg change="#secondStage">Nun</seg>
+</retrace>
+                  </add>
+               </subst> wanſtige Schuften mit den Feuerbacken</l>
+            <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst
+                  change="#secondStage
+         #thirdStage">
+                  <del>ſatt</del>
+                  <add>feiſt</add>
+               </subst>.</l>
+            <l n="11658">
+               <delSpan spanTo="#anchor_delSpan_1" change="#thirdStage"/>Ihr hagren,  triſten, krummgezog<subst>
+                  <del>nen</del>
+                  <add>ener</add>
+               </subst> Nacken</l>
+            <l>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_delSpan_1"/></l>
+         </div>
+      </egXML>
+      <p>Note first, that a change, once assigned to an element, is
+      inherited by all descendants of that element unless overridden
+      by a subsequent assignment. So in the example above the three
+      verses are assigned to the first stage initially. The writing of
+      <mentioned>Nun</mentioned> (as part of the substitution in the
+      first verse) takes place in the second stage and is repeated or
+      fixated in the third. Also the substitution in the second verse
+      is done repeatedly: initially it takes place in the second
+      stage, but is fixated as a whole in the third.</p>
+      <p>The interpretation of change assignments for a particular
+      text passage is based on a number of implicit assumptions and
+      constraints which have the effect of minimizing the amount of
+      tagging necessary. The system is also flexible enough to support
+      an explicit distinction between acts of writing and textual
+      alterations, since either of these can be associated with
+      changes described in the encoding. The following example shows
+      an encoding in which the same passage is transcribed twice, once
+      from a documentary perspective, and once from a textual one
+      :</p>
+      <!-- faust_2.xml -->
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <profileDesc>
+            <creation>
+               <listChange ordered="true">
+                  <change target="#zone_1 #subst_3">First stage, written in ink by a scribe</change>
+                  <change
+target="#zone_2 #mod_1 #line_1 #line_2 #subst_1 #subst_2
+#subst_4 #delSpan_1"
+>Revised by Goethe using pencil</change>
+                  <change target="#redo_1 #redo_2 #redo_3 #subst_1 #subst_2
+#delSpan_1 #add_1"
+>Fixation of the revised passages and further revisions by Goethe using
+ink</change>
+               </listChange>
+            </creation>
+         </profileDesc> 
+<!-- ... -->
+<sourceDoc>
+            <surface>
+               <zone xml:id="zone_1">
+                  <line xml:id="line_1">
+<handShift new="#g_bl"/>
+<retrace hand="#g_t" xml:id="redo_1">Nun</retrace>
+                  </line>
+                  <line><handShift new="#jo_t"/>Ihr wanſtige Schuften mit den Feuerbacken</line>
+                  <line xml:id="line_2">
+<handShift new="#g_bl"/>
+<retrace hand="#g_t" xml:id="redo_2">feiſt</retrace>
+                  </line>
+                  <line>Ihr glüht ſo recht vom Höllen Schwefel ſatt.</line> [...]       </zone>
+            </surface>
+         </sourceDoc>
+         <text>
+            <body>
+               <l n="11656">
+                  <subst xml:id="subst_1">
+<del>Ihr</del>
+<add>Nun</add>
+                  </subst> wanſtige Schuften mit den Feuerbacken</l>
+               <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst xml:id="subst_2">
+<del>ſatt</del>
+<add>feiſt</add>
+                  </subst>.</l>
+            </body>
+         </text>
+      </egXML>
+      <p>The documentary transcription stresses the writing process,
+      while the textual transcription emphasizes textual
+      alterations. In either case, the change of writing activity
+      associated with a particular feature in the transcript is
+      explicitly indicated. From the documentary perspective, the
+      stage assignments describe the writing process, in that they
+      specify, which segment has been written when and how often. From
+      the textual perspective, the markup concentrates on the order of
+      textual alterations and makes no assumptions about the order of
+      writing.  In this example, the association is made by pointing
+      from the <gi>change</gi> element to all the passages and
+      alterations in question in either perspective, which has the
+      merit of not confusing the presentation of the interventions
+      concerned with writing sequence information, at the price of
+      requiring a distinct identifier on each intervention.
+      </p>
+   </div>
+
+
+
 <div type="div2" xml:id="PHTRXX"><head>Other Primary Source Features not Covered in these Guidelines</head>
 <p>We repeat the advice given at the beginning of this chapter, that
 these recommendations are not intended to meet every transcriptional
@@ -2188,6 +3149,17 @@ The selection and combination of modules to form a TEI schema is described in
 &subst;
 &supplied;
 &surplus;
+
+&line;
+&listChange;
+&metamark;
+&mod;
+&patch;
+&redo;
+&retrace;
+&transpose;
+&transposeGrp;
+&undo;
 </specGrp>
 </div>
 </div>
