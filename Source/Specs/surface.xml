@@ -25,6 +25,7 @@ celui-ci.</desc>
     <memberOf key="att.global"/>
     <memberOf key="att.coordinated"/>
     <memberOf key="att.declaring"/>
+    <memberOf key="att.typed"/> <!-- added by gen -->
   </classes>
   <content>
     <rng:group>
@@ -35,11 +36,16 @@ celui-ci.</desc>
         <rng:ref name="model.graphicLike"/>
       </rng:zeroOrMore>
       <rng:zeroOrMore>
+<rng:choice>
+  <rng:ref name="model.global"/>
         <rng:ref name="zone"/>
+        <rng:ref name="line"/>
+        <rng:ref name="patch"/>
+</rng:choice>
       </rng:zeroOrMore>
     </rng:group>
   </content>
-  <!-- moved @start to att.coordinated -->
+
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <facsimile>
@@ -49,18 +55,24 @@ celui-ci.</desc>
       </facsimile>
     </egXML>
   </exemplum>
+
+
+
   <remarks>
     <p>The <gi>surface</gi> element  represents a rectangular  area of
 any physical surface forming part of the source material. This may be a sheet of
 paper, one face of a monument, a billboard, a papyrus scroll, or
 indeed any 2-dimensional surface.</p>
-    <p>The coordinate space defined by this element may be thought of as
-a grid <att>lrx</att> - <att>ulx</att> units wide and <att>uly</att> - <att>lry</att> units high. This
-grid is superimposed on the whole of any image directly contained by
-the <gi>surface</gi> element. The coordinate values used by every
-<gi>zone</gi> element contained by this surface are to be understood
-with reference to the same grid.</p>
-  </remarks>
+    <p>The coordinate space defined by this element may be thought of
+    as a grid <att>lrx</att> - <att>ulx</att> units wide and
+    <att>uly</att> - <att>lry</att> units high. This grid is
+    superimposed on the whole of any image directly contained by the
+    <gi>surface</gi> element. The coordinate values used by every
+    <gi>zone</gi> element contained by this surface are to be
+    understood with reference to the same grid.</p>
+<p>The   <gi>surface</gi> element may contain graphic representations
+or transcriptions of the writing on a surface, or both. It may also be
+subdivided, using the <gi>zone</gi> element.</p> </remarks>
   <remarks xml:lang="fr" version="2009-11-16">
     <p>L'élément <gi>surface</gi> représente un secteur rectangulaire d’une surface physique faisant partie du matériau source. Ce peut être une feuille du papier, la façade d'un monument, un panneau publicitaire, un rouleau de papyrus ou en fait toute surface à deux dimensions.</p>
     <p>L'espace de coordonnées défini par cet élément peut être considéré comme une grille d'unités horizontales<att>lrx</att> - <att>ulx</att> et verticales <att>lry</att> - <att>ury</att>. Cette grille se superpose à la totalité de toute image directement contenue par l'élément <gi>surface</gi>. Les coordonnées employées par chaque élément <gi>zone</gi>contenu par cette surface doivent être interprétées en référence à la même grille.</p>

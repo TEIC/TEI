@@ -21,10 +21,18 @@ $Id$
     testo.</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.datable"/>
     <memberOf key="model.profileDescPart"/>
   </classes>
-  <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq.limited"/>
+  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+
+  <rng:zeroOrMore>
+    <rng:choice>
+      <rng:text/>
+    <rng:ref 
+	 name="model.limitedPhrase"/>
+      <rng:ref name="listChange"/>
+</rng:choice>    </rng:zeroOrMore>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -69,19 +77,21 @@ $Id$
     </egXML>
   </exemplum>
   <remarks>
-    <p rend="dataDesc">Character data and phrase-level elements.</p>
-    <p>The <gi>creation</gi> element may be used to record details of a text's creation, e.g. the
-      date and place it was composed, if these are of interest; it should not be confused with the
-        <gi>publicationStmt</gi> element, which records date and place of publication.</p>
+    <p>The <gi>creation</gi> element may be used to record details of
+    a text's creation, e.g. the date and place it was composed, if
+    these are of interest.</p>
+    <p>It may also contain a more structured account of the various
+    stages or revisions associated with the evolution of a text; this
+    should be encoded using the <gi>listChange</gi> element.  It
+    should not be confused with the <gi>publicationStmt</gi> element,
+    which records date and place of publication.</p>
   </remarks>
   <remarks xml:lang="fr">
-    <p rend="dataDesc">Chaînes de caractères non structurées et éléments de niveau expression.</p>
     <p>L’élément <gi>creation</gi> peut être utilisé pour détailler  des éléments concernant l’origine du
       texte, c’est-à-dire sa date et son  lieu de composition ; on ne doit pas le confondre avec
       l'élément <gi>publicationStmt</gi> qui contient la date et le lieu de publication.</p>
   </remarks>
   <remarks xml:lang="es">
-    <p rend="dataDesc">Datos de carácter y elementos de nivel sintagmático.</p>
     <p> El elemento <gi>creación</gi> se puede utilizar para registrar los detalles de la creación
       de un texto, p.ej. la fecha y el lugar en el que fue compuesto, si éstos son de interés; no
       debe ser confundido con el elemento <gi>publicationStmt</gi>, que registra la fecha y el lugar
