@@ -1,0 +1,81 @@
+<elementSpec ident="patch"  module="transcr"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+ <desc> a part of a surface which was originally
+ physically distinct but was combined with it at some time prior to
+ some or all of the writing on the surface.</desc>
+   <classes>
+      <memberOf key="att.coordinated"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.typed"/>
+   </classes>
+   <content>
+      <rng:zeroOrMore>
+         <rng:choice>
+            <rng:text/>
+            <rng:ref name="model.global"/>
+            <rng:ref name="zone"/>
+         </rng:choice>
+      </rng:zeroOrMore>
+   </content>
+   <attList>
+      <attDef ident="binder" mode="add">
+         <desc>describes the method by which a patch is or was
+         connected to the main surface</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+         </datatype>
+         <valList type="open">
+            <valItem ident="glued"><desc>patch is glued in place</desc>
+            </valItem>
+            <valItem ident="pinned"><desc>patch is pinned or stapled in place</desc>
+            </valItem>
+            <valItem ident="sewn"><desc>patch is sewn in place</desc>
+            </valItem>
+         </valList>
+      </attDef>
+      <attDef ident="flipping" mode="add"><desc>indicates whether the
+      patch is attached and folded in such a way as to provide two
+      writing surfaces</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+         </datatype>
+      </attDef>
+      <attDef ident="height">
+         <desc>height of the patch</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+         </datatype>
+      </attDef>
+      <attDef ident="width">
+         <desc>width of the patch</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+         </datatype>
+      </attDef>
+   </attList>
+<exemplum>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<surface>
+   <zone>
+      <line>Poem</line>
+      <line>As in Visions of — at</line>
+      <line>night —</line>
+      <line>All sorts of fancies running through</line>
+      <line>the head</line>
+   </zone>
+   <patch type="newsprint" binder="glue" flipping="false"
+			       height="40cm" width="90cm"> 
+			  <zone>Spring has
+      just set in here, and the weather.... a
+			   steamer </zone>
+         <metamark function="sequence">2</metamark>
+   </patch>
+   <patch type="newsprint" binder="glue" flipping="false"
+			       height="35cm" width="90cm"> 
+			  <zone>"The shores on either side of the Sound are... The In-       </zone>   
+			   <metamark function="sequence">3</metamark>
+   </patch>
+</surface>
+</egXML> 
+</exemplum>
+</elementSpec>
