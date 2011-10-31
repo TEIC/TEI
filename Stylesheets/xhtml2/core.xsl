@@ -1255,16 +1255,10 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:variable>
-	<xsl:choose>
-	  <xsl:when test="parent::tei:div | parent::tei:body">
-	    <div>
-	      <img src="{$IMG}" alt="page image"/>
-	    </div>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <img width="600" height="860" src="{$IMG}" alt="page image"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+	<xsl:element name="{if (tei:is-inline(..)) then 'span' else 'div'}">
+	  <xsl:call-template name="rendToClass"/>
+	  <img  src="{$IMG}" alt="page image"/>
+	</xsl:element>
       </xsl:when>
 
       <xsl:when test="$pagebreakStyle='active'">
