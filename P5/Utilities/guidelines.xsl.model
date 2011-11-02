@@ -53,8 +53,6 @@
   <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']"
 	 use="substring-after(@target,'#')"/>
 
-  <xsl:template name="copyrightStatement">Copyright TEI Consortium 2010</xsl:template>
-
   <xsl:template match="/">
     <xsl:apply-imports/>
     <xsl:for-each select="key('ELEMENTDOCS',1)">
@@ -218,6 +216,7 @@ their encoding.</p>
 	      <xsl:with-param name="file">
 		<xsl:text>examples-</xsl:text>
 		<xsl:value-of select="$me"/>
+		<xsl:text>.html</xsl:text>
 	      </xsl:with-param>
 	    </xsl:call-template>
 	  </body>
@@ -929,7 +928,7 @@ their encoding.</p>
 
   <xsl:template name="stdfooter">
     <xsl:param name="style" select="'plain'"/>
-    <xsl:param name="file">index</xsl:param>
+    <xsl:param name="file">index.html</xsl:param>
     <xsl:variable name="date">
       <xsl:call-template name="generateDate"/>
     </xsl:variable>
@@ -938,14 +937,14 @@ their encoding.</p>
     </xsl:variable>
     <div class="stdfooter">
     <p>
-    [<a href="../../en/html/{$file}.html">English</a>]
-    [<a href="../../de/html/{$file}.html">Deutsch</a>]
-    [<a href="../../es/html/{$file}.html">Español</a>]
-    [<a href="../../it/html/{$file}.html">Italiano</a>]
-    [<a href="../../fr/html/{$file}.html">Français</a>]
-    [<a href="../../ja/html/{$file}.html">日本語</a>]
-    [<a href="../../kr/html/{$file}.html">한국어</a>]
-    [<a href="../../zh-tw/html/{$file}.html">中文</a>]
+    [<a href="../../en/html/{$file}">English</a>]
+    [<a href="../../de/html/{$file}">Deutsch</a>]
+    [<a href="../../es/html/{$file}">Español</a>]
+    [<a href="../../it/html/{$file}">Italiano</a>]
+    [<a href="../../fr/html/{$file}">Français</a>]
+    [<a href="../../ja/html/{$file}">日本語</a>]
+    [<a href="../../kr/html/{$file}">한국어</a>]
+    [<a href="../../zh-tw/html/{$file}">中文</a>]
     </p>
       <hr/>
       <xsl:if test="$linkPanel='true'">
@@ -967,14 +966,12 @@ their encoding.</p>
         <hr/>
       </xsl:if>
       <address>
-        <xsl:call-template name="copyrightStatement"/>
-        <xsl:text> </xsl:text>
-        <a href="COPYING.txt">Licensed under the GPL.</a>
-        <xsl:text> Copying and redistribution is permitted and encouraged. </xsl:text>
+        <xsl:apply-templates 
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
 	<br/>
         <xsl:text>Version </xsl:text>
         <xsl:value-of 
-select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
         <xsl:text>This page generated on </xsl:text> 
 	<xsl:call-template name="whatsTheDate"/>
 
