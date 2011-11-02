@@ -211,6 +211,8 @@ valid: check
 	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
 	@echo BUILD: Check for places with no examples
 	${SAXON} ${DRIVER} Utilities/listspecwithnoexample.xsl
+	@echo BUILD: do graphics files exist
+	${SAXON} ${DRIVER} Utilities/listgraphics.xsl | sh
 
 test: p5subset.xml
 	@echo BUILD Run test cases for P5
