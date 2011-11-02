@@ -146,14 +146,14 @@ pdf.stamp: check
 	done
 	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
-	-(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
 	grep -v "Failed to convert input string to UTF16" $(JOB).log
-	-(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
 	grep -v "Failed to convert input string to UTF16" $(JOB).log
 	makeindex -s p5.ist Guidelines 
-	-(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
 	grep -v "Failed to convert input string to UTF16" $(JOB).log
-	-(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> $(JOB).log 1> $(JOB).log
 	grep -v "Failed to convert input string to UTF16" $(JOB).log
 	rm $(JOB).log
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
