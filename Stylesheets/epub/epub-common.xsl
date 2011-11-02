@@ -274,9 +274,16 @@
   <xsl:template match="tei:availability" mode="metadata">
     <dt>Availability</dt>
     <dd>
-        <xsl:apply-templates mode="metadata"/>
+      <xsl:apply-templates mode="metadata"/>
     </dd>
   </xsl:template>
+
+  <xsl:template match="tei:licence" mode="metadata">
+    <div>
+      <xsl:apply-templates mode="metadata"/>
+    </div>
+  </xsl:template>
+
   <xsl:template match="tei:bibl/tei:title" mode="metadata" priority="99">
     <i>
       <xsl:apply-templates/>
