@@ -931,6 +931,7 @@
             </dd>
 	    -->
 	   <li>
+	     <xsl:call-template name="makeAnchor"/>
 	     <xsl:apply-templates select="."/>
 	   </li>
           </xsl:for-each>

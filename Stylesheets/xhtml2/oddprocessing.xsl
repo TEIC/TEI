@@ -876,7 +876,7 @@
               <xsl:for-each select="key('ATT-CLASS-ALPHA',$letter)">
                 <xsl:sort select="translate(substring-after(@ident,'att.'),$lc,$uc)"/>
                 <li>
-		  <call-template name="refDocLink"/>
+		  <xsl:call-template name="refDocLink"/>
 		</li>
               </xsl:for-each>
             </ul>
@@ -899,7 +899,7 @@
             </h3>
             <xsl:for-each
 		select="key('ATT-CLASS-MODULE',@module)">
-	      <call-template name="refDocLink"/>
+	      <xsl:call-template name="refDocLink"/>
             </xsl:for-each>
           </div>
         </xsl:if>
