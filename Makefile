@@ -1,7 +1,7 @@
 # Main makefile for TEI P5
 # $Id$
 LANGUAGE=en
-JOB=job$$
+JOB=job$$$$
 SFUSER=rahtz
 GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
@@ -507,4 +507,3 @@ clean:
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
 	rm -f teiwebsiteguidelines.zip
-
