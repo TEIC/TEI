@@ -134,7 +134,7 @@ pdf.stamp: check
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
-	@echo BUILD: check XeLaTeX systems works locally
+	@echo BUILD: check XeLaTeX system works locally
 	${SAXON} ${SAXON_ARGS}  Guidelines.xml Utilities/guidelines.xsl > Guidelines.tex
 	rm -f Utilities/guidelines.xsl
 	for i in Guidelines-REF*tex; \
