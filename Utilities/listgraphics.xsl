@@ -15,11 +15,11 @@
 	  <xsl:value-of select="@url"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:text>test -f </xsl:text>
+	  <xsl:text>if [ ! -f </xsl:text>
 	  <xsl:value-of select="@url"/>
-	  <xsl:text> || echo ERROR FILE DOES NOT EXIST </xsl:text>
+	  <xsl:text> ] &#10; then&#10; echo ERROR FILE DOES NOT EXIST: </xsl:text>
 	  <xsl:value-of select="@url"/>
-	  <xsl:text>&amp;&amp; OK=1 </xsl:text>
+	  <xsl:text>&amp;&amp; OK=1; fi</xsl:text>
 	</xsl:otherwise>
       </xsl:choose>
       <xsl:text>&#10;</xsl:text>
