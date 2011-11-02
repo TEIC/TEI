@@ -280,7 +280,7 @@
 
   <xsl:template match="tei:licence" mode="metadata">
     <div>
-      <xsl:apply-templates mode="metadata"/>
+      <xsl:apply-templates/>
     </div>
   </xsl:template>
 
