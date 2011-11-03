@@ -303,7 +303,7 @@
             <xsl:when test="@rend='small'">\textsmall</xsl:when>
             <xsl:when test="@rend='smallcaps'">\textsc</xsl:when>
             <xsl:when test="@rend='smaller'">\textsmaller</xsl:when>
-            <xsl:when test="@rend='strike'">\sout</xsl:when>
+            <xsl:when test="@rend='strikethrough'">\sout</xsl:when>
             <xsl:when test="@rend='sub'">\textsubscript</xsl:when>
             <xsl:when test="@rend='subscript'">\textsubscript</xsl:when>
             <xsl:when test="@rend='sup'">\textsuperscript</xsl:when>
