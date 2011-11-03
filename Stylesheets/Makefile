@@ -3,7 +3,9 @@ JING=jing
 TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
-DIRS=odds2 xhtml2 common2 slides2 latex2 fo2 tools2 profiles epub docx odt nlm tite rdf dtd relaxng txt
+
+DIRS=common2 docx dtd epub fo2 latex2 nlm odds2 odt profiles rdf relaxng slides2 tite tools2 txt xhtml2
+EXTRAS=html/build-to.xml
 OLDDIRS=slides fo html common latex
 SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub teitoepub3 teitohtml transformtei teitodtd teitoxsd teitorelaxng teitornc teitotxt teitordf
 PREFIX=/usr
@@ -64,7 +66,7 @@ check:
 p5-2:
 	@echo BUILD Build for P5, XSLT 2.0
 	test -d release/p5-2 || mkdir -p release/p5-2/xml/tei/stylesheet/
-	for i in  ${DIRS} ; do \
+	for i in  ${DIRS} ${EXTRAS} ; do \
 		tar cf - --exclude .svn $$i | (cd release/p5-2/xml/tei/stylesheet; tar xf - ); \
 	done
 
