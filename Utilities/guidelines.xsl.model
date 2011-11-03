@@ -965,9 +965,9 @@ their encoding.</p>
         </div>
         <hr/>
       </xsl:if>
+      <xsl:apply-templates 
+	  select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
       <address>
-        <xsl:apply-templates 
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
 	<br/>
         <xsl:text>Version </xsl:text>
         <xsl:value-of 
@@ -990,6 +990,11 @@ their encoding.</p>
       </xsl:if>
   </xsl:template>
 
+<xsl:template match="tei:licence">
+  <div class="licence">
+    <xsl:apply-templates/>
+  </div>
+</xsl:template>
 <xsl:template name="bodyHook">
   <xsl:if test="not($googleAnalytics='')">
     <script type="text/javascript" src="udm-dom.js">
