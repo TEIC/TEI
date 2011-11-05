@@ -1534,7 +1534,7 @@
 	  <xsl:value-of select="$postQuote"/>
 	</span>
       </xsl:when>
-      <xsl:when test="@rend='display' or tei:p or tei:l or
+      <xsl:when test="@rend='display' or tei:lb or tei:p or tei:l or
 		      string-length(.)&gt;150">
         <blockquote>
           <xsl:call-template name="rendToClass"/>
