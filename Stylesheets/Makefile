@@ -137,7 +137,6 @@ deb:
 	rm -f tei*xsl*_*changes
 	rm -f tei*xsl*_*build
 	(cd debian-tei-xsl-common; debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-xsl;     debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-xsl2;    debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
 
 sfupload:

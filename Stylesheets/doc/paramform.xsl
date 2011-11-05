@@ -62,10 +62,10 @@
 
 <xsl:for-each select="TEI/text/body/div[@xml:id]">
   <xsl:call-template name="listcgi">
-    <xsl:with-param name="File">common2/tei-param.xsl</xsl:with-param>
+    <xsl:with-param name="File">common/tei-param.xsl</xsl:with-param>
   </xsl:call-template>
   <xsl:call-template name="listcgi">
-    <xsl:with-param name="File">xhtml2/tei-param.xsl</xsl:with-param>
+    <xsl:with-param name="File">html/tei-param.xsl</xsl:with-param>
   </xsl:call-template>
 </xsl:for-each>
 <xsl:text disable-output-escaping="yes">
@@ -102,7 +102,7 @@ END
 #          }
 print "&lt;xsl:import href=\"";
 print $HOME;
-print "/tei/stylesheet/xhtml2/tei.xsl\"/>\n";
+print "/tei/stylesheet/html/tei.xsl\"/>\n";
 foreach $key (keys %Default) {
 my $Passed=$query->param($key);
 my $D=$Default{$key};
@@ -165,11 +165,11 @@ return "";
        <table>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
-	       name="File">common2/tei-param.xsl</xsl:with-param>
+	       name="File">common/tei-param.xsl</xsl:with-param>
 	 </xsl:call-template>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
-	       name="File">xhtml2/tei-param.xsl</xsl:with-param>
+	       name="File">html/tei-param.xsl</xsl:with-param>
 	 </xsl:call-template>
        </table>
    </xsl:for-each>
