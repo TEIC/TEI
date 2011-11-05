@@ -748,6 +748,9 @@
     <text:span>
       <xsl:attribute name="text:style-name">
 	<xsl:choose>
+	  <xsl:when test="@rend='normalweight'">
+	    <xsl:text>Standard</xsl:text>
+	  </xsl:when>
 	  <xsl:when test="@rend='code' or @rend='typewriter'">
 	    <xsl:text>Source_20_Text</xsl:text>
 	  </xsl:when>

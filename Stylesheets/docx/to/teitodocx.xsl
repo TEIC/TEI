@@ -933,6 +933,9 @@
 	      <xsl:when  test="contains(@rend,'underline') ">
 		<w:u w:val="single"/>
 	      </xsl:when>
+	      <xsl:when  test="contains(@rend,'underwavyline') ">
+		<w:u w:val="wave"/>
+	      </xsl:when>
 	      <xsl:when test="contains(@rend,'underdoubleline')">
 		<w:u w:val="double"/>
 	      </xsl:when>

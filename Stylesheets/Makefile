@@ -168,9 +168,8 @@ clean:
 	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
-	(cd debian-tei-xsl-common/debian;  rm -rf tei-xsl-common)
-	(cd debian-tei-p5-xsl/debian;      rm -rf tei-p5-xsl)
-	(cd debian-tei-p5-xsl2/debian;     rm -rf tei-p5-xsl2)
+	-(cd debian-tei-xsl-common/debian;  rm -rf tei-xsl-common)
+	-(cd debian-tei-p5-xsl2/debian;     rm -rf tei-p5-xsl2)
 	rm -f teioo.jar
 	rm -rf docx/ImageInfo/bin
 

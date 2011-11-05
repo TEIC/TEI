@@ -309,7 +309,9 @@
             <xsl:when test="@rend='sup'">\textsuperscript</xsl:when>
             <xsl:when test="@rend='superscript'">\textsuperscript</xsl:when>
             <xsl:when test="@rend='ul'">\uline</xsl:when>
-            <xsl:when test="@rend='underline'">\underline</xsl:when>
+            <xsl:when test="@rend='underwavyline'">\uwave</xsl:when>
+            <xsl:when test="@rend='underdoubleline'">\uuline</xsl:when>
+            <xsl:when test="@rend='underline'">\uline</xsl:when>
          </xsl:choose>
       </xsl:variable>
       <xsl:value-of select="$cmd"/>

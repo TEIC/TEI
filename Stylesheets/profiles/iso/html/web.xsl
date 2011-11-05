@@ -226,6 +226,9 @@
 	    <xsl:when test=".='strikedoublethrough'">
 	      <s>text-decoration:line-through;</s>
 	    </xsl:when>
+	    <xsl:when test=".='underwavyline'">
+	      <s>text-decoration:wavy;</s>
+	    </xsl:when>
 	    <xsl:when test=".='underline'">
 	      <s>text-decoration:underline;</s>
 	    </xsl:when>

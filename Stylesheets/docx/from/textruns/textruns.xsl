@@ -218,6 +218,10 @@
 	  <n>underline</n>
 	</xsl:if>
 
+	<xsl:if test="w:rPr/w:u[@w:val='wave']">
+	  <n>underwavyline</n>
+	</xsl:if>
+
 	<xsl:if test="w:rPr/w:u[@w:val='double']">
 	  <n>underdoubleline</n>
 	</xsl:if>
