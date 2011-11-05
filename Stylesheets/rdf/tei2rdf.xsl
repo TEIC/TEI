@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <XSL:stylesheet xmlns:XSL="http://www.w3.org/1999/XSL/Transform" version="2.0"
                 xpath-default-namespace="http://www.tei-c.org/ns/1.0">
-   <XSL:import href="../tools2/getfiles.xsl"/>
+   <XSL:import href="../tools/getfiles.xsl"/>
    <XSL:import href="crm.xsl"/>
    <XSL:param name="corpus">./</XSL:param>
    <XSL:template match="*">
