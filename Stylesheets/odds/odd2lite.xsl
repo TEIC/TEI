@@ -16,7 +16,7 @@
   <xsl:import href="../common/verbatim.xsl"/>
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common/tei.xsl"/>
-  <xsl:include href="../common2/tagdocs.xsl"/>
+  <xsl:include href="../common/tagdocs.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making TEI Lite XML from ODD </p>

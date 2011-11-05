@@ -4,21 +4,21 @@ TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
 
-DIRS=common2 docx dtd epub fo2 latex2 nlm odds2 odt profiles rdf relaxng slides2 tite tools2 txt xhtml2
+DIRS=common docx dtd epub fo latex nlm odds odt profiles rdf relaxng slides tite tools txt html
 EXTRAS=html/build-to.xml
 OLDDIRS=slides fo html common latex
 SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub teitoepub3 teitohtml transformtei teitodtd teitoxsd teitorelaxng teitornc teitotxt teitordf
 PREFIX=/usr
 OXY=/usr/share/oxygen/stylesheetDocumentation.sh
 TARGETS= \
-	latex2/tei.xsl \
-	xhtml2/tei.xsl \
-	fo2/tei.xsl \
-	odds2/odd2odd.xsl \
-	odds2/odd2relax.xsl \
-	odds2/odd2dtd.xsl \
-	slides2/teihtml-slides.xsl \
-	slides2/teilatex-slides.xsl \
+	latex/tei.xsl \
+	html/tei.xsl \
+	fo/tei.xsl \
+	odds/odd2odd.xsl \
+	odds/odd2relax.xsl \
+	odds/odd2dtd.xsl \
+	slides/teihtml-slides.xsl \
+	slides/teilatex-slides.xsl \
 	profiles/default/csv/to.xsl	\
 	profiles/default/docx/to.xsl \
 	profiles/default/dtd/to.xsl	\
@@ -63,56 +63,16 @@ check:
 	@echo -n saxon: 
 	@which ${SAXON} || exit 1
 
-p5-2:
+p5:
 	@echo BUILD Build for P5, XSLT 2.0
-	test -d release/p5-2 || mkdir -p release/p5-2/xml/tei/stylesheet/
-	for i in  ${DIRS} ${EXTRAS} ; do \
-		tar cf - --exclude .svn $$i | (cd release/p5-2/xml/tei/stylesheet; tar xf - ); \
-	done
-
-p4:
-	@echo BUILD Build for P4
-	test -d release/p4 || mkdir -p release/p4/xml/teip4/stylesheet/
-	for i in ${OLDDIRS} ; do \
-		test -d release/p4/xml/teip4/stylesheet/$$i || mkdir -p release/p4/xml/teip4/stylesheet/$$i; \
-		for j in $$i/*.xsl; do perl toP4.pl < $$j > release/p4/xml/teip4/stylesheet/$$j;done; \
-	done
-	(cd release/p4/xml/teip4/stylesheet/html/;test -d ../xhtml || mkdir ../xhtml; for i in *.xsl; do \
-	cp  $$i ../xhtml/$$i;  \
-	perl -p -i -e 's+<xsl:stylesheet+<xsl:stylesheet xmlns=\"http://www.w3.org/1999/xhtml\"+'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/>html</>xml</'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/ target="_top"//'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/>iso-8859-1</>utf-8</'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/text\/html/application\/xhtml+xml/' ../xhtml/$$i ; \
-	perl -p -i -e 's+outputXHTML\">false<+outputXHTML\">true<+'  ../xhtml/$$i ;  \
-	perl -p -i -e 's+-//W3C//DTD HTML 4.0 Transitional//EN+-//W3C//DTD XHTML 1.1//EN+'  ../xhtml/$$i ;  \
-	perl -p -i -e 's+http://www.w3.org/TR/html4/loose.dtd+http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd+'  ../xhtml/$$i ;  \
-	 done)
-	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/p4/xml/teip4/stylesheet/xhtml/tei-param.xsl
-
-p5: p4
-	@echo BUILD Build for P5, XSLT 1.0
 	test -d release/p5 || mkdir -p release/p5/xml/tei/stylesheet/
-	for i in ${OLDDIRS} ; do \
-	test -d release/p5/xml/tei/stylesheet/$$i || mkdir -p release/p5/xml/tei/stylesheet/$$i; cp $$i/*.xsl release/p5/xml/tei/stylesheet/$$i; \
+	for i in  ${DIRS} ${EXTRAS} ; do \
+		tar cf - --exclude .svn $$i | (cd release/p5/xml/tei/stylesheet; tar xf - ); \
 	done
-	(cd release/p5/xml/tei/stylesheet/html;test -d ../xhtml || mkdir ../xhtml; for i in *.xsl; do \
-	cp  $$i ../xhtml/$$i;  \
-	perl -p -i -e 's+<xsl:stylesheet+<xsl:stylesheet xmlns=\"http://www.w3.org/1999/xhtml\"+'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/>html</>xml</'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/ target="_top"//'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/>iso-8859-1</>utf-8</'  ../xhtml/$$i ;  \
-	perl -p -i -e 's/text\/html/application\/xhtml+xml/' ../xhtml/$$i ; \
-	perl -p -i -e 's+outputXHTML\">false<+outputXHTML\">true<+'  ../xhtml/$$i ;  \
-	perl -p -i -e 's+-//W3C//DTD HTML 4.0 Transitional//EN+-//W3C//DTD XHTML 1.1//EN+'  ../xhtml/$$i ;  \
-	perl -p -i -e 's+http://www.w3.org/TR/html4/loose.dtd+http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd+'  ../xhtml/$$i ;  \
-	 done)
-	perl -p -i -e 's/name="xhtml">false</name="xhtml">true</' release/p5/xml/tei/stylesheet/xhtml/tei-param.xsl
+
 
 common: 
 	@echo BUILD Build for P5, common files and documentation
-	test -d release/common/xml/teip4/stylesheet || mkdir -p release/common/xml/teip4/stylesheet
-	cp VERSION *.css i18n.xml release/common/xml/teip4/stylesheet
 	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
 	cp VERSION *.css i18n.xml release/common/xml/tei/stylesheet
 
@@ -134,44 +94,32 @@ oxygendoc:
 teioo.jar:
 	(cd odt; jar cf ../teioo.jar META-INF/manifest.xml mimetype TypeDetection.xcu *xsl *ott teilite.dtd )
 
-test: clean p4 p5 p5-2 common
+test: clean p5 common
 	@echo BUILD Run tests
 	(cd release/p5/xml/tei/stylesheet; cp ../../../../../i18n.xml .)
-	(cd release/p4/xml/teip4/stylesheet; cp ../../../../../i18n.xml .)
 	(cd Test2; make)
 	(cd Test; make)
 	rm release/p5/xml/tei/stylesheet/i18n.xml
-	rm release/p4/xml/teip4/stylesheet/i18n.xml
+
 
 
 dist: clean release
 	-rm tei-xsl-`cat VERSION`.zip
 	(cd release/common; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/p4; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 	(cd release/p5; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/p5-2; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 
-release: common doc oxygendoc p4 p5 p5-2
+release: common doc oxygendoc p5
 
-installp5-2: p5-2 teioo.jar
+installp5: p5 teioo.jar
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
 	cp teioo.jar ${PREFIX}/share/xml/tei/stylesheet
-	(cd release/p5-2; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
+	(cd release/p5; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	mkdir -p ${PREFIX}/bin
 	for i in $(SCRIPTS); do \
 	  cp $$i ${PREFIX}/bin/$$i; \
 	  chmod 755 ${PREFIX}/bin/$$i; \
 	  perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i; \
 	done
-
-installp5: p5
-	mkdir -p ${PREFIX}/share
-	(cd release/p5; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
-
-installp4: p4 
-	mkdir -p ${PREFIX}/share
-	(cd release/p4; tar cf - .) |  (cd ${PREFIX}/share; tar xf  -)
-
 
 installcommon: doc common
 	mkdir -p ${PREFIX}/lib/cgi-bin
@@ -182,7 +130,7 @@ installcommon: doc common
 	(cd release/common/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 	(cd release/common/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
-install: installp4 installp5 installp5-2 installcommon
+install: installp5 installcommon
 
 debversion:
 	(cd debian-tei-xsl-common;  dch -v `cat ../VERSION` new release)
@@ -202,9 +150,9 @@ sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
 
 profile:
-	saxon -o:/dev/null 	-TP Test2/test.xml xhtml2/tei.xsl >& profile.xml
+	saxon -o:/dev/null 	-TP Test2/test.xml html/tei.xsl >& profile.xml
 	saxon profile.xml timing-profile.xsl  > profile1.html
-	saxon -o:/dev/null 	-TP Test2/test.xml latex2/tei.xsl >& profile.xml
+	saxon -o:/dev/null 	-TP Test2/test.xml latex/tei.xsl >& profile.xml
 	saxon profile.xml timing-profile.xsl  > profile2.html
 
 log:
@@ -219,12 +167,10 @@ clean:
 	-rm profile1.html profile2.html profile.xml
 	find . -name "*~"  | xargs rm
 	rm -f tei-xsl-*.zip	
-	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
 	rm -f stylebear style.xml customize.xml teixsl.html
 	rm -rf release
-	rm -rf xhtml
 	(cd Test; make clean)
 	(cd Test2; make clean)
 	rm -rf tei-p5-xsl_*
