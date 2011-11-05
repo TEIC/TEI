@@ -481,8 +481,6 @@
         <!-- Process Child elements -->
         <xsl:for-each-group select="current-group()"
 			    group-starting-with="*[not(tei:is-inline(.))]">
-
-<xsl:message>[ <xsl:value-of select="name(.)"/>: <xsl:value-of select="."/> ]</xsl:message>
             <xsl:choose>
                 <!-- if the current item is a block element, we process that one,
                      and then take call this function recursively was all the other
