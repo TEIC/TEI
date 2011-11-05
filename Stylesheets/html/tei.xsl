@@ -53,7 +53,7 @@
   <xsl:include href="textcrit.xsl"/>
   <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>
-  <xsl:include href="../common2/verbatim.xsl"/>
+  <xsl:include href="../common/verbatim.xsl"/>
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">

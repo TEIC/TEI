@@ -13,8 +13,8 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
                 version="2.0">
-   <xsl:import href="../../../xhtml/tei.xsl"/>
-   <xsl:import href="../../../xhtml/oddprocessing.xsl"/>
+   <xsl:import href="../../../html/tei.xsl"/>
+   <xsl:import href="../../../html/oddprocessing.xsl"/>
    <xsl:import href="../../../odds/teiodds.xsl"/>
    <xsl:import href="../../../epub/tei-to-epub.xsl"/>
    <xsl:import href="../isoutils.xsl"/>

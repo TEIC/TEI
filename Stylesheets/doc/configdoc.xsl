@@ -15,10 +15,10 @@ will construct a XSL file for you, with all the variables configured.
   <TargetDirectory path="./xsltdoc/"/>
   <SourceDirectory path="../"/>
   <RootStylesheets>
-    <File href="xhtml2/tei.xsl"/>
-    <File href="fo2/tei.xsl"/>
-    <File href="latex2/tei.xsl"/>
-    <File href="slides2/teilatex-slides.xsl"/>
+    <File href="html/tei.xsl"/>
+    <File href="fo/tei.xsl"/>
+    <File href="latex/tei.xsl"/>
+    <File href="slides/teilatex-slides.xsl"/>
   </RootStylesheets>
 <!--
   <AdditionalCSS>

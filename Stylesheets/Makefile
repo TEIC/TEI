@@ -96,12 +96,7 @@ teioo.jar:
 
 test: clean p5 common
 	@echo BUILD Run tests
-	(cd release/p5/xml/tei/stylesheet; cp ../../../../../i18n.xml .)
-	(cd Test2; make)
 	(cd Test; make)
-	rm release/p5/xml/tei/stylesheet/i18n.xml
-
-
 
 dist: clean release
 	-rm tei-xsl-`cat VERSION`.zip
@@ -134,7 +129,6 @@ install: installp5 installcommon
 
 debversion:
 	(cd debian-tei-xsl-common;  dch -v `cat ../VERSION` new release)
-	(cd debian-tei-p5-xsl;  dch -v `cat ../VERSION` new release)
 	(cd debian-tei-p5-xsl2;  dch -v `cat ../VERSION` new release)
 
 deb:
@@ -150,9 +144,9 @@ sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
 
 profile:
-	saxon -o:/dev/null 	-TP Test2/test.xml html/tei.xsl >& profile.xml
+	saxon -o:/dev/null 	-TP Test/test.xml html/tei.xsl >& profile.xml
 	saxon profile.xml timing-profile.xsl  > profile1.html
-	saxon -o:/dev/null 	-TP Test2/test.xml latex/tei.xsl >& profile.xml
+	saxon -o:/dev/null 	-TP Test/test.xml latex/tei.xsl >& profile.xml
 	saxon profile.xml timing-profile.xsl  > profile2.html
 
 log:
@@ -172,7 +166,6 @@ clean:
 	rm -f stylebear style.xml customize.xml teixsl.html
 	rm -rf release
 	(cd Test; make clean)
-	(cd Test2; make clean)
 	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*

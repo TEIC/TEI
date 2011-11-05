@@ -7,7 +7,7 @@
     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
     version="2.0">
 
-<xsl:import href="../xhtml/tei.xsl"/>
+<xsl:import href="../html/tei.xsl"/>
 
 <doc scope="stylesheet" xmlns="http://www.oxygenxml.com/ns/doc/xsl" >
     <desc>
