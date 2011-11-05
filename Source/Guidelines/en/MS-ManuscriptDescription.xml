@@ -1211,7 +1211,10 @@ within it.</p>
 
 <div type="div3" xml:id="mscoit"><head>The <gi>msItem</gi> and <gi>msItemStruct</gi> Elements</head>
 <!-- I'm for killing off msItemStruct, personally -->
-<p>Each discrete item in a manuscript or manuscript part can be described within a distinct <gi>msItem</gi> or <gi>msItemStruct</gi> element, and may be classified using the <att>class</att> attribute.</p>
+<p>Each discrete item in a manuscript or manuscript part can be
+described within a distinct <gi>msItem</gi> or <gi>msItemStruct</gi>
+element, and may be classified using the <att>class</att>
+attribute.</p>
 <p>These are the possible component elements of <gi>msItem</gi> and <gi>msItemStruct</gi>.
 <specList>
 <specDesc key="author"/>
@@ -1408,19 +1411,33 @@ k<ex>onungu</ex>r</incipit>
 þo t<ex>il</ex> fullra aura</explicit>
 </msItem>
 </msContents></egXML>
-The value of the <att>class</att> attribute
-should specify the identifier used for the appropriate classification
-within a <gi>taxonomy</gi> element, defined in the <gi>classDecl</gi>
-element of the TEI Header (<ptr target="#HD55"/>), as
-shown here:
+The value used for the <att>class</att> attribute
+in this example  points to a
+<gi>category</gi> element with the identifier <code>law</code>, which
+defines the classification  concerned. Such <gi>category</gi> elements
+will typically appear within 
+a <gi>taxonomy</gi> element,  within the <gi>classDecl</gi>
+element of the TEI Header (<ptr target="#HD55"/>) as
+in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <classDecl><taxonomy>
 <!-- -->
 <category xml:id="law">
-<catDesc>Laws</catDesc>
+<catDesc>Legislation</catDesc>
+</category>
+<category xml:id="war">
+<catDesc>Military topics</catDesc>
 </category>
 <!-- -->
 </taxonomy></classDecl>
+</egXML>
+More than one classification may apply to a single item. Another text,
+concerned with legislation about military topics might thus be
+specified as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="non">
+<msItem class="#law #war">
+<!-- details of the item here -->
+</msItem>
 </egXML></p>
 </div>
 <div type="div3" xml:id="mslangs">
