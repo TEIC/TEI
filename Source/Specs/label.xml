@@ -9,8 +9,8 @@
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="label">
   <equiv/>
   <gloss version="2009-01-06" xml:lang="fr">étiquette</gloss>
-  <desc>contains the label associated with an item in a list; in glossaries, marks the term being
-    defined.</desc>
+  <desc>contains any label or heading used to identify part of a text,
+  typically but not exclusively in a list or glossary.</desc>
   <desc version="2007-12-20" xml:lang="kr">목록의 항목과 관련된 표지를 포함한다; 용어집에서는 정의되고 있는 용어를 표지한다.</desc>
   <desc version="2007-05-02" xml:lang="zh-tw">包含和列表中某項目相關聯的標號；在詞彙表中則用來標記被定義的字詞。</desc>
   <desc version="2008-04-05" xml:lang="ja"> リスト中の項目に関連するラベルを示す．用語集においては，定義される用 語を示す． </desc>
@@ -28,9 +28,11 @@
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <exemplum xml:lang="en">
-    <p>Labels are most commonly used for the headwords in glossary lists; note the use of the global
-        <att>xml:lang</att> attribute to set the default language of the glossary list to Middle
-      English, and identify the glosses and headings as modern English or Latin:</p>
+    <p>Labels are commonly used for the headwords in glossary
+    lists; note the use of the global <att>xml:lang</att> attribute to
+    set the default language of the glossary list to Middle English,
+    and identify the glosses and headings as modern English or
+    Latin:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <list type="gloss" xml:lang="enm">
         <head xml:lang="en">Vocabulary</head>
@@ -107,7 +109,7 @@
       </egXML>
   </exemplum>
   <exemplum version="2008-04-06" xml:lang="fr">
-    <p xmlns:teix="http://www.tei-c.org/ns/Examples">On emploie aussi <gi>label</gi> dans d'autres listes sructurées, comme dans cet extrait du
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">On emploie aussi <gi>label</gi> dans d'autres listes structurées, comme dans cet extrait du
         journal de Jules Renard.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Renard_Journal">
       <list type="gloss">
@@ -205,7 +207,18 @@
         <item>I went to Crassy, and staid two days.</item>
       </list>
     </egXML>
-  </exemplum>
+<p>Note that the <gi>label</gi> might also appear within the
+<gi>item</gi> rather than as its sibling. Though syntactically valid,
+this usage is not recommended TEI practice.</p> </exemplum>
+  <exemplum xml:lang="en">
+<p>Labels may also be used for labelled paragraphs where these are not 
+treated as full divisions. Note that, in this case,  the
+<gi>label</gi> element appears <emph>within</emph> the <gi>p</gi>
+element, rather than as a preceding sibling.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#GibAut">
+<!-- example needed -->
+</egXML>
+</exemplum>
   <listRef>
     <ptr target="#COLI" type="div2"/>
   </listRef>
