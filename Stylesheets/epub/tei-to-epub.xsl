@@ -43,12 +43,12 @@
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:param name="useHeaderFrontMatter">false</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="autoHead">true</xsl:param>
   <xsl:param name="autoToc">true</xsl:param>
   <xsl:param name="bottomNavigationPanel">false</xsl:param>
   <xsl:param name="coverimage"/>
+  <xsl:param name="createanttask">false</xsl:param>
   <xsl:param name="cssFile">../tei.css</xsl:param>
   <xsl:param name="cssODDFile">../odd.css</xsl:param>
   <xsl:param name="cssPrintFile">../epub-print.css</xsl:param>
@@ -57,12 +57,13 @@
   <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
   <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
   <xsl:param name="fixgraphicsurl">false</xsl:param>
-  <xsl:param name="createanttask">false</xsl:param>
+  <xsl:param name="footnoteBackLink">true</xsl:param>
+  <xsl:param name="inputDir">.</xsl:param>
   <xsl:param name="institution"/>
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
-  <xsl:param name="inputDir">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
+  <xsl:param name="outputTarget">epub</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="subject"/>
@@ -70,7 +71,7 @@
   <xsl:param name="tocFront">true</xsl:param>
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
-  <xsl:param name="outputTarget">epub</xsl:param>
+  <xsl:param name="useHeaderFrontMatter">false</xsl:param>
 
   <xsl:key name="Timeline" match="tei:timeline" use="1"/>
   <xsl:key name="Object" match="tei:when" use="substring(@corresp,2)"/>

@@ -223,7 +223,7 @@
         <xsl:when test="self::tei:ptr">true</xsl:when>
         <xsl:when test="self::tei:publisher">true</xsl:when>
         <xsl:when test="self::tei:pubPlace">true</xsl:when>
-        <xsl:when test="self::tei:q[*[not(tei:is-inline(.))]]">false</xsl:when>
+        <xsl:when test="self::tei:q[tei:l]">false</xsl:when>
         <xsl:when test="self::tei:q">true</xsl:when>
         <xsl:when test="self::tei:said">true</xsl:when>
         <xsl:when test="self::tei:ref">true</xsl:when>

@@ -478,10 +478,11 @@
         <xsl:param name="bookmark-id"/>
         <xsl:param name="bookmark-name"/>
 
-
         <!-- Process Child elements -->
         <xsl:for-each-group select="current-group()"
 			    group-starting-with="*[not(tei:is-inline(.))]">
+
+<xsl:message>[ <xsl:value-of select="name(.)"/>: <xsl:value-of select="."/> ]</xsl:message>
             <xsl:choose>
                 <!-- if the current item is a block element, we process that one,
                      and then take call this function recursively was all the other
@@ -1099,13 +1100,12 @@
     
     <xsl:template match="tei:q|tei:said|tei:soCalled">
       <xsl:choose>
+	<xsl:when test="*[not(tei:is-inline(.))] or parent::tei:cit|parent::tei:div">
+	  <xsl:call-template name="block-element"/>
+	</xsl:when>
 	<xsl:when test="tei:l">
 	  <xsl:apply-templates/>
 	</xsl:when>
-	<xsl:when test="teix:egXML|tei:list|parent::tei:cit|parent::tei:div">
-	  <xsl:call-template name="block-element"/>
-	</xsl:when>
-
 	<xsl:otherwise>
 	  <w:r>
 	    <w:t>
