@@ -1032,6 +1032,17 @@
 	<xsl:apply-templates/>
 	<xsl:text>]</xsl:text>
       </xsl:when>
+      <xsl:when test="@type='footnote'">
+	<div class="note">
+	  <xsl:call-template name="makeAnchor">
+	    <xsl:with-param name="name" select="$identifier"/>
+	  </xsl:call-template>
+	  <span class="noteNumber">
+	    <xsl:number/>
+	  </span>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
       <xsl:when test="(@place='display' or tei:q) 
 		      and (parent::tei:div or parent::tei:p or parent::tei:body)">
 	<div class="note">

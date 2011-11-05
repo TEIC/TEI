@@ -448,6 +448,11 @@
 	       <xsl:when test="not($body='')">
 		 <xsl:value-of select="$body"/>
 	       </xsl:when>
+               <xsl:when test="$ptr and @type='footnote'">
+		 <xsl:text>[</xsl:text>
+		 <xsl:number level="any"/>
+		 <xsl:text>]</xsl:text>
+	       </xsl:when>
 	       <xsl:when test="$ptr and id($W)">
 		 <xsl:apply-templates mode="xref" select="id($W)">
 		   <xsl:with-param name="minimal" select="$minimalCrossRef"/>

@@ -287,6 +287,7 @@
   <xsl:template name="makeTEILink">
       <xsl:param name="ptr" as="xs:boolean" select="false()"/>
       <!-- is this a ptr or a ref? -->
+
     <xsl:choose>
       <!-- If there is a target attribute starting with #, it is always a local reference -->
       <xsl:when test="@target and starts-with(@target,'#')">
