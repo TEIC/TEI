@@ -71,7 +71,7 @@ html-web.stamp:
 	rm -rf Guidelines-web-tmp 
 	mkdir Guidelines-web-tmp
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
-	cp -r Source/Guidelines/${INPUTLANGUAGE}/Images webnav/* odd.css guidelines.css COPYING.txt guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html/ 
+	cp -r Source/Guidelines/${INPUTLANGUAGE}/Images webnav/* odd.css guidelines.css guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html/ 
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
 		pageLayout=CSS \
@@ -245,7 +245,6 @@ dist-source.stamp: p5subset.xml
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
 	tar -c -f - --exclude "*~" --exclude .svn 	\
 	p5subset.xml \
-	COPYING.txt \
 	Makefile \
 	ReleaseNotes  \
 	Source \

@@ -965,8 +965,39 @@ their encoding.</p>
         </div>
         <hr/>
       </xsl:if>
-      <xsl:apply-templates 
-	  select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability"/>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+	<div class="availability">
+	  <xsl:apply-templates/>
+	  <xsl:choose>
+	    <xsl:when test="count(tei:licence)&gt;1">
+	      <ol>
+		<xsl:for-each select="tei:licence">
+		  <li>
+		    <xsl:choose>
+		      <xsl:when test="@target">
+			<a href="{@target}"><xsl:value-of select="@target"/></a>
+		      </xsl:when>
+		      <xsl:otherwise>			
+			<xsl:apply-templates/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </li>
+		</xsl:for-each>
+	      </ol>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <div class="licence">
+		<xsl:for-each select="tei:licence">
+		  <a href="{@target}">
+		    <xsl:apply-templates/>
+		  </a>
+		</xsl:for-each>
+	      </div>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</div>
+      </xsl:for-each>
       <address>
 	<br/>
         <xsl:text>Version </xsl:text>
@@ -990,11 +1021,8 @@ their encoding.</p>
       </xsl:if>
   </xsl:template>
 
-<xsl:template match="tei:licence">
-  <div class="licence">
-    <xsl:apply-templates/>
-  </div>
-</xsl:template>
+  <xsl:template match="tei:licence"/>
+
 <xsl:template name="bodyHook">
   <xsl:if test="not($googleAnalytics='')">
     <script type="text/javascript" src="udm-dom.js">
