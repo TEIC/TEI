@@ -1104,15 +1104,47 @@ glyphes non standard</head>
         </div>
         <hr/>
       </xsl:if>
+      <xsl:for-each
+	  select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+	<div class="availability">
+	  <xsl:apply-templates/>
+	  <xsl:choose>
+	    <xsl:when test="count(tei:licence)&gt;1">
+	      <ol>
+		<xsl:for-each select="tei:licence">
+		  <li>
+		    <xsl:choose>
+		      <xsl:when test="@target">
+			<a href="{@target}"><xsl:value-of select="@target"/></a>
+		      </xsl:when>
+		      <xsl:otherwise>			
+			<xsl:apply-templates/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </li>
+		</xsl:for-each>
+	      </ol>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <div class="licence">
+		<xsl:for-each select="tei:licence">
+		  <a href="{@target}">
+		    <xsl:apply-templates/>
+		  </a>
+		</xsl:for-each>
+	      </div>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</div>
+      </xsl:for-each>
+
       <address>
-        <xsl:call-template name="copyrightStatement"/>
-        <xsl:text> Licensed under the GPL. See file COPYING.txt.</xsl:text>
-        <xsl:text> Copying and redistribution is permitted and encouraged. </xsl:text>
-        <br/>
+	<br/>
         <xsl:text>Version </xsl:text>
-        <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
-        <xsl:text> This page generated on </xsl:text>
-        <xsl:call-template name="whatsTheDate"/>
+        <xsl:value-of 
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+        <xsl:text>This page generated on </xsl:text> 
+	<xsl:call-template name="whatsTheDate"/>
       </address>
     </div>
     <xsl:if test="not($googleAnalytics='')">
