@@ -205,7 +205,7 @@ valid: check
 	${SAXON} ${SAXON_ARGS}  -s:${DRIVER} -xsl:Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
 	${SAXON} ${SAXON_ARGS}  -o:ValidatorLog.xml -s:${DRIVER} -xsl:Utilities/validator.xsl 
 	cat ValidatorLog.xml
-	(grep -q "<Note>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo ERROR found; false; fi)
+	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo ERROR found; false; fi)
 	rm ValidatorLog.xml Utilities/pointerattributes.xsl Source.xml
 	#@echo BUILD: Check validity with xmllint
 	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
