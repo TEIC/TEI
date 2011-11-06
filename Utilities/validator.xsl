@@ -4,13 +4,16 @@
   <xsl:key name="IDENTS" match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
   <xsl:key name="EXIDS" match="teix:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
-  <xsl:template match="/">
-    <xsl:apply-templates/>
-    <xsl:for-each select="//*[@xml:id]">
-      <xsl:if test="count(key('IDS',@xml:id))&gt;1">
-	<xsl:message>ERROR: id <xsl:value-of select="@xml:id"/> used more than once</xsl:message>
-      </xsl:if>
-    </xsl:for-each>
+  <xsl:output indent="yes"/>
+    <xsl:template match="/">
+      <Messages>
+	<xsl:apply-templates/>
+	<xsl:for-each select="//*[@xml:id]">
+	  <xsl:if test="count(key('IDS',@xml:id))&gt;1">
+	    <ERROR>id <xsl:value-of select="@xml:id"/> used more than once</ERROR>
+	  </xsl:if>
+	</xsl:for-each>
+      </Messages>
   </xsl:template>
 
   <xsl:template match="text()"/>
@@ -25,24 +28,24 @@
 <xsl:template match="rng:ref[@name='data.enumerated']">
   <xsl:if
       test="not(../../tei:valList)">
-  <xsl:message>ERROR: 
+  <ERROR>
 	No valList in <xsl:value-of
 	select="ancestor::tei:attDef/@ident"/>@<xsl:value-of
 	select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
 	where datatype is enumerated
-  </xsl:message>
+  </
   </xsl:if>
 </xsl:template>
 
 <xsl:template match="tei:valList">
   <xsl:if
       test="not(../tei:datatype/rng:ref[@name='data.enumerated'])">
-  <xsl:message>ERROR: 
+  <ERROR>
 	valList in <xsl:value-of
 	select="ancestor::tei:attDef/@ident"/>@<xsl:value-of
 	select="ancestor::tei:elementSpec/@ident|ancestor::tei:classSpec/@ident"/>
 	where datatype is not enumerated
-  </xsl:message>
+  </
 
   </xsl:if>
 </xsl:template>
@@ -92,7 +95,7 @@
           <xsl:value-of select="substring-before($a,' ')"/>
         </xsl:variable>
         <xsl:if test="not(key('IDENTS',$k)/tei:attList//tei:attDef[@ident=$this])">
-          <xsl:message>ERROR: <xsl:value-of select="$me"/> refers to <xsl:value-of select="$this"/> in <xsl:value-of select="$k"/>, which does not exist</xsl:message>
+          <ERROR><xsl:value-of select="$me"/> refers to <xsl:value-of select="$this"/> in <xsl:value-of select="$k"/>, which does not exist</ERROR>
         </xsl:if>
         <xsl:call-template name="checkAtts">
           <xsl:with-param name="a" select="substring-after($a,' ')"/>
@@ -169,11 +172,11 @@
   </xsl:template>
   <xsl:template name="Remark">
     <xsl:param name="value"/>
-    <xsl:message>Note: <xsl:value-of select="name(.)"/> points to ID not in my namespace: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </xsl:message>
+    <Note><xsl:value-of select="name(.)"/> points to ID not in my namespace: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </Note>
   </xsl:template>
   <xsl:template name="Error">
     <xsl:param name="value"/>
-    <xsl:message>ERROR: <xsl:value-of select="name(.)"/> points to non-existent <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </xsl:message>
+    <ERROR><xsl:value-of select="name(.)"/> points to non-existent <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </ERROR>
   </xsl:template>
   <xsl:template name="Warning">
     <xsl:param name="value"/>
@@ -182,8 +185,8 @@
       <xsl:text>@</xsl:text>
       <xsl:value-of select="name(.)"/>
     </xsl:variable>
-    <xsl:message>Note: <xsl:value-of select="$where"/> points to something I cannot find: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) 
-</xsl:message>
+    <Note><xsl:value-of select="$where"/> points to something I cannot find: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) 
+</Note>
   </xsl:template>
   <xsl:template name="checkexamplelinks">
     <xsl:param name="stuff"/>
