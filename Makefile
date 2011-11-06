@@ -199,13 +199,14 @@ valid: check
 	./run-onvdl  p5valid.nvdl  v.xml
 	rm v.body v.header
 	@echo BUILD: Check validity with Schematron
-	${SAXON} ${SAXON_ARGS}  p5.isosch Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} p5.isosch.xsl
+	${SAXON} ${SAXON_ARGS}  -s:p5.isosch -xsl:Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
+	${SAXON} ${SAXON_ARGS}  -s:${DRIVER} -xsl:p5.isosch.xsl
 	@echo BUILD: Check validity with local XSLT script
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} Utilities/validator.xsl
-	rm Utilities/pointerattributes.xsl
-	rm Source.xml
+	${SAXON} ${SAXON_ARGS}  -s:${DRIVER} -xsl:Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
+	${SAXON} ${SAXON_ARGS}  -o:ValidatorLog.xml -s:${DRIVER} -xsl:Utilities/validator.xsl 
+	cat ValidatorLog.xml
+	grep -q "<ERROR>" ValidatorLog.xml || false
+	rm ValidatorLog.xml Utilities/pointerattributes.xsl Source.xml
 	#@echo BUILD: Check validity with xmllint
 	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
 	@echo BUILD: Check for places with no examples
@@ -497,6 +498,7 @@ clean:
 	rm -rf catalogue.* modList
 	rm -f       p5.xml
 	rm -f       Guidelines.epub
+	rm -f       Guidelines.mobi
 	rm -f       Test/detest.rnc
 	rm -f       Test/detest.rng
 	rm -f       Test/detest.dtd
