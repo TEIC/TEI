@@ -549,7 +549,21 @@ independently of them. </p>
 </p>
 
 <p>The elements <gi>surface</gi> and <gi>zone</gi> were introduced
-above, <!-- in section <ptr target="#PHFAX"/>-->. The element
+above, in section <ptr target="#PHFAX"/>. Most writing is linear, in the sense that it is composed of
+discrete tokens organized physically into groups, typically organized
+in a sequence corresponding with the way they are intended to be
+read. Depending on the directionality of the writing system used,
+this might be any combination of top-down and left to right, or vice
+versa. It thus seems convenient to introduce an element <gi>line</gi> to
+hold a complete group of such tokens. 
+Where, however, the lineation is
+not considered significant, any group of tokens may be
+indicated using the <gi>zone</gi> element. The
+<gi>seg</gi> element described in section <ptr
+target="#SASE"/> may also be used to indicate smaller sequences of tokens
+within <gi>zone</gi>, or <gi>line</gi> as appropriate. 
+</p>
+<p>The element
 <gi>patch</gi> is useful in cases where some or all of the written
 surfaces are composed of physically distinct scraps. In the following
 example, taken from the Walt Whitman archive, two pieces of newsprint
@@ -566,20 +580,6 @@ contain additional written zones themselves (such as the numbers in
 this case). The <gi>patch</gi> element may be used to represent such
 <q>sub-surfaces</q>. </p>
 
-<p>Most writing is linear, in the sense that it is composed of
-discrete tokens organized physically into groups, typically organized
-in a sequence corresponding with the way they are intended to be
-read. Depending on the directionality of the writing system used,
-this might be any combination of top-down and left to right, or vice
-versa. It thus seems convenient to introduce an element <gi>line</gi> to
-hold a complete group of such tokens. 
-Where, however, the lineation is
-not considered significant, any group of tokens may be
-indicated using the <gi>zone</gi> element. The
-<gi>seg</gi> element described in section <ptr
-target="#SASE"/> may also be used to indicate smaller sequences of tokens
-within <gi>zone</gi>, or <gi>line</gi> as appropriate. 
-</p>
 
 
 <p>Using these elements, the Whitman draft above might be encoded as
@@ -2277,13 +2277,14 @@ taken from the Walt Whitman archive:
 <head>http://www.whitmanarchive.org/resources/sleepers/</head>
          </figure></p>   <!-- loc.00295 detail -->
 <p>In this example, the whole of what was originally the 14th section
-has been marked for deletion, both by horizontal and vertical lines,
+of the poem has been marked for deletion, both by horizontal and vertical lines,
 and by the metamarks resembling the <q>delta</q> deletion symbol to
 left and right of the section. The deletion itself might be encoded 
-by using the normal <gi>del</gi> or <gi>delSpan</gi> element. 
+by using the normal <gi>del</gi> or <gi>delSpan</gi> element, and the
+metamarks by the <gi>metamark</gi> element. 
 This is quite a different case from that of the next example, in which the
 writer does not intend to suppress the content, but only to mark that
-it has been transferred or reused. </p>
+it has been copied to another manuscript or reused. </p>
 <p>
 <figure>
 <graphic url="Images/whitman-02.jpg" width="70%"/>
@@ -2341,7 +2342,7 @@ which is subsequently reaffirmed, for example by inking it over; and
 <term>clarification</term>, where the first version was badly written
 and has been rewritten for clarity. The element <gi>retrace</gi> is
 provided for both cases; its <att>cause</att> attribute may be used to
-distinguish them.
+distinguish these or other cases.
 <specList>
          <specDesc key="retrace" />
       </specList>
@@ -2425,7 +2426,7 @@ any kind of cancellation. It points to the element or elements which
 are being cancelled. These components need not be contiguous, provided
 that the cancellation is clearly a single act; each distinct act of
 cancellation requires a distinct <gi>undo</gi> element, however. Either
-of the attributes <att>target</att> or <gi>spanTo</gi> may be used to
+of the attributes <att>target</att> or <att>spanTo</att> may be used to
 indicate the passages concerned. </p>
 
       <p>Consider the following imaginary example : 
