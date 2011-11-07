@@ -77,11 +77,11 @@ common:
 
 doc:
 	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
-	saxon -o:customize.xml param.xml doc/param.xsl 
-	saxon -o:style.xml param.xml  doc/paramform.xsl 
-	saxon -o:release/common/doc/tei-xsl-common2/index.html teixsl.xml profiles/default/html/to.xsl 
-	saxon -o:release/common/doc/tei-xsl-common2/style.html style.xml  profiles/default/html/to.xsl 
-	saxon -o:release/common/doc/tei-xsl-common2/customize.html customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
+	saxon -o:doc/customize.xml doc/param.xml doc/param.xsl 
+	saxon -o:doc/style.xml doc/param.xml  doc/paramform.xsl 
+	saxon -o:release/common/doc/tei-xsl-common2/index.html doc/teixsl.xml profiles/default/html/to.xsl 
+	saxon -o:release/common/doc/tei-xsl-common2/style.html doc/style.xml  profiles/default/html/to.xsl 
+	saxon -o:release/common/doc/tei-xsl-common2/customize.html doc/customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
 	cp doc/teixsl.png teixsl.xml style.xml customize.xml release/common/doc/tei-xsl-common
 	cp VERSION tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
 
@@ -161,7 +161,7 @@ clean:
 	rm -f tei-xsl-*.zip	
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
-	rm -f stylebear style.xml customize.xml teixsl.html
+	rm -f stylebear doc/style.xml doc/customize.xml teixsl.html
 	rm -rf release
 	(cd Test; make clean)
 	rm -rf tei-p5-xsl_*
