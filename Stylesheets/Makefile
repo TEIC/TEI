@@ -72,23 +72,23 @@ p5:
 
 common: 
 	@echo BUILD Build for P5, common files and documentation
-	test -d release/common2/xml/tei/stylesheet || mkdir -p release/common2/xml/tei/stylesheet
-	cp VERSION *.css i18n.xml release/common2/xml/tei/stylesheet
+	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
+	cp VERSION *.css i18n.xml release/common/xml/tei/stylesheet
 
 doc:
-	test -d release/common2/doc/tei-xsl-common || mkdir -p release/common2/doc/tei-xsl-common
+	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
 	saxon -o:customize.xml param.xml doc/param.xsl 
 	saxon -o:style.xml param.xml  doc/paramform.xsl 
-	saxon -o:release/common2/doc/tei-xsl-common2/index.html teixsl.xml profiles/default/html/to.xsl 
-	saxon -o:release/common2/doc/tei-xsl-common2/style.html style.xml  profiles/default/html/to.xsl 
-	saxon -o:release/common2/doc/tei-xsl-common2/customize.html customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
-	cp doc/teixsl.png teixsl.xml style.xml customize.xml release/common2/doc/tei-xsl-common
-	cp VERSION tei.css ChangeLog LICENSE release/common2/doc/tei-xsl-common
+	saxon -o:release/common/doc/tei-xsl-common2/index.html teixsl.xml profiles/default/html/to.xsl 
+	saxon -o:release/common/doc/tei-xsl-common2/style.html style.xml  profiles/default/html/to.xsl 
+	saxon -o:release/common/doc/tei-xsl-common2/customize.html customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
+	cp doc/teixsl.png teixsl.xml style.xml customize.xml release/common/doc/tei-xsl-common
+	cp VERSION tei.css ChangeLog LICENSE release/common/doc/tei-xsl-common
 
 oxygendoc:
 	test -f $(OXY) || exit 1
 	@echo using oXygen stylesheet documentation generator
-	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common2/doc/tei-xsl-common2/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common2/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 teioo.jar:
 	(cd odt; jar cf ../teioo.jar META-INF/manifest.xml mimetype TypeDetection.xcu *xsl *ott teilite.dtd )
@@ -121,8 +121,8 @@ installcommon: doc common
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
 	mkdir -p ${PREFIX}/share/doc/
 	mkdir -p ${PREFIX}/share/xml/
-	(cd release/common2/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
-	(cd release/common2/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
+	(cd release/common/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
+	(cd release/common/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
 install: installp5 installcommon
 
@@ -167,7 +167,7 @@ clean:
 	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
-	-(cd debian-tei-xsl-common2/debian;  rm -rf tei-xsl-common)
+	-(cd debian-tei-xsl-common/debian;  rm -rf tei-xsl-common)
 	-(cd debian-tei-p5-xsl2/debian;     rm -rf tei-p5-xsl2)
 	rm -f teioo.jar
 	rm -rf docx/ImageInfo/bin

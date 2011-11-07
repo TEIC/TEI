@@ -580,7 +580,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:template>
       
-    <xsl:template match="tei:note/tei:p">
+    <xsl:template match="tei:note[@place]/tei:p">
       <xsl:apply-templates/>
     </xsl:template>
 
@@ -816,11 +816,7 @@ of this software, even if advised of the possibility of such damage.
             <w:pPr>
                 <w:pStyle w:val="zzSTDTitle"/>
             </w:pPr>
-            <w:r>
-                <w:t>
-                    <xsl:call-template name="generateTitle"/>
-                </w:t>
-            </w:r>
+	    <xsl:call-template name="generateTitle"/>
         </w:p>
     </xsl:template>
     
