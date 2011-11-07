@@ -51,6 +51,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
 
 
+
 <xsl:key name="XDS" match="xd:doc" use="@class"/>
   <xsl:param name="startAttribute"/>
   <xsl:param name="endAttribute"/>
@@ -82,10 +83,10 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:for-each select="TEI/text/body/div[@xml:id]">
   <xsl:call-template name="listcgi">
-    <xsl:with-param name="File">common/tei-param.xsl</xsl:with-param>
+    <xsl:with-param name="File">common2/tei-param.xsl</xsl:with-param>
   </xsl:call-template>
   <xsl:call-template name="listcgi">
-    <xsl:with-param name="File">html/tei-param.xsl</xsl:with-param>
+    <xsl:with-param name="File">xhtml2/tei-param.xsl</xsl:with-param>
   </xsl:call-template>
 </xsl:for-each>
 <xsl:text disable-output-escaping="yes">
@@ -185,11 +186,11 @@ return "";
        <table>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
-	       name="File">common/tei-param.xsl</xsl:with-param>
+	       name="File">common2/tei-param.xsl</xsl:with-param>
 	 </xsl:call-template>
 	 <xsl:call-template name="list">
 	   <xsl:with-param
-	       name="File">html/tei-param.xsl</xsl:with-param>
+	       name="File">xhtml2/tei-param.xsl</xsl:with-param>
 	 </xsl:call-template>
        </table>
    </xsl:for-each>

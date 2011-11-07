@@ -79,7 +79,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:with-param name="Type">common</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:call-template name="listparams">
-	    <xsl:with-param name="Type">html</xsl:with-param>
+	    <xsl:with-param name="Type">xhtml</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:call-template name="listparams">
 	    <xsl:with-param name="Type">fo</xsl:with-param>
@@ -96,7 +96,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="Type">common</xsl:with-param>
 	</xsl:call-template>
 	<xsl:call-template name="listtemplates">
-	  <xsl:with-param name="Type">html</xsl:with-param>
+	  <xsl:with-param name="Type">xhtml</xsl:with-param>
 	</xsl:call-template>
 	<xsl:call-template name="listtemplates">
 	  <xsl:with-param name="Type">fo</xsl:with-param>
@@ -115,6 +115,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="Path">
     <xsl:text>../</xsl:text>
     <xsl:value-of select="$Type"/>
+    <xsl:text>2</xsl:text>
   </xsl:variable>
   <xsl:for-each select="document(concat($Path,'/tei-param.xsl'))">
     <xsl:if test="count(key('XDS',$I))&gt;0">
@@ -153,9 +154,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="Type"/>
   <xsl:variable name="I" select="@xml:id"/>
   <xsl:variable name="Path">
-    <xsl:text>../</xsl:text>
-    <xsl:value-of select="$Type"/>
-  </xsl:variable>
+	<xsl:text>../</xsl:text>
+	<xsl:value-of select="$Type"/>
+	<xsl:text>2</xsl:text>
+	</xsl:variable>
+
     <xsl:for-each select="document(concat($Path,'/tei-param.xsl'))">
       <xsl:for-each select="key('XDS',$I)">
 	<xsl:if test="not(following-sibling::xsl:*[1]/self::xsl:template)">
