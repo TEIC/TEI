@@ -4,35 +4,35 @@ OXY=/usr/share/oxygen
 default: conversions-from conversions-to test-html test-latex oddbyexample odd2odd
 
 test-html:
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
 	diff -r -x .svn files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes1.xml ../../html/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
+	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
 	diff -r -x .svn files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../html/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false)
 	diff -r -x .svn files expected-results/testnotes2
 	rm -rf files
-	saxon -o:dummy  test.xml ../html/tei.xsl $(SAXONOPT)
-	saxon -o:dummy -versionmsg:off  test3.xml ../html/tei.xsl $(SAXONOPT)
-	saxon -o:dummy4 -versionmsg:off  test4.xml ../html/tei.xsl $(SAXONOPT)
+	saxon -o:dummy  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	echo differences:
 	diff dummy dummy4
 	diff dummy expected-results/dummy
-	saxon -o:test5.xhtml test5.xml ../html/tei.xsl  $(SAXONOPT)
+	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
 
 testsplit:
-	saxon test6.xml ../html/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
+	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
 
 
 test-latex:
 	saxon -o:test6.tex test6.xml ../slides/teilatex-slides.xsl $(SAXONOPT)
 	diff test6.tex expected-results/test6.tex
-	saxon -o:test5.tex test5.xml ../latex/tei.xsl  $(SAXONOPT)
+	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
 	diff test5.tex expected-results/test5.tex
-	saxon -o:test5.fo test5.xml ../fo/tei.xsl  $(SAXONOPT)
+	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
 	diff test5.fo expected-results/test5.fo
 
 odd2odd:
