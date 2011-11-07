@@ -7,7 +7,7 @@
     xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
     version="2.0">
 
-<xsl:import href="../html/tei.xsl"/>
+<xsl:import href="../xhtml2/tei.xsl"/>
 
 <doc scope="stylesheet" xmlns="http://www.oxygenxml.com/ns/doc/xsl" >
     <desc>
@@ -122,7 +122,7 @@ END
 #          }
 print "&lt;xsl:import href=\"";
 print $HOME;
-print "/tei/stylesheet/html/tei.xsl\"/>\n";
+print "/tei/stylesheet/xhtml2/tei.xsl\"/>\n";
 foreach $key (keys %Default) {
 my $Passed=$query->param($key);
 my $D=$Default{$key};

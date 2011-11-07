@@ -14,7 +14,7 @@
   <xsl:param name="cssFile"/>
   <xsl:param name="cssSecondaryFile"/>
   <xsl:param name="summaryDoc">false</xsl:param>
-  <xsl:include href="../common/tagdocs.xsl"/>
+  <xsl:include href="../common2/tagdocs.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the tagdocs module,

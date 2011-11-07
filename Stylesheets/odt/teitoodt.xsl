@@ -39,10 +39,10 @@
     >
 
 <!--
-  <xsl:import href="../common/header.xsl"/>
-  <xsl:import href="../common/i18n.xsl"/>
+  <xsl:import href="../common2/header.xsl"/>
+  <xsl:import href="../common2/i18n.xsl"/>
 -->
-  <xsl:import href="../common/core.xsl"/>
+  <xsl:import href="../common2/core.xsl"/>
   <xsl:param name="useFixedDate">false</xsl:param>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

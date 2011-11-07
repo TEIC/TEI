@@ -11,7 +11,7 @@
 		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" 
 		version="2.0" exclude-result-prefixes="iso tei teix dc
 						       html opf ncx smil">
-  <xsl:import href="../html/tei.xsl"/>
+  <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="epub-common.xsl"/>
   <xsl:import href="epub-preflight.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="no"/>

@@ -33,7 +33,7 @@
 
     <xsl:import href="placeholders.xsl"/>
 
-    <xsl:import href="../../common/functions.xsl"/>
+    <xsl:import href="../../common2/functions.xsl"/>
     <xsl:import href="../utils/functions.xsl"/>
     <xsl:import href="../utils/variables.xsl"/>
     <xsl:import href="../utils/identity/identity.xsl"/>
@@ -41,9 +41,9 @@
     <xsl:import href="../utils/maths/mml2omml.xsl"/>  
 
 
-    <xsl:import href="../../common/core.xsl"/>
+    <xsl:import href="../../common2/core.xsl"/>
 
-    <xsl:import href="../../common/msdescription.xsl"/>
+    <xsl:import href="../../common2/msdescription.xsl"/>
 
     <!-- Deals with dynamic text creation such as toc -->
     <xsl:include href="dynamic/dynamic.xsl"/>

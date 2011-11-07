@@ -7,8 +7,8 @@
     version="2.0"
 >
 
-  <XSL:import href="../common/odds.xsl"/>
-  <XSL:import href="../common/i18n.xsl"/>
+  <XSL:import href="../common2/odds.xsl"/>
+  <XSL:import href="../common2/i18n.xsl"/>
 
   <XSL:key name="EQUIVFILES" match="equiv" use="@filter"/>
   <XSL:key name="MEMBERS" match="elementSpec" use="classes/memberOf/@key"/>

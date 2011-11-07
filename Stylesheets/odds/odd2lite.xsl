@@ -13,10 +13,10 @@
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 exclude-result-prefixes="fo a tei html s rng sch xsi teix xs"
                 version="2.0">
-  <xsl:import href="../common/verbatim.xsl"/>
+  <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../common/tei.xsl"/>
-  <xsl:include href="../common/tagdocs.xsl"/>
+  <xsl:import href="../common2/tei.xsl"/>
+  <xsl:include href="../common2/tagdocs.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making TEI Lite XML from ODD </p>

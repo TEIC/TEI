@@ -13,7 +13,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="xlink dbk rng tei teix xhtml a html xs xsl"
                 version="2.0">
-   <xsl:import href="../../../fo/tei.xsl"/>
+   <xsl:import href="../../../fo2/tei.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 

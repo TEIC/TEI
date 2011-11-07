@@ -10,7 +10,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="html a fo rng tei teix teidocx"
                 version="2.0">
-  <xsl:import href="../common/tei.xsl"/>
+  <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -67,7 +67,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="textcrit.xsl"/>
   <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>
-  <xsl:include href="../common/verbatim.xsl"/>
+  <xsl:include href="../common2/verbatim.xsl"/>
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">

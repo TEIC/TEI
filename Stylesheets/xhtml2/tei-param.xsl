@@ -298,7 +298,7 @@ will generate an &lt;h2&gt;</p>
    </doc>
   <xsl:template name="logoPicture">
       <a class="framelogo" href="http://www.tei-c.org/Stylesheets/">
-         <img src="http://www.tei-c.org/release/common/doc/tei-xsl-common/teixsl.png" vspace="5" width="124"
+         <img src="http://www.tei-c.org/release/common2/doc/tei-xsl-common/teixsl.png" vspace="5" width="124"
               height="161"
               border="0"
               alt="created by TEI XSL Stylesheets"/>

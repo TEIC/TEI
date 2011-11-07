@@ -10,7 +10,7 @@
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="tei xlink xhtml m"
                 version="2.0">
-  <xsl:import href="../html/tei.xsl"/>
+  <xsl:import href="../xhtml2/tei.xsl"/>
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

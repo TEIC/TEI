@@ -49,7 +49,7 @@ XSL LaTeX stylesheet to make slides
                 xmlns:map="http://apache.org/cocoon/sitemap/1.0"
                 exclude-result-prefixes="a s map atom xhtml teix tei xsl rng"
                 version="2.0">
-  <xsl:import href="../latex/tei.xsl"/>
+  <xsl:import href="../latex2/tei.xsl"/>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:variable name="docClass">beamer</xsl:variable>

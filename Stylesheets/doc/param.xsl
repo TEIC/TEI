@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:output indent="yes" encoding="utf-8" omit-xml-declaration="yes"/>
 
-<xsl:include href="../common/verbatim.xsl"/>
+<xsl:include href="../common2/verbatim.xsl"/>
 
 <xsl:template match="div">
   <xsl:copy>

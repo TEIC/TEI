@@ -32,7 +32,7 @@
                 exclude-result-prefixes="a cp dc dcterms dcmitype prop
 					  iso m mml mo mv o pic r rel   html    tbx tei teidocx v xs ve w10 w wne wp">
 
-	  <xsl:import href="../../common/functions.xsl"/>
+	  <xsl:import href="../../common2/functions.xsl"/>
 	  <xsl:import href="../utils/maths/omml2mml.xsl"/>
 	  <xsl:import href="../utils/functions.xsl"/>
 	  <xsl:import href="../utils/variables.xsl"/>

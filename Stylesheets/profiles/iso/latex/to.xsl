@@ -13,7 +13,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="xlink dbk rng tei teix xhtml a html  xs xsl"
                 version="2.0">
-   <xsl:import href="../../../latex/tei.xsl"/>
+   <xsl:import href="../../../latex2/tei.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
 
 

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="teitohtml">
+<!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id$
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert TEI documents into HTML files.
+ -->
+  <!-- Path to TEI XML file. -->
+  <property name="inputFile" value=""/>
+  <!-- Path where the output ePUB file will be saved. -->
+  <property name="outputFile" value=""/>
+  <!-- which profile -->
+  <property name="profile" value="default"/>
+  <!-- where does oxygen keep stuff -->
+  <property name="oxygenlib" value=""/>
+  <!-- Stylesheet for transformation -->
+  <property name="stylesheetFile"  value="../profiles/${profile}/html/to.xsl"/>
+  <property name="odd2oddxsl" value="../odds/odd2odd.xsl"/>
+  <property name="odd2litexsl"     value="../odds/odd2lite.xsl"/>
+  <dirname property="inputFileDir" file="${inputFile}"/>
+  <dirname property="outputDir" file="${outputFile}"/>
+  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
+  <path id="classpath">
+    <pathelement path="${java.class.path}"/>
+  </path>
+  <!--  <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>-->
+  <condition property="processODD">
+    <equals arg1="${odd}" arg2="true"/>
+  </condition>
+  <target name="setup">
+    <delete dir="${outputTempDir}"/>
+    <mkdir dir="${outputTempDir}"/>
+  </target>
+  <target name="notodd" unless="processODD">
+    <copy file="${inputFile}" tofile="${outputTempDir}/tmp2.xml" overwrite="true"/>
+  </target>
+
+  <target name="odd" if="processODD">
+    <echo>Do ODD processing</echo>
+    <xslt force="yes" style="${odd2oddxsl}" in="${inputFile}" out="${outputTempDir}/tmp1.xml" classpath="classpath">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <xslt force="yes" style="${odd2litexsl}" in="${outputTempDir}/tmp1.xml" out="${outputTempDir}/tmp2.xml" classpath="classpath">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
+      <param name="displayMode" expression="rnc"/>
+    </xslt>
+  </target>
+
+ 
+  <target name="transform">
+    <echo level="info">XSLT generate HTML files</echo>
+    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputFile}" classpath="classpath">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="directory" expression="file:///${outputTempDir}"/>
+      <param name="inputDir" expression="${inputFileDir}/"/>
+      <param name="cssFile" expression="${cssFile}" if="cssFile"/>
+      <!-- name of media overlay file -->
+      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+      <!-- file per page -->
+      <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+
+ <target name="dist" depends="setup,odd,notodd,transform,cleanup"/>
+
+  <target name="cleanup" unless="debug">  
+    <delete dir="${outputTempDir}"/>
+  </target>
+
+</project>

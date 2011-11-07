@@ -13,15 +13,15 @@
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 exclude-result-prefixes="tei html t a rng s iso tbx cals teix"
                 version="2.0">
-   <xsl:import href="../../../html/tei.xsl"/>
-   <xsl:import href="../../../html/oddprocessing.xsl"/>
+   <xsl:import href="../../../xhtml2/tei.xsl"/>
+   <xsl:import href="../../../xhtml2/oddprocessing.xsl"/>
    <xsl:import href="../../../odds/teiodds.xsl"/>
    <xsl:import href="../../../epub/tei-to-epub.xsl"/>
    <xsl:import href="../isoutils.xsl"/>
    <xsl:import href="../isotei-schema.xsl"/>
-   <xsl:import href="../html/web.xsl"/>
-   <xsl:import href="../html/tbx.xsl"/>
-   <xsl:import href="../html/cals.xsl"/>
+   <xsl:import href="../xhtml2/web.xsl"/>
+   <xsl:import href="../xhtml2/tbx.xsl"/>
+   <xsl:import href="../xhtml2/cals.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

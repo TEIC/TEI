@@ -8,7 +8,7 @@
     version="2.0">
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../html/tei.xsl"/>
+    <xsl:import href="../../../xhtml2/tei.xsl"/>
 
     <xsl:param name="filePerPage">false</xsl:param>
    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
