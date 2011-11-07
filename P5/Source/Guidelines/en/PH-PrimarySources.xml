@@ -539,6 +539,7 @@ representing the physical surfaces carrying them rather than
 independently of them. </p>
 <p>The following elements are available for this purpose:
 <specList>
+<specDesc key="sourceDoc"/>
 <specDesc key="surface"/>
 <specDesc key="zone"/>
 <specDesc key="patch" atts="binder height width flipping"/>
@@ -548,20 +549,19 @@ independently of them. </p>
 </specList>
 </p>
 
-<p>The elements <gi>surface</gi> and <gi>zone</gi> were introduced
-above, in section <ptr target="#PHFAX"/>. Most writing is linear, in the sense that it is composed of
-discrete tokens organized physically into groups, typically organized
-in a sequence corresponding with the way they are intended to be
-read. Depending on the directionality of the writing system used,
-this might be any combination of top-down and left to right, or vice
-versa. It thus seems convenient to introduce an element <gi>line</gi> to
-hold a complete group of such tokens. 
-Where, however, the lineation is
-not considered significant, any group of tokens may be
-indicated using the <gi>zone</gi> element. The
-<gi>seg</gi> element described in section <ptr
-target="#SASE"/> may also be used to indicate smaller sequences of tokens
-within <gi>zone</gi>, or <gi>line</gi> as appropriate. 
+<p>The elements <gi>surface</gi> and <gi>zone</gi> are described
+above, in section <ptr target="#PHFAX"/>. Most writing is linear, in
+the sense that it is composed of discrete tokens organized physically
+into groups, typically organized in a sequence corresponding with the
+way they are intended to be read. Depending on the directionality of
+the writing system used, this might be any combination of top-down and
+left to right, or vice versa. The element <gi>line</gi> may be used to
+hold a complete group of such tokens.  Where, however, the lineation
+is not considered significant, any group of tokens may be indicated
+using the <gi>zone</gi> element. The <gi>seg</gi> element described in
+section <ptr target="#SASE"/> may also be used to indicate smaller
+sequences of tokens within <gi>zone</gi>, or <gi>line</gi> as
+appropriate.
 </p>
 <p>The element
 <gi>patch</gi> is useful in cases where some or all of the written
@@ -2619,14 +2619,15 @@ some time after the original writing. An exception to this is where a
 false start or <soCalled>instant</soCalled> correction has been
 identified: the author starts to write, and then immediately corrects
 what has been written. </p>
-<p>The  <att>instant</att> attribute defined by this module may be
-used on any element which is a member of the <ident
-type="class">att.editLike</ident> class to modify this default assumption.
-         When the value of <att>instant</att> is set to <val>true</val>, 
-         the addition or deletion is considered to belong to the same change as
-         its parent element, while <code>false</code> means some change
-         later than that of its parent.</p>
-      <p> An example of false start can be seen in the following line: <figure>
+<p>The <att>instant</att> attribute defined by this module may be used
+on any element which is a member of the <ident
+type="class">att.editLike</ident> class to modify this default
+assumption.  When the value of <att>instant</att> is set to
+<val>true</val>, the addition or deletion is considered to belong to
+the same change as its parent element, while <code>false</code> means
+some change later than that of its parent.</p>
+      <p> An example of false start can be seen in the following line:
+      <figure>
 <graphic url="Images/whitman03a.jpg" width="70%"/>
 <head>http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg</head>
          </figure> in which we can detect the following sequence of events: <list
@@ -2846,10 +2847,10 @@ consequence of the other. To document this we need:
 other changes.</item>
 </list></p>
       
-<p>The existing element <gi>creation</gi> (within the TEI Header
-profile description) is defined as the appropriate location for all
-information relating to the genesis or production of a text. We modify
-it slightly to permit a new <gi>listChange</gi> element which contains
+<p>The element <gi>creation</gi> (within the TEI Header
+profile description) contains  all 
+information relating to the genesis or production of a text. It may
+contain a <gi>listChange</gi> element which contains
 a number of <gi>change</gi> elements, one for each identified change:
 <specList>
             <specDesc key="listChange" atts="ordered"/>
