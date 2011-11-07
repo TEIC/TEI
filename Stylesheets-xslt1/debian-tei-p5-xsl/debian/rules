@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+export DH_COMPAT=5
+DESTDIR = $(CURDIR)/debian/tei-p5-xsl/usr
+
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	touch configure-stamp
+
+
+build: build-stamp
+
+build-stamp: configure-stamp 
+	dh_testdir
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	(cd ..; make PREFIX=$(DESTDIR) installp5)
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+#	dh_installexamples config-dist.php
+#	dh_installinit
+#	dh_installcron
+	dh_installchangelogs 
+	dh_compress  --exclude=.xml --exclude=.xsl
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+# Build architecture-dependent files here.
+binary-arch: build install
+# We have nothing to do by default.
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure
