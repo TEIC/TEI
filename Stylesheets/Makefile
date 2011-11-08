@@ -79,9 +79,9 @@ doc:
 	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
 	saxon -o:doc/customize.xml doc/param.xml doc/param.xsl 
 	saxon -o:doc/style.xml doc/param.xml  doc/paramform.xsl 
-	saxon -o:release/common/doc/tei-xsl-common2/index.html doc/teixsl.xml profiles/default/html/to.xsl 
-	saxon -o:release/common/doc/tei-xsl-common2/style.html doc/style.xml  profiles/default/html/to.xsl 
-	saxon -o:release/common/doc/tei-xsl-common2/customize.html doc/customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
+	saxon -o:release/common/doc/tei-xsl-common/index.html doc/teixsl.xml profiles/default/html/to.xsl 
+	saxon -o:release/common/doc/tei-xsl-common/style.html doc/style.xml  profiles/default/html/to.xsl 
+	saxon -o:release/common/doc/tei-xsl-common/customize.html doc/customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
 	cp doc/teixsl.png doc/teixsl.xml doc/style.xml doc/customize.xml release/common/doc/tei-xsl-common
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl-common
 
@@ -117,7 +117,7 @@ installp5: p5 teioo.jar
 
 installcommon: doc common
 	mkdir -p ${PREFIX}/lib/cgi-bin
-	cp stylebear ${PREFIX}/lib/cgi-bin/stylebear
+	cp doc/stylebear ${PREFIX}/lib/cgi-bin/stylebear
 	chmod 755 ${PREFIX}/lib/cgi-bin/stylebear
 	mkdir -p ${PREFIX}/share/doc/
 	mkdir -p ${PREFIX}/share/xml/
@@ -161,7 +161,7 @@ clean:
 	rm -f tei-xsl-*.zip	
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
-	rm -f stylebear doc/style.xml doc/customize.xml teixsl.html
+	rm -f doc/stylebear doc/style.xml doc/customize.xml teixsl.html
 	rm -rf release
 	(cd Test; make clean)
 	rm -rf tei-p5-xsl_*
