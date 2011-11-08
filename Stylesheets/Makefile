@@ -11,7 +11,7 @@ PREFIX=/usr
 OXY=/usr/share/oxygen/stylesheetDocumentation.sh
 TARGETS= \
 	latex2/tei.xsl \
-	html2/tei.xsl \
+	xhtml2/tei.xsl \
 	fo2/tei.xsl \
 	odds/odd2odd.xsl \
 	odds/odd2relax.xsl \
