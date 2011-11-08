@@ -155,6 +155,7 @@ pdf.stamp: check
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
 	rm pdfbuild.log
+	rm Guidelines.xml
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 	touch pdf.stamp
 
