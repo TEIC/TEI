@@ -37,7 +37,7 @@ dtds: check
 	rm -rf DTD
 	mkdir DTD
 	@echo BUILD: Generate modular DTDs
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/odd2dtd.xsl outputDir=DTD 	\
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds/odd2dtd.xsl outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
 	${VERBOSE}
@@ -48,7 +48,7 @@ schema-relaxng:
 	rm -rf Schema
 	mkdir Schema
 	@echo BUILD: Generate modular RELAX NG schemas
-	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds2/odd2relax.xsl outputDir=Schema \
+	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds/odd2relax.xsl outputDir=Schema \
 	lang=${LANGUAGE}  \
 	${VERBOSE}
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
@@ -56,7 +56,7 @@ schema-relaxng:
 
 schema-sch:
 	@echo BUILD: Extract schema rules to make p5.isosch
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds2/extract-isosch.xsl > p5.isosch
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds/extract-isosch.xsl > p5.isosch
 
 
 html-web: html-web.stamp check.stamp
@@ -123,7 +123,7 @@ fontcheck:
 
 pdf.stamp: check
 	@echo BUILD: build Lite version of Guidelines
-	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds2/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
+	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	@echo BUILD: build LaTeX version of Guidelines from Lite
