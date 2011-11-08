@@ -82,7 +82,7 @@ doc:
 	saxon -o:release/common/doc/tei-xsl-common2/index.html doc/teixsl.xml profiles/default/html/to.xsl 
 	saxon -o:release/common/doc/tei-xsl-common2/style.html doc/style.xml  profiles/default/html/to.xsl 
 	saxon -o:release/common/doc/tei-xsl-common2/customize.html doc/customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
-	cp doc/teixsl.png teixsl.xml style.xml customize.xml release/common/doc/tei-xsl-common
+	cp doc/teixsl.png doc/teixsl.xml doc/style.xml doc/customize.xml release/common/doc/tei-xsl-common
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl-common
 
 oxygendoc:
