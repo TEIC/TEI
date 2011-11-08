@@ -21,21 +21,25 @@ lettre.</desc>
     <memberOf key="model.divBottomPart"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-	<ref name="model.divTop"/>
-	<ref name="model.global"/>
-      </choice>
-    </zeroOrMore>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="model.common"/>
-    </zeroOrMore>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-	<ref name="model.divBottom"/>
-	<ref name="model.global"/>
-      </choice>
-    </zeroOrMore>
+   <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">     
+     <choice>
+       <group>	 
+	 <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	   <ref name="model.divTopPart"/>
+	 </zeroOrMore>
+	 <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	   <ref name="model.common"/>
+	 </oneOrMore>
+	 <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	   <ref name="model.divBottomPart"/>
+	 </zeroOrMore>
+       </group>
+       <group>
+	 <ref name="model.global"/>
+       </group>
+     </choice>
+   </zeroOrMore>
+   
   </content>
 
   <exemplum xml:lang="en">
