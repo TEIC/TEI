@@ -73,9 +73,9 @@ release-stamp:
 
 clean:
 	rm -rf release
-	rm -f tei-roma-`cat VERSION`.zip
 	rm -f release-stamp roma/oddschema.rnc
 	rm -f tei-roma_*
+	rm -f tei-roma-*.zip	
 	rm -rf debian-tei-roma/debian/tei-roma
 
 log:
