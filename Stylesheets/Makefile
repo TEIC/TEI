@@ -10,9 +10,9 @@ SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub teitoepub3 te
 PREFIX=/usr
 OXY=/usr/share/oxygen/stylesheetDocumentation.sh
 TARGETS= \
-	latex/tei.xsl \
-	html/tei.xsl \
-	fo/tei.xsl \
+	latex2/tei.xsl \
+	html2/tei.xsl \
+	fo2/tei.xsl \
 	odds/odd2odd.xsl \
 	odds/odd2relax.xsl \
 	odds/odd2dtd.xsl \
