@@ -26,9 +26,9 @@ SAXON=saxon
 SAXON_ARGS=-ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
-ODD2DTD=$(shell find  ${XSL} -name 'odd2dtd.xsl' | head -1)
-ODD2RELAX=$(shell find  ${XSL} -name 'odd2relax.xsl' | head -1)
-ODD2LITE=$(shell find  ${XSL} -name 'odd2lite.xsl' | head -1)
+ODD2DTD=${XSL}/odds2/odd2dtd.xsl
+ODD2RELAX=${XSL}/odds2/odd2relax.xsl
+ODD2LITE=${XSL}/odds2/odd2lite.xsl
 
 .PHONY: convert dtds schemas html validate valid test clean dist exemplars
 
