@@ -26,6 +26,9 @@ SAXON=saxon
 SAXON_ARGS=-ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
+ODD2DTD=$(shell find  ${XSL} -name 'odd2dtd.xsl' | head -1)
+ODD2RELAX=$(shell find  ${XSL} -name 'odd2relax.xsl' | head -1)
+ODD2LITE=$(shell find  ${XSL} -name 'odd2lite.xsl' | head -1)
 
 .PHONY: convert dtds schemas html validate valid test clean dist exemplars
 
@@ -37,7 +40,7 @@ dtds: check
 	rm -rf DTD
 	mkdir DTD
 	@echo BUILD: Generate modular DTDs
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds*/odd2dtd.xsl outputDir=DTD 	\
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${ODD2DTD} outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
 	${VERBOSE}
@@ -48,7 +51,7 @@ schema-relaxng:
 	rm -rf Schema
 	mkdir Schema
 	@echo BUILD: Generate modular RELAX NG schemas
-	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${XSL}/odds*/odd2relax.xsl outputDir=Schema \
+	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${ODD2RELAX} outputDir=Schema \
 	lang=${LANGUAGE}  \
 	${VERBOSE}
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
@@ -56,7 +59,7 @@ schema-relaxng:
 
 schema-sch:
 	@echo BUILD: Extract schema rules to make p5.isosch
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${XSL}/odds*/extract-isosch.xsl > p5.isosch
+	${SAXON} ${SAXON_ARGS}  ${DRIVER} `dirname ${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
 
 
 html-web: html-web.stamp check.stamp
@@ -123,7 +126,7 @@ fontcheck:
 
 pdf.stamp: check
 	@echo BUILD: build Lite version of Guidelines
-	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${XSL}/odds*/odd2lite.xsl displayMode=rnc lang=${LANGUAGE} \
+	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	@echo BUILD: build LaTeX version of Guidelines from Lite
@@ -301,8 +304,8 @@ dist-doc.stamp:
 	rm html-web.stamp;make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
-	for i in ReleaseNotes/readme*xml; do  ${SAXON} $$i ${XSL}/xhtml2/tei.xsl cssFile=html/guidelines.css \
-		> release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
+	for i in ReleaseNotes/readme*xml; do  teitohtml $$i  --cssFile=html/guidelines.css \
+		release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	@echo BUILD: make PDF version of Guidelines
 	make pdf
@@ -449,7 +452,7 @@ changelog:
 
 catalogue:
 	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
-	${SAXON} ${SAXON_ARGS}  catalogue.xml ${XSL}/xhtml2/tei.xsl > catalogue.html
+	teitohtml catalogue.xml catalogue.html
 	@echo Made catalogue.html
 
 catalogue-print:
