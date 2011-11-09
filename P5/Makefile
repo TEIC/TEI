@@ -304,7 +304,8 @@ dist-doc.stamp:
 	rm html-web.stamp;make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
-	for i in ReleaseNotes/readme*xml; do  teitohtml $$i  --cssFile=html/guidelines.css \
+	@echo BUILD: Make web pages for release notes
+	for i in ReleaseNotes/readme*xml; do  teitohtml --css=html/guidelines.css $$i  \
 		release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	@echo BUILD: make PDF version of Guidelines
