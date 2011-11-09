@@ -531,7 +531,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:template>
 
 	  <xsl:template name="cellContents">
--	     <xsl:apply-templates select="w:p" mode="inTable"/> 
+	     <xsl:apply-templates select="w:p" mode="inTable"/> 
 	  </xsl:template>
 
 	  <xsl:template match="w:p" mode="inTable">
