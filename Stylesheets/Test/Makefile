@@ -54,6 +54,10 @@ oddbyexample:
 conversions-from:
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf expected-results/test12.rdf
+	../teitohtml5 test.xml test.html5
+	perl -p -i -e 's/on 20.*Z--/--/' test.html5
+	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
+	diff test.html5 expected-results/test.html5
 	../teitohtml --profile=tei --odd test15.odd test.odd.html
 	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
