@@ -28,16 +28,20 @@ $Id$
     <memberOf key="att.transcriptional"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-          <oneOrMore>
-            <choice>
-              <ref name="add"/>
-              <ref name="del"/>
-              <ref name="model.milestoneLike"/>
-            </choice>
-         </oneOrMore>
-    </group>
+        <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+          <choice>
+            <ref name="add"/>
+            <ref name="del"/>
+            <ref name="model.milestoneLike"/>
+          </choice>
+       </oneOrMore>
   </content>
+  <constraintSpec ident="substContents1" scheme="isoschematron">
+    <constraint>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="child::add and child::del">
+        Subst must have at least one child add and at least one child del</assert>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
 ... are all included. <del hand="#RG">It is</del>
