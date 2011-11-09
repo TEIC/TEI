@@ -977,6 +977,9 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:when test="contains(@rend,'subscript')">
 		<w:vertAlign w:val="subscript"/>
 	      </xsl:when>
+	      <xsl:when test="contains(@rend,'sub')">
+		<w:vertAlign w:val="subscript"/>
+	      </xsl:when>
 	    </xsl:choose>
 
 	    <xsl:choose>
@@ -985,6 +988,9 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:when>
 	      <xsl:when test="contains(@rend,'superscript')">
                 <w:vertAlign w:val="superscript"/>
+	      </xsl:when>
+	      <xsl:when test="contains(@rend,'sup')">
+                <w:vertAlign w:val="sup"/>
 	      </xsl:when>
 	    </xsl:choose>
 
@@ -1752,10 +1758,31 @@ of this software, even if advised of the possibility of such damage.
                                 <xsl:variable name="rows" select="@rowsep"/>
                                 <xsl:if test="@namest">
                                     <xsl:variable name="start">
-                                        <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"/>
+                                        <xsl:for-each
+					    select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]">
+					  <xsl:choose>
+					    <xsl:when test="@colnum">
+					      <xsl:value-of
+						  select="@colnum"/>
+					      </xsl:when>
+					      <xsl:otherwise>
+						<xsl:number/>
+					      </xsl:otherwise>
+					  </xsl:choose>
+					</xsl:for-each>
                                     </xsl:variable>
                                     <xsl:variable name="end">
-                                        <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"/>
+				      <xsl:for-each select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]">
+					  <xsl:choose>
+					    <xsl:when test="@colnum">
+					      <xsl:value-of
+						  select="@colnum"/>
+					      </xsl:when>
+					      <xsl:otherwise>
+						<xsl:number/>
+					      </xsl:otherwise>
+					  </xsl:choose>
+					</xsl:for-each>
                                     </xsl:variable>
                                     <xsl:for-each select="ancestor::cals:tgroup/cals:colspec[position()&gt;$start        and position()&lt;=$end]">
                                         <cals:entry DUMMY="true" colname="{@colname}" rowsep="{$rows}"/>
@@ -1885,13 +1912,34 @@ of this software, even if advised of the possibility of such damage.
         <w:tc>
             <w:tcPr>
                 <xsl:if test="@namest">
-                    <xsl:variable name="start">
-                        <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]/@colnum"/>
-                    </xsl:variable>
-                    <xsl:variable name="end">
-                        <xsl:value-of select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]/@colnum"/>
-                    </xsl:variable>
-                    <w:gridSpan w:val="{number($end)-number($start)+1}"/>
+		  <xsl:variable name="start">
+		    <xsl:for-each
+			select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]">
+		      <xsl:choose>
+			<xsl:when test="@colnum">
+			  <xsl:value-of
+			      select="@colnum"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:number/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>
+		  </xsl:variable>
+		  <xsl:variable name="end">
+		    <xsl:for-each select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]">
+		      <xsl:choose>
+			<xsl:when test="@colnum">
+			  <xsl:value-of
+						  select="@colnum"/>
+			</xsl:when>
+			<xsl:otherwise>
+			  <xsl:number/>
+			</xsl:otherwise>
+		      </xsl:choose>
+		    </xsl:for-each>
+		  </xsl:variable>
+		  <w:gridSpan w:val="{number($end)-number($start)+1}"/>
                 </xsl:if>
                 <xsl:if test="@morerows">
                     <w:vMerge w:val="restart"/>
