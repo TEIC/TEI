@@ -1432,13 +1432,14 @@ uncertainty as to the order of substitution and as to which of many
 possible readings should be preferred.</p>
 <p>As we have shown, the simplest method of recording a substitution
 is simply to record both the addition and the deletion. However, when
-the module defined by this chapter is in use, an additional element is
+the module defined by this chapter is in use, additional elements are
 available to indicate that the encoder believes the addition and the
 deletion to be part of the same intervention: a substitution.
-<specList>
-<specDesc key="subst"/>
+   <specList>
+      <specDesc key="subst"/>
+      <specDesc key="substJoin"/>
 </specList>
-Using this element, the example at the end of the last section might
+Using the <gi>subst</gi> element, the example at the end of the last section might
 be encoded as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>
    <delSpan rend="verticalStrike" spanTo="#delend02"/>
@@ -1449,8 +1450,7 @@ together, the order in which they are presented is not significant. By
 convention, however, deletion precedes addition. This may be
 overridden by means of the <att>seq</att> attribute, which is of
 particular usefulness when a sequence of deletions and additions
-occurs.
-</p>
+occurs.</p>
 
 <p>For example, returning to the example from William James, in a
 passage first written out by James as <q>One must have lived longer
@@ -1472,8 +1472,20 @@ thus provide a simple method of supporting the kind of
 <soCalled>genetic</soCalled> textual criticism typified by (for
 example) Hans Walter Gabler's work on the reconstruction of the
 <soCalled>overlay</soCalled> levels implicit in the manuscripts of James Joyce's
-<title>Ulysses</title>.
-</p>
+<title>Ulysses</title>.</p>
+   
+   <p>
+      The case of a single substitution or scribal correction that involves non-contiguous addition and deletion can be handled
+      by using the <gi>substJoin</gi> element to make an explicit connection between one or more <gi>add</gi> and <gi>del</gi>
+      elements. For example, in the following example from Thomas Moore's <title>Lalla Rookh</title>, the metrical structure of
+      the verse means that the deleted word and its substitution are in different positions, and so a <gi>subst</gi> element would
+      be invalid because of the intervening text:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         While <del xml:id="r1">pondering</del> thus <add xml:id="r2">she mus'd</add>, 
+         her pinions fann'd<substJoin target="#r1 #r2"/>
+      </egXML>
+   </p>
+   
 <p>As a more complex example, consider the following passage in one of
 the manuscripts of Wilfred Owen's <title>Dulce et decorum
 est</title>:
@@ -3149,6 +3161,7 @@ The selection and combination of modules to form a TEI schema is described in
 &restore;
 &space;
 &subst;
+&substJoin;
 &supplied;
 &surplus;
 
