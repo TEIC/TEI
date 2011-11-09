@@ -17,7 +17,7 @@
 
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../odds/odd2relax.xsl"/>
+    <xsl:import href="../../../odds2/odd2relax.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>

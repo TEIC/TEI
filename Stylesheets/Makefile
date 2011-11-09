@@ -13,9 +13,9 @@ TARGETS= \
 	latex2/tei.xsl \
 	xhtml2/tei.xsl \
 	fo2/tei.xsl \
-	odds/odd2odd.xsl \
-	odds/odd2relax.xsl \
-	odds/odd2dtd.xsl \
+	odds2/odd2odd.xsl \
+	odds2/odd2relax.xsl \
+	odds2/odd2dtd.xsl \
 	slides/teihtml-slides.xsl \
 	slides/teilatex-slides.xsl \
 	profiles/default/csv/to.xsl	\

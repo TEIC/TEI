@@ -13,9 +13,9 @@
     exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
 
   <xsl:import href="../../../epub/tei-to-epub.xsl"/>
-  <xsl:import href="../../../odds/teiodds.xsl"/>
+  <xsl:import href="../../../odds2/teiodds.xsl"/>
   <xsl:import href="../../../xhtml2/oddprocessing.xsl"/>
-  <xsl:import href="../../../odds/guidelines.xsl"/>
+  <xsl:import href="../../../odds2/guidelines.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="no"/>
   <xsl:param name="googleAnalytics"/>
   <xsl:param name="outputMethod">xhtml</xsl:param>
