@@ -36,7 +36,7 @@ test-latex:
 	diff test5.fo expected-results/test5.fo
 
 odd2odd:
-	saxon -s:testdrama.odd -xsl:../odds/odd2odd.xsl -o:testdrama.compiled.xml \
+	saxon -s:testdrama.odd -xsl:../odds2/odd2odd.xsl -o:testdrama.compiled.xml \
 	localsource=`pwd`/p5subset.xml $(SAXONOPT) 
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	diff testdrama.compiled.xml expected-results/testdrama.compiled.xml
