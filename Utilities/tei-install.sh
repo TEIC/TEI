@@ -42,6 +42,7 @@ sfname=$package
 case $package in 
   TEIP5)         name=P5;          pname=tei;      SFNAME=TEIP5-All;;
   Stylesheets)   name=Stylesheets; pname=tei-xsl;;
+  Stylesheets-xslt1)   name=Stylesheets; pname=tei-xslt1;;
   Roma)          name=Roma;        pname=tei-roma;;
     *) echo "Error: package $package unsupported"; exit 1;;
 esac
