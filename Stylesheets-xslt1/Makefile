@@ -9,7 +9,7 @@ PREFIX=/usr
 
 .PHONY: doc release common
 
-default: check test release
+default: check release
 
 check:
 	@echo Checking you have running XML tools and Perl before trying to run transform...
