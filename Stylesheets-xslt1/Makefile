@@ -100,7 +100,7 @@ sfupload:
 clean:
 	echo "" > test~
 	find . -name "*~"  | xargs rm
-	rm -f tei-xsl-*.zip	
+	rm -f tei-xsl*.zip	
 	rm -rf tei-p5-xsl_*
 	rm -rf release
 	rm -rf xhtml
