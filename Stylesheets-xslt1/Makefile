@@ -104,7 +104,7 @@ clean:
 	rm -rf tei-p5-xsl_*
 	rm -rf release
 	rm -rf xhtml
-	(cd Test; make clean)
+	(cd Test1; make clean)
 	rm -rf tei-p5-xsl_*
 	(cd debian-tei-p5-xsl/debian;      rm -rf tei-p5-xsl)
 
