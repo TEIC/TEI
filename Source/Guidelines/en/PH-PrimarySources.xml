@@ -23,14 +23,14 @@ chapter <ptr target="#MS"/>, but again the present module may be used
 independently if such data is not required.
 </p>
 <!-- following para may need revision? -->
-<p>It should be noted that, as elsewhere in these Guidelines,  this
+<!-- p>It should be noted that, as elsewhere in these Guidelines,  this
 chapter places more emphasis on the problems of representing the
 textual components of a document than on those relating to the
 description of the document's physical characteristics such as the
 carrier medium or physical construction. These aspects, of particular
 importance in codicology and the bibliographic study of incunables,
 are touched on in the chapter on Manuscript Description (<ptr target="#MS"/>) and also form the subject of ongoing work in the TEI
-Physical Bibliography workgroup.</p>
+Physical Bibliography workgroup.</p-->
 
 <p>Although this chapter discusses manuscript materials more
 frequently than other forms of written text, most of the
@@ -51,7 +51,7 @@ authorial manuscript, the author and the scribe are the same person.
 <head>Digital Facsimiles</head>
 
 <p>These Guidelines are mostly concerned with the preparation of
-digital texts, in which a pre-existing text is transcribed or
+digital texts in which pre-existing sources are transcribed or
 otherwise converted into character form, and marked up in
 XML. However, it is also very common practice to make a different form
 of <soCalled>digital text</soCalled>, which is instead composed of
@@ -101,7 +101,7 @@ directly to a graphic resource:
 </TEI>  
 </egXML>
 
-By convention, this encoding indicates that the image indicated by
+By convention, this encoding indicates that the image indicated by the
 <att>facs</att> attribute represents the whole of the text following
 the <gi>pb</gi> (pagebreak) element, up to the next <gi>pb</gi>
 element. Any convenient milestone element (see further <ptr
@@ -111,9 +111,10 @@ used.  Though simple, this method has some drawbacks. It does not
 scale well to more complex cases where, for example, the images do not
 correspond exactly with transcribed pages, or where the intention is
 to align specific marked up elements with detailed images, or parts of
-images. And it makes the management of the information about the
-images more difficult by scattering references to them through the
-file. Nevertheless, this solution may be adequate for many
+images. The management of information about the images may become more
+difficult if references to them are scattered through many files
+rather than being concentrated in a single identifiable
+location. Nevertheless, this solution may be adequate for many
 straightforward <soCalled>digital library</soCalled>
 applications. </p>
 
@@ -127,7 +128,7 @@ written surface and to link such elements with digital facsimile
 images of them. Typical applications include the provision of full
 text search in <soCalled>digital facsimile editions</soCalled>, and
 ways of annotating graphics, for example so as to identify individuals
-appearing in a group portraits and link them to data about the person
+appearing in group portraits and link them to data about the peeople
 represented. </p>
 
 <p>The following elements are used to represent components of a
@@ -142,7 +143,7 @@ digital facsimile:
 <p>The <gi>facsimile</gi> element is used to represent a digital
 facsimile. It appears within a TEI document along with, or instead of,
 the <gi>text</gi> element introduced in section <ptr target="#DS"/>. When this module is selected therefore, a
-legal TEI document may thus comprise any of the following:-
+legal TEI document may thus comprise any of the following :
 <list type="simple">
 <item>a TEI Header and a text element</item>
 <item>a TEI Header and a facsimile element</item>
@@ -193,7 +194,7 @@ same area of the work:
 
 <p>The <gi>surface</gi> element provides a way of indicating that the
 two images of page2 represent the same physical surface within the
-source material. A <term>surface</term> might be a sheet of paper or
+source material. A <term>surface</term> might be one side of a piece of paper or
 parchment, a face of a monument, a billboard, a membrane of a scroll,
 or indeed any two-dimensional surface, of any size. </p>
 
@@ -208,18 +209,21 @@ following attributes, supplied by the <ident type="class">att.coordinated</ident
 <p> The same coordinate space is used for a <gi>surface</gi> and for
 all of its child elements.<note place="bottom">The coordinate space
 may be thought of as a grid superimposed on a rectangular
-space. Rectangular areas of the grid are defined as four numbers <hi rend="math">a b c d</hi>: the first two identify the grid point which
+space. Rectangular areas of the grid are defined as four numbers <hi
+rend="math">a b c d</hi>: the first two identify the grid point which
 is at the upper left corner of the rectangle; the second two give the
 grid point located at the lower right corner of the rectangle. The
 grid point <hi rend="math">a b</hi> is understood to be the point
 which is located <hi rend="math">a</hi> points from the origin along
-the <hi rend="math">x</hi> (horizontal) axis, and <hi rend="math">b</hi> points from the origin along the <hi rend="math">y</hi> (vertical) axis.</note> It may be most convenient
+the <hi rend="math">x</hi> (horizontal) axis, and <hi
+rend="math">b</hi> points from the origin along the <hi
+rend="math">y</hi> (vertical) axis.</note> It may be most convenient
 to derive a coordinate space from a digital image of the surface in
 question such that each pixel in the image corresponds with a whole
 number of units (typically 1) in the coordinate space. In other cases
-it may be more convenient to use units such as millimetres; in neither
-case is any specific mapping to the physical dimensions of the object
-represented implied.
+it may be more convenient to use units such as millimetres.  Neither
+practice implies any specific mapping between the co-ordinate system
+used and the actual dimensions of the physical object represented.
 </p>
 
 <p>Each <gi>surface</gi> can contain one or more <gi>zone</gi>
@@ -230,23 +234,24 @@ rectangular or non-rectangular: a rectangular zone is defined by a
 sequence of four co-ordinates in the same way as a surface; a
 non-rectangular zone is defined using the attribute
 <att>points</att>, which  provides a sequence of co-ordinates, each
-of which specifies a point on the line surrounding the zone. 
+of which specifies a point on the perimeter of the zone. 
 <specList>
 <specDesc key="att.coordinated" atts="points"/>
 </specList>
-<note place="bottom">The  <att>points</att> attribute supplies a <soCalled>points
-specification</soCalled> in the same form as that required by the
-<gi>polyline</gi> or <gi>polygon</gi> elements in  the SVG standard. See
-<ptr target="http://www.w3.org/TR/SVG/shapes.html#PointsBNF"/></note>
-</p><p>A zone  may be used to define any region of
-interest, such as a detail or illustration, or some part of the
-surface which is to be aligned with a particular text element.  
-As we have seen, a surface will usually correspond with the whole
-of a written surface. A zone, by contrast, defines any arbitrary
-area of interest using the same coordinate system. It
-might be bigger or smaller than its parent surface, or might overlap
-its boundaries. The only constraint is that it must be defined using
-the same coordinate system. </p>
+</p><p>The <att>points</att> attribute supplies a
+<soCalled>points specification</soCalled> in the same form as that
+required by the <gi>polyline</gi> or <gi>polygon</gi> elements in the
+SVG standard. See <ptr
+target="http://www.w3.org/TR/SVG/shapes.html#PointsBNF"/>
+</p>
+<p>A zone may be used to define any region of interest, such as a
+detail or illustration, or some part of the surface which is to be
+aligned with a particular text element.  As we have seen, a surface
+will usually correspond with the whole of a written surface. A zone,
+by contrast, defines any arbitrary area of interest using the same
+coordinate system. It might be bigger or smaller than its parent
+surface, or might overlap its boundaries. The only constraint is that
+it must be defined using the same coordinate system. </p>
 
 <p>When an image of some kind is supplied within either a zone or a
 surface, the implication is that the whole of the image represents the
@@ -259,13 +264,6 @@ larger than the page (for example to include a binding or the surface
 of a desk on which the page rests), then it will be enclosed by a zone
 with coordinates larger than those of the parent surface. </p>
 
-<p>Note that this mechanism does not provide any way of addressing a
-non-rectangular area, nor of coping with distortions introduced by
-perspective or parallax; if this is needed, the more powerful
-mechanisms provided by the Scalable Vector Graphics (SVG)
- language <note place="foot">SVG and other graphic formalisms are discussed
-in <ptr target="#FTGRNO"/> below</note>
-should be used to define an overlay, as further discussed in <ptr target="#SACSXA"/>. </p>
 
 
 <p>For example, consider the following figure: <figure><head>Relation
@@ -372,7 +370,7 @@ contains a <gi>graphic</gi>
 </surface>
 </facsimile></egXML> We can now identify distinct zones within the
 page image using the coordinate scale defined for the surface. In
-<ptr target="#facs-fig1"/> we show the upper part of the page, with
+the following figure <ptr target="#facs-fig1"/> we show the upper part of the page, with
 boxes indicating four such zones. Each of these will be represented by
 a  <gi>zone</gi> element, given within the <gi>surface</gi>
 element already defined, and specified in terms of the same
@@ -382,26 +380,27 @@ coordinate system.
   <graphic url="Images/facs-fig1.png"/>
 </figure>
 The following encoding defines each of the four zones identified in
-the figure.
+the figure above.
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
 <graphic url="Bovelles-49r.png"/>
 	<zone ulx="25" uly="25" lrx="180" lry="60"> 
-	  <desc>contains the title</desc>
+	  <!-- contains the title -->
 	</zone>
 	<zone ulx="28" uly="75" lrx="175" lry="178"/> 
-	<!-- contains the paragraph in italics -->
+	<!--  contains the paragraph in italics -->
 	<zone ulx="105" uly="76" lrx="175" lry="160"/> 
 	<!-- contains the figure -->
 	<zone ulx="45" uly="125" lrx="60" lry="130"/>
 	<!-- contains the word "pendans" -->
 </surface>
-</facsimile></egXML> 
-Note that the location of each zone is defined
+</facsimile></egXML> Note that the location of each zone is defined
 independently but using the same coordinate system, so that they may
-overlap freely. Zones need not  nest within each other; they must
-however be rectangular, as previously noted. As noted earlier, a zone may
-fall outside the area of the surface which defines its coordinate space.</p>
+overlap freely. Zones need not nest within each other; moreover, as
+noted earlier, a zone may fall outside the area of the surface which
+defines its coordinate space.</p>
+
+<!-- insert example of non-rectangular zone here -->
 
 <p>In this example a single <gi>graphic</gi> element has been
 associated directly with the surface of the page rather than nesting
@@ -421,27 +420,27 @@ follows:
   </zone>
 </egXML>
 </p>
-<p>If, as is often the case, a transcription of the zone
-identified in this way is to be included in the encoded TEI document, this
-may be done in two ways. If the transcription is regarded as a text in
-its own right, organized and structured independently of its physical
+<p>If, as is often the case, a transcription of the zone identified in
+this way is to be included in the encoded TEI document, this may be
+done in two ways. If the transcription is regarded as a text in its
+own right, organized and structured independently of its physical
 realization in the document or documents represented by the facsimile,
-then the recommended practice is to use the  <gi>text</gi>
-element, provided as a sibling of the <gi>facsimile</gi> element. This
-approach is illustrated in section <ptr target="#PH-bov"/>
-below. Alternatively, if the transcription is intended to prioritize
-representation of the process by which the document came to take its
-present form over representation of the final text <!--do no more
-than represent the physicality of the document itself-->, it may be
-preferable to use a subset of the available elements and to embed them
-within the <gi>zone</gi> element, as further described in section <ptr
-target="#PHZLAB"/> below.</p>
-
+then the recommended practice is to use the <gi>text</gi> element to
+contain such a structured representation. The <gi>text</gi> element is
+a sibling of the <gi>facsimile</gi> and <gi>sourceDoc</gi>
+elements. This approach is illustrated in section <ptr
+target="#PH-bov"/> below. Alternatively, if the transcription is
+intended to prioritize representation of the process by which the
+document came to take its present form over representation of the
+final text, <!--do no more than represent the physicality of the
+document itself--> it may be preferable to use a subset of the
+available elements and to embed them within the <gi>zone</gi> element,
+as further described in section <ptr target="#PHZLAB"/> below.</p>
 
 <div xml:id="PH-bov"><head>Parallel transcription</head>
 
-<p>Now suppose that we wish to align a transcription of this page
-with the zones identified above. The first step is to give each
+<p>If we wish to align a transcription of this page
+with particular zones within a facsimile, we begin by giving each
 relevant part of the facsimile an identifier:
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
@@ -487,16 +486,15 @@ leur sonnerie mal plaisante à oyr.<figure facs="#B49rFig1"><graphic url="Bovell
 </div>
 </egXML>
 </p>
-<p>Further discussion of the  encoding
-choices made in the above transcription is provided in the remainder
-of this chapter. </p>
 
 <p>It is also possible to point in the other direction, from a
 <gi>surface</gi> or <gi>zone</gi> to the corresponding text. This is
 the function of the <att>start</att> attribute, which supplies the
-identifier of the element containing the transcribed text found within
-the surface or zone concerned. Thus, another way of linking this page
-with its transcription would be simply <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+identifier of the element containing at least the start of the
+transcribed text found within the surface or zone concerned. Thus,
+another way of linking this page with its transcription would be
+simply <egXML xml:lang="und"
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface start="#PB49R">
 <graphic url="Bovelles-49r.png"/>
 </surface>
@@ -550,7 +548,7 @@ independently of them. </p>
 </p>
 
 <p>The elements <gi>surface</gi> and <gi>zone</gi> are described
-above, in section <ptr target="#PHFAX"/>. Most writing is linear, in
+above in section <ptr target="#PHFAX"/>. Most writing is linear, in
 the sense that it is composed of discrete tokens organized physically
 into groups, typically organized in a sequence corresponding with the
 way they are intended to be read. Depending on the directionality of
@@ -566,7 +564,7 @@ appropriate.
 <p>The element
 <gi>patch</gi> is useful in cases where some or all of the written
 surfaces are composed of physically distinct scraps. In the following
-example, taken from the Walt Whitman archive, two pieces of newsprint
+example, taken from the Walt Whitman Archive, two pieces of newsprint
 have been glued to a piece of blue paper on which a poem is being
 drafted:
 
@@ -616,9 +614,9 @@ element corresponding with the <gi>zone</gi> or <gi>surface</gi>
 elements identified in the transcription. The encoder may choose to
 complement a transcription with graphic representations of its source
 at whatever level is considered effective, or not at all. Equally, the
-encoder may choose to provide only graphics without transcription, or
-with a structured (non-embedded) transcription, or any combination of
-the three. </p>
+encoder may choose to provide only graphics without any transcription,
+to provide only a structured (non-embedded) transcription, or to provide
+any combination of the three. </p>
 </div>
 
 
@@ -642,7 +640,7 @@ text, but rather to represent the creative process, as evidenced by
 different <q>layers</q> or <q>traces</q> of writing in one or more
 documents. Transcriptions of this kind are closely focussed on the physical
 appearance of specific documents, needing to distinguish the traces of
-different writing activities on them, such as additions,
+different writing activities on them, such as additions
 and deletions but also other indications of how the writing is to be
 read, such as indications of transposition, re-affirmation of writing
 which has been deleted, and so on.  Such distinctions are considered of
@@ -659,7 +657,7 @@ and lacunae. This chapter provides ways of encoding such information:
 the text, such as expansion of abbreviations, corrections, conjectures,
 etc. (section <ptr target="#PHCH"/>)</item>
 <item>then, methods of describing important extra-linguistic phenomena
-in the source: unusual spaces, lines, page and line breaks, change of
+in the source: unusual spaces, lines, page and line breaks, changes of
 manuscript hand, etc. (section <ptr target="#PHPH"/>)</item>
 <item>finally, a method of recording material such as running heads,
 catch-words, and the like (section <ptr target="#PHSK"/>)</item></list></p>
@@ -715,7 +713,7 @@ section <ptr target="#TCTR"/>.
 to record various types of actual or potential alteration of the text:
 expansion of abbreviations, correction of the text (either by author,
 scribe, or later hand, or by previous or current editors or scholars),
-addition, deletion, or substitution of material, and the like.  The
+addition, deletion, or substitution of material, and similar matters.  The
 sections below describe how such phenomena may be encoded using either
 elements defined in the core module (defined in chapter <ptr target="#CO"/>) or specialized elements available only when the module
 described in this chapter is available.</p>
@@ -884,8 +882,9 @@ of <mentioned>good</mentioned> to <mentioned>goode</mentioned>:
 good<ex xml:id="exp01">e</ex>
 I was welbeloued</egXML>
  <!--  abbr="&#x027d;" -->
-Then the note: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#exp01">The stroke added to the final d could signify the
-plural ending (-es, -is, -ys&gt;) but the singular <hi rend="it">good</hi> was used with the meaning <q>property</q>,
+Then the note: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#exp01">The stroke added to the final d could signify the
+plural ending (-es, -is, -ys&gt;) but the singular <hi rend="it">goode</hi> was used with the meaning <q>property</q>,
 <q>wealth</q>, at this time (v. examples quoted in OED, sb. Good,
 C. 7, b, c, d and 8 spec.)</note></egXML> The editor might declare a
 degree of certainty for this expansion, based on the OED examples, and
@@ -908,7 +907,7 @@ responsibility for suggesting this expansion  respectively. </p>
 proposed expansion is one way of encoding what might equally well be
 represented as an abbreviation, represented by the hooked D, as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
-<choice><sic>good<abbr>ɽ</abbr></sic>
+<choice><sic>goo<abbr>&#x0257;</abbr></sic>
 <expan resp="#mp" cert="high">good<ex>e</ex></expan></choice>
 I was welbeloued</egXML>
 If it is desired to express aspects of certainty and responsibility
@@ -931,8 +930,8 @@ defined in the <ident type="module">core</ident> module should be used to
 indicate passages deemed in need of correction, or actually corrected,
 during the  transcription of a source. For
 example, in the manuscript of William James's <title>A Pluralistic
-Universe</title>, edited by Fredson Bowers (Cambridge: Harvard
-University Press, 1977) a sentence first written <q rend="display">One
+Universe</title> as edited by Fredson Bowers (Cambridge: Harvard
+University Press, 1977), a sentence first written <q rend="display">One
 must have lived longer with this system, to appreciate its
 advantages.</q> has been modified by James to begin <q>But One must
 ...</q>, without the inital capital O having been reduced to
@@ -1007,7 +1006,9 @@ typically all detailed notes will be collected together in a separate
 <gi>div</gi> element in the <gi>back</gi>. Alternatively, the pointer
 may be omitted, and the <gi>note</gi> placed immediately adjacent to
 the element being annotated. The advantage of the former solution  is
-that it permits the same annotation to refer to several corrections. </p>
+that it permits the same annotation to refer to several corrections,
+by supplying more than one pointer in the <att>target</att> attribute
+of the <gi>note</gi>, as shown in the example below. </p>
 <p>The attribute <att>cert</att> may be used to indicate the
 degree of confidence ascribed by the encoder to the proposed
 emendation on a broad scale: high, medium, or low. The attribute
@@ -1079,7 +1080,7 @@ sense in the context.</item>
 A <att>subtype</att> attribute may be used in conjunction with the
 <att>type</att> for subclassification purposes: the above examples
 might thus be represented as <tag>choice type="substitution"
-subtype="graphicResemblence"</tag> for example. </p>
+subtype="graphicResemblance"</tag> for example. </p>
 <p>For a given project, it may well be desirable to limit the possible
 values for the <att>type</att> or <att>subtype</att> attributes automatically. This is easily
 done but requires customization of the TEI system using techniques
@@ -1163,7 +1164,7 @@ been provided by the person indicated by the <att>resp</att>
 attribute.
 </p>
 
-<p>If it is desired to express aspects of certainty and responsibility
+<p>If it is desired to express certainty of or responsibility
 for some other aspect of the use of these elements, then the
 mechanisms discussed in chapter <ptr target="#CE"/> may be found
 useful. See also <ptr target="#PHHR"/> for further discussion of the
@@ -1501,13 +1502,13 @@ worst amongt us</add></subst>, who'd no boots</l>
 <l>Of tired, outstripped <del>fif</del> five-nines that dropped behind.</l></egXML>
 In this representation, 
 <list type="simple">
-<item>the false start <mentioned>fif</mentioned> in the last line is simply marked as
-a deletion; </item>
+<item>the authorial slip (<mentioned>amongt</mentioned> for
+<mentioned>amongst</mentioned>) is retained without comment.</item>
 <item>the other two authorial corrections are marked as
 substitutions, each combining a deletion and an addition.
 </item>
-<item>the authorial slip (<mentioned>amongt</mentioned> for
-<mentioned>amongst</mentioned>) is retained without comment.</item>
+<item>the false start <mentioned>fif</mentioned> in the last line is simply marked as
+a deletion; </item>
 </list>
 </p>
 <p>The <gi>app</gi> element presented in chapter <ptr target="#TC"/>
@@ -2502,7 +2503,7 @@ therefore be encoded, if the intention is to record its actual
 state. Instead, the following elements may be used to indicate the
 intended reordering:
 <specList>
-<specDesc key="transposeGrp"/>
+<specDesc key="listTranspose"/>
 <specDesc key="transpose"/>
 </specList></p>
 <p>Consider for example, the
@@ -2521,12 +2522,12 @@ should be reversed. We may encode this as follows:
    og <seg xml:id="ib02">hör</seg><metamark rend="underline"
       function="transposition" target="#ib02" place="above"
    >1.</metamark></line>
-<transposeGrp>
+<listTranspose>
    <transpose>
       <ptr target="#ib02"/>
       <ptr target="#ib01"/>
    </transpose>
-</transposeGrp>
+</listTranspose>
          </egXML>
       </p>
       
@@ -2546,12 +2547,12 @@ sections concerned: <figure>
    <metamark function="transposition"
 	     place="margin-left">1.)</metamark> 
 da kan du Folkets Jøkelhjerter tine;</line>
-<transposeGrp>
+<listTranspose>
    <transpose>
       <ptr target="#ib4"/>
       <ptr target="#ib3"/>
    </transpose>
-</transposeGrp>
+</listTranspose>
          </egXML> 
 When transposition is made, the whole element indicated is understood
 to be moved, not just its contents. In the above example, the
@@ -2563,9 +2564,9 @@ kind of markup, the generic <gi>milestone</gi> can be used instead of
 <gi>seg</gi> or any other existing elements.</p>
 -->      
 
-<p>One or more <gi>transposeGrp</gi> elements may be supplied either
+<p>One or more <gi>listTranspose</gi> elements may be supplied either
 embedded within the text or in the <gi>profileDesc</gi> of the header,
-depending on local preference. Each <gi>transposeGrp</gi> can contain
+depending on local preference. Each <gi>listTranspose</gi> can contain
 one or more <gi>transpose</gi> elements, each of which defines a
 single transposition.</p>
 </div>
@@ -2900,7 +2901,7 @@ probably at a later stage</change>
       transcription, as we will see below.  For instance deletions can
       only be assigned to a stage that follows the one in which the
       passage being deleted was written down. Hence, having a certain
-      order of stages put in place before transcription begins, will
+      order of stages put in place before transcription begins will
       allow the encoder to reduce verbose tagging, where default
       assumptions based on the natural order of actions can be
       made.</p>
@@ -3032,13 +3033,13 @@ stage</change>
             <l>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_delSpan_1"/></l>
          </div>
       </egXML>
-      <p>Note first, that a change, once assigned to an element, is
+      <p>Note first that a change, once assigned to an element, is
       inherited by all descendants of that element unless overridden
       by a subsequent assignment. So in the example above the three
       verses are assigned to the first stage initially. The writing of
       <mentioned>Nun</mentioned> (as part of the substitution in the
       first verse) takes place in the second stage and is repeated or
-      fixated in the third. Also the substitution in the second verse
+      fixed in the third. Also the substitution in the second verse
       is done repeatedly: initially it takes place in the second
       stage, but is fixated as a whole in the third.</p>
       <p>The interpretation of change assignments for a particular
@@ -3104,7 +3105,7 @@ ink</change>
       associated with a particular feature in the transcript is
       explicitly indicated. From the documentary perspective, the
       stage assignments describe the writing process, in that they
-      specify, which segment has been written when and how often. From
+      specify which segment has been written when and how often. From
       the textual perspective, the markup concentrates on the order of
       textual alterations and makes no assumptions about the order of
       writing.  In this example, the association is made by pointing
@@ -3167,13 +3168,13 @@ The selection and combination of modules to form a TEI schema is described in
 
 &line;
 &listChange;
+&listTranspose;
 &metamark;
 &mod;
 &patch;
 &redo;
 &retrace;
 &transpose;
-&transposeGrp;
 &undo;
 </specGrp>
 </div>
