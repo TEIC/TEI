@@ -67,8 +67,8 @@ p5: p4
 
 dist: clean release
 	-rm tei-xslt1-`cat VERSION`.zip
-	(cd release/p4; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/p5; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/p4; zip -r -q ../../tei-xslt1-`cat ../../VERSION`.zip .)
+	(cd release/p5; zip -r -q ../../tei-xslt1-`cat ../../VERSION`.zip .)
 
 
 release: p4 p5 
