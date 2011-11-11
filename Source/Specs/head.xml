@@ -33,25 +33,21 @@
     <memberOf key="model.pLike.front"/>
   </classes>
   <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <choice>
+        <text/>
+        <ref name="model.gLike"/>
+	<group>
+	  <choice>
+	    <ref name="model.lLike"/>
+	    <ref name="lg"/>
+	  </choice>
+	</group>
+        <ref name="model.phrase"/>
+        <ref name="model.global"/>
+      </choice>
+    </zeroOrMore>
   </content>
-  <!--  <attList>
-        <attDef ident="type" usage="opt">
-        <equiv/>
-        <desc>categorizes the heading in any way meaningful
-        to the encoder. </desc>
-        <desc version="2007-05-02" xml:lang="zh-tw">標記者可自行用任何方法將標題分類。</desc>
-        <desc version="2007-01-21" xml:lang="it">fornisce la categoria del titolo in modo significativo per il codificatore</desc>
-        <desc version="2007-05-04" xml:lang="es">clasifica el encabezamiento de cualquier manera significativa para el codificador.</desc>
-        <desc version="2006-10-28" xml:lang="ja">当該表題の分類．</desc>
-        <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-        </datatype>
-        <valDesc>A set of user-defined keywords may be employed. Their
-        significance should be documented in the header.
-        </valDesc>
-        </attDef>
-        </attList>-->
   <exemplum xml:lang="en">
     <p>The most common use for the <gi>head</gi> element is to mark the headings of sections. In
       older writings, the headings or <term>incipits</term> may be rather longer than usual in
