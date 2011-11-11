@@ -10,6 +10,7 @@ TESTFILES= \
 	testClasses.dtd \
 	testbare.dtd \
 	testdictionaries.dtd \
+	testecco.dtd \
 	testfand.dtd \
 	testfand2.dtd \
 	testfand3.dtd \
