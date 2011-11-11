@@ -40,12 +40,36 @@ celui-ci.</desc>
   <rng:ref name="model.global"/>
         <rng:ref name="zone"/>
         <rng:ref name="line"/>
-        <rng:ref name="patch"/>
+         <rng:ref name="surface"/>
+         <rng:ref name="surfaceGrp"/>
 </rng:choice>
       </rng:zeroOrMore>
     </rng:group>
   </content>
-
+   <attList>
+      <attDef ident="binder" mode="add">
+         <desc>describes the method by which this surface is or was
+         connected to the main surface</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+         </datatype>
+         <valList type="open">
+            <valItem ident="glued"><desc>glued in place</desc>
+            </valItem>
+            <valItem ident="pinned"><desc>pinned or stapled in place</desc>
+            </valItem>
+            <valItem ident="sewn"><desc>sewn in place</desc>
+            </valItem>
+         </valList>
+      </attDef>
+      <attDef ident="flipping" mode="add"><desc>indicates whether the
+      surface is attached and folded in such a way as to provide two
+      writing surfaces</desc>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+         </datatype>
+      </attDef>
+</attList>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <facsimile>
@@ -59,21 +83,24 @@ celui-ci.</desc>
 
 
   <remarks>
-    <p>The <gi>surface</gi> element  represents a rectangular  area of
-any physical surface forming part of the source material. This may be a sheet of
-paper, one face of a monument, a billboard, a papyrus scroll, or
-indeed any 2-dimensional surface.</p>
+    <p>The <gi>surface</gi> element  represents any two-dimensional space on
+some physical surface forming part of the source material, such as a piece of
+paper, a face of a monument, a billboard, a scroll, a leaf etc.</p>
     <p>The coordinate space defined by this element may be thought of
     as a grid <att>lrx</att> - <att>ulx</att> units wide and
-    <att>uly</att> - <att>lry</att> units high. This grid is
-    superimposed on the whole of any image directly contained by the
-    <gi>surface</gi> element. The coordinate values used by every
-    <gi>zone</gi> element contained by this surface are to be
-    understood with reference to the same grid.</p>
+    <att>uly</att> - <att>lry</att> units high. </p>
 <p>The   <gi>surface</gi> element may contain graphic representations
 or transcriptions of the writing on a surface, or both. It may also be
-subdivided, using the <gi>zone</gi> element.</p> </remarks>
-  <remarks xml:lang="fr" version="2009-11-16">
+subdivided, using the <gi>zone</gi> element. The coordinate values used by every
+    <gi>zone</gi> element contained by this element are to be
+    understood with reference to the same grid. If the <att>points</att> attribute is used to indicate the
+exact perimeter of the surface being documented, the points defined
+are also understood with reference to this same coordinate system. </p>
+<p>Where it is useful or meaningful to do so, any grouping of multiple
+<gi>surface</gi> elements may be indicated using the
+<gi>surfaceGrp</gi> elements. </p> 
+</remarks>
+ <remarks xml:lang="fr" version="2009-11-16">
     <p>L'élément <gi>surface</gi> représente un secteur rectangulaire d’une surface physique faisant partie du matériau source. Ce peut être une feuille du papier, la façade d'un monument, un panneau publicitaire, un rouleau de papyrus ou en fait toute surface à deux dimensions.</p>
     <p>L'espace de coordonnées défini par cet élément peut être considéré comme une grille d'unités horizontales<att>lrx</att> - <att>ulx</att> et verticales <att>lry</att> - <att>ury</att>. Cette grille se superpose à la totalité de toute image directement contenue par l'élément <gi>surface</gi>. Les coordonnées employées par chaque élément <gi>zone</gi>contenu par cette surface doivent être interprétées en référence à la même grille.</p>
   </remarks>
