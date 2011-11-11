@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date: $
+$Id:  $
+-->
+<elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns="http://www.tei-c.org/ns/1.0" ident="surfaceGrp" module="transcr">
+  <desc>defines any kind of useful grouping of written surfaces, for
+  example the recto and verso of a single leaf, which the encoder
+  wishes to treat as a single unit. </desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.coordinated"/>
+    <memberOf key="att.declaring"/>
+    <memberOf key="att.typed"/> <!-- added by gen -->
+  </classes>
+  <content>
+<rng:oneOrMore>
+<rng:choice>  
+  <rng:ref name="model.global"/>
+  <rng:ref name="surface"/>
+  <rng:ref name="surfaceGrp"/>
+</rng:choice>
+</rng:oneOrMore>
+</content>
+<!-- need a rule to say at least two -->
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <sourceDoc>
+<surfaceGrp>
+        <surface ulx="0" uly="0" lrx="200" lry="300">
+          <graphic url="Bovelles-49r.png"/>
+        </surface>
+        <surface ulx="0" uly="0" lrx="200" lry="300">
+          <graphic url="Bovelles-49v.png"/>
+        </surface>
+</surfaceGrp>
+      </sourceDoc>
+    </egXML>
+  </exemplum>
+
+  <remarks>
+<p>Where it is useful or meaningful to do so, any grouping of multiple
+<gi>surface</gi> elements may be indicated using the
+<gi>surfaceGrp</gi> elements. </p> 
+</remarks>
+</elementSpec>

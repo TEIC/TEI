@@ -48,6 +48,7 @@ authorial manuscript, the author and the scribe are the same person.
 </p>
 
 <div xml:id="PHFAX">
+
 <head>Digital Facsimiles</head>
 
 <p>These Guidelines are mostly concerned with the preparation of
@@ -136,18 +137,24 @@ digital facsimile:
 <specList>
 <specDesc key="facsimile"/>
 <specDesc key="surface"/>
+<specDesc key="surfaceGrp"/>
 <specDesc key="zone"/>
 </specList>
 </p>
 
 <p>The <gi>facsimile</gi> element is used to represent a digital
 facsimile. It appears within a TEI document along with, or instead of,
-the <gi>text</gi> element introduced in section <ptr target="#DS"/>. When this module is selected therefore, a
+the <gi>text</gi> element introduced in section <ptr target="#DS"/>. 
+A superset of the facilities provided by the <gi>facsimile</gi>
+element is provided by the <gi>sourceDoc</gi> element discussed in
+section <ptr target="#PH-transcr"/> below. When this module is selected therefore, a
 legal TEI document may thus comprise any of the following :
 <list type="simple">
 <item>a TEI Header and a text element</item>
 <item>a TEI Header and a facsimile element</item>
+<item>a TEI Header and a sourceDoc element</item>
 <item>a TEI Header, a facsimile element, and a text element</item>
+<item>a TEI Header, a sourceDoc element, and a text element</item>
 </list>
 </p>
 <p>Like the <gi>text</gi> element, a <gi>facsimile</gi> element may
@@ -198,12 +205,31 @@ source material. A <term>surface</term> might be one side of a piece of paper or
 parchment, a face of a monument, a billboard, a membrane of a scroll,
 or indeed any two-dimensional surface, of any size. </p>
 
+<p>The <gi>surfaceGrp</gi> element may be used to indicate that
+two (or more) surfaces are associated in some way, for
+example because they represent the recto and verso of the same leaf,
+as in this example:
+  <egXML  xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+<facsimile>
+<surfaceGrp n="leaf1">
+  <surface>
+    <graphic url="page1.png"/>
+  </surface>
+  <surface>
+   <graphic url="page2-highRes.png"/>
+   <graphic url="page2-lowRes.png"/>
+  </surface>
+</surfaceGrp>
+</facsimile>
+</egXML>
+</p>
+
 <p>The actual dimensions of the object represented are not documented
 by the <gi>surface</gi> element; instead, the <gi>surface</gi> is
 located within an abstract coordinate space, which is defined by the
 following attributes, supplied by the <ident type="class">att.coordinated</ident> class:
 <specList>
-<specDesc key="att.coordinated" atts="ulx uly lrx lry"/>
+<specDesc key="att.coordinated" atts="ulx uly lrx lry points"/>
 </specList>
 </p>
 <p> The same coordinate space is used for a <gi>surface</gi> and for
@@ -235,9 +261,9 @@ sequence of four co-ordinates in the same way as a surface; a
 non-rectangular zone is defined using the attribute
 <att>points</att>, which  provides a sequence of co-ordinates, each
 of which specifies a point on the perimeter of the zone. 
-<specList>
+<!--<specList>
 <specDesc key="att.coordinated" atts="points"/>
-</specList>
+</specList>-->
 </p><p>The <att>points</att> attribute supplies a
 <soCalled>points specification</soCalled> in the same form as that
 required by the <gi>polyline</gi> or <gi>polygon</gi> elements in the
@@ -267,12 +293,14 @@ with coordinates larger than those of the parent surface. </p>
 
 
 <p>For example, consider the following figure: <figure><head>Relation
-between page, surface, and zone</head> <graphic url="Images/facs-fig2.jpg"/></figure> This is an image of a two page
+between page, surface, and zone</head> <graphic
+url="Images/facs-fig2.jpg"/></figure> This is an image of a two page
 spread from a manuscript in the Badische Landesbibliothek,
 Karlsruhe. We have no information as to the dimensions of the original
 object, but the low resolution image displayed here contains 500
 pixels horizontally and 321 pixels vertically. For convenience, we
-might map each pixel to one cell of the coordinate space.<note place="bottom">The coordinate space used here is based on pixels, but
+might map each pixel to one cell of the coordinate space.<note
+place="bottom">The coordinate space used here is based on pixels, but
 the mapping between pixels and units in the coordinate space need not
 be one-to-one; it might be convenient to define a more delicate grid,
 to enable us to address much smaller parts of the image. This can be
@@ -353,18 +381,20 @@ example, to define the written part of the left hand page:
 
 <p>In the following example, we discuss a hypothetical digital edition
 of an early 16th century French work, Charles de Bovelles'
-<title>Géometrie Pratique</title>.<note place="bottom">The image is taken
-from the collection at <ptr target="http://ancilla.unice.fr/Illustr.html"/>, and was digitized from a copy
-in the Bibliothèque Municipale de Lyon, by whose kind permission it is
-included here</note> In this edition, each
-page has been digitized as a separate file: for example, recto page 49
-is stored in a file called <ident type="file">Bovelles-49r.png</ident>.  In the
-<gi>facsimile</gi> element used to contain the whole set of pages, we
-define a <gi>surface</gi> element for this page, which we situate within a
-coordinate scale running from 0 to 200 in the x (horizontal) axis,
-and 0 to 300 in the y (vertical) axis.  The <gi>surface</gi> element
-contains a <gi>graphic</gi> 
-  element which represents the whole of this surface: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<title>Géometrie Pratique</title>.<note place="bottom">The image is
+taken from the collection at <ptr
+target="http://ancilla.unice.fr/Illustr.html"/>, and was digitized
+from a copy in the Bibliothèque Municipale de Lyon, by whose kind
+permission it is included here</note> In this edition, each page has
+been digitized as a separate file: for example, recto page 49 is
+stored in a file called <ident type="file">Bovelles-49r.png</ident>.
+In the <gi>facsimile</gi> element used to contain the whole set of
+pages, we define a <gi>surface</gi> element for this page, which we
+situate within a coordinate scale running from 0 to 200 in the x
+(horizontal) axis, and 0 to 300 in the y (vertical) axis.  The
+<gi>surface</gi> element contains a <gi>graphic</gi> element which
+represents the whole of this surface: <egXML xml:lang="und"
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
   <graphic url="Bovelles-49r.png"/>
 </surface>
@@ -509,12 +539,14 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 </text>
  </egXML></p>
 
+   
 <specGrp xml:id="DPFACS">
 &facsimile;
 &sourceDoc;
 &att.global.facs;
 &att.global.change;
 &surface;
+&surfaceGrp;
 &att.coordinated;
 &zone;
 &model.resourceLike;
@@ -524,10 +556,11 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 
 <div xml:id="PH-transcr"><head>Combining transcription with facsimile</head>
 
-<p>A digitized source document may contain nothing more than page images and a
-small amount of metadata. It may also contain an encoded transcription
-of the pages represented, which may either be <q>embedded</q> within
-the <gi>facsimile</gi> structure, or given in parallel to it. </p>
+<p>A digitized source document may contain nothing more than page
+images and a small amount of metadata. It may also contain an encoded
+transcription of the pages represented, which may either be
+<q>embedded</q> within a <gi>sourceDoc</gi> element, or supplied in
+parallel to a <gi>facsimile</gi> as defined above.</p>
 </div>
 
 <div xml:id="PHZLAB"><head>Embedded transcription</head>
@@ -540,9 +573,8 @@ independently of them. </p>
 <specDesc key="sourceDoc"/>
 <specDesc key="surface"/>
 <specDesc key="zone"/>
-<specDesc key="patch" atts="binder height width flipping"/>
+<!--specDesc key="patch" atts="binder height width flipping"/-->
 <specDesc key="line"  />
-<!--specDesc key="block" atts="type"/-->
 <specDesc key="seg" />
 </specList>
 </p>
@@ -561,12 +593,12 @@ section <ptr target="#SASE"/> may also be used to indicate smaller
 sequences of tokens within <gi>zone</gi>, or <gi>line</gi> as
 appropriate.
 </p>
-<p>The element
-<gi>patch</gi> is useful in cases where some or all of the written
-surfaces are composed of physically distinct scraps. In the following
-example, taken from the Walt Whitman Archive, two pieces of newsprint
-have been glued to a piece of blue paper on which a poem is being
-drafted:
+
+<p>The element <gi>surface</gi> is also useful in cases where some or all of
+the written surfaces are composed of physically distinct scraps. In
+the following example, taken from the Walt Whitman Archive, two pieces
+of newsprint have been glued to a piece of blue paper on which a poem
+is being drafted:
 
 <figure><graphic url="Images/whitman01.jpg" width="400px"/>
             <head rend="it">Image from
@@ -575,8 +607,7 @@ drafted:
 The two pieces of newsprint might perhaps be regarded as special kinds
 of zone, but they are effectively new surfaces, since they might
 contain additional written zones themselves (such as the numbers in
-this case). The <gi>patch</gi> element may be used to represent such
-<q>sub-surfaces</q>. </p>
+this case).  </p>
 
 
 
@@ -590,18 +621,16 @@ follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <line>All sorts of fancies running through</line>
       <line>the head</line>
    </zone>
-   <patch type="newsprint" binder="glue" flipping="false"
-			       height="40cm" width="90cm"> 
+   <surface type="newsprint" binder="glue" flipping="false">
 			  <zone>Spring has
       just set in here, and the weather.... a
 			   steamer </zone>
          <metamark function="sequence">2</metamark>
-   </patch>
-   <patch type="newsprint" binder="glue" flipping="false"
-			       height="35cm" width="90cm"> 
+   </surface>
+   <surface type="newsprint" binder="glue" flipping="false">
 			  <zone>"The shores on either side of the Sound are... The In-       </zone>   
 			   <metamark function="sequence">3</metamark>
-   </patch>
+   </surface>
 </surface>
 </egXML> 
 </p>
@@ -615,23 +644,28 @@ elements identified in the transcription. The encoder may choose to
 complement a transcription with graphic representations of its source
 at whatever level is considered effective, or not at all. Equally, the
 encoder may choose to provide only graphics without any transcription,
-to provide only a structured (non-embedded) transcription, or to provide
-any combination of the three. </p>
+to provide only a structured (non-embedded) transcription, or to
+provide any combination of the three. </p>
+<p>This example also lacks any co-ordinate information to specify
+either the size of the two newspaper fragments or whereabouts on the
+parent <gi>surface</gi> element they are to be found, other than the
+reading order implicit in their sequence. Such information could be
+added if desired by specifying a coordinate system on the outermost
+<gi>surface</gi> element, and then indicating values within that
+system for each of the two fragments, as was discussed above.</p>
 </div>
-
-
 
 </div>
 
 <div xml:id="PHST"><head>Scope of Transcriptions</head>
 
 <p>When transcribing a primary source, scholars may wish to record
-information concerning individual readings of letters, words, or larger
-units, whether the object is simply a <soCalled>neutral</soCalled>
-transcription or a critical edition.  In either case they  may also
-wish to include other editorial material, such
-as comments on the status or possible origin of particular readings,
-corrections, or text supplied to fill lacunae.  
+information concerning individual readings of letters, words, or
+larger units, whether the object is simply a
+<soCalled>neutral</soCalled> transcription or a critical edition.  In
+either case they may also wish to include other editorial material,
+such as comments on the status or possible origin of particular
+readings, corrections, or text supplied to fill lacunae.
 </p>
 
 <p>Such elements may also be used for digital
@@ -648,10 +682,10 @@ particular importance when dealing with authorial manuscripts, but are
 also relevant in the case of historical sources such as charters or
 other legal documents.</p>
 
-<p>In either case, it is
-customary in transcriptions to register certain features of the
-source, such as ornamentation, underlining, deletion, areas of damage
-and lacunae. This chapter provides ways of encoding such information:
+<p>In either case, it is customary in transcriptions to register
+certain features of the source, such as ornamentation, underlining,
+deletion, areas of damage and lacunae. This chapter provides ways of
+encoding such information:
 <list type="simple">
 <item>first, methods of recording editorial or other alterations to
 the text, such as expansion of abbreviations, corrections, conjectures,
@@ -684,22 +718,26 @@ combination of the two; see further <ptr target="#PHZLAB"/>.
 
 <p>These recommendations are not intended to meet every
 transcriptional circumstance likely to be faced by any scholar.
-Rather, they should be regarded as a base which can be elaborated if necessary by different scholars in different disciplines<!-- , with
+Rather, they should be regarded as a base which can be elaborated if
+necessary by different scholars in different disciplines
+</p>
+<!-- , with
 distinct scholarly domains eventually developing their own document
 types.  In time, the feature structure notation developed in chapter
 <ptr target="#FS"/>, may also permit scholars to tailor the encoding
-of complex transcriptional information in ways not here anticipated-->.
- <!-- We are conscious that a great deal of work remains to done in
+of complex transcriptional information in ways not here anticipated.
+ We are conscious that a great deal of work remains to done in
 these areas, and that the encoder will need to take even more
 individual responsibility than usual in applying the recommendations
 of this chapter in such contexts, but believe that these
 recommendations form a good basis for such future work.-->
-</p><p>As a rule, all elements which may be used in the course of a
+
+<p>As a rule, all elements which may be used in the course of a
 transcription of a single witness may also be used in a critical
-apparatus, i.e. within the elements proposed in chapter <ptr target="#TC"/>.
-This can generally be achieved by nesting a
-particular reading containing tagged elements from a particular witness
-within the <gi>rdg</gi> element in an <gi>app</gi> structure.
+apparatus, i.e. within the elements proposed in chapter <ptr
+target="#TC"/>.  This can generally be achieved by nesting a
+particular reading containing tagged elements from a particular
+witness within the <gi>rdg</gi> element in an <gi>app</gi> structure.
 	</p>
 <p>Just as a critical apparatus may contain transcriptional elements
 within its record of variant readings in various witnesses, one may
@@ -709,14 +747,17 @@ section <ptr target="#TCTR"/>.
 	</p>
 </div>
 <div type="div2" xml:id="PHCH"><head>Altered, Corrected, and Erroneous Texts</head>
+
 <p>In the detailed transcription of any source, it may prove necessary
 to record various types of actual or potential alteration of the text:
 expansion of abbreviations, correction of the text (either by author,
 scribe, or later hand, or by previous or current editors or scholars),
-addition, deletion, or substitution of material, and similar matters.  The
-sections below describe how such phenomena may be encoded using either
-elements defined in the core module (defined in chapter <ptr target="#CO"/>) or specialized elements available only when the module
+addition, deletion, or substitution of material, and similar matters.
+The sections below describe how such phenomena may be encoded using
+either elements defined in the core module (defined in chapter <ptr
+target="#CO"/>) or specialized elements available only when the module
 described in this chapter is available.</p>
+
 <!-- add and del for things added and removed
      supplied by later editor  (add suppress, or use gap) -> ed for
      emendation in general (DO, MD, LB to discuss) -->
@@ -771,26 +812,33 @@ page: thus, a <q>p with a bar through the descender</q>, a
 abbreviation in terms of the letter or letters it is seen as standing
 for: thus, <q>per</q>, <q>re</q>, <q>n</q>. Both of these views are
 supported by these Guidelines. </p>
+
 <p>In many cases the glyph found in the manuscript source also exists
 in the Unicode character set: for example the common Latin brevigraph
-⁊, standing for <mentioned>et</mentioned> and often known as
-the <soCalled>Tironian et</soCalled> can be directly represented in
-any XML document as the Unicode character with code point
-<val>U+204A</val> (see further <ptr target="#SG-er"/> and <ptr target="#CHSH"/>). In cases where it does not, these Guidelines
-recommend use of the <gi>g</gi> element provided by the <ident type="module">gaiji</ident> module described in chapter <ptr target="#WD"/>. This module allows the encoder great flexibility both
+⁊, standing for <mentioned>et</mentioned> and often known as the
+<soCalled>Tironian et</soCalled> can be directly represented in any
+XML document as the Unicode character with code point
+<val>U+204A</val> (see further <ptr target="#SG-er"/> and <ptr
+target="#CHSH"/>). In cases where it does not, these Guidelines
+recommend use of the <gi>g</gi> element provided by the <ident
+type="module">gaiji</ident> module described in chapter <ptr
+target="#WD"/>. This module allows the encoder great flexibility both
 in processing and in documenting non-standard characters or glyphs,
 including the ability to provide detailed documentation and images for
 them.
 </p>
+
 <p>These two methods of coding abbreviation may also be combined. An
 encoder may record, for any abbreviation, both the sequence of letters
 or marks which constitutes it, and its sense, that is, the letter or
 letters for which it is believed to stand. For example, in the
-following fragment the phrase <mentioned>euery persone</mentioned>
-is represented by a sequence of characters which may be transcribed
+following fragment the phrase <mentioned>euery persone</mentioned> is
+represented by a sequence of characters which may be transcribed
 directly, using the <gi>g</gi> element to indicate the two brevigraphs
-it contains as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-BIBL-1">eu<g ref="#b-er">er</g>y <g ref="#b-per">per</g>sone that loketh after heuen hath a place in this
-ladder
+it contains as follows: <egXML
+xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-BIBL-1">eu<g
+ref="#b-er">er</g>y <g ref="#b-per">per</g>sone that loketh after
+heuen hath a place in this ladder
 <!-- elsewhere -->
 <charDecl>
 <char xml:id="b-er">
@@ -2670,9 +2718,6 @@ type="ordered">
 
 </div>
 
-
-
-
 <div><head>Aspects of Layout</head>
 <p>Finally in this chapter we present elements which may be used to
 capture aspects of the layout of material on a page where this is
@@ -3165,13 +3210,12 @@ The selection and combination of modules to form a TEI schema is described in
 &substJoin;
 &supplied;
 &surplus;
-
 &line;
 &listChange;
 &listTranspose;
 &metamark;
 &mod;
-&patch;
+<!--&patch;-->
 &redo;
 &retrace;
 &transpose;
