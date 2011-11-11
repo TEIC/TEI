@@ -35,7 +35,7 @@ dir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
 echo Try to fetch $version package from $dir
 case $package in 
   TEIP5)         names="tei-p5-source tei-p5-schema tei-p5-database tei-p5-doc tei-p5-exemplars tei-p5-test";;
-  Stylesheets-xslt1)   names="tei-p5-xsl";;
+  Stylesheets1)   names="tei-p5-xsl";;
   Stylesheets)   names="tei-xsl-common tei-p5-xsl2";;
   Roma)          names=tei-roma;;
     *) echo "Error: package $package unsupported"; exit 1;;
