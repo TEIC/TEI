@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2">
+   <title>ISO Schematron rules</title>
+   <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
+   <ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+   <pattern id="ptr-constraint-ptrAtts">
+      <rule context="tei:ptr">
+         <report test="@target and @cRef">Only one of the
+	attributes 'target' and 'cRef' may be supplied.</report>
+      </rule>
+   </pattern>
+   <pattern id="ref-constraint-refAtts">
+      <rule context="tei:ref">
+         <report test="@target and @cRef">Only one of the
+	attributes 'target' and 'cRef' may be supplied.</report>
+      </rule>
+   </pattern>
+   <pattern id="relatedItem-constraint-targetorcontent1">
+      <rule context="tei:relatedItem">
+         <report test="@target and count( child::* ) &gt; 0">If the 'target' attribute is used, the
+        relatedItem element must be empty</report>
+         <assert test="@target or child::*">A relatedItem element should have either a 'target' attribute
+        or a child element to indicate the related bibliographic item</assert>
+      </rule>
+   </pattern>
+   <pattern id="link-constraint-linkTargets1">
+      <rule context="tei:link">
+         <report test="@target and @targets">You may not supply both 
+	@target and @targets</report>
+      </rule>
+   </pattern>
+   <pattern id="link-constraint-linkTargets2">
+      <rule context="tei:link">
+         <report test="not(@target) and not(@targets)">You must
+	supply either @target or @targets</report>
+      </rule>
+   </pattern>
+   <pattern id="link-constraint-linkTargets3">
+      <rule context="tei:link">
+         <assert test="contains(@target,' ')">You must supply at least two
+values for @target</assert>
+      </rule>
+   </pattern>
+   <pattern id="join-constraint-joinTargets1">
+      <rule context="tei:join">
+         <report test="@target and @targets">You may not supply both 
+	@target and @targets</report>
+      </rule>
+   </pattern>
+   <pattern id="join-constraint-joinTargets2">
+      <rule context="tei:join">
+         <report test="not(@target) and not(@targets)">You must
+	supply either @target or @targets</report>
+      </rule>
+   </pattern>
+   <pattern id="join-constraint-joinTargets3">
+      <rule context="tei:join">
+         <assert test="contains(@target,' ')">You must supply at least two
+values for @target</assert>
+      </rule>
+   </pattern>
+   <pattern id="alt-constraint-altTargets1">
+      <rule context="tei:alt">
+         <report test="@target and @targets">You may not supply both 
+	@target and @targets</report>
+      </rule>
+   </pattern>
+   <pattern id="alt-constraint-altTargets2">
+      <rule context="tei:alt">
+         <report test="not(@target) and not(@targets)">You must
+	supply either @target or @targets</report>
+      </rule>
+   </pattern>
+   <pattern id="alt-constraint-altTargets3">
+      <rule context="tei:alt">
+         <assert test="contains(@target,' ')">You must supply at least two
+values for @target</assert>
+      </rule>
+   </pattern>
+</schema>

@@ -27,23 +27,40 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <ref name="model.headLike"/>
-        <ref name="model.pLike"/>
-        <ref name="figDesc"/>
-        <ref name="model.graphicLike"/>
-        <ref name="model.egLike"/>
-        <ref name="floatingText"/>
-        <!--        <rng:ref name="figure"/> -->
-        <ref name="model.global"/>
-      </choice>
-    </zeroOrMore>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <choice>
+          <ref name="model.divTop"/>
+          <ref name="model.global"/>
+        </choice>
+      </zeroOrMore>
+      <oneOrMore>
+	<group>
+	  <choice>
+	    <ref name="model.common"/>
+	    <ref name="figDesc"/>
+	    <ref name="model.graphicLike"/>
+	    <ref name="model.headLike"/>
+	  </choice>
+	</group>
+	<zeroOrMore>
+	  <ref name="model.global"/>
+	</zeroOrMore>
+      </oneOrMore>
+      <zeroOrMore>
+          <group>
+            <ref name="model.divBottom"/>
+          </group>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </zeroOrMore>
+    </group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <figure>
-        <head>Figure One: The View from the Bridge</head>
+        <head>The View from the Bridge</head>
         <figDesc>A Whistleresque view showing four or five sailing boats in the foreground, and a
           series of buoys strung out between them.</figDesc>
         <graphic url="http://www.example.org/fig1.png" scale="0.5"/>
