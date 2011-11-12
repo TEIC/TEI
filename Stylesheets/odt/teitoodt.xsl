@@ -38,10 +38,6 @@
     office:version="1.0"
     >
 
-<!--
-  <xsl:import href="../common2/header.xsl"/>
-  <xsl:import href="../common2/i18n.xsl"/>
--->
   <xsl:import href="../common2/core.xsl"/>
   <xsl:param name="useFixedDate">false</xsl:param>
 
