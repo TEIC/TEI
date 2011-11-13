@@ -77,7 +77,12 @@ of this software, even if advised of the possibility of such damage.
     
    <!-- identity transform -->
 
-<xsl:template match="@*|text()|comment()|processing-instruction()">
+   <xsl:template match="/">
+     <xsl:message>Reading new document from <xsl:value-of
+     select="$documentFile"/> and header data from TEI file  <xsl:value-of select="$headerFile"/></xsl:message>
+     <xsl:apply-templates/>
+   </xsl:template>
+   <xsl:template match="@*|text()|comment()|processing-instruction()">
       <xsl:copy-of select="."/>
    </xsl:template>
 
