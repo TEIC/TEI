@@ -70,7 +70,7 @@
 
   <target name="coverpages" if="makecoverpages">
     <echo>Make cover pages</echo>
-    <xslt force="yes"
+    <xslt
 	  style="${profileDir}/${profile}/docx/makecoverpages.xsl" 
 	  in="${outputTempDir}/word/document.xml" 
 	  out="${outputTempDir}/tmp3.xml" 
@@ -83,8 +83,8 @@
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9he.jar"/>
-      <param name="header-file"   expression="${outputTempDir}/tmp2.xml"/>
-      <param name="document-file" expression="${outputTempDir}/newdocument.xml"/>
+      <param name="headerFile"   expression="${outputTempDir}/tmp2.xml"/>
+      <param name="documentFile" expression="${outputTempDir}/newdocument.xml"/>
     </xslt>
     <move file="${outputTempDir}/tmp3.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
     <delete file="${outputTempDir}/newdocument.xml"/>

@@ -71,8 +71,8 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-    <xsl:param name="header-file"/>
-    <xsl:param name="document-file"/>
+    <xsl:param name="headerFile"/>
+    <xsl:param name="documentFile"/>
     <xsl:param name="debug">false</xsl:param>   
     
    <!-- identity transform -->
@@ -94,14 +94,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:copy>
          <xsl:apply-templates select="@*"/>
          <w:r>
-	           <xsl:copy-of select="@w:rsidR"/>
-	           <xsl:apply-templates select="w:r/w:rPr"/>
-	           <w:t>
-	              <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	              <xsl:for-each select="document($header-file)">
-	                 <xsl:value-of select="key('ISOMETA',$alias)"/>
-	              </xsl:for-each>
-	           </w:t>
+	   <xsl:copy-of select="@w:rsidR"/>
+	   <xsl:apply-templates select="w:r/w:rPr"/>
+	   <w:t>
+	     <xsl:attribute name="xml:space">preserve</xsl:attribute>
+	     <xsl:for-each select="doc($headerFile)">
+	       <xsl:value-of select="key('ISOMETA',$alias)"/>
+	     </xsl:for-each>
+	   </w:t>
          </w:r>
       </xsl:copy>
    </xsl:template>
@@ -110,7 +110,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="w:body">
       <xsl:copy>
          <xsl:apply-templates/>
-         <xsl:copy-of select="document($document-file)/w:document/w:body/*"/>
+         <xsl:copy-of select="doc($documentFile)/w:document/w:body/*"/>
       </xsl:copy>
    </xsl:template>
 
