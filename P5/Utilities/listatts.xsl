@@ -170,7 +170,7 @@ function numSortDesc(a, b){
 ]]></script>
 </head>
       <body>
-	<xsl:variable name="list">n place rend role status type</xsl:variable>
+	<xsl:variable name="list">n place rend role status type xml:lang</xsl:variable>
 	<ul>
 	  <xsl:for-each select="tokenize($list,' ')">
 	    <li><a href="#{.}"><xsl:value-of select="."/></a></li>
