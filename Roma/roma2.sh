@@ -253,7 +253,7 @@ which trang > /dev/null || die "you do not have trang installed"
 which perl > /dev/null || die "you do not have perl installed"
 test -f $ODD || die "file $ODD does not exist"
 echo "TEI stylesheet tree: $TEIXSLDIR"
-test -d $TEIXSLDIR/odds || \
+test -d $TEIXSLDIR/odds2 || \
      curl $TEIXSLDIR/odds2/odd2odd.xsl > /dev/null || \
      die "stylesheet location $TEIXSLDIR is not accessible"
 if test "x$schema" = "x"
