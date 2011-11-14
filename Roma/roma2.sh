@@ -14,7 +14,7 @@ makeODD()
     if test "x$lang" = "x"
     then
 	xmllint --xinclude $ODD | saxon -s:-  -o:$RESULTS/$ODD.compiled  \
-	    -xsl:$TEIXSLDIR/odds/odd2odd.xsl \
+	    -xsl:$TEIXSLDIR/odds2/odd2odd.xsl \
 	    $SELECTEDSCHEMA  \
 	    $LANGUAGE\
 	    $DOCLANG \
@@ -23,12 +23,12 @@ makeODD()
 	    autoGlobal=$AUTOGLOBAL $SOURCE $DEBUG  
     else
 	echo  [names translated to language $lang]
-	xmllint --xinclude $ODD |  saxon -s:- -xsl:$TEIXSLDIR/odds/odd2odd.xsl \
+	xmllint --xinclude $ODD |  saxon -s:- -xsl:$TEIXSLDIR/odds2/odd2odd.xsl \
 	    autoGlobal=$AUTOGLOBAL \
 	    currentDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
 	    $SOURCE $DEBUG  \
-	    | saxon -o:$RESULTS/$ODD.compiled -s:- -xsl:$TEIXSLDIR/odds/translate-odd.xsl \
+	    | saxon -o:$RESULTS/$ODD.compiled -s:- -xsl:$TEIXSLDIR/odds2/translate-odd.xsl \
 	    $DEBUG $LANGUAGE $DOCLANG 
    fi
 }
@@ -36,7 +36,7 @@ makeODD()
 makeRelax() 
 {
     echo "2. make RELAX NG from compiled ODD"
-    saxon   -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds/odd2relax.xsl \
+    saxon   -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds2/odd2relax.xsl \
     $PATTERN $DEBUG $LANGUAGE $DOCLANG  $SELECTEDSCHEMA \
 	     parameterize=$parameterize \
              autoGlobal=$AUTOGLOBAL \
@@ -58,7 +58,7 @@ makeXSD()
 makeDTD()
 {
     echo "5. make DTD from compiled ODD"
-    saxon -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds/odd2dtd.xsl \
+    saxon -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds2/odd2dtd.xsl \
 	$DEBUG $LANGUAGE $DOCLANG   $SELECTEDSCHEMA \
 	    parameterize=$parameterize \
 	    autoGlobal=$AUTOGLOBAL \
@@ -68,7 +68,7 @@ makeDTD()
 makeSCH()
 {
     echo "8. extract Schematron from compiled ODD"
-    saxon  -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds/extract-sch.xsl \
+    saxon  -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds2/extract-sch.xsl \
     $DEBUG $LANGUAGE $DOCLANG   $SELECTEDSCHEMA \
 	> $RESULTS/$schema.sch
 }
@@ -76,7 +76,7 @@ makeSCH()
 makeISOSCH()
 {
     echo "9. extract Schematron from compiled ODD"
-    saxon  -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds/extract-isosch.xsl \
+    saxon  -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds2/extract-isosch.xsl \
     $DEBUG $LANGUAGE $DOCLANG   $SELECTEDSCHEMA \
 	> $RESULTS/$schema.isosch
 }
@@ -84,7 +84,7 @@ makeISOSCH()
 makeHTMLDOC() 
 {
     echo "10. make HTML documentation $schema.doc.html "
-    saxon -o:$RESULTS/$schema.doc.html -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds/odd2html.xsl \
+    saxon -o:$RESULTS/$schema.doc.html -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds2/odd2html.xsl \
 	$DOCFLAGS  \
 	$DEBUG  $LANGUAGE $DOCLANG autoGlobal=$AUTOGLOBAL \
 	STDOUT=true \
@@ -139,7 +139,7 @@ makeXMLDOC()
 {
     echo "6. make expanded documented ODD $schema.doc.xml "
     saxon -o:$RESULTS/$schema.doc.xml  \
-    -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds/odd2lite.xsl \
+    -s:$RESULTS/$ODD.compiled -xsl:$TEIXSLDIR/odds2/odd2lite.xsl \
     $DEBUG $DOCFLAGS  $LANGUAGE $DOCLANG $SOURCE autoGlobal=$AUTOGLOBAL 
 }
 
@@ -254,11 +254,11 @@ which perl > /dev/null || die "you do not have perl installed"
 test -f $ODD || die "file $ODD does not exist"
 echo "TEI stylesheet tree: $TEIXSLDIR"
 test -d $TEIXSLDIR/odds || \
-     curl $TEIXSLDIR/odds/odd2odd.xsl > /dev/null || \
+     curl $TEIXSLDIR/odds2/odd2odd.xsl > /dev/null || \
      die "stylesheet location $TEIXSLDIR is not accessible"
 if test "x$schema" = "x"
 then
- schema=$(xmllint --xinclude $1 | saxon -s:- -xsl:$TEIXSLDIR/odds/extract-schemaSpec-ident.xsl | head -1 )
+ schema=$(xmllint --xinclude $1 | saxon -s:- -xsl:$TEIXSLDIR/odds2/extract-schemaSpec-ident.xsl | head -1 )
  schema=${schema:?"Unable to ascertain ident= of <schemaSpec>"}
 fi
 echo "Results to: $RESULTS"
