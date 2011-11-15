@@ -85,10 +85,9 @@ associate any element in a transcription with an image of the
 corresponding part of the source, by means of the usual URI pointing
 mechanism. <!-- i.e. URI reference? --> </p>
 
-<p>If a digital text contains one image per page or column (or similar
-unit), and no more complex mapping between text and image is
-envisaged, then the <att>facs</att> attribute may be used to point
-directly to a graphic resource:
+<p>In the simple case where a digital text is composed of page images,
+the <att>facs</att> attribute on the <gi>pb</gi> element may be used
+to associate each image with an appropriate point in the text:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
 <TEI>
@@ -121,16 +120,16 @@ applications. </p>
 
 <p>The recommended approach to encoding facsimiles is instead to use
 the <att>facs</att> attribute in conjunction with the elements
-<gi>facsimile</gi>, <gi>surface</gi>, and <gi>zone</gi>, which are
-also provided by this module. These elements make it possible to
-accommodate multiple images of each page, as well as to record
-arbitrary planar coordinates of textual elements on any kind of
-written surface and to link such elements with digital facsimile
-images of them. Typical applications include the provision of full
-text search in <soCalled>digital facsimile editions</soCalled>, and
-ways of annotating graphics, for example so as to identify individuals
-appearing in group portraits and link them to data about the peeople
-represented. </p>
+<gi>facsimile</gi>, <gi>surface</gi>, <gi>surfaceGrp</gi>, and
+<gi>zone</gi>, which are also provided by this module. These elements
+make it possible to accommodate multiple images of each page, as well
+as to record arbitrary planar coordinates of textual elements on any
+kind of written surface and to link such elements with digital
+facsimile images of them. Typical applications include the provision
+of full text search in <soCalled>digital facsimile
+editions</soCalled>, and ways of annotating graphics, for example so
+as to identify individuals appearing in group portraits and link them
+to data about the peeople represented. </p>
 
 <p>The following elements are used to represent components of a
 digital facsimile:
@@ -144,11 +143,12 @@ digital facsimile:
 
 <p>The <gi>facsimile</gi> element is used to represent a digital
 facsimile. It appears within a TEI document along with, or instead of,
-the <gi>text</gi> element introduced in section <ptr target="#DS"/>. 
+the <gi>text</gi> element introduced in section <ptr target="#DS"/>.
 A superset of the facilities provided by the <gi>facsimile</gi>
 element is provided by the <gi>sourceDoc</gi> element discussed in
-section <ptr target="#PH-transcr"/> below. When this module is selected therefore, a
-legal TEI document may thus comprise any of the following :
+section <ptr target="#PH-transcr"/> below. When this module is
+selected therefore, a legal TEI document may thus comprise any of the
+following :
 <list type="simple">
 <item>a TEI Header and a text element</item>
 <item>a TEI Header and a facsimile element</item>
@@ -174,8 +174,9 @@ in the same way as described in sections <ptr target="#DSFRONT"/> and
 </facsimile>
 </egXML>
 
-If desired, the <gi>binaryObject</gi> element described in <ptr target="#COGR"/> (or any other element from the
-<ident type="class">model.graphicLike</ident> class) can be used instead of a
+If desired, the <gi>binaryObject</gi> element described in <ptr
+target="#COGR"/> (or any other element from the <ident
+type="class">model.graphicLike</ident> class) can be used instead of a
 <gi>graphic</gi>.</p>
 
 <p>In this simple case, the four page images are understood to
@@ -200,10 +201,10 @@ same area of the work:
 </p>
 
 <p>The <gi>surface</gi> element provides a way of indicating that the
-two images of page2 represent the same physical surface within the
-source material. A <term>surface</term> might be one side of a piece of paper or
-parchment, a face of a monument, a billboard, a membrane of a scroll,
-or indeed any two-dimensional surface, of any size. </p>
+two images of page2 represent the same surface within the source
+material. A <term>surface</term> might be one side of a piece of paper
+or parchment, a face of a monument, a billboard, a membrane of a
+scroll, or indeed any two-dimensional surface, of any size. </p>
 
 <p>The <gi>surfaceGrp</gi> element may be used to indicate that
 two (or more) surfaces are associated in some way, for
@@ -227,7 +228,8 @@ as in this example:
 <p>The actual dimensions of the object represented are not documented
 by the <gi>surface</gi> element; instead, the <gi>surface</gi> is
 located within an abstract coordinate space, which is defined by the
-following attributes, supplied by the <ident type="class">att.coordinated</ident> class:
+following attributes, supplied by the <ident
+type="class">att.coordinated</ident> class:
 <specList>
 <specDesc key="att.coordinated" atts="ulx uly lrx lry points"/>
 </specList>
@@ -308,14 +310,15 @@ done simply by supplying appropriate values for the attributes which
 define the coordinate space; for example doubling them all would map
 each pixel to two grid points in the coordinate space.</note> </p>
 
-<p>The coordinates of the <gi>surface</gi> (that is, the area of the
-image which represents the written two page spread) can then be
-specified in terms of this coordinate space, simply by counting
-pixels in the image.  The left corner of the two page spread appears
-50 units from the left of the image and 20 units from the top, while
-the bottom right corner of the spread appears 400 units from the left
-of the image, and 280 units from the top. We therefore define the
-written surface within this image as follows: <egXML  xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+<p>We could then define a <gi>surface</gi> element corresponding with
+the area of the image which represents the written two page spread in
+terms of this coordinate space, simply by counting pixels in the
+image.  The left corner of the two page spread appears 50 units from
+the left of the image and 20 units from the top, while the bottom
+right corner of the spread appears 400 units from the left of the
+image, and 280 units from the top. We therefore define the written
+surface within this image as follows: <egXML xml:lang="und"
+xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="50" uly="20" lrx="400" lry="280">
 	<!-- ... -->
 </surface>
@@ -460,17 +463,17 @@ contain such a structured representation. The <gi>text</gi> element is
 a sibling of the <gi>facsimile</gi> and <gi>sourceDoc</gi>
 elements. This approach is illustrated in section <ptr
 target="#PH-bov"/> below. Alternatively, if the transcription is
-intended to prioritize representation of the process by which the
-document came to take its present form over representation of the
-final text, <!--do no more than represent the physicality of the
-document itself--> it may be preferable to use a subset of the
+intended not to prioritize representation of the
+final text so much as the process by which the
+document came to take its present form, or the physical disposition of
+its component parts, it may be preferable to use a subset of the
 available elements and to embed them within the <gi>zone</gi> element,
 as further described in section <ptr target="#PHZLAB"/> below.</p>
 
 <div xml:id="PH-bov"><head>Parallel transcription</head>
 
-<p>If we wish to align a transcription of this page
-with particular zones within a facsimile, we begin by giving each
+<p>Suppose now that we wish to align a transcription of the page discussed 
+in the preceding section with particular zones.  We begin by giving each
 relevant part of the facsimile an identifier:
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 <surface ulx="0" uly="0" lrx="200" lry="300">
@@ -2547,8 +2550,8 @@ document indicating that passages should be moved to a different
 position. Typically this may be done  using
 arrows, asterisks or numbers, or other means. By definition the result
 of a transposition is not present in the document, and should not
-therefore be encoded, if the intention is to record its actual
-state. Instead, the following elements may be used to indicate the
+therefore be encoded, if the intention is to represent the actual
+appearance of the document. Instead, the following elements may be used to indicate the
 intended reordering:
 <specList>
 <specDesc key="listTranspose"/>
@@ -2623,7 +2626,7 @@ single transposition.</p>
       <head>Alternative Readings</head>
       <p><figure>
 <graphic url="Images/moore04.png" width="400px"/>
-<head>Lalla Rookh 3</head>
+<head>Original ms of Thomas Moore's Lalla Rookh</head>
          </figure> 
 In this example two alternative readings are provided, but no
 preference is indicated. While the author apparently
@@ -2642,10 +2645,16 @@ encoding the state of this manuscript, as  follows:
 <line>Alone <seg xml:id="alt1">before</seg>
    <add place="above" xml:id="alt2">beside</add> his
    native river ­—</line>
-<alt targets="#alt1 #alt2" mode="excl" weights="0 1"/>
+<alt target="#alt1 #alt2" mode="excl" weights="0 1"/>
          </zone>
       </egXML>
-</p><p>The <gi>alt</gi> element is further discussed in section <ptr
+</p><p>The <att>mode</att> attribute here indicates that the two
+possible readings indicated by the <att>target</att> attribute are
+mutually exclusive. The <att>weights</att> attribute provides the
+relative importance or preference to be attached to the two readings;
+in this case, we have a very strong preference for the second reading
+because this is the one that appears in  the published
+version of the poem.  The <gi>alt</gi> element is further discussed in section <ptr
 target="#SAAT"/>. </p>
  </div>
 <!-- NOTE next section on ice, pending further council discussion -->
@@ -2690,7 +2699,9 @@ some change later than that of its parent.</p>
       <p> An example of false start can be seen in the following line:
       <figure>
 <graphic url="Images/whitman03a.jpg" width="70%"/>
-<head>http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg</head>
+<head><ref
+	  target="http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg">Walt
+Whitman : The Sleepers</ref></head>
          </figure> in which we can detect the following sequence of events: <list
 type="ordered">
 <item>The letter <val>T</val> is written and then immediately deleted</item>
@@ -2698,8 +2709,9 @@ type="ordered">
 <item>The added word <val>His</val> is then deleted</item>
 <item>The initial letter <val>i</val> of the words <mentioned>iron necklace</mentioned> is overwritten with a
    capital I</item>
-         </list> To indicate that the first of these acts must have taken place before
-         the others, we might encode this revision campaign as follows:
+         </list> To indicate that the first of these acts must have
+	 taken place during the main act of writing, before
+         the other deletion and additions, we might encode this revision campaign as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <line><del instant="true">T</del>
    <mod type="subst">
@@ -2894,12 +2906,16 @@ respectively.</p>
 <div xml:id="PH-changes"><head>Changes</head>
 <p>A major purpose of genetic editing is the identification of
 <soCalled>revision campaigns</soCalled> or, more generally,
-<term>changes</term>. An editor may wish to assign a set of alterations
-(deletions, additions, substitutions, transpositions, etc.) or any
-other act of writing to a particular change, to indicate both that one
-or more of such phenomena preceded or followed another and also to
-indicate that they are related in some way, for example that one is a
-consequence of the other. To document this we need:
+<term>changes</term>. An editor may wish to assign a set of
+alterations (deletions, additions, substitutions, transpositions,
+etc.) or any other act of writing to a particular change, to indicate
+both that one or more of such phenomena preceded or followed another
+and also to indicate that they are related in some way, for example
+that one is a consequence of the other. They might also wish to group
+together certain revisions, regardless of when they might have
+occurred, based on a variety of other shared characteristics (e.g.,
+corrections of factual errors or revisions that incorporate
+suggestions made by a given reader).  To document this we need:
 <list><item>a system to assign phenomena to a particular change</item>
 <item>a way to characterize a change, in itself and in relation to
 other changes.</item>
@@ -3025,10 +3041,11 @@ witnessed by the print.</change>
       purely documentary and do not affect the textual stage
       associated with any element thus referred to. The association of
       a textual component with a change is always made explicitly,
-      either by pointing from the <gi>change</gi> attribute
-      <att>target</att> to one or more elements, or (preferably) by
-      pointing from the element concerned to the <gi>change</gi>
-      element by means of its <att>change</att> attribute:</p>
+      either by using the <att>target</att> attribute on the
+      <gi>change</gi> element to point to one or more elements, or
+      (preferably) by pointing from the element or elements concerned
+      to the <gi>change</gi> element by means of their
+      <att>change</att> attribute:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <line change="#firstStage">This is a <mod type="subst" change="#secondStage">
                <del>house</del>
