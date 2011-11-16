@@ -82,6 +82,7 @@ of this software, even if advised of the possibility of such damage.
      select="$documentFile"/> and header data from TEI file  <xsl:value-of select="$headerFile"/></xsl:message>
      <xsl:apply-templates/>
    </xsl:template>
+
    <xsl:template match="@*|text()|comment()|processing-instruction()">
       <xsl:copy-of select="."/>
    </xsl:template>
@@ -115,12 +116,18 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="w:body">
       <xsl:copy>
          <xsl:apply-templates/>
-         <xsl:copy-of select="doc($documentFile)/w:document/w:body/*"/>
+         <xsl:apply-templates
+	     select="doc($documentFile)/w:document/w:body/*"/>
       </xsl:copy>
    </xsl:template>
 
    <xsl:template match="w:sectPr"/>
 
+   <xsl:template match="w:p">
+     <xsl:copy>
+       <xsl:apply-templates/>
+     </xsl:copy>
+   </xsl:template>
 
  <xsl:template name="block-element">
      <xsl:param name="select"/>
