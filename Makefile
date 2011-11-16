@@ -19,10 +19,12 @@ XSLP4=/usr/share/xml/teip4/stylesheet
 # If you have not installed the Debian packages, uncomment one
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
+XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 JING=jing
 TRANG=trang
 SAXON=saxon
+#SAXON="/home/mholmes/Oxygen XML Editor 12/lib/saxon9ee.jar"
 SAXON_ARGS=-ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
