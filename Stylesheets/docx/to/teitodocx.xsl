@@ -1777,7 +1777,8 @@ of this software, even if advised of the possibility of such damage.
                                 </xsl:copy>
                                 <xsl:variable name="rows" select="@rowsep"/>
                                 <xsl:variable name="cols" select="@colsep"/>
-                                <xsl:if test="@namest">
+                                <xsl:choose>
+				  <xsl:when test="@namest and ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]">
                                     <xsl:variable name="start">
                                         <xsl:for-each
 					    select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@namest]">
@@ -1792,6 +1793,7 @@ of this software, even if advised of the possibility of such damage.
 					  </xsl:choose>
 					</xsl:for-each>
                                     </xsl:variable>
+
                                     <xsl:variable name="end">
 				      <xsl:for-each select="ancestor::cals:tgroup/cals:colspec[@colname=current()/@nameend]">
 					  <xsl:choose>
@@ -1805,13 +1807,20 @@ of this software, even if advised of the possibility of such damage.
 					  </xsl:choose>
 					</xsl:for-each>
                                     </xsl:variable>
-
-                                    <xsl:for-each select="ancestor::cals:tgroup/cals:colspec[position()&gt;$start        and position()&lt;=$end]">
+                                    <xsl:for-each select="ancestor::cals:tgroup/cals:colspec[position()&gt;$start and position()&lt;=$end]">
                                         <cals:entry DUMMY="true"
 						    colname="{@colname}"
 						    colsep="{$cols}" rowsep="{$rows}"/>
                                     </xsl:for-each>
-                                </xsl:if>
+				  </xsl:when>
+				  <xsl:when test="@namest">
+				    <xsl:message
+					terminate="yes">ERROR Column <xsl:value-of select="@namest"/> 
+				    <xsl:text> referenced with @namest attribute </xsl:text>
+				    <xsl:text>is not named in the list of  &lt;colspec&gt; elements for this table</xsl:text>
+				  </xsl:message></xsl:when>
+
+				</xsl:choose>
                             </xsl:for-each>
                         </xsl:copy>
                     </xsl:for-each>

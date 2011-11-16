@@ -1487,7 +1487,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:call-template name="makeQuote"/>
 	</span>
       </xsl:when>
-      <xsl:when test="*[not(tei:is-inline(.))] or tei:note or tei:bibl">
+      <xsl:when test="*[not(tei:is-inline(.))] or tei:p or tei:note or tei:bibl">
         <div class="blockquote {@rend}">
           <xsl:apply-templates/>
         </div>
