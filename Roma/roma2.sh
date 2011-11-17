@@ -94,7 +94,7 @@ makeHTMLDOC()
 makePDFDOC() 
 {
     echo "7. make PDF documentation $schema.doc.pdf and $schema.doc.tex "
-    saxon  -o:$RESULTS/$schema.doc.tex -s:$RESULTS/$schema.doc.xml -xsl:$TEIXSLDIR/latex/tei.xsl \
+    saxon  -o:$RESULTS/$schema.doc.tex -s:$RESULTS/$schema.doc.xml -xsl:$TEIXSLDIR/latex2/tei.xsl \
 	$DEBUG $DOCFLAGS $LANGUAGE $DOCLANG autoGlobal=$AUTOGLOBAL useHeaderFrontMatter=true reencode=false \
 	preQuote=“ postQuote=”
     cat > $RESULTS/perl$$.pl<<EOF
@@ -298,7 +298,8 @@ then
   SOURCE=""
 else 
   echo using $LOCALSOURCE as default source
-  SOURCE="defaultSource=$LOCALSOURCE"
+  SOURCE="defaultSource=$LOCALSO
+URCE"
 fi
 
 makeODD || die "odd2odd process failed"
