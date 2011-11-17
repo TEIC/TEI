@@ -297,8 +297,11 @@ if test "x$LOCALSOURCE" = "x"
 then
   SOURCE=""
 else 
-  echo using $LOCALSOURCE as default source
-  SOURCE="defaultSource=$LOCALSOURCE"
+  REALD=`dirname "$LOCALSOURCE"`
+  SDIR=`(cd $REALD; pwd)`
+  REALSOURCE=$SDIR/`basename $LOCALSOURCE`
+  echo using $REALSOURCE as default source
+  SOURCE="defaultSource=$REALSOURCE"
 fi
 
 makeODD || die "odd2odd process failed"
