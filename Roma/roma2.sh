@@ -298,8 +298,7 @@ then
   SOURCE=""
 else 
   echo using $LOCALSOURCE as default source
-  SOURCE="defaultSource=$LOCALSO
-URCE"
+  SOURCE="defaultSource=$LOCALSOURCE"
 fi
 
 makeODD || die "odd2odd process failed"
