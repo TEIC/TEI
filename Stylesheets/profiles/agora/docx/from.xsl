@@ -59,10 +59,10 @@
       <xsl:apply-templates mode="pass3"/>
     </body>
   </xsl:template>
-  <xsl:template match="tei:body/tei:p[@rend='Title']" mode="pass3"/>
-  <xsl:template match="tei:body/tei:p[@rend='author']" mode="pass3"/>
-  <xsl:template match="tei:body/tei:p[@rend='Subtitle']" mode="pass3"/>
-  <xsl:template match="tei:body/tei:p[@rend='abstract']" mode="pass3"/>
+  <xsl:template match="tei:p[@rend='Title']" mode="pass3"/>
+  <xsl:template match="tei:p[@rend='author']" mode="pass3"/>
+  <xsl:template match="tei:p[@rend='Subtitle']" mode="pass3"/>
+  <xsl:template match="tei:p[@rend='abstract']" mode="pass3"/>
   <!-- fix paragraph styles which should be TEI elements -->
   <xsl:template match="tei:p[@rend='epigraph']" mode="pass3">
     <epigraph>
@@ -110,14 +110,13 @@
     </xsl:element>
   </xsl:template>
   <!-- now some attribute values we want to kill -->
-  <xsl:template match="tei:p[@rend='Body Text First Indent']" mode="pass3">
-    <p>
-      <xsl:apply-templates mode="pass3"/>
-    </p>
-  </xsl:template>
+  <xsl:template match="@rend[.='Body Text First Indent']" mode="pass3"/>
+  <xsl:template match="@rend[.='Body Text']" mode="pass3"/>
+
   <xsl:template match="tei:p[@rend='FootnoteText']" mode="pass3">
     <xsl:apply-templates mode="pass3"/>
   </xsl:template>
+
   <!-- and copy everything else -->
   <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass3">
     <xsl:copy-of select="."/>
