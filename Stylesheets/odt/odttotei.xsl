@@ -167,7 +167,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:attribute>
 	</xsl:for-each>  
       <xsl:call-template name="teiHeader"/>
-      <xsl:apply-templates/>
+      <text>
+	<xsl:apply-templates/>
+      </text>
     </TEI>
   </xsl:template>
 
@@ -260,9 +262,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="/office:document-content/office:body">
-    <text>
       <xsl:apply-templates/>
-    </text>
   </xsl:template>
 
   <!-- sections -->
