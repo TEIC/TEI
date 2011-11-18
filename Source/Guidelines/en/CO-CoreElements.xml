@@ -2309,11 +2309,12 @@ TEI schemes for XPointer, see <ptr target="#SATS"/>.</p>
  </p>
 <p>The elements <gi>ptr</gi> and <gi>ref</gi> are the default members
 of the phrase-level model class <ident type="class">model.ptrLike</ident>. As
-members of the class <ident type="class">att.pointing</ident> and <ident type="class">att.typed</ident>, they
+members of the classes <ident type="class">att.pointing</ident>, <ident type="class">att.typed</ident> and <ident type="class">att.internetMedia</ident> they
 also carry the following
 attributes:
 <specList><specDesc key="att.pointing" atts="target evaluate"/>
-<specDesc key="att.typed" atts="type subtype"/></specList>
+<specDesc key="att.typed" atts="type subtype"/>
+  <specDesc key="att.internetMedia" atts="mimeType"/></specList>
  </p>
 <p>The two elements may be used in the same
 way; the difference between them is simply that while the <gi>ptr</gi>
@@ -2406,7 +2407,15 @@ section. In conjunction with the analytic tools discussed
 in chapters <ptr target="#SA"/>, <ptr target="#AI"/>, and <ptr target="#FS"/>, they may be
 used to link analyses of a text to their object, to combine
 corresponding segments of a text, or to align segments of a text with a
-temporal or other axis or with each other.</p><specGrp xml:id="DCOXR" >
+temporal or other axis or with each other.</p> 
+  <p>Where the <att>target</att> attribute of <gi>ptr</gi> or <gi>ref</gi>
+points to an external resource available on the network, the <att>mimeType</att> attribute 
+ may be used to specify the mime type of that resource; this may be important 
+ for to enable appropriate processing. For example:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+      <p>The current version of the TEI Guidelines source code is available in the TEI Sourceforge Repository; <ref target="http://tei.svn.sourceforge.net/viewvc/tei/trunk/P5/Source/guidelines-en.xml" mimeType="application/tei+xml">guidelines-en.xml</ref> is the root document used to create the English version of the Guidelines.</p>
+    </egXML>
+  </p><specGrp xml:id="DCOXR" >
 &ptr;
 &ref;
 </specGrp>
