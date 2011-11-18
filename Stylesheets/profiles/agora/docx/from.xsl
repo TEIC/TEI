@@ -14,7 +14,7 @@
   <xsl:template match="tei:TEI" mode="pass2">
     <xsl:variable name="Doctext">
       <xsl:copy>
-        <xsl:apply-templates select="." mode="pass2"/>
+        <xsl:apply-templates mode="pass2"/>
       </xsl:copy>
     </xsl:variable>
     <xsl:apply-templates select="$Doctext" mode="pass3"/>
