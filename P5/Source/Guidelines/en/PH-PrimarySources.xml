@@ -14,13 +14,14 @@ representation of primary sources, such as manuscripts or other
 written materials. Section <ptr target="#PHFAX"/> provides elements
 for the encoding of digital facsimiles or images of such materials,
 while the remainder of the chapter discusses ways of encoding detailed
-transcriptions of such materials. It is expected that this module will
-also be useful in the preparation of critical editions, but the module
-defined here is distinct from that defined in chapter <ptr target="#TC"/>, and may be used independently of it. Detailed metadata
-relating to primary sources of any kind may be recorded using the
-elements defined by the manuscript description module discussed in
-chapter <ptr target="#MS"/>, but again the present module may be used
-independently if such data is not required.
+transcriptions of such materials. This module may also be useful in
+the preparation of critical editions, but the module defined here is
+distinct from that defined in chapter <ptr target="#TC"/>, and may be
+used independently of it. Detailed metadata relating to primary
+sources of any kind may be recorded using the elements defined by the
+manuscript description module discussed in chapter <ptr
+target="#MS"/>, but again the present module may be used independently
+if such data is not required.
 </p>
 <!-- following para may need revision? -->
 <!-- p>It should be noted that, as elsewhere in these Guidelines,  this
@@ -35,7 +36,7 @@ Physical Bibliography workgroup.</p-->
 <p>Although this chapter discusses manuscript materials more
 frequently than other forms of written text, most of the
 recommendations presented are equally applicable <foreign>mutatis
-mutandis</foreign> in the encoding of printed matter or indeed any
+mutandis</foreign> to the encoding of printed matter or indeed any
 form of written source, including monumental inscriptions. Similarly,
 where in the following descriptions terms such as
 <soCalled>scribe</soCalled>, <soCalled>author</soCalled>,
@@ -85,9 +86,9 @@ associate any element in a transcription with an image of the
 corresponding part of the source, by means of the usual URI pointing
 mechanism. <!-- i.e. URI reference? --> </p>
 
-<p>In the simple case where a digital text is composed of page images,
-the <att>facs</att> attribute on the <gi>pb</gi> element may be used
-to associate each image with an appropriate point in the text:
+<p>In the simple case where a digital text is composed of page
+images, the <att>facs</att> attribute on the <gi>pb</gi> element may
+be used to associate each image with an appropriate point in the text:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
 <TEI>
@@ -120,35 +121,40 @@ applications. </p>
 
 <p>The recommended approach to encoding facsimiles is instead to use
 the <att>facs</att> attribute in conjunction with the elements
-<gi>facsimile</gi>, <gi>surface</gi>, <gi>surfaceGrp</gi>, and
-<gi>zone</gi>, which are also provided by this module. These elements
-make it possible to accommodate multiple images of each page, as well
-as to record arbitrary planar coordinates of textual elements on any
-kind of written surface and to link such elements with digital
-facsimile images of them. Typical applications include the provision
-of full text search in <soCalled>digital facsimile
-editions</soCalled>, and ways of annotating graphics, for example so
-as to identify individuals appearing in group portraits and link them
-to data about the peeople represented. </p>
+<gi>facsimile</gi> or <gi>sourceDoc</gi>, and the elements
+<gi>surface</gi>, <gi>surfaceGrp</gi>, and <gi>zone</gi>, which are
+also provided by this module. These elements make it possible to
+accommodate multiple images of each page, as well as to record
+arbitrary planar coordinates of textual elements on any kind of
+written surface and to link such elements with digital facsimile
+images of them. Typical applications include the provision of full
+text search in <soCalled>digital facsimile editions</soCalled>, and
+ways of annotating graphics, for example so as to identify individuals
+appearing in group portraits and link them to data about the peeople
+represented. </p>
 
-<p>The following elements are used to represent components of a
+<p>The following elements are availble to represent components of a
 digital facsimile:
 <specList>
 <specDesc key="facsimile"/>
+<specDesc key="sourceDoc"/>
 <specDesc key="surface"/>
 <specDesc key="surfaceGrp"/>
 <specDesc key="zone"/>
 </specList>
 </p>
 
-<p>The <gi>facsimile</gi> element is used to represent a digital
-facsimile. It appears within a TEI document along with, or instead of,
-the <gi>text</gi> element introduced in section <ptr target="#DS"/>.
-A superset of the facilities provided by the <gi>facsimile</gi>
-element is provided by the <gi>sourceDoc</gi> element discussed in
-section <ptr target="#PH-transcr"/> below. When this module is
-selected therefore, a legal TEI document may thus comprise any of the
-following :
+<p>Either of the <gi>facsimile</gi> and <gi>sourceDoc</gi> elements
+may be used to represent a digital facsimile. Either may appear within a TEI
+document along with, or instead of, the <gi>text</gi> element
+introduced in section <ptr target="#DS"/>.  The <gi>facsimile</gi>
+element is designed for the case where the digital facsimile contains
+only images, whereas the <gi>sourceDoc</gi> element is for use in the
+case where such images are complemented by a documentary
+transcription. In this section, we first discuss the simpler case,
+returning to the use of <gi>sourceDoc</gi> in section <ptr
+target="#PH-transcr"/> below. When this module is selected therefore,
+a legal TEI document may thus comprise any of the following :
 <list type="simple">
 <item>a TEI Header and a text element</item>
 <item>a TEI Header and a facsimile element</item>
@@ -184,7 +190,7 @@ represent the complete facsimile, and are to be read in the sequence
 given. Suppose, however, that the second page of this particular work
 is available both as an ordinary photograph and as an infra-red image,
 or in two different resolutions. The <gi>surface</gi> element may be
-used to indicate that there are two image files corresponding with the
+used to group the two image files, since these correspond with the
 same area of the work:
 
   <egXML  xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
@@ -225,16 +231,18 @@ as in this example:
 </egXML>
 </p>
 
-<p>The actual dimensions of the object represented are not documented
-by the <gi>surface</gi> element; instead, the <gi>surface</gi> is
-located within an abstract coordinate space, which is defined by the
-following attributes, supplied by the <ident
-type="class">att.coordinated</ident> class:
+<p>The actual dimensions of the object represented are not provided by
+the <gi>surface</gi> element; instead, the <gi>surface</gi> element
+defines an abstract coordinate space which may be used to address
+parts of the image. Four attributes supplied by the <ident
+type="class">att.coordinated</ident> class are used to define this
+space. A fifth attribute <att>points</att> may be used to define a
+polygon of any shape using this coordinate system:
 <specList>
 <specDesc key="att.coordinated" atts="ulx uly lrx lry points"/>
 </specList>
 </p>
-<p> The same coordinate space is used for a <gi>surface</gi> and for
+<p> By default, the same coordinate space is used for a <gi>surface</gi> and for
 all of its child elements.<note place="bottom">The coordinate space
 may be thought of as a grid superimposed on a rectangular
 space. Rectangular areas of the grid are defined as four numbers <hi
@@ -351,13 +359,13 @@ graphic itself:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 
 	<surface ulx="50" uly="20" lrx="210" lry="280">
-	  <desc>left hand page</desc>
+	  <!-- left hand page -->
 	  <zone ulx="0" uly="0" lrx="500" lry="321">
 <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
 		</zone>
 	</surface>
 	<surface ulx="240" uly="25" lrx="400" lry="280">
-	  <desc>right hand page</desc>
+	  <!-- right hand page -->
 		<zone ulx="0" uly="0" lrx="500" lry="321">
 			<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
 		</zone>
@@ -370,12 +378,11 @@ parts of each surface for analytical purposes. For
 example, to define the written part of the left hand page:
  <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 	<surface ulx="50" uly="20" lrx="210" lry="280">
-	  <desc>Left hand page</desc>
 		<zone ulx="0" uly="0" lrx="500" lry="321">
 			<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
 		</zone>
 		<zone ulx="90" uly="40" lrx="200" lry="225">
-		  <desc>Written part of left hand page</desc>
+		  <!--- Written part of left hand page -->
 		</zone>
 	</surface>
 </facsimile></egXML>
@@ -603,7 +610,7 @@ the following example, taken from the Walt Whitman Archive, two pieces
 of newsprint have been glued to a piece of blue paper on which a poem
 is being drafted:
 
-<figure><graphic url="Images/whitman01.jpg" width="400px"/>
+<figure xml:id="sleeprs"><graphic url="Images/whitman01.jpg" width="400px"/>
             <head rend="it">Image from
                http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg</head>
          </figure>  
@@ -611,8 +618,6 @@ The two pieces of newsprint might perhaps be regarded as special kinds
 of zone, but they are effectively new surfaces, since they might
 contain additional written zones themselves (such as the numbers in
 this case).  </p>
-
-
 
 <p>Using these elements, the Whitman draft above might be encoded as
 follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -655,7 +660,9 @@ parent <gi>surface</gi> element they are to be found, other than the
 reading order implicit in their sequence. Such information could be
 added if desired by specifying a coordinate system on the outermost
 <gi>surface</gi> element, and then indicating values within that
-system for each of the two fragments, as was discussed above.</p>
+system for each of the two fragments, as was discussed above. We
+discuss this in further detail in section <ptr target="#PH-surfzone"/>
+below. </p>
 </div>
 
 </div>
@@ -671,16 +678,16 @@ such as comments on the status or possible origin of particular
 readings, corrections, or text supplied to fill lacunae.
 </p>
 
-<p>Such elements may also be used for digital
-transcriptions in which the object is not to represent a finished
-text, but rather to represent the creative process, as evidenced by
-different <q>layers</q> or <q>traces</q> of writing in one or more
-documents. Transcriptions of this kind are closely focussed on the physical
-appearance of specific documents, needing to distinguish the traces of
-different writing activities on them, such as additions
-and deletions but also other indications of how the writing is to be
-read, such as indications of transposition, re-affirmation of writing
-which has been deleted, and so on.  Such distinctions are considered of
+<p>Such elements may also be used for digital transcriptions in which
+the object is not to represent a finished text, but rather to
+represent the creative process, as evidenced by different
+<q>layers</q> or <q>traces</q> of writing in one or more
+documents. Transcriptions of this kind are closely focussed on the
+physical appearance of specific documents, needing to distinguish the
+traces of different writing activities on them, such as additions and
+deletions but also other indications of how the writing is to be read,
+such as indications of transposition, re-affirmation of writing which
+has been deleted, and so on.  Such distinctions are considered of
 particular importance when dealing with authorial manuscripts, but are
 also relevant in the case of historical sources such as charters or
 other legal documents.</p>
@@ -702,11 +709,11 @@ catch-words, and the like (section <ptr target="#PHSK"/>)</item></list></p>
 
 <p>The remainder of this chapter describes a model for encoding such
 transcriptions, in which elements such as <gi>mod</gi>, <gi>del</gi>,
-etc are used to mark writing traces and their functions within the
+etc. are used to mark writing traces and their functions within the
 document. Each such element can be assigned to one or more
 editorially-defined modification groups, termed a <term>change</term>,
 by means of a global <att>change</att> attribute, which references a
-definition for the set of changes concerned, typically provided within
+definition for the modification group concerned, typically provided within
 the TEI Header <gi>creation</gi> element; see further <ptr
 target="#PH-changes"/>. The transcription itself may be embedded
 within the elements <gi>surface</gi> and <gi>zone</gi> described in
@@ -760,10 +767,6 @@ The sections below describe how such phenomena may be encoded using
 either elements defined in the core module (defined in chapter <ptr
 target="#CO"/>) or specialized elements available only when the module
 described in this chapter is available.</p>
-
-<!-- add and del for things added and removed
-     supplied by later editor  (add suppress, or use gap) -> ed for
-     emendation in general (DO, MD, LB to discuss) -->
 
 <div type="div3" xml:id="PHCO">
 <head>Core elements for Transcriptional Work</head>
@@ -860,12 +863,17 @@ typically forming part of a <gi>charDecl</gi> element, as described in
 
 <p>The transcriber may also wish to indicate that, because of the
 presence of these particular characters, the two words are actually
-abbreviations, by using the <gi>abbr</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g ref="#b-er">er</g>y</abbr> <abbr><g ref="#b-per">per</g>sone</abbr>
+abbreviations, by using the <gi>abbr</gi> element: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g
+ref="#b-er">er</g>y</abbr> <abbr><g ref="#b-per">per</g>sone</abbr>
 ... </egXML> Alternatively, the transcriber may choose silently to
-expand these abbreviations, using the <gi>expan</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
+expand these abbreviations, using the <gi>expan</gi> element: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
 <expan>persone</expan> ... </egXML> And, of course, the
 <gi>choice</gi> element can be used to show that one encoding is an
-alternative for the other: <egXML xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g ref="#b-er">er</g>y</abbr><expan>euery</expan></choice></egXML>
+alternative for the other: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g
+ref="#b-er">er</g>y</abbr><expan>euery</expan></choice></egXML>
 </p>
 <p>When abbreviated forms such as these are expanded, two processes
 are carried out: some characters not present in the abbreviation are
@@ -2696,12 +2704,11 @@ assumption.  When the value of <att>instant</att> is set to
 <val>true</val>, the addition or deletion is considered to belong to
 the same change as its parent element, while <code>false</code> means
 some change later than that of its parent.</p>
-      <p> An example of false start can be seen in the following line:
-      <figure>
+      <p> An example of false start or instant correction can be seen in the following line:
+      <figure corresp="#WHITMS1">
 <graphic url="Images/whitman03a.jpg" width="70%"/>
-<head><ref
-	  target="http://www.whitmanarchive.org/resources/sleepers/uva.00256.001.jpg">Walt
-Whitman : The Sleepers</ref></head>
+<head>Detail fron <title>[I am a curse]</title>, one of the drafts for
+Whitman's <title>Song of Myself</title></head>
          </figure> in which we can detect the following sequence of events: <list
 type="ordered">
 <item>The letter <val>T</val> is written and then immediately deleted</item>
@@ -2712,7 +2719,7 @@ type="ordered">
          </list> To indicate that the first of these acts must have
 	 taken place during the main act of writing, before
          the other deletion and additions, we might encode this revision campaign as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#WHITMS1">
 <line><del instant="true">T</del>
    <mod type="subst">
       <del>The</del>
@@ -2727,8 +2734,137 @@ type="ordered">
          </egXML>
       </p>
    </div>
+</div>
+
+<div xml:id="PH-surfzone"><head>Advanced uses of surface and zone</head>
+
+<p>The function of the <gi>surface</gi> element is both to identify a
+specific area containing writing and to provide a two dimensional set
+of coordinates which can be used to position and dimension sub-parts
+of it. Furthermore, surfaces may nest within other surfaces, as in the
+case of <q>patches</q> or other written materials attached to the main
+writing surface.  In the general case, the position and dimensions of
+such nested surfaces will be defined using the same co-ordinate system
+as that supplied by the parent <gi>surface</gi> element. It is also
+possible, however, that a different coordinate system is required for
+such a nested surface, perhaps because it requires a more complex
+granularity. We consider both possibilities.</p>
+
+<p>In the earlier examples showing nested examples we did not provide
+any coordinate information, for simplicity of presentation. Suppose
+however, that we wish to indicate the position and sizes of the
+newspaper scraps in figure <ptr target="#sleeprs"/>, relative to the whole 
+page. The four attributes <att>ulx</att>, <att>uly</att>,
+<att>urx</att> and <att>ury</att> when given on the <gi>surface</gi>
+element define the co-ordinate scheme, rather than specifying the
+location of that surface; we must therefore introduce an additional
+<gi>zone</gi> element, as in the following revised encoding for the
+example given in section <ptr target="#PHZLAB"/> above:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<surface ulx="0" uly="0" lrx="50" lry="50">
+   <zone ulx="1" uly="1" lrx="10" lry="10">
+      <line>Poem</line>
+      <line>As in Visions of — at</line>
+      <line>night —</line>
+      <line>All sorts of fancies running through</line>
+      <line>the head</line>
+   </zone>
+   <zone ulx="4" uly="4" lrx="20" lry="20">
+   <surface type="newsprint" attachment="glue" flipping="false">
+			  <zone>Spring has
+      just set in here, and the weather.... a
+			   steamer </zone>
+         <metamark function="sequence">2</metamark>
+   </surface>
+</zone>
+</surface></egXML>
+
+In this version of the encoding, the inner surface, corresponding with
+the first piece of newsprint, inherits locational information from
+the <gi>zone</gi> element that contains it. This zone, and the
+preceding one, which contains a sequence of <gi>line</gi> elements,
+are both positioned in terms of  the coordinates specified on the
+outermost <gi>surface</gi> element, which defines a scale running from
+0 to 50 in either direction. On that scale, the <gi>line</gi> elements
+occupy a rectangle with coordinates (1,1,10,10), while the nested
+surface occupies a rectangle with coordinates (4,4,20,20).</p>
+<p>Now suppose that we wish to define a finer scale grid for the
+newspaper patch, perhaps because we wish to localize zones within it
+with greater accuracy. To do this we will need to specify the
+position of the nested surface as in the previous example, but also to
+define  the new coordinate system. We accomplish this as follows:
+
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<surface ulx="0" uly="0" lrx="50" lry="50">
+   <zone ulx="1" uly="1" lrx="10" lry="10">
+      <line>Poem</line>
+<!-- ... -->
+      <line>the head</line>
+   </zone>
+   <zone ulx="4" uly="4" lrx="20" lry="20">
+   <surface ulx="0" uly="0" lrx="100" lry="100">
+     <zone ulx="10" uly="10" lrx="90" lry="95">
+       Spring has just set in here, and the weather
+       .... a  steamer </zone>
+   </surface>
+</zone>
+</surface></egXML>
+
+As before, the second zone defines the position and size of the
+newspaper patch itself in terms of a coordinate system running from
+0 to 50 on both X and Y axes. The nested <gi>surface</gi> element
+however defines a new scale for all of its components, running from 0
+to 100 on both X and Y axes. The position of the nested zone
+containing the text <mentioned>Spring ... steamer</mentioned> is now
+given in terms of this scale.</p>
+
+<p>All of the examples so far given have involved rectangular zones,
+for clarity of exposition. As noted above, the <att>points</att>
+attribute may be used to define non rectangular zones as a series of
+points. For example, in the last of the Whitman examples discussed in
+section <ptr target="PH-meta"/> above, we might wish to record the
+exact shape of the zone containing the metamark
+<mentioned>Entered</mentioned>. Since this is not a rectangular zone,
+we use the <att>points</att> attribute to indicate the points defining
+a polygon which contains it. The values used are expressed in terms of
+a coordinate space running from 0 to 229 in the X dimension, and 0 to
+160 in the Y dimension. </p>
+
+<egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+<surface xml:id="w2" ulx="229" uly="160" lrx="0" lry="0"> 
+<graphic url="whitman-02.jpg"/> 
+<zone xml:id="entered" 
+ points="142.625,122.19 155.024,113.736 178.133,122.754
+	 208.569,144.172 198.988,154.881 178.133,139.663"/> 
+</surface>
+</egXML>
+
+<p>In exactly the same way, we may wish to identify the curved zone 
+in the following image containing the word
+<mentioned>Northamptonshire</mentioned>:
+<figure><graphic url="Images/mould-stone.jpg"/>
+<head>Gravestone of Private Mould in the Protestant Cemetery in
+Rome</head>
+</figure>
+This curved zone might be encoded in the following way:
+
+<egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+  <surface xml:id="badge" ulx="14.54" uly="16.14" lrx="0" lry="0">
+  <graphic url="stone.jpg"/>
+  <zone xml:id="county" points="4.6,6.3 5.25,5.85 6.2,6.6
+  8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125
+  8.21722,8.3125 6.2,7.65"/>
+  </surface>
+</egXML>
+</p>
+
 
 </div>
+
+
 
 <div><head>Aspects of Layout</head>
 <p>Finally in this chapter we present elements which may be used to

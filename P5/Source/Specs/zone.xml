@@ -8,7 +8,7 @@ $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0"   xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="zone" module="transcr">
   <equiv/>
-  <desc>defines an area contained within a <gi>surface</gi>
+  <desc>defines any two-dimensional area within a <gi>surface</gi>
 element. </desc>
   <desc version="2007-12-20" xml:lang="kr"><gi>surface</gi> 요소 내에 포함된 직사각형 영역을 정의한다.</desc>
   <desc version="2008-04-06" xml:lang="es">define el área rectangular de la <gi>superficie</gi>.</desc>
@@ -24,22 +24,30 @@ element. </desc>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
-         <rng:choice>
-            <rng:text/>
-        <rng:ref name="model.glossLike"/>
+        <rng:choice>
+        <rng:text/>
         <rng:ref name="model.graphicLike"/>
-	    <rng:ref name="model.global"/>
-	    <rng:ref name="zone"/>
-         <rng:ref name="line"/>
-         <rng:ref name="choice"/><!-- added under protest -->
-	 <rng:ref name="model.pPart.transcriptional"/>
-	 <rng:ref name="model.segLike"/>
-	 <rng:ref name="model.hiLike"/> <!-- I hate doing this, but
-	 it seems necessary -->
+	<rng:ref name="model.global"/>
+	<rng:ref name="surface"/>
+	<rng:ref name="zone"/>
+        <rng:ref name="line"/>
+	<rng:ref name="model.linePart"/>
 </rng:choice></rng:zeroOrMore>
   </content>
 
    <attList>
+
+<attDef ident="points">
+<desc>identifies a non-rectangular area within the bounding box
+specified by the other attributes  by specifying
+a series of pairs of numbers, each of which gives the x,y coordinates
+of a point on a line defining the non-rectangular area.</desc>
+<datatype minOccurs="3" maxOccurs="unbounded">
+<rng:ref name="data.point"/>
+</datatype>
+</attDef>
+
+
       <attDef ident="rotate" mode="add">
          <desc>indicates the amount by which this zone has been
          rotated clockwise, with respect to the normal orientation of
@@ -54,6 +62,28 @@ element. </desc>
       </attDef>
    </attList>
 
+
+
+
+
+
+  <exemplum xml:lang="und">
+
+<egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+  <surface ulx="14.54" uly="16.14" lrx="0" lry="0">
+  <graphic url="stone.jpg"/>
+  <zone xml:id="county" points="4.6,6.3 5.25,5.85 6.2,6.6
+  8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125
+  8.21722,8.3125 6.2,7.65"/>
+  </surface>
+</egXML>
+<p>This example defines a non-rectangular zone: see the illustration
+in section <ptr target="#PH-surfzone"/>.    </p>
+  </exemplum>
+
+
+
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <facsimile>
@@ -64,13 +94,20 @@ element. </desc>
         </surface>
       </facsimile>
     </egXML>
+<p>This example defines a zone which has been defined as larger than its parent
+surface in order to match the dimensions of the  graphic it contains.   </p>
   </exemplum>
+
+
+
   <remarks>
     <p>The position of every zone for a given surface is always
 defined by reference to the coordinate system defined for that
-surface. Any graphic element contained by a zone represents the whole
+surface. </p><p>A graphic element contained by a zone represents the whole
 of the zone.</p>
-  </remarks>
+<p>A zone may be of any shape. The attribute <att>points</att> may be
+used to define a polygonal zone, using the co-ordinate system defined
+by its parent surface.</p>  </remarks>
   <remarks xml:lang="fr">
     <p>La position de chaque zone pour une surface donnée est toujours définie par rapport au système de coordonnées défini pour cette surface. Tout élément graphique contenu par une zone se représente par toute la zone.</p>
   </remarks>
@@ -82,5 +119,5 @@ of the zone.</p>
 </p>
   </remarks>
 </elementSpec>
-<!-- needs more examples. also how do we do non-rectangular zones? -->
+
 
