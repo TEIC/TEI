@@ -152,7 +152,7 @@ element is designed for the case where the digital facsimile contains
 only images, whereas the <gi>sourceDoc</gi> element is for use in the
 case where such images are complemented by a documentary
 transcription. In this section, we first discuss the simpler case,
-returning to the use of <gi>sourceDoc</gi> in section <ptr
+returning to the use of the <gi>sourceDoc</gi> element in section <ptr
 target="#PH-transcr"/> below. When this module is selected therefore,
 a legal TEI document may thus comprise any of the following :
 <list type="simple">
@@ -291,15 +291,16 @@ surface, or might overlap its boundaries. The only constraint is that
 it must be defined using the same coordinate system. </p>
 
 <p>When an image of some kind is supplied within either a zone or a
-surface, the implication is that the whole of the image represents the
-zone or surface containing it. In the simple case therefore, we might
+surface, the implication is that the image represents the whole of the
+zone or surface concerned. In the simple case therefore, we might
 imagine a surface defining a page, within which there is a graphic
 representing the whole of that page, and a number of zones defining
 parts of the page, each with its own graphic, each representing a part
-of the page. If however one of those graphics actually represents an area
-larger than the page (for example to include a binding or the surface
-of a desk on which the page rests), then it will be enclosed by a zone
-with coordinates larger than those of the parent surface. </p>
+of the page. If however one of those graphics actually represents an
+area larger than the page (for example to include a binding or the
+surface of a desk on which the page rests), then it will be enclosed
+by a zone with coordinates larger than those of the parent
+surface. </p>
 
 
 <p>For example, consider the following figure: <figure><head>Relation
@@ -347,52 +348,41 @@ interest can be defined by a <gi>zone</gi> element, within which we can
 <ident type="class">model.graphicLike</ident> class) may be used instead of a
 <gi>graphic</gi> element.</p>
 
-<p>Since the image in this
-example contains two pages, it might be preferable to define
-two distinct surfaces, one for each page, including its illuminated
-margins, as well as defining the zone for the
-graphic itself:
+<p>Since the image in this example is of a two page opening, we will
+probably wish to define at least two nested zones, one for each page :
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-
-	<surface ulx="50" uly="20" lrx="210" lry="280">
-	  <!-- left hand page -->
-	  <zone ulx="0" uly="0" lrx="500" lry="321">
+<surface ulx="50" uly="20" lrx="400" lry="280">
+<zone ulx="0" uly="0" lrx="500" lry="321">
 <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
-		</zone>
-	</surface>
-	<surface ulx="240" uly="25" lrx="400" lry="280">
-	  <!-- right hand page -->
-		<zone ulx="0" uly="0" lrx="500" lry="321">
-			<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
-		</zone>
-	</surface>
-</facsimile></egXML>
-</p>
-<p>In addition to acting as a container for <gi>graphic</gi> elements,
-<gi>zone</gi> elements may also be used to select
-parts of each surface for analytical purposes. For
-example, to define the written part of the left hand page:
- <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
-	<surface ulx="50" uly="20" lrx="210" lry="280">
-		<zone ulx="0" uly="0" lrx="500" lry="321">
-			<graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
-		</zone>
-		<zone ulx="90" uly="40" lrx="200" lry="225">
-		  <!--- Written part of left hand page -->
-		</zone>
-	</surface>
-</facsimile></egXML>
+</zone>
+ <zone ulx="50" uly="20" lrx="210" lry="280">
+   <!-- left hand page -->
+</zone>
+<zone ulx="240" uly="25" lrx="400" lry="280">
+  <!-- right hand page -->
+</zone>
+<zone ulx="90" uly="40" lrx="200" lry="225">
+  <!--- written part of left hand page -->
+</zone>
+</surface>
+</facsimile></egXML></p>
+<p>As this example shows, in addition to acting as a container for
+<gi>graphic</gi> elements, <gi>zone</gi> elements may be used to
+identify parts of a surface for any analytical purpose. A zone may
+also contain a nested surface, if for example a page has an additional
+scrap of paper attached to it, as further discussed in section <ptr
+target="#PH-surfzone"/> below.
 </p>
 
 
-<p>In the following example, we discuss a hypothetical digital edition
-of an early 16th century French work, Charles de Bovelles'
-<title>Géometrie Pratique</title>.<note place="bottom">The image is
-taken from the collection at <ptr
+<p>In the following extended example, we discuss a hypothetical
+digital edition of an early 16th century French work, Charles de
+Bovelles' <title>Géometrie Pratique</title>.<note place="bottom">The
+image is taken from the collection at <ptr
 target="http://ancilla.unice.fr/Illustr.html"/>, and was digitized
 from a copy in the Bibliothèque Municipale de Lyon, by whose kind
-permission it is included here</note> In this edition, each page has
+permission it is included here.</note> In this edition, each page has
 been digitized as a separate file: for example, recto page 49 is
 stored in a file called <ident type="file">Bovelles-49r.png</ident>.
 In the <gi>facsimile</gi> element used to contain the whole set of
@@ -467,12 +457,12 @@ contain such a structured representation. The <gi>text</gi> element is
 a sibling of the <gi>facsimile</gi> and <gi>sourceDoc</gi>
 elements. This approach is illustrated in section <ptr
 target="#PH-bov"/> below. Alternatively, if the transcription is
-intended not to prioritize representation of the
-final text so much as the process by which the
-document came to take its present form, or the physical disposition of
-its component parts, it may be preferable to use a subset of the
-available elements and to embed them within the <gi>zone</gi> element,
-as further described in section <ptr target="#PHZLAB"/> below.</p>
+intended not to prioritize representation of the final text so much as
+the process by which the document came to take its present form, or
+the physical disposition of its component parts, it may be preferable
+to use a subset of the available elements and to embed them within the
+<gi>zone</gi> element, as further described in section <ptr
+target="#PHZLAB"/> below.</p>
 
 <div xml:id="PH-bov"><head>Parallel transcription</head>
 
@@ -586,23 +576,25 @@ independently of them. </p>
 </specList>
 </p>
 
-<p>The elements <gi>surface</gi> and <gi>zone</gi> are described
-above in section <ptr target="#PHFAX"/>. Most writing is linear, in
-the sense that it is composed of discrete tokens organized physically
-into groups, typically organized in a sequence corresponding with the
-way they are intended to be read. Depending on the directionality of
-the writing system used, this might be any combination of top-down and
-left to right, or vice versa. The element <gi>line</gi> may be used to
-hold a complete group of such tokens.  Where, however, the lineation
-is not considered significant, any group of tokens may be indicated
-using the <gi>zone</gi> element. The <gi>seg</gi> element described in
-section <ptr target="#SASE"/> may also be used to indicate smaller
-sequences of tokens within <gi>zone</gi>, or <gi>line</gi> as
-appropriate.
+<p>The elements <gi>surface</gi>, <gi>surfaceGrp</gi>, and
+<gi>zone</gi> were introduced above in section <ptr
+target="#PHFAX"/>. </p>
+
+<p>Most writing is linear, in the sense that it is composed of
+discrete tokens organized physically into groups, typically organized
+in a sequence corresponding with the way they are intended to be
+read. Depending on the directionality of the writing system used, this
+might be any combination of top-down and left to right, or vice
+versa. The element <gi>line</gi> may be used to hold a complete group
+of such tokens.  Where, however, the lineation is not considered
+significant, any group of tokens may be indicated using the
+<gi>zone</gi> element. The <gi>seg</gi> element described in section
+<ptr target="#SASE"/> may also be used to indicate smaller sequences
+of tokens within <gi>zone</gi>, or <gi>line</gi> as appropriate.
 </p>
 
-<p>The element <gi>surface</gi> is also useful in cases where some or all of
-the written surfaces are composed of physically distinct scraps. In
+<p>As mentioned above,  some or all of
+the written surfaces being transcribed may be composed of physically distinct scraps. In
 the following example, taken from the Walt Whitman Archive, two pieces
 of newsprint have been glued to a piece of blue paper on which a poem
 is being drafted:
@@ -611,13 +603,15 @@ is being drafted:
             <head rend="it">Image from
                http://www.whitmanarchive.org/resources/sleepers/duk.00258.001.jpg</head>
          </figure>  
-The two pieces of newsprint might perhaps be regarded as special kinds
-of zone, but they are effectively new surfaces, since they might
+
+The two pieces of newsprint might simply be regarded as special kinds
+of zone, but they are also  new surfaces, since they might
 contain additional written zones themselves (such as the numbers in
 this case).  </p>
 
 <p>Using these elements, the Whitman draft above might be encoded as
-follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+follows: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
 <surface>
    <zone>
       <line>Poem</line>
@@ -626,16 +620,19 @@ follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <line>All sorts of fancies running through</line>
       <line>the head</line>
    </zone>
-   <surface type="newsprint" attachment="glue" flipping="false">
-			  <zone>Spring has
-      just set in here, and the weather.... a
+   <zone>
+     <surface type="newsprint" attachment="glue" flipping="false">
+<zone>Spring has just set in here, and the weather.... a
 			   steamer </zone>
          <metamark function="sequence">2</metamark>
-   </surface>
-   <surface type="newsprint" attachment="glue" flipping="false">
-			  <zone>"The shores on either side of the Sound are... The In-       </zone>   
+     </surface>
+   </zone>
+   <zone>
+     <surface type="newsprint" attachment="glue" flipping="false">
+       <zone>"The shores on either side of the Sound are... The In-       </zone>   
 			   <metamark function="sequence">3</metamark>
    </surface>
+ </zone>
 </surface>
 </egXML> 
 </p>
@@ -2224,16 +2221,17 @@ record traces of the writing process within a document.
 <div><head>Generic modification</head>
 
 
-   <p>Most, if not all, transcriptional elements imply a certain level
-   of semantic interpretation. For instance, using the <gi>add</gi>
-   element to encode a word or phrase that occupies interlinear space
-   involves a decision that it has been deliberately inserted as an
-   addition rather than an alternative, and indeed a judgment that it
-   was written after, rather than before, the other lines. Where it is
-   felt desirable to keep the recording of <soCalled>what is on the
-   page</soCalled> entirely separate from <soCalled>what is the
-   editor’s interpretation</soCalled>, the generic <gi>mod</gi>
-   element may be preferred. 
+   
+<p>Most, if not all, transcriptional elements imply a certain level of
+semantic interpretation. For instance, using the <gi>add</gi> element
+to encode a word or phrase that occupies interlinear space involves a
+decision that it has been deliberately inserted as an addition rather
+than an alternative, and indeed a judgment that it was written after,
+rather than before, the other lines. Where it is felt desirable to
+keep the recording of <soCalled>what is on the page</soCalled>
+entirely separate from <soCalled>what is the editor’s
+interpretation</soCalled>, the generic <gi>mod</gi> element may be
+preferred.
    
       <specList>
          <specDesc key="mod" />
@@ -2820,7 +2818,7 @@ given in terms of this scale.</p>
 for clarity of exposition. As noted above, the <att>points</att>
 attribute may be used to define non rectangular zones as a series of
 points. For example, in the last of the Whitman examples discussed in
-section <ptr target="PH-meta"/> above, we might wish to record the
+section <ptr target="#PH-meta"/> above, we might wish to record the
 exact shape of the zone containing the metamark
 <mentioned>Entered</mentioned>. Since this is not a rectangular zone,
 we use the <att>points</att> attribute to indicate the points defining
