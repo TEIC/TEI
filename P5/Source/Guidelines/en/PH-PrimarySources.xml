@@ -140,7 +140,7 @@ digital facsimile:
 <specDesc key="sourceDoc"/>
 <specDesc key="surface"/>
 <specDesc key="surfaceGrp"/>
-<specDesc key="zone"/>
+<specDesc key="zone" atts="points"/>
 </specList>
 </p>
 
@@ -231,28 +231,31 @@ as in this example:
 </egXML>
 </p>
 
-<p>The actual dimensions of the object represented are not provided by
-the <gi>surface</gi> element; instead, the <gi>surface</gi> element
-defines an abstract coordinate space which may be used to address
-parts of the image. Four attributes supplied by the <ident
-type="class">att.coordinated</ident> class are used to define this
-space. A fifth attribute <att>points</att> may be used to define a
-polygon of any shape using this coordinate system:
+<p>Simply grouping related graphics is not however the main purpose of
+the <gi>surface</gi> element: rather it is to help identify the
+location and size of the various two-dimensional spaces constituting
+the digital facsimile. The actual dimensions of the object represented
+are not provided by the <gi>surface</gi> element; instead, the
+<gi>surface</gi> element defines an abstract coordinate space which
+may be used to address parts of the image. Four attributes supplied by
+the <ident type="class">att.coordinated</ident> class are used to
+define this space. <!-- A fifth attribute <att>points</att> may be
+used to define a polygon of any shape using this coordinate system:-->
 <specList>
-<specDesc key="att.coordinated" atts="ulx uly lrx lry points"/>
+<specDesc key="att.coordinated" atts="ulx uly lrx lry"/>
 </specList>
 </p>
-<p> By default, the same coordinate space is used for a <gi>surface</gi> and for
-all of its child elements.<note place="bottom">The coordinate space
-may be thought of as a grid superimposed on a rectangular
-space. Rectangular areas of the grid are defined as four numbers <hi
-rend="math">a b c d</hi>: the first two identify the grid point which
-is at the upper left corner of the rectangle; the second two give the
-grid point located at the lower right corner of the rectangle. The
-grid point <hi rend="math">a b</hi> is understood to be the point
-which is located <hi rend="math">a</hi> points from the origin along
-the <hi rend="math">x</hi> (horizontal) axis, and <hi
-rend="math">b</hi> points from the origin along the <hi
+<p> By default, the same coordinate space is used for a
+<gi>surface</gi> and for all of its child elements.<note
+place="bottom">The coordinate space may be thought of as a grid
+superimposed on a rectangular space. Rectangular areas of the grid are
+defined as four numbers <hi rend="math">a b c d</hi>: the first two
+identify the grid point which is at the upper left corner of the
+rectangle; the second two give the grid point located at the lower
+right corner of the rectangle. The grid point <hi rend="math">a b</hi>
+is understood to be the point which is located <hi rend="math">a</hi>
+points from the origin along the <hi rend="math">x</hi> (horizontal)
+axis, and <hi rend="math">b</hi> points from the origin along the <hi
 rend="math">y</hi> (vertical) axis.</note> It may be most convenient
 to derive a coordinate space from a digital image of the surface in
 question such that each pixel in the image corresponds with a whole
@@ -262,29 +265,27 @@ practice implies any specific mapping between the co-ordinate system
 used and the actual dimensions of the physical object represented.
 </p>
 
-<p>Each <gi>surface</gi> can contain one or more <gi>zone</gi>
-elements, each of which represents a  region or
-<term>bounding box</term> defined in terms of the same coordinate
-space as that of its parent <gi>surface</gi> element. A zone may be
-rectangular or non-rectangular: a rectangular zone is defined by a
-sequence of four co-ordinates in the same way as a surface; a
-non-rectangular zone is defined using the attribute
-<att>points</att>, which  provides a sequence of co-ordinates, each
-of which specifies a point on the perimeter of the zone. 
-<!--<specList>
-<specDesc key="att.coordinated" atts="points"/>
-</specList>-->
-</p><p>The <att>points</att> attribute supplies a
+<p>A <gi>surface</gi> element can contain one or more <gi>zone</gi>
+elements, each of which represents a region or <term>bounding
+box</term> defined in terms of the same coordinate space as that of
+its parent <gi>surface</gi> element. A zone may be rectangular or
+non-rectangular: a rectangular zone is defined by a sequence of four
+co-ordinates in the same way as a surface; a non-rectangular zone is
+defined using the attribute <att>points</att>, which provides a
+sequence of co-ordinates, each of which specifies a point on the
+perimeter of the zone.<note place="foot">The <att>points</att> attribute supplies a
 <soCalled>points specification</soCalled> in the same form as that
 required by the <gi>polyline</gi> or <gi>polygon</gi> elements in the
 SVG standard. See <ptr
 target="http://www.w3.org/TR/SVG/shapes.html#PointsBNF"/>
-</p>
+</note></p>
 <p>A zone may be used to define any region of interest, such as a
 detail or illustration, or some part of the surface which is to be
-aligned with a particular text element.  As we have seen, a surface
-will usually correspond with the whole of a written surface. A zone,
-by contrast, defines any arbitrary area of interest using the same
+aligned with a particular text element, or otherwise distinguished
+from the rest of the surface.  A surface establishes a coordinate
+system which may be used to address parts or the whole of some digital
+representation of a written surface. A zone, by contrast, defines any
+arbitrary area of interest within that surface, using the same
 coordinate system. It might be bigger or smaller than its parent
 surface, or might overlap its boundaries. The only constraint is that
 it must be defined using the same coordinate system. </p>
@@ -299,7 +300,6 @@ of the page. If however one of those graphics actually represents an area
 larger than the page (for example to include a binding or the surface
 of a desk on which the page rests), then it will be enclosed by a zone
 with coordinates larger than those of the parent surface. </p>
-
 
 
 <p>For example, consider the following figure: <figure><head>Relation
@@ -347,13 +347,10 @@ interest can be defined by a <gi>zone</gi> element, within which we can
 <ident type="class">model.graphicLike</ident> class) may be used instead of a
 <gi>graphic</gi> element.</p>
 
-<p>The <gi>desc</gi> element may also be used within either
-<gi>surface</gi> or <gi>zone</gi> to provide some further information
-about the area being defined. For example, since the image in this
+<p>Since the image in this
 example contains two pages, it might be preferable to define
 two distinct surfaces, one for each page, including its illuminated
-margins. In this case, each surface must specify a bounding box which
-encloses the appropriate page, as well as defining the zone for the
+margins, as well as defining the zone for the
 graphic itself:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
@@ -2833,7 +2830,7 @@ a coordinate space running from 0 to 229 in the X dimension, and 0 to
 
 <egXML
       xmlns="http://www.tei-c.org/ns/Examples">
-<surface xml:id="w2" ulx="229" uly="160" lrx="0" lry="0"> 
+<surface ulx="229" uly="160" lrx="0" lry="0"> 
 <graphic url="whitman-02.jpg"/> 
 <zone xml:id="entered" 
  points="142.625,122.19 155.024,113.736 178.133,122.754
