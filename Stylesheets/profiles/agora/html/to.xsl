@@ -51,7 +51,7 @@
    <xsl:param name="homeWords">AGORA</xsl:param>
  
 <!-- number paragraphs -->
-  <xsl:template name="numerParagraph">
+  <xsl:template name="numberParagraph">
     <xsl:number level="any" from="tei:body"/>
   </xsl:template>
 
@@ -82,7 +82,6 @@
 </ul></xsl:template>
 
 <xsl:template match="tei:ref">
-  <xsl:message>hello</xsl:message>
   <span class="ref"><xsl:value-of select="."></xsl:value-of></span>
   <span class="contextaRef"><xsl:value-of select="@cRef"/></span>
   
