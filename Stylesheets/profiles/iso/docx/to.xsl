@@ -88,7 +88,6 @@ of this software, even if advised of the possibility of such damage.
     
     <xsl:param name="word-directory">..</xsl:param>
     <xsl:param name="tei-directory">./</xsl:param>
-    <xsl:param name="debug">false</xsl:param>   
     <xsl:param name="numberFormat">fr</xsl:param>
     
     <xsl:variable name="orig" select="/"/>

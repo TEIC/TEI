@@ -1427,7 +1427,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:call-template>
 	  <xsl:if test="$numberParagraphs='true'">
 	    <xsl:text>[</xsl:text>
-	    <xsl:number/>
+	    <xsl:call-template name="numberParagraph"/>
 	    <xsl:text>] </xsl:text>
 	  </xsl:if>
 	  <xsl:apply-templates/>
@@ -1435,6 +1435,14 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>How to number paragraphs</desc>
+  </doc>
+  <xsl:template name="numberParagraph">
+      <xsl:number/>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element p[@rend='box']</desc>
   </doc>
