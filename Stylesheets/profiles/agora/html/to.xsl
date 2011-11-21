@@ -35,14 +35,20 @@
    <xsl:param name="numberHeadings">false</xsl:param>
    <xsl:param name="numberFigures">false</xsl:param>
    <xsl:param name="numberTables">false</xsl:param>
+  <xsl:param name="numberParagraphs">false</xsl:param>
+  <xsl:param name="generateParagraphIDs">true</xsl:param>
+  <xsl:param name="autoToc">false</xsl:param>
+  
+  <xsl:param name="CSSFile">agora-tei.css</xsl:param>
+  <xsl:param name="institution">AGORA Project</xsl:param>
 
-   <xsl:param name="institution">AGORA Project</xsl:param>
-
-<!-- doesnt work...-->
    <xsl:param name="bottomNavigationPanel">false</xsl:param>
-
+   <xsl:param name="footnoteBackLink">true</xsl:param>
+  
    <xsl:param name="homeURL"></xsl:param>
-   <xsl:param name="homeWords"></xsl:param>
+  <xsl:param name="feedbackURL"></xsl:param>
+  <xsl:param name="searchURL"></xsl:param>
+   <xsl:param name="homeWords">An AGORA Project</xsl:param>
    <xsl:param name="parentWords"></xsl:param>
 
 
@@ -72,7 +78,12 @@
           <xsl:apply-templates select="tei:item"/>
 </ul></xsl:template>
 
-
+<xsl:template match="tei:ref">
+  <xsl:message>hello</xsl:message>
+  <span class="ref"><xsl:value-of select="."></xsl:value-of></span>
+  <span class="contextaRef"><xsl:value-of select="@cRef"/></span>
+  
+</xsl:template>
 
 <!-- these seem to be inherited -->
     <xsl:template match="html:*">
