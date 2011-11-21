@@ -39,7 +39,7 @@
   <xsl:param name="generateParagraphIDs">true</xsl:param>
   <xsl:param name="autoToc">false</xsl:param>
   
-  <xsl:param name="CSSFile">agora-tei.css</xsl:param>
+  <xsl:param name="CSSFile">tei-agora.css</xsl:param>
   <xsl:param name="institution">AGORA Project</xsl:param>
 
    <xsl:param name="bottomNavigationPanel">false</xsl:param>
@@ -48,7 +48,7 @@
    <xsl:param name="homeURL"></xsl:param>
   <xsl:param name="feedbackURL"></xsl:param>
   <xsl:param name="searchURL"></xsl:param>
-   <xsl:param name="homeWords">An AGORA Project</xsl:param>
+   <xsl:param name="homeWords"></xsl:param>
    <xsl:param name="parentWords"></xsl:param>
 
 
