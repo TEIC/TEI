@@ -38,8 +38,11 @@
   <xsl:param name="numberParagraphs">true</xsl:param>
   <xsl:param name="generateParagraphIDs">true</xsl:param>
   <xsl:param name="autoToc">false</xsl:param>
-  
-  <xsl:param name="CSSFile">tei-agora.css</xsl:param>
+
+
+  <xsl:param name="cssInlineFile">../profiles/agora/html/tei-agora.css</xsl:param>
+  <xsl:param name="cssFile"/>
+
   <xsl:param name="institution">AGORA Project</xsl:param>
 
    <xsl:param name="bottomNavigationPanel">false</xsl:param>

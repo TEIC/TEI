@@ -1426,9 +1426,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:if test="$numberParagraphs='true'">
-	    <xsl:text>[</xsl:text>
-	    <xsl:call-template name="numberParagraph"/>
-	    <xsl:text>] </xsl:text>
+	    <span class="numberParagraph">
+	      <xsl:call-template name="numberParagraph"/>
+	    </span>
 	  </xsl:if>
 	  <xsl:apply-templates/>
 	</xsl:element>
