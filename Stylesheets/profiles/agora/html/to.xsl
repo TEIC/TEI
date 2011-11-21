@@ -35,7 +35,7 @@
    <xsl:param name="numberHeadings">false</xsl:param>
    <xsl:param name="numberFigures">false</xsl:param>
    <xsl:param name="numberTables">false</xsl:param>
-  <xsl:param name="numberParagraphs">false</xsl:param>
+  <xsl:param name="numberParagraphs">true</xsl:param>
   <xsl:param name="generateParagraphIDs">true</xsl:param>
   <xsl:param name="autoToc">false</xsl:param>
   
