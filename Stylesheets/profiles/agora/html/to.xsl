@@ -43,14 +43,17 @@
   <xsl:param name="institution">AGORA Project</xsl:param>
 
    <xsl:param name="bottomNavigationPanel">false</xsl:param>
+  <xsl:param name="linkPanel">false</xsl:param>
    <xsl:param name="footnoteBackLink">true</xsl:param>
   
    <xsl:param name="homeURL"></xsl:param>
   <xsl:param name="feedbackURL"></xsl:param>
-  <xsl:param name="searchURL"></xsl:param>
-   <xsl:param name="homeWords"></xsl:param>
-   <xsl:param name="parentWords"></xsl:param>
-
+   <xsl:param name="homeWords">AGORA</xsl:param>
+ 
+<!-- number paragraphs -->
+  <xsl:template name="numerParagraph">
+    <xsl:number level="any" from="tei:body"/>
+  </xsl:template>
 
 <!-- suppress pb -->
 <xsl:template match="tei:pb"/>
