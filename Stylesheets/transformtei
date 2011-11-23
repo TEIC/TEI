@@ -9,6 +9,7 @@
 script=`basename $0`
 scriptdir=`dirname $0`
 APPHOME=`(cd $scriptdir; pwd)`
+profiledir=$APPHOME/profiles
 oxygenlib=/usr/share/oxygen/lib
 die()
 {
@@ -102,6 +103,8 @@ else
    format=$to
    outsuffix=.$to
 fi
+
+
 while test $# -gt 0; do
   case $1 in
     --coverimage=*) cover=`echo $1 | sed 's/.*=//'`;;
@@ -109,15 +112,15 @@ while test $# -gt 0; do
     --fileperpage)  splitLevel="-DsplitLevel=-1"; fileperpage="-DfilePerPage=true";;
     --odd)          odd=true;;
     --mediaoverlay) mediaoverlay="-Dmediaoverlay=true";;
-    --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
-    --oxygenlib=*)  oxygenlib=`echo $1 | sed 's/.*=//'`;;
+       --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
+     --oxygenlib=*)  oxygenlib=`echo $1 | sed 's/.*=//'`;;
     --profiledir=*) profiledir=`echo $1 | sed 's/.*=//'`;;
-      --apphome=*)  APPHOME=`echo $1 | sed 's/.*=//'`;;
-    --publisher=*)  publisher=`echo $1 | sed 's/.*=//'`;;
-    --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
+       --apphome=*)  APPHOME=`echo $1 | sed 's/.*=//'`;;
+     --publisher=*)  publisher=`echo $1 | sed 's/.*=//'`;;
+      --saxonjar=*)   SAXONJAR=`echo $1 | sed 's/.*=//'`;;
     --splitLevel=*) splitLevel="-DsplitLevel=`echo $1 | sed 's/.*=//'`";;
-    --subject=*)    subject="`echo $1 | sed 's/.*=//'`";;
-    --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
+       --subject=*)    subject="`echo $1 | sed 's/.*=//'`";;
+           --uid=*)        uid=`echo $1 | sed 's/.*=//'`;;
     --debug)        debug="-Ddebug=true"; verbose=true; antflag=-v;;
     --verbose)      verbose=true;;
     --summaryDoc)      summaryDoc="-DsummaryDoc=true";;
@@ -134,7 +137,6 @@ while test $# -gt 0; do
   shift
 done
 
-profiledir=$APPHOME/profiles
 version=`cat $APPHOME/VERSION`
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
 infile=`basename "$in"`
