@@ -21,11 +21,15 @@
         <p>The following are examples of custom date or time formats that are <emph>not</emph> valid ISO or W3C format
                     normalizations, normalized to a different dating system</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <p>Alhazen died in Cairo on the <date when="1040-03-06" when-custom="431-06-12">12th day of Jumada t-Tania, 430 AH</date>.</p>
-          <p>The current world will end <date when="2012-12-21" when-custom="13.0.0.0.0">at the end of B'ak'tun 13</date>.</p>
-          <p>The Battle of Meggidu (<date when-custom="Thutmose_III:23">23rd year of the reign of Thutmose III</date>).</p>
-          <p>Esidorus bix(i)t
-            in p(ac)e annos
+          <p>Alhazen died in Cairo on the 
+            <date when="1040-03-06" when-custom="431-06-12">
+              12th day of Jumada t-Tania, 430 AH
+            </date>.</p>
+          <p>The current world will end 
+            <date when="2012-12-21" when-custom="13.0.0.0.0">at the end of B'ak'tun 13</date>.</p>
+          <p>The Battle of Meggidu
+            (<date when-custom="Thutmose_III:23">23rd year of the reign of Thutmose III</date>).</p>
+          <p>Esidorus bix(i)t in p(ac)e annos
             LXX pl(u)s m(inu)s s(ub) <date when-custom="Ind:4-10-11">d(ie)
             XI men(sis) O(cto)b(ris) ind(ictione) IIII</date></p>
         </egXML>
@@ -57,15 +61,27 @@
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>A normalized form of temporal expression.</valDesc>
-      </attDef>
-    <attDef ident="to-custom" usage="opt">
-      <equiv/>
-      <desc>indicates the ending point of the period in some standard form.</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression.</valDesc>
     </attDef>
+      <attDef ident="to-custom" usage="opt">
+        <equiv/>
+        <desc>indicates the ending point of the period in some standard form.</desc>
+        <datatype minOccurs="1" maxOccurs="unbounded">
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+        </datatype>
+        <valDesc>A normalized form of temporal expression.</valDesc>
+      </attDef>
+      <attDef ident="datingPoint" usage="opt">
+        <desc>supplies a pointer to some location defining a named point in time with reference to which the datable item is understood to have occurred</desc>
+        <datatype>
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        </datatype>
+      </attDef>
+      <attDef ident="datingMethod" usage="opt">
+        <desc>supplies a pointer to a <gi>calendarDesc</gi> element or other means of interpreting the values of the custom dating attributes.</desc>
+        <datatype>
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+        </datatype>
+      </attDef>
   </attList>
   <listRef>
     <ptr target="#NDDATE"/>
