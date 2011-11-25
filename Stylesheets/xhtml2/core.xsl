@@ -1490,8 +1490,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="parent::tei:hi or ancestor::tei:head">
-        <span class="inlineq">
+      <xsl:when test="parent::tei:q[@rend=current()/@rend] or parent::tei:hi or ancestor::tei:head">
+        <span class="inlineq {@rend}">
 	  <xsl:call-template name="makeQuote"/>
 	</span>
       </xsl:when>

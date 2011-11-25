@@ -291,6 +291,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="parent::tei:note[@place='foot'] and self::tei:gap">false</xsl:when>
 	<xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">true</xsl:when>
 	<xsl:when test="parent::tei:body">true</xsl:when>
+	<xsl:when test="tei:floatingText">true</xsl:when>
 	<xsl:when test="parent::tei:div">true</xsl:when>
 	<xsl:when test="parent::tei:titlePage">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
