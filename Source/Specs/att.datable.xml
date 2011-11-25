@@ -25,13 +25,59 @@ $Id$
     <memberOf key="att.datable.iso"/>
     <memberOf key="att.datable.custom"/>
   </classes>
+  <attList>
+    <attDef ident="calendar" usage="opt">
+      <equiv/>
+      <desc>indicates the system or calendar to which the date represented by the content of this
+        element belongs.</desc>
+      <desc version="2007-12-20" xml:lang="kr">날짜 표현 시스템 또는 달력 표시 형식을 표시한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">指明該日期表示所使用的曆法計算系統。</desc>
+      <desc version="2008-04-05" xml:lang="ja"> 当該日付の歴システムを示す． </desc>
+      <desc version="2009-01-06" xml:lang="fr">indique le système ou le calendrier auquel appartient
+        la date exprimée dans le contenu de l'élément.</desc>
+      <desc version="2007-05-04" xml:lang="es">indica el sistema o calendario en que se muestra una
+        fecha.</desc>
+      <desc version="2007-01-21" xml:lang="it">indica il sistema o calendario al quale la data
+        appartiene.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#Gregorian">Feb. 22, 1732</date> 
+          (<date calendar="#Julian" when="1732-02-22"> Feb. 11, 1731/32, O.S.</date>).</egXML>
+      </exemplum>
+      <exemplum version="2008-04-06" xml:lang="fr">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Bouiller_Rapport"> L'année
+          1960 fut, en vertu du calendrier grégorien, bissextile ; le 22 juin tomba ainsi le jour
+          de l'été, le <date calendar="#Gregorian"> 22 juin</date>.
+        </egXML>
+      </exemplum>
+    </attDef>
+    <attDef ident="period" usage="opt">
+      <desc>supplies a pointer to some location defining a named
+        period of time within which the datable item is understood to
+        have occurred.</desc>
+      <desc version="2007-12-20" xml:lang="kr">시간을 명시할 수 있는 항목이 일어난 시간의 기간명을 정의하는 특정 위치로의 포인터를 제공한다.</desc>
+      <desc version="2008-04-06" xml:lang="es">suministra un indicador a una localización concreta que define un periodo de tiempo conocido dentro del cual el item datable se ha producido.</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+        時間事象の名前付き時間幅を定義する時点を示す．
+      </desc>
+      <desc version="2008-03-30" xml:lang="fr">fournit un pointeur vers un emplacement donné
+        définissant une période de temps nommée pendant laquelle l'item datable
+        s'inscrit.</desc>
+      <desc version="2007-11-06" xml:lang="it">fornisce un puntatore a una data posizione definendo un determinato periodo di tempo entro il quale l'oggetto da datare è collocabile</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
   <remarks>
     <p>This <soCalled>superclass</soCalled> provides attributes that
     can be used to provide normalized values of temporal information.
     By default, the attributes from the <ident type="class">att.datable.w3c</ident> class are provided. If the
     module for names &amp; dates is loaded, this class also provides
-    attributes from the <ident type="class">att.datable.iso</ident>
-    class. In general, the possible values of attributes restricted to
+    attributes from the <ident type="class">att.datable.iso</ident> and
+    <ident type="class">att.datable.custom</ident> classes. In general, the possible values of attributes restricted to
     the W3C datatypes form a subset of those values available via the
     ISO 8601 standard. However, the greater expressiveness of the ISO
     datatypes may not be needed, and there exists much greater
