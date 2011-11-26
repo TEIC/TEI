@@ -62,11 +62,11 @@ other written surface. We call such a resource a <term>digital
 facsimile</term>. A digital facsimile may, in the simplest case, just
 consist of a collection of images, with some metadata to identify them
 and the source materials portrayed. It may sometimes contain a
-variety of images of the same source pages, for example of different
+variety of images of the same source pages, perhaps of different
 resolutions, or of different kinds. Such a collection may form part of
 any kind of document, for example a commentary of a codicological or
 paeleographic nature, where there is a need to align explanatory text
-with image data. And it may also be complemented by
+with image data. It may also be complemented by
 a transcribed or encoded version of the original source, which may be
 linked to the page images. In this section we present elements
 designed to support these various possibilities and discuss the
@@ -125,7 +125,7 @@ the <att>facs</att> attribute in conjunction with the elements
 <gi>surface</gi>, <gi>surfaceGrp</gi>, and <gi>zone</gi>, which are
 also provided by this module. These elements make it possible to
 accommodate multiple images of each page, as well as to record
-arbitrary planar coordinates of textual elements on any kind of
+the position and relative size of elements identified any kind of
 written surface and to link such elements with digital facsimile
 images of them. Typical applications include the provision of full
 text search in <soCalled>digital facsimile editions</soCalled>, and
@@ -144,7 +144,7 @@ digital facsimile:
 </specList>
 </p>
 
-<p>Either of the <gi>facsimile</gi> and <gi>sourceDoc</gi> elements
+<p>Either of the <gi>facsimile</gi> or <gi>sourceDoc</gi> elements
 may be used to represent a digital facsimile. Either may appear within a TEI
 document along with, or instead of, the <gi>text</gi> element
 introduced in section <ptr target="#DS"/>.  The <gi>facsimile</gi>
@@ -304,7 +304,7 @@ surface. </p>
 
 
 <p>For example, consider the following figure: <figure><head>Relation
-between page, surface, and zone</head> <graphic
+between Page, Surface, and Zone</head> <graphic
 url="Images/facs-fig2.jpg"/>
 <head>Badische Landesbibliothek, 
 Manuscript Durlach 1, Fols. 95v-96r </head></figure> This is an image of a two page
@@ -405,7 +405,7 @@ a  <gi>zone</gi> element, given within the <gi>surface</gi>
 element already defined, and specified in terms of the same
 coordinate system. 
 <figure xml:id="facs-fig1">
-  <head>Zones within a surface</head>
+  <head>Zones within a Surface</head>
   <graphic url="Images/facs-fig1.png"/>
 </figure>
 The following encoding defines each of the four zones identified in
@@ -477,7 +477,7 @@ to use a subset of the available elements and to embed them within the
 <gi>zone</gi> element, as further described in section <ptr
 target="#PHZLAB"/> below.</p>
 
-<div xml:id="PH-bov"><head>Parallel transcription</head>
+<div xml:id="PH-bov"><head>Parallel Transcription</head>
 
 <p>Suppose now that we wish to align a transcription of the page discussed 
 in the preceding section with particular zones.  We begin by giving each
@@ -508,8 +508,8 @@ means of the <att>facs</att> attribute:
 <head facs="#B49rHead">
 DU SON ET ACCORD DES CLOCHES ET <lb/> des alleures des chevaulx,
 chariotz &amp; charges, des fontaines:&amp; <lb/> encyclie du monde,
-&amp; de la dimension du corps humain.</head>
-<head>Chapitre septiesme</head>
+&amp; de la dimension du corps humain.<lb/>
+Chapitre septiesme</head>
 <div n="1">
 <p>Le son &amp; accord des cloches pendans en ung mesme <lb/> axe, est
 faict en contraires parties.</p>
@@ -564,16 +564,16 @@ xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
 
 </div>
 
-<div xml:id="PH-transcr"><head>Combining transcription with facsimile</head>
+<div xml:id="PH-transcr"><head>Combining Transcription with Facsimile</head>
 
 <p>A digitized source document may contain nothing more than page
 images and a small amount of metadata. It may also contain an encoded
 transcription of the pages represented, which may either be
 <q>embedded</q> within a <gi>sourceDoc</gi> element, or supplied in
 parallel to a <gi>facsimile</gi> as defined above.</p>
-</div>
 
-<div xml:id="PHZLAB"><head>Embedded transcription</head>
+
+<div xml:id="PHZLAB"><head>Embedded Transcription</head>
 <p>An <term>embedded transcription</term> is one in which words
 and other written traces are encoded as subcomponents of elements
 representing the physical surfaces carrying them rather than
@@ -673,7 +673,7 @@ discuss this in further detail in section <ptr target="#PH-surfzone"/>
 below. </p>
 </div>
 
-</div>
+
 
 <div xml:id="PHST"><head>Scope of Transcriptions</head>
 
@@ -1630,7 +1630,7 @@ original, or because it is illegible, or for some other reason such as editorial
 the <gi>gap</gi> core element may be used to register the omission;
 where such text is transcribed, but the editor wishes to indicate that
 they consider it to be superfluous, for example because it is an
-inadvertant scribal repetition, the <gi>surplus</gi> element may be
+inadvertent scribal repetition, the <gi>surplus</gi> element may be
 used in preference. Where text not present in the source is supplied (whether
 conjecturally or from other witnesses) to fill an apparent gap in the
 text,  the <gi>supplied</gi> element may be used. 
@@ -2214,9 +2214,10 @@ deletion was made from  a passage which had earlier been added:
 <del>eventually</del> to the text.</add></egXML></item>
 </list></p></div>
 </div>
+</div>
 
 <div xml:id="alterations">
-   <head>Marking up the writing process</head>
+   <head>Marking up the Writing Process</head>
    <p>Modifications of various kinds (correction, addition, deletion,
    etc.) are frequently found within a single document, and may also
    be inferred when different documents are compared, although it may be
@@ -2232,7 +2233,7 @@ deletion was made from  a passage which had earlier been added:
 record traces of the writing process within a document. 
 </p>
 
-<div><head>Generic modification</head>
+<div><head>Generic Modification</head>
 
 
    
@@ -2375,7 +2376,7 @@ it has been copied to another manuscript or reused. </p>
 </p>   
 <p>This page contains internal deletions, additions, and retracings
 but these are semantically quite different from the apparent
-<soCalled>deletion</soCalled> signalled by the largere of the two
+<soCalled>deletion</soCalled> signalled by the larger of the two
 single vertical lines, which shows that the written material has been
 transferred or re-used, not deleted. </p>
 <egXML
@@ -2411,7 +2412,7 @@ indicate that the whole of the written zone with identifier
 
    </div>
 
-<div><head>Fixation and clarification</head>
+<div><head>Fixation and Clarification</head>
 
 <p>A writer may sometimes rewrite material a second time without
 significant change and in the same place. We consider this a distinct
@@ -2465,7 +2466,7 @@ the next section should be used in preference.
 </p>   </div>
 
  <div xml:id="undo">
-<head>Fixation, cancellation, and reinstatement of modifications</head>
+<head>Fixation, Cancellation, and Reinstatement of Modifications</head>
 
 <p>In a draft version of Goethe’s Faust, a passage was struck through
 once in pencil during one revision and then again with ink during a
@@ -2541,7 +2542,7 @@ is not supplied, it is the effect of the parent element (the
 
 <p>Alternatively, we might more economically use the generic <gi>seg</gi> element within
 the <gi>line</gi> to delimit the two sequences whose
-deletion is being reverted, and then use the <gi>target</gi> attribute
+deletion is being reverted, and then use the <att>target</att> attribute
 on a single <gi>undo</gi> element:
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -2700,7 +2701,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
          </egXML></p>
    </div>-->
 
-<div xml:id="instant"><head>Instant corrections</head>
+<div xml:id="instant"><head>Instant Corrections</head>
 <p>The use of elements such as <gi>del</gi> and <gi>add</gi>
 necessarily implies that the modifications they indicate were made at
 some time after the original writing. An exception to this is where a
@@ -2746,7 +2747,7 @@ type="ordered">
    </div>
 </div>
 
-<div xml:id="PH-surfzone"><head>Advanced uses of surface and zone</head>
+<div xml:id="PH-surfzone"><head>Advanced uses of Surface and Zone</head>
 
 <p>The function of the <gi>surface</gi> element is both to identify a
 specific area containing writing and to provide a two dimensional set
