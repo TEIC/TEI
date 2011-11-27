@@ -246,7 +246,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:publisher">true</xsl:when>
         <xsl:when test="self::tei:pubPlace">true</xsl:when>
         <xsl:when test="self::tei:q[tei:l]">false</xsl:when>
-        <xsl:when test="self::tei:q[not(@rend)]">false</xsl:when>
+        <xsl:when test="self::tei:q[tei:figure or tei:p or tei:note or
+			tei:bibl or tei:sp or tei:floatingText]">false</xsl:when>
+        <xsl:when test="self::tei:q">true</xsl:when>
         <xsl:when test="self::tei:said">true</xsl:when>
         <xsl:when test="self::tei:ref">true</xsl:when>
         <xsl:when test="self::tei:region">true</xsl:when>
