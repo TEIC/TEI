@@ -1673,7 +1673,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element space</desc>
   </doc>
   <xsl:template match="tei:space">
-    <span style="inline-block">
+    <span style="display:inline-block">
       <xsl:if test="@extent">
 	<xsl:variable name="unit">
 	  <xsl:choose>
