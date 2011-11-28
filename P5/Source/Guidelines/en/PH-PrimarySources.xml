@@ -16,8 +16,7 @@ $Id$
       also be useful in the preparation of critical editions, but the module defined here is
       distinct from that defined in chapter <ptr target="#TC"/>, and may be used independently of
       it. Detailed metadata relating to primary sources of any kind may be recorded using the
-      elements defined by the manuscript description module discussed in chapter <ptr target="#MS"
-      />, but again the present module may be used independently if such data is not required. </p>
+      elements defined by the manuscript description module discussed in chapter <ptr target="#MS"/>, but again the present module may be used independently if such data is not required. </p>
    <!-- following para may need revision? -->
    <!-- p>It should be noted that, as elsewhere in these Guidelines,  this
 chapter places more emphasis on the problems of representing the
@@ -46,7 +45,7 @@ Physical Bibliography workgroup.</p-->
       <p>These Guidelines are mostly concerned with the preparation of digital texts in which
          pre-existing sources are transcribed or otherwise converted into character form, and marked
          up in XML. However, it is also very common practice to make a different form of
-            <soCalled>digital text</soCalled>, which is instead composed of digital images of the
+            <soCalled>digital text</soCalled>, which is instead compose[bd of digital images of the
          original source, typically one per page, or other written surface. We call such a resource
          a <term>digital facsimile</term>. A digital facsimile may, in the simplest case, just
          consist of a collection of images, with some metadata to identify them and the source
@@ -64,16 +63,14 @@ Physical Bibliography workgroup.</p-->
          is extended to include two new pointer attributes, <att>facs</att> and <att>change</att>: <specList>
             <specDesc key="att.global.facs" atts="facs"/>
             <specDesc key="att.global.change" atts="change"/>
-         </specList> The <att>change</att> attribute is discussed further below in section <ptr
-            target="#PH-changes"/>. The <att>facs</att> attribute is used to associate any element
+         </specList> The <att>change</att> attribute is discussed further below in section <ptr target="#PH-changes"/>. The <att>facs</att> attribute is used to associate any element
          in a transcription with an image of the corresponding part of the source, by means of the
          usual URI pointing mechanism. <!-- i.e. URI reference? -->
       </p>
 
       <p>In the simple case where a digital text is composed of page images, the <att>facs</att>
          attribute on the <gi>pb</gi> element may be used to associate each image with an
-         appropriate point in the text: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-            valid="feasible">
+         appropriate point in the text: <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
             <TEI>
                <teiHeader>
                   <!--...--></teiHeader>
@@ -108,7 +105,7 @@ Physical Bibliography workgroup.</p-->
          identify individuals appearing in group portraits and link them to data about the peeople
          represented. </p>
 
-      <p>The following elements are availble to represent components of a digital facsimile: <specList>
+      <p>The following elements are available to represent components of a digital facsimile: <specList>
             <specDesc key="facsimile"/>
             <specDesc key="sourceDoc"/>
             <specDesc key="surface"/>
@@ -138,8 +135,7 @@ Physical Bibliography workgroup.</p-->
             <ptr target="#DSFRONT"/> and <ptr target="#DSBACK"/>. </p>
 
       <p>In the simplest case, a facsimile just contains a series of <gi>graphic</gi> elements, each
-         of which identifies an image file: <egXML xml:lang="und"
-            xmlns="http://www.tei-c.org/ns/Examples">
+         of which identifies an image file: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
             <facsimile>
                <graphic url="page1.png"/>
                <graphic url="page2.png"/>
@@ -154,8 +150,7 @@ Physical Bibliography workgroup.</p-->
          facsimile, and are to be read in the sequence given. Suppose, however, that the second page
          of this particular work is available both as an ordinary photograph and as an infra-red
          image, or in two different resolutions. The <gi>surface</gi> element may be used to group
-         the two image files, since these correspond with the same area of the work: <egXML
-            xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+         the two image files, since these correspond with the same area of the work: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
             <facsimile>
                <graphic url="page1.png"/>
                <surface>
@@ -170,8 +165,9 @@ Physical Bibliography workgroup.</p-->
 
       <p>The <gi>surface</gi> element provides a way of indicating that the two images of page2
          represent the same surface within the source material. A <term>surface</term> might be one
-         side of a piece of paper or parchment, a face of a monument, a billboard, a membrane of a
-         scroll, or indeed any two-dimensional surface, of any size. </p>
+         side of a piece of paper or parchment, an opening in a codex treated as a single surface by
+         the writer, a face of a monument, a billboard, a membrane of a scroll, or indeed any
+         two-dimensional surface, of any size. </p>
 
       <p>The <gi>surfaceGrp</gi> element may be used to indicate that two (or more) surfaces are
          associated in some way, for example because they represent the recto and verso of the same
@@ -188,15 +184,14 @@ Physical Bibliography workgroup.</p-->
                </surfaceGrp>
             </facsimile>
          </egXML>
-      </p>
+     The <gi>surfaceGrp</gi> element may also be useful as a means of identifying other groups of written surfaces, such as adjacent faces of a monument, or gatherings of leaves. </p>
 
       <p>Simply grouping related graphics is not however the main purpose of the <gi>surface</gi>
          element: rather it is to help identify the location and size of the various two-dimensional
-         spaces constituting the digital facsimile. The actual dimensions of the object represented
-         are not provided by the <gi>surface</gi> element; instead, the <gi>surface</gi> element
-         defines an abstract coordinate space which may be used to address parts of the image. Four
-         attributes supplied by the <ident type="class">att.coordinated</ident> class are used to
-         define this space. <!-- A fifth attribute <att>points</att> may be
+         spaces constituting the digital facsimile.  Note however that the actual dimensions of the
+         object represented are not provided by the <gi>surface</gi> element ; rather, the
+            <gi>surface</gi> element defines an abstract coordinate space which may be used to
+         address parts of the image. Four attributes supplied by the <ident type="class">att.coordinated</ident> class are used to define this space. <!-- A fifth attribute <att>points</att> may be
 used to define a polygon of any shape using this coordinate system:-->
          <specList>
             <specDesc key="att.coordinated" atts="ulx uly lrx lry"/>
@@ -225,17 +220,16 @@ used to define a polygon of any shape using this coordinate system:-->
             <att>points</att>, which provides a sequence of co-ordinates, each of which specifies a
          point on the perimeter of the zone.<note place="foot">The <att>points</att> attribute
             supplies a <soCalled>points specification</soCalled> in the same form as that required
-            by the <gi>polyline</gi> or <gi>polygon</gi> elements in the SVG standard. See <ptr
-               target="http://www.w3.org/TR/SVG/shapes.html#PointsBNF"/>
+            by the <gi>polyline</gi> or <gi>polygon</gi> elements in the SVG standard. See <ptr target="http://www.w3.org/TR/SVG/shapes.html#PointsBNF"/>
          </note></p>
       <p>A zone may be used to define any region of interest, such as a detail or illustration, or
          some part of the surface which is to be aligned with a particular text element, or
          otherwise distinguished from the rest of the surface. A surface establishes a coordinate
          system which may be used to address parts or the whole of some digital representation of a
-         written surface. A zone, by contrast, defines any arbitrary area of interest within that
-         surface, using the same coordinate system. It might be bigger or smaller than its parent
-         surface, or might overlap its boundaries. The only constraint is that it must be defined
-         using the same coordinate system. </p>
+         written surface. A zone, by contrast, defines any arbitrary area of interest relative to
+         that surface, using the same coordinate system. It might be bigger or smaller than its
+         parent surface, or might overlap its boundaries. The only constraint is that it must be
+         defined using the same coordinate system. </p>
 
       <p>When an image of some kind is supplied within either a zone or a surface, the implication
          is that the image represents the whole of the zone or surface concerned. In the simple case
@@ -264,12 +258,10 @@ used to define a polygon of any shape using this coordinate system:-->
       </p>
 
       <p>We therefore define a <gi>surface</gi> element corresponding with the area of the image
-         which represents the written two page spread and embed the graphic within it: <egXML
-            xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+         which represents the whole of the two page spread and embed the graphic within it: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
                <surface ulx="0" uly="0" lrx="500" lry="321">
-                  <graphic
-                     url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"
-                  /> </surface>
+                  <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
+               </surface>
             </facsimile></egXML></p>
 
 
@@ -279,13 +271,10 @@ used to define a polygon of any shape using this coordinate system:-->
          instead of a <gi>graphic</gi> element.</p>
 
       <p>Since the image in this example is of a two page opening, we will probably wish to define
-         at least two nested zones, one for each page : <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+         at least two nested zones, one for each page : <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
                <surface ulx="50" uly="20" lrx="400" lry="280">
                   <zone ulx="0" uly="0" lrx="500" lry="321">
-                     <graphic
-                        url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"
-                     />
+                     <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
                   </zone>
                   <zone ulx="50" uly="20" lrx="210" lry="280">
                      <!-- left hand page -->
@@ -299,10 +288,13 @@ used to define a polygon of any shape using this coordinate system:-->
                </surface>
             </facsimile></egXML></p>
       <p>As this example shows, in addition to acting as a container for <gi>graphic</gi> elements,
-            <gi>zone</gi> elements may be used to identify parts of a surface for any analytical
-         purpose. A zone may also contain a nested surface, if for example a page has an additional
-         scrap of paper attached to it, as further discussed in section <ptr target="#PH-surfzone"/>
-         below. </p>
+            <gi>zone</gi> elements may be used to identify parts of a surface for  analytical
+         purposes.  </p><p>The relationship between zone and surface can be quite complex : for example, it may be
+         appropriate to treat the whole of a two page spread as a single written surface, perhaps
+         because particular written zones span both pages. A zone may contain a nested surface, if
+         for example a page has an additional scrap of paper attached to it. A zone may be of any
+         shape, not simply rectangular. Discussion of these and other cases are provided in section
+            <ptr target="#PH-surfzone"/> below. </p>
 
 
       <p>In the following extended example, we discuss a hypothetical digital edition of an early
@@ -324,8 +316,9 @@ used to define a polygon of any shape using this coordinate system:-->
          coordinate scale defined for the surface. In the following figure <ptr target="#facs-fig1"
          /> we show the upper part of the page, with boxes indicating four such zones. Each of these
          will be represented by a <gi>zone</gi> element, given within the <gi>surface</gi> element
-         already defined, and specified in terms of the same coordinate system. <figure
-            xml:id="facs-fig1"><graphic url="Images/facs-fig1.png"/>
+         already defined, and specified in terms of the same coordinate system. Some zones of
+         interest are indicated by red lines in the following image.  <figure xml:id="facs-fig1">
+            <graphic url="Images/facs-fig1.png"/>
             <head>Detail of p 49r from Bovelles <title>Géometrie Pratique</title></head>
          </figure> The following encoding defines each of the four zones identified in the figure
          above. <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
@@ -342,19 +335,15 @@ used to define a polygon of any shape using this coordinate system:-->
                   <!-- contains the word "pendans" -->
                </surface>
             </facsimile></egXML> Note that the location of each zone is defined independently but
-         using the same coordinate system, so that they may overlap freely. Zones need not nest
-         within each other; moreover, as noted earlier, a zone may fall outside the area of the
-         surface which defines its coordinate space.</p>
+         using the same coordinate system.</p>
 
       <p>A non rectangular-zone, for example that containing the word <mentioned>cloches</mentioned>
          at bottom left of the page, could also be defined, using the <att>points</att> attribute :
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
                <surface ulx="0" uly="0" lrx="200" lry="300">
                   <graphic url="Bovelles-49r.png"/>
-                  <zone
-                     points="4.8,31.0 5.4,30.7 5.5,32.2
-		5.8,32.8 6.1,33.4 5.5,33.7 5.1,33.3 4.6,32.2"
-                  />
+                  <zone points="4.8,31.0 5.4,30.7 5.5,32.2
+		5.8,32.8 6.1,33.4 5.5,33.7 5.1,33.3 4.6,32.2"/>
                </surface>
             </facsimile></egXML>
       </p>
@@ -365,10 +354,8 @@ used to define a polygon of any shape using this coordinate system:-->
          example a detailed image is available. Since all <gi>zone</gi> elements use the same
          coordinate system (that defined by their parent <gi>surface</gi>), there is no need to
          demonstrate enclosure of one zone within another by means of nesting. To continue the
-         current example, supposing that we have an additional image called <ident type="file"
-            >Bovelles49r-detail.png</ident> containing an additional image of the figure in the
-         third zone above, we might encode that zone as follows: <egXML xml:lang="und"
-            xmlns="http://www.tei-c.org/ns/Examples">
+         current example, supposing that we have an additional image called <ident type="file">Bovelles49r-detail.png</ident> containing an additional image of the figure in the
+         third zone above, we might encode that zone as follows: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
             <zone ulx="105" uly="76" lrx="175" lry="160">
                <graphic url="Bovelles49r-detail.png"/>
             </zone>
@@ -409,15 +396,14 @@ used to define a polygon of any shape using this coordinate system:-->
                      <zone xml:id="B49rHead" ulx="25" uly="25" lrx="180" lry="60"/>
                      <!-- contains the title -->
                      <zone xml:id="B49rPara2" ulx="28" uly="75" lrx="175" lry="178"/>
-                     <!-- contains the paragraph in italics -->
+                     <!-- contains the first paragraph in italics -->
                      <zone xml:id="B49rFig1" ulx="105" uly="76" lrx="175" lry="160"/>
                      <!-- contains the figure -->
                      <zone xml:id="B49rW457" ulx="45" uly="125" lrx="60" lry="130"/>
                      <!-- contains the word "pendans" -->
                   </surface>
                </facsimile></egXML> The alignment between transcription and image is made, as usual,
-            by means of the <att>facs</att> attribute: <egXML
-               xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr">
+            by means of the <att>facs</att> attribute: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr">
                <pb facs="#B49r"/>
                <fw>De Geometrie 49</fw>
                <head facs="#B49rHead"> DU SON ET ACCORD DES CLOCHES ET <lb/> des alleures des
@@ -445,8 +431,7 @@ used to define a polygon of any shape using this coordinate system:-->
                <gi>zone</gi> to the corresponding text. This is the function of the <att>start</att>
             attribute, which supplies the identifier of the element containing at least the start of
             the transcribed text found within the surface or zone concerned. Thus, another way of
-            linking this page with its transcription would be simply <egXML xml:lang="und"
-               xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+            linking this page with its transcription would be simply <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
                   <surface start="#PB49R">
                      <graphic url="Bovelles-49r.png"/>
                   </surface>
@@ -489,9 +474,11 @@ used to define a polygon of any shape using this coordinate system:-->
          </p>
 
          <p>The elements <gi>surface</gi>, <gi>surfaceGrp</gi>, and <gi>zone</gi> were introduced
-            above in section <ptr target="#PHFAX"/>. </p>
-
-         <p>Most writing is linear, in the sense that it is composed of discrete tokens organized
+            above in section <ptr target="#PHFAX"/> When supplied within a <gi>sourceDoc</gi> element, these
+            elements may contain transcriptions of the written content of a source in addition to or
+            as an alternative to digital images of them. Such transcription may be placed directly
+         within the <gi>zone</gi> element, or within one or more <gi>line</gi> elements, for cases where 
+            the writing is linear, in the sense that it is composed of discrete tokens organized
             physically into groups, typically organized in a sequence corresponding with the way
             they are intended to be read. Depending on the directionality of the writing system
             used, this might be any combination of top-down and left to right, or vice versa. The
@@ -500,20 +487,39 @@ used to define a polygon of any shape using this coordinate system:-->
             indicated using the <gi>zone</gi> element. The <gi>seg</gi> element described in section
                <ptr target="#SASE"/> may also be used to indicate smaller sequences of tokens within
                <gi>zone</gi>, or <gi>line</gi> as appropriate. </p>
-
+       
+         <p>Returning to the preceding example, within a <gi>sourceDoc</gi> element, we might 
+            transcribe the content of the zone we gave the identifier <ident>B49rPara2</ident> within it as follows : </p>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <sourceDoc>
+            <surface ulx="0" uly="0" lrx="200" lry="300">
+               <zone ulx="0" uly="0" lrx="200" lry="300">
+                  <graphic url="Bovelles-49r.png"/>
+               </zone>
+               <!-- ... -->  
+               <zone  ulx="28" uly="75" lrx="175" lry="178"><line>LEs cloches ont quasi fi</line><line>gures de rondes
+            pyra</line><line>mides imperfaictes &amp; </line><line> irregulieres: &amp; leur accord se</line>
+            <line> fait par reigle geometrique. Com</line><line>me si les deux cloches C &amp; D
+                  </line><line> sont <zone  ulx="45" uly="125" lrx="60" lry="130">pendans</zone> à ung mesme axe</line><line>  ou essieu A B:
+            je dis que leur ac</line><line>cord se fera en co<ex>n</ex>traires parties</line><line>
+               co<ex>m</ex>me voyez icy figuré. Car quãd </line><line> lune sera en
+            hault, laultre declinera embas. Aultrement si elles declinent toutes deux
+            ensembles en une mesme partie, elles seront discord,</line><line>  &amp; sera leur
+            sonnerie mal plaisante à oyr.</line></zone>
+               <zone ulx="105" uly="76" lrx="175" lry="160">
+               <graphic url="Bovelles49r-detail.png"/>
+            </zone>    </surface></sourceDoc></egXML>
          <p>As mentioned above, some or all of the written surfaces being transcribed may be
             composed of physically distinct scraps. In the following example, taken from the Walt
             Whitman Archive, two pieces of newsprint have been glued to a piece of blue paper on
             which a poem is being drafted: <figure xml:id="sleeprs">
                <graphic url="Images/whitman01.jpg" width="400px"/>
-               <head rend="it">Single leaf of notes possibly related to the poem
-                  eventually titled Sleepers. From the Walt Whitman Archive (Duke 258). </head>
+               <head rend="it">Single leaf of notes possibly related to the poem eventually titled
+                  Sleepers. From the Walt Whitman Archive (Duke 258). </head>
             </figure> The two pieces of newsprint might simply be regarded as special kinds of zone,
             but they are also new surfaces, since they might contain additional written zones
             themselves (such as the numbers in this case). </p>
 
-         <p>Using these elements, the Whitman draft above might be encoded as follows: <egXML
-               xmlns="http://www.tei-c.org/ns/Examples" corresp="#WHITMS2">
+         <p>Using these elements, the Whitman draft above might be encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#WHITMS2">
                <surface>
                   <zone>
                      <line>Poem</line>
@@ -538,8 +544,7 @@ used to define a polygon of any shape using this coordinate system:-->
             </egXML>
          </p>
 
-         <p>The <gi>metamark</gi> element used in this example is further discussed below (<ptr
-               target="#PH-meta"/>)</p>
+         <p>The <gi>metamark</gi> element used in this example is further discussed below (<ptr target="#PH-meta"/>)</p>
 
          <p>Note that in this example we have not included any <gi>graphic</gi> element
             corresponding with the <gi>zone</gi> or <gi>surface</gi> elements identified in the
@@ -583,8 +588,7 @@ used to define a polygon of any shape using this coordinate system:-->
          source, such as ornamentation, underlining, deletion, areas of damage and lacunae. This
          chapter provides ways of encoding such information: <list type="simple">
             <item>first, methods of recording editorial or other alterations to the text, such as
-               expansion of abbreviations, corrections, conjectures, etc. (section <ptr
-                  target="#PHCH"/>)</item>
+               expansion of abbreviations, corrections, conjectures, etc. (section <ptr target="#PHCH"/>)</item>
             <item>then, methods of describing important extra-linguistic phenomena in the source:
                unusual spaces, lines, page and line breaks, changes of manuscript hand, etc.
                (section <ptr target="#PHPH"/>)</item>
@@ -694,8 +698,7 @@ recommendations form a good basis for such future work.-->
                character set: for example the common Latin brevigraph ⁊, standing for
                   <mentioned>et</mentioned> and often known as the <soCalled>Tironian et</soCalled>
                can be directly represented in any XML document as the Unicode character with code
-               point <val>U+204A</val> (see further <ptr target="#SG-er"/> and <ptr target="#CHSH"
-               />). In cases where it does not, these Guidelines recommend use of the <gi>g</gi>
+               point <val>U+204A</val> (see further <ptr target="#SG-er"/> and <ptr target="#CHSH"/>). In cases where it does not, these Guidelines recommend use of the <gi>g</gi>
                element provided by the <ident type="module">gaiji</ident> module described in
                chapter <ptr target="#WD"/>. This module allows the encoder great flexibility both in
                processing and in documenting non-standard characters or glyphs, including the
@@ -705,18 +708,11 @@ recommendations form a good basis for such future work.-->
                for any abbreviation, both the sequence of letters or marks which constitutes it, and
                its sense, that is, the letter or letters for which it is believed to stand. For
                example, in the following fragment the phrase <mentioned>euery persone</mentioned> is
-               represented by a sequence of abbreviated characters:
-               <figure>
+               represented by a sequence of abbreviated characters: <figure>
                   <graphic url="Images/euerypersone.png"/>
-                  <head>Detail from fol. 126v of Bodleian MS Laud
-                     Misc 517</head>
-               </figure>
-               
-               
-               These lines may be transcribed directly, using the
-                  <gi>g</gi> element to indicate the two brevigraphs  as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-BIBL-1">eu<g ref="#b-er"
-                     >er</g>y <g ref="#b-per">per</g>sone that loketh after heuen hath a place in
+                  <head>Detail from fol. 126v of Bodleian MS Laud Misc 517</head>
+               </figure> These lines may be transcribed directly, using the <gi>g</gi> element to
+               indicate the two brevigraphs as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-BIBL-1">eu<g ref="#b-er">er</g>y <g ref="#b-per">per</g>sone that loketh after heuen hath a place in
                   this ladder <!-- elsewhere -->
                   <charDecl>
                      <char xml:id="b-er">
@@ -733,16 +729,12 @@ recommendations form a good basis for such future work.-->
 
             <p>The transcriber may also wish to indicate that, because of the presence of these
                particular characters, the two words are actually abbreviations, by using the
-                  <gi>abbr</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g
-                        ref="#b-er">er</g>y</abbr>
+                  <gi>abbr</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<g ref="#b-er">er</g>y</abbr>
                   <abbr><g ref="#b-per">per</g>sone</abbr> ... </egXML> Alternatively, the
                transcriber may choose silently to expand these abbreviations, using the
-                  <gi>expan</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                     ><expan>euery</expan>
+                  <gi>expan</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>euery</expan>
                   <expan>persone</expan> ... </egXML> And, of course, the <gi>choice</gi> element
-               can be used to show that one encoding is an alternative for the other: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g ref="#b-er"
-                        >er</g>y</abbr><expan>euery</expan></choice></egXML>
+               can be used to show that one encoding is an alternative for the other: <egXML xmlns="http://www.tei-c.org/ns/Examples"><choice><abbr>eu<g ref="#b-er">er</g>y</abbr><expan>euery</expan></choice></egXML>
             </p>
             <p>When abbreviated forms such as these are expanded, two processes are carried out:
                some characters not present in the abbreviation are added (always), and some
@@ -758,20 +750,15 @@ recommendations form a good basis for such future work.-->
                individual letters or signs within both the abbreviation and the expansion. The
                   <gi>am</gi> element surrounds characters or signs such as tittles or tildes, used
                to indicate the presence of an abbreviation, which are typically removed or replaced
-               by other characters in the expanded form of the abbreviation: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<am><g ref="#b-er"/></am>y</abbr>
+               by other characters in the expanded form of the abbreviation: <egXML xmlns="http://www.tei-c.org/ns/Examples"><abbr>eu<am><g ref="#b-er"/></am>y</abbr>
                   <abbr><am><g ref="#b-per"/></am>sone</abbr> ... </egXML> while the <gi>ex</gi>
                element may be used to indicate those characters within the expansion which are not
-               present in the abbreviated form. <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                        ><expan>eu<ex>er</ex>y</expan>
+               present in the abbreviated form. <egXML xmlns="http://www.tei-c.org/ns/Examples"><expan>eu<ex>er</ex>y</expan>
                   <expan><ex>per</ex>sone</expan> ... </egXML> The content of the <gi>abbr</gi>
                element should usually include the whole of the abbreviated word, while the
                   <gi>expan</gi> element should include the whole of its expansion. If this is not
                considered necessary, the <gi>am</gi> and <gi>ex</gi> elements may be used within a
-                  <gi>choice</gi> element, as in this example: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">eu<choice><am><g ref="#b-er"
-                        /></am><ex>er</ex></choice>y <choice><am><g ref="#b-per"
-                     /></am><ex>per</ex></choice>sone ... </egXML>
+                  <gi>choice</gi> element, as in this example: <egXML xmlns="http://www.tei-c.org/ns/Examples">eu<choice><am><g ref="#b-er"/></am><ex>er</ex></choice>y <choice><am><g ref="#b-per"/></am><ex>per</ex></choice>sone ... </egXML>
             </p>
             <p>As implied in the preceding discussion, making decisions about which of these various
                methods of representing abbreviation to use will form an important part of an
@@ -794,11 +781,9 @@ recommendations form a good basis for such future work.-->
                   <gi>note</gi> element, on which see section <ptr target="#CONO"/>, and by use of
                the <att>resp</att> and <att>cert</att> attributes. In this instance from the English
                   <title>Brut</title>, a note is attached to an editorial expansion of the tail on
-               the final d of <mentioned>good</mentioned> to <mentioned>goode</mentioned>: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-01">For alle the while
+               the final d of <mentioned>good</mentioned> to <mentioned>goode</mentioned>: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-01">For alle the while
                   that I had good<ex xml:id="exp01">e</ex> I was welbeloued</egXML>
-               <!--  abbr="&#x027d;" --> Then the note: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><note target="#exp01">The stroke added to
+               <!--  abbr="&#x027d;" --> Then the note: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#exp01">The stroke added to
                      the final d could signify the plural ending (-es, -is, -ys&gt;) but the
                      singular <hi rend="it">goode</hi> was used with the meaning <q>property</q>,
                         <q>wealth</q>, at this time (v. examples quoted in OED, sb. Good, C. 7, b,
@@ -819,14 +804,12 @@ recommendations form a good basis for such future work.-->
                expansion respectively. </p>
             <p>The <gi>choice</gi> element may be used to indicate that the proposed expansion is
                one way of encoding what might equally well be represented as an abbreviation,
-               represented by the hooked D, as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
+               represented by the hooked D, as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">For alle the while that I had
                            <choice><sic>goo<abbr>&#x0257;</abbr></sic>
                      <expan resp="#mp" cert="high">good<ex>e</ex></expan></choice> I was
                   welbeloued</egXML> If it is desired to express aspects of certainty and
                responsibility for some other aspect of the use of these elements, then the
-               mechanisms discussed in chapter <ptr target="#CE"/> should be used. See also <ptr
-                  target="#PHHR"/> for discussion of the issues of certainty and responsibility in
+               mechanisms discussed in chapter <ptr target="#CE"/> should be used. See also <ptr target="#PHHR"/> for discussion of the issues of certainty and responsibility in
                the context of transcription.</p>
 
             <p>If more than one expansion for the same abbreviation is to be recorded, multiple
@@ -838,16 +821,14 @@ recommendations form a good basis for such future work.-->
          <div type="div3" xml:id="PHCC">
             <head>Correction and Conjecture</head>
 
-            <p>The <gi>sic</gi>, <gi>corr</gi>, and <gi>choice</gi> elements, defined in the <ident
-                  type="module">core</ident> module should be used to indicate passages deemed in
+            <p>The <gi>sic</gi>, <gi>corr</gi>, and <gi>choice</gi> elements, defined in the <ident type="module">core</ident> module should be used to indicate passages deemed in
                need of correction, or actually corrected, during the transcription of a source. For
                example, in the manuscript of William James's <title>A Pluralistic Universe</title>
                as edited by Fredson Bowers (Cambridge: Harvard University Press, 1977), a sentence
                first written <q rend="display">One must have lived longer with this system, to
                   appreciate its advantages.</q> has been modified by James to begin <q>But One must
                   ...</q>, without the inital capital O having been reduced to lowercase. This
-               non-standard orthography could be recorded thus: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">But <sic>One</sic> must have lived
+               non-standard orthography could be recorded thus: <egXML xmlns="http://www.tei-c.org/ns/Examples">But <sic>One</sic> must have lived
                   ...</egXML> or corrected: <egXML xmlns="http://www.tei-c.org/ns/Examples">But
                      <corr>one</corr> must have lived ...</egXML> or the two possibilities might be
                represented as a choice: <egXML xmlns="http://www.tei-c.org/ns/Examples">But
@@ -855,8 +836,7 @@ recommendations form a good basis for such future work.-->
                ...</egXML></p>
             <p>Similarly, in this example from Albertus Magnus, both a manuscript error
                   <mentioned>angues</mentioned> and its correction <mentioned>augens</mentioned> are
-               registered within a <gi>choice</gi> element: <egXML xml:lang="la"
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-02">Nos autem iam
+               registered within a <gi>choice</gi> element: <egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-02">Nos autem iam
                   ostendimus quod nutrimentum et
                      <choice><sic>angues</sic><corr>augens</corr></choice>.</egXML>
             </p>
@@ -872,8 +852,7 @@ recommendations form a good basis for such future work.-->
                   <gi>supplied</gi> element discussed in <ptr target="#PHOM"/> should be used in
                preference to <gi>corr</gi>. Thus, in the following example, from George Moore's
                draft of additional materials for <title>Memoirs of My Dead Life</title>, the
-               transcriber supplies the word <mentioned>we</mentioned> omitted by the author: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-03">You see that I avoid
+               transcriber supplies the word <mentioned>we</mentioned> omitted by the author: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-03">You see that I avoid
                   the word create for we create nothing <supplied>we</supplied> develope.</egXML>
             </p>
             <p>As with <gi>expan</gi> and <gi>abbr</gi>, the choice as to whether to record simply
@@ -892,10 +871,8 @@ recommendations form a good basis for such future work.-->
                Instances of these elements may also be classified according to any convenient
                typology using the <att>type</att> attribute. </p>
             <p>For example, consider the following encoding of an emendation in the Hengwrt
-               manuscript proposed by E. Talbot Donaldson: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">Telle me also, to what conclusioun Were
-                  membres maad, of generacioun And of so parfit wis a <choice xml:id="corr117"
-                        ><sic>wight</sic><corr>wright</corr></choice> ywroght? <!-- ... -->
+               manuscript proposed by E. Talbot Donaldson: <egXML xmlns="http://www.tei-c.org/ns/Examples">Telle me also, to what conclusioun Were
+                  membres maad, of generacioun And of so parfit wis a <choice xml:id="corr117"><sic>wight</sic><corr>wright</corr></choice> ywroght? <!-- ... -->
                   <note target="#corr117">This emendation of the Hengwrt copy text, based on a Latin
                      source and on the reading of three late and usually unauthoritative
                      manuscripts, was proposed by E. Talbot Donaldson in
@@ -920,19 +897,14 @@ recommendations form a good basis for such future work.-->
                enhanced as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <!-- somewhere in the header ... -->
                   <name xml:id="ETD">E Talbot Donaldson</name>
-                  <!-- ... --> And of so parfit wis a <choice><sic>wight</sic><corr resp="#ETD"
-                        cert="medium">wright</corr></choice> ywroght? </egXML></p>
+                  <!-- ... --> And of so parfit wis a <choice><sic>wight</sic><corr resp="#ETD" cert="medium">wright</corr></choice> ywroght? </egXML></p>
 
             <p>As remarked above, where the same annotation applies to several corrections, this may
                be represented by supplying multiple pointers on the note. Consider for example such
                corrections as the following, in Dudo of S. Quentin. Parkes cites two cases in this
-               manuscript of the same phenomenon: <egXML xml:lang="la"
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-04">quamuis <choice
-                     xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei gesta
-                  sunt ... unde esset uiriliter <choice xml:id="sic-2"
-                        ><corr>uegetata</corr><sic>negata</sic></choice></egXML> which may be
-               described as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note
-                     target="#sic-1 #sic-2">Substitution of a more familiar word which resembles
+               manuscript of the same phenomenon: <egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-04">quamuis <choice xml:id="sic-1"><sic>mens</sic><corr>iners</corr></choice> que nutu dei gesta
+                  sunt ... unde esset uiriliter <choice xml:id="sic-2"><corr>uegetata</corr><sic>negata</sic></choice></egXML> which may be
+               described as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><note target="#sic-1 #sic-2">Substitution of a more familiar word which resembles
                      graphically what the scribe should be copying but which does not make sense in
                      the context.</note></egXML>
             </p>
@@ -947,20 +919,14 @@ recommendations form a good basis for such future work.-->
                   the preceding line</q>, etc. The <att>type</att> attribute on the <gi>corr</gi>
                element can be used to specify an arbitrary code for the particular kind of
                correction (or other editorial intervention) identified within it. This code can be
-               chosen freely and is not treated as a pointer. <egXML xml:lang="la"
-                  xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice><sic>mens</sic><corr
-                        type="graphSubs">iners</corr></choice> que nutu dei gesta sunt ... unde
-                  esset uiriliter <choice><corr type="graphSubs"
-                     >uegetata</corr><sic>negata</sic></choice></egXML> Note that this encoding
-               might be extended to include a range of possible corrections: <egXML xml:lang="la"
-                  xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice><sic>mens</sic><corr
-                        type="graphSubs">iners</corr><corr type="reversal">inres</corr></choice> que
+               chosen freely and is not treated as a pointer. <egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice><sic>mens</sic><corr type="graphSubs">iners</corr></choice> que nutu dei gesta sunt ... unde
+                  esset uiriliter <choice><corr type="graphSubs">uegetata</corr><sic>negata</sic></choice></egXML> Note that this encoding
+               might be extended to include a range of possible corrections: <egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples">quamuis <choice><sic>mens</sic><corr type="graphSubs">iners</corr><corr type="reversal">inres</corr></choice> que
                   nutu dei gesta sunt ...</egXML> In addition, the conscientious encoder will
                provide documentation explaining the circumstances in which particular codes are
                judged appropriate. A suitable location for this might be within the
                   <gi>correction</gi> element of the <gi>encodingDesc</gi> of the header, which
-               might include a <gi>list</gi> such as the following: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+               might include a <gi>list</gi> such as the following: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <correction>
                      <p>The following codes are used to categorise corrections identified in this
                         transcription: <list type="gloss">
@@ -975,8 +941,7 @@ recommendations form a good basis for such future work.-->
                   subtype="graphicResemblance"</tag> for example. </p>
             <p>For a given project, it may well be desirable to limit the possible values for the
                   <att>type</att> or <att>subtype</att> attributes automatically. This is easily
-               done but requires customization of the TEI system using techniques described in <ptr
-                  target="#MD"/>, in particular <ptr target="#MDMDAL"/>, which should be consulted
+               done but requires customization of the TEI system using techniques described in <ptr target="#MD"/>, in particular <ptr target="#MDMDAL"/>, which should be consulted
                for further information on this topic.</p>
             <p>When making a correction in a source which forms part of a textual tradition attested
                by many witnesses, a textual editor will sometimes use a reading from one witness to
@@ -988,15 +953,13 @@ recommendations form a good basis for such future work.-->
                problematic word <mentioned>wight</mentioned> to <mentioned>wyf</mentioned> which is
                the reading found in the Cambridge manuscript Gg.1. 27. This may be simply
                represented as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"> And of so
-                  parfit wis a <choice><sic>wight</sic><corr resp="#mp" source="#Gg"
-                     >wyf</corr></choice> ywroght?</egXML> The value of the <att>source</att>
+                  parfit wis a <choice><sic>wight</sic><corr resp="#mp" source="#Gg">wyf</corr></choice> ywroght?</egXML> The value of the <att>source</att>
                attribute here is, like the value of the <att>resp</att> attribute, a pointer, in
                this case indicating the manuscript used as a witness. Elsewhere in the transcribed
                text, a list of witnesses used in this text will be given, one of which has an
                identifier <code>Gg</code>. Each witness will be represented either by a
                   <gi>witness</gi> element (see <ptr target="#TCAPLL"/>) or more fully by a
-                  <gi>msDesc</gi> element (see <ptr target="#MS"/>) : <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <gi>msDesc</gi> element (see <ptr target="#MS"/>) : <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <msDesc xml:id="Gg">
                      <msIdentifier>
                         <settlement>Cambridge</settlement>
@@ -1008,8 +971,7 @@ recommendations form a good basis for such future work.-->
             </p>
 
             <p>The <gi>app</gi> element described in chapter <ptr target="#TC"/> provides a more
-               powerful way of representing all three possible readings in parallel: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">And of so parfit wis a <app>
+               powerful way of representing all three possible readings in parallel: <egXML xmlns="http://www.tei-c.org/ns/Examples">And of so parfit wis a <app>
                      <rdg wit="#Hg">wight</rdg>
                      <rdg wit="#Ln #Ry2 #Ld">wright</rdg>
                      <rdg wit="#Gg">wyf</rdg>
@@ -1021,8 +983,7 @@ recommendations form a good basis for such future work.-->
                indicated has this reading, who is not necessarily the same as the person responsible
                for asserting that this reading should be used to correct the others. Editorial
                intervention elements such as <gi>corr</gi> can however be nested within a
-                  <gi>rdg</gi> to provide this additional information: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">And of so parfit wis a <app>
+                  <gi>rdg</gi> to provide this additional information: <egXML xmlns="http://www.tei-c.org/ns/Examples">And of so parfit wis a <app>
                      <rdg wit="#Hg">wight</rdg>
                      <rdg wit="#Ln #Ry2 #Ld"><corr resp="#ETD">wright</corr></rdg>
                      <rdg wit="#Gg"><corr resp="#mp">wyf</corr></rdg>
@@ -1040,8 +1001,7 @@ recommendations form a good basis for such future work.-->
                   <att>resp</att> attribute. </p>
 
             <p>If it is desired to express certainty of or responsibility for some other aspect of
-               the use of these elements, then the mechanisms discussed in chapter <ptr target="#CE"
-               /> may be found useful. See also <ptr target="#PHHR"/> for further discussion of the
+               the use of these elements, then the mechanisms discussed in chapter <ptr target="#CE"/> may be found useful. See also <ptr target="#PHHR"/> for further discussion of the
                issues of certainty and responsibility in the context of transcription.</p>
          </div>
 
@@ -1056,8 +1016,7 @@ recommendations form a good basis for such future work.-->
                   <specDesc key="delSpan"/>
                </specList> Of these, <gi>add</gi> and <gi>del</gi> are included in the core module,
                while <gi>addSpan</gi> and <gi>delSpan</gi> are available only when using the module
-               defined in this chapter. These particular elements are members of the <ident
-                  type="class">att.spanning</ident> class, from which they inherit the following
+               defined in this chapter. These particular elements are members of the <ident type="class">att.spanning</ident> class, from which they inherit the following
                attribute: <specList>
                   <specDesc key="att.spanning" atts="spanTo"/>
                </specList>
@@ -1078,8 +1037,7 @@ recommendations form a good basis for such future work.-->
                   Drugget</title>, the author's addition of <mentioned>do ever</mentioned> may be
                recorded as follows, with the <att>hand</att> attribute indicating that the addition
                was Beerbohm's by referencing a <gi>handNote</gi> element defined elsewhere in the
-               document (see further <ptr target="#PHDH"/>): <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-05">Some things are best
+               document (see further <ptr target="#PHDH"/>): <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-05">Some things are best
                   at first sight. Others — and here is one of them — <add hand="#mb">do ever</add>
                   improve by recognition .... <handNote xml:id="mb">Max Beerbohm
                      holograph</handNote>
@@ -1091,9 +1049,7 @@ recommendations form a good basis for such future work.-->
                   sabachthani</title> the author's deletion of <mentioned>my</mentioned> may be
                recorded as follows. In this case, the <att>hand</att> attribute indicating that the
                deletion was Lawrence's is complemented by a <att>rend</att> attribute indicating
-               that the deletion was by strike-through: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-06">For I hate this <del
-                     rend="strikethrough" hand="#dhl">my</del> body, which is so dear to me ...
+               that the deletion was by strike-through: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-06">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body, which is so dear to me ...
                      <handNote xml:id="dhl">D H Lawrence holograph</handNote>
                </egXML></p>
 
@@ -1111,26 +1067,22 @@ recommendations form a good basis for such future work.-->
                addition. For example, consider the following passage from a draft letter by Robert
                Graves: <figure>
                   <graphic url="Images/PHgraves2.png" width="500px"/>
-                  <head>Draft letter from Robert Graves to Desmond
-                     Flower, 17 Dec 1938 (detail). </head>    
+                  <head>Draft letter from Robert Graves to Desmond Flower, 17 Dec 1938 (detail).
+                  </head>
                </figure> At the end of this extract, the writer inserts the word <q>cant,</q> above
                the line, with a stroke to indicate insertion. Assuming that we have previously
-               defined the identifier <code>RG</code> somewhere: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+               defined the identifier <code>RG</code> somewhere: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <listPerson>
                      <person xml:id="RG">
                         <!-- information about Robert Graves here -->
                      </person>
                   </listPerson>
-               </egXML>, this extract might now be encoded as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07"> The O.E.D. is not a
+               </egXML>, this extract might now be encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07"> The O.E.D. is not a
                   dictionary so much as a corpus of precedents <del hand="#RG">in the</del>:
                   current, obsolete, <add hand="#RG" place="above">cant,</add> cataphretic and
                   nonce-words are all included. </egXML> A little earlier in the same extract,
                Graves writes <q>for an abridgement</q> above the line, and then deletes it. This may
-               be encoded similarly: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#PH-eg-07"> As for 'significant artist.' You quote the O.E.D <add
-                     hand="#RG" place="above"><del>for an abridgement</del></add>in explanation...
+               be encoded similarly: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07"> As for 'significant artist.' You quote the O.E.D <add hand="#RG" place="above"><del>for an abridgement</del></add>in explanation...
                </egXML> Similarly, in the margin, the word <q>Norton</q> has been added and then
                deleted: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07"> You
                   quote the <add hand="#RG" place="margin"><del>Norton</del></add> O.E.D...</egXML>
@@ -1178,8 +1130,7 @@ a line through it. </p>
                achieved by grouping the addition and deletion together within a <gi>subst</gi>
                element. At the end of the passage illustrated above, Graves first writes <q>It is
                   the expressed...</q>, then deletes <q>It is</q>, and substitutes an uppercase T at
-               the start of <q>the</q>. <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#PH-eg-07"> ... are all included. <del hand="#RG">It is</del>
+               the start of <q>the</q>. <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07"> ... are all included. <del hand="#RG">It is</del>
                   <subst><add>T</add><del>t</del></subst>he expressed </egXML>
                <!--
 "Oh keep the Dog far hence, that's 
@@ -1209,9 +1160,7 @@ a line through it. </p>
                is placed to mark the beginning of the span of added text, and an <gi>anchor</gi> is
                used to mark its end. The <att>hand</att> attribute on the <gi>addSpan</gi> element
                ascribes responsibility for the addition to the manuscript to Helgi, and the
-                  <att>spanTo</att> attribute points to the end of the added text: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-08"><handNote
-                     xml:id="heol" scribe="HelgiÓlafsson"/>
+                  <att>spanTo</att> attribute points to the end of the added text: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-08"><handNote xml:id="heol" scribe="HelgiÓlafsson"/>
                   <!-- ... -->
                   <body>
                      <div><!-- text here --></div>
@@ -1245,8 +1194,7 @@ in the Eliot typescript mentioned above, there are --> several
                version of <title>Lalla Rookh</title> two lines are marked for omission by vertical
                strike-through. Within the first of the two lines, the word
                   <mentioned>upon</mentioned> has also been struck out, and the word
-                  <mentioned>over</mentioned> has been added: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-09"><l>
+                  <mentioned>over</mentioned> has been added: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-09"><l>
                      <delSpan rend="verticalStrike" spanTo="#delend01"/> Tis moonlight
                         <del>upon</del>
                      <add>over</add> Oman's sky</l>
@@ -1316,24 +1264,22 @@ in the Eliot typescript mentioned above, there are --> several
                For example, in the following example from Thomas Moore's <title>Lalla Rookh</title>,
                the metrical structure of the verse means that the deleted word and its substitution
                are in different positions, and so a <gi>subst</gi> element would be invalid because
-               of the intervening text: <egXML xmlns="http://www.tei-c.org/ns/Examples"> While <del
-                     xml:id="change1">pondering</del> thus <add xml:id="change2">she mus'd</add>,
+               of the intervening text: <egXML xmlns="http://www.tei-c.org/ns/Examples"> While <del xml:id="change1">pondering</del> thus <add xml:id="change2">she mus'd</add>,
                   her pinions fann'd<substJoin target="#change1 #change2"/>
                </egXML>
             </p>
 
             <p>As a more complex example, consider the following passage:<!-- in one of the manuscripts
-               of Wilfred Owen's <title>Dulce et decorum est</title>:--> <figure>
+               of Wilfred Owen's <title>Dulce et decorum est</title>:-->
+               <figure>
                   <graphic width="450px" url="Images/PHowen.png"/>
-                  <head>Detail from <title>Dulce et decorum est</title> autograph manuscript in the English Faculty
-                     Library, Oxford University. </head>
-               </figure> This passage might be encoded as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-16">
+                  <head>Detail from <title>Dulce et decorum est</title> autograph manuscript in the
+                     English Faculty Library, Oxford University. </head>
+               </figure> This passage might be encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-16">
                   <l>And towards our distant rest began to trudge,</l>
                   <l><subst><del>Helping the worst amongst us</del><add>Dragging the worst amongt
                            us</add></subst>, who'd no boots</l>
-                  <l>But limped on, blood-shod. All went lame; <subst><del status="shortEnd"
-                           >half-</del><add>all</add></subst> blind;</l>
+                  <l>But limped on, blood-shod. All went lame; <subst><del status="shortEnd">half-</del><add>all</add></subst> blind;</l>
                   <l>Drunk with fatigue ; deaf even to the hoots</l>
                   <l>Of tired, outstripped <del>fif</del> five-nines that dropped
                   behind.</l></egXML> In this representation, <list type="simple">
@@ -1349,8 +1295,7 @@ in the Eliot typescript mentioned above, there are --> several
                facilities, by treating each state of the text as a distinct reading. The
                   <gi>rdg</gi> element has a <att>varSeq</att> attribute which may be used in the
                same way as the <att>seq</att> attribute to indicate the preferred sequence. The
-               James example above might thus be represented as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with <app>
+               James example above might thus be represented as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">One must have lived longer with <app>
                      <rdg varSeq="1"><del>this</del></rdg>
                      <rdg varSeq="2"><del><add>such a</add></del></rdg>
                      <rdg varSeq="3"><add>a</add></rdg>
@@ -1373,9 +1318,7 @@ in the Eliot typescript mentioned above, there are --> several
             <p>Presume that Lawrence decided to restore <mentioned>my</mentioned> to the phrase of
                   <title>Eloi, Eloi, lama sabachthani</title> first written <q>For I hate this my
                   body</q>, with the <mentioned>my</mentioned> first deleted then restored by
-               writing <q>stet</q> in the margin. This may be encoded: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">For I hate this <restore hand="#dhl"
-                     type="marginalStetNote"><del>my</del></restore> body</egXML></p>
+               writing <q>stet</q> in the margin. This may be encoded: <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this <restore hand="#dhl" type="marginalStetNote"><del>my</del></restore> body</egXML></p>
             <p>Another feature commonly encountered in manuscripts is the use of circles, lines, or
                arrows to indicate transposition of material from one point in the text to another.
                No specific markup for this phenomenon is proposed at this time. Such cases are most
@@ -1403,14 +1346,10 @@ in the Eliot typescript mentioned above, there are --> several
                to specify the amount of text which is illegible in this way at this point, using any
                convenient units, where this can be determined. For example, in the Beerbohm
                manuscript of <title>The Golden Drugget</title> cited above, the author has erased a
-               passage amounting about 10 cm in length by inking over it completely: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-05">Others <gap
-                     reason="cancelled" hand="#mb" quantity="10" unit="cm"/>—and here is one of
+               passage amounting about 10 cm in length by inking over it completely: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-05">Others <gap reason="cancelled" hand="#mb" quantity="10" unit="cm"/>—and here is one of
                   them...</egXML></p>
             <p>In an autograph letter of Sydney Smith now in the Pierpont Morgan library three words
-               in the signature are quite illegible: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#PH-eg-10">I am dr Sr yr <gap reason="illegible" quantity="3" unit="word"
-                  />Sydney Smith</egXML> The degree of precision attempted when measuring the size
+               in the signature are quite illegible: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-10">I am dr Sr yr <gap reason="illegible" quantity="3" unit="word"/>Sydney Smith</egXML> The degree of precision attempted when measuring the size
                of a gap will vary with the purpose of the encoding and the nature of the material:
                no particular recommendation is made here.</p>
 
@@ -1424,24 +1363,20 @@ in the Eliot typescript mentioned above, there are --> several
 
             <p>For example, when encountering the form <soCalled>dedikararunt</soCalled> on an
                inscription, the editor may choose any of the following three possibilities: <list>
-                  <item>mark this as an erroneous form <egXML
-                        xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp">
+                  <item>mark this as an erroneous form <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp">
                         <sic>dedikararunt</sic>
                      </egXML></item>
-                  <item>additionally supply a corrected form <egXML
-                        xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp">
+                  <item>additionally supply a corrected form <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp">
                         <choice><sic>dedikararunt</sic>
                            <corr>dedikarunt</corr>
                         </choice>
                      </egXML></item>
                   <item>indicate that the erroneous form contains surplus characters which the
-                     editor wishes to suppress <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                        corresp="#PHegsurp"> dedika<surplus>ra</surplus>runt </egXML></item>
+                     editor wishes to suppress <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp"> dedika<surplus>ra</surplus>runt </egXML></item>
                </list>
             </p>
             <p>The <gi>surplus</gi> element may also be used to mark up interpolations, as in the
-               following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#PHegsurp2">
+               following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PHegsurp2">
                   <l n="4">a darmi morte, poi m'avete preso <surplus reason="interpolated">a
                         tradimento</surplus></l>
                   <l n="5">sì com' l'uccellator prende l'uccello</l>
@@ -1525,10 +1460,8 @@ in the Eliot typescript mentioned above, there are --> several
                   <specDesc key="handShift"/>
                </specList>
             </p>
-            <p>Both <gi>handShift</gi> and <gi>handNote</gi> are members of the <ident type="class"
-                  >att.handFeatures</ident> class, and thus share the following attributes: <specList>
-                  <specDesc key="att.handFeatures"
-                     atts="scribe script scribeRef
+            <p>Both <gi>handShift</gi> and <gi>handNote</gi> are members of the <ident type="class">att.handFeatures</ident> class, and thus share the following attributes: <specList>
+                  <specDesc key="att.handFeatures" atts="scribe script scribeRef
 				       scriptRef medium scope"/>
                </specList>
             </p>
@@ -1554,16 +1487,14 @@ in the Eliot typescript mentioned above, there are --> several
 
             <p>In the following example there is a change of ink within the one hand. This is simply
                indicated by a new value for the <att>medium</att> attribute on the
-                  <gi>handShift</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#PH-eg-11"><l>When wolde the cat dwelle in his ynne</l>
+                  <gi>handShift</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-11"><l>When wolde the cat dwelle in his ynne</l>
                   <handShift medium="greenish-ink"/>
                   <l>And if the cattes skynne be slyk <handShift medium="black-ink"/> and
                   gaye</l></egXML></p>
 
             <p>In the following example, the encoder has identified two distinct hands within the
                document and given them identifiers <val>h1</val> and <val>h2</val>, by means of the
-               following declarations included in the document's TEI Header: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+               following declarations included in the document's TEI Header: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <handNotes>
                      <handNote xml:id="h1" script="copperplate" medium="brown-ink">Carefully written
                         with regular descenders</handNote>
@@ -1572,17 +1503,14 @@ in the Eliot typescript mentioned above, there are --> several
                   </handNotes>
                </egXML>
             </p>
-            <p>Then the change of hand is indicated in the text: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-12"><handShift new="#h1"
-                     resp="#das"/>... and that good Order Decency and regular worship may be once
+            <p>Then the change of hand is indicated in the text: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-12"><handShift new="#h1" resp="#das"/>... and that good Order Decency and regular worship may be once
                   more introduced and Established in this Parish according to the Rules and
                   Ceremonies of the Church of England and as under a good Consciencious and sober
                   Curate there would and ought to be <handShift new="#h2" resp="#das"/> and for that
                   purpose the parishioners pray</egXML></p>
 
             <p>When a more precise or nuanced discussion of the writing in a manuscript is required,
-               the <gi>handNote</gi> and <gi>scriptNote</gi> elements discussed in <ptr
-                  target="#msph2"/> should be used. Either element may serve as the target for a
+               the <gi>handNote</gi> and <gi>scriptNote</gi> elements discussed in <ptr target="#msph2"/> should be used. Either element may serve as the target for a
                   <gi>handShift</gi>. </p>
 
          </div>
@@ -1595,9 +1523,7 @@ in the Eliot typescript mentioned above, there are --> several
                James passage mentioned above in section <ptr target="#PHCC"/>. In this example, the
                   <mentioned>But</mentioned> inserted by James is tagged as an <gi>add</gi>, and the
                consequent editorial correction of <mentioned>One</mentioned> to
-                  <mentioned>one</mentioned> treated separately: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><add place="above" resp="#FB" hand="#WJ"
-                     >But</add>
+                  <mentioned>one</mentioned> treated separately: <egXML xmlns="http://www.tei-c.org/ns/Examples"><add place="above" resp="#FB" hand="#WJ">But</add>
                   <choice><sic>One</sic><corr resp="#FB">one</corr></choice> must have lived ... <!-- elsewhere -->
                   <respStmt xml:id="FB">
                      <resp>editorial changes</resp>
@@ -1684,10 +1610,8 @@ lead to unpredictable results.</p>
                   Prologue</title> (see <ptr target="#PHCC"/>) may be encoded as follows using the
                   <att>resp</att> and <att>cert</att> attributes on the <gi>corr</gi> element:
                   <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <choice><sic>wight</sic><corr resp="#ETD" cert="medium"
-                  >wright</corr></choice></egXML> Exactly the same information could be conveyed
-               using the certainty and responsibility mechanisms, as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <choice><sic>wight</sic><corr resp="#ETD" cert="medium">wright</corr></choice></egXML> Exactly the same information could be conveyed
+               using the certainty and responsibility mechanisms, as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <choice><corr xml:id="c117">wright</corr><sic>wight</sic></choice>
                   <certainty target="#c117" locus="value" degree="0.7"/>
                   <respons target="#c117" locus="value" resp="#ETD"/></egXML> The choice of which
@@ -1719,8 +1643,7 @@ lead to unpredictable results.</p>
 
          <div type="div3" xml:id="PHDA">
             <head>Damage, Illegibility, and Supplied Text</head>
-            <p>The <gi>gap</gi> and <gi>supplied</gi> elements described above (section <ptr
-                  target="#PHOM"/>) should be used with appropriate attributes where the degree of
+            <p>The <gi>gap</gi> and <gi>supplied</gi> elements described above (section <ptr target="#PHOM"/>) should be used with appropriate attributes where the degree of
                damage or illegibility in a text is such that nothing can be read and the text must
                be either omitted or supplied conjecturally or from one or more other sources. In
                many cases, however, despite damage or illegibility, the text may yet be read with
@@ -1746,16 +1669,13 @@ lead to unpredictable results.</p>
                through irregular rubbing so that letters in various places are obscured and in some
                cases cannot be read at all. </p>
             <p>In the first line of this leaf, the transcriber may believe that the last three
-               letters of <mentioned>daga</mentioned> can be read clearly despite the damage: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13" xml:lang="non">um
+               letters of <mentioned>daga</mentioned> can be read clearly despite the damage: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13" xml:lang="non">um
                   aldr d<damage>aga</damage> yndisniota</egXML>
             </p>
             <p>If, as is often the case, the damage crosses structural divisions, so that the
                   <gi>damage</gi> element cannot be nested properly within the containing
                   <gi>div</gi> elements, the <gi>damageSpan</gi> element may be used, in the same
-               way as the <gi>delSpan</gi> and <gi>addSpan</gi> elements discussed in section <ptr
-                  target="#PHAD"/>. <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#PH-eg-13"><p>
+               way as the <gi>delSpan</gi> and <gi>addSpan</gi> elements discussed in section <ptr target="#PHAD"/>. <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13"><p>
                      <!-- ... -->
                      <pb n="5r"/>
                      <damageSpan agent="rubbing" extent="whole leaf" spanTo="#damageEnd"/>
@@ -1765,16 +1685,13 @@ lead to unpredictable results.</p>
                   </p></egXML> Note that in this example the <att>spanTo</att> element points to the
                next <gi>pb</gi> element rather than to an inserted <gi>anchor</gi> element, since
                the whole of the leaf (the text between the two <gi>pb</gi> elements has sustained
-               damage. For other techniques of handling non-nesting information, see chapter <ptr
-                  target="#NH"/>.</p>
+               damage. For other techniques of handling non-nesting information, see chapter <ptr target="#NH"/>.</p>
             <p>If, as is also likely, the damage affects several disjoint parts of the text, each
                such part must be marked with a separate <gi>damage</gi> or <gi>damageSpan</gi>
                element. To indicate that each of these is to be regarded as forming part of the same
                damaged area, the <att>group</att> attribute may be used as in the following example.
                In this (imaginary) text of Fitzgerald's translation from Omar Khayam, water damage
-               has affected an area covering parts of several lines <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><l> The Moving Finger wri<damage
-                        agent="water" group="1">es; and</damage> having writ,</l>
+               has affected an area covering parts of several lines <egXML xmlns="http://www.tei-c.org/ns/Examples"><l> The Moving Finger wri<damage agent="water" group="1">es; and</damage> having writ,</l>
                   <l>Moves <damage agent="water" group="1">on: nor all your</damage> Piety nor
                      Wit</l>
                   <l><damageSpan agent="water" group="1" spanTo="#washOut"/>Shall lure it back to
@@ -1793,27 +1710,19 @@ lead to unpredictable results.</p>
             <p>If the damage has been so severe as to render parts of the text only imperfectly
                legible, the <gi>unclear</gi> element should be used to mark the fact. Returning to
                the Eddic example above, an encoder less confident in the <mentioned>daga</mentioned>
-               reading, may indicate this as follows: <egXML xml:lang="mul"
-                  xmlns="http://www.tei-c.org/ns/Examples">um aldr d<unclear reason="damage"
-                     >aga</unclear> yndisniota</egXML></p>
+               reading, may indicate this as follows: <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">um aldr d<unclear reason="damage">aga</unclear> yndisniota</egXML></p>
             <p>If it is desired to supply more information about the kind of damage, it is also
                possible to nest an <gi>unclear</gi> element within the <gi>damage</gi> element:
-                  <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage
-                     agent="rubbing"><unclear>aga</unclear></damage> yndisniota</egXML></p>
+                  <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">um aldr d<damage agent="rubbing"><unclear>aga</unclear></damage> yndisniota</egXML></p>
             <p>Alternatively, the transcriber may not feel able to read the last three letters of
                   <mentioned>daga</mentioned> but may wish to supply them by conjecture. Note the
                use of the <att>resp</att> attribute to assign the conjecture to Finnur Jónsson:
-                  <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13"
-                  >um aldr d<supplied reason="rubbing" resp="#msm">aga</supplied> yndisniota</egXML>
+                  <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<supplied reason="rubbing" resp="#msm">aga</supplied> yndisniota</egXML>
                The <gi>supplied</gi> element may if desired be enclosed within a <gi>damage</gi>
-               element: <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#PH-eg-13">um aldr d<damage agent="rubbing"><supplied source="#msm"
-                        >aga</supplied></damage> yndisniota</egXML></p>
+               element: <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">um aldr d<damage agent="rubbing"><supplied source="#msm">aga</supplied></damage> yndisniota</egXML></p>
             <p>Contrast the use of <gi>gap</gi> in the next line, where the transcriber believes
-               that four letters cannot be read at all because of the damage: <egXML xml:lang="mul"
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">þar komr inn dimmi
-                  dreki fliugandi naþr frann neþan <gap reason="illegible" agent="rubbing"
-                     quantity="4" unit="letter"/></egXML> As with <gi>supplied</gi>, this
+               that four letters cannot be read at all because of the damage: <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-13">þar komr inn dimmi
+                  dreki fliugandi naþr frann neþan <gap reason="illegible" agent="rubbing" quantity="4" unit="letter"/></egXML> As with <gi>supplied</gi>, this
                   <gi>gap</gi> might be enclosed by a <gi>damage</gi> element.</p>
             <p>Where elements are nested in this way, information about agency, etc. is by default
                inherited. In the following imaginary example, there is a smoke-damaged part within
@@ -1889,21 +1798,17 @@ lead to unpredictable results.</p>
                   <item>if one <gi>add</gi> element (with identifier <ident>ADD1</ident>) contains
                      another (with identifier <ident>ADD2</ident>), then the addition
                         <ident>ADD1</ident> was first made to the text, and later a second addition
-                        (<ident>ADD2</ident>) was made within that added text: <egXML
-                        xmlns="http://www.tei-c.org/ns/Examples">This is the text <add xml:id="ADD1"
-                           >with some added <add xml:id="ADD2">(interlinear!)</add> material</add>
+                        (<ident>ADD2</ident>) was made within that added text: <egXML xmlns="http://www.tei-c.org/ns/Examples">This is the text <add xml:id="ADD1">with some added <add xml:id="ADD2">(interlinear!)</add> material</add>
                         as written.</egXML></item>
                   <item>if one <gi>del</gi> element contains another, and the <att>seq</att>
                      attribute does not indicate otherwise, it should be assumed that the inner
                      deletion was made before the enclosing one. In the following example, the word
                         <mentioned>redundant</mentioned> was deleted before a second second deletion
-                     removed the entire passage: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                           ><del>This sentence contains some <del>redundant</del> unnecessary
+                     removed the entire passage: <egXML xmlns="http://www.tei-c.org/ns/Examples"><del>This sentence contains some <del>redundant</del> unnecessary
                            verbiage.</del></egXML></item>
                   <item>if a <gi>del</gi> element contains an <gi>add</gi> element, the normal
                      interpretation will be that an addition was made within a passage which was
-                     later deleted in its entirety: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                           ><del>This sentence was deleted <add>originally</add> from the
+                     later deleted in its entirety: <egXML xmlns="http://www.tei-c.org/ns/Examples"><del>This sentence was deleted <add>originally</add> from the
                            text.</del></egXML></item>
                   <item>if an <gi>add</gi> element contains a <gi>del</gi> element, the normal
                      interpretation will be that a deletion was made from a passage which had
@@ -1926,10 +1831,10 @@ lead to unpredictable results.</p>
             is missing from the other: this does not necessarily imply that the word was added to
             the first witness, nor that it was deleted from the other. </p>
 
-         <p>In this section we discuss a number of elements which may be used to record traces of
-            the writing process within a document. </p>
+         <p>In this section we discuss a number of elements which may be useful when attempting to
+            record traces of the writing process within a document. </p>
 
-         <div>
+         <div xml:id="PH-mod">
             <head>Generic Modification</head>
 
 
@@ -2005,15 +1910,14 @@ lead to unpredictable results.</p>
                   <head><title>Kundige bok 2</title>, fol 1v. </head>
                </figure>
             </p>
-     
+
 
             <p>In the second paragraph, the word <mentioned xml:lang="lat">lege</mentioned> ("read")
                was written in the left hand margin, next to the sentence beginning <q>Ock en
                   schullen de bruwere...</q>. It is thought to function as a metamark, indicating
                that this sentence forms part of the regulations. A further sentence was then added,
                while at some later stage the text and also the metamark were deleted. We might
-               encode this as follows: <!-- ka04_1v-dtl.xml --><egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+               encode this as follows: <!-- ka04_1v-dtl.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <delSpan spanTo="#endDel" change="#L3"/>
                   <metamark function="flag" target="#zone-1" change="#L2">lege</metamark>
                   <zone xml:id="zone-1" change="#L1">Ock en schullen de bruwere des hilgen dages
@@ -2027,13 +1931,13 @@ lead to unpredictable results.</p>
             </p>
             <p>The <att>change</att> attribute used here to indicate the sequencing of these various
                interventions is discussed below, in section <ptr target="#PH-changes"/>. The
-               elements <gi>addSpan</gi> and <gi>delSpan</gi> are discussed in section <ptr
-                  target="#PHAD"/>. </p>
+               elements <gi>addSpan</gi> and <gi>delSpan</gi> are discussed in section <ptr target="#PHAD"/>. </p>
 
             <p>The <gi>metamark</gi> element may also be used to encode the symbols etc. often found
                in marked-up proofs such as the following, taken from the Walt Whitman archive: <figure>
                   <graphic url="Images/whitman-03.jpg" width="400px"/>
-                  <head>From a corrected proof of <title>Miracles</title> (Walt Whitman Archive)</head>
+                  <head>From a corrected proof of <title>Miracles</title> (Walt Whitman
+                     Archive)</head>
                </figure></p>
             <!-- loc.00295 detail -->
             <p>In this example, the whole of what was originally the 14th section of the poem has
@@ -2047,8 +1951,8 @@ lead to unpredictable results.</p>
             <p>
                <figure>
                   <graphic url="Images/whitman-02.jpg" width="70%"/>
-                  <head>From "I am that halfgrown angry boy" (MS q 25), David M. Rubenstein Rare Book &amp; Manuscript Library, Duke University.
-                  </head>
+                  <head>From "I am that halfgrown angry boy" (MS q 25), David M. Rubenstein Rare
+                     Book &amp; Manuscript Library, Duke University. </head>
                </figure>
             </p>
             <p>This page contains internal deletions, additions, and retracings but these are
@@ -2087,7 +1991,7 @@ has identifier <val>z2</val>. -->
 
          </div>
 
-         <div>
+         <div xml:id="PH-fix">
             <head>Fixation and Clarification</head>
 
             <p>A writer may sometimes rewrite material a second time without significant change and
@@ -2107,10 +2011,9 @@ has identifier <val>z2</val>. -->
                word <mentioned>skuldren</mentioned> hastily, and then returned to it to make the
                letter <mentioned>l</mentioned> larger and clearer: <figure>
                   <graphic url="Images/skuldren.jpg" width="400px"/>
-                  <head rend="it">From autograph ms of <title>Peer Gynt</title>, Collin 2869, 4°, I.1.1, the Royal
-                     Library of Copenhagen</head>
-               </figure> We might transcribe this word as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <head rend="it">From autograph ms of <title>Peer Gynt</title>, Collin 2869, 4°,
+                     I.1.1, the Royal Library of Copenhagen</head>
+               </figure> We might transcribe this word as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <line>... Sku<retrace cause="unclear">l</retrace>dren </line>
                </egXML>
             </p>
@@ -2120,14 +2023,14 @@ has identifier <val>z2</val>. -->
                can distinguish at least three attempts to write the letters
                   <mentioned>er</mentioned> in the word <mentioned>bægerklang</mentioned>: <figure>
                   <graphic url="Images/munch01.jpg" width="400px"/>
-                  <head rend="it">From a ms in the Edvard Munch archive </head><!-- but we dont know which -->
+                  <head rend="it">From a ms in the Edvard Munch archive </head>
+                  <!-- but we dont know which -->
                </figure> We might encode this by nesting the <gi>retrace</gi> element as follows:
                   <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <line>ved Bæg<retrace cause="unclear" change="#stage2">
                         <retrace cause="unclear" change="#stage1">er</retrace>
                      </retrace> ...</line>
-               </egXML> The <att>change</att> attribute used here is discussed further below (<ptr
-                  target="#PH-changes"/>). </p>
+               </egXML> The <att>change</att> attribute used here is discussed further below (<ptr target="#PH-changes"/>). </p>
 
             <p>The <gi>retrace</gi> element is used only for cases where text has been written
                multiple times. When metamarks and other markup-like strokes have been rewritten
@@ -2136,11 +2039,11 @@ has identifier <val>z2</val>. -->
          </div>
 
          <div xml:id="undo">
-            <head>Fixation, Cancellation, and Reinstatement of Modifications</head>
+            <head>Confirmation, Cancellation, and Reinstatement of Modifications</head>
 
             <p>In a draft version of Goethe’s Faust, a passage was struck through once in pencil
                during one revision and then again with ink during a later revision, supposedly to
-               fixate the deletion. <figure>
+               confirm the deletion. <figure>
                   <graphic url="Images/faust_redo.jpg" width="90%"/>
                   <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
                </figure> A writer may also indicate that an alteration is itself to be altered: for
@@ -2156,8 +2059,7 @@ has identifier <val>z2</val>. -->
             <p>The <gi>redo</gi> element might be used to encode the Faust example above as
                follows:</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
-               <line><redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"/><mod
-                     xml:id="mod_1" rend="strikethrough" spanTo="#anchor_1" hand="#g_bl"/>Ihr
+               <line><redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"/><mod xml:id="mod_1" rend="strikethrough" spanTo="#anchor_1" hand="#g_bl"/>Ihr
                   hagren, triſten, krummgezog<mod rend="strikethrough">nen</mod>ener Nacken</line>
                <line>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_1"/></line>
             </egXML>
@@ -2177,7 +2079,7 @@ has identifier <val>z2</val>. -->
 
             <p>Consider the following imaginary example : <figure>
                   <graphic url="Images/undoing1.jpg" width="80%"/>
-               <head>Imaginary example demonstrating restoring and undoing</head>
+                  <head>Imaginary example demonstrating restoring and undoing</head>
                </figure> We hypothesize that the text has gone through three states or changes, as
                follows: <list type="ordered">
                   <item>This is just some sample text, we need a real example. </item>
@@ -2186,12 +2088,9 @@ has identifier <val>z2</val>. -->
                </list>
             </p>
 
-            <p>This sequence of events might be encoded as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+            <p>This sequence of events might be encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <line>This is <del change="#s2" rend="overstrike">
-                        <undo spanTo="#Xa" rend="dotted" change="#s3"/>just some <anchor xml:id="Xa"
-                        /> sample <undo spanTo="#Xb" rend="dotted" change="#s3"/>text, <anchor
-                           xml:id="Xb"/> we need</del>
+                        <undo spanTo="#Xa" rend="dotted" change="#s3"/>just some <anchor xml:id="Xa"/> sample <undo spanTo="#Xb" rend="dotted" change="#s3"/>text, <anchor xml:id="Xb"/> we need</del>
                      <add change="#s2">not</add> a real example.</line>
                </egXML> using two <gi>undo</gi> elements, each with a <att>spanTo</att> attribute,
                to delimit the two parts of the deletion which were reverted at change s3. Note that
@@ -2200,8 +2099,7 @@ has identifier <val>z2</val>. -->
 
             <p>Alternatively, we might more economically use the generic <gi>seg</gi> element within
                the <gi>line</gi> to delimit the two sequences whose deletion is being reverted, and
-               then use the <att>target</att> attribute on a single <gi>undo</gi> element: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples">
+               then use the <att>target</att> attribute on a single <gi>undo</gi> element: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                   <line>This is <del change="#s2" rend="overstrike">
                         <seg xml:id="X-a">just some</seg> sample <seg xml:id="X-b">text</seg>, we
                         need</del>
@@ -2232,10 +2130,7 @@ individual tokens. Or one from a real doc -->
                   <mentioned>bör</mentioned> precedes the word <mentioned>hör</mentioned> in the
                text, the order of the two words should be reversed. We may encode this as follows:
                   <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <line><seg xml:id="ib01">bör</seg><metamark rend="underline"
-                        function="transposition" target="#ib01" place="above">2.</metamark> og <seg
-                        xml:id="ib02">hör</seg><metamark rend="underline" function="transposition"
-                        target="#ib02" place="above">1.</metamark></line>
+                  <line><seg xml:id="ib01">bör</seg><metamark rend="underline" function="transposition" target="#ib01" place="above">2.</metamark> og <seg xml:id="ib02">hör</seg><metamark rend="underline" function="transposition" target="#ib02" place="above">1.</metamark></line>
                   <listTranspose>
                      <transpose>
                         <ptr target="#ib02"/>
@@ -2252,8 +2147,7 @@ individual tokens. Or one from a real doc -->
                   <head>Extract from ms in the Edvard Munch archive</head>
                </figure>
                <!-- ibsen04.xml --><egXML xmlns="http://www.tei-c.org/ns/Examples">
-                  <line xml:id="ib3"><metamark function="transposition" place="margin-left"
-                        >2.)</metamark> thi da er du med Himmelen i Pagt; — </line>
+                  <line xml:id="ib3"><metamark function="transposition" place="margin-left">2.)</metamark> thi da er du med Himmelen i Pagt; — </line>
                   <line xml:id="ib4">
                      <metamark function="transposition" place="margin-left">1.)</metamark> da kan du
                      Folkets Jøkelhjerter tine;</line>
@@ -2292,8 +2186,7 @@ kind of markup, the generic <gi>milestone</gi> can be used instead of
                in fact, in the first printed edition of <title>Lalla Rookh</title> the word
                   <mentioned>beside</mentioned> was chosen. </p>
             <p>The element <gi>alt</gi> provided by the <ident type="module">linking</ident> module
-               gives a simple way of encoding the state of this manuscript, as follows: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-09">
+               gives a simple way of encoding the state of this manuscript, as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-09">
                   <zone>
                      <line>Alone <seg xml:id="alt1">before</seg>
                         <add place="above" xml:id="alt2">beside</add> his native river ­—</line>
@@ -2351,8 +2244,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
                   <graphic url="Images/whitman03a.jpg" width="70%"/>
                   <head>Detail fron <title>[I am a curse]</title>, one of the drafts for Whitman's
                         <title>Song of Myself</title></head>
-               </figure> in which we can detect the following sequence of events: <list
-                  type="ordered">
+               </figure> in which we can detect the following sequence of events: <list type="ordered">
                   <item>The letter <val>T</val> is written and then immediately deleted</item>
                   <item>The word <val>The</val> is written, deleted, and replaced by the word
                         <val>His</val></item>
@@ -2361,8 +2253,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
                         necklace</mentioned> is overwritten with a capital I</item>
                </list> To indicate that the first of these acts must have taken place during the
                main act of writing, before the other deletion and additions, we might encode this
-               revision campaign as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#WHITMS1">
+               revision campaign as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#WHITMS1">
                   <line><del instant="true">T</del>
                      <mod type="subst">
                         <del>The</del>
@@ -2399,8 +2290,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
             <att>ury</att> when given on the <gi>surface</gi> element define the co-ordinate scheme,
          rather than specifying the location of that surface; we must therefore introduce an
          additional <gi>zone</gi> element, as in the following revised encoding for the example
-         given in section <ptr target="#PHZLAB"/> above: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+         given in section <ptr target="#PHZLAB"/> above: <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <surface ulx="0" uly="0" lrx="50" lry="50">
                <zone ulx="1" uly="1" lrx="10" lry="10">
                   <line>Poem</line>
@@ -2426,8 +2316,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
       <p>Now suppose that we wish to define a finer scale grid for the newspaper patch, perhaps
          because we wish to localize zones within it with greater accuracy. To do this we will need
          to specify the position of the nested surface as in the previous example, but also to
-         define the new coordinate system. We accomplish this as follows: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+         define the new coordinate system. We accomplish this as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <surface ulx="0" uly="0" lrx="50" lry="50">
                <zone ulx="1" uly="1" lrx="10" lry="10">
                   <line>Poem</line>
@@ -2459,10 +2348,8 @@ xmlns="http://www.tei-c.org/ns/Examples">
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <surface ulx="229" uly="160" lrx="0" lry="0">
             <graphic url="whitman-02.jpg"/>
-            <zone xml:id="entered"
-               points="142.625,122.19 155.024,113.736 178.133,122.754
-	 208.569,144.172 198.988,154.881 178.133,139.663"
-            />
+            <zone xml:id="entered" points="142.625,122.19 155.024,113.736 178.133,122.754
+	 208.569,144.172 198.988,154.881 178.133,139.663"/>
          </surface>
       </egXML>
 
@@ -2470,15 +2357,12 @@ xmlns="http://www.tei-c.org/ns/Examples">
          containing the word <mentioned>Northamptonshire</mentioned>: <figure>
             <graphic url="Images/mould-stone.jpg"/>
             <head>Gravestone of Private Mould in the Protestant Cemetery in Rome</head>
-         </figure> This curved zone might be encoded in the following way: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+         </figure> This curved zone might be encoded in the following way: <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <surface xml:id="badge" ulx="14.54" uly="16.14" lrx="0" lry="0">
                <graphic url="stone.jpg"/>
-               <zone xml:id="county"
-                  points="4.6,6.3 5.25,5.85 6.2,6.6
+               <zone xml:id="county" points="4.6,6.3 5.25,5.85 6.2,6.6
   8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125
-  8.21722,8.3125 6.2,7.65"
-               />
+  8.21722,8.3125 6.2,7.65"/>
             </surface>
          </egXML>
       </p>
@@ -2489,8 +2373,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
          written part of the This written part appears 50 units from the left of the image and 20
          units from the top, while the bottom right corner of the written part appears 400 units
          from the left of the image, and 280 units from the top. We therefore define the written
-         surface within this image as follows: <egXML xml:lang="und"
-            xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+         surface within this image as follows: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
                <surface ulx="50" uly="20" lrx="400" lry="280">
                   <!-- ... -->
                </surface>
@@ -2498,13 +2381,10 @@ xmlns="http://www.tei-c.org/ns/Examples">
          interest which represents an area larger than this surface. Using the same coordinate
          system as that defined for the surface, its coordinates are <val>0,0,500,321</val>. This
          zone of interest can be defined by a <gi>zone</gi> element, within which we can place the
-         uncropped <gi>graphic</gi>: 
-         <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
+         uncropped <gi>graphic</gi>: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
                <surface ulx="50" uly="20" lrx="400" lry="280">
                   <zone ulx="0" uly="0" lrx="500" lry="321">
-                     <graphic
-                        url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"
-                     />
+                     <graphic url="http://upload.wikimedia.org/wikipedia/commons/5/50/Handschrift.karlsruhe.blb.jpg"/>
                   </zone></surface>
             </facsimile></egXML>
       </p>
@@ -2514,8 +2394,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
       <head>Aspects of Layout</head>
       <p>Finally in this chapter we present elements which may be used to capture aspects of the
          layout of material on a page where this is considered important. Methods for recording page
-         breaks, column breaks, and line breaks in the source are described in section <ptr
-            target="#CORS"/>. A similar method is provided by this module for the markup of quire or
+         breaks, column breaks, and line breaks in the source are described in section <ptr target="#CORS"/>. A similar method is provided by this module for the markup of quire or
          gathering boundaries, using the element <gi>gb</gi>. <specList>
             <specDesc key="gb"/>
          </specList> More detailed information about the physical make-up of a source will usually
@@ -2539,8 +2418,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
                <mentioned>preestes</mentioned>: <egXML xmlns="http://www.tei-c.org/ns/Examples">By
                god if wommen had writen storyes As <space quantity="7" unit="char"/> han within her
                oratoryes</egXML> The <gi>supplied</gi> element discussed in the previous section may
-            be used to supply the text presumed missing: <egXML
-               xmlns="http://www.tei-c.org/ns/Examples">By god if wommen had writen storyes As
+            be used to supply the text presumed missing: <egXML xmlns="http://www.tei-c.org/ns/Examples">By god if wommen had writen storyes As
                   <supplied reason="space" resp="#ETD" source="#Hg">preestes</supplied> han within
                her oratoryes</egXML> Here, the fact of the space within the manuscript is indicated
             by the value of the <att>reason</att> attribute. The source of the supplied text is
@@ -2549,36 +2427,33 @@ xmlns="http://www.tei-c.org/ns/Examples">
       </div>
       <div type="div3" xml:id="PHLN">
          <head>Lines</head>
-         <p>The most common form of marking of text in manuscripts is by lines written under,
-            beside, or through the text. The lines themselves may be of various types: they may be
-            solid, dashed or dotted, doubled or tripled, wavy or straight, or a combination of these
-            and other renderings. The line may be used for emphasis, or to mark a foreign or
-            technical term, or to signal a quotation or a title, etc.: the elements <gi>emph</gi>,
-               <gi>foreign</gi>, <gi>term</gi>, <gi>mentioned</gi>, <gi>title</gi> may be used for
-            these. Frequently, a scholar may judge that a line is used to delete text: the
-               <gi>del</gi> element is available to indicate this. In all these cases, the
-               <att>rend</att> attribute may be used on these or other elements to indicate that the
-            text is marked by a line and the style of the line. Thus, Lawrence's deletion by
+         <p>One of the more common forms of modification encountered in written documents of any
+            kind is the presence of lines written under, beside, or through the text. Such lines may
+            be of various types: they may be solid, dashed or dotted, doubled or tripled, wavy or
+            straight, or a combination of these and other renderings. The line may be used for
+            emphasis, or to mark a foreign or technical term, or to signal a quotation or a title,
+            etc.: the elements <gi>emph</gi>, <gi>foreign</gi>, <gi>term</gi>, <gi>mentioned</gi>,
+               <gi>title</gi> may be used for these. Where the line has a clear paratextual function
+            the <gi>metamark</gi> element may be considered more appropriate. Frequently, a scholar
+            may judge that a line is used to delete text: the <gi>del</gi> element is available to
+            indicate this. In all these cases, the <att>rend</att> attribute may be used to supply
+            further details concerning the style of the line. Thus, Lawrence's deletion by
             strike-through of <mentioned>my</mentioned> in the autograph of <title>Eloi, Eloi, lama
-               sabachthani</title> is noted: <egXML xmlns="http://www.tei-c.org/ns/Examples">For I
-               hate this <del rend="strikethrough" hand="#dhl">my</del> body, which is so dear to
-               me</egXML></p>
+               sabachthani</title> may be encoded : <egXML xmlns="http://www.tei-c.org/ns/Examples">For I hate this <del rend="strikethrough" hand="#dhl">my</del> body, which is so
+               dear to me</egXML></p>
          <p>There will be instances, however, where a scholar wishes only to register the occurrence
             of lines in the text, without making any judgement as to what the lines signify. In
             these the <gi>hi</gi> element may be used, with the <att>rend</att> attribute to mark
             the style of line. In the manuscript of a letter by Robert Browning to George
             Moulton-Barrett the underlining of the phrase <mentioned>had obtained all the letters to
-               Mr Boyd</mentioned> may be marked-up as follows: <egXML
-               xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-15">I have once — by
-               declaring I would prosecute by law — hindered a man's proceedings who <hi
-                  rend="underline">had obtained all the letters to Mr Boyd</hi></egXML></p>
+               Mr Boyd</mentioned> may be marked-up as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-15">I have once — by
+               declaring I would prosecute by law — hindered a man's proceedings who <hi rend="underline">had obtained all the letters to Mr Boyd</hi></egXML></p>
          <p>The above examples presume the common case where a single word or phrase is marked by a
             line, with no doubt as to where the marking begins or ends and with no overlapping of
             the area of text with other marked areas of text. Where there is doubt, the
                <gi>certainty</gi> element may be used to record the doubt. In the Browning example
             cited above the underlining actually begins half-way under <mentioned>who</mentioned>,
-            and this uncertainty could be remarked as follows: <egXML
-               xmlns="http://www.tei-c.org/ns/Examples">I have once — by declaring I would prosecute
+            and this uncertainty could be remarked as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">I have once — by declaring I would prosecute
                by law — hindered a man's proceedings who <hi xml:id="cstart1" rend="underline">had
                   obtained all the letters to Mr Boyd</hi>
                <!-- ... -->
@@ -2600,18 +2475,18 @@ xmlns="http://www.tei-c.org/ns/Examples">
             on which there is some annotation: in many manuscripts of Chaucer's <title>Wife of
                Bath's Prologue</title> lines 655–8 are marked with nesting parentheses against which
             the scribe has written <mentioned>nota</mentioned>.</p>
-         <p>At the lowest level, all such features could be captured by use of the <gi>note</gi>
-            element, containing a prose description of the manuscript at this point, enhanced by a
-            link to a visual representation (or facsimile) of the feature in question. It is not yet
-            clear how best to mark up such phenomena so as to obtain more usefully structured
-            encodings. For example, in the Chaucer example just cited, one may wish to record that
-            the <mentioned>nota</mentioned> is written in the Hengwrt manuscript in the right margin
-            against a single large left parenthesis bracketing the four lines, with two right
-            parentheses in the right margin bracketing two overlapping pairs of lines: the first and
-            third, the second and fourth. The <gi>note</gi> element allows us to record that the
-            scribe wrote <mentioned>nota</mentioned>, but is not well-adapted to show that the
+         <p>Such features could be captured by use of the <gi>note</gi> element, containing a prose
+            description of the manuscript at this point, enhanced by a link to a visual
+            representation (or facsimile) of the feature in question. For example, in the Chaucer
+            example just cited, one may wish to record that the <mentioned>nota</mentioned> is
+            written in the Hengwrt manuscript in the right margin against a single large left
+            parenthesis bracketing the four lines, with two right parentheses in the right margin
+            bracketing two overlapping pairs of lines: the first and third, the second and fourth.
+            The <gi>note</gi> element allows us to record that the scribe wrote
+               <mentioned>nota</mentioned>, but is not well-adapted to show that the
                <mentioned>nota</mentioned> points both at all four lines and at two pairs of lines
-            within the four lines. </p>
+            within the four lines. The <gi>metamark</gi> element discussed in section <ptr target="#PH-meta"/> above provides better facilities for this kind of complex
+            annotation. </p>
       </div>
    </div>
    <div type="div2" xml:id="PHSK">
@@ -2645,8 +2520,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
          </list> It should not be used for marginal glosses, annotations, or textual variants, which
          should be tagged using <gi>gloss</gi>, <gi>note</gi>, or the text-critical tags described
          in chapter <ptr target="#TC"/>, respectively.</p>
-      <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><fw type="head"
-               place="top-centre">Poëms.</fw>
+      <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><fw type="head" place="top-centre">Poëms.</fw>
             <fw type="pageNum" place="top-right">29</fw>
             <fw type="sig" place="bot-centre">E3</fw>
             <fw type="catch" place="bot-right">TEMPLE</fw></egXML>
@@ -2817,8 +2691,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
                      </retrace>
                   </add>
                </subst> wanſtige Schuften mit den Feuerbacken</l>
-            <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst
-                  change="#secondStage
+            <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst change="#secondStage
          #thirdStage">
                   <del>ſatt</del>
                   <add>feiſt</add>
@@ -2851,13 +2724,10 @@ xmlns="http://www.tei-c.org/ns/Examples">
             <creation>
                <listChange ordered="true">
                   <change target="#zone_1 #subst_3">First stage, written in ink by a scribe</change>
-                  <change
-                     target="#zone_2 #mod_1 #line_1 #line_2 #subst_1 #subst_2
-#subst_4 #delSpan_1"
-                     >Revised by Goethe using pencil</change>
+                  <change target="#zone_2 #mod_1 #line_1 #line_2 #subst_1 #subst_2
+#subst_4 #delSpan_1">Revised by Goethe using pencil</change>
                   <change target="#redo_1 #redo_2 #redo_3 #subst_1 #subst_2
-#delSpan_1 #add_1"
-                     >Fixation of the revised passages and further revisions by Goethe using
+#delSpan_1 #add_1">Fixation of the revised passages and further revisions by Goethe using
                      ink</change>
                </listChange>
             </creation>
@@ -2917,15 +2787,13 @@ xmlns="http://www.tei-c.org/ns/Examples">
          witnesses: the materials of the carrier, the medium of the inscribing implement, the
          organisation of the carrier materials themselves (as quiring, collation, etc.), authorial
          instructions or scribal markup, etc., except insofaras these are involved in the broader
-         question of manuscript description, as addressed by the <ident type="module"
-            >msdescription</ident> module described in chapter <ptr target="#MS"/>. </p>
+         question of manuscript description, as addressed by the <ident type="module">msdescription</ident> module described in chapter <ptr target="#MS"/>. </p>
    </div>
 
    <div>
       <head>Module for Transcription of Primary Sources</head>
 
-      <p>The module described in this chapter makes available the following components: <moduleSpec
-            xml:id="DPH" ident="transcr">
+      <p>The module described in this chapter makes available the following components: <moduleSpec xml:id="DPH" ident="transcr">
             <altIdent type="FPI">Transcription of Primary Sources</altIdent>
             <desc>Transcription of primary sources</desc>
             <desc xml:lang="zh-tw">原文轉錄</desc>
@@ -2934,8 +2802,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
             <desc xml:lang="pt">Transcrição de fontes primárias</desc>
             <desc xml:lang="ja">転記モジュール</desc>
          </moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
-         The selection and combination of modules to form a TEI schema is described in <ptr
-            target="#STIN"/>. </p>
+         The selection and combination of modules to form a TEI schema is described in <ptr target="#STIN"/>. </p>
       <specGrp xml:id="DTCHD"> &addSpan; &damage; &damageSpan; &delSpan; &ex; &fw; &gb; &handNotes;
          &handShift; &am; &restore; &space; &subst; &substJoin; &supplied; &surplus; &line;
          &listChange; &listTranspose; &metamark; &mod; <!--&patch;--> &redo; &retrace; &transpose;
