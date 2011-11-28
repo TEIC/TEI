@@ -1673,17 +1673,26 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element space</desc>
   </doc>
   <xsl:template match="tei:space">
-    <xsl:choose>
-      <xsl:when test="@quantity|@extent">
-        <xsl:call-template name="space_loop">
-          <xsl:with-param name="extent" select="@quantity|@extent"/>
-        </xsl:call-template>
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>&#160;</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
+    <span style="inline-block">
+      <xsl:if test="@extent">
+	<xsl:variable name="unit">
+	  <xsl:choose>
+	    <xsl:when test="@unit='chars'">
+	      <xsl:text>em</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="@unit">
+	      <xsl:value-of select="@unit"/>
+	    </xsl:when>
+	    <xsl:otherwise>em</xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
+	<xsl:attribute name="width">
+	  <xsl:value-of select="@extent"/>
+	  <xsl:value-of select="$unit"/>
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:text>&#160;</xsl:text>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element term</desc>
@@ -2253,25 +2262,6 @@ of this software, even if advised of the possibility of such damage.
             </xsl:call-template>
           </xsl:otherwise>
         </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] <param name="extent">extent</param>
-      </desc>
-  </doc>
-  <xsl:template name="space_loop">
-    <xsl:param name="extent"/>
-    <xsl:choose>
-      <xsl:when test="$extent &lt; 1"> </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>&#160;</xsl:text>
-        <xsl:variable name="newextent">
-          <xsl:value-of select="$extent - 1"/>
-        </xsl:variable>
-        <xsl:call-template name="space_loop">
-          <xsl:with-param name="extent" select="$newextent"/>
-        </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
