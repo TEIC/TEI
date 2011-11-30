@@ -286,7 +286,7 @@ which may be marked in their own right.  In some styles of markup,
 tags will be applied only to the low-level items, leaving the
 constituent groups which contain them untagged. We distinguish the
 class of <term>top-level constituents</term> of dictionary entries,
-which can occur directly within entries, from the class of
+which can occur directly within the <gi>entry</gi> element, from the class of
 <term>phrase-level</term> constituents, which can normally occur only
 within top-level constituents. The top-level constituents of
 dictionary entries are described in section <ptr target="#DIENGP"/>,
@@ -314,7 +314,11 @@ element marks the subdivision of entries into homographs differing in
 their part-of-speech. The <gi>sense</gi> element marks the subdivision
 of entries and part-of-speech homographs into senses; this element
 nests recursively in order to provide for a hierarchy of sub-senses of
-any depth.  All of these levels may each contain any of the
+any depth.  It is recommended to use the <gi>sense</gi> element even 
+for an entry that has only one sense to group together all parts of 
+the definition relating to the word sense since this leads to more 
+consistent encoding across entries. 
+All of these levels may each contain any of the
 constituent parts of an entry. A special case of hierarchical
 structure is represented by the <gi>re</gi> (related entry) element,
 which is discussed in section <ptr target="#DITPRE"/>. Finally, the
@@ -493,8 +497,8 @@ homograph, or only to a particular sense. The examples below illustrate this poi
 <specDesc key="note"/>
 </specList>
 </p>
-<p>In a simple entry with no internal hierarchy, all top-level constituents appear at
-the <gi>entry</gi> level.<!--
+<p>In a simple entry with no internal hierarchy, all top-level constituents can appear 
+as children of <gi>entry</gi>.<!--
 <note place="bottom"> Each example taken from a real
 dictionary indicates its source using the following abbreviations for dictionary
 names:<list type="gloss">
@@ -560,7 +564,7 @@ G. &amp; C. Merriam Co., 1975). </item>
 </entry>
 </egXML> 
 For the elements which appear within the <gi>form</gi> and <gi>gramGrp</gi>
-elements of this and other  examples, see below, section <ptr target="#DITPFO"/>, and section<ptr target="#DITPGR"/>. </p>
+elements of this and other  examples, see below, section <ptr target="#DITPFO"/>, and section <ptr target="#DITPGR"/>. </p>
 <p>Any top-level constituent can appear at any level when the
 hierarchical structure of the entry is more complex. The most obvious examples are
 <gi>def</gi> and <gi>cit</gi>, which appear at the <gi>sense</gi> level when
@@ -586,6 +590,9 @@ act of disproving. <ref target="#DIC-CED">CED</ref> </q>
 </entry>
 </egXML>
 </p>
+<p>For ease of processing of such entries containing multiple senses along with those containing 
+only a single sense, it is recommended to use <gi>sense</gi> in all entries to wrap those elements 
+relating to a particular word sense.</p>
 <p>In the following example, <gi>gramGrp</gi> is used to distinguish two homographs:<q rend="display">
 <hi rend="bold">bray</hi>
 <code lang="ipa">/breI/</code> n cry of an ass; sound of a trumpet. ∙ vt [VP2A]
@@ -600,14 +607,18 @@ make a cry or sound of this kind. <ref target="#DIC-OALD">OALD</ref> </q>
 <gramGrp>
 <pos>n</pos>
 </gramGrp>
+<sense>
 <def>cry of an ass; sound of a trumpet.</def>
+</sense>
 </hom>
 <hom>
 <gramGrp>
 <pos>vt</pos>
 <subc>VP2A</subc>
 </gramGrp>
+<sense>
 <def>make a cry or sound of this kind.</def>
+</sense>
 </hom>
 </entry>
 </egXML>
@@ -704,8 +715,10 @@ feelings and actions are uncontrolled; freedom from control...<ref target="#DIC-
 <pos>n</pos>
 <subc>U</subc>
 </gramGrp>
+<sense>
 <def>the state when one's feelings and actions are uncontrolled; freedom
 from control…</def>
+</sense>
 </entry>
 </superEntry>
 </egXML>
@@ -1420,6 +1433,7 @@ further information for the user of the dictionary.<q rend="display">
 Algeria</hi>). <ref target="#DIC-CR">CR</ref> </q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <entry>
+<!-- ... -->
 <cit type="translation" xml:lang="en">
 <quote>OAS</quote>
 <def>illegal military organization supporting French rule of
@@ -1440,10 +1454,13 @@ spices. [literally: separation] <ref target="#DIC-CED">CED</ref> </q>
 <form>
 <orth>havdalah</orth>
 <orth>havdoloh</orth>
+<gram type="pos">n.</gram>
 </form>
+<sense>
 <usg type="dom">Judaism</usg>
 <def>the ceremony marking the end of the sabbath or of a festival,
 including the blessings over wine, candles and spices.</def>
+</sense>
 <cit type="translation" xml:lang="en">
 <note>literally</note>
 <quote>separation</quote>
@@ -1494,6 +1511,7 @@ profundidad. … </q>
 <mentioned>a</mentioned> priv. y <mentioned>byssos</mentioned>,
 <gloss>fondo</gloss>
 </etym>
+<!-- ... -->
 </entry>
 </egXML>
 <q rend="display">
@@ -1503,6 +1521,7 @@ breath — more at <hi rend="bold">pneumatic</hi>]: any of various symbols used 
 the notation of Gregorian chant … [WNC]</q>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <entry>
+<!-- ... -->
 <etym>
 <lang>F</lang> fr. <lang>ML</lang>
 <mentioned>pneuma</mentioned>
@@ -1512,7 +1531,9 @@ the notation of Gregorian chant … [WNC]</q>
 <xr type="etym">more at <ptr target="#pneumatic"/>
 </xr>
 </etym>
-<def>any of various symbols … </def>
+<sense>
+<def>any of various symbols used in the notation of Gregorian chant <!-- ... --> </def>
+</sense>
 </entry>
 <!-- ... -->
 <entry xml:id="pneumatic">
@@ -1580,6 +1601,7 @@ horrifiée par la dépense</hi> she was horrified at the expense. <ref target="#
 <!-- <trans> in an example -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
 <entry>
+<!-- ... -->
 <cit type="translation" xml:lang="en">
 <quote>to horrify</quote>
 </cit>
