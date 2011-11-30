@@ -1,9 +1,22 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: conversions-from conversions-to test-html test-latex oddbyexample odd2odd
+default: conversions-from conversions-to test-html test-latex test-fo oddbyexample odd2odd
 
 test-html:
+	saxon -o:test.html  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	saxon -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	saxon -o:test4.html -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test4.html test3.html
+	diff test.html expected-results/test.html
+	../teitohtml5 test.xml test.html5
+	perl -p -i -e 's/on 20.*Z--/--/' test.html5
+	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
+	diff test.html5 expected-results/test.html5
+	echo differences:
+	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
+	diff test5.xhtml expected-results/test5.xhtml
+	jing -c xhtml.rnc test5.xhtml
 	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
 	diff -r -x .svn files expected-results/testnotes
 	rm -rf files
@@ -13,15 +26,6 @@ test-html:
 	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false)
 	diff -r -x .svn files expected-results/testnotes2
 	rm -rf files
-	saxon -o:dummy  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	saxon -o:dummy -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	saxon -o:dummy4 -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	echo differences:
-	diff dummy dummy4
-	diff dummy expected-results/dummy
-	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
-	diff test5.xhtml expected-results/test5.xhtml
-	jing -c xhtml.rnc test5.xhtml
 
 testsplit:
 	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
@@ -32,6 +36,8 @@ test-latex:
 	diff test6.tex expected-results/test6.tex
 	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
 	diff test5.tex expected-results/test5.tex
+
+test-fo:
 	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
 	diff test5.fo expected-results/test5.fo
 
@@ -54,10 +60,6 @@ oddbyexample:
 conversions-from:
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf expected-results/test12.rdf
-	../teitohtml5 test.xml test.html5
-	perl -p -i -e 's/on 20.*Z--/--/' test.html5
-	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
-	diff test.html5 expected-results/test.html5
 	../teitohtml --profile=tei --odd test15.odd test.odd.html
 	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
@@ -89,10 +91,10 @@ conversions-from:
 	unzip -t test.xml.docx > test.xml.docx.listing
 	diff test.xml.docx.listing expected-results/test.xml.docx.listing
 	rm test.xml.docx.listing
-	../teitoodt test10.xml 
-	unzip -t test10.xml.odt > test10.xml.odt.listing
-	diff test10.xml.odt.listing expected-results/test10.xml.odt.listing
-	rm test10.xml.odt.listing
+	../teitoodt test.xml 
+	unzip -t test.xml.odt > test.xml.odt.listing
+	diff test.xml.odt.listing expected-results/test.xml.odt.listing
+	rm test.xml.odt.listing
 	test -d $(OXY) || exit 1
 	java -Xmx256m \
 	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
@@ -123,19 +125,19 @@ conversions-to:
 	rm test.rng test.rnc
 
 clean:
-	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy*
+	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html
 	rm -f  oddbyexample.* xml.xsd index*div*html
 	rm -f  test.tex test.xml.odt test.xml.docx test.epub
 	rm -f  test8.pdf
 	rm -f  test8.log
 	rm -f  test5.odt
-	rm -f  test10.xml.odt
 	rm -f  test8.aux
 	rm -f  test7.xml test11.xml
 	rm -f  test8.tex
 	rm -f  test7.zip
 	rm -f  test8.doc
 	rm -f  test8.out
+	rm -r test12.rdf
 	rm -f  test9.docx test9.odt
 	rm -f  test*listing*
 	rm -f test*epub test*text
