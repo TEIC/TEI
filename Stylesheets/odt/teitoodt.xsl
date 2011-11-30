@@ -1036,7 +1036,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates/>
       </xsl:variable>
       <xsl:for-each-group select="$cellContents/node()"			  
-			  group-adjacent="if (self::text:span or self::text() or self::text:a)
+			  group-adjacent="if (self::draw:frame or self::text:span or self::text() or self::text:a)
 					  then 1
 					  else 2">      
       <xsl:choose>

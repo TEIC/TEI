@@ -305,6 +305,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="starts-with(@rend,'color')">\textcolor</xsl:when>
             <xsl:when test="@rend='bold'">\textbf</xsl:when>
             <xsl:when test="@rend='calligraphic'">\textcal</xsl:when>
+            <xsl:when test="@rend='capsall'">\uppercase</xsl:when>
             <xsl:when test="@rend='center'">\centerline</xsl:when>
             <xsl:when test="@rend='code'">\texttt</xsl:when>
             <xsl:when test="@rend='expanded'">\textsc</xsl:when>
@@ -330,6 +331,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="@rend='subscript'">\textsubscript</xsl:when>
             <xsl:when test="@rend='sup'">\textsuperscript</xsl:when>
             <xsl:when test="@rend='superscript'">\textsuperscript</xsl:when>
+            <xsl:when test="@rend='typewriter'">\texttt</xsl:when>
             <xsl:when test="@rend='ul'">\uline</xsl:when>
             <xsl:when test="@rend='underwavyline'">\uwave</xsl:when>
             <xsl:when test="@rend='underdoubleline'">\uuline</xsl:when>

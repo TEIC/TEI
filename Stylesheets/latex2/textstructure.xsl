@@ -363,8 +363,9 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:titlePage">
   \begin{titlepage}
-<xsl:apply-templates/>
+  <xsl:apply-templates select="tei:docTitle|tei:docAuthor"/>
   \maketitle
+  <xsl:apply-templates select="*[not(self::tei:docTitle) and not(self::tei:docAuthor)]"/>
   \end{titlepage}
   \cleardoublepage
 </xsl:template>

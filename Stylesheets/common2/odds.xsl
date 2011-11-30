@@ -44,6 +44,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="makeDescription">
     <xsl:param name="includeValList">false</xsl:param>
+    <xsl:param name="checkXref">false</xsl:param>
     <xsl:param name="coded">true</xsl:param>
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
