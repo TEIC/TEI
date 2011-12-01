@@ -8,7 +8,7 @@ $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="state">
   <gloss version="2009-03-19" xml:lang="fr">statut</gloss>
-  <desc>contains a description of some status or quality attributed to a person, place, or organization at some specific time.</desc>
+  <desc>contains a description of some status or quality attributed to a person, place, or organization often at some specific time or for a specific date range.</desc>
   <desc version="2009-03-19" xml:lang="fr">contient la description d'un statut ou d'une qualité actuels attribués à une personne, un lieu ou une
         organisation.</desc>
   <desc version="2007-12-20" xml:lang="kr">개인, 장소, 또는 조직에 관련한 현재 지위 또는 특성 기술을 포함한다.</desc>
@@ -66,13 +66,47 @@ $Id$
       </person>
     </egXML>
   </exemplum>
-  <exemplum version="2008-04-06" xml:lang="fr">
+  
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <org>
+    <orgName notAfter="1960">The Silver Beetles</orgName>
+    <orgName notBefore="1960">The Beatles</orgName>
+    <state type="membership" from="1960-08" to="1962-05">
+      <desc>
+        <persName>John Lennon</persName>
+        <persName>Paul McCartney</persName>
+        <persName>George Harrison</persName>
+        <persName>Stuart Sutcliffe</persName>
+        <persName>Pete Best</persName>
+      </desc>
+    </state>
+    <state type="membership" notBefore="1963">
+      <desc>
+        <persName>John Lennon</persName>
+        <persName>Paul McCartney</persName>
+        <persName>George Harrison</persName>
+        <persName>Ringo Starr</persName>
+      </desc>
+    </state>
+  </org>
+    </egXML>
+    </exemplum>
+      <exemplum version="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <person>
         <state ref="#fr_SCHOL" type="status">
           <label>étudiant</label>
         </state>
       </person>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <trait cert="high" type="social" from="1987-01-01" to="1997-12-31">
+        <label>Citoyenneté</label>
+        <desc>Entre 1987 et 1997a bénéficié du statut de citoyen naturalisé du ROYAUME-UNI </desc>
+      </trait>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-tw">
@@ -84,4 +118,14 @@ $Id$
       </person>
     </egXML>
   </exemplum>
+  <remarks>
+    <p>Where there is confusion between <gi>trait</gi> and <gi>state</gi> the more general purpose
+      element <gi>state</gi> should be used even for unchanging characteristics. If you wish to
+      distinguish between characteristics that are generally perceived to be time-bound states and
+      those assumed to be fixed traits, then <gi>trait</gi> is available for the more static of
+      these. The <gi>state</gi> element encodes characteristics which are sometimes assumed to
+      change, often at specific times or over a date range, whereas the <gi>trait</gi> elements are
+      used to record characteristics, such as eye-colour, which are less subject to change. Traits are typically, but not necessarily, 
+      independent of the volition or action of the holder.</p>
+  </remarks>
 </elementSpec>
