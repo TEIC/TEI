@@ -374,7 +374,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="exc"
 		  select="concat(' ',normalize-space(@except),' ')"/>
     <xsl:variable name="inc"  
-		  select="tokenize(normalize-space(@include),' ')"/>
+		  select="concat('/',translate(normalize-space(@include),' ','/'),'/')"/>
       <xsl:choose>
 	<xsl:when test="not(@except) and not(@include)">
 	  <xsl:for-each select="document($sourceDoc,$top)">
@@ -397,31 +397,17 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:call-template>
 	    </xsl:for-each>
 	  </xsl:for-each>
-	  <xsl:for-each select="$inc">
-	    <xsl:variable name="i" select="."/>
-	    <xsl:for-each select="document($sourceDoc,$top)">
+	  <xsl:for-each select="document($sourceDoc,$top)">
+	    <xsl:for-each
+		select="key('odd2odd-MODULE_MEMBERS',$name)">
 	      <xsl:choose>
-		<xsl:when test="key('odd2odd-IDENTS',$i)">
-		  <xsl:for-each select="key('odd2odd-IDENTS',$i)">
-		    <xsl:if test="not(self::tei:classSpec)">
-		      <xsl:call-template name="odd2odd-checkObject">
-			<xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
-			<xsl:with-param name="why">(inclusion) module <xsl:value-of select="$name"/></xsl:with-param>
-		      </xsl:call-template>
-		    </xsl:if>
-		  </xsl:for-each>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:call-template name="die">
-		    <xsl:with-param name="message">
-		      <xsl:text>Reference to </xsl:text>
-		      <xsl:value-of select="$i"/>
-		      <xsl:text> in </xsl:text>
-		      <xsl:value-of select="$name"/>
-		      <xsl:text>: not found in source</xsl:text>
-		    </xsl:with-param>
+		<xsl:when test="self::tei:classSpec"/>
+		<xsl:when test="contains($inc,concat('/',@ident,'/'))">
+		  <xsl:call-template name="odd2odd-checkObject">
+		    <xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
+		    <xsl:with-param name="why">(inclusion) module <xsl:value-of select="$name"/></xsl:with-param>
 		  </xsl:call-template>
-		</xsl:otherwise>
+		</xsl:when>
 	      </xsl:choose>
 	    </xsl:for-each>
 	  </xsl:for-each>
