@@ -1031,10 +1031,11 @@ of <name type="class">att.datable.w3c</name> --> provides the
 following attributes:
 <specList><specDesc key="att.datable.w3c" atts="when notBefore notAfter from to"/></specList>
 as discussed in <ptr target="#NDATTS"/> above. </p>
-<div type="div4" xml:id="NDPERSEpc">
+
+   <div type="div4" xml:id="NDPERSEpc">
 <head>Personal Characteristics</head>
- <p>The <ident type="class">model.persTraitLike</ident> class contains elements
-describing physical or socially-constructed characteristics or traits
+ <p>The <ident type="class">model.persStateLike</ident> class contains elements
+describing physical or socially-constructed characteristics, traits, or states
 of a person. Members of the class comprise the following specific
 elements:
 <specList>
@@ -1045,8 +1046,14 @@ elements:
 <specDesc key="sex"/>
 <specDesc key="age"/>
 <specDesc key="socecStatus"/>
+  <specDesc key="persName"/>
+  <specDesc key="occupation"/>
+  <specDesc key="residence"/>
+  <specDesc key="affiliation"/>
+  <specDesc key="education"/>
+  <specDesc key="floruit"/>
 </specList>
-All, apart from <gi>langKnowledge</gi>, have a content model of <ident type="macro">macro.phraseSeq</ident>, by which is meant ordinary prose containing phrase-level elements.
+All, apart from <gi>langKnowledge</gi>, allow  content of ordinary prose containing phrase-level elements.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <socecStatus key="AB1">Status AB1 in the RG Classification scheme</socecStatus>
 </egXML>
@@ -1126,26 +1133,11 @@ and value.
 </p>
 <!-- what does alb point to here? -->
  <!-- AC: I suppose it could point to the defintion of the country for example  -->
-<p>The  generic element can be used in place of one of the more
-specific elements: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<trait type="nationality" notBefore="2002-01-15">
-    <label>Nationality</label>
-    <desc>American citizen from 15 January 2002.</desc>
-</trait>
-</egXML>
-is the same as:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<nationality notBefore="2002-01-15">Became an American citizen on 15 January 2002.</nationality> 
-</egXML>
-or even:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
-<nationality notBefore="2002-01-15" key="US"/>
-</egXML>
-</p>
-<p>More usually however, the element is provided as a simple means of
+
+<p>The <gi>trait</gi> element is provided as a simple means of
 extending the set of descriptive features available in a standardized
-way. For example, there are no predefined elements for such features
+way. The use of the <att>type</att> attribute to categorize the nature of the trait is recommended when providing general traits. 
+  For example, there are no predefined elements for such features
 as eye or hair colour. If these are to be recorded, they may simply be
 added as new types of trait:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -1159,25 +1151,15 @@ added as new types of trait:
 </trait>
 </egXML>
 </p>
+  <p>Where there is confusion between <gi>trait</gi> and <gi>state</gi> the more general purpose
+    element <gi>state</gi> should be used even for unchanging characteristics. If you wish to
+    distinguish between characteristics that are generally perceived to be time-bound states and
+    those assumed to be fixed traits, then <gi>trait</gi> is available for the more static of
+    these. The <gi>state</gi> element encodes characteristics which are sometimes assumed to
+    change, often at specific times or over a date range, whereas the <gi>trait</gi> elements are
+    used to record characteristics, such as eye-colour, which are less subject to change. Traits are typically, but not necessarily, 
+    independent of the volition or action of the holder.</p>
 
-</div>
-<div type="div4" xml:id="NDPERSEps">
-<head>Personal States</head>
-
- <p>The <ident type="class">model.persStateLike</ident> class contains
- elements describing changeable characteristics of a person which have
- a definite duration, for example occupation, residence, or
- name. Members of the class comprise the following specific elements:
-
-<specList>
-<specDesc key="persName"/>
-<specDesc key="occupation"/>
-<specDesc key="residence"/>
-<specDesc key="affiliation"/>
-<specDesc key="education"/>
-<specDesc key="floruit"/>
-</specList>
-</p>
 <p>The <gi>persName</gi> element is repeatable and can, like all TEI
 elements, take the attribute <att>xml:lang</att> to indicate the
 language of the content of the element, as well as a
@@ -1227,10 +1209,10 @@ element called <gi>state</gi>.
 <specDesc key="state"/>
 </specList>
 </p>
-<p>This element can be used to
-extend the range of descriptive information available in the same way
-as the <gi>trait</gi> element, using the same content model. 
-For example, a description of the first living held by the Icelandic
+
+  
+  <p>
+  For example, a description of the first living held by the Icelandic
 clergyman and poet Jón Oddsson Hjaltalín might be tagged as
 follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><state type="office" from="1777-04-07" to="1780-07-12">
@@ -1255,7 +1237,35 @@ he should exchange livings with
 </state>
 </egXML>
 </p>
-<!-- more discussion needed here -->
+  
+  <p>The  generic <gi>state</gi> element can be used in place of one of the more
+    specific elements: 
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <state type="nationality" notBefore="2002-01-15">
+        <label>Nationality</label>
+        <desc>American citizen from 15 January 2002.</desc>
+      </state>
+    </egXML>
+    is the same as:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <nationality notBefore="2002-01-15">American citizen from 15 January 2002.</nationality> 
+    </egXML>
+    or even:
+    <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+      <nationality notBefore="2002-01-15" key="US"/>
+    </egXML>
+  </p>
+  <p>This element can be used to
+    extend the range of descriptive information available in the same way
+    as the <gi>trait</gi> element, using the same content model. However, 
+    if there is any confusion over whether something is a <gi>state</gi> or a <gi>trait</gi>, 
+    then the more general purpose <gi>state</gi> element should be used as almost all traits are time-bound in 
+    a general sense. <gi>state</gi> may be used for both time-bound and generally unchanging characteristics, but if you wish to 
+    distinguish between these then <gi>trait</gi> is available for the more static of
+    these. Traits are typically, but not necessarily, 
+    independent of the volition or action of the holder.
+  </p>
+  
 </div>
 <div type="div4" xml:id="NDPERSEpe">
 <head>Personal Events</head>
@@ -1597,9 +1607,9 @@ supplying both names with an indication of the time period during
 which each was current. </p>
 
 <p>A place is defined, however, by its physical location, which does
-not typically change over time; we regard the location therefore as a
+not typically change over time;<!-- we regard the location therefore as a
 trait of the place, and represent it by means of elements from the
-<ident type="class">model.placeTraitLike</ident> class. Locations may
+<ident type="class">model.placeTraitLike</ident> class-->. Locations may
 be specified in a number of ways: as a set of coordinates defining a
 point or an area on the surface of the earth, or by providing a
 description of how the place may be found, usually in terms of other
