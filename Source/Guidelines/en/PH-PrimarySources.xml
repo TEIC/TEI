@@ -2429,7 +2429,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
 
       <p>The function of the <gi>surface</gi> element is both to identify a specific area containing
          writing and to provide a two dimensional set of coordinates which can be used to position
-         and dimension sub-parts of it. Furthermore, surfaces may nest within other surfaces, as in
+         and provide dimensions for sub-parts of it. Furthermore, surfaces may nest within other surfaces, as in
          the case of <q>patches</q> or other written materials attached to the main writing surface.
          In the general case, the position and dimensions of such nested surfaces will be defined
          using the same co-ordinate system as that supplied by the parent <gi>surface</gi> element.
@@ -2439,7 +2439,8 @@ xmlns="http://www.tei-c.org/ns/Examples">
 
       <p>In the earlier examples showing nested examples we did not provide any coordinate
          information, for simplicity of presentation. Suppose however, that we wish to indicate the
-         position and sizes of the newspaper scraps in figure <ptr target="#sleeprs"/>, relative to
+         position and sizes of the newspaper scraps in <ref
+	 target="#sleeprs">figure 4 above</ref>, relative to
          the whole page. The four attributes <att>ulx</att>, <att>uly</att>, <att>urx</att> and
             <att>ury</att> when given on the <gi>surface</gi> element define the co-ordinate scheme,
          rather than specifying the location of that surface; we must therefore introduce an
@@ -2492,21 +2493,25 @@ xmlns="http://www.tei-c.org/ns/Examples">
          containing the text <mentioned>Spring ... steamer</mentioned> is now given in terms of this
          scale.</p>
 
-      <p>All of the examples so far given have involved rectangular zones, for clarity of
-         exposition. As noted above, the <att>points</att> attribute may be used to define non
-         rectangular zones as a series of points. For example, in the last of the Whitman examples
-         discussed in section <ptr target="#PH-meta"/> above, we might wish to record the exact
-         shape of the zone containing the metamark <mentioned>Entered</mentioned>. Since this is not
-         a rectangular zone, we use the <att>points</att> attribute to indicate the points defining
-         a polygon which contains it. The values used are expressed in terms of a coordinate space
-         running from 0 to 229 in the X dimension, and 0 to 160 in the Y dimension. </p>
+      <p>All of the examples so far given have involved rectangular
+      zones, for clarity of exposition. As noted above, the
+      <att>points</att> attribute may be used to define
+      non-rectangular zones as a series of points. For example, in the
+      last of the Whitman examples discussed in section <ptr
+      target="#PH-meta"/> above, we might wish to record the exact
+      shape of the zone containing the metamark
+      <mentioned>Entered</mentioned>. Since this is not a rectangular
+      zone, we use the <att>points</att> attribute to indicate the
+      points defining a polygon which contains it. The values used are
+      expressed in terms of a coordinate space running from 0 to 229
+      in the X dimension, and 0 to 160 in the Y dimension. </p>
 
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
-         <surface ulx="229" uly="160" lrx="0" lry="0">
+         <surface urx="0" ury="0" lrx="229" lry="160" >
             <graphic url="whitman-02.jpg"/>
             <zone xml:id="entered"
-               points="142.625,122.19 155.024,113.736 178.133,122.754
-	 208.569,144.172 198.988,154.881 178.133,139.663"
+               points="142,122 155,113 178,122
+	 208,144 198,154 178,139"
             />
          </surface>
       </egXML>
@@ -2521,17 +2526,17 @@ xmlns="http://www.tei-c.org/ns/Examples">
                <graphic url="stone.jpg"/>
                <zone xml:id="county"
                   points="4.6,6.3 5.25,5.85 6.2,6.6
-  8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125
-  8.21722,8.3125 6.2,7.65"
+  8.2,7.4 9.9,6.6 10.9,6.1 11.4,6.7
+  8.2,8.3 6.2,7.6"
                />
             </surface>
          </egXML>
       </p>
       <p>Finally, it should be noted that a <gi>zone</gi> does not need to be entirely contained
          within the two-dimensional space defined by its parent surface. For example, we might wish
-         to encode the example in figure <ptr target="#durlach"/> above not as a surface
+         to encode the example in <ref  target="#durlach">figure 2 above</ref> above not as a surface
          representing the whole of the two page spread, but as a surface representing only the
-         written part of the This written part appears 50 units from the left of the image and 20
+         written part of this opening. The written part appears 50 units from the left of the image and 20
          units from the top, while the bottom right corner of the written part appears 400 units
          from the left of the image, and 280 units from the top. We therefore define the written
          surface within this image as follows: <egXML xml:lang="und"
@@ -2599,7 +2604,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
             straight, or a combination of these and other renderings. The line may be used for
             emphasis, or to mark a foreign or technical term, or to signal a quotation or a title,
             etc.: the elements <gi>emph</gi>, <gi>foreign</gi>, <gi>term</gi>, <gi>mentioned</gi>,
-               <gi>title</gi> may be used for these. Where the line has a clear paratextual function
+             or  <gi>title</gi> may be used for these. Where the line has a clear paratextual function
             the <gi>metamark</gi> element may be considered more appropriate. Frequently, a scholar
             may judge that a line is used to delete text: the <gi>del</gi> element is available to
             indicate this. In all these cases, the <att>rend</att> attribute may be used to supply
@@ -2610,7 +2615,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
                dear to me</egXML></p>
          <p>There will be instances, however, where a scholar wishes only to register the occurrence
             of lines in the text, without making any judgement as to what the lines signify. In
-            these the <gi>hi</gi> element may be used, with the <att>rend</att> attribute to mark
+            these cases the <gi>hi</gi> element may be used, with the <att>rend</att> attribute to mark
             the style of line. In the manuscript of a letter by Robert Browning to George
             Moulton-Barrett the underlining of the phrase <mentioned>had obtained all the letters to
                Mr Boyd</mentioned> may be marked-up as follows: <egXML
@@ -2804,7 +2809,8 @@ xmlns="http://www.tei-c.org/ns/Examples">
                <date notAfter="1816-07-18"/>
                <listChange ordered="true">
                   <change xml:id="mod1" when="1816-07-16">The first draft of
-                        <title>Persuasion</title> is completed by the <date>July 16 1816</date>
+                        <title>Persuasion</title>, completed by the date
+			<date>July 16 1816</date> which is
                      written after the word <q>Finis</q> at <ref target="#pers-30">page
                      30</ref>.</change>
                   <change xml:id="mod2" notBefore="1816-07-16">After the <date>16th of July</date>
@@ -2824,7 +2830,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
       <p>Each <gi>change</gi> element, apart from declaring a distinct change in the creation of the
          document, may also contain references to other annotations contained within the
             <gi>teiHeader</gi> or in the document (as shown in the previous example). Such
-         references, along with the textual content are purely documentary and do not affect the
+         references, along with the textual content, are purely documentary and do not affect the
          textual stage associated with any element thus referred to. The association of a textual
          component with a change is always made explicitly, either by using the <att>target</att>
          attribute on the <gi>change</gi> element to point to one or more elements, or (preferably)
@@ -2864,8 +2870,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
                   </add>
                </subst> wanſtige Schuften mit den Feuerbacken</l>
             <l n="11657">Ihr glüht ſo recht vom Höllen Schwefel <subst
-                  change="#secondStage
-         #thirdStage">
+                  change="#secondStage #thirdStage">
                   <del>ſatt</del>
                   <add>feiſt</add>
                </subst>.</l>
@@ -2879,10 +2884,10 @@ xmlns="http://www.tei-c.org/ns/Examples">
       </egXML>
       <p>Note first that a change, once assigned to an element, is inherited by all descendants of
          that element unless overridden by a subsequent assignment. So in the example above the
-         three verses are assigned to the first stage initially. The writing of
-            <mentioned>Nun</mentioned> (as part of the substitution in the first verse) takes place
+         three lines are assigned to the first stage initially. The writing of
+            <mentioned>Nun</mentioned> (as part of the substitution in the first line) takes place
          in the second stage and is repeated or fixed in the third. Also the substitution in the
-         second verse is done repeatedly: initially it takes place in the second stage, but is
+         second line is done repeatedly: initially it takes place in the second stage, but is
          fixated as a whole in the third.</p>
       <p>The interpretation of change assignments for a particular text passage is based on a number
          of implicit assumptions and constraints which have the effect of minimizing the amount of
