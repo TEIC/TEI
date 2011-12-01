@@ -1156,11 +1156,12 @@ recommendations form a good basis for such future work.-->
                   nonce-words are all included. </egXML> A little earlier in the same extract,
                Graves writes <q>for an abridgement</q> above the line, and then deletes it. This may
                be encoded similarly: <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  corresp="#PH-eg-07"> As for 'significant artist.' You quote the O.E.D <add
-                     hand="#RG" place="above"><del>for an abridgement</del></add>in explanation...
+                  corresp="#PH-eg-07"> As for 'significant artist.' You quote the O.E.D <del><add
+                     hand="#RG" place="above">for an
+	       abridgement</add></del> in explanation...
                </egXML> Similarly, in the margin, the word <q>Norton</q> has been added and then
                deleted: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-eg-07"> You
-                  quote the <add hand="#RG" place="margin"><del>Norton</del></add> O.E.D...</egXML>
+                  quote the <del><add hand="#RG" place="margin">Norton</add></del> O.E.D...</egXML>
                The word <q>O.E.D.</q> in this first sentence has also clearly been the result of
                some redrafting: it may be that Graves started to write <q>Oxford</q>, and then
                changed it; it may be that he inserted other punctuation marks between the letters
@@ -1198,6 +1199,10 @@ deletions here are attributed to Pound (EP): the comma following
 the latter deletion being marked by a box drawn around it rather than by
 a line through it. </p>
 -->
+               <!--
+"Oh keep the Dog far hence, that's 
+<subst><del>foe</del><add place="margin">friend</add></subst> to men, 
+</egXML>-->
 
 
             <p>An encoder may also wish to indicate that an addition replaces a specific deletion,
@@ -1208,10 +1213,6 @@ a line through it. </p>
                the start of <q>the</q>. <egXML xmlns="http://www.tei-c.org/ns/Examples"
                   corresp="#PH-eg-07"> ... are all included. <del hand="#RG">It is</del>
                   <subst><add>T</add><del>t</del></subst>he expressed </egXML>
-               <!--
-"Oh keep the Dog far hence, that's 
-<subst><del>foe</del><add place="margin">friend</add></subst> to men, 
-</egXML>-->
                The use of this element and of the <att>seq</att> attribute to indicate the order in
                which interventions such as deletions are believed to have occurred are further
                discussed in section <ptr target="#PHSU"/> below. </p>
@@ -1292,14 +1293,17 @@ in the Eliot typescript mentioned above, there are --> several
          <div type="div3" xml:id="PHSU">
             <head>Substitutions</head>
 
-            <p>Substitution of one word or phrase for another is perhaps the most common of all
-               phenomena requiring special treatment in transcription of primary textual sources. It may be simply one word written over the top of another, or deletion
-               of one word and its replacement by another written above it by the same
-               hand on the same occasion; the
-               deletion and replacement may be done by different hands at different times; there may
-               be a long chain of substitutions on the same stretch of text, with uncertainty as to
-               the order of substitution and as to which of many possible readings should be
-               preferred.</p>
+            <p>Substitution of one word or phrase for another is
+            perhaps the most common of all phenomena requiring special
+            treatment in transcription of primary textual sources. It
+            may be simply one word written over the top of another, or
+            deletion of one word and its replacement by another
+            written above it by the same hand on the same occasion;
+            the deletion and replacement may be done by different
+            hands at different times; there may be a long chain of
+            substitutions on the same stretch of text, with
+            uncertainty as to the order of substitution and as to
+            which of many possible readings should be preferred.</p>
             <p>As we have shown, the simplest method of recording a substitution is simply to record
                both the addition and the deletion. However, when the module defined by this chapter
                is in use, additional elements are available to indicate that the encoder believes
@@ -1312,10 +1316,11 @@ in the Eliot typescript mentioned above, there are --> several
                            <subst><del>upon</del><add>over</add></subst> Oman's sky</l>
                   <l>Her isles of pearl look lovelily<anchor xml:id="delend02"/></l></egXML> Since
                the purpose of this element is solely to group its child elements together, the order
-               in which they are presented is not significant. By convention, however, deletion
-               precedes addition. This may be overridden by means of the <att>seq</att> attribute,
-               which is of particular usefulness when a sequence of deletions and additions
-               occurs.</p>
+               in which they are presented is not significant. When
+	       both  deletion and addition are present, it may not
+	       always be clear which occurs first: using the
+	       <att>seq</att> attribute is a simple way of resolving
+	       any such ambiguities.</p>
 
             <p>For example, returning to the example from William James, in a passage first written
                out by James as <q>One must have lived longer with this system, to appreciate its
@@ -1335,7 +1340,9 @@ in the Eliot typescript mentioned above, there are --> several
                simple method of supporting the kind of <soCalled>genetic</soCalled> textual
                criticism typified by (for example) Hans Walter Gabler's work on the reconstruction
                of the <soCalled>overlay</soCalled> levels implicit in the manuscripts of James
-               Joyce's <title>Ulysses</title>.</p>
+               Joyce's <title>Ulysses</title>. A fuller and more
+	    complex way of supporting such an approach is discussed in
+	    <ptr target="#PH-changes"/>. </p>
 
             <p> The case of a single substitution or scribal correction that involves non-contiguous
                addition and deletion can be handled by using the <gi>substJoin</gi> element to make
