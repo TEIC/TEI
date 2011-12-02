@@ -642,7 +642,9 @@ select="$makeDecls"/></xsl:message>
               <xsl:choose>
                 <xsl:when test="$type='sequence'">
                   <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
-                    <xsl:apply-templates select="." mode="classmember">
+                    <xsl:apply-templates select="."
+					 mode="classmember">
+                      <xsl:with-param name="theClass" select="$thisClass"/>
                       <xsl:with-param name="suffix" select="$type"/>
                     </xsl:apply-templates>
                   </xsl:for-each>
@@ -650,7 +652,8 @@ select="$makeDecls"/></xsl:message>
                 <xsl:when test="$type='sequenceOptional'">
                   <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
                     <optional>
-                      <xsl:apply-templates select="." mode="classmember">
+                      <xsl:apply-templates select="."  mode="classmember">
+			<xsl:with-param name="theClass" select="$thisClass"/>
                         <xsl:with-param name="suffix" select="$type"/>
                       </xsl:apply-templates>
                     </optional>
@@ -660,7 +663,8 @@ select="$makeDecls"/></xsl:message>
                 <xsl:when test="$type='sequenceRepeatable'">
                   <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
                     <oneOrMore>
-                      <xsl:apply-templates select="." mode="classmember">
+                      <xsl:apply-templates select="."  mode="classmember">
+			<xsl:with-param name="theClass" select="$thisClass"/>		   
                         <xsl:with-param name="suffix" select="$type"/>
                       </xsl:apply-templates>
                     </oneOrMore>
@@ -672,6 +676,7 @@ select="$makeDecls"/></xsl:message>
                     <zeroOrMore>
                       <xsl:apply-templates select="." mode="classmember">
                         <xsl:with-param name="suffix" select="$type"/>
+			<xsl:with-param name="theClass" select="$thisClass"/>
                       </xsl:apply-templates>
                     </zeroOrMore>
                   </xsl:for-each>
@@ -682,6 +687,7 @@ select="$makeDecls"/></xsl:message>
                     <xsl:for-each select="key('CLASSMEMBERS',$thisClass)">
                       <xsl:apply-templates select="." mode="classmember">
                         <xsl:with-param name="suffix" select="$type"/>
+			<xsl:with-param name="theClass" select="$thisClass"/>
                       </xsl:apply-templates>
                     </xsl:for-each>
                   </choice>
@@ -789,6 +795,17 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
   <xsl:template match="tei:elementSpec" mode="classmember">
+    <xsl:param name="theClass"/>
+
+    <xsl:variable name="min" select="tei:classes/tei:memberOf[@key=$theClass]/@min"/>
+    <xsl:variable name="max" select="tei:classes/tei:memberOf[@key=$theClass]/@max"/>
+
+    <xsl:variable name="mini" as="xs:integer">
+      <xsl:choose>
+        <xsl:when test="not($min castable as xs:integer)">1</xsl:when>
+        <xsl:otherwise><xsl:value-of select="$min"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="elementPrefix">
       <xsl:choose>
         <xsl:when test="@prefix">
@@ -799,7 +816,31 @@ select="$makeDecls"/></xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$elementPrefix}{@ident}"/>
+    <xsl:variable name="ident" select="@ident"/>
+    
+    <xsl:for-each select="for $i in 1 to $mini return $i">
+      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$elementPrefix}{$ident}"/>
+    </xsl:for-each> 
+    <xsl:choose>
+      <xsl:when test="$max='unbounded'">
+        <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$elementPrefix}{$ident}"/>
+        </zeroOrMore>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="maxi" as="xs:integer">
+          <xsl:choose>
+            <xsl:when test="not($max castable as xs:integer)">1</xsl:when>
+            <xsl:otherwise><xsl:value-of select="$max"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:for-each select="for $i in ($mini+1) to $maxi return $i">
+          <optional xmlns="http://relaxng.org/ns/structure/1.0">
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="{$elementPrefix}{$ident}"/>
+          </optional>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose> 
   </xsl:template>
 
   <xsl:template match="tei:elementSpec" mode="tangle">
