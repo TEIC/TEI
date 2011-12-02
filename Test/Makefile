@@ -9,6 +9,7 @@ ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/
 TESTFILES= \
 	testClasses.dtd \
 	testbare.dtd \
+	testcardinality.dtd \
 	testdictionaries.dtd \
 	testecco.dtd \
 	testfand.dtd \
