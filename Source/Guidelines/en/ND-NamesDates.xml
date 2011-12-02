@@ -925,7 +925,7 @@ describes relationships amongst the people listed.
 <specDesc key="person"/>
 <specDesc key="personGrp"/>
 <specDesc key="listPerson"/>
-<specDesc key="relationGrp"/>
+<specDesc key="listRelation"/>
 </specList>
 </p>
 
@@ -1382,11 +1382,11 @@ of what happened, as in the following example:
 <p>When the module defined by this chapter is included in a schema,
 the following two elements may be used to document relationships
 amongst the persons, places, or organizations identified:
-<specList><specDesc key="relationGrp"/><specDesc key="relation" atts="name active mutual passive"/></specList> These elements are both
+<specList><specDesc key="listRelation"/><specDesc key="relation" atts="name active mutual passive"/></specList> These elements are both
 members of the <ident type="class">att.typed</ident> class, from which
 they inherit the <att>type</att> and <att>subtype</att> attributes in
 the usual way. The value specified for either attribute on a
-<gi>relationGrp</gi> element is implicitly applicable to all of its
+<gi>listRelation</gi> element is implicitly applicable to all of its
 child <gi>relation</gi> elements, unless overridden.</p>
 <p>A <term>relationship</term>, as defined here, may be any kind of
 describable link between specified participants. A participant (in
@@ -1416,11 +1416,11 @@ children <q>active</q> in the relationship <mentioned>is child of</mentioned>;
 similarly <q>works for</q> inverts the active and passive roles of
 <q>employs</q>.</p>
 <p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><relationGrp>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><listRelation>
    <relation name="parent" active="#P1 #P2" passive="#P3 #P4"/>
    <relation name="spouse" mutual="#P1 #P2"/>
    <relation type="social" name="employer" active="#P1" passive="#P3 #P4"/>
-</relationGrp></egXML>
+</listRelation></egXML>
 This example defines the relationships amongst a number of people not
 further described here; we assume however that each person has been
 allocated an identifier such as <val>P1</val>, <val>P2</val>,
@@ -2282,9 +2282,8 @@ occupation and residence.</p>
 &occupation;
 
 &org;
-
-&relationGrp;
-
+&listRelation;
+&relationGrp; <!-- we keep it here for backward compatibility -->
 &person;
 
 &personGrp;
