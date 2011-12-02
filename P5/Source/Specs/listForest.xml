@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING.txt for details
+$Date: 2011-01-31 23:31:24 +0000 (Mon, 31 Jan 2011) $
+$Id: forestGrp.xml 8457 2011-01-31 23:31:24Z rahtz $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="listForest">
+  <desc>provides for lists of forests.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.divPart"/>
+  </classes>
+  <content>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="forest"/>
+    </oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>identifies the type of the forest group.</desc>
+      <desc version="2007-12-20" xml:lang="kr">수형도군의 유형을 식별한다.</desc>
+      <desc version="2007-05-02" xml:lang="zh-tw">標明森林群組的類型。</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該森集合の種類を示す．
+      </desc>
+      <desc version="2007-06-12" xml:lang="fr">précise le type du groupe de forêts.</desc>
+      <desc version="2007-05-04" xml:lang="es">identifica el tipo de grupo de bosque</desc>
+      <desc version="2007-01-21" xml:lang="it">identifica il tipo di gruppo di foresta</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valDesc>A character string.</valDesc>
+      <valDesc xml:lang="fr" version="2009-11-17">Une chaîne de caractères.</valDesc>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listForest>
+        <forest type="derivation-syntactic">
+          <tree ord="true">
+            <root children="#fgex1 #fgex2"/>
+            <!-- ... -->
+          </tree>
+          <!-- ... -->
+        </forest>
+        <forest type="derivation-prosodic">
+          <tree ord="true">
+            <root children="#fgex3 #fgex4"/>
+            <!-- ... -->
+          </tree>
+          <!-- ... -->
+        </forest>
+      </listForest>
+    </egXML>
+  </exemplum>
+  <exemplum version="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"> </egXML>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">One or more forests representing the same object.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p rend="dataDesc">Une ou plusieurs forêts.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    ひとつ以上の森．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#GDAT" type="div2"/>
+  </listRef>
+</elementSpec>
