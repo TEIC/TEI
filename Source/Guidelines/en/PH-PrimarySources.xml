@@ -2159,7 +2159,7 @@ has identifier <val>z2</val>. -->
                   <mentioned>er</mentioned> in the word <mentioned>bægerklang</mentioned>: <figure>
                   <graphic url="Images/munch01.jpg" width="400px"/>
                   <head rend="it">Detail from autograph ms
-		  <title>Brand</title> (KBK Collin 262) </head>
+		  <title>Brand</title> in The Royal Library,  Denmark (KBK Collin 262) </head>
 
                </figure> We might encode this by nesting the <gi>retrace</gi> element as follows:
                   <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-ib05">
@@ -2267,12 +2267,12 @@ individual tokens. Or one from a real doc -->
                </specList></p>
             <p>Consider for example, the following extract from an Ibsen manuscript <figure>
                   <graphic url="Images/ibsen01.jpg" width="400px"/>
-                  <head>Detail from autograph ms of <title>Den episke
-		  Brand</title> (KBK Collin 2869)</head>
+                  <head>Extract from autograph <title>Digte</title>
+		  (Poems) NBO Ms. 4º 1110a</head>
                </figure> The underlined numbers 1 and 2 here indicate that, although the word
                   <mentioned>bör</mentioned> precedes the word <mentioned>hör</mentioned> in the
                text, the order of the two words should be reversed. We may encode this as follows:
-                  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-ib01">
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#PH-ib04">
                   <line><seg xml:id="ib01">bör</seg><metamark rend="underline"
                         function="transposition" target="#ib01" place="above">2.</metamark> og <seg
                         xml:id="ib02">hör</seg><metamark rend="underline" function="transposition"
@@ -2290,12 +2290,12 @@ individual tokens. Or one from a real doc -->
                being transposed. When (as in the following example) the whole of a line is to be
                transposed, there is no need to delimit the sections concerned: <figure>
                   <graphic url="Images/ibsen04.jpg" width="600px"/>
-                  <head>Extract from autograph <title>Digte</title>
-		  (Poems) NBO Ms. 4º 1110a</head>
+                  <head>Detail from autograph ms of <title>Den episke
+		  Brand</title> (KBK Collin 2869)</head>
                </figure>
                <!-- ibsen04.xml --><egXML
 				       xmlns="http://www.tei-c.org/ns/Examples"
-				       corresp="#PH-ib04">
+				       corresp="#PH-ib01">
                   <line xml:id="ib3"><metamark function="transposition" place="margin-left"
                         >2.)</metamark> thi da er du med Himmelen i Pagt; — </line>
                   <line xml:id="ib4">
@@ -2441,11 +2441,11 @@ xmlns="http://www.tei-c.org/ns/Examples">
          information, for simplicity of presentation. Suppose however, that we wish to indicate the
          position and sizes of the newspaper scraps in <ref
 	 target="#sleeprs">figure 4 above</ref>, relative to
-         the whole page. The four attributes <att>ulx</att>, <att>uly</att>, <att>lrx</att> and
+         the whole page. As previously noted, the four attributes <att>ulx</att>, <att>uly</att>, <att>lrx</att> and
             <att>lry</att> when given on the <gi>surface</gi> element define the co-ordinate scheme,
-         rather than specifying the location of that surface; we must therefore introduce an
-         additional <gi>zone</gi> element, as in the following revised encoding for the example
-         given in section <ptr target="#PHZLAB"/> above: <egXML
+         rather than specifying the location of that surface. We must therefore introduce an
+         additional <gi>zone</gi> element, as in the following revised encoding for this example
+ <egXML corresp="#WHITMS2"
             xmlns="http://www.tei-c.org/ns/Examples">
             <surface ulx="0" uly="0" lrx="50" lry="50">
                <zone ulx="1" uly="1" lrx="10" lry="10">
@@ -2557,22 +2557,77 @@ xmlns="http://www.tei-c.org/ns/Examples">
                   </zone></surface>
             </facsimile></egXML>
       </p>
+
    </div>
 
    <div>
       <head>Aspects of Layout</head>
-      <p>Finally in this chapter we present elements which may be used to capture aspects of the
-         layout of material on a page where this is considered important. Methods for recording page
-         breaks, column breaks, and line breaks in the source are described in section <ptr
-            target="#CORS"/>. A similar method is provided by this module for the markup of quire or
-         gathering boundaries, using the element <gi>gb</gi>. <specList>
-            <specDesc key="gb"/>
-         </specList> More detailed information about the physical make-up of a source will usually
+      <p>Finally in this chapter we present elements which may be used
+      to capture some general aspects of the
+         layout of material on a page where this is considered
+	 important. 
+
+Within the <gi>sourceDoc</gi> element, as already
+	 indicated, the element <gi>surface</gi> and
+	 <gi>surfaceGrp</gi> enable the encoder to represent directly
+	 the structure of a codex as gatherings or quires, leaves,
+	 and surfaces, as in the following example:
+<egXML xml:lang="und"
+       xmlns="http://www.tei-c.org/ns/Examples"><sourceDoc>
+<surfaceGrp type="quire" n="1">
+<surfaceGrp type="leaf" n="1">
+<surface type="recto" n="1r">
+<!-- ... -->
+</surface>
+<surface type="verso" n="1v">
+<!-- ... -->
+</surface>
+</surfaceGrp>
+<surfaceGrp type="leaf" n="2">
+<surface type="recto" n="2r">
+<!-- ... -->
+</surface>
+<surface type="verso" n="2v">
+<!-- ... -->
+</surface>
+</surfaceGrp>
+<!-- other leaves in first quire -->
+</surfaceGrp>
+<!-- other quires here -->
+</sourceDoc></egXML></p>
+<p>In some cases, it may be preferable to define <gi>surface</gi>s
+corresponding with each two page opening, for example where it is clear
+that the writer regarded each such opening as a single writing
+surface, with written zones or other features crossing the page
+divide. An example is shown here: 
+<figure><graphic url="Images/proust-42v.png"/>
+<head>Opening from autograph ms of Proust's <title>A la recherche du
+temps perdu</title> (f 42v-43r)</head>
+</figure>
+</p><p>The coloured lines added to this image indicate a number of zones
+of writing, colour coded to indicate the order in which they were
+written (purple, then green, then red). For example, the zone marked
+in red on the left contains a note referring to the purple zone on the
+right. </p>
+<!--
+referring to the zone marked in purple on the right 
+<line>Décidément je crois que cette promenade à l’Ile</line>
+<line>ne sera que quand je m’amuse déjà avec Albertine. Ainsi</line>
+<line>une partie…</line>
+
+. olore refer to macro times of elaboration: first purple, then green, then red. Blue is for the pages within the opening.
+-->
+<p>This approach assumes that the transcription will primarily be
+organized in the same way as the physical layout of the source,
+using embedded transcription elements. Alternatively, where the
+a non-embedded transcription has been provided, using the
+<gi>text</gi>  element, it is still possible to record gathering
+breaks, page
+         breaks, column breaks, line breaks etc in the source, using
+	 the elements described in section <ptr
+            target="#CORS"/>.  Detailed metadata about the physical make-up of a source will usually
          be summarized by the <gi>physDesc</gi> component of a <gi>msDesc</gi> element discussed in
-            <ptr target="#msph"/>; if it is desired to structure a transcription as a sequence of
-         blocks of text corresponding with pages or quires, the generic <gi>ab</gi> element may be
-         used in preference to the elements <gi>div</gi>
-         <gi>p</gi> etc. </p>
+            <ptr target="#msph"/>. </p>
 
       <div type="div3" xml:id="PHSP">
          <head>Space</head>
@@ -2987,7 +3042,7 @@ xmlns="http://www.tei-c.org/ns/Examples">
          </moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Additional Element Set for Transcription of Primary Sources//EN-->
          The selection and combination of modules to form a TEI schema is described in <ptr
             target="#STIN"/>. </p>
-      <specGrp xml:id="DTCHD"> &addSpan; &damage; &damageSpan; &delSpan; &ex; &fw; &gb; &handNotes;
+      <specGrp xml:id="DTCHD"> &addSpan; &damage; &damageSpan; &delSpan; &ex; &fw;  &handNotes;
          &handShift; &am; &restore; &space; &subst; &substJoin; &supplied; &surplus; &line;
          &listChange; &listTranspose; &metamark; &mod; <!--&patch;--> &redo; &retrace; &transpose;
          &undo; </specGrp>
