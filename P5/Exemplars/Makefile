@@ -23,7 +23,8 @@ LANGUAGE=en
 P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS= --localsource=${P5}/p5subset.xml --xsl=${XSL}
+ROMAOPTS=--xsl=${XSL}
+SOURCE=--localsource=${P5}/p5subset.xml 
 
 
 %.rng: %.odd
@@ -31,7 +32,7 @@ ROMAOPTS= --localsource=${P5}/p5subset.xml --xsl=${XSL}
 	xmllint --xinclude $*.odd > $*.xi
 	@echo Validate $< itself
 	rnv ../p5odds.rnc $*.xi
-	${ROMA} ${ROMAOPTS} $*.odd .
+	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
 	@echo Test schema built from $<
 	jing $*.rng $*.xml && echo $* validates OK
 
@@ -39,7 +40,8 @@ ROMAOPTS= --localsource=${P5}/p5subset.xml --xsl=${XSL}
 	@echo "BUILD: Test schema from $<"
 	@echo Validate $< itself
 	rnv ../p5odds.rnc $< 
-	${ROMA} ${ROMAOPTS} --docflags="summaryDoc=true" --docpdf --dochtml $< .
+	${ROMA} ${ROMAOPTS} ${SOURCE}--docflags="summaryDoc=true" --docpdf --dochtml $< .
+	${XSL}/teitoepub ${SOURCE} --profile=tei --odd $< $*.doc.epub
 	@echo Test schema built from $<
 	jing $*.rng $*.xml && echo $* validates OK
 
@@ -72,6 +74,7 @@ dist: schemas
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	cp *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
 	cp *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
+	cp *.doc.epub ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:
