@@ -533,6 +533,41 @@ valid, then it should be enclosed in a CDATA marked section within an
 <p>An <gi>egXML</gi> element should not be used to tag non-XML
 examples: the general purpose <gi>eg</gi> or <gi>q</gi> elements
 should be used for such purposes.</p>
+<p>In order to encode information concerning the rendering of the example 
+in the original source (if there was one), it is recommended that the TEI <att>rend</att>
+attribute be used, in the TEI namespace.  To do so one should declare the TEI namespace with 
+a local prefix on the <gi>egXML</gi> element, and use this to refer to the TEI <att>rend</att> 
+attribute as opposed to the version of the <att>rend</att> attribute in the 
+  TEI Examples namespace. In the following example note how the 'tei:' local prefix for the TEI namespace is
+  declared and used with <att>tei:rend</att> to provide information about the coloring of the <gi>val</gi> 
+elements inside the TEI Examples namespaced elements.
+
+  <eg><![CDATA[
+<egXML xmlns="http://www.tei-c.org/ns/Examples"
+xmlns:tei="http://www.tei-c.org/ns/1.0">
+<div>
+    <head>A slide about<gi>egXML</gi></head>
+    <list>
+     <item><gi>egXML</gi>  can be used to give XML examples in the TEI
+Examples namespace</item>
+     <item>Attributes values for<att>valid</att>:
+      <list tei:rend="collapsed">
+      <item><val tei:rend="green">true</val>: intended to be fully
+valid</item>
+      <item><val tei:rend="amber">feasible</val>: valid if missing nodes
+provided</item>
+      <item><val tei:rend="red">false</val>: not intended to be valid</item>
+      </list>
+      </item>
+      <item>The<att>rend</att>  attribute in the TEI namespace can be
+used for recording how parts of the example was rendered.</item>
+      </list>
+</div>
+</egXML>
+]]>
+  </eg>
+If complex rendition information is required, then the <att>rendition</att> attribute, in the TEI namespace, can be used.
+</p>
 </div>
 <div type="div4" xml:id="TDcrystalsCEcl"><head>Classification of Components</head>
 <p>In the TEI scheme elements are assigned to one or more
