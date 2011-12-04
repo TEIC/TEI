@@ -106,6 +106,7 @@ release: common doc oxygendoc p5
 
 installp5: p5 teioo.jar
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
+	cp catalog.xml ${PREFIX}/share/xml/tei/stylesheet
 	cp teioo.jar ${PREFIX}/share/xml/tei/stylesheet
 	(cd release/p5; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
 	mkdir -p ${PREFIX}/bin
