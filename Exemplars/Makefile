@@ -41,7 +41,7 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	@echo Validate $< itself
 	rnv ../p5odds.rnc $< 
 	${ROMA} ${ROMAOPTS} ${SOURCE}--docflags="summaryDoc=true" --docpdf --dochtml $< .
-	teitoepub ${SOURCE} --summmaryDoc --profile=tei --odd $< $*.doc.epub
+	teitoepub ${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
 	@echo Test schema built from $<
 	jing $*.rng $*.xml && echo $* validates OK
 
