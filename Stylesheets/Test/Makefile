@@ -137,10 +137,10 @@ clean:
 	rm -f  test7.zip
 	rm -f  test8.doc
 	rm -f  test8.out
-	rm -r test12.rdf
+	rm -f  test12.rdf
 	rm -f  test9.docx test9.odt
 	rm -f  test*listing*
-	rm -f test*epub test*text
+	rm -f  test*epub test*text
 	rm -f  test.aux test.log test.out test.pdf 
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
 
