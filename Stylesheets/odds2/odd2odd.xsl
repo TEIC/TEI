@@ -672,14 +672,14 @@ How can a class be ok?
 
   <xsl:template match="tei:memberOf" mode="odd2odd-copy">
     <xsl:variable name="k" select="@key"/>
-    <xsl:for-each select="$ODD">
-      <xsl:choose>
-        <xsl:when test="key('odd2odd-DELETE',$k)"/>
-        <xsl:otherwise>
-          <memberOf xmlns="http://www.tei-c.org/ns/1.0" key="{$k}"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+    <xsl:choose>
+      <xsl:when test="$ODD/key('odd2odd-DELETE',$k)"/>
+      <xsl:otherwise>
+	<memberOf xmlns="http://www.tei-c.org/ns/1.0" key="{$k}">
+	  <xsl:copy-of select="@min|@max"/>
+	</memberOf>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="*" mode="odd2odd-copy">
@@ -834,7 +834,9 @@ for change individually.
                   <xsl:choose>
                     <xsl:when test="@mode='delete'"/>
                     <xsl:when test="@mode='add' or not (@mode)">
-                      <memberOf key="{@key}"/>
+                      <memberOf key="{@key}">
+			<xsl:copy-of select="@min|@max"/>
+		      </memberOf>
                     </xsl:when>
                   </xsl:choose>
                 </xsl:for-each>

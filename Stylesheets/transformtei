@@ -38,6 +38,7 @@ case $format in
       teitoxsd) ;;
     *) 
 	echo "  --odd                # perform processing of ODD (if appropriate)"
+	echo "  --localsource=DIR    # where is local copy of source of TEI Guidelines"
 	echo "  --summaryDoc         # only make summary, when doing ODD processing"
 	;;
 esac
@@ -74,6 +75,7 @@ odd=false
 verbose=false
 summaryDoc=""
 antflag=-q
+TEISOURCE=
 
 # epub only
 overlayfile=
@@ -111,6 +113,7 @@ while test $# -gt 0; do
     --css=*)        cssFile=-DcssFile=`echo $1 | sed 's/.*=//'`;;
     --fileperpage)  splitLevel="-DsplitLevel=-1"; fileperpage="-DfilePerPage=true";;
     --odd)          odd=true;;
+    --localsource=*)   TEISOURCE="`echo $1 | sed 's/.*=//'`";;
     --mediaoverlay) mediaoverlay="-Dmediaoverlay=true";;
        --profile=*)    profile=`echo $1 | sed 's/.*=//'`;;
      --oxygenlib=*)  oxygenlib=`echo $1 | sed 's/.*=//'`;;
@@ -136,6 +139,17 @@ while test $# -gt 0; do
   esac
   shift
 done
+
+if test "x$TEISOURCE" = "x"
+then
+  localsource=""
+else 
+  REALD=`dirname "$TEISOURCE"`
+  SDIR=`(cd $REALD; pwd)`
+  REALSOURCE=$SDIR/`basename $TEISOURCE`
+  echo using $REALSOURCE as default source
+  localsource=" -Dlocalsource=$REALSOURCE "
+fi
 
 version=`cat $APPHOME/VERSION`
 in=${1:?"no input file supplied; for usage syntax $0 --help"}
@@ -175,7 +189,8 @@ esac
 
 echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
-	-lib ${SAXONJAR} $debug $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress\
+	-lib ${SAXONJAR} $debug \
+    $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress $localsource \
         -Dodd=$odd \
         -Dverbose=$verbose \
 	-DinputFile="$indir/$infile" \

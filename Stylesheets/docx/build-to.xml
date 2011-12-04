@@ -31,15 +31,11 @@
   <property name="profile" value="default"/>
   <!-- which language -->
   <property name="lang" value="en"/>
-  <!-- whether to make summary odd doc  -->
-  <property name="summaryDoc" value="false"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
   <property name="teitoDocx"       value="${profileDir}/${profile}/docx/to.xsl"/>
   <property name="listgraphics"    value="../tools/makegraphicsanttask.xsl"/>
-  <property name="odd2oddxsl"      value="../odds2/odd2odd.xsl"/>
-  <property name="odd2litexsl"     value="../odds2/odd2lite.xsl"/>
   <dirname property="xslDir"       file="${teitoDocx}"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir"    file="${outputFile}"/>
@@ -49,14 +45,10 @@
     <pathelement path="${java.class.path}"/>
   </path>
 
-   <condition property="processODD">
-    <equals arg1="${odd}" arg2="true"/>
-  </condition>
-
   <condition property="makecoverpages">
     <available file="${profileDir}/${profile}/docx/makecoverpages.xsl"/>
   </condition>
-
+  <import file="../odds2/build-to.xml"/>
   <target name="setup">
     <!-- Recreate temporary output directory -->
     <taskdef name="images" classname="ImageTask" classpath="../tools/ImageInfo/ImageInfo.jar"/>
@@ -90,37 +82,6 @@
     <delete file="${outputTempDir}/newdocument.xml"/>
   </target>
 
-  <target name="notodd" unless="processODD">
-    <copy file="${inputFile}" tofile="${outputTempDir}/tmp2.xml" overwrite="true"/>
-  </target>
-
-  <target name="odd" if="processODD">
-    <echo>Do ODD processing</echo>
-    <xslt force="yes" style="${odd2oddxsl}" in="${inputFile}" out="${outputTempDir}/tmp1.xml" classpath="classpath">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="lang" expression="${lang}" if="lang"/>
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
-    <xslt force="yes" style="${odd2litexsl}" in="${outputTempDir}/tmp1.xml" out="${outputTempDir}/tmp2.xml" classpath="classpath">
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
-        </catalogpath>
-      </xmlcatalog>
-      <param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
-      <param name="displayMode" expression="rnc"/>
-    </xslt>
-  </target>
 
 
   <target name="transform">
