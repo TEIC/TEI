@@ -483,7 +483,7 @@ section in the Guidelines where this element is fully documented. </p>
 <p><specList>
 <specDesc key="exemplum"/>
   <specDesc key="eg"/> 
-  <specDesc key="egXML"/>
+  <specDesc key="egXML" atts="valid"/>
 </specList>
 </p>
 <p>The <gi>exemplum</gi> element is used to combine a single
@@ -491,12 +491,14 @@ illustrative example with an optional paragraph of commentary
 following or preceding it. The illustrative example itself may be
 marked up using either the <gi>eg</gi> or the <gi>egXML</gi>
 element.</p>
-<p>If an example contains  XML markup, it should be marked up using
-the <gi>egXML</gi> element. In such a case, it will clearly be necessary to
-distinguish the markup within the example from the
-markup of the document itself. In an XML schema environment, this is
-easily done by  using a different name
-space for the  <gi>egXML</gi> element. For example:
+
+<p>If an example contains XML markup, it should be marked up using the
+<gi>egXML</gi> element. In such a case, it will clearly be necessary
+to distinguish the markup within the example from the markup of the
+document itself. In an XML schema environment, this is easily done by
+using a different name space for the content of the <gi>egXML</gi>
+element. For example:
+
 <eg><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -504,10 +506,41 @@ to mark any technical term, thus :
   giving me a headache.</egXML></p>
 ]]></eg>
 </p>
+<p>When this approach is taken, but it is also desired to use markup within
+the example for example to indicate some aspect of its formatting, the
+markup concerned must be explicitly associated with the current (TEI)
+namespace, as in the following example:
+  <eg><![CDATA[
+<egXML xmlns="http://www.tei-c.org/ns/Examples"
+xmlns:tei="http://www.tei-c.org/ns/1.0">
+<div>
+    <head>A slide about <gi>egXML</gi></head>
+    <list>
+     <item><gi>egXML</gi>  can be used to give XML examples in the TEI
+Examples namespace</item>
+     <item>Attributes values for<att>valid</att>:
+      <list tei:rend="collapsed">
+      <item><val tei:rend="green">true</val>: intended to be fully
+valid</item>
+      <item><val tei:rend="amber">feasible</val>: valid if missing nodes
+provided</item>
+      <item><val tei:rend="red">false</val>: not intended to be valid</item>
+      </list>
+      </item>
+      <item>The<att>rend</att>  attribute in the TEI namespace can be
+used for recording how parts of the example was rendered.</item>
+      </list>
+</div>
+</egXML>
+]]>
+  </eg></p>
+<p>If complex rendition information is required, then the <att>rendition</att> attribute, in the TEI namespace, can be used.
+</p>
 <p>Alternatively, the XML tagging within an example may be
-<soCalled>escaped</soCalled>, either by using entity
-references, or by wrapping the whole example in a CDATA marked
-section:
+<soCalled>escaped</soCalled>, either by using entity references to
+represent the opening angle bracket, or by wrapping the whole example
+in a CDATA marked section:
+
 <eg><![CDATA[<p>The <gi>term</gi> element may be used 
 to mark any technical term, thus :
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -527,47 +560,14 @@ validate, and should therefore generally be avoided.
 <p>If the XML contained in an example is not well-formed then it must
 either be enclosed in a CDATA marked section, or
 <soCalled>escaped</soCalled> as above: this applies whether the
-<gi>eg</gi> or <gi>egXML</gi> is used. If it is well-formed but not
-valid, then it should be enclosed in a CDATA marked section within an
-<gi>egXML</gi>.</p>
+<gi>eg</gi> or <gi>egXML</gi> is used. The <att>valid</att> attribute
+on <gi>egXML</gi> may be used to indicate the XML validity of the example
+with respect to some schema, as being valid, invalid, or feasibly valid.
+</p>
 <p>An <gi>egXML</gi> element should not be used to tag non-XML
 examples: the general purpose <gi>eg</gi> or <gi>q</gi> elements
 should be used for such purposes.</p>
-<p>In order to encode information concerning the rendering of the example 
-in the original source (if there was one), it is recommended that the TEI <att>rend</att>
-attribute be used, in the TEI namespace.  To do so one should declare the TEI namespace with 
-a local prefix on the <gi>egXML</gi> element, and use this to refer to the TEI <att>rend</att> 
-attribute as opposed to the version of the <att>rend</att> attribute in the 
-  TEI Examples namespace. In the following example note how the 'tei:' local prefix for the TEI namespace is
-  declared and used with <att>tei:rend</att> to provide information about the coloring of the <gi>val</gi> 
-elements inside the TEI Examples namespaced elements.
 
-  <eg><![CDATA[
-<egXML xmlns="http://www.tei-c.org/ns/Examples"
-xmlns:tei="http://www.tei-c.org/ns/1.0">
-<div>
-    <head>A slide about<gi>egXML</gi></head>
-    <list>
-     <item><gi>egXML</gi>  can be used to give XML examples in the TEI
-Examples namespace</item>
-     <item>Attributes values for<att>valid</att>:
-      <list tei:rend="collapsed">
-      <item><val tei:rend="green">true</val>: intended to be fully
-valid</item>
-      <item><val tei:rend="amber">feasible</val>: valid if missing nodes
-provided</item>
-      <item><val tei:rend="red">false</val>: not intended to be valid</item>
-      </list>
-      </item>
-      <item>The<att>rend</att>  attribute in the TEI namespace can be
-used for recording how parts of the example was rendered.</item>
-      </list>
-</div>
-</egXML>
-]]>
-  </eg>
-If complex rendition information is required, then the <att>rendition</att> attribute, in the TEI namespace, can be used.
-</p>
 </div>
 <div type="div4" xml:id="TDcrystalsCEcl"><head>Classification of Components</head>
 <p>In the TEI scheme elements are assigned to one or more
