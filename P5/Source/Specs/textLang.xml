@@ -6,15 +6,14 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="TEXTLANG" ident="textLang">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="TEXTLANG" ident="textLang">
   <gloss>text language</gloss>
   <gloss version="2007-12-20" xml:lang="kr">텍스트 언어</gloss>
   <gloss version="2007-05-02" xml:lang="zh-tw"/>
   <gloss version="2008-04-06" xml:lang="es">lengua del texto</gloss>
   <gloss version="2007-06-12" xml:lang="fr">langues du texte</gloss>
   <gloss version="2007-11-06" xml:lang="it">lingua del testo</gloss>
-  <desc xml:id="textlang.desc">in a manuscript description, describes
-  the languages and writing systems identified within the manuscript
+  <desc xml:id="textlang.desc">describes the languages and writing systems identified within the bibliographic work  
   being described. </desc>
   <desc version="2007-12-20" xml:lang="kr">(<gi>langUsage</gi>에 기술된 기술과 반대로) 원고에서 사용된 언어와 글 체계를
     기술한다.</desc>
@@ -32,6 +31,7 @@ $Id$
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.msItemPart"/>
+    <memberOf key="model.biblPart"/>
   </classes>
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
@@ -44,7 +44,7 @@ $Id$
       <gloss version="2008-04-06" xml:lang="es">lengua principal</gloss>
       <gloss version="2007-06-12" xml:lang="fr">langue principale</gloss>
       <gloss version="2007-11-06" xml:lang="it">lingua principale</gloss>
-      <desc>supplies a code which identifies the chief language used in the manuscript.</desc>
+      <desc>supplies a code which identifies the chief language used in the bibliographic work.</desc>
       <desc version="2007-12-20" xml:lang="kr">원고에 사용된 주요 언어를 식별하는 부호를 제공한다.</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">提供一代碼，識別手稿中使用的主要語言。</desc>
       <desc version="2008-04-05" xml:lang="ja"> 当該手書き資料中で主に使用される言語を特定するコードを示す． </desc>
@@ -69,7 +69,7 @@ $Id$
       <gloss version="2008-04-06" xml:lang="es">otras lenguas</gloss>
       <gloss version="2007-06-12" xml:lang="fr">autres langues</gloss>
       <gloss version="2007-11-06" xml:lang="it">altre lingue</gloss>
-      <desc>one or more codes identifying any other languages used in the manuscript.</desc>
+      <desc>one or more codes identifying any other languages used in the bibliographic work.</desc>
       <desc version="2007-12-20" xml:lang="kr">원고에 사용된 다른 언어를 식별하는 하나 이상의 부호</desc>
       <desc version="2007-05-02" xml:lang="zh-tw">一個或多個代碼識別手稿中使用的任何其他語言。</desc>
       <desc version="2008-04-05" xml:lang="ja"> 当該手書き資料中で使用されている他の言語を特定する，ひとつ以上の コード． </desc>
@@ -108,7 +108,7 @@ $Id$
   </exemplum>
   <remarks>
     <p>Note that this element should not be used to document the
-languages or writing systems used for the description itself: as for
+languages or writing systems used for the bibliographic or manuscript description itself: as for
 all other TEI elements, such information should be provided by means of the
 global <att>xml:lang</att> attribute attached to the element
 containing the description. The same values should be used to identify
@@ -117,6 +117,7 @@ documented further in the <gi>language</gi> element.
 </p>
   </remarks>
   <listRef>
+    <ptr target="#COBICOI"/>
     <ptr target="#mslangs"/>
   </listRef>
 </elementSpec>

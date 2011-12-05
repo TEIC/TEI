@@ -4694,7 +4694,7 @@ would be empty:
 &relatedItem;
 </specGrp>
 </div>
-<div type="div4" xml:id="COBICON"><head>Notes and Other Additional Information</head>
+<div type="div4" xml:id="COBICON"><head>Notes, Languages, and Other Additional Information</head>
 <p>Explanatory notes about the publication of unusual items, the form of
 an item (e.g.  <mentioned>[Score]</mentioned> or <mentioned>[Microform]</mentioned>), or
 its provenance (e.g.  <mentioned>translation of ...</mentioned>) may be tagged
@@ -4713,7 +4713,47 @@ Text Processing.</title>
    <note>Classic polemic supporting descriptive over procedural
          markup in scholarly work.</note>
 </bibl></egXML>
- </p></div>
+ </p>
+<p>
+The <gi>textLang</gi> element may be used to record information about the languages used within a bibliographic item.
+<specList><specDesc key="textLang" atts="mainLang otherLangs"/></specList>
+This element can take the form of a simple note such as:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<textLang>Latin, with some glosses in Anglo-Saxon and French</textLang>
+</egXML>
+However, it is generally recommended where feasible to use the <att>mainLang</att> attribute to record the chief 
+language of the bibliographic item, and optionally the <att>otherLangs</att> to identify other languages used in the work. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<textLang mainLang="la" otherLangs="ang fr">Latin, with some glosses in Anglo-Saxon and French</textLang>
+</egXML>
+</p>
+<p>The <att>mainLang</att> and <att>otherLangs</att> attributes should use a language <q>tag</q> geenerated according to 
+<ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref> such as those used in ISO 639-1 (or three letter codes in ISO 639-2 or 639-3 if ISO 639-1 does not provide a two letter code).  The form and scope of language identifiers recommended by these
+Guidelines is based on the IANA standard described at <ptr target="#CHSH"/> and should be followed throughout. Where additional 
+detail is needed correctly  to describe a language, or to discuss its
+deployment in a given text, this should be done using the
+<gi>langUsage</gi> element in the TEI Header, within which
+individual <gi>language</gi> elements document the languages
+used: see <ptr target="#HD41"/>.  </p>
+<p>Note that the <gi>language</gi> element defines a particular
+combination of human language and writing system. Only one
+<gi>language</gi> element may be supplied for each such
+combination. Standard TEI practice also allows this element to be
+referenced by any element using the global <att>xml:lang</att>
+attribute in order to specify the language applicable to the content
+of that element. For example, assuming that <gi>language</gi>
+elements have been defined with the identifiers <ident>fr</ident> (for
+French), <ident>la</ident> (for Latin), and <ident>de</ident> (for
+German), a manuscript description written in French which specifies
+that a particular manuscript contains predominantly German but also
+some Latin material, might
+have a <gi>textLang</gi> element like the following:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="fr">
+<textLang xml:lang="fr" mainLang="de" otherLangs="la">allemand et latin</textLang>
+</egXML> For more information about the use of <gi>textLang</gi> in manuscript descriptions
+see: <ptr target="#mslangs"/>.</p>
+
+</div>
 <div type="div4" xml:id="COBICOO"><head>Order of Components within References</head>
 <p>The order of elements in <gi>bibl</gi> elements is not constrained.
  </p>
