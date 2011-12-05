@@ -167,6 +167,173 @@ example <ident type="class">model.divLike</ident> for a model class,
 and <ident type="class">att.global</ident> for an attribute class.
 </p>
 
+<div xml:id="AB-namecon">
+<head>TEI Naming Conventions</head>
+<p>These Guidelines use a more or less consistent set of conventions
+in the naming of XML elements and classes. This section summarizes
+those conventions.</p>
+<div>
+<head>Element and Attribute Names</head>
+<p>An unadorned name such as <q>blort</q> is the
+name of a TEI element or attribute. <note place="foot">During
+generation of TEI RelaxNG schema fragments, the patterns corresponding
+with these TEI names are given a prefix <code>tei</code> to allow them
+to co-exist with names from other XML namespace. This prefix is not
+visible to the end user, and is not used in TEI documentation. When
+generating multi-namespace schemas, however, the user needs to be
+aware of them. </note>.</p>
+<p>The following conventions apply to the choice of names :
+<list>
+<item>Elements are given generic identifiers as far as possible
+consisting of one or more <term>tokens</term>, by which we mean whole
+words or recognisable abbreviations of them, taken from the English
+language. </item>
+<item>Where an element name contains more than one token, the first
+letter of the second
+token, and of any subsequent ones, is capitalised, as in for example
+<gi>biblStruct</gi>, <gi>listPerson</gi>. This
+<soCalled>camelCasing</soCalled> is used also for attribute names and
+symbolic values. </item>
+<item>Module names also use whole words, for the most part, but are
+always all lower case. </item>
+<item>The specification for an element or attribute whose name
+contains abbreviations generally also includes a <gi>gloss</gi>
+element providing the expanded sense of the name.</item>
+<item>An element specification may also contain approved translations
+for element or attribute names in one or more other languages using
+the <gi>altIdent</gi> element; this is not however generally done in
+TEI P5.</item>
+</list>
+</p>
+
+<p>Whole words are generally preferred for clarity. The following
+abbreviations are however commonly used within generic identifiers:
+<list>
+
+<label>att</label>
+<item>attribute</item>
+<label>bibl</label>
+<item>bibliographic description or reference in a bibliography</item>
+<label>cat</label>
+<item>category, especially as used in text classification </item>
+<label>char</label>
+<item>character, typically a Unicode character</item>
+<label>doc</label>
+<item>document : this usually refers to the original source document
+which is being encoded,</item>
+<label>decl</label>
+<item>declaration : has a specific sense in the TEI
+Header, as discussed in <ptr target="#HD12"/></item>
+<label>desc</label>
+<item>description : has a specific sense in the TEI Header, as
+discussed in <ptr target="#HD12"/> </item>
+<label>grp</label>
+<item>group. In TEI usage, a group is distinguised from a list in that
+the former associates several objects which act as a single entity,
+while the latter does not. For example, a <gi>linkGrp</gi> combines
+several <gi>link</gi> elements which have certain properties in
+common, whereas a <gi>listBibl</gi> simply lists a number of otherwise
+unrelated <gi>bibl</gi> elements.</item>
+<label>interp</label>
+<item>interpretation or analysis</item>
+<label>lang</label><item>(natural) language</item>
+<label>ms</label><item>manuscript</item>
+<label>org</label>
+<item>organization, that is, a named group of people or legal entity</item>
+<label>rdg</label>
+<item>reading or version found in a specific witness</item>
+<label>ref</label><item>reference or link</item>
+<label>spec</label>
+<item>technical specification or definition</item>
+<label>stmt</label>
+<item>statement : used in a specific sense in the TEI Header,
+as discussed in <ptr target="#HD12"/></item>
+<label>struct</label>
+<item>structured : that is, containing a specific set of
+named elements rather than <soCalled>mixed content</soCalled></item>
+<label>val</label>
+<item>value, for example of a variable or an attribute</item>
+<label>wit</label>
+<item>witness: that is, a specific document which attests specific
+readings in a textual tradition or apparatus</item>
+</list>
+</p>
+<p>Some abbreviations are used inconsistently: for example,
+<gi>add</gi> is an addition, and <gi>addSpan</gi> is a spanning
+addition, but <gi>addName</gi> is an additional name, not the name of
+an addition. Such inconsistencies are relatively few in number, and it
+is hoped to remove them in subsequent revisions of the Guidelines.</p>
+<p>Some elements have very short abbreviated names: these are for the
+most part elements which are likely to be used very frequently in a
+marked up text, for example <gi>p</gi> (paragraph), <gi>s</gi>
+(segment) <gi>hi</gi> (highlighted phrase), <gi>ptr</gi> (pointer),
+<gi>div</gi> (division) etc. We do not specifically list such elements
+here: as noted above, an expansion of each such abbreviated name is
+provided within the documentation using the <gi>gloss</gi> element
+.</p>
+</div>
+</div>
+<div>
+<head>Class, macro, and datatype names</head>
+
+<p>All named objects other than elements and attributes have one of
+the following prefixes, which indicate whether the object is a module,
+an attribute class, a model class, a datatype, or a macro: <table>
+<row role="label">
+<cell>Component</cell>
+<cell>Name</cell>
+<cell>Example</cell>
+</row>
+<row><cell>Attribute 
+Classes</cell><cell>att.*</cell><cell>att.global</cell></row>
+<row><cell>Model 
+Classes</cell><cell>model.*</cell><cell>model.biblPart</cell></row>
+<row><cell>Macros</cell><cell>macro.*</cell><cell>macro.paraContent</cell></row>
+<row><cell>Datatypes</cell><cell>data.*</cell><cell>data.pointer</cell></row>
+</table>
+</p>
+<p>The concepts of model class, attribute class, etc. are defined in
+<ptr target="ST"/>.  Here we simply note some conventions about their
+naming. </p>
+
+<p>The following rules apply to attribute class names : <list>
+<item>Attribute class names take the form <code>att.xxx</code>, where
+<code>xxx</code> is typically an adjective, or a series of adjectives
+separated by dots, describing a property common to the attributes
+which make up the class.</item>
+<item>Attributes with the same name are considered to have the same
+semantics, whether the attribute is inherited from a class, or locally
+defined.</item>
+</list>
+</p>
+
+<p>The following rules apply to model class names: <list>
+<item>Model classes have names beginning <code>model.</code> followed
+by a <term>root name</term>, and zero or more suffixes as described
+below.</item>
+<item>A root name may be the name of an element, generally the
+prototypical parent or sibling for elements which are members of the
+class.</item>
+<item>The first suffix should be <code>Part</code>, if the class
+members are all children of the element named rootname; or
+<code>Like</code>, if the class members are all siblings of the
+element named <code>rootname</code>. </item>
+<item>The rootname <code>global</code> is used to indicate that class
+members are permitted anywhere in a TEI document.</item>
+<item>Additional suffixes may be added, prefixed by a dot, to
+distinguish subclasses, semantic or structural.</item>
+</list>
+</p>
+<p>For example, the class of elements which can form part of a
+<gi>div</gi> is called <ident>model.divPart</ident>. This class
+includes as a subclass the elements which can form part of a
+<gi>div</gi> in a spoken text, which is named
+<ident>model.divPart.spoken</ident></p>
+
+
+</div>
+
+
 
 <div type="div3" xml:id="ABTEI2"><head>Design Principles</head>
 	
