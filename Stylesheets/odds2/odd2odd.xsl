@@ -386,7 +386,12 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:for-each>
 	  </xsl:for-each>
 	</xsl:when>
-	<xsl:when test="exists($inc)">
+	<xsl:when test="@include">
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>Process module reference to [<xsl:value-of
+	    select="@key"/>] with inclusion of [<xsl:value-of
+	    select="@include"/>]</xsl:message>
+	  </xsl:if>
 	  <!-- get model and attribute classes regardless -->
 	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each
@@ -396,8 +401,6 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:with-param name="why">module (auto from include) <xsl:value-of select="$name"/></xsl:with-param>
 	      </xsl:call-template>
 	    </xsl:for-each>
-	  </xsl:for-each>
-	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS',$name)">
 	      <xsl:choose>
@@ -413,6 +416,10 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:otherwise>
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>Process module reference to [<xsl:value-of
+	    select="@key"/>] with exclusion of [<xsl:value-of select="@except"/>]</xsl:message>
+	  </xsl:if>
 	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each select="key('odd2odd-MODULE_MEMBERS',$name)">
 	      <xsl:if test="not(contains($exc,concat(' ',@ident,' ')))">
