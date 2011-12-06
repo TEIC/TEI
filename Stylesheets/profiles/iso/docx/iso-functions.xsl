@@ -340,6 +340,9 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="self::tei:series">true</xsl:when>
 	  <xsl:when test="self::tei:name">true</xsl:when>
 	  <xsl:when test="self::tei:note[parent::tei:biblStruct]">true</xsl:when>
+	  <xsl:when
+	      test="self::tei:note[@type='remark']">true</xsl:when>
+	  <xsl:when test="self::tei:note[@type='emphasize']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='end']">true</xsl:when>

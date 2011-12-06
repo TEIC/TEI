@@ -488,6 +488,41 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:call-template>
     </xsl:template>
 
+    
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc> Process notes which have a type attribute</desc>
+  </doc>
+
+  <xsl:template match="tei:note[@type]">
+    <xsl:choose>
+      <xsl:when test="@type='remark'">
+        <xsl:call-template name="create-remark"/>
+      </xsl:when>
+      <xsl:when test="@type='emphasize'">
+        <xsl:call-template name="create-emphasize"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="block-element">
+          <xsl:with-param name="pPr">
+            <w:pPr>
+              <w:pStyle>
+                <xsl:attribute name="w:val">
+                  <xsl:choose>
+                    <xsl:when test="@type">
+                      <xsl:value-of select="@type"/>
+                    </xsl:when>
+                    <xsl:otherwise>Note</xsl:otherwise>
+                  </xsl:choose>
+                </xsl:attribute>
+              </w:pStyle>
+            </w:pPr>
+          </xsl:with-param>
+          <xsl:with-param name="nop">false</xsl:with-param>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
     <xsl:template name="create-footnote">           
       <xsl:variable name="pPr">
 	<xsl:choose>
@@ -1331,5 +1366,36 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <xsl:template match="tei:p[@rend='Table units']"/>
+
+
+    <!-- 
+        OPMERKING
+    -->    
+    <xsl:template name="create-remark">
+      <w:r>
+	<w:rPr>
+	  <w:rStyle w:val="RemarkReference"/>
+	  <w:vanish/>
+	</w:rPr>
+	<w:t>OPMERKING</w:t>
+	<xsl:variable name="n">
+	  <xsl:number level="any"  count="tei:note[@type='remark']" />
+	</xsl:variable>
+	<!--	<w:commentReference w:id="{$n - 1}"/>-->
+      </w:r>
+    </xsl:template>    
+    
+    <!-- 
+        emphasize
+    -->    
+    <xsl:template name="create-emphasize">
+        <w:r>
+	  <w:rPr>
+	    <w:rStyle w:val="RemarkReference"/>
+	    <w:vanish/>
+	  </w:rPr>
+	  <w:t>[ </w:t>
+        </w:r>
+    </xsl:template>     
 
 </xsl:stylesheet>
