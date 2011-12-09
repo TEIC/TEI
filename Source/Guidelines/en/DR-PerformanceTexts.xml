@@ -9,14 +9,15 @@ $Id$
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="DR" n="10"><head>Performance Texts</head>
 <p>This module is intended for use when encoding printed dramatic
 texts, screen plays or radio scripts, and written transcriptions of any
-form of performance.
+other form of performance.
 </p> 
-<p>Section <ptr target="#DRFAB"/> discusses elements, such as cast lists,
+<p>Section <ptr target="#DRFAB"/> discusses elements such as cast lists,
 which can appear only in the front or back matter of printed dramatic
 texts. Section <ptr target="#DRBOD"/> discusses the structural
 components of performance texts: these include major structural
 divisions such as acts and scenes (section <ptr target="#DRDIV"/>);
-individual speeches (section <ptr target="#DRSP"/>); stage directions
+individual speeches (section <ptr target="#DRSP"/>); groups of
+speeches (section <ptr target="#DRSPG"/>); stage directions
 (section <ptr target="#DRSTA"/>); and the elements making up individual
 speeches (section <ptr target="#DRPAL"/>). Section <ptr target="#DREMB"/>
 discusses ways of encoding units which cross the simple hierarchic
@@ -128,18 +129,7 @@ following examples:
 
 <specGrp xml:id="DDRSET" n="The set element">
 
-
-
-
-
-
-
 &set;
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="DRPRO"><head>Prologues and Epilogues</head>
@@ -542,99 +532,33 @@ role description does function more like a heading:
 <!-- Soyinka, Madmen and Specialists, Methuen 1971 -->
  </p>
 <specGrp xml:id="DDRCAST" n="The castList element">
-
-
-
-
-
-
-
 &castList;
-
-
-
-
-
-
-
-
-
-
-
-
-&castGroup;
-
-
-
-
-
-
-
-
-
-
-
-
-&castItem;
-
-
-
-
-
-
-
-
-
-
-
-
-&role;
-
-
-
-
-
-
-
-
-
-
-
-
-&roleDesc;
-
-
-
-
-
-
-
-
-
-
-
-
+&castGroup; 
+&castItem; 
+&role; 
+&roleDesc; 
 &actor;
-
-
-
-
-
 </specGrp>
 </div>
 </div>
 <div type="div2" xml:id="DRBOD"><head>The Body of a Performance Text</head>
-<p>The body of a performance text may be divided into structural units,
-variously called acts, scenes, stasima, entr'actes, etc.  All such
-formal divisions should be encoded using an appropriate text-division
-element (<gi>div</gi>, <gi>div1</gi>, <gi>div2</gi>, etc.), as further
-discussed in section <ptr target="#DRDIV"/>.  Whether divided up into such
-units or not, all performance texts consist of sequences of speeches
-(see <ptr target="#DRSP"/>) and stage directions (see <ptr target="#DRSTA"/>).
-Speeches will generally consist of a sequence of
-<term>chunk</term>-level items:  paragraphs, verse lines, stanzas, or
-(in case of uncertainty as to whether something is verse or prose)
-<gi>seg</gi> elements (see <ptr target="#DRPAL"/>).</p>
+<p>The body of a performance text may be divided into structural
+units, variously called acts, scenes, stasima, entr'actes, etc.  All
+such formal divisions should be encoded using an appropriate
+text-division element (<gi>div</gi>, <gi>div1</gi>, <gi>div2</gi>,
+etc.), as further discussed in section <ptr target="#DRDIV"/>.
+Whether divided up into such units or not, all performance texts
+consist of sequences of speeches (see <ptr target="#DRSP"/>) and stage
+directions (see <ptr target="#DRSTA"/>).  In musical performances, it
+is also common to identify groups of speeches which act as a single
+unit, sometimes called a <term>number</term>; such units typically
+float within the structural hierarchy at the same level as speeches
+preceding or following them and cannot therefore be treated as 
+text-divisions. (see <ptr target="#DRSPG"/>). Speeches will generally
+consist of a sequence of <term>chunk</term>-level items: paragraphs,
+verse lines, stanzas, or (in case of uncertainty as to whether
+something is verse or prose) <gi>ab</gi> elements (see <ptr
+target="#DRPAL"/>).</p>
 <p>The boundaries of formal units such as verse lines or paragraphs do
 not always coincide with speech boundaries.  Units such as songs may be
 discontinuous or shared among several speakers.  As described below in
@@ -804,6 +728,56 @@ following example:
 <p>The <gi>sp</gi> and <gi>speaker</gi> elements are both declared
 within the core module (see section <ptr target="#CODV"/>).
 	</p></div>
+
+<div type="div3" xml:id="DRSPG"><head>Grouped speeches</head>
+<p>This module makes available the following additional element for
+handling groups of speeches: <specList><specDesc
+key="spGrp"/></specList></p>
+<p>The <gi>spGrp</gi> element is intended for cases where
+the characters in a performance launch into something which might be
+regarded almost as a kind of separate structural division, typically
+associated with its own heading or numbering system, but which
+<soCalled>floats</soCalled> in the text, at the same hierarchic level
+as speeches preceding or following it. Such units are often numbered,
+titled, and visually presented as distinct objects within the
+text. Here is a typical example from a well-known American musical comedy:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"
+       corresp="#GerStra"><spGrp type="number" n="3">
+<head>By Strauss : performed by Georges Guetary, Gene Kelly, and Oscar
+Levant</head>
+<sp><speaker>HENRI BAUREL</speaker>
+<lg><l>The waltzes of Mittel Europa </l>
+<l>They charm you and warm you within </l>
+<l>While each day discloses </l>
+<l>What Broadway composes </l>
+<l>Is emptiness pounding on tin.</l></lg>
+</sp>
+<sp xml:lang="de">
+<speaker>JERRY MULLIGAN: ADAM COOK:</speaker>
+<lg><l>Mein Herr! </l>
+<l>Mein Herr!</l>
+<l>Bitte, bitte!</l>
+<l>Denke, danke!</l>
+<l>Aufwiedersehen! Aufwiedersehen!</l></lg>
+</sp>
+<sp><speaker>HENRI BAUREL:</speaker>
+<lg><l>How can I be civil </l>
+<l>When hearing this drivel? </l>
+<l>It's only for night-clubbing souses. </l>
+<l>Oh give me the free 'n easy </l>
+<l>Waltz that is Viennes-y </l>
+<l>And go tell the band</l>
+<l>If they want a hand</l>
+<l>The waltz must be Strauss's</l></lg>
+</sp>
+<sp><speaker>ALL</speaker>
+<lg><l>Ya ya ya </l>
+<l>Give me oom pah pah...</l></lg>
+</sp>
+<!-- ... -->
+</spGrp>
+</egXML></p>
+</div>
 <div type="div3" xml:id="DRSTA"><head>Stage Directions</head>
 <p>Both between and within the speeches of a written performance text,
 it is normal practice to include a wide variety of descriptive
@@ -937,20 +911,9 @@ to confirm my speech. <move who="#lm" type="enter" where="C"/>
 Lo you! here she comes. This is her very guise; and,
 upon my life, fast asleep.</p>
 </sp></egXML></p>
-<specGrp xml:id="DDRSTA" n="Stage directions">
-
-
-
-
-
-
-
+<specGrp xml:id="DDRSTA" >
+&spGrp;
 &move;
-
-
-
-
-
 </specGrp>
 </div>
 <div type="div3" xml:id="DRPAL"><head>Speech Contents</head>
@@ -1028,33 +991,58 @@ notorious whelp, you insolent slave</l>
 </sp></egXML>
 </p>
 <p>In dramatic texts, the <gi>lg</gi> or line group element is most
-often of use for the encoding of songs and other stanzaic material, as
-further discussed in the next section.  Line groups may be fragmented
+often of use for the encoding of songs and other stanzaic material. Line groups may be fragmented
 across speakers in the same way as individual lines, and the same set of
-attributes is available to record this fact.  In the following example,
-an <gi>lg</gi> element is used to represent one verse of a song, which is
-divided between several voices:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DRPAL-eg-46"><stage type="head">Song — Sir Joseph</stage>
+attributes may be used to record this fact. The  element
+<gi>spGrp</gi> is provided in order to simplify the situation, very
+common in performances, where performance of a single entity, such as
+a song, is shared amongst several performers, as in the following
+example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"
+       corresp="#DRPAL-eg-46"><spGrp>
+<head>Song — Sir Joseph</head>
 <sp>
-  <lg type="song" part="I">
     <l>I am the monarch of the sea,</l>
     <l>The ruler of the Queen's Navee.</l>
     <l>Whose praise Great Britain loudly chants.</l>
-  </lg> </sp>
+</sp>
 <sp>
   <speaker>Cousin Hebe</speaker>
-  <lg type="song" part="M">
     <l>And we are his sisters and his cousins and his aunts!</l>
-  </lg> </sp>
+</sp>
 <sp>
   <speaker>Rel.</speaker>
-  <lg type="song" part="F">
     <l>And we are his sisters and his cousins and his aunts!</l>
-  </lg> </sp></egXML>
-<!-- W.S. Gilbert: HMS Pinafore p. 11 -->
-These elements are all defined in the core, and are thus available to
-every TEI document without formality.  A more detailed discussion of the
-encoding of verse is provided in chapter <ptr target="#VE"/>.</p></div>
+</sp>
+<!-- ... -->
+</spGrp>
+</egXML>
+</p>
+<p>This encoding however does not indicate that the three lines of
+Sir Joseph's song and the two lines following it together constitute a
+single verse stanza. This can be indicated by using the <att>part</att>
+attribute, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"
+       corresp="#DRPAL-eg-46"><spGrp>
+<head>Song — Sir Joseph</head>
+<sp><lg part="I">
+    <l>I am the monarch of the sea,</l>
+    <l>The ruler of the Queen's Navee.</l>
+    <l>Whose praise Great Britain loudly chants.</l>
+</lg></sp>
+<sp>
+  <speaker>Cousin Hebe</speaker>
+<lg part="M"> <l>And we are his sisters and his cousins and his aunts!</l></lg>
+</sp>
+<sp>
+  <speaker>Rel.</speaker>
+<lg part="F">    <l>And we are his sisters and his cousins and his aunts!</l></lg>
+</sp>
+<!-- ... -->
+</spGrp>
+</egXML>
+</p>
+</div>
 <div type="div3" xml:id="DREMB"><head>Embedded Structures</head>
 <p>Although primarily composed of speeches, performance texts often
 contain other structural units such as songs or strophes which are
@@ -1126,9 +1114,12 @@ it as a floating text:
 element, each of its constituent parts must be regarded as a distinct
 fragment; the problem then facing the encoder is to reconstitute the
 interrupted whole in some way.</p>
-<p>As already noted above, the <att>part</att> attribute may be used to
+<p>As already noted above, the <gi>spGrp</gi> element may be used to
+group together consecutive speeches which are grouped together in some
+way, for example constituting a single song. Alternatively the
+<att>part</att> attribute, typically used to
 indicate that an <gi>l</gi> element contains a partial, not a complete,
-verse line.  The same attribute may be used on the <gi>lg</gi> element,
+verse line, may also be used on the <gi>lg</gi> element,
 to indicate that the line group is partial rather than complete, thus:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DR-eg-07"><sp><speaker>Kelly</speaker>
    <stage>(wheeling quietly in his semi-dance,
@@ -1233,9 +1224,6 @@ might be encoded as follows:
     </div1>
   </body>
 </text></egXML>
-<!-- Suppressed N att on JOIN on the theory that N is for     -->
-	<!-- numbers or similar symbols, and 'True Love Know' does    -->
-	<!-- not qualify.  (msm)                                      -->
 The location of the <gi>join</gi> element is not significant; here it
 has been placed shortly after the conclusion of the song, in order to
 have it close to the fragments it unifies.</p>
@@ -1414,68 +1402,11 @@ other stage directions by using the specialized <gi>tech</gi> element:
 within a speech or between speeches.
  </p>
 <specGrp xml:id="DDROTH" n="Screenplays and other technical matters">
-
-
-
-
-
-
-
 &view;
-
-
-
-
-
-
-
-
-
-
-
-
 &camera;
-
-
-
-
-
-
-
-
-
-
-
 &sound;
-
-
-
-
-
-
-
-
-
-
-
 &caption;
-
-
-
-
-
-
-
-
-
-
-
 &tech;
-
-
-
-
-
 </specGrp>
 
 </div></div>
