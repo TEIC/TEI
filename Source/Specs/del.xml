@@ -46,6 +46,11 @@
         weht der Wind</l>
     </egXML>
   </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <del rend="overstrike"><gap reason="illegible" quantity="5" unit="character"/></del>
+    </egXML>
+  </exemplum>
   <exemplum version="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fr-ex-Gide_Journal">
       <p>[...] mais il y reste quelque chose de mystérieux, de furtif. <del rend="overtyped">Je</del> On cesse un instant d'y penser; <del rend="overstrike">les </del>mes yeux se
@@ -59,24 +64,30 @@
     </egXML>
   </exemplum>
   <remarks>
-    <p>Degrees of uncertainty over what can still be read may be indicated by use of the
-        <gi>certainty</gi> element (see <ptr target="#CE"/>).</p>
+    <p>Degrees of uncertainty over what can still be read, or whether a deletion was intended may be
+      indicated by use of the <gi>certainty</gi> element (see <ptr target="#CE"/>).</p>
     <p>This element should be used for deletion of shorter sequences of text, typically single words
       or phrases. The <gi>delSpan</gi> element should be used for longer sequences of text, for
       those containing structural subdivisions, and for those containing overlapping additions and
       deletions.</p>
-    <p>The text deleted must be at least partially legible, in order for the encoder to be able to
-      transcribe it. Illegible text within a deletion may be marked using the <gi>gap</gi> tag to
-      signal that text is present but has not been transcribed. Attributes on the <gi>gap</gi>
+    <p>The text deleted must be at least partially legible in order for the encoder to be able to
+      transcribe it (unless it is restored in a <gi>supplied</gi> tag). Illegible or lost text within a 
+      deletion may be marked using the <gi>gap</gi> tag to signal that text is present but has not
+      been transcribed, or is no longer visible. Attributes on the <gi>gap</gi>
       element may be used to indicate how much text is omitted, the reason for omitting it, etc. If
       text is not fully legible, the <gi>unclear</gi> element (available when using the additional
       tagset for transcription of primary sources) should be used to signal the areas of text which
-      cannot be read with confidence in a similar way. See further sections <ptr target="#PHOM"/>
-      and, for the close association of the <gi>del</gi> tag with the <gi>gap</gi>, <gi>damage</gi>,
+      cannot be read with confidence in a similar way.</p>
+    <p>There is a clear distinction in the TEI between <gi>del</gi>, which is a statement of the
+     the or a later scribe's intent to cancel or remove text, and elements such as 
+      <gi>gap</gi> or <gi>unclear</gi> which signal the editor's decision to omit or inability to read the text
+      remaining.
+    See further sections <ptr target="#PHOM"/> and, for the close association of the
+      <gi>del</gi> tag with the <gi>gap</gi>, <gi>damage</gi>,
         <gi>unclear</gi> and <gi>supplied</gi> elements (the latter three tags available when using
       the additional tagset for transcription of primary sources), <ptr target="#PHCOMB"/>.</p>
     <p>The <gi>del</gi> tag should not be used for deletions made by editors or encoders. In these
-      cases, either the <gi>corr</gi> tag or the <gi>gap</gi> tag should be used.</p>
+      cases, either <gi>corr</gi>, <gi>surplus</gi> or <gi>gap</gi> should be used.</p>
   </remarks>
   <remarks xml:lang="fr">
     <p>Cf. <gi>gap</gi>.</p>
