@@ -183,7 +183,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text> </xsl:text>
   </xsl:template>
 
-  <xsl:template match="tei:milestone[@unit='line">
+  <xsl:template match="tei:milestone[@unit='line']">
     <br/>
   </xsl:template>
 
