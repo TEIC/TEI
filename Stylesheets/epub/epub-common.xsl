@@ -236,6 +236,17 @@ of this software, even if advised of the possibility of such damage.
     <p><i><xsl:value-of select="tei:resp"/></i>:
       <xsl:value-of select="tei:name"/></p>
   </xsl:template>
+
+  <xsl:template match="tei:list" mode="metadata">
+    <ul>
+      <xsl:apply-templates mode="metadata"/>
+    </ul>
+  </xsl:template>
+  <xsl:template match="tei:item" mode="metadata">
+    <li>
+      <xsl:apply-templates mode="metadata"/>
+    </li>
+  </xsl:template>
   <xsl:template match="tei:relatedItem[@target]" mode="metadata" priority="10">
     <a href="{@target}">
       <xsl:value-of select="@target"/>
