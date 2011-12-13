@@ -355,9 +355,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="."/>
   </xsl:template>
   <xsl:template match="*" mode="metadata">
-    <p>
-      <xsl:apply-templates/>
-    </p>
+    <xsl:choose>
+      <xsl:when test="tei:p">
+	  <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<p>
+	  <xsl:apply-templates/>
+	</p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:seriesStmt/tei:p">
     <xsl:apply-templates/>
