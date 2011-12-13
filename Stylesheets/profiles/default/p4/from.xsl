@@ -390,6 +390,13 @@ of this software, even if advised of the possibility of such damage.
     </xsl:attribute>
   </xsl:template>
 
+ <!-- word key -->
+  <xsl:template match="entryFree/@key">
+    <xsl:attribute name="sortKey">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
   <!-- tagsDecl has a compulsory namespace child now -->
   <xsl:template match="tagsDecl">
     <xsl:if test="*">
