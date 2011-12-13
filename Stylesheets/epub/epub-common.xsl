@@ -182,6 +182,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:lb[@rend='space']">
     <xsl:text> </xsl:text>
   </xsl:template>
+
+  <xsl:template match="tei:milestone[@unit='line">
+    <br/>
+  </xsl:template>
+
   <xsl:template match="tei:titleStmt" mode="metadata">
     <h3>Title statement</h3>
     <xsl:apply-templates mode="metadata"/>
