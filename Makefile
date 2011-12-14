@@ -107,7 +107,7 @@ teiwebsiteguidelines:
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=kr DOCUMENTATIONLANGUAGE=kr html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ko DOCUMENTATIONLANGUAGE=ko html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 
@@ -298,7 +298,7 @@ dist-doc.stamp:
 	rm html-web.stamp;make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
 	rm html-web.stamp;make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
 	rm html-web.stamp;make LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
-	rm html-web.stamp;make LANGUAGE=kr DOCUMENTATIONLANGUAGE=kr html-web
+	rm html-web.stamp;make LANGUAGE=ko DOCUMENTATIONLANGUAGE=ko html-web
 	rm html-web.stamp;make LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
 	rm html-web.stamp;make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
 	rm html-web.stamp;make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
