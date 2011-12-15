@@ -771,6 +771,15 @@ of this software, even if advised of the possibility of such damage.
     </cesDoc>
 </xsl:template>
 
+<!-- found in Perseus -->
+
+  <xsl:template match="lg1|lg2|lg3|lg4">
+    <lg>
+    <xsl:apply-templates 
+        select="*|@*|processing-instruction()|comment()|text()"/>
+    </lg>
+  </xsl:template>
+
 <!-- from OTA DTD -->
   <xsl:template match="spkr">
     <speaker>
