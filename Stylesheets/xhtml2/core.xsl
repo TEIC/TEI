@@ -1026,7 +1026,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:call-template name="noteN"/>
                 </sup>
               </a>
-              <xsl:if test="following-sibling::node()[1][self::tei:note']">
+              <xsl:if test="following-sibling::node()[1][self::tei:note]">
                 <sup>
                   <xsl:text>,</xsl:text>
                 </sup>
