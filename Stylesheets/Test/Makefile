@@ -4,6 +4,15 @@ OXY=/usr/share/oxygen
 default: conversions-from conversions-to test-html test-latex test-fo oddbyexample odd2odd
 
 test-html:
+	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
+	diff -r -x .svn files expected-results/testnotes
+	rm -rf files
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false)
+	diff -r -x .svn files expected-results/testnotes2
+	rm -rf files
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
+	diff -r -x .svn files expected-results/testnotes
+	rm -rf files
 	saxon -o:test.html  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:test4.html -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
@@ -17,15 +26,6 @@ test-html:
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
-	diff -r -x .svn files expected-results/testnotes
-	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
-	diff -r -x .svn files expected-results/testnotes
-	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false)
-	diff -r -x .svn files expected-results/testnotes2
-	rm -rf files
 
 testsplit:
 	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
