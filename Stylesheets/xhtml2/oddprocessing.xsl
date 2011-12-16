@@ -186,6 +186,7 @@ of this software, even if advised of the possibility of such damage.
             </head>
             <body id="TOP">
               <xsl:call-template name="bodyMicroData"/>
+              <xsl:call-template name="bodyHook"/>
               <xsl:call-template name="guidelinesTop">
                 <xsl:with-param name="name">
                   <xsl:value-of select="$name"/>
