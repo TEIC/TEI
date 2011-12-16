@@ -23,7 +23,7 @@ version=
 package=TEIP5
 while test $# -gt 0; do
   case $1 in
-    --sfuser)      SFUSER=`echo $1 | sed 's/.*=//'`;;
+    --sfuser=*)      SFUSER=`echo $1 | sed 's/.*=//'`;;
     --dummy)       ECHO=echo;;
     --package=*)   package=`echo $1 | sed 's/.*=//'`;;
     --version=*)   version=`echo $1 | sed 's/.*=//'`;;
