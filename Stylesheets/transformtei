@@ -161,7 +161,7 @@ then
    outfile=`basename "$1" .$from`$outsuffix
    outdir=$indir
 else
-   outfile=$2
+   outfile=`basename $2`
    O=`dirname $2`
    outdir=`(cd $O; pwd)`
 fi
@@ -187,7 +187,7 @@ case $format in
 	  ;;
 esac
 
-echo Convert $infile to $outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
+echo Convert $infile to $outdir/$outfile \($from to $to\) using profile $profile $debug $fileperpage $splitLevel $viewportwidth $viewportheight 
 ant $antflag -f $APPHOME/$format/build-$direction.xml \
 	-lib ${SAXONJAR} $debug \
     $fileperpage $cssFile $splitLevel $viewportwidth $viewportheight $summaryDoc $mediaoverlay $nocompress $localsource \
