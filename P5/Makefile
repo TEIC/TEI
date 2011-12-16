@@ -293,6 +293,11 @@ dist-doc.stamp:
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
 	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
+	@echo BUILD: Make web pages for release notes
+	for i in ReleaseNotes/readme*xml; \
+	do  teitohtml --css=html/guidelines.css $$i  \
+		./release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
+	done
 	@echo BUILD: Make web guidelines in all supported languages
 	make html-web
 	rm html-web.stamp;make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
@@ -304,10 +309,6 @@ dist-doc.stamp:
 	rm html-web.stamp;make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
-	@echo BUILD: Make web pages for release notes
-	for i in ReleaseNotes/readme*xml; do  teitohtml --css=html/guidelines.css $$i  \
-		release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
-	done
 	@echo BUILD: make PDF version of Guidelines
 	make pdf
 	@echo BUILD: make ePub and Kindle version of Guidelines
