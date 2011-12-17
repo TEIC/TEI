@@ -46,7 +46,7 @@ Physical Bibliography workgroup.</p-->
       <p>These Guidelines are mostly concerned with the preparation of digital texts in which
          pre-existing sources are transcribed or otherwise converted into character form, and marked
          up in XML. However, it is also very common practice to make a different form of
-            <soCalled>digital text</soCalled>, which is instead compose[bd of digital images of the
+            <soCalled>digital text</soCalled>, which is instead composed of digital images of the
          original source, typically one per page, or other written surface. We call such a resource
          a <term>digital facsimile</term>. A digital facsimile may, in the simplest case, just
          consist of a collection of images, with some metadata to identify them and the source
@@ -105,7 +105,7 @@ Physical Bibliography workgroup.</p-->
          kind of written surface and to link such elements with digital facsimile images of them.
          Typical applications include the provision of full text search in <soCalled>digital
             facsimile editions</soCalled>, and ways of annotating graphics, for example so as to
-         identify individuals appearing in group portraits and link them to data about the peeople
+         identify individuals appearing in group portraits and link them to data about the people
          represented. </p>
 
       <p>The following elements are available to represent components of a digital facsimile: <specList>
@@ -130,7 +130,7 @@ Physical Bibliography workgroup.</p-->
             <item>a TEI Header and a facsimile element</item>
             <item>a TEI Header and a sourceDoc element</item>
             <item>a TEI Header, a facsimile element, and a text element</item>
-            <item>a TEI Header, a sourceDoc element, and a text element</item>
+            <item>a TEI Header, one or more sourceDoc or facsimile elements, and a text element</item>
          </list>
       </p>
       <p>Like the <gi>text</gi> element, a <gi>facsimile</gi> element may also contain an optional
@@ -193,7 +193,7 @@ Physical Bibliography workgroup.</p-->
 
       <p>Simply grouping related graphics is not however the main purpose of the <gi>surface</gi>
          element: rather it is to help identify the location and size of the various two-dimensional
-         spaces constituting the digital facsimile. Note however that the actual dimensions of the
+         spaces constituting the digital facsimile. Note that the actual dimensions of the
          object represented are not provided by the <gi>surface</gi> element ; rather, the
             <gi>surface</gi> element defines an abstract coordinate space which may be used to
          address parts of the image. Four attributes supplied by the <ident type="class"
@@ -351,7 +351,7 @@ used to define a polygon of any shape using this coordinate system:-->
             </facsimile></egXML> Note that the location of each zone is defined independently but
          using the same coordinate system.</p>
 
-      <p>A non rectangular-zone, for example that containing the word <mentioned>cloches</mentioned>
+      <p>A non rectangular-zone, for example that containing the word <mentioned>cloche.</mentioned>
          at bottom left of the page, could also be defined, using the <att>points</att> attribute :
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile>
                <surface ulx="0" uly="0" lrx="200" lry="300">
@@ -508,9 +508,9 @@ used to define a polygon of any shape using this coordinate system:-->
             section <ptr target="#SASE"/> may also be used to indicate smaller sequences of tokens
             within <gi>zone</gi>, or <gi>line</gi> as appropriate. </p>
 
-         <p>Returning to the preceding example, within a <gi>sourceDoc</gi> element, we might
-            transcribe the content of the zone we gave the identifier <ident>B49rPara2</ident>
-            within it as follows : </p>
+         <p>Returning to the preceding example,  we might
+            transcribe the content of the zone to which we gave the identifier <ident>B49rPara2</ident>
+            within a <gi>sourceDoc</gi> element as follows : </p>
          <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <sourceDoc>
                <surface ulx="0" uly="0" lrx="200" lry="300">
@@ -614,13 +614,17 @@ used to define a polygon of any shape using this coordinate system:-->
       <p>In either case, it is customary in transcriptions to register certain features of the
          source, such as ornamentation, underlining, deletion, areas of damage and lacunae. This
          chapter provides ways of encoding such information: <list type="simple">
-            <item>first, methods of recording editorial or other alterations to the text, such as
+            <item>methods of recording editorial or other alterations to the text, such as
                expansion of abbreviations, corrections, conjectures, etc. (section <ptr
                   target="#PHCH"/>)</item>
-            <item>then, methods of describing important extra-linguistic phenomena in the source:
+            <item>methods of describing important extra-linguistic phenomena in the source:
                unusual spaces, lines, page and line breaks, changes of manuscript hand, etc.
                (section <ptr target="#PHPH"/>)</item>
-            <item>finally, a method of recording material such as running heads, catch-words, and
+<item>methods of representing complex organizations of surfaces and
+zones (section <ptr target="#PH-surfzone"/>) </item>
+<item>methods of representing aspects of layout such as spacing or
+lines  <ptr target="#PHLAY"/>  </item>
+            <item>methods of representing material such as running heads, catch-words, and
                the like (section <ptr target="#PHSK"/>)</item>
          </list></p>
 
@@ -2560,13 +2564,12 @@ xmlns="http://www.tei-c.org/ns/Examples">
 
    </div>
 
-   <div>
+   <div xml:id="PHLAY">
       <head>Aspects of Layout</head>
-      <p>Finally in this chapter we present elements which may be used
-      to capture some general aspects of the
+      <p>The following methods are available
+      to capture general aspects of the
          layout of material on a page where this is considered
 	 important. 
-
 Within the <gi>sourceDoc</gi> element, as already
 	 indicated, the element <gi>surface</gi> and
 	 <gi>surfaceGrp</gi> enable the encoder to represent directly
