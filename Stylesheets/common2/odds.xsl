@@ -186,8 +186,8 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:if test="following-sibling::tei:*"> 
 	    <xsl:text> </xsl:text>
 	  </xsl:if>
+	</xsl:for-each>
 	<xsl:text>]</xsl:text>
-      </xsl:for-each>
     </xsl:if>
   </xsl:template>
 
