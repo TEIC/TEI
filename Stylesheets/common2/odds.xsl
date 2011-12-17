@@ -44,8 +44,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="makeDescription">
     <xsl:param name="includeValList">false</xsl:param>
-    <xsl:param name="checkXref">false</xsl:param>
     <xsl:param name="coded">true</xsl:param>
+    <xsl:param name="showListRef">true</xsl:param>
     <xsl:variable name="documentationLanguage">
       <xsl:call-template name="generateDoc"/>
     </xsl:variable>
@@ -179,10 +179,14 @@ of this software, even if advised of the possibility of such damage.
         </xsl:for-each>
       </xsl:when>
     </xsl:choose>
-    <xsl:if test="tei:listRef">
-      <xsl:for-each select="tei:listRef/tei:*">
-	<xsl:text> </xsl:text>
-	<xsl:apply-templates select="." mode="weave"/>
+    <xsl:if test="tei:listRef and $showListRef='true'">
+	<xsl:text> [</xsl:text>
+	<xsl:for-each select="tei:listRef/tei:*">
+	  <xsl:apply-templates select="." mode="weave"/>
+	  <xsl:if test="following-sibling::tei:*"> 
+	    <xsl:text> </xsl:text>
+	  </xsl:if>
+	<xsl:text>]</xsl:text>
       </xsl:for-each>
     </xsl:if>
   </xsl:template>

@@ -933,7 +933,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:element>
     <xsl:call-template name="showSpace"/>
-    <xsl:call-template name="makeDescription"/>
+    <xsl:call-template name="makeDescription">
+      <xsl:with-param name="showListRef">false</xsl:with-param>
+    </xsl:call-template>
     <xsl:choose>
       <xsl:when test="$atts='-'"/>
       <xsl:when test="$atts='+'">
