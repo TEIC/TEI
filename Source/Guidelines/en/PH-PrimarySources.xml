@@ -2182,12 +2182,14 @@ has identifier <val>z2</val>. -->
          <div xml:id="undo">
             <head>Confirmation, Cancellation, and Reinstatement of Modifications</head>
 
-            <p>In a draft version of Goethe’s Faust, a passage was struck through once in pencil
+            <p><!--In a draft version of Goethe’s Faust, a passage was struck through once in pencil
                during one revision and then again with ink during a later revision, supposedly to
                confirm the deletion. <figure>
                   <graphic url="Images/faust_redo.jpg" width="90%"/>
                   <head rend="it">Fixation of a deletion in Goethe’s Faust</head>
-               </figure> A writer may also indicate that an alteration is itself to be altered: for
+               </figure> 
+-->
+A writer may <!--also--> indicate that an alteration is itself to be altered: for
                example, a struck-through passage may be restored via a dotted underlining, or the
                underlining of a passage may be deleted by a wavy line.</p>
 
@@ -2197,7 +2199,7 @@ has identifier <val>z2</val>. -->
                </specList>
             </p>
 
-            <p>The <gi>redo</gi> element might be used to encode the Faust example above as
+<!--            <p>The <gi>redo</gi> element might be used to encode the Faust example above as
                follows:</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
                <line><redo xml:id="redo_3" hand="#g_t" target="#mod_1" cause="fix"/><mod
@@ -2205,8 +2207,8 @@ has identifier <val>z2</val>. -->
                   hagren, triſten, krummgezog<mod rend="strikethrough">nen</mod>ener Nacken</line>
                <line>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_1"/></line>
             </egXML>
-
-            <!-- NOTE insert narrative explanation -->
+-->
+   
 
 
             <p>The element <gi>restore</gi> (<ptr target="#PHCD"/>) is provided for the
@@ -2790,17 +2792,18 @@ breaks, page
          </specList>
       </p>
 
-      <p>In the following example taken from the genetic edition of Goethe’s Faust, the editor has
+      <p>In the following example an editor has
          identified four distinct changes:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <profileDesc>
             <creation>
                <listChange ordered="true">
-                  <change xml:id="ST-1">First stage, written in ink by a writer</change>
-                  <change xml:id="ST-2">Second stage, written in Goethe's hand using pencil</change>
-                  <change xml:id="ST-3">Fixation of the revised passages and further revisions by
-                     Goethe using ink</change>
-                  <change xml:id="ST-4">Addition of another stanza in a different hand, probably at
+                  <change xml:id="ST-1">First stage, written in ink </change>
+                  <change xml:id="ST-2">Second stage, with revisions written in the author's hand using pencil</change>
+                  <change xml:id="ST-3">Fixation of the pencilled
+		  revisions together with further revisions in the
+		  author's hand using  ink</change>
+                  <change xml:id="ST-4">Additions in a different hand, probably at
                      a later stage</change>
                </listChange>
             </creation>
@@ -2809,16 +2812,16 @@ breaks, page
       <p>The <gi>listChange</gi> element carries an attribute <att>ordered</att>, which can take the
          values <code>true</code> or <code>false</code> (the default). The attribute specifies
          whether the order of child elements signifies a temporal order for the revision campaigns
-         which they document. In the Faust example above, the editor has asserted that the four
+         which they document. In the example above, the editor has asserted that the four
          stages distinguished are ordered chronologically according to the order of the
-            <gi>change</gi> elements. Note that asserting a specific order early on, though probably
+            <gi>change</gi> elements. <!-- Note that asserting a specific order early on, though probably
          one of the hardest tasks in a genetic analysis, can considerably reduce the encoding effort
          in assigning textual alterations to stages during the transcription, as we will see below.
          For instance deletions can only be assigned to a stage that follows the one in which the
          passage being deleted was written down. Hence, having a certain order of stages put in
          place before transcription begins will allow the encoder to reduce verbose tagging, where
          default assumptions based on the natural order of actions can be made.</p>
-      <p>If necessary, <gi>listChange</gi> elements can be nested hierarchically. This may be
+      <p>--> If necessary, <gi>listChange</gi> elements can be nested hierarchically. This may be
          helpful in two cases. Firstly one can build up hypotheses about related revisions
          step-by-step, starting with stages of smaller coverage, whose members are certainly
          related, and then in a subsequent pass grouping these stages in turn, thereby extending
@@ -2885,21 +2888,62 @@ breaks, page
             </creation>
          </profileDesc>
       </egXML>
-      <p>Each <gi>change</gi> element, apart from declaring a distinct change in the creation of the
-         document, may also contain references to other annotations contained within the
-            <gi>teiHeader</gi> or in the document (as shown in the previous example). Such
-         references, along with the textual content, are purely documentary and do not affect the
-         textual stage associated with any element thus referred to. The association of a textual
-         component with a change is always made explicitly, either by using the <att>target</att>
-         attribute on the <gi>change</gi> element to point to one or more elements, or (preferably)
-         by pointing from the element or elements concerned to the <gi>change</gi> element by means
-         of their <att>change</att> attribute:</p>
+      <p>Each <gi>change</gi> element, apart from declaring a distinct
+      change in the creation of the document, may also contain
+      references to other annotations contained within the
+      <gi>teiHeader</gi> or in the document (as shown in the previous
+      example). Such references, along with the textual content, are
+      purely documentary and do not affect the textual stage
+      associated with any element thus referred to. The association of
+      a textual component with a change is always made explicitly,
+      either by using the <att>target</att> attribute on the
+      <gi>change</gi> element to point to one or more elements, or by
+      pointing from the element or elements concerned to the
+      <gi>change</gi> element by means of their <att>change</att>
+      attribute. If a <gi>change</gi> element is associated with some
+      element, it is also associated with all of that element's
+      children, unless otherwise indicated, for example by a new value
+      for the <att>change</att> attribute. </p>
+<p>In the following simple example, the text at one stage read <q>This
+is a mouse</q>, and at the next <q>This is a house mouse</q>:
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <line change="#firstStage">This is a 
+	 <add change="#secondStage">house</add>
+	 mouse.</line>
+      </egXML>
+</p>
+<p>In this example, however, the text originally read <q>This is a
+house</q>, and subsequently <q>This is a mouse</q>:
+
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <line change="#firstStage">This is a <mod type="subst" change="#secondStage">
                <del>house</del>
                <add>mouse</add>
             </mod>.</line>
       </egXML>
+Note that in this case both the deletion and the addition are
+associated with the second stage. The word <q>house</q>, because it was deleted at the second
+stage, must have been present at the first stage, whereas the word
+<q>mouse</q> must have been added during the second stage.  </p>
+
+<p>Elements such as <gi>add</gi> and <gi>del</gi> and the like carry
+an implied semantics concerning the order in which events in the
+writing of a document was carried out: something which is deleted must
+have been written before it was deleted; something which is added must
+have been added at a later stage of the writing. Even when a
+combination of such elements is used, the chronology can usually be
+inferred (see further <ptr target=""/>). Explicit indication of the
+stage to which some modification belongs is mostly useful in
+situations where all the alterations identified in a document are to
+be grouped, for example chronologically. <!--For example, in the
+manuscript of Goethe's <title>Helena</title> two distinct stages have
+been identified, one dating from 1800, and one from 1825. 
+<figure><graphic url="goethe-hel.jpg"/></figure></p>
+In each line occur alterations. Their belonging to different phases of the writing process may be indicated in the following way:
+
+following ...-->
+<!--
       <p>This simple example shows the latter of the two options: The relevant changes are declared
          in the header; then textual alterations and acts of writing are associated with them. The
          above markup indicates that the whole sentence was realized in the first stage, while the
@@ -2940,21 +2984,21 @@ breaks, page
             <l>Wenn ihr nur piepſet iſt die Welt ſchon matt.<anchor xml:id="anchor_delSpan_1"/></l>
          </div>
       </egXML>
-      <p>Note first that a change, once assigned to an element, is inherited by all descendants of
+     <p>Note first that a change, once assigned to an element, is inherited by all descendants of
          that element unless overridden by a subsequent assignment. So in the example above the
          three lines are assigned to the first stage initially. The writing of
             <mentioned>Nun</mentioned> (as part of the substitution in the first line) takes place
          in the second stage and is repeated or fixed in the third. Also the substitution in the
          second line is done repeatedly: initially it takes place in the second stage, but is
-         fixated as a whole in the third.</p>
+         fixated as a whole in the third.</p>-->
       <p>The interpretation of change assignments for a particular text passage is based on a number
          of implicit assumptions and constraints which have the effect of minimizing the amount of
          tagging necessary. The system is also flexible enough to support an explicit distinction
          between acts of writing and textual alterations, since either of these can be associated
          with changes described in the encoding. The following example shows an encoding in which
          the same passage is transcribed twice, once from a documentary perspective, and once from a
-         textual one :</p>
-      <!-- faust_2.xml -->
+         textual one :
+  
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <profileDesc>
             <creation>
@@ -2971,7 +3015,7 @@ breaks, page
                </listChange>
             </creation>
          </profileDesc>
-         <!-- ... -->
+       
          <sourceDoc>
             <surface>
                <zone xml:id="zone_1">
@@ -3001,16 +3045,21 @@ breaks, page
             </body>
          </text>
       </egXML>
-      <p>The documentary transcription stresses the writing process, while the textual transcription
+    
+</p>
+
+  <p>The documentary transcription stresses the writing process, while the textual transcription
          emphasizes textual alterations. In either case, the change of writing activity associated
          with a particular feature in the transcript is explicitly indicated. From the documentary
-         perspective, the stage assignments describe the writing process, in that they specify which
-         segment has been written when and how often. From the textual perspective, the markup
-         concentrates on the order of textual alterations and makes no assumptions about the order
-         of writing. In this example, the association is made by pointing from the <gi>change</gi>
+         perspective, by  assigning particular modifications to a
+	 specific change, we describe the writing process, in that they specify which
+         segment has been written when <!-- and how often-->. From the textual perspective, the markup
+         concentrates simply on the existence of textual alterations
+	 and makes no explicit claims about the order
+         of writing. <!-- In this example, the association is made by pointing from the <gi>change</gi>
          element to all the passages and alterations in question in either perspective, which has
          the merit of not confusing the presentation of the interventions concerned with writing
-         sequence information, at the price of requiring a distinct identifier on each intervention.
+         sequence information, at the price of requiring a distinct identifier on each intervention.-->
       </p>
    </div>
 
