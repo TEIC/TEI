@@ -4,9 +4,9 @@ TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
 
-DIRS=common2 docx dtd epub fo2 latex2 nlm odds2 odt profiles rdf relaxng slides tite tools txt xhtml2
-EXTRAS=html/build-to.xml
-SCRIPTS=teitodocx docxtotei teitoodt odttotei teitolatex teitoepub teitoepub3 teitohtml teitohtml5 transformtei teitodtd teitoxsd teitorelaxng teitornc teitotxt teitordf
+DIRS=bibtex common2 docx dtd epub epub3 fo2 html html5 latex2 nlm odds2 odt rdf relaxng rnc slides tbx tite tools txt xhtml2 xsd
+
+SCRIPTS=docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei
 PREFIX=/usr
 OXY=/usr/share/oxygen/stylesheetDocumentation.sh
 TARGETS= \
@@ -65,7 +65,7 @@ check:
 p5:
 	@echo BUILD Build for P5, XSLT 2.0
 	test -d release/p5 || mkdir -p release/p5/xml/tei/stylesheet/
-	for i in  ${DIRS} ${EXTRAS} ; do \
+	for i in  ${DIRS} ; do \
 		tar cf - --exclude .svn $$i | (cd release/p5/xml/tei/stylesheet; tar xf - ); \
 	done
 
