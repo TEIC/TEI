@@ -71,8 +71,12 @@
 <u style="border-bottom: 1px double #000"><xsl:apply-templates/></u>
 </xsl:template>
 
-<xsl:template match="tei:hi[@rend='ulw']">
+<xsl:template match="tei:hi[@rend='shadow']">
 <u style="border-bottom: 1px dotted #000"><xsl:apply-templates/></u>
+</xsl:template>
+
+<xsl:template match="tei:lb[@rend='indent']">
+<br/><xsl:text>    </xsl:text>
 </xsl:template>
 
 <!-- also weird list types -->
