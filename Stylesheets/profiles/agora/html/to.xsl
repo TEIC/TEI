@@ -56,7 +56,9 @@
 <!-- number paragraphs -->
   <xsl:template name="numberParagraph">
     <xsl:if test="ancestor::tei:body">
-      <xsl:number level="any" from="tei:body"/>
+      <span class="numberParagraph">      
+	<xsl:number level="any" from="tei:body"/>
+      </span>
     </xsl:if>
   </xsl:template>
 

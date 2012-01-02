@@ -1421,9 +1421,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:with-param>
           </xsl:call-template>
           <xsl:if test="$numberParagraphs='true'">
-            <span class="numberParagraph">
-              <xsl:call-template name="numberParagraph"/>
-            </span>
+	    <xsl:call-template name="numberParagraph"/>
           </xsl:if>
           <xsl:apply-templates/>
         </xsl:element>
@@ -1434,7 +1432,9 @@ of this software, even if advised of the possibility of such damage.
     <desc>How to number paragraphs</desc>
   </doc>
   <xsl:template name="numberParagraph">
-    <xsl:number/>
+    <span class="numberParagraph">
+      <xsl:number/>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element p[@rend='box']</desc>
@@ -1790,7 +1790,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] </desc>
+    <desc>[html] sections in mode for table of contents</desc>
   </doc>
   <xsl:template name="continuedToc">
     <xsl:if test="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
@@ -2141,7 +2141,6 @@ of this software, even if advised of the possibility of such damage.
           </xsl:call-template>
         </span>
       </xsl:when>
-      <!-- NN added -->
       <xsl:when test="$value='ul'">
         <u>
           <xsl:call-template name="applyRend">
@@ -2149,7 +2148,6 @@ of this software, even if advised of the possibility of such damage.
           </xsl:call-template>
         </u>
       </xsl:when>
-      <!-- NN added -->
       <xsl:when test="$value='interlinMarks'">
         <xsl:text>`</xsl:text>
         <xsl:call-template name="applyRend">
