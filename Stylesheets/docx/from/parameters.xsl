@@ -91,4 +91,6 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:param name="verbose">false</xsl:param>
 
+    <xsl:param name="pageWidth">0</xsl:param>
+
 </xsl:stylesheet>
