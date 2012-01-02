@@ -362,7 +362,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="@rendition">
         <span>
-          <xsl:call-template name="applyRendition"/>
+	  <xsl:call-template name="applyRendition"/>
         </span>
       </xsl:when>
       <xsl:otherwise>
@@ -1022,26 +1022,26 @@ of this software, even if advised of the possibility of such damage.
           <xsl:choose>
             <xsl:when test="$footnoteFile='true'">
               <a class="notelink" title="{normalize-space($note-title)}" href="{$masterFile}-notes.html#{$identifier}">
-                <sup>
+		<xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
                   <xsl:call-template name="noteN"/>
-                </sup>
+		</xsl:element>
               </a>
               <xsl:if test="following-sibling::node()[1][self::tei:note]">
-                <sup>
+		<xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
                   <xsl:text>,</xsl:text>
-                </sup>
+                </xsl:element>
               </xsl:if>
             </xsl:when>
             <xsl:otherwise>
               <a class="notelink" title="{normalize-space($note-title)}" href="#{$identifier}">
-                <sup>
+		<xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">				  
                   <xsl:call-template name="noteN"/>
-                </sup>
+                </xsl:element>
               </a>
               <xsl:if test="following-sibling::node()[1][self::tei:note]">
-                <sup>
+		<xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
                   <xsl:text>,</xsl:text>
-                </sup>
+                </xsl:element>
               </xsl:if>
             </xsl:otherwise>
           </xsl:choose>
@@ -1557,14 +1557,14 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@rend='inline'">
+      <xsl:when test="@rend='quoted'">
         <span class="quote_inline">
           <xsl:value-of select="$preQuote"/>
           <xsl:apply-templates/>
           <xsl:value-of select="$postQuote"/>
         </span>
       </xsl:when>
-      <xsl:when test="@rend='display' or tei:lb or tei:p or tei:l or         string-length(.)&gt;150">
+      <xsl:when test="@rend='display' or tei:lb or tei:p or tei:l or string-length(.)&gt;150">
         <blockquote>
           <xsl:call-template name="rendToClass"/>
           <xsl:choose>
@@ -1584,9 +1584,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <span class="quote_inline">
-          <xsl:value-of select="$preQuote"/>
           <xsl:apply-templates/>
-          <xsl:value-of select="$postQuote"/>
         </span>
       </xsl:otherwise>
     </xsl:choose>
