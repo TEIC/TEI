@@ -106,6 +106,14 @@
   <span class="corr"><xsl:apply-templates/></span>
 </xsl:template>
 
+<!-- add a space in front of surname inside author -->
+
+<xsl:template
+    match="tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author/tei:surname">
+<xsl:text> </xsl:text>
+<xsl:apply-templates/>
+</xsl:template>
+
 <!-- these seem to be inherited -->
     <xsl:template match="html:*">
       <xsl:element name="{local-name()}">
