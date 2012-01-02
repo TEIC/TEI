@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." name="fix template styles">
+	<!-- ANT script to prepare and clean up a template for the DOCX transformation 
+		to be used for creating a DOCX target file tranformed from a TEI XML document.
+	-->
+  
+  <!-- define the the saxon transformer or place it in the ant lib directory -->
+  <property name = "saxon.jar" value=".../saxon9he.jar"/>
+  
+	<!-- modfiy basedir, if necessary: -Dbasedir=... -->
+	<echo>     basedir: ${basedir}</echo>
+	
+	<!-- profile, may be overwritten by external property: -Dprofile=default -->
+	<property name="profile" value="default"/>
+    
+	<!-- the profiles directory, may be overwritten by: -DprofilesDir=... -->
+	<property name="profilesDir">../../profiles/</property>
+	<echo> profilesDir: ${profilesDir}</echo>
+
+	<!-- the source directory, may be overwritten by: -DsourceDir=... -->
+	<property name="sourceDir">${profilesDir}${profile}/docx/</property>
+
+	<!-- the source file, may be overwritten by: -DsourceFile=... -->
+	<property name="sourceFile">${sourceDir}template_original.docx</property>
+	<echo>  sourceFile: ${sourceFile}</echo>
+  
+	<!-- the target directory, may be overwritten by: -DtargetDir=... 
+			The target directory is also used as a base for a temporary workind directory. -->
+	<property name="targetDir">${profilesDir}${profile}/docx/</property>
+  
+	<!-- the target file, may be overwritten by: -DtargetFile=... -->
+	<property name="targetFile">${targetDir}template.docx</property>
+	<echo>  targetFile: ${targetFile}</echo>
+	
+	<!-- remove the target file -->
+	<delete file="${targetFile}" />
+	
+	<!-- create the working directory and unzip the source file -->
+	<property name="temp">${targetDir}temp/</property>
+	<mkdir dir="${temp}"/>
+	<unzip src="${sourceFile}" dest="${temp}" failOnEmptyArchive="true" />
+
+	<!-- remove custom document properties -->
+	<delete includeEmptyDirs="true" verbose="true">
+		<fileset dir="${temp}">
+			<include name="docProps/custom.xml" />
+			<include name="word/webSettings.xml" />
+			<include name="word/_rels/settings.xml.rels" />
+			<include name="word/endnotes.xml" />
+			<include name="word/footnotes.xml" />
+			<include name="customXml/*" />
+			<include name="word/footer*" />
+			<include name="word/header*" />
+			<include name="word/theme" />
+			<include name="word/glossary" />
+		</fileset>
+	</delete>
+
+	<!-- fix .rels -->
+	<xslt style="fixdotrels.xsl"  in="${temp}_rels/.rels"  out="${temp}__rels/.rels" >
+		<factory name="net.sf.saxon.TransformerFactoryImpl"/>
+		<classpath location="${saxon.jar}"/>
+	</xslt>
+	<move file="${temp}__rels/.rels" tofile="${temp}_rels/.rels" verbose="true" />
+
+
+	<!-- fix styles -->
+	<xslt style="fixstyle.xsl"  in="${temp}word/styles.xml"  out="${temp}word/_styles.xml" >
+		<factory name="net.sf.saxon.TransformerFactoryImpl"/>
+		<classpath location="${saxon.jar}"/>
+	</xslt>
+	<move file="${temp}word/_styles.xml" tofile="${temp}word/styles.xml" verbose="true" />
+
+	<!-- zip back together -->
+	<zip destfile="${targetFile}" basedir="${temp}" />
+
+	<!-- delete the working directory whith all its content -->
+	<echo>remove working directory</echo>
+	<delete includeEmptyDirs="true" verbose="true">
+		<fileset dir="${temp}"/>
+	</delete>
+
+	<echo>  target template stored in ${targetFile}</echo>
+
+</project>
