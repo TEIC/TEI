@@ -115,11 +115,20 @@
 </xsl:template>
 
   <xsl:template match="tei:div[@type='bibliography']">
-<xsl:if test='not(head)'>
-<head>References</head>
+<div class="refs">
+<xsl:if test='not(tei:head)'>
+<h2><span class="head">References</span></h2>
 </xsl:if>
       <xsl:apply-templates/>
-  </xsl:template>
+</div>  </xsl:template>
+
+  <xsl:template match="tei:div[@type='abstract']">
+<div class="abstract">
+<xsl:if test='not(tei:head)'>
+<h2><span class="head">Abstract</span></h2>
+</xsl:if>
+      <xsl:apply-templates/>
+</div>  </xsl:template>
 
 
 <!-- these seem to be inherited -->
