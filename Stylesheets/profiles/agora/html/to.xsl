@@ -73,8 +73,12 @@
 <u style="border-bottom: 1px double #000"><xsl:apply-templates/></u>
 </xsl:template>
 
-<xsl:template match="tei:hi[@rend='shadow']">
+<xsl:template match="tei:hi[@rend='ulw']">
 <u style="border-bottom: 1px dotted #000"><xsl:apply-templates/></u>
+</xsl:template>
+
+<xsl:template match="tei:hi[@rend='shadow']">
+<u style="background-color: gray"><xsl:apply-templates/></u>
 </xsl:template>
 
 <xsl:template match="tei:lb[@rend='indent']">
@@ -94,7 +98,7 @@
 </ul></xsl:template>
 
 <xsl:template match="tei:ref">
-  <span class="ref"><xsl:value-of select="."></xsl:value-of></span>
+  <span class="ref"><xsl:apply-templates/></span>
   <span class="contextaRef"><xsl:value-of select="@cRef"/></span>
 </xsl:template>
 
