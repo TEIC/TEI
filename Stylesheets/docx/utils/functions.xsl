@@ -64,36 +64,39 @@ of this software, even if advised of the possibility of such damage.
       </desc></doc>
 
     
-        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Converts a dimension into the 20th of a ps point.</desc></doc>
-    <xsl:function name="tei:convert-dim-pt20" as="xs:integer">
+      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Converts a dimension into the 20th of a point.</desc></doc>
+      <xsl:function name="tei:convert-dim-pt20" as="xs:integer">
         <xsl:param name="dim"/>
-	     <xsl:value-of select="number(substring($dim,0,string-length($dim)-1)) * 20"/>
-    </xsl:function>
+	<xsl:value-of select="tei:convert-dim-pt($dim) * 20"/>
+      </xsl:function>
     
-    <xsl:function name="tei:convert-dim-pt" as="xs:integer">
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Convert a dimension into point.</desc></doc>
+      <xsl:function name="tei:convert-dim-pt" as="xs:integer">
         <xsl:param name="dim"/>
         <xsl:choose>
-            <xsl:when test="ends-with($dim,'cm')">
-                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*28.3464567) cast as xs:integer"/>
-            </xsl:when>
-            <xsl:when test="ends-with($dim,'in')">
-                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*72) cast as xs:integer"/>
-            </xsl:when>
-            
-            <xsl:when test="ends-with($dim,'mm')">
-                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*2.83464567) cast as xs:integer"/>
-            </xsl:when>
-            <xsl:when test="ends-with($dim,'pt')">
-                <xsl:value-of select="number(substring($dim,0,string-length($dim)-1)) cast as xs:integer"/>
-            </xsl:when>
-            <xsl:when test="ends-with($dim,'px')">
-                <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*0.75) cast as xs:integer"/>
-            </xsl:when>
-            
-            <xsl:otherwise>
-                -1
-            </xsl:otherwise>
+	  <xsl:when test="ends-with($dim,'%')">
+	    <xsl:value-of select="number($pageWidth * number(substring($dim,0,string-length($dim)))) cast as xs:integer"/>
+	  </xsl:when>
+	  <xsl:when test="ends-with($dim,'cm')">
+	    <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*28.3464567) cast as xs:integer"/>
+	  </xsl:when>
+	  <xsl:when test="ends-with($dim,'in')">
+	    <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*72) cast as xs:integer"/>
+	  </xsl:when>
+	  <xsl:when test="ends-with($dim,'mm')">
+	    <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*2.83464567) cast as xs:integer"/>
+	  </xsl:when>
+	  <xsl:when test="ends-with($dim,'pt')">
+	    <xsl:value-of select="number(substring($dim,0,string-length($dim)-1)) cast as xs:integer"/>
+	  </xsl:when>
+	  <xsl:when test="ends-with($dim,'px')">
+	    <xsl:value-of select="number(number(substring($dim,0,string-length($dim)-1))*0.75) cast as xs:integer"/>
+	  </xsl:when>            
+	  <xsl:otherwise>
+	    -1
+	  </xsl:otherwise>
         </xsl:choose>
     </xsl:function>
     
@@ -236,11 +239,4 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
     </xsl:function>
 
-   <!--
-    <xsl:function name="tei:getColNum">
-      <xsl:param name="col"/>
-      <xsl:value-of
-	  select="ancestor::cals:table/cals:tgroup/cals:colspec[@colname=$col]/@colnum"/>
-    </xsl:function>
--->
 </xsl:stylesheet>

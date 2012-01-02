@@ -220,6 +220,7 @@ of this software, even if advised of the possibility of such damage.
             -->
             
             <xsl:variable name="Width">
+	      <!-- remembering that pageWidth is already divided by 100 -->
                 <xsl:choose>
                     <xsl:when test="contains(@width,'%')">
                         <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>

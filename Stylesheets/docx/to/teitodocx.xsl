@@ -39,12 +39,17 @@
   <xsl:param name="useFixedDate">false</xsl:param>
   <!--
         A4 is 210mm x 297mm; leaving 1in margin (25mm),
-        gives 160 x 247 approx useable area.  In Microsoft speak, 
-        1mm = 35998 units. so page size is 6659630 x 9791456
-        Divide by 100 to avoid overflow.
+        gives 160 x 247 approx useable area. For figures,
+	Microsoft use English metrical units (emu), in which
+        1mm = 3600 units. So page size is 57600 * 889200
+        Divide by 100 to avoid overflow in calculations.
+
+        For other measurements in Word, see useful discussion at
+	http://startbigthinksmall.wordpress.com/2010/01/04/points-inches-and-emus-measuring-units-in-office-open-xml/
     -->
-  <xsl:param name="pageWidth">575.9680</xsl:param>
-  <xsl:param name="pageHeight">889.1506</xsl:param>
+  <xsl:param name="pageWidth">576</xsl:param>
+  <xsl:param name="pageHeight">890</xsl:param>
+  <xsl:param name="tableWidthPercentage"></xsl:param>
   <xsl:param name="defaultHeaderFooterFile">templates/default.xml</xsl:param>
   <xsl:param name="postQuote">’</xsl:param>
   <xsl:param name="preQuote">‘</xsl:param>
@@ -1154,9 +1159,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="html:colgroup">
           <w:tblGrid>
             <xsl:for-each select="html:colgroup/html:col">
-              <w:gridCol>
-                <xsl:attribute name="w:w" select="tei:convert-dim-pt20(@width)"/>
-              </w:gridCol>
+              <w:gridCol w:w="{tei:convert-dim-pt20(@width)}"/>
             </xsl:for-each>
           </w:tblGrid>
         </xsl:when>
@@ -1165,10 +1168,10 @@ of this software, even if advised of the possibility of such damage.
           <xsl:copy-of select="w:tblGrid"/>
         </xsl:when>
         <xsl:otherwise>
+	  <xsl:variable name="maxcols" select="max(.//tei:row/count(tei:cell))"/>
           <w:tblGrid>
-            <xsl:for-each select="tei:row[1]/tei:cell">
-              <w:gridCol w:w="500"/>
-              <!-- notional amount -->
+            <xsl:for-each select="1 to $maxcols">
+              <w:gridCol w:type="pct" w:w="{round((100 div $maxcols) *  50)}"/>
             </xsl:for-each>
           </w:tblGrid>
         </xsl:otherwise>
@@ -1370,7 +1373,20 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="tableheading-from-cals"/>
     <w:tbl>
       <w:tblPr>
-        <w:tblW w:w="0" w:type="auto"/>
+        <w:tblW>
+	  <xsl:choose>
+	    <xsl:when test="not($tableWidthPercentage='')">
+	      <xsl:attribute name="w:w">
+		<xsl:value-of  select="round(number($tableWidthPercentage)* 50)"/>
+	      </xsl:attribute>
+	      <xsl:attribute name="w:type">pct</xsl:attribute>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:attribute name="w:w">0</xsl:attribute>
+	      <xsl:attribute name="w:type">auto</xsl:attribute>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</w:tblW>
         <w:jc w:val="center"/>
         <w:tblBorders>
           <xsl:variable name="tblBorders">
@@ -1512,30 +1528,35 @@ of this software, even if advised of the possibility of such damage.
         </w:tblBorders>
         <w:tblLayout w:type="fixed"/>
       </w:tblPr>
+      <xsl:variable name="maxcols" select="max(.//cals:row/count(cals:entry))"/>
       <xsl:choose>
         <xsl:when test="cals:tgroup/cals:colspec">
           <w:tblGrid>
+	    <xsl:variable name="totunits" select="sum(cals:tgroup/cals:colspec[ends-with(@colwidth,'*')]/number(substring-before(@colwidth,'*')))"/>
             <xsl:for-each select="cals:tgroup/cals:colspec">
               <w:gridCol>
-                <xsl:attribute name="w:w">
-                  <xsl:choose>
-                    <xsl:when test="contains(@colwidth,'*')">
-                      <xsl:value-of select="number($pageWidth *         number(substring-before(@colwidth,'*'))         div 10)         cast as         xs:integer"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="tei:convert-dim-pt20(@colwidth)"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:attribute>
-              </w:gridCol>
-            </xsl:for-each>
+		  <xsl:choose>
+		    <!-- cell widths are specified in 50th of a percent -->
+		    <xsl:when test="ends-with(@colwidth,'*')">
+		      <xsl:attribute name="w:type">pct</xsl:attribute>
+		      <xsl:attribute name="w:w">
+			<xsl:value-of  select="round((number(substring-before(@colwidth,'*')) * 5000) div $totunits)"/>
+		      </xsl:attribute>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:attribute name="w:w">
+			<xsl:value-of select="tei:convert-dim-pt20(@colwidth)"/>
+		      </xsl:attribute>
+		    </xsl:otherwise>
+		  </xsl:choose>
+	      </w:gridCol>
+	    </xsl:for-each>
           </w:tblGrid>
         </xsl:when>
         <xsl:otherwise>
           <w:tblGrid>
-            <xsl:for-each select="cals:row[1]/cals:entry">
-              <w:gridCol w:w="500"/>
-              <!-- notional amount -->
+            <xsl:for-each select="1 to $maxcols">
+              <w:gridCol w:type="pct" w:w="{round((100 div $maxcols) *  50)}"/>
             </xsl:for-each>
           </w:tblGrid>
         </xsl:otherwise>
