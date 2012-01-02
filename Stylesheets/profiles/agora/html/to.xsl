@@ -114,6 +114,14 @@
 <xsl:apply-templates/>
 </xsl:template>
 
+  <xsl:template match="tei:div[@type='bibliography']">
+<xsl:if test='not(head)'>
+<head>References</head>
+</xsl:if>
+      <xsl:apply-templates/>
+  </xsl:template>
+
+
 <!-- these seem to be inherited -->
     <xsl:template match="html:*">
       <xsl:element name="{local-name()}">
@@ -130,8 +138,5 @@
       <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="tei:div[@type='illustration']">
-      <xsl:apply-templates/>
-  </xsl:template>
 
 </xsl:stylesheet>
