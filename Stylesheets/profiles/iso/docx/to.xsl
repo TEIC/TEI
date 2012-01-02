@@ -467,7 +467,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="create-footnote">
     <xsl:variable name="pPr">
       <xsl:choose>
-        <xsl:when test="(@place='tablefoot') and  (ancestor::tei:cell      or ancestor::cals:entry)">
+        <xsl:when test="(@place='tablefoot') and  (ancestor::tei:cell or ancestor::cals:entry)">
           <w:pPr>
             <w:pStyle w:val="Tablefootnote"/>
           </w:pPr>
@@ -531,7 +531,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <xsl:variable name="num">
-          <xsl:number count="tei:note[@place='foot' or @place='bottom'][not(ancestor::cals:entry)]" level="any"/>
+          <!--NEN: remove restriction [not(ancestor::cals:entry)] to count also foornotes in tables-->
+          <xsl:number count="tei:note[@place='foot' or @place='bottom']" level="any"/>
         </xsl:variable>
         <xsl:variable name="id" select="$num+1"/>
         <w:r>
@@ -835,9 +836,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Create all the files of the docx archive;    for ISO, don't write out most of the auxiliary files.
-    </desc>
+    <desc> Create all the files of the docx archive; for ISO, don't write out most of the
+            auxiliary files. </desc>
   </doc>
   <xsl:template name="write-docxfiles">
     <xsl:if test="$isofreestanding='true'">
@@ -868,9 +868,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="write-docxfile-docprops-custom"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Writes the main document.xml file, that contains all "real" content.
-    </desc>
+    <desc> Writes the main document.xml file, that contains all "real" content. </desc>
   </doc>
   <xsl:template name="create-document-dot-xml">
     <w:document>
@@ -1215,19 +1213,27 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:p[@rend='Table units']"/>
   <!-- 
+        NEN: <note type="Remark">
         OPMERKING
+        Place paragraph with style Note starting with text 'Opmerking' followed by [tab]
     -->
   <xsl:template name="create-remark">
+    <w:pPr>
+      <w:pStyle w:val="Note"/>
+    </w:pPr>
+    <xsl:variable name="n">
+      <xsl:number level="any" count="tei:note[@type='remark']"/>
+    </xsl:variable>
+    <w:bookmarkStart w:id="{$n}" w:name="{@xml:id}"/>
     <w:r>
-      <w:rPr>
-        <w:rStyle w:val="RemarkReference"/>
-        <w:vanish/>
-      </w:rPr>
       <w:t>OPMERKING</w:t>
-      <xsl:variable name="n">
-        <xsl:number level="any" count="tei:note[@type='remark']"/>
-      </xsl:variable>
-      <!--	<w:commentReference w:id="{$n - 1}"/>-->
+    </w:r>
+    <w:bookmarkEnd w:id="{$n}"/>
+    <w:r>
+      <w:tab/>
+      <w:t>
+        <xsl:value-of select="."/>
+      </w:t>
     </w:r>
   </xsl:template>
   <!-- 

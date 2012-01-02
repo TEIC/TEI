@@ -1940,8 +1940,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="nop">
         <xsl:choose>
           <xsl:when test="not(text()) and tei:note[(not(@place))]">true</xsl:when>
-          <xsl:when test="not(text()) and tei:note[@place='foot']">true</xsl:when>
-          <xsl:otherwise>false</xsl:otherwise>
+          <!--NEN: next when commented to make footnotes in table possible-->
+          <!--<xsl:when test="not(text()) and tei:note[@place='foot']">true</xsl:when>-->
+	    <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
       </xsl:with-param>
     </xsl:call-template>
