@@ -14,10 +14,10 @@ test-html:
 	diff -r -x .svn files expected-results/testnotes
 	rm -rf files
 	saxon -o:test.html  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test.html expected-results/test.html
 	saxon -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:test4.html -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test4.html test3.html
-	diff test.html expected-results/test.html
 	../teitohtml5 test.xml test.html5
 	perl -p -i -e 's/on 20.*Z--/--/' test.html5
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
