@@ -197,52 +197,6 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:if>
 	  <xsl:call-template name="figureHook"/>
 	  <xsl:apply-templates/>
-	  <xsl:if test="tei:head">
-	    <xsl:variable name="caption">
-	      <xsl:choose>
-		<xsl:when test="ancestor::tei:front and  $numberFrontFigures='true'">
-		  <xsl:call-template name="i18n">
-		    <xsl:with-param name="word">figureWord</xsl:with-param>
-		  </xsl:call-template>
-		  <xsl:text> </xsl:text>
-		  <xsl:number count="tei:figure[tei:head]" from="tei:front" level="any"/>
-		  <xsl:text>. </xsl:text>
-		</xsl:when>
-		<xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
-		  <xsl:call-template name="i18n">
-		    <xsl:with-param name="word">figureWord</xsl:with-param>
-		  </xsl:call-template>
-		  <xsl:text> </xsl:text>
-		  <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
-		  <xsl:text>. </xsl:text>
-		</xsl:when>
-		<xsl:when test="ancestor::tei:body and $numberFigures='true'">
-		  <xsl:call-template name="i18n">
-		    <xsl:with-param name="word">figureWord</xsl:with-param>
-		  </xsl:call-template>
-		  <xsl:text> </xsl:text>
-		  <xsl:number count="tei:figure[tei:head]" from="tei:body" level="any"/>
-		  <xsl:text>. </xsl:text>
-		</xsl:when>
-	      </xsl:choose>
-	    </xsl:variable>
-	    <xsl:choose>
-	      <xsl:when test="$outputTarget='html5'">
-		<figcaption>
-		  <xsl:copy-of select="$caption"/>
-		  <xsl:apply-templates select="tei:head"/>
-		</figcaption>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<span class="caption">
-		  <xsl:copy-of select="$caption"/>
-		  <xsl:for-each select="tei:head">
-		    <xsl:apply-templates/>
-		  </xsl:for-each>
-		</span>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:if>
 	</xsl:element>
       </xsl:otherwise>
     </xsl:choose>
@@ -250,7 +204,60 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element figure/tei:head</desc>
   </doc>
-  <xsl:template match="tei:figure/tei:head"/>
+  <xsl:template match="tei:figure/tei:head">
+    <xsl:variable name="captionlabel">
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:front and  $numberFrontFigures='true'">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">figureWord</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text> </xsl:text>
+	  <xsl:number count="tei:figure[tei:head]" from="tei:front" level="any"/>
+	  <xsl:text>. </xsl:text>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">figureWord</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text> </xsl:text>
+	  <xsl:for-each select="..">
+	    <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
+	  </xsl:for-each>
+	  <xsl:text>. </xsl:text>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:body and $numberFigures='true'">
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">figureWord</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text> </xsl:text>
+	  <xsl:for-each select="..">
+	    <xsl:number count="tei:figure[tei:head]" from="tei:body"
+			level="any"/>
+	    </xsl:for-each>
+	  <xsl:text>. </xsl:text>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$outputTarget='html5'">
+	<figcaption>
+	  <xsl:if test="@rend">
+	    <xsl:attribute name="class" select="@rend"/>
+	  </xsl:if>
+	  <xsl:call-template name="rendering"/>
+	  <xsl:copy-of select="$captionlabel"/>
+	  <xsl:apply-templates/>
+	</figcaption>
+      </xsl:when>
+      <xsl:otherwise>
+	<span class="caption {@rend}">
+	  <xsl:copy-of select="$captionlabel"/>
+	  <xsl:apply-templates/>
+	</span>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element formula</desc>
   </doc>
