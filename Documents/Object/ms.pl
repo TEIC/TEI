@@ -8,7 +8,7 @@ s/&/&amp;/g;
    if ($n > 0) { print "</object>\n"; }
    $n=$n+1;
    $rest =~ s/ /_/g;
-   print qq(<object n="$n" xml:id="$rest">\n);
+   print qq(<object xml:id="$rest">\n);
  }
  elsif ($key eq 'CONT') { print qq(<idno type="CONT">$rest</idno>\n); }
  elsif ($key eq 'SMF') { print qq(<idno type="SMF">$rest</idno>\n); }
