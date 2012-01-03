@@ -65,9 +65,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
   </xsl:variable>
   
-  <xsl:variable name="uc">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-  <xsl:variable name="lc">abcdefghijklmnopqrstuvwxyz</xsl:variable>
-  
   <xsl:template match="*">
     <xsl:choose>
       <xsl:when test="namespace-uri()=''">
@@ -538,7 +535,7 @@ of this software, even if advised of the possibility of such damage.
        of attributes -->
   
   <xsl:template match="@targOrder">
-    <xsl:if test="not(translate(.,$uc,$lc) ='u')">
+    <xsl:if test="not(lower-case(.) ='u')">
       <xsl:attribute name="targOrder">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -547,7 +544,7 @@ of this software, even if advised of the possibility of such damage.
   
   
   <xsl:template match="@opt">
-    <xsl:if test="not(translate(.,$uc,$lc) ='n')">
+    <xsl:if test="not(lower-case(.) ='n')">
       <xsl:attribute name="opt">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -556,7 +553,7 @@ of this software, even if advised of the possibility of such damage.
   
   
   <xsl:template match="@to">
-    <xsl:if test="not(translate(.,$uc,$lc) ='ditto')">
+    <xsl:if test="not(lower-case(.) ='ditto')">
       <xsl:attribute name="to">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -566,7 +563,7 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:template match="@default">
     <xsl:choose>
-      <xsl:when test="translate(.,$uc,$lc)= 'no'"/>
+      <xsl:when test="lower-case(.)= 'no'"/>
       <xsl:otherwise>
 	<xsl:attribute name="default">
 	  <xsl:value-of select="."/>
@@ -577,7 +574,7 @@ of this software, even if advised of the possibility of such damage.
   
   
   <xsl:template match="@part">
-    <xsl:if test="not(translate(.,$uc,$lc) ='n')">
+    <xsl:if test="not(lower-case(.) ='n')">
       <xsl:attribute name="part">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -586,7 +583,7 @@ of this software, even if advised of the possibility of such damage.
   
   
   <xsl:template match="@full">
-    <xsl:if test="not(translate(.,$uc,$lc) ='yes')">
+    <xsl:if test="not(lower-case(.) ='yes')">
       <xsl:attribute name="full">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -598,14 +595,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@status">
     <xsl:choose>
       <xsl:when test="parent::teiHeader">
-	<xsl:if test="not(translate(.,$uc,$lc) ='new')">
+	<xsl:if test="not(lower-case(.) ='new')">
 	  <xsl:attribute name="status">
 	    <xsl:value-of select="."/>
 	  </xsl:attribute>
 	</xsl:if>
       </xsl:when>
       <xsl:when test="parent::del">
-	<xsl:if test="not(translate(.,$uc,$lc) ='unremarkable')">
+	<xsl:if test="not(lower-case(.) ='unremarkable')">
 	  <xsl:attribute name="status">
 	    <xsl:value-of select="."/>
 	  </xsl:attribute>
@@ -621,7 +618,7 @@ of this software, even if advised of the possibility of such damage.
   
   
   <xsl:template match="@place">
-    <xsl:if test="not(translate(.,$uc,$lc) ='unspecified')">
+    <xsl:if test="not(lower-case(.) ='unspecified')">
       <xsl:attribute name="place">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -630,7 +627,7 @@ of this software, even if advised of the possibility of such damage.
   
   
   <xsl:template match="@sample">
-    <xsl:if test="not(translate(.,$uc,$lc) ='complete')">
+    <xsl:if test="not(lower-case(.) ='complete')">
       <xsl:attribute name="sample">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -639,7 +636,7 @@ of this software, even if advised of the possibility of such damage.
   
   
   <xsl:template match="@org">
-    <xsl:if test="not(translate(.,$uc,$lc) ='uniform')">
+    <xsl:if test="not(lower-case(.) ='uniform')">
       <xsl:attribute name="org">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -647,7 +644,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="teiHeader/@type">
-    <xsl:if test="not(translate(.,$uc,$lc) ='text')">
+    <xsl:if test="not(lower-case(.) ='text')">
       <xsl:attribute name="type">
 	<xsl:value-of select="."/>
       </xsl:attribute>
@@ -659,8 +656,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@anchored">
     <xsl:attribute name="anchored">
       <xsl:choose>
-	<xsl:when test="translate(.,$uc,$lc)='yes'">true</xsl:when>
-	<xsl:when test="translate(.,$uc,$lc)='no'">false</xsl:when>
+	<xsl:when test="lower-case(.)='yes'">true</xsl:when>
+	<xsl:when test="lower-case(.)='no'">false</xsl:when>
       </xsl:choose>
     </xsl:attribute>
   </xsl:template>
@@ -670,8 +667,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@tei">
     <xsl:attribute name="tei">
       <xsl:choose>
-	<xsl:when test="translate(.,$uc,$lc)='yes'">true</xsl:when>
-	<xsl:when test="translate(.,$uc,$lc)='no'">false</xsl:when>
+	<xsl:when test="lower-case(.)='yes'">true</xsl:when>
+	<xsl:when test="lower-case(.)='no'">false</xsl:when>
       </xsl:choose>
     </xsl:attribute>
   </xsl:template>

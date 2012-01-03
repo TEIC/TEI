@@ -929,20 +929,41 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:listBibl">
     <xsl:choose>
+      <xsl:when test="tei:biblStruct and $biblioStyle='mla'">
+	<div type="listBibl" xmlns="http://www.w3.org/1999/xhtml">	  
+	<xsl:for-each select="tei:biblStruct">
+	  <p class="hang" xmlns="http://www.w3.org/1999/xhtml">
+	    <xsl:apply-templates select="tei:analytic" mode="mla"/>
+	    <xsl:apply-templates select="tei:monogr" mode="mla"/>
+	    <xsl:apply-templates select="tei:relatedItem" mode="mla"/>
+	    <xsl:choose>
+	      <xsl:when test="tei:note">
+		<xsl:apply-templates select="tei:note"/>
+	      </xsl:when>
+	      <xsl:when test="*//tei:ref/@target and not(contains(*//tei:ref/@target, '#'))">
+		<xsl:text>Web.&#10;</xsl:text>
+		<xsl:if test="*//tei:imprint/tei:date/@type='access'">
+		  <xsl:value-of select="*//tei:imprint/tei:date[@type='access']"/>
+		  <xsl:text>.</xsl:text>
+		</xsl:if>
+	      </xsl:when>
+	      <xsl:when test="tei:analytic/tei:title[@level='u'] or tei:monogr/tei:title[@level='u']"/>
+	      <xsl:otherwise>Print.&#10;</xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:if test="tei:monogr/tei:imprint/tei:extent"><xsl:value-of select="tei:monogr/tei:imprint/tei:extent"/>. </xsl:if>
+	    <xsl:if test="tei:series/tei:title[@level='s']">
+	      <xsl:apply-templates select="tei:series/tei:title[@level='s']"/>
+	      <xsl:text>. </xsl:text>
+	    </xsl:if>
+	  </p>
+	</xsl:for-each>
+	</div>
+      </xsl:when>
       <xsl:when test="tei:biblStruct">
         <ol class="listBibl">
           <xsl:for-each select="tei:biblStruct">
-            <xsl:sort select="translate((          tei:*/tei:author/tei:surname|          tei:*[1]/tei:author/tei:orgName|            tei:*[1]/tei:author/tei:name|            tei:*[1]/tei:author|            tei:*[1]/tei:editor/tei:surname|            tei:*[1]/tei:editor/tei:name|            tei:*[1]/tei:editor|            tei:*[1]/tei:title[1])[1],  $uc,$lc)"/>
+            <xsl:sort select="lower-case((tei:*/tei:author/tei:surname|tei:*[1]/tei:author/tei:orgName|tei:*[1]/tei:author/tei:name|tei:*[1]/tei:author|tei:*[1]/tei:editor/tei:surname|tei:*[1]/tei:editor/tei:name|tei:*[1]/tei:editor|tei:*[1]/tei:title[1])[1])"/>
             <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
-            <!--
-	   <dt>
-              <xsl:call-template name="makeAnchor"/>
-              <xsl:apply-templates select="." mode="xref"/>
-            </dt>
-            <dd>
-              <xsl:apply-templates select="."/>
-            </dd>
-	    -->
             <li>
               <xsl:call-template name="makeAnchor"/>
               <xsl:apply-templates select="."/>
@@ -2463,4 +2484,152 @@ of this software, even if advised of the possibility of such damage.
     </xsl:element>
   </xsl:template>
   <xsl:template name="microdata"/>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] processing analytic element as needed for MLA style (from Laura Mandell> </desc>
+  </doc>
+  <xsl:template match="tei:analytic" mode="mla">
+    <xsl:variable name="refIdwHash">
+      <xsl:value-of select="following-sibling::tei:monogr/tei:ref/@target"/>
+    </xsl:variable>
+    <xsl:variable name="refId">
+      <xsl:value-of select="substring-after($refIdwHash, '#')"/>
+    </xsl:variable>
+    <xsl:apply-templates/>
+    <xsl:if test="not(following-sibling::tei:monogr/tei:title[@level='m']) and $refId!=''">
+      <xsl:text> </xsl:text>
+      <xsl:if test="following-sibling::tei:monogr/tei:imprint/tei:date">
+	<xsl:value-of select="following-sibling::tei:monogr/tei:imprint/tei:date"/>
+	<xsl:text>. </xsl:text>
+      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:author[1]">
+	  <xsl:value-of select="substring-before(ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:author[1], ',')"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:editor[@role='editor'][1]">
+	  <xsl:value-of select="substring-before(ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:editor[@role='editor'][1], ',')"/>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:author[3]">
+	  <xsl:text>, </xsl:text>
+	  <xsl:value-of select="substring-before(ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:author[2], ',')"/>
+	  <xsl:text>, and </xsl:text>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:editor[@role='editor'][3]">
+	  <xsl:text>, </xsl:text>
+	  <xsl:value-of select="substring-before(ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:editor[@role='editor'][2], ',')"/>
+	  <xsl:text>, and </xsl:text>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:author[2]">
+	  <xsl:text> and </xsl:text>
+	  <xsl:value-of select="substring-before(ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:author[2], ',')"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:editor[@role='editor'][2]">
+	  <xsl:text> and </xsl:text>
+	  <xsl:value-of select="substring-before(ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:editor[@role='editor'][2], ',')"/>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:if test="ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:author[3]">
+	<xsl:value-of select="substring-before(ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:author[3], ',')"/>
+      </xsl:if>
+      <xsl:if test="ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:editor[@role='editor'][3]">
+	<xsl:value-of select="substring-before(ancestor::tei:listBibl/tei:biblStruct[@xml:id=$refId]/tei:monogr/tei:editor[@role='editor'][3], ',')"/>
+      </xsl:if>
+      <xsl:text> </xsl:text>
+      <xsl:value-of select="following-sibling::tei:monogr/tei:imprint/tei:biblScope[@type='pp']"/>
+      <xsl:text>. </xsl:text>
+    </xsl:if>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] processing monogr element as needed for MLA style (from Laura Mandell> </desc>
+  </doc>
+  <xsl:template match="tei:monogr" mode="mla">
+    <xsl:choose>
+      <xsl:when test="preceding-sibling::tei:analytic">
+	<xsl:choose>
+	  <xsl:when test="tei:author = parent::tei:biblStruct/tei:analytic/tei:author">
+	    <xsl:if test="tei:author[2]">
+	      <xsl:apply-templates select="tei:author"/>
+	    </xsl:if>
+	    <xsl:apply-templates select="tei:title"/>
+	    <xsl:if test="tei:edition"><xsl:apply-templates select="tei:edition"/></xsl:if>
+	    <xsl:apply-templates select="tei:editor[@role='editor']"/>
+	    <xsl:if test="tei:editor[@role='translator']">
+	      <xsl:apply-templates select="tei:editor[@role='translator']"/>
+	    </xsl:if>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:apply-templates select="tei:author"/>
+	    <xsl:apply-templates select="tei:title"/>
+	    <xsl:if test="tei:edition"><xsl:apply-templates select="tei:edition"/></xsl:if>
+	    <xsl:apply-templates select="tei:editor[@role='editor']"/>
+	    <xsl:if test="tei:editor[@role='translator']">
+	      <xsl:apply-templates select="tei:editor[@role='translator']"/>
+	    </xsl:if>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:when test="tei:editor[@role='editor'] and not(preceding-sibling::tei:analytic) and not(tei:author)">
+	<xsl:apply-templates select="tei:editor[@role='editor']"/>
+	<xsl:apply-templates select="tei:title"/>
+	<xsl:if test="tei:edition"><xsl:apply-templates select="tei:edition"/></xsl:if>
+	<xsl:if test="tei:editor[@role='translator']">
+	  <xsl:apply-templates select="tei:editor[@role='translator']"/>
+	</xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates select="tei:author"/>
+	<xsl:apply-templates select="tei:title"/>
+	<xsl:if test="tei:edition"><xsl:apply-templates select="tei:edition"/></xsl:if>
+	<xsl:apply-templates select="tei:editor[@role='editor']"/>
+	<xsl:if test="tei:editor[@role='translator']">
+	  <xsl:apply-templates select="tei:editor[@role='translator']"/>
+	</xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="*//tei:ref/@target and not(contains(*//tei:ref/@target, '#'))">
+	<xsl:if test="tei:imprint/tei:date[@type='update']"><xsl:value-of select="tei:imprint/tei:date[@type='update']"/></xsl:if>
+      </xsl:when>
+      <xsl:when test="ancestor-or-self::tei:biblStruct/*/tei:title/@level='u'">
+	<xsl:value-of select="tei:imprint"/>
+      </xsl:when>
+      <xsl:when test="tei:title/@level='m'">
+	<xsl:if test="tei:imprint/tei:biblScope/@type='vol'">
+	<xsl:value-of select="tei:imprint/tei:biblScope[@type='vol']"/>. </xsl:if>
+	<xsl:choose>
+	  <xsl:when test="tei:imprint/tei:pubPlace"><xsl:value-of select="tei:imprint/tei:pubPlace"/>: </xsl:when>
+	  <xsl:otherwise>[n.p.]: </xsl:otherwise>
+	</xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="tei:imprint/tei:publisher"><xsl:value-of select="tei:imprint/tei:publisher"/>, </xsl:when>
+	  <xsl:otherwise>[n.p.], </xsl:otherwise>
+	</xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="tei:imprint/tei:date"><xsl:value-of select="tei:imprint/tei:date"/>. </xsl:when>
+	  <xsl:otherwise>[n.d.]  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:when test="tei:title/@level='j'">
+	<xsl:if test="tei:imprint/tei:biblScope/@type='vol'"><xsl:value-of select="tei:imprint/tei:biblScope[@type='vol']"/></xsl:if>
+	<xsl:if test="tei:imprint/tei:biblScope/@type='no'"><xsl:text>.</xsl:text><xsl:value-of select="tei:imprint/tei:biblScope[@type='no']"/></xsl:if>
+	<xsl:if test="tei:imprint/tei:date"><xsl:text>&#10;</xsl:text>(<xsl:value-of select="tei:imprint/tei:date"/>)</xsl:if>
+	<xsl:if test="tei:imprint/tei:biblScope/@type='pp'">: <xsl:value-of select="tei:imprint/tei:biblScope[@type='pp']"/></xsl:if>
+	<xsl:text>. </xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] processing relatedItem element as needed for MLA style (from Laura Mandell> </desc>
+  </doc>
+  
+  <xsl:template match="tei:relatedItem" mode="mla">
+    <xsl:if test="@type='otherEdition'"><xsl:text>Rpt. </xsl:text></xsl:if>
+    <xsl:if test="tei:biblStruct/tei:analytic"><xsl:apply-templates select="tei:biblStruct/tei:analytic" mode="mla"/></xsl:if>
+    <xsl:if test="tei:biblStruct/tei:monogr"><xsl:apply-templates select="tei:biblStruct/tei:monogr" mode="mla"/></xsl:if>
+  </xsl:template>
+  
 </xsl:stylesheet>

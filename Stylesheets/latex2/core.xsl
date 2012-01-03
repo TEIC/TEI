@@ -466,7 +466,7 @@ of this software, even if advised of the possibility of such damage.
        <xsl:when test="tei:biblStruct">
 	 <xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
 	 <xsl:for-each select="tei:biblStruct">
-	   <xsl:sort select="translate(string(tei:*[1]/tei:author/tei:surname or  tei:*[1]/tei:author/tei:orgName or  tei:*[1]/tei:author/tei:name or  tei:*[1]/tei:editor/tei:surname or  tei:*[1]/tei:editor/tei:name or  tei:*[1]/tei:title),$uc,$lc)"/>
+	   <xsl:sort select="lower-case(string(tei:*[1]/tei:author/tei:surname or  tei:*[1]/tei:author/tei:orgName or  tei:*[1]/tei:author/tei:name or  tei:*[1]/tei:editor/tei:surname or  tei:*[1]/tei:editor/tei:name or  tei:*[1]/tei:title))"/>
 	   <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
 	   <xsl:text>\bibitem[</xsl:text>
 	   <xsl:apply-templates select="." mode="xref"/>

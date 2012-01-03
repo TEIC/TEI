@@ -62,14 +62,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:key name="APP" match="tei:app" use="1"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
-      <desc> Uppercase letters.</desc>
-   </doc>
-  <xsl:variable name="uc">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
-      <desc> Lowercase letters.</desc>
-   </doc>
-  <xsl:variable name="lc">abcdefghijklmnopqrstuvwxyz</xsl:variable>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc> Name of XSLT processor.</desc>
    </doc>
   <xsl:variable name="processor">

@@ -214,36 +214,312 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
    <!-- authors and editors -->
-<xsl:template match="tei:editor|tei:author">
-  <xsl:choose>
-    <xsl:when test="ancestor::tei:bibl">
-      <xsl:apply-templates/>
-    </xsl:when>
-    <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
-      <xsl:apply-templates/>
-      <xsl:call-template name="tei:makeText">
-	<xsl:with-param name="letters">. </xsl:with-param>
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
-      <xsl:apply-templates/>
-      <xsl:call-template name="tei:makeText">
-	<xsl:with-param name="letters"> (ed</xsl:with-param>
-      </xsl:call-template>
-      <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
-      <xsl:call-template name="tei:makeText">
-	<xsl:with-param name="letters">.) </xsl:with-param>
-      </xsl:call-template>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:apply-templates/>
-      <xsl:call-template name="tei:makeText">
-	<xsl:with-param name="letters">, </xsl:with-param>
-      </xsl:call-template>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
+   <xsl:template match="tei:editor|tei:author">
+     <xsl:choose>
+       <xsl:when test="ancestor::tei:bibl">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
+	 <xsl:apply-templates/>
+	 <xsl:call-template name="tei:makeText">
+	   <xsl:with-param name="letters">. </xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:when test="self::tei:editor and not(following-sibling::tei:editor)">
+	 <xsl:apply-templates/>
+	 <xsl:call-template name="tei:makeText">
+	   <xsl:with-param name="letters"> (ed</xsl:with-param>
+	 </xsl:call-template>
+	 <xsl:if test="preceding-sibling::tei:editor">s</xsl:if>
+	 <xsl:call-template name="tei:makeText">
+	   <xsl:with-param name="letters">.) </xsl:with-param>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:apply-templates/>
+	 <xsl:call-template name="tei:makeText">
+	   <xsl:with-param name="letters">, </xsl:with-param>
+	 </xsl:call-template>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
 
+   <xsl:template match="tei:author|tei:editor" mode="mla">
+     <!-- <xsl:variable name="totalNbr">
+	  <xsl:number select="ancestor::tei:listBibl"/>
+        </xsl:variable>
+        <xsl:value-of select="$totalNbr"/>. 
+        <xsl:choose>
+        <xsl:when test="self::tei:author[1] = parent::tei:analytic/parent::tei:biblStruct/preceding-sibling::tei:biblStruct/*/tei:author[1] or self::tei:author[1] =
+        parent::tei:analytic/parent::tei:biblStruct/preceding-sibling::tei:biblStruct/tei:monogr/tei:editor[1]">
+        <xsl:text>[three hyphens]</xsl:text>
+        <xsl:choose>
+        <xsl:when test="self::tei:author and following-sibling::tei:author"><xsl:text>, </xsl:text></xsl:when>
+        <xsl:otherwise><xsl:text>. </xsl:text></xsl:otherwise>
+        </xsl:choose>
+        </xsl:when>
+        <xsl:when test="self::tei:author[1] = parent::tei:monogr/parent::tei:biblStruct/preceding-sibling::tei:biblStruct/*/tei:author[1] and not(preceding-sibling::tei:analytic) or self::tei:author[1] =
+        parent::tei:monogr/parent::tei:biblStruct/preceding-sibling::tei:biblStruct/tei:monogr/tei:editor[1] and not(preceding-sibling::tei:analytic)">
+        <xsl:text>[three hyphens]</xsl:text>
+        <xsl:choose>
+        <xsl:when test="self::tei:author and following-sibling::tei:author"><xsl:text>, </xsl:text></xsl:when>
+        <xsl:otherwise><xsl:text>. </xsl:text></xsl:otherwise>
+        </xsl:choose>
+        </xsl:when>
+        <xsl:when test="self::tei:editor[1] = parent::tei:*/parent::tei:biblStruct/preceding-sibling::tei:biblStruct/*/tei:author[1] and
+        not(preceding-sibling::tei:analytic) or self::tei:editor[1]
+        = parent::tei:*/parent::tei:biblStruct/preceding-sibling::tei:biblStruct/tei:monogr/tei:editor[1] and not(preceding-sibling::tei:analytic)">
+        <xsl:text>[three hyphens]</xsl:text>
+        <xsl:text>, </xsl:text>
+        </xsl:when> 
+        TAKE OUT THE EXTRA OPEN CHOOSE BEFORE YOU ADD THIS BACK IN-->
+     <xsl:choose>
+       <xsl:when test="self::tei:author and not(following-sibling::tei:author)">
+	 <xsl:choose>
+	   <xsl:when test="ancestor::tei:biblStruct and not(preceding-sibling::tei:author)">
+	     <xsl:apply-templates/>
+	     <xsl:if test="not(ends-with(.,'.'))">
+	       <xsl:text>. </xsl:text>
+	     </xsl:if>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:if test="not(self::tei:author[3])">
+	       <xsl:text> and </xsl:text>
+	     </xsl:if>
+	     <xsl:choose>
+	       <xsl:when test="contains(self::tei:author, ',')">
+		 <xsl:value-of select="substring-after(., ',')"/>
+		 <xsl:text> </xsl:text>
+		 <xsl:value-of select="substring-before(., ',')"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     <xsl:if test="not(ends-with(.,'.'))">
+	       <xsl:text>. </xsl:text>
+	     </xsl:if>
+	   </xsl:otherwise>
+	 </xsl:choose>
+	 <xsl:text> </xsl:text>
+       </xsl:when>
+       <xsl:when test="self::tei:author and following-sibling::tei:author">
+	 <xsl:choose>
+	   <xsl:when test="ancestor::tei:biblStruct and not(preceding-sibling::tei:author)">
+	     <xsl:apply-templates/>
+	     <xsl:text>, </xsl:text>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:choose>
+	       <xsl:when test="contains(self::tei:author, ',')">
+		 <xsl:value-of select="substring-after(., ',')"/>
+		 <xsl:text> </xsl:text>
+		 <xsl:value-of select="substring-before(., ',')"/>
+		 <xsl:text>, and </xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+		 <xsl:text>, and </xsl:text>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:when>
+       <xsl:when test="self::tei:editor[@role='translator'] and ancestor::tei:biblStruct">
+	 <xsl:choose>
+	   <xsl:when test="preceding-sibling::tei:editor[@role='editor']/text() = self::tei:editor[@role='translator']/text()">
+	     <xsl:text>Ed. and Trans. </xsl:text>
+	   </xsl:when>
+	   <xsl:when test="not(preceding-sibling::tei:editor[@role='translator'])">				
+	     <xsl:text>Trans. </xsl:text>
+	   </xsl:when>
+	   <xsl:when test="preceding-sibling::tei:editor[@role='translator'] and following-sibling::tei:editor[@role='translator']">
+	     <xsl:text>, </xsl:text>
+	   </xsl:when>
+	   <xsl:otherwise><xsl:text> and </xsl:text></xsl:otherwise>
+	 </xsl:choose>
+	 <xsl:choose>
+	   <xsl:when test="contains(self::tei:editor[@role='translator'], ',')">
+	     <xsl:value-of select="substring-after(., ',')"/>
+	     <xsl:text> </xsl:text>
+	     <xsl:value-of select="substring-before(., ',')"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:apply-templates/>
+	   </xsl:otherwise>
+	 </xsl:choose>
+	 <xsl:if test="not(following-sibling::tei:editor[@role='translator'])">
+	   <xsl:text>. </xsl:text>
+	 </xsl:if>
+       </xsl:when>
+       <xsl:when test="self::tei:editor[@role='editor'] and not(parent::tei:monogr/parent::tei:biblStruct/tei:analytic) and not(preceding-sibling::tei:author)">
+	 <xsl:choose>
+	   <xsl:when test="ancestor::tei:biblStruct and not(following-sibling::tei:editor[@role='editor']) and not(preceding-sibling::tei:editor[@role='editor'])">
+	     <xsl:apply-templates/>
+	     <xsl:text>, ed. </xsl:text>
+	   </xsl:when>
+	   <xsl:when test="ancestor::tei:biblStruct and following-sibling::tei:editor[@role='editor'] and not(preceding-sibling::tei:editor[@role='editor'])">
+	     <xsl:apply-templates/>
+	     <xsl:choose>
+	       <xsl:when test="position() + 1 = last()">
+		 <xsl:text> </xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:text>, </xsl:text>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:when>
+	   <xsl:when test="ancestor::tei:biblStruct and following-sibling::tei:editor[@role='editor']">
+	     <xsl:choose>
+	       <xsl:when test="contains(self::tei:editor[@role='editor'], ',')">						
+		 <xsl:value-of select="substring-after(., ',')"/>
+		 <xsl:text> </xsl:text>
+		 <xsl:value-of select="substring-before(., ',')"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     <xsl:choose>
+	       <xsl:when test="position() + 1 = last()">
+		 <xsl:text> </xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:text>, </xsl:text>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:when>
+	   <xsl:when test="ancestor::tei:biblStruct and not(following-sibling::tei:editor[@role='editor'])">
+	     <xsl:choose>
+	       <xsl:when test="preceding-sibling::tei:editor[@role='editor']">
+		 <xsl:text>and </xsl:text>
+		 <xsl:choose>
+		   <xsl:when test="contains(self::tei:editor[@role='editor'], ',')">						
+		     <xsl:value-of select="substring-after(., ',')"/>
+		     <xsl:text> </xsl:text>
+		     <xsl:value-of select="substring-before(., ',')"/>
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <xsl:apply-templates/>
+		   </xsl:otherwise>
+		 </xsl:choose>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     <xsl:choose>
+	       <xsl:when test="../tei:editor[@role='editor'][2]">
+		 <xsl:text>, eds. </xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:text>, ed. </xsl:text>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:when>
+	 </xsl:choose>
+       </xsl:when>
+       <xsl:when test="self::tei:editor[@role='editor'] and not(following-sibling::tei:editor[@role='editor'])">
+	 <xsl:choose>
+	   <xsl:when test="ancestor::tei:biblStruct and not(preceding-sibling::tei:editor[@role='editor'])">
+	     <xsl:text>Ed. </xsl:text>
+	     <xsl:choose>
+	       <xsl:when test="contains(self::tei:editor[@role='editor'], ',')">						
+		 <xsl:value-of select="substring-after(., ',')"/>
+		 <xsl:text> </xsl:text>
+		 <xsl:value-of select="substring-before(., ',')"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     <xsl:text>. </xsl:text>
+	   </xsl:when>
+	   <xsl:when test="ancestor::tei:biblStruct and preceding-sibling::tei:editor[@role='editor']">
+	     <xsl:text>and </xsl:text>
+	     <xsl:choose>
+	       <xsl:when test="contains(self::tei:editor[@role='editor'], ',')">						
+		 <xsl:value-of select="substring-after(., ',')"/>
+		 <xsl:text> </xsl:text>
+		 <xsl:value-of select="substring-before(., ',')"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     <xsl:text>. </xsl:text>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:apply-templates/>
+	     <xsl:text> (</xsl:text>
+	     <xsl:text>ed</xsl:text>
+	     <xsl:if test="preceding-sibling::tei:editor[@role='editor']">s</xsl:if>
+	     <xsl:text>.</xsl:text>
+	     <xsl:text>) </xsl:text>
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:when>
+       <xsl:when test="self::tei:editor[@role='editor'] and following-sibling::tei:editor[@role='editor']">
+	 <xsl:choose>
+	   <xsl:when test="ancestor::tei:biblStruct and not(preceding-sibling::tei:editor[@role='editor'])">
+	     <xsl:text>Ed. </xsl:text>
+	     <xsl:choose>
+	       <xsl:when test="contains(self::tei:editor[@role='editor'], ',')">						
+		 <xsl:value-of select="substring-after(., ',')"/>
+		 <xsl:text> </xsl:text>
+		 <xsl:value-of select="substring-before(., ',')"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     <xsl:choose>
+	       <xsl:when test="position() + 1 = last()">
+		 <xsl:text> </xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:text>, </xsl:text>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:when>
+	   <xsl:when test="ancestor::tei:biblStruct and preceding-sibling::tei:editor[@role='editor']">
+	     <xsl:choose>
+	       <xsl:when test="contains(self::tei:editor[@role='editor'], ',')">						
+		 <xsl:value-of select="substring-after(., ',')"/>
+		 <xsl:text> </xsl:text>
+		 <xsl:value-of select="substring-before(., ',')"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     <xsl:text>, </xsl:text>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:choose>
+	       <xsl:when test="contains(self::tei:editor[@role='editor'], ',')">						
+		 <xsl:value-of select="substring-after(., ',')"/>
+		 <xsl:text> </xsl:text>
+		 <xsl:value-of select="substring-before(., ',')"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	     <xsl:choose>
+	       <xsl:when test="position() + 1 = last()">
+		 <xsl:text> </xsl:text>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:text>, </xsl:text>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:when>
+     </xsl:choose>
+   </xsl:template>
+   
    <xsl:template match="tei:surname">
       <xsl:if test="../tei:forename">
          <xsl:apply-templates select="../tei:forename" mode="use"/>

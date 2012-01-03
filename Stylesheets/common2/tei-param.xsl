@@ -310,6 +310,14 @@ Paragraph indentation
 </desc>
   </doc>
   <xsl:param name="parIndent">1em</xsl:param>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
+    <desc>
+      Style for formatted bibliography
+    </desc>
+  </doc>
+  <xsl:param name="biblioStyle"></xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
     <desc>
 Default spacing between paragraphs
