@@ -3,7 +3,7 @@ $n=0;
 while (<>) {
 chop;
 s/&/&amp;/g;
- ($key,$rest) = /([A-Z]+) (.*)/;
+ ($key,$rest) = /([A-Z]+) +(.*)/;
  if ($key eq 'NUMB') {
    if ($n > 0) { print "</object>\n"; }
    $n=$n+1;
