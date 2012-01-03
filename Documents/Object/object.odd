@@ -21,21 +21,21 @@
 	within one particular community—no matter whether great or
 	small, but of a certain stability—instantly evokes the idea of
 	one particular place through an association of
-	contiguity. (Olsen, 1928, p. 5)</quote></p>
+	contiguity. (Olsen, 1928, p. 5)</quote>
 
       <bibl>Olsen, Magnus. Farms and fanes of ancient Norway: the place-names of a
-country discussed in their bearings on social and religious
-history. Volume 9 of Instituttet for sammenlignende kulturforskning,
-Serie A, Forelesninger. Oslo: Aschehoug, 1928.</bibl>
-
+      country discussed in their bearings on social and religious
+      history. Volume 9 of Instituttet for sammenlignende kulturforskning,
+      Serie A, Forelesninger. Oslo: Aschehoug, 1928.</bibl>
+      </p>
 <div>
   <head>Examples</head>
 <p><egXML xmlns="http://www.tei-c.org/ns/Examples">
-<object xml:id="grindstone1">
-  <trait type="type">Tool</trait>
-  <p>Actually, it is the combination of wheel and grindstone which
+<object xml:id="rcgrindstone">
+  <trait type="type"><p>Tool</p></trait>
+  <note>Actually, it is the combination of wheel and grindstone which
   makes a <soCalled>Machine</soCalled> which Crusoe uses to sharpen
-  his tools.</p>
+  his tools.</note>
   <bibl>chapter 3, April 3rd</bibl>
 </object>
 </egXML>
@@ -45,8 +45,8 @@ Serie A, Forelesninger. Oslo: Aschehoug, 1928.</bibl>
   <label>Mythical sword</label>
   <objectName>Excalibur</objectName>
   <objectName xml:lang="cy">Caledfwlch</objectName>
-  <trait type="type">Sword</trait>
-  <p><objectName>Excalibur</objectName> is the legendary sword of
+  <trait type="type"><p>Sword</p></trait>
+  <note><objectName>Excalibur</objectName> is the legendary sword of
   <persName ref="#ARTHUR">King Arthur</persName>, sometimes attributed
   with magical powers or associated with the rightful sovereignty of
   <placeName>Great Britain</placeName>. Sometimes Excalibur and the <rs type="object"
@@ -55,26 +55,26 @@ Serie A, Forelesninger. Oslo: Aschehoug, 1928.</bibl>
   weapon, but in most versions they are considered separate. The sword
   was associated with the Arthurian legend very early. In Welsh, the
   sword is called <objectName xml:lang="cy">Caledfwlch</objectName>.
-  </p>
+  </note>
   <bibl><ptr target="http://en.wikipedia.org/wiki/Excalibur"/></bibl>
 </object>
 <listRelation>
-<relation type="owned" active="#ARTHUR" passive="#EXC"/>
+  <relation name="owned" active="#ARTHUR" passive="#EXC"/>
 </listRelation>
 </egXML>
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <object xml:id="ROYALGEORGE">
   <label>Warship</label>
-  <date type="start">1756</date>
-  <date type="end">1782</date>
-  <p><objectName>HMS Royal George</objectName> was a 100-gun
+  <event type="start" when="1756"/>
+  <event type="end" when="1782"/>
+  <note><objectName>HMS Royal George</objectName> was a 100-gun
   first-rate ship of the line of the <orgName ref="#Royal_Navy">Royal
   Navy</orgName>, built at <placeName
   ref="#Woolwich_Dockyard">Woolwich Dockyard</placeName> and launched
   on <date when="1756-02-18">18 February 1756</date>. The largest
   warship in the world at the time of launching, she saw service
-  during the <ref ref="#Seven_Years%27_War">Seven Years' War</ref>
+  during the <ref target="#Seven_Years%27_War">Seven Years' War</ref>
   including being Admiral <persName ref="#Edward_Hawke">Sir Edward
   Hawke</persName>'s flagship at the <name type="event"
   ref="#Battle_of_Quiberon_Bay">Battle of Quiberon Bay</name> and
@@ -84,7 +84,7 @@ Serie A, Forelesninger. Oslo: Aschehoug, 1928.</bibl>
   anchored off <placeName ref="#Portsmouth">Portsmouth</placeName> on 
   <date when="1782-08-29">29 August 1782</date> with the
   loss of more than 800 lives, one of the most serious maritime losses
-  to occur in British waters.</p>
+  to occur in British waters.</note>
   <bibl><ptr target="http://en.wikipedia.org#HMS_Royal_George_(1756)"/></bibl>
 </object>
 </egXML>
@@ -93,9 +93,9 @@ Serie A, Forelesninger. Oslo: Aschehoug, 1928.</bibl>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <object xml:id="V9002441">
 <idno>9002441</idno>
-<trait type="Fabric">SOUTH ITALIAN, APULIAN</trait>
-<trait type="Technique">RED-FIGURE</trait>
-<trait type="ShapeName">AMPHORA, PANATHENAIC SHAPE</trait>
+<trait type="Fabric"><p>SOUTH ITALIAN, APULIAN</p></trait>
+<trait type="Technique"><p>RED-FIGURE</p></trait>
+<trait type="ShapeName"><p>AMPHORA, PANATHENAIC SHAPE</p></trait>
 <bibl>Corpus Vasorum Antiquorum: LECCE, MUSEO PROVINCIALE SIGISMONDO CASTROMEDIANO 2, 26, PL.(283) 44.1.4</bibl>
 </object>
 </egXML>
@@ -154,6 +154,7 @@ great river of Oroonoque; ... Written by himself. — Robinson Crusoe"
                 <rng:zeroOrMore>
                   <rng:choice>
                     <rng:ref name="model.labelLike"/>
+                    <rng:ref name="model.nameLike"/>
                     <rng:ref name="model.objectStateLike"/>
                     <rng:ref name="model.objectEventLike"/>
                   </rng:choice>
@@ -233,6 +234,60 @@ great river of Oroonoque; ... Written by himself. — Robinson Crusoe"
         </classSpec>
       </specGrp>
       <specGrp xml:id="CHANGES">
+	<elementSpec ident="trait" mode="change">
+	  <classes mode="replace">
+	    <memberOf key="att.global"/>
+	    <memberOf key="att.datable"/>
+	    <memberOf key="att.editLike"/>
+	    <memberOf key="att.naming"/>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="model.persStateLike"/>
+	    <memberOf key="model.placeStateLike"/>
+	    <memberOf key="model.objectStateLike"/>
+	  </classes>
+	</elementSpec>
+	<elementSpec ident="event" mode="change">
+	  <classes mode="replace">	    
+	    <memberOf key="att.global"/>
+	    <memberOf key="att.datable"/>
+	    <memberOf key="att.editLike"/>
+	    <memberOf key="att.typed"/>
+	    <memberOf key="att.naming"/>
+	    <memberOf key="att.sortable"/>
+	    <memberOf key="model.persEventLike"/>
+	    <memberOf key="model.placeEventLike"/>
+	    <memberOf key="model.objectEventLike"/>
+	  </classes>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.headLike"/>
+      </zeroOrMore>
+      <choice>
+        <group>
+          <zeroOrMore>
+            <ref name="model.pLike"/>
+          </zeroOrMore>
+        </group>
+        <group>
+          <zeroOrMore>
+            <ref name="model.labelLike"/>
+          </zeroOrMore>
+        </group>
+      </choice>
+      <zeroOrMore>
+        <choice>
+          <ref name="model.noteLike"/>
+          <ref name="model.biblLike"/>
+        </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <ref name="event"/>
+      </zeroOrMore>
+    </group>
+  </content>
+	</elementSpec>
+
        </specGrp>
       <schemaSpec ident="object" start="TEI">
         <moduleRef key="tei"/>
@@ -242,6 +297,7 @@ great river of Oroonoque; ... Written by himself. — Robinson Crusoe"
         <moduleRef key="linking"/>
         <moduleRef key="namesdates"/>
 	<specGrpRef target="#NEW"/>
+	<specGrpRef target="#CHANGES"/>
       </schemaSpec>
 </div>
     </body>
