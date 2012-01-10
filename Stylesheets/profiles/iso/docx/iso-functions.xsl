@@ -344,6 +344,7 @@ of this software, even if advised of the possibility of such damage.
 	      test="self::tei:note[@type='remark']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@type='emphasize']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
+	  <xsl:when test="self::tei:note[@place='tablefoot']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>

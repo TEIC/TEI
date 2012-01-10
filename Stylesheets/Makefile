@@ -4,7 +4,7 @@ TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex common2 docx dtd epub epub3 fo2 html html5 latex2 nlm odds2 odt profiles rdf relaxng rnc slides tbx tite tools txt xhtml2 xsd
+DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 latex2 nlm odds2 odt profiles rdf relaxng rnc slides tbx tite tools txt xhtml2 xsd
 
 SCRIPTS=docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei
 PREFIX=/usr

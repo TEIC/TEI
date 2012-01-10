@@ -49,6 +49,31 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="system-property('xsl:vendor')"/>
   </xsl:variable>
 
+<xsl:template match="/">
+  <xsl:choose>
+    <xsl:when test="*[namespace-uri()='http://docbook.org/ns/docbook']">
+      <xsl:apply-templates/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:variable name="db5">
+	<xsl:apply-templates mode="convert"/>
+      </xsl:variable>
+      <xsl:apply-templates select="$db5/*"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template match="@*|text()|comment()" mode="convert">
+  <xsl:copy-of select="."/>
+</xsl:template>
+
+<xsl:template match="*" mode="convert">
+  <xsl:element name="{name()}" namespace="http://docbook.org/ns/docbook">
+    <xsl:apply-templates select="@*|text()|*|comment()" mode="convert"/>
+  </xsl:element>
+</xsl:template>
+
+
 <xsl:template match="abbrev">
   <abbr>
     <xsl:apply-templates/>
@@ -362,6 +387,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:when test="parent::listitem and count(../para)=1">
 	<xsl:apply-templates/>
     </xsl:when>
+    <xsl:when test="parent::footnote and count(../para)=1">
+	<xsl:apply-templates/>
+    </xsl:when>
     <xsl:otherwise>
       <p>  
 	<xsl:apply-templates/>
@@ -386,6 +414,9 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="row">
   <row>
+    <xsl:if test="ancestor::thead">
+      <xsl:attribute name="role">label</xsl:attribute>
+    </xsl:if>
     <xsl:apply-templates/>
   </row>
 </xsl:template>
@@ -424,9 +455,9 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="table">
-  <xsl:copy>
+  <table>
     <xsl:apply-templates/>
-  </xsl:copy>
+  </table>
 </xsl:template>
 
 <xsl:template match="tbody">
@@ -498,6 +529,157 @@ of this software, even if advised of the possibility of such damage.
   <ptr target="#{@linkend}" type="{@role}" />
 </xsl:template>
 
+<xsl:template match="programlisting">
+  <eg>
+    <xsl:apply-templates/>
+  </eg>
+</xsl:template>
+
+<xsl:template match="firstname">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="jobtitle">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="orgdiv">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="simpara">
+  <xsl:choose>
+    <xsl:when test="following-sibling::simpara or
+		    preceding-sibling::simpara">
+      <p>
+	<xsl:apply-templates/>
+      </p>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates/>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
+<xsl:template match="term">
+  <term>
+    <xsl:apply-templates/>
+  </term>
+</xsl:template>
+
+<xsl:template match="thead">
+  <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="variablelist">
+  <list type="gloss">
+    <xsl:apply-templates/>
+  </list>
+</xsl:template>
+
+<xsl:template match="varlistentry">
+    <xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="varlistentry/term">
+  <label>
+    <xsl:apply-templates/>
+  </label>
+</xsl:template>
+
+<!-- more -->
+
+<xsl:template match="action">
+  <hi rend="Action">
+  <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="command">
+  <hi rend="Command">
+  <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="database">
+  <hi rend="Database">
+  <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="function">
+  <hi rend="Function">
+  <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="guilabel">
+  <hi rend="Label">
+    <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="parameter">
+  <hi rend="Parameter">
+  <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="remark">
+  <hi rend="Remark">
+  <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="trademark">
+  <xsl:apply-templates/>
+  <xsl:text>™</xsl:text>
+</xsl:template>
+
+<xsl:template match="type">
+  <hi rend="Type">
+  <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="varname">
+  <xsl:apply-templates/>
+</xsl:template>
+
+
+<xsl:template match="filename">
+  <hi rend="FileSpec">
+    <xsl:apply-templates/>
+  </hi>
+</xsl:template>
+
+<xsl:template match="footnote">
+  <note place="foot">
+    <xsl:apply-templates/>
+  </note>
+</xsl:template>
+
+<xsl:template match="informalexample">
+  <eg>
+    <xsl:apply-templates/>
+  </eg>
+</xsl:template>
+<xsl:template match="graphic">
+  <graphic target="@fileref">
+    <xsl:if test="@align">
+      <xsl:attribute name="rend" select="@align"/>
+    </xsl:if>
+  </graphic>
+</xsl:template>
+
+
+<!-- catch all -->
+
+<xsl:template match="*">
+  <xsl:message>Unknown element <xsl:value-of  select="name()"/></xsl:message>
+  <xsl:apply-templates/>
+</xsl:template>
+
 <!-- use general-purpose templates to add standard attributes -->
 <xsl:template name="Role">
     <xsl:if test="@role">
@@ -526,5 +708,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="whatsTheDate">
       <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
   </xsl:template>
+
+
 
 </xsl:stylesheet>
