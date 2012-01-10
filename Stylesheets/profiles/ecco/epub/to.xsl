@@ -127,7 +127,10 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="generateSubjectHook">
     <dc:subject>ECCO</dc:subject>
-    <dc:subject>Oxford Text Archive</dc:subject>
+    <dc:subject>University of Oxford Text Archive</dc:subject>
   </xsl:template>
+
+  <xsl:param name="autoBlockQuote">true</xsl:param>
+  <xsl:param name="autoBlockQuoteLength">150</xsl:param>
 
 </xsl:stylesheet>

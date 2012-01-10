@@ -739,9 +739,21 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
    <xsl:param name="refDocFooterURL">index.html</xsl:param>
 
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="anyURI">
+      <desc>Gap between elements in navigation list
+  </desc></doc>
    <xsl:template name="navInterSep">
       <xsl:text>: </xsl:text>
    </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
+      <desc>Whether it should be attempted to make quotes into block
+      quotes if they are over a certain length</desc></doc>
+  <xsl:param name="autoBlockQuote">false</xsl:param>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="integer">
+      <desc>Length beyond which a quote is a block quote</desc></doc>
+  <xsl:param name="autoBlockQuoteLength">150</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
       <desc>[html] Hooks where HTML can be inserted when processing

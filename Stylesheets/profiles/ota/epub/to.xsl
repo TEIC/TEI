@@ -173,7 +173,7 @@ of this software, even if advised of the possibility of such damage.
 	test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/idno[@type='TCP']">
       <dc:subject>ECCO</dc:subject>
     </xsl:if>
-    <dc:subject>Oxford Text Archive</dc:subject>
+    <dc:subject>University of Oxford Text Archive</dc:subject>
   </xsl:template>
 
 </xsl:stylesheet>

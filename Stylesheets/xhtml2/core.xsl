@@ -1586,7 +1586,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="$postQuote"/>
         </span>
       </xsl:when>
-      <xsl:when test="@rend='display' or tei:lb or tei:p or tei:l or string-length(.)&gt;150">
+      <xsl:when test="@rend='display' or tei:lb or tei:p or tei:l or
+		      ($autoBlockQuote='true' and string-length(.)&gt;$autoBlockQuoteLength)">
         <blockquote>
           <xsl:call-template name="rendToClass"/>
           <xsl:choose>
