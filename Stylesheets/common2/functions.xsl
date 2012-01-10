@@ -230,7 +230,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='tablefoot']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='inline']">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:biblStruct]">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:bibl]">true</xsl:when>
@@ -292,7 +291,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$element">
       <xsl:choose>
 	<xsl:when test="parent::tei:note[@place='foot'] and self::tei:gap">false</xsl:when>
-	<xsl:when test="parent::tei:note[@place='foot' or @place='tablefoot' or @place='bottom']">true</xsl:when>
+	<xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">true</xsl:when>
 	<xsl:when test="parent::tei:body">true</xsl:when>
 	<xsl:when test="tei:floatingText">true</xsl:when>
 	<xsl:when test="parent::tei:div">true</xsl:when>

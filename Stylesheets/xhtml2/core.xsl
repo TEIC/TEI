@@ -1026,7 +1026,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates/>
         <xsl:text>]</xsl:text>
       </xsl:when>
-      <xsl:when test="@place='foot' or @place='tablefoot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
+      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
         <xsl:element name="{if (parent::tei:head or parent::tei:hi)  then 'span'           else if (parent::tei:l) then 'span'           else if (parent::tei:bibl/parent::tei:head) then 'span'           else if (parent::tei:stage/parent::tei:q) then 'span'           else if  (parent::tei:body or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="concat($identifier,'_return')"/>

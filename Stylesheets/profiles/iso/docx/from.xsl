@@ -752,7 +752,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:when test="$style=$ExampleHeadingChar"/>
 	    <xsl:when test="$style=$NoteHeadingChar"/>
 	    <xsl:when
-	    test="$style=$TableNote,HeadingChar"/>
+	    test="$style=$TableNoteHeadingChar"/>
 	-->
 
 	    <!-- stored elsewhere in TBX -->
@@ -1614,7 +1614,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Table note']"
 		  mode="paragraph">
-        <note place="tablefoot">
+        <note rend="Tablenote">
 	  <xsl:call-template name="process-checking-for-crossrefs"/>
         </note>
     </xsl:template>
