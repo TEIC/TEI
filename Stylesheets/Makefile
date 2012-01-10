@@ -9,7 +9,7 @@ DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 latex2 nlm odds2 
 SCRIPTS=docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei
 PREFIX=/usr
 OXY=/usr/share/oxygen/stylesheetDocumentation.sh
-TARGETS= \
+DOCTARGETS= \
 	latex2/tei.xsl \
 	xhtml2/tei.xsl \
 	fo2/tei.xsl \
@@ -28,6 +28,15 @@ TARGETS= \
 	profiles/default/lite/to.xsl \
 	profiles/default/odt/to.xsl \
 	profiles/default/relaxng/to.xsl	\
+	profiles/default/docx/from.xsl \
+	profiles/default/csv/from.xsl		\
+	profiles/default/odt/from.xsl \
+	profiles/default/docbook/from.xsl	\
+	profiles/default/p4/from.xsl\
+	profiles/default/docx/from.xsl
+
+PROFILEDOCTARGETS=\
+	profiles/enrich/docx/from.xsl \
 	profiles/enrich/docx/to.xsl \
 	profiles/enrich/fo/to.xsl \
 	profiles/enrich/html/to.xsl \
@@ -35,15 +44,7 @@ TARGETS= \
 	profiles/iso/docx/to.xsl \
 	profiles/iso/fo/to.xsl \
 	profiles/iso/html/to.xsl \
-	profiles/iso/latex/to.xsl \
-	profiles/default/docx/from.xsl \
-	profiles/enrich/docx/from.xsl \
-	profiles/default/csv/from.xsl		\
-	profiles/default/odt/from.xsl \
-	profiles/default/docbook/from.xsl	\
-	profiles/default/p4/from.xsl\
-	profiles/default/docx/from.xsl
-
+	profiles/iso/latex/to.xsl 
 
 .PHONY: doc release common
 
@@ -88,7 +89,7 @@ doc:
 oxygendoc:
 	test -f $(OXY) || exit 1
 	@echo using oXygen stylesheet documentation generator
-	for i in ${TARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common2/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+	for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common2/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 teioo.jar:
 	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
@@ -116,6 +117,11 @@ installp5: p5 teioo.jar
 	  perl -p -i -e 's+^APPHOME=.*+APPHOME=/usr/share/xml/tei/stylesheet+' ${PREFIX}/bin/$$i; \
 	done
 
+installprofiles:
+	test -d release/p5 || mkdir -p release/p5/xml/tei/stylesheet/
+	tar cf - --exclude .svn --exclude default profiles | (cd release/p5/xml/tei/stylesheet; tar xf - )
+	for i in ${PROFILEDOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-p5-xslprofiles/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+
 installcommon: doc common
 	mkdir -p ${PREFIX}/lib/cgi-bin
 	cp doc/stylebear ${PREFIX}/lib/cgi-bin/stylebear
@@ -125,11 +131,12 @@ installcommon: doc common
 	(cd release/common/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 	(cd release/common/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
-install: installp5 installcommon
+install: installp5 installcommon installprofiles
 
 debversion:
 	(cd debian-tei-xsl-common;  dch -v `cat ../VERSION` new release)
 	(cd debian-tei-p5-xsl2;  dch -v `cat ../VERSION` new release)
+	(cd debian-tei-p5-xslprofiles;  dch -v `cat ../VERSION` new release)
 
 deb:
 	@echo BUILD Make Debian packages
@@ -138,6 +145,7 @@ deb:
 	rm -f tei*xsl*_*build
 	(cd debian-tei-xsl-common; debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-xsl2;    debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-xslprofiles;    debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
 
 sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
