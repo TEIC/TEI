@@ -118,9 +118,13 @@ installp5: p5 teioo.jar
 	done
 
 installprofiles:
-	test -d release/p5 || mkdir -p release/p5/xml/tei/stylesheet/
-	tar cf - --exclude .svn --exclude default profiles | (cd release/p5/xml/tei/stylesheet; tar xf - )
-	for i in ${PROFILEDOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-p5-xslprofiles/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+	test -d release/profiles || mkdir -p release/profiles/xml/tei/stylesheet/
+	mkdir -p ${PREFIX}/share/xml/
+	mkdir -p ${PREFIX}/share/doc/
+	tar cf - --exclude .svn --exclude default profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
+	for i in ${PROFILEDOCTARGETS}; do echo process doc for $$i; export ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+	(cd release/profiles; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
+	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 
 installcommon: doc common
 	mkdir -p ${PREFIX}/lib/cgi-bin
