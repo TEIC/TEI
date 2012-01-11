@@ -34,7 +34,7 @@ DOCTARGETS= \
 	profiles/default/csv/from.xsl		\
 	profiles/default/odt/from.xsl \
 	profiles/default/docbook/from.xsl	\
-	profiles/default/p4/from.xsl\
+	profiles/default/p4/from.xsl \
 	profiles/default/docx/from.xsl
 
 PROFILEDOCTARGETS=\
