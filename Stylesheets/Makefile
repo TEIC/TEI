@@ -4,9 +4,9 @@ TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 latex2 nlm odds2 odt profiles rdf relaxng rnc slides tbx tite tools txt xhtml2 xsd
+DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 latex2 nlm odds2 odt profiles/default rdf relaxng rnc slides tbx tite tools txt xhtml2 xsd
 
-SCRIPTS=docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei
+SCRIPTS=docbooktotei docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei
 PREFIX=/usr
 OXY=/usr/share/oxygen/stylesheetDocumentation.sh
 DOCTARGETS= \
@@ -20,6 +20,7 @@ DOCTARGETS= \
 	slides/teilatex-slides.xsl \
 	profiles/default/csv/to.xsl	\
 	profiles/default/docx/to.xsl \
+	profiles/default/docx/from.xsl \
 	profiles/default/dtd/to.xsl	\
 	profiles/default/epub/to.xsl	\
 	profiles/default/fo/to.xsl	\
@@ -27,6 +28,7 @@ DOCTARGETS= \
 	profiles/default/latex/to.xsl \
 	profiles/default/lite/to.xsl \
 	profiles/default/odt/to.xsl \
+	profiles/default/odt/from.xsl \
 	profiles/default/relaxng/to.xsl	\
 	profiles/default/docx/from.xsl \
 	profiles/default/csv/from.xsl		\
@@ -42,6 +44,7 @@ PROFILEDOCTARGETS=\
 	profiles/enrich/html/to.xsl \
 	profiles/enrich/latex/to.xsl \
 	profiles/iso/docx/to.xsl \
+	profiles/iso/docx/from.xsl \
 	profiles/iso/fo/to.xsl \
 	profiles/iso/html/to.xsl \
 	profiles/iso/latex/to.xsl 
