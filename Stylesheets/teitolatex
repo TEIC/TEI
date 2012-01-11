@@ -55,16 +55,16 @@ while test $# -gt 0; do
 done
 HERE=`pwd`
 FILE=${1:?"no TEI file supplied; for usage syntax $0 --help"}
-if test -f $FILLE
+if test -f "$FILE"
 then 
      echo Read file $FILE
 else
   echo File $FILE does not exist
   die
 fi
-D=`dirname $1`
-F=`basename $1`
-B=`basename $1 .xml`
+D=`dirname "$1"`
+F=`basename "$1"`
+B=`basename "$1" .xml`
 DOCHOME=`(cd $D; pwd)`
 X=`dirname $0`
 APPHOME=`(cd $X; pwd)`
@@ -80,13 +80,13 @@ fi
 mkdir -p $TEMPDIR/media
 case $DOCHOME/$F in 
        *.zip)  (cd $TEMPDIR; unzip -q $DOCHOME/$F ); F=`basename $F .zip`.xml;; 
-       *) cp $DOCHOME/$F $TEMPDIR/$F  ;; 
+       *) cp "$DOCHOME/$F" "$TEMPDIR/$F"  ;; 
 esac
 cd $TEMPDIR
 
 # images
-saxon $F $XSL/docx/utils/graphics/listgraphics.xsl ORIG=$DOCHOME DIR=$TEMPDIR/media > fetch
-sh $TEMPDIR/fetch
+saxon "$F" $XSL/docx/utils/graphics/listgraphics.xsl ORIG="$DOCHOME" DIR=$TEMPDIR/media > fetch
+source $TEMPDIR/fetch
 if $debug 
 then
 cat $TEMPDIR/fetch
@@ -95,23 +95,23 @@ rm $TEMPDIR/fetch
 fi
 if $odd
 then
-    saxon -o:$TEMPDIR/tmp1.xml $F $XSL/odds/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
+    saxon -o:$TEMPDIR/tmp1.xml "$F" $XSL/odds/odd2odd.xsl localsource=/usr/share/xml/tei/odd/p5subset.xml TEIC=true
     saxon -o:$TEMPDIR/tmp2.xml $TEMPDIR/tmp1.xml $XSL/odds/odd2lite.xsl displayMode=rnc  summaryDoc=true
 else
-    ln -s $F tmp2.xml
+    ln -s "$F" tmp2.xml
 fi
 if $debug 
 then
  echo $TOXSL  odd=$odd debug=$debug verbose=$verbose 
 fi
-saxon  -o:$DOCHOME/$B.tex tmp2.xml $TOXSL odd=$odd debug=$debug verbose=$verbose fixgraphicsurl=true
+saxon  -o:"$DOCHOME/$B".tex tmp2.xml $TOXSL odd=$odd debug=$debug verbose=$verbose fixgraphicsurl=true
 if $debug 
 then
     echo leaving tmp[123].xml alone
 else
     rm -f tmp1.xml tmp2.xml
 fi
-cd $HERE
+cd "$HERE"
 if $debug 
 then
     echo Working files left in $TEMPDIR
