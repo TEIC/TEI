@@ -61,7 +61,7 @@ of the TEI you need to validate that corpus
   <!-- the document corpus -->
   <xsl:param name="corpus">./</xsl:param>
   <!-- the source of the TEI (just needs *Spec)-->
-  <xsl:param name="tei">/usr/share/xml/tei/odd/p5subset.xml</xsl:param>
+  <xsl:param name="tei">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
   <!-- should we make valList for @rend -->
   <xsl:param name="enumerateRend">false</xsl:param>
   <xsl:param name="enumerateType">false</xsl:param>
@@ -127,14 +127,6 @@ valList
                     <xsl:copy-of select="@ident"/>
                     <xsl:call-template name="checktype"/>
                   </attDef>
-                </xsl:for-each>
-                <xsl:for-each select="key('IDENTS','att.global')">
-                  <xsl:for-each select=".//tei:attDef">
-                    <attDef class="att.global">
-                      <xsl:copy-of select="@ident"/>
-                      <xsl:call-template name="checktype"/>
-                    </attDef>
-                  </xsl:for-each>
                 </xsl:for-each>
                 <xsl:call-template name="classatts"/>
               </elementSpec>
