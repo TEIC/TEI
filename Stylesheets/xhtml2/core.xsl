@@ -2093,19 +2093,19 @@ of this software, even if advised of the possibility of such damage.
         </b>
       </xsl:when>
       <xsl:when test="$value='center'">
-        <center>
+        <span style="text-align:center">
           <xsl:call-template name="applyRend">
             <xsl:with-param name="value" select="$rest"/>
           </xsl:call-template>
-        </center>
+	</span>
       </xsl:when>
       <xsl:when test="$value='code'">
         <b>
-          <tt>
+          <code>
             <xsl:call-template name="applyRend">
               <xsl:with-param name="value" select="$rest"/>
             </xsl:call-template>
-          </tt>
+          </code>
         </b>
       </xsl:when>
       <xsl:when test="$value='italics' or $value='italic' or $value='cursive' or         $value='it' or $value='ital'">
@@ -2163,11 +2163,11 @@ of this software, even if advised of the possibility of such damage.
         </span>
       </xsl:when>
       <xsl:when test="$value='ul'">
-        <u>
+        <span style="text-decoration:underline">
           <xsl:call-template name="applyRend">
             <xsl:with-param name="value" select="$rest"/>
           </xsl:call-template>
-        </u>
+        </span>
       </xsl:when>
       <xsl:when test="$value='interlinMarks'">
         <xsl:text>`</xsl:text>

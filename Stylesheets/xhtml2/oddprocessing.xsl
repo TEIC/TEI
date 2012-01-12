@@ -230,9 +230,9 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="typewriter">
     <xsl:param name="text"/>
-    <tt>
+    <code>
       <xsl:copy-of select="$text"/>
-    </tt>
+    </code>
   </xsl:template>
   <xsl:template name="showRNC">
     <xsl:param name="style"/>
