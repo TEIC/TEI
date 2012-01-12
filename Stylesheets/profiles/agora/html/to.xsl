@@ -37,23 +37,22 @@
    <xsl:param name="numberTables">false</xsl:param>
   <xsl:param name="numberParagraphs">false</xsl:param>
   <xsl:param name="generateParagraphIDs">true</xsl:param>
-  <xsl:param name="autoToc">false</xsl:param>
-
-
-
+  <xsl:param name="autoToc">true</xsl:param>
   <xsl:param name="cssInlineFile">../profiles/agora/html/tei-agora.css</xsl:param>
   <xsl:param name="cssFile"/>
-
   <xsl:param name="institution">AGORA Project</xsl:param>
-
    <xsl:param name="bottomNavigationPanel">false</xsl:param>
   <xsl:param name="linkPanel">false</xsl:param>
    <xsl:param name="footnoteBackLink">true</xsl:param>
-  
    <xsl:param name="homeURL"></xsl:param>
   <xsl:param name="feedbackURL"></xsl:param>
    <xsl:param name="homeWords">AGORA</xsl:param>
  
+<xsl:template name="copyrightStatement">
+This page is made available under the Creative Commons General Public License "Attribution, Non-Commercial, Share-Alike", version 3.0 (CCPL BY-NC-SA) 
+</xsl:template>
+
+
 <!-- number paragraphs -->
   <xsl:template name="numberParagraph">
     <xsl:if test="ancestor::tei:body">
