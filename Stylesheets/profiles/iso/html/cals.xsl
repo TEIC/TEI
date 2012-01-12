@@ -237,10 +237,10 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="style">border-bottom:thin solid black</xsl:attribute>
       </xsl:if>
       <xsl:if test="not(preceding-sibling::*)                   and ancestor::cals:row/@id">
-        <a name="{ancestor::cals:row/@id}"/>
+        <xsl:attribute name="id" select="ancestor::cals:row/@id"/>
       </xsl:if>
       <xsl:if test="@id">
-        <a name="{@id}"/>
+        <xsl:attribute name="id" select="@id"/>
       </xsl:if>
       <xsl:choose>
         <xsl:when test="$empty.cell">

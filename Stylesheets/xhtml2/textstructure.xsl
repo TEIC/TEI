@@ -1050,20 +1050,28 @@ of this software, even if advised of the possibility of such damage.
 	       </xsl:call-template>
 	       <xsl:call-template name="sectionHeadHook"/>
 	     </xsl:element>
-		 <xsl:if test="$topNavigationPanel='true' and $nav='true'">
-		   <xsl:call-template name="xrefpanel">
-		     <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
-		     <xsl:with-param name="mode" select="local-name(.)"/>
-		   </xsl:call-template>
-		 </xsl:if>
+	     <xsl:if test="$topNavigationPanel='true' and
+			   $nav='true'">
+	       <xsl:element name="{if ($outputTarget='html5') then 'nav'
+				  else 'div'}">
+		 <xsl:call-template name="xrefpanel">
+		   <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
+		   <xsl:with-param name="mode" select="local-name(.)"/>
+		 </xsl:call-template>
+	       </xsl:element>
+	     </xsl:if>
 	   </xsl:if>
 	   <xsl:apply-templates/>
-		 <xsl:if test="$bottomNavigationPanel='true' and $nav='true'">
-		   <xsl:call-template name="xrefpanel">
-		     <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
-		     <xsl:with-param name="mode" select="local-name(.)"/>
-		   </xsl:call-template>
-		 </xsl:if>
+	   <xsl:if test="$bottomNavigationPanel='true' and
+			 $nav='true'">
+	     <xsl:element name="{if ($outputTarget='html5') then 'nav' else
+				'div'}">	       
+	       <xsl:call-template name="xrefpanel">
+		 <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
+		 <xsl:with-param name="mode" select="local-name(.)"/>
+	       </xsl:call-template>
+	     </xsl:element>
+	   </xsl:if>
          </xsl:otherwise>
 	</xsl:choose>
   </xsl:template>
@@ -1464,17 +1472,21 @@ of this software, even if advised of the possibility of such damage.
 			<xsl:call-template name="sectionHeadHook"/>
                      </h2>
 		     <xsl:if test="$topNavigationPanel='true'">
-		       <xsl:call-template name="xrefpanel">
-			 <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
-			 <xsl:with-param name="mode" select="local-name(.)"/>
-		       </xsl:call-template>
+		       <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+			 <xsl:call-template name="xrefpanel">
+			   <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
+			   <xsl:with-param name="mode" select="local-name(.)"/>
+			 </xsl:call-template>
+		       </xsl:element>
 		     </xsl:if>
                      <xsl:call-template name="doDivBody"/>
                      <xsl:if test="$bottomNavigationPanel='true'">
-                        <xsl:call-template name="xrefpanel">
-                           <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
-                           <xsl:with-param name="mode" select="local-name(.)"/>
+		       <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+			 <xsl:call-template name="xrefpanel">
+			   <xsl:with-param name="homepage" select="concat($masterFile,$standardSuffix)"/>
+			   <xsl:with-param name="mode" select="local-name(.)"/>
                         </xsl:call-template>
+		       </xsl:element>
                      </xsl:if>
                   </xsl:for-each>
                </xsl:when>
@@ -2646,16 +2658,17 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="topNavigation">
       <xsl:if test="ancestor::teiCorpus">
-         <p class="{$alignNavigationPanel}">
-            <xsl:call-template name="nextLink"/>
-            <xsl:call-template name="previousLink"/>
-            <xsl:call-template name="upLink">
-               <xsl:with-param name="up" select="concat($masterFile,$standardSuffix)"/>
-               <xsl:with-param name="title">
-                  <xsl:call-template name="contentsWord"/>
-               </xsl:with-param>
-            </xsl:call-template>
-         </p>
+	<xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">	  
+	  <xsl:attribute name="class" select="$alignNavigationPanel"/>
+	    <xsl:call-template name="nextLink"/>
+	    <xsl:call-template name="previousLink"/>
+	    <xsl:call-template name="upLink">
+	      <xsl:with-param name="up" select="concat($masterFile,$standardSuffix)"/>
+	      <xsl:with-param name="title">
+		<xsl:call-template name="contentsWord"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	</xsl:element>
       </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2803,10 +2816,12 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:with-param>
                </xsl:call-template>
                <xsl:if test="$topNavigationPanel='true'">
-                  <xsl:call-template name="xrefpanel">
-                     <xsl:with-param name="homepage" select="concat($BaseFile,$standardSuffix)"/>
+		 <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+		   <xsl:call-template name="xrefpanel">
+		     <xsl:with-param name="homepage" select="concat($BaseFile,$standardSuffix)"/>
                      <xsl:with-param name="mode" select="local-name(.)"/>
                   </xsl:call-template>
+		 </xsl:element>
                </xsl:if>
                <xsl:if test="$subTocDepth &gt;= 0">
                   <xsl:call-template name="subtoc"/>
@@ -2815,10 +2830,12 @@ of this software, even if advised of the possibility of such damage.
                <xsl:call-template name="doDivBody"/>
                <xsl:call-template name="printNotes"/>
                <xsl:if test="$bottomNavigationPanel='true'">
+		 <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
                   <xsl:call-template name="xrefpanel">
                      <xsl:with-param name="homepage" select="concat($BaseFile,$standardSuffix)"/>
                      <xsl:with-param name="mode" select="local-name(.)"/>
                   </xsl:call-template>
+		 </xsl:element>
                </xsl:if>
                <xsl:call-template name="stdfooter"/>
 	              <xsl:call-template name="bodyEndHook"/>
@@ -2865,13 +2882,12 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="xrefpanel">
       <xsl:param name="homepage"/>
       <xsl:param name="mode"/>
-      <p class="{$alignNavigationPanel}">
-	<xsl:call-template name="generateUpLink"/>
-	<xsl:if test="not(ancestor-or-self::tei:TEI[@rend='nomenu'])">
-	  <xsl:call-template name="previousLink"/>
-	  <xsl:call-template name="nextLink"/>
-	</xsl:if>
-      </p>
+      <xsl:attribute name="class" select="$alignNavigationPanel"/>
+      <xsl:call-template name="generateUpLink"/>
+      <xsl:if test="not(ancestor-or-self::tei:TEI[@rend='nomenu'])">
+	<xsl:call-template name="previousLink"/>
+	<xsl:call-template name="nextLink"/>
+      </xsl:if>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

@@ -1177,7 +1177,9 @@ glyphes non standard</head>
           <img src="Images/banner.jpg" alt="Text Encoding Initiative logo and banner"/>
         </div>
         <xsl:if test="not($googleAnalytics='')">
-          <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
+	  <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+	    <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
+	  </xsl:element>
         </xsl:if>
       </div>
       <div id="searchbox" style="float:left;">

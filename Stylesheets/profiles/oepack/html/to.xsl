@@ -63,6 +63,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="htmlTitlePrefix">[OTA] </xsl:param>
 
   <xsl:template name="additionalMenu">
+    <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">      
     <ul class="OTAnav">
       <li class="navLabel"><span class="bold">O</span>xford <span class="bold"
         >T</span>ext <span class="bold">A</span>rchive: </li>
@@ -82,6 +83,7 @@ of this software, even if advised of the possibility of such damage.
         <a href="/about/search.xml">Search OTA</a>
       </li>
     </ul>
+    </xsl:element>
   </xsl:template>
 
   <xsl:template name="stdfooter">

@@ -352,16 +352,18 @@ will generate an &lt;h2&gt;</p>
 	<xsl:comment>no nav bar</xsl:comment>
       </xsl:when>
       <xsl:otherwise>
-         <xsl:for-each select="document($navbarFile,document(''))">
-            <xsl:for-each select="tei:list/tei:item">
-               <span class="navbar">
-                  <a href="{$URLPREFIX}{tei:xref/@url}" class="navbar">
-                     <xsl:apply-templates select="tei:xref/text()"/>
-                  </a>
-               </span>
-               <xsl:if test="following-sibling::tei:item"> | </xsl:if>
-            </xsl:for-each>
-         </xsl:for-each>
+	<xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
+	  <xsl:for-each select="document($navbarFile,document(''))">
+	    <xsl:for-each select="tei:list/tei:item">
+	      <span class="navbar">
+		<a href="{$URLPREFIX}{tei:xref/@url}" class="navbar">
+		  <xsl:apply-templates select="tei:xref/text()"/>
+		</a>
+	      </span>
+	      <xsl:if test="following-sibling::tei:item"> | </xsl:if>
+	    </xsl:for-each>
+	  </xsl:for-each>
+	</xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
