@@ -1452,4 +1452,30 @@ their encoding.</p>
   </xsl:template>
 
 
+  <xsl:template name="calculateFigureNumber">
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:front">
+	<xsl:number count="tei:figure[tei:head]" from="tei:div[parent::tei:front]" level="any"/>
+	<xsl:for-each select="ancestor::tei:div[parent::tei:front]">
+	  <xsl:number/>
+	</xsl:for-each>
+	<xsl:text>.</xsl:text>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:back">
+	<xsl:for-each select="ancestor::tei:div[parent::tei:back]">
+	  <xsl:number/>
+	</xsl:for-each>
+	<xsl:text>.</xsl:text>
+	<xsl:number count="tei:figure[tei:head]" from="tei:div[parent::tei:back]" level="any"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:body">
+	<xsl:for-each select="ancestor::tei:div[parent::tei:body]">
+	  <xsl:number/>
+	</xsl:for-each>
+	<xsl:text>.</xsl:text>
+	<xsl:number count="tei:figure[tei:head]" from="tei:div[parent::tei:body]" level="any"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
