@@ -42,10 +42,6 @@
                         <!-- <xsl:call-template name="addID"/> -->
                         <!-- oXygen end change -->
                         <xsl:if test="$makeTableCaption='true'">
-                            <xsl:call-template name="i18n">
-                                <xsl:with-param name="word">tableWord</xsl:with-param>
-                            </xsl:call-template>
-                            <xsl:text> </xsl:text>
                             <xsl:call-template name="calculateTableNumber"/>
                             <xsl:text>. </xsl:text>
                         </xsl:if>

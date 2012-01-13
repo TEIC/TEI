@@ -265,48 +265,48 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:table">
       <div>
          <xsl:attribute name="class">
-	           <xsl:text>table</xsl:text>
-	           <xsl:if test="@align">
-	              <xsl:text> </xsl:text>
-	              <xsl:value-of select="@align"/>
-	           </xsl:if>
-         </xsl:attribute>
+	   <xsl:text>table</xsl:text>
+	   <xsl:if test="@align">
+	     <xsl:text> </xsl:text>
+	     <xsl:value-of select="@align"/>
+	   </xsl:if>
+	 </xsl:attribute>
 	 <xsl:if test="@xml:id">	   
 	   <xsl:call-template name="makeAnchor"/>
 	 </xsl:if>
-         <table>
-            <xsl:call-template name="rendToClass">
-	              <xsl:with-param name="id">false</xsl:with-param>
-	           </xsl:call-template>
-            <xsl:if test="@rend='frame' or @rend='rules'">
-               <xsl:attribute name="rules">all</xsl:attribute>
-               <xsl:attribute name="border">1</xsl:attribute>
-            </xsl:if>
-            <xsl:for-each select="@*">
-               <xsl:if test="name(.)='summary' or name(.) = 'width' or name(.) = 'border' or name(.) = 'frame' or name(.) = 'rules' or name(.) = 'cellspacing' or name(.) = 'cellpadding'">
-                  <xsl:copy-of select="."/>
-               </xsl:if>
-            </xsl:for-each>
-	    <xsl:if test="tei:head">
-	      <caption>
-		<xsl:apply-templates select="tei:head"/>
-	      </caption>
-	    </xsl:if>
-	    <xsl:choose>
-	      <xsl:when test="tei:row[@rend='thead']">
-		<thead>
-		  <xsl:apply-templates
-		      select="tei:row[@rend='thead']"/>
-		</thead>
-		<tbody>
-		  <xsl:apply-templates select="tei:row[not(@rend='thead')]"/>
-		</tbody>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:apply-templates select="tei:row"/>
-	      </xsl:otherwise>
-	    </xsl:choose>
-         </table>
+	 <table>
+	   <xsl:call-template name="rendToClass">
+	     <xsl:with-param name="id">false</xsl:with-param>
+	   </xsl:call-template>
+	   <xsl:if test="@rend='frame' or @rend='rules'">
+	     <xsl:attribute name="rules">all</xsl:attribute>
+	     <xsl:attribute name="border">1</xsl:attribute>
+	   </xsl:if>
+	   <xsl:for-each select="@*">
+	     <xsl:if test="name(.)='summary' or name(.) = 'width' or name(.) = 'border' or name(.) = 'frame' or name(.) = 'rules' or name(.) = 'cellspacing' or name(.) = 'cellpadding'">
+	       <xsl:copy-of select="."/>
+	     </xsl:if>
+	   </xsl:for-each>
+	   <xsl:if test="tei:head">
+	     <caption>
+	       <xsl:apply-templates select="tei:head"/>
+	     </caption>
+	   </xsl:if>
+	   <xsl:choose>
+	     <xsl:when test="tei:row[@rend='thead']">
+	       <thead>
+		 <xsl:apply-templates
+		     select="tei:row[@rend='thead']"/>
+	       </thead>
+	       <tbody>
+		 <xsl:apply-templates select="tei:row[not(@rend='thead')]"/>
+	       </tbody>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:apply-templates select="tei:row"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </table>
 	 <xsl:apply-templates select="tei:note"/>
       </div>
   </xsl:template>

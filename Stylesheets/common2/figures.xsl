@@ -65,11 +65,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:table" mode="xref">
       <xsl:choose>
          <xsl:when test="$numberTables='true'">
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">tableWord</xsl:with-param>
-            </xsl:call-template>
-            <xsl:text> </xsl:text>
-            <xsl:number level="any"/>
+	   <xsl:call-template name="calculateTableNumber"/>
             <xsl:if test="tei:head">
                <xsl:text>. </xsl:text>
                <xsl:apply-templates mode="plain" select="tei:head"/>
@@ -269,6 +265,15 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:number count="tei:figure[tei:head]" from="tei:body" level="any"/>
       </xsl:when>
     </xsl:choose>    
+  </xsl:template>
+
+
+  <xsl:template name="calculateTableNumber">
+    <xsl:call-template name="i18n">
+      <xsl:with-param name="word">tableWord</xsl:with-param>
+    </xsl:call-template>
+    <xsl:text> </xsl:text>
+    <xsl:number level="any"/>
   </xsl:template>
 
 </xsl:stylesheet>
