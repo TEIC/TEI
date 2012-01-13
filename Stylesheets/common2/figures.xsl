@@ -245,4 +245,30 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
   </xsl:template>
 
+  <xsl:template name="calculateFigureNumber">
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:front and  $numberFrontFigures='true'">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">figureWord</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+	<xsl:number count="tei:figure[tei:head]" from="tei:front" level="any"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">figureWord</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+	<xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
+      </xsl:when>
+      <xsl:when test="ancestor::tei:body and $numberFigures='true'">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">figureWord</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+	<xsl:number count="tei:figure[tei:head]" from="tei:body" level="any"/>
+      </xsl:when>
+    </xsl:choose>    
+  </xsl:template>
+
 </xsl:stylesheet>
