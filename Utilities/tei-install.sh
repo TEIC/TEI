@@ -36,6 +36,11 @@ while test $# -gt 0; do
   esac
   shift
 done
+if [  -z $version ] 
+then
+ echo You must use the --version option to specify which version of the package you are installing
+ exit 1
+done
 dir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
 echo Try to fetch $version package from $dir
 sfname=$package
