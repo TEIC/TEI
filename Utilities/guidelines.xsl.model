@@ -1455,6 +1455,10 @@ their encoding.</p>
   <xsl:template name="calculateFigureNumber">
     <xsl:choose>
       <xsl:when test="ancestor::tei:front">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">figureWord</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
 	<xsl:number count="tei:figure[tei:head]" from="tei:div[parent::tei:front]" level="any"/>
 	<xsl:for-each select="ancestor::tei:div[parent::tei:front]">
 	  <xsl:number/>
@@ -1462,6 +1466,10 @@ their encoding.</p>
 	<xsl:text>.</xsl:text>
       </xsl:when>
       <xsl:when test="ancestor::tei:back">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">figureWord</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
 	<xsl:for-each select="ancestor::tei:div[parent::tei:back]">
 	  <xsl:number/>
 	</xsl:for-each>
@@ -1469,6 +1477,10 @@ their encoding.</p>
 	<xsl:number count="tei:figure[tei:head]" from="tei:div[parent::tei:back]" level="any"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:body">
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">figureWord</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
 	<xsl:for-each select="ancestor::tei:div[parent::tei:body]">
 	  <xsl:number/>
 	</xsl:for-each>
