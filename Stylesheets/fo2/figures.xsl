@@ -121,9 +121,6 @@ of this software, even if advised of the possibility of such damage.
                </block>
                <block>
                   <xsl:call-template name="figureCaptionstyle"/>
-                  <xsl:call-template name="i18n">
-                     <xsl:with-param name="word">figureWord</xsl:with-param>
-                  </xsl:call-template>
                   <xsl:call-template name="calculateFigureNumber"/>
                   <xsl:text>. </xsl:text>
                   <xsl:apply-templates select="tei:head"/>
@@ -145,7 +142,6 @@ of this software, even if advised of the possibility of such damage.
                <xsl:when test="$captionInlineFigures='true'">
                   <block>
                      <xsl:call-template name="figureCaptionstyle"/>
-                     <xsl:text>Figure </xsl:text>
                      <xsl:call-template name="calculateFigureNumber"/>
                      <xsl:text>. </xsl:text>
                      <xsl:apply-templates select="tei:head"/>
@@ -336,12 +332,6 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
          </table-body>
       </table>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[fo] </desc>
-   </doc>
-  <xsl:template name="calculateFigureNumber">
-      <xsl:number from="tei:text" level="any"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[fo] </desc>

@@ -49,28 +49,12 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:figure" mode="xref">
       <xsl:choose>
-         <xsl:when test="$numberFigures='true'">
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">figureWord</xsl:with-param>
-            </xsl:call-template>
-            <xsl:text> </xsl:text>
-            <xsl:choose>
-               <xsl:when test="ancestor::tei:front">
-                  <xsl:number count="tei:figure[tei:head]" from="tei:front" level="any"/>
-               </xsl:when>
-               <xsl:when test="ancestor::tei:back">
-                  <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
-               </xsl:when>
-               <xsl:when test="ancestor::tei:body">
-                  <xsl:number count="tei:figure[tei:head]" from="tei:body" level="any"/>
-               </xsl:when>
-            </xsl:choose>
-            <xsl:if test="tei:head">
-               <xsl:text>, </xsl:text>
-               <xsl:apply-templates mode="plain" select="tei:head"/>
-            </xsl:if>
-         </xsl:when>
-         <xsl:otherwise>
+	<xsl:when test="tei:head">
+	  <xsl:call-template name="calculateFigureNumber"/>
+	  <xsl:text>, </xsl:text>
+	  <xsl:apply-templates mode="plain" select="tei:head"/>
+	</xsl:when>
+	<xsl:otherwise>
             <xsl:text>this figure</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
@@ -260,4 +244,5 @@ of this software, even if advised of the possibility of such damage.
          </xsl:choose>
       </xsl:if>
   </xsl:template>
+
 </xsl:stylesheet>

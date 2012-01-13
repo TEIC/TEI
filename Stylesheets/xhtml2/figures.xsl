@@ -189,7 +189,6 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:attribute>
 	    </xsl:otherwise>
 	  </xsl:choose>
-	  
 	  <xsl:if test="@xml:id">
 	    <xsl:attribute name="id">
 	      <xsl:value-of select="@xml:id"/>
@@ -206,37 +205,9 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:figure/tei:head">
     <xsl:variable name="captionlabel">
-      <xsl:choose>
-	<xsl:when test="ancestor::tei:front and  $numberFrontFigures='true'">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">figureWord</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
-	  <xsl:number count="tei:figure[tei:head]" from="tei:front" level="any"/>
-	  <xsl:text>. </xsl:text>
-	</xsl:when>
-	<xsl:when test="ancestor::tei:back and $numberBackFigures='true'">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">figureWord</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
-	  <xsl:for-each select="..">
-	    <xsl:number count="tei:figure[tei:head]" from="tei:back" level="any"/>
-	  </xsl:for-each>
-	  <xsl:text>. </xsl:text>
-	</xsl:when>
-	<xsl:when test="ancestor::tei:body and $numberFigures='true'">
-	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">figureWord</xsl:with-param>
-	  </xsl:call-template>
-	  <xsl:text> </xsl:text>
-	  <xsl:for-each select="..">
-	    <xsl:number count="tei:figure[tei:head]" from="tei:body"
-			level="any"/>
-	    </xsl:for-each>
-	  <xsl:text>. </xsl:text>
-	</xsl:when>
-      </xsl:choose>
+      <xsl:for-each select="..">
+	<xsl:call-template name="calculateFigureNumber"/>
+      </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$outputTarget='html5'">
@@ -245,6 +216,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:attribute name="class" select="@rend"/>
 	  </xsl:if>
 	  <xsl:call-template name="rendering"/>
+	  <xsl:text>. </xsl:text>
 	  <xsl:copy-of select="$captionlabel"/>
 	  <xsl:apply-templates/>
 	</figcaption>
@@ -252,6 +224,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
 	<span class="caption {@rend}">
 	  <xsl:copy-of select="$captionlabel"/>
+	  <xsl:text>. </xsl:text>
 	  <xsl:apply-templates/>
 	</span>
       </xsl:otherwise>
