@@ -327,7 +327,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </dd>
   </xsl:template>
-  <xsl:template match="tei:bibl/tei:date" mode="metadata"><i>Date</i>:     <xsl:apply-templates/></xsl:template>
+  <xsl:template match="tei:bibl/tei:date" mode="metadata"
+		priority="99">
+    <i>Date</i>:     <xsl:apply-templates/>
+  </xsl:template>
   <xsl:template match="tei:note" mode="metadata">
     <xsl:text> [</xsl:text>
     <xsl:apply-templates/>
