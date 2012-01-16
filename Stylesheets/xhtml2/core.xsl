@@ -1469,7 +1469,8 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element q and tei:said</desc>
   </doc>
-  <xsl:template match="tei:q[@rend='inline margQuotes' or          @rend='inline margSglQuotes']">
+  <xsl:template match="tei:q[@rend='inline margQuotes' or
+		       @rend='inline margSglQuotes']" priority="99">
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:q[not(@place) and tei:l]">
