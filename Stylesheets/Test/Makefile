@@ -1,7 +1,11 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: conversions-from conversions-to test-html test-latex test-fo oddbyexample odd2odd
+default: conversions-from conversions-to test-html test-latex test-fo oddbyexample odd2odd p4top5
+
+p4top5:
+	saxon -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
+	diff test17.tei expected-results/test17.tei
 
 test-html:
 	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
