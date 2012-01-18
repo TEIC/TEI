@@ -543,7 +543,7 @@ of this software, even if advised of the possibility of such damage.
   
   
   <xsl:template match="@opt">
-    <xsl:if test="not(translate(lower-case(.) ='n')">
+    <xsl:if test="not(lower-case(.) ='n')">
       <xsl:attribute name="opt">
 	<xsl:value-of select="."/>
       </xsl:attribute>
