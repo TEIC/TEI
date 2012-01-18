@@ -90,7 +90,8 @@ doc:
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl-common
 
 oxygendoc:
-	test -f $(OXY) || exit 1
+	@echo text for existence of file $(OXY)
+	@test -f $(OXY) || exit 1
 	@echo using oXygen stylesheet documentation generator
 	for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common2/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
@@ -125,8 +126,9 @@ installprofiles:
 	mkdir -p ${PREFIX}/share/xml/
 	mkdir -p ${PREFIX}/share/doc/
 	tar cf - --exclude .svn --exclude default profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
-	for i in ${PROFILEDOCTARGETS}; do echo process doc for $$i; export ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 	(cd release/profiles; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
+	@echo text for existence of file $(OXY)
+	-test -f $(OXY) && for i in ${PROFILEDOCTARGETS}; do echo process doc for $$i; export ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done && \
 	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 
 installcommon: doc common

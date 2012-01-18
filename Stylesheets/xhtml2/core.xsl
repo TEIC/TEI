@@ -1360,6 +1360,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="parent::tei:figure">span</xsl:when>
         <xsl:when test="parent::tei:head or    parent::tei:q/parent::tei:head or    parent::tei:note[@place='margin']/parent::tei:head">span</xsl:when>
         <xsl:when test="ancestor::tei:notesStmt">div</xsl:when>
+        <xsl:when test="tei:table">div</xsl:when>
         <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
         <xsl:when test="$outputTarget='epub'">div</xsl:when>
         <xsl:when test="tei:eg">div</xsl:when>
