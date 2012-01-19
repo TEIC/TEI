@@ -596,14 +596,17 @@
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:label">
+    <span class="label">
       <xsl:call-template name="makeAnchor"/>
-    <xsl:apply-templates/>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:label</xd:short>
     <xd:detail> </xd:detail>
   </xd:doc>
   <xsl:template match="tei:label" mode="print">
+    <span class="label">
     <xsl:call-template name="makeAnchor"/>
     <xsl:choose>
       <xsl:when test="@rend">
@@ -619,6 +622,7 @@
         <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
+    </span>
   </xsl:template>
   <xd:doc>
     <xd:short>Process elements tei:lb</xd:short>
@@ -904,12 +908,14 @@
     <xsl:variable name="ident">
       <xsl:apply-templates mode="ident" select="."/>
     </xsl:variable>
+    <span class="name">
       <xsl:call-template name="makeAnchor">
 	<xsl:with-param name="name">
 	  <xsl:value-of select="$ident"/>
 	</xsl:with-param>
       </xsl:call-template>
     <xsl:apply-templates/>
+    </span>
   </xsl:template>
 
   <xd:doc>
@@ -2084,12 +2090,9 @@
     <xsl:param name="name"/>
     <xsl:choose>
       <xsl:when test="$name and $xhtml='true'">
-	<span>
 	  <xsl:attribute name="id">
 	    <xsl:value-of select="$name"/>
 	  </xsl:attribute>
-	  <xsl:comment>anchor</xsl:comment>
-	</span>	
       </xsl:when>
       <xsl:when test="$name">
 	<a name="{$name}">
@@ -2097,12 +2100,9 @@
 	</a>
       </xsl:when>
       <xsl:when test="@xml:id and $xhtml='true'">
-	<span>
 	  <xsl:attribute name="id">
 	    <xsl:value-of select="@xml:id"/>
 	  </xsl:attribute>
-	  <xsl:comment>anchor</xsl:comment>
-	</span>	
       </xsl:when>
       <xsl:when test="@xml:id">
         <a name="{@xml:id}">
@@ -2117,12 +2117,9 @@
 	</xsl:variable>
 	<xsl:choose>
 	  <xsl:when test="$xhtml='true'">
-	    <span>
 	      <xsl:attribute name="id">
 		<xsl:value-of select="$me"/>
 	      </xsl:attribute>
-	      <xsl:comment>anchor</xsl:comment>
-	    </span>	
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <a name="{$me}">
