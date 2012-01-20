@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
-  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
+  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
   <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
   <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]" use="substring(@corresp,2)"/>

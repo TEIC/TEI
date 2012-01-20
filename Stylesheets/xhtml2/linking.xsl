@@ -106,7 +106,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="Hash">
          <xsl:text>#</xsl:text>
       </xsl:variable>
-
+      <xsl:variable name="result">
       <xsl:choose>
 	<xsl:when test="$filePerPage='true'">
 	  <xsl:choose>
@@ -181,6 +181,13 @@ of this software, even if advised of the possibility of such damage.
             </xsl:choose>
          </xsl:otherwise>
       </xsl:choose>
+</xsl:variable>
+<!--
+<xsl:message><xsl:value-of select="$ident"/>: <xsl:value-of
+select="$depth"/>: <xsl:value-of select="$splitLevel"/>: <xsl:value-of
+select="$result"/></xsl:message>
+-->
+<xsl:value-of select="$result"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -304,7 +311,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
 
          <xsl:otherwise>
-	   <xsl:variable name="ancestors" select="count(ancestor-or-self::tei:*[local-name()='div1'
+	   <xsl:variable name="ancestors" select="count(ancestor::tei:*[local-name()='div1'
 				 or local-name()='div2'
 				 or local-name()='div3'
 				 or local-name()='div4'
@@ -313,7 +320,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:variable name="what"
 			 select="if
 				 ($ancestors &lt; number($splitLevel)) then 1 else
-				 $ancestors - number($splitLevel) + 1"/>
+				 $ancestors - number($splitLevel) +1"/>
             <xsl:apply-templates mode="ident"
 				 select="ancestor-or-self::tei:*[local-name()='div1'
 				 or local-name()='div2'

@@ -16,9 +16,10 @@
 
   <xsl:import href="../html5/tei.xsl"/>
   <xsl:import href="../epub/epub-common.xsl"/>
+  <xsl:import href="../epub/epub-preflight.xsl"/>
   <xsl:output method="xml" encoding="utf-8" indent="no"/>
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
-  <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p>
@@ -63,6 +64,7 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
   <xsl:param name="useHeaderFrontMatter">false</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="autoHead">true</xsl:param>
@@ -82,7 +84,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
-  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/Content</xsl:param>
+  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
   <xsl:param name="subject"/>
@@ -104,7 +106,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="processTEI">
     <xsl:variable name="stage1">
-      <xsl:apply-templates mode="fixgraphics"/>
+      <xsl:apply-templates  mode="preflight"/>
     </xsl:variable>
     <xsl:for-each select="$stage1">
       <xsl:call-template name="processTEIHook"/>
@@ -156,9 +158,9 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:result-document>
 	-->
         <xsl:if test="$debug='true'">
-          <xsl:message>write file Content/stylesheet.css</xsl:message>
+          <xsl:message>write file stylesheet.css</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'/Content/stylesheet.css')}">
+        <xsl:result-document method="text" href="{concat($directory,'/OPS/stylesheet.css')}">
           <xsl:if test="$debug='true'">
             <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
           </xsl:if>
@@ -191,9 +193,9 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file Content/print.css</xsl:message>
+          <xsl:message>write file OPS/print.css</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'/Content/print.css')}">
+        <xsl:result-document method="text" href="{concat($directory,'/OPS/print.css')}">
           <xsl:if test="$debug='true'">
             <xsl:message>reading file <xsl:value-of select="$cssPrintFile"/></xsl:message>
           </xsl:if>
@@ -205,22 +207,22 @@ of this software, even if advised of the possibility of such damage.
           <xsl:message>write file mimetype</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/mimetype')}">
-          <xsl:text>application/epub+zip</xsl:text>
+          <xsl:value-of select="$epubMimetype"/>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
           <xsl:message>write file META-INF/container.xml</xsl:message>
         </xsl:if>
-        <xsl:result-document method="xml" href="{concat($directory,'/META-INF/container.xml')}">
+        <xsl:result-document method="xml" omit-xml-declaration="no" doctype-system="" href="{concat($directory,'/META-INF/container.xml')}">
           <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
             <rootfiles>
-              <rootfile full-path="Content/content.opf" media-type="application/oebps-package+xml"/>
+              <rootfile full-path="OPS/content.opf" media-type="application/oebps-package+xml"/>
             </rootfiles>
           </container>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file Content/content.opf</xsl:message>
+          <xsl:message>write file content.opf</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/Content/content.opf')}" method="xml">
+        <xsl:result-document omit-xml-declaration="no" doctype-system="" href="{concat($directory,'/OPS/content.opf')}" method="xml">
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
               <dc:title prefer="dcterms-title">
@@ -291,7 +293,7 @@ of this software, even if advised of the possibility of such damage.
                 <meta name="cover" content="cover-image"/>
               </xsl:if>
 	      <meta property="dcterms:modified">
-		<xsl:call-template name="lastRevisedDate"/>
+		<xsl:call-template name="generateRevDate"/>
 	      </meta>
             </metadata>
             <manifest>
@@ -356,6 +358,26 @@ of this software, even if advised of the possibility of such damage.
                   <item href="{@url}" id="image-{$ID}" media-type="{$mimetype}"/>
                 </xsl:if>
               </xsl:for-each>
+
+		<!-- page images -->
+		<xsl:for-each select="key('PBGRAPHICS',1)">
+		  <xsl:variable name="img" select="@facs"/>
+		  <xsl:variable name="ID">
+		    <xsl:number level="any"/>
+		  </xsl:variable>
+		  <xsl:variable name="mimetype">
+		    <xsl:choose>
+		      <xsl:when test="@mimeType != ''">
+			<xsl:value-of select="@mimeType"/>
+		      </xsl:when>
+		      <xsl:when test="contains($img,'.gif')">image/gif</xsl:when>
+		      <xsl:when test="contains($img,'.png')">image/png</xsl:when>
+		      <xsl:otherwise>image/jpeg</xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:variable>
+		  <item href="{$img}" id="pbimage-{$ID}" media-type="{$mimetype}"/>
+		</xsl:for-each>
+
               <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
               <xsl:call-template name="epubManifestHook"/>
             </manifest>
@@ -421,9 +443,9 @@ of this software, even if advised of the possibility of such damage.
           </package>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file Content/titlepage.html</xsl:message>
+          <xsl:message>write file OPS/titlepage.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/Content/titlepage.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/titlepage.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -453,9 +475,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="tei:text/tei:front/tei:titlePage">
           <xsl:variable name="N" select="position()"/>
           <xsl:if test="$debug='true'">
-            <xsl:message>write file Content/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
+            <xsl:message>write file OPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
           </xsl:if>
-          <xsl:result-document href="{concat($directory,'/Content/titlepage',$N,'.html')}" method="xml">
+          <xsl:result-document href="{concat($directory,'/OPS/titlepage',$N,'.html')}" method="xml">
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
               <head>
                 <meta http-equiv="Content-Type" content="text/html;         charset=UTF-8"/>
@@ -472,9 +494,9 @@ of this software, even if advised of the possibility of such damage.
           </xsl:result-document>
         </xsl:for-each>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file Content/titlepageback.html</xsl:message>
+          <xsl:message>write file OPS/titlepageback.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/Content/titlepageback.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/titlepageback.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -491,9 +513,11 @@ of this software, even if advised of the possibility of such damage.
           </html>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file Content/toc.ncx</xsl:message>
+          <xsl:message>write file OPS/toc.ncx</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/Content/toc.ncx')}" method="xml">
+        <xsl:result-document
+	    href="{concat($directory,'/OPS/toc.ncx')}"
+	    method="xml" doctype-system="" >
           <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
             <head>
               <meta name="dtb:uid">
@@ -583,9 +607,11 @@ of this software, even if advised of the possibility of such damage.
           </ncx>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file Content/toc.html</xsl:message>
+          <xsl:message>write file OPS/toc.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/Content/toc.html')}" method="xml">
+        <xsl:result-document
+	    href="{concat($directory,'/OPS/toc.html')}"
+	    method="xml" doctype-system="" >
 	  <html xmlns="http://www.w3.org/1999/xhtml" profile="http://www.idpf.org/epub/30/profile/content/">
 	    <head>
 	      <title>

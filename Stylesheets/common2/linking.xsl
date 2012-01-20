@@ -290,9 +290,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       <xsl:choose>
          <xsl:when test="$Text=''">
-            <xsl:text>&lt;</xsl:text>
-            <xsl:value-of select="local-name(.)"/>
-            <xsl:text>&gt;</xsl:text>
+	   <!--
+	       <xsl:text>&lt;</xsl:text>
+	       <xsl:value-of select="local-name(.)"/>
+	       <xsl:text>&gt;</xsl:text>
+	   -->
          </xsl:when>
          <xsl:otherwise>
             <xsl:copy-of select="$Text"/>

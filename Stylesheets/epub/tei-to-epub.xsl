@@ -78,7 +78,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="institution"/>
   <xsl:param name="linkPanel">false</xsl:param>
   <xsl:param name="odd">false</xsl:param>
-  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OEBPS</xsl:param>
+  <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <xsl:param name="outputTarget">epub</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
@@ -172,16 +172,16 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:message>write Javascript file <xsl:value-of select="$name"/></xsl:message>
         </xsl:if>
 	    <xsl:result-document method="text"
-				 href="{concat($directory,'/OEBPS/',$name)}">
+				 href="{concat($directory,'/OPS/',$name)}">
 	      <xsl:for-each select="unparsed-text($file)">
 		<xsl:copy-of select="."/>
 	      </xsl:for-each>
 	    </xsl:result-document>
 	  </xsl:for-each>
         <xsl:if test="$verbose='true'">
-          <xsl:message>write file OEBPS/stylesheet.css</xsl:message>
+          <xsl:message>write file OPS/stylesheet.css</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'/OEBPS/stylesheet.css')}">
+        <xsl:result-document method="text" href="{concat($directory,'/OPS/stylesheet.css')}">
 	  <xsl:if test="not($cssFile='')">
 	    <xsl:if test="$verbose='true'">
 	      <xsl:message>reading file <xsl:value-of select="$cssFile"/></xsl:message>
@@ -225,9 +225,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:if>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
-          <xsl:message>write file OEBPS/print.css</xsl:message>
+          <xsl:message>write file OPS/print.css</xsl:message>
         </xsl:if>
-        <xsl:result-document method="text" href="{concat($directory,'/OEBPS/print.css')}">
+        <xsl:result-document method="text" href="{concat($directory,'/OPS/print.css')}">
           <xsl:if test="$verbose='true'">
             <xsl:message>reading file <xsl:value-of select="$cssPrintFile"/></xsl:message>
           </xsl:if>
@@ -239,7 +239,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:message>write file mimetype</xsl:message>
         </xsl:if>
         <xsl:result-document method="text" href="{concat($directory,'/mimetype')}">
-          <xsl:text>application/epub+zip</xsl:text>
+          <xsl:value-of select="$epubMimetype"/>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
           <xsl:message>write file META-INF/container.xml</xsl:message>
@@ -247,14 +247,14 @@ of this software, even if advised of the possibility of such damage.
         <xsl:result-document method="xml" href="{concat($directory,'/META-INF/container.xml')}">
           <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
             <rootfiles>
-              <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+              <rootfile full-path="OPS/content.opf" media-type="application/oebps-package+xml"/>
             </rootfiles>
           </container>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
-          <xsl:message>write file OEBPS/content.opf</xsl:message>
+          <xsl:message>write file OPS/content.opf</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OEBPS/content.opf')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/content.opf')}" method="xml">
           <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" 
 		      xmlns:dcterms="http://purl.org/dc/terms/" 
@@ -356,7 +356,7 @@ of this software, even if advised of the possibility of such damage.
 		    </xsl:variable>		    
 		    <xsl:if test="count(key('objectOnPage',$page))&gt;0">
 		    <item id="{$target}-audio" href="{$target}-overlay.smil" media-type="application/smil+xml"/>
-		    <xsl:result-document href="{concat($directory,'/OEBPS/',$target,'-overlay.smil')}" method="xml">
+		    <xsl:result-document href="{concat($directory,'/OPS/',$target,'-overlay.smil')}" method="xml">
 		    <smil xmlns="http://www.w3.org/ns/SMIL" version="3.0" profile="http://www.ipdf.org/epub/30/profile/content/">
 		      <body> 
 			<xsl:for-each select="key('objectOnPage',$page)">
@@ -625,9 +625,9 @@ of this software, even if advised of the possibility of such damage.
           </package>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
-          <xsl:message>write file OEBPS/titlepage.html</xsl:message>
+          <xsl:message>write file OPS/titlepage.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OEBPS/titlepage.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/titlepage.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
 	      <xsl:call-template name="metaHTML">
@@ -670,9 +670,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="tei:text/tei:front/tei:titlePage">
           <xsl:variable name="N" select="position()"/>
           <xsl:if test="$verbose='true'">
-            <xsl:message>write file OEBPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
+            <xsl:message>write file OPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
           </xsl:if>
-          <xsl:result-document href="{concat($directory,'/OEBPS/titlepage',$N,'.html')}" method="xml">
+          <xsl:result-document href="{concat($directory,'/OPS/titlepage',$N,'.html')}" method="xml">
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
               <head>
 		<xsl:call-template name="metaHTML">
@@ -692,9 +692,9 @@ of this software, even if advised of the possibility of such damage.
         </xsl:for-each>
 	<xsl:if test="$filePerPage='true'">
 	  <xsl:if test="$verbose='true'">
-	    <xsl:message>write file OEBPS/titlepageverso.html</xsl:message>
+	    <xsl:message>write file OPS/titlepageverso.html</xsl:message>
 	  </xsl:if>
-	  <xsl:result-document href="{concat($directory,'/OEBPS/titlepageverso.html')}" method="xml">
+	  <xsl:result-document href="{concat($directory,'/OPS/titlepageverso.html')}" method="xml">
 	    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	      <head>
 		<xsl:call-template name="metaHTML">
@@ -711,9 +711,9 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:if>
 	
 	<xsl:if test="$verbose='true'">
-	  <xsl:message>write file OEBPS/titlepageback.html</xsl:message>
+	  <xsl:message>write file OPS/titlepageback.html</xsl:message>
 	</xsl:if>
-        <xsl:result-document href="{concat($directory,'/OEBPS/titlepageback.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/titlepageback.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
 	      <xsl:call-template name="metaHTML">
@@ -736,9 +736,9 @@ of this software, even if advised of the possibility of such damage.
           </html>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
-          <xsl:message>write file OEBPS/toc.ncx</xsl:message>
+          <xsl:message>write file OPS/toc.ncx</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OEBPS/toc.ncx')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/toc.ncx')}" method="xml">
           <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
             <head>
               <meta name="dtb:uid">
@@ -816,9 +816,9 @@ of this software, even if advised of the possibility of such damage.
           </ncx>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
-          <xsl:message>write file OEBPS/page-template.xpgt</xsl:message>
+          <xsl:message>write file OPS/page-template.xpgt</xsl:message>
         </xsl:if>
-        <xsl:result-document method="xml" href="{concat($directory,'/OEBPS/page-template.xpgt')}">
+        <xsl:result-document method="xml" href="{concat($directory,'/OPS/page-template.xpgt')}">
           <ade:template xmlns="http://www.w3.org/1999/xhtml" xmlns:ade="http://ns.adobe.com/2006/ade" xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:layout-master-set>
               <fo:simple-page-master master-name="single_column">

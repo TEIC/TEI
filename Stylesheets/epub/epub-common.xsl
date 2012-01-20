@@ -46,6 +46,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
   <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs and not(@rend='none')]"/>
   <xsl:param name="javascriptFiles"/>
+  <xsl:param name="epubMimetype">application/epub+zip</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[epub] Suppress normal page footer      </desc>

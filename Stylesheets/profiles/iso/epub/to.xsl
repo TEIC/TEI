@@ -79,7 +79,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:param name="forceWrap">true</xsl:param>
   
    <xsl:param name="autoHead">false</xsl:param>
-   <xsl:param name="outputDir">OEBPS</xsl:param>
+   <xsl:param name="outputDir">OPS</xsl:param>
    <xsl:param name="splitLevel">0</xsl:param>
    <xsl:param name="STDOUT">false</xsl:param>
 

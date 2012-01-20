@@ -1217,8 +1217,17 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="number($splitLevel)=-1"/>
       <xsl:when test="@place='foot' or @place='bottom' or @place='end'         or $autoEndNotes='true'">
         <xsl:variable name="parent">
-          <xsl:call-template name="locateParentDiv"/>
+	  <xsl:for-each select="ancestor::tei:*[local-name()='div'
+	    or local-name()='div1'
+	    or local-name()='div2'
+	    or local-name()='div3'
+	    or local-name()='div4'
+	    or local-name()='div5'
+	    or local-name()='div6'][1]">
+	    <xsl:call-template name="locateParentDiv"/>
+	  </xsl:for-each>
         </xsl:variable>
+
         <xsl:if test="$whence = $parent">
           <xsl:call-template name="makeaNote"/>
         </xsl:if>
@@ -2013,6 +2022,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
         </xsl:when>
         <xsl:otherwise>
+	  
           <xsl:variable name="me">
             <xsl:apply-templates select="." mode="ident"/>
           </xsl:variable>
