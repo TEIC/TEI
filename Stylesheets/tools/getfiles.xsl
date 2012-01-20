@@ -77,7 +77,7 @@
 	   <table border="1">
 	     <xsl:for-each-group select="key('All',1)" group-by="local-name()">
 	       <xsl:sort select="current-grouping-key()"/>
-	       <tr valign="top">
+	       <tr style="vertical-align:top;">
 		 <td> 
 		   <xsl:value-of select="current-grouping-key()"/>
 		 </td> 

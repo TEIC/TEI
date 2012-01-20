@@ -14,10 +14,10 @@
 
   
 
-  <xsl:import href="../html5/tei.xsl"/>
+  <xsl:import href="../xhtml2/tei.xsl"/>
   <xsl:import href="../epub/epub-common.xsl"/>
   <xsl:import href="../epub/epub-preflight.xsl"/>
-  <xsl:output method="xml" encoding="utf-8" indent="no"/>
+  <xsl:output method="xml" encoding="utf-8" doctype-system="" indent="no"/>
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -64,7 +64,7 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
-  <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
+  <xsl:param name="outputMethod">xml</xsl:param>
   <xsl:param name="useHeaderFrontMatter">false</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="autoHead">true</xsl:param>
@@ -76,8 +76,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="cssPrintFile">../epub-print.css</xsl:param>
   <xsl:param name="debug">false</xsl:param>
   <xsl:param name="directory">.</xsl:param>
-  <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
-  <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
+  <xsl:param name="doctypePublic"/>
+  <xsl:param name="doctypeSystem"/>
   <xsl:param name="fixgraphicsurl">false</xsl:param>
   <xsl:param name="createanttask">false</xsl:param>
   <xsl:param name="institution"/>
@@ -93,6 +93,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="topNavigationPanel">false</xsl:param>
   <xsl:param name="uid"/>
   <xsl:param name="outputTarget">epub</xsl:param>
+  <xsl:param name="outputSuffix">.xhtml</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>(extensible) wrapper for root element</desc>
   </doc>
@@ -215,23 +216,23 @@ of this software, even if advised of the possibility of such damage.
         <xsl:result-document method="xml" omit-xml-declaration="no" doctype-system="" href="{concat($directory,'/META-INF/container.xml')}">
           <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
             <rootfiles>
-              <rootfile full-path="OPS/content.opf" media-type="application/oebps-package+xml"/>
+              <rootfile full-path="OPS/package.opf" media-type="application/oebps-package+xml"/>
             </rootfiles>
           </container>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
-          <xsl:message>write file content.opf</xsl:message>
+          <xsl:message>write file package.opf</xsl:message>
         </xsl:if>
-        <xsl:result-document omit-xml-declaration="no" doctype-system="" href="{concat($directory,'/OPS/content.opf')}" method="xml">
-          <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
+        <xsl:result-document omit-xml-declaration="no"
+			     doctype-system=""
+			     href="{concat($directory,'/OPS/package.opf')}"
+			     method="xml" indent="yes">
+          <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="pub-id" version="3.0">
             <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf">
-              <dc:title prefer="dcterms-title">
+              <dc:title id="title">
                 <xsl:call-template name="generateSimpleTitle"/>
               </dc:title>
-	      <meta property="dcterms:title" id="dcterms-title">
-                <xsl:call-template name="generateSimpleTitle"/>
-	      </meta>
-	      <meta about="#dcterms-title" property="title-type">primary</meta>	      
+	      <meta refines="#title" property="title-type">main</meta>
               <xsl:variable name="A">
                 <xsl:call-template name="generateAuthor"/>
               </xsl:variable>
@@ -247,43 +248,41 @@ of this software, even if advised of the possibility of such damage.
 		  </xsl:non-matching-substring>
 		</xsl:analyze-string>
 	      </xsl:variable>
-              <dc:creator prefer="auth">
+
+              <dc:creator id="creator">
 		<xsl:value-of select="$printA"/>
               </dc:creator>
-	      <meta property="dcterms:creator" id="auth">
+	      <meta refines="#creator" property="file-as">
 		<xsl:value-of select="$A"/>
 	      </meta>
-	      <meta about="#auth" property="file-as">
-		<xsl:value-of select="$printA"/>
-	      </meta>
-	      <meta about="#auth" property="role" id="auth-role">aut</meta>
-	      <meta about="#auth-role" property="scheme" datatype="xsd:anyURI">http://id.loc.gov/vocabulary/relators</meta>
-              <dc:language xsi:type="dcterms:RFC3066">
+	      <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
+              <dc:language>
                 <xsl:call-template name="generateLanguage"/>
               </dc:language>
               <xsl:call-template name="generateSubject"/>
-              <dc:identifier id="dcidid" opf:scheme="URI">
+              <dc:identifier id="pub-id">
                 <xsl:call-template name="generateID"/>
               </dc:identifier>
+	      <meta refines="#pub-id" property="identifier-type" scheme="onix:codelist5">15</meta>
               <dc:description>
                 <xsl:call-template name="generateSimpleTitle"/>
                 <xsl:text> / </xsl:text>
                 <xsl:value-of select="$A"/>
               </dc:description>
-	      <meta property="dcterms:publisher">
+	      <dc:publisher>
                 <xsl:call-template name="generatePublisher"/>
-	      </meta>
+	      </dc:publisher>
               <xsl:for-each select="tei:teiHeader/tei:profileDesc/tei:creation/tei:date[@notAfter]">
-                <dc:date opf:event="creation">
+                <dc:date id="creation">
                   <xsl:value-of select="@notAfter"/>
                 </dc:date>
               </xsl:for-each>
               <xsl:for-each select="tei:teiHeader/tei:fileDesc/tei:sourceDesc//tei:date[@when][1]">
-                <dc:date opf:event="original-publication">
+                <dc:date id="original-publication">
                   <xsl:value-of select="@when"/>
                 </dc:date>
               </xsl:for-each>
-              <dc:date opf:event="epub-publication" xsi:type="dcterms:W3CDTF">
+              <dc:date id="epub-publication">
                 <xsl:call-template name="generateDate"/>
               </dc:date>
               <dc:rights>
@@ -304,17 +303,15 @@ of this software, even if advised of the possibility of such damage.
                 <item href="{$coverimage}" id="cover-image-extra" media-type="image/jpeg"/>
               </xsl:if>
               <item href="stylesheet.css" id="css" media-type="text/css"/>
-              <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>
+              <item href="titlepage.xhtml" id="titlepage" media-type="application/xhtml+xml"/>
               <xsl:for-each select="tei:text/tei:front/tei:titlePage">
                 <xsl:variable name="N" select="position()"/>
-                <item href="titlepage{$N}.html" id="titlepage{$N}" media-type="application/xhtml+xml"/>
+                <item href="titlepage{$N}.xhtml" id="titlepage{$N}" media-type="application/xhtml+xml"/>
               </xsl:for-each>
-              <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>
+              <item href="titlepageback.xhtml" id="titlepageback" media-type="application/xhtml+xml"/>
               <item id="print.css" href="print.css" media-type="text/css"/>
-              <item id="apt" href="page-template.xpgt"
-		    media-type="application/adobe-page-template+xml"/>
-	      <item id="toc" properties="nav" href="toc.html" media-type="application/xhtml+xml"/>
-              <item id="start" href="index.html" media-type="application/xhtml+xml"/>
+	      <item id="toc" properties="nav" href="toc.xhtml" media-type="application/xhtml+xml"/>
+              <item id="start" href="index.xhtml" media-type="application/xhtml+xml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:choose>
                   <xsl:when test="not(html:a)"/>
@@ -416,8 +413,8 @@ of this software, even if advised of the possibility of such damage.
               <xsl:call-template name="epubSpineHook"/>
             </spine>
             <guide>
-              <reference type="text" href="titlepage.html" title="Cover"/>
-              <reference type="text" title="Start" href="index.html"/>
+              <reference type="text" href="titlepage.xhtml" title="Cover"/>
+              <reference type="text" title="Start" href="index.xhtml"/>
               <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                 <xsl:if test="html:a">
                   <reference type="text" href="{html:a[1]/@href}">
@@ -438,17 +435,16 @@ of this software, even if advised of the possibility of such damage.
 		      </xsl:if>
 		  -->
               </xsl:for-each>
-              <reference href="titlepageback.html" type="text" title="About this book"/>
+              <reference href="titlepageback.xhtml" type="text" title="About this book"/>
             </guide>
           </package>
         </xsl:result-document>
         <xsl:if test="$debug='true'">
           <xsl:message>write file OPS/titlepage.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OPS/titlepage.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/titlepage.xhtml')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
-              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
               <meta name="calibre:cover" content="true"/>
               <title>Title page</title>
               <style type="text/css" title="override_css">
@@ -475,13 +471,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="tei:text/tei:front/tei:titlePage">
           <xsl:variable name="N" select="position()"/>
           <xsl:if test="$debug='true'">
-            <xsl:message>write file OPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
+            <xsl:message>write file OPS/titlepage<xsl:value-of select="$N"/><xsl:value-of select="$outputSuffix"/></xsl:message>
           </xsl:if>
-          <xsl:result-document href="{concat($directory,'/OPS/titlepage',$N,'.html')}" method="xml">
+          <xsl:result-document href="{concat($directory,'/OPS/titlepage',$N,'.xhtml')}" method="xml">
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
               <head>
-                <meta http-equiv="Content-Type" content="text/html;         charset=UTF-8"/>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
                 <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
                 <title>Title page</title>
               </head>
@@ -496,10 +490,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:if test="$debug='true'">
           <xsl:message>write file OPS/titlepageback.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OPS/titlepageback.html')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/titlepageback.xhtml')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
-              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
               <title>About this book</title>
             </head>
             <body>
@@ -539,7 +532,7 @@ of this software, even if advised of the possibility of such damage.
                   <navLabel>
                     <text>[Cover]</text>
                   </navLabel>
-                  <content src="titlepage.html"/>
+                  <content src="titlepage.xhtml"/>
                 </navPoint>
                 <xsl:for-each select="tei:text/tei:front/tei:titlePage[1]">
                   <xsl:variable name="N" select="position()"/>
@@ -547,14 +540,14 @@ of this software, even if advised of the possibility of such damage.
                     <navLabel>
                       <text>[Title page]</text>
                     </navLabel>
-                    <content src="titlepage{$N}.html"/>
+                    <content src="titlepage{$N}.xhtml"/>
                   </navPoint>
                 </xsl:for-each>
                 <navPoint>
                   <navLabel>
                     <text>[The book]</text>
                   </navLabel>
-                  <content src="index.html"/>
+                  <content src="index.xhtml"/>
                 </navPoint>
                 <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
                   <xsl:choose>
@@ -594,7 +587,7 @@ of this software, even if advised of the possibility of such damage.
                   <navLabel>
                     <text>[About this book]</text>
                   </navLabel>
-                  <content src="titlepageback.html"/>
+                  <content src="titlepageback.xhtml"/>
                 </navPoint>
               </xsl:variable>
               <xsl:for-each select="$navPoints/ncx:navPoint">
@@ -610,15 +603,14 @@ of this software, even if advised of the possibility of such damage.
           <xsl:message>write file OPS/toc.html</xsl:message>
         </xsl:if>
         <xsl:result-document
-	    href="{concat($directory,'/OPS/toc.html')}"
+	    href="{concat($directory,'/OPS/toc.xhtml')}"
 	    method="xml" doctype-system="" >
-	  <html xmlns="http://www.w3.org/1999/xhtml" profile="http://www.idpf.org/epub/30/profile/content/">
+	  <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
 	    <head>
 	      <title>
 		<xsl:call-template name="generateSimpleTitle"/>
 	      </title>
 	      <link rel="stylesheet" href="stylesheet.css" type="text/css"/>
-	      <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	    </head>
 	    <body>
 	      <section class="TableOfContents">
@@ -651,13 +643,13 @@ of this software, even if advised of the possibility of such damage.
 		      <a epub:type="toc" href="#toc">Table of Contents</a>
 		    </li>
 		    <li>
-		      <a epub:type="titlepage" href="titlepage.html">[Title page]</a>
+		      <a epub:type="titlepage" href="titlepage.xhtml">[Title page]</a>
 		    </li>
 		    <li>
-		      <a epub:type="bodymatter" href="index.html">[The book]</a>
+		      <a epub:type="bodymatter" href="index.xhtml">[The book]</a>
 		    </li>
 		    <li>
-		      <a href="titlepageback.html">[About this book]</a>
+		      <a href="titlepageback.xhtml">[About this book]</a>
 		    </li>
 		  </ol>
 		</nav>

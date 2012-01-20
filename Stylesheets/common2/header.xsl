@@ -203,23 +203,26 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       <xsl:choose>
          <xsl:when test="starts-with($when,'$Date')">
-        <!-- it's RCS -->
-        <xsl:value-of select="substring($when,16,2)"/>
-            <xsl:text>/</xsl:text>
-            <xsl:value-of select="substring($when,13,2)"/>
-            <xsl:text>/</xsl:text>
-            <xsl:value-of select="substring($when,8,4)"/>
+	   <!-- it's RCS -->
+	   <xsl:value-of select="substring($when,16,2)"/>
+	   <xsl:text>/</xsl:text>
+	   <xsl:value-of select="substring($when,13,2)"/>
+	   <xsl:text>/</xsl:text>
+	   <xsl:value-of select="substring($when,8,4)"/>
          </xsl:when>
          <xsl:when test="starts-with($when,'$LastChangedDate')">
-        <!-- it's Subversion-->
-        <xsl:value-of select="substring-before(substring-after($when,'('),')')"/>
+	   <!-- it's Subversion-->
+	   <xsl:value-of select="substring-before(substring-after($when,'('),')')"/>
          </xsl:when>
-         <xsl:otherwise>
-            <xsl:value-of select="$when"/>
+         <xsl:when test="not($when='')">
+	   <xsl:value-of select="$when"/>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
-
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] Work out the publish date of the document </desc>
    </doc>

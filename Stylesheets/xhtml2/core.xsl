@@ -195,7 +195,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:change">
     <tr>
-      <td valign="top" width="15%">
+      <td style="vertical-align:top;" width="15%">
         <xsl:value-of select="tei:date"/>
       </td>
       <td width="85%">
@@ -542,7 +542,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:item" mode="glosstable">
     <tr>
-      <td valign="top">
+      <td style="vertical-align:top;">
         <strong>
           <xsl:apply-templates mode="print" select="preceding-sibling::tei:*[1]"/>
         </strong>
@@ -847,12 +847,12 @@ of this software, even if advised of the possibility of such damage.
               <xsl:with-param name="default"/>
             </xsl:call-template>
             <tr>
-              <td valign="top">
+              <td style="vertical-align:top;">
                 <dl>
                   <xsl:apply-templates mode="gloss" select="tei:item[position()&lt;=$nitems ]"/>
                 </dl>
               </td>
-              <td valign="top">
+              <td style="vertical-align:top;">
                 <dl>
                   <xsl:apply-templates mode="gloss" select="tei:item[position() &gt;$nitems]"/>
                 </dl>

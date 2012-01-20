@@ -993,7 +993,7 @@ of this software, even if advised of the possibility of such damage.
       
 	<xsl:choose>
 	  <xsl:when test="parent::tei:*/@rend='multicol'">
-	    <td valign="top">
+	    <td style="vertical-align:top;">
 	      <xsl:if test="not($Depth = '')">
 		<xsl:element name="h{$Depth + $divOffset}">
 		  <xsl:for-each select="tei:head[1]">		
@@ -2112,7 +2112,7 @@ of this software, even if advised of the possibility of such damage.
             </td>
          </tr>
          <tr>
-            <td align="left" class="sidetext" rowspan="2" valign="top" width="{$linksWidth}">
+            <td align="left" class="sidetext" rowspan="2" style="vertical-align:top;" width="{$linksWidth}">
                <xsl:call-template name="searchbox"/>
                <xsl:call-template name="leftHandFrame">
                   <xsl:with-param name="currentID" select="$requestedID"/>
@@ -2120,7 +2120,7 @@ of this software, even if advised of the possibility of such damage.
             </td>
          </tr>
          <tr>
-            <td class="maintext" colspan="2" valign="top">
+            <td class="maintext" colspan="2" style="vertical-align:top;">
                <xsl:call-template name="mainFrame">
                   <xsl:with-param name="currentID" select="$currentID"/>
                </xsl:call-template>
@@ -2521,7 +2521,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:for-each select="//tei:body/tei:div">
                <xsl:text>&#10;</xsl:text>
                <tr class="summaryline">
-                  <td align="right" class="summarycell" valign="top">
+                  <td align="right" class="summarycell" style="vertical-align:top;">
                      <b>
                         <a class="nolink">
                            <xsl:attribute name="href">
@@ -2531,7 +2531,7 @@ of this software, even if advised of the possibility of such damage.
                         </a>
                      </b>
                   </td>
-                  <td class="link" valign="top">
+                  <td class="link" style="vertical-align:top;">
                      <xsl:for-each select=".//xref|.//xptr">
                         <xsl:if test="position() &gt; 1">
                            <xsl:text>&#160;</xsl:text>

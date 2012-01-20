@@ -109,7 +109,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="$publisher"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="normalize-space(tei:teiHeader/tei:fileDesc/tei:publicationStmt)"/>
+        <xsl:value-of select="normalize-space(ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

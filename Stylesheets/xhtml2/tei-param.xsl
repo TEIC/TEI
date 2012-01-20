@@ -325,8 +325,7 @@ will generate an &lt;h2&gt;</p>
 	  <meta charset="utf-8" />
 	</xsl:when>
 	<xsl:otherwise>
-	  <meta http-equiv="Content-Type" content="text/html;
-						   charset={$outputEncoding}"/>
+	  <meta http-equiv="Content-Type" content="text/html; charset={$outputEncoding}"/>
 	  <meta name="DC.Title">
 	    <xsl:attribute name="content">
 	      <xsl:value-of select="normalize-space(translate($title,'&lt;&gt;','&#x2329;&#x3009;'))"/>
@@ -404,7 +403,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 	                    </xsl:call-template>
 
                   </td>
-                  <td valign="top"/>
+                  <td style="vertical-align:top;"/>
                </tr>
             </table>
          </xsl:when>
