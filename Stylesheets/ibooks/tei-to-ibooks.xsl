@@ -60,5 +60,77 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:param name="epubMimetype">application/x-ibooks+zip</xsl:param>
   <xsl:param name="doctype-system"/>
-  <xsl:output method="xml" omit-xml-declaration="no"  encoding="utf-8" doctype-system="" indent="no"/>
+  <xsl:param name="opfPackageVersion">2.0</xsl:param>
+
+  <xsl:output method="xml" omit-xml-declaration="no"  encoding="utf-8"
+	      doctype-system="" indent="no"/>
+
+  <xsl:template name="linkCSS">
+    <xsl:param name="file"/>
+    <xsl:param name="media"/>
+    <xsl:choose>
+      <xsl:when test="not($media='')">
+	<xsl:processing-instruction name="xml-stylesheet"> href='<xsl:value-of
+	select="$file"/>' type='text/css' media='<xsl:value-of select="$media"/>'</xsl:processing-instruction>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:processing-instruction name="xml-stylesheet">href='<xsl:value-of
+	select="$file"/>' type='text/css' </xsl:processing-instruction>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="opfmetadata">
+    <xsl:param name="author"/>
+    <xsl:param name="printAuthor"/>
+    <xsl:param name="coverImageOutside"/>
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/"
+	      xmlns="http://www.idpf.org/2007/opf" 
+	      xmlns:opf="http://www.idpf.org/2007/opf">
+      <dc:title>
+	<xsl:call-template name="generateSimpleTitle"/>
+      </dc:title>
+      <dc:creator>
+	<xsl:value-of select="$printAuthor"/>
+      </dc:creator>
+      <dc:contributor opf:role="bkp">TEI stylesheets</dc:contributor>
+      <dc:language>
+	<xsl:call-template name="generateLanguage"/>
+      </dc:language>
+      <xsl:call-template name="generateSubject"/>
+      <dc:identifier id="pub-id">
+	<xsl:call-template name="generateID"/>
+      </dc:identifier>
+      <dc:description>
+	<xsl:call-template name="generateSimpleTitle"/>
+	<xsl:text> / </xsl:text>
+	<xsl:value-of select="$author"/>
+      </dc:description>
+      <dc:publisher>
+	<xsl:call-template name="generatePublisher"/>
+      </dc:publisher>
+      <xsl:for-each select="tei:teiHeader/tei:profileDesc/tei:creation/tei:date[@notAfter]">
+	<dc:date id="creation">
+	  <xsl:value-of select="@notAfter"/>
+	</dc:date>
+      </xsl:for-each>
+      <xsl:for-each select="tei:teiHeader/tei:fileDesc/tei:sourceDesc//tei:date[@when][1]">
+	<dc:date id="original-publication">
+	  <xsl:value-of select="@when"/>
+	</dc:date>
+      </xsl:for-each>
+      <dc:date id="epub-publication">
+	<xsl:call-template name="generateDate"/>
+      </dc:date>
+      <xsl:if test="not($coverImageOutside='')">
+	<meta name="cover" content="cover-image"/>
+      </xsl:if> 
+      <meta name="ibooks:requiredVersion" content="1"/>
+      <meta name="ibooks:searchReferenceText" content="searchReferenceText"/>
+      <meta name="ibooks:currentVersion" content="1"/>
+      <meta name="ibooks:autoHyphenate" content="yes"/>
+      <meta name="ibooks:searchIndex" content="searchIndex"/>
+   </metadata>
+  </xsl:template>
+      
 </xsl:stylesheet>

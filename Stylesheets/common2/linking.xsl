@@ -222,7 +222,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:when>
             <xsl:when test="$autoHead='true'">
 	      <xsl:choose>
-		<xsl:when test="$outputTarget='epub' and
+		<xsl:when test="($outputTarget='epub' or $outputTarget='epub3') and
 				not(tei:head)"/>
 		<xsl:otherwise>
 		  <xsl:call-template name="autoMakeHead">

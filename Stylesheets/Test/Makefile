@@ -37,8 +37,10 @@ testsplit:
 
 test-latex:
 	saxon -o:test6.tex test6.xml ../slides/teilatex-slides.xsl $(SAXONOPT)
+	perl -p -i -e 's/Date{[^}]*}/Date{}/' test6.tex
 	diff test6.tex expected-results/test6.tex
 	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
+	perl -p -i -e 's/Date{[^}]*}/Date{}/' test5.tex
 	diff test5.tex expected-results/test5.tex
 
 test-fo:

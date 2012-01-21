@@ -81,7 +81,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:variable>
     <xsl:element name="{$cellname}">
-      <xsl:attribute name="valign">top</xsl:attribute>
       <xsl:for-each select="@*">
 	<xsl:choose>
 	  <xsl:when test="name(.) = 'width' or name(.) =

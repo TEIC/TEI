@@ -146,8 +146,9 @@ of this software, even if advised of the possibility of such damage.
          <xsl:text> (</xsl:text>
          <xsl:call-template name="i18n">
             <xsl:with-param name="word">revisedWord</xsl:with-param>
-         </xsl:call-template>: 
-    <xsl:value-of select="$revdate"/>
+         </xsl:call-template>
+	 <xsl:text>: </xsl:text>
+	 <xsl:value-of select="$revdate"/>
          <xsl:text>)</xsl:text>
       </xsl:if>
       <xsl:text>}&#10;\def\TheID{</xsl:text>

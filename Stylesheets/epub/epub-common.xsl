@@ -45,6 +45,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
   <xsl:key name="GRAPHICS" use="1" match="tei:graphic"/>
   <xsl:key name="PBGRAPHICS" use="1" match="tei:pb[@facs and not(@rend='none')]"/>
+  <xsl:key name="Timeline" match="tei:timeline" use="1"/>
+  <xsl:key name="Object" match="tei:when" use="substring(@corresp,2)"/>
+  <xsl:key name="objectOnPage" match="tei:*[@xml:id]" use="generate-id(preceding::tei:pb[1])"/>
+
   <xsl:param name="javascriptFiles"/>
   <xsl:param name="epubMimetype">application/epub+zip</xsl:param>
 
@@ -130,19 +134,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="format-dateTime(current-dateTime(),'[Y][M02][D02][H02][m02][s02]')"/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[epub] Override addition of CSS links. We force a simple
-      name of "stylesheet.css"
-      </desc>
-  </doc>
-  <xsl:template name="includeCSS">
-    <link xmlns="http://www.w3.org/1999/xhtml" href="stylesheet.css" rel="stylesheet" type="text/css"/>
-    <xsl:if test="not($cssPrintFile='')">
-      <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" media="print" type="text/css" href="print.css"/>
-    </xsl:if>
-    <link xmlns="http://www.w3.org/1999/xhtml" rel="stylesheet" type="application/vnd.adobe-page-template+xml" href="page-template.xpgt"/>
-    <xsl:call-template name="generateLocalCSS"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -448,4 +439,67 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <!-- its inserted explicitly -->
   <xsl:template match="tei:front/tei:titlePage"/>
+
+  <xsl:template match="html:li">
+    <xsl:choose>
+      <xsl:when test="not(html:a)"/>
+      <xsl:when test="starts-with(html:a/@href,'#')"/>
+      <xsl:when test="contains(@class,'headless')"/>
+      <xsl:when test="html:a/@href=preceding-sibling::html:li/html:a/@href"/>
+      <xsl:otherwise>
+        <navPoint xmlns="http://www.daisy.org/z3986/2005/ncx/">
+          <navLabel>
+            <text>
+              <xsl:value-of select="html:span[@class='headingNumber']"/>
+              <xsl:value-of select="normalize-space(html:a[1])"/>
+            </text>
+          </navLabel>
+          <content src="{html:a/@href}"/>
+        </navPoint>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="javascriptHook">
+    <xsl:for-each select="tokenize($javascriptFiles,',')">
+      <xsl:variable name="name" select="tokenize(normalize-space(.),'/')[last()]"/>
+      <script type="text/javascript" src="{$name}">
+        <xsl:comment>JS library</xsl:comment>
+      </script>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="epubSpineHook"/>
+  <xsl:template name="epubManifestHook"/>
+  <xsl:template name="processTEIHook"/>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[epub] Override addition of CSS links. We force a simple
+      name of "stylesheet.css"
+      </desc>
+  </doc>
+  <xsl:template name="includeCSS">
+    <xsl:call-template name="linkCSS">
+      <xsl:with-param name="file">stylesheet.css</xsl:with-param>
+    </xsl:call-template>
+    <xsl:if test="not($cssPrintFile='')">
+      <xsl:call-template name="linkCSS">
+	<xsl:with-param name="file">print.css</xsl:with-param>
+	<xsl:with-param name="media">print</xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:call-template name="generateLocalCSS"/>
+  </xsl:template>
+
+  <xsl:template name="linkCSS">
+    <xsl:param name="file"/>
+    <xsl:param name="media"/>
+    <link xmlns="http://www.w3.org/1999/xhtml" href="{$file}"
+	  rel="stylesheet" type="text/css">
+      <xsl:if test="not($media='')">
+	<xsl:attribute name="media" select="$media"/>
+      </xsl:if>
+    </link>
+  </xsl:template>
+
 </xsl:stylesheet>

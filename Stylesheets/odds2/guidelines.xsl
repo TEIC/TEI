@@ -446,14 +446,14 @@ glyphes non standard</head>
     <meta content="application/xhtml+xml; charset=utf-8" http-equiv="Content-Type"/>
   </xsl:template>
   <xsl:template name="startDivHook">
-      <xsl:if test="$outputTarget='epub' and not(parent::tei:div)">
+      <xsl:if test="($outputTarget='epub' or $outputTarget='epub3') and not(parent::tei:div)">
         <h2>
           <xsl:call-template name="header"/>
         </h2>
       </xsl:if>
     <xsl:if test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
       <div>
-        <xsl:if test="$outputTarget='epub'">
+        <xsl:if test="$outputTarget='epub' or $outputTarget='epub3'">
           <xsl:attribute name="style">
             <xsl:text>margin-top: 0em;</xsl:text>
           </xsl:attribute>
@@ -831,7 +831,7 @@ glyphes non standard</head>
       </xsl:variable>
       <li>
         <xsl:choose>
-	  <xsl:when test="$outputTarget='epub'"/>
+	  <xsl:when test="$outputTarget='epub' or $outputTarget='epub3'"/>
           <xsl:when test="not(ancestor::tei:div) and tei:div">
             <xsl:attribute name="class">
               <xsl:text>tocTree</xsl:text>
@@ -1177,9 +1177,7 @@ glyphes non standard</head>
           <img src="Images/banner.jpg" alt="Text Encoding Initiative logo and banner"/>
         </div>
         <xsl:if test="not($googleAnalytics='')">
-	  <xsl:element name="{if ($outputTarget='html5') then 'nav' else 'div'}">
-	    <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
-	  </xsl:element>
+          <xsl:copy-of select="document('staticnav.xml')/html:ul"/>
         </xsl:if>
       </div>
       <div id="searchbox" style="float:left;">

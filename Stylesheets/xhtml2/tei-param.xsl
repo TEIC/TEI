@@ -321,7 +321,7 @@ will generate an &lt;h2&gt;</p>
       </xsl:if>
       <meta name="generator" content="Text Encoding Initiative Consortium XSLT stylesheets"/>
       <xsl:choose>
-	<xsl:when test="$outputTarget='html5'">
+	<xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
 	  <meta charset="utf-8" />
 	</xsl:when>
 	<xsl:otherwise>
