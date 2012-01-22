@@ -1371,7 +1371,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="ancestor::tei:notesStmt">div</xsl:when>
         <xsl:when test="tei:table">div</xsl:when>
         <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
-        <xsl:when test="$outputTarget='epub'">div</xsl:when>
+        <xsl:when test="$outputTarget='epub' or $outputTarget='epub3'">div</xsl:when>
         <xsl:when test="tei:eg">div</xsl:when>
         <xsl:when test="tei:figure">div</xsl:when>
         <xsl:when test="tei:floatingText">div</xsl:when>
