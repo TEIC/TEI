@@ -98,7 +98,7 @@ oxygendoc:
 teioo.jar:
 	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
 
-test: clean p5 common
+test: clean p5 common debversion
 	@echo BUILD Run tests
 	(cd Test; make)
 
