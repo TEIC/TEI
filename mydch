@@ -1,0 +1,21 @@
+#!/bin/sh
+OLDVERSION=`head -1 $1 | awk '{print $2}' | tr -d '/\(\)/'`
+PACKAGE=`head -1 $1 | awk '{print $1}' `
+NAME=`grep  -- "^ --" $1| head -1 | sed 's/ -- \(.*\)<.*/\1/'`
+EMAIL=`grep  -- "^ --" $1 | head -1 | sed 's/.*<\(.*\)>.*/\1/'`
+NEWVERSION=`cat VERSION`
+DATE=`date "+%a, %d %b %Y %H:%M:%S %z"`
+if [ $OLDVERSION = $NEWVERSION ]
+then
+  echo "version in Debian ($OLDVERSION) is the same as $NEWVERSION"
+else
+  echo update with $NEWVERSION
+  echo "$PACKAGE ($NEWVERSION) natty; urgency=low" > /tmp/changelog
+  echo "" >> /tmp/changelog
+  echo "  * new release from upstream" >> /tmp/changelog
+  echo "" >> /tmp/changelog
+  echo " -- $NAME <$EMAIL>  $DATE" >> /tmp/changelog
+  echo "" >> /tmp/changelog
+  cat $1 >> /tmp/changelog
+  mv /tmp/changelog $1
+fi
