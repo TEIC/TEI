@@ -371,14 +371,14 @@ dist: dist-source dist-schema dist-doc dist-test dist-exemplars dist-database
 	(cd release; zip -q -r tei-p5-test-${UPVERSION}.zip tei-p5-test )
 
 debversion:
-	(cd debian-tei-p5-database;  dch -v `cat ../VERSION` release)
-	(cd debian-tei-p5-doc;       dch -v `cat ../VERSION` release)
-	(cd debian-tei-p5-exemplars; dch -v `cat ../VERSION` release)
-	(cd debian-tei-p5-schema;    dch -v `cat ../VERSION` release)
-	(cd debian-tei-p5-source;    dch -v `cat ../VERSION` release)
-	(cd debian-tei-p5-test;      dch -v `cat ../VERSION` release)
+	sh ./mydch debian-tei-p5-database/debian/changelog
+	sh ./mydch debian-tei-p5-doc/debian/changelog
+	sh ./mydch debian-tei-p5-exemplars/debian/changelog
+	sh ./mydch debian-tei-p5-schema/debian/changelog
+	sh ./mydch debian-tei-p5-source/debian/changelog
+	sh ./mydch debian-tei-p5-test/debian/changelog
 
-deb: dist
+deb: dist debversion
 	rm -f tei-p5-*_*deb
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
