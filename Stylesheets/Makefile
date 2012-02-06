@@ -143,11 +143,11 @@ installcommon: doc common
 install: installp5 installcommon installprofiles
 
 debversion:
-	(cd debian-tei-xsl-common;  dch -v `cat ../VERSION` new release)
-	(cd debian-tei-p5-xsl2;  dch -v `cat ../VERSION` new release)
-	(cd debian-tei-p5-xslprofiles;  dch -v `cat ../VERSION` new release)
+	sh ./mydch debian-tei-xsl-common/debian/changelog
+	sh ./mydch debian-tei-p5-xsl2/debian/changelog
+	sh ./mydch debian-tei-p5-xslprofiles/debian/changelog
 
-deb:
+deb: debversion
 	@echo BUILD Make Debian packages
 	rm -f tei*xsl*_*deb
 	rm -f tei*xsl*_*changes
