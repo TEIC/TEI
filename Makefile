@@ -218,12 +218,14 @@ valid: check
 	@echo BUILD: do graphics files exist
 	${SAXON} -s:${DRIVER} -xsl:Utilities/listgraphics.xsl | sh
 
-test: p5subset.xml debversion
+test: debversion
+	make p5subset.xml
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
 	rm p5subset.xml
 
-exemplars: p5subset.xml
+exemplars: 
+	make p5subset.xml
 	@echo BUILD TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 	rm p5subset.xml
@@ -240,7 +242,6 @@ p5odds-examples.rng: p5subset.xml p5odds-examples.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds-examples.rng ...
 	which ${ROMA} || exit 1
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
-	rm p5subset.xml
 
 p5subset.xml: Source/Specs/*.xml Source/Guidelines/en/*.xml
 	@echo BUILD make subset of P5 with just the module/element/class/macro Spec elements
