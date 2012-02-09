@@ -234,9 +234,8 @@ p5odds.rng: p5subset.xml p5odds.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds.rng ...
 	which ${ROMA} || exit 1
 	${ROMA} ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
-	rm p5subset.xml
 
-exampleschema:  p5odds-examples.rng 
+exampleschema:  p5odds-examples.rng p5subset.xml
 p5odds-examples.rng: p5subset.xml p5odds-examples.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds-examples.rng ...
 	which ${ROMA} || exit 1
