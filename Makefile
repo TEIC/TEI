@@ -248,7 +248,8 @@ p5subset.xml: Source/Specs/*.xml Source/Guidelines/en/*.xml
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
 	touch p5subset.xml
 
-dist-source.stamp: p5subset.xml
+dist-source.stamp: 
+	make p5subset.xml
 	@echo BUILD: Make distribution directory for source
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
@@ -279,6 +280,7 @@ dist-source.stamp: p5subset.xml
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	touch dist-source.stamp
+	rm p5subset.xml
 
 dist-schema.stamp: schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
