@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" n="testdrama"><?TEIVERSION 2.0.0 Last updated on 16th December 2011.?>
+<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" n="testdrama"><?TEIVERSION 2.0.2 Last updated on 2nd February 2012.?>
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -1206,7 +1206,7 @@ associated with a dated element, at the time indicated.</desc>
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>A pointer to an element in the document header that is associated with a person
+      <valDesc>A pointer to an element typically, but not necessarily, in the document header that is associated with a person
         asserted as responsible for some aspect of the text's creation, transcription, editing, or
         encoding.</valDesc>
       <valDesc version="2009-05-25" xml:lang="fr">Pointeur vers un élément de l'en-tête du
@@ -6779,7 +6779,7 @@ en-tête et un texte, constitue un document TEI.</desc>
       <valDesc>the result of applying the algorithm for the resolution of canonical references
           (described in section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SACR">16.2.5. </ref>) should be a valid URI reference that resolves
           to a <gi>gloss</gi> element</valDesc>
-      <valDesc>Le résultat de l'application de l'algorithme pour la résolution de références
+      <valDesc xml:lang="fr">Le résultat de l'application de l'algorithme pour la résolution de références
           canoniques (décrites dans la section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SACR">16.2.5. </ref>) devrait être une référence à
           un URI valide réductible à un élément élément<gi>gloss</gi>
         </valDesc>
@@ -7193,7 +7193,8 @@ en-tête et un texte, constitue un document TEI.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>must be one of the hand identifiers declared in the document header (see section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHDH">11.3.2.1. </ref>).</valDesc>
+      <valDesc>must point to a hand identifier typically but not necessarily declared in the document header (see
+        section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHDH">11.3.2.1. </ref>).</valDesc>
     </attDef><attDef ident="agent" usage="opt">
       <equiv/>
       <desc>In the case of text omitted because of damage, categorizes the cause of the damage, if
@@ -7496,7 +7497,7 @@ en-tête et un texte, constitue un document TEI.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>must be one of the hand identifiers declared in the document header (see
+      <valDesc>must point to a hand identifier typically but not necessarily declared in the document header (see
                 section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHDH">11.3.2.1. </ref>).</valDesc>
     </attDef><attDef ident="agent" usage="opt">
       <equiv/>
@@ -14611,7 +14612,7 @@ during the encoding of a text.</desc><desc version="2009-01-05" xml:lang="fr">do
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>an identifier specified as the value of the <att>xml:id</att> attribute on some
-          <gi>rendition</gi> element in the current document.</valDesc>
+          <gi>rendition</gi> element typically but not necessarily in the current document.</valDesc>
       <valDesc xml:lang="fr">un identifiant spécifié comme valeur de l'attribut <att>xml:id</att>
         sur un élément <gi>rendition</gi> dans le document courant.</valDesc>
     </attDef></attList><exemplum xml:lang="en">
@@ -16059,11 +16060,12 @@ langues, registres, dialectes, etc. présents à l’intérieur d’un texte.</d
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>Usually this will indicate an external website or other location where the scheme is
-        documented. </valDesc>
-      <valDesc xml:lang="fr">Habituellement, cela indiquera un site Web externe ou un autre
-        emplacement où le shéma est documenté. </valDesc>
-    </attDef></attList><exemplum xml:lang="en">
+      <valDesc>may point to a local definition, for example in a <gi>taxonomy</gi> element, or more
+        usually to some external location where the scheme is fully defined.</valDesc>
+      <valDesc xml:lang="fr">peut pointer vers une définition locale, par exemple dans un élément
+        <gi>taxonomy</gi>, ou de manière plus générale, vers un emplacement externe où le shéma est
+        entièrement défini.</valDesc>
+      </attDef></attList><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <keywords scheme="http://classificationweb.net">
         <term>Babbage, Charles</term>
@@ -19007,7 +19009,7 @@ she has done so inadvertently.
       <sch:assert test="contains(@target,' ')">You must supply at least two
 values for @target</sch:assert>
     </constraint>
-  </constraintSpec><attList><attRef n="4" name="att.global.attributes"/><attRef n="4" name="att.pointing.attributes"/><attRef n="4" name="att.typed.attributes"/><attDef ident="targets" usage="opt">
+  </constraintSpec><attList><attRef n="4" name="att.global.attributes"/><attRef n="4" name="att.pointing.attributes"/><attRef n="4" name="att.typed.attributes"/><attDef ident="targets" usage="opt" status="deprecated">
       <equiv/>
       <desc>specifies the identifiers of the elements or passages to be linked or associated. </desc>
       <desc version="2007-12-20" xml:lang="ko">연결 또는 연관된 요소 또는 단락의 확인소를 명시한다.</desc>
