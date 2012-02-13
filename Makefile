@@ -268,7 +268,11 @@ dist-source.stamp:
 	fasc-tail.xml \
 	p5.nvdl \
 	p5odds.odd \
+	p5odds.rng \
+	p5odds.rnc \
 	p5odds-examples.odd \
+	p5odds-examples.rng \
+	p5odds-examples.rnc \
 	relax.rng \
 	schematron.rng \
 	iso-schematron.rng \
