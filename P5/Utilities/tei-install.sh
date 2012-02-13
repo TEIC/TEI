@@ -16,7 +16,7 @@ die()
 }
 
 Vault=/projects/tei/web/Vault
-Jenkins=http://tei.oucs.ox.ac.uk/jenkins/job
+Jenkins=http://bits.nsms.ox.ac.uk:8080/jenkins/job
 ECHO=
 SFUSER=rahtz
 version=
@@ -36,18 +36,18 @@ while test $# -gt 0; do
   esac
   shift
 done
-if [  -z $version ] 
+if [ -z $version ] 
 then
  echo You must use the --version option to specify which version of the package you are installing
  exit 1
-done
+fi
 dir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
 echo Try to fetch $version package from $dir
-sfname=$package
+SFNAME=$package
 case $package in 
-  TEIP5)         name=P5;          pname=tei;      SFNAME=TEIP5-All;;
-  Stylesheets)   name=Stylesheets; pname=tei-xsl;;
+  TEIP5)         name=P5;          pname=tei;      SFNAME=TEI-P5-all;;
   Stylesheets1)   name=Stylesheets1; pname=tei-xslt1;;
+  Stylesheets)   name=Stylesheets; pname=tei-xsl;;
   Roma)          name=Roma;        pname=tei-roma;;
     *) echo "Error: package $package unsupported"; exit 1;;
 esac
