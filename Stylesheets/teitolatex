@@ -71,6 +71,16 @@ APPHOME=`(cd $X; pwd)`
 TEMPDIR=/tmp/latex$$
 TEMPLATES=$APPHOME/profiles/$profile/latex
 XSL=$APPHOME
+if [ $# -eq 1 ]
+then
+   outfile=`basename "$1" .xml`.tex
+   outdir=$indir
+else
+   outfile=`basename $2`
+   O=`dirname $2`
+   outdir=`(cd $O; pwd)`
+fi
+
 if test "x$conversion" = "x"
 then
   TOXSL=$APPHOME/profiles/$profile/latex/to.xsl
@@ -104,7 +114,7 @@ if $debug
 then
  echo $TOXSL  odd=$odd debug=$debug verbose=$verbose 
 fi
-saxon  -o:"$DOCHOME/$B".tex tmp2.xml $TOXSL odd=$odd debug=$debug verbose=$verbose fixgraphicsurl=true
+saxon  -o:"$outdir/$outfile" tmp2.xml $TOXSL odd=$odd debug=$debug verbose=$verbose fixgraphicsurl=true
 if $debug 
 then
     echo leaving tmp[123].xml alone
@@ -118,4 +128,4 @@ then
 else
     rm -rf $TEMPDIR
 fi
-echo Wrote $B.tex in $DOCHOME
+echo Wrote $outdir/$outfile
