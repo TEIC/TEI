@@ -97,7 +97,7 @@ them. </p>
     <p>While there is some overlap between these requirements,
     distinct specialized markup constructs have been created for each
     of these cases as explained in section <ptr target="#D25-20"/>
-    below.  The following section will then proceed to discuss how to
+    below.  The following sections will then proceed to discuss how to
     apply them to the problems at hand, discussing annotation of
     existing characters in section <ptr target="#D25-30"/> and finally
     creation of new ones in <ptr target="#D25-40"/>.</p>
@@ -130,8 +130,8 @@ part of it) by adding a suitable encoding declaration. For example, if
 a document begins with the declaration <code>&lt;?xml
 encoding="iso-8859-1"?&gt;</code> any Unicode characters which are not
 in the ISO-8859-1 character set must be represented by NCRs. </p>
-<p>The gaiji module defined by this chapter adds a further way of
-representing specific characters and glyphs in a document. This allows
+     <p>The <mentioned>gaiji</mentioned> module defined by this chapter adds a further way of
+       representing specific characters and glyphs in a document. (Gaiji is from Japanese 外字, meaning <gloss>external characters</gloss>.) This allows
 the encoder to distinguish characters and glyphs which Unicode regards
 as identical, to add new nonstandard characters or glyphs, and to
 represent Unicode characters not available in the document encoding by
@@ -532,20 +532,19 @@ the letter we wish to distinguish: <egXML xmlns="http://www.tei-c.org/ns/Example
      following examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <g ref="#Filig">Fi</g>lthy riches...</p>
 <!-- in the charDecl -->
-  <glyph xml:id="per">
-   <glyphName>LATIN ABBREVIATION PER</glyphName>  
-   <figure><graphic url="per.png"/></figure>
+  <glyph xml:id="Filig">
+   <glyphName>LATIN UPPER F AND LATIN LOWER I LIGATURE</glyphName>  
+   <figure><graphic url="Filig.png"/></figure>
  </glyph>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... <abbr><g
 ref="#per">per</g></abbr> ardua</p>
 <!-- in the charDecl -->
-</egXML></p>
-<p><egXML xmlns="http://www.tei-c.org/ns/Examples">
-  <glyph xml:id="Filig">
-   <glyphName>LATIN UPPER F AND LATIN LOWER I LIGATURE</glyphName>  
-   <figure><graphic url="Filig.png"/></figure>
+  <glyph xml:id="per">
+   <glyphName>LATIN ABBREVIATION PER</glyphName>  
+   <figure><graphic url="per.png"/></figure>
  </glyph>
+  
 </egXML>
 (In fact the Unicode Standard does provide a character to represent the
       <code>Fi</code> ligature; the encoder may however prefer not to
@@ -600,7 +599,7 @@ represented as follows:<eg><![CDATA[<abbr>&r1;</abbr>]]></eg></p>
       <charDecl>
 	<glyph xml:id="u8aaa">
 	  <mapping type="Unicode">說</mapping>
-	  <mapping type="orthographic">説</mapping>
+	  <mapping type="standard">説</mapping>
 	</glyph>
       </charDecl>
     </egXML>
@@ -734,7 +733,7 @@ will be empty.</p>
     there are around 137,000 code points available in this area, which
     should be enough for most needs. No code point assignments will be made
     to this area by standard bodies and only some very basic default
-    properties have been assigned (which may be overwritten where
+    properties have been assigned (which may be overridden where
     necessary by the mechanism outlined in this chapter). Therefore,
     unlike all other code points defined by the Unicode Standard, PUA code points should
     <emph>not</emph> be used directly in documents intended for blind interchange.
