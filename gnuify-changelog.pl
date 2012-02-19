@@ -15,7 +15,7 @@ use strict;
 my %hackers = (
 	       "romary" => 'Laurent Romary <laurent.romary@inria.fr>',
 	       "kshawkin" => 'Kevin Hawkins <kevin.s.hawkins@ultraslavonic.info>',
-	       "rahtz"           => 'Sebastian Rahtz <sebastian.rahtz@oucs.ox.ac.uk>',
+	       "rahtz"           => 'Sebastian Rahtz <sebastian.rahtz@gmail.com>',
 	       "louBurnard"      => 'Lou Burnard <lou.burnard@retired.ox.ac.uk>',
 	       "louburnard"      => 'Lou Burnard <lou.burnard@retired.ox.ac.uk>',
 	       "sbauman"         => 'Syd Bauman  <sbauman@brown.edu>',
