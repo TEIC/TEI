@@ -22,6 +22,14 @@ my %hackers = (
 	       "mlforcada"       => 'Mikel L. Forcada <mlf@ua.es>',
 	       "dsew"            => 'David Sewell <dsewell@virginia.edu>',
 	       "ge8"             => 'J-L Benoit <jean-luc.benoit@atilf.fr>',
+	       "bansp" => "Piotr Bański <bansp\@o2.pl>",
+	       "brettbarney" => "Brett Barney <bbarney2\@unlnotes.unl.edu>",
+	       "dpod" => "Daniel O'Donnell <daniel.odonnell\@uleth.ca>",
+	       "gabrielbodard" => "Gabriel Bodard <gabriel.bodard\@kcl.ac.uk>",
+	       "jcummings" => "James Cummings <james.cummings\@oucs.ox.ac.uk>",
+	       "martindholmes" => "Martin Holmes <mholmes\@uvic.ca>",
+	       "stuartyeates" => "Stuart Yeates <syeates\@gmail.com>",
+	       "trolard" => "Perry Trolard <ptrolard\@gmail.com>",
 );
 
 my $parse_next_line = 0;
