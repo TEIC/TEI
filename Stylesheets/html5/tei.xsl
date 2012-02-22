@@ -12,7 +12,8 @@
     <xsl:param name="outputTarget">html5</xsl:param>
     <xsl:param name="doctype-system">about:legacy-compat</xsl:param>
     <xsl:param name="doctype-public"/>
-    
+    <xsl:param name="divOffset">1</xsl:param>
+
     <xsl:template match="/">
 	<xsl:call-template name="processTEI"/>
     </xsl:template>

@@ -1023,33 +1023,46 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:when>
          <xsl:otherwise>
 	   <xsl:if test="not($Depth = '')">
-	     <xsl:element name="{if (number($Depth)+$divOffset &gt;6) then 'div'
-				else concat('h',number($Depth) + $divOffset)}">
-	       <xsl:choose>
-		 <xsl:when test="@rend">
-		   <xsl:call-template name="rendToClass">
-		     <xsl:with-param
-			 name="id">false</xsl:with-param>
-		   </xsl:call-template>
-		 </xsl:when>
-		 <xsl:otherwise>
-		   <xsl:for-each select="tei:head[1]">
+	     <xsl:variable name="Heading">
+	       <xsl:element name="{if (number($Depth)+$divOffset &gt;6) then 'div'
+				  else concat('h',number($Depth) + $divOffset)}">
+		 <xsl:choose>
+		   <xsl:when test="@rend">
 		     <xsl:call-template name="rendToClass">
-		       <xsl:with-param name="default">
-			 <xsl:if test="number($Depth)&gt;5">
-			   <xsl:text>div</xsl:text>
-			   <xsl:value-of select="$Depth"/>
-			 </xsl:if>
-		       </xsl:with-param>
+		       <xsl:with-param
+			   name="id">false</xsl:with-param>
 		     </xsl:call-template>
-		   </xsl:for-each>
-		 </xsl:otherwise>
-	       </xsl:choose>
-	       <xsl:call-template name="header">
-		 <xsl:with-param name="display">full</xsl:with-param>
-	       </xsl:call-template>
-	       <xsl:call-template name="sectionHeadHook"/>
-	     </xsl:element>
+		   </xsl:when>
+		   <xsl:otherwise>
+		     <xsl:for-each select="tei:head[1]">
+		       <xsl:call-template name="rendToClass">
+			 <xsl:with-param name="default">
+			   <xsl:if test="number($Depth)&gt;5">
+			     <xsl:text>div</xsl:text>
+			     <xsl:value-of select="$Depth"/>
+			   </xsl:if>
+			 </xsl:with-param>
+		       </xsl:call-template>
+		     </xsl:for-each>
+		   </xsl:otherwise>
+		 </xsl:choose>
+		 <xsl:call-template name="header">
+		   <xsl:with-param name="display">full</xsl:with-param>
+		 </xsl:call-template>
+		 <xsl:call-template name="sectionHeadHook"/>
+	       </xsl:element>
+	     </xsl:variable>
+	     <xsl:choose>
+	       <xsl:when test="$outputTarget='html5'">
+		 <header>
+		   <xsl:copy-of select="$Heading"/>
+		 </header>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:copy-of select="$Heading"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+
 	     <xsl:if test="$topNavigationPanel='true' and
 			   $nav='true'">
 	       <xsl:element name="{if ($outputTarget='html5') then 'nav'
