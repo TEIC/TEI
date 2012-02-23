@@ -28,8 +28,8 @@
 	<xsl:copy>
 	  <xsl:call-template name="subdivs"/>
 	</xsl:copy>
-	<xsl:apply-templates select="key('ALL',1)"/>
       </xsl:for-each>
+      <xsl:apply-templates select="key('ALL',1)"/>
     </TEI>
   </xsl:template>
 
