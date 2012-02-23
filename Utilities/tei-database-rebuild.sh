@@ -22,7 +22,6 @@ echo Using $HOST:$PORT/$WEBAPP
 cd /tmp
 perl $X/addtoexist.pl $OPTS --remove=/db/TEI
 perl $X/addtoexist.pl $OPTS --remove=/db/system/config/db/TEI/index.xconf
-xsltproc -o tei.xml $X/simplify.xsl  $S/Source/guidelines-en.xml
 perl $X/addtoexist.pl $OPTS -c /db/system/config/db/TEI -s $X/index.xconf
-perl $X/addtoexist.pl $OPTS -c /db/TEI -s tei.xml
-rm tei.xml
+perl $X/addtoexist.pl $OPTS -c /db/TEI -s $S/p5subset.xml
+
