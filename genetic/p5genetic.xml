@@ -218,10 +218,6 @@ record traces of the writing process within a document.
 
 <div><head>Generic modification</head>
 
-<specList>
-<specDesc key="mod" atts="rend type spanTo"/>
-</specList>
-
 
    <p>Most, if not all, transcriptional elements imply a certain level
    of semantic interpretation. For instance, using the <gi>add</gi>
@@ -232,7 +228,13 @@ record traces of the writing process within a document.
    felt desirable to keep the recording of <soCalled>what is on the
    page</soCalled> entirely separate from <soCalled>what is the
    editor’s interpretation</soCalled>, the generic <gi>mod</gi>
-   element may be preferred. This element simply indicates any kind of
+   element may be preferred. 
+   
+      <specList>
+         <specDesc key="mod" atts="rend type spanTo"/>
+      </specList>
+      
+      This element simply indicates any kind of
    modification that has been identified in the document, without
    prejudice as to its function. Occurrences of the <gi>mod</gi>
    element may be categorised by means of their <att>type</att>
@@ -745,10 +747,10 @@ profile description) is defined as the appropriate location for all
 information relating to the genesis or production of a text. We modify
 it slightly to permit a new <gi>listChange</gi> element which contains
 a number of <gi>change</gi> elements, one for each identified change:
-<listSpec>
+<specList>
             <specDesc key="listChange" atts="ordered"/>
             <specDesc key="change"/>
-         </listSpec>
+         </specList>
       </p>
       
 <p>In the following example taken from the genetic edition of Goethe’s
@@ -1149,7 +1151,16 @@ mode="change">
 <elementSpec ident="listChange" mode="add">
   <classes>
     <memberOf key="att.global"/>
-</classes>
+  </classes>
+   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:oneOrMore>
+         <rng:choice>
+            <rng:ref name="listChange"/>
+            <rng:ref name="change"/>
+         </rng:choice>
+      </rng:oneOrMore>
+      
+   </content>
 <attList >
 <attDef ident="ordered" mode="add">
 <desc>indicates whether the ordering of its child <gi>change</gi>
@@ -1160,15 +1171,7 @@ elements is to be considered significant or not</desc>
 <defaultVal>true</defaultVal>
 </attDef>
 </attList>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-                     <rng:oneOrMore>
-		       <rng:choice>
-			 <rng:ref name="listChange"/>
-                        <rng:ref name="change"/>
-		       </rng:choice>
-                     </rng:oneOrMore>
-
-</content>
+  
 
 </elementSpec>
 
