@@ -101,6 +101,7 @@ validate-html:
 teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
 	rm -f teiwebsiteguidelines.zip
+	curl -s http://www.tei-c.org/index.xml | xmllint --html --noent --dropdtd --xmlout - > Utilities/teic-index.xml
 	rm -f html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
@@ -110,7 +111,7 @@ teiwebsiteguidelines:
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ko DOCUMENTATIONLANGUAGE=ko html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
-
+	rm Utilities/teic-index.xml
 
 pdf: pdf.stamp
 
