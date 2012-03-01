@@ -74,7 +74,7 @@ html-web.stamp:
 	rm -rf Guidelines-web-tmp 
 	mkdir Guidelines-web-tmp
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
-	cp -r Source/Guidelines/${INPUTLANGUAGE}/Images webnav/* odd.css guidelines.css guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html/ 
+	tar --exclude .svn -c -f - Source/Guidelines/${INPUTLANGUAGE}/Images webnav/* odd.css guidelines.css guidelines-print.css | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
 		pageLayout=CSS \
@@ -100,7 +100,7 @@ validate-html:
 
 teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
-	rm -f teiwebsiteguidelines.zip
+	rm -f teiwebsiteguidelines.zip Guidelines-web
 	curl -s http://www.tei-c.org/index.xml | xmllint --html --noent --dropdtd --xmlout - > Utilities/teic-index.xml
 	rm -f html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
