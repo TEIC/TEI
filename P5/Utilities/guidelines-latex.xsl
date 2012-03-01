@@ -73,6 +73,11 @@
 \def\l@subparagraph{\@dottedtocline{5}{7em}{6em}}
 \def\@pnumwidth{3em}
 \setcounter{tocdepth}{2}
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+\thispagestyle{empty}
+\mbox{}
+\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
 \def\tableofcontents{
 \clearpage
 \pdfbookmark[0]{Table of Contents}{TOC}
