@@ -74,7 +74,8 @@ html-web.stamp:
 	rm -rf Guidelines-web-tmp 
 	mkdir Guidelines-web-tmp
 	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
-	tar --exclude .svn -c -f - Source/Guidelines/${INPUTLANGUAGE}/Images odd.css guidelines.css guidelines-print.css | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
+	cp odd.css guidelines.css guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html
+	(cd Source/Guidelines/${INPUTLANGUAGE}; tar --exclude .svn -c -f - Images) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
 	(cd webnav; tar --exclude .svn -c -f - .) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
 	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
