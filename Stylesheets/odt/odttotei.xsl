@@ -656,7 +656,7 @@ of this software, even if advised of the possibility of such damage.
               </hi>
             </xsl:when>
             <xsl:when
-              test="style:text-properties[style:text-underline-style='solid']">
+              test="style:text-properties[@style:text-underline-style='solid']">
               <hi rend="underline">
                 <xsl:copy-of select="$contents"/>
               </hi>
