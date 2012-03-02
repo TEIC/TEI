@@ -42,7 +42,7 @@
     </xsl:for-each>
   </xsl:template>
   
-  <xsl:template match="@*|text()|comment()|processing-instruction()">
+  <xsl:template match="@*|text()|processing-instruction()">
     <xsl:copy-of select="."/>
   </xsl:template>
   
@@ -50,7 +50,7 @@
   <xsl:template match="*">
     <xsl:copy>
       <xsl:apply-templates 
-	  select="*|@*|processing-instruction()|comment()|text()"/>
+	  select="*|@*|processing-instruction()|text()"/>
     </xsl:copy>
   </xsl:template>
 	
