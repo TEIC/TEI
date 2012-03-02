@@ -636,40 +636,51 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="name(.)"/>:        <xsl:value-of select="."/>&#10;
     </xsl:for-each>
     -->
-
-          <xsl:choose>
-            <xsl:when
-              test="style:text-properties[starts-with(@style:text-position,'super')]">
-              <hi rend="sup">
-                <xsl:copy-of select="$contents"/>
-              </hi>
-            </xsl:when>
-            <xsl:when
-              test="style:text-properties[starts-with(@style:text-position,'sub')]">
-              <hi rend="sub">
-                <xsl:copy-of select="$contents"/>
-              </hi>
-            </xsl:when>
-            <xsl:when test="style:text-properties[@fo:font-weight='bold']">
-              <hi>
-                <xsl:copy-of select="$contents"/>
-              </hi>
-            </xsl:when>
-            <xsl:when
-              test="style:text-properties[@style:text-underline-style='solid']">
-              <hi rend="underline">
-                <xsl:copy-of select="$contents"/>
-              </hi>
-            </xsl:when>
-            <xsl:when test="style:text-properties[@fo:font-style='italic']">
-              <emph>
-                <xsl:copy-of select="$contents"/>
-              </emph>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:copy-of select="$contents"/>
-            </xsl:otherwise>
-          </xsl:choose>
+    <xsl:variable name="rendstring">
+      <xsl:if
+	  test="style:text-properties[starts-with(@style:text-position,'super')]">
+	<xsl:text>sup </xsl:text>
+      </xsl:if>
+      
+      <xsl:if
+	  test="style:text-properties[starts-with(@style:text-position,'sub')]">
+	<xsl:text>sub </xsl:text>
+      </xsl:if>
+      
+      <xsl:if test="style:text-properties[@fo:font-weight='bold']">
+	<xsl:text>bold </xsl:text>
+      </xsl:if>
+      
+      <xsl:if
+	  test="style:text-properties[@style:text-underline-type='double']">
+	<xsl:text>underdoubleline </xsl:text>
+      </xsl:if>
+      
+      <xsl:if
+	  test="style:text-properties[@style:text-underline-style='solid']">
+	<xsl:text>underline </xsl:text>
+      </xsl:if>
+      
+      <xsl:if
+	  test="style:text-properties[@style:text-line-through-style='solid']">
+	<xsl:text>strikethrough </xsl:text>
+      </xsl:if>
+      
+      <xsl:if test="style:text-properties[@fo:font-style='italic']">
+	<xsl:text>italic </xsl:text>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$rendstring=''">
+	<xsl:copy-of select="$contents"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<hi rend="{normalize-space($rendstring)}">
+	  <xsl:copy-of select="$contents"/>
+	</hi>
+      </xsl:otherwise>
+    </xsl:choose>
+    
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
