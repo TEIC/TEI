@@ -893,7 +893,7 @@ for change individually.
           <xsl:choose>
             <xsl:when test="tei:valList[@mode='delete']"/>
             <xsl:when test="tei:valList">
-              <xsl:apply-templates mode="odd2odd-copy" select="tei:valList"/>
+              <xsl:apply-templates mode="odd2odd-copy" select="tei:valList[1]"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
@@ -1030,7 +1030,7 @@ for change individually.
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="tei:valList">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:valList"/>
+              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:valList[1]"/>
             </xsl:when>
             <xsl:when test="tei:stringVal">
               <xsl:apply-templates mode="odd2odd-justcopy" select="tei:stringVal"/>
@@ -1865,90 +1865,84 @@ so that is only put back in if there is some content
   <xsl:template name="odd2odd-mergeAttribute">
     <xsl:param name="New"/>
     <xsl:param name="Old"/>
-    <attDef xmlns="http://www.tei-c.org/ns/1.0" ident="{$Old/@ident}">
-      <xsl:for-each select="$New">
-        <xsl:attribute name="usage">
+    <attDef xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:attribute name="ident" select="$Old/@ident"/>
+       <xsl:attribute name="usage">
           <xsl:choose>
-            <xsl:when test="@usage">
-              <xsl:value-of select="@usage"/>
+            <xsl:when test="$New/@usage">
+              <xsl:value-of select="$New/@usage"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="$Old/@usage"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:attribute>
-        <xsl:if test="tei:altIdent">
-          <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
+        <xsl:if test="$New/tei:altIdent">
+          <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:altIdent"/>
         </xsl:if>
         <!-- equiv, gloss, desc trio -->
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
-          <xsl:when test="tei:equiv">
-            <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
+          <xsl:when test="$New/tei:equiv">
+            <xsl:apply-templates mode="odd2odd-copy" select="$New/tei:equiv"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:for-each select="$Old">
-              <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
-            </xsl:for-each>
+            <xsl:apply-templates mode="odd2odd-copy" select="$Old/tei:equiv"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="tei:gloss">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
+          <xsl:when test="$New/tei:gloss">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:gloss"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:for-each select="$Old">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
-            </xsl:for-each>
+              <xsl:apply-templates mode="odd2odd-justcopy" select="$Old/tei:gloss"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
-          <xsl:when test="tei:desc">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+          <xsl:when test="$New/tei:desc">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:desc"/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:for-each select="$Old">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
-            </xsl:for-each>
+              <xsl:apply-templates mode="odd2odd-justcopy" select="$Old/tei:desc"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="tei:constraintSpec">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:constraintSpec"/>
+          <xsl:when test="$New/tei:constraintSpec">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:constraintSpec"/>
           </xsl:when>
           <xsl:when test="$Old/tei:constraintSpec">
             <xsl:copy-of select="$Old/tei:constraintSpec"/>
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="tei:datatype">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:datatype"/>
+          <xsl:when test="$New/tei:datatype">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:datatype"/>
           </xsl:when>
           <xsl:when test="$Old/tei:datatype">
             <xsl:copy-of select="$Old/tei:datatype"/>
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="tei:defaultVal">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:defaultVal"/>
+          <xsl:when test="$New/tei:defaultVal">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:defaultVal"/>
           </xsl:when>
           <xsl:when test="$Old/tei:defaultVal">
             <xsl:copy-of select="$Old/tei:defaultVal"/>
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
-          <xsl:when test="tei:valDesc">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:valDesc"/>
+          <xsl:when test="$New/tei:valDesc">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:valDesc"/>
           </xsl:when>
           <xsl:when test="$Old/tei:valDesc">
             <xsl:copy-of select="$Old/tei:valDesc"/>
           </xsl:when>
         </xsl:choose>
         <xsl:choose>
-	  <xsl:when test="tei:valList[@mode='delete']"/>
-          <xsl:when test="tei:valList[@mode='add' or @mode='replace']">
-            <xsl:for-each select="tei:valList">
+	  <xsl:when test="$New/tei:valList[@mode='delete']"/>
+          <xsl:when test="$New/tei:valList[@mode='add' or @mode='replace']">
+            <xsl:for-each select="$New/tei:valList[1]">
               <xsl:copy>
                 <xsl:copy-of select="@type"/>
                 <xsl:copy-of select="@repeatable"/>
@@ -1956,16 +1950,16 @@ so that is only put back in if there is some content
               </xsl:copy>
             </xsl:for-each>
           </xsl:when>
-          <xsl:when test="tei:valList[@mode='change']">
-            <xsl:for-each select="tei:valList">
+          <xsl:when test="$New/tei:valList[@mode='change']">
+            <xsl:for-each select="$New/tei:valList">
               <xsl:copy>
                 <xsl:copy-of select="@*"/>
                 <xsl:for-each select="$Old/tei:valList/tei:valItem">
                   <xsl:variable name="thisme" select="@ident"/>
-                  <xsl:if test="not($New/tei:valList/tei:valItem[@ident=$thisme and (@mode='delete' or @mode='replace')])">
+                  <xsl:if test="not($New/tei:valList[1]/tei:valItem[@ident=$thisme and (@mode='delete' or @mode='replace')])">
                     <xsl:copy>
                       <xsl:copy-of select="@*"/>
-                      <xsl:for-each select="$New/tei:valList/tei:valItem[@ident=$thisme]">
+                      <xsl:for-each select="$New/tei:valList[1]/tei:valItem[@ident=$thisme]">
                         <xsl:choose>
                           <xsl:when test="tei:equiv">
                             <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
@@ -2012,8 +2006,8 @@ so that is only put back in if there is some content
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
-          <xsl:when test="tei:exemplum">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
+          <xsl:when test="$New/tei:exemplum">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:exemplum"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:for-each select="$Old">
@@ -2023,8 +2017,8 @@ so that is only put back in if there is some content
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
-          <xsl:when test="tei:remarks">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
+          <xsl:when test="$New/tei:remarks">
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:remarks"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:for-each select="$Old">
@@ -2032,7 +2026,6 @@ so that is only put back in if there is some content
             </xsl:for-each>
           </xsl:otherwise>
         </xsl:choose>
-      </xsl:for-each>
     </attDef>
   </xsl:template>
   <xsl:template match="tei:specGrp">
