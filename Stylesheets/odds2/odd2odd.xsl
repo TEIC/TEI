@@ -680,7 +680,7 @@ How can a class be ok?
   <xsl:template match="tei:memberOf" mode="odd2odd-copy">
     <xsl:variable name="k" select="@key"/>
     <xsl:choose>
-      <xsl:when test="$ODD/key('odd2odd-DELETE',$k)"/>
+      <xsl:when test="$ODD/key('odd2odd-DELETE',$k)"/>      
       <xsl:otherwise>
 	<memberOf xmlns="http://www.tei-c.org/ns/1.0" key="{$k}">
 	  <xsl:copy-of select="@min|@max"/>
@@ -1951,7 +1951,7 @@ so that is only put back in if there is some content
             </xsl:for-each>
           </xsl:when>
           <xsl:when test="$New/tei:valList[@mode='change']">
-            <xsl:for-each select="$New/tei:valList">
+            <xsl:for-each select="$New/tei:valList[1]">
               <xsl:copy>
                 <xsl:copy-of select="@*"/>
                 <xsl:for-each select="$Old/tei:valList/tei:valItem">
