@@ -126,4 +126,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
 
+  <xsl:template
+      match="w:r[w:instrText][normalize-space(w:instrText)='']" mode="pass0"/>
+
 </xsl:stylesheet>

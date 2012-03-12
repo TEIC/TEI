@@ -71,7 +71,8 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
     
-    
+   <xsl:variable name="dblq">"</xsl:variable>
+   <xsl:variable name="dblqplusr">" \r "</xsl:variable>
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Calls the named template paragraph-wp that can be overriden.</p>
@@ -199,9 +200,21 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:variable>
 		<xsl:choose>
 		  <xsl:when test="$rends/tei:r='index'">
-		    <indexTerm>
-		      <xsl:value-of select="current-group()//w:instrText[2]"/>
-		    </indexTerm>
+		    <index>
+		      <term>
+		      <xsl:for-each
+			  select="current-group()//w:instrText">
+			<xsl:choose>
+			  <xsl:when test=".='XE'"/>
+			  <xsl:when test="normalize-space(.)=$dblq"/>
+			  <xsl:when test="starts-with(normalize-space(.),$dblqplusr)"/>
+			  <xsl:otherwise>
+			    <xsl:apply-templates/>
+			  </xsl:otherwise>
+			</xsl:choose>
+		      </xsl:for-each>
+		      </term>
+		    </index>
 		  </xsl:when>
 		  <xsl:when test="$rends/tei:r='SEQ'">
 		    <xsl:variable name="What"
