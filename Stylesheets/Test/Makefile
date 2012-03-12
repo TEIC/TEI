@@ -128,6 +128,10 @@ conversions-to:
 	perl -p -i -e 's/Date:[^<]+</</' test11.xml
 	jing test.rng test11.xml
 	diff test11.xml expected-results/test11.xml
+	../docxtotei test18.docx test18.xml
+	perl -p -i -e 's/Date:[^<]+</</' test18.xml
+	jing test.rng test18.xml
+	diff test18.xml expected-results/test18.xml
 	rm test.rng test.rnc
 
 clean:
@@ -138,7 +142,7 @@ clean:
 	rm -f  test8.log
 	rm -f  test5.odt
 	rm -f  test8.aux
-	rm -f  test7.xml test11.xml
+	rm -f  test7.xml test11.xml test18.xml
 	rm -f  test8.tex
 	rm -f  test7.zip
 	rm -f  test8.doc
