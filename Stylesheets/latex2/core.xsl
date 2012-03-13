@@ -713,15 +713,22 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements p[@rend='display']</desc>
+      <desc>Process element p with @rend='display'</desc>
    </doc>
   <xsl:template match="tei:p[@rend='display']"> \begin{quote}
-    <xsl:apply-templates/> \end{quote}</xsl:template>
+      <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>\end{quote}&#10;</xsl:text>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements q[@rend='display']</desc>
+      <desc>Process element q with @rend='display'</desc>
    </doc>
-  <xsl:template match="tei:q[@rend='display']"> \begin{quote}
-    <xsl:apply-templates/> \end{quote}</xsl:template>
+  <xsl:template match="tei:q[@rend='display']"> 
+      <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>\end{quote}&#10;</xsl:text>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element ref[@type='cite']</desc>
@@ -730,38 +737,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Process text(), escaping the LaTeX command characters.</p>
-      </desc>
-   </doc>
-  <xsl:template match="text()"> 
-      <xsl:value-of select="tei:escapeChars(.)"/>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Process attributes in text mode, escaping the LaTeX
-    command characters.</p>
-         <p>as with text()</p>
-      </desc>
+      <desc>Process element signed</desc>
    </doc>
-  <xsl:template match="@*" mode="attributetext">
-      <xsl:value-of select="tei:escapeChars(.)"/>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements text()</desc>
-   </doc>
-  <xsl:template match="text()" mode="eg">
-      <xsl:choose>
-         <xsl:when test="starts-with(.,'&#xA;')">
-            <xsl:value-of select="substring-after(tei:escapeCharsVerbatim(.),'&#xA;')"/>
-         </xsl:when>
-         <xsl:otherwise>
-	   <xsl:value-of select="tei:escapeCharsVerbatim(.)"/>
-         </xsl:otherwise>
-      </xsl:choose>
+  <xsl:template match="tei:signed">
+      <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>\end{quote}&#10;</xsl:text>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -844,6 +827,40 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="makeSpan">
     <xsl:apply-templates/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Process text(), escaping the LaTeX command characters.</p>
+      </desc>
+   </doc>
+  <xsl:template match="text()"> 
+      <xsl:value-of select="tei:escapeChars(.)"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Process attributes in text mode, escaping the LaTeX
+    command characters.</p>
+         <p>as with text()</p>
+      </desc>
+   </doc>
+  <xsl:template match="@*" mode="attributetext">
+      <xsl:value-of select="tei:escapeChars(.)"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process text (in example mode)</desc>
+   </doc>
+  <xsl:template match="text()" mode="eg">
+      <xsl:choose>
+         <xsl:when test="starts-with(.,'&#xA;')">
+            <xsl:value-of select="substring-after(tei:escapeCharsVerbatim(.),'&#xA;')"/>
+         </xsl:when>
+         <xsl:otherwise>
+	   <xsl:value-of select="tei:escapeCharsVerbatim(.)"/>
+         </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
