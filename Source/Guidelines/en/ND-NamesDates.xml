@@ -238,7 +238,7 @@ names in a text but are insufficiently powerful to mark their internal
 components or structure. To conduct nominal record linkage or even to
 create an alphabetically sorted list of personal names, it is
 important to distinguish between a family name, a forename and an
-honorary title. Similarly, when confronted with a referencing string
+honorary title. Similarly, when confronted with a string
 such as <q>John, by the grace of God, king of England, lord of
 Ireland, duke of Normandy and Aquitaine, and count of Anjou</q>, the
 analyst will often wish to distinguish amongst the various constituent
@@ -301,7 +301,7 @@ occur in any order:
 </p>
 <p>The <att>type</att> attribute may be used with both
 <gi>forename</gi> and <gi>surname</gi> elements to provide further
-culture- or project- specific detail about the name component, for
+culture- or project-specific detail about the name component, for
 example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName> 
    <forename type="first">Franklin</forename>
@@ -466,16 +466,16 @@ for this attribute for names in the Western European tradition follow:
 <item>Membership of some elected or
  appointed organization such as <mentioned>President</mentioned>, <mentioned>Governor</mentioned>, etc.</item><label><val>military</val></label>
  <item>Military rank such as <mentioned>Colonel</mentioned>.</item><label><val>epithet</val></label>
-<item>A traditional descriptive phrase
-or nick-name such as <mentioned>The Hammer</mentioned>, <mentioned>The Great</mentioned>, etc.</item></list>
-Note, however, that the <term>role</term> a person has in a given
-context (such as <mentioned>witness</mentioned>,
+<item>A traditional descriptive phrase or nick-name such as
+<mentioned>The Hammer</mentioned>, <mentioned>The Great</mentioned>,
+etc.</item></list> Note, however, that the <term>role</term> a person
+has in a given context (such as <mentioned>witness</mentioned>,
 <mentioned>defendant</mentioned>, etc. in a legal document) should not
 be encoded using the <gi>roleName</gi> element, since this is intended
-to describe the role of this part of the name, not the role of the
-person bearing the name. Information about roles, occupations, etc. of
-a person are encoded within the <gi>person</gi> element discussed
-below in <ptr target="#NDPERS"/>.</p>
+to mark roles which function as part of a person's name, not the role
+of the person bearing the name om general. Information about roles,
+occupations, etc. of a person are encoded within the <gi>person</gi>
+element discussed below in <ptr target="#NDPERS"/>.</p>
 <p>Here are some further examples of the usage of these elements:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="PGK1">
    <roleName type="nobility">Princess</roleName>
@@ -511,8 +511,8 @@ below in <ptr target="#NDPERS"/>.</p>
 </persName></egXML>
 </p>
 <p>Although highly flexible, these mechanisms for marking
-personal name components will not cater for every personal name
-and processing need.  Where the internal structure of personal
+personal name components will not cater for every personal name, nor
+for every processing need.  Where the internal structure of personal
 names is highly complex or where name components are
 particularly ambiguous, feature structures are recommended as
 the most appropriate mechanism to mark and analyze them, as further discussed in chapter <ptr target="#FS"/>.
@@ -522,8 +522,9 @@ the most appropriate mechanism to mark and analyze them, as further discussed in
 <div type="div2" xml:id="NDORG"><head>Organizational Names</head>
 <p>In these Guidelines, we use the term <q>organization</q> for any
 named collection of people regarded as a single unit. Typical examples
-include businesses or institutions such as <soCalled>Harvard
-College</soCalled> or <soCalled>the BBC</soCalled>, but also racial or
+include institutions such as <soCalled>Harvard
+College</soCalled> or <soCalled>the BBC</soCalled> and businesses such as
+<soCalled>Apple</soCalled> or <soCalled>Google</soCalled> but also racial or
 ethnic groupings or political factions where these are regarded as
 forming a single agency such as <soCalled>the Scythians</soCalled> or
 <soCalled>the Militant Tendency</soCalled>. Giving a loosely-defined
@@ -532,7 +533,7 @@ particular political or social agenda and an analysis of the way such
 phrases are constructed and used may therefore be of considerable
 importance to the social historian, even where the objective existence
 of an <q>organization</q> in this sense is harder to demonstrate than
-that of (say) a named person. In the case of business or other
+that of (say) a named person. In the case of businesses or other
 formally constituted institutions, the component parts of an
 organizational name may help to characterize the organization in terms
 of its perceived geographical location, ownership, likely number of
@@ -594,8 +595,8 @@ or as a composite of other kinds of name:
    <surname>Ernst</surname> &amp; <surname>Young</surname>
 </orgName></egXML>
  </p>
-<p>The components of an organization's name are not always
-personal names. They may also include place names: 
+<p>The components of an organization's name may include place names as
+well as personal names:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">A spokesman from 
 <orgName type="regional">
   <orgName>IBM</orgName>
@@ -669,10 +670,11 @@ simply as an abbreviation for the elements <tag>name
 type="place"</tag> or <tag>rs type="place"</tag>. The following
 encodings are thus equivalent:<note place="bottom">Strictly, a suitable
 value such as <val>figurative</val> should be added to the two place
-names which are presented periphrastically in the second example here,
-in order to preserve the distinction indicated by the choice of
+names which are presented periphrastically in the second version of
+this example. This would preserve the distinction indicated by the choice of
 <gi>rs</gi> rather than <gi>name</gi> to encode them in the first
-version.</note> <egXML xmlns="http://www.tei-c.org/ns/Examples">After
+version of this
+example.</note> <egXML xmlns="http://www.tei-c.org/ns/Examples">After
 spending some time in our <rs key="NY1" type="place">modern <name
 key="BA1" type="place">Babylon</name></rs>, <name key="NY1"
 type="place">New York</name>, I have proceeded to 
@@ -925,8 +927,6 @@ using the <gi>org</gi> element described in section <ptr target="#ND-org"/> belo
 element, which groups such descriptions together, and optionally also
 describes relationships amongst the people listed.
 <specList>
-<specDesc key="person"/>
-<specDesc key="personGrp"/>
 <specDesc key="listPerson"/>
 <specDesc key="listRelation"/>
 </specList>
@@ -967,9 +967,11 @@ recorded for that person itself, such as its reliability or source: <specList>
 <specDesc key="att.editLike" atts="evidence source"/>
 </specList>
 In addition, a small number of very commonly used personal properties
-may be recorded using  attributes specific to <gi>person</gi> (and
-<gi>personGrp</gi>) <specList><specDesc key="person"
-atts="role sex age"/></specList></p>
+may be recorded using attributes specific to <gi>person</gi> and
+<gi>personGrp</gi> :  <specList><specDesc key="person"
+atts="role sex age"/>
+<specDesc key="personGrp"/>
+</specList></p>
 
 <p>These attributes are intended for use where only a small amount of
 data is to be encoded in a more or less normalised form, possibly for
