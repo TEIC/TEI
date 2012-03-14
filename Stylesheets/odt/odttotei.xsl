@@ -89,7 +89,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:param name="dir">.</xsl:param>
 
-  <xsl:output encoding="utf-8" indent="no"/>
+  <xsl:output encoding="utf-8" indent="yes"/>
 
   <!--  <xsl:strip-space elements="text:span"/>-->
   
