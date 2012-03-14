@@ -665,6 +665,11 @@ of this software, even if advised of the possibility of such damage.
 	  test="style:text-properties[@style:text-line-through-style='solid']">
 	<xsl:text>strikethrough </xsl:text>
       </xsl:if>
+
+      <xsl:if
+	  test="style:text-properties[@fo:font-variant='small-caps']">
+	<xsl:text>smallcaps </xsl:text>
+      </xsl:if>
       
       <xsl:if test="style:text-properties[@fo:font-style='italic']">
 	<xsl:text>italic </xsl:text>
