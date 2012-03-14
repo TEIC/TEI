@@ -1008,6 +1008,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="text:alphabetical-index-mark">
+    <xsl:if test="not(normalize-space(@text:string-value)='')">
     <index>
       <xsl:if test="@text:id">
 	<xsl:attribute name="xml:id">
@@ -1032,6 +1033,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:otherwise>
       </xsl:choose>
     </index>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="text:alphabetical-index">
