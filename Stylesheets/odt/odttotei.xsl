@@ -138,9 +138,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="pass1">
       <xsl:apply-templates/>
     </xsl:variable>
-    <xsl:for-each select="$pass1">
-      <xsl:apply-templates mode="pass2"/>
-    </xsl:for-each>
+    <xsl:variable name="pass2">
+      <xsl:apply-templates mode="pass2" select="$pass1"/>
+    </xsl:variable>
+    <xsl:apply-templates mode="pass3" select="$pass2"/>    
   </xsl:template>
 
   <xsl:template match="office:document-content|office:body">
@@ -1378,6 +1379,31 @@ These seem to have no obvious translation
 	  </xsl:copy>
 	</xsl:otherwise>
       </xsl:choose>
+    </xsl:template>
+
+  <!-- third pass -->
+
+
+
+    <xsl:template match="@*|comment()|processing-instruction()" mode="pass3">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    
+    <xsl:template match="*" mode="pass3">
+        <xsl:copy>
+            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    
+    <xsl:template match="text()" mode="pass3">
+        <xsl:value-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="tei:div[not(@type)]" mode="pass3">
+      <div type="div{count(ancestor-or-self::tei:div)}">
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
+      </div>
     </xsl:template>
 
 </xsl:stylesheet>
