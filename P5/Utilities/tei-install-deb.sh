@@ -38,6 +38,7 @@ case $package in
   Stylesheets1)   names="tei-p5-xsl";;
   Stylesheets)   names="tei-xsl-common tei-p5-xslprofiles tei-p5-xsl2";;
   Roma)          names=tei-roma;;
+  OxGarage)      names=tei-oxgarage;;
     *) echo "Error: package $package unsupported"; exit 1;;
 esac
 for p in ${names}
