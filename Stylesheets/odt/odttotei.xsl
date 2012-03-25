@@ -633,60 +633,73 @@ of this software, even if advised of the possibility of such damage.
         </xsl:variable>
         <xsl:for-each select="key('STYLES',$name)">
 
-    <!--! <xsl:for-each select="style:text-properties/@*">
-    <xsl:value-of select="name(.)"/>:        <xsl:value-of select="."/>&#10;
-    </xsl:for-each>
-    -->
-    <xsl:variable name="rendstring">
-      <xsl:if
-	  test="style:text-properties[starts-with(@style:text-position,'super')]">
-	<xsl:text>sup </xsl:text>
-      </xsl:if>
-      
-      <xsl:if
-	  test="style:text-properties[starts-with(@style:text-position,'sub')]">
-	<xsl:text>sub </xsl:text>
-      </xsl:if>
-      
-      <xsl:if test="style:text-properties[@fo:font-weight='bold']">
-	<xsl:text>bold </xsl:text>
-      </xsl:if>
-      
-      <xsl:if
-	  test="style:text-properties[@style:text-underline-type='double']">
-	<xsl:text>underdoubleline </xsl:text>
-      </xsl:if>
-      
-      <xsl:if
-	  test="style:text-properties[@style:text-underline-style='solid']">
-	<xsl:text>underline </xsl:text>
-      </xsl:if>
-      
-      <xsl:if
-	  test="style:text-properties[@style:text-line-through-style='solid']">
-	<xsl:text>strikethrough </xsl:text>
-      </xsl:if>
+	  <!--! <xsl:for-each select="style:text-properties/@*">
+	      <xsl:value-of select="name(.)"/>:        <xsl:value-of select="."/>&#10;
+	      </xsl:for-each>
+	  -->
+	  <xsl:variable name="divrendstring">
+	    <xsl:if
+		test="style:paragraph-properties/@fo:text-align">
+	      <xsl:value-of
+		  select="style:paragraph-properties/@fo:text-align"/>
+	      <xsl:text> </xsl:text>
+	    </xsl:if>
+	  </xsl:variable>
+<xsl:message>so: <xsl:value-of select="$divrendstring"/></xsl:message>
+	  <xsl:if test="not($divrendstring='')">
+	      <xsl:attribute name="rend" select="normalize-space($divrendstring)"/>
+	  </xsl:if>
 
-      <xsl:if
-	  test="style:text-properties[@fo:font-variant='small-caps']">
-	<xsl:text>smallcaps </xsl:text>
-      </xsl:if>
-      
-      <xsl:if test="style:text-properties[@fo:font-style='italic']">
-	<xsl:text>italic </xsl:text>
-      </xsl:if>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$rendstring=''">
-	<xsl:copy-of select="$contents"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<hi rend="{normalize-space($rendstring)}">
-	  <xsl:copy-of select="$contents"/>
-	</hi>
-      </xsl:otherwise>
-    </xsl:choose>
-    
+	  <xsl:variable name="rendstring">
+	    <xsl:if
+		test="style:text-properties[starts-with(@style:text-position,'super')]">
+	      <xsl:text>sup </xsl:text>
+	    </xsl:if>
+	    
+	    <xsl:if
+		test="style:text-properties[starts-with(@style:text-position,'sub')]">
+	      <xsl:text>sub </xsl:text>
+	    </xsl:if>
+	    
+	    <xsl:if test="style:text-properties[@fo:font-weight='bold']">
+	      <xsl:text>bold </xsl:text>
+	    </xsl:if>
+	    
+	    <xsl:if
+		test="style:text-properties[@style:text-underline-type='double']">
+	      <xsl:text>underdoubleline </xsl:text>
+	    </xsl:if>
+	    
+	    <xsl:if
+		test="style:text-properties[@style:text-underline-style='solid']">
+	      <xsl:text>underline </xsl:text>
+	    </xsl:if>
+	    
+	    <xsl:if
+		test="style:text-properties[@style:text-line-through-style='solid']">
+	      <xsl:text>strikethrough </xsl:text>
+	    </xsl:if>
+	    
+	    <xsl:if
+		test="style:text-properties[@fo:font-variant='small-caps']">
+	      <xsl:text>smallcaps </xsl:text>
+	    </xsl:if>
+	    
+	    <xsl:if test="style:text-properties[@fo:font-style='italic']">
+	      <xsl:text>italic </xsl:text>
+	    </xsl:if>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$rendstring=''">
+	      <xsl:copy-of select="$contents"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <hi rend="{normalize-space($rendstring)}">
+		<xsl:copy-of select="$contents"/>
+	      </hi>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
@@ -789,6 +802,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="@table:number-columns-spanned &gt;'1'">
         <xsl:attribute name="cols">
           <xsl:value-of select="@table:number-columns-spanned"/>
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@table:number-rows-spanned &gt;'1'">
+        <xsl:attribute name="rows">
+          <xsl:value-of select="@table:number-rows-spanned"/>
         </xsl:attribute>
       </xsl:if>
       <xsl:if test="text:h">

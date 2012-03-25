@@ -1032,6 +1032,10 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:attribute name="table:number-columns-spanned"
 		       select="@cols"/>
       </xsl:if>
+      <xsl:if test="@rows">
+	<xsl:attribute name="table:number-rows-spanned"
+		       select="@rows"/>
+      </xsl:if>
       <xsl:variable name="cellContents">
 	<xsl:apply-templates/>
       </xsl:variable>
