@@ -36,9 +36,14 @@ $Id$
     <memberOf key="model.nameLike"/>
     <memberOf key="model.publicationStmtPart"/>
   </classes>
-  <content>
-    <!--    <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>-->
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/>
+  <content  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:zeroOrMore>
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+	<rng:ref name="idno"/>
+      </rng:choice>
+    </rng:zeroOrMore>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
