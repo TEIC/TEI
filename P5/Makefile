@@ -444,6 +444,10 @@ check.stamp:
 	@which ${SAXON} || exit 1
 	@echo -n rnv: 
 	@which rnv || exit 1
+	@echo -n roma2: 
+	@which roma2 || exit 1
+	@echo -n onvdl: 
+	@which onvdl || exit 1
 	touch check.stamp
 
 epub: epub.stamp
