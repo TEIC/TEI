@@ -6,7 +6,8 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="availability">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" 
+module="header" ident="availability">
   <equiv/>
   <gloss version="2007-06-12" xml:lang="fr">disponibilité</gloss>
   <desc>supplies information about the availability of a text, for example any restrictions on its
@@ -28,10 +29,13 @@ $Id$
     <memberOf key="model.publicationStmtPart"/>
     <memberOf key="att.declarable"/>
   </classes>
-  <content>
-    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="model.availabilityPart"/>
-    </oneOrMore>
+  <content  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <rng:oneOrMore>
+      <rng:choice>
+      <rng:ref name="model.availabilityPart"/>
+      <rng:ref name="model.pLike"/>
+      </rng:choice>
+</rng:oneOrMore>
   </content>
   <attList>
     <attDef ident="status" usage="opt">
