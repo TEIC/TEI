@@ -771,7 +771,10 @@ class romaDom extends domDocument
 	        if ($szValList == '') {
 		 foreach( $oChild->childNodes as $valItem )
 		   {
-		    $aszList[] = $valItem->getAttribute( 'ident' );
+		   if ($valItem->nodeName =='valItem')	
+		      {
+			$aszList[] = $valItem->getAttribute( 'ident' );
+		      }
 		   }
 		   $szValList = join( ',', $aszList );	
 		  }
