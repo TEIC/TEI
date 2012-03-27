@@ -769,9 +769,9 @@ class romaDom extends domDocument
 		break;
 	      case 'valList':
 	        if ($szValList == '') {
-		 foreach( $oChild->childNodes as $oChild )
+		 foreach( $oChild->childNodes as $valItem )
 		   {
-		    $aszList[] = $oChild->getAttribute( 'ident' );
+		    $aszList[] = $valItem->getAttribute( 'ident' );
 		   }
 		   $szValList = join( ',', $aszList );	
 		  }
