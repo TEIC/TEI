@@ -10,7 +10,7 @@ collection("/db/TEI")//tei:elementSpec[@ident=$n]/tei:classes/tei:memberOf
 return
 <Class>
 {
-for $a in collection("/db/TEI")//tei:classSpec[@ident=$c/@key or @ident='att.global']//tei:attDef
+for $a in collection("/db/TEI")//tei:classSpec[@ident=$c/@key]//tei:attDef
 return
  <att>
     <name>

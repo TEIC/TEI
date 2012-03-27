@@ -49,8 +49,4 @@ return
 for $ac in collection("/db/TEI")//tei:classSpec[@ident=$class/@key]//tei:attDef
 return tei:atts($ac,$lang)
 }
-{
-for $ac in collection("/db/TEI")//tei:classSpec[@ident='att.global']//tei:attDef
-return tei:atts($ac,$lang)
-}
 </Element>
