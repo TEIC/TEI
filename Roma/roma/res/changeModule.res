@@ -94,7 +94,7 @@ form_attributes=Attribut
 form_changeAttributes=Ändra attribut
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=從這個模組中選擇您想要包含的元素。點選「包含」來將元素全部包含, 若要全部排除在外則點選「不包含」。.
 headline=更改模組
 form_headline=以下元素列表所屬模組：

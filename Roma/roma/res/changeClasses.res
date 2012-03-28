@@ -78,7 +78,7 @@ form_attributes=Attribut
 form_changeAttributes=ändraAttribut
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=選擇您想要更改的TEI集合。點選集合名稱來觀看它的說明檔。
 headline=更改屬性元素集
 form_headline=屬性元素集清單

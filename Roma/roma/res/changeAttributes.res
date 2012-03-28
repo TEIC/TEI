@@ -94,7 +94,7 @@ form_description=Beskrivning
 form_valList=Lista värden
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=您可以刪除屬性或更改屬性的data種類。
 headline=更改屬性
 form_headline=更改屬性

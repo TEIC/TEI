@@ -95,7 +95,7 @@ form_description=Beskrivning
 form_prefix=Prefix för TEI namnen i schemat
 form_namespace=Namespace for new elements
 
-[zh-tw]
+[zh-TW]
 helpmessage=在這兒可以設定全域參數
 headline=設定全域參數
 form_headline=設定全域參數

@@ -86,7 +86,7 @@ form_contents=Innehåll
 form_description=Beskrivning
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=在這兒可以定製新元素或調整現有的元素。
 headline=更改元素
 form_headline=定製一個新元素

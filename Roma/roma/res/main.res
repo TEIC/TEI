@@ -142,7 +142,7 @@ sanitycheck=Sanity Checker
 workingon=You are currently working on
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=
 title=製作TEI的文件模型檔
 save=儲存設定檔

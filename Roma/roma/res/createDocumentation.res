@@ -54,7 +54,7 @@ form_headline=Skapa dokumentationen nu
 form_output=Vilket format vill du på dokumentationen?
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=在這兒可以取得自製TEI模型的說明檔。
 headline=需要說明檔嗎?
 form_headline=建立說明檔

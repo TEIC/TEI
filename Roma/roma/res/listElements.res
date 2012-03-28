@@ -117,7 +117,7 @@ form_delete=Ta bort
 form_changeAttributes=Ändra attribut
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=已被定義在您的文件模型當中的元素。
 headline=現有的元素
 form_headline=現有的元素清單

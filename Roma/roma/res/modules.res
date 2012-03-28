@@ -101,7 +101,7 @@ form_remove=Ta bort
 selectedModules_headline=Lista på valda moduler
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=點選「加入」來將模組加到您的文件模型中，或是點選模組名稱來更改它的內容。
 headline=TEI 模組
 form_headline=TEI 模組清單

@@ -67,7 +67,7 @@ form_doclanguage=Språk för dokumentation
 form_clearCustomization=Avsluta anpassning (tillbaka till engelska)
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=選擇另一種語言
 headline=選擇另一種語言
 form_headline=您想要讓元素和屬性用另一種語言來呈現嗎？

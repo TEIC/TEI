@@ -101,7 +101,7 @@ form_description=Beskrivning
 form_delete=Ta bort
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=已被定義在這個元素或元素集當中的屬性。
 headline=現有的屬性
 form_headline=屬性清單

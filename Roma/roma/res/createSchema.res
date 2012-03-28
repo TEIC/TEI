@@ -61,7 +61,7 @@ form_output=Vilket format föredrar du?
 schemaHelp=We use RelaxNG but for help see: 
 
 
-[zh-tw]
+[zh-TW]
 helpmessage=您可以選擇Relax NG、W3C或DTD的模型語言來建立文件模型檔。
 headline=建立文件模型
 form_headline=建立文件模型

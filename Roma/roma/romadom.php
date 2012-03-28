@@ -921,10 +921,10 @@ class romaDom extends domDocument
 	case 'fr'    : $szLanguage='fr'; break;
 	case 'de'    : $szLanguage='de'; break;
 	case 'it'    : $szLanguage='it'; break;
-	case 'zh-tw' : $szLanguage='zh-tw'; break;
+	case 'zh-TW' : $szLanguage='zh-TW'; break;
 	case 'es' :    $szLanguage='es'; break;
 	case 'pt' :    $szLanguage='pt'; break;
-	case 'zh'    : $szLanguage='zh-tw'; break;
+	case 'zh'    : $szLanguage='zh-TW'; break;
 	case 'ja'    : $szLanguage='ja'; break;
 	case 'ru'    : $szLanguage='ru'; break;
 	case 'sw'    : $szLanguage='sw'; break;
