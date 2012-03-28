@@ -111,7 +111,7 @@ teiwebsiteguidelines:
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
 	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ko DOCUMENTATIONLANGUAGE=ko html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
+	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-TW DOCUMENTATIONLANGUAGE=zh-TW html-web
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 	rm Utilities/teic-index.xml
 
@@ -319,7 +319,7 @@ dist-doc.stamp:
 	rm html-web.stamp;make LANGUAGE=ko DOCUMENTATIONLANGUAGE=ko html-web
 	rm html-web.stamp;make LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
 	rm html-web.stamp;make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
-	rm html-web.stamp;make LANGUAGE=zh-tw DOCUMENTATIONLANGUAGE=zh-tw html-web
+	rm html-web.stamp;make LANGUAGE=zh-TW DOCUMENTATIONLANGUAGE=zh-TW html-web
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
 	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	@echo BUILD: make PDF version of Guidelines
