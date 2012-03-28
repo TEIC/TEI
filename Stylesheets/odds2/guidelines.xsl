@@ -43,37 +43,37 @@
     <head xml:lang="fr" corresp="VE">Poésie</head>
     <head xml:lang="fr" corresp="WD">Représentation des caractères et des
 glyphes non standard</head>
-    <head xml:lang="zh-tw" corresp="AI">簡易分析機制</head>
-    <head xml:lang="zh-tw" corresp="CE">確定程度與不確定程度</head>
-    <head xml:lang="zh-tw" corresp="CO">所有TEI文件所通用的元素</head>
-    <head xml:lang="zh-tw" corresp="CC">文集文本</head>
-    <head xml:lang="zh-tw" corresp="DI">紙本字典</head>
-    <head xml:lang="zh-tw" corresp="DR">劇本</head>
-    <head xml:lang="zh-tw" corresp="FT">表格、方程式與圖表</head>
-    <head xml:lang="zh-tw" corresp="WD">文字與字體說明</head>
-    <head xml:lang="zh-tw" corresp="HD">TEI標頭</head>
-    <head xml:lang="zh-tw" corresp="FS">功能結構 (Feature Structures)</head>
-    <head xml:lang="zh-tw" corresp="SA">Linking, segmentation and alignment連結、分割與隊列</head>
-    <head xml:lang="zh-tw" corresp="MS">寫本描述</head>
-    <head xml:lang="zh-tw" corresp="ND">名稱與日期</head>
-    <head xml:lang="zh-tw" corresp="GD">圖形、網絡與樹狀結構</head>
-    <head xml:lang="zh-tw" corresp="TS">轉錄的言詞</head>
-    <head xml:lang="zh-tw" corresp="TD">TEI模組說明</head>
-    <head xml:lang="zh-tw" corresp="ST">所有TEI模組可用的元素集、資料類型、巨集指令之宣告</head>
-    <head xml:lang="zh-tw" corresp="TC">學術編輯註解</head>
-    <head xml:lang="zh-tw" corresp="DS">預設文件結構</head>
-    <head xml:lang="zh-tw" corresp="PH">原文轉錄</head>
-    <head xml:lang="zh-tw" corresp="VE">韻文結構</head>
-    <head xml:lang="zh-tw" corresp="dedication">獻辭</head>
-    <head xml:lang="zh-tw" corresp="PREF">序言與致謝</head>
-    <head xml:lang="zh-tw" corresp="PREFS">序文的言辭</head>
-    <head xml:lang="zh-tw" corresp="REF-CLASSES-ATTS">屬性集</head>
-    <head xml:lang="zh-tw" corresp="REF-CLASSES-MODEL">元素集</head>
-    <head xml:lang="zh-tw" corresp="REF-ELEMENTS">元素</head>
-    <head xml:lang="zh-tw" corresp="REF-MACROS">資料類型與其他巨集指令</head>
-    <head xml:lang="zh-tw" corresp="USE">使用TEI</head>
-    <head xml:lang="zh-tw" corresp="SG">XML入門</head>
-    <head xml:lang="zh-tw" corresp="AB">關於</head>
+    <head xml:lang="zh-TW" corresp="AI">簡易分析機制</head>
+    <head xml:lang="zh-TW" corresp="CE">確定程度與不確定程度</head>
+    <head xml:lang="zh-TW" corresp="CO">所有TEI文件所通用的元素</head>
+    <head xml:lang="zh-TW" corresp="CC">文集文本</head>
+    <head xml:lang="zh-TW" corresp="DI">紙本字典</head>
+    <head xml:lang="zh-TW" corresp="DR">劇本</head>
+    <head xml:lang="zh-TW" corresp="FT">表格、方程式與圖表</head>
+    <head xml:lang="zh-TW" corresp="WD">文字與字體說明</head>
+    <head xml:lang="zh-TW" corresp="HD">TEI標頭</head>
+    <head xml:lang="zh-TW" corresp="FS">功能結構 (Feature Structures)</head>
+    <head xml:lang="zh-TW" corresp="SA">Linking, segmentation and alignment連結、分割與隊列</head>
+    <head xml:lang="zh-TW" corresp="MS">寫本描述</head>
+    <head xml:lang="zh-TW" corresp="ND">名稱與日期</head>
+    <head xml:lang="zh-TW" corresp="GD">圖形、網絡與樹狀結構</head>
+    <head xml:lang="zh-TW" corresp="TS">轉錄的言詞</head>
+    <head xml:lang="zh-TW" corresp="TD">TEI模組說明</head>
+    <head xml:lang="zh-TW" corresp="ST">所有TEI模組可用的元素集、資料類型、巨集指令之宣告</head>
+    <head xml:lang="zh-TW" corresp="TC">學術編輯註解</head>
+    <head xml:lang="zh-TW" corresp="DS">預設文件結構</head>
+    <head xml:lang="zh-TW" corresp="PH">原文轉錄</head>
+    <head xml:lang="zh-TW" corresp="VE">韻文結構</head>
+    <head xml:lang="zh-TW" corresp="dedication">獻辭</head>
+    <head xml:lang="zh-TW" corresp="PREF">序言與致謝</head>
+    <head xml:lang="zh-TW" corresp="PREFS">序文的言辭</head>
+    <head xml:lang="zh-TW" corresp="REF-CLASSES-ATTS">屬性集</head>
+    <head xml:lang="zh-TW" corresp="REF-CLASSES-MODEL">元素集</head>
+    <head xml:lang="zh-TW" corresp="REF-ELEMENTS">元素</head>
+    <head xml:lang="zh-TW" corresp="REF-MACROS">資料類型與其他巨集指令</head>
+    <head xml:lang="zh-TW" corresp="USE">使用TEI</head>
+    <head xml:lang="zh-TW" corresp="SG">XML入門</head>
+    <head xml:lang="zh-TW" corresp="AB">關於</head>
     <head xml:lang="it" corresp="USE">Come usare TEI</head>
     <head xml:lang="it" corresp="SG">Una graduale introduzione a XML</head>
     <head xml:lang="it" corresp="AB">Le presenti Linee Guida</head>
@@ -1086,7 +1086,7 @@ glyphes non standard</head>
 	  [<a href="../../fr/html/{$file}.html">Français</a>]
 	  [<a href="../../ja/html/{$file}.html">日本語</a>]
 	  [<a href="../../kr/html/{$file}.html">한국어</a>]
-	  [<a href="../../zh-tw/html/{$file}.html">中文</a>]
+	  [<a href="../../zh-TW/html/{$file}.html">中文</a>]
 	</p>
       </xsl:if>
       <hr/>
@@ -1183,7 +1183,7 @@ glyphes non standard</head>
       <div id="searchbox" style="float:left;">
         <form action="http://www.google.com/search" method="get">
           <fieldset><input style="color:#225588;" value="" maxlength="255" size="20" name="q" type="text"/>&#160;<select name="sitesearch"><option value="http://www.tei-c.org/">Entire site</option><option value="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/" selected="selected">P5 Guidelines
-	    <xsl:choose><xsl:when test="$documentationLanguage='en'"> — English</xsl:when><xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when><xsl:when test="$documentationLanguage='es'"> — Español</xsl:when><xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when><xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when><xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when><xsl:when test="$documentationLanguage='kr'"> — 한국어</xsl:when><xsl:when test="$documentationLanguage='zh-tw'"> — 中文</xsl:when></xsl:choose>
+	    <xsl:choose><xsl:when test="$documentationLanguage='en'"> — English</xsl:when><xsl:when test="$documentationLanguage='de'"> — Deutsch</xsl:when><xsl:when test="$documentationLanguage='es'"> — Español</xsl:when><xsl:when test="$documentationLanguage='it'"> — Italiano</xsl:when><xsl:when test="$documentationLanguage='fr'"> — Français</xsl:when><xsl:when test="$documentationLanguage='ja'"> — 日本語</xsl:when><xsl:when test="$documentationLanguage='kr'"> — 한국어</xsl:when><xsl:when test="$documentationLanguage='zh-TW'"> — 中文</xsl:when></xsl:choose>
 	    </option><option value="http://www.tei-c.org/Guidelines/P4/html/">P4 Guidelines</option></select>&#160;<input style="font-size:100%; font-weight:bold;      color:#FFFFFF; background-color:#225588; height: 2em;" value="Search" type="submit"/></fieldset>
         </form>
       </div>

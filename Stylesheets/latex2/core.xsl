@@ -521,7 +521,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:text>}</xsl:text>
       <xsl:choose>
-         <xsl:when test="parent::tei:listBibl/@xml:lang='zh-tw' or @xml:lang='zh-tw'">
+         <xsl:when test="parent::tei:listBibl/@xml:lang='zh-TW' or @xml:lang='zh-TW'">
 	           <xsl:text>{\textChinese </xsl:text>
 	           <xsl:apply-templates/>
 	           <xsl:text>}</xsl:text>

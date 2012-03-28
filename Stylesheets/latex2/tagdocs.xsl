@@ -149,7 +149,7 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template match="tei:seg[@xml:lang]">
       <xsl:choose>
-         <xsl:when test="@xml:lang='zh-tw'">
+         <xsl:when test="@xml:lang='zh-TW'">
             <xsl:text>{\textChinese </xsl:text>
             <xsl:apply-templates/>
             <xsl:text>}</xsl:text>
@@ -293,7 +293,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="tei:hi[@rend='label'  or @rend='defaultVal']">
       <xsl:text>{</xsl:text>
       <xsl:choose>
-         <xsl:when test="@xml:lang='zh-tw'">
+         <xsl:when test="@xml:lang='zh-TW'">
             <xsl:text>\textChinese </xsl:text>
             <xsl:apply-templates/>
          </xsl:when>

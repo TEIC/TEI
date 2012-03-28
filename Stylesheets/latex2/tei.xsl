@@ -125,7 +125,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
       <xsl:choose>
-         <xsl:when test="parent::*/@xml:lang='zh-tw'">
+         <xsl:when test="parent::*/@xml:lang='zh-TW'">
 	           <xsl:text>{\textChinese </xsl:text>
 		   <xsl:value-of select="tei:escapeCharsVerbatim($words)"/>
 	           <xsl:text>}</xsl:text>

@@ -1041,7 +1041,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@xml:lang='und'">
         <xsl:call-template name="showExample"/>
       </xsl:when>
-      <xsl:when test="@xml:lang='mul' and not($documentationLanguage='zh-tw')">
+      <xsl:when test="@xml:lang='mul' and not($documentationLanguage='zh-TW')">
         <!-- will need to generalize this if other langs come along like
 		chinese -->
         <xsl:call-template name="showExample"/>

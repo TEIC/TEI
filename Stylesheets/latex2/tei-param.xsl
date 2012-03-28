@@ -354,7 +354,7 @@ capable of dealing with UTF-8 directly.
          <xsl:when test="$reencode='true'">
             <xsl:text>\ttfamily\small\selectfont </xsl:text>
          </xsl:when>
-         <xsl:when test="../@xml:lang='zh-tw' or       @xml:lang='zh-tw'">
+         <xsl:when test="../@xml:lang='zh-TW' or       @xml:lang='zh-TW'">
             <xsl:text>\fontspec{Arial Unicode MS}\small\selectfont </xsl:text>
          </xsl:when>
          <xsl:when test="../@xml:lang='ja' or       @xml:lang='ja'">
