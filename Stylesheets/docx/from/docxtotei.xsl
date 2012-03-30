@@ -491,4 +491,6 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template match="@rend[.='Body_Text']" mode="pass2"/>
 
+    <xsl:template match="@rend[.='Normal (Web)']" mode="pass2"/>
+
 </xsl:stylesheet>
