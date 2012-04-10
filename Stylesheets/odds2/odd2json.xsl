@@ -38,6 +38,8 @@
   <xsl:param name="ulName"/>
   <xsl:param name="urlName"/>
   <xsl:param name="xrefName"/>
+  <xsl:param name="coded">false</xsl:param>
+  <xsl:param name="showListRef">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making JSON from ODD </p>
@@ -182,9 +184,12 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
 	<xsl:text>]</xsl:text>
       </xsl:if>
-      <xsl:text>,"content":"</xsl:text>
-      <xsl:call-template name="generateChildren"/>
+      <xsl:text>,"model":"</xsl:text>
+      <xsl:call-template name="generateSummaryChildren"/>
       <xsl:text>"</xsl:text>
+      <xsl:text>,"children":[</xsl:text>
+      <xsl:call-template name="generateChildren"/>
+      <xsl:text>]</xsl:text>
       <xsl:text>,"attributes":[</xsl:text>
       <xsl:variable name="a">
 	<xsl:call-template name="atts"/>
@@ -193,9 +198,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>{"ident":"</xsl:text>
 	<xsl:value-of select="@ident"/>
 	<xsl:text>",</xsl:text>
-	<xsl:value-of select="tei:desc"/>
+	<xsl:value-of select="desc"/>
 	<xsl:text>}</xsl:text>
-	<xsl:if test="following-sibling::tei:attDef">,</xsl:if>
+	<xsl:if test="position()!=last()">,</xsl:if>
       </xsl:for-each>
       <xsl:text>]</xsl:text>
       <xsl:text>}</xsl:text>
@@ -203,7 +208,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>&#10;</xsl:text>
     </xsl:for-each>
     <xsl:text>],</xsl:text>
-
     <xsl:text>"attclasses": [</xsl:text>
     <xsl:for-each select="key('ATTCLASSDOCS',1)">
       <xsl:sort select="@ident"/>
@@ -277,11 +281,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="atts">
     <xsl:call-template name="listAtts"/>
-    <xsl:if test="$TEIC='true'">
-      <xsl:call-template name="classA">
-	<xsl:with-param name="i">att.global</xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:call-template name="classA">
 	<xsl:with-param name="i" select="@key"/>
@@ -331,7 +330,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </xsl:template>
 
-  <xsl:template name="generateChildren">
+  <xsl:template name="generateSummaryChildren">
     <xsl:variable name="name" select="@ident"/>
     <xsl:variable name="Original" select="/"/>
     <xsl:choose>
@@ -367,6 +366,34 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template name="generateChildren">
+    <xsl:variable name="name" select="@ident"/>
+    <xsl:variable name="Original" select="/"/>
+    <xsl:choose>
+      <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
+      </xsl:when>
+      <xsl:when test="tei:content/rng:empty">
+      </xsl:when>
+      <xsl:when test="tei:content/rng:text and count(tei:content/rng:*)=1">
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="Children">
+          <xsl:for-each select="tei:content">
+            <xsl:call-template name="followRef"/>
+          </xsl:for-each>
+        </xsl:variable>
+	<xsl:for-each-group
+	    select="$Children/Element[not(@type='TEXT')]"
+	    group-by="@name">
+	  <xsl:sort select="@name"/>
+	  <xsl:text>{"ident":"</xsl:text>
+	  <xsl:value-of select="@name"/>
+	  <xsl:text>"}</xsl:text>	
+	  <xsl:if test="position()!=last()">,</xsl:if>
+	</xsl:for-each-group>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
