@@ -2557,7 +2557,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="here" select="."/>
     <xsl:for-each select="$List">
       <xsl:choose>
-        <xsl:when test="Element[@type='Text'] and count(Element)=1">
+        <xsl:when test="Element[@type='TEXT'] and count(Element)=1">
           <xsl:element namespace="{$outputNS}" name="{$segName}">
             <xsl:attribute name="xml:lang">
               <xsl:value-of select="$documentationLanguage"/>
@@ -2626,6 +2626,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="followRef">
+      <xsl:if test=".//rng:text">
+	<Element type="TEXT"/>
+      </xsl:if>
     <xsl:for-each select=".//rng:ref">
       <xsl:if test="not(starts-with(@name,'any')        or starts-with(@name,'macro.any')       or @name='AnyThing')">
         <xsl:variable name="Name">

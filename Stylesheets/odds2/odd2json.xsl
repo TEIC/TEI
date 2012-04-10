@@ -7,7 +7,6 @@
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
     xmlns:s="http://www.ascc.net/xml/schematron" 
     xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
-    xmlns="http://www.tei-c.org/ns/1.0"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -17,7 +16,28 @@
     version="2.0">
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
+  <xsl:import href="../common2/tagdocs.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
+  <xsl:param name="cellName">cell</xsl:param>
+  <xsl:param name="codeName">code</xsl:param>
+  <xsl:param name="colspan"/>
+  <xsl:param name="ddName"/>
+  <xsl:param name="divName">div</xsl:param>
+  <xsl:param name="dlName"/>
+  <xsl:param name="dtName"/>
+  <xsl:param name="hiName">hi</xsl:param>
+  <xsl:param name="itemName"/>
+  <xsl:param name="labelName">label</xsl:param>
+  <xsl:param name="outputNS"/>
+  <xsl:param name="rendName">rend</xsl:param>
+  <xsl:param name="rowName"/>
+  <xsl:param name="sectionName"/>
+  <xsl:param name="segName">seg</xsl:param>
+  <xsl:param name="spaceCharacter"/>
+  <xsl:param name="tableName"/>
+  <xsl:param name="ulName"/>
+  <xsl:param name="urlName"/>
+  <xsl:param name="xrefName"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making JSON from ODD </p>
@@ -58,6 +78,47 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
+   
+   <xsl:template name="emphasize">
+      <xsl:param name="class"/>
+      <xsl:param name="content"/>
+   </xsl:template>
+   <xsl:template name="emptySlash">
+     <xsl:param name="name"/>
+   </xsl:template>
+   <xsl:template name="generateEndLink">
+      <xsl:param name="where"/>
+   </xsl:template>
+   <xsl:template name="identifyElement">
+      <xsl:param name="id"/>
+   </xsl:template>
+   <xsl:template name="makeExternalLink">
+      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
+      <xsl:param name="dest"/>
+   </xsl:template>
+   <xsl:template name="makeInternalLink">
+      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
+      <xsl:param name="target"/>
+      <xsl:param name="dest"/>
+      <xsl:param name="class"/>
+      <xsl:param name="body"/>
+   </xsl:template>
+   <xsl:template name="makeSectionHead">
+      <xsl:param name="name"/>
+      <xsl:param name="id"/>
+   </xsl:template>
+   <xsl:template name="refdoc"/>
+   <xsl:template name="showRNC">
+      <xsl:param name="style"/>
+      <xsl:param name="contents"/>
+      <xsl:value-of select="$contents"/>
+   </xsl:template>
+   <xsl:template name="showSpace">
+   </xsl:template>
+   <xsl:template name="showSpaceBetweenItems"/>
+   <xsl:template name="specHook">
+     <xsl:param name="name"/>
+   </xsl:template>
   <xsl:output encoding="utf-8" indent="yes" method="text"/>
   <xsl:strip-space elements="*"/>
   <xsl:param name="TEIC">false</xsl:param>
@@ -121,6 +182,9 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
 	<xsl:text>]</xsl:text>
       </xsl:if>
+      <xsl:text>,"content":"</xsl:text>
+      <xsl:call-template name="generateChildren"/>
+      <xsl:text>"</xsl:text>
       <xsl:text>,"attributes":[</xsl:text>
       <xsl:variable name="a">
 	<xsl:call-template name="atts"/>
@@ -266,5 +330,45 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:choose>
       </xsl:for-each>
     </xsl:template>
+
+  <xsl:template name="generateChildren">
+    <xsl:variable name="name" select="@ident"/>
+    <xsl:variable name="Original" select="/"/>
+    <xsl:choose>
+      <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
+          <xsl:text>ANY</xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:content/rng:empty">
+	<xsl:text>EMPTY</xsl:text>
+      </xsl:when>
+      <xsl:when test="tei:content/rng:text and count(tei:content/rng:*)=1">
+	<xsl:text>TEXT</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="Children">
+          <xsl:for-each select="tei:content">
+            <xsl:call-template name="followRef"/>
+          </xsl:for-each>
+        </xsl:variable>
+	<xsl:for-each select="$Children">
+	  <xsl:choose>
+	    <xsl:when test="Element[@type='TEXT'] and
+			    count(Element)=1">
+	      <xsl:text>TEXT</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="count(Element)=0">
+	      <xsl:text>EMPTY</xsl:text>
+	    </xsl:when>
+	    <xsl:when test="Element[@type='TEXT']">
+	      <xsl:text>MIXED</xsl:text>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>SIMPLE</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>
