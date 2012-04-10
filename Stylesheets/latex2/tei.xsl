@@ -51,7 +51,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:output method="text" encoding="utf8"/>
-  <xsl:strip-space elements="*"/>
+
   <xsl:preserve-space elements="tei:hi tei:emph tei:foreign tei:p"/>
   <xsl:include href="core.xsl"/>
   <xsl:include href="corpus.xsl"/>
