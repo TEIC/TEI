@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<XSL:stylesheet 
-    xmlns:XSL="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/TransformAlias" 
+<xsl:stylesheet 
+    xmlns:gen="http://www.w3.org/1999/XSL/TransformAlias" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
     xmlns:fo="http://www.w3.org/1999/XSL/Format" 
     xmlns:html="http://www.w3.org/1999/xhtml" 
@@ -15,32 +15,33 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
     version="2.0">
-  <XSL:import href="teiodds.xsl"/>
-  <XSL:import href="../common2/i18n.xsl"/>
-  <XSL:import href="../common2/tagdocs.xsl"/>
-  <XSL:import href="../common2/tei-param.xsl"/>
-  <XSL:param name="cellName">cell</XSL:param>
-  <XSL:param name="codeName">code</XSL:param>
-  <XSL:param name="colspan"/>
-  <XSL:param name="ddName"/>
-  <XSL:param name="divName">div</XSL:param>
-  <XSL:param name="dlName"/>
-  <XSL:param name="dtName"/>
-  <XSL:param name="hiName">hi</XSL:param>
-  <XSL:param name="itemName"/>
-  <XSL:param name="labelName">label</XSL:param>
-  <XSL:param name="outputNS"/>
-  <XSL:param name="rendName">rend</XSL:param>
-  <XSL:param name="rowName"/>
-  <XSL:param name="sectionName"/>
-  <XSL:param name="segName">seg</XSL:param>
-  <XSL:param name="spaceCharacter"/>
-  <XSL:param name="tableName"/>
-  <XSL:param name="ulName"/>
-  <XSL:param name="urlName"/>
-  <XSL:param name="xrefName"/>
-  <XSL:param name="coded">false</XSL:param>
-  <XSL:param name="showListRef">false</XSL:param>
+  <xsl:import href="teiodds.xsl"/>
+  <xsl:import href="../common2/i18n.xsl"/>
+  <xsl:import href="../common2/tagdocs.xsl"/>
+  <xsl:import href="../common2/tei-param.xsl"/>
+  <xsl:namespace-alias stylesheet-prefix="gen" result-prefix="xsl"/>
+  <xsl:param name="cellName">cell</xsl:param>
+  <xsl:param name="codeName">code</xsl:param>
+  <xsl:param name="colspan"/>
+  <xsl:param name="ddName"/>
+  <xsl:param name="divName">div</xsl:param>
+  <xsl:param name="dlName"/>
+  <xsl:param name="dtName"/>
+  <xsl:param name="hiName">hi</xsl:param>
+  <xsl:param name="itemName"/>
+  <xsl:param name="labelName">label</xsl:param>
+  <xsl:param name="outputNS"/>
+  <xsl:param name="rendName">rend</xsl:param>
+  <xsl:param name="rowName"/>
+  <xsl:param name="sectionName"/>
+  <xsl:param name="segName">seg</xsl:param>
+  <xsl:param name="spaceCharacter"/>
+  <xsl:param name="tableName"/>
+  <xsl:param name="ulName"/>
+  <xsl:param name="urlName"/>
+  <xsl:param name="xrefName"/>
+  <xsl:param name="coded">false</xsl:param>
+  <xsl:param name="showListRef">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making JSON from ODD </p>
@@ -82,103 +83,103 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
    
-   <XSL:template name="bitOut">
-      <XSL:param name="grammar"/>
-      <XSL:param name="element"/>
-      <XSL:param name="content"/>
-   </XSL:template>
+   <xsl:template name="bitOut">
+      <xsl:param name="grammar"/>
+      <xsl:param name="element"/>
+      <xsl:param name="content"/>
+   </xsl:template>
 
-   <XSL:template name="typewriter">
-      <XSL:param name="text"/>
-   </XSL:template>
+   <xsl:template name="typewriter">
+      <xsl:param name="text"/>
+   </xsl:template>
 
-   <XSL:template name="emphasize">
-      <XSL:param name="class"/>
-      <XSL:param name="content"/>
-   </XSL:template>
-   <XSL:template name="emptySlash">
-     <XSL:param name="name"/>
-   </XSL:template>
-   <XSL:template name="generateEndLink">
-      <XSL:param name="where"/>
-   </XSL:template>
-   <XSL:template name="identifyElement">
-      <XSL:param name="id"/>
-   </XSL:template>
-   <XSL:template name="makeExternalLink">
-      <XSL:param name="ptr" as="xs:boolean" select="false()"/>
-      <XSL:param name="dest"/>
-   </XSL:template>
-   <XSL:template name="makeInternalLink">
-      <XSL:param name="ptr" as="xs:boolean"  select="false()"/>
-      <XSL:param name="target"/>
-      <XSL:param name="dest"/>
-      <XSL:param name="class"/>
-      <XSL:param name="body"/>
-   </XSL:template>
-   <XSL:template name="makeSectionHead">
-      <XSL:param name="name"/>
-      <XSL:param name="id"/>
-   </XSL:template>
-   <XSL:template name="refdoc"/>
-   <XSL:template name="showRNC">
-      <XSL:param name="style"/>
-      <XSL:param name="contents"/>
-      <XSL:value-of select="$contents"/>
-   </XSL:template>
-   <XSL:template name="showSpace">
-   </XSL:template>
-   <XSL:template name="showSpaceBetweenItems"/>
-   <XSL:template name="specHook">
-     <XSL:param name="name"/>
-   </XSL:template>
-  <XSL:output encoding="utf-8" indent="yes" method="xml"/>
-  <XSL:param name="TEIC">false</XSL:param>
-  <XSL:param name="verbose"/>
-  <XSL:param name="outputDir"/>
-  <XSL:param name="appendixWords"/>
-  <XSL:template name="makeAnchor">
-      <XSL:param name="name"/>
-  </XSL:template>
-  <XSL:param name="splitLevel">-1</XSL:param>
-  <XSL:variable name="oddmode">dtd</XSL:variable>
-  <XSL:variable name="filesuffix"/>
+   <xsl:template name="emphasize">
+      <xsl:param name="class"/>
+      <xsl:param name="content"/>
+   </xsl:template>
+   <xsl:template name="emptySlash">
+     <xsl:param name="name"/>
+   </xsl:template>
+   <xsl:template name="generateEndLink">
+      <xsl:param name="where"/>
+   </xsl:template>
+   <xsl:template name="identifyElement">
+      <xsl:param name="id"/>
+   </xsl:template>
+   <xsl:template name="makeExternalLink">
+      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
+      <xsl:param name="dest"/>
+   </xsl:template>
+   <xsl:template name="makeInternalLink">
+      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
+      <xsl:param name="target"/>
+      <xsl:param name="dest"/>
+      <xsl:param name="class"/>
+      <xsl:param name="body"/>
+   </xsl:template>
+   <xsl:template name="makeSectionHead">
+      <xsl:param name="name"/>
+      <xsl:param name="id"/>
+   </xsl:template>
+   <xsl:template name="refdoc"/>
+   <xsl:template name="showRNC">
+      <xsl:param name="style"/>
+      <xsl:param name="contents"/>
+      <xsl:value-of select="$contents"/>
+   </xsl:template>
+   <xsl:template name="showSpace">
+   </xsl:template>
+   <xsl:template name="showSpaceBetweenItems"/>
+   <xsl:template name="specHook">
+     <xsl:param name="name"/>
+   </xsl:template>
+  <xsl:output encoding="utf-8" indent="yes" method="xml"/>
+  <xsl:param name="TEIC">false</xsl:param>
+  <xsl:param name="verbose"/>
+  <xsl:param name="outputDir"/>
+  <xsl:param name="appendixWords"/>
+  <xsl:template name="makeAnchor">
+      <xsl:param name="name"/>
+  </xsl:template>
+  <xsl:param name="splitLevel">-1</xsl:param>
+  <xsl:variable name="oddmode">dtd</xsl:variable>
+  <xsl:variable name="filesuffix"/>
    <!-- get list of output files -->
-  <XSL:variable name="linkColor"/>
+  <xsl:variable name="linkColor"/>
 
-  <XSL:template match="/">
-    <xsl:strip-space>
-      <XSL:attribute name="elements">
-	<XSL:for-each select="//tei:elementSpec">
-	  <XSL:sort select="@ident"/>
-	  <XSL:variable name="id" select="@ident"/>
-	  <XSL:choose>
-	    <XSL:when test="tei:content//rng:ref[@name='macro.anyXML']"/>
-	    <XSL:when test="tei:content/rng:empty"/>
-	    <XSL:when test="tei:content/rng:text and count(tei:content/rng:*)=1"/>
-	    <XSL:otherwise>
-	      <XSL:variable name="Children">
-		<XSL:for-each select="tei:content">
-		  <XSL:call-template name="followRef"/>
-		</XSL:for-each>
-	      </XSL:variable>
-	      <XSL:for-each select="$Children">
-		<XSL:choose>
-		  <XSL:when test="Element[@type='TEXT'] and
+  <xsl:template match="/">
+    <gen:strip-space>
+      <xsl:attribute name="elements">
+	<xsl:for-each select="//tei:elementSpec">
+	  <xsl:sort select="@ident"/>
+	  <xsl:variable name="id" select="@ident"/>
+	  <xsl:choose>
+	    <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']"/>
+	    <xsl:when test="tei:content/rng:empty"/>
+	    <xsl:when test="tei:content/rng:text and count(tei:content/rng:*)=1"/>
+	    <xsl:otherwise>
+	      <xsl:variable name="Children">
+		<xsl:for-each select="tei:content">
+		  <xsl:call-template name="followRef"/>
+		</xsl:for-each>
+	      </xsl:variable>
+	      <xsl:for-each select="$Children">
+		<xsl:choose>
+		  <xsl:when test="Element[@type='TEXT'] and
 				  count(Element)=1"/>
-		  <XSL:when test="count(Element)=0"/>
-		  <XSL:when test="Element[@type='TEXT']"/>
-		  <XSL:otherwise>
-		    <XSL:value-of select="$id"/>
-		    <XSL:text> </XSL:text>
-		  </XSL:otherwise>
-		</XSL:choose>
-	      </XSL:for-each>
-	    </XSL:otherwise>
-	  </XSL:choose>
-	</XSL:for-each>
-      </XSL:attribute>
-    </xsl:strip-space>
-  </XSL:template>
+		  <xsl:when test="count(Element)=0"/>
+		  <xsl:when test="Element[@type='TEXT']"/>
+		  <xsl:otherwise>
+		    <xsl:value-of select="$id"/>
+		    <xsl:text> </xsl:text>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:attribute>
+    </gen:strip-space>
+  </xsl:template>
 
-</XSL:stylesheet>
+</xsl:stylesheet>
