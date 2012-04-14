@@ -715,7 +715,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element p with @rend='display'</desc>
    </doc>
-  <xsl:template match="tei:p[@rend='display']"> \begin{quote}
+  <xsl:template match="tei:p[@rend='display']"> 
       <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>\end{quote}&#10;</xsl:text>
