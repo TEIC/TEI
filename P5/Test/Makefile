@@ -45,11 +45,10 @@ TESTSPECIALFILES= \
 	testsvg.special  
 
 TESTBADFILES= \
-	detest \
-	testerrmav
+	detest 
 
 
-default: normal normaldtd special testmeta2010 test-extns test-frag
+default: normal normaldtd special testmeta2010 test-extns test-frag detest
 
 normal: $(TESTFILES2)
 normaldtd: $(TESTFILES)
@@ -137,12 +136,14 @@ test-sgml:
 
 detest:
 	@echo BUILD: Test file with deliberate errors
-	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) detest.odd .
-	-jing -t detest.rng detest.xml  > detest.log.all
-	-xmllint --noent --dropdtd  detest.xml | rnv detest.rnc 2>> detest.log.all
-	-jing detest.xsd detest.xml >> detest.log.all
+	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --isoschematron --xsl=$(XSL) detest.odd .
+	echo -jing -t detest.rng detest.xml  > detest.log.all
+	-rnv detest.rnc detest.xml 2>> detest.log.all
+	@echo Validate using Schematron
+	saxon detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
+	saxon detest.xml detest.xsl 2>> detest.log.all
 	sed 's/.*detest.xml:/detest.xml:/' < detest.log.all | sed 's/Elapsed time.*//' >  detest.log
-	diff detest.log detest.log.ok
+	diff detest.log expected-results/detest.log
 
 
 clean:

@@ -2,7 +2,7 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>A test file for datatypes</title>
+        <title>A test file for TEI which produces errors</title>
       </titleStmt>
       <publicationStmt>
         <p>Unpublished</p>
@@ -15,14 +15,19 @@
 
   <text>
     <body>
-<p>This document is for testing datatype validation.
+<p>This document is for testing validation.</p>
+
+<p><delSpan/></p>
+
+<div>
+<head>The blort element, just to play with</head>
 <!-- following shd be errors and are correctly detected by emacs -->
+<p>
 <blort truth="no"  numeric="fig" prob="low" sex="yes"
        temporal="1994-31-12" count="-1"/>
 
 <!-- following shd be errors but are not detected by emacs -->
 <blort xml:lang="wibble" prob="12345"/>
-
 
 <!-- following shd not be errors -->
 <blort truth="false" xtruth="inapplicable" sex="2" temporal="1994-12-31" count="42"/>
@@ -35,7 +40,8 @@
 <blort prob="0.456"/>
 <blort />
 </p>
-    
+</div>
+
 </body>
   </text>
 </TEI>
