@@ -23,7 +23,7 @@ LANGUAGE=en
 P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--xsl=${XSL}
+ROMAOPTS=--xsl=${XSL} --isoschematron
 SOURCE=--localsource=${P5}/p5subset.xml 
 
 
@@ -35,6 +35,9 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
 	@echo Test schema built from $<
 	jing $*.rng $*.xml && echo $* validates OK
+	@echo Validate using Schematron
+	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
+	saxon $*.xml $*.xsl
 
 %.doc.pdf: %.odd
 	@echo "BUILD: Test schema from $<"
@@ -44,6 +47,9 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	teitoepub ${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
 	@echo Test schema built from $<
 	jing $*.rng $*.xml && echo $* validates OK
+	@echo Validate using Schematron
+	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
+	saxon $*.xml $*.xsl
 
 schemas: $(ODDS) $(DOCODDS)
 	-rm tei_odds.dtd tei_odds.xsd
