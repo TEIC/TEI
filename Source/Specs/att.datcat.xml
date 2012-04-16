@@ -6,7 +6,8 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="DATCAT" type="atts" ident="att.datcat">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="DATCAT" type="atts" ident="att.datcat"
+ xmlns:dcr="http://www.isocat.org/ns/dcr">
   <desc>introduces <att>dcr:datacat</att> and <att>dcr:ValueDatacat</att> attributes that may be used to align XML elements or attributes with the appropriate Data Categories (DCs) defined by the ISO 12620:2009 standard and stored in the Web repository called ISOCat at <ref target="http://www.isocat.org/">http://www.isocat.org/</ref>.</desc>
   <attList>
     <attDef ident="datcat" usage="opt" ns="http://www.isocat.org/ns/dcr">
@@ -24,27 +25,23 @@ $Id$
       </datatype>
     </attDef>
   </attList>
-  <remarks>
-    <p>ISO 12620:2009 is a standard describing the data model and procedures for a Data Category Registry (DCR). Data categories are defined as elementary descriptors in a linguistic structure. In the DCR data model each data category gets assigned a unique Peristent IDentifier (PID), i.e., an URI. Linguistic resources or preferably their schemas that make use of data categories from a DCR should refer to them using this PID. For XML-based resources, like TEI documents, ISO 12620:2009 normative Annex A gives a small Data Category Reference XML vocabulary (also available online at <ref target="http://www.isocat.org/12620/">http://www.isocat.org/12620/</ref>) which provides two attributes dcr:datcat anddcr:valueDatcat. The following TEI example illustrates its usage in a TEI feature (structure):
+    <exemplum>
+    <p>In this example <att>dcr:datcat</att> relates the feature name to the data category "partOfSpeech" and <att>dcr:valueDatcat</att> the feature value to the data category "commonNoun". Both these data categories reside in the ISOcat DCR at <ref target="http://www.isocat.org">www.isocat.org</ref>, which is the DCR used by ISO TC37 and hosted by its registration authority, the MPI for Psycholinguistics in Nijmegen.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-    <TEI xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:dcr="http://www.isocat.org/ns/dcr">
-      ...
       <fs>
-        ...
         <f
           name="part of speech"
           dcr:datcat="http://www.isocat.org/datcat/DC-1345"
           fVal="common noun"
           dcr:valueDatcat="http://www.isocat.org/datcat/DC-1256"
         />
-        ...
       </fs>
-      ...
-    </TEI>
-    </egXML></p>
-    <p>In this example <att>dcr:datcat</att> relates the feature name to the data category "partOfSpeech" and <att>dcr:valueDatcat</att> the feature value to the data category "commonNoun". Both these data categories reside in the ISOcat DCR at <ref target="http://www.isocat.org">www.isocat.org</ref>, which is the DCR used by ISO TC37 and hosted by its registration authority, the MPI for Psycholinguistics in Nijmegen.</p>
+    </egXML>
+    </exemplum>
+  <remarks>
+    <p>ISO 12620:2009 is a standard describing the data model and procedures for a Data Category Registry (DCR). Data categories are defined as elementary descriptors in a linguistic structure. In the DCR data model each data category gets assigned a unique Peristent IDentifier (PID), i.e., an URI. Linguistic resources or preferably their schemas that make use of data categories from a DCR should refer to them using this PID. For XML-based resources, like TEI documents, ISO 12620:2009 normative Annex A gives a small Data Category Reference XML vocabulary (also available online at <ref target="http://www.isocat.org/12620/">http://www.isocat.org/12620/</ref>) which provides two attributes dcr:datcat anddcr:valueDatcat.</p>
   </remarks>
   <listRef>
-    <ptr target="#DI"/>  <!--??-->
+    <ptr target="#DI"/>
   </listRef>
 </classSpec>
