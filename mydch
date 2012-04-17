@@ -3,7 +3,9 @@ NEWVERSION=`cat VERSION`
 DATE=`date "+%a, %d %b %Y %H:%M:%S %z"`
 if [ ! -f $1 ]
 then
-    echo "tei-p5-test ($NEWVERSION) debian; urgency=low" > $1
+    DIR=`dirname $1`
+    PACKAGE=`(cd $DIR; grep Source: control | awk '{print $2}')`
+    echo "$PACKAGE ($NEWVERSION) debian; urgency=low" > $1
     echo "" >> $1
     echo '  * release generated from TEI source. We do not maintain a history here of releases' >> $1
     echo "" >> $1
