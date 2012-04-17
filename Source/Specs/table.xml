@@ -24,25 +24,28 @@ $Id$
     <memberOf key="model.listLike"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
       <zeroOrMore>
-        <choice>
-          <ref name="model.headLike"/>
-          <ref name="model.global"/>
-        </choice>
+	<choice>
+	  <ref name="model.headLike"/>
+	  <ref name="model.global"/>
+	</choice>
       </zeroOrMore>
-      <oneOrMore>
-        <ref name="row"/>
-        <zeroOrMore>
-          <ref name="model.global"/>
-        </zeroOrMore>
-      </oneOrMore>
-      </group>
-      <oneOrMore>
-        <ref name="model.graphicLike"/>
-      </oneOrMore>
-    </choice>
+      <choice>
+	<oneOrMore>
+	  <ref name="row"/>
+	  <zeroOrMore>
+	    <ref name="model.global"/>
+	  </zeroOrMore>
+	</oneOrMore>
+	<oneOrMore>
+	  <ref name="model.graphicLike"/>
+	  <zeroOrMore>
+	    <ref name="model.global"/>
+	  </zeroOrMore>
+	</oneOrMore>
+      </choice>
+    </group>
   </content>
   <attList>
     <attDef ident="rows" usage="opt">
