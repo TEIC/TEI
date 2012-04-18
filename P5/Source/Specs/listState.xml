@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright TEI Consortium. 
+  Dual-licensed under CC-by and BSD2 licences 
+  See the file COPYING.txt for details
+  $Date$
+  $Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listState">
+  <gloss>list of states and/or traits</gloss>
+  <desc>contains a list of various kinds of characteristics of people, places, and organizations.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="att.sortable"/>
+    <memberOf key="model.listLike"/>
+  </classes>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <ref name="model.headLike"/>
+      </zeroOrMore>
+      <oneOrMore>
+        <choice>
+          <ref name="model.orgStateLike"/>
+          <ref name="model.persStateLike"/>
+          <ref name="model.placeStateLike"/>
+          <ref name="listState"/>
+        </choice>
+      </oneOrMore>
+    </group>
+  </content>
+  
+  <remarks>
+    <p rend="dataDesc">The <att>type</att> attribute may be used to distinguish lists of characteristics of a particular type if convenient.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#NDPERS"/>
+  </listRef>
+</elementSpec>
