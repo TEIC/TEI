@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei"
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xmlns:sch="http://purl.oclc.org/dsdl/schematron"
 	   type="atts" ident="att.pointing">
   <desc>defines a set of attributes used by all elements which point
   to other elements by means of one or more URI references.</desc>
@@ -20,6 +20,43 @@ $Id$
   <desc version="2007-01-21" xml:lang="it">definisce un insieme di attributi usati da tutti gli elementi che puntano ad altri elementi tramite uno o più URI</desc>
   <attList>
 
+    <attDef ident="refLang" usage="opt">
+      <equiv/>
+      <desc>specifies the language of the referenced destination, by analogy with HTML's hreflang, using a <soCalled>tag</soCalled> generated
+        according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
+      </datatype>
+        <constraintSpec ident="refLang" scheme="isoschematron">
+        <constraint>
+          <sch:rule context="tei:*[@refLang]">
+            <sch:assert test="count(@target)">@refLang can only be used if @target is specified.</sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
+      <valDesc>The value must conform to BCP 47. If the value is a
+        private use code (i.e., starts with <val>x-</val> or contains
+        <val>-x-</val>), a <gi>language</gi> element with a matching value for
+        its <att>ident</att> attribute should be supplied in the TEI
+        Header to document this value. Such documentation may also
+        optionally be supplied for non-private-use codes, though these
+        must remain consistent with their Unicode definitions.</valDesc>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <linkGrp xml:id="pol-swh_aln_2.1-linkGrp">
+            <ptr xml:id="pol-swh_aln_2.1.1-ptr"
+              target="pol/UDHR/text.xml#pol_txt_1-head" type="tuv" xml:lang="pl"/>
+            
+            <ptr xml:id="pol-swh_aln_2.1.2-ptr"
+              target="swh/UDHR/text.xml#swh_txt_1-head" type="tuv" xml:lang="sw"/>
+          </linkGrp>
+        </egXML>
+        <p>In the example above, the linkGrp combines pointers at parallel fragments of the Universal Declaration of Human Rights: one of them is in Polish, the other in Swahili.</p>
+      </exemplum>
+      <remarks>
+        <p>The function of this attribute is to identify not the language/script of the child of the element that uses it, but rather the language/script of the element or attribute addressed by the element that contains <att>refLang</att>, typically a <gi>ptr</gi>:</p>
+      </remarks>
+    </attDef>
     <attDef ident="target" usage="opt">
       <equiv/>
       <desc>specifies the destination of the reference by supplying one or more URI References</desc>
