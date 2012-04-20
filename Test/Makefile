@@ -135,7 +135,7 @@ test-sgml:
 	onsgmls -e -g -s  sgmldecl.tei extns.sgm 
 
 detest:
-	@echo BUILD: Test file with deliberate errors
+	@echo BUILD: Test file with deliberate mistakes
 	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --isoschematron --xsl=$(XSL) detest.odd .
 	echo -jing -t detest.rng detest.xml  > detest.log.all
 	-rnv detest.rnc detest.xml 2>> detest.log.all
