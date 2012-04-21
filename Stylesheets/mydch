@@ -15,11 +15,9 @@ else
     PACKAGE=`head -1 $1 | awk '{print $1}' `
     NAME=`grep  -- "^ --" $1| head -1 | sed 's/ -- \(.*\)<.*/\1/'`
     EMAIL=`grep  -- "^ --" $1 | head -1 | sed 's/.*<\(.*\)>.*/\1/'`
-    if [ $OLDVERSION = $NEWVERSION ]
+    if [ ! $OLDVERSION = $NEWVERSION ]
     then
-	echo "version in Debian ($OLDVERSION) is the same as $NEWVERSION"
-    else
-	echo update with $NEWVERSION
+	echo update debian changelog with $NEWVERSION
 	echo "$PACKAGE ($NEWVERSION) natty; urgency=low" > /tmp/changelog
 	echo "" >> /tmp/changelog
 	echo "  * new release from upstream" >> /tmp/changelog

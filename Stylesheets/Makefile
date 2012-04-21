@@ -184,7 +184,7 @@ log:
 
 clean:
 	echo "" > test~
-	-rm profile1.html profile2.html profile.xml
+	rm -f profile1.html profile2.html profile.xml
 	find . -name "*~"  | xargs rm
 	rm -f tei-xsl-*.zip	
 	rm -rf tei-p5-xsl2_*
