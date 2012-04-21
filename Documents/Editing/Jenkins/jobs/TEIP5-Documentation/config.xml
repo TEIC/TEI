@@ -32,10 +32,14 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>make clean dist-doc validate-html</command>
+      <command>make XSL=`pwd`/../../Stylesheets/lastSuccessful/archive/dist/xml/tei/stylesheet clean dist-doc validate-html</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>Guidelines-web/**,Guidelines.pdf,Guidelines.mobi,Guidelines.epub</artifacts>
+      <latestOnly>false</latestOnly>
+    </hudson.tasks.ArtifactArchiver>
     <hudson.tasks.BuildTrigger>
       <childProjects>TEIP5</childProjects>
       <threshold>
@@ -44,10 +48,6 @@
         <color>BLUE</color>
       </threshold>
     </hudson.tasks.BuildTrigger>
-    <hudson.tasks.ArtifactArchiver>
-      <artifacts>Guidelines-web/**,Guidelines.pdf,Guidelines.mobi,Guidelines.epub</artifacts>
-      <latestOnly>false</latestOnly>
-    </hudson.tasks.ArtifactArchiver>
     <hudson.plugins.logparser.LogParserPublisher>
       <unstableOnWarning>false</unstableOnWarning>
       <failBuildOnError>true</failBuildOnError>

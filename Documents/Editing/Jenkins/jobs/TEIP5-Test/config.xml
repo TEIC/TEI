@@ -36,16 +36,16 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>make clean validate test exemplars</command>
+      <command>make XSL=`pwd`/../../Stylesheets/lastSuccessful/archive/dist/xml/tei/stylesheet clean validate test exemplars</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
     <hudson.tasks.BuildTrigger>
       <childProjects>TEIP5-Documentation</childProjects>
       <threshold>
-        <name>SUCCESS</name>
-        <ordinal>0</ordinal>
-        <color>BLUE</color>
+        <name>UNSTABLE</name>
+        <ordinal>1</ordinal>
+        <color>YELLOW</color>
       </threshold>
     </hudson.tasks.BuildTrigger>
     <hudson.plugins.logparser.LogParserPublisher>
