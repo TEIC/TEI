@@ -143,20 +143,20 @@
 	      focus of the passage in question. In other cases, examples may be direct 
 	      translations of each other, and hence identical from the perspective of 
 	      their encoding.</p>	      
-	      <ul>
 		<xsl:for-each
 		    select="/tei:TEI/tei:text/tei:body/tei:div[@xml:id=$mychapter]">
 		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
-		    <li>
-		      <b>
-			<a href="#{@xml:id}">
-			  <xsl:call-template name="header"/> <em> (defining module)</em>
-			</a>
-		      </b>
-		    </li>
+		    <ul>
+		      <li>
+			<b>
+			  <a href="#{@xml:id}">
+			    <xsl:call-template name="header"/> <em> (defining module)</em>
+			  </a>
+			</b>
+		      </li>
+		    </ul>
 		  </xsl:if>
 		</xsl:for-each>
-	      </ul>
 	      <xsl:variable name="items">
 		<xsl:for-each
 		    select="/tei:TEI/tei:text/tei:body/tei:div[not(@xml:id=$mychapter)]">
