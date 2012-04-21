@@ -57,6 +57,7 @@
     <xsl:apply-imports/>
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
+      <xsl:variable name="mychapter" select="ancestor::tei:div[last()]/@xml:id"/>
       <xsl:variable name="documentationLanguage">
 	<xsl:call-template name="generateDoc"/>
       </xsl:variable>
@@ -131,23 +132,34 @@
 	      </h3>
 	      <p>These search results reproduce every example of the
 	      use of <xsl:text>&lt;</xsl:text>
-<xsl:value-of select="$me"/>
-<xsl:text>&gt;</xsl:text> in the Guidelines, including all localised
-and translated versions. In some cases, the examples have been drawn
-from discussion of other elements in the Guidelines and illustrating
-the use of <xsl:text>&lt;</xsl:text>
-<xsl:value-of select="$me"/>
-<xsl:text>&gt;</xsl:text>
-is not the main 
-focus of the passage in question. In other cases, examples may be direct 
-translations of each other, and hence identical from the perspective of 
-their encoding.</p>
-
-
-
-              <xsl:variable name="items">
+	      <xsl:value-of select="$me"/>
+	      <xsl:text>&gt;</xsl:text> in the Guidelines, including all localised
+	      and translated versions. In some cases, the examples have been drawn
+	      from discussion of other elements in the Guidelines and illustrating
+	      the use of <xsl:text>&lt;</xsl:text>
+	      <xsl:value-of select="$me"/>
+	      <xsl:text>&gt;</xsl:text>
+	      is not the main 
+	      focus of the passage in question. In other cases, examples may be direct 
+	      translations of each other, and hence identical from the perspective of 
+	      their encoding.</p>	      
+	      <ul>
 		<xsl:for-each
-		    select="/tei:TEI/tei:text/tei:body/tei:div">
+		    select="/tei:TEI/tei:text/tei:body/tei:div[@xml:id=$mychapter]">
+		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
+		    <li>
+		      <b>
+			<a href="#{@xml:id}">
+			  <xsl:call-template name="header"/> <em> (defining module)</em>
+			</a>
+		      </b>
+		    </li>
+		  </xsl:if>
+		</xsl:for-each>
+	      </ul>
+	      <xsl:variable name="items">
+		<xsl:for-each
+		    select="/tei:TEI/tei:text/tei:body/tei:div[not(@xml:id=$mychapter)]">
 		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
 		    <li>
 		      <a href="#{@xml:id}">
@@ -159,62 +171,29 @@ their encoding.</p>
 		    </li>
 		  </xsl:if>
 		</xsl:for-each>
-              </xsl:variable>
+	      </xsl:variable>
               <xsl:if test="count($items/html:li)&gt;0">
                 <ul>
                   <xsl:copy-of select="$items/html:li"/>
                 </ul>
               </xsl:if>
 	      <xsl:for-each
-		  select="/tei:TEI/tei:text/tei:body/tei:div">
-		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
-		    <h4 id="{@xml:id}">
-		      <xsl:call-template name="header"/>
-		    </h4>
-		    <xsl:for-each select="key('EXAMPLES',concat(@xml:id,$me))">
-		      <xsl:variable name="pos">
-			<xsl:number level="any" from="teix:egXML"/>
-		      </xsl:variable>
-		      <xsl:if test="number($pos)=1 or ($me='egXML' and
-				    number($pos)=2)">
-			<hr/>
-			<p>
-			  <xsl:choose>
-			    <xsl:when test="ancestor::tei:elementSpec">
-			      <a
-				  href="../../{ancestor::tei:exemplum/@xml:lang}/html/ref-{ancestor::tei:elementSpec/@ident}.html">
-				<xsl:text>&lt;</xsl:text>
-				<xsl:value-of
-				    select="ancestor::tei:elementSpec/@ident"/>
-				<xsl:text>&gt;</xsl:text>
-			      </a>
-			    </xsl:when>
-			    <xsl:when test="ancestor::tei:classSpec">
-			      <a
-				  href="../../{ancestor::tei:exemplum/@xml:lang}/html/ref-{ancestor::tei:classSpec/@ident}.html">
-				<xsl:value-of
-				    select="ancestor::tei:classSpec/@ident"/>
-			      </a>
-			    </xsl:when>
-			    <xsl:otherwise>
-			      <xsl:for-each select="ancestor::tei:div[@xml:id and tei:head][1]">
-				<a>
-				  <xsl:attribute name="href">
-				    <xsl:apply-templates select="." mode="generateLink"/>
-				  </xsl:attribute>
-				  <xsl:call-template name="header"/>
-				</a>
-			      </xsl:for-each>
-			    </xsl:otherwise>
-			  </xsl:choose>
-			</p>
-			<xsl:apply-templates select="ancestor::teix:egXML">
-			  <xsl:with-param name="simple">true</xsl:with-param>
-			  <xsl:with-param name="highlight"><xsl:value-of select="$me"/></xsl:with-param>
-			</xsl:apply-templates>
-		      </xsl:if>
-		    </xsl:for-each>
-		  </xsl:if>
+		  select="/tei:TEI/tei:text/tei:body/tei:div[@xml:id=$mychapter]">
+		<xsl:if
+		    test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
+		  <xsl:call-template name="showExamplesFromDiv">
+		    <xsl:with-param name="me" select="$me"/>
+		  </xsl:call-template>
+		</xsl:if>
+	      </xsl:for-each>
+	      <xsl:for-each
+		  select="/tei:TEI/tei:text/tei:body/tei:div[not(@xml:id=$mychapter)]">
+		<xsl:if
+		    test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
+		  <xsl:call-template name="showExamplesFromDiv">
+		    <xsl:with-param name="me" select="$me"/>
+		  </xsl:call-template>
+		</xsl:if>
 	      </xsl:for-each>
 	    </div>
 	    <xsl:call-template name="stdfooter">
@@ -227,6 +206,56 @@ their encoding.</p>
 	  </body>
 	</html>
       </xsl:result-document>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="showExamplesFromDiv">
+    <xsl:param name="me"/>
+    <h4 id="{@xml:id}">
+      <xsl:call-template name="header"/>
+    </h4>
+    <xsl:for-each select="key('EXAMPLES',concat(@xml:id,$me))">
+      <xsl:variable name="pos">
+	<xsl:number level="any" from="teix:egXML"/>
+      </xsl:variable>
+      <xsl:if test="number($pos)=1 or ($me='egXML' and
+		    number($pos)=2)">
+	<hr/>
+	<p>
+	  <xsl:choose>
+	    <xsl:when test="ancestor::tei:elementSpec">
+	      <a
+		  href="../../{ancestor::tei:exemplum/@xml:lang}/html/ref-{ancestor::tei:elementSpec/@ident}.html">
+		<xsl:text>&lt;</xsl:text>
+		<xsl:value-of
+		    select="ancestor::tei:elementSpec/@ident"/>
+		<xsl:text>&gt;</xsl:text>
+	      </a>
+	    </xsl:when>
+	    <xsl:when test="ancestor::tei:classSpec">
+	      <a
+		  href="../../{ancestor::tei:exemplum/@xml:lang}/html/ref-{ancestor::tei:classSpec/@ident}.html">
+		<xsl:value-of
+		    select="ancestor::tei:classSpec/@ident"/>
+	      </a>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:for-each select="ancestor::tei:div[@xml:id and tei:head][1]">
+		<a>
+		  <xsl:attribute name="href">
+		    <xsl:apply-templates select="." mode="generateLink"/>
+		  </xsl:attribute>
+		  <xsl:call-template name="header"/>
+		</a>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</p>
+	<xsl:apply-templates select="ancestor::teix:egXML">
+	  <xsl:with-param name="simple">true</xsl:with-param>
+	  <xsl:with-param name="highlight"><xsl:value-of select="$me"/></xsl:with-param>
+	</xsl:apply-templates>
+      </xsl:if>
     </xsl:for-each>
   </xsl:template>
 
