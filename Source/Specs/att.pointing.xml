@@ -20,17 +20,17 @@ $Id$
   <desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi usati da tutti gli elementi che puntano ad altri elementi tramite uno o più URI</desc>
   <attList>
 
-    <attDef ident="refLang" usage="opt">
+    <attDef ident="targetLang" usage="opt">
       <equiv/>
-      <desc>specifies the language of the referenced destination, by analogy with HTML's hreflang, using a <soCalled>tag</soCalled> generated
+      <desc>specifies the language of the destination referenced by <att>target</att>, using a <soCalled>language tag</soCalled> generated
         according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
       </datatype>
-        <constraintSpec ident="refLang" scheme="isoschematron">
+        <constraintSpec ident="targetLang" scheme="isoschematron">
         <constraint>
-          <sch:rule context="tei:*[@refLang]">
-            <sch:assert test="count(@target)">@refLang can only be used if @target is specified.</sch:assert>
+          <sch:rule context="tei:*[@targetLang]">
+            <sch:assert test="count(@target)">@targetLang can only be used if @target is specified.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -45,10 +45,10 @@ $Id$
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <linkGrp xml:id="pol-swh_aln_2.1-linkGrp">
             <ptr xml:id="pol-swh_aln_2.1.1-ptr"
-              target="pol/UDHR/text.xml#pol_txt_1-head" type="tuv" refLang="pl"/>
+              target="pol/UDHR/text.xml#pol_txt_1-head" type="tuv" targetLang="pl"/>
             
             <ptr xml:id="pol-swh_aln_2.1.2-ptr"
-              target="swh/UDHR/text.xml#swh_txt_1-head" type="tuv" refLang="sw"/>
+              target="swh/UDHR/text.xml#swh_txt_1-head" type="tuv" targetLang="sw"/>
           </linkGrp>
         </egXML>
         <p>In the example above, the linkGrp combines pointers at parallel fragments of the Universal Declaration of Human Rights: one of them is in Polish, the other in Swahili.</p>
