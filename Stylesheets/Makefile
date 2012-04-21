@@ -49,7 +49,7 @@ PROFILEDOCTARGETS=\
 	profiles/iso/html/to.xsl \
 	profiles/iso/latex/to.xsl 
 
-.PHONY: doc release common
+.PHONY: doc release common profiles
 
 default: check test release
 
@@ -79,6 +79,11 @@ common:
 	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
 	cp VERSION *.css i18n.xml release/common/xml/tei/stylesheet
 
+profiles: 
+	@echo BUILD Build for P5, profiles
+	test -d release/profiles/xml/tei/stylesheet || mkdir -p release/profiles/xml/tei/stylesheet
+	tar cf - --exclude .svn profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
+
 doc:
 	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
 	saxon -o:doc/customize.xml doc/param.xml doc/param.xsl 
@@ -91,7 +96,7 @@ doc:
 
 oxygendoc:
 	@echo text for existence of file $(OXY)
-	@test -f $(OXY) || exit 1
+	@test -f $(OXY) || exit 0
 	@echo using oXygen stylesheet documentation generator
 	for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common2/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
@@ -105,9 +110,14 @@ test: clean p5 common debversion
 dist: clean release
 	-rm tei-xsl-`cat VERSION`.zip
 	(cd release/common; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
-	(cd release/p5; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/p5;     zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	-rm -rf dist
+	mkdir dist
+	(cd release/p5; tar cf - .)       | (cd dist; tar xf  -)
+	(cd release/profiles; tar cf - .) | (cd dist; tar xf  -)
+	(cd release/common/; tar cf - .)  | (cd dist; tar xf -)
 
-release: common doc oxygendoc p5
+release: common doc oxygendoc p5 profiles
 
 installp5: p5 teioo.jar
 	mkdir -p ${PREFIX}/share/xml/tei/stylesheet
@@ -140,7 +150,7 @@ installcommon: doc common
 	(cd release/common/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 	(cd release/common/xml; tar cf - .) | (cd ${PREFIX}/share/xml; tar xf -)
 
-install: installp5 installcommon installprofiles
+install: installp5 installprofiles installcommon 
 
 debversion:
 	sh ./mydch debian-tei-xsl-common/debian/changelog
@@ -180,7 +190,7 @@ clean:
 	rm -rf tei-p5-xsl2_*
 	rm -rf tei-xsl-common_*
 	rm -f doc/stylebear doc/style.xml doc/customize.xml teixsl.html
-	rm -rf release
+	rm -rf release dist
 	(cd Test; make clean)
 	rm -rf tei-p5-xsl_*
 	rm -rf tei-p5-xsl2_*
