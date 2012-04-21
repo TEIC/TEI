@@ -427,6 +427,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:with-param>
     </xsl:call-template>
     <xsl:apply-templates select="@*" mode="verbatim"/>
+    <xsl:if test="local-name(.)='TEI' or local-name(.)='teiCorpus'">
+      <xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
+    </xsl:if>  
     <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
       <xsl:choose>
         <xsl:when test="not(parent::*)">
@@ -680,6 +683,7 @@ of this software, even if advised of the possibility of such damage.
         </text>
       </all>
     </xsl:variable>
+
     <xsl:for-each select="$ns/all/names">
       <xsl:for-each-group select="ns" group-by="@name">
         <xsl:if test="key('NSUsed',@value)">
