@@ -66,9 +66,6 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:when test="@xml:id">
 	     <xsl:value-of select="@xml:id"/>
 	   </xsl:when>
-	   <xsl:when test="@n">
-	     <xsl:value-of select="@n"/>
-	   </xsl:when>
 	   <xsl:otherwise>
 	     <xsl:number count="tei:app" level="any"/>
 	   </xsl:otherwise>
@@ -111,13 +108,10 @@ of this software, even if advised of the possibility of such damage.
          <xsl:text>App</xsl:text>
          <xsl:choose>
             <xsl:when test="@xml:id">
-	              <xsl:value-of select="@xml:id"/>
-            </xsl:when>
-            <xsl:when test="@n">
-	              <xsl:value-of select="@n"/>
+	      <xsl:value-of select="@xml:id"/>
             </xsl:when>
             <xsl:otherwise>
-	              <xsl:number count="tei:app" level="any"/>
+	      <xsl:number count="tei:app" level="any"/>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
