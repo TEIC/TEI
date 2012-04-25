@@ -21,14 +21,35 @@
     </xd:desc>
   </xd:doc>
   
+<!--  <xsl:output method="xhtml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>-->
+  <xsl:output method="html" />
+  
+<!-- List of static ids referenced in CSS files, which we're leaving unchanged for now. -->
+  <xsl:variable name="staticIds" select="('banner', 'onecol', 'udm', 'container', 'accessibility', 'hdr2', 'hdr3', 'azindex', 'byMod')"/>
+  
 <!-- Template for matching id attributes. -->
   <xsl:template match="@id">
-    <xsl:attribute name="id" select="concat('tei_', .)"/>
+    <xsl:choose>
+     <xsl:when test=". = $staticIds">
+       <xsl:copy-of select="."/>
+     </xsl:when>
+      <xsl:otherwise>
+        <xsl:attribute name="id" select="concat('tei_', .)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+    
   </xsl:template>
   
 <!-- Template for matching local links. -->
-  <xsl:template match="@href[contains(., '#') and not(contains(., '://'))]">
-    <xsl:attribute name="href" select="replace(., '#', '#tei_')"/>
+  <xsl:template match="@href[matches(., '.*#.+') and not(contains(., '://'))]">
+    <xsl:choose>
+      <xsl:when test=". = $staticIds">
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:attribute name="href" select="replace(., '#', '#tei_')"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
 <!-- Identity transform. -->
