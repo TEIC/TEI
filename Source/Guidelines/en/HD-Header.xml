@@ -939,6 +939,7 @@ class. By default, this class makes available the following elements:
 <specDesc key="tagsDecl"/>
 <specDesc key="refsDecl"/>
 <specDesc key="classDecl"/>
+  <specDesc key="schemaSpec"/>
 <specDesc key="appInfo"/>
 </specList>Each of these elements is further described 
 in the appropriate section below. Other modules have the ability to
@@ -953,6 +954,7 @@ extend this class; examples are noted in section <ptr target="#HDENCOTH"/>
 <specGrpRef target="#DHD57"/>
 <specGrpRef target="#D2254"/>
 <specGrpRef target="#D2255"/>
+<specGrpRef target="#DHDSCHSPEC"/>
 <specGrpRef target="#DHDAPP"/>
 </specGrp><div type="div3" xml:id="HD51"><head>The Project Description</head><p>The <gi>projectDesc</gi> element may be used to describe, in prose,
 the purpose for which a digital resource was created, together with
@@ -1612,6 +1614,39 @@ more than one language, as in the following example:
 <specGrp xml:id="D2255" n="The classification declaration">&classDecl;&taxonomy;&category;&catDesc;
 </specGrp>
 </div>
+  
+<!-- MDH: 2012-04-26 new section on <schemaSpec> availability in <encodingDesc>. -->
+  <div type="div3" xml:id="HDSCHSPEC">
+    
+    <head>The Schema Specification Element</head>
+    
+    <p>The <gi>schemaSpec</gi> element is normally found at the heart of a TEI ODD file. The use of ODD files,
+      and their relationship to schemas, is described in detail in <ptr target="#TD"/>. In simple terms, an ODD file 
+    is an XML specification from which a schema in one of many schema languages, including RELAX NG or W3C Schema, 
+    can be generated using an ODD processor. In addition to appearing in the <gi>body</gi> of an ODD file, <gi>schemaSpec</gi>
+    may also appear inside <gi>encodingDesc</gi>.</p>
+    
+    <p>A <gi>schemaSpec</gi> element contains all the information needed to generate a project's schemas. It is inevitably much smaller than 
+    a project schema, and may consist only of a series of module declarations, as in the simple example below. Therefore you may find it
+    convenient to make a copy of the <gi>schemaSpec</gi> from your project's ODD file inside the <gi>teiHeader</gi> itself, in addition to 
+      supplying an external schema and/or ODD file; if the XML file becomes separated from its schema, the schema can be regenerated at 
+      any time using the information in the <gi>schemaSpec</gi> element.
+    
+      <egXML xml:lang="en"
+        xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc>
+          <!-- Other encoding description elements... -->
+          <schemaSpec ident="myTEICustomization" docLang="en" prefix="tei_" xml:lang="en">
+            <moduleRef key="core"/>
+            <moduleRef key="tei"/>
+            <moduleRef key="header"/>
+            <moduleRef key="textstructure"/>
+          </schemaSpec>
+        </encodingDesc>
+      </egXML>
+    </p>
+    <specGrp xml:id="DHDSCHSPEC" n="The Schema Specification">&schemaSpec;&moduleRef;</specGrp>
+  </div>
+  
 <div type="div3" xml:id="HDAPP">
 <head>The Application Information Element</head>
 <p>It is sometimes convenient to store information relating to the
