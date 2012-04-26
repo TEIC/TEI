@@ -338,9 +338,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates select="text()|*[not(local-name(.)='frame')]"/>
 	</head>
       </xsl:when>
-      <xsl:when test="parent::table:table-cell">
-	<xsl:call-template name="applyStyle"/>
-      </xsl:when>
+      <xsl:when test="parent::table:table-cell"/>
 
       <xsl:when test="count(parent::text:note-body/text:p)=1">
           <xsl:apply-templates/>
@@ -645,7 +643,7 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:text> </xsl:text>
 	    </xsl:if>
 	  </xsl:variable>
-<xsl:message>so: <xsl:value-of select="$divrendstring"/></xsl:message>
+
 	  <xsl:if test="not($divrendstring='')">
 	      <xsl:attribute name="rend" select="normalize-space($divrendstring)"/>
 	  </xsl:if>
@@ -812,6 +810,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="text:h">
         <xsl:attribute name="role">label</xsl:attribute>
       </xsl:if>
+      <xsl:for-each select="text:p[@text:style-name][1]">
+	<xsl:call-template name="applyStyle"/>
+      </xsl:for-each>
       <xsl:apply-templates/>
     </cell>
   </xsl:template>
