@@ -1456,8 +1456,21 @@ representation of a graphic, embedded within an <gi>svg:svg</gi> element.
 </div>
 
   <div type="div2" xml:id="TD-LinkingSchemas"><head>Linking Schemas to XML Documents</head>
+<p>Schemas can be linked to XML documents by means of the <tag type="pi">xml-model</tag> 
+  processing instruction described in the W3C Working Group Note 
+  <title level="m">Associating Schemas with XML documents</title> 
+  (<ptr target="http://www.w3.org/TR/xml-model/"/>). <tag type="pi">xml-model</tag> can be 
+used for any type of schema, and may be used for multiple schemas:
 
-
+  <eg><![CDATA[<?xml-model href="tei_tite.rng" type="application/xml" ?>
+<?xml-model href="checkLinks.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+<?xml-model href="tei_tite.odd" type="application/tei+xml" schematypens="http://www.tei-c.org/ns/1.0" ?>]]></eg>
+  
+  This example includes a standard RELAX NG schema, a Schematron schema which might be 
+  used for checking that all pointing attributes point at existing targets, and also a link to the TEI ODD file from which the
+  RELAX NG schema was generated. See also <ptr target="#HDSCHSPEC"/> for details of another method of 
+  linking an ODD specification into your file by including a <gi>schemaSpec</gi> element in <gi>encodingDesc</gi>.
+</p>
 
   </div>
 
