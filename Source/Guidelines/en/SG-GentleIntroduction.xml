@@ -1375,10 +1375,44 @@ DTD processor will take note of this fact. </p></div>
 
 <div type="div3" xml:id="SG-assoc"><head>Associating a document instance with its schema</head>
 
-<p>Different schema languages adopt entirely different attitudes to
-this question. A document instance may be valid according to many
-different schemas, each appropriate to a different processing task. In
-RELAX NG therefore no facility for associating a particular schema
+<p>In the past, different schema languages adopted entirely different attitudes to
+this question, leading to a variety of different methods of associating schemas with 
+document instances. However, a W3C Working Group Note, 
+  <title level="m">Associating Schemas with XML documents</title>, 
+(<ptr target="http://www.w3.org/TR/xml-model/"/> now provides a 
+standardized method of doing this through the use of a processing instruction:
+
+  <eg><![CDATA[<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng"?>]]></eg>
+
+The <att>href</att> <term>pseudo-attribute</term> points to the location of the schema. This is the only mandatory
+  pseudo-attribute, but others can be added to give more information about the schema:
+  
+  <eg><![CDATA[<?xml-model href="burgess.rng" 
+                       title="Anthony Burgess Project Schema" 
+                       schematypens="http://relaxng.org/ns/structure/1.0" 
+                       type="application/xml"
+                     ?>]]></eg>
+
+See the XML Model WG Note for more information on the pseudo-attributes available and 
+how to use them.</p>
+  
+  <p>A document instance may be valid according to many
+different schemas, each appropriate to a different processing task. 
+All of these may be expressed in the same way:
+
+  <eg><![CDATA[<?xml-model href="tei_tite.xsd" type="application/xml" ?>
+<?xml-model href="checkNames.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron" ?>]]></eg>
+
+This example includes a standard schema in XML Schema format, along with a schematron schema which might be 
+used for checking the format and linking of names.</p>
+
+<!-- MDH 2012-04-27: The following two paragraphs now appear to be 
+      obsolete, since we are recommending the use of xml-model for 
+      all schema association (see http://purl.org/TEI/FR/1650195), but 
+      are left here temporarily in case Council decides it would be a good 
+      idea to reintroduce the link to DSDL. If you see these comments 
+      after 2012, delete them. -->
+<!--<p>In RELAX NG therefore no facility for associating a particular schema
 with a particular instance exists: the task is regarded as a specific
 case of the more general issues addressed by the general architectural
 framework within which RELAX NG is defined: the ISO draft standard for
@@ -1395,11 +1429,11 @@ SGML, however, a document instance can point directly to the resource
 or resources that may be used to validate it. In W3C Schema Language,
 this is usually done by means of an attribute on the root element of
 the document instance; for XML DTDs the <code>DOCTYPE</code> statement
-introduced in <ptr target="#SG-ass1"/> is used for this purpose.</p>
+introduced in <ptr target="#SG-ass1"/> is used for this purpose.</p>-->
 
-<p>Fortunately, any modern XML processing software tool will provide
+<p>Any modern XML processing software tool will provide
 clear ways of carrying out this task appropriate to the particular
-language chosen. In the interests of maximizing portability of
+schema language chosen. In the interests of maximizing portability of
 document instances, they should contain as little processing-specific
 information as possible.</p>
 
