@@ -1617,19 +1617,14 @@ more than one language, as in the following example:
 <!-- MDH: 2012-04-26 new section on <schemaSpec> availability in <encodingDesc>. -->
   <div type="div3" xml:id="HDSCHSPEC">
     
-    <head>The Schema Specification Element</head>
+    <head>The Schema Specification</head>
     
-    <p>The <gi>schemaSpec</gi> element is normally found at the heart of a TEI ODD file. The use of ODD files,
-      and their relationship to schemas, is described in detail in <ptr target="#TD"/>. In simple terms, an ODD file 
-    is an XML specification from which a schema in one of many schema languages, including RELAX NG or W3C Schema, 
-    can be generated using an ODD processor. In addition to appearing in the <gi>body</gi> of an ODD file, <gi>schemaSpec</gi>
-    may also appear inside <gi>encodingDesc</gi>.</p>
+    <p>The <gi>schemaSpec</gi> element contains a schema specification. When this element apperas inside <gi>encodingDesc</gi>, it allows embedding of a schema inside a TEI header; alternatively, this element may be used in the <gi>body</gi> of an ODD document. The use of ODD files, and their relationship to schemas, is described in detail in <ptr target="#TD"/>.</p>
     
-    <p>A <gi>schemaSpec</gi> element contains all the information needed to generate a project's schemas. It is inevitably much smaller than 
-    a project schema, and may consist only of a series of module declarations, as in the simple example below. Therefore you may find it
-    convenient to make a copy of the <gi>schemaSpec</gi> from your project's ODD file inside the <gi>teiHeader</gi> itself, in addition to 
+    <p>A <gi>schemaSpec</gi> element contains all the information needed to generate schemas for a particular TEI customization, and the ODD documentation elements, by reference to the TEI, are more succinct than the schemas derived from them. Therefore you may find it
+    convenient to make a copy of the <gi>schemaSpec</gi> from your project's ODD document inside the <gi>teiHeader</gi> itself, in addition to 
       supplying an external schema and/or ODD file; if the XML file becomes separated from its schema, the schema can be regenerated at 
-      any time using the information in the <gi>schemaSpec</gi> element.
+      any time using the information in the <gi>schemaSpec</gi> element. For example:
     
       <egXML xml:lang="en"
         xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc>
