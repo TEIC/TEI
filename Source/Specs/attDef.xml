@@ -7,7 +7,6 @@ $Date$
 $Id$
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="attDef">
-  <equiv/>
   <gloss>attribute definition</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">속성 정의</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">屬性定義</gloss>
@@ -56,9 +55,15 @@ $Id$
       </zeroOrMore>
     </group>
   </content>
+  <constraintSpec ident="attDefContents" scheme="isoschematron">
+    <constraint>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron"
+	      test="tei:datatype or tei:valList[@type='closed']">
+        Attribute [@<value-of select="@ident"/>] from [<value-of select="ancestor::*[@ident]/@ident"/>] must have a closed valList or a datatype</assert>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="usage" usage="opt">
-      <equiv/>
       <desc>specifies the optionality of the attribute.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">속성 또는 요소의 수의성을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明屬性或元素的必備性。</desc>
@@ -75,7 +80,6 @@ $Id$
       <defaultVal>opt</defaultVal>
       <valList type="closed">
         <valItem ident="req">
-          <equiv/>
           <gloss>required</gloss>
           <gloss versionDate="2008-04-05" xml:lang="ja">必須．</gloss>
           <gloss versionDate="2007-06-12" xml:lang="fr">requis</gloss>
@@ -84,7 +88,6 @@ $Id$
           <gloss xml:lang="zh-TW">必備的</gloss>
         </valItem>
         <valItem ident="mwa">
-          <equiv/>
           <gloss>mandatory when applicable </gloss>
           <gloss versionDate="2008-04-05" xml:lang="ja">可能であれば，必須．</gloss>
           <gloss versionDate="2007-06-12" xml:lang="fr">obligatoire si c'est applicable</gloss>
@@ -92,7 +95,6 @@ $Id$
           <gloss versionDate="2007-05-04" xml:lang="es">obligatorio cuando es pertinente</gloss>
         </valItem>
         <valItem ident="rec">
-          <equiv/>
           <gloss>recommended </gloss>
           <gloss xml:lang="zh-TW">推薦的</gloss>
           <gloss versionDate="2008-04-05" xml:lang="ja">推奨．</gloss>
@@ -101,7 +103,6 @@ $Id$
           <gloss versionDate="2007-05-04" xml:lang="es">recomendado</gloss>
         </valItem>
         <valItem ident="rwa">
-          <equiv/>
           <gloss>recommended when applicable </gloss>
           <gloss versionDate="2008-04-05" xml:lang="ja">可能であれば，推奨．</gloss>
           <gloss versionDate="2007-06-12" xml:lang="fr">recommandé si c'est applicable</gloss>
@@ -110,7 +111,6 @@ $Id$
           <gloss xml:lang="zh-TW">可應用時必備的</gloss>
         </valItem>
         <valItem ident="opt">
-          <equiv/>
           <gloss>optional </gloss>
           <gloss versionDate="2008-04-05" xml:lang="ja">選択的．</gloss>
           <gloss versionDate="2007-06-12" xml:lang="fr">facultatif</gloss>
@@ -121,7 +121,6 @@ $Id$
       </valList>
     </attDef>
     <attDef ident="ns" usage="opt">
-      <equiv/>
       <gloss>namespace</gloss>
       <gloss versionDate="2007-12-20" xml:lang="ko">이름 공간</gloss>
       <gloss versionDate="2007-05-02" xml:lang="zh-TW">名稱空間</gloss>
