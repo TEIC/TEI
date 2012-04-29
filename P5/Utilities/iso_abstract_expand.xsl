@@ -68,7 +68,6 @@
     xmlns:iso="http://purl.oclc.org/dsdl/schematron"  
     xmlns:nvdl="http://purl.oclc.org/dsdl/nvdl"  
     
-  
     xmlns:iae="http://www.schematron.com/namespace/iae" 
      
       >
@@ -292,5 +291,7 @@
         </xsl:otherwise>
       </xsl:choose> 
 </xslt:template>
+
+
 
 </xslt:stylesheet>

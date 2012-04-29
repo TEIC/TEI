@@ -7,6 +7,7 @@
 	    of ISO DSDL. It handles 
 	    	<relax:extRef> for ISO RELAX NG
 	    	<sch:include>  for ISO Schematron and Schematron 1.n
+	    	<sch:extends>  for 2009 draft ISO Schematron
 	    	<xi:xinclude>  simple W3C XIncludes for ISO NVRL and DSRL 
 	    	<crdl:ref>     for draft ISO CRDL
 	    	<dtll:include> for draft ISO DTLL
@@ -40,6 +41,10 @@
 -->
 <!-- 
   VERSION INFORMATION
+    2010-04-21
+    * Add basic syntax checks on XPaths belonging to Schematron elements only
+    * Unlocalized messages are put out using xsl:message. The intent is to allow
+    * problems to be caught at compile time. 
 	2009-02-25 
 	* Update DSDL namespace to use schematron.com
 	* Tested with SAXON9, Xalan 2.7.1, IE7, 
@@ -108,7 +113,11 @@
 	xmlns:dtll="http://www.jenitennison.com/datatypes"
 	xmlns:dsdl="http://www.schematron.com/namespace/dsdl"
 	xmlns:relax="http://relaxng.org/ns/structure/1.0"
-	xmlns:xlink="http://www.w3.org/1999/xlink">
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	
+	
+     xmlns:sch-check="http://www.schematron.com/namespace/sch-check" 
+	>
 	<!-- Note: The URL for the dsdl namespace is not official -->
 
 
@@ -119,11 +128,91 @@
 	<xsl:param name="include-relaxng">true</xsl:param>
 	<xsl:param name="include-xlink">true</xsl:param>
 
+   
+    <!-- ========================================================== -->
+    <!-- Output and process contents, check Schematron XPaths too   -->
+    <!-- ========================================================== -->
+    
 	<xsl:template match="/">
 		<xsl:apply-templates select="." mode="dsdl:go" />
 	</xsl:template>
 
-	<!-- output everything else unchanged -->
+	<!-- output everything else unchanged. But check Xpaths here.  -->
+
+	<xslt:template match="iso:rule[@context]"  mode="dsdl:go">
+	  <xsl:call-template name="sch-check:xpath-wf-message">
+          <xsl:with-param name="string" select=" @context "  />
+          <xsl:with-param name="subject" select=" 'Bad rule: ' "  />
+        </xsl:call-template>
+        
+		<xslt:copy>
+			<xslt:copy-of select="@*" />
+			<xslt:apply-templates mode="dsdl:go" />
+		</xslt:copy>
+	</xslt:template>
+	
+	<xslt:template match="iso:assert[@test]"  mode="dsdl:go">
+	  <xsl:call-template name="sch-check:xpath-wf-message">
+          <xsl:with-param name="string" select=" @test "  />
+          <xsl:with-param name="subject" select=" 'Bad assert: ' "  />
+        </xsl:call-template>
+        
+		<xslt:copy>
+			<xslt:copy-of select="@*" />
+			<xslt:apply-templates mode="dsdl:go" />
+		</xslt:copy>
+	</xslt:template>
+	
+	<xslt:template match="iso:report[@test]"  mode="dsdl:go">
+	  <xsl:call-template name="sch-check:xpath-wf-message">
+          <xsl:with-param name="string" select=" @test "  />
+          <xsl:with-param name="subject" select=" 'Bad report: ' "  />
+        </xsl:call-template>
+        
+		<xslt:copy>
+			<xslt:copy-of select="@*" />
+			<xslt:apply-templates mode="dsdl:go" />
+		</xslt:copy>
+	</xslt:template>
+	
+	<xslt:template match="iso:let[@value]"  mode="dsdl:go">
+	  <xsl:call-template name="sch-check:xpath-wf-message">
+          <xsl:with-param name="string" select=" @value "  />
+          <xsl:with-param name="subject" select=" 'Bad let: ' "  />
+        </xsl:call-template>
+        
+		<xslt:copy>
+			<xslt:copy-of select="@*" />
+			<xslt:apply-templates mode="dsdl:go" />
+		</xslt:copy>
+	</xslt:template>
+	
+	
+		<xslt:template match="iso:value-of[@select]" mode="dsdl:go">
+	  <xsl:call-template name="sch-check:xpath-wf-message">
+          <xsl:with-param name="string" select=" @select "  />
+          <xsl:with-param name="subject" select=" 'Bad value-of: ' "  />
+        </xsl:call-template>
+        
+		<xslt:copy>
+			<xslt:copy-of select="@*" />
+			<xslt:apply-templates mode="dsdl:go" />
+		</xslt:copy>
+	</xslt:template>
+	
+		<xslt:template match="iso:name[@path]" mode="dsdl:go">
+	  <xsl:call-template name="sch-check:xpath-wf-message">
+          <xsl:with-param name="string" select=" @select "  />
+          <xsl:with-param name="subject" select=" 'Bad name element: ' "  />
+        </xsl:call-template>
+        
+		<xslt:copy>
+			<xslt:copy-of select="@*" />
+			<xslt:apply-templates mode="dsdl:go" />
+		</xslt:copy>
+	</xslt:template>
+
+		<!-- output everything else unchanged -->
 	<xslt:template match="node()" priority="-1" mode="dsdl:go">
 		<xslt:copy>
 			<xslt:copy-of select="@*" />
@@ -1154,6 +1243,266 @@
 			<xsl:value-of select="@xlink:href" />
 		</xsl:processing-instruction>
 	</xslt:template>
+
+<!-- ================================================================= -->
+<!-- UTILITY TEMPLATES                                                 -->
+<!-- ================================================================= -->
+
+<!-- MESSAGE WHEN XPATH NOT WELL FORMED -->
+
+<xsl:template name="sch-check:xpath-wf-message" >
+  <xsl:param name="string" />
+  <xsl:param name="subject" />
+	  <xsl:variable name="xpath-wf-result">
+	      <xsl:call-template name="sch-check:xpath-wf">
+          <xsl:with-param name="string" select=" $string "  />
+        </xsl:call-template>
+	   </xsl:variable>
+	   
+	   <xsl:if test="string-length($xpath-wf-result) > 0">
+	      <xsl:message><xsl:value-of select="$subject"/><xsl:value-of select="$xpath-wf-result" /></xsl:message>
+	   </xsl:if>
+  </xsl:template>
+ 
+<!-- XPATH WELL FORMED -->
+ 
+<xsl:template name="sch-check:xpath-wf" >
+  <xsl:param name="string" />
+   <!-- This does some minimal checks to see if a string is well-formed XPath.
+   It checks 
+      1) String is not empty, 
+      2) equal number of open and close parens
+      3) equal number of left and right square brackets
+   It does not check balancing. It does not check inside string literals in XPaths.
+   
+   If there is no error, empty content is returned. If there is an error, it is given
+   as an error message. This is not localized yet.
+   --> 
+   
+   
+   <xsl:variable name="stripped-contents">
+   <xsl:call-template name="sch-check:strip-strings" >  
+            <xsl:with-param name="string" select=" $string " />
+            <xsl:with-param name="mode" select="  0" />
+   </xsl:call-template>
+   </xsl:variable>
+   
+      
+   <xsl:variable name="paren-result">
+   <xsl:call-template name="sch-check:test-paren" >  
+            <xsl:with-param name="string" select="$stripped-contents" />
+            <xsl:with-param name="count" select="  0" />
+   </xsl:call-template>
+   </xsl:variable>
+    
+   
+   <xsl:variable name="sqb-result">
+   <xsl:call-template name="sch-check:test-sqb" >  
+            <xsl:with-param name="string" select="$stripped-contents" />
+            <xsl:with-param name="count" select="  0" />
+   </xsl:call-template>
+   </xsl:variable>
+    
+   
+   <xsl:choose>
+      <xsl:when test="string-length( normalize-space($string)) = 0"
+      >XPath error. No XPath.</xsl:when>
+         <xsl:when test="contains( $stripped-contents, '/[' )"
+      >XPath error. Missing location step. Suggestion: remove '/' before '['.
+      <xsl:value-of select=" normalize-space($string)"/></xsl:when>
+      <!-- not implemented yet 
+      <xsl:when test=" count () mod 2 = 1" 
+      >XPath syntax error. Odd number of apostrophe characters. Suggestion: check string termination and delimiting.
+      <xsl:value-of select=" normalize-space($string)"/></xsl:when>
+      <xsl:when test=" count ( ) mod 2 = 1" 
+      >XPath syntax error. Odd number of quote characters. Suggestion: check string termination and delimiting.
+      <xsl:value-of select=" normalize-space($string)"/></xsl:when>
+      -->
+      <xsl:when test=" $paren-result > 0 "
+      >XPath syntax error. Unclosed parenthesis. Suggestion: add ')'.
+      <xsl:value-of select=" normalize-space($string)"/></xsl:when>
+      <xsl:when test=" $paren-result &lt; 0 "
+      >XPath syntax error. Extra close parenthesis. Suggestion: remove ')'.
+      <xsl:value-of select=" normalize-space($string)"/></xsl:when>
+     
+      <xsl:when test=" $sqb-result > 0 "
+      >XPath syntax error. Unclosed left square bracket. Suggestion: add ']'.
+      <xsl:value-of select=" normalize-space($string)"/></xsl:when>
+      <xsl:when test=" $sqb-result &lt; 0 "
+      >XPath syntax error. Extra right square bracket. Suggestion: remove ']'.
+      <xsl:value-of select=" normalize-space($string)"/></xsl:when>
+
+  </xsl:choose>       
+ 
+ 
+ 
+</xsl:template> 
+
+
+<!--  STRIP XPATH STRINGS -->
+<xsl:template name="sch-check:strip-strings">
+  <xsl:param name="string" />
+  <xsl:param name="mode" />
+  
+  <!-- 
+    mode 0 =  outside string 
+    mode 1 = in double quote string 
+    mode 2 = in single quote string
+  -->
+  <xsl:choose>
+     <xsl:when test=" string-length( $string) = 0" />
+     <xsl:when test="$mode = 1 ">
+      <xsl:choose> 
+          
+          
+           <xsl:when test="starts-with( $string, '&quot;&quot;') " >
+       
+           	<xsl:call-template name="sch-check:strip-strings">
+            	<xsl:with-param name="string" select="  substring ( $string, 3 )"/>
+            	<xsl:with-param name="mode" select=" $mode" />
+         	</xsl:call-template>
+           </xsl:when> 
+           <xsl:when test="starts-with( $string, '&quot;') " >
+           	<xsl:call-template name="sch-check:strip-strings">
+            	<xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            	<xsl:with-param name="mode" select=" 0 " />
+         	</xsl:call-template>
+           </xsl:when>  
+            
+           <xsl:otherwise>
+         	<xsl:call-template name="sch-check:strip-strings">
+            	<xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            	<xsl:with-param name="mode" select=" $mode " />
+         	</xsl:call-template>
+         </xsl:otherwise>
+         </xsl:choose>
+     </xsl:when>
+     
+     <xsl:when test="$mode = 2 ">
+      <xsl:choose> 
+     
+          <!-- doubled double quote or double apos is an escape  -->
+          <xsl:when test="starts-with( $string, &quot;''&quot;) " >
+           	<xsl:call-template name="sch-check:strip-strings">
+            	<xsl:with-param name="string" select="  substring ( $string, 3 )"/>
+            	<xsl:with-param name="mode" select=" $mode" />
+         	</xsl:call-template>
+           </xsl:when>   
+           <xsl:when test="starts-with( $string, &quot;'&quot; )" >
+           	<xsl:call-template name="sch-check:strip-strings">
+            	<xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            	<xsl:with-param name="mode" select=" 0 " />
+         	</xsl:call-template>
+           </xsl:when>
+           <xsl:otherwise>
+         	<xsl:call-template name="sch-check:strip-strings">
+            	<xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            	<xsl:with-param name="mode" select=" $mode " />
+         	</xsl:call-template>
+         </xsl:otherwise>
+         </xsl:choose>
+     </xsl:when>
+     
+     <xsl:otherwise> <!-- mode = 0 -->
+         <xsl:choose>
+           <xsl:when test="starts-with( $string, '&quot;')" >
+           	<xsl:call-template name="sch-check:strip-strings">
+            	<xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            	<xsl:with-param name="mode" select=" 1 " />
+         	</xsl:call-template>
+           </xsl:when> 
+     
+           <xsl:when test="starts-with( $string, &quot;'&quot; )" >
+           	<xsl:call-template name="sch-check:strip-strings">
+            	<xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            	<xsl:with-param name="mode" select=" 2 " />
+         	</xsl:call-template>
+           </xsl:when>
+           <xsl:otherwise>
+         	  <xsl:value-of select="substring( $string, 1, 1)" />
+         	  <xsl:call-template name="sch-check:strip-strings">
+         	 
+            	<xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            	<xsl:with-param name="mode" select=" $mode " />
+         	</xsl:call-template>
+         </xsl:otherwise>
+         </xsl:choose>
+     </xsl:otherwise>
+  </xsl:choose>
+  
+  
+</xsl:template>  
+ 
+ <!--  COUNT THE NUMBER OF UNMATCHED PARENTHESES -->
+ <!-- Limitation: Does not check balancing. -->
+ 
+<xsl:template name="sch-check:test-paren">
+  <xsl:param name="string" /> 
+  <xsl:param name="count"  />
+
+  <xsl:choose>
+     <xsl:when test=" string-length( $string) = 0">
+         <xsl:value-of select=" $count " />
+    </xsl:when>
+    <xsl:when test=" starts-with( $string, '(') ">
+         <xsl:call-template name="sch-check:test-paren">
+            <xsl:with-param name="string" select="  substring ( $string, 2 )" />
+            <xsl:with-param name="count" select="  $count + 1 " />
+         </xsl:call-template>
+    </xsl:when>
+    <xsl:when test=" starts-with( $string, ')') ">
+         <xsl:call-template name="sch-check:test-paren">
+            <xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            <xsl:with-param name="count" select="$count - 1 " />
+         </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+         <xsl:call-template name="sch-check:test-paren">
+            <xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            <xsl:with-param name="count" select=" $count " />
+         </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>            
+
+
+</xsl:template>
+
+
+ <!--  COUNT THE NUMBER OF SQUARE BRACKETS -->
+ <!-- Limitation: Does not check balancing. -->
+<xsl:template name="sch-check:test-sqb">
+  <xsl:param name="string" /> 
+  <xsl:param name="count"  />
+
+  <xsl:choose>
+     <xsl:when test=" string-length( $string) = 0">
+         <xsl:value-of select=" $count " />
+    </xsl:when>
+    <xsl:when test=" starts-with( $string, '[') ">
+         <xsl:call-template name="sch-check:test-sqb">
+            <xsl:with-param name="string" select="  substring ( $string, 2 )" />
+            <xsl:with-param name="count" select="  $count + 1 " />
+         </xsl:call-template>
+    </xsl:when>
+    <xsl:when test=" starts-with( $string, ']') ">
+         <xsl:call-template name="sch-check:test-sqb">
+            <xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            <xsl:with-param name="count" select="$count - 1 " />
+         </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+         <xsl:call-template name="sch-check:test-sqb">
+            <xsl:with-param name="string" select="  substring ( $string, 2 )"/>
+            <xsl:with-param name="count" select=" $count " />
+         </xsl:call-template>
+    </xsl:otherwise>
+  </xsl:choose>            
+
+
+</xsl:template>
+
+
+
 
 
 </xslt:stylesheet>
