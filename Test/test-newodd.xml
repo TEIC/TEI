@@ -321,6 +321,41 @@
 	  </elementSpec>
       </schemaSpec>
 
+	<schemaSpec
+	    start="TEI" 
+	    prefix="tei_"
+	    ident="testSchema-7">
+	  <moduleRef key="tei"/>
+	  <moduleRef key="header"/>
+	  <moduleRef key="textstructure"/>
+	  <moduleRef key="core"/>
+	  
+	  <elementSpec 
+	      mode="add"
+	      prefix="example_"
+	      ns="http://www.example.org/ns"
+	      ident="p">
+	    <desc>Its not clear a what a p is, but its not a TEI p</desc>
+	    <classes>
+	      <memberOf key="model.pLike"/>
+	    </classes>
+	    <content>
+	      <rng:ref name="macro.paraContent"/>
+	    </content>
+	  </elementSpec>
+	  <elementSpec 
+	      mode="change"
+	      ident="body">
+	    <content autoPrefix="false">
+	      <rng:oneOrMore>
+		<rng:choice>
+		  <rng:ref name="tei_p"/>
+		  <rng:ref name="example_p"/>
+		</rng:choice>
+	      </rng:oneOrMore>
+	    </content>
+	  </elementSpec>
+      </schemaSpec>     
       
     </body>
   </text>
