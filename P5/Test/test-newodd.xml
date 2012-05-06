@@ -356,7 +356,30 @@
 	    </content>
 	  </elementSpec>
       </schemaSpec>     
-      
+
+      <schemaSpec 
+	  prefix="tei_" start="TEI teiCorpus"  ident="testSchema-8">
+        <moduleRef
+	    url="http://trapas.eu5.org/exchange-documents-v2.4.rng" prefix="EXCH_"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="core"/>
+        <moduleRef key="analysis"/>
+        <moduleRef key="corpus"/>
+        <moduleRef key="header"/>
+        <moduleRef key="namesdates"/>
+        <elementSpec module="core" ident="note" mode="change">
+          <content>
+            <rng:ref name="macro.specialPara"/>
+            <rng:optional>
+              <rng:choice>
+                <rng:ref name="EXCH_exch.publication-reference"/>
+                <rng:ref name="EXCH_exch.abstract"/>
+              </rng:choice>
+            </rng:optional>
+          </content>
+        </elementSpec>      
+
+      </schemaSpec>
     </body>
   </text>
 </TEI>
