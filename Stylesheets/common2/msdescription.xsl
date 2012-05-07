@@ -368,7 +368,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="after">&gt;</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <xsl:template match="tei:supplied[@reason='illegible']">
+  <xsl:template match="tei:supplied[@reason='illegible' or not(@reason)]">
     <xsl:call-template name="msInline">
       <xsl:with-param name="before">[</xsl:with-param>
       <xsl:with-param name="after">]</xsl:with-param>

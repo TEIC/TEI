@@ -70,18 +70,33 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:param name="shadowGraphics">true</xsl:param>
     <xsl:param name="useNSPrefixes">false</xsl:param>    
-    <xsl:template match="teix:egXML|tei:p[@rend='eg']">
-        <xsl:param name="simple">false</xsl:param>
-        <xsl:param name="highlight"/>
-        <xsl:call-template name="block-element">
-            <xsl:with-param name="select">
-                <tei:p rend="Special" 
-		       iso:style="font-family:DejaVu Sans Mono; font-size:18; text-align:left;" >
-                    <xsl:call-template name="create-egXML-section"/>
-                </tei:p>
-            </xsl:with-param>
-        </xsl:call-template>
+
+    <xsl:template match="/">
+      <xsl:variable name="pass0">
+	<xsl:apply-templates mode="pass0"/>
+      </xsl:variable>
+      <xsl:for-each select="$pass0/*">
+	<xsl:call-template name="write-docxfiles"/>
+	<xsl:call-template name="create-document-dot-xml"/>
+      </xsl:for-each>
     </xsl:template>
 
-   
+    <xsl:template match="tei:add[@place='interlinear']" mode="pass0">
+      <xsl:apply-templates mode="pass0"/>
+      <tei:note place="foot">
+	<xsl:apply-templates mode="pass0"/>
+	<xsl:text>] ajouté en interligne</xsl:text>
+      </tei:note>
+    </xsl:template>
+
+    <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass0">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="*" mode="pass0">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
+    </xsl:copy>
+  </xsl:template>
+
 </xsl:stylesheet>
