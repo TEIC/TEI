@@ -856,7 +856,7 @@ of this software, even if advised of the possibility of such damage.
         <w:vertAlign w:val="superscript"/>
       </xsl:when>
       <xsl:when test="contains(@rend,'sup')">
-        <w:vertAlign w:val="sup"/>
+        <w:vertAlign w:val="superscript"/>
       </xsl:when>
     </xsl:choose>
     <!-- text direction -->
