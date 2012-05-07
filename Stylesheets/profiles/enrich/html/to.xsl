@@ -55,7 +55,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:output indent="no"/>
     <!--  -->
-    <xsl:template name="msSection">
+    <xsl:template name="processAsSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
       <xsl:param name="implicitBlock">false</xsl:param>
@@ -79,7 +79,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:template>
     
-    <xsl:template name="msLabelled">
+    <xsl:template name="processWithLabel">
       <xsl:param name="before"/>
       <i>
          <xsl:value-of select="$before"/>
@@ -88,7 +88,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
-    <xsl:template name="msInline">
+    <xsl:template name="processInline">
       <xsl:param name="before"/>
       <xsl:param name="after"/>
       <xsl:param name="style"/>
@@ -113,7 +113,7 @@ of this software, even if advised of the possibility of such damage.
       </span>
     </xsl:template>
 
-    <xsl:template name="msBlock">
+    <xsl:template name="processBlock">
       <xsl:param name="style"/>
       <div class="{$style}">
 	        <xsl:apply-templates/>

@@ -224,7 +224,7 @@ of this software, even if advised of the possibility of such damage.
 </xsl:text>
    </xsl:template>
 
-    <xsl:template name="msSection">
+    <xsl:template name="processAsSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
       <xsl:param name="implicitBlock">false</xsl:param>
@@ -256,7 +256,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:template>
     
-    <xsl:template name="msInline">
+    <xsl:template name="processInline">
       <xsl:param name="before"/>
       <xsl:param name="style"/>
       <xsl:param name="after"/>
@@ -280,7 +280,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
 
-    <xsl:template name="msBlock">
+    <xsl:template name="processBlock">
       <xsl:param name="style"/>
       <xsl:text>\par </xsl:text>
       <xsl:apply-templates/>
@@ -288,7 +288,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
 
-    <xsl:template name="msLabelled">
+    <xsl:template name="processWithLabel">
       <xsl:param name="before"/>
       <xsl:text>\textit{</xsl:text>
       <xsl:value-of select="$before"/>

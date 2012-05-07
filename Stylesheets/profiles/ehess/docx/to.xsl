@@ -81,11 +81,72 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </xsl:template>
 
+    <!-- make preliminary interpretative pass over the text -->
+
+    <xsl:template match="tei:lb" mode="pass0"/>
+
+    <xsl:template match="tei:pb"" mode="pass0">
+
+    </xsl:template>
+
+    <xsl:template match="tei:list[not(@type)]" mode="pass0">
+      <tei:list>
+	<xsl:attribute name="type">ordered</xsl:attribute>
+	<xsl:apply-templates mode="pass0" select="@*|*"/>
+      </tei:list>
+    </xsl:template>
+
+    <xsl:template match="tei:item" mode="pass0">
+      <tei:item>
+	<xsl:attribute name="type"><xsl:number level="any"/></xsl:attribute>
+	<xsl:apply-templates mode="pass0" select="text()|@*|*"/>
+      </tei:item>
+    </xsl:template>
+
     <xsl:template match="tei:add[@place='interlinear']" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
       <tei:note place="foot">
 	<xsl:apply-templates mode="pass0"/>
 	<xsl:text>] ajouté en interligne</xsl:text>
+      </tei:note>
+    </xsl:template>
+
+    <xsl:template match="tei:unclear" mode="pass0">
+      <xsl:apply-templates mode="pass0"/>
+      <tei:note place="foot">
+	<xsl:apply-templates mode="pass0"/>
+	<xsl:text>] lecture incertaine</xsl:text>
+      </tei:note>
+    </xsl:template>
+
+    <xsl:template match="tei:supplied[@reason]" mode="pass0">
+      <xsl:apply-templates mode="pass0"/>
+      <tei:note place="foot">
+	<xsl:apply-templates mode="pass0"/>
+	<xsl:text>] </xsl:text>
+	<xsl:value-of select="@reason"/>
+      </tei:note>
+    </xsl:template>
+
+    <xsl:template match="tei:damage[@extent and @type]" mode="pass0">
+      <xsl:apply-templates mode="pass0"/>
+      <tei:note place="foot">
+	<xsl:value-of select="@type"/>
+	<xsl:text> sur </xsl:text>
+	<xsl:value-of select="@extent"/>
+      </tei:note>
+    </xsl:template>
+
+    <xsl:template match="tei:damage" mode="pass0">
+      <tei:note place="foot">
+	<xsl:text>support endommagé</xsl:text>
+      </tei:note>
+    </xsl:template>
+
+    <xsl:template match="tei:del[@rend='overstrike']" mode="pass0">
+      <tei:note place="foot">
+	<xsl:apply-templates mode="pass0"/>
+	<xsl:text> biffé</xsl:text>
       </tei:note>
     </xsl:template>
 

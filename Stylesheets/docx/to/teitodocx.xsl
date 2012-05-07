@@ -136,7 +136,7 @@ of this software, even if advised of the possibility of such damage.
         Generic template from msDescription for high-level section
     </desc>
   </doc>
-  <xsl:template name="msSection">
+  <xsl:template name="processAsSection">
     <xsl:param name="level"/>
     <xsl:param name="implicitBlock"/>
     <xsl:param name="heading"/>
@@ -157,7 +157,7 @@ of this software, even if advised of the possibility of such damage.
         Generic template from msDescription for inline objects
     </desc>
   </doc>
-  <xsl:template name="msInline">
+  <xsl:template name="processInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
@@ -188,7 +188,7 @@ of this software, even if advised of the possibility of such damage.
         Generic template from msDescription for mid-level block
     </desc>
   </doc>
-  <xsl:template name="msBlock">
+  <xsl:template name="processBlock">
     <xsl:param name="style"/>
     <xsl:call-template name="block-element">
       <xsl:with-param name="style">
@@ -201,7 +201,7 @@ of this software, even if advised of the possibility of such damage.
         Generic template from msDescription for labelled object
     </desc>
   </doc>
-  <xsl:template name="msLabelled">
+  <xsl:template name="processWithLabel">
     <xsl:param name="before"/>
     <w:r>
       <w:rPr>
