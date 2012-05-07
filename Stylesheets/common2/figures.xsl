@@ -48,15 +48,17 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element figure</desc>
    </doc>
   <xsl:template match="tei:figure" mode="xref">
-      <xsl:choose>
-	<xsl:when test="tei:head">
-	  <xsl:call-template name="calculateFigureNumber"/>
+    <xsl:choose>
+      <xsl:when test="tei:head">
+	<xsl:call-template name="calculateFigureNumber"/>
+	<xsl:if test="$headInXref='true'">
 	  <xsl:text>, </xsl:text>
 	  <xsl:apply-templates mode="plain" select="tei:head"/>
-	</xsl:when>
-	<xsl:otherwise>
-            <xsl:text>this figure</xsl:text>
-         </xsl:otherwise>
+	</xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>this figure</xsl:text>
+      </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -66,10 +68,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="$numberTables='true'">
 	   <xsl:call-template name="calculateTableNumber"/>
-            <xsl:if test="tei:head">
-               <xsl:text>. </xsl:text>
-               <xsl:apply-templates mode="plain" select="tei:head"/>
-            </xsl:if>
+	   <xsl:if test="$headInXref='true' and tei:head">	     
+	     <xsl:text>. </xsl:text>
+	     <xsl:apply-templates mode="plain" select="tei:head"/>
+	   </xsl:if>
          </xsl:when>
          <xsl:otherwise>
 	   <xsl:choose>

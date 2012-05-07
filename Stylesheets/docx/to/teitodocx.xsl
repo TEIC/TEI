@@ -7,7 +7,10 @@
   <xsl:import href="../utils/identity/identity.xsl"/>
   <xsl:import href="../utils/verbatim/tei-docx-verbatim.xsl"/>
   <xsl:import href="../utils/maths/mml2omml.xsl"/>
+  <xsl:import href="../../common2/tei-param.xsl"/>
   <xsl:import href="../../common2/core.xsl"/>
+  <xsl:import href="../../common2/figures.xsl"/>
+  <xsl:import href="../../common2/i18n.xsl"/>
   <xsl:import href="../../common2/msdescription.xsl"/>
   <!-- Deals with dynamic text creation such as toc -->
   <xsl:include href="dynamic/dynamic.xsl"/>
@@ -47,33 +50,30 @@
         For other measurements in Word, see useful discussion at
 	http://startbigthinksmall.wordpress.com/2010/01/04/points-inches-and-emus-measuring-units-in-office-open-xml/
     -->
-  <xsl:param name="pageWidth">576</xsl:param>
-  <xsl:param name="pageHeight">890</xsl:param>
-  <xsl:param name="tableWidthPercentage"></xsl:param>
+  <xsl:param name="addColour">red</xsl:param>
+  <xsl:param name="alignFigures">center</xsl:param>
+  <xsl:param name="bulletEight">•</xsl:param>
+  <xsl:param name="bulletFive">•</xsl:param>
+  <xsl:param name="bulletFour">+</xsl:param>
+  <xsl:param name="bulletOne"></xsl:param>
+  <xsl:param name="bulletSeven">•</xsl:param>
+  <xsl:param name="bulletSix">•</xsl:param>
+  <xsl:param name="bulletThree">*</xsl:param>
+  <xsl:param name="bulletTwo">•</xsl:param>
+  <xsl:param name="debug">false</xsl:param>
   <xsl:param name="defaultHeaderFooterFile">templates/default.xml</xsl:param>
+  <xsl:param name="docDoc"><xsl:value-of select="concat($wordDirectory, '/word/document.xml')"/></xsl:param>
+  <xsl:param name="headInXref">false</xsl:param>
+  <xsl:param name="inputDir">.</xsl:param>
+  <xsl:param name="pageHeight">890</xsl:param>
+  <xsl:param name="pageWidth">576</xsl:param>
   <xsl:param name="postQuote">’</xsl:param>
   <xsl:param name="preQuote">‘</xsl:param>
-  <xsl:param name="bulletOne"></xsl:param>
-  <xsl:param name="bulletTwo">•</xsl:param>
-  <xsl:param name="bulletThree">*</xsl:param>
-  <xsl:param name="bulletFour">+</xsl:param>
-  <xsl:param name="bulletFive">•</xsl:param>
-  <xsl:param name="bulletSix">•</xsl:param>
-  <xsl:param name="bulletSeven">•</xsl:param>
-  <xsl:param name="bulletEight">•</xsl:param>
-  <xsl:param name="word-directory">..</xsl:param>
-  <xsl:param name="inputDir">.</xsl:param>
-  <xsl:param name="debug">false</xsl:param>
-  <xsl:param name="styleDoc">
-    <xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/>
-  </xsl:param>
-  <xsl:param name="docDoc">
-    <xsl:value-of select="concat($wordDirectory, '/word/document.xml')"/>
-  </xsl:param>
-  <xsl:param name="shadowGraphics">false</xsl:param>
-  <xsl:param name="alignFigures">center</xsl:param>
   <xsl:param name="renderAddDel">true</xsl:param>
-  <xsl:param name="addColour">red</xsl:param>
+  <xsl:param name="shadowGraphics">false</xsl:param>
+  <xsl:param name="styleDoc"><xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/></xsl:param>
+  <xsl:param name="tableWidthPercentage"></xsl:param>
+  <xsl:param name="word-directory">..</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -2005,23 +2005,32 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:ptr">
     <xsl:call-template name="linkMe">
       <xsl:with-param name="anchor">
-        <xsl:choose>
-          <xsl:when test="@type='cit'">[</xsl:when>
-          <xsl:when test="@type='figure'">Figure </xsl:when>
-          <xsl:when test="@type='table'">Table </xsl:when>
-        </xsl:choose>
-        <xsl:choose>
-          <xsl:when test="starts-with(@target,'#')  and id(substring(@target,2))">
-            <xsl:variable name="target" select="substring(@target,2)"/>
-            <xsl:apply-templates select="id($target)" mode="xref"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="@target"/>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:choose>
-          <xsl:when test="@type='cit'">]</xsl:when>
-        </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="@type='cit'">[</xsl:when>
+	  <xsl:when test="@type='figure'">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">figureWord</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
+	  </xsl:when>
+	  <xsl:when test="@type='table'">
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">tableWord</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text> </xsl:text>
+	  </xsl:when>
+	</xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="starts-with(@target,'#')  and id(substring(@target,2))">
+	    <xsl:apply-templates select="id(substring(@target,2))" mode="xref"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@target"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="@type='cit'">]</xsl:when>
+	</xsl:choose>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -2187,7 +2196,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:bibl|tei:biblStruct" mode="xref">
     <xsl:number/>
   </xsl:template>
-  <xsl:template match="tei:note|tei:figure|tei:table|tei:item" mode="xref">
+  <xsl:template match="tei:note|tei:item" mode="xref">
     <xsl:number/>
   </xsl:template>
   <xsl:template match="tei:div" mode="xref">

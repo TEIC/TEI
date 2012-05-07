@@ -150,7 +150,6 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:value-of select="1000+$number"/>
 	    </xsl:with-param>
 	    <xsl:with-param name="bookmark-name">
-	      <xsl:text>_</xsl:text>
 	      <xsl:value-of select="../@xml:id"/>
 	    </xsl:with-param>
 	  </xsl:call-template>
