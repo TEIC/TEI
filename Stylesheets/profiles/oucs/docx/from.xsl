@@ -126,6 +126,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
 	<xsl:when test="$s='heading 1'">true</xsl:when>
 	<xsl:when test="$s='Heading 1'">true</xsl:when>
+	<xsl:when test="$s='Title'">true</xsl:when>
 	<xsl:when test="$s='Heading1'">true</xsl:when>
 	<xsl:when test="$s='ITLP H1'">true</xsl:when>
 	<xsl:when test="$s='ITLP Anonymous Heading 1'">true</xsl:when>
@@ -148,6 +149,8 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="starts-with($s,'Heading')">true</xsl:when>
 	<xsl:when test="$s='ITLP Anonymous Heading 1'">true</xsl:when>
 	<xsl:when test="$s='ITLP Anonymous Heading 2'">true</xsl:when>
+	<xsl:when test="$s='Title'">true</xsl:when>
+	<xsl:when test="$s='Subtitle'">true</xsl:when>
 	<xsl:when test="$s='ITLP H1'">true</xsl:when>
 	<xsl:when test="$s='ITLP H2'">true</xsl:when>
 	<xsl:when test="$s='ITLP H3'">true</xsl:when>
@@ -180,7 +183,11 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="number(regex-group(1))"/>
 	</xsl:matching-substring>
 	<xsl:non-matching-substring>
-	  <xsl:text>1</xsl:text>
+	  <xsl:choose>
+	    <xsl:when test="regex-group(0)='Title'">1</xsl:when>
+	    <xsl:when test="regex-group(0)='Subtitle'">2</xsl:when>
+	    <xsl:otherwise>1</xsl:otherwise>
+	  </xsl:choose>
 	</xsl:non-matching-substring>
       </xsl:analyze-string>
     </xsl:function>
@@ -194,9 +201,16 @@ of this software, even if advised of the possibility of such damage.
     
     <xsl:function name="tei:get-nextlevel-header" as="xs:string">
       <xsl:param name="current-header"/>
-      <xsl:value-of select="translate($current-header,'12345678','23456789')"/>
+      <xsl:choose>
+	<xsl:when test="$current-header='Title'">
+	  <xsl:text>Subtitle</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="translate($current-header,'12345678','23456789')"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:function>
-   
+
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>Defines whether or not a word paragraph is a list element.</desc>
     </doc>
