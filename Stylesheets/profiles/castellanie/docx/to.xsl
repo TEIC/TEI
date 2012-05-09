@@ -71,6 +71,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="shadowGraphics">true</xsl:param>
     <xsl:param name="useNSPrefixes">false</xsl:param>    
 
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	Before main processing starts, pre-process the document
+	elements in a separate mode ('pass0'), in order to add extra 
+	material which implements the footnoting etc.
+      </desc>
+    </doc>
+
     <xsl:template match="/">
       <xsl:variable name="pass0">
 	<xsl:apply-templates mode="pass0"/>
@@ -81,14 +89,21 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </xsl:template>
 
-    <!-- make preliminary interpretative pass over the text -->
 
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	page breaks and line breaks are discarded in first pass
+      </desc>
+    </doc>
     <xsl:template match="tei:lb" mode="pass0"/>
 
-    <xsl:template match="tei:pb"" mode="pass0">
+    <xsl:template match="tei:pb" mode="pass0"/>
 
-    </xsl:template>
-
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	lists without a type attribute are assumed to be ordered
+      </desc>
+    </doc>
     <xsl:template match="tei:list[not(@type)]" mode="pass0">
       <tei:list>
 	<xsl:attribute name="type">ordered</xsl:attribute>
@@ -96,12 +111,23 @@ of this software, even if advised of the possibility of such damage.
       </tei:list>
     </xsl:template>
 
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	items are numbered sequentially passim
+      </desc>
+    </doc>
     <xsl:template match="tei:item" mode="pass0">
       <tei:item>
 	<xsl:attribute name="type"><xsl:number level="any"/></xsl:attribute>
 	<xsl:apply-templates mode="pass0" select="text()|@*|*"/>
       </tei:item>
     </xsl:template>
+
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	add footnote for interlinear addition
+      </desc>
+    </doc>
 
     <xsl:template match="tei:add[@place='interlinear']" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
