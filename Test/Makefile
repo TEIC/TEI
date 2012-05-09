@@ -23,6 +23,7 @@ TESTFILES= \
 	testlangs.dtd 
 
 TESTFILES2 = \
+	testall.xsd \
 	testconstraint.xsd \
 	testconstraint2.xsd \
 	testi18n.xsd \
