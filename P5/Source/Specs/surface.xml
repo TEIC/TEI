@@ -28,23 +28,27 @@ celui-ci.</desc>
     <memberOf key="att.typed"/> <!-- added by gen -->
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-        <rng:ref name="model.glossLike"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="model.graphicLike"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-<rng:choice>
-  <rng:ref name="model.global"/>
-        <rng:ref name="zone"/>
-        <rng:ref name="line"/>
-         <rng:ref name="surface"/>
-         <rng:ref name="surfaceGrp"/>
-</rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0" >
+      <zeroOrMore>
+	<choice>
+	  <ref name="model.glossLike"/>
+	  <ref name="model.graphicLike"/>
+	</choice>
+      </zeroOrMore>
+      <zeroOrMore>
+	<group>
+	  <choice>
+	    <ref name="zone"/>
+	    <ref name="line"/>
+	    <ref name="surface"/>
+	    <ref name="surfaceGrp"/>
+	  </choice>
+	</group>
+	<zeroOrMore>
+	  <ref name="model.global"/>
+	</zeroOrMore>
+      </zeroOrMore>
+    </group>
   </content>
    <attList>
       <attDef ident="attachment" mode="add">
