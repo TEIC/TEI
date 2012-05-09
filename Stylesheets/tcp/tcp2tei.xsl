@@ -2004,5 +2004,6 @@ version="2.0">
 
 
    <xsl:template name="makeID"/>
-
+   <xsl:template name="idnoHook"/>
+	
 </xsl:stylesheet>
