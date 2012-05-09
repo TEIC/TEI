@@ -53,104 +53,104 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="HERE" select="/"/>
   <xsl:template match="/">
     <xsl:variable name="phase1">
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp"/>
     </xsl:variable>
     <xsl:for-each select="$phase1">
       <xsl:apply-templates/>
     </xsl:for-each>
   </xsl:template>
-  <!-- ECCO copy -->
-  <xsl:template match="@*" mode="ecco">
+  <!-- TCP copy -->
+  <xsl:template match="@*" mode="tcp">
     <xsl:attribute name="{lower-case(local-name(.))}">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
 
-  <xsl:template match="processing-instruction()|comment()|text()" mode="ecco">
+  <xsl:template match="processing-instruction()|comment()|text()" mode="tcp">
     <xsl:copy/>
   </xsl:template>
 
-  <xsl:template match="*" mode="ecco">
+  <xsl:template match="*" mode="tcp">
     <xsl:element name="{lower-case(local-name(.))}">
-      <xsl:apply-templates select="@*" mode="ecco"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*" mode="tcp"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </xsl:element>
   </xsl:template>
 
-  <!-- ECCO discards -->
-  <xsl:template match="FIGDESC/HI" mode="ecco">
-    <xsl:apply-templates mode="ecco"/>
+  <!-- TCP discards -->
+  <xsl:template match="FIGDESC/HI" mode="tcp">
+    <xsl:apply-templates mode="tcp"/>
   </xsl:template>
-  <xsl:template match="PB/@MS" mode="ecco"/>
-  <xsl:template match="LABEL/@ROLE" mode="ecco"/>
-  <xsl:template match="TITLE/@TYPE" mode="ecco"/>
-  <xsl:template match="TEMPHEAD" mode="ecco"/>
-  <xsl:template match="TITLE/@I2" mode="ecco"/>
-  <xsl:template match="IDG" mode="ecco"/>
-  <xsl:template match="@LANG[.='eng dut']" mode="ecco"/>
-  <xsl:template match="@LANG[.='eng san']" mode="ecco"/>
-  <xsl:template match="@LANG[.='fre eng']" mode="ecco"/>
-  <xsl:template match="@LANG[.='lat eng']" mode="ecco"/>
-  <xsl:template match="@LANG[.='lat gre']" mode="ecco"/>
-  <xsl:template match="@PLACE[.='marg']" mode="ecco">
+  <xsl:template match="PB/@MS" mode="tcp"/>
+  <xsl:template match="LABEL/@ROLE" mode="tcp"/>
+  <xsl:template match="TITLE/@TYPE" mode="tcp"/>
+  <xsl:template match="TEMPHEAD" mode="tcp"/>
+  <xsl:template match="TITLE/@I2" mode="tcp"/>
+  <xsl:template match="IDG" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng dut']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng san']" mode="tcp"/>
+  <xsl:template match="@LANG[.='fre eng']" mode="tcp"/>
+  <xsl:template match="@LANG[.='lat eng']" mode="tcp"/>
+  <xsl:template match="@LANG[.='lat gre']" mode="tcp"/>
+  <xsl:template match="@PLACE[.='marg']" mode="tcp">
     <xsl:attribute name="place">margin</xsl:attribute>
   </xsl:template>
-  <!-- ECCO controversial changes -->
-  <xsl:template match="FIGURE/SIGNED" mode="ecco">
+  <!-- TCP controversial changes -->
+  <xsl:template match="FIGURE/SIGNED" mode="tcp">
     <ab type="signed">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </ab>
   </xsl:template>
   <!--
-      <xsl:template match="HEAD/L" mode="ecco">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/><lb/>
+      <xsl:template match="HEAD/L" mode="tcp">
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
       </xsl:template>
-      <xsl:template match="TRAILER/L" mode="ecco">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/><lb/>
+      <xsl:template match="TRAILER/L" mode="tcp">
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
       </xsl:template>
   -->
-  <xsl:template match="HEAD[@TYPE='sub'][Q/L and not(P)]" mode="ecco">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+  <xsl:template match="HEAD[@TYPE='sub'][Q/L and not(P)]" mode="tcp">
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
   </xsl:template>
-  <xsl:template match="HEAD[@TYPE='sub']/Q[L]" mode="ecco">
+  <xsl:template match="HEAD[@TYPE='sub']/Q[L]" mode="tcp">
       <epigraph>
 	<xsl:apply-templates
 	    select="*|processing-instruction()|comment()|text()"
-	    mode="ecco"/>
+	    mode="tcp"/>
       </epigraph>
   </xsl:template>
   <xsl:template match="P[not(parent::SP) and count(*)=1 and not(text()) and (LETTER or
-		       LIST or TABLE or FIGURE)]" mode="ecco">
+		       LIST or TABLE or FIGURE)]" mode="tcp">
 	<xsl:apply-templates select="*|processing-instruction()|comment()"
-	    mode="ecco"/>
+	    mode="tcp"/>
   </xsl:template>
-  <xsl:template match="CELL[count(*)=1 and not(text()) and P]" mode="ecco">
+  <xsl:template match="CELL[count(*)=1 and not(text()) and P]" mode="tcp">
     <cell>
-	<xsl:apply-templates select="@*" mode="ecco"/>
+	<xsl:apply-templates select="@*" mode="tcp"/>
       <xsl:for-each select="p">
 	<xsl:apply-templates select="*|processing-instruction()|comment()|text()"
-	    mode="ecco"/>
+	    mode="tcp"/>
       </xsl:for-each>
     </cell>
 </xsl:template>
 
-  <xsl:template match="NOTE[count(*)=1 and not(text())]/Q" mode="ecco">
+  <xsl:template match="NOTE[count(*)=1 and not(text())]/Q" mode="tcp">
 	<xsl:apply-templates
 	    select="*|processing-instruction()|comment()|text()"
-	    mode="ecco"/>
+	    mode="tcp"/>
   </xsl:template>
   <xsl:template match="Q[count(*)=1 and not(text()) and LG/L]"
-		mode="ecco" priority="10">
+		mode="tcp" priority="10">
     <q>
-      <xsl:apply-templates select="@*" mode="ecco"/>
+      <xsl:apply-templates select="@*" mode="tcp"/>
       <xsl:for-each select="lg">
 	<xsl:apply-templates select="*|processing-instruction()|comment()|text()"
-			     mode="ecco"/>
+			     mode="tcp"/>
       </xsl:for-each>
     </q>
   </xsl:template>
 
-  <xsl:template match="TITLESTMT/TITLE/text()[last()]" mode="ecco">
+  <xsl:template match="TITLESTMT/TITLE/text()[last()]" mode="tcp">
     <xsl:choose>
       <xsl:when test="matches(.,':$')">
 	<xsl:value-of select="substring(.,1,string-length(.)-1)"/>
@@ -161,66 +161,66 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="HEADNOTE[P/FIGURE]" mode="ecco">
-      <xsl:apply-templates mode="ecco"/>
+  <xsl:template match="HEADNOTE[P/FIGURE]" mode="tcp">
+      <xsl:apply-templates mode="tcp"/>
   </xsl:template>
 
-  <xsl:template match="HEADNOTE" mode="ecco">
+  <xsl:template match="HEADNOTE" mode="tcp">
     <argument>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp"/>
     </argument>
   </xsl:template>
 
-  <xsl:template match="TAILNOTE" mode="ecco">
+  <xsl:template match="TAILNOTE" mode="tcp">
     <argument>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp"/>
     </argument>
   </xsl:template>
 
-  <xsl:template match="STAGE/STAGE" mode="ecco">
-      <xsl:apply-templates mode="ecco"/>
+  <xsl:template match="STAGE/STAGE" mode="tcp">
+      <xsl:apply-templates mode="tcp"/>
   </xsl:template>
 
 <!--
-  <xsl:template match="CELL/L" mode="ecco">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/><lb/>
+  <xsl:template match="CELL/L" mode="tcp">
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
   </xsl:template>
-  <xsl:template match="CELL/LG" mode="ecco">
-    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+  <xsl:template match="CELL/LG" mode="tcp">
+    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
   </xsl:template>
-  <xsl:template match="CELL/LG/L" mode="ecco">
-    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/><lb/>
+  <xsl:template match="CELL/LG/L" mode="tcp">
+    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
   </xsl:template>
 -->
-  <!-- ECCO non-controversial transforms -->
-  <xsl:template match="ROW/PB" mode="ecco"/>
-  <xsl:template match="ROW[PB]" mode="ecco">
+  <!-- TCP non-controversial transforms -->
+  <xsl:template match="ROW/PB" mode="tcp"/>
+  <xsl:template match="ROW[PB]" mode="tcp">
     <row>
-      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="tcp"/>
     </row>
     <xsl:for-each select="PB">
       <pb>
-	<xsl:apply-templates select="@*" mode="ecco"/>
+	<xsl:apply-templates select="@*" mode="tcp"/>
       </pb>
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template match="EEBO" mode="ecco">
-    <xsl:apply-templates select="*" mode="ecco"/>
+  <xsl:template match="EEBO" mode="tcp">
+    <xsl:apply-templates select="*" mode="tcp"/>
   </xsl:template>
 
-  <xsl:template match="ETS" mode="ecco">
+  <xsl:template match="ETS" mode="tcp">
     <TEI.2>
-      <xsl:apply-templates select="@*" mode="ecco"/>
+      <xsl:apply-templates select="@*" mode="tcp"/>
       <xsl:for-each select="document(concat($ID,'.hdr'),$HERE)">
-        <xsl:apply-templates select="*" mode="ecco"/>
+        <xsl:apply-templates select="*" mode="tcp"/>
       </xsl:for-each>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp"/>
     </TEI.2>
   </xsl:template>
-  <xsl:template match="PUBLICATIONSTMT" mode="ecco">
+  <xsl:template match="PUBLICATIONSTMT" mode="tcp">
     <publicationStmt>
-      <xsl:apply-templates select="*" mode="ecco"/>
+      <xsl:apply-templates select="*" mode="tcp"/>
       <xsl:if test="parent::FILEDESC">
 	<xsl:call-template name="makeID"/>
 	<xsl:for-each select="$HERE">
@@ -238,77 +238,77 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
     </publicationStmt>
   </xsl:template>
-  <xsl:template match="PUBLICATIONSTMT/IDNO"  mode="ecco"/>
-  <xsl:template match="FILEDESC/EXTENT" mode="ecco"/>
+  <xsl:template match="PUBLICATIONSTMT/IDNO"  mode="tcp"/>
+  <xsl:template match="FILEDESC/EXTENT" mode="tcp"/>
 
-  <xsl:template match="EEBO/GROUP" mode="ecco">
+  <xsl:template match="EEBO/GROUP" mode="tcp">
     <text>
       <group>
-        <xsl:apply-templates select="@*" mode="ecco"/>
-        <xsl:apply-templates select="*" mode="ecco"/>
+        <xsl:apply-templates select="@*" mode="tcp"/>
+        <xsl:apply-templates select="*" mode="tcp"/>
       </group>
     </text>
   </xsl:template>
-  <xsl:template match="LETTER" mode="ecco">
+  <xsl:template match="LETTER" mode="tcp">
     <floatingText type="letter">
       <body>
-        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
       </body>
     </floatingText>
   </xsl:template>
-  <xsl:template match="TEXT" mode="ecco">
+  <xsl:template match="TEXT" mode="tcp">
     <xsl:choose>
       <xsl:when test="parent::ETS or parent::EEBO or parent::GROUP">
         <text>
-          <xsl:apply-templates select="@*" mode="ecco"/>
-          <xsl:apply-templates select="*" mode="ecco"/>
+          <xsl:apply-templates select="@*" mode="tcp"/>
+          <xsl:apply-templates select="*" mode="tcp"/>
         </text>
       </xsl:when>
       <xsl:otherwise>
         <floatingText>
-          <xsl:apply-templates select="@*" mode="ecco"/>
-          <xsl:apply-templates select="*" mode="ecco"/>
+          <xsl:apply-templates select="@*" mode="tcp"/>
+          <xsl:apply-templates select="*" mode="tcp"/>
         </floatingText>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="DIV2|DIV3|DIV4|DIV5|DIV6|DIV7" mode="ecco">
+  <xsl:template match="DIV2|DIV3|DIV4|DIV5|DIV6|DIV7" mode="tcp">
     <div>
-      <xsl:apply-templates select="@*" mode="ecco"/>
-      <xsl:apply-templates select="*" mode="ecco"/>
+      <xsl:apply-templates select="@*" mode="tcp"/>
+      <xsl:apply-templates select="*" mode="tcp"/>
     </div>
   </xsl:template>
-  <xsl:template match="DIV1" mode="ecco">
+  <xsl:template match="DIV1" mode="tcp">
     <xsl:choose>
       <xsl:when test="count(parent::BODY/*)=1">
-        <xsl:apply-templates select="*" mode="ecco"/>
+        <xsl:apply-templates select="*" mode="tcp"/>
       </xsl:when>
       <xsl:otherwise>
         <div>
-          <xsl:apply-templates select="@*" mode="ecco"/>
-          <xsl:apply-templates select="*" mode="ecco"/>
+          <xsl:apply-templates select="@*" mode="tcp"/>
+          <xsl:apply-templates select="*" mode="tcp"/>
         </div>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="LANGUSAGE/@ID" mode="ecco"/>
-  <xsl:template match="LANGUAGE[not(@ID)]" mode="ecco">
+  <xsl:template match="LANGUSAGE/@ID" mode="tcp"/>
+  <xsl:template match="LANGUAGE[not(@ID)]" mode="tcp">
     <language id="{../@ID}">
-      <xsl:apply-templates select="@*|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*|text()" mode="tcp"/>
     </language>
   </xsl:template>
-  <xsl:template match="GAP/@DISP" mode="ecco">
+  <xsl:template match="GAP/@DISP" mode="tcp">
     <xsl:attribute name="rend">
       <xsl:text>content:</xsl:text>
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="ITEM/@ROLE" mode="ecco">
+  <xsl:template match="ITEM/@ROLE" mode="tcp">
     <xsl:attribute name="rend">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="PB/@REF" mode="ecco">
+  <xsl:template match="PB/@REF" mode="tcp">
     <xsl:attribute name="facs">
       <xsl:value-of select="."/>
     </xsl:attribute>
@@ -317,1058 +317,1058 @@ of this software, even if advised of the possibility of such damage.
     </xsl:attribute>
   </xsl:template>
 
-  <xsl:template match="NOTE[@PLACE='foot;']" mode="ecco">
+  <xsl:template match="NOTE[@PLACE='foot;']" mode="tcp">
     <note place="bottom">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="ecco"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </note>
   </xsl:template>
-  <xsl:template match="NOTE[@PLACE='foor']" mode="ecco">
+  <xsl:template match="NOTE[@PLACE='foor']" mode="tcp">
     <note place="bottom">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="ecco"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </note>
   </xsl:template>
-  <xsl:template match="NOTE[@PLACE='foot']" mode="ecco">
+  <xsl:template match="NOTE[@PLACE='foot']" mode="tcp">
     <note place="bottom">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="ecco"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </note>
   </xsl:template>
-  <xsl:template match="NOTE[@PLACE='‖']" mode="ecco">
+  <xsl:template match="NOTE[@PLACE='‖']" mode="tcp">
     <note n="‖">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="ecco"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </note>
   </xsl:template>
-  <xsl:template match="NOTE[@PLACE='‡']" mode="ecco">
+  <xsl:template match="NOTE[@PLACE='‡']" mode="tcp">
     <note n="‡">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="ecco"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </note>
   </xsl:template>
-  <xsl:template match="NOTE[@PLACE='†']" mode="ecco">
+  <xsl:template match="NOTE[@PLACE='†']" mode="tcp">
     <note n="†">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="ecco"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </note>
   </xsl:template>
-  <xsl:template match="KEYWORDS" mode="ecco">
+  <xsl:template match="KEYWORDS" mode="tcp">
     <keywords>
       <xsl:if test="not(@SCHEME)">
         <xsl:attribute name="scheme">
           <xsl:text>http://authorities.loc.gov/</xsl:text>
         </xsl:attribute>
       </xsl:if>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="ecco"/>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </keywords>
   </xsl:template>
-  <xsl:template match="SUP" mode="ecco">
+  <xsl:template match="SUP" mode="tcp">
     <hi rend="sup">
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp"/>
     </hi>
   </xsl:template>
-  <xsl:template match="SUB" mode="ecco">
+  <xsl:template match="SUB" mode="tcp">
     <hi rend="sub">
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp"/>
     </hi>
   </xsl:template>
-  <xsl:template match="BELOW" mode="ecco">
+  <xsl:template match="BELOW" mode="tcp">
     <hi rend="below">
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp"/>
     </hi>
   </xsl:template>
-  <xsl:template match="ABOVE" mode="ecco">
+  <xsl:template match="ABOVE" mode="tcp">
     <hi rend="above">
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp"/>
     </hi>
   </xsl:template>
-  <xsl:template match="HEADER" mode="ecco">
+  <xsl:template match="HEADER" mode="tcp">
     <teiHeader>
-      <xsl:apply-templates select="@*" mode="ecco"/>
-      <xsl:apply-templates select="*" mode="ecco"/>
+      <xsl:apply-templates select="@*" mode="tcp"/>
+      <xsl:apply-templates select="*" mode="tcp"/>
     </teiHeader>
   </xsl:template>
 
-  <xsl:template match="TEI.2|OTA" mode="ecco">
+  <xsl:template match="TEI.2|OTA" mode="tcp">
     <TEI.2>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </TEI.2>
   </xsl:template>
-  <xsl:template match="ADDNAME" mode="ecco">
+  <xsl:template match="ADDNAME" mode="tcp">
     <addName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </addName>
   </xsl:template>
-  <xsl:template match="ADDSPAN" mode="ecco">
+  <xsl:template match="ADDSPAN" mode="tcp">
     <addSpan>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </addSpan>
   </xsl:template>
-  <xsl:template match="ADDRLINE" mode="ecco">
+  <xsl:template match="ADDRLINE" mode="tcp">
     <addrLine>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </addrLine>
   </xsl:template>
-  <xsl:template match="ALTGRP" mode="ecco">
+  <xsl:template match="ALTGRP" mode="tcp">
     <altGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </altGrp>
   </xsl:template>
-  <xsl:template match="ATTDEF" mode="ecco">
+  <xsl:template match="ATTDEF" mode="tcp">
     <attDef>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </attDef>
   </xsl:template>
-  <xsl:template match="ATTLIST" mode="ecco">
+  <xsl:template match="ATTLIST" mode="tcp">
     <attList>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </attList>
   </xsl:template>
-  <xsl:template match="ATTNAME" mode="ecco">
+  <xsl:template match="ATTNAME" mode="tcp">
     <attName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </attName>
   </xsl:template>
-  <xsl:template match="ATTLDECL" mode="ecco">
+  <xsl:template match="ATTLDECL" mode="tcp">
     <attlDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </attlDecl>
   </xsl:template>
-  <xsl:template match="BASEWSD" mode="ecco">
+  <xsl:template match="BASEWSD" mode="tcp">
     <baseWsd>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </baseWsd>
   </xsl:template>
-  <xsl:template match="BIBLFULL" mode="ecco">
+  <xsl:template match="BIBLFULL" mode="tcp">
     <biblFull>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </biblFull>
   </xsl:template>
-  <xsl:template match="BIBLSCOPE" mode="ecco">
+  <xsl:template match="BIBLSCOPE" mode="tcp">
     <biblScope>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </biblScope>
   </xsl:template>
-  <xsl:template match="BIBLSTRUCT" mode="ecco">
+  <xsl:template match="BIBLSTRUCT" mode="tcp">
     <biblStruct>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </biblStruct>
   </xsl:template>
-  <xsl:template match="CASTGROUP" mode="ecco">
+  <xsl:template match="CASTGROUP" mode="tcp">
     <castGroup>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </castGroup>
   </xsl:template>
-  <xsl:template match="CASTITEM" mode="ecco">
+  <xsl:template match="CASTITEM" mode="tcp">
     <castItem>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </castItem>
   </xsl:template>
-  <xsl:template match="CASTLIST" mode="ecco">
+  <xsl:template match="CASTLIST" mode="tcp">
     <castList>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </castList>
   </xsl:template>
-  <xsl:template match="CATDESC" mode="ecco">
+  <xsl:template match="CATDESC" mode="tcp">
     <catDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </catDesc>
   </xsl:template>
-  <xsl:template match="CATREF" mode="ecco">
+  <xsl:template match="CATREF" mode="tcp">
     <catRef>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </catRef>
   </xsl:template>
-  <xsl:template match="CLASSCODE" mode="ecco">
+  <xsl:template match="CLASSCODE" mode="tcp">
     <classCode>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </classCode>
   </xsl:template>
-  <xsl:template match="CLASSDECL" mode="ecco">
+  <xsl:template match="CLASSDECL" mode="tcp">
     <classDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </classDecl>
   </xsl:template>
-  <xsl:template match="CLASSDOC" mode="ecco">
+  <xsl:template match="CLASSDOC" mode="tcp">
     <classDoc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </classDoc>
   </xsl:template>
-  <xsl:template match="CODEDCHARSET" mode="ecco">
+  <xsl:template match="CODEDCHARSET" mode="tcp">
     <codedCharSet>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </codedCharSet>
   </xsl:template>
-  <xsl:template match="DATADESC" mode="ecco">
+  <xsl:template match="DATADESC" mode="tcp">
     <dataDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </dataDesc>
   </xsl:template>
-  <xsl:template match="DATERANGE" mode="ecco">
+  <xsl:template match="DATERANGE" mode="tcp">
     <dateRange>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </dateRange>
   </xsl:template>
-  <xsl:template match="DATESTRUCT" mode="ecco">
+  <xsl:template match="DATESTRUCT" mode="tcp">
     <dateStruct>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </dateStruct>
   </xsl:template>
-  <xsl:template match="DELSPAN" mode="ecco">
+  <xsl:template match="DELSPAN" mode="tcp">
     <delSpan>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </delSpan>
   </xsl:template>
-  <xsl:template match="DIVGEN" mode="ecco">
+  <xsl:template match="DIVGEN" mode="tcp">
     <divGen>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </divGen>
   </xsl:template>
-  <xsl:template match="DOCAUTHOR|DAUTHOR" mode="ecco">
+  <xsl:template match="DOCAUTHOR|DAUTHOR" mode="tcp">
     <docAuthor>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </docAuthor>
   </xsl:template>
-  <xsl:template match="DOCDATE" mode="ecco">
+  <xsl:template match="DOCDATE" mode="tcp">
     <docDate>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </docDate>
   </xsl:template>
-  <xsl:template match="DOCEDITION" mode="ecco">
+  <xsl:template match="DOCEDITION" mode="tcp">
     <docEdition>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </docEdition>
   </xsl:template>
-  <xsl:template match="DOCIMPRINT" mode="ecco">
+  <xsl:template match="DOCIMPRINT" mode="tcp">
     <docImprint>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </docImprint>
   </xsl:template>
-  <xsl:template match="DOCTITLE|DTITLE" mode="ecco">
+  <xsl:template match="DOCTITLE|DTITLE" mode="tcp">
     <docTitle>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </docTitle>
   </xsl:template>
-  <xsl:template match="ELEAF" mode="ecco">
+  <xsl:template match="ELEAF" mode="tcp">
     <eLeaf>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </eLeaf>
   </xsl:template>
-  <xsl:template match="ETREE" mode="ecco">
+  <xsl:template match="ETREE" mode="tcp">
     <eTree>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </eTree>
   </xsl:template>
-  <xsl:template match="EDITIONSTMT" mode="ecco">
+  <xsl:template match="EDITIONSTMT" mode="tcp">
     <editionStmt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </editionStmt>
   </xsl:template>
-  <xsl:template match="EDITORIALDECL" mode="ecco">
+  <xsl:template match="EDITORIALDECL" mode="tcp">
     <editorialDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </editorialDecl>
   </xsl:template>
-  <xsl:template match="ELEMDECL" mode="ecco">
+  <xsl:template match="ELEMDECL" mode="tcp">
     <elemDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </elemDecl>
   </xsl:template>
-  <xsl:template match="ENCODINGDESC" mode="ecco">
+  <xsl:template match="ENCODINGDESC" mode="tcp">
     <encodingDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </encodingDesc>
   </xsl:template>
-  <xsl:template match="ENTDOC" mode="ecco">
+  <xsl:template match="ENTDOC" mode="tcp">
     <entDoc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </entDoc>
   </xsl:template>
-  <xsl:template match="ENTNAME" mode="ecco">
+  <xsl:template match="ENTNAME" mode="tcp">
     <entName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </entName>
   </xsl:template>
-  <xsl:template match="ENTITYSET" mode="ecco">
+  <xsl:template match="ENTITYSET" mode="tcp">
     <entitySet>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </entitySet>
   </xsl:template>
-  <xsl:template match="ENTRYFREE" mode="ecco">
+  <xsl:template match="ENTRYFREE" mode="tcp">
     <entryFree>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </entryFree>
   </xsl:template>
-  <xsl:template match="EXTFIGURE" mode="ecco">
+  <xsl:template match="EXTFIGURE" mode="tcp">
     <extFigure>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </extFigure>
   </xsl:template>
-  <xsl:template match="FALT" mode="ecco">
+  <xsl:template match="FALT" mode="tcp">
     <fAlt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fAlt>
   </xsl:template>
-  <xsl:template match="FDECL" mode="ecco">
+  <xsl:template match="FDECL" mode="tcp">
     <fDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fDecl>
   </xsl:template>
-  <xsl:template match="FDESCR" mode="ecco">
+  <xsl:template match="FDESCR" mode="tcp">
     <fDescr>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fDescr>
   </xsl:template>
-  <xsl:template match="FLIB" mode="ecco">
+  <xsl:template match="FLIB" mode="tcp">
     <fLib>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fLib>
   </xsl:template>
-  <xsl:template match="FIGDESC" mode="ecco">
+  <xsl:template match="FIGDESC" mode="tcp">
     <figDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </figDesc>
   </xsl:template>
-  <xsl:template match="FILEDESC" mode="ecco">
+  <xsl:template match="FILEDESC" mode="tcp">
     <fileDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fileDesc>
   </xsl:template>
-  <xsl:template match="FIRSTLANG" mode="ecco">
+  <xsl:template match="FIRSTLANG" mode="tcp">
     <firstLang>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </firstLang>
   </xsl:template>
-  <xsl:template match="FORENAME" mode="ecco">
+  <xsl:template match="FORENAME" mode="tcp">
     <foreName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </foreName>
   </xsl:template>
-  <xsl:template match="FORESTGRP" mode="ecco">
+  <xsl:template match="FORESTGRP" mode="tcp">
     <forestGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </forestGrp>
   </xsl:template>
-  <xsl:template match="FSCONSTRAINTS" mode="ecco">
+  <xsl:template match="FSCONSTRAINTS" mode="tcp">
     <fsConstraints>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fsConstraints>
   </xsl:template>
-  <xsl:template match="FSDECL" mode="ecco">
+  <xsl:template match="FSDECL" mode="tcp">
     <fsDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fsDecl>
   </xsl:template>
-  <xsl:template match="FSDESCR" mode="ecco">
+  <xsl:template match="FSDESCR" mode="tcp">
     <fsDescr>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fsDescr>
   </xsl:template>
-  <xsl:template match="FSLIB" mode="ecco">
+  <xsl:template match="FSLIB" mode="tcp">
     <fsLib>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fsLib>
   </xsl:template>
-  <xsl:template match="FSDDECL" mode="ecco">
+  <xsl:template match="FSDDECL" mode="tcp">
     <fsdDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fsdDecl>
   </xsl:template>
-  <xsl:template match="FVLIB" mode="ecco">
+  <xsl:template match="FVLIB" mode="tcp">
     <fvLib>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </fvLib>
   </xsl:template>
-  <xsl:template match="GENNAME" mode="ecco">
+  <xsl:template match="GENNAME" mode="tcp">
     <genName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </genName>
   </xsl:template>
-  <xsl:template match="GEOGNAME" mode="ecco">
+  <xsl:template match="GEOGNAME" mode="tcp">
     <geogName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </geogName>
   </xsl:template>
-  <xsl:template match="GRAMGRP" mode="ecco">
+  <xsl:template match="GRAMGRP" mode="tcp">
     <gramGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </gramGrp>
   </xsl:template>
-  <xsl:template match="HANDLIST" mode="ecco">
+  <xsl:template match="HANDLIST" mode="tcp">
     <handList>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </handList>
   </xsl:template>
-  <xsl:template match="HANDSHIFT" mode="ecco">
+  <xsl:template match="HANDSHIFT" mode="tcp">
     <handShift>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </handShift>
   </xsl:template>
-  <xsl:template match="HEADITEM" mode="ecco">
+  <xsl:template match="HEADITEM" mode="tcp">
     <headItem>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </headItem>
   </xsl:template>
-  <xsl:template match="HEADLABEL" mode="ecco">
+  <xsl:template match="HEADLABEL" mode="tcp">
     <headLabel>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </headLabel>
   </xsl:template>
-  <xsl:template match="INODE" mode="ecco">
+  <xsl:template match="INODE" mode="tcp">
     <iNode>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </iNode>
   </xsl:template>
-  <xsl:template match="INTERPGRP" mode="ecco">
+  <xsl:template match="INTERPGRP" mode="tcp">
     <interpGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </interpGrp>
   </xsl:template>
-  <xsl:template match="JOINGRP" mode="ecco">
+  <xsl:template match="JOINGRP" mode="tcp">
     <joinGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </joinGrp>
   </xsl:template>
-  <xsl:template match="LACUNAEND" mode="ecco">
+  <xsl:template match="LACUNAEND" mode="tcp">
     <lacunaEnd>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </lacunaEnd>
   </xsl:template>
-  <xsl:template match="LACUNASTART" mode="ecco">
+  <xsl:template match="LACUNASTART" mode="tcp">
     <lacunaStart>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </lacunaStart>
   </xsl:template>
-  <xsl:template match="LANGKNOWN" mode="ecco">
+  <xsl:template match="LANGKNOWN" mode="tcp">
     <langKnown>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </langKnown>
   </xsl:template>
-  <xsl:template match="LANGUSAGE" mode="ecco">
+  <xsl:template match="LANGUSAGE" mode="tcp">
     <langUsage>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </langUsage>
   </xsl:template>
-  <xsl:template match="LINKGRP" mode="ecco">
+  <xsl:template match="LINKGRP" mode="tcp">
     <linkGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </linkGrp>
   </xsl:template>
   <xsl:template match="LISTBIBL">
     <listBibl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </listBibl>
   </xsl:template>
-  <xsl:template match="METDECL" mode="ecco">
+  <xsl:template match="METDECL" mode="tcp">
     <metDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </metDecl>
   </xsl:template>
-  <xsl:template match="NAMELINK" mode="ecco">
+  <xsl:template match="NAMELINK" mode="tcp">
     <nameLink>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </nameLink>
   </xsl:template>
-  <xsl:template match="NOTESSTMT" mode="ecco">
+  <xsl:template match="NOTESSTMT" mode="tcp">
     <notesStmt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </notesStmt>
   </xsl:template>
-  <xsl:template match="OREF" mode="ecco">
+  <xsl:template match="OREF" mode="tcp">
     <oRef>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </oRef>
   </xsl:template>
-  <xsl:template match="OVAR" mode="ecco">
+  <xsl:template match="OVAR" mode="tcp">
     <oVar>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </oVar>
   </xsl:template>
-  <xsl:template match="OFFSET" mode="ecco">
+  <xsl:template match="OFFSET" mode="tcp">
     <offSet>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </offSet>
   </xsl:template>
-  <xsl:template match="ORGDIVN" mode="ecco">
+  <xsl:template match="ORGDIVN" mode="tcp">
     <orgDivn>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </orgDivn>
   </xsl:template>
-  <xsl:template match="ORGNAME" mode="ecco">
+  <xsl:template match="ORGNAME" mode="tcp">
     <orgName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </orgName>
   </xsl:template>
-  <xsl:template match="ORGTITLE" mode="ecco">
+  <xsl:template match="ORGTITLE" mode="tcp">
     <orgTitle>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </orgTitle>
   </xsl:template>
-  <xsl:template match="ORGTYPE" mode="ecco">
+  <xsl:template match="ORGTYPE" mode="tcp">
     <orgType>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </orgType>
   </xsl:template>
-  <xsl:template match="OTHERFORM" mode="ecco">
+  <xsl:template match="OTHERFORM" mode="tcp">
     <otherForm>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </otherForm>
   </xsl:template>
-  <xsl:template match="PREF" mode="ecco">
+  <xsl:template match="PREF" mode="tcp">
     <pRef>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </pRef>
   </xsl:template>
-  <xsl:template match="PVAR" mode="ecco">
+  <xsl:template match="PVAR" mode="tcp">
     <pVar>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </pVar>
   </xsl:template>
-  <xsl:template match="PARTICDESC" mode="ecco">
+  <xsl:template match="PARTICDESC" mode="tcp">
     <particDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </particDesc>
   </xsl:template>
-  <xsl:template match="PARTICLINKS" mode="ecco">
+  <xsl:template match="PARTICLINKS" mode="tcp">
     <particLinks>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </particLinks>
   </xsl:template>
-  <xsl:template match="PERSNAME" mode="ecco">
+  <xsl:template match="PERSNAME" mode="tcp">
     <persName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </persName>
   </xsl:template>
-  <xsl:template match="PERSONGRP" mode="ecco">
+  <xsl:template match="PERSONGRP" mode="tcp">
     <personGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </personGrp>
   </xsl:template>
-  <xsl:template match="PLACENAME" mode="ecco">
+  <xsl:template match="PLACENAME" mode="tcp">
     <placeName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </placeName>
   </xsl:template>
-  <xsl:template match="POSTBOX" mode="ecco">
+  <xsl:template match="POSTBOX" mode="tcp">
     <postBox>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </postBox>
   </xsl:template>
-  <xsl:template match="POSTCODE" mode="ecco">
+  <xsl:template match="POSTCODE" mode="tcp">
     <postCode>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </postCode>
   </xsl:template>
-  <xsl:template match="PROFILEDESC" mode="ecco">
+  <xsl:template match="PROFILEDESC" mode="tcp">
     <profileDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </profileDesc>
   </xsl:template>
-  <xsl:template match="PROJECTDESC" mode="ecco">
+  <xsl:template match="PROJECTDESC" mode="tcp">
     <projectDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </projectDesc>
   </xsl:template>
-  <xsl:template match="PUBPLACE" mode="ecco">
+  <xsl:template match="PUBPLACE" mode="tcp">
     <pubPlace>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </pubPlace>
   </xsl:template>
-  <xsl:template match="RDGGRP" mode="ecco">
+  <xsl:template match="RDGGRP" mode="tcp">
     <rdgGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </rdgGrp>
   </xsl:template>
-  <xsl:template match="RECORDINGSTMT" mode="ecco">
+  <xsl:template match="RECORDINGSTMT" mode="tcp">
     <recordingStmt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </recordingStmt>
   </xsl:template>
-  <xsl:template match="REFSDECL" mode="ecco">
+  <xsl:template match="REFSDECL" mode="tcp">
     <refsDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </refsDecl>
   </xsl:template>
-  <xsl:template match="RESPSTMT" mode="ecco">
+  <xsl:template match="RESPSTMT" mode="tcp">
     <respStmt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </respStmt>
   </xsl:template>
-  <xsl:template match="REVISIONDESC|revdesc" mode="ecco">
+  <xsl:template match="REVISIONDESC|revdesc" mode="tcp">
     <revisionDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </revisionDesc>
   </xsl:template>
-  <xsl:template match="ROLEDESC" mode="ecco">
+  <xsl:template match="ROLEDESC" mode="tcp">
     <roleDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </roleDesc>
   </xsl:template>
-  <xsl:template match="ROLENAME" mode="ecco">
+  <xsl:template match="ROLENAME" mode="tcp">
     <roleName>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </roleName>
   </xsl:template>
-  <xsl:template match="SAMPLINGDECL" mode="ecco">
+  <xsl:template match="SAMPLINGDECL" mode="tcp">
     <samplingDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </samplingDecl>
   </xsl:template>
-  <xsl:template match="SCRIPTSTMT" mode="ecco">
+  <xsl:template match="SCRIPTSTMT" mode="tcp">
     <scriptStmt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </scriptStmt>
   </xsl:template>
-  <xsl:template match="SERIESSTMT" mode="ecco">
+  <xsl:template match="SERIESSTMT" mode="tcp">
     <seriesStmt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </seriesStmt>
   </xsl:template>
-  <xsl:template match="SETTINGDESC" mode="ecco">
+  <xsl:template match="SETTINGDESC" mode="tcp">
     <settingDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </settingDesc>
   </xsl:template>
-  <xsl:template match="SOCALLED" mode="ecco">
+  <xsl:template match="SOCALLED" mode="tcp">
     <soCalled>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </soCalled>
   </xsl:template>
-  <xsl:template match="SOCECSTATUS" mode="ecco">
+  <xsl:template match="SOCECSTATUS" mode="tcp">
     <socecStatus>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </socecStatus>
   </xsl:template>
-  <xsl:template match="SOURCEDESC" mode="ecco">
+  <xsl:template match="SOURCEDESC" mode="tcp">
     <sourceDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </sourceDesc>
   </xsl:template>
-  <xsl:template match="SPANGRP" mode="ecco">
+  <xsl:template match="SPANGRP" mode="tcp">
     <spanGrp>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </spanGrp>
   </xsl:template>
-  <xsl:template match="STDVALS" mode="ecco">
+  <xsl:template match="STDVALS" mode="tcp">
     <stdVals>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </stdVals>
   </xsl:template>
-  <xsl:template match="TAGDOC" mode="ecco">
+  <xsl:template match="TAGDOC" mode="tcp">
     <tagDoc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </tagDoc>
   </xsl:template>
-  <xsl:template match="TAGUSAGE" mode="ecco">
+  <xsl:template match="TAGUSAGE" mode="tcp">
     <tagUsage>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </tagUsage>
   </xsl:template>
-  <xsl:template match="TAGSDECL" mode="ecco">
+  <xsl:template match="TAGSDECL" mode="tcp">
     <tagsDecl>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </tagsDecl>
   </xsl:template>
-  <xsl:template match="TEICORPUS.2" mode="ecco">
+  <xsl:template match="TEICORPUS.2" mode="tcp">
     <teiCorpus.2>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </teiCorpus.2>
   </xsl:template>
-  <xsl:template match="TEIFSD2" mode="ecco">
+  <xsl:template match="TEIFSD2" mode="tcp">
     <teiFsd2>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </teiFsd2>
   </xsl:template>
-  <xsl:template match="TEIHEADER" mode="ecco">
+  <xsl:template match="TEIHEADER" mode="tcp">
     <teiHeader>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </teiHeader>
   </xsl:template>
-  <xsl:template match="TERMENTRY" mode="ecco">
+  <xsl:template match="TERMENTRY" mode="tcp">
     <termEntry>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </termEntry>
   </xsl:template>
-  <xsl:template match="TEXTCLASS" mode="ecco">
+  <xsl:template match="TEXTCLASS" mode="tcp">
     <textClass>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </textClass>
   </xsl:template>
-  <xsl:template match="TEXTDESC" mode="ecco">
+  <xsl:template match="TEXTDESC" mode="tcp">
     <textDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </textDesc>
   </xsl:template>
-  <xsl:template match="TIMERANGE" mode="ecco">
+  <xsl:template match="TIMERANGE" mode="tcp">
     <timeRange>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </timeRange>
   </xsl:template>
-  <xsl:template match="TIMESTRUCT" mode="ecco">
+  <xsl:template match="TIMESTRUCT" mode="tcp">
     <timeStruct>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </timeStruct>
   </xsl:template>
-  <xsl:template match="TITLEPAGE|tpage" mode="ecco">
+  <xsl:template match="TITLEPAGE|tpage" mode="tcp">
     <titlePage>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </titlePage>
   </xsl:template>
-  <xsl:template match="TITLEPART" mode="ecco">
+  <xsl:template match="TITLEPART" mode="tcp">
     <titlePart>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </titlePart>
   </xsl:template>
-  <xsl:template match="TITLESTMT" mode="ecco">
+  <xsl:template match="TITLESTMT" mode="tcp">
     <titleStmt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </titleStmt>
   </xsl:template>
-  <xsl:template match="VALT" mode="ecco">
+  <xsl:template match="VALT" mode="tcp">
     <vAlt>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </vAlt>
   </xsl:template>
-  <xsl:template match="VDEFAULT" mode="ecco">
+  <xsl:template match="VDEFAULT" mode="tcp">
     <vDefault>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </vDefault>
   </xsl:template>
-  <xsl:template match="VRANGE" mode="ecco">
+  <xsl:template match="VRANGE" mode="tcp">
     <vRange>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </vRange>
   </xsl:template>
-  <xsl:template match="VALDESC" mode="ecco">
+  <xsl:template match="VALDESC" mode="tcp">
     <valDesc>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </valDesc>
   </xsl:template>
-  <xsl:template match="VALLIST" mode="ecco">
+  <xsl:template match="VALLIST" mode="tcp">
     <valList>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </valList>
   </xsl:template>
-  <xsl:template match="VARIANTENCODING" mode="ecco">
+  <xsl:template match="VARIANTENCODING" mode="tcp">
     <variantEncoding>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </variantEncoding>
   </xsl:template>
-  <xsl:template match="WITDETAIL" mode="ecco">
+  <xsl:template match="WITDETAIL" mode="tcp">
     <witDetail>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </witDetail>
   </xsl:template>
-  <xsl:template match="WITEND" mode="ecco">
+  <xsl:template match="WITEND" mode="tcp">
     <witEnd>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </witEnd>
   </xsl:template>
-  <xsl:template match="WITLIST" mode="ecco">
+  <xsl:template match="WITLIST" mode="tcp">
     <witList>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </witList>
   </xsl:template>
-  <xsl:template match="WITSTART" mode="ecco">
+  <xsl:template match="WITSTART" mode="tcp">
     <witStart>
-      <xsl:apply-templates mode="ecco" select="@*"/>
-      <xsl:apply-templates mode="ecco"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
+      <xsl:apply-templates mode="tcp"/>
     </witStart>
   </xsl:template>
-  <xsl:template match="@TEI" mode="ecco">
+  <xsl:template match="@TEI" mode="tcp">
     <xsl:attribute name="TEI">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@ADJFROM" mode="ecco">
+  <xsl:template match="@ADJFROM" mode="tcp">
     <xsl:attribute name="adjFrom">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@ADJTO" mode="ecco">
+  <xsl:template match="@ADJTO" mode="tcp">
     <xsl:attribute name="adjTo">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@ASSERTEDVALUE" mode="ecco">
+  <xsl:template match="@ASSERTEDVALUE" mode="tcp">
     <xsl:attribute name="assertedValue">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@BASETYPE" mode="ecco">
+  <xsl:template match="@BASETYPE" mode="tcp">
     <xsl:attribute name="baseType">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@COPYOF" mode="ecco">
+  <xsl:template match="@COPYOF" mode="tcp">
     <xsl:attribute name="copyOf">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@DEPPTR" mode="ecco">
+  <xsl:template match="@DEPPTR" mode="tcp">
     <xsl:attribute name="depPtr">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@ENTITYLOC" mode="ecco">
+  <xsl:template match="@ENTITYLOC" mode="tcp">
     <xsl:attribute name="entityLoc">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@ENTITYSTD" mode="ecco">
+  <xsl:template match="@ENTITYSTD" mode="tcp">
     <xsl:attribute name="entityStd">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@FVAL" mode="ecco">
+  <xsl:template match="@FVAL" mode="tcp">
     <xsl:attribute name="fVal">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@GRPPTR" mode="ecco">
+  <xsl:template match="@GRPPTR" mode="tcp">
     <xsl:attribute name="grpPtr">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@INDEGREE" mode="ecco">
+  <xsl:template match="@INDEGREE" mode="tcp">
     <xsl:attribute name="inDegree">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@MUTEXCL" mode="ecco">
+  <xsl:template match="@MUTEXCL" mode="tcp">
     <xsl:attribute name="mutExcl">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@OUTDEGREE" mode="ecco">
+  <xsl:template match="@OUTDEGREE" mode="tcp">
     <xsl:attribute name="outDegree">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@SAMEAS" mode="ecco">
+  <xsl:template match="@SAMEAS" mode="tcp">
     <xsl:attribute name="sameAs">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TARGFUNC" mode="ecco">
+  <xsl:template match="@TARGFUNC" mode="tcp">
     <xsl:attribute name="targFunc">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TARGORDER" mode="ecco">
+  <xsl:template match="@TARGORDER" mode="tcp">
     <xsl:if test="not(. = 'u')">
       <xsl:attribute name="targOrder">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="TEIHEADER/@TYPE" mode="ecco"/>
+  <xsl:template match="TEIHEADER/@TYPE" mode="tcp"/>
   <xsl:template match="@TARGTYPE">
     <xsl:attribute name="targType">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TARGETEND" mode="ecco">
+  <xsl:template match="@TARGETEND" mode="tcp">
     <xsl:attribute name="targetEnd">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@VALUETO" mode="ecco">
+  <xsl:template match="@VALUETO" mode="tcp">
     <xsl:attribute name="valueTo">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@VARSEQ" mode="ecco">
+  <xsl:template match="@VARSEQ" mode="tcp">
     <xsl:attribute name="varSeq">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@WSCALE" mode="ecco">
+  <xsl:template match="@WSCALE" mode="tcp">
     <xsl:attribute name="wScale">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TEIFORM" mode="ecco"/>
-  <xsl:template match="@OPT" mode="ecco">
+  <xsl:template match="@TEIFORM" mode="tcp"/>
+  <xsl:template match="@OPT" mode="tcp">
     <xsl:if test="not(. = 'n')">
       <xsl:attribute name="opt">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@TO" mode="ecco">
+  <xsl:template match="@TO" mode="tcp">
     <xsl:if test="not(. = 'DITTO')">
       <xsl:attribute name="to">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@DEFAULT" mode="ecco">
+  <xsl:template match="@DEFAULT" mode="tcp">
     <xsl:if test="not(. = 'no')">
       <xsl:attribute name="default">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@PART" mode="ecco">
+  <xsl:template match="@PART" mode="tcp">
     <xsl:if test="not(. = 'n')">
       <xsl:attribute name="part">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@FULL" mode="ecco">
+  <xsl:template match="@FULL" mode="tcp">
     <xsl:if test="not(. = 'yes')">
       <xsl:attribute name="full">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@FROM" mode="ecco">
+  <xsl:template match="@FROM" mode="tcp">
     <xsl:if test="not(. = 'ROOT')">
       <xsl:attribute name="from">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@STATUS" mode="ecco">
+  <xsl:template match="@STATUS" mode="tcp">
     <xsl:choose>
       <xsl:when test="parent::TEIHEADER">
         <xsl:if test="not(. = 'new')">
@@ -1391,54 +1391,54 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="@PLACE" mode="ecco">
+  <xsl:template match="@PLACE" mode="tcp">
     <xsl:if test="not(. = 'unspecified')">
       <xsl:attribute name="place">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@SAMPLE" mode="ecco">
+  <xsl:template match="@SAMPLE" mode="tcp">
     <xsl:if test="not(. = 'complete')">
       <xsl:attribute name="sample">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@ORG" mode="ecco">
+  <xsl:template match="@ORG" mode="tcp">
     <xsl:if test="not(. = 'uniform')">
       <xsl:attribute name="org">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="ENCDESC" mode="ecco">
+  <xsl:template match="ENCDESC" mode="tcp">
     <encodingDesc>
-      <xsl:apply-templates mode="ecco" select="*|@*|processing-instruction()|comment()|text()"/>
+      <xsl:apply-templates mode="tcp" select="*|@*|processing-instruction()|comment()|text()"/>
     </encodingDesc>
   </xsl:template>
-  <xsl:template match="EDSTMT" mode="ecco">
+  <xsl:template match="EDSTMT" mode="tcp">
     <editorialStmt>
-      <xsl:apply-templates mode="ecco" select="*|@*|processing-instruction()|comment()|text()"/>
+      <xsl:apply-templates mode="tcp" select="*|@*|processing-instruction()|comment()|text()"/>
     </editorialStmt>
   </xsl:template>
-  <xsl:template match="TITLSTMT" mode="ecco">
+  <xsl:template match="TITLSTMT" mode="tcp">
     <titleStmt>
-      <xsl:apply-templates mode="ecco" select="*|@*|processing-instruction()|comment()|text()"/>
+      <xsl:apply-templates mode="tcp" select="*|@*|processing-instruction()|comment()|text()"/>
     </titleStmt>
   </xsl:template>
-  <xsl:template match="MILESTONE[not(@UNIT)]" mode="ecco">
+  <xsl:template match="MILESTONE[not(@UNIT)]" mode="tcp">
     <milestone unit="unknown">
-      <xsl:apply-templates mode="ecco" select="@*"/>
+      <xsl:apply-templates mode="tcp" select="@*"/>
     </milestone>
   </xsl:template>
-  <xsl:template match="@TYPE" mode="ecco">
+  <xsl:template match="@TYPE" mode="tcp">
     <xsl:attribute name="type">
       <xsl:value-of select="translate(translate(.,'(','_'),$intype,'')"/>
     </xsl:attribute>
   </xsl:template>
 
-  <xsl:template match="@UNIT" mode="ecco">
+  <xsl:template match="@UNIT" mode="tcp">
     <xsl:attribute name="unit">
       <xsl:value-of select="translate(.,' ','_')"/>
     </xsl:attribute>
