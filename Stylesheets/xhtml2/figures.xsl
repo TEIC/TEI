@@ -215,7 +215,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:attribute name="class" select="@rend"/>
 	  </xsl:if>
 	  <xsl:call-template name="rendering"/>
-	  <xsl:text>. </xsl:text>
+	  <xsl:if test="not($captionlabel='')">
+	    <xsl:text>. </xsl:text>
+	  </xsl:if>
 	  <xsl:copy-of select="$captionlabel"/>
 	  <xsl:apply-templates/>
 	</figcaption>
@@ -223,7 +225,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
 	<span class="caption {@rend}">
 	  <xsl:copy-of select="$captionlabel"/>
-	  <xsl:text>. </xsl:text>
+	  <xsl:if test="not($captionlabel='')">
+	    <xsl:text>. </xsl:text>
+	  </xsl:if>
 	  <xsl:apply-templates/>
 	</span>
       </xsl:otherwise>
