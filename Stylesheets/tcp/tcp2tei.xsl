@@ -225,12 +225,19 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="makeID"/>
 	<xsl:for-each select="$HERE">
 	  <xsl:for-each select="/ETS/EEBO/IDG">
+	    <xsl:if test="STC">
+	      <idno type="STC">
+		<xsl:value-of select="."/>
+	      </idno>
+	    </xsl:if>
 	    <idno type="TCP"><xsl:value-of select="@ID"/></idno>
 	    <idno type="BIBNO"><xsl:value-of select="BIBNO"/></idno>
 	    <xsl:for-each select="VID">
-	      <idno type="{@SET}">
-		<xsl:value-of select="."/>
-	      </idno>
+		<xsl:if test="@SET">
+		  <idno type="{@SET}">
+		    <xsl:value-of select="."/>
+		  </idno>
+		</xsl:if>
 	    </xsl:for-each>
 	  </xsl:for-each>
 	</xsl:for-each>
@@ -2014,7 +2021,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="fileDesc/publicationStmt">
     <publicationStmt  xmlns="http://www.tei-c.org/ns/1.0">
-      <p>unknown</p>
       <xsl:for-each select="idno">
 	<idno>
 	  <xsl:copy-of select="@*"/>
@@ -2042,8 +2048,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="figDesc/hi[@rend='sup']">
+    <xsl:apply-templates/>
+  </xsl:template>
 
-   <xsl:template name="makeID"/>
-   <xsl:template name="idnoHook"/>
+  <xsl:template name="makeID"/>
+  <xsl:template name="idnoHook"/>
 	
 </xsl:stylesheet>
