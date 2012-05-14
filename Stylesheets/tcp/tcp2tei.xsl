@@ -225,11 +225,11 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="makeID"/>
 	<xsl:for-each select="$HERE">
 	  <xsl:for-each select="/ETS/EEBO/IDG">
-	    <xsl:if test="STC">
+	    <xsl:for-each select="STC">
 	      <idno type="STC">
 		<xsl:value-of select="."/>
 	      </idno>
-	    </xsl:if>
+	    </xsl:for-each>
 	    <idno type="TCP"><xsl:value-of select="@ID"/></idno>
 	    <idno type="BIBNO"><xsl:value-of select="BIBNO"/></idno>
 	    <xsl:for-each select="VID">
