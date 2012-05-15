@@ -199,9 +199,20 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <xsl:template match="add[@place='leftMargin' or
+			 @place='rightMargin']|hi[@place='leftMargin' or
 			 @place='rightMargin']" mode="pass0">
       <note xmlns="http://www.tei-c.org/ns/1.0">
-	<xsl:copy-of select="@place"/>
+	<xsl:attribute name="place">
+	  <xsl:choose>
+	    <xsl:when test="@place='margin'">marginInner</xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>margin</xsl:text>
+	      <xsl:value-of select="upper-case(substring(@place,1,1))"/>
+	      <xsl:value-of
+		  select="replace(substring(@place,2),'Margin','')"/>
+	    </xsl:otherwise>
+	  </xsl:choose>	  
+	</xsl:attribute>
 	<xsl:apply-templates mode="pass0"/>
       </note>
     </xsl:template>
@@ -233,6 +244,7 @@ of this software, even if advised of the possibility of such damage.
 		       or @place='marginOuter'
 		       or @place='marginLeft'
 		       or @place='marginRight']">
+<xsl:message>Margin note <xsl:value-of select="@place"/></xsl:message>
     <xsl:call-template name="block-element">
         <xsl:with-param name="style">
 	  <xsl:text>MarginNote</xsl:text>
