@@ -298,4 +298,15 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+  
+  
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+  <desc>Change foreign without @xml:lang to vernacular style</desc>
+  </doc>
+  <xsl:template match="foreign[not(@xml:lang)]"  mode="pass0">
+    <hi rend="vernacular" xmlns="http://www.tei-c.org/ns/1.0"><xsl:apply-templates mode="pass0"/></hi>
+  </xsl:template>
+  
+  
+  
 </xsl:stylesheet>
