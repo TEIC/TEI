@@ -103,6 +103,11 @@ of this software, even if advised of the possibility of such damage.
     </doc>
     <xsl:template match="lb" mode="pass0"/>
 
+
+
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Page breaks changed to notes</desc>
+  </doc>
     <xsl:template match="pb" mode="pass0">
       <note place="marginOuter"  xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:text>[p. </xsl:text>
@@ -140,12 +145,11 @@ of this software, even if advised of the possibility of such damage.
 	add footnote for interlinear addition
       </desc>
     </doc>
-
     <xsl:template match="add[@place='interlinear']" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
       <note place="foot"  xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates mode="pass0"/>
-	<xsl:text>] ajouté en interligne</xsl:text>
+        <xsl:text>] </xsl:text> <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">ajouté en interligne</hi>
       </note>
     </xsl:template>
 
@@ -158,7 +162,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates mode="pass0"/>
       <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates mode="pass0"/>
-	<xsl:text>] lecture incertaine</xsl:text>
+        <xsl:text>] </xsl:text>  <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">lecture incertaine</hi>
       </note>
     </xsl:template>
 
@@ -167,8 +171,7 @@ of this software, even if advised of the possibility of such damage.
 	add footnote for supplied text
       </desc>
     </doc>
-
-    <xsl:template match="supplied[@reason]" mode="pass0">
+<xsl:template match="supplied[@reason]" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
       <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates mode="pass0"/>
@@ -188,16 +191,22 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
 	<xsl:when test="@extent and @type">
 	  <xsl:value-of select="@type"/>
-	  <xsl:text> sur </xsl:text>
+	  <xsl:text> </xsl:text> <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">sur 
 	  <xsl:value-of select="@extent"/>
+	  </hi>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:text>support endommagé</xsl:text>
+	  <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">support endommagé</hi>
 	</xsl:otherwise>
       </xsl:choose>
       </note>
     </xsl:template>
 
+
+
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Changing additions and left/right rendering to notes placed in margin</desc>
+  </doc>
     <xsl:template match="add[@place='leftMargin' or
 			 @place='rightMargin']|hi[@rend='leftMargin' or
 			 @rend='rightMargin']" mode="pass0">
@@ -216,18 +225,55 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates mode="pass0"/>
       </note>
     </xsl:template>
-
-    <xsl:template match="del[@rend='overstrike']" mode="pass0">
-      <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
-	<xsl:apply-templates mode="pass0"/>
-	<xsl:text> biffé</xsl:text>
-      </note>
+  
+  
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>sic text added</desc>
+  </doc>
+  <xsl:template match="sic" mode="pass0">
+    <xsl:apply-templates mode="pass0"/><xsl:text> </xsl:text><hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">(sic)</hi>
     </xsl:template>
+  
+  
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Deleted text noted as footnote, different text depending on @rend</desc>
+  </doc>
+    <xsl:template match="del[@rend]" mode="pass0">
+      <xsl:choose>
+        <xsl:when test="@rend='overstrike'">
+          <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
+            <xsl:apply-templates mode="pass0"/> <xsl:text> </xsl:text>
+            <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">biffé</hi>
+          </note>
+        </xsl:when>
+        <xsl:when test="@rend='underlined'">
+          <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
+            <xsl:apply-templates mode="pass0"/> <xsl:text> </xsl:text>
+            <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">annulé par soulignement</hi>
+          </note>
+        </xsl:when>
+        <xsl:when test="@rend='underlined_dotted'">
+          <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
+            <xsl:apply-templates mode="pass0"/> <xsl:text> </xsl:text>
+            <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">annulé par exponctuation</hi>
+          </note>
+        </xsl:when>
+        <!-- JC: Not sure if this xsl:otherwise a good idea but adding some default probably is -->
+        <xsl:otherwise>
+          <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
+            <xsl:apply-templates mode="pass0"/>
+            <hi rend="italics" xmlns="http://www.tei-c.org/ns/1.0">annulé</hi>
+          </note>
+          </xsl:otherwise>
+          </xsl:choose>
+      </xsl:template>
 
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Templates copying existing markup</desc>
+  </doc>
     <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass0">
       <xsl:copy-of select="."/>
     </xsl:template>
-
     <xsl:template match="*" mode="pass0">
       <xsl:copy>
 	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
