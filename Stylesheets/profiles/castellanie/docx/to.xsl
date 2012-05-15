@@ -199,17 +199,17 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <xsl:template match="add[@place='leftMargin' or
-			 @place='rightMargin']|hi[@place='leftMargin' or
-			 @place='rightMargin']" mode="pass0">
+			 @place='rightMargin']|hi[@rend='leftMargin' or
+			 @rend='rightMargin']" mode="pass0">
       <note xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:attribute name="place">
 	  <xsl:choose>
 	    <xsl:when test="@place='margin'">marginInner</xsl:when>
 	    <xsl:otherwise>
 	      <xsl:text>margin</xsl:text>
-	      <xsl:value-of select="upper-case(substring(@place,1,1))"/>
+	      <xsl:value-of select="upper-case(substring(@place|@rend,1,1))"/>
 	      <xsl:value-of
-		  select="replace(substring(@place,2),'Margin','')"/>
+		  select="replace(substring(@place|@rend,2),'Margin','')"/>
 	    </xsl:otherwise>
 	  </xsl:choose>	  
 	</xsl:attribute>
