@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
+                xpath-default-namespace="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:iso="http://www.iso.org/ns/1.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -29,7 +30,7 @@
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p> TEI stylesheet for making Word docx files from TEI XML (see tei-docx.xsl) for EHESS </p>
+         <p> TEI stylesheet for making Word docx files from TEI XML for EHESS </p>
          <p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -83,6 +84,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="pass0">
 	<xsl:apply-templates mode="pass0"/>
       </xsl:variable>
+      <!--
+	  <xsl:result-document href="/tmp/x.xml">
+	  <xsl:copy-of select="$pass0"/>
+	  </xsl:result-document>
+      -->
       <xsl:for-each select="$pass0/*">
 	<xsl:call-template name="write-docxfiles"/>
 	<xsl:call-template name="create-document-dot-xml"/>
@@ -95,20 +101,20 @@ of this software, even if advised of the possibility of such damage.
 	page breaks and line breaks are discarded in first pass
       </desc>
     </doc>
-    <xsl:template match="tei:lb" mode="pass0"/>
+    <xsl:template match="lb" mode="pass0"/>
 
-    <xsl:template match="tei:pb" mode="pass0"/>
+    <xsl:template match="pb" mode="pass0"/>
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	lists without a type attribute are assumed to be ordered
       </desc>
     </doc>
-    <xsl:template match="tei:list[not(@type)]" mode="pass0">
-      <tei:list>
+    <xsl:template match="list[not(@type)]" mode="pass0">
+      <list xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:attribute name="type">ordered</xsl:attribute>
 	<xsl:apply-templates mode="pass0" select="@*|*"/>
-      </tei:list>
+      </list>
     </xsl:template>
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
@@ -116,11 +122,11 @@ of this software, even if advised of the possibility of such damage.
 	items are numbered sequentially passim
       </desc>
     </doc>
-    <xsl:template match="tei:item" mode="pass0">
-      <tei:item>
+    <xsl:template match="item" mode="pass0">
+      <item  xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:attribute name="n"><xsl:number level="any"/></xsl:attribute>
 	<xsl:apply-templates mode="pass0" select="text()|@*|*"/>
-      </tei:item>
+      </item>
     </xsl:template>
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
@@ -129,12 +135,12 @@ of this software, even if advised of the possibility of such damage.
       </desc>
     </doc>
 
-    <xsl:template match="tei:add[@place='interlinear']" mode="pass0">
+    <xsl:template match="add[@place='interlinear']" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
-      <tei:note place="foot">
+      <note place="foot"  xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates mode="pass0"/>
 	<xsl:text>] ajouté en interligne</xsl:text>
-      </tei:note>
+      </note>
     </xsl:template>
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
@@ -142,12 +148,12 @@ of this software, even if advised of the possibility of such damage.
 	add footnote for unclear reading
       </desc>
     </doc>
-    <xsl:template match="tei:unclear" mode="pass0">
+    <xsl:template match="unclear" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
-      <tei:note place="foot">
+      <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates mode="pass0"/>
 	<xsl:text>] lecture incertaine</xsl:text>
-      </tei:note>
+      </note>
     </xsl:template>
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
@@ -156,13 +162,13 @@ of this software, even if advised of the possibility of such damage.
       </desc>
     </doc>
 
-    <xsl:template match="tei:supplied[@reason]" mode="pass0">
+    <xsl:template match="supplied[@reason]" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
-      <tei:note place="foot">
+      <note place="foot"  xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates mode="pass0"/>
 	<xsl:text>] </xsl:text>
 	<xsl:value-of select="@reason"/>
-      </tei:note>
+      </note>
     </xsl:template>
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
@@ -170,26 +176,31 @@ of this software, even if advised of the possibility of such damage.
 	add footnote for damage
       </desc>
     </doc>
-    <xsl:template match="tei:damage[@extent and @type]" mode="pass0">
+    <xsl:template match="damage" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
-      <tei:note place="foot">
-	<xsl:value-of select="@type"/>
-	<xsl:text> sur </xsl:text>
-	<xsl:value-of select="@extent"/>
-      </tei:note>
+      <note place="foot"  xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:choose>
+	<xsl:when test="@extent and @type">
+	  <xsl:value-of select="@type"/>
+	  <xsl:text> sur </xsl:text>
+	  <xsl:value-of select="@extent"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>support endommagé</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+      </note>
     </xsl:template>
 
-    <xsl:template match="tei:damage" mode="pass0">
-      <tei:note place="foot">
-	<xsl:text>support endommagé</xsl:text>
-      </tei:note>
+    <xsl:template match="add[@place='leftMargin' or
+			 @place='rightMargin']">
     </xsl:template>
 
-    <xsl:template match="tei:del[@rend='overstrike']" mode="pass0">
-      <tei:note place="foot">
+    <xsl:template match="del[@rend='overstrike']" mode="pass0">
+      <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates mode="pass0"/>
 	<xsl:text> biffé</xsl:text>
-      </tei:note>
+      </note>
     </xsl:template>
 
     <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass0">
