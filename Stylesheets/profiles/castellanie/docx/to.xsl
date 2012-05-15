@@ -223,12 +223,21 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	Marginal notes map to corresponding Word style, albeit named
+	slightly differently
+      </desc>
+    </doc>
   <xsl:template match="note[@place='margin'
 		       or @place='marginOuter'
 		       or @place='marginLeft'
 		       or @place='marginRight']">
     <xsl:call-template name="block-element">
-        <xsl:with-param name="style" select="replace(@place,'m','M')"/>
+        <xsl:with-param name="style">
+	  <xsl:text>MarginNote</xsl:text>
+	  <xsl:value-of select="substring-after(@place,'margin')"/>
+	</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 </xsl:stylesheet>

@@ -226,6 +226,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:msName">true</xsl:when>
         <xsl:when test="self::tei:name">true</xsl:when>
         <xsl:when test="self::tei:note[@place='margin']">false</xsl:when>
+        <xsl:when test="self::tei:note[@place='marginOuter']">false</xsl:when>
+        <xsl:when test="self::tei:note[@place='marginLeft']">false</xsl:when>
+        <xsl:when test="self::tei:note[@place='marginRight']">false</xsl:when>
         <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
