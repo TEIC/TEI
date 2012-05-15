@@ -31,8 +31,6 @@
                 version="2.0"
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso      tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
-       <xsl:import href="../../common2/header.xsl"/>
-       <xsl:import href="../../common2/i18n.xsl"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
