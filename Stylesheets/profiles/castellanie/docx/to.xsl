@@ -290,7 +290,6 @@ of this software, even if advised of the possibility of such damage.
 		       or @place='marginOuter'
 		       or @place='marginLeft'
 		       or @place='marginRight']">
-<xsl:message>Margin note <xsl:value-of select="@place"/></xsl:message>
     <xsl:call-template name="block-element">
         <xsl:with-param name="style">
 	  <xsl:text>MarginNote</xsl:text>
@@ -303,8 +302,10 @@ of this software, even if advised of the possibility of such damage.
   <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl">
   <desc>Change foreign without @xml:lang to vernacular style</desc>
   </doc>
-  <xsl:template match="foreign[not(@xml:lang)]"  mode="pass0">
-    <hi rend="vernacular" xmlns="http://www.tei-c.org/ns/1.0"><xsl:apply-templates mode="pass0"/></hi>
+  <xsl:template match="foreign[not(@xml:lang)]">
+    <xsl:call-template name="processInline">
+      <xsl:with-param name="stylename">vernacular</xsl:with-param>
+    </xsl:call-template>
   </xsl:template>
   
   

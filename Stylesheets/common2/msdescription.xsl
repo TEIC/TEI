@@ -42,34 +42,6 @@ of this software, even if advised of the possibility of such damage.
   </doc>
 
 
-  <xsl:template name="processAsSection">
-    <xsl:param name="heading"/>
-    <xsl:param name="level"/>
-    <xsl:param name="implicitBlock"/>
-    <xsl:apply-templates/>
-  </xsl:template>
-  <xsl:template name="processBlock">
-    <xsl:param name="style"/>
-    <xsl:apply-templates/>
-  </xsl:template>
-  <xsl:template name="processInline">
-    <xsl:param name="before"/>
-    <xsl:param name="after"/>
-    <xsl:param name="style"/>
-    <xsl:value-of select="$before"/>
-    <xsl:apply-templates/>
-    <xsl:value-of select="$after"/>
-  </xsl:template>
-  <xsl:template name="processWithLabel">
-    <xsl:param name="before"/>
-    <xsl:value-of select="$before"/>
-    <xsl:text>: </xsl:text>
-    <xsl:apply-templates/>
-  </xsl:template>
-  <xsl:template name="msLiteral">
-    <xsl:param name="text"/>
-    <xsl:value-of select="$text"/>
-  </xsl:template>
   <!-- headings -->
   <xsl:template match="tei:accMat">
     <xsl:call-template name="processAsSection">
@@ -292,7 +264,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="preceding-sibling::tei:summary"/>
       <xsl:when test="preceding-sibling::tei:*">
-        <xsl:call-template name="msLiteral">
+        <xsl:call-template name="processLiteral">
           <xsl:with-param name="text">
             <xsl:text>, </xsl:text>
           </xsl:with-param>
@@ -306,7 +278,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:summary">
     <xsl:choose>
       <xsl:when test="preceding-sibling::tei:*">
-        <xsl:call-template name="msLiteral">
+        <xsl:call-template name="processLiteral">
           <xsl:with-param name="text">
             <xsl:text>, </xsl:text>
           </xsl:with-param>
@@ -319,7 +291,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:rubric">
     <xsl:if test="preceding-sibling::tei:*">
-      <xsl:call-template name="msLiteral">
+      <xsl:call-template name="processLiteral">
         <xsl:with-param name="text">
           <xsl:text> </xsl:text>
         </xsl:with-param>
@@ -329,7 +301,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:msItem/tei:author">
     <xsl:if test="preceding-sibling::tei:*">
-      <xsl:call-template name="msLiteral">
+      <xsl:call-template name="processLiteral">
         <xsl:with-param name="text">
           <xsl:text> </xsl:text>
         </xsl:with-param>
@@ -339,7 +311,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:msItem/tei:title">
     <xsl:if test="preceding-sibling::tei:*">
-      <xsl:call-template name="msLiteral">
+      <xsl:call-template name="processLiteral">
         <xsl:with-param name="text">
           <xsl:text> </xsl:text>
         </xsl:with-param>
@@ -403,7 +375,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:dimensions">
     <xsl:for-each select="*">
       <xsl:apply-templates select="."/>
-      <xsl:call-template name="msLiteral">
+      <xsl:call-template name="processLiteral">
         <xsl:with-param name="text">
           <xsl:choose>
             <xsl:when test="string-length(.)=0 and @extent">
@@ -426,7 +398,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:origDate">
     <xsl:apply-imports/>
     <xsl:if test="following-sibling::tei:origPlace">
-      <xsl:call-template name="msLiteral">
+      <xsl:call-template name="processLiteral">
         <xsl:with-param name="text">
           <xsl:text>, </xsl:text>
         </xsl:with-param>
@@ -436,7 +408,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:msIdentifier/tei:*">
     <xsl:apply-imports/>
     <xsl:if test="following-sibling::tei:*/text()">
-      <xsl:call-template name="msLiteral">
+      <xsl:call-template name="processLiteral">
         <xsl:with-param name="text">
           <xsl:text>, </xsl:text>
         </xsl:with-param>

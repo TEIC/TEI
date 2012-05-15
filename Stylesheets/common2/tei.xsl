@@ -222,4 +222,34 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="letters"/>
     <xsl:value-of select="$letters"/>
   </xsl:template>
+
+  <xsl:template name="processAsSection">
+    <xsl:param name="heading"/>
+    <xsl:param name="level"/>
+    <xsl:param name="implicitBlock"/>
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template name="processBlock">
+    <xsl:param name="style"/>
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template name="processInline">
+    <xsl:param name="before"/>
+    <xsl:param name="after"/>
+    <xsl:param name="style"/>
+    <xsl:value-of select="$before"/>
+    <xsl:apply-templates/>
+    <xsl:value-of select="$after"/>
+  </xsl:template>
+  <xsl:template name="processWithLabel">
+    <xsl:param name="before"/>
+    <xsl:value-of select="$before"/>
+    <xsl:text>: </xsl:text>
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template name="processLiteral">
+    <xsl:param name="text"/>
+    <xsl:value-of select="$text"/>
+  </xsl:template>
+
 </xsl:stylesheet>

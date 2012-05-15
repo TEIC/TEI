@@ -155,18 +155,31 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-        Generic template from msDescription for inline objects
+        Generic template for inline objects
     </desc>
   </doc>
   <xsl:template name="processInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
+    <xsl:param name="stylename"/>
     <w:r>
       <w:rPr>
-        <w:rStyle w:val="tei{local-name()}"/>
-        <xsl:choose>
-          <xsl:when test="$style='italic'">
+        <w:rStyle>
+	  <xsl:attribute name="w:val">
+	    <xsl:choose>
+	      <xsl:when test="$stylename=''">
+		<xsl:text>tei</xsl:text>
+		<xsl:value-of select="local-name()"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$stylename"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	</w:rStyle>
+	<xsl:choose>
+	  <xsl:when test="$style='italic'">
             <w:i/>
           </xsl:when>
           <xsl:when test="$style='bold'">
@@ -228,7 +241,7 @@ of this software, even if advised of the possibility of such damage.
         Generic template from msDescription for literal text
     </desc>
   </doc>
-  <xsl:template name="msLiteral">
+  <xsl:template name="processLiteral">
     <xsl:param name="text"/>
     <w:r>
       <w:rPr/>
