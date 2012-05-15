@@ -98,12 +98,18 @@ of this software, even if advised of the possibility of such damage.
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	page breaks and line breaks are discarded in first pass
+	 line breaks are discarded in first pass
       </desc>
     </doc>
     <xsl:template match="lb" mode="pass0"/>
 
-    <xsl:template match="pb" mode="pass0"/>
+    <xsl:template match="pb" mode="pass0">
+      <note place="marginOuter"  xmlns="http://www.tei-c.org/ns/1.0">
+	<xsl:text>[p. </xsl:text>
+	<xsl:value-of select="@n"/>
+	<xsl:text>]</xsl:text>
+      </note>      
+    </xsl:template>
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
@@ -164,7 +170,7 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template match="supplied[@reason]" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
-      <note place="foot"  xmlns="http://www.tei-c.org/ns/1.0">
+      <note place="foot" xmlns="http://www.tei-c.org/ns/1.0">
 	<xsl:apply-templates mode="pass0"/>
 	<xsl:text>] </xsl:text>
 	<xsl:value-of select="@reason"/>
@@ -193,7 +199,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <xsl:template match="add[@place='leftMargin' or
-			 @place='rightMargin']">
+			 @place='rightMargin']" mode="pass0">
+      <note xmlns="http://www.tei-c.org/ns/1.0">
+	<xsl:copy-of select="@place"/>
+	<xsl:apply-templates mode="pass0"/>
+      </note>
     </xsl:template>
 
     <xsl:template match="del[@rend='overstrike']" mode="pass0">
@@ -213,4 +223,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
+  <xsl:template match="note[@place='margin'
+		       or @place='marginOuter'
+		       or @place='marginLeft'
+		       or @place='marginRight']">
+    <xsl:call-template name="block-element">
+        <xsl:with-param name="style" select="replace(@place,'m','M')"/>
+    </xsl:call-template>
+  </xsl:template>
 </xsl:stylesheet>
