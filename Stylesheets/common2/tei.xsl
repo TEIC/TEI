@@ -10,6 +10,14 @@
                 exclude-result-prefixes="s tei fotex xsi sch fo"
                 version="2.0">
   <xsl:import href="tei-param.xsl"/>
+  <xsl:import href="core.xsl"/>
+  <xsl:import href="textstructure.xsl"/>
+  <xsl:import href="header.xsl"/>
+  <xsl:import href="linking.xsl"/>
+  <xsl:import href="figures.xsl"/>
+  <xsl:import href="textcrit.xsl"/>
+  <xsl:import href="i18n.xsl"/>
+  <xsl:import href="functions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet definitions common for all of HTML, FO and LaTeX
@@ -127,14 +135,6 @@ of this software, even if advised of the possibility of such damage.
 			    tei:vColl tei:vDefault tei:vLabel
 			    tei:vMerge tei:vNot tei:vRange tei:valItem
 			    tei:valList tei:vocal"/>
-  <xsl:include href="core.xsl"/>
-  <xsl:include href="textstructure.xsl"/>
-  <xsl:include href="header.xsl"/>
-  <xsl:include href="linking.xsl"/>
-  <xsl:include href="figures.xsl"/>
-  <xsl:include href="textcrit.xsl"/>
-  <xsl:include href="i18n.xsl"/>
-  <xsl:include href="functions.xsl"/>
 
   <xsl:key name="APP" match="tei:app" use="1"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">

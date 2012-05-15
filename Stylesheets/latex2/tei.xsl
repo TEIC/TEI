@@ -5,6 +5,18 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="s xs tei"
                 version="2.0">
+  <xsl:import href="core.xsl"/>
+  <xsl:import href="corpus.xsl"/>
+  <xsl:import href="drama.xsl"/>
+  <xsl:import href="figures.xsl"/>
+  <xsl:import href="header.xsl"/>
+  <xsl:import href="linking.xsl"/>
+  <xsl:import href="namesdates.xsl"/>
+  <xsl:import href="tagdocs.xsl"/>
+  <xsl:import href="textstructure.xsl"/>
+  <xsl:import href="transcr.xsl"/>
+  <xsl:import href="verse.xsl"/>
+  <xsl:import href="textcrit.xsl"/>
   <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <xsl:import href="../common2/verbatim.xsl"/>
@@ -53,18 +65,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:output method="text" encoding="utf8"/>
 
   <xsl:preserve-space elements="tei:hi tei:emph tei:foreign tei:p"/>
-  <xsl:include href="core.xsl"/>
-  <xsl:include href="corpus.xsl"/>
-  <xsl:include href="drama.xsl"/>
-  <xsl:include href="figures.xsl"/>
-  <xsl:include href="header.xsl"/>
-  <xsl:include href="linking.xsl"/>
-  <xsl:include href="namesdates.xsl"/>
-  <xsl:include href="tagdocs.xsl"/>
-  <xsl:include href="textstructure.xsl"/>
-  <xsl:include href="transcr.xsl"/>
-  <xsl:include href="verse.xsl"/>
-  <xsl:include href="textcrit.xsl"/>
 
   <xsl:param name="startNamespace">\color{red}</xsl:param>
   <xsl:param name="startElement">{</xsl:param>

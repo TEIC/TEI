@@ -180,7 +180,10 @@ Use real name of graphics files rather than pointers
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="float">
       <desc>
-When processing a "pb" element, decide what to generate: "active" generates a page break; "visible" genrates a bracketed number (with scissors), and "bracketsonly" generates a bracketed number (without scissors).
+When processing a "pb" element, decide what to generate: "active"
+generates a page break; "visible" generates a bracketed number (with
+scissors), and "bracketsonly" generates a bracketed number (without
+scissors).
 </desc>
    </doc>
    <xsl:param name="pagebreakStyle"/>

@@ -51,7 +51,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-   <xsl:key name="APP" match="tei:app" use="1"/>
+   <xsl:key name="APPREADINGS" match="tei:app[starts-with(@from,'#')]" use="substring(@from,2)"/>
    
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
@@ -93,5 +93,34 @@ of this software, even if advised of the possibility of such damage.
       </xsl:with-param>
     </xsl:call-template>
     </xsl:template>
+
+    <xsl:template match="tei:w">
+      <xsl:apply-templates/>
+      <xsl:if test="not(tei:app) and @xml:id">
+	<xsl:call-template name="findApp"/>
+      </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="findApp">
+      <xsl:for-each select="key('APPREADINGS',@xml:id)">
+	<xsl:apply-templates select="."/>
+      </xsl:for-each>
+    </xsl:template>
+	 
+  <xsl:template match="tei:l[tei:w]"
+		priority="999999999">
+<xsl:message>word <xsl:value-of select="."/></xsl:message>
+    <xsl:for-each select="tei:w">      
+      <xsl:apply-templates select="."/>
+      <xsl:if test="preceding-sibling::tei:w">
+	<xsl:text> </xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="tei:back/tei:div[@type='apparatus']"
+		priority="9999"/>
+
+
 
 </xsl:stylesheet>
