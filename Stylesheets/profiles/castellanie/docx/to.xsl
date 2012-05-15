@@ -135,7 +135,7 @@ of this software, even if advised of the possibility of such damage.
     </doc>
     <xsl:template match="item" mode="pass0">
       <item  xmlns="http://www.tei-c.org/ns/1.0">
-	<xsl:attribute name="n"><xsl:number level="any"/></xsl:attribute>
+	<xsl:attribute name="n"><xsl:number level="any" from="tei:text"/></xsl:attribute>
 	<xsl:apply-templates mode="pass0" select="text()|@*|*"/>
       </item>
     </xsl:template>
@@ -304,7 +304,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="foreign[not(@xml:lang)]">
     <xsl:call-template name="processInline">
-      <xsl:with-param name="stylename">vernacular</xsl:with-param>
+      <xsl:with-param name="style">vernacular</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
