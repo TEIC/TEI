@@ -118,7 +118,7 @@ of this software, even if advised of the possibility of such damage.
     </doc>
     <xsl:template match="tei:item" mode="pass0">
       <tei:item>
-	<xsl:attribute name="type"><xsl:number level="any"/></xsl:attribute>
+	<xsl:attribute name="n"><xsl:number level="any"/></xsl:attribute>
 	<xsl:apply-templates mode="pass0" select="text()|@*|*"/>
       </tei:item>
     </xsl:template>
@@ -137,6 +137,11 @@ of this software, even if advised of the possibility of such damage.
       </tei:note>
     </xsl:template>
 
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	add footnote for unclear reading
+      </desc>
+    </doc>
     <xsl:template match="tei:unclear" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
       <tei:note place="foot">
@@ -144,6 +149,12 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>] lecture incertaine</xsl:text>
       </tei:note>
     </xsl:template>
+
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	add footnote for supplied text
+      </desc>
+    </doc>
 
     <xsl:template match="tei:supplied[@reason]" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
@@ -154,6 +165,11 @@ of this software, even if advised of the possibility of such damage.
       </tei:note>
     </xsl:template>
 
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	add footnote for damage
+      </desc>
+    </doc>
     <xsl:template match="tei:damage[@extent and @type]" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
       <tei:note place="foot">
