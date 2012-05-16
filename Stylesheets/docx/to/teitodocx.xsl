@@ -2381,6 +2381,14 @@ of this software, even if advised of the possibility of such damage.
       <w:br w:type="page"/>
     </w:r>
   </xsl:template>
+
+   <xsl:template match="tei:att">
+    <xsl:call-template name="processInline">
+      <xsl:with-param name="before">@</xsl:with-param>
+      <xsl:with-param name="style">italic</xsl:with-param>
+    </xsl:call-template>
+   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
         A signature block
