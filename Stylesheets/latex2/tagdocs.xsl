@@ -72,7 +72,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element att</desc>
    </doc>
   <xsl:template match="tei:att">
-      <xsl:text>\textbf{@</xsl:text>
+      <xsl:text>\textit{@</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
   </xsl:template>

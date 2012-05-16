@@ -649,7 +649,11 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="."/>
+        <xsl:call-template name="verbatim-Text">
+          <xsl:with-param name="words">
+            <xsl:value-of select="."/>
+          </xsl:with-param>
+        </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

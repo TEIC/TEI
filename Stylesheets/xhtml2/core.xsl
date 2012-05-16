@@ -433,8 +433,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:att">
     <span class="gi">
-      <b>@<xsl:apply-templates/>
-         </b>
+      <xsl:text>@</xsl:text>
+      <xsl:apply-templates/>
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

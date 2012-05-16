@@ -303,7 +303,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:att">
       <inline hyphenate="false" color="{$giColor}" font-family="{$typewriterFont}"
-              font-weight="bold">
+              font-style="italic">
          <xsl:text>@</xsl:text>
          <xsl:apply-templates/>
       </inline>
