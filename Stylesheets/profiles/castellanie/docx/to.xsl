@@ -304,7 +304,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="foreign[not(@xml:lang)]">
     <xsl:call-template name="processInline">
-      <xsl:with-param name="style">vernacular</xsl:with-param>
+      <xsl:with-param name="stylename">vernacular</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
