@@ -205,6 +205,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template match="ROW/TABLE" mode="tcp">
+    <cell>
+      <table>
+	<xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="tcp"/>
+      </table>
+    </cell>
+  </xsl:template>
+
   <xsl:template match="EEBO" mode="tcp">
     <xsl:apply-templates select="*" mode="tcp"/>
   </xsl:template>
@@ -1953,6 +1961,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <xsl:template match="@old"/>
+  <xsl:template match="milestone/@unit[.='unspec']"/>
   <xsl:template match="ref/@from"/>
   <xsl:template match="@mergedin">
     <xsl:attribute name="mergedIn">
