@@ -6,7 +6,8 @@ GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
-XELATEXFLAGS=--interaction=batchmode --output-driver="xdvipdfmx -V 5"
+XELATEXFLAGS=--output-driver="xdvipdfmx -V 5" 
+#--interaction=batchmode
 XELATEX=xelatex 
 VERBOSE=
 PREFIX=/usr
@@ -151,6 +152,16 @@ pdf.stamp: check
 	done
 	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines)
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines)
+	makeindex -s p5.ist Guidelines 
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines)
+	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines)
+	rm Guidelines.xml
+	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
+	touch pdf.stamp
+
+lessverbosepdf:
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> pdfbuild.log 1> pdfbuild.log
@@ -161,9 +172,6 @@ pdf.stamp: check
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
 	rm pdfbuild.log
-	rm Guidelines.xml
-	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
-	touch pdf.stamp
 
 
 chapterpdfs:
