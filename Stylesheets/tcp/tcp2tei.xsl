@@ -1455,7 +1455,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="@UNIT" mode="tcp">
     <xsl:attribute name="unit">
-      <xsl:value-of select="translate(.,' ','_')"/>
+      <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
   <!-- =============== p4top5 =================== -->
