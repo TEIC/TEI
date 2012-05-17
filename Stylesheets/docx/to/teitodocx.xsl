@@ -2382,7 +2382,7 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
   </xsl:template>
 
-   <xsl:template match="tei:att">
+   <xsl:template match="tei:att|tei:hi[@rend='att']">
     <xsl:call-template name="processInline">
       <xsl:with-param name="before">@</xsl:with-param>
       <xsl:with-param name="style">italic</xsl:with-param>
