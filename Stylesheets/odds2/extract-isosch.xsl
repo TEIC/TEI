@@ -6,20 +6,21 @@
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:oxdoc="http://www.oxygenxml.com/ns/doc/xsl"
                 version="2.0"
                 exclude-result-prefixes="tei rng teix sch xi
-					 #default">
+                                         #default">
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
-    <desc>
-      <p> TEI stylesheet for simplifying TEI ODD markup </p>
-      <p>This software is dual-licensed:
+  <oxdoc:doc scope="stylesheet" type="stylesheet">
+    <oxdoc:desc>
+      <oxdoc:p> TEI stylesheet for simplifying TEI ODD markup </oxdoc:p>
+      <oxdoc:p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
 Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
 
 2. http://www.opensource.org/licenses/BSD-2-Clause
-		
+                
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -44,130 +45,177 @@ data, or profits; or business interruption) however caused and on any
 theory of liability, whether in contract, strict liability, or tort
 (including negligence or otherwise) arising in any way out of the use
 of this software, even if advised of the possibility of such damage.
-</p>
-      <p>Author: See AUTHORS</p>
-      <p>Id: $Id$</p>
-      <p>Copyright: 2011, TEI Consortium</p>
-    </desc>
-  </doc>
-
+</oxdoc:p>
+      <oxdoc:p>Author: See AUTHORS</oxdoc:p>
+      <oxdoc:p>Id: $Id$</oxdoc:p>
+      <oxdoc:p>Copyright: 2011, TEI Consortium</oxdoc:p>
+      <oxdoc:p/>
+      <oxdoc:p>Modified 2012-05 by Syd Bauman: It seems that ISO Schematron does not have
+        a <oxdoc:pre>&lt;key></oxdoc:pre> element. In fact, ISO 19757-3:2006 explicitly
+        says “The XSLT key element may be used, in the XSLT namespace, before the pattern
+        elements.” So we could just ignore <oxdoc:pre>&lt;key></oxdoc:pre> elements in
+        the (ISO) Schematron namespace, but since then the user will likely not be
+        getting what is intended, we’ll issue an error message as well.</oxdoc:p>
+    </oxdoc:desc>
+  </oxdoc:doc>
+  
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="lang"></xsl:param>
-  <xsl:key name="NS" 
-	   match="sch:ns"
-	   use="1"/>
 
-  <xsl:key name="PATTERNS"
-	   match="sch:pattern"
-	   use="1"/>
+  <xsl:key name="NSs" 
+           match="sch:ns"
+           use="1"/>
 
-  <xsl:key name="CONSTRAINTS"
-	   match="tei:constraint"
-	   use="1"/>
+  <xsl:key name="KEYs" 
+           match="xsl:key"
+           use="1"/>
 
+  <xsl:key name="badKEYs" 
+           match="sch:key"
+           use="1"/>
+
+  <xsl:key name="PATTERNs"
+           match="sch:pattern"
+           use="1"/>
+
+  <xsl:key name="CONSTRAINTs"
+           match="tei:constraint"
+           use="1"/>
 
   <xsl:template match="/">
-      <schema queryBinding="xslt2">
-         <title>ISO Schematron rules</title>
-         <xsl:for-each select="key('NS',1)">
-            <xsl:choose>
-               <xsl:when test="ancestor::teix:egXML"/>
-	       <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
-		 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
-               <xsl:otherwise>
-                  <xsl:apply-templates select="."/>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:for-each>
+    <schema queryBinding="xslt2">
+      <title>ISO Schematron rules</title>
 
-         <xsl:for-each select="key('PATTERNS',1)">
-            <xsl:choose>
-               <xsl:when test="ancestor::teix:egXML"/>
-	       <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
-		 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
-               <xsl:otherwise>
-                  <xsl:apply-templates select="."/>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:for-each>
+      <xsl:comment>namespaces:</xsl:comment>
+      <xsl:for-each select="key('NSs',1)">
+        <xsl:choose>
+          <xsl:when test="ancestor::teix:egXML"/>
+          <xsl:when
+            test="ancestor::tei:constraintSpec/@xml:lang
+                 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:otherwise>
+            <xsl:apply-templates select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
 
-         <xsl:for-each select="key('CONSTRAINTS',1)">
-            <xsl:choose>
-               <xsl:when test="ancestor::teix:egXML"/>
-	       <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
-		 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
-               <xsl:otherwise>
-		 <xsl:variable name="patID">
-		   <xsl:choose>
-		     <xsl:when test="ancestor::tei:elementSpec">
-		       <xsl:value-of select="concat(ancestor::tei:elementSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-		     </xsl:when>
-		     <xsl:when test="ancestor::tei:classSpec">
-		       <xsl:value-of select="concat(ancestor::tei:classSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-		     </xsl:when>
-		     <xsl:when test="ancestor::tei:macroSpec">
-		       <xsl:value-of select="concat(ancestor::tei:macroSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"/>
-		     </xsl:when>
-                        <xsl:otherwise>
-                          <!-- Added 2010-07-03 by Syd Bauman to handle the case in which <constraintSpec> -->
-                          <!-- is a direct child of <schemaSpec>. -->
-                          <xsl:text>constraint-</xsl:text>
-                          <xsl:value-of select="ancestor::tei:constraintSpec/@ident"/>
-                          <xsl:if test="count( ../sch:rule ) > 1">
-                            <xsl:text>-</xsl:text>
-                            <xsl:number/>
-                          </xsl:if>
-                        </xsl:otherwise>
-                     </xsl:choose>
-                  </xsl:variable>
-		 <xsl:if test="sch:rule">
-		   <pattern id="{$patID}">
-		     <xsl:apply-templates select="sch:rule"/>
-		   </pattern>
-		 </xsl:if>
-		 <xsl:if test="sch:assert|sch:report">
-		   <pattern id="{$patID}">
-		     <rule>
-		       <xsl:attribute name="context">
-			 <xsl:text>tei:</xsl:text>
-			 <xsl:choose>
-			   <xsl:when test="ancestor::tei:elementSpec">
-			     <xsl:value-of
-				 select="ancestor::tei:elementSpec/@ident"/>
-			   </xsl:when>
-			   <xsl:otherwise>*</xsl:otherwise>
-			 </xsl:choose>
-		       </xsl:attribute>
-		       <xsl:apply-templates select="sch:assert|sch:report"/>
-		     </rule>
-		   </pattern>
-		 </xsl:if>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:for-each>
-      </schema>
+      <xsl:comment>keys:</xsl:comment>
+      <xsl:for-each select="key('KEYs',1)">
+        <xsl:choose>
+          <xsl:when test="ancestor::teix:egXML"/>
+          <xsl:when
+            test="ancestor::tei:constraintSpec/@xml:lang
+                 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:otherwise>
+            <xsl:apply-templates select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+
+      <xsl:if test="key('badKEYs',1)">
+        <xsl:message>WARNING: You have <xsl:value-of select="count(key('badKEYs',1))"/> &lt;key>
+          elements in the ISO Schematron namespace — but ISO Schematron does not have a &lt;key>
+          element, so they are being summarily ignored. This will likely result in an ISO Schematron
+          schema that does not perform the desired constraint tests properly.</xsl:message>
+      </xsl:if>
+
+      <xsl:comment>patterns:</xsl:comment>
+      <xsl:for-each select="key('PATTERNs',1)">
+        <xsl:choose>
+          <xsl:when test="ancestor::teix:egXML"/>
+          <xsl:when
+            test="ancestor::tei:constraintSpec/@xml:lang
+                 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:otherwise>
+            <xsl:apply-templates select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+
+      <xsl:comment>constraints:</xsl:comment>
+      <xsl:for-each select="key('CONSTRAINTs',1)">
+        <xsl:choose>
+          <xsl:when test="ancestor::teix:egXML"/>
+          <xsl:when
+            test="ancestor::tei:constraintSpec/@xml:lang
+                 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:otherwise>
+            <xsl:variable name="patID">
+              <xsl:choose>
+                <xsl:when test="ancestor::tei:elementSpec">
+                  <xsl:value-of
+                    select="concat(ancestor::tei:elementSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"
+                  />
+                </xsl:when>
+                <xsl:when test="ancestor::tei:classSpec">
+                  <xsl:value-of
+                    select="concat(ancestor::tei:classSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"
+                  />
+                </xsl:when>
+                <xsl:when test="ancestor::tei:macroSpec">
+                  <xsl:value-of
+                    select="concat(ancestor::tei:macroSpec/@ident,'-constraint-',ancestor::tei:constraintSpec/@ident)"
+                  />
+                </xsl:when>
+                <xsl:otherwise>
+                  <!-- Added 2010-07-03 by Syd Bauman to handle the case in which <constraintSpec> -->
+                  <!-- is a direct child of <schemaSpec>. -->
+                  <xsl:text>constraint-</xsl:text>
+                  <xsl:value-of select="ancestor::tei:constraintSpec/@ident"/>
+                  <xsl:if test="count( ../sch:rule ) > 1">
+                    <xsl:text>-</xsl:text>
+                    <xsl:number/>
+                  </xsl:if>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:if test="sch:rule">
+              <pattern id="{$patID}">
+                <xsl:apply-templates select="sch:rule"/>
+              </pattern>
+            </xsl:if>
+            <xsl:if test="sch:assert|sch:report">
+              <pattern id="{$patID}">
+                <rule>
+                  <xsl:attribute name="context">
+                    <xsl:text>tei:</xsl:text>
+                    <xsl:choose>
+                      <xsl:when test="ancestor::tei:elementSpec">
+                        <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+                      </xsl:when>
+                      <xsl:otherwise>*</xsl:otherwise>
+                    </xsl:choose>
+                  </xsl:attribute>
+                  <xsl:apply-templates select="sch:assert|sch:report"/>
+                </rule>
+              </pattern>
+            </xsl:if>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </schema>
   </xsl:template>
   
   <xsl:template match="sch:rule[not(@context)]">
     <rule>
       <xsl:attribute name="context">
-	<xsl:text>tei:</xsl:text>
-	<xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
+        <xsl:text>tei:</xsl:text>
+        <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
       </xsl:attribute>
       <xsl:apply-templates/>
     </rule>
   </xsl:template>
-  
-  
+    
   <xsl:template match="@*|text()|comment()|processing-instruction()">
-      <xsl:copy-of select="."/>
+    <xsl:copy/>
   </xsl:template>
   
-  
-  <xsl:template match="sch:*">
-    <xsl:element name="{local-name()}">
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+  <xsl:template match="sch:*|xsl:key">
+    <xsl:element name="{local-name()}" namespace="{namespace-uri(.)}">
+      <xsl:apply-templates select="@*|node()"/>
     </xsl:element>
   </xsl:template>
-  
+
+  <xsl:template match="sch:key"/>
+
 </xsl:stylesheet>
