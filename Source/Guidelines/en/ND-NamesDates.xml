@@ -119,6 +119,10 @@ I never fly from <name key="LHR" type="place">Heathrow Airport</name>
 to <name key="FR" type="place">France</name></egXML>
 </p>
 
+<p>However, as explained in <ptr target="#CONARS"/>, interchange is 
+improved by use of tag URIs in <att>ref</att> instead of <att>key</att>.
+</p>
+
 <p>The <att>nymRef</att> attribute has a more specialized use, where
 it is the name itself which is of interest rather than the person,
 place, or organization being named. See section <ptr target="#NDNYM"/>
@@ -267,17 +271,17 @@ attribute allows for further subcategorization of the personal name
 itself, for example as a <val>married</val>, <val>maiden</val>, <val>pen</val>,
 <val>pseudo</val>, or <val>religious</val> name.  Consequently the following
 examples are equivalent: <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
-<rs key="DPB1" type="person">David Paul Brown</rs> has suffered the 
+<rs ref="tag:projectname.org,2012:DPB1" type="person">David Paul Brown</rs> has suffered the 
 furniture of his office to be seized 
 the third time for rent.</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
-<rs key="DPB1" type="person">
+<rs ref="tag:projectname.org,2012:DPB1" type="person">
   <name>David Paul Brown</name>
 </rs> has suffered ...</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
-<name key="DPB1" type="person">David Paul Brown</name> has suffered ...</egXML>
+<name ref="tag:projectname.org,2012:DPB1" type="person">David Paul Brown</name> has suffered ...</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">That silly man
-<persName key="DPB1">David Paul Brown</persName> has suffered ...</egXML>
+<persName ref="tag:projectname.org,2012:DPB1">David Paul Brown</persName> has suffered ...</egXML>
 </p>
 <p>The <gi>persName</gi> element is more powerful than the
 <gi>rs</gi> and <gi>name</gi> elements because distinctive name
@@ -393,7 +397,7 @@ Alternatively, it may be felt more appropriate to mark a patronymic as a distinc
 </egXML>
 In the following example, the <att>type</att> attribute is used
 to distinguish a patronymic from other forenames:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="pn9">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:pn9">  
    <forename sort="2">Sergei</forename>
    <forename sort="3" type="patronym">Mikhailovic</forename>
    <surname sort="1">Uspensky</surname>
@@ -413,7 +417,7 @@ should be combined when constructing a sort key for the name.
  but unrelated people. In either case, the <gi>genName</gi>
 element may be used to distinguish such labels from other parts of the name,
 as in the following examples:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><persName key="HEMA1">  
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:HEMA1">  
   <surname>Marques</surname>
   <genName>Junior</genName>,
   <forename>Henrique</forename>
@@ -439,7 +443,7 @@ is often a matter of arbitrary choice whether such components
 are regarded as part of the surname or not; the <gi>nameLink</gi>
 element is provided as a means of making clear what the correct usage
 should be in a given case, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="DUDO1"> 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:DUDO1"> 
    <roleName type="honorific" full="abb">Mme</roleName>
    <nameLink>de la</nameLink>
    <surname>Rochefoucault</surname>
@@ -477,30 +481,30 @@ of the person bearing the name om general. Information about roles,
 occupations, etc. of a person are encoded within the <gi>person</gi>
 element discussed below in <ptr target="#NDPERS"/>.</p>
 <p>Here are some further examples of the usage of these elements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="PGK1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:PGK1">
    <roleName type="nobility">Princess</roleName>
    <forename>Grace</forename>
 </persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="GRMO1" type="pseudo">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:GRMO1" type="pseudo">
    <addName type="honorific">Grandma</addName>
    <surname>Moses</surname>
 </persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="SLWICL1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:SLWICL1">
    <roleName type="office">President</roleName>
    <forename>Bill</forename>
    <surname>Clinton</surname>
 </persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="MOGA1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:MOGA1">
    <roleName type="military">Colonel</roleName>
    <surname>Gaddafi</surname>
 </persName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="FRTG1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:FRTG1">
    <forename>Frederick</forename>
    <addName type="epithet">the Great</addName>
 </persName></egXML>
 </p>
 <p>A name may have any combination of the above elements:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName key="EGBR1">     
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><persName ref="tag:projectname.org,2012:EGBR1">     
    <roleName type="office">Governor</roleName>
    <forename sort="2">Edmund</forename>
    <forename full="init" sort="3">G.</forename>
@@ -550,16 +554,16 @@ This element is a member of the same attribute classes as
 organizational name:  
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDORG-eg-34">About a year back, a question of considerable 
 interest was agitated in the 
-<orgName type="voluntary" key="PAS1">Pennsyla. Abolition Society</orgName></egXML>
+<orgName type="voluntary" ref="tag:projectname.org,2012:PAS1">Pennsyla. Abolition Society</orgName></egXML>
 <!-- From the Diary of Thomas Pym Cope -->
 This encoding is equivalent to, but more specific than, either of the
 following representations:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
-interest was agitated in the  <rs key="PAS1" type="org">
+interest was agitated in the  <rs ref="tag:projectname.org,2012:PAS1" type="org">
 <name>Pennsyla. Abolition Society</name></rs>.</egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
 interest was agitated in the 
-<name key="PAS1" type="org">Pennsyla. Abolition 
+<name ref="tag:projectname.org,2012:PAS1" type="org">Pennsyla. Abolition 
 Society</name>.</egXML>
 As shown above, like the <gi>rs</gi> and <gi>name</gi> elements, the <gi>orgName</gi>
 element has a <att>key</att> attribute with which an external
@@ -675,14 +679,16 @@ this example. This would preserve the distinction indicated by the choice of
 <gi>rs</gi> rather than <gi>name</gi> to encode them in the first
 version of this
 example.</note> <egXML xmlns="http://www.tei-c.org/ns/Examples">After
-spending some time in our <rs key="NY1" type="place">modern <name
-key="BA1" type="place">Babylon</name></rs>, <name key="NY1"
+spending some time in our <rs ref="tag:projectname.org,2012:NY1" type="place">modern <name
+ref="tag:projectname.org,2012:BA1" type="place">Babylon</name></rs>, <name ref="tag:projectname.org,2012:NY1"
 type="place">New York</name>, I have proceeded to 
-the <rs key="PH1" type="place">City of Brotherly Love</rs>.</egXML>
+the <rs ref="tag:projectname.org,2012:PH1" type="place">City of Brotherly Love</rs>.</egXML>
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDPLAC-eg-55">After spending some
-time in our <placeName key="NY1">modern <placeName key="BA1">Babylon</placeName></placeName>, <placeName key="NY1">New
-York</placeName>, I have proceeded to the <placeName key="PH1">City of
+time in our <placeName ref="tag:projectname.org,2012:NY1">modern 
+<placeName ref="tag:projectname.org,2012:BA1">Babylon</placeName></placeName>, 
+<placeName ref="tag:projectname.org,2012:NY1">New
+York</placeName>, I have proceeded to the <placeName ref="tag:projectname.org,2012:PH1">City of
 Brotherly Love</placeName>.</egXML>
 <!-- from letter from 'JK' found in Poulson's Daily Advertiser -->
 	<!-- 8 October, 1835, -->
@@ -712,7 +718,7 @@ as in the following examples:
   <settlement type="city">Rochester</settlement>,
   <region type="state">New York</region>
 </placeName></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="LSEA1">  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName ref="tag:projectname.org,2012:LSEA1">  
   <country type="nation">Laos</country>,
   <bloc type="sub-continent">Southeast Asia</bloc>
 </placeName></egXML>
@@ -730,7 +736,7 @@ mountains, lakes, or rivers, independently of geo-political units.  The
 <gi>geogName</gi> is provided to mark up such names, as an alternative
 to the <gi>placeName</gi> element discussed above. 
 For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">Mississippi River</geogName></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName ref="tag:projectname.org,2012:MIRI1" type="river">Mississippi River</geogName></egXML>
 </p>
 <p>In addition to the usual phrase level elements, the <gi>geogName</gi>
 element may contain the following specialized element:
@@ -741,20 +747,20 @@ element may contain the following specialized element:
 <p>Where the <gi>geogFeat</gi> element is used to characterize the kind of
 geographic feature being named, the <gi>name</gi> element will generally
 also be used to mark the associated proper noun or noun phrase:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName key="MIRI1" type="river">    
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><geogName ref="tag:projectname.org,2012:MIRI1" type="river">    
    <name>Mississippi</name>
    <geogFeat>River</geogFeat> </geogName></egXML> A more complex
    example, showing a variety of practices, follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">The isolated ridge
-   separates two great corridors which run from <name key="GLCO1" type="place">Glencoe</name> into
-<geogName key="GLET1" type="glen">
+   separates two great corridors which run from <name ref="tag:projectname.org,2012:GLCO1" type="place">Glencoe</name> into
+<geogName ref="tag:projectname.org,2012:GLET1" type="glen">
    <geogFeat>Glen</geogFeat>
    <name>Etive</name>
 </geogName>, the
-<geogName key="LAGA1" type="hill">  
+<geogName ref="tag:projectname.org,2012:LAGA1" type="hill">  
    <geogFeat xml:lang="gd">Lairig</geogFeat> 
    <name>Gartain</name>
 </geogName> and the
-<geogName key="LAEI1" type="hill">  
+<geogName ref="tag:projectname.org,2012:LAEI1" type="hill">  
    <geogFeat xml:lang="gd">Lairig</geogFeat> 
    <name>Eilde</name>
 </geogName></egXML></p>
@@ -783,7 +789,7 @@ combination with either a <gi>placeName</gi> or a <gi>geogName</gi>
 element.
 <specList><specDesc key="offset"/><specDesc key="measure"/></specList>
 Some examples of relative place names are:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="NRPA1"> 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName ref="tag:projectname.org,2012:NRPA1"> 
    <offset>near the top of</offset>
    <geogName>     
       <geogFeat>Mount</geogFeat>
@@ -798,7 +804,7 @@ Some examples of relative place names are:
 If desired, the distance specified may be
 normalized using the <att>unit</att> and <att>quantity</att>
 attributes of <gi>measure</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName key="Duncan">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><placeName ref="tag:projectname.org,2012:Duncan">
   <measure unit="km" quantity="17.7">11 miles</measure>
   <offset>Northwest of</offset>
   <settlement type="city">Providence</settlement>, <region type="state">RI</region>
@@ -1068,7 +1074,7 @@ elements:
 </specList>
 All, apart from <gi>langKnowledge</gi>, allow  content of ordinary prose containing phrase-level elements.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<socecStatus key="AB1">Status AB1 in the RG Classification scheme</socecStatus>
+<socecStatus ref="tag:projectname.org,2012:AB1">Status AB1 in the RG Classification scheme</socecStatus>
 </egXML>
 <!-- socecstatus has its own @code and @scheme attributes which need
 exemplifying here too? -->
@@ -1243,7 +1249,7 @@ of 1780 the bishop recommended that Jón
 should <q xml:lang="da">promoveres til andet bedre kald, end det 
 hand hidindtil har havt</q>, and on 12 July it was agreed that 
 he should exchange livings with 
-<name type="person" key="ThorJon">sr. Þórður Jónsson</name> at 
+<name type="person" ref="tag:projectname.org,2012:ThorJon">sr. Þórður Jónsson</name> at 
 <name type="place">Kálfafell á Síðu</name>, 
 <name type="place">Skaftafellssýsla</name>.</p>
 
@@ -2481,7 +2487,7 @@ represented as a hierarchic structure like this:
 <p>The <gi>nym</gi> element may be used for components of geographical
 or organizational names as well. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<geogName key="LAEI1" type="hill">  
+<geogName ref="tag:projectname.org,2012:LAEI1" type="hill">  
    <geogFeat xml:lang="gd" nymRef="#LAIRG">Lairig</geogFeat> 
    <name>Eilde</name>
 </geogName>

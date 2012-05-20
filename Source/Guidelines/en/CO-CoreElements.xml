@@ -1765,6 +1765,9 @@ as provided by a standard reference source.
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NONE" >
 <p><name key="LHR" type="airport">Heathrow</name> </p></egXML>
 </p>
+ 
+<p>The standard reference source should be documented using a <gi>taxonomy</gi> element in the TEI header.</p>
+
 <p>The <att>ref</att> attribute can be used to point directly
 to  some other resource providing more information about the
 entity named by the element, such as an authority record in a
@@ -1782,16 +1785,24 @@ the administration of <rs key="POJA1" type="person">Col. Polk
 suspended enjoyments and pursuits of private and professional
 spheres</p></egXML>
 </p>
+ 
+<p>Since the value of the <att>key</att> attribute does not follow any standard syntax, can only be deciphered by a human reader (possibly by consulting the <gi>taxonomy</gi> element in the TEI header), and could coincide with a value used by another project, such <term>magic tokens</term> or <term>magic cookies</term> should be avoided. A preferred approach for magic tokens which follows standard practice on the Web is to use a <att>ref</att> attribute whose value is a tag URI as defined in <ref target="#RFC4151">RFC 4151</ref>. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONARS-eg-108" xml:lang="en">
+<p><name ref="tag:projectname.org,2012:VOM1" type="person">Mme. de Volanges</name> marie <rs ref="tag:theworksoflaclos.org,2012:VOM2">sa fille</rs>: c'est encore un secret;
+mais elle m'en a fait part hier.</p>
+</egXML>
+The inclusion of the domain name of the party responsible for tagging (<ident>theworksoflaclos.org</ident>), as specified in RFC 4151, helps ensure uniqueness of magic token values across TEI encoding projects, allowing for improved interchange of TEI documents.</p>
 
 <p>The <gi>choice</gi> element discussed in <ptr target="#COED"/> may be
 used if it is desired to record both a normalized form of a name and
 the name used in the source being encoded: 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONARS-eg-110"><p><name key="WADLM1" type="person"><choice>
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CONARS-eg-110">
+<p><name ref="tag:projectname.org,2012:WADLM1" type="person"><choice>
 <orig>Walter de la Mare</orig>
 <reg>de la Mare, Walter</reg>
 </choice></name>
-was born at <name key="Ch1" type="place">Charlton</name>, in
-<name key="KT1" type="county">Kent</name>, in 1873.</p></egXML>
+was born at <name ref="tag:projectname.org,2012:Ch1" type="place">Charlton</name>, in
+<name ref="tag:projectname.org,2012:KT1" type="county">Kent</name>, in 1873.</p></egXML>
 </p><p>The <gi>index</gi> element discussed in <ptr target="#CONOIX"/> may be
 more appropriate if the function of the regularization is to provide a
 consistent index:
