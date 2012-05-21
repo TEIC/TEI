@@ -1737,17 +1737,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <!-- no need for empty <p> in sourceDesc -->
   <xsl:template match="sourceDesc/p[string-length(.)=0]"/>
-  <!-- start creating the new choice element -->
-  <xsl:template match="corr[@sic]">
-    <choice xmlns="http://www.tei-c.org/ns/1.0">
-      <corr>
-        <xsl:value-of select="text()"/>
-      </corr>
-      <sic>
-        <xsl:value-of select="@sic"/>
-      </sic>
-    </choice>
-  </xsl:template>
   <xsl:template match="gap/@desc"/>
   <xsl:template match="gap">
     <gap xmlns="http://www.tei-c.org/ns/1.0">
@@ -1759,6 +1748,17 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
     </gap>
   </xsl:template>
+  <!--  creating a choice element -->
+  <xsl:template match="corr[@sic]">
+    <choice xmlns="http://www.tei-c.org/ns/1.0">
+      <corr>
+        <xsl:value-of select="text()"/>
+      </corr>
+      <sic>
+        <xsl:value-of select="@sic"/>
+      </sic>
+    </choice>
+  </xsl:template>
   <xsl:template match="sic[@corr]">
     <choice xmlns="http://www.tei-c.org/ns/1.0">
       <sic>
@@ -1769,6 +1769,27 @@ of this software, even if advised of the possibility of such damage.
       </corr>
     </choice>
   </xsl:template>
+  <xsl:template match="orig[@reg]">
+    <choice xmlns="http://www.tei-c.org/ns/1.0">
+      <orig>
+        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+      </orig>
+      <reg>
+        <xsl:value-of select="@reg"/>
+      </reg>
+    </choice>
+  </xsl:template>
+  <xsl:template match="reg[@orig]">
+    <choice xmlns="http://www.tei-c.org/ns/1.0">
+      <reg>
+        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+      </reg>
+      <orig>
+        <xsl:value-of select="@orig"/>
+      </orig>
+    </choice>
+  </xsl:template>
+  <xsl:template match="@orig|@reg"/>
   <xsl:template match="abbr[@expan]">
     <choice xmlns="http://www.tei-c.org/ns/1.0">
       <abbr>
@@ -1993,28 +2014,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </div1>
   </xsl:template>
-  <!-- from Conal Tuohy -->
-  <xsl:template match="orig[@reg]">
-    <choice xmlns="http://www.tei-c.org/ns/1.0">
-      <orig>
-        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
-      </orig>
-      <reg>
-        <xsl:value-of select="@reg"/>
-      </reg>
-    </choice>
-  </xsl:template>
-  <xsl:template match="reg[@orig]">
-    <choice xmlns="http://www.tei-c.org/ns/1.0">
-      <reg>
-        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
-      </reg>
-      <orig>
-        <xsl:value-of select="@orig"/>
-      </orig>
-    </choice>
-  </xsl:template>
-  <xsl:template match="@orig|@reg"/>
 
   <!-- remove default values for attributes -->
   <xsl:template match="row/@role[.='data']"/>
