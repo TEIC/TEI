@@ -1985,7 +1985,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <xsl:template match="@old"/>
-  <xsl:template match="milestone/@unit[.='unspec']"/>
+
   <xsl:template match="ref/@from"/>
   <xsl:template match="@mergedin">
     <xsl:attribute name="mergedIn">
