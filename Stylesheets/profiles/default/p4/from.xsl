@@ -301,6 +301,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
+      <xsl:when test="starts-with($val,'http')">
+        <xsl:value-of select="$val"/>jo
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:text>#</xsl:text>
 	<xsl:value-of select="$val"/>
