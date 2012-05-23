@@ -2161,7 +2161,36 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element defaultVal</desc>
   </doc>
-  <xsl:template match="tei:defaultVal" mode="weave"/>
+  <xsl:template match="tei:defaultVal" mode="weave">
+    <xsl:if test="not(../tei:valList)">
+    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>odd_label</xsl:text>
+        </xsl:attribute>
+        <xsl:element namespace="{$outputNS}" name="{$hiName}">
+          <xsl:attribute name="xml:lang">
+            <xsl:value-of select="$documentationLanguage"/>
+          </xsl:attribute>
+          <xsl:attribute name="{$rendName}">
+            <xsl:text>label</xsl:text>
+          </xsl:attribute>
+          <xsl:call-template name="i18n">
+            <xsl:with-param name="word">Default</xsl:with-param>
+          </xsl:call-template>
+        </xsl:element>
+        <xsl:text> </xsl:text>
+      </xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>odd_value</xsl:text>
+        </xsl:attribute>
+	<xsl:value-of select="."/>
+      </xsl:element>
+    </xsl:element>
+    </xsl:if>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element desc</desc>
   </doc>
