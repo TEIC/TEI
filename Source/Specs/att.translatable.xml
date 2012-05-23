@@ -21,8 +21,7 @@ portion of an ODD document.</desc>
   <attList>
     <attDef ident="versionDate" usage="opt">
       <equiv/>
-      <desc>specifies the date on which the translated source text was
-      taken</desc>
+      <desc>specifies the date on which the source text was extracted and sent to the translator</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">번역 버전이 도출된 원본의 버전 이름 또는 수를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明該翻譯版本來源的版本名稱或版本數</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">
@@ -35,6 +34,12 @@ portion of an ODD document.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
       </datatype>
+      <remarks><p>The <att>versionDate</att> attribute can be used to 
+        determine whether a translation might
+        need to be revisited, by comparing the modification date on the
+        containing file with the <att>versionDate</att> value on the translation. If the
+        file has changed, changelogs can be checked to see whether the source
+        text has been modified since the translation was made.</p></remarks>
     </attDef>
   </attList>
 </classSpec>
