@@ -96,11 +96,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:attribute name="place">margin</xsl:attribute>
   </xsl:template>
   <!-- TCP controversial changes -->
-  <xsl:template match="FIGURE/SIGNED" mode="tcp">
-    <ab type="signed">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-    </ab>
-  </xsl:template>
   <!--
       <xsl:template match="HEAD/L" mode="tcp">
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
