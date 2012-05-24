@@ -66,4 +66,28 @@ of this software, even if advised of the possibility of such damage.
      <xsl:copy-of select="$readings"/>
      <xsl:text>}}</xsl:text>
    </xsl:template>
+
+    <xsl:template match="tei:lg">
+      <xsl:choose>
+	<xsl:when test="count(key('APP',1))&gt;0">
+	  <xsl:variable name="c" select="(count(tei:l)+1) div 2"/>
+	  <xsl:text>\setstanzaindents{1,1,0}</xsl:text>
+	  <xsl:text>\setcounter{stanzaindentsrepetition}{</xsl:text>
+	  <xsl:value-of select="$c"/>
+	  <xsl:text>}</xsl:text>
+	  <xsl:text>\stanza&#10;</xsl:text>
+	  <xsl:for-each select="tei:l">
+	    <xsl:apply-templates/>
+	    <xsl:if test="following-sibling::tei:l">
+	      <xsl:text>&amp;</xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+	  <xsl:text>\&amp;&#10;</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
+
 </xsl:stylesheet>

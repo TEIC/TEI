@@ -214,6 +214,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:if test="count(key('APP',1))&gt;0">
 \beginnumbering
+\def\endstanzaextra{\pstart\centering---------\skipnumbering\pend}
 </xsl:if>
       <xsl:apply-templates/>
       <xsl:if test="count(key('APP',1))&gt;0">
@@ -329,7 +330,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>the main TEI text</desc>
    </doc>
   <xsl:template match="tei:text">
       <xsl:choose>
