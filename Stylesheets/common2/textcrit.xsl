@@ -103,22 +103,29 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <xsl:template match="tei:w">
-      <xsl:apply-templates/>
-
-      <xsl:if test="not(tei:app) and @xml:id">
-	<xsl:call-template name="findApp"/>
-      </xsl:if>
-
+      <xsl:choose>
+	<xsl:when test="not(tei:app) and key('APPREADINGS',@xml:id)">
+	  <xsl:call-template name="findApp"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template name="findApp">
       <xsl:variable name="sourcelem" select="."/>
       <xsl:for-each select="key('APPREADINGS',@xml:id)">
-	<xsl:if test="count(tei:rdg)&gt;1 or not(.=$sourcelem)">
-	  <xsl:call-template name="makeApp">
-	    <xsl:with-param name="lem" select="$sourcelem"/>
-	  </xsl:call-template>
-	</xsl:if>
+	<xsl:choose>
+	  <xsl:when test="count(tei:rdg)=1 and .=$sourcelem">
+	    <xsl:value-of select="$sourcelem"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="makeApp">
+	      <xsl:with-param name="lem" select="$sourcelem"/>
+	    </xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:for-each>
     </xsl:template>
 	 
