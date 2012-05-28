@@ -117,7 +117,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="sourcelem" select="."/>
       <xsl:for-each select="key('APPREADINGS',@xml:id)">
 	<xsl:choose>
-	  <xsl:when test="count(tei:rdg)=1 and .=$sourcelem">
+	  <xsl:when test="count(tei:rdg)=1 and deep-equal(.,$sourcelem)">
 	    <xsl:value-of select="$sourcelem"/>
 	  </xsl:when>
 	  <xsl:otherwise>
