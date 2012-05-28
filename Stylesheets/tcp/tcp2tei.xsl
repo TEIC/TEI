@@ -1727,9 +1727,11 @@ a) if there is no @n, just @unit   == marginal note, @type='milestone'
     </xsl:choose>
   </xsl:template>
   <xsl:template match="@TYPE" mode="tcp">
-    <xsl:attribute name="type">
-      <xsl:value-of select="translate(translate(.,'(','_'),$intype,'')"/>
-    </xsl:attribute>
+    <xsl:if test="not(.='')">
+      <xsl:attribute name="type">
+	<xsl:value-of select="translate(translate(.,'(','_'),$intype,'')"/>
+      </xsl:attribute>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match="@UNIT" mode="tcp">
