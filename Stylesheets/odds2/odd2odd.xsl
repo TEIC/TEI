@@ -267,7 +267,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="text()|@*" mode="odd2odd-pass0">
+  <xsl:template match="text()|@*|comment()" mode="odd2odd-pass0">
       <xsl:copy-of select="."/>
   </xsl:template>
   
@@ -278,19 +278,19 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="*" mode="odd2odd-pass0">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:apply-templates select="*|text()|processing-instruction()" mode="odd2odd-pass0"/>
+      <xsl:apply-templates select="*|text()|comment()|processing-instruction()" mode="odd2odd-pass0"/>
     </xsl:copy>
   </xsl:template>
 
 
   <!-- ******************* Pass 1, follow schemaSpec ********************************* -->
-  <xsl:template match="@*|processing-instruction()|text()" mode="odd2odd-pass1">
+  <xsl:template match="@*|processing-instruction()|text()|comment()" mode="odd2odd-pass1">
     <xsl:copy-of select="."/>
   </xsl:template>
 
   <xsl:template match="*" mode="odd2odd-pass1">
     <xsl:copy>
-      <xsl:apply-templates mode="odd2odd-pass1" select="*|@*|processing-instruction()|text()"/>
+      <xsl:apply-templates mode="odd2odd-pass1" select="*|@*|processing-instruction()|comment()|text()"/>
     </xsl:copy>
   </xsl:template>
 
@@ -532,7 +532,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="*" mode="odd2odd-pass2">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:apply-templates mode="odd2odd-pass2"/>
+      <xsl:apply-templates mode="odd2odd-pass2" select="text()|comment()|*"/>
     </xsl:copy>
   </xsl:template>
 
