@@ -255,9 +255,11 @@ capable of dealing with UTF-8 directly.
       <xsl:choose>
          <xsl:when test="$reencode='true'">
 \IfFileExists{utf8x.def}%
- {\usepackage[utf8x]{inputenc}}%
+ {\usepackage[utf8x]{inputenc}
+    \PrerenderUnicode{–}
+  }%
  {\usepackage[utf8]{inputenc}}
-\PrerenderUnicode{–}
+
 <xsl:call-template name="latexBabel"/>
 \usepackage[T1]{fontenc}
 \usepackage{float}
