@@ -1506,30 +1506,30 @@ prouerb.
 </doc>
   <xsl:template match="MILESTONE" mode="tcp">
     <xsl:choose>
-      <xsl:when test="@unit and (not(@n) or @n='')">
+      <xsl:when test="@UNIT and (not(@N) or @N='')">
 	<note place="margin">
-	  <xsl:value-of select="@unit"/>
+	  <xsl:value-of select="@UNIT"/>
 	</note>
       </xsl:when>
-      <xsl:when test="not(@unit)">
+      <xsl:when test="not(@UNIT) and @N">
 	<note place="margin" type="milestone">
-	  <xsl:value-of select="@n"/>
+	  <xsl:value-of select="@N"/>
 	</note>
       </xsl:when>
       <!-- this short list seem like editorial words. are there more? -->
-      <xsl:when test="@unit='date' or @unit='folio' or  @unit='line'">
-	<note place="margin" type="milestone" subtype="{@unit}">
-<xsl:message>Milestone 1: <xsl:value-of select="@unit"/>/<xsl:value-of select="@n"/></xsl:message>
-	  <xsl:value-of select="@n"/>
+      <xsl:when test="@UNIT='date' or @UNIT='folio' or  @UNIT='line'">
+	<note place="margin" type="milestone" subtype="{@UNIT}">
+<xsl:message>Milestone 1: <xsl:value-of select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
+	  <xsl:value-of select="@N"/>
 	</note>
       </xsl:when>
       <xsl:otherwise>
-<xsl:message>Milestone 2: <xsl:value-of select="@unit"/><xsl:text> </xsl:text><xsl:value-of select="@n"/></xsl:message>
+<xsl:message>Milestone 2: <xsl:value-of select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of select="@N"/></xsl:message>
 	<note place="margin" type="milestone">
 	  <label>
-	    <xsl:value-of select="@unit"/>
+	    <xsl:value-of select="@UNIT"/>
 	    <xsl:text> </xsl:text>
-	    <xsl:value-of select="@n"/>
+	    <xsl:value-of select="@N"/>
 	  </label>
 	</note>
       </xsl:otherwise>
