@@ -1439,290 +1439,96 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="MILESTONE" mode="tcp">
 <!--
-a) if there is no @n, just @unit   == marginal note, @type='milestone'
+a) if there is no @n, just @unit   == marginal note
 
-        <milestone unit="Anni_regum_britannie"/>
+        <milestone unit="Anni regum britannie"/>
 
  b) if there is no @unit, just a @n, and the @n is not numeric of some kind  == marginal note, @type='milestone'
 
         <milestone n="Washing of a Ship."/>
 
- c) if @unit is from a closed list of words (chapter, section, etc), it is a normal milestone. hope all values of @n are legal
+ c) if @unit is from a closed list of words (page, line, folio), it
+ seems editorial, add as subtype on @note
 
- d) if @unit is plainly from the original, like "Propos.", make a nested <label> from @unit + @n, and hope to allow <label> inside <milestone>
+ d) otherwise, make a  <label> from @unit + @n, and put in a marginal note
 
- e)  otherwise, leave as normal <milestone>
+Dodgy values for @n:
+*
+*,
+Answ.
+Answer.
+Answere.
+Answere:
+Arte.
+A☜
+Chorus.
+Conclus.
+Correction.
+Doctrine.
+E. &amp; 116. f. &amp;c.
+Explana∣tion.
+Maior.
+Minor
+Minor.
+Nature.
+Note:
+Obiect.
+Obiection.
+Practise.
+Probation
+Probation.
+Prouerbe.
+Quest.
+Question.
+Question:
+Temperatur
+Temperature and Vertue.
+Temperature.
+The Cure.
+The Texte.
+The cause.
+The reasone
+The signe.
+The text.
+The texte
+The texte,
+The texte.
+The texte:
+Verse
+Verse.
+Vertue.
+Vse.
+chorus
+ibid
+ibid.
+prouerb.
+&amp;.
+
 -->
     <xsl:choose>
-      <xsl:when test="not(@n) or @n=''">
+      <xsl:when test="@unit and (not(@n) or @n='')">
 	<note place="margin">
 	  <xsl:value-of select="@unit"/>
 	</note>
       </xsl:when>
-      <xsl:when test="@n='&amp;'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='&amp;.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='*'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='*,'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Answ.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Answer.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Answere.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Answere:'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Arte.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='A☜'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Chorus.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Conclus.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Correction.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Doctrine.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='E. &amp; 116. f. &amp;c.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Explana∣tion.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Maior.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Minor'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Minor.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Nature.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Note:'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Obiect.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Obiection.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Practise.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Probation'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Probation.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Prouerbe.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Quest.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Question.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Question:'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Temperatur'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Temperature and Vertue.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Temperature.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The Cure.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The Texte.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The cause.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The reasone'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The signe.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The text.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The texte'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The texte,'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The texte.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='The texte:'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Verse'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Verse.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Vertue.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='Vse.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='chorus'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='ibid'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='ibid.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@n='prouerb.'">
-	<note place="margin" type="milestone">
-	  <xsl:apply-templates select="@n"/>
-	</note>
-      </xsl:when>
       <xsl:when test="not(@unit)">
-	<milestone unit="unspec">
-	  <xsl:apply-templates mode="tcp" select="@*"/>
-	</milestone>
+	<note place="margin" type="milestone">
+	  <xsl:value-of select="@n"/>
+	</note>
+      </xsl:when>
+      <xsl:when test="@unit='date' or @unit='folio' or  @unit='line'">
+	<note place="margin" type="milestone" subtype="{@unit}">
+	  <xsl:value-of select="@n"/>
+	</note>
       </xsl:when>
       <xsl:otherwise>
-	<milestone>
-	  <xsl:apply-templates mode="tcp" select="@*"/>
-	</milestone>
+	<note place="margin" type="milestone">
+	  <label>
+	    <xsl:value-of select="@unit"/>
+	    <xsl:text> </xsl:text>
+	    <xsl:value-of select="@n"/>
+	  </label>
+	</note>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
