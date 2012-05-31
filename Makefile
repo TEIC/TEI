@@ -192,9 +192,8 @@ valid: check
 #
 	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
 	./run-onvdl p5.nvdl ${DRIVER} 
-	@echo BUILD: Check validity with rnv
-	xmllint --noent --xinclude ${DRIVER} > Source.xml
-	rnv -v p5odds.rnc Source.xml
+	@echo BUILD: Check validity with rnv if we have it
+	-which rnv && (xmllint --noent --xinclude ${DRIVER} > Source.xml; rnv -v p5odds.rnc Source.xml)
 	@echo BUILD: Check full validity of relevant examples with nvdl
 	${SAXON} ${DRIVER} Utilities/extractegXML.xsl > v.body
 	echo "<!DOCTYPE p [" > v.header
@@ -440,8 +439,6 @@ check.stamp:
 	@which ${JING} || exit 1
 	@echo -n saxon: 
 	@which ${SAXON} || exit 1
-	@echo -n rnv: 
-	@which rnv || exit 1
 	@echo -n roma2: 
 	@which roma2 || exit 1
 	@echo -n onvdl: 
