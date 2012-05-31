@@ -1516,6 +1516,11 @@ prouerb.
 	  <xsl:value-of select="@N"/>
 	</note>
       </xsl:when>
+      <xsl:when test="@UNIT='unspec' and @N">
+	<note place="margin" type="milestone">
+	  <xsl:value-of select="@N"/>
+	</note>
+      </xsl:when>
       <!-- this short list seem like editorial words. are there more? -->
       <xsl:when test="@UNIT='date' or @UNIT='folio' or  @UNIT='line'">
 	<note place="margin" type="milestone" subtype="{@UNIT}">
