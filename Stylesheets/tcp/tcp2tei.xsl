@@ -1438,19 +1438,19 @@ of this software, even if advised of the possibility of such damage.
     </titleStmt>
   </xsl:template>
   <xsl:template match="MILESTONE" mode="tcp">
-<!--
-a) if there is no @n, just @unit   == marginal note
 
-        <milestone unit="Anni regum britannie"/>
-
- b) if there is no @unit, just a @n, and the @n is not numeric of some kind  == marginal note, @type='milestone'
 
         <milestone n="Washing of a Ship."/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc><p>
+	a) if there is no @n, just @unit   == marginal note
+	b) if there is no @unit, just a @n, and the @n is not numeric of some kind  == marginal note, @type='milestone'
 
- c) if @unit is from a closed list of words (page, line, folio), it
- seems editorial, add as subtype on @note
+	c) if @unit is from a closed list of words (page, line, folio), it
+	seems editorial, add as subtype on @note
 
- d) otherwise, make a  <label> from @unit + @n, and put in a marginal note
+	d) otherwise, make a  label from @unit + @n, and put in a
+	marginal note
 
 Dodgy values for @n:
 *
@@ -1504,7 +1504,9 @@ ibid.
 prouerb.
 &amp;.
 
--->
+</p>
+</desc>
+</doc>
     <xsl:choose>
       <xsl:when test="@unit and (not(@n) or @n='')">
 	<note place="margin">
@@ -1516,12 +1518,15 @@ prouerb.
 	  <xsl:value-of select="@n"/>
 	</note>
       </xsl:when>
+      <!-- this short list seem like editorial words. are there more? -->
       <xsl:when test="@unit='date' or @unit='folio' or  @unit='line'">
 	<note place="margin" type="milestone" subtype="{@unit}">
+<xsl:message>Milestone 1: <xsl:value-of select="@unit"/>/<xsl:value-of select="@n"/></xsl:message>
 	  <xsl:value-of select="@n"/>
 	</note>
       </xsl:when>
       <xsl:otherwise>
+<xsl:message>Milestone 2: <xsl:value-of select="@unit"/><xsl:text> </xsl:text><xsl:value-of select="@n"/></xsl:message>
 	<note place="margin" type="milestone">
 	  <label>
 	    <xsl:value-of select="@unit"/>
