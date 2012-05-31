@@ -1437,10 +1437,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates mode="tcp" select="*|@*|processing-instruction()|comment()|text()"/>
     </titleStmt>
   </xsl:template>
-  <xsl:template match="MILESTONE" mode="tcp">
 
-
-        <milestone n="Washing of a Ship."/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc><p>
 	a) if there is no @n, just @unit   == marginal note
@@ -1507,6 +1504,7 @@ prouerb.
 </p>
 </desc>
 </doc>
+  <xsl:template match="MILESTONE" mode="tcp">
     <xsl:choose>
       <xsl:when test="@unit and (not(@n) or @n='')">
 	<note place="margin">
