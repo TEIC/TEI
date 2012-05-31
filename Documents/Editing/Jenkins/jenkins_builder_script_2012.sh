@@ -276,8 +276,20 @@ echo "Starting the Jenkins server."
 #echo "Stylesheets build has been triggered."
 
 echo "OK, we should be done. Now you have to:"
-echo "Go to the Jenkins interface on http://[this_computer_ip]:8080, and set up authentication. Read the Jenkins documentation for help with this."
-echo "If some builds fail initially, it may be simply due to sequencing and timing. Trigger the Stylesheets build, and when that's completed, trigger the TEIP5-Test build."
+echo "Go to the Jenkins interface on 
+http://[this_computer_ip]:8080, and set up 
+authentication. Read the Jenkins documentation 
+for help with this."
+echo ""
+echo "Make sure you do this, because your Jenkins 
+installation is currently unsecured, and anyone 
+could make changes to it."
+echo ""
+echo "If some builds fail initially, it may be simply 
+due to sequencing and timing. The Stylesheets build
+must successfully complete before any of the TEIP5 
+builds will be able to work."
+echo ""
 echo "That's it!"
 echo "Press return to exit."
 read
