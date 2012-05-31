@@ -186,7 +186,7 @@ echo "Downloading and building rnv (the RelaxNG validator) from SourceForge."
 echo "First we need libexpat-dev, on which it depends."
 apt-get -y install libexpat-dev
 echo "Now we download rnv, build and install it."
-wget http://downloads.sourceforge.net/project/rnv/Sources/1.7.10/rnv-1.7.10.zip?r=&ts=1338494052&use_mirror=iweb
+wget -O rnv-1.7.10.zip http://downloads.sourceforge.net/project/rnv/Sources/1.7.10/rnv-1.7.10.zip?r=\&ts=1338494052\&use_mirror=iweb
 unzip rnv-1.7.10.zip
 cd rnv-1.7.10
 ./configure
@@ -212,6 +212,8 @@ echo "Getting the Hudson log parsing rules from TEI SVN."
 cd /var/lib/jenkins
 svn export https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/Jenkins/hudson-log-parse-rules
 chown jenkins hudson-log-parse-rules
+svn export https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/Jenkins/hudson.plugins.logparser.LogParserPublisher.xml
+chown jenkins hudson.plugins.logparser.LogParserPublisher.xml
 
 echo "Getting all the job data from TEI SVN."
 #Don't bring down the config.xml file for now; that contains security settings specific to 
