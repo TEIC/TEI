@@ -208,8 +208,12 @@ echo "First we need libexpat-dev, on which it depends."
 apt-get -y install libexpat-dev
 echo ""
 echo "Now we download rnv, build and install it."
-#This seems to be fragile. Let's catch it in case it fails.
-wget -O rnv-1.7.10.zip http://downloads.sourceforge.net/project/rnv/Sources/1.7.10/rnv-1.7.10.zip?r=\&ts=1338494052\&use_mirror=iweb
+#This seems to be fragile. Let's catch it in case it fails. Lots of apparently good URLs fail when 
+#using wget, so I've fallen back on using curl -L. We'll see how reliable this is.
+#wget -O rnv-1.7.10.zip http://sourceforge.net/projects/rnv/files/Sources/1.7.10/rnv-1.7.10.zip/download
+#wget -O rnv-1.7.10.zip http://downloads.sourceforge.net/projects/rnv/Sources/1.7.10/rnv-1.7.10.zip?r=\&ts=1338494052\&use_mirror=iweb
+#wget -O rnv-1.7.10.zip http://sourceforge.net/projects/rnv/files/Sources/1.7.10/rnv-1.7.10.zip/download?use_mirror=voxel
+curl -L http://sourceforge.net/projects/rnv/files/Sources/1.7.10/rnv-1.7.10.zip/download > rnv-1.7.10.zip
 if [ $? != 0 ]; then
 {
     echo "Failed to download rnv source code from SourceForge."
