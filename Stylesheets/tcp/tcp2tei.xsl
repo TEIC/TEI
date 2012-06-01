@@ -1522,7 +1522,10 @@ prouerb.
 	</note>
       </xsl:when>
       <!-- this short list seem like editorial words. are there more? -->
-      <xsl:when test="@UNIT='date' or @UNIT='folio' or  @UNIT='line'">
+      <xsl:when test="@UNIT='date' or @UNIT='folio' or  @UNIT='line'
+		      or  @UNIT='verse'  or  @UNIT='month' or @UNIT='ground of'
+		      or @UNIT='canon' or @UNIT='commandment' or @UNIT='day'
+		      or  @UNIT='leaf' or  @UNIT='monarch' or  @UNIT='year'  @UNIT='chapter'">
 	<note place="margin" type="milestone" subtype="{@UNIT}">
 <xsl:message>Milestone 1: <xsl:value-of select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
 	  <xsl:value-of select="@N"/>
