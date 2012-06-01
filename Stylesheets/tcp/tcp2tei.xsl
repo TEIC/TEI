@@ -129,6 +129,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <!-- this short list seem like editorial words. are there more? -->
       <xsl:when test="
+		      @UNIT='article' or 
 		      @UNIT='canon' or 
 		      @UNIT='chapter' or
 		      @UNIT='commandment' or
@@ -136,9 +137,11 @@ of this software, even if advised of the possibility of such damage.
 		      @UNIT='day' or
 		      @UNIT='folio' or  
 		      @UNIT='ground of' or 
+		      @UNIT='indulgence' or 
 		      @UNIT='leaf' or  
 		      @UNIT='line' or  
 		      @UNIT='monarch' or  
+		      @UNIT='motive' or  
 		      @UNIT='month' or 
 		      @UNIT='reason'  or  
 		      @UNIT='verse'  or  
