@@ -208,12 +208,38 @@ echo "First we need libexpat-dev, on which it depends."
 apt-get -y install libexpat-dev
 echo ""
 echo "Now we download rnv, build and install it."
+#This seems to be fragile. Let's catch it in case it fails.
 wget -O rnv-1.7.10.zip http://downloads.sourceforge.net/project/rnv/Sources/1.7.10/rnv-1.7.10.zip?r=\&ts=1338494052\&use_mirror=iweb
+if [ $? != 0 ]; then
+{
+    echo "Failed to download rnv source code from SourceForge."
+    echo "This is not crucial, but if you want to make sure rnv
+is installed, press Control+C to exit now, and run this 
+script again. Otherwise, press return to continue."
+    read
+} fi
 unzip rnv-1.7.10.zip
+if [ $? != 0 ]; then
+{
+    echo "Failed to unzip the rnv source code from SourceForge."
+    echo "This is not crucial, but if you want to make sure rnv
+is installed, press Control+C to exit now, and run this 
+script again. Otherwise, press return to continue."
+    read
+} fi
 cd rnv-1.7.10
 ./configure
 make
 make install
+if [ $? != 0 ]; then
+{
+    echo "Failed to build and install rnv from SourceForge."
+    echo "This is not crucial, but if you want to make sure rnv
+is installed, press Control+C to exit now, and run this 
+script again. Otherwise, press return to continue."
+    read
+} fi
+
 echo ""
 
 #Setting up configuration for oXygen
