@@ -1441,65 +1441,13 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc><p>
 	a) if there is no @n, just @unit   == marginal note
-	b) if there is no @unit, just a @n, and the @n is not numeric of some kind  == marginal note, @type='milestone'
+	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
 
 	c) if @unit is from a closed list of words (page, line, folio), it
 	seems editorial, add as subtype on @note
 
 	d) otherwise, make a  label from @unit + @n, and put in a
-	marginal note
-
-Dodgy values for @n:
-*
-*,
-Answ.
-Answer.
-Answere.
-Answere:
-Arte.
-A☜
-Chorus.
-Conclus.
-Correction.
-Doctrine.
-E. &amp; 116. f. &amp;c.
-Explana∣tion.
-Maior.
-Minor
-Minor.
-Nature.
-Note:
-Obiect.
-Obiection.
-Practise.
-Probation
-Probation.
-Prouerbe.
-Quest.
-Question.
-Question:
-Temperatur
-Temperature and Vertue.
-Temperature.
-The Cure.
-The Texte.
-The cause.
-The reasone
-The signe.
-The text.
-The texte
-The texte,
-The texte.
-The texte:
-Verse
-Verse.
-Vertue.
-Vse.
-chorus
-ibid
-ibid.
-prouerb.
-&amp;.
+	marginal note, @type='milestone'
 
 </p>
 </desc>
@@ -1527,7 +1475,7 @@ prouerb.
 		      @UNIT='chapter' or
 		      @UNIT='commandment' or
 		      @UNIT='date' or 
-		      @UNIT='day' 
+		      @UNIT='day' or
 		      @UNIT='folio' or  
 		      @UNIT='ground of' or 
 		      @UNIT='leaf' or  
@@ -1544,7 +1492,7 @@ prouerb.
 	</note>
       </xsl:when>
       <xsl:otherwise>
-<xsl:message>Milestone 2: <xsl:value-of select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of select="@N"/></xsl:message>
+	<xsl:message>Milestone 2: <xsl:value-of select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of select="@N"/></xsl:message>
 	<note place="margin" type="milestone">
 	  <label>
 	    <xsl:value-of select="@UNIT"/>
