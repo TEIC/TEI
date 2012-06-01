@@ -66,6 +66,9 @@ echo "Do you want to continue? Press return to continue,
 Control+c to stop."
 read
 
+#Save the current directory so that we can come back here.
+currDir=`pwd`
+
 echo ""
 echo "Entering the Mighty Jenkins Builder Script."
 
@@ -128,23 +131,13 @@ echo ""
 echo "Press return to continue"
 read
 
-#Start by installing various fonts. The MS fonts have EULAs, so if we get that 
+#Start by installing the MS fonts, which have EULAs, so if we get that 
 #bit out of the way, the rest of the install can proceed basically unattended.
 echo "We'll start by installing some fonts we need. 
 You'll have to agree to a EULA here."
 apt-get -y install msttcorefonts
 apt-get -y install ttf-dejavu ttf-arphic-ukai ttf-arphic-uming ttf-baekmuk ttf-junicode ttf-kochi-gothic ttf-kochi-mincho
 echo ""
-echo "The Han Nom font is not available in repositories, 
-so we have to download it from SourceForge."
-cd /usr/share/fonts/truetype
-mkdir hannom
-cd hannom
-wget -O hannom.zip http://downloads.sourceforge.net/project/vietunicode/hannom/hannom%20v2005/hannomH.zip
-unzip hannom.zip
-find . -iname "*.ttf" | rename 's/\ /_/g'
-rm hannom.zip
-fc-cache -f -v
 
 #Now do updates.
 echo "Doing system updates before starting on anything else."
@@ -202,6 +195,29 @@ apt-get -y --force-yes install psgml xmlstarlet debiandoc-sgml linuxdoc-tools ji
 apt-get -y --force-yes install trang-java tei-p5-doc tei-p5-database tei-p5-source tei-schema saxon tei-p5-xsl tei-p5-xsl2 tei-p5-xslprofiles tei-roma onvdl tei-oxygen zip &&
 echo ""
 
+echo "The Han Nom font is not available in repositories, 
+so we have to download it from SourceForge."
+cd /usr/share/fonts/truetype
+mkdir hannom
+cd hannom
+wget -O hannom.zip http://downloads.sourceforge.net/project/vietunicode/hannom/hannom%20v2005/hannomH.zip
+if [ $? != 0 ]; then
+{
+    echo "Failed to download Hannom font from SourceForge."
+    echo "This is not crucial, but if you want to make sure it
+is installed, press Control+C to exit now, and run this 
+script again. Otherwise, press return to continue."
+    read
+} fi
+unzip hannom.zip
+find . -iname "*.ttf" | rename 's/\ /_/g'
+rm hannom.zip
+fc-cache -f -v
+
+#Go back to our home directory.
+cd $currDir
+echo "Changed back to $currDir"
+
 #Downloading and installing rnv
 echo "Downloading and building rnv (the RelaxNG validator) from SourceForge."
 echo "First we need libexpat-dev, on which it depends."
@@ -254,7 +270,7 @@ chmod a+x /root/.com.oxygenxml
 mkdir /root/.java
 chmod a+x /root/.java
 touch  /root/.java/.com.oxygenxml.rk
-chmod a+w .com.oxygenxml.rk
+chmod a+w /root/.com.oxygenxml.rk
 
 #Jenkins
 echo "Installing the Jenkins CI Server."
