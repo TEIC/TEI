@@ -79,7 +79,8 @@ if grep -q 12.04 /etc/lsb-release
 then echo "Running on Ubuntu Precise. Good."
 else
   echo "This script needs to be run on Ubuntu Precise Server."
-  echo "According to /etc/lsb-release, you don't seem to be running that version of Ubuntu."
+  echo "According to /etc/lsb-release, you don't seem to be 
+running that version of Ubuntu."
   echo "The script will now terminate."
   exit
 fi
@@ -90,21 +91,28 @@ if [ -f $OxyLicense ];
 then echo "Oxygen license is in the right place."
 else
   echo "You must provide a license for Oxygen, in the form of a 
-file named licensekey.txt with the nine lines of text of the license 
-key (located between the license key start and end markers). "
-  echo "This should be placed in /usr/share/oxygen. Create that directory if it does not exist."
-  echo "The script will now terminate. Run it again when you have installed the Oxygen license key."
+file named licensekey.txt containing the nine lines of text of 
+the license key (located between the license key start and end 
+markers). "
+  echo "This should be placed in /usr/share/oxygen. Create that 
+directory if it does not exist."
+  echo "The script will now terminate. Run it again when you 
+have installed the Oxygen license key."
   exit
 fi
 
 echo ""
-echo "Using netstat to check whether any service is currently running on port 8080."
+echo "Using netstat to check whether any service is currently 
+running on port 8080."
 echo ""
 netstat -tulpan | grep 8080
 if [ $? -eq 0 ] 
-then echo "Another service appears to be running on port 8080, which is the default port for Jenkins."
-  echo "You can either continue, and then change the port on which Jenkins runs later, or "
-  echo "stop now, and move that service to another port."
+then echo "Another service appears to be running on port 8080, 
+which is the default port for Jenkins."
+  echo "You can either continue, and then change the port on 
+which Jenkins runs later, or stop now, and move that service 
+to another port."
+echo ""
   echo "Press return to continue, or Control+c to stop."
   read
 fi
@@ -112,8 +120,8 @@ fi
 echo ""
 echo "*******************************************"
 echo "Throughout the following process, you may be 
-asked to agree to various EULAs and licences. Just
-agree to everything, by selecting 'OK', 'Yes' etc."
+asked to agree to a couple of EULAs and licences. 
+Agree to everything, by selecting 'OK', 'Yes' etc."
 echo "*******************************************"
 echo ""
 
@@ -122,10 +130,13 @@ read
 
 #Start by installing various fonts. The MS fonts have EULAs, so if we get that 
 #bit out of the way, the rest of the install can proceed basically unattended.
-echo "We'll start by installing some fonts we need. You'll have to agree to a EULA here."
+echo "We'll start by installing some fonts we need. 
+You'll have to agree to a EULA here."
 apt-get -y install msttcorefonts
 apt-get -y install ttf-dejavu ttf-arphic-ukai ttf-arphic-uming ttf-baekmuk ttf-junicode ttf-kochi-gothic ttf-kochi-mincho
-echo "The Han Nom font is not available in repositories, so we have to download it from SourceForge."
+echo ""
+echo "The Han Nom font is not available in repositories, 
+so we have to download it from SourceForge."
 cd /usr/share/fonts/truetype
 mkdir hannom
 cd hannom
@@ -143,48 +154,59 @@ apt-get -y upgrade
 #Now add the repositories we want.
 echo "Backing up repository list."
 cp /etc/apt/sources.list /etc/apt/sources.list.bak
+echo ""
 
 #Uncomment partner repos.
 echo "Uncommenting partner repositories on sources list."
 sed -i -re '/partner/ s/^#//' /etc/apt/sources.list
+echo ""
 
 #First Jenkins
 echo "Adding Jenkins repository."
 wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 echo "deb http://pkg.jenkins-ci.org/debian binary/" > /etc/apt/sources.list.d/jenkins.list
+echo ""
 
 #Next TEI.
-echo "Adding TEI Debian repository. It may take some time to retrieve the key."
+echo "Adding TEI Debian repository. It may take some time 
+to retrieve the key."
 gpg --keyserver wwwkeys.pgp.net --recv-keys FEA4973F86A9A497
 apt-key add ~/.gnupg/pubring.gpg
 echo "deb http://tei.oucs.ox.ac.uk/teideb/binary ./" > /etc/apt/sources.list.d/tei.list
+echo ""
 
 #Now we can start installing packages.
 echo "Updating for new repositories."
 apt-get update
+echo ""
 
 #We will need a JDK, so we try to install the one to match the default OpenJDK JRE that's installed.
 echo "Installing the OpenJDK Java Development Kit."
 apt-get -y install openjdk-6-jdk
+echo ""
 
 #We need Maven for the OxGarage install.
 echo "Installing the Maven project tool"
 apt-get -y install maven2
+echo ""
 
 echo "Installing core packages we need."
 apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc debhelper subversion trang &&
 echo "Installing curl, required for some tei building stuff."
 apt-get -y install curl &&
+echo ""
 
 #TEI packages
 echo "Installing TEI packages."
 apt-get -y --force-yes install psgml xmlstarlet debiandoc-sgml linuxdoc-tools jing jing-trang-doc libjing-java texlive-xetex &&
 apt-get -y --force-yes install trang-java tei-p5-doc tei-p5-database tei-p5-source tei-schema saxon tei-p5-xsl tei-p5-xsl2 tei-p5-xslprofiles tei-roma onvdl tei-oxygen zip &&
+echo ""
 
 #Downloading and installing rnv
 echo "Downloading and building rnv (the RelaxNG validator) from SourceForge."
 echo "First we need libexpat-dev, on which it depends."
 apt-get -y install libexpat-dev
+echo ""
 echo "Now we download rnv, build and install it."
 wget -O rnv-1.7.10.zip http://downloads.sourceforge.net/project/rnv/Sources/1.7.10/rnv-1.7.10.zip?r=\&ts=1338494052\&use_mirror=iweb
 unzip rnv-1.7.10.zip
@@ -192,6 +214,7 @@ cd rnv-1.7.10
 ./configure
 make
 make install
+echo ""
 
 #Setting up configuration for oXygen
 #This particular line is very unfortunate, but we apparently have to do it.
@@ -204,7 +227,9 @@ touch  /root/.java/.com.oxygenxml.rk
 chmod a+w .com.oxygenxml.rk
 
 #Jenkins
+echo "Installing the Jenkins CI Server."
 apt-get -y install jenkins
+echo ""
 
 #Configuration for Jenkins
 echo "Starting configuration of Jenkins."
@@ -214,6 +239,7 @@ svn export https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/J
 chown jenkins hudson-log-parse-rules
 svn export https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/Jenkins/hudson.plugins.logparser.LogParserPublisher.xml
 chown jenkins hudson.plugins.logparser.LogParserPublisher.xml
+echo ""
 
 echo "Getting all the job data from TEI SVN."
 #Don't bring down the config.xml file for now; that contains security settings specific to 
@@ -223,6 +249,8 @@ echo "Getting all the job data from TEI SVN."
 #chown jenkins config.xml
 svn export --force https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/Jenkins/jobs/ jobs
 chown -R jenkins jobs
+echo ""
+
 echo "Installing Jenkins plugins."
 cd plugins
 wget --no-check-certificate http://updates.jenkins-ci.org/latest/copyartifact.hpi
@@ -243,9 +271,11 @@ wget --no-check-certificate http://updates.jenkins-ci.org/latest/WebSVN2.hpi
 chown jenkins WebSVN2.hpi
 wget --no-check-certificate http://updates.jenkins-ci.org/latest/PrioritySorter.hpi
 chown jenkins PrioritySorter.hpi
+echo ""
 
 echo "Stopping Jenkins server, so that we can reconfigure all the jobs a little."
 /etc/init.d/jenkins stop
+echo ""
 
 #Reconfigure Jinks jobs with user's email, and adding priority settings if necessary.
 #NOTE: Avoiding this, because you need to set up a whole host of Jenkins config files
@@ -257,6 +287,7 @@ echo "Configuring job priorities settings."
 cd /var/lib/jenkins
 svn export https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/Jenkins/jenkins_job_config.xsl
 chown jenkins jenkins_job_config.xsl
+echo ""
 
 echo "Running transformations on job configurations."
 saxon -s:/var/lib/jenkins/jobs/OxGarage/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/OxGarage/config.xml jobPriority=90 email=
@@ -266,6 +297,7 @@ saxon -s:/var/lib/jenkins/jobs/Stylesheets1/config.xml -xsl:/var/lib/jenkins/jen
 saxon -s:/var/lib/jenkins/jobs/TEIP5/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5/config.xml jobPriority=10 email=
 saxon -s:/var/lib/jenkins/jobs/TEIP5-Documentation/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5-Documentation/config.xml jobPriority=10 email=
 saxon -s:/var/lib/jenkins/jobs/TEIP5-Test/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5-Test/config.xml jobPriority=10 email=
+echo ""
 
 echo "Starting the Jenkins server."
 /etc/init.d/jenkins start
@@ -275,6 +307,8 @@ echo "Starting the Jenkins server."
 #wget http://localhost:8080/job/Stylesheets/build > /dev/null
 #echo "Stylesheets build has been triggered."
 
+echo ""
+echo "*******************************************"
 echo "OK, we should be done. Now you have to:"
 echo "Go to the Jenkins interface on 
 http://[this_computer_ip]:8080, and set up 
@@ -292,6 +326,7 @@ builds will be able to work."
 echo ""
 echo "That's it!"
 echo "Press return to exit."
+echo "*******************************************"
 read
 exit
 
