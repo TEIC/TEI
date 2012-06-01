@@ -96,14 +96,71 @@ of this software, even if advised of the possibility of such damage.
     <xsl:attribute name="place">margin</xsl:attribute>
   </xsl:template>
   <!-- TCP controversial changes -->
-  <!--
-      <xsl:template match="HEAD/L" mode="tcp">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
-      </xsl:template>
-      <xsl:template match="TRAILER/L" mode="tcp">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
-      </xsl:template>
-  -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc><p>
+	a) if there is no @n, just @unit   == marginal note
+	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
+
+	c) if @unit is from a closed list of words (page, line, folio), it
+	seems editorial, add as subtype on @note
+
+	d) otherwise, make a  label from @unit + @n, and put in a
+	marginal note, @type='milestone'
+
+</p>
+</desc>
+</doc>
+  <xsl:template match="MILESTONE" mode="tcp">
+    <xsl:choose>
+      <xsl:when test="@UNIT and (not(@N) or @N='')">
+	<note place="margin">
+	  <xsl:value-of select="@UNIT"/>
+	</note>
+      </xsl:when>
+      <xsl:when test="not(@UNIT) and @N">
+	<note place="margin" type="milestone">
+	  <xsl:value-of select="@N"/>
+	</note>
+      </xsl:when>
+      <xsl:when test="@UNIT='unspec' and @N">
+	<note place="margin" type="milestone">
+	  <xsl:value-of select="@N"/>
+	</note>
+      </xsl:when>
+      <!-- this short list seem like editorial words. are there more? -->
+      <xsl:when test="
+		      @UNIT='canon' or 
+		      @UNIT='chapter' or
+		      @UNIT='commandment' or
+		      @UNIT='date' or 
+		      @UNIT='day' or
+		      @UNIT='folio' or  
+		      @UNIT='ground of' or 
+		      @UNIT='leaf' or  
+		      @UNIT='line' or  
+		      @UNIT='monarch' or  
+		      @UNIT='month' or 
+		      @UNIT='reason'  or  
+		      @UNIT='verse'  or  
+		      @UNIT='year'  
+		      ">	
+	<note place="margin" type="milestone" subtype="{@UNIT}">
+	  <xsl:message>Milestone 1: <xsl:value-of select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
+	  <xsl:value-of select="@N"/>
+	</note>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:message>Milestone 2: <xsl:value-of select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of select="@N"/></xsl:message>
+	<note place="margin" type="milestone">
+	  <label>
+	    <xsl:value-of select="@UNIT"/>
+	    <xsl:text> </xsl:text>
+	    <xsl:value-of select="@N"/>
+	  </label>
+	</note>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   <xsl:template match="HEAD[@TYPE='sub'][Q/L and not(P)]" mode="tcp">
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
   </xsl:template>
@@ -1438,71 +1495,6 @@ of this software, even if advised of the possibility of such damage.
     </titleStmt>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc><p>
-	a) if there is no @n, just @unit   == marginal note
-	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
-
-	c) if @unit is from a closed list of words (page, line, folio), it
-	seems editorial, add as subtype on @note
-
-	d) otherwise, make a  label from @unit + @n, and put in a
-	marginal note, @type='milestone'
-
-</p>
-</desc>
-</doc>
-  <xsl:template match="MILESTONE" mode="tcp">
-    <xsl:choose>
-      <xsl:when test="@UNIT and (not(@N) or @N='')">
-	<note place="margin">
-	  <xsl:value-of select="@UNIT"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="not(@UNIT) and @N">
-	<note place="margin" type="milestone">
-	  <xsl:value-of select="@N"/>
-	</note>
-      </xsl:when>
-      <xsl:when test="@UNIT='unspec' and @N">
-	<note place="margin" type="milestone">
-	  <xsl:value-of select="@N"/>
-	</note>
-      </xsl:when>
-      <!-- this short list seem like editorial words. are there more? -->
-      <xsl:when test="
-		      @UNIT='canon' or 
-		      @UNIT='chapter' or
-		      @UNIT='commandment' or
-		      @UNIT='date' or 
-		      @UNIT='day' or
-		      @UNIT='folio' or  
-		      @UNIT='ground of' or 
-		      @UNIT='leaf' or  
-		      @UNIT='line' or  
-		      @UNIT='monarch' or  
-		      @UNIT='month' or 
-		      @UNIT='reason'  or  
-		      @UNIT='verse'  or  
-		      @UNIT='year'  
-		      ">	
-	<note place="margin" type="milestone" subtype="{@UNIT}">
-	  <xsl:message>Milestone 1: <xsl:value-of select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
-	  <xsl:value-of select="@N"/>
-	</note>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:message>Milestone 2: <xsl:value-of select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of select="@N"/></xsl:message>
-	<note place="margin" type="milestone">
-	  <label>
-	    <xsl:value-of select="@UNIT"/>
-	    <xsl:text> </xsl:text>
-	    <xsl:value-of select="@N"/>
-	  </label>
-	</note>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
   <xsl:template match="@TYPE" mode="tcp">
     <xsl:if test="not(.='')">
       <xsl:attribute name="type">
