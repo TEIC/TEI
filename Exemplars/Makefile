@@ -31,7 +31,7 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	@echo "BUILD: Test schema from $<"
 	xmllint --xinclude $*.odd > $*.xi
 	@echo Validate $< itself
-	rnv ../p5odds.rnc $*.xi
+	which rnv && rnv ../p5odds.rnc $*.xi
 	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
 	@echo Test schema built from $<
 	jing $*.rng $*.xml && echo $* validates OK
@@ -42,7 +42,7 @@ SOURCE=--localsource=${P5}/p5subset.xml
 %.doc.pdf: %.odd
 	@echo "BUILD: Test schema from $<"
 	@echo Validate $< itself
-	rnv ../p5odds.rnc $< 
+	which rnv && rnv ../p5odds.rnc $< 
 	${ROMA} ${ROMAOPTS} ${SOURCE}--docflags="summaryDoc=true" --docpdf --dochtml $< .
 	teitoepub ${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
 	@echo Test schema built from $<

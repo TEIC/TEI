@@ -193,7 +193,7 @@ valid: check
 	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
 	./run-onvdl p5.nvdl ${DRIVER} 
 	@echo BUILD: Check validity with rnv if we have it
-	-which rnv && (xmllint --noent --xinclude ${DRIVER} > Source.xml; rnv -v p5odds.rnc Source.xml)
+	-which rnv && (xmllint --noent --xinclude ${DRIVER} > Source.xml; rnv -v p5odds.rnc Source.xml; rm -f Source.xml)
 	@echo BUILD: Check full validity of relevant examples with nvdl
 	${SAXON} ${DRIVER} Utilities/extractegXML.xsl > v.body
 	echo "<!DOCTYPE p [" > v.header
@@ -210,7 +210,7 @@ valid: check
 	${SAXON} ${SAXON_ARGS}  -o:ValidatorLog.xml -s:${DRIVER} -xsl:Utilities/validator.xsl 
 	cat ValidatorLog.xml
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo ERROR found; false; fi)
-	rm ValidatorLog.xml Utilities/pointerattributes.xsl Source.xml
+	rm ValidatorLog.xml Utilities/pointerattributes.xsl 
 	#@echo BUILD: Check validity with xmllint
 	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
 	@echo BUILD: Check for places with no examples
