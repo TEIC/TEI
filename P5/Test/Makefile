@@ -58,7 +58,7 @@ special: $(TESTSPECIALFILES)
 %.rng: %.odd
 	@echo "BUILD: Test schema from $<"
 	@echo Validate $< itself
-	rnv ../p5odds.rnc $< 
+	-which rnv && rnv ../p5odds.rnc $< 
 	saxon -o:$*-ex.odd $< ../Utilities/odd2exodd.xsl 
 	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) $*-ex.odd . 
 	@echo check egXML in $<
@@ -69,7 +69,7 @@ special: $(TESTSPECIALFILES)
 	@echo Validate using Jing for RELAX NG... 
 	jing -t $*.rng $*.xml
 	@echo Validate using RNV.... 
-	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc 
+	-which rnv && (xmllint --noent --dropdtd  $*.xml | rnv $*.rnc )
 	@echo Validate using xmllint for DTD  
 	xmllint --dropdtd $*.xml | xmllint --noout --dtdvalid $*.dtd -
 	@echo Validate using Schematron
