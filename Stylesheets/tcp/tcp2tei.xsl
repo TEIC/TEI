@@ -1458,133 +1458,133 @@ of this software, even if advised of the possibility of such damage.
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@TYPE='poem (rebus)'">
+  <xsl:template match="@TYPE[.='poem (rebus)']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">(rebus)</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem and prayer'">
+  <xsl:template match="@TYPE[.='poem and prayer']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">prayer</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem and response'">
+  <xsl:template match="@TYPE[.='poem and response']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">response</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem collection'">
+  <xsl:template match="@TYPE[.='poem collection']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">collection</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem fragment'">
+  <xsl:template match="@TYPE[.='poem fragment']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">fragment</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem fragments'">
+  <xsl:template match="@TYPE[.='poem fragments']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">fragments</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem from author to the reader'">
+  <xsl:template match="@TYPE[.='poem from author to the reader']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">from_author_to_the_reader</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem in honor of Gustavus'">
+  <xsl:template match="@TYPE[.='poem in honor of Gustavus']">
     <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">in_honor_of__Gustavus</xsl:attribute>
+    <xsl:attribute name="subtype">in_honor_of_Gustavus</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem incorporating anagrams'">
+  <xsl:template match="@TYPE[.='poem incorporating anagrams']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">incorporating_anagrams</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem incorporating the Creed'">
+  <xsl:template match="@TYPE[.='poem incorporating the Creed']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">incorporating_the_Creed</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem on frontispiece'">
+  <xsl:template match="@TYPE[.='poem on frontispiece']">
     <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">on__frontispiece</xsl:attribute>
+    <xsl:attribute name="subtype">on_frontispiece</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem on the seven virtues'">
+  <xsl:template match="@TYPE[.='poem on the seven virtues']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">on_the_seven_virtues</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to Archpapist'">
+  <xsl:template match="@TYPE[.='poem to Archpapist']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_Archpapist</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to God from second edition'">
+  <xsl:template match="@TYPE[.='poem to God from second edition']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_God_from_second_edition</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to author'">
+  <xsl:template match="@TYPE[.='poem to author']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_author</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to book'">
+  <xsl:template match="@TYPE[.='poem to book']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_book</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to king'">
+  <xsl:template match="@TYPE[.='poem to king']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_king</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to pupils'">
+  <xsl:template match="@TYPE[.='poem to pupils']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_pupils</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to readers'">
+  <xsl:template match="@TYPE[.='poem to readers']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_readers</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to subjects'">
+  <xsl:template match="@TYPE[.='poem to subjects']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_subjects</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to the author'">
+  <xsl:template match="@TYPE[.='poem to the author']">
     <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_the__author</xsl:attribute>
+    <xsl:attribute name="subtype">to_the_author</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to the censorious reader'">
+  <xsl:template match="@TYPE[.='poem to the censorious reader']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_the_censorious_reader</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to the censors'">
+  <xsl:template match="@TYPE[.='poem to the censors']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_the_censors</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to the pious reader'">
+  <xsl:template match="@TYPE[.='poem to the pious reader']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">to_the_pious_reader</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem to the reader'">
+  <xsl:template match="@TYPE[.='poem to the reader']">
     <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_the___reader</xsl:attribute>
+    <xsl:attribute name="subtype">to_the__reader</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem with commentary'">
+  <xsl:template match="@TYPE[.='poem with commentary']">
     <xsl:attribute name="type">poem</xsl:attribute>
     <xsl:attribute name="subtype">commentary</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poem(s) by one author'">
+  <xsl:template match="@TYPE[.='poem(s) by one author']">
     <xsl:attribute name="type">poem(s)</xsl:attribute>
-    <xsl:attribute name="subtype">by_one__author</xsl:attribute>
+    <xsl:attribute name="subtype">by_one_author</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poems and commentary'">
+  <xsl:template match="@TYPE[.='poems and commentary']">
     <xsl:attribute name="type">poems</xsl:attribute>
     <xsl:attribute name="subtype">commentary</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poems gratulatory'">
+  <xsl:template match="@TYPE[.='poems gratulatory']">
     <xsl:attribute name="type">poems</xsl:attribute>
     <xsl:attribute name="subtype">gratulatory</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poems of acknowledgment'">
+  <xsl:template match="@TYPE[.='poems of acknowledgment']">
     <xsl:attribute name="type">poems</xsl:attribute>
     <xsl:attribute name="subtype">acknowledgment</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poems on the Symbols'">
+  <xsl:template match="@TYPE[.='poems on the Symbols']">
     <xsl:attribute name="type">poems</xsl:attribute>
-    <xsl:attribute name="subtype">on_the__Symbols</xsl:attribute>
+    <xsl:attribute name="subtype">on_the_Symbols</xsl:attribute>
   </xsl:template>
-  <xsl:template match="@TYPE='poems to the reader'">
+  <xsl:template match="@TYPE[.='poems to the reader']">
     <xsl:attribute name="type">poems</xsl:attribute>
-    <xsl:attribute name="subtype">to_the__reader</xsl:attribute>
+    <xsl:attribute name="subtype">to_the_reader</xsl:attribute>
   </xsl:template>
   <xsl:template match="@UNIT" mode="tcp">
     <xsl:attribute name="unit">
