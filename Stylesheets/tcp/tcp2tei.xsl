@@ -232,21 +232,16 @@ of this software, even if advised of the possibility of such damage.
     </argument>
   </xsl:template>
 
+  <xsl:template match="FIGURE/BYLINE" mode="tcp">
+    <signed>
+      <xsl:apply-templates mode="tcp"/>
+    </signed>
+  </xsl:template>
+
   <xsl:template match="STAGE/STAGE" mode="tcp">
       <xsl:apply-templates mode="tcp"/>
   </xsl:template>
 
-<!--
-  <xsl:template match="CELL/L" mode="tcp">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
-  </xsl:template>
-  <xsl:template match="CELL/LG" mode="tcp">
-    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-  </xsl:template>
-  <xsl:template match="CELL/LG/L" mode="tcp">
-    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/><lb/>
-  </xsl:template>
--->
   <!-- TCP non-controversial transforms -->
   <xsl:template match="ROW/PB" mode="tcp"/>
   <xsl:template match="ROW[PB]" mode="tcp">
@@ -1704,7 +1699,15 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="val"/>
     <xsl:choose>
       <xsl:when test="contains($val,' ')">
-        <xsl:text>#</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
+	    <xsl:value-of select="$val"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>#</xsl:text>
+	    <xsl:value-of select="$val"/>
+	  </xsl:otherwise>
+	</xsl:choose>
         <xsl:value-of select="substring-before($val,' ')"/>
         <xsl:text> </xsl:text>
         <xsl:call-template name="splitter">
@@ -1713,12 +1716,16 @@ of this software, even if advised of the possibility of such damage.
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="starts-with($val,'http')">
-        <xsl:value-of select="$val"/>
-      </xsl:when>
       <xsl:otherwise>
-        <xsl:text>#</xsl:text>
-        <xsl:value-of select="$val"/>
+	<xsl:choose>
+	  <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
+	    <xsl:value-of select="$val"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text>#</xsl:text>
+	    <xsl:value-of select="$val"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
