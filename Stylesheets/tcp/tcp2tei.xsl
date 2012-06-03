@@ -3,14 +3,11 @@
 $Date$ $Author$
 
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-		xmlns:tei="http://www.tei-c.org/ns/1.0"
-version="2.0">	
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
-      <desc>
-         <p>XSLT script for cleaning up ECCO texts to P4, then running P4 to P5</p>
-         <p> 
-            <h1 xmlns="">License</h1>This software is dual-licensed:
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" version="2.0">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+    <desc>
+      <p>XSLT script for cleaning up ECCO texts to P4, then running P4 to P5</p>
+      <p><h1 xmlns="">License</h1>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
 Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
@@ -42,11 +39,11 @@ theory of liability, whether in contract, strict liability, or tort
 (including negligence or otherwise) arising in any way out of the use
 of this software, even if advised of the possibility of such damage.
 </p>
-         <p>Author: See AUTHORS</p>
-         <p>Id: $Id$</p>
-         <p>Copyright: 2008, TEI Consortium</p>
-      </desc>
-   </doc>
+      <p>Author: See AUTHORS</p>
+      <p>Id: $Id$</p>
+      <p>Copyright: 2008, TEI Consortium</p>
+    </desc>
+  </doc>
   <xsl:output cdata-section-elements="eg" indent="yes" method="xml" encoding="utf-8" omit-xml-declaration="yes"/>
   <xsl:param name="ID"/>
   <xsl:param name="intype"> ',)</xsl:param>
@@ -65,39 +62,53 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-
   <xsl:template match="processing-instruction()|comment()|text()" mode="tcp">
     <xsl:copy/>
   </xsl:template>
-
   <xsl:template match="*" mode="tcp">
     <xsl:element name="{lower-case(local-name(.))}">
       <xsl:apply-templates select="@*" mode="tcp"/>
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </xsl:element>
   </xsl:template>
-
   <!-- TCP discards -->
   <xsl:template match="FIGDESC/HI" mode="tcp">
     <xsl:apply-templates mode="tcp"/>
   </xsl:template>
+  <!-- TCP controversial changes -->
+  <!-- lose all the multi-language xml:lang things -->
   <xsl:template match="PB/@MS" mode="tcp"/>
   <xsl:template match="LABEL/@ROLE" mode="tcp"/>
   <xsl:template match="TITLE/@TYPE" mode="tcp"/>
   <xsl:template match="TEMPHEAD" mode="tcp"/>
   <xsl:template match="TITLE/@I2" mode="tcp"/>
   <xsl:template match="IDG" mode="tcp"/>
+  <xsl:template match="@LANG[.='dut eng']" mode="tcp"/>
+  <xsl:template match="@LANG[.='dut fre eng']" mode="tcp"/>
   <xsl:template match="@LANG[.='eng dut']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng fre ita spa lat gre']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng fre lat']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng fre']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng ita']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng lat fre']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng lat']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng may mlg']" mode="tcp"/>
   <xsl:template match="@LANG[.='eng san']" mode="tcp"/>
+  <xsl:template match="@LANG[.='eng spa']" mode="tcp"/>
   <xsl:template match="@LANG[.='fre eng']" mode="tcp"/>
+  <xsl:template match="@LANG[.='fre lat']" mode="tcp"/>
+  <xsl:template match="@LANG[.='ita eng']" mode="tcp"/>
+  <xsl:template match="@LANG[.='ita lat fre eng']" mode="tcp"/>
+  <xsl:template match="@LANG[.='lat eng dut spa heb gre ita fre']" mode="tcp"/>
+  <xsl:template match="@LANG[.='lat eng ita fre']" mode="tcp"/>
   <xsl:template match="@LANG[.='lat eng']" mode="tcp"/>
+  <xsl:template match="@LANG[.='lat fre']" mode="tcp"/>
   <xsl:template match="@LANG[.='lat gre']" mode="tcp"/>
-  <xsl:template match="@PLACE[.='marg']" mode="tcp">
-    <xsl:attribute name="place">margin</xsl:attribute>
-  </xsl:template>
-  <!-- TCP controversial changes -->
+  <xsl:template match="@LANG[.='spa eng']" mode="tcp"/>
+  <xsl:template match="@LANG[.='wel eng']" mode="tcp"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc><p>
+    <desc>
+      <p>
 	a) if there is no @n, just @unit   == marginal note
 	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
 
@@ -108,140 +119,105 @@ of this software, even if advised of the possibility of such damage.
 	marginal note, @type='milestone'
 
 </p>
-</desc>
-</doc>
+    </desc>
+  </doc>
   <xsl:template match="MILESTONE" mode="tcp">
     <xsl:choose>
       <xsl:when test="@UNIT and (not(@N) or @N='')">
-	<note place="margin">
-	  <xsl:value-of select="@UNIT"/>
-	</note>
+        <note place="margin">
+          <xsl:value-of select="@UNIT"/>
+        </note>
       </xsl:when>
       <xsl:when test="not(@UNIT) and @N">
-	<note place="margin" type="milestone">
-	  <xsl:value-of select="@N"/>
-	</note>
+        <note place="margin" type="milestone">
+          <xsl:value-of select="@N"/>
+        </note>
       </xsl:when>
       <xsl:when test="@UNIT='unspec' and @N">
-	<note place="margin" type="milestone">
-	  <xsl:value-of select="@N"/>
-	</note>
+        <note place="margin" type="milestone">
+          <xsl:value-of select="@N"/>
+        </note>
       </xsl:when>
       <!-- this short list seem like editorial words. are there more? -->
-      <xsl:when test="
-		      @UNIT='article' or 
-		      @UNIT='canon' or 
-		      @UNIT='chapter' or
-		      @UNIT='commandment' or
-		      @UNIT='date' or 
-		      @UNIT='day' or
-		      @UNIT='folio' or  
-		      @UNIT='ground of' or 
-		      @UNIT='indulgence' or 
-		      @UNIT='leaf' or  
-		      @UNIT='line' or  
-		      @UNIT='monarch' or  
-		      @UNIT='motive' or  
-		      @UNIT='month' or 
-		      @UNIT='reason'  or  
-		      @UNIT='verse'  or  
-		      @UNIT='year'  
-		      ">	
-	<note place="margin" type="milestone" subtype="{@UNIT}">
-	  <xsl:message>Milestone 1: <xsl:value-of select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
-	  <xsl:value-of select="@N"/>
-	</note>
+      <xsl:when test="         @UNIT='article' or          @UNIT='canon' or          @UNIT='chapter' or         @UNIT='commandment' or         @UNIT='date' or          @UNIT='day' or         @UNIT='folio' or           @UNIT='ground of' or          @UNIT='indulgence' or          @UNIT='leaf' or           @UNIT='line' or           @UNIT='monarch' or           @UNIT='motive' or           @UNIT='month' or          @UNIT='reason'  or           @UNIT='verse'  or           @UNIT='year'           ">
+        <note place="margin" type="milestone" subtype="{@UNIT}">
+          <xsl:message>Milestone 1: <xsl:value-of select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
+          <xsl:value-of select="@N"/>
+        </note>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:message>Milestone 2: <xsl:value-of select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of select="@N"/></xsl:message>
-	<note place="margin" type="milestone">
-	  <label>
-	    <xsl:value-of select="@UNIT"/>
-	    <xsl:text> </xsl:text>
-	    <xsl:value-of select="@N"/>
-	  </label>
-	</note>
+        <xsl:message>Milestone 2: <xsl:value-of select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of select="@N"/></xsl:message>
+        <note place="margin" type="milestone">
+          <label>
+            <xsl:value-of select="@UNIT"/>
+            <xsl:text> </xsl:text>
+            <xsl:value-of select="@N"/>
+          </label>
+        </note>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xsl:template match="HEAD[@TYPE='sub'][Q/L and not(P)]" mode="tcp">
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
+    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
   </xsl:template>
   <xsl:template match="HEAD[@TYPE='sub']/Q[L]" mode="tcp">
-      <epigraph>
-	<xsl:apply-templates
-	    select="*|processing-instruction()|comment()|text()"
-	    mode="tcp"/>
-      </epigraph>
+    <epigraph>
+      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
+    </epigraph>
   </xsl:template>
-  <xsl:template match="P[not(parent::SP) and count(*)=1 and not(text()) and (LETTER or
-		       LIST or TABLE or FIGURE)]" mode="tcp">
-	<xsl:apply-templates select="*|processing-instruction()|comment()"
-	    mode="tcp"/>
+  <xsl:template match="P[not(parent::SP) and count(*)=1 and not(text()) and (LETTER or          LIST or TABLE or FIGURE)]" mode="tcp">
+    <xsl:apply-templates select="*|processing-instruction()|comment()" mode="tcp"/>
   </xsl:template>
   <xsl:template match="CELL[count(*)=1 and not(text()) and P]" mode="tcp">
     <cell>
-	<xsl:apply-templates select="@*" mode="tcp"/>
+      <xsl:apply-templates select="@*" mode="tcp"/>
       <xsl:for-each select="p">
-	<xsl:apply-templates select="*|processing-instruction()|comment()|text()"
-	    mode="tcp"/>
+        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
       </xsl:for-each>
     </cell>
-</xsl:template>
-
-  <xsl:template match="NOTE[count(*)=1 and not(text())]/Q" mode="tcp">
-	<xsl:apply-templates
-	    select="*|processing-instruction()|comment()|text()"
-	    mode="tcp"/>
   </xsl:template>
-  <xsl:template match="Q[count(*)=1 and not(text()) and LG/L]"
-		mode="tcp" priority="10">
+  <xsl:template match="NOTE[count(*)=1 and not(text())]/Q" mode="tcp">
+    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
+  </xsl:template>
+  <xsl:template match="Q[count(*)=1 and not(text()) and LG/L]" mode="tcp" priority="10">
     <q>
       <xsl:apply-templates select="@*" mode="tcp"/>
       <xsl:for-each select="lg">
-	<xsl:apply-templates select="*|processing-instruction()|comment()|text()"
-			     mode="tcp"/>
+        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
       </xsl:for-each>
     </q>
   </xsl:template>
-
   <xsl:template match="TITLESTMT/TITLE/text()[last()]" mode="tcp">
     <xsl:choose>
       <xsl:when test="matches(.,':$')">
-	<xsl:value-of select="substring(.,1,string-length(.)-1)"/>
+        <xsl:value-of select="substring(.,1,string-length(.)-1)"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:value-of select="."/>
+        <xsl:value-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
   <xsl:template match="HEADNOTE[P/FIGURE]" mode="tcp">
-      <xsl:apply-templates mode="tcp"/>
+    <xsl:apply-templates mode="tcp"/>
   </xsl:template>
-
   <xsl:template match="HEADNOTE" mode="tcp">
     <argument>
       <xsl:apply-templates mode="tcp"/>
     </argument>
   </xsl:template>
-
   <xsl:template match="TAILNOTE" mode="tcp">
     <argument>
       <xsl:apply-templates mode="tcp"/>
     </argument>
   </xsl:template>
-
   <xsl:template match="FIGURE/BYLINE" mode="tcp">
     <signed>
       <xsl:apply-templates mode="tcp"/>
     </signed>
   </xsl:template>
-
   <xsl:template match="STAGE/STAGE" mode="tcp">
-      <xsl:apply-templates mode="tcp"/>
+    <xsl:apply-templates mode="tcp"/>
   </xsl:template>
-
   <!-- TCP non-controversial transforms -->
   <xsl:template match="ROW/PB" mode="tcp"/>
   <xsl:template match="ROW[PB]" mode="tcp">
@@ -250,23 +226,20 @@ of this software, even if advised of the possibility of such damage.
     </row>
     <xsl:for-each select="PB">
       <pb>
-	<xsl:apply-templates select="@*" mode="tcp"/>
+        <xsl:apply-templates select="@*" mode="tcp"/>
       </pb>
     </xsl:for-each>
   </xsl:template>
-
   <xsl:template match="ROW/TABLE" mode="tcp">
     <cell>
       <table>
-	<xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="tcp"/>
+        <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="tcp"/>
       </table>
     </cell>
   </xsl:template>
-
   <xsl:template match="EEBO" mode="tcp">
     <xsl:apply-templates select="*" mode="tcp"/>
   </xsl:template>
-
   <xsl:template match="ETS" mode="tcp">
     <TEI.2>
       <xsl:apply-templates select="@*" mode="tcp"/>
@@ -280,32 +253,35 @@ of this software, even if advised of the possibility of such damage.
     <publicationStmt>
       <xsl:apply-templates select="*" mode="tcp"/>
       <xsl:if test="parent::FILEDESC">
-	<xsl:call-template name="makeID"/>
-	<xsl:for-each select="$HERE">
-	  <xsl:for-each select="/ETS/EEBO/IDG">
-	    <xsl:for-each select="STC">
-	      <idno type="STC">
-		<xsl:value-of select="."/>
-	      </idno>
-	    </xsl:for-each>
-	    <idno type="TCP"><xsl:value-of select="@ID"/></idno>
-	    <idno type="BIBNO"><xsl:value-of select="BIBNO"/></idno>
-	    <xsl:for-each select="VID">
-		<xsl:if test="@SET">
-		  <idno type="{@SET}">
-		    <xsl:value-of select="."/>
-		  </idno>
-		</xsl:if>
-	    </xsl:for-each>
-	  </xsl:for-each>
-	</xsl:for-each>
-	<xsl:call-template name="idnoHook"/>
+        <xsl:call-template name="makeID"/>
+        <xsl:for-each select="$HERE">
+          <xsl:for-each select="/ETS/EEBO/IDG">
+            <xsl:for-each select="STC">
+              <idno type="STC">
+                <xsl:value-of select="."/>
+              </idno>
+            </xsl:for-each>
+            <idno type="TCP">
+              <xsl:value-of select="@ID"/>
+            </idno>
+            <idno type="BIBNO">
+              <xsl:value-of select="BIBNO"/>
+            </idno>
+            <xsl:for-each select="VID">
+              <xsl:if test="@SET">
+                <idno type="{@SET}">
+                  <xsl:value-of select="."/>
+                </idno>
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:for-each>
+        </xsl:for-each>
+        <xsl:call-template name="idnoHook"/>
       </xsl:if>
     </publicationStmt>
   </xsl:template>
-  <xsl:template match="PUBLICATIONSTMT/IDNO"  mode="tcp"/>
+  <xsl:template match="PUBLICATIONSTMT/IDNO" mode="tcp"/>
   <xsl:template match="FILEDESC/EXTENT" mode="tcp"/>
-
   <xsl:template match="EEBO/GROUP" mode="tcp">
     <text>
       <group>
@@ -345,7 +321,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="DIV1" mode="tcp">
     <xsl:choose>
-      <xsl:when test="count(parent::BODY/*)=1">
+      <xsl:when test="count(parent::BODY/*)=1  and not(child::CLOSER)">
         <xsl:apply-templates select="*" mode="tcp"/>
       </xsl:when>
       <xsl:otherwise>
@@ -380,43 +356,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:attribute name="rend">
       <xsl:text>none</xsl:text>
     </xsl:attribute>
-  </xsl:template>
-
-  <xsl:template match="NOTE[@PLACE='foot;']" mode="tcp">
-    <note place="bottom">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-    </note>
-  </xsl:template>
-  <xsl:template match="NOTE[@PLACE='foor']" mode="tcp">
-    <note place="bottom">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-    </note>
-  </xsl:template>
-  <xsl:template match="NOTE[@PLACE='foot']" mode="tcp">
-    <note place="bottom">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-    </note>
-  </xsl:template>
-  <xsl:template match="NOTE[@PLACE='‖']" mode="tcp">
-    <note n="‖">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-    </note>
-  </xsl:template>
-  <xsl:template match="NOTE[@PLACE='‡']" mode="tcp">
-    <note n="‡">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-    </note>
-  </xsl:template>
-  <xsl:template match="NOTE[@PLACE='†']" mode="tcp">
-    <note n="†">
-      <xsl:apply-templates select="@*[not(name()='PLACE')]" mode="tcp"/>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-    </note>
   </xsl:template>
   <xsl:template match="KEYWORDS" mode="tcp">
     <keywords>
@@ -454,7 +393,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*" mode="tcp"/>
     </teiHeader>
   </xsl:template>
-
   <xsl:template match="TEI.2|OTA" mode="tcp">
     <TEI.2>
       <xsl:apply-templates mode="tcp" select="@*"/>
@@ -1456,12 +1394,33 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+      @PLACE has both inconsistencies and mistakes; some values
+      should obviously be @n</p>
+    </desc>
+  </doc>
   <xsl:template match="@PLACE" mode="tcp">
-    <xsl:if test="not(. = 'unspecified')">
-      <xsl:attribute name="place">
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test=".='marg' or .='marg;' or .='marg)' or .='marg='         or .='ma / rg' or .='6marg'">
+        <xsl:attribute name="place">margin</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=". = 'unspecified'"/>
+      <xsl:when test=".='foot;' or .='foor;' or .='foot'">
+        <xsl:attribute name="place">bottom</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='‡' or .='†' or .='‖' or .='6'  or .='“' or         .='1' or .='*'">
+        <xsl:attribute name="n">
+          <xsl:value-of select="."/>
+        </xsl:attribute>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:attribute name="place">
+          <xsl:value-of select="."/>
+        </xsl:attribute>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="@SAMPLE" mode="tcp">
     <xsl:if test="not(. = 'complete')">
@@ -1492,15 +1451,141 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates mode="tcp" select="*|@*|processing-instruction()|comment()|text()"/>
     </titleStmt>
   </xsl:template>
-
   <xsl:template match="@TYPE" mode="tcp">
     <xsl:if test="not(.='')">
       <xsl:attribute name="type">
-	<xsl:value-of select="translate(translate(.,'(','_'),$intype,'')"/>
+        <xsl:value-of select="translate(translate(.,'(', '__'),$intype,'')"/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-
+  <xsl:template match="@TYPE='poem (rebus)'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">(rebus)</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem and prayer'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">prayer</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem and response'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">response</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem collection'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">collection</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem fragment'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">fragment</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem fragments'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">fragments</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem from author to the reader'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">from_author_to_the_reader</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem in honor of Gustavus'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">in_honor_of__Gustavus</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem incorporating anagrams'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">incorporating_anagrams</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem incorporating the Creed'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">incorporating_the_Creed</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem on frontispiece'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">on__frontispiece</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem on the seven virtues'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">on_the_seven_virtues</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to Archpapist'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_Archpapist</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to God from second edition'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_God_from_second_edition</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to author'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_author</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to book'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_book</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to king'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_king</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to pupils'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_pupils</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to readers'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_readers</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to subjects'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_subjects</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to the author'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_the__author</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to the censorious reader'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_the_censorious_reader</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to the censors'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_the_censors</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to the pious reader'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_the_pious_reader</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem to the reader'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">to_the___reader</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem with commentary'">
+    <xsl:attribute name="type">poem</xsl:attribute>
+    <xsl:attribute name="subtype">commentary</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poem(s) by one author'">
+    <xsl:attribute name="type">poem(s)</xsl:attribute>
+    <xsl:attribute name="subtype">by_one__author</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poems and commentary'">
+    <xsl:attribute name="type">poems</xsl:attribute>
+    <xsl:attribute name="subtype">commentary</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poems gratulatory'">
+    <xsl:attribute name="type">poems</xsl:attribute>
+    <xsl:attribute name="subtype">gratulatory</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poems of acknowledgment'">
+    <xsl:attribute name="type">poems</xsl:attribute>
+    <xsl:attribute name="subtype">acknowledgment</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poems on the Symbols'">
+    <xsl:attribute name="type">poems</xsl:attribute>
+    <xsl:attribute name="subtype">on_the__Symbols</xsl:attribute>
+  </xsl:template>
+  <xsl:template match="@TYPE='poems to the reader'">
+    <xsl:attribute name="type">poems</xsl:attribute>
+    <xsl:attribute name="subtype">to_the__reader</xsl:attribute>
+  </xsl:template>
   <xsl:template match="@UNIT" mode="tcp">
     <xsl:attribute name="unit">
       <xsl:value-of select="."/>
@@ -1527,11 +1612,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="text()">
     <xsl:analyze-string regex="([^∣]*)∣" select=".">
       <xsl:matching-substring>
-	<xsl:value-of select="regex-group(1)"/>
-	<lb  xmlns="http://www.tei-c.org/ns/1.0" rend="hidden" type="hyphenInWord"/>
+        <xsl:value-of select="regex-group(1)"/>
+        <lb xmlns="http://www.tei-c.org/ns/1.0" rend="hidden" type="hyphenInWord"/>
       </xsl:matching-substring>
       <xsl:non-matching-substring>
-	<xsl:value-of select="."/>
+        <xsl:value-of select="."/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:template>
@@ -1699,15 +1784,15 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="val"/>
     <xsl:choose>
       <xsl:when test="contains($val,' ')">
-	<xsl:choose>
-	  <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
-	    <xsl:value-of select="$val"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:text>#</xsl:text>
-	    <xsl:value-of select="$val"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+        <xsl:choose>
+          <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
+            <xsl:value-of select="$val"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="$val"/>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:value-of select="substring-before($val,' ')"/>
         <xsl:text> </xsl:text>
         <xsl:call-template name="splitter">
@@ -1717,15 +1802,15 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:choose>
-	  <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
-	    <xsl:value-of select="$val"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:text>#</xsl:text>
-	    <xsl:value-of select="$val"/>
-	  </xsl:otherwise>
-	</xsl:choose>
+        <xsl:choose>
+          <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
+            <xsl:value-of select="$val"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="$val"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2045,7 +2130,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <xsl:template match="@old"/>
-
   <xsl:template match="ref/@from"/>
   <xsl:template match="@mergedin">
     <xsl:attribute name="mergedIn">
@@ -2074,15 +2158,12 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </div1>
   </xsl:template>
-
   <!-- remove default values for attributes -->
   <xsl:template match="row/@role[.='data']"/>
   <xsl:template match="cell/@role[.='data']"/>
   <xsl:template match="cell/@rows[.='1']"/>
   <xsl:template match="cell/@cols[.='1']"/>
   <xsl:template match="q/@broken[.='no']"/>
-
-
   <xsl:template match="encodingDesc/projectDesc">
     <projectDesc xmlns="http://www.tei-c.org/ns/1.0">
       <p>Created by converting TCP files to TEI P5 using tcp2tei.xsl,
@@ -2091,16 +2172,15 @@ of this software, even if advised of the possibility of such damage.
     </projectDesc>
   </xsl:template>
   <xsl:template match="fileDesc/publicationStmt">
-    <publicationStmt  xmlns="http://www.tei-c.org/ns/1.0">
+    <publicationStmt xmlns="http://www.tei-c.org/ns/1.0">
       <xsl:for-each select="idno">
-	<idno>
-	  <xsl:copy-of select="@*"/>
-	  <xsl:apply-templates/>
-	</idno>
+        <idno>
+          <xsl:copy-of select="@*"/>
+          <xsl:apply-templates/>
+        </idno>
       </xsl:for-each>
     </publicationStmt>
   </xsl:template>
-
   <xsl:template match="closer[postscript[not(following-sibling::*)]]">
     <closer xmlns="http://www.tei-c.org/ns/1.0">
       <xsl:copy-of select="@*"/>
@@ -2108,22 +2188,17 @@ of this software, even if advised of the possibility of such damage.
     </closer>
     <xsl:apply-templates select="postscript"/>
   </xsl:template>
-
   <xsl:template match="head/stage">
-    <hi rend="stage"  xmlns="http://www.tei-c.org/ns/1.0">
+    <hi xmlns="http://www.tei-c.org/ns/1.0" rend="stage">
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
-
   <xsl:template match="closer[postscript[following-sibling::*]]">
-      <xsl:apply-templates/>
+    <xsl:apply-templates/>
   </xsl:template>
-
   <xsl:template match="figDesc/hi[@rend='sup']">
     <xsl:apply-templates/>
   </xsl:template>
-
   <xsl:template name="makeID"/>
   <xsl:template name="idnoHook"/>
-	
 </xsl:stylesheet>
