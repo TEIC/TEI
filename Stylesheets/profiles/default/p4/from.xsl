@@ -292,25 +292,36 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="val"/>
     <xsl:choose>
       <xsl:when test="contains($val,' ')">
-	<xsl:text>#</xsl:text>
-	<xsl:value-of select="substring-before($val,' ')"/>
-	<xsl:text> </xsl:text>
-	<xsl:call-template name="splitter">
-	  <xsl:with-param name="val">
-	    <xsl:value-of select="substring-after($val,' ')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:when>
-      <xsl:when test="starts-with($val,'http')">
-        <xsl:value-of select="$val"/>
+        <xsl:choose>
+          <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
+            <xsl:value-of select="$val"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>#</xsl:text>
+	    <xsl:value-of select="substring-before($val,' ')"/>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text> </xsl:text>
+        <xsl:call-template name="splitter">
+          <xsl:with-param name="val">
+            <xsl:value-of select="substring-after($val,' ')"/>
+          </xsl:with-param>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:text>#</xsl:text>
-	<xsl:value-of select="$val"/>
+        <xsl:choose>
+          <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
+            <xsl:value-of select="$val"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="$val"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+ 
   
   <!-- fool around with selected elements -->
   
