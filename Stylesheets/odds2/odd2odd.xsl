@@ -568,11 +568,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="odd2odd-amINeeded">
     <!--
-How can a class be ok?
-  a) if an element is a member of it
-  b) if its referred to in a content model
-  c) if some other class is a member of it, and that class is OK
--->
+	How can a class be ok?
+	a) if an element is a member of it
+	b) if its referred to in a content model
+	c) if some other class is a member of it, and that class is OK
+    -->
     <xsl:variable name="k" select="@ident"/>
     <xsl:choose>
       <xsl:when test="$autoGlobal='true' and starts-with(@ident,'att.global')">y</xsl:when>

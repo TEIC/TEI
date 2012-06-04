@@ -50,6 +50,13 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="ROLES" match="item/@role" use="1"/>
   <xsl:param name="intype"> ',)</xsl:param>
   <xsl:variable name="HERE" select="/"/>
+  <xsl:variable name="Rendition">
+    <tagsDecl xmlns="http://www.tei-c.org/ns/1.0">
+      <xsl:for-each-group select="//GAP/@DISP" group-by=".">
+	<rendition xml:id="{position()}"><xsl:value-of select="current-grouping-key()"/></rendition>
+      </xsl:for-each-group>
+    </tagsDecl>
+  </xsl:variable>
   <xsl:template match="/">
     <xsl:variable name="phase1">
       <xsl:apply-templates mode="tcp"/>
@@ -82,6 +89,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="PB/@MS" mode="tcp"/>
   <xsl:template match="LABEL/@ROLE" mode="tcp"/>
   <xsl:template match="TITLE/@TYPE" mode="tcp"/>
+  <xsl:template match="GROUP/@TYPE" mode="tcp"/>
   <xsl:template match="TEMPHEAD" mode="tcp"/>
   <xsl:template match="TITLE/@I2" mode="tcp"/>
   <xsl:template match="IDG" mode="tcp"/>
@@ -369,10 +377,9 @@ of this software, even if advised of the possibility of such damage.
     </language>
   </xsl:template>
   <xsl:template match="GAP/@DISP" mode="tcp">
-    <xsl:attribute name="rend">
-      <xsl:text>content:</xsl:text>
-      <xsl:value-of select="."/>
-    </xsl:attribute>
+    <desc>
+      <xsl:value-of  select="."/>
+    </desc>
   </xsl:template>
   <xsl:template match="PB/@REF" mode="tcp">
     <xsl:attribute name="facs">
@@ -1919,7 +1926,7 @@ of this software, even if advised of the possibility of such damage.
         </revisionDesc>
 	</xsl:when>
 	<xsl:when test="not(revisionDesc)">
-	  <xsl:call-template name="roletaxonomy"/>
+	  <xsl:call-template name="Decls"/>
 	</xsl:when>
       </xsl:choose>
     </teiHeader>
@@ -1931,7 +1938,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:attribute>
   </xsl:template>
   <xsl:template match="revisionDesc">
-    <xsl:call-template name="roletaxonomy"/>
+    <xsl:call-template name="Decls"/>
     <revisionDesc xmlns="http://www.tei-c.org/ns/1.0">
       <xsl:apply-templates select="@*|*|comment()|processing-instruction()"/>
     </revisionDesc>
@@ -2259,9 +2266,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
-  <xsl:template match="closer[postscript[following-sibling::*]]">
-    <xsl:apply-templates/>
-  </xsl:template>
   <xsl:template match="figDesc/hi[@rend='sup']">
     <xsl:apply-templates/>
   </xsl:template>
@@ -2280,18 +2284,32 @@ of this software, even if advised of the possibility of such damage.
       </p>
     </desc>
   </doc>
-  <xsl:template name="roletaxonomy">
-    <xsl:if test="key('ROLES',1)">
+  <xsl:template name="Decls">
+    <xsl:if test="key('ROLES',1) or $Rendition/tagsDecl/rendition">
       <encodingDesc xmlns="http://www.tei-c.org/ns/1.0">
-	<classDecl>
-	  <taxonomy>
-	    <xsl:for-each-group select="key('ROLES',1)" group-by=".">
-	      <category xml:id="role_{.}">
-		<catDesc><xsl:value-of select="."/></catDesc>
-	      </category>
-	    </xsl:for-each-group>
-	  </taxonomy>
-	</classDecl>
+	<xsl:if test="key('ROLES',1)">
+	  <classDecl>
+	    <taxonomy>
+	      <xsl:for-each-group select="key('ROLES',1)" group-by=".">
+		<category xml:id="role_{.}">
+		  <catDesc><xsl:value-of select="."/></catDesc>
+		</category>
+	      </xsl:for-each-group>
+	    </taxonomy>
+	  </classDecl>
+	</xsl:if>
+	<xsl:if test="$Rendition/tagsDecl/rendition">
+	  <tagsDecl>
+	    <xsl:for-each select="$Rendition/tagsDecl/rendition">
+	      <rendition scheme="css">
+		<xsl:apply-templates select="@xml:id"/>
+		<xsl:text>content:</xsl:text>
+		<xsl:value-of select="."/>
+		<xsl:text>;</xsl:text>
+	      </rendition>
+	    </xsl:for-each>
+	  </tagsDecl>
+	</xsl:if>
       </encodingDesc>
     </xsl:if>
   </xsl:template>
