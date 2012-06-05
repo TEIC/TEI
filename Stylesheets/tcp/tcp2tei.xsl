@@ -174,9 +174,19 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>A HEAD/@TYPE='sub' can lose itself if it consists of
+      Q with L inside, though if thats all there is, looks like
+      an epigraph
+      </p>
+    </desc>
+  </doc>
   <xsl:template match="HEAD[@TYPE='sub']" mode="tcp">
     <xsl:choose>
-      <xsl:when test="Q/L and not(P|GAP)">
+      <xsl:when test="Q/L and not(P|GAP|text())">
 	<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
       </xsl:when>
       <xsl:when test="Q/L and P|GAP">
@@ -184,7 +194,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
 	</head>
 	</xsl:when>
-      <xsl:when test="Q[L]">
+      <xsl:when test="Q[L] and not(text())">
 	<epigraph>
 	  <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
 	</epigraph>
@@ -197,8 +207,23 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="P[not(parent::SP) and count(*)=1 and not(text()) and (LETTER or          LIST or TABLE or FIGURE)]" mode="tcp">
-    <xsl:apply-templates select="*|processing-instruction()|comment()" mode="tcp"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A paragraph with some types of child only can lose itself
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="P[not(parent::SP) and count(*)=1 and
+		       not(text()) and 
+		       (LETTER or LIST or TABLE or FIGURE)]" 
+		mode="tcp">
+    <xsl:apply-templates select="*|text()|processing-instruction()|comment()" mode="tcp"/>
+  </xsl:template>
+
+  <xsl:template match="ADD/P" mode="tcp">
+    <xsl:apply-templates select="*|text()|processing-instruction()|comment()" mode="tcp"/>
+    <lb/>
   </xsl:template>
 
   <xsl:template match="CELL[count(*)=1 and not(text()) and P]" mode="tcp">
@@ -233,27 +258,39 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="HEADNOTE[P/FIGURE]" mode="tcp">
     <xsl:apply-templates mode="tcp"/>
   </xsl:template>
+
+  <xsl:template match="ARGUMENT[count(*)=1]/HEAD" mode="tcp">
+    <p>
+      <xsl:apply-templates mode="tcp"/>
+    </p>
+  </xsl:template>
+
   <xsl:template match="HEADNOTE" mode="tcp">
     <argument>
       <xsl:apply-templates mode="tcp"/>
     </argument>
   </xsl:template>
+
   <xsl:template match="TAILNOTE" mode="tcp">
     <argument>
       <xsl:apply-templates mode="tcp"/>
     </argument>
   </xsl:template>
+
   <xsl:template match="FIGURE/BYLINE" mode="tcp">
     <signed>
       <xsl:apply-templates mode="tcp"/>
     </signed>
   </xsl:template>
+
   <xsl:template match="STAGE/STAGE" mode="tcp">
     <xsl:apply-templates mode="tcp"/>
   </xsl:template>
+
   <!-- TCP non-controversial transforms -->
   <xsl:template match="ROW/PB" mode="tcp"/>
   <xsl:template match="ROW[PB]" mode="tcp">
@@ -389,16 +426,20 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>none</xsl:text>
     </xsl:attribute>
   </xsl:template>
+
   <xsl:template match="KEYWORDS" mode="tcp">
-    <keywords>
-      <xsl:if test="not(@SCHEME)">
-        <xsl:attribute name="scheme">
-          <xsl:text>http://authorities.loc.gov/</xsl:text>
-        </xsl:attribute>
-      </xsl:if>
-      <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-    </keywords>
+    <xsl:if test="*">
+      <keywords>
+	<xsl:if test="not(@SCHEME)">
+	  <xsl:attribute name="scheme">
+	    <xsl:text>http://authorities.loc.gov/</xsl:text>
+	  </xsl:attribute>
+	</xsl:if>
+	<xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="tcp"/>
+      </keywords>
+    </xsl:if>
   </xsl:template>
+
   <xsl:template match="SUP" mode="tcp">
     <hi rend="sup">
       <xsl:apply-templates mode="tcp"/>
@@ -2254,13 +2295,8 @@ of this software, even if advised of the possibility of such damage.
       </p>
     </projectDesc>
   </xsl:template>
-  <xsl:template match="closer[postscript[not(following-sibling::*)]]">
-    <closer xmlns="http://www.tei-c.org/ns/1.0">
-      <xsl:copy-of select="@*"/>
-      <xsl:apply-templates select="text()|*[not(self::postscript)]"/>
-    </closer>
-    <xsl:apply-templates select="postscript"/>
-  </xsl:template>
+
+
   <xsl:template match="head/stage">
     <hi xmlns="http://www.tei-c.org/ns/1.0" rend="stage">
       <xsl:apply-templates/>
