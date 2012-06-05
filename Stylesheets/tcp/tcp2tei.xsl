@@ -57,6 +57,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each-group>
     </tagsDecl>
   </xsl:variable>
+
   <xsl:template match="/">
     <xsl:variable name="phase1">
       <xsl:apply-templates mode="tcp"/>
@@ -65,12 +66,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </xsl:for-each>
   </xsl:template>
-  <!-- TCP copy -->
+
+  <!-- TCP default identity transform -->
   <xsl:template match="@*" mode="tcp">
     <xsl:attribute name="{lower-case(local-name(.))}">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+
   <xsl:template match="processing-instruction()|comment()|text()" mode="tcp">
     <xsl:copy/>
   </xsl:template>
@@ -80,12 +83,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
     </xsl:element>
   </xsl:template>
+
   <!-- TCP discards -->
   <xsl:template match="FIGDESC/HI" mode="tcp">
     <xsl:apply-templates mode="tcp"/>
   </xsl:template>
+
   <!-- TCP controversial changes -->
-  <!-- lose all the multi-language xml:lang things -->
   <xsl:template match="PB/@MS" mode="tcp"/>
   <xsl:template match="LABEL/@ROLE" mode="tcp"/>
   <xsl:template match="TITLE/@TYPE" mode="tcp"/>
@@ -93,35 +97,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="TEMPHEAD" mode="tcp"/>
   <xsl:template match="TITLE/@I2" mode="tcp"/>
   <xsl:template match="IDG" mode="tcp"/>
+
+  <!-- lose all the multi-language xml:lang things -->
   <xsl:template match="@LANG[.='32']" mode="tcp"/>
-  <xsl:template match="@LANG[.='dut eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='dut fre eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng dut']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng fre ita spa lat gre']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng fre lat']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng fre']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng ita']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng lat fre']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng lat']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng may mlg']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng san']" mode="tcp"/>
-  <xsl:template match="@LANG[.='eng spa']" mode="tcp"/>
-  <xsl:template match="@LANG[.='fre eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='fre lat']" mode="tcp"/>
-  <xsl:template match="@LANG[.='grc lat']" mode="tcp"/>
-  <xsl:template match="@LANG[.='gre eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='ita eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='ita lat fre eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='lat ara']" mode="tcp"/>
-  <xsl:template match="@LANG[.='lat eng dut spa heb gre ita fre']" mode="tcp"/>
-  <xsl:template match="@LANG[.='lat eng ita fre']" mode="tcp"/>
-  <xsl:template match="@LANG[.='lat eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='lat fre']" mode="tcp"/>
-  <xsl:template match="@LANG[.='lat grc']" mode="tcp"/>
-  <xsl:template match="@LANG[.='lat gre']" mode="tcp"/>
-  <xsl:template match="@LANG[.='por spa eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='spa eng']" mode="tcp"/>
-  <xsl:template match="@LANG[.='wel eng']" mode="tcp"/>
+  <xsl:template match="@LANG[contains(.,' ')]" mode="tcp"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
@@ -156,9 +135,27 @@ of this software, even if advised of the possibility of such damage.
         </note>
       </xsl:when>
       <!-- this short list seem like editorial words. are there more? -->
-      <xsl:when test="         @UNIT='article' or          @UNIT='canon' or          @UNIT='chapter' or         @UNIT='commandment' or         @UNIT='date' or          @UNIT='day' or         @UNIT='folio' or           @UNIT='ground of' or          @UNIT='indulgence' or          @UNIT='leaf' or           @UNIT='line' or           @UNIT='monarch' or           @UNIT='motive' or           @UNIT='month' or          @UNIT='reason'  or           @UNIT='verse'  or           @UNIT='year'           ">
+      <xsl:when test="
+         @UNIT='article' or
+         @UNIT='canon' or
+         @UNIT='chapter' or 
+         @UNIT='commandment' or 
+         @UNIT='date' or 
+	 @UNIT='day' or 
+	 @UNIT='folio' or 
+	 @UNIT='ground of' or 
+	 @UNIT='indulgence' or 
+	 @UNIT='leaf' or 
+	 @UNIT='line' or 
+	 @UNIT='monarch' or 
+	 @UNIT='motive' or 
+	 @UNIT='month' or 
+	 @UNIT='reason'  or 
+	 @UNIT='verse'  or 
+	 @UNIT='year'           ">
         <note place="margin" type="milestone" subtype="{@UNIT}">
-          <xsl:message>Milestone 1: <xsl:value-of select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
+          <xsl:message>Milestone 1: <xsl:value-of
+          select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
           <xsl:value-of select="@N"/>
         </note>
       </xsl:when>
@@ -186,6 +183,11 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="HEAD[@TYPE='sub']" mode="tcp">
     <xsl:choose>
+      <xsl:when test="following-sibling::HEAD or following-sibling::OPENER">
+	<head type="sub">
+	  <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
+	</head>
+      </xsl:when>
       <xsl:when test="Q/L and not(P|GAP|text())">
 	<xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
       </xsl:when>
@@ -214,22 +216,30 @@ of this software, even if advised of the possibility of such damage.
       </p>
     </desc>
   </doc>
-  <xsl:template match="P[not(parent::SP) and count(*)=1 and
+  <xsl:template match="P[not(parent::SP or parent::HEADNOTE or
+		       parent::POSTSCRIPT or parent::ARGUMENT) and count(*)=1 and
 		       not(text()) and 
 		       (LETTER or LIST or TABLE or FIGURE)]" 
 		mode="tcp">
     <xsl:apply-templates select="*|text()|processing-instruction()|comment()" mode="tcp"/>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A paragraph inside ADD is lost, just a line-break added
+      </p>
+    </desc>
+  </doc>
   <xsl:template match="ADD/P" mode="tcp">
-    <xsl:apply-templates select="*|text()|processing-instruction()|comment()" mode="tcp"/>
     <lb/>
+    <xsl:apply-templates select="*|text()|processing-instruction()|comment()" mode="tcp"/>
   </xsl:template>
 
   <xsl:template match="CELL[count(*)=1 and not(text()) and P]" mode="tcp">
     <cell>
       <xsl:apply-templates select="@*" mode="tcp"/>
-      <xsl:for-each select="p">
+      <xsl:for-each select="P">
         <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
       </xsl:for-each>
     </cell>
@@ -242,7 +252,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="Q[count(*)=1 and not(text()) and LG/L]" mode="tcp" priority="10">
     <q>
       <xsl:apply-templates select="@*" mode="tcp"/>
-      <xsl:for-each select="lg">
+      <xsl:for-each select="LG">
         <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
       </xsl:for-each>
     </q>
@@ -259,7 +269,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="HEADNOTE[P/FIGURE]" mode="tcp">
+  <xsl:template match="HEADNOTE[P/FIGURE and not(following-sibling::HEAD)]" mode="tcp">
     <xsl:apply-templates mode="tcp"/>
   </xsl:template>
 
@@ -269,10 +279,22 @@ of this software, even if advised of the possibility of such damage.
     </p>
   </xsl:template>
 
+  <xsl:template match="HEADNOTE[count(*)=1]/HEAD" mode="tcp">
+    <p>
+      <xsl:apply-templates mode="tcp"/>
+    </p>
+  </xsl:template>
+
   <xsl:template match="HEADNOTE" mode="tcp">
     <argument>
       <xsl:apply-templates mode="tcp"/>
     </argument>
+  </xsl:template>
+
+  <xsl:template match="TAILNOTE[count(*)=1]/HEAD" mode="tcp">
+    <p>
+      <xsl:apply-templates mode="tcp"/>
+    </p>
   </xsl:template>
 
   <xsl:template match="TAILNOTE" mode="tcp">
@@ -289,6 +311,14 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="STAGE/STAGE" mode="tcp">
     <xsl:apply-templates mode="tcp"/>
+  </xsl:template>
+
+  <xsl:template match="STAGE[following-sibling::HEAD]" mode="tcp">
+    <head type="sub">
+      <stage>
+	<xsl:apply-templates mode="tcp"/>
+      </stage>
+    </head>
   </xsl:template>
 
   <!-- TCP non-controversial transforms -->
@@ -316,6 +346,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="ETS" mode="tcp">
     <TEI.2>
       <xsl:apply-templates select="@*" mode="tcp"/>
+      <xsl:message>Reading header from <xsl:value-of select="$ID"/>.hdr</xsl:message>
       <xsl:for-each select="document(concat($ID,'.hdr'),$HERE)">
         <xsl:apply-templates select="*" mode="tcp"/>
       </xsl:for-each>
@@ -751,7 +782,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="FIGDESC" mode="tcp">
     <figDesc>
       <xsl:apply-templates mode="tcp" select="@*"/>
-      <xsl:apply-templates mode="tcp"/>
+      <xsl:value-of select="translate(.,'∣','')"/>
     </figDesc>
   </xsl:template>
   <xsl:template match="FILEDESC" mode="tcp">
@@ -1702,7 +1733,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="namespace-uri()=''">
         <xsl:element namespace="http://www.tei-c.org/ns/1.0" name="{local-name(.)}">
-          <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+          <xsl:apply-templates select="@*"/>
+          <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
@@ -1712,17 +1744,19 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template match="@*|processing-instruction()|comment()">
     <xsl:copy/>
   </xsl:template>
+
   <xsl:template match="text()">
     <xsl:analyze-string regex="([^∣]*)∣" select=".">
       <xsl:matching-substring>
-        <xsl:value-of select="regex-group(1)"/>
-        <lb xmlns="http://www.tei-c.org/ns/1.0" rend="hidden" type="hyphenInWord"/>
+	<xsl:value-of select="regex-group(1)"/>
+	<lb xmlns="http://www.tei-c.org/ns/1.0" rend="hidden" type="hyphenInWord"/>
       </xsl:matching-substring>
       <xsl:non-matching-substring>
-        <xsl:value-of select="."/>
+	<xsl:value-of select="."/>
       </xsl:non-matching-substring>
     </xsl:analyze-string>
   </xsl:template>
@@ -1873,6 +1907,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+
+  <xsl:template match="@facs">
+    <xsl:attribute name="facs">
+      <xsl:value-of select="translate(.,' :[]','_')"/>
+    </xsl:attribute>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
