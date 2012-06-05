@@ -103,7 +103,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@LANG[contains(.,' ')]" mode="tcp"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-      <p>
+      <p>Milestones:
 	a) if there is no @n, just @unit   == marginal note
 	b) if there is no @unit, just a @n,  == marginal note, @type='milestone'
 
@@ -112,8 +112,7 @@ of this software, even if advised of the possibility of such damage.
 
 	d) otherwise, make a  label from @unit + @n, and put in a
 	marginal note, @type='milestone'
-
-</p>
+      </p>
     </desc>
   </doc>
   <xsl:template match="MILESTONE" mode="tcp">
@@ -236,6 +235,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="*|text()|processing-instruction()|comment()" mode="tcp"/>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>Remove gratuitous p layer inside cell</p>
+    </desc>
+</doc>
   <xsl:template match="CELL[count(*)=1 and not(text()) and P]" mode="tcp">
     <cell>
       <xsl:apply-templates select="@*" mode="tcp"/>
