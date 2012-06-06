@@ -253,15 +253,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
   </xsl:template>
 
-  <xsl:template match="Q[count(*)=1 and not(text()) and LG/L]" mode="tcp" priority="10">
-    <q>
-      <xsl:apply-templates select="@*" mode="tcp"/>
-      <xsl:for-each select="LG">
-        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="tcp"/>
-      </xsl:for-each>
-    </q>
-  </xsl:template>
-
   <xsl:template match="TITLESTMT/TITLE/text()[last()]" mode="tcp">
     <xsl:choose>
       <xsl:when test="matches(.,':$')">
@@ -1569,164 +1560,166 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="@TYPE" mode="tcp">
-    <xsl:if test="not(normalize-space(.)='')">
-      <xsl:attribute name="type">
-	<xsl:analyze-string 
-	    regex="([0-9]+)(.*)" 
-	    select="translate(translate(.,'( &amp;/', '____'),$intype,'')">
-	  <xsl:matching-substring>
-	    <xsl:text>n</xsl:text>
-	    <xsl:value-of select="regex-group(1)"/>
-	    <xsl:value-of select="regex-group(2)"/>
-	  </xsl:matching-substring>
-	  <xsl:non-matching-substring>
-	    <xsl:value-of select="."/>
-	  </xsl:non-matching-substring>
-	</xsl:analyze-string>
-      </xsl:attribute>
-    </xsl:if>
+    <xsl:choose>    
+      <xsl:when test=".='poem (rebus)'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">(rebus)</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem(s)'">
+	<xsl:attribute name="type">poems</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem and response'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">response</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem collection'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">collection</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem fragment'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">fragment</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem fragments'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">fragments</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem from author to the reader'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">from_author_to_the_reader</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem in honor of Gustavus'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">in_honor_of_Gustavus</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem incorporating anagrams'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">incorporating_anagrams</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem incorporating the Creed'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">incorporating_the_Creed</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem on frontispiece'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">on_frontispiece</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem on the seven virtues'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">on_the_seven_virtues</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to Archpapist'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_Archpapist</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to God from second edition'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_God_from_second_edition</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to author'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_author</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to book'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_book</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to king'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_king</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to pupils'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_pupils</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to readers'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_readers</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to subjects'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_subjects</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to the author'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_the_author</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to the censorious reader'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_the_censorious_reader</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to the censors'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_the_censors</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to the pious reader'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_the_pious_reader</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem to the reader'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">to_the__reader</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem with commentary'">
+	<xsl:attribute name="type">poem</xsl:attribute>
+	<xsl:attribute name="subtype">commentary</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poem(s) by one author'">
+	<xsl:attribute name="type">poems</xsl:attribute>
+	<xsl:attribute name="subtype">by_one_author</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poems and commentary'">
+	<xsl:attribute name="type">poems</xsl:attribute>
+	<xsl:attribute name="subtype">commentary</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poems gratulatory'">
+	<xsl:attribute name="type">poems</xsl:attribute>
+	<xsl:attribute name="subtype">gratulatory</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poems of acknowledgment'">
+	<xsl:attribute name="type">poems</xsl:attribute>
+	<xsl:attribute name="subtype">acknowledgment</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poems on the Symbols'">
+	<xsl:attribute name="type">poems</xsl:attribute>
+	<xsl:attribute name="subtype">on_the_Symbols</xsl:attribute>
+      </xsl:when>
+      <xsl:when test=".='poems to the reader'">
+	<xsl:attribute name="type">poems</xsl:attribute>
+	<xsl:attribute name="subtype">to_the_reader</xsl:attribute>
+      </xsl:when>
+      
+      <xsl:when test="not(normalize-space(.)='')">
+	<xsl:attribute name="type">
+	  <xsl:analyze-string 
+	      regex="([0-9]+)(.*)" 
+	      select="translate(translate(.,'( &amp;/', '____'),$intype,'')">
+	    <xsl:matching-substring>
+	      <xsl:text>n</xsl:text>
+	      <xsl:value-of select="regex-group(1)"/>
+	      <xsl:value-of select="regex-group(2)"/>
+	    </xsl:matching-substring>
+	    <xsl:non-matching-substring>
+	      <xsl:value-of select="."/>
+	    </xsl:non-matching-substring>
+	  </xsl:analyze-string>
+	</xsl:attribute>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
-
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
-      You sometimes find a milestone inside a marginal note, where
-      the note has the same value for @type as the milestone has for unit.
-      Kill the @type  on note in this situation.
+	You sometimes find a milestone inside a marginal note, where
+	the note has the same value for @type as the milestone has for unit.
+	Kill the @type  on note in this situation.
       </p>
     </desc>
   </doc>
-
+  
   <xsl:template match="NOTE/@TYPE[.=../MILESTONE/@UNIT]" mode="tcp"/>
-
-  <xsl:template match="@TYPE[.='poem (rebus)']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">(rebus)</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem and prayer']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">prayer</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem and response']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">response</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem collection']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">collection</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem fragment']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">fragment</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem fragments']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">fragments</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem from author to the reader']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">from_author_to_the_reader</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem in honor of Gustavus']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">in_honor_of_Gustavus</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem incorporating anagrams']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">incorporating_anagrams</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem incorporating the Creed']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">incorporating_the_Creed</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem on frontispiece']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">on_frontispiece</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem on the seven virtues']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">on_the_seven_virtues</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to Archpapist']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_Archpapist</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to God from second edition']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_God_from_second_edition</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to author']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_author</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to book']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_book</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to king']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_king</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to pupils']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_pupils</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to readers']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_readers</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to subjects']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_subjects</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to the author']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_the_author</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to the censorious reader']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_the_censorious_reader</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to the censors']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_the_censors</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to the pious reader']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_the_pious_reader</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem to the reader']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">to_the__reader</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem with commentary']" mode="tcp">
-    <xsl:attribute name="type">poem</xsl:attribute>
-    <xsl:attribute name="subtype">commentary</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poem(s) by one author']" mode="tcp">
-    <xsl:attribute name="type">poem(s)</xsl:attribute>
-    <xsl:attribute name="subtype">by_one_author</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poems and commentary']" mode="tcp">
-    <xsl:attribute name="type">poems</xsl:attribute>
-    <xsl:attribute name="subtype">commentary</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poems gratulatory']" mode="tcp">
-    <xsl:attribute name="type">poems</xsl:attribute>
-    <xsl:attribute name="subtype">gratulatory</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poems of acknowledgment']" mode="tcp">
-    <xsl:attribute name="type">poems</xsl:attribute>
-    <xsl:attribute name="subtype">acknowledgment</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poems on the Symbols']" mode="tcp">
-    <xsl:attribute name="type">poems</xsl:attribute>
-    <xsl:attribute name="subtype">on_the_Symbols</xsl:attribute>
-  </xsl:template>
-  <xsl:template match="@TYPE[.='poems to the reader']" mode="tcp">
-    <xsl:attribute name="type">poems</xsl:attribute>
-    <xsl:attribute name="subtype">to_the_reader</xsl:attribute>
-  </xsl:template>
+  
   <xsl:template match="@UNIT" mode="tcp">
     <xsl:attribute name="unit">
       <xsl:value-of select="."/>
@@ -1748,11 +1741,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
   <xsl:template match="@*|processing-instruction()|comment()">
     <xsl:copy/>
   </xsl:template>
-
+  
   <xsl:template match="text()">
     <xsl:analyze-string regex="([^∣]*)∣" select=".">
       <xsl:matching-substring>
