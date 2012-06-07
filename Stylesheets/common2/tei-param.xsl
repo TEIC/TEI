@@ -57,17 +57,17 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="graphicsPrefix"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="string">
-    <desc> Default file suffix for graphics files,
+    <desc>Default file suffix for graphics files,
     if not directly specified</desc>
   </doc>
   <xsl:param name="graphicsSuffix">.png</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="figures" type="decimal">
-    <desc> Scaling of imported graphics</desc>
+    <desc>Scaling of imported graphics</desc>
   </doc>
   <xsl:param name="standardScale">1</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="headings" type="boolean">
-    <desc> Construct a heading 
+    <desc>Construct a heading 
     for &lt;div&gt; elements with no &lt;head&gt;</desc>
   </doc>
   <xsl:param name="autoHead"/>
@@ -103,7 +103,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="headings" type="string">
-    <desc> Punctuation to insert after a section
+    <desc>Punctuation to insert after a section
     number</desc>
   </doc>
   <xsl:template name="headingNumberSuffix">
@@ -111,18 +111,18 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="$numberSpacer"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="headings" type="string">
-    <desc> Character to put after number of
+    <desc>Character to put after number of
     section header</desc>
   </doc>
   <xsl:param name="numberSpacer">
     <xsl:text> </xsl:text>
   </xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
-    <desc> Name of department within institution</desc>
+    <desc>Name of department within institution</desc>
   </doc>
   <xsl:param name="department"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
-    <desc> Name of link to home page of application</desc>
+    <desc>Name of link to home page of application</desc>
   </doc>
   <xsl:param name="homeLabel">Home</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
@@ -134,33 +134,33 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="homeWords">TEI</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
-    <desc> Institution</desc>
+    <desc>Institution</desc>
   </doc>
   <xsl:param name="institution">A TEI Project</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
-    <desc> Institution link</desc>
+    <desc>Institution link</desc>
   </doc>
   <xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="string">
-    <desc> Name of overall institution</desc>
+    <desc>Name of overall institution</desc>
   </doc>
   <xsl:param name="parentWords">Parent Institution</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="links" type="anyURI">
-    <desc> Link to search application</desc>
+    <desc>Link to search application</desc>
   </doc>
   <xsl:param name="searchURL">http://www.google.com</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="anyURI">
-    <desc> The home page for these stylesheets</desc>
+    <desc>The home page for these stylesheets</desc>
   </doc>
   <xsl:param name="teixslHome">http://www.tei-c.org/Stylesheets/</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
-    <desc> Process elements according to assumptions
+    <desc>Process elements according to assumptions
     of TEI P4</desc>
   </doc>
   <xsl:param name="teiP4Compat">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
-    <desc> Title, author and date is taken from the
+    <desc>Title, author and date is taken from the
     &lt;teiHeader&gt; rather than looked for in the front matter</desc>
   </doc>
   <xsl:param name="useHeaderFrontMatter">false</xsl:param>
@@ -186,17 +186,17 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="headInXref">true</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc> Automatically number figures in back
+    <desc>Automatically number figures in back
     matter</desc>
   </doc>
   <xsl:param name="numberBackFigures">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="string">
-    <desc> How to construct heading numbering in
+    <desc>How to construct heading numbering in
     back matter</desc>
   </doc>
   <xsl:param name="numberBackHeadings">A.1</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc> Automatically number tables in back
+    <desc>Automatically number tables in back
     matter</desc>
   </doc>
   <xsl:param name="numberBackTables">true</xsl:param>
@@ -209,12 +209,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="string">
-    <desc> How to construct heading numbering in
+    <desc>How to construct heading numbering in
     main matter</desc>
   </doc>
   <xsl:param name="numberBodyHeadings">1.1.1.1</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc> Automatically number figures</desc>
+    <desc>Automatically number figures</desc>
   </doc>
   <xsl:param name="numberFigures">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering">
@@ -228,35 +228,35 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc> Automatically number figures in
+    <desc>Automatically number figures in
     front matter</desc>
   </doc>
   <xsl:param name="numberFrontFigures">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="string">
-    <desc> How to construct heading numbering in
+    <desc>How to construct heading numbering in
     front matter</desc>
   </doc>
   <xsl:param name="numberFrontHeadings"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc> Automatically number tables in front
+    <desc>Automatically number tables in front
     matter</desc>
   </doc>
   <xsl:param name="numberFrontTables">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc> Automatically number sections</desc>
+    <desc>Automatically number sections</desc>
   </doc>
   <xsl:param name="numberHeadings">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="integer">
-    <desc> Depth to which sections should be
+    <desc>Depth to which sections should be
     numbered</desc>
   </doc>
   <xsl:param name="numberHeadingsDepth">9</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc> Automatically number tables</desc>
+    <desc>Automatically number tables</desc>
   </doc>
   <xsl:param name="numberTables">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc> Use value of "n" attribute to number
+    <desc>Use value of "n" attribute to number
     sections</desc>
   </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
@@ -267,42 +267,42 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="numberParagraphs">false</xsl:param>
   <xsl:param name="prenumberedHeadings">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
-    <desc> The complete URL when the document is
+    <desc>The complete URL when the document is
     being delivered from a web server (normally set by Apache or Cocoon)</desc>
   </doc>
   <xsl:param name="REQUEST"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
-    <desc> Write to standard output channel</desc>
+    <desc>Write to standard output channel</desc>
   </doc>
   <xsl:param name="STDOUT">true</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
-    <desc> Display of &lt;pb&gt; element.
+    <desc>Display of &lt;pb&gt; element.
     Choices are "visible", "active" and "none".</desc>
   </doc>
   <xsl:param name="pagebreakStyle">visible</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
-    <desc> How to display Relax NG schema fragments
+    <desc>How to display Relax NG schema fragments
     (rnc or rng)</desc>
   </doc>
   <xsl:param name="displayMode">rnc</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="boolean">
-    <desc> Provide minimal context for a link</desc>
+    <desc>Provide minimal context for a link</desc>
   </doc>
   <xsl:param name="minimalCrossRef">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
-    <desc> Character to insert at end of quote.</desc>
+    <desc>Character to insert at end of quote.</desc>
   </doc>
   <xsl:param name="postQuote">’</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
-    <desc> Character to insert at start of quote</desc>
+    <desc>Character to insert at start of quote</desc>
   </doc>
   <xsl:param name="preQuote">‘</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="tables" type="string">
-    <desc> Default alignment of table cells</desc>
+    <desc>Default alignment of table cells</desc>
   </doc>
   <xsl:param name="cellAlign">left</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="tables" type="string">
-    <desc> Default alignment of tables</desc>
+    <desc>Default alignment of tables</desc>
   </doc>
   <xsl:param name="tableAlign">left</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
