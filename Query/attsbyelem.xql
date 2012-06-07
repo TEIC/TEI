@@ -33,6 +33,15 @@ declare function tei:atts($a as element(),$lang as xs:string) as element() {
       }
   </att>
 };
+declare function tei:classatts($root as element(), $a as element(),$lang as xs:string) as element()* {
+	for $class in $a/tei:classes/tei:memberOf
+		 return 
+		  ( for $ac in $root//tei:classSpec[@ident=$class/@key]//tei:attDef
+	    	 	 return tei:atts($ac,$lang) )
+			 |
+                 ( for $ac in $root//tei:classSpec[@ident=$class/@key] 
+		    	   return tei:classatts($root,$ac,$lang) )
+};
 
 let $e := request:get-parameter("name", "")
 let $lang := request:get-parameter("lang", "")
@@ -44,9 +53,6 @@ for $a in $c//tei:attDef
 return tei:atts($a,$lang) 
 }
 {
-for $class in $c/tei:classes/tei:memberOf
-return
-for $ac in collection("/db/TEI")//tei:classSpec[@ident=$class/@key]//tei:attDef
-return tei:atts($ac,$lang)
+tei:classatts(/tei:TEI,$c,$lang)
 }
 </Element>
