@@ -83,6 +83,7 @@ Description
   </xsl:template>
   <xsl:template name="generateList">
     <xsl:for-each select="//Element/att">
+      <xsl:sort select="name"/>
       <tr>
         <td>
           <a>
