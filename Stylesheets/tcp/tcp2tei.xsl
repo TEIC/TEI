@@ -264,7 +264,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="HEADNOTE[P/FIGURE and not(following-sibling::HEAD)]" mode="tcp">
+  <xsl:template match="HEADNOTE[P/FIGURE and
+		       not(following-sibling::HEAD or following-sibling::OPENER)]" mode="tcp">
     <xsl:apply-templates mode="tcp"/>
   </xsl:template>
 
@@ -1563,7 +1564,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>    
       <xsl:when test=".='poem (rebus)'">
 	<xsl:attribute name="type">poem</xsl:attribute>
-	<xsl:attribute name="subtype">(rebus)</xsl:attribute>
+	<xsl:attribute name="subtype">rebus</xsl:attribute>
       </xsl:when>
       <xsl:when test=".='poem(s)'">
 	<xsl:attribute name="type">poems</xsl:attribute>
