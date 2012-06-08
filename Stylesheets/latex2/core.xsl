@@ -791,76 +791,58 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>}</xsl:text>
     </xsl:template>
     
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+    If verseNumbering is requested,
+ counts all the verse lines since the last container (<gi xmlns="">div1</gi> by
+ default) and labels every fifth verse using a LaTeX box 3 ems wide.
 
-   <xsl:template name="emphasize">
-      <xsl:param name="class"/>
-      <xsl:param name="content"/>
+  </desc>
+   </doc>
+  <xsl:template match="tei:l">
       <xsl:choose>
-         <xsl:when test="$class='titlem'">
-            <xsl:text>\textit{</xsl:text>
-            <xsl:copy-of select="$content"/>
-            <xsl:text>}</xsl:text>
+         <xsl:when test="$verseNumbering='true'">
+            <xsl:variable name="id" select="generate-id()"/>
+            <xsl:variable name="pos">
+               <xsl:for-each select="ancestor::*[name()=$resetVerseLineNumbering]//l">
+                  <xsl:if test="generate-id()=$id">
+                     <xsl:value-of select="position()"/>
+                  </xsl:if>
+               </xsl:for-each>
+            </xsl:variable>
+            <xsl:choose>
+               <xsl:when test="$pos mod $everyHowManyLines = 0">
+                  <xsl:text>\leftline{\makebox[3em][r]{</xsl:text>
+                  <xsl:value-of select="$pos"/>
+                  <xsl:text>}\quad{}</xsl:text>
+                  <xsl:apply-templates/>
+                  <xsl:text>}</xsl:text> 
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:text>\leftline{\makebox[3em][r]{}\quad{}</xsl:text>
+                  <xsl:apply-templates/>
+                  <xsl:text>}</xsl:text> 
+               </xsl:otherwise>
+            </xsl:choose>
          </xsl:when>
-         <xsl:when test="$class='titlej'">
-            <xsl:text>\textit{</xsl:text>
-            <xsl:copy-of select="$content"/>
-            <xsl:text>}</xsl:text>
-         </xsl:when>
-         <xsl:when test="$class='titlea'">
-            <xsl:text>‘</xsl:text>
-	           <xsl:copy-of select="$content"/>
-            <xsl:text>’</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:copy-of select="$content"/>
-         </xsl:otherwise>
+         <xsl:when test="ancestor::tei:quote and following-sibling::tei:l">
+            <xsl:apply-templates/>\\
+	 </xsl:when>
+	 <xsl:when test="parent::tei:sp">
+	   <xsl:apply-templates/>
+	   <xsl:text>\hfill\\</xsl:text>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:text>\leftline{</xsl:text>
+	   <xsl:apply-templates/>
+	   <xsl:text>}</xsl:text>
+	 </xsl:otherwise>
       </xsl:choose>
-   </xsl:template>
-
-
-  <xsl:template name="Text">
-      <xsl:param name="words"/>
-      <xsl:value-of select="tei:escapeChars($words)"/>
   </xsl:template>
 
-  <xsl:template name="applyRendition"/>
-
-  <xsl:template name="makeSpan">
+  <xsl:template match="tei:del[@rend='overstrike']">
+    <xsl:text>\sout{</xsl:text>
     <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
   </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Process text(), escaping the LaTeX command characters.</p>
-      </desc>
-   </doc>
-  <xsl:template match="text()"> 
-      <xsl:value-of select="tei:escapeChars(.)"/>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Process attributes in text mode, escaping the LaTeX
-    command characters.</p>
-         <p>as with text()</p>
-      </desc>
-   </doc>
-  <xsl:template match="@*" mode="attributetext">
-      <xsl:value-of select="tei:escapeChars(.)"/>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process text (in example mode)</desc>
-   </doc>
-  <xsl:template match="text()" mode="eg">
-      <xsl:choose>
-         <xsl:when test="starts-with(.,'&#xA;')">
-            <xsl:value-of select="substring-after(tei:escapeCharsVerbatim(.),'&#xA;')"/>
-         </xsl:when>
-         <xsl:otherwise>
-	   <xsl:value-of select="tei:escapeCharsVerbatim(.)"/>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-
 </xsl:stylesheet>

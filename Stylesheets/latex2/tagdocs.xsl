@@ -85,6 +85,16 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="simple">false</xsl:param>
       <xsl:param name="highlight"/>
       <xsl:choose>
+         <xsl:when test="parent::tei:cell[number(@cols)&gt;1]">
+	           <xsl:call-template name="egXMLStartHook"/>
+	           <xsl:call-template name="exampleFontSet"/>
+	           <xsl:apply-templates mode="verbatim">
+	              <xsl:with-param name="highlight">
+	                 <xsl:value-of select="$highlight"/>
+	              </xsl:with-param>
+	           </xsl:apply-templates>
+	           <xsl:call-template name="egXMLEndHook"/>
+         </xsl:when>
          <xsl:when test="parent::tei:cell">
 	           <xsl:text>\leavevmode\bgroup</xsl:text>
 	           <xsl:call-template name="egXMLStartHook"/>

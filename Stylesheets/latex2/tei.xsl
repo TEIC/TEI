@@ -169,4 +169,75 @@ of this software, even if advised of the possibility of such damage.
   </xsl:function>
 
 
+   <xsl:template name="emphasize">
+      <xsl:param name="class"/>
+      <xsl:param name="content"/>
+      <xsl:choose>
+         <xsl:when test="$class='titlem'">
+            <xsl:text>\textit{</xsl:text>
+            <xsl:copy-of select="$content"/>
+            <xsl:text>}</xsl:text>
+         </xsl:when>
+         <xsl:when test="$class='titlej'">
+            <xsl:text>\textit{</xsl:text>
+            <xsl:copy-of select="$content"/>
+            <xsl:text>}</xsl:text>
+         </xsl:when>
+         <xsl:when test="$class='titlea'">
+            <xsl:text>‘</xsl:text>
+	           <xsl:copy-of select="$content"/>
+            <xsl:text>’</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:copy-of select="$content"/>
+         </xsl:otherwise>
+      </xsl:choose>
+   </xsl:template>
+
+
+  <xsl:template name="Text">
+      <xsl:param name="words"/>
+      <xsl:value-of select="tei:escapeChars($words)"/>
+  </xsl:template>
+
+  <xsl:template name="applyRendition"/>
+
+  <xsl:template name="makeSpan">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Process text(), escaping the LaTeX command characters.</p>
+      </desc>
+   </doc>
+  <xsl:template match="text()"> 
+      <xsl:value-of select="tei:escapeChars(.)"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Process attributes in text mode, escaping the LaTeX
+    command characters.</p>
+         <p>as with text()</p>
+      </desc>
+   </doc>
+  <xsl:template match="@*" mode="attributetext">
+      <xsl:value-of select="tei:escapeChars(.)"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process text (in example mode)</desc>
+   </doc>
+  <xsl:template match="text()" mode="eg">
+      <xsl:choose>
+         <xsl:when test="starts-with(.,'&#xA;')">
+            <xsl:value-of select="substring-after(tei:escapeCharsVerbatim(.),'&#xA;')"/>
+         </xsl:when>
+         <xsl:otherwise>
+	   <xsl:value-of select="tei:escapeCharsVerbatim(.)"/>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>

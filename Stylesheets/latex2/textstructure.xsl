@@ -282,54 +282,6 @@ of this software, even if advised of the possibility of such damage.
  \begin{quote}<xsl:apply-templates/>\end{quote}
 </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-    If verseNumbering is requested,
- counts all the verse lines since the last container (<gi xmlns="">div1</gi> by
- default) and labels every fifth verse using a LaTeX box 3 ems wide.
-
-  </desc>
-   </doc>
-  <xsl:template match="tei:l">
-      <xsl:choose>
-         <xsl:when test="$verseNumbering='true'">
-            <xsl:variable name="id" select="generate-id()"/>
-            <xsl:variable name="pos">
-               <xsl:for-each select="ancestor::*[name()=$resetVerseLineNumbering]//l">
-                  <xsl:if test="generate-id()=$id">
-                     <xsl:value-of select="position()"/>
-                  </xsl:if>
-               </xsl:for-each>
-            </xsl:variable>
-            <xsl:choose>
-               <xsl:when test="$pos mod $everyHowManyLines = 0">
-                  <xsl:text>\leftline{\makebox[3em][r]{</xsl:text>
-                  <xsl:value-of select="$pos"/>
-                  <xsl:text>}\quad{}</xsl:text>
-                  <xsl:apply-templates/>
-                  <xsl:text>}</xsl:text> 
-               </xsl:when>
-               <xsl:otherwise>
-                  <xsl:text>\leftline{\makebox[3em][r]{}\quad{}</xsl:text>
-                  <xsl:apply-templates/>
-                  <xsl:text>}</xsl:text> 
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:when>
-         <xsl:when test="ancestor::tei:quote and following-sibling::tei:l">
-            <xsl:apply-templates/>\\
-	 </xsl:when>
-	 <xsl:when test="parent::tei:sp">
-	   <xsl:apply-templates/>
-	   <xsl:text>\hfill\\</xsl:text>
-	 </xsl:when>
-	 <xsl:otherwise>
-	   <xsl:text>\leftline{</xsl:text>
-	   <xsl:apply-templates/>
-	   <xsl:text>}</xsl:text>
-	 </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>the main TEI text</desc>
    </doc>
   <xsl:template match="tei:text">

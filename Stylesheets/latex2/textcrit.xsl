@@ -77,7 +77,9 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text>}</xsl:text>
 	  <xsl:text>\stanza&#10;</xsl:text>
 	  <xsl:for-each select="tei:l">
+	    <xsl:if test="parent::tei:lg/@xml:lang='Av'">{\itshape </xsl:if>
 	    <xsl:apply-templates/>
+	    <xsl:if test="parent::tei:lg/@xml:lang='Av'">}</xsl:if>
 	    <xsl:if test="following-sibling::tei:l">
 	      <xsl:text>&amp;</xsl:text>
 	    </xsl:if>

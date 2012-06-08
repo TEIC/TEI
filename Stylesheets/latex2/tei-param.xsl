@@ -270,6 +270,7 @@ capable of dealing with UTF-8 directly.
 \uc@dclc{8491}{default}{\AA{}}
 \uc@dclc{8239}{default}{\,}
 \uc@dclc{20154}{default}{ }
+\uc@dclc{10148}{default}{>}
 \def\textschwa{\rotatebox{-90}{e}}
 \def\textJapanese{}
 \def\textChinese{}

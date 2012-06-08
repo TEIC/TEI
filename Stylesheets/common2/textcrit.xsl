@@ -73,30 +73,31 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:choose>
 	  <xsl:when test="tei:lem">
 	    <xsl:value-of select="tei:lem"/>
-	</xsl:when>
-	<xsl:when test="not($lem='')">
-	  <xsl:value-of select="$lem"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="tei:rdg[1]"/>
-	</xsl:otherwise>
-      </xsl:choose>
+	  </xsl:when>
+	  <xsl:when test="not($lem='')">
+	    <xsl:value-of select="$lem"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="tei:rdg[1]"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:with-param>
       <xsl:with-param name="lemmawitness">
-      <xsl:value-of select="@wit"/>
+	<xsl:value-of select="@wit"/>
       </xsl:with-param>
       <xsl:with-param name="readings">
 	<xsl:for-each select="tei:rdg">
 	  <xsl:choose>
-	    <xsl:when test="not(../tei:lem) and position()=1"/>
+	    <xsl:when test="false"/> <!--$lem='' or (not(../tei:lem) and position()=1)"/>-->
 	    <xsl:otherwise>
-	      <xsl:value-of select="."/>
-	      <xsl:text>(</xsl:text>
+	      <xsl:apply-templates/>
+	      <xsl:if test="@cause='omission'">[]</xsl:if>
+	      <xsl:text> (</xsl:text>
 	      <xsl:value-of select="translate(substring(@wit,2),' #',', ')"/>
 	      <xsl:text>)</xsl:text>
-	  </xsl:otherwise>
+	      <xsl:if test="following-sibling::tei:rdg">; </xsl:if>
+	    </xsl:otherwise>
 	  </xsl:choose>
-	  <xsl:if test="following-sibling::tei:rdg">; </xsl:if>
 	</xsl:for-each>
       </xsl:with-param>
     </xsl:call-template>
@@ -116,17 +117,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template name="findApp">
       <xsl:variable name="sourcelem" select="."/>
       <xsl:for-each select="key('APPREADINGS',@xml:id)">
-	<xsl:choose>
-	  <xsl:when test="count(tei:rdg)=1 and
-			 tei:rdg=$sourcelem">
-	    <xsl:value-of select="$sourcelem"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:call-template name="makeApp">
-	      <xsl:with-param name="lem" select="$sourcelem"/>
-	    </xsl:call-template>
-	  </xsl:otherwise>
-	</xsl:choose>
+	<xsl:call-template name="makeApp">
+	  <xsl:with-param name="lem" select="$sourcelem"/>
+	</xsl:call-template>
       </xsl:for-each>
     </xsl:template>
 	 
