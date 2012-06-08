@@ -103,8 +103,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="headings" type="string">
-    <desc>Punctuation to insert after a section
-    number</desc>
+    <desc>Punctuation to insert after a section number</desc>
   </doc>
   <xsl:template name="headingNumberSuffix">
     <xsl:text>.</xsl:text>

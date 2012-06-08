@@ -38,7 +38,7 @@ theory of liability, whether in contract, strict liability, or tort
 (including negligence or otherwise) arising in any way out of the use
 of this software, even if advised of the possibility of such damage.
 
-$Id: checkxsl.xsl 9646 2011-11-05 23:39:08Z rahtz $
+$Id$
 
 2008, TEI Consortium
 -->
