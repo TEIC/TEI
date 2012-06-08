@@ -4,7 +4,7 @@
 
   <xsl:template match="/">
     <TEI xmlns="http://www.tei-c.org/ns/1.0">
-      <xsl:apply-templates select="TEI/teiHeader"/>
+      <xsl:copy-of select="TEI/teiHeader"/>
       <xsl:for-each select="TEI/text/front">
 	<xsl:copy>
 	  <xsl:call-template name="subdivs"/>
