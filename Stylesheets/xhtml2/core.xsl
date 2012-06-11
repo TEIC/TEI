@@ -497,7 +497,30 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element hi</desc>
   </doc>
   <xsl:template match="tei:hi">
+    <xsl:variable name="rend">
+      <xsl:choose>
+	<xsl:when test="@rend">
+	  <xsl:value-of select="@rend"/>
+	</xsl:when>
+	<xsl:otherwise>italic</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
+      <xsl:when test="tei:note[@place='margin']">
+	<xsl:for-each-group select="*|text()"
+			    group-adjacent="if (self::tei:note)  then 1  else 2">
+	  <xsl:choose>
+	    <xsl:when test="current-grouping-key()=1">
+	      <xsl:apply-templates select="current-group()"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <span class="{$rend}">
+		<xsl:apply-templates select="current-group()"/>
+	      </span>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
+      </xsl:when>
       <xsl:when test="@rend">
         <xsl:call-template name="rendering"/>
       </xsl:when>
@@ -1139,7 +1162,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </span>
       </xsl:when>
-      <xsl:when test="@place='margin' and (tei:p or tei:list or *[not(tei:is-inline(.))])">
+      <xsl:when test="@place='margin' and (tei:p or tei:list or tei:lg or *[not(tei:is-inline(.))])">
         <div class="margnote">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
