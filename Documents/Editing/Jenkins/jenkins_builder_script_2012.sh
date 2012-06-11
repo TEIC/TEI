@@ -334,12 +334,20 @@ echo ""
 #in order to make emailing work.
 #echo "If you want Jenkins to notify you when a build fails, please enter your email address now:"
 #read email
-echo "Configuring job priorities settings."
 
+echo "Downloading various configuration files for Jenkins."
 cd /var/lib/jenkins
 svn export https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/Jenkins/jenkins_job_config.xsl
 chown jenkins jenkins_job_config.xsl
-echo ""
+svn export https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/Jenkins/jenkins_main_config.xsl
+chown jenkins jenkins_main_config.xsl
+svn export https://tei.svn.sourceforge.net/svnroot/tei/trunk/Documents/Editing/Jenkins/defaultConfig.xml
+mv defaultConfig.xml config.xml
+saxon -s:/var/lib/jenkins/config.xml -xsl:/var/lib/jenkins/jenkins_main_config.xsl -o:/var/lib/jenkins/config.xml jinksVersion=$JINKSVERSION
+chown jenkins config.xml
+echo "Downloaded and set up root configuration file."
+
+echo "Configuring job priorities settings."
 
 echo "Running transformations on job configurations."
 saxon -s:/var/lib/jenkins/jobs/OxGarage/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/OxGarage/config.xml jobPriority=90 email=
