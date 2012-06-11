@@ -319,6 +319,12 @@ wget --no-check-certificate http://updates.jenkins-ci.org/latest/PrioritySorter.
 chown jenkins PrioritySorter.hpi
 echo ""
 
+#Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
+echo "Discovering Jenkins version..."
+cd /tmp
+wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+JINKSVERSION=`java -jar jenkins-cli.jar -s http://localhost:8080 version`
+
 echo "Stopping Jenkins server, so that we can reconfigure all the jobs a little."
 /etc/init.d/jenkins stop
 echo ""
