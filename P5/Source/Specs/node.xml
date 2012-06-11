@@ -54,7 +54,7 @@ other analytic element.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">노드의 유형을 제공한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供節點類型。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">
-      ノードの種類を示す．
+	ノードの種類を示す．
       </desc>
       <desc versionDate="2007-06-12" xml:lang="fr">indique le type du nœud.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">define un tipo de nodo.</desc>
@@ -90,6 +90,15 @@ transition.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">nodo finale in una rete di transizione</desc>
         </valItem>
       </valList>
+      <exemplum xml:lang="und">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <graph>
+	    <node xml:id="gnex11" adjTo="#gnex12" adj="#gnex13" type="initial"><label>1</label></node>
+	    <node xml:id="gnex12" adjFrom="#gnex11" adjTo="#gnex13"><label>2</label></node>
+	    <node xml:id="gnex13" adjFrom="#gnex12" adj="#gnex11" type="final"><label>3</label></node>
+	  </graph>
+	</egXML>
+      </exemplum>
     </attDef>
     <attDef ident="adjTo" usage="opt">
       <gloss>adjacent to</gloss>
@@ -111,6 +120,15 @@ transition.</desc>
       </datatype>
       <valDesc>A list of identifiers.</valDesc>
       <valDesc versionDate="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
+      <exemplum xml:lang="und">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <graph>
+	    <node xml:id="gnex21" adjTo="#gnex22" adj="#gnex23" type="initial"><label>1</label></node>
+	    <node xml:id="gnex22" adjTo="#gnex23"><label>2</label></node>
+	    <node xml:id="gnex23" type="final"><label>3</label></node>
+	  </graph>
+	</egXML>
+      </exemplum>
     </attDef>
     <attDef ident="adjFrom" usage="opt">
       <gloss>adjacent from</gloss>
@@ -133,6 +151,15 @@ node.</desc>
       </datatype>
       <valDesc>A list of identifiers.</valDesc>
       <valDesc versionDate="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
+      <exemplum xml:lang="und">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <graph>
+	    <node xml:id="gnex31" type="initial"><label>1</label></node>
+	    <node xml:id="gnex32" adjFrom="#gnex31"><label>2</label></node>
+	    <node xml:id="gnex33" adjFrom="#gnex32" adj="#gnex31" type="final"><label>3</label></node>
+	  </graph>
+	</egXML>
+      </exemplum>
     </attDef>
     <attDef ident="adj" usage="opt">
       <gloss>adjacent</gloss>
@@ -156,6 +183,15 @@ adjacent from the current node.</desc>
       </datatype>
       <valDesc>A list of identifiers.</valDesc>
       <valDesc versionDate="2009-11-17" xml:lang="fr">Une liste d'identifiants.</valDesc>
+      <exemplum xml:lang="und">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <graph>
+	    <node xml:id="gnex41" adj="#gnex42 #gnex43" type="initial"><label>1</label></node>
+	    <node xml:id="gnex42" adj="#gnex41 #gnex43"><label>2</label></node>
+	    <node xml:id="gnex43" adj="#gnex42 #gnex41" type="final"><label>3</label></node>
+	  </graph>
+	</egXML>
+      </exemplum>
       <remarks>
         <p>Use this attribute instead of the <att>adjTo</att> and
 <att>adjFrom</att> attributes when the graph is undirected and vice
@@ -189,6 +225,15 @@ are adjacent from the given node.</desc>
       </datatype>
       <valDesc>A non-negative integer.</valDesc>
       <valDesc xml:lang="fr" versionDate="2009-11-17">Un entier non négatif.</valDesc>
+      <exemplum xml:lang="und">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <graph>
+	    <node xml:id="gnex51" adjTo="#gnex52" adj="#gnex53" inDegree="1" type="initial"><label>1</label></node>
+	    <node xml:id="gnex52" adjFrom="#gnex51" adjTo="#gnex53" inDegree="2"><label>2</label></node>
+	    <node xml:id="gnex53" adjFrom="#gnex52" adj="#gnex51" inDegree="2" type="final"><label>3</label></node>
+	  </graph>
+	</egXML>
+      </exemplum>
     </attDef>
     <attDef ident="outDegree" usage="opt">
       <equiv/>
@@ -208,6 +253,15 @@ are adjacent to the given node.</desc>
       </datatype>
       <valDesc>A non-negative integer.</valDesc>
       <valDesc xml:lang="fr" versionDate="2009-11-17">Un entier non négatif.</valDesc>
+      <exemplum xml:lang="und">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <graph>
+	    <node xml:id="gnex61" adjTo="#gnex62" adj="#gnex63" outDegree="2" type="initial"><label>1</label></node>
+	    <node xml:id="gnex62" adjFrom="#gnex61" adjTo="#gnex63" outDegree="1"><label>2</label></node>
+	    <node xml:id="gnex63" adjFrom="#gnex62" adj="#gnex61" outDegree="2" type="final"><label>3</label></node>
+	  </graph>
+	</egXML>
+      </exemplum>
     </attDef>
     <attDef ident="degree" usage="opt">
       <equiv/>
@@ -226,6 +280,15 @@ the node is incident.</desc>
       </datatype>
       <valDesc>A non-negative integer.</valDesc>
       <valDesc xml:lang="fr" versionDate="2009-11-17">Un entier non négatif.</valDesc>
+      <exemplum xml:lang="und">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+	  <graph>
+	    <node xml:id="gnex71" adjTo="#gnex72" adj="#gnex73" outDegree="1"  indegree="0" degree="1" type="initial"><label>1</label></node>
+	    <node xml:id="gnex72" adjFrom="#gnex71" adjTo="#gnex73" outDegree="1" indegree="1" degree="0" ><label>2</label></node>
+	    <node xml:id="gnex73" adjFrom="#gnex72" adj="#gnex71" outDegree="0"  indegree="1"  degree="1" type="final"><label>3</label></node>
+	  </graph>
+	</egXML>
+      </exemplum>
       <remarks>
         <p>Use this attribute instead of the <att>inDegree</att> and
 <att>outDegree</att> attributes when the graph is undirected and vice
