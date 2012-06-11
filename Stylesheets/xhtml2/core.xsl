@@ -1139,7 +1139,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </span>
       </xsl:when>
-      <xsl:when test="@place='margin' and *[not(tei:is-inline(.))]">
+      <xsl:when test="@place='margin' and (tei:p or tei:list or *[not(tei:is-inline(.))])">
         <div class="margnote">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>

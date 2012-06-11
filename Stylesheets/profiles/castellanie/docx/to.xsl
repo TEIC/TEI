@@ -290,12 +290,41 @@ of this software, even if advised of the possibility of such damage.
 		       or @place='marginOuter'
 		       or @place='marginLeft'
 		       or @place='marginRight']">
-    <xsl:call-template name="block-element">
+    <xsl:call-template name="marginalFloat"/>
+  </xsl:template>
+  
+  <xsl:template name="marginalNote">
+	<xsl:call-template name="block-element">
         <xsl:with-param name="style">
-	  <xsl:text>MarginNote</xsl:text>
-	  <xsl:value-of select="substring-after(@place,'margin')"/>
+	<xsl:text>MarginNote</xsl:text>
+	<xsl:value-of select="substring-after(@place,'margin')"/>
 	</xsl:with-param>
     </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="marginalFloat">
+    <w:r>
+      <w:pict>
+	<!--          <v:shapetype id="_x0000_t202" coordsize="21600,21600" o:spt="202" path="m,l,21600r21600,l21600,xe">
+	     <v:stroke joinstyle="miter"/>
+	     <v:path gradientshapeok="t" o:connecttype="rect"/>
+	     </v:shapetype>
+	     
+	     id="_x0000_s1028" 
+	-->
+	<v:shape type="#_x0000_t202" style="position:static;left:0;text-align:left;margin-left:100pt;margin-top:0pt;width:50pt;height:20pt;mso-height-percent:200;mso-position-horizontal-relative:margin;mso-position-vertical-relative:margin;mso-height-percent:200;mso-width-relative:margin;mso-height-relative:margin" o:allowincell="f" o:allowoverlap="f">
+            <v:textbox style="mso-fit-shape-to-text:t">
+              <w:txbxContent>
+                <w:p>
+		  <xsl:apply-templates/>
+                </w:p>
+              </w:txbxContent>
+            </v:textbox>
+            <w10:wrap type="square" anchorx="margin" anchory="margin"/>
+          </v:shape>
+        </w:pict>
+      </w:r>
+
   </xsl:template>
   
   

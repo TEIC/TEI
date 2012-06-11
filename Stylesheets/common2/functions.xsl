@@ -204,6 +204,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:ex">true</xsl:when>
         <xsl:when test="self::tei:expan">true</xsl:when>
         <xsl:when test="self::tei:figure[@place='inline']">true</xsl:when>
+        <xsl:when test="self::tei:figure[parent::tei:head]">true</xsl:when>
         <xsl:when test="self::tei:foreign">true</xsl:when>
         <xsl:when test="self::tei:forename">true</xsl:when>
         <xsl:when test="self::tei:gap">true</xsl:when>
@@ -225,10 +226,10 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:series">true</xsl:when>
         <xsl:when test="self::tei:msName">true</xsl:when>
         <xsl:when test="self::tei:name">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='margin']">false</xsl:when>
-        <xsl:when test="self::tei:note[@place='marginOuter']">false</xsl:when>
-        <xsl:when test="self::tei:note[@place='marginLeft']">false</xsl:when>
-        <xsl:when test="self::tei:note[@place='marginRight']">false</xsl:when>
+        <xsl:when test="self::tei:note[@place='margin']">true</xsl:when>
+        <xsl:when test="self::tei:note[@place='marginOuter']">true</xsl:when>
+        <xsl:when test="self::tei:note[@place='marginLeft']">true</xsl:when>
+        <xsl:when test="self::tei:note[@place='marginRight']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
