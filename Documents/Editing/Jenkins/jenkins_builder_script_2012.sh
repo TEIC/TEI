@@ -66,6 +66,10 @@ echo "Do you want to continue? Press return to continue,
 Control+c to stop."
 read
 
+#Set -e so we exit if something goes wrong. More useful error messages
+#would be helpful, in the future.
+set -e
+
 #Save the current directory so that we can come back here.
 currDir=`pwd`
 
