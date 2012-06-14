@@ -128,27 +128,32 @@ set -e
 
 echo ""
 echo "*******************************************"
-echo "Throughout the following process, you may be 
-asked to agree to a couple of EULAs and licences. 
-Agree to everything, by selecting 'OK', 'Yes' etc."
+echo "The following build process should proceed without
+any need for intervention from you, but if it fails at
+some point, you can start it again, or read through the 
+script and run each section separately to figure out what
+the problem is."
 echo "*******************************************"
 echo ""
 
 echo "Press return to continue"
 read
 
-#Start by installing the MS fonts, which have EULAs, so if we get that 
-#bit out of the way, the rest of the install can proceed basically unattended.
-echo "We'll start by installing some fonts we need. 
-You'll have to agree to a EULA here."
-apt-get -y install msttcorefonts
-apt-get -y install ttf-dejavu ttf-arphic-ukai ttf-arphic-uming ttf-baekmuk ttf-junicode ttf-kochi-gothic ttf-kochi-mincho
-echo ""
+#We used to start by installing the MS fonts, which have EULAs, so if we got that 
+#bit out of the way, the rest of the install could proceed basically unattended. But
+#switching from Times New Roman to Libertine should remove that requirement.
+#echo "We'll start by installing some fonts we need. 
+#You'll have to agree to a EULA here."
+#apt-get -y install msttcorefonts
 
 #Now do updates.
 echo "Doing system updates before starting on anything else."
 apt-get update
 apt-get -y upgrade
+
+echo "Installing required fonts."
+apt-get -y install ttf-dejavu ttf-arphic-ukai ttf-arphic-uming ttf-baekmuk ttf-junicode ttf-kochi-gothic ttf-kochi-mincho ttf-linux-libertine
+echo ""
 
 #Now add the repositories we want.
 echo "Backing up repository list."
