@@ -85,6 +85,12 @@ lemma and at least one reading.</desc>
       element or within it.</sch:assert>
     </constraint>
   </constraintSpec>
+  <constraintSpec scheme="isoschematron" ident="atleast1rdg">
+    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+      <sch:assert test="count(descendant::tei:rdg[generate-id(current() ) = generate-id(ancestor::tei:app[1])]) &gt; 0">An &lt;app&gt; 
+        must contain at least one &lt;rdg&gt; element.</sch:assert>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="type" usage="opt">
       <equiv/>
