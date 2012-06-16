@@ -4,9 +4,9 @@ TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 latex2 nlm odds2 odt profiles/default rdf relaxng rnc slides tbx tite tools txt xhtml2 xsd tcp
+DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 latex2 nlm odds2 odt profiles/default rdf relaxng rnc slides tbx tcp tite tools txt xhtml2 xsd 
 
-SCRIPTS=docbooktotei docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei
+SCRIPTS=docbooktotei docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei tcptotei
 PREFIX=/usr
 OXY=/usr/share/oxygen/stylesheetDocumentation.sh
 DOCTARGETS= \
