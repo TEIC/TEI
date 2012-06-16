@@ -47,13 +47,14 @@ dist:  release-stamp
 	(cd release; zip -r ../tei-roma-`cat ../VERSION`.zip tei-roma)
 
 debversion:
-	(cd debian-tei-roma;  dch -v `cat ../VERSION` new release)
+	sh ./mydch debian-tei-roma/debian/changelog
 
-deb:	
-	rm -f tei-roma*_*changes
-	rm -f tei-roma*_*build
-	rm -f tei-roma*_*deb
-	(cd debian-tei-roma; debclean; debuild -i.svn -I.svn -uc -us)
+deb: debversion
+	@echo BUILD Make Debian packages
+	rm -f tei*roma*_*deb
+	rm -f tei*roma*_*changes
+	rm -f tei*roma*_*build
+	(cd debian-tei-roma; debclean;debuild --no-lintian  -nc -b -i.svn -I.svn -uc -us)
 
 release: clean release-stamp
 
