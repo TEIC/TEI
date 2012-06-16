@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>P5 version 2.1.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2012-06-15">June 2012</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>created retrospectively from svn ChangeLog</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>This is a maintenance release of the P5 Guidelines, which
+      does however introduce some changes in existing content
+      models.</p>
+<p>The majority of these changes and corrections are a consequence of
+feature requests or bugs reported by the TEI community, using the
+Sourceforge tracking system. The Council has also launched an
+initiative to make some systematic improvements in the prose of the
+Guidelines, notably in normalising some spelling and punctuation
+variations. </p>
+<p> Since the last release (14 February 2012), the Council has closed
+xxx tickets in the sourceforge tracking system, which should be
+consulted for details of the specific changes implemented and
+proposed. Ticket numbers are also referenced in the Change Log, as
+usual.</p>
+<div><head>Schema Changes</head>
+<p>These changes should not affect existing documents,
+but do result in changes to the generated schemas.
+      
+<list type="ordered">
+<item>The content models of <gi>availability</gi>,
+<gi>postscript</gi>, <gi>spGrp</gi>, and <gi>surface</gi>, have been
+modified to remove some inappropriate restrictions ()</item>
+<item>Additional schematron constraints have been implemented for
+several elements, notably for <gi>attDef</gi>, <gi>delSpan</gi> and
+other members of the <ident>att.spanning</ident> class.</item>
+<item>A new class <ident>att.datcat</ident> has been introduced to
+permit the use of ISO Standard Data Category Registry values where
+appropriate (3432520)</item>
+<item>The attribute <att>version</att> has been renamed
+<att>versionDate</att> to clarify its function (3393781)</item>
+<item>A new class <ident type="class">att.witnessed</ident> was
+introduced to ensure that only appropriate elements carry the
+<att>wit</att> attribute (3496951)</item>
+<item>A new attribute <att>targetLang</att> was added to the
+<ident>att.pointing</ident> class to specify the
+language of the content of an element being pointed to  (3288293)</item>
+<item>The <gi>idno</gi> element may now self-nest (3441658)</item>
+<!--
+SCHEMA CHANGES
+	change to <surface>	
+	adjust surface to use labelLike instead of glossLike, and that allows for global elements to be interleaved
+	rewrite content model to be deterministic,  at the cost of allowing glossLike and graphicLike to interleave at the start of <surface>
+	relax postscript content model 
+	rewrite content model of postscript to allow model.global anywhere; examples in Test/testecco.xml
+
+	add constraint on attDef that it must have a datatype or a closed valList; update ISO schematron code
+
+att.datcat:
+	members of att.datcat (practically, only @valueDatcat relevant here)
+	member of att.datcat
+	making fs and att.lexicographic members of att.datcat; removing gram from it
+	make att.datcat work minimally
+	make class declaration valid TEI
+	set up att.datcat, dont just declare it
+	use right name of attribute class, att.datcat
+	an imperfect fix to the placement of the egXML
+	attempting to install att.datcat cf, ticket 3432520
+	Not functional yet, cf. http://sourceforge.net/tracker/index.php?func=detail&aid=3432520&group_id=106328&atid=644065
+
+	changing the version attribute from att.translatable into versionDate. cf Sourceforge  tei-Bugs-3393781
+	clarify use of @version on the TEI element, per 3393781
+
+	A /trunk/P5/Source/Specs/att.witnessed.xml
+	add the poxy source file
+	Remove @wit from rdgGrp per bug 3496951
+
+	Implementing @refLang per ID: 3288293; not sure if the schematron check is optimal
+
+	Action item from Ann Arbor meeting arising out of ticket 3439587.
+
+	adjust model to allow multiple graphic in table properly with page breaks. http://purl.org/tei/fr/3305016
+
+	allow <trailer> to have type/subtype attributes, per Council meeting 2012-04-16 (noted that trailer is repeatable, so distinguishing between occurences with @type is desirable)
+
+	permit multiple heads at start of a spGrp for consistency with div etc.
+
+	implement fr 3441658 permitting nested <idno> elements
+
+	change content model of availability to reference model.pLike and model.availabilityPart specifically; remove p as member of model.availabilityPart; add test to test suite implementing fr 3449887
+
+-->
+</list>
+</p></div>
+<div><head>Textual Changes</head>
+<p>A large number of minor enhancements of various kinds were
+implementing, ranging from correction of typos and normalisation of
+punctuation, to rewording of phrases considered needlessly
+obscure. In addition, a number of systematic checks and enhancements
+were carried out :
+<list>
+<item>explicit usage examples are being added for all attributes
+specified, to complement those already provided for all elements; </item>
+<item>several passages reported as misleading or ambiguous in
+sourceforge tickets were reworded or clarified; </item>
+<item>some cosmetic changes were made to the formatting of the PDF and HTML
+versions of the Guidelines, notably to ensure that only  open source
+fonts are used throughout; </item>
+<item>a large number of typos were corrected,  many of them reported by
+a few careful proofreaders from the TEI Community (to whom our
+thanks!) </item>
+</list>
+</p>
+
+<!--
+
+ADD EXAMPLES FOR ALL ATTRIBUTEs
+	add examples to node.xml
+	add @xml:lang example to att.global.xml
+	add @type example to att.typed.xml
+	add @key example to att.canonical.xml
+	add bi-lingual corresp example to att.global.linking.xml
+	Examples for @aloud and @direct on <said> (see
+	http://purl.org/TEI/BUGS/3520704), and a bibliography addition for
+	one of them.
+	Adding @xml:lang to <egXML> for examples, and moving explanatory
+	text from <egXML up to <exemplum>.
+	added @xml:lang on egXML (Latin)
+	Redoing formatting for examples of @corresp and @break.
+	Added an example for @break (http://purl.org/TEI/BUGS/3520704), and also linked att.breaking spec to #CORS5; it was previously linked to Attribute Classes, which doesn't mention it, and isn't really relevant.
+	Added an example for @corresp (see http://purl.org/TEI/BUGS/3520704).
+	added examples of author IDs per FR 2493417
+	corrected <ptr>s in <listRef>
+	add example of @prefix on moduleRef/@url
+	note an example of same name in two namespaces
+	Made it clear that @targetLang is not one of the global attributes, but I'm having some doubts as to whether it should appear here at all; but it IS tempting to mention it here to prevent the abuse of @xml:lang, and I hope that this is OK as the rationale.
+	Replacing bad example in att.scoping per http://purl.org/TEI/BUGS/3518818
+	it's not classes that are 'mostly' adjectival but parts of their
+	names, and besides this information is not precise and in general
+	simply not relevant
+
+NORMALISE SPACING ROUND DASHES 
+	M /trunk/P5/Source/Guidelines/en/AI-AnalyticMechanisms.xml
+	M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+	M /trunk/P5/Source/Guidelines/en/SG-GentleIntroduction.xml
+	Fixing more spacing around em dashes per ticket
+	http://purl.org/TEI/BUGS/3471119.
+
+	
+Minor changes to improve clarity of wording
+	 M /trunk/P5/Source/Guidelines/en/VE-Verse.xml
+	Deleting XPath sentence as per http://purl.org/tei/bug/3497369
+	Acting on http://purl.org/TEI/BUGS/3500088, and adding an explanation and example showing how to declare and use more than one <metDecl> element in the same document.
+	(Incomplete <lg>s won't do, even in <egXML>s.)
+	correct capitalisation in node.xml
+	Reworded explanation of key added at revision 10374 per Lou's suggestion
+	very slightly more rational : /trunk/P5/Source/Specs/occupation.xml
+	Following discussion on the Council list, made a slight change to the <desc> of @versionDate and added some clarification in <remarks>.
+	FR 3437509: recommend use of tag URIs instead of @key	
+	corrected havdalah example per bug 3475748
+	Added <listRef><ptr target="#WD"/></listRef> to the end of the g.xml spec to provide a link to the relevant chapter. No idea why this was missing.
+
+	remove remaining instances of deprecated quotation/@form
+	Tweaks to new content relating to the use of xml-model for http://purl.org/TEI/FR/1650195.
+	Adding a new section to Ch22 regarding xml-model for http://purl.org/TEI/FR/1650195.
+	Added information about xml-model to the Gentle Introduction for
+	http://purl.org/TEI/FR/1650195.
+	clarifying namespace issue per 3515806
+	add ref to MDMDAL and remove ref to nonexistent element per 3510813
+	addition of full stop to the sentence in remarks of floatingText spec	
+	clarify alternative lacunaEnd example (#3496998)
+	clarify conformance or not of non-TEI attributes
+	remove space from "ice cream"; briefly consider adding biblio cit
+	for source but decided it wd be too silly
+	redo the formula examples
+	tweak wording re presence of quotation marks per bug 3505300
+	
+Make  <schemaSpec> available explicitly within <encodingDesc> and document
+	usage in the HD chapter, per Council decision in Michigan on ticket http://purl.org/TEI/FR/1650195.
+	M /trunk/P5/Source/Specs/lg.xmlmake prose fit the spec, which allows for only one line inside an lg somewhere
+
+TYPOGRAPHIC IMPROVEMENMTS
+	switch to Linux Libertine
+	avoid empty <ul> in example web pages
+	when listing examples, show those from the home chapter first
+	avoid headers and footers on blank pages, as per SF bug report 3475600
+add space in footer, as per SF 3481266 from Pablo Rodrigues
+	
+incorrect example
+	   M /trunk/P5/Source/Guidelines/en/VE-Verse.xml
+	fixed embarrassing typo from implementing FR 3500566
+	
+
+UNKNOWN MINOR CHANGES
+	FR 3500566 per decision at Ann Arbor meeting
+	   M /trunk/P5/Source/Guidelines/en/CO-CoreElements.xml	<person> could be in a different TEI document
+	repeat of r10359 / @mimeType example using charset=
+	insert language into url
+	   M /trunk/P5/Source/Specs/formula.xml	implemented proposal from bug 644062
+	
+
+	Corrected French example from ticket http://purl.org/TEI/BUGS/3500088.
+
+	generalise possible values for @source per bug 644062
+
+   M /trunk/P5/Source/Specs/egXML.xml	add example of feasible validity, make invalid one invalid, and reorder.
+	Added valid="false" to <egXML> example, following discussion on Council list.
+
+
+MINOR TYPOS AND SPELLING STDN
+	fixed typos reported in bug 3505459
+	clarify wording of xml:lang valdesc per 3454803
+	Working on spelling standardization (http://purl.org/TEI/BUGS/3494222): categorize, authorize, recognize, parenthesize, organize, characterize.
+	Working on spelling standardization (http://purl.org/TEI/BUGS/3494222): realize, regularize, summarize.
+	Working on spelling standardization (http://purl.org/TEI/BUGS/3494222): normalize, standardize, specialize.
+	add an apostrophe to New Year's Day per 3497032
+	corrections from bug # 3487827
+	change "any or all" to "one or more" per 3487827
+	added period after license statement (TEI SF bugs 644062)
+	remove redundant material in USE.xml per bug #3454814
+	remove redundant links per bug #3440314
+	Fixing wrong ptr to Guidelines location in definition of <mentioned>. See http://purl.org/TEI/BUGS/3500679.
+	adding missing space in idno remarks
+	Fixing a missing period reported in http://purl.org/TEI/BUGS/3497369. This does not answer the main import of the bug report, which will remain open.
+	Fixing bug reported in http://purl.org/TEI/BUGS/3497347.
+	remove "Latin" per bug 3497016
+	typo fix from 3497030
+	correct module name per bug 3497007
+	correct namepart to name component per 3497005
+	typos 3496999 3496997 from Jens
+	standardise on sigil and explain its meaning per bug #3496955
+	Fixing bug http://purl.org/TEI/BUGS/3494953 by changing 'phenomena' to 'phenomenon'.
+	Fixing bug http://purl.org/TEI/BUGS/3494952 by adding <title> tag around 'Carmina Burana'.
+	Fixing bug http://purl.org/TEI/BUGS/3496950 by adding @resp to <witDetail> and expanding explanation as suggested by the poster.
+	Replacing &nbsp; with &#160; to avoid possible validation errors with XSLT.
+	Changed "Geographical Markup Language" to "OpenGIS Geography Markup Language". See bug http://purl.org/TEI/BUGS/3492947.
+
+	version number now right-aligned
+	make version number more visible
+
+	remaining minor changes from bug #3492947
+
+	See http://purl.org/TEI/BUGS/3492947 and discussion on Council list: added <state> and <trait> to list of model.persStateLike listing, and commented out <langKnown>.
+-->
+
+
+</div>
+<div><head>Environmental Changes</head>
+<p>The production of new releases of TEI P5 is now almost entirely automated, with
+all modifications continuously tested using a pair of
+Jenkins continuous integration servers. This has
+necessitated development and maintenance of a suite of scripts which
+have seen a large number of changes since the Council decided to
+ensure that a TEI P5 Release could be tested and delivered by any
+Council member. Full details of the current procedure for doing this are
+now provided in working document TCW20,  which has been considerably
+enhanced during this period. </p>
+
+<!--
+stormy corner
+	make sure files all have svn keyword expansion turned on
+	keep header in subset
+	rewrite XQuery to recurse down att class membership properly
+	redo the way subset is created, so that moduleSpec nests inside <div> as needed for Roma
+	add name of Korean translator
+	just in case no rnv
+	even just the source needs the odd schemas built
+	put ptrs in footnote
+	just first run of latex shows full errors
+	make pdf generation very verbose
+	   M /trunk/P5/Test/test-newodd.xml
+	do not put TEI namespace on examples inside <egXML>; it will be
+	added automagically if the root element is TEI anyway
+	avoid using the word error
+	fix overeager script which gave versionDate attribute to <?xml
+	put group around model.graphicLike to make DTDs happy
+	stop keeping debian changelog in version control	
+	add Schematron testing to Exemplars
+	adding in test designed to fail, as way of testing Schematron
+	change chinese to zh-TW passim	
+	link back from examples page for an example to the reference page
+	(TEI SF bugs 644062)
+	dont copy comments to working subset of P5
+	support oxgarage in deb install script
+	get images in right place
+	copy webnav separately
+	purge old guidelines for teic web pages, exclude .svn from generated HTML
+	pull navigation for website from live copy at tei-c.org instead of old staticnav.xml
+	make p5subset more rational
+	load existing subset into eXist
+	add SVN stuff
+	add SVN properties
+	regenerate changelog
+	normalize names
+	
+JINKS CITY
+	Moving Jenkins log parsing rules to go with the rest of the Jinks work.
+	Added OxGarage build messages to "ok" section of log parse rules for Jenkins. The first time OxGarage is built, a lot of messages show up which were being flagged as errors, but which aren't. This would be confusing for someone setting up a Jenkins server.
+-->
+</div>
+    </body>
+  </text>
+</TEI>
