@@ -354,11 +354,11 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
 	 <xsl:otherwise>
 	   <span style="color:green;">
-	     <xsl:text>&lt;</xsl:text>
+	     <xsl:text>&#10216;</xsl:text>
 	   </span>
 	   <xsl:apply-templates/>
 	   <span style="color:green;">
-	     <xsl:text>&gt;</xsl:text>
+	     <xsl:text>&#10217;</xsl:text>
 	   </span>
 	 </xsl:otherwise>
       </xsl:choose>
