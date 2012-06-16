@@ -1107,6 +1107,9 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:when test="tei:content/rng:element[rng:anyName]">
 		<xsl:text> (#PCDATA)</xsl:text>
 	      </xsl:when>
+	      <xsl:when test="tei:content/rng:ref/@name='data.name'">
+		<xsl:text> (#PCDATA)</xsl:text>
+	      </xsl:when>
 	      <xsl:when test="tei:content/rng:element">
                   <xsl:text> ANY</xsl:text>
 	      </xsl:when>
