@@ -336,6 +336,34 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </del>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>The del element</desc>
+  </doc>
+  <xsl:template match="tei:add">
+      <xsl:choose>
+         <xsl:when test="@place='sup' or @place='above'">
+            <sup>
+               <xsl:apply-templates/>
+            </sup>
+         </xsl:when>
+         <xsl:when test="@place='sub' or @place='below'">
+            <sub>
+               <xsl:apply-templates/>
+            </sub>
+         </xsl:when>
+	 <xsl:otherwise>
+	   <span style="color:green;">
+	     <xsl:text>&lt;</xsl:text>
+	   </span>
+	   <xsl:apply-templates/>
+	   <span style="color:green;">
+	     <xsl:text>&gt;</xsl:text>
+	   </span>
+	 </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element eg</desc>
   </doc>

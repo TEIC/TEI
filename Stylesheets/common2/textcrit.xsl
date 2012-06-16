@@ -127,4 +127,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:back/tei:div[@type='apparatus']"
 		priority="9999"/>
 
+   <xsl:template match="tei:metamark"/>
+   <xsl:template match="tei:sourceDoc"/>
+   <xsl:template match="tei:facsimile"/>
+
 </xsl:stylesheet>
