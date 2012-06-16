@@ -342,8 +342,17 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="ETS" mode="tcp">
     <TEI.2>
       <xsl:apply-templates select="@*" mode="tcp"/>
-      <xsl:message>Reading header from <xsl:value-of select="$ID"/>.hdr</xsl:message>
-      <xsl:for-each select="document(concat($ID,'.hdr'),$HERE)">
+      <xsl:variable name="name">
+	<xsl:choose>
+	  <xsl:when test="$ID=''">
+	    <xsl:value-of select="//IDG/@ID"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$ID"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
+      <xsl:for-each select="document(concat($name,'.hdr'),$HERE)">
         <xsl:apply-templates select="*" mode="tcp"/>
       </xsl:for-each>
       <xsl:apply-templates mode="tcp"/>
