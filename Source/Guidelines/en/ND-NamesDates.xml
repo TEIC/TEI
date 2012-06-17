@@ -368,8 +368,6 @@ name is an abbreviation, initials,  or given in full:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDPER-eg-17"><s><persName>
 <forename>Peter</forename> <surname>son of Herbert</surname></persName> gives the king 40 m. for 
 having custody of the land and heir of <persName><forename>John</forename> <surname>son of Hugh</surname></persName>...</s></egXML>
-<!-- <bibl>C 60/16 Fine Roll 6 HENRY III (28 October 1221-27 October 1222),
- membrane 5, entry 154<bibl>-->
 </p>
 
 <p>Similarly, patronymics may be treated as forenames, thus:
@@ -379,15 +377,13 @@ having custody of the land and heir of <persName><forename>John</forename> <surn
    <forename>Sturluson</forename>
 </persName>
 to combine the two traditions in cyclic form.</egXML>
-<!-- Carol Clover, The Medieval Saga (Ithaca:  Cornell        -->
-	<!-- Univ. Press, 1982), p. 57.                               -->
 When a patronymic is used as a surname, however (e.g. by an individual
 who otherwise would have no surname, but lives in a culture which
 requires surnames), it may be tagged as such:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDPER-eg-18">Even <persName><forename>Finnur</forename>
 <surname>Jonsson</surname></persName>
 acknowledged the artificiality of the procedure...</egXML>
-<!-- Clover, p. 77.                                           -->
+
 Alternatively, it may be felt more appropriate to mark a patronymic as a distinct kind of name, neither a forename nor a surname, using the <gi>addName</gi> element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDPER-eg-18">
          <persName>
@@ -555,7 +551,7 @@ organizational name:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDORG-eg-34">About a year back, a question of considerable 
 interest was agitated in the 
 <orgName type="voluntary" ref="tag:projectname.org,2012:PAS1">Pennsyla. Abolition Society</orgName></egXML>
-<!-- From the Diary of Thomas Pym Cope -->
+
 This encoding is equivalent to, but more specific than, either of the
 following representations:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">About a year back, a question of considerable 
@@ -587,7 +583,7 @@ strong aversion to the <orgName type="phrase">United
 States Government</orgName>, and of
 predilection for self-government under 
 the <orgName type="phrase">English Crown</orgName></egXML>
-<!-- Anthony Trollope, North America, Penguin ed., 51 -->
+
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <orgName>The Justified Ancients of Mu Mu</orgName>
@@ -690,8 +686,6 @@ time in our <placeName ref="tag:projectname.org,2012:NY1">modern
 <placeName ref="tag:projectname.org,2012:NY1">New
 York</placeName>, I have proceeded to the <placeName ref="tag:projectname.org,2012:PH1">City of
 Brotherly Love</placeName>.</egXML>
-<!-- from letter from 'JK' found in Poulson's Daily Advertiser -->
-	<!-- 8 October, 1835, -->
 </p>
 <div type="div3" xml:id="NDPLGU"><head>Geo-political Place Names</head>
 <p>A place name may contain text with no indication of its internal
@@ -1040,8 +1034,7 @@ specific elements for  common types of biographical
 information, and a generic element for other, user-defined, types
 of information.</p> 
 <p>All the elements in these three classes belong to the attribute
-class <ident type="class">att.datable</ident>, which <!--, as a subclass
-of <name type="class">att.datable.w3c</name> --> provides the
+class <ident type="class">att.datable</ident>, which provides the
 following attributes:
 <specList><specDesc key="att.datable.w3c" atts="when notBefore notAfter from to"/></specList>
 as discussed in <ptr target="#NDATTS"/> above. </p>
@@ -1127,22 +1120,22 @@ As elsewhere, these coded values may be used as an alternative to or
 <sex value="2"/>
 </egXML>
 </p>
-<p>The generic <gi>trait</gi> element is also a member of this class,
+<p>The generic <gi>trait</gi> and <gi>state</gi> elements are also a member of this class,
 <specList>
 <specDesc key="trait"/>
+<specDesc key="state"/>
 </specList>
-This element can be used to extend the range of information supplied
-about an individual's personal traits. It may contain an optional
-<gi>label</gi> element, used to provide a human-readable
-specification for the category of trait or feature concerned and a
-description of the feature itself supplied within a <gi>desc</gi>
-element. These may be followed by or one or more
-<gi>p</gi> elements supplying more detailed information about the
-trait. In either case, these may be followed by one or more
- notes or bibliographical references. The <att>type</att>, <att>ref</att>, and
- <att>key</att> attributes are available on the <gi>trait</gi>
-element to indicate a fuller definition of the combination of feature
-and value.
+These element can be used to extend the range of information supplied
+about an individual's personal characteristics. Either may contain an
+optional <gi>label</gi> element, used to provide a human-readable
+specification for the characteristic concerned and a description of
+the feature itself supplied within a <gi>desc</gi> element. These may
+be followed by or one or more <gi>p</gi> elements supplying more
+detailed information about the trait. In either case, these may be
+followed by one or more notes or bibliographical references. The
+<att>type</att>, <att>ref</att>, and <att>key</att> attributes may be
+used to indicate a fuller definition of the combination of feature and
+value.
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <trait type="ethnicity" key="alb">
     <label>Ethnicity</label>
@@ -1153,12 +1146,11 @@ and value.
 <!-- what does alb point to here? -->
  <!-- AC: I suppose it could point to the defintion of the country for example  -->
 
-<p>The <gi>trait</gi> element is provided as a simple means of
-extending the set of descriptive features available in a standardized
-way. The use of the <att>type</att> attribute to categorize the nature of the trait is recommended when providing general traits. 
-  For example, there are no predefined elements for such features
-as eye or hair colour. If these are to be recorded, they may simply be
-added as new types of trait:
+<p>These elements are provided as a simple means of extending the set
+of descriptive features available in a standardized way.  For example,
+there are no predefined elements for such features as eye or hair
+colour. If these are to be recorded, they may simply be added as new
+types of trait:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <trait type="physical">
    <label>eye colour</label>
@@ -1170,18 +1162,17 @@ added as new types of trait:
 </trait>
 </egXML>
 </p>
-  <p>Where there is confusion between <gi>trait</gi> and
-  <gi>state</gi> the more general purpose element <gi>state</gi>
-  should be used even for unchanging characteristics. If you wish to
+
+  <p>If none of the more specialised elements listed above is
+  appropriate, then a choice must be made between the two generic
+  elements <gi>trait</gi> and <gi>state</gi>. If you wish to
   distinguish between characteristics that are generally perceived to
-  be time-bound states and those assumed to be fixed traits, then
-  <gi>trait</gi> is available for the more static of these. The
-  <gi>state</gi> element typically encodes characteristics which
-  change, often at specific times or over a date range, whereas the
-  <gi>trait</gi> elements are used to record characteristics such as
-  eye-colour, which are generally less subject to change. Traits are
+  be transient and those which are generally considered unchanging,
+  use <gi>state</gi> for the former, and <gi>trait</gi> for the
+  latter. It may also be helpful to note that that traits are
   typically, but not necessarily, independent of the volition or
-  action of the holder.</p>
+  action of the holder. If the distinction between state and trait is
+  not considered relevant or useful, use <gi>state</gi>.</p>
 
 <p>The <gi>persName</gi> element is repeatable and can, like all TEI
 elements, take the attribute <att>xml:lang</att> to indicate the
@@ -1225,16 +1216,9 @@ the following example:
   </person>
 </egXML>
 </p>
-
-<p>In addition to these specific elements the class contains a generic
-element called <gi>state</gi>.
-<specList>
-<specDesc key="state"/>
-</specList>
-</p>
-
   
-  <p>
+  <p>Alternatively, the generic <gi>name</gi> element may be used for
+  all of the naming components in a description. 
   For example, a description of the first living held by the Icelandic
 clergyman and poet Jón Oddsson Hjaltalín might be tagged as
 follows:
@@ -1261,8 +1245,10 @@ he should exchange livings with
 </egXML>
 </p>
   
-  <p>The  generic <gi>state</gi> element can be used in place of one of the more
-    specific elements: 
+  <p>Similarly, the  generic <gi>state</gi> or <gi>trait</gi> element
+  may be used in preference to the more specific elements listed
+  above:
+ 
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <state type="nationality" notBefore="2002-01-15">
         <label>Nationality</label>
@@ -1277,13 +1263,6 @@ he should exchange livings with
     <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
       <nationality notBefore="2002-01-15" key="US"/>
     </egXML>
-  </p>
-  <p>This element can be used to
-    extend the range of descriptive information available in the same way
-    as the <gi>trait</gi> element, using the same content model. As
-    noted above, if it is unclear whether  <gi>state</gi> or
-    <gi>trait</gi> should be used, the more general-purpose
-    <gi>state</gi> element should be preferred. 
   </p>
   
 </div>
@@ -1383,14 +1362,15 @@ David Jones changed his name in 1966 to David Bowie:
 </person>
 </egXML>
 </p>
-<p>All the generic elements are also members of the <ident type="class">att.responsibility</ident>
-and <ident type="class">att.editLike</ident> classes. These classes <!--, originally intended to provide
-attributes <q>describing the nature of an encoded scholarly intervention
-or interpretation of any kind</q> --> make available the attributes
-<att>cert</att>, to indicate the degree of certainty, <att>resp</att>, the agency responsible, and <att>evidence</att>,
-the nature of the evidence used. In this way it is possible, in the
-case of multiple and conflicting sources, to provide more than one view
-of what happened, as in the following example:
+<p>All the generic elements are also members of the <ident
+type="class">att.responsibility</ident> and <ident
+type="class">att.editLike</ident> classes. These classes make
+available the attributes <att>cert</att>, to indicate the degree of
+certainty, <att>resp</att>, the agency responsible, and
+<att>evidence</att>, the nature of the evidence used. In this way it
+is possible, in the case of multiple and conflicting sources, to
+provide more than one view of what happened, as in the following
+example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <event type="birth" resp="#XYZ" cert="high"><p>Born in <name type="place">Brixton</name> on 8 January 1947.</p></event>
 <event type="birth" resp="#ABC" cert="low"><p>Born in <name type="place">Berkhamsted</name> on 9 January 1947.</p></event>
@@ -1627,16 +1607,14 @@ supplying both names with an indication of the time period during
 which each was current. </p>
 
 <p>A place is defined, however, by its physical location, which does
-not typically change over time.<!-- we regard the location therefore as a
-trait of the place, and represent it by means of elements from the
-<ident type="class">model.placeTraitLike</ident> class--> Locations may
-be specified in a number of ways: as a set of coordinates defining a
-point or an area on the surface of the earth, or by providing a
-description of how the place may be found, usually in terms of other
-place names. For example, we can identify the location of the Canadian
-city of London, either by specifying its latitute and longitude, or by
-specifying that we mean the city called London located in the province
-called Ontario within the country called Canada. </p>
+not typically change over time. Locations may be specified in a number
+of ways: as a set of coordinates defining a point or an area on the
+surface of the earth, or by providing a description of how the place
+may be found, usually in terms of other place names. For example, we
+can identify the location of the Canadian city of London, either by
+specifying its latitute and longitude, or by specifying that we mean
+the city called London located in the province called Ontario within
+the country called Canada. </p>
 <p>In addition we may wish to supply a brief characterization of the
 place identified, for example to state that it is a city, an
 administrative area such as a country, or a landmark of some kind such
@@ -1824,36 +1802,6 @@ work. GML is also an ISO standard (ISO
         </location>
       </place></egXML>
   </p>
-<!-- redo this example in KML please -->
-<!--  <p>Over time, a place may change its name but not its location, or its location and not
-    its name, or both. These possibilities are all catered for in the same way, by
-    supplying multiple <gi>placeName</gi> or <gi>location</gi> elements along with
-    attributes taken from the att.dating class. For example, we may indicate the differing
-    physical locations of Roman and modern Lyon as follows: <egXML
-      xmlns="http://www.tei-c.org/ns/Examples">
-      <place xml:id="LYON3">
-        <placeName notBefore="1400">Lyon</placeName>
-        <placeName notAfter="-0056">Lugdunum</placeName>
-        <location notAfter="-0056">
-<gml:Polygon>
-  <gml:exterior>
-    <gml:LinearRing> 45.1 -110.23 46.48 -99.08 31.74 -108.86 45.3 -78.2 42.25
-      -103.45 </gml:LinearRing>
-  </gml:exterior>
-</gml:Polygon>
-        </location>
-        <location notBefore="1950">
-<gml:Polygon>
-  <gml:exterior>
-    <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
-      45.256 -110.45 </gml:LinearRing>
-  </gml:exterior>
-</gml:Polygon>
-        </location>
-      </place>
-    </egXML></p>
-
--->
 
   <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to
   indicate the source of the location information.</p>
@@ -2200,7 +2148,8 @@ declaration for France to the list above: <egXML xmlns="http://www.tei-c.org/ns/
 
 <!-- material on oxford colleges to go here -->
 
-
+<!-- next div3 was originally proposed by MJD workgroup but never
+properly elaborated or tested LB 2012-06-15 -->
 
 <!--
 <div3 >
@@ -2579,15 +2528,6 @@ expression:
   <offset>after</offset>
   <time when="13:45:00" type="occasion">the departure of the afternoon train to Boston</time>
 </time></egXML></p>
-<!-- AC: <att>exact</att> is not an attribute of <gi>date</gi> and it wasn't in the example anyway, so I have commented out the following: <p>In the following example, the <att>exact</att> attribute has been
-used to indicate a lack of precision in the distance stated:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">In practice, festival candles are lit
-<time>  
-   <time>just</time>
-   <offset>before</offset>
-   <time type="occasion">sundown</time>
-</time></egXML>
- </p>-->
 <p>In the following example, a nested <gi>date</gi> element is
 used to show that <q>my birthday</q> and the cited date are parts of
 the same temporal expression, and hence to disambiguate the phrase
@@ -2649,9 +2589,9 @@ For further discussion of  feature structure representation see chapter <ptr tar
  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDDATEA-eg-169">The university's view
 of American affairs produced a stinging attack by Edmund Burke in the
 Commons debate of <date when="1775-10-26">26 October 1775</date></egXML>
-<!-- The History of the University of Oxford, vol v, 178 -->
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#NDDATEA-eg-170"><date when="1993-05-14">Friday, 14 May 1993</date></egXML>
-<!-- the headline on the Independent Newspaper on that day -->
+
 </p>
 <p>It may be useful to categorize a temporal expression which is given
 in terms of a named event, such as a public holiday, or a
@@ -2728,46 +2668,16 @@ express the same normalized value in any of the following ways:
 <date when-iso="1301/1400">fourteenth century</date>
 <date when-iso="1301/P1Y">fourteenth century</date>
 </egXML>
-<!--
-
-These attributes rely on the following datatype macros:
-<specList>
-  <specDesc key="data.temporal.iso"/>
-  <specDesc key="data.duration.iso"/>
-</specList>
- </p>
-<?tei winita I'd like to keep this lovely example, but not sure where to put it yet sb ?>
-<p>The <att>when</att> and <att>dur</att>
-attributes are both used to provide a
-standardized or regularized form for the content of an element,
-conforming to a subset of the possible formats defined by the relevant
-international standard (ISO 8601) as profiled by <title>XML Schema
-Part 2: Datatypes Second Edition</title>.</p>
-
--->
 
  </p>
 
 <specGrp>
-<!--  &macro.anyGML; -->
-<!--  &model.persNamePart;    moved to ST-->
-  &model.orgStateLike;    
-  &att.personal;    
-<!--  &model.placeNamePart;    moved to ST -->
-  &model.placeLike;    
-  &att.datable.iso; 
-  &att.duration.iso; 
-  
-
-
-
-
+&model.orgStateLike;    
+&att.personal;    
+&model.placeLike;    
+&att.datable.iso; 
+&att.duration.iso; 
 &data.temporal.iso;
-  
-
-
-
-
 &data.duration.iso;
     <specGrpRef target="#DNDPER"/>
     <specGrpRef target="#DNDPLAC"/>
