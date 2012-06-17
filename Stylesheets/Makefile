@@ -8,7 +8,7 @@ DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 latex2 nlm odds2 
 
 SCRIPTS=docbooktotei docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei tcptotei
 PREFIX=/usr
-OXY=/usr/share/oxygen/stylesheetDocumentation.sh
+OXY=/usr/share/oxygen
 DOCTARGETS= \
 	latex2/tei.xsl \
 	xhtml2/tei.xsl \
@@ -95,10 +95,10 @@ doc:
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl-common
 
 oxygendoc:
-	@echo text for existence of file $(OXY)
-	@test -f $(OXY) || exit 0
+	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
+	@test -f $(OXY)/stylesheetDocumentation.sh || exit 0
 	@echo using oXygen stylesheet documentation generator
-	for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common2/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+	for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common2/`dirname $$i`; ${OXY}/stylesheetDocumentation.sh $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 teioo.jar:
 	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
@@ -137,8 +137,8 @@ installprofiles:
 	mkdir -p ${PREFIX}/share/doc/
 	tar cf - --exclude .svn --exclude default profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
 	(cd release/profiles; tar cf - .) | (cd ${PREFIX}/share; tar xf  -)
-	@echo text for existence of file $(OXY)
-	-test -f $(OXY) && for i in ${PROFILEDOCTARGETS}; do echo process doc for $$i; export ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $$i`; ${OXY} $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done && \
+	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
+	-test -f $(OXY) && for i in ${PROFILEDOCTARGETS}; do echo process doc for $$i; export ODIR=release/profiles/doc/tei-p5-xslprofiles/`dirname $$i`; ${OXY}/stylesheetDocumentation.sh $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done && \
 	(cd release/profiles/doc; tar cf - .) | (cd ${PREFIX}/share/doc; tar xf -)
 
 installcommon: doc common
