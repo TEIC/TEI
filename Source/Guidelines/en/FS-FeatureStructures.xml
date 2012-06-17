@@ -260,6 +260,29 @@ representation in XML further in section <ptr target="#FSFL"/> below.
 <p>However, the most general method of attempting to ensure that only legal
 combinations of feature names and values are used is to provide a
 <term>feature-system declaration</term> discussed in <ptr target="#FD"/>.</p>
+<p>Whether at the level of feature-system declarations, feature- and feature-value
+libraries, or individual features, it is possible to align both feature names and their
+values with standardized external data category repositories such as ISOcat. <note
+place="bottom">See section <ptr
+target="#DIMVLV"/> for more discussion of the need and rationale for ISOcat
+references.</note> The both the feature "part of speech" and its value "common noun" are
+aligned with the respective definitions provided by <ptr type="cit"
+target="#ISO-12620"/>, as implemented by ISOcat. 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<TEI xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:dcr="http://www.isocat.org/ns/dcr">
+<!--...-->
+<fs>
+<!--...-->
+<f
+name="part of speech"
+dcr:datcat="http://www.isocat.org/datcat/DC-1345"
+fVal="common noun"
+dcr:valueDatcat="http://www.isocat.org/datcat/DC-1256"
+/>
+...
+</fs>
+...
+</TEI></egXML></p>
 </div>
 <div type="div2" xml:id="FSFL"><head>Feature Libraries and Feature-Value Libraries</head>
 <p>As the examples in the preceding section suggest, the direct
@@ -339,7 +362,7 @@ below.
 </p>
 <p>Note that when features or feature structures are linked to in this
 way, the result is effectively a copy of the item linked to into the
-place from which it is linked. This form of linking should be distinguished  from
+place from which it is linked. This form of linking should be distinguished from
 the phenomenon of <term>structure-sharing</term>, where it is desired
 to indicate that some part of an annotation structure appears
 simultaneously in two or more places within the structure. This kind
