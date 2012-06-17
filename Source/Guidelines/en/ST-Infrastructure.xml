@@ -1290,13 +1290,15 @@ coded values or names of some kind. These values may be constrained or
 defined in a number of different ways, each of which is given a
 different name, as follows:
 <specList>
-<specDesc key="data.key"/> 
+<!--specDesc key="data.key"/--> 
 <specDesc key="data.word"/>
+<specDesc key="data.text"/>
 <specDesc key="data.name"/>
 <specDesc key="data.enumerated"/>
 <specDesc key="data.code"/>
 </specList>
-</p><p>The attribute <att>key</att> provided by the <ident type="class">att.canonical</ident> class is currently the only attribute
+</p>
+<!-- <p>The attributes <att>key</att> provided by the <ident type="class">att.canonical</ident> class is currently the only attribute
 of type <ident type="datatype">data.key</ident>. It is used to supply
 an externally-defined identifier, such as a database key or
 filename. Because such identifiers are externally-defined, no
@@ -1306,7 +1308,9 @@ rules for constructing a valid database key in a particular system,
 may be documented by a <gi>tagUsage</gi> element in the TEI Header,
 but are not enforced by the datatype as defined here. Such
 system-specific constraints may however be added to a TEI schema by
-using the customisation techniques methods described in <ptr target="#MD"/>.</p><p>Attributes of type <ident type="datatype">data.word</ident>, such
+using the customisation techniques methods described in <ptr
+target="#MD"/>.</p>--><!-- removed as we don't now use data.key LB 2012-06-17-->
+<p>Attributes of type <ident type="datatype">data.word</ident>, such
 as <att>age</att> on <gi>person</gi>, are used to supply an identifier
 expressed as any kind of single token or word. The TEI places a few
 constraints on the characters which may be used for this purpose: only
@@ -1314,39 +1318,60 @@ Unicode characters classified as letters, digits, punctuation
 characters, or symbols can appear in an attribute value of this
 kind. Note in particular that such values cannot include whitespace
 characters. Legal values include <val>cholmondeley</val>,
-<val>été</val>, <val>1234</val>, <val>_content</val>, or
+<val>été</val>, <val>1234</val>, <val>e_content</val>, or
 <val>xml:id</val>, but not <val>grand wazoo</val>. Attributes of this
 kind are sometimes used to associate (by co-reference) elements of
-different types.</p><p>Attributes of type <ident type="datatype">data.name</ident> are
-also words in this sense, but they have the additional constraint that
-they must be legal XML identifiers, as defined by the XML 1.0
-specification, or successors. As such, they may not begin with digits
-or punctuation characters. Legal identifiers include
-<val>cholmondeley</val>, <val>été</val>, <val>e_content</val>, or
-<val>xml:id</val>, but not <val>grand wazoo</val> or
-<val>1234</val>. Attributes of this kind are typically used to
-represent XML element or attribute names.</p><p>Attributes of type <ident type="datatype">data.enumerated</ident>,
-such as <att>new</att> on <gi>shift</gi> or <att>evidence</att>
-supplied by <ident type="class">att.editLike</ident>, have the same
-definition as <ident type="datatype">data.word</ident> above, with the
-added constraint that the word supplied is taken from a specific list
-of possibilities. In each case, the element or class specification
-which includes the definition for the attribute will also contain a
-list of possible values, together with a prose description of their
-intended significance.  This list may be open (in which case the list
-is advisory), or closed (in which case it determines the range of
-legal values). In this latter case, the datatype will not be
-<ident type="datatype">data.enumerated</ident>, but an explicit list of the possible values.</p>
+different types.</p>
+<p>Where identifiers are defined externally, for example as part of a
+database or file system, the inability to include whitespace or other
+special characters in a value may be problematic. In other cases, it
+may also be simply more convenient to supply a short sequence of
+natural language words including spaces as a single value. For these
+reasons, we also provide a datatype <ident>data.text</ident> which
+does permit whitespace and indeed any other Unicode character. Legal
+values include <val>cholmondeley</val>, <val>été</val>,
+<val>1234</val>, <val>e-content</val>, <val>xml:id</val>, and
+<val>grand wazoo</val>. This datatype should be used with care since
+XML will not normalise whitespace characters within it: for example
+the values <code>n="a b"</code> (two spaces) and <code>n="a b"</code>
+(three spaces) would be considered distinct. This case should be
+distinguished from that of an attribute permitting multiple values,
+each of which may be separated by whitespace which <emph>will</emph>
+be normalised (see further <ptr target="#TD-datatypes"/>).
+</p>
+<p>Attributes of type <ident type="datatype">data.name</ident> are
+similar to those of type <ident type="datatype">data.word</ident>, but
+with the additional constraint that they must be legal XML
+identifiers, as defined by the XML 1.0 specification, or
+successors. Hence, they may not begin with digits or punctuation
+characters. Legal identifiers include <val>cholmondeley</val>,
+<val>été</val>, <val>e_content</val>, or <val>xml:id</val>, but not
+<val>grand wazoo</val> or <val>1234</val>. Attributes of this kind are
+typically used to represent XML element or attribute
+names.</p><p>Attributes of type <ident
+type="datatype">data.enumerated</ident>, such as <att>new</att> on
+<gi>shift</gi> or <att>evidence</att> supplied by <ident
+type="class">att.editLike</ident>, have the same definition as <ident
+type="datatype">data.word</ident> above, with the added constraint
+that the word supplied is taken from a specific list of
+possibilities. In each case, the element or class specification which
+includes the definition for the attribute will also contain a list of
+possible values, together with a prose description of their intended
+significance.  This list may be open (in which case the list is
+advisory), or closed (in which case it determines the range of legal
+values). In this latter case, the datatype will not be <ident
+type="datatype">data.enumerated</ident>, but an explicit list of the
+possible values.</p>
 <p>Attributes of type <ident type="datatype">data.code</ident> are
 similar in function, in that they also supply encoded names for values
 which are defined in more detail elsewhere.  In this case, however,
 the full definition is supplied as content of another XML element,
 typically but not necessarily in the same document, and it is
 referenced by means of a pointer.</p><specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-4" n="Coded value datatypes">
-&data.key;
+<!--&data.key;-->
 
 &data.word;
-
+&data.text;
 &data.code;
 
 &data.name;
