@@ -1,12 +1,13 @@
 default namespace = "http://www.tei-c.org/ns/1.0"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace ns1 = "http://www.isocat.org/ns/dcr"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
 # Schema 
-# Edition: 2.0.2 Last updated on 2nd February 2012.
-# Edition Location: http://www.tei-c.org/Vault/P5/2.0.2/
+# Edition: 2.1.0. Last updated on 17th June 2012.
+# Edition Location: http://www.tei-c.org/Vault/P5/2.1.0/
 #
 
 #
@@ -22,7 +23,6 @@ macro.specialPara =
    | model.inter
    | model.divPart
    | model.global)*
-macro.xtext = (text | model.gLike)*
 data.certainty = "high" | "medium" | "low" | "unknown"
 data.probability = xsd:double { minInclusive = "0" maxInclusive = "1" }
 data.numeric =
@@ -51,8 +51,8 @@ data.outputMeasurement =
 data.pattern = xsd:token
 data.pointer = xsd:anyURI
 data.version = xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
-data.key = xsd:string
 data.word = xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
+data.text = xsd:string
 data.code = xsd:anyURI
 data.name = xsd:Name
 data.enumerated = data.name
@@ -69,7 +69,7 @@ att.canonical.attribute.key =
   
   ## provides an externally-defined means of identifying the entity (or entities) being
   ##         named, using a coded value of some kind.
-  attribute key { data.key }?
+  attribute key { data.text }?
 att.canonical.attribute.ref =
   
   ## (reference) provides an explicit means of locating a full definition for the entity being named by
@@ -145,9 +145,7 @@ att.dimensions.attribute.extent =
   
   ## indicates the size of the object concerned using a project-specific vocabulary combining
   ##         quantity and units in a single string of words. 
-  attribute extent {
-    list { data.word, data.word* }
-  }?
+  attribute extent { data.text }?
 att.dimensions.attribute.precision =
   
   ## characterizes the precision of the values specified by the other attributes.
@@ -210,6 +208,23 @@ att.datable.attribute.period =
   ##         period of time within which the datable item is understood to
   ##         have occurred.
   attribute period { data.pointer }?
+att.datcat.attributes =
+  att.datcat.attribute.datcat, att.datcat.attribute.valueDatcat
+att.datcat.attribute.datcat =
+  
+  ## contains a PID (persistent identifier) that aligns the given element with the appropriate 
+  ##         Data Category (or categories) in ISOcat.
+  attribute ns1:datcat {
+    list { data.pointer, data.pointer* }
+  }?
+att.datcat.attribute.valueDatcat =
+  
+  ## contains a PID (persistent identifier) that aligns the content of the given
+  ##         element or the value of the given attribute with the appropriate simple Data
+  ##         Category (or categories) in ISOcat.
+  attribute ns1:valueDatcat {
+    list { data.pointer, data.pointer* }
+  }?
 att.declarable.attributes = att.declarable.attribute.default
 att.declarable.attribute.default =
   
@@ -384,9 +399,7 @@ att.global.attribute.n =
   
   ## (number) gives a number (or other label) for an element, which is not necessarily unique within
   ##         the document.
-  attribute n {
-    list { data.word, data.word* }
-  }?
+  attribute n { data.text }?
 att.global.attribute.xmllang =
   
   ## (language) indicates the language of the element content using a tag generated
@@ -666,7 +679,32 @@ att.typed.attribute.subtype =
   ## provides a sub-categorization of the element, if needed
   attribute subtype { data.enumerated }?
 att.pointing.attributes =
-  att.pointing.attribute.target, att.pointing.attribute.evaluate
+  att.pointing.attribute.targetLang,
+  att.pointing.attribute.target,
+  att.pointing.attribute.evaluate
+att.pointing.attribute.targetLang =
+  
+  ## specifies the language of the content to be found at the destination referenced by target, using a language tag generated
+  ##         according to BCP 47.
+  attribute targetLang { data.language }?
+sch:pattern [
+  id = "targetLang-constraint-targetLang"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:*[@targetLang]"
+    "\x{a}" ~
+    "            "
+    sch:assert [
+      test = "count(@target)"
+      "@targetLang can only be used if @target is specified."
+    ]
+    "\x{a}" ~
+    "          "
+  ]
+  "\x{a}" ~
+  "   "
+]
 att.pointing.attribute.target =
   
   ## specifies the destination of the reference by supplying one or more URI References
@@ -716,7 +754,9 @@ att.pointing.group.attribute.targFunc =
     list { data.word, data.word, data.word* }
   }?
 att.segLike.attributes =
-  att.segLike.attribute.function, att.segLike.attribute.part
+  att.datcat.attributes,
+  att.segLike.attribute.function,
+  att.segLike.attribute.part
 att.segLike.attribute.function =
   
   ## characterizes the function of the segment.
@@ -830,12 +870,11 @@ att.transcriptional.attribute.seq =
   ## (sequence) assigns a sequence number related to the order in which
   ##       the encoded features carrying this attribute are believed to have occurred.
   attribute seq { data.count }?
-att.translatable.attributes = att.translatable.attribute.version
-att.translatable.attribute.version =
+att.translatable.attributes = att.translatable.attribute.versionDate
+att.translatable.attribute.versionDate =
   
-  ## specifies the version name or number of the source from
-  ##	which the translated version was derived
-  attribute version { data.word }?
+  ## specifies the date on which the source text was extracted and sent to the translator
+  attribute versionDate { data.temporal.w3c }?
 model.nameLike.agent = name
 model.nameLike.agent_alternation = name
 model.nameLike.agent_sequence = name
@@ -1083,7 +1122,7 @@ model.publicationStmtPart =
   | authority
   | idno
   | availability
-model.availabilityPart = p | licence
+model.availabilityPart = licence
 model.glossLike = desc | gloss
 model.quoteLike = quote | cit
 model.quoteLike_alternation = quote | cit
@@ -1419,13 +1458,13 @@ distinct =
     attribute type { data.enumerated }?,
     
     ## specifies how the phrase is distinct diachronically
-    attribute time { data.key }?,
+    attribute time { data.text }?,
     
     ## specifies how the phrase is distinct diatopically
-    attribute space { data.key }?,
+    attribute space { data.text }?,
     
     ## specifies how the phrase is distinct diastatically
-    attribute social { data.key }?,
+    attribute social { data.text }?,
     empty
   }
 said =
@@ -1459,8 +1498,8 @@ quote =
   }
 q =
   
-  ## (separated from the surrounding text with quotation marks) contains material which is marked as (ostensibly) being somehow different than the
-  ##     surrounding text, for any one of a variety of reasons including, but not limited to: direct
+  ## (quoted) contains material which is distinguished from the
+  ##     surrounding text using quotation marks or a similar method, for any one of a variety of reasons including, but not limited to: direct
   ##     speech or thought, technical terms or jargon, authorial distance, quotations from elsewhere, and
   ##     passages that are mentioned but not used. [3.3.3. ]
   element q {
@@ -1520,7 +1559,7 @@ cit =
   }
 mentioned =
   
-  ## marks words or phrases mentioned, not used. [3.3.4. ]
+  ## marks words or phrases mentioned, not used. [3.3.3. ]
   element mentioned { macro.phraseSeq, att.global.attributes, empty }
 soCalled =
   
@@ -1574,8 +1613,7 @@ term =
   }
 sic =
   
-  ## (latin for thus or so
-  ##   ) contains text reproduced although apparently incorrect or inaccurate. [3.4.1. ]
+  ## (Latin for thus or so) contains text reproduced although apparently incorrect or inaccurate. [3.4.1. ]
   element sic {
     macro.paraContent,
     att.global.attributes,
@@ -1709,10 +1747,7 @@ rs =
     macro.phraseSeq,
     att.global.attributes,
     att.naming.attributes,
-    
-    ## indicates more specifically the object referred to by the referencing string.
-    ##         When suitable, values should be drawn from an existing ontology, such as the BBN's proposed answer categories.
-    attribute type { data.enumerated }?,
+    att.typed.attributes,
     empty
   }
 email =
@@ -2509,7 +2544,7 @@ l =
   }
 lg =
   
-  ## (line group) contains a group of verse lines functioning as a formal unit, e.g. a stanza, refrain,
+  ## (line group) contains one or more verse lines functioning as a formal unit, e.g. a stanza, refrain,
   ##         verse paragraph, etc. [3.12.1.  3.12.  7.2.5. ]
   element lg {
     ((model.divTop | model.global)*,
@@ -2519,7 +2554,27 @@ lg =
       | model.labelLike
       | model.global
       | lg)*,
-     (model.divBottom, model.global*)*),
+     (model.divBottom, model.global*)*)
+    >> sch:pattern [
+         id = "lg-constraint-atleast1oflggapl"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:lg"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test =
+               "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
+             "An <lg> \x{a}" ~
+             "        must contain at least one child <l>, <lg> or <gap>."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
     att.global.attributes,
     att.divLike.attributes,
     att.typed.attributes,
@@ -2663,8 +2718,7 @@ fileDesc =
   }
 titleStmt =
   
-  ## (title statement) groups information about the title of a work and those responsible for its intellectual
-  ##     content. [2.2.1.  2.2. ]
+  ## (title statement) groups information about the title of a work and those responsible for its content. [2.2.1.  2.2. ]
   element titleStmt {
     (title+, model.respLike*), att.global.attributes, empty
   }
@@ -2733,7 +2787,7 @@ idno =
   ##   such as a bibliographic item, a person, a title, an organization,
   ##   etc. in a standardized way. [2.2.4.  2.2.5.  3.11.2.3. ]
   element idno {
-    macro.xtext,
+    (text | model.gLike | idno)*,
     att.global.attributes,
     att.sortable.attributes,
     
@@ -2747,7 +2801,7 @@ availability =
   ## supplies information about the availability of a text, for example any restrictions on its
   ##     use or distribution, its copyright status, any licence applying to it, etc. [2.2.4. ]
   element availability {
-    model.availabilityPart+,
+    (model.availabilityPart | model.pLike)+,
     att.global.attributes,
     att.declarable.attributes,
     
@@ -3073,7 +3127,8 @@ rendition =
     ## where CSS is used, provides a way of defining
     ## pseudo-elements, that is, styling rules
     ## applicable to specific sub-portions of an element.
-    attribute scope { text }?,
+    ## Sample values include: 1] first-line; 2] first-letter; 3] before; 4] after
+    attribute scope { data.enumerated }?,
     empty
   }
 refsDecl =
@@ -3404,7 +3459,7 @@ TEI =
        ],
     att.global.attributes,
     
-    ## specifies the version number of the TEI Guidelines against
+    ## specifies the major version number of the TEI Guidelines against
     ##       which this document is valid.
     attribute version { data.version }?,
     empty
@@ -3592,7 +3647,9 @@ div7 =
 trailer =
   
   ## contains a closing title or footer appearing at the end of a division of a text.  [4.2.4.  4.2. ]
-  element trailer { macro.phraseSeq, att.global.attributes, empty }
+  element trailer {
+    macro.phraseSeq, att.global.attributes, att.typed.attributes, empty
+  }
 byline =
   
   ## contains the primary statement of responsibility given for a work
@@ -3605,7 +3662,7 @@ byline =
 dateline =
   
   ## contains a brief description of the place, date, time, etc. of production of a letter,
-  ##     newspaper story, or other work, prefixed or suffixed to it as a kind of heading or trailer.  [4.2.4.  4.2.2. ]
+  ##     newspaper story, or other work, prefixed or suffixed to it as a kind of heading or trailer.  [4.2.2. ]
   element dateline { macro.phraseSeq, att.global.attributes, empty }
 argument =
   
@@ -3626,7 +3683,7 @@ epigraph =
 opener =
   
   ## groups together dateline, byline, salutation, and similar phrases appearing as a preliminary
-  ##     group at the start of a division, especially of a letter. [4.2.4.  4.2. ]
+  ##     group at the start of a division, especially of a letter. [4.2. ]
   element opener {
     (text
      | model.gLike
@@ -3659,19 +3716,21 @@ closer =
 salute =
   
   ## (salutation) contains a salutation or greeting prefixed to a foreword, dedicatory epistle, or other
-  ##     division of a text, or the salutation in the closing of a letter, preface, etc. [4.2.4.  4.2.2. ]
+  ##     division of a text, or the salutation in the closing of a letter, preface, etc. [4.2.2. ]
   element salute { macro.phraseSeq, att.global.attributes, empty }
 signed =
   
   ## (signature) contains the closing salutation, etc., appended to a foreword,
-  ## dedicatory epistle, or other division of a text.  [4.2.4.  4.2.2. ]
+  ## dedicatory epistle, or other division of a text.  [4.2.2. ]
   element signed { macro.phraseSeq, att.global.attributes, empty }
 postscript =
   
   ## contains a postscript, e.g. to a letter. [4.2. ]
   element postscript {
-    ((model.divTopPart*, model.common+, model.divBottomPart*)
-     | model.global)*,
+    ((model.global | model.divTopPart)*,
+     model.common,
+     (model.global | model.common)*,
+     (model.divBottomPart, model.global*)*),
     att.global.attributes,
     empty
   }
@@ -4297,8 +4356,8 @@ table =
   
   ## contains text displayed in tabular form, in rows and columns. [14.1.1. ]
   element table {
-    (((model.headLike | model.global)*, (row, model.global*)+)
-     | model.graphicLike+),
+    ((model.headLike | model.global)*,
+     ((row, model.global*)+ | (model.graphicLike, model.global*)+)),
     att.global.attributes,
     
     ## indicates the number of rows in the table.
@@ -4327,10 +4386,10 @@ formula =
   
   ## contains a mathematical or other formula. [14.2. ]
   element formula {
-    (text | model.graphicLike)*,
+    (text | model.graphicLike | model.hiLike)*,
     att.global.attributes,
     
-    ## specifies the notation used for the content of the element.
+    ## names the notation used for the content of the element.
     attribute notation { data.enumerated }?,
     empty
   }
