@@ -10,7 +10,7 @@
 
     <xsl:import href="../../../xhtml2/tei.xsl"/>
 
-  <xsl:param name="feedbackURL">http://www.tei-c.org/contact.xml</xsl:param>
+  <xsl:param name="feedbackURL">http://www.tei-c.org/About/contact.xml</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
