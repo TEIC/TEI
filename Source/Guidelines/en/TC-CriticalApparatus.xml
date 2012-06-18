@@ -7,215 +7,175 @@ $Date$
 $Id$
 -->
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TC" n="19">
-<head>Critical Apparatus</head>
-<p>Scholarly editions of texts, especially texts of great antiquity or
-importance, often record some or all of the known variations among
-different <term>witnesses</term> to the text.  Witnesses to a text may
-include authorial or other manuscripts, printed editions of the work,
-early translations, or quotations of a work in other texts.
-Information concerning variant readings of a text may be accumulated in
-highly structured form in a critical apparatus of variants.  This
-chapter defines a module for use in encoding such an
-apparatus of variants, which may be used in conjunction with any of the
-modules defined in these Guidelines.  It also defines an element
-class which provides extra attributes for some elements of the core tag
-set when this module is selected.</p>
+  <head>Critical Apparatus</head>
+  <p>Scholarly editions of texts, especially texts of great antiquity or importance, often record
+    some or all of the known variations among different <term>witnesses</term> to the text.
+    Witnesses to a text may include authorial or other manuscripts, printed editions of the work,
+    early translations, or quotations of a work in other texts. Information concerning variant
+    readings of a text may be accumulated in highly structured form in a critical apparatus of
+    variants. This chapter defines a module for use in encoding such an apparatus of variants, which
+    may be used in conjunction with any of the modules defined in these Guidelines. It also defines
+    an element class which provides extra attributes for some elements of the core tag set when this
+    module is selected.</p>
 
-<p>Information about variant readings (whether or not represented by a
-critical apparatus in the source text) may be recorded in a series of
-<term>apparatus entries</term>, each entry documenting one
-<term>variation</term>, or set of readings, in the text.  Elements for the
-apparatus entry and readings, and for the documentation of the witnesses
-whose readings are included in the apparatus, are described in
-section <ptr target="#TCAPLL"/>. Special tags for fragmentary witnesses are
-described in section <ptr target="#TCAPMI"/>.  The available methods for
-embedding the apparatus in the rest of the text, or for linking an
-external apparatus to the base text, are described in section <ptr target="#TCAPLK"/>.  Finally, several extra attributes for some tags of the
-core tag set, made available when the additional tag set for text
-criticism is selected, are documented in section <ptr target="#PHCO"/>.
-	</p>
+  <p>Information about variant readings (whether or not represented by a critical apparatus in the
+    source text) may be recorded in a series of <term>apparatus entries</term>, each entry
+    documenting one <term>variation</term>, or set of readings, in the text. Elements for the
+    apparatus entry and readings, and for the documentation of the witnesses whose readings are
+    included in the apparatus, are described in section <ptr target="#TCAPLL"/>. Special tags for
+    fragmentary witnesses are described in section <ptr target="#TCAPMI"/>. The available methods
+    for embedding the apparatus in the rest of the text, or for linking an external apparatus to the
+    base text, are described in section <ptr target="#TCAPLK"/>. Finally, several extra attributes
+    for some tags of the core tag set, made available when the additional tag set for text criticism
+    is selected, are documented in section <ptr target="#PHCO"/>. </p>
 
-<p>Many examples given in this chapter refer to the following texts
-of the opening (usually just line 1) of Chaucer's <title>Wife of
-Bath's Prologue</title>, as it appears in each of the four different
-manuscripts
-<list type="simple">
-<item>Ellesmere, Huntingdon Library 26.C.9 (<label>El</label>)
-<!--<q rend="display">Experience though noon Auctoritee /
+  <p>Many examples given in this chapter refer to the following texts of the opening (usually just
+    line 1) of Chaucer's <title>Wife of Bath's Prologue</title>, as it appears in each of the four
+    different manuscripts <list type="simple">
+      <item>Ellesmere, Huntingdon Library 26.C.9 (<label>El</label>)
+        <!--<q rend="display">Experience though noon Auctoritee /
 Were in this world, were right ynogh to me /
 To speke of wo that is in mariage; ...</q>--></item>
-<item>Hengwrt, National Library of Wales, Aberystwyth,
-Peniarth 392D (<label>Hg</label>)
-<!--<q rend="display">Experience thogh noon Auctoritee /
+      <item>Hengwrt, National Library of Wales, Aberystwyth, Peniarth 392D (<label>Hg</label>)
+        <!--<q rend="display">Experience thogh noon Auctoritee /
 Were in this world, is right ynogh for me /
 To speke of wo that is in mariage; ...</q>--></item>
-<item> British Library Lansdowne 851 (<label>La</label>)
-<!--<q rend="display">Experiment thouh none auctorite /
+      <item> British Library Lansdowne 851 (<label>La</label>)
+        <!--<q rend="display">Experiment thouh none auctorite /
 Were in this world, is right ynohe for me /
 To speke of wo that is in mariage; ...</q>--></item>
-<item>Bodleian Library Rawlinson Poetic 149 (<label>Ra2</label>)
-<!--<q rend="display">Eryment though none auctorite /
+      <item>Bodleian Library Rawlinson Poetic 149 (<label>Ra2</label>)
+        <!--<q rend="display">Eryment though none auctorite /
 Were in this world, it is right ynow for me /
 To speke of wo that is in mariage; ...</q>-->
-</item></list></p>
+      </item>
+    </list></p>
 
-<div type="div2" xml:id="TCAPLL"><head>The Apparatus Entry, Readings, and Witnesses</head>
-<p>This section introduces the fundamental markup methods used to encode
-textual variations:
-<list type="simple">
-<item>the <gi>app</gi> element for entries in the critical apparatus:
-see section <ptr target="#TCAPEN"/>.</item>
-<item>elements for identifying individual readings: see section <ptr target="#TCAPLR"/>.</item>
-<item>ways of grouping readings together: see section <ptr target="#TCAPSU"/>.</item>
-<item>methods of identifying which witnesses support a particular
-reading, and for describing the witnesses included in the
-apparatus: see section <ptr target="#TCAPLW"/>.</item>
-<item>elements for indicating which portions of a text are covered by
-fragmentary witnesses: see section <ptr target="#TCAPMI"/>.</item></list></p>
-<p>The <gi>app</gi> element is in one sense a more  sophisticated and
-complex version of the <gi>choice</gi> element introduced in <ptr target="#COEDCOR"/> as a way of marking points where the encoding of a passage
-in a single source may be carried out in more than one way. Unlike
-<gi>choice</gi>, however, the <gi>app</gi> element allows for the
-representation of many different versions of the same passage taken
-from different sources.</p>
+  <div type="div2" xml:id="TCAPLL">
+    <head>The Apparatus Entry, Readings, and Witnesses</head>
+    <p>This section introduces the fundamental markup methods used to encode textual variations:
+        <list type="simple">
+        <item>the <gi>app</gi> element for entries in the critical apparatus: see section <ptr
+            target="#TCAPEN"/>.</item>
+        <item>elements for identifying individual readings: see section <ptr target="#TCAPLR"
+          />.</item>
+        <item>ways of grouping readings together: see section <ptr target="#TCAPSU"/>.</item>
+        <item>methods of identifying which witnesses support a particular reading, and for
+          describing the witnesses included in the apparatus: see section <ptr target="#TCAPLW"
+          />.</item>
+        <item>elements for indicating which portions of a text are covered by fragmentary witnesses:
+          see section <ptr target="#TCAPMI"/>.</item>
+      </list></p>
+    <p>The <gi>app</gi> element is in one sense a more sophisticated and complex version of the
+        <gi>choice</gi> element introduced in <ptr target="#COEDCOR"/> as a way of marking points
+      where the encoding of a passage in a single source may be carried out in more than one way.
+      Unlike <gi>choice</gi>, however, the <gi>app</gi> element allows for the representation of
+      many different versions of the same passage taken from different sources.</p>
 
-<div type="div3" xml:id="TCAPEN"><head>The Apparatus Entry</head>
-<p>Individual textual variations are encoded using the <gi>app</gi>
-element, which groups together all the readings constituting the
-variation.  The identification of discrete textual variations or
-apparatus entries is not a purely mechanical process; different editors
-may group readings differently.  No rules are given here as to how to
-group readings into apparatus entries; the tags given here may be used
-to group readings in whatever way the editor finds most perspicuous or
-useful.</p>
-<p>The individual apparatus entry is encoded with the <gi>app</gi>
-element:
-<specList><specDesc key="app" atts="type from to loc"/></specList></p>
-<p>The attributes <att>loc</att>, <att>from</att>, and <att>to</att>,
-are used to link the apparatus entry to the base text, if present.  In
-such cases, several methods
-may be used for such linkage, each involving a slightly different usage
-for these attributes.  Linkage between text and apparatus is described
-below in section <ptr target="#TCAPLK"/>. For the use of the
-<gi>app</gi> element without a base text, see <ptr target="#TCAPPS"/>. </p>
-<p>Each <gi>app</gi> element comprises one or more readings, which in
-turn are encoded using the <gi>rdg</gi> or other elements, as described
-in the next section.  A very simple partial apparatus for the first line
-of the <title>Wife of Bath's Prologue</title> might take a form
-something like this:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+    <div type="div3" xml:id="TCAPEN">
+      <head>The Apparatus Entry</head>
+      <p>Individual textual variations are encoded using the <gi>app</gi> element, which groups
+        together all the readings constituting the variation. The identification of discrete textual
+        variations or apparatus entries is not a purely mechanical process; different editors may
+        group readings differently. No rules are given here as to how to group readings into
+        apparatus entries; the tags given here may be used to group readings in whatever way the
+        editor finds most perspicuous or useful.</p>
+      <p>The individual apparatus entry is encoded with the <gi>app</gi> element: <specList>
+          <specDesc key="app" atts="type from to loc"/>
+        </specList></p>
+      <p>The attributes <att>loc</att>, <att>from</att>, and <att>to</att>, are used to link the
+        apparatus entry to the base text, if present. In such cases, several methods may be used for
+        such linkage, each involving a slightly different usage for these attributes. Linkage
+        between text and apparatus is described below in section <ptr target="#TCAPLK"/>. For the
+        use of the <gi>app</gi> element without a base text, see <ptr target="#TCAPPS"/>. </p>
+      <p>Each <gi>app</gi> element comprises one or more readings, which in turn are encoded using
+        the <gi>rdg</gi> or other elements, as described in the next section. A very simple partial
+        apparatus for the first line of the <title>Wife of Bath's Prologue</title> might take a form
+        something like this:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
    <rdg wit="#El">Experience though noon Auctoritee</rdg>
    <rdg wit="#La">Experiment thouh noon Auctoritee</rdg>
    <rdg wit="#Ra2">Eryment though none auctorite</rdg>
 </app></egXML>
-Of course, in practice the apparatus will be somewhat more complex.
-Specifically, it may be desired to
-record more obviously that manuscripts El and La agree on the
-words <q>noon Auctoritee</q>, to indicate a preference for one
-reading, etc.  The following sections on
-readings, subvariation, and witness information describe some of the
-more important complications which can arise.</p>
-<specGrp xml:id="DTCAPEN" n="Apparatus entry">
-
-
-
-
-
-
-
-
-
-
-&app;
-
-
-
-
-
-</specGrp></div>
-<div type="div3" xml:id="TCAPLR"><head>Readings</head>
-<p>Individual readings are the crucial elements in any critical
-apparatus of variants.  The following elements should be used to tag
-individual readings within an apparatus entry:
-<specList><specDesc key="lem"/><specDesc key="rdg"/></specList>
-N.B. the term <term>lemma</term> is used here in the text-critical
-sense of <q>the reading accepted as that of the original or of the
-base text</q>. This sense differs from that in which the word is used
-elsewhere in the Guidelines, for example as in the attribute
-<att>lemma</att> where the intended sense is <q>the root form of
-an inflected word</q>, or  <q>the heading
-of an entry in a reference book, especially a dictionary</q>. <!-- nor with
+        Of course, in practice the apparatus will be somewhat more complex. Specifically, it may be
+        desired to record more obviously that manuscripts El and La agree on the words <q>noon
+          Auctoritee</q>, to indicate a preference for one reading, etc. The following sections on
+        readings, subvariation, and witness information describe some of the more important
+        complications which can arise.</p>
+      <specGrp xml:id="DTCAPEN" n="Apparatus entry"> &app; </specGrp>
+    </div>
+    <div type="div3" xml:id="TCAPLR">
+      <head>Readings</head>
+      <p>Individual readings are the crucial elements in any critical apparatus of variants. The
+        following elements should be used to tag individual readings within an apparatus entry: <specList>
+          <specDesc key="lem"/>
+          <specDesc key="rdg"/>
+        </specList> N.B. the term <term>lemma</term> is used here in the text-critical sense of
+          <q>the reading accepted as that of the original or of the base text</q>. This sense
+        differs from that in which the word is used elsewhere in the Guidelines, for example as in
+        the attribute <att>lemma</att> where the intended sense is <q>the root form of an inflected
+          word</q>, or <q>the heading of an entry in a reference book, especially a dictionary</q>.
+        <!-- nor with
 <q>a subsidiary proposition introduced in the proof of some other
 proposition; a helping theorem.</q>--></p>
-<p>In recording readings within an apparatus entry, the <gi>rdg</gi>
-element may always be used; each <gi>app</gi> must contain at least one
-<gi>rdg</gi>.</p>
-<p>The <gi>lem</gi> element may also be used, under some circumstances,
-to record the base text of the source edition, to mark the readings of a
-base witness, to indicate the preference of an editor or encoder for a
-particular reading, or to make clear, in cases of ambiguity, precisely
-which portion of the main text the variation applies to.  Those who
-prefer to work without the notion of a base text may prefer not to use
-it at all.  How it is used depends in part on the method chosen for
-linking the apparatus to the text; for more information, see section
-<ptr target="#TCAPLK"/>.</p> 
-<p>Readings may be encoded individually, or grouped for perspicuity
-using the <gi>rdgGrp</gi> element described in section <ptr target="#TCAPSU"/>.</p>
-<p>As members of the attribute classes  <ident
-type="class">att.witnessed</ident> and <ident type="class">att.textCritical</ident>,
-both of these elements inherit the following attributes.  <!--Some of
+      <p>In recording readings within an apparatus entry, the <gi>rdg</gi> element may always be
+        used; each <gi>app</gi> must contain at least one <gi>rdg</gi>.</p>
+      <p>The <gi>lem</gi> element may also be used, under some circumstances, to record the base
+        text of the source edition, to mark the readings of a base witness, to indicate the
+        preference of an editor or encoder for a particular reading, or to make clear, in cases of
+        ambiguity, precisely which portion of the main text the variation applies to. Those who
+        prefer to work without the notion of a base text may prefer not to use it at all. How it is
+        used depends in part on the method chosen for linking the apparatus to the text; for more
+        information, see section <ptr target="#TCAPLK"/>.</p>
+      <p>Readings may be encoded individually, or grouped for perspicuity using the <gi>rdgGrp</gi>
+        element described in section <ptr target="#TCAPSU"/>.</p>
+      <p>As members of the attribute classes <ident type="class">att.witnessed</ident> and <ident
+          type="class">att.textCritical</ident>, both of these elements inherit the following
+        attributes. <!--Some of
 these attributes are intelligible only if the reading is ascribed to a
 single witness; others have no such restriction.-->
-<specList><specDesc key="att.witnessed" atts="wit"/>
-<specDesc key="att.textCritical" atts="type cause varSeq hand"/></specList>
-The  <ident type="class">att.textCritical</ident> class also inherits the following attributes from the <ident
-type="class">att.responsibility</ident> class: 
-<specList><specDesc key="att.responsibility" atts="resp cert"/></specList>
-As elsewhere, these attributes may be used to indicate the 
-person responsible for the editorial decision being recorded, and also
-the degree of certainty associated with that decision by the person
-carrying out the encoding. 
-</p>
-<p>The <att>wit</att> attribute identifies the witnesses which have the
-reading in question.  It is required if the apparatus gathers together
-readings from different witnesses, but may be omitted in an apparatus
-recording the readings of only one witness, e.g. substitutions,
-divergent opinions on what is in the witness or on how to expand
-abbreviations, etc.  Even in such a one-witness apparatus, however,
-the <att>wit</att> attribute may still be useful when it is desired to
-record the occurrence of a particular reading in some other witness.
-For other methods of identifying the witnesses to a reading, see
-section <ptr target="#TCAPLW"/>.
-	</p>
-<p>The <att>type</att> attribute allows the encoder to classify readings
-in any convenient way, for example as substantive variants of the lemma:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+        <specList>
+          <specDesc key="att.witnessed" atts="wit"/>
+          <specDesc key="att.textCritical" atts="type cause varSeq hand"/>
+        </specList> The <ident type="class">att.textCritical</ident> class also inherits the
+        following attributes from the <ident type="class">att.responsibility</ident> class: <specList>
+          <specDesc key="att.responsibility" atts="resp cert"/>
+        </specList> As elsewhere, these attributes may be used to indicate the person responsible
+        for the editorial decision being recorded, and also the degree of certainty associated with
+        that decision by the person carrying out the encoding. </p>
+      <p>The <att>wit</att> attribute identifies the witnesses which have the reading in question.
+        It is required if the apparatus gathers together readings from different witnesses, but may
+        be omitted in an apparatus recording the readings of only one witness, e.g. substitutions,
+        divergent opinions on what is in the witness or on how to expand abbreviations, etc. Even in
+        such a one-witness apparatus, however, the <att>wit</att> attribute may still be useful when
+        it is desired to record the occurrence of a particular reading in some other witness. For
+        other methods of identifying the witnesses to a reading, see section <ptr target="#TCAPLW"
+        />. </p>
+      <p>The <att>type</att> attribute allows the encoder to classify readings in any convenient
+        way, for example as substantive variants of the lemma:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
    <lem wit="#El #Hg">Experience</lem>
    <rdg wit="#La" type="substantive">Experiment</rdg>
    <rdg wit="#Ra2" type="substantive">Eryment</rdg>
 </app></egXML>
-or as orthographic variants:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+        or as orthographic variants:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
    <lem wit="#El #Ra2">though</lem>
    <rdg wit="#La" type="orthographic">thouh</rdg>
 </app></egXML></p>
-<p>The <att>varSeq</att> and <att>cause</att> attributes may be used to
-convey information on the sequence and cause of variation.  In the
-following apparatus fragment, the reading <mentioned>Eryment</mentioned> is
-tagged as sequential to (derived from) the reading
-<mentioned>Experiment</mentioned>, and the cause
-is given as loss of the abbreviation for <mentioned>per</mentioned>.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+      <p>The <att>varSeq</att> and <att>cause</att> attributes may be used to convey information on
+        the sequence and cause of variation. In the following apparatus fragment, the reading
+          <mentioned>Eryment</mentioned> is tagged as sequential to (derived from) the reading
+          <mentioned>Experiment</mentioned>, and the cause is given as loss of the abbreviation for
+          <mentioned>per</mentioned>.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
    <rdg wit="#La" varSeq="1">Experiment</rdg>
    <rdg wit="#Ra2" cause="abbreviation_loss" varSeq="2">Eryment</rdg>
 </app></egXML></p>
-<p>If a manuscript is written in several hands, and it is desired to
-report which hand wrote a particular reading, the <att>hand</att>
-attribute should be used.  For example, in the Munich manuscript
-containing the <title>Carmina Burana</title>,
-the word <mentioned>alle</mentioned> has been changed
-to <mentioned>allen</mentioned>:
-<egXML xml:lang="gmh" xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-251"><l>Swaz hi gât umbe</l>
+      <p>If a manuscript is written in several hands, and it is desired to report which hand wrote a
+        particular reading, the <att>hand</att> attribute should be used. For example, in the Munich
+        manuscript containing the <title>Carmina Burana</title>, the word
+          <mentioned>alle</mentioned> has been changed to <mentioned>allen</mentioned>: <egXML xml:lang="gmh" xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-251"><l>Swaz hi gât umbe</l>
 <l>daz sint alle megede,</l>
 <l>die wellent ân man</l>
 <l>
@@ -225,57 +185,48 @@ to <mentioned>allen</mentioned>:
    </app>
 disen sumer gân.</l>
 </egXML>
-<!-- Des Minnesangs Fr&uuml;hling, ed.  Hugo Moser and        -->
-	<!-- Helmut Tervooren (Stuttgart:  Hirzel, 1977), I, 20.      -->
-	<!-- (Anonymous VI).                                          --></p>
-<p>Similarly, if a witness is hard to decipher, it may be desired to
-indicate responsibility for the claim that a particular reading is
-supported by a particular witness.  In line 2212a of
-<title>Beowulf</title>, for example, the manuscript is read in different
-ways by different scholars; the editor Klaeber prints one text, using
-parentheses to indicate his expansion, and
-records in the apparatus two different accounts of the manuscript
-reading, by Zupitza and Chambers:<note place="bottom">For the sake of
-legibility in the example, long marks
-over vowels are omitted. </note>
-<egXML xml:lang="ang" xmlns="http://www.tei-c.org/ns/Examples" corresp="#TCAPLR-eg-11"><l>se ðe on
+        <!-- Des Minnesangs Fr&uuml;hling, ed.  Hugo Moser and        -->
+        <!-- Helmut Tervooren (Stuttgart:  Hirzel, 1977), I, 20.      -->
+        <!-- (Anonymous VI).                                          --></p>
+      <p>Similarly, if a witness is hard to decipher, it may be desired to indicate responsibility
+        for the claim that a particular reading is supported by a particular witness. In line 2212a
+        of <title>Beowulf</title>, for example, the manuscript is read in different ways by
+        different scholars; the editor Klaeber prints one text, using parentheses to indicate his
+        expansion, and records in the apparatus two different accounts of the manuscript reading, by
+        Zupitza and Chambers:<note place="bottom">For the sake of legibility in the example, long
+          marks over vowels are omitted. </note>
+        <egXML xml:lang="ang" xmlns="http://www.tei-c.org/ns/Examples" corresp="#TCAPLR-eg-11"><l>se ðe on
   <app>
      <rdg wit="#Kl">hea(um) h(æþ)e</rdg>
      <rdg wit="#ms" resp="#Z">heaðo hlæwe</rdg>
      <rdg wit="#ms" resp="#Cha">heaum hope</rdg>
   </app></l>
 <l>hord beweotode,</l></egXML>
-<!-- He also records the fact that Holthausen, editions 1-5,  -->
-	<!-- and Sch&uuml;cking follow Zupitza's reading of the ms.   -->
-	<!-- So in 'real life' this will require a witDetail          -->
-	<!-- element, I think.                                        --></p>
-<p>The <att>hand</att> and <att>resp</att> attributes are intelligible
-only on an element recording a reading from a single witness, and should
-not be used if more than one witness is given on the same <gi>rdg</gi>
-or <gi>lem</gi> element.  If more than one witness is given for the
-reading, they are undefined.  To convey this information when the
-witness is one among several, the <gi>witDetail</gi> element should be
-used; see section <ptr target="#TCAPLW"/>.</p>
-<p>Where there is a greater weight of editorial discussion and
-interpretation than can conveniently be expressed through the attributes
-provided on these elements (for example where there are multiple
-witnesses for a single reading or
-multiple editorial responsibility for an emendation) this information
-can be attached to the apparatus in a note, or recorded in the feature
-structure notation defined in chapter <ptr target="#FS"/>.  In particular,
-such recurring text-critical situations as palaeographic confusion of
-particular letters, or homœoarchy or homœoteleuton involving specific
-character groups, may lend themselves to feature structure treatment.
-Information concerning these recurrent situations may be encoded into
-database-like fragments within the text which would then be available to
-sophisticated computer-assisted analysis.  Further work remains to be
-done on such mechanisms, however, and so no examples are given here of
-the use of feature structures in text-critical apparatus.</p>
-<p>The <gi>note</gi> element may also be used to record the specific
-wording of notes in the apparatus of the source edition, as here in
-a transcription of Friedrich Klaeber's note on <title>Beowulf</title>
-2207a:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#TCAPLR-eg-11"><l n="2207a">syððan Beowulfe
+        <!-- He also records the fact that Holthausen, editions 1-5,  -->
+        <!-- and Sch&uuml;cking follow Zupitza's reading of the ms.   -->
+        <!-- So in 'real life' this will require a witDetail          -->
+        <!-- element, I think.                                        --></p>
+      <p>The <att>hand</att> and <att>resp</att> attributes are intelligible only on an element
+        recording a reading from a single witness, and should not be used if more than one witness
+        is given on the same <gi>rdg</gi> or <gi>lem</gi> element. If more than one witness is given
+        for the reading, they are undefined. To convey this information when the witness is one
+        among several, the <gi>witDetail</gi> element should be used; see section <ptr
+          target="#TCAPLW"/>.</p>
+      <p>Where there is a greater weight of editorial discussion and interpretation than can
+        conveniently be expressed through the attributes provided on these elements (for example
+        where there are multiple witnesses for a single reading or multiple editorial responsibility
+        for an emendation) this information can be attached to the apparatus in a note, or recorded
+        in the feature structure notation defined in chapter <ptr target="#FS"/>. In particular,
+        such recurring text-critical situations as palaeographic confusion of particular letters, or
+        homœoarchy or homœoteleuton involving specific character groups, may lend themselves to
+        feature structure treatment. Information concerning these recurrent situations may be
+        encoded into database-like fragments within the text which would then be available to
+        sophisticated computer-assisted analysis. Further work remains to be done on such
+        mechanisms, however, and so no examples are given here of the use of feature structures in
+        text-critical apparatus.</p>
+      <p>The <gi>note</gi> element may also be used to record the specific wording of notes in the
+        apparatus of the source edition, as here in a transcription of Friedrich Klaeber's note on
+          <title>Beowulf</title> 2207a: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#TCAPLR-eg-11"><l n="2207a">syððan Beowulfe
 <note resp="#Kl" place="app">Fol. 179a <mentioned>beowulfe</mentioned>.
   Folio 179, with the last page (Fol. 198b), is the worst part of the
   entire MS. It has been freshened up by a later hand, but not always
@@ -283,115 +234,72 @@ a transcription of Friedrich Klaeber's note on <title>Beowulf</title>
   Zupitza and Chambers.</note></l>
 <l n="2207b">brade rice</l>
 </egXML>
-<!-- Klaeber, app. to 2207.                                   -->
-Notes providing details of the reading of one particular witness should
-be encoded using the specialized <gi>witDetail</gi> element described in
-section <ptr target="#TCAPLW"/>.</p>
-<p>Encoders should be aware of the distinct fields of use of the
-attribute values <att>wit</att>, <att>hand</att>, and <att>resp</att>.
-Broadly, <att>wit</att> identifies the physical entity in which the
-reading is found (manuscript, clay tablet, papyrus, printed edition);
-<att>hand</att> refers to the agent responsible for inscribing that
-reading in that physical entity (scribe, author, inscriber, hand 1, hand
-2); <att>resp</att> indicates the scholar responsible for asserting the
-existence of that reading in that physical entity.  In some cases, the
-categories may blur:  a scholar may produce an edition introducing
-readings for which he or she is responsible; that edition may itself
-become a witness in a later critical apparatus.  Thus, readings
-introduced as corrections in the earlier edition will be seen in the
-later apparatus as witnessed by the earlier edition.  As observed in the
-discussion concerning the discrimination of <att>hand</att> and
-<att>resp</att> in transcription of primary sources in section <ptr target="#PHHR"/>, the division of layers of responsibility through various
-scholars for particular aspects of a particular reading may require the
-more complex mechanisms for assigning responsibility described in
-chapter <ptr target="#CE"/>.</p>
-<specGrp xml:id="DTCAPLR" n="Readings">
-
-
-
-
-
-
-
-
-
-
-&lem;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&rdg;
-
-
-
-
-
-</specGrp></div>
-<div type="div3" xml:id="TCAPSU"><head>Indicating Subvariation in Apparatus Entries</head>
-<p>The <gi>rdgGrp</gi> element may be used to group readings, either
-because they have identical values on one or more attributes, or because
-they are seen as forming a self-contained variant sequence, or for some
-other reason.  This grouping of readings is entirely optional:  no such
-grouping of readings is required.
-<specList><specDesc key="rdgGrp"/></specList></p>
-<p>The <gi>rdgGrp</gi> element is a member of class <ident type="class">att.textCritical</ident> and therefore can carry the
-<att>wit</att>, <att>type</att>, <att>cause</att>, <att>varSeq</att>,
-<att>hand</att>, and <att>resp</att> attributes described in the
-preceding section.  When values for any of these attributes are given
-on a <gi>rdgGrp</gi> element, the values given are inherited by the
-<gi>rdg</gi> or <gi>lem</gi> elements nested within the reading group,
-unless overridden by a new specification on the individual reading
-element.</p>
-<p>To indicate that both Hg and La vary only orthographically from the
-lemma, one might tag both readings <tag>rdg type='orthographic'</tag>,
-as shown in the preceding section.  This fact can be expressed more
-perspicuously, however, by grouping their readings into a
-<gi>rdgGrp</gi>, thus:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+        <!-- Klaeber, app. to 2207.                                   --> Notes providing details of
+        the reading of one particular witness should be encoded using the specialized
+          <gi>witDetail</gi> element described in section <ptr target="#TCAPLW"/>.</p>
+      <p>Encoders should be aware of the distinct fields of use of the attribute values
+          <att>wit</att>, <att>hand</att>, and <att>resp</att>. Broadly, <att>wit</att> identifies
+        the physical entity in which the reading is found (manuscript, clay tablet, papyrus, printed
+        edition); <att>hand</att> refers to the agent responsible for inscribing that reading in
+        that physical entity (scribe, author, inscriber, hand 1, hand 2); <att>resp</att> indicates
+        the scholar responsible for asserting the existence of that reading in that physical entity.
+        In some cases, the categories may blur: a scholar may produce an edition introducing
+        readings for which he or she is responsible; that edition may itself become a witness in a
+        later critical apparatus. Thus, readings introduced as corrections in the earlier edition
+        will be seen in the later apparatus as witnessed by the earlier edition. As observed in the
+        discussion concerning the discrimination of <att>hand</att> and <att>resp</att> in
+        transcription of primary sources in section <ptr target="#PHHR"/>, the division of layers of
+        responsibility through various scholars for particular aspects of a particular reading may
+        require the more complex mechanisms for assigning responsibility described in chapter <ptr
+          target="#CE"/>.</p>
+      <specGrp xml:id="DTCAPLR" n="Readings"> &lem; &rdg; </specGrp>
+    </div>
+    <div type="div3" xml:id="TCAPSU">
+      <head>Indicating Subvariation in Apparatus Entries</head>
+      <p>The <gi>rdgGrp</gi> element may be used to group readings, either because they have
+        identical values on one or more attributes, or because they are seen as forming a
+        self-contained variant sequence, or for some other reason. This grouping of readings is
+        entirely optional: no such grouping of readings is required. <specList>
+          <specDesc key="rdgGrp"/>
+        </specList></p>
+      <p>The <gi>rdgGrp</gi> element is a member of class <ident type="class"
+          >att.textCritical</ident> and therefore can carry the <att>wit</att>, <att>type</att>,
+          <att>cause</att>, <att>varSeq</att>, <att>hand</att>, and <att>resp</att> attributes
+        described in the preceding section. When values for any of these attributes are given on a
+          <gi>rdgGrp</gi> element, the values given are inherited by the <gi>rdg</gi> or
+          <gi>lem</gi> elements nested within the reading group, unless overridden by a new
+        specification on the individual reading element.</p>
+      <p>To indicate that both Hg and La vary only orthographically from the lemma, one might tag
+        both readings <tag>rdg type='orthographic'</tag>, as shown in the preceding section. This
+        fact can be expressed more perspicuously, however, by grouping their readings into a
+          <gi>rdgGrp</gi>, thus:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
    <lem wit="#El #Ra2">though</lem>
    <rdgGrp type="orthographic">
       <rdg wit="#La">thogh</rdg>
       <rdg wit="#Hg">thouh</rdg>
    </rdgGrp>
 </app></egXML></p>
-<p>Similarly, <gi>rdgGrp</gi> may be used to organize the substantive
-variants of an apparatus entry.  Editors may need to indicate that each
-of a group of witnesses may be taken as all supporting a particular
-reading, even though there may be variation concerning the exact form of
-that reading in, or the degree of support offered by, those witnesses.
-For example:  one may identify three substantive variants on the first
-word of Chaucer's <title>Wife of Bath's Prologue</title> in the
-manuscripts:  these might be expressed in regularized spelling as
-<mentioned>Experience</mentioned>, <mentioned>Experiment</mentioned>, and <mentioned>Eriment</mentioned>.  In fact, the
-manuscripts display many different spellings of these words, and a
-scholar may wish both to show that the manuscripts have all these
-variant spellings and that these variant spellings actually support only
-the three regularized spelling forms.  One may term these variant
-spellings as <soCalled>subvariants</soCalled> of the regularized
-spelling forms.</p>
-<p>This subvariation can be expressed within an <gi>app</gi> element
-by gathering the readings into three groups according to the
-normalized form of their reading.  All the readings within each group
-may be accounted subvariants of the main reading for the group, which
-may be indicated by tagging it as a <gi>lem</gi> element or as
-<tag>rdg type='groupBase'</tag>.</p>
-<p>In this example, the different subvariants on <mentioned>Experience</mentioned>,
-<mentioned>Experiment</mentioned>, and <mentioned>Eriment</mentioned> are held within three
-<gi>rdgGrp</gi> elements nested within the enclosing <gi>app</gi>
-element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app type="substantive">
+      <p>Similarly, <gi>rdgGrp</gi> may be used to organize the substantive variants of an apparatus
+        entry. Editors may need to indicate that each of a group of witnesses may be taken as all
+        supporting a particular reading, even though there may be variation concerning the exact
+        form of that reading in, or the degree of support offered by, those witnesses. For example:
+        one may identify three substantive variants on the first word of Chaucer's <title>Wife of
+          Bath's Prologue</title> in the manuscripts: these might be expressed in regularized
+        spelling as <mentioned>Experience</mentioned>, <mentioned>Experiment</mentioned>, and
+          <mentioned>Eriment</mentioned>. In fact, the manuscripts display many different spellings
+        of these words, and a scholar may wish both to show that the manuscripts have all these
+        variant spellings and that these variant spellings actually support only the three
+        regularized spelling forms. One may term these variant spellings as
+          <soCalled>subvariants</soCalled> of the regularized spelling forms.</p>
+      <p>This subvariation can be expressed within an <gi>app</gi> element by gathering the readings
+        into three groups according to the normalized form of their reading. All the readings within
+        each group may be accounted subvariants of the main reading for the group, which may be
+        indicated by tagging it as a <gi>lem</gi> element or as <tag>rdg type='groupBase'</tag>.</p>
+      <p>In this example, the different subvariants on <mentioned>Experience</mentioned>,
+          <mentioned>Experiment</mentioned>, and <mentioned>Eriment</mentioned> are held within
+        three <gi>rdgGrp</gi> elements nested within the enclosing <gi>app</gi> element:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app type="substantive">
     <rdgGrp type="subvariants">
          <lem wit="#El #Hg">Experience</lem>
         <rdg wit="#Ha4">Experiens</rdg>
@@ -405,22 +313,20 @@ element:
         <rdg wit="#Ra2">Eryment</rdg>
      </rdgGrp>
 </app></egXML>
-From this, one may deduce that the regularized reading <mentioned>Experience</mentioned>
-is supported by all three manuscripts El Hg Ha4, although the spelling
-differs in Ha4, and that the regularized reading <mentioned>Eriment</mentioned> is
-supported by Ra2, even though the form differs in that manuscript.
-Accordingly, an application which recognizes that these apparatus
-entries show subvariation may then assign all the witnesses instanced as
-attesting the sub-variants on that lemma as actually supporting the
-reading of the lemma itself at a higher level of classification.  Thus,
-Ha4 here supports the reading <mentioned>Experience</mentioned> found in El and Hg, even
-though it is spelt slightly differently in Ha4.</p>
-<p>Reading groups may nest recursively, so that variants can be
-classified to any desired depth.  Because apparatus entries may also
-nest, the <gi>app</gi> element might also be used to group readings in
-the same way.  The example above is substantially identical to the
-following, which uses <gi>app</gi> instead of <gi>rdgGrp</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app n="a1" type="substantive">
+        From this, one may deduce that the regularized reading <mentioned>Experience</mentioned> is
+        supported by all three manuscripts El Hg Ha4, although the spelling differs in Ha4, and that
+        the regularized reading <mentioned>Eriment</mentioned> is supported by Ra2, even though the
+        form differs in that manuscript. Accordingly, an application which recognizes that these
+        apparatus entries show subvariation may then assign all the witnesses instanced as attesting
+        the sub-variants on that lemma as actually supporting the reading of the lemma itself at a
+        higher level of classification. Thus, Ha4 here supports the reading
+          <mentioned>Experience</mentioned> found in El and Hg, even though it is spelt slightly
+        differently in Ha4.</p>
+      <p>Reading groups may nest recursively, so that variants can be classified to any desired
+        depth. Because apparatus entries may also nest, the <gi>app</gi> element might also be used
+        to group readings in the same way. The example above is substantially identical to the
+        following, which uses <gi>app</gi> instead of <gi>rdgGrp</gi>:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app n="a1" type="substantive">
    <rdg wit="#El #Hg #Ha4">        
       <app n="a2" type="orthographic">
          <lem wit="#El #Hg">Experience</lem>
@@ -440,21 +346,19 @@ following, which uses <gi>app</gi> instead of <gi>rdgGrp</gi>:
       </app>
    </rdg>
 </app></egXML>
-This expresses even more clearly than the previous encoding of this
-material that at the highest level of classification (apparatus entry
-A1), this variation has three normalized readings, and that the first of
-these is supported by manuscripts El, Hg, and Ha4; the second by Cp,
-Ld1, and La; and the third by Ra2.  Some encoders may find the use of
-nested apparatus entries less intuitive than the use of reading groups,
-however, so both methods of classifying the readings of a variation are
-allowed.</p>
-<p>Reading groups may also be used to bring together variants which form
-an apparent developmental sequence, and to make clear that other
-readings are not part of that sequence, as in the following example,
-which makes clear that the variant sequence <mentioned>experiment</mentioned> to
-<mentioned>eriment</mentioned> says nothing about the relative priority of
-<mentioned>experiment</mentioned> and <mentioned>experience</mentioned>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app type="substantive">
+        This expresses even more clearly than the previous encoding of this material that at the
+        highest level of classification (apparatus entry A1), this variation has three normalized
+        readings, and that the first of these is supported by manuscripts El, Hg, and Ha4; the
+        second by Cp, Ld1, and La; and the third by Ra2. Some encoders may find the use of nested
+        apparatus entries less intuitive than the use of reading groups, however, so both methods of
+        classifying the readings of a variation are allowed.</p>
+      <p>Reading groups may also be used to bring together variants which form an apparent
+        developmental sequence, and to make clear that other readings are not part of that sequence,
+        as in the following example, which makes clear that the variant sequence
+          <mentioned>experiment</mentioned> to <mentioned>eriment</mentioned> says nothing about the
+        relative priority of <mentioned>experiment</mentioned> and
+        <mentioned>experience</mentioned>:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app type="substantive">
     <rdgGrp type="subvariants">
         <lem wit="#El #Hg">Experience</lem>
         <rdg wit="#Ha4">Experiens</rdg>
@@ -464,72 +368,54 @@ which makes clear that the variant sequence <mentioned>experiment</mentioned> to
             <lem wit="#Cp #Ld1">Experiment</lem>
             <rdg wit="#La">Ex<g ref="#per"/>iment</rdg>
         </rdgGrp>
-        <rdgGrp varSeq="2" cause="abbreviation_loss" >
+        <rdgGrp varSeq="2" cause="abbreviation_loss">
             <lem>Eriment<wit>[unattested]</wit></lem>
             <rdg wit="#Ra2">Eryment</rdg>
         </rdgGrp>
     </rdgGrp>
 </app></egXML></p>
-<specGrp xml:id="DTCAPSU" n="Reading Groups">
-
-
-
-
-
-
-
-
-
-
-&rdgGrp;
-
-
-
-
-
-</specGrp></div>
-<div type="div3" xml:id="TCAPLW"><head>Witness Information</head>
-<p>A given reading is associated with the set of witnesses attesting it
-by listing the witnesses in the <att>wit</att> attribute on the
-<gi>rdg</gi>, <gi>lem</gi>, or <gi>rdgGrp</gi> element.  Special
-mechanisms, described in the following sections, are needed to associate
-annotation on a reading with one specific witness among several
-(section <ptr target="#TCAPWD"/>), to transcribe witness information verbatim from a
-source edition (section <ptr target="#TCSCWL"/>), and to identify the
-formal lists of witnesses typically provided in the front matter of
-critical editions (section <ptr target="#TCAPWL"/>).</p>
-<div type="div4" xml:id="TCAPWD"><head>Witness Detail Information</head>
-<p>When it is desired to give additional information about a particular
-witness or witnesses for the reading, the information may be given in a
-<gi>witDetail</gi> element. This is a specialized form of note, which
-can be linked to both a reading and to one or more of the witnesses
-for that reading. The former linkage is effected by the
-<att>target</att> attribute which <gi>witDetail</gi> inherits from the
-attribute class <ident type="class">att.pointing</ident>, and the
-latter by the  <att>wit</att> attribute. 
-<specList><specDesc key="att.pointing" atts="target"/>
-<specDesc key="witDetail" atts="wit"/></specList></p>
-<p>Unlike <gi>note</gi>, <gi>witDetail</gi>
-cannot be included in the text at the point of attachment; it must point to
-the reading(s) being annotated by means of its <att>target</att> attribute.  To
-indicate, on the authority of editor PR, that the Ellesmere manuscript
-has an ornamental capital in the word <mentioned>Experience</mentioned>, for
-example, one might write:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app type="substantive">
+      <specGrp xml:id="DTCAPSU" n="Reading Groups"> &rdgGrp; </specGrp>
+    </div>
+    <div type="div3" xml:id="TCAPLW">
+      <head>Witness Information</head>
+      <p>A given reading is associated with the set of witnesses attesting it by listing the
+        witnesses in the <att>wit</att> attribute on the <gi>rdg</gi>, <gi>lem</gi>, or
+          <gi>rdgGrp</gi> element. Special mechanisms, described in the following sections, are
+        needed to associate annotation on a reading with one specific witness among several (section
+          <ptr target="#TCAPWD"/>), to transcribe witness information verbatim from a source edition
+        (section <ptr target="#TCSCWL"/>), and to identify the formal lists of witnesses typically
+        provided in the front matter of critical editions (section <ptr target="#TCAPWL"/>).</p>
+      <div type="div4" xml:id="TCAPWD">
+        <head>Witness Detail Information</head>
+        <p>When it is desired to give additional information about a particular witness or witnesses
+          for the reading, the information may be given in a <gi>witDetail</gi> element. This is a
+          specialized form of note, which can be linked to both a reading and to one or more of the
+          witnesses for that reading. The former linkage is effected by the <att>target</att>
+          attribute which <gi>witDetail</gi> inherits from the attribute class <ident type="class"
+            >att.pointing</ident>, and the latter by the <att>wit</att> attribute. <specList>
+            <specDesc key="att.pointing" atts="target"/>
+            <specDesc key="witDetail" atts="wit"/>
+          </specList></p>
+        <p>Unlike <gi>note</gi>, <gi>witDetail</gi> cannot be included in the text at the point of
+          attachment; it must point to the reading(s) being annotated by means of its
+            <att>target</att> attribute. To indicate, on the authority of editor PR, that the
+          Ellesmere manuscript has an ornamental capital in the word
+            <mentioned>Experience</mentioned>, for example, one might write:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><app type="substantive">
     <rdgGrp type="subvariants">
         <lem xml:id="W026" wit="#El #Hg">Experience</lem>
         <rdg wit="#Ha4">Experiens</rdg>
     </rdgGrp>
 </app>
 <witDetail target="#W026" wit="#El" resp="#PR">Ornamental capital.</witDetail></egXML>
-This encoding makes clear that the ornamental capital mentioned is in
-the Ellesmere manuscript, and not in Hengwrt or Ha4. The <att>resp</att> attribute assigns responsibility to PR.</p>
-<p>Like <gi>note</gi>, <gi>witDetail</gi> may be used to
-record the specific wording of information in the source text, even when
-the information itself is captured in some more formal way elsewhere.
-The example from the <title>Carmina Burana</title> above (section <ptr target="#TCAPLR"/>), for example, might be extended thus, to record the
-wording of the note explaining the variant:
-<egXML xml:lang="gmh" xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-251"><l>Swaz hi gât umbe</l>
+          This encoding makes clear that the ornamental capital mentioned is in the Ellesmere
+          manuscript, and not in Hengwrt or Ha4. The <att>resp</att> attribute assigns
+          responsibility to PR.</p>
+        <p>Like <gi>note</gi>, <gi>witDetail</gi> may be used to record the specific wording of
+          information in the source text, even when the information itself is captured in some more
+          formal way elsewhere. The example from the <title>Carmina Burana</title> above (section
+            <ptr target="#TCAPLR"/>), for example, might be extended thus, to record the wording of
+          the note explaining the variant: <egXML xml:lang="gmh" xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-251"><l>Swaz hi gât umbe</l>
 <l>daz sint alle megede,</l>
 <l>die wellent ân man</l>
 <l>
@@ -542,63 +428,56 @@ disen sumer gân.</l>
    <ref>allen</ref>
    <mentioned>n</mentioned> nachgetragen.
 </witDetail></egXML>
-<!-- Des Minnesangs Fr&uuml;hling, ed.  Hugo Moser and        -->
-	<!-- Helmut Tervooren (Stuttgart:  Hirzel, 1977), I, 20.      -->
-	<!-- (Anonymous VI).                                          --></p>
-<p>Observe that a single witness detail element may be linked to several
-different readings (noting, for example, a recurrent phenomenon in a
-particular manuscript) by having the <att>target</att> attribute point
-at all the readings in question.  Similarly, feature structures
-containing information about the text in a witness (whether
-retroversion, regularization, or other) can also be linked to specific
-<gi>lem</gi> and <gi>rdg</gi> instances.  See chapter <ptr target="#FS"/>.</p>
-<specGrp xml:id="DTCAPWD" n="Witness Details">
-&witDetail;
-</specGrp></div>
-<div type="div4" xml:id="TCSCWL"><head>Witness Information in the Source</head>
-<p>In the transcription of printed critical editions, it may be
-desirable to retain for future reference the exact form in which the
-source edition records the witnesses to a particular reading; this is
-particularly important in cases of ambiguity in the information, or
-uncertainty as to the correct interpretation.  The <gi>wit</gi>
-element may be used to transcribe such lists of witnesses to a
-particular reading.
-<specList><specDesc key="wit"/></specList>
-The <gi>wit</gi> list may appear following a <gi>rdg</gi>,
-<gi>rdgGrp</gi>, or <gi>lem</gi> element in any apparatus entry, and
-should be used only to transcribe the witness information in the form
-found in the source.<!-- In particular, it should not be used as a substitute     -->
-	<!-- for the <att>wit</att> attribute:  where present, the    -->
-	<!-- information in the <gi>wit</gi> element and the          -->
-	<!-- <att>wit</att> attribute should agree, unless the        -->
-	<!-- encoder is uncertain about the interpretation of the     -->
-	<!-- witness information in the source, or the encoder has    -->
-	<!-- corrected an error in the source.                        -->
-The advantage of holding witness information in the <att>wit</att>
-attribute of <gi>lem</gi> or <gi>rdg</gi> is that <!-- this may make
+          <!-- Des Minnesangs Fr&uuml;hling, ed.  Hugo Moser and        -->
+          <!-- Helmut Tervooren (Stuttgart:  Hirzel, 1977), I, 20.      -->
+          <!-- (Anonymous VI).                                          --></p>
+        <p>Observe that a single witness detail element may be linked to several different readings
+          (noting, for example, a recurrent phenomenon in a particular manuscript) by having the
+            <att>target</att> attribute point at all the readings in question. Similarly, feature
+          structures containing information about the text in a witness (whether retroversion,
+          regularization, or other) can also be linked to specific <gi>lem</gi> and <gi>rdg</gi>
+          instances. See chapter <ptr target="#FS"/>.</p>
+        <specGrp xml:id="DTCAPWD" n="Witness Details"> &witDetail; </specGrp>
+      </div>
+      <div type="div4" xml:id="TCSCWL">
+        <head>Witness Information in the Source</head>
+        <p>In the transcription of printed critical editions, it may be desirable to retain for
+          future reference the exact form in which the source edition records the witnesses to a
+          particular reading; this is particularly important in cases of ambiguity in the
+          information, or uncertainty as to the correct interpretation. The <gi>wit</gi> element may
+          be used to transcribe such lists of witnesses to a particular reading. <specList>
+            <specDesc key="wit"/>
+          </specList> The <gi>wit</gi> list may appear following a <gi>rdg</gi>, <gi>rdgGrp</gi>, or
+            <gi>lem</gi> element in any apparatus entry, and should be used only to transcribe the
+          witness information in the form found in the source.<!-- In particular, it should not be used as a substitute     -->
+          <!-- for the <att>wit</att> attribute:  where present, the    -->
+          <!-- information in the <gi>wit</gi> element and the          -->
+          <!-- <att>wit</att> attribute should agree, unless the        -->
+          <!-- encoder is uncertain about the interpretation of the     -->
+          <!-- witness information in the source, or the encoder has    -->
+          <!-- corrected an error in the source.                        --> The advantage of holding
+          witness information in the <att>wit</att> attribute of <gi>lem</gi> or <gi>rdg</gi> is
+          that <!-- this may make
 it more convenient for -->an application can check that every
-sigil<note place="foot">We use the term sigil as the English
-equivalent of the Latin term <foreign>siglum</foreign> (sign)
-traditionally used for the brief identifier associated with a
-particular document.</note>  for the
-identifier has been declared elsewhere in the document. Because the
-<att>wit</att> attribute has declared datatype of one or more <ident type="datatype">data.pointer</ident> values, a check can be made that
-readings are assigned only to witness sigla which have been identified
-(using the <att>xml:id</att> attribute) within a <gi>listWit</gi>
-element (see section <ptr target="#TCAPWL"/>). Such checking is more
-difficult for witness sigla held as the content of a <gi>wit</gi>
-element. <!--: an application program can check them, but parsers will
-not.--> For this reason, it is recommended that encoders always hold
-witness information in the <att>wit</att> attribute of <gi>lem</gi>
-and <gi>rdg</gi>, where possible. Thus, as in the examples below, even
-when a reference to a witness is exactly reproduced in the
-<gi>wit</gi> element, the corresponding sigil for that witness can be
-written into the <att>wit</att> attribute of the matching <gi>rdg</gi> or
-<gi>lem</gi>. However, in cases where it is uncertain  how the witness
-reference contained in the <gi>wit</gi> element should be interpreted,
-or where no witness exists, the <att>wit</att> attribute on the
-matching <gi>rdg</gi> or <gi>lem</gi> may be left empty. <egXML
-   xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-251" xml:lang="gmh"><lg type="stanza"> <l xml:id="Diet1.1">Slăfest du, vriedel ziere?</l>
+            sigil<note place="foot">We use the term sigil as the English equivalent of the Latin
+            term <foreign>siglum</foreign> (sign) traditionally used for the brief identifier
+            associated with a particular document.</note> for the identifier has been declared
+          elsewhere in the document. Because the <att>wit</att> attribute has declared datatype of
+          one or more <ident type="datatype">data.pointer</ident> values, a check can be made that
+          readings are assigned only to witness sigla which have been identified (using the
+            <att>xml:id</att> attribute) within a <gi>listWit</gi> element (see section <ptr
+            target="#TCAPWL"/>). Such checking is more difficult for witness sigla held as the
+          content of a <gi>wit</gi> element.
+          <!--: an application program can check them, but parsers will
+not.--> For this reason, it
+          is recommended that encoders always hold witness information in the <att>wit</att>
+          attribute of <gi>lem</gi> and <gi>rdg</gi>, where possible. Thus, as in the examples
+          below, even when a reference to a witness is exactly reproduced in the <gi>wit</gi>
+          element, the corresponding sigil for that witness can be written into the <att>wit</att>
+          attribute of the matching <gi>rdg</gi> or <gi>lem</gi>. However, in cases where it is
+          uncertain how the witness reference contained in the <gi>wit</gi> element should be
+          interpreted, or where no witness exists, the <att>wit</att> attribute on the matching
+            <gi>rdg</gi> or <gi>lem</gi> may be left empty. <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-251" xml:lang="gmh"><lg type="stanza"> <l xml:id="Diet1.1">Slăfest du, vriedel ziere?</l>
     <l xml:id="Diet1.2">wan wecket uns leider schiere;</l>
     <l xml:id="Diet1.3">ein vogellīn sŏ wol getăn</l>
     <l xml:id="Diet1.4">daz ist der linden an daz zwī gegăn.</l>
@@ -613,53 +492,38 @@ matching <gi>rdg</gi> or <gi>lem</gi> may be left empty. <egXML
     <wit>Jungbluth, Festschr. Pretzel 1963, 122.</wit>
     </app>
 </egXML>
-<!-- MF 39,18, ed. Moser/Tervooren, p. 66.                    -->
-Of course, the sigil used for a particular witness in the source, as
-recorded in the <gi>wit</gi> element, may well differ from that used
-to indicated the same witness in the <att>wit</att> attribute, as
-shown particularly in the apparatus for the second line of the poem
-(Diet.1.2).</p>
+          <!-- MF 39,18, ed. Moser/Tervooren, p. 66.                    --> Of course, the sigil
+          used for a particular witness in the source, as recorded in the <gi>wit</gi> element, may
+          well differ from that used to indicated the same witness in the <att>wit</att> attribute,
+          as shown particularly in the apparatus for the second line of the poem (Diet.1.2).</p>
 
-<specGrp xml:id="DTCSCWL" n="Sourcetext Witness Lists in Apparatus">
-
-
-
-
-
-
-
-
-
-
-&wit;
-
-
-
-
-
-</specGrp></div>
-<div type="div4" xml:id="TCAPWL"><head>The Witness List</head>
-<p>A list of all identified witnesses should normally be supplied in
-the front matter of the edition, or in the <gi>sourceDesc</gi> element
-of its header. This may be given either as a simple bibliographic
-list, using the <gi>listBibl</gi> element described in <ptr target="#COBI"/>, or as  a <gi>listWit</gi> element, which 
-contains a series of <gi>witness</gi> elements.  Each <gi>witness</gi>
-element may contain a brief characterisation of the witness, given as
-one or more prose paragraphs. If more detailed information about
-a manuscript witness is available, it should be represented using the
-<gi>msDesc</gi> element provided by the <ident type="module">msdescription</ident>
-module; a <gi>msDesc</gi> may appear within a <gi>listBibl</gi>. </p>
-<p>Whether information about a particular witness is supplied by
-means of a <gi>bibl</gi>, <gi>msDesc</gi>, or <gi>witness</gi>
-element, a unique sigil for this source should always be
-supplied,  using the global <att>xml:id</att> attribute. This
-identifier can then be used
-elsewhere to refer to this particular witness.  <specList><specDesc key="listWit"/><specDesc key="witness"/><specDesc key="msDesc"/><specDesc key="bibl"/><specDesc key="listBibl"/></specList></p>
-<p>The minimal information provided by a witness list is thus the set of
-sigla for all the witnesses named in the apparatus.  For example, the
-witnesses referenced by the examples of this
-chapter might simply be listed  thus:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><listWit>
+        <specGrp xml:id="DTCSCWL" n="Sourcetext Witness Lists in Apparatus"> &wit; </specGrp>
+      </div>
+      <div type="div4" xml:id="TCAPWL">
+        <head>The Witness List</head>
+        <p>A list of all identified witnesses should normally be supplied in the front matter of the
+          edition, or in the <gi>sourceDesc</gi> element of its header. This may be given either as
+          a simple bibliographic list, using the <gi>listBibl</gi> element described in <ptr
+            target="#COBI"/>, or as a <gi>listWit</gi> element, which contains a series of
+            <gi>witness</gi> elements. Each <gi>witness</gi> element may contain a brief
+          characterisation of the witness, given as one or more prose paragraphs. If more detailed
+          information about a manuscript witness is available, it should be represented using the
+            <gi>msDesc</gi> element provided by the <ident type="module">msdescription</ident>
+          module; a <gi>msDesc</gi> may appear within a <gi>listBibl</gi>. </p>
+        <p>Whether information about a particular witness is supplied by means of a <gi>bibl</gi>,
+            <gi>msDesc</gi>, or <gi>witness</gi> element, a unique sigil for this source should
+          always be supplied, using the global <att>xml:id</att> attribute. This identifier can then
+          be used elsewhere to refer to this particular witness. <specList>
+            <specDesc key="listWit"/>
+            <specDesc key="witness"/>
+            <specDesc key="msDesc"/>
+            <specDesc key="bibl"/>
+            <specDesc key="listBibl"/>
+          </specList></p>
+        <p>The minimal information provided by a witness list is thus the set of sigla for all the
+          witnesses named in the apparatus. For example, the witnesses referenced by the examples of
+          this chapter might simply be listed thus:
+          <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><listWit>
    <witness xml:id="Chi3"/>
    <witness xml:id="Ha4"/>
    <witness xml:id="Ju"/> 
@@ -675,25 +539,20 @@ chapter might simply be listed  thus:
    <witness xml:id="Wa"/>  
    <witness xml:id="X"/>   
 </listWit></egXML></p>
-<p>It is more helpful, however, for witness lists to be somewhat
-more informative:  each <gi>witness</gi> element should contain at
-least a brief prose
-description of the witness, perhaps including a bibliographic
-citation, as in the following examples:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><listWit>
+        <p>It is more helpful, however, for witness lists to be somewhat more informative: each
+            <gi>witness</gi> element should contain at least a brief prose description of the
+          witness, perhaps including a bibliographic citation, as in the following examples:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><listWit>
   <witness xml:id="El">Ellesmere, Huntingdon Library 26.C.9</witness>
   <witness xml:id="Hg">Hengwrt, National Library of Wales,
     Aberystwyth, Peniarth 392D</witness>
   <witness xml:id="Ra2">Bodleian Library Rawlinson Poetic 149
 (see further <ptr target="http://example.com/msDescs#MSRP149"/>)</witness>
 </listWit></egXML>
-As the last example shows, the witness description here may be complemented
-by a reference to a full
-description of the manuscript supplied elsewhere, typically as the
-content of a <gi>msDesc</gi> or <gi>bibl</gi> element. 
-Alternatively, it may contain a whole paragraph of
-commentary for each witness :
-<egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-251"><listWit>
+          As the last example shows, the witness description here may be complemented by a reference
+          to a full description of the manuscript supplied elsewhere, typically as the content of a
+            <gi>msDesc</gi> or <gi>bibl</gi> element. Alternatively, it may contain a whole
+          paragraph of commentary for each witness : <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOR-eg-251"><listWit>
    <witness xml:id="A">die sog. <soCalled>Kleine (oder alte)
       Heidelberger Liederhandschrift</soCalled>.
       <bibl>Universitätsbibliothek Heidelberg col. pal.
@@ -721,16 +580,14 @@ commentary for each witness :
       bzw. unbekannten Dichtern, ein Marienlobpreis und eine
       Minnelehre.)</witness>
 </listWit></egXML>
-<!-- Moser/Tervooren II: 39-40; the last bit of the entry for A omits some stuff -->
-</p>
-<p>It would however generally be preferable to represent such detailed
-information using an appropriately structured <gi>msDesc</gi> element,
-as discussed in chapter <ptr target="#MS"/>. Note also that if the
-witnesses being recorded are not manuscripts but printed works, it
-may be preferable to document them using the standard <gi>bibl</gi> or
-<gi>biblStruct</gi> elements described in <ptr target="#COBI"/>, as in
-this example:
-<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">
+          <!-- Moser/Tervooren II: 39-40; the last bit of the entry for A omits some stuff -->
+        </p>
+        <p>It would however generally be preferable to represent such detailed information using an
+          appropriately structured <gi>msDesc</gi> element, as discussed in chapter <ptr
+            target="#MS"/>. Note also that if the witnesses being recorded are not manuscripts but
+          printed works, it may be preferable to document them using the standard <gi>bibl</gi> or
+            <gi>biblStruct</gi> elements described in <ptr target="#COBI"/>, as in this example:
+          <egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples">
 <listBibl> 
 <bibl xml:id="bcn_1482">T. Kempis, De la imitació de Jesuchrist e del
 menyspreu del món (trad. Miquel Peres); Barcelona, 1482, Pere
@@ -742,22 +599,20 @@ imitació de nostre senyor Déu Jesucrist, (trad. Miquel Peres);
 Barcelona, 1518, Carles Amorós. </bibl>
 </listBibl>
 </egXML>
-</p>
-<p>In text-critical work it is customary to refer to frequently occurring
-groups of witnesses by means of a single common sigil.  Such sigla may
-be documented as pseudo-witnesses in their own right by including a
-nested witness list within 
-the witness list, which uses the sigil for the group as its
-identifier, and supplies a fuller name for the group in its optional child
-<gi>head</gi> element, before
- listing the other witnesses contained by the group. <!-- In this example, the group of
+        </p>
+        <p>In text-critical work it is customary to refer to frequently occurring groups of
+          witnesses by means of a single common sigil. Such sigla may be documented as
+          pseudo-witnesses in their own right by including a nested witness list within the witness
+          list, which uses the sigil for the group as its identifier, and supplies a fuller name for
+          the group in its optional child <gi>head</gi> element, before listing the other witnesses
+          contained by the group.
+          <!-- In this example, the group of
 manuscripts of the <title>Canterbury Tales</title> which make up <soCalled>Constant
 Group C</soCalled> are themselves first allocated sigla in individual
 <gi>witness</gi> elements, and then those sigla are given as the
-<att>included</att> value of a further <gi>witness</gi> element. --> 
-For example, the Constant Group C of manuscripts comprising witnesses Cp, La,
-and S12, might be represented as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<att>included</att> value of a further <gi>witness</gi> element. -->
+          For example, the Constant Group C of manuscripts comprising witnesses Cp, La, and S12,
+          might be represented as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <listWit>
 <witness xml:id="Ellesmere">Ellesmere, Huntingdon Library 26.C.9</witness>
 <!-- ... -->
@@ -768,213 +623,111 @@ and S12, might be represented as follows:
    <witness xml:id="Sl2">British Library Sloane MS 1686</witness>
 </listWit>
 </listWit></egXML>
-<!--   <witness xml:id="c" included="#Cp #La #Sl2">Constant Group c</witness>-->
-That the reading <mentioned>Experiment</mentioned> occurs in all three manuscripts
-can now be indicated simply as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><rdg wit="#Con">Experiment</rdg></egXML>
-<!-- What happens if both 'c' and 'La' are given, on two      -->
-	<!-- different readings?  Needs clarification for next        -->
-	<!-- revision.  Allow single-ms readings to override a        -->
-	<!-- group?  What, then, about groups of groups, or about     -->
-	<!-- overlapping groups?  Perhaps better to say that 'c'      -->
-	<!-- *always* is the same as 'Cp La Sl2', with no             -->
-	<!-- exceptions.  (msm)
-	-->
-Note that a single witness cannot  appear more than once in a witness list,
-and therefore cannot be assigned to more than one group of witnesses.
-</p>
+          <!--   <witness xml:id="c" included="#Cp #La #Sl2">Constant Group c</witness>--> That the
+          reading <mentioned>Experiment</mentioned> occurs in all three manuscripts can now be
+          indicated simply as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><rdg wit="#Con">Experiment</rdg></egXML>
+          <!-- What happens if both 'c' and 'La' are given, on two      -->
+          <!-- different readings?  Needs clarification for next        -->
+          <!-- revision.  Allow single-ms readings to override a        -->
+          <!-- group?  What, then, about groups of groups, or about     -->
+          <!-- overlapping groups?  Perhaps better to say that 'c'      -->
+          <!-- *always* is the same as 'Cp La Sl2', with no             -->
+          <!-- exceptions.  (msm)
+	--> Note that a single witness cannot appear more than once in a
+          witness list, and therefore cannot be assigned to more than one group of witnesses. </p>
 
 
-<p>Situations commonly arise where there are many more or less
-fragmentary witnesses, such that there may be quite distinct groups of
-witnesses for different parts of a text or collection of texts.  One
-may treat this with distinct <gi>listWit</gi> elements for each
-different part.  Alternatively, one may have a single <gi>listWit</gi>
-element at the beginning of the file or in its header listing all the
-witnesses, partial and complete, for the text, with the attestation of
-fragmentary witnesses indicated within the apparatus by use of the
-<gi>witStart</gi> and <gi>witEnd</gi> elements described in section
-<ptr target="#TCAPMI"/>.</p>
-<p>If a witness list is provided, it may be unnecessary to give, in each
-apparatus entry, an exhaustive list of the witnesses which agree with
-the base text.  An application program can—in principle—compare
-the witnesses given for each variant found with those given in the full
-list of witnesses, subtracting from this list all the witnesses not
-active at this point (perhaps because of lacuna, or because they contain
-a variation on a different, overlapping lemma) and thence calculate all
-the manuscripts agreeing with the base text.  In practice, encoders may
-find it less error-prone to list all witnesses explicitly in each
-apparatus entry.</p>
-<specGrp xml:id="DTCAPLW" n="Witness Lists in Front Matter">
-
-
-
-
-
-
-
-
-
-
-&listWit;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&witness;
-
-
-
-
-
-</specGrp></div></div>
-<div type="div3" xml:id="TCAPMI"><head>Fragmentary Witnesses</head>
-<p>If a witness is incomplete (whether a single fragment, a series of
-fragments, or a relatively complete text with one or more lacunae), it
-is usually desirable to record explicitly where its preserved portions
-begin and end.  The following empty tags, which may occur within any
-<gi>lem</gi> or <gi>rdg</gi> element, indicate the beginning or end of a
-fragmentary witness or of a lacuna within a witness:
-<specList><specDesc key="witStart"/><specDesc key="witEnd"/><specDesc key="lacunaStart"/><specDesc key="lacunaEnd"/></specList>
-These elements constitute the class <ident type="class">model.rdgPart</ident>, members of which are permitted
-within the elements <gi>lem</gi> and <gi>rdg</gi> when the module
-defined by this chapter is included in a schema.</p>
-<p>Suppose a fragment of a manuscript X of the <title>Wife of Bath's
-Prologue</title> has a physical lacuna, and the text of the manuscript
-begins with <mentioned>auctorite</mentioned>.  In an apparatus this might appear
-thus, distinguished from the reading of other manuscripts by the
-presence of the <gi>lacunaEnd</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+        <p>Situations commonly arise where there are many more or less fragmentary witnesses, such
+          that there may be quite distinct groups of witnesses for different parts of a text or
+          collection of texts. One may treat this with distinct <gi>listWit</gi> elements for each
+          different part. Alternatively, one may have a single <gi>listWit</gi> element at the
+          beginning of the file or in its header listing all the witnesses, partial and complete,
+          for the text, with the attestation of fragmentary witnesses indicated within the apparatus
+          by use of the <gi>witStart</gi> and <gi>witEnd</gi> elements described in section <ptr
+            target="#TCAPMI"/>.</p>
+        <p>If a witness list is provided, it may be unnecessary to give, in each apparatus entry, an
+          exhaustive list of the witnesses which agree with the base text. An application program
+          can—in principle—compare the witnesses given for each variant found with those given in
+          the full list of witnesses, subtracting from this list all the witnesses not active at
+          this point (perhaps because of lacuna, or because they contain a variation on a different,
+          overlapping lemma) and thence calculate all the manuscripts agreeing with the base text.
+          In practice, encoders may find it less error-prone to list all witnesses explicitly in
+          each apparatus entry.</p>
+        <specGrp xml:id="DTCAPLW" n="Witness Lists in Front Matter"> &listWit; &witness; </specGrp>
+      </div>
+    </div>
+    <div type="div3" xml:id="TCAPMI">
+      <head>Fragmentary Witnesses</head>
+      <p>If a witness is incomplete (whether a single fragment, a series of fragments, or a
+        relatively complete text with one or more lacunae), it is usually desirable to record
+        explicitly where its preserved portions begin and end. The following empty tags, which may
+        occur within any <gi>lem</gi> or <gi>rdg</gi> element, indicate the beginning or end of a
+        fragmentary witness or of a lacuna within a witness: <specList>
+          <specDesc key="witStart"/>
+          <specDesc key="witEnd"/>
+          <specDesc key="lacunaStart"/>
+          <specDesc key="lacunaEnd"/>
+        </specList> These elements constitute the class <ident type="class">model.rdgPart</ident>,
+        members of which are permitted within the elements <gi>lem</gi> and <gi>rdg</gi> when the
+        module defined by this chapter is included in a schema.</p>
+      <p>Suppose a fragment of a manuscript X of the <title>Wife of Bath's Prologue</title> has a
+        physical lacuna, and the text of the manuscript begins with
+        <mentioned>auctorite</mentioned>. In an apparatus this might appear thus, distinguished from
+        the reading of other manuscripts by the presence of the <gi>lacunaEnd</gi> element:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
    <lem wit="#El #Hg">Auctoritee</lem>
    <rdg wit="#La #Ra2">auctorite</rdg>
    <rdg wit="#X"><lacunaEnd/>auctorite</rdg>
 </app></egXML>
-Alternatively, it may be clearer to record this as
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+        Alternatively, it may be clearer to record this as
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
    <lem wit="#El #Hg">Auctoritee</lem>
    <rdg wit="#La #Ra2 #X"><lacunaEnd wit="#X"/>auctorite</rdg>
 </app></egXML>
-since this shows more clearly that the lacuna and the reading of
-<q>auctorite</q> both appear in witness X. 
-In some cases, the apparatus in the source may commence recording the
-readings for a particular witness without its being clear whether the
-previous absence of readings for this witness is due to a lacuna, or to
-some other reason.  The <gi>witStart</gi> element may be used in this
-circumstance:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
+        since this shows more clearly that the lacuna and the reading of <q>auctorite</q> both
+        appear in witness X. In some cases, the apparatus in the source may commence recording the
+        readings for a particular witness without its being clear whether the previous absence of
+        readings for this witness is due to a lacuna, or to some other reason. The <gi>witStart</gi>
+        element may be used in this circumstance:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app>
    <lem wit="#El #Hg">Auctoritee</lem>
    <rdg wit="#La #Ra2">auctorite</rdg>
    <rdg wit="#X"><witStart/>auctorite</rdg>
 </app></egXML></p>
-<specGrp xml:id="DTCFW" n="Fragmentary witnesses">
+      <specGrp xml:id="DTCFW" n="Fragmentary witnesses"> &witStart; &witEnd; &lacunaStart;
+        &lacunaEnd; </specGrp>
+    </div>
+  </div>
+  <div type="div2" xml:id="TCAPLK">
+    <head>Linking the Apparatus to the Text</head>
+    <p>Three different methods may be used to link a critical apparatus to the text: <list
+        type="ordered">
+        <item>the location-referenced method,</item>
+        <item>the double-end-point-attached method, and</item>
+        <item>the parallel segmentation method.</item>
+      </list></p>
+    <p>Both the location-referenced and the double end-point methods may be used with either
+        <term>in-line</term> or <term>external</term> apparatus, the former dispersed within the
+      base text, the latter held in some separate location, within or outside the document with the
+      base text. The parallel segmentation method does not use the concept of a base text and may
+      only be used for in-line apparatus.</p>
+    <p>Any document containing <gi>app</gi> elements requires a <gi>variantEncoding</gi> declaration
+      in the <gi>encodingDesc</gi> element of its TEI header, thus: <specList>
+        <specDesc key="variantEncoding" atts="method location"/>
+      </specList></p>
 
-
-
-
-
-
-
-
-
-
-&witStart;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&witEnd;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lacunaStart;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&lacunaEnd;
-
-
-
-
-
-</specGrp></div></div>
-<div type="div2" xml:id="TCAPLK"><head>Linking the Apparatus to the Text</head>
-<p>Three different methods may be used to link a critical
-apparatus to the text:
-<list type="ordered">
-<item>the location-referenced method,</item>
-<item>the double-end-point-attached method, and</item>
-<item>the parallel segmentation method.</item></list></p>
-<p>Both the location-referenced and the double end-point methods may be
-used with either <term>in-line</term> or <term>external</term>
-apparatus, the former dispersed within the base text, the latter held in
-some separate location, within or outside the document with the base
-text.  The parallel segmentation method does not use the concept of a
-base text and may only be used for in-line apparatus.</p>
-<p>Any document containing <gi>app</gi> elements requires a
-<gi>variantEncoding</gi> declaration in the <gi>encodingDesc</gi>
-element of its TEI header, thus:
-<specList><specDesc key="variantEncoding" atts="method location"/></specList></p>
-
-<div type="div3" xml:id="TCAPLO"><head>The Location-referenced Method</head>
-<p>The location-referenced method of encoding apparatus provides a
-convenient method for encoding printed apparatus; in this method as in
-most printed editions, the apparatus is linked to the base text by
-indicating explicitly only the block of text on which there is a variant
-(noted usually by a canonical reference scheme, or by line number in the
-edition, such as <val>A 137</val> or <mentioned>Page 15 line 1</mentioned>).</p>
-<p>If the location-referenced method is used for an apparatus stored
-externally to the base text, the TEI header must have the
-declaration:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="location-referenced" location="external"/></egXML></p>
-<p>In the <gi>body</gi> of the document, the base text (here El) will
-appear:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+    <div type="div3" xml:id="TCAPLO">
+      <head>The Location-referenced Method</head>
+      <p>The location-referenced method of encoding apparatus provides a convenient method for
+        encoding printed apparatus; in this method as in most printed editions, the apparatus is
+        linked to the base text by indicating explicitly only the block of text on which there is a
+        variant (noted usually by a canonical reference scheme, or by line number in the edition,
+        such as <val>A 137</val> or <mentioned>Page 15 line 1</mentioned>).</p>
+      <p>If the location-referenced method is used for an apparatus stored externally to the base
+        text, the TEI header must have the declaration:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="location-referenced" location="external"/></egXML></p>
+      <p>In the <gi>body</gi> of the document, the base text (here El) will appear:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
   <body> 
     <div n="WBP" type="prologue">
       <head>The Prologe of the Wyves Tale of Bathe</head>
@@ -983,19 +736,17 @@ appear:
     </div>
   </body>
 </text></egXML></p>
-<p>Elsewhere in the document, or in a separate file, the apparatus will
-appear. On each <gi>app</gi> element, the <att>loc</att> attribute
-should be specified to indicate where the variant occurs in the base
-text.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app loc="WBP 1">
+      <p>Elsewhere in the document, or in a separate file, the apparatus will appear. On each
+          <gi>app</gi> element, the <att>loc</att> attribute should be specified to indicate where
+        the variant occurs in the base text.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app loc="WBP 1">
    <rdg wit="#La">Experiment</rdg>
    <rdg wit="#Ra2">Eryment</rdg>
 </app></egXML></p>
-<p>If the same text is encoded using in-line storage, the apparatus is
-dispersed through the base text block to which it refers.  In this case,
-the location of the variant can be read from the line in which it
-occurs.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="location-referenced" location="internal"/>
+      <p>If the same text is encoded using in-line storage, the apparatus is dispersed through the
+        base text block to which it refers. In this case, the location of the variant can be read
+        from the line in which it occurs.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="location-referenced" location="internal"/>
 <!-- ... -->
 <l n="1">Experience
   <app>
@@ -1004,67 +755,59 @@ occurs.
   </app>
   though noon Auctoritee</l>
 <l>Were in this world ...</l></egXML></p>
-<p>Since the location is not required to be exact, the apparatus for
-a line might also appear at the end of the line:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">Experience though noon Auctoritee
+      <p>Since the location is not required to be exact, the apparatus for a line might also appear
+        at the end of the line:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">Experience though noon Auctoritee
   <app>
     <rdg wit="#La"> Experiment</rdg>
     <rdg wit="#Ra2"> Eryment</rdg>
   </app></l>
 <l>Were in this world ...</l></egXML></p>
-<p>When the apparatus is linked to the text by means of location
-references, as shown here, it is not possible to find automatically the
-precise portion of text varied by the readings.  In order to show
-explicitly what portion of the base text is replaced by the variant
-readings, the <gi>lem</gi> element may be used:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">Experience though noon Auctoritee
+      <p>When the apparatus is linked to the text by means of location references, as shown here, it
+        is not possible to find automatically the precise portion of text varied by the readings. In
+        order to show explicitly what portion of the base text is replaced by the variant readings,
+        the <gi>lem</gi> element may be used:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">Experience though noon Auctoritee
   <app>
     <lem wit="#El">Experience</lem>
     <rdg wit="#La">Experiment</rdg>
     <rdg wit="#Ra2">Eryment</rdg>
   </app></l>
 <l>Were in this world ...</l></egXML>
-Often the lemma will have no attributes, being simply the
-<soCalled>base text reading</soCalled> and requiring no qualification,
-but it may optionally carry the normal attributes, as shown here.  Some
-text critics prefer to abbreviate or elide the lemma, in order to save
-space or trouble; such practice is not forbidden by these Guidelines,
-but no recommendations are made for conventions of abbreviating the
-lemma, whether abbreviation of each word, or suppression of all but the
-first and last word, etc.</p>
-<p>Where it is intended that the apparatus be complete enough to allow
-the reconstruction of the witnesses (or at least of
-their non-orthographic variations), simple location-reference methods
-are unlikely to be as successful as the other two methods, which allow the
-unambiguous reconstruction of the lemma from the encoding.</p></div>
-<div type="div3" xml:id="TCAPDE"><head>The Double End-Point Attachment Method</head>
-<p>In the double end-point attachment method, the beginning and end of
-the lemma in the base text are both explicitly indicated.  It thus
-differs from the location-referenced method, in which only the larger
-span of text containing the lemma is indicated.  Double end-point
-attachment permits unambiguous matching of each variant reading against
-its lemma.  It or the parallel-segmentation method should be used in all
-cases where this is desired, for example where the apparatus is intended
-to enable full reconstruction of the text, or of the substantives, of
-every witness.</p>
-<p>When the double end-point attachment method is used, the
-<att>from</att> and <att>to</att> attributes of the <gi>app</gi> element
-are used to indicate the beginning and ending points of the reading in
-the base text: their values are identifiers which occur at the
-locations in question.  If no other markup is present there, the
-beginning and ending points should be marked using the <gi>anchor</gi>
-element defined in chapter <ptr target="#SA"/>.  In cases where it is not
-possible to insert anchors within the base text (e.g. where the text is
-on a read-only medium) the beginning and end of the lemma may be
-indicated by using the <soCalled>indirect pointing</soCalled> mechanisms
-discussed in chapter <ptr target="#SA"/>.  Explicit anchors are more likely
-to be reliable, and are therefore to be preferred.</p>
-<p>The double end-point attachment method may be used with in-line or
-external apparatus.  In the latter case, the base text (here El) will
-appear with <gi>anchor</gi> elements inserted at every place where a
-variant begins or ends (unless some element with an identifier
-already begins or ends at that point):
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
+        Often the lemma will have no attributes, being simply the <soCalled>base text
+          reading</soCalled> and requiring no qualification, but it may optionally carry the normal
+        attributes, as shown here. Some text critics prefer to abbreviate or elide the lemma, in
+        order to save space or trouble; such practice is not forbidden by these Guidelines, but no
+        recommendations are made for conventions of abbreviating the lemma, whether abbreviation of
+        each word, or suppression of all but the first and last word, etc.</p>
+      <p>Where it is intended that the apparatus be complete enough to allow the reconstruction of
+        the witnesses (or at least of their non-orthographic variations), simple location-reference
+        methods are unlikely to be as successful as the other two methods, which allow the
+        unambiguous reconstruction of the lemma from the encoding.</p>
+    </div>
+    <div type="div3" xml:id="TCAPDE">
+      <head>The Double End-Point Attachment Method</head>
+      <p>In the double end-point attachment method, the beginning and end of the lemma in the base
+        text are both explicitly indicated. It thus differs from the location-referenced method, in
+        which only the larger span of text containing the lemma is indicated. Double end-point
+        attachment permits unambiguous matching of each variant reading against its lemma. It or the
+        parallel-segmentation method should be used in all cases where this is desired, for example
+        where the apparatus is intended to enable full reconstruction of the text, or of the
+        substantives, of every witness.</p>
+      <p>When the double end-point attachment method is used, the <att>from</att> and <att>to</att>
+        attributes of the <gi>app</gi> element are used to indicate the beginning and ending points
+        of the reading in the base text: their values are identifiers which occur at the locations
+        in question. If no other markup is present there, the beginning and ending points should be
+        marked using the <gi>anchor</gi> element defined in chapter <ptr target="#SA"/>. In cases
+        where it is not possible to insert anchors within the base text (e.g. where the text is on a
+        read-only medium) the beginning and end of the lemma may be indicated by using the
+          <soCalled>indirect pointing</soCalled> mechanisms discussed in chapter <ptr target="#SA"
+        />. Explicit anchors are more likely to be reliable, and are therefore to be preferred.</p>
+      <p>The double end-point attachment method may be used with in-line or external apparatus. In
+        the latter case, the base text (here El) will appear with <gi>anchor</gi> elements inserted
+        at every place where a variant begins or ends (unless some element with an identifier
+        already begins or ends at that point):
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
     <variantEncoding method="double-end-point" location="external"/>
 <!-- ... -->
       <div n="WBP" type="prologue"><head>The Prologe ... </head>
@@ -1072,23 +815,21 @@ already begins or ends at that point):
         <l>Were in this world ...</l> 
       </div> 
 </egXML>
-The apparatus will be separately encoded:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app from="#WBP.1" to="#WBP-A2">
+        The apparatus will be separately encoded:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app from="#WBP.1" to="#WBP-A2">
    <rdg wit="#La">Experiment</rdg>
    <rdg wit="#Ra2">Eryment</rdg>
 </app></egXML>
-No <gi>anchor</gi> element is needed at the beginning of the line, since
-the <att>from</att> attribute can use the identifier for the
-line as a whole; the lemma is assumed to run from the beginning of the
-element indicated by the <att>from</att> attribute, to the end of that
-indicated by the <att>to</att> attribute.  If no value is
-given for <att>to</att>, the lemma runs from the beginning to the end of
-the element indicated by the <att>from</att> attribute.</p>
-<p>When the apparatus is encoded in-line, it is dispersed through the
-base text.  Only the beginning of the lemma need be marked with an
-<gi>anchor</gi>, since the <gi>app</gi> is inserted at the end of the
-lemma, and itself therefore marks the end of the lemma.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="double-end-point" location="internal"/>
+        No <gi>anchor</gi> element is needed at the beginning of the line, since the <att>from</att>
+        attribute can use the identifier for the line as a whole; the lemma is assumed to run from
+        the beginning of the element indicated by the <att>from</att> attribute, to the end of that
+        indicated by the <att>to</att> attribute. If no value is given for <att>to</att>, the lemma
+        runs from the beginning to the end of the element indicated by the <att>from</att>
+        attribute.</p>
+      <p>When the apparatus is encoded in-line, it is dispersed through the base text. Only the
+        beginning of the lemma need be marked with an <gi>anchor</gi>, since the <gi>app</gi> is
+        inserted at the end of the lemma, and itself therefore marks the end of the lemma.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="double-end-point" location="internal"/>
 <!-- ... -->
 <l n="1" xml:id="wbp.1">Experience
    <app from="#wbp.1">
@@ -1097,37 +838,37 @@ lemma, and itself therefore marks the end of the lemma.
    </app>
    though noon Auctoritee</l>
 <l>Were in this world ...</l></egXML></p>
-<p>The lemma need not be repeated within the <gi>app</gi> element in
-this method, as it may be extracted reliably from the base text.  If an
-exhaustive list of witnesses is available, it will also not be necessary
-to specify just which manuscripts agree with the base text to enable
-reconstruction of witnesses.  An application will be able to determine
-the manuscripts that witness the base reading, by noting which witnesses
-are attested as having a variant reading, and inferring the base text
-reading for all others after adjusting for fragmentary witnesses and for
-witnesses carrying overlapping variant readings.</p>
-<p>Alternatively, if it is desired to make an explicit record of the
-attestation of the base text, the <gi>lem</gi> element may be embedded
-within <gi>app</gi>, carrying the witnesses to the base. Thus
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><app from="#WBP.1" to="#WBP-A2">
+      <p>The lemma need not be repeated within the <gi>app</gi> element in this method, as it may be
+        extracted reliably from the base text. If an exhaustive list of witnesses is available, it
+        will also not be necessary to specify just which manuscripts agree with the base text to
+        enable reconstruction of witnesses. An application will be able to determine the manuscripts
+        that witness the base reading, by noting which witnesses are attested as having a variant
+        reading, and inferring the base text reading for all others after adjusting for fragmentary
+        witnesses and for witnesses carrying overlapping variant readings.</p>
+      <p>Alternatively, if it is desired to make an explicit record of the attestation of the base
+        text, the <gi>lem</gi> element may be embedded within <gi>app</gi>, carrying the witnesses
+        to the base. Thus
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><app from="#WBP.1" to="#WBP-A2">
    <lem wit="#El #Hg">Experience</lem>
    <rdg wit="#La">Experiment</rdg>
    <rdg wit="#Ra2">Eryment</rdg>
 </app></egXML></p>
-<p>This method is designed to cope with <soCalled>overlapping
-lemmata</soCalled>. For example, at line 117 of the Wife of Bath's
-Prologue, the manuscripts Hg (Hengwrt), El (Ellesmere), and Ha4 (British
-Library Harleian 7334) read:
-<list type="gloss">
-<label>Hg</label><item>And of so parfit wys a wight ywroght</item>
-<label>El</label><item>And for what profit was a wight ywroght</item>
-<label>Ha4</label><item>And in what wise was a wight ywroght</item></list></p>
-<p>In this case, one might wish to record <mentioned>in what wise was</mentioned> in Ha4
-as a single variant for <mentioned>of so parfit wys</mentioned> in Hg, and <mentioned>was a
-wight</mentioned> in El and Ha4 as a variant on <mentioned>wys a wight</mentioned> in Hg.  This method
-can readily cope with such difficult situations, typically found in
-large and complex traditions:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l xml:id="WBP.117" n="117"> And
+      <p>This method is designed to cope with <soCalled>overlapping lemmata</soCalled>. For example,
+        at line 117 of the Wife of Bath's Prologue, the manuscripts Hg (Hengwrt), El (Ellesmere),
+        and Ha4 (British Library Harleian 7334) read: <list type="gloss">
+          <label>Hg</label>
+          <item>And of so parfit wys a wight ywroght</item>
+          <label>El</label>
+          <item>And for what profit was a wight ywroght</item>
+          <label>Ha4</label>
+          <item>And in what wise was a wight ywroght</item>
+        </list></p>
+      <p>In this case, one might wish to record <mentioned>in what wise was</mentioned> in Ha4 as a
+        single variant for <mentioned>of so parfit wys</mentioned> in Hg, and <mentioned>was a
+          wight</mentioned> in El and Ha4 as a variant on <mentioned>wys a wight</mentioned> in Hg.
+        This method can readily cope with such difficult situations, typically found in large and
+        complex traditions:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><l xml:id="WBP.117" n="117"> And
   <anchor xml:id="WBP-A117.1"/> of so parfit
   <anchor xml:id="WBP-A117.2"/> wys
   <anchor xml:id="WBP-A117.3"/> a wight
@@ -1140,37 +881,31 @@ large and complex traditions:
     <lem wit="#Hg">wys a wight</lem>
     <rdg wit="#El #Ha4">was a wight</rdg>
   </app></l></egXML>
-The parallel segmentation method, to be discussed next, cannot handle
-overlaps among variants, and would require the individual variants to be
-split into pieces.</p>
-<p>Because creation and interpretation of double end-point attachment
-apparatus will be lengthy and difficult it is likely that they will
-usually be created and examined by scholars only with mechanical
-assistance.</p></div>
-<div type="div3" xml:id="TCAPPS"><head>The Parallel Segmentation Method</head>
-<p>This method differs from the double end-point attachment method in
-that all variants at any point of the text are expressed as variants
-on one another.  In this method, no two variations can overlap,
-although they may nest.  Thus, the concepts of a base text and of a
-lemma become unnecessary:  the texts compared are divided into
-matching segments all synchronized with one another.  This permits
-direct comparison of any span of text in any witness with that in
-any other witness.  It is also very easy with this method for an
-application to extract the full text of any one witness from the
-apparatus.</p>
-<p>This method will (by definition) always be satisfactory when there
-are just two texts for comparison (assuming they are in the same
-language and script).  It will also be useful where editors do not wish
-to privilege a text as the <soCalled>base</soCalled> or when editors
-wish to present parallel texts.  It will become less convenient as
-traditions become more complex and tension develops between the need to
-segment on the largest variation found and the need to express the
-finest detail of agreement between witnesses.</p>
-<p>In the parallel segmentation method, each segment of text on which
-there is variation is marked by an <gi>app</gi> element; each reading is
-given in a <gi>rdg</gi> element; if it is desired to single out one
-reading as preferred, it may be tagged <gi>lem</gi>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="parallel-segmentation" location="internal"/>
+        The parallel segmentation method, to be discussed next, cannot handle overlaps among
+        variants, and would require the individual variants to be split into pieces.</p>
+      <p>Because creation and interpretation of double end-point attachment apparatus will be
+        lengthy and difficult it is likely that they will usually be created and examined by
+        scholars only with mechanical assistance.</p>
+    </div>
+    <div type="div3" xml:id="TCAPPS">
+      <head>The Parallel Segmentation Method</head>
+      <p>This method differs from the double end-point attachment method in that all variants at any
+        point of the text are expressed as variants on one another. In this method, no two
+        variations can overlap, although they may nest. Thus, the concepts of a base text and of a
+        lemma become unnecessary: the texts compared are divided into matching segments all
+        synchronized with one another. This permits direct comparison of any span of text in any
+        witness with that in any other witness. It is also very easy with this method for an
+        application to extract the full text of any one witness from the apparatus.</p>
+      <p>This method will (by definition) always be satisfactory when there are just two texts for
+        comparison (assuming they are in the same language and script). It will also be useful where
+        editors do not wish to privilege a text as the <soCalled>base</soCalled> or when editors
+        wish to present parallel texts. It will become less convenient as traditions become more
+        complex and tension develops between the need to segment on the largest variation found and
+        the need to express the finest detail of agreement between witnesses.</p>
+      <p>In the parallel segmentation method, each segment of text on which there is variation is
+        marked by an <gi>app</gi> element; each reading is given in a <gi>rdg</gi> element; if it is
+        desired to single out one reading as preferred, it may be tagged <gi>lem</gi>:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="parallel-segmentation" location="internal"/>
 <!-- ... -->
   <l n="1">
     <app><lem wit="#El #Hg">Experience</lem>
@@ -1178,22 +913,19 @@ reading as preferred, it may be tagged <gi>lem</gi>:
          <rdg wit="#Ra2">Eryment</rdg></app>
     though noon Auctoritee</l>
   <l>Were in this world ...</l></egXML></p>
-<p>This method cannot be used with external apparatus:  it must be used
-in-line.  Note that apparatus encoded with this method may be translated
-into the double end-point attachment method and back without loss of
-information.  Where double-end-point-attachment encodings have no
-overlapping lemmata, translation of these to the parallel segmentation
-encoding and back will also be possible without loss of information.</p>
-<p>For economy, the witnesses to the reading most widely attested need
-not be stated.  Since all manuscripts must be represented in all
-apparatus entries, it will be possible for an application to read a
-<gi>listWit</gi> declaring all the witnesses to the text and then
-calculate which witnesses have not been named.  In the example below,
-only La and Ra2 are identified explicitly with a reading; an application
-might successfully infer from this that <mentioned>Experience</mentioned>,
-whose witnesses are not given, must be attested by El and Hg.  To avoid
-confusion, however, witnesses may be omitted only for a single reading.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">    
+      <p>This method cannot be used with external apparatus: it must be used in-line. Note that
+        apparatus encoded with this method may be translated into the double end-point attachment
+        method and back without loss of information. Where double-end-point-attachment encodings
+        have no overlapping lemmata, translation of these to the parallel segmentation encoding and
+        back will also be possible without loss of information.</p>
+      <p>For economy, the witnesses to the reading most widely attested need not be stated. Since
+        all manuscripts must be represented in all apparatus entries, it will be possible for an
+        application to read a <gi>listWit</gi> declaring all the witnesses to the text and then
+        calculate which witnesses have not been named. In the example below, only La and Ra2 are
+        identified explicitly with a reading; an application might successfully infer from this that
+          <mentioned>Experience</mentioned>, whose witnesses are not given, must be attested by El
+        and Hg. To avoid confusion, however, witnesses may be omitted only for a single reading.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">    
    <app>
       <lem>Experience</lem>
       <rdg wit="#La">Experiment</rdg>
@@ -1201,13 +933,11 @@ confusion, however, witnesses may be omitted only for a single reading.
    </app>
    though noon Auctoritee</l>
 <l>Were in this world ...</l></egXML></p>
-<p>Alternatively, the witnesses for every reading may be stated, as in
-the first example.</p>
-<p>As noted, apparatus entries may nest in this method:  if an imaginary
-fifth manuscript of the text read <mentioned>Auctoritee, though none
-experience</mentioned>, the variation on the individual words of the line would
-nest within that for the line as a whole:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
+      <p>Alternatively, the witnesses for every reading may be stated, as in the first example.</p>
+      <p>As noted, apparatus entries may nest in this method: if an imaginary fifth manuscript of
+        the text read <mentioned>Auctoritee, though none experience</mentioned>, the variation on
+        the individual words of the line would nest within that for the line as a whole:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="1">
    <app>
       <rdg wit="#Chi3">Auctoritee, though none experience</rdg>
       <rdg>    
@@ -1228,46 +958,119 @@ nest within that for the line as a whole:
       </rdg>
    </app>
 </l></egXML></p>
-<p>Parallel segmentation cannot, however, deal very gracefully with
-variants which overlap without nesting:  such variants must be broken up
-into pieces in order to keep all witnesses synchronized.
- </p></div></div>
-<div type="div2" xml:id="TCTR"><head>Using Apparatus Elements in Transcriptions</head>
-<p>It is often desirable to record different transcriptions of one
-stretch of text.  These variant transcriptions may be grouped within a
-single <gi>app</gi> element.  An application may then construct
-different <soCalled>views</soCalled> of the transcription by extraction of the
-appropriate variant readings from the apparatus elements embedded in the
-transcription.</p>
-<p>For example, alternative expansions can be recorded in several
-different <gi>expan</gi> elements, all grouped within an <gi>app</gi>
-element.  Consider, for example, the three different transcriptions
-given below of line 105 of the Hengwrt manuscript of Chaucer's
-<title>The Wife of Bath's Prologue</title>.  The last word of the line
-<mentioned>Virginite is grete perfection</mentioned> is written <mentioned>perfectio</mentioned>
-followed by two minims over which a bar has been drawn, which has been
-read in different ways by different scholars.  The first
-transcription, by Elizabeth Solopova, represents the two minims with
-bar above as a special composite character using the <gi>g</gi> element.  This
-transcription notes this as a mark of abbreviation but gives no
-expansion for it.  A second transcriber, F. J. Furnivall, regards the
-bar as an abbreviation of <mentioned>u</mentioned>, and therefore reads the two minims as
-an <mentioned>n</mentioned>.  A third transcriber, P. G. Ruggiers, regards the
-bar as an abbreviation of <mentioned>n</mentioned>, reading the minims as
-<mentioned>u</mentioned>.  This information may be held within an <gi>app</gi>
-structure, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Virginite is grete
+      <p>Parallel segmentation cannot, however, deal very gracefully with variants which overlap
+        without nesting: such variants must be broken up into pieces in order to keep all witnesses
+        synchronized. </p>
+    </div>
+
+    <!-- JC: Adding in draft section on other linking methods 2012-06-18 -->
+
+    <div type="div3" xml:id="TCAPLN">
+      <head>Other Linking Methods</head>
+      <p> When an apparatus is provided it does not need to be given at the location in the
+        transcription where the variation, emendation, attribution, or other apparatus observation
+        occurs. Instead it may be stored in a separate place in the same file, or indeed in another
+        file, and point to the location at which it is meant to be used. Storing apparatus entries
+        separately can be beneficial when encoding multiple competing, potentially overlapping,
+        interpretations of the same point in the source texts. </p>
+      <p> The location-referenced method can be used to point a position in a text using the
+          <att>loc</att> attribute and a canonical reference that is understood and documented in
+        the context of the file where it is used. Where possible it is recommended that other
+        methods use the <att>from</att> attribute to point to an <att>xml:id</att> attribute on an
+          <gi>anchor/</gi> or other element at the location where the apparatus observation takes
+        place. The contents of an element pointed to are understood to be equivalent to a
+          <gi>lem</gi> if none exists in the <gi>app</gi>, and if a <gi>lem</gi> does exist this
+        should replace any content. </p>
+      <p>The <att>from</att> attribute is a <ident type="datatype">data.pointer</ident> datatype and
+        thus contains a URI as a value. This means that it can point directly to an
+          <att>xml:id</att>, an <att>xml:id</att> in another local file, or indeed a file identified
+        by any URL or URN.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> 
+    <l n="1"><seg xml:id="WBP-so.1.1">Experience</seg> though noon Auctoritee</l>
+    
+    <!-- In another file -->
+    
+    <app from="wbp.xml#WBP-so.1.1">
+      <rdg wit="#La">Experiment</rdg>
+      <rdg wit="#Ra2">Eryment</rdg>
+    </app>
+   </egXML>
+        This could also be encoded as:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> 
+    <l n="1"><anchor xml:id="WBP-so.1.1a"/> though noon Auctoritee</l>
+    
+    <!-- In another file -->
+    
+    <app from="http://www.example.com/wbp.xml#WBP-so.1.1a">
+      <lem>Experience</lem>
+      <rdg wit="#La">Experiment</rdg>
+      <rdg wit="#Ra2">Eryment</rdg>
+    </app>
+   </egXML>
+        However, this should be considered more fragile since a full reading of the <gi>lem</gi> is
+        not provided in the source file. </p>
+      <p> In addition, URLs can contain XPointer schemes including xpath1(), range(), and
+        string-range() which can be used in providing the location of an <gi>app</gi> that is stored
+        separately from the text to which it applies. Both <att>from</att> and <att>to</att> can be
+        used, as in the double end-point attachment method, to identify the starting and ending
+        location for an apparatus using XPointer schemes described in <ptr target="#SATS"/> section
+        to more precisely identify this location where beneficial.
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">     
+        <l n="1" xml:id="WP.1a">Experience though noon Auctoritee</l>
+        
+        <!-- In another file -->
+        
+        <app from="wbp.xml#string-range(WBP.1a, 0, 10)">
+          <lem>Experience</lem>
+          <rdg wit="#La">Experiment</rdg>
+          <rdg wit="#Ra2">Eryment</rdg>
+        </app>
+   </egXML>
+      </p>
+      <p> If only the <att>from</att> attribute is provided then it should be understood that this
+        supplies the location of the textual variance that the apparatus documents. If the
+          <att>from</att> attribute contains an XPointer scheme that identifies a range of text (or
+        elements) then this is understood to record the starting and ending of the range as in the
+        double end-point attachment method. In such a case a @to attribute is unnecessary. </p>
+    </div>
+
+  </div>
+
+
+
+
+  <div type="div2" xml:id="TCTR">
+    <head>Using Apparatus Elements in Transcriptions</head>
+    <p>It is often desirable to record different transcriptions of one stretch of text. These
+      variant transcriptions may be grouped within a single <gi>app</gi> element. An application may
+      then construct different <soCalled>views</soCalled> of the transcription by extraction of the
+      appropriate variant readings from the apparatus elements embedded in the transcription.</p>
+    <p>For example, alternative expansions can be recorded in several different <gi>expan</gi>
+      elements, all grouped within an <gi>app</gi> element. Consider, for example, the three
+      different transcriptions given below of line 105 of the Hengwrt manuscript of Chaucer's
+        <title>The Wife of Bath's Prologue</title>. The last word of the line <mentioned>Virginite
+        is grete perfection</mentioned> is written <mentioned>perfectio</mentioned> followed by two
+      minims over which a bar has been drawn, which has been read in different ways by different
+      scholars. The first transcription, by Elizabeth Solopova, represents the two minims with bar
+      above as a special composite character using the <gi>g</gi> element. This transcription notes
+      this as a mark of abbreviation but gives no expansion for it. A second transcriber, F. J.
+      Furnivall, regards the bar as an abbreviation of <mentioned>u</mentioned>, and therefore reads
+      the two minims as an <mentioned>n</mentioned>. A third transcriber, P. G. Ruggiers, regards
+      the bar as an abbreviation of <mentioned>n</mentioned>, reading the minims as
+        <mentioned>u</mentioned>. This information may be held within an <gi>app</gi> structure, as
+      follows:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">Virginite is grete
 <app>
   <rdg resp="#ES">perfectio<am><g ref="#ii"/></am></rdg>
   <rdg resp="#FJF">perfectio<ex>u</ex>n</rdg>
   <rdg resp="#PGR">perfectiou<ex>n</ex></rdg>
 </app></egXML>
-This example uses special purpose elements <gi>am</gi> and <gi>ex</gi>
-used to represent abbreviation marks and editorial expansion
-respectively; these elements are provided by the <ident type="module">transcr</ident> module documented in chapter <ptr target="#PH"/>, which should be consulted for further discussion of
-methods of representing multiple readings of a source.
-
-<!-- This example illustrates the adaptation of the <gi>rdg</gi> aelement for
+      This example uses special purpose elements <gi>am</gi> and <gi>ex</gi> used to represent
+      abbreviation marks and editorial expansion respectively; these elements are provided by the
+        <ident type="module">transcr</ident> module documented in chapter <ptr target="#PH"/>, which
+      should be consulted for further discussion of methods of representing multiple readings of a
+      source.
+      <!-- This example illustrates the adaptation of the <gi>rdg</gi> aelement for
 use within the transcription of a particular witness.  The
 <att>wit</att> attribute, which may be compulsory in recording variant
 readings of many witnesses within a critical apparatus, is redundant
@@ -1291,10 +1094,9 @@ processor will know that the responsibility for the expansion
 This simplifies the processing of the information, as the application
 has only to look at the attribute values for each reading in turn and
 not for those for elements nested within.--></p>
-<p>Editorial notes may also be attached to <gi>app</gi> structures
-within transcriptions.  Here, editorial preference for Ruggiers'
-expansion and an explanation of that preference is given:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">Virginite is grete
+    <p>Editorial notes may also be attached to <gi>app</gi> structures within transcriptions. Here,
+      editorial preference for Ruggiers' expansion and an explanation of that preference is given:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">Virginite is grete
 <app>
   <rdg resp="#ES">perfecti<am><g ref="#ii"/></am></rdg>
   <rdg xml:id="f105" resp="#FJF">perfectio<ex>u</ex>n</rdg>
@@ -1306,111 +1108,45 @@ expansion and an explanation of that preference is given:
   this mark as an abbreviation for 'u' in these manuscripts and it is
   widely used as an abbreviation for 'n'. Ruggiers' expansion is to
   be accepted.</note></egXML>
-</p>
-<p>In most cases, elements used to indicate features of a primary
-textual source may be represented within an <gi>app</gi> structure
-simply by nesting them within its readings, just as the <gi>am</gi>
-and <gi>ex</gi> elements are nested within the <gi>rdg</gi> elements
-in the example just given.  However, in cases where the tagged feature
-extends across a span of text which might itself contain variant
-readings which it is desired to represent by <gi>app</gi> structures,
-some adaptation of the tagging may be necessary.  For example, a span of
-text may be marked in the transcription of the primary source as a
-single deletion but it may be desirable to represent just a few words
-from this source as individual deletions within the context of a
-critical apparatus drawing together readings from this and several other
-witnesses.  In this case, the tagging of the span of words as one
-deletion may need to be decomposed into a series of one-word deletions
-for encoding within the apparatus.  If it is important to record
-the fact that all were deleted by the same act, the markup may use
-the <gi>join</gi> element or the <att>next</att> and <att>prev</att>
-attributes defined by chapter <ptr target="#SA"/>.</p></div>
+    </p>
+    <p>In most cases, elements used to indicate features of a primary textual source may be
+      represented within an <gi>app</gi> structure simply by nesting them within its readings, just
+      as the <gi>am</gi> and <gi>ex</gi> elements are nested within the <gi>rdg</gi> elements in the
+      example just given. However, in cases where the tagged feature extends across a span of text
+      which might itself contain variant readings which it is desired to represent by <gi>app</gi>
+      structures, some adaptation of the tagging may be necessary. For example, a span of text may
+      be marked in the transcription of the primary source as a single deletion but it may be
+      desirable to represent just a few words from this source as individual deletions within the
+      context of a critical apparatus drawing together readings from this and several other
+      witnesses. In this case, the tagging of the span of words as one deletion may need to be
+      decomposed into a series of one-word deletions for encoding within the apparatus. If it is
+      important to record the fact that all were deleted by the same act, the markup may use the
+        <gi>join</gi> element or the <att>next</att> and <att>prev</att> attributes defined by
+      chapter <ptr target="#SA"/>.</p>
+  </div>
 
-<div><head>Module for Critical Apparatus</head>
-<p>The module described in this chapter makes available the following
-components:
-<moduleSpec xml:id="DTC" ident="textcrit">
-<altIdent type="FPI">Text Criticism</altIdent>
-<desc>Critical Apparatus</desc>
-<desc xml:lang="fr">Apparat critique</desc>
-<desc xml:lang="zh-TW">學術編輯註解</desc>
-<desc xml:lang="it">Apparato critico</desc><desc xml:lang="pt">Critical Apparatus</desc><desc xml:lang="ja">校勘モジュール</desc></moduleSpec>
-
-The selection and combination of modules to form a TEI schema is described in
-<ptr target="#STIN"/>.
-</p>
-<specGrp>
-
-
-
-
-
-
-
-
-
-
-&variantEncoding;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&model.rdgPart;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&att.rdgPart;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-&att.witnessed;
-&att.textCritical;
-
-
-
-
-
-<specGrpRef target="#DTCAPEN"/>
-<specGrpRef target="#DTCAPLR"/>
-<specGrpRef target="#DTCAPSU"/>
-<specGrpRef target="#DTCAPWD"/>
-<specGrpRef target="#DTCSCWL"/>
-<specGrpRef target="#DTCAPLW"/>
-<specGrpRef target="#DTCFW"/>
-</specGrp></div>
+  <div>
+    <head>Module for Critical Apparatus</head>
+    <p>The module described in this chapter makes available the following components: <moduleSpec
+        xml:id="DTC" ident="textcrit">
+        <altIdent type="FPI">Text Criticism</altIdent>
+        <desc>Critical Apparatus</desc>
+        <desc xml:lang="fr">Apparat critique</desc>
+        <desc xml:lang="zh-TW">學術編輯註解</desc>
+        <desc xml:lang="it">Apparato critico</desc>
+        <desc xml:lang="pt">Critical Apparatus</desc>
+        <desc xml:lang="ja">校勘モジュール</desc>
+      </moduleSpec> The selection and combination of modules to form a TEI schema is described in
+        <ptr target="#STIN"/>. </p>
+    <specGrp> &variantEncoding; &model.rdgPart; &att.rdgPart; &att.witnessed; &att.textCritical;
+        <specGrpRef target="#DTCAPEN"/>
+      <specGrpRef target="#DTCAPLR"/>
+      <specGrpRef target="#DTCAPSU"/>
+      <specGrpRef target="#DTCAPWD"/>
+      <specGrpRef target="#DTCSCWL"/>
+      <specGrpRef target="#DTCAPLW"/>
+      <specGrpRef target="#DTCFW"/>
+    </specGrp>
+  </div>
 
 </div>
