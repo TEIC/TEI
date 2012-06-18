@@ -305,7 +305,7 @@ dist-doc.stamp:
 	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
 	@echo BUILD: Make web pages for release notes
 	for i in ReleaseNotes/readme*xml; \
-	do  teitohtml --css=en/html/guidelines.css $$i  \
+	do  teitohtml --css=en/html/guidelines.css --feedbackURL=http://www.tei-c.org/Consortium/contact.xml $$i  \
 		./release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	@echo BUILD: Make web guidelines in all supported languages
