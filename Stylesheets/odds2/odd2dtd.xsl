@@ -1028,6 +1028,9 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test=".//rng:anyName">
 	    <xsl:text> ANY</xsl:text>
 	  </xsl:when>
+	  <xsl:when test="processing-instruction()[name()='NameList']">
+	    <xsl:text> ANY</xsl:text>
+	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:apply-templates
 		select="tei:*|rng:*|processing-instruction()"/>
@@ -1104,14 +1107,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="Contents">
          <BLAH>
             <xsl:choose>
+	      <xsl:when test="tei:content/rng:element">
+                  <xsl:text> ANY</xsl:text>
+	      </xsl:when>
 	      <xsl:when test="tei:content/rng:element[rng:anyName]">
 		<xsl:text> (#PCDATA)</xsl:text>
 	      </xsl:when>
 	      <xsl:when test="tei:content/rng:ref/@name='data.name'">
 		<xsl:text> (#PCDATA)</xsl:text>
-	      </xsl:when>
-	      <xsl:when test="tei:content/rng:element">
-                  <xsl:text> ANY</xsl:text>
 	      </xsl:when>
 	      <xsl:when test="tei:valList[@type='closed']">
 		<xsl:text> (#PCDATA)</xsl:text>
