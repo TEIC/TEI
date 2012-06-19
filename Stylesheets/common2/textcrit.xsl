@@ -87,17 +87,15 @@ of this software, even if advised of the possibility of such damage.
       </xsl:with-param>
       <xsl:with-param name="readings">
 	<xsl:for-each select="tei:rdg">
-	  <xsl:choose>
-	    <xsl:when test="false"/> <!--$lem='' or (not(../tei:lem) and position()=1)"/>-->
-	    <xsl:otherwise>
+
+<!--	    <xsl:when test="$lem='' or (not(../tei:lem) and position()=1)"/>--> 
+
 	      <xsl:apply-templates/>
 	      <xsl:if test="@cause='omission'">[]</xsl:if>
 	      <xsl:text> (</xsl:text>
 	      <xsl:value-of select="translate(substring(@wit,2),' #',', ')"/>
 	      <xsl:text>)</xsl:text>
 	      <xsl:if test="following-sibling::tei:rdg">; </xsl:if>
-	    </xsl:otherwise>
-	  </xsl:choose>
 	</xsl:for-each>
       </xsl:with-param>
     </xsl:call-template>

@@ -77,7 +77,7 @@ p5:
 common: 
 	@echo BUILD Build for P5, common files and documentation
 	test -d release/common/xml/tei/stylesheet || mkdir -p release/common/xml/tei/stylesheet
-	cp VERSION *.css i18n.xml release/common/xml/tei/stylesheet
+	cp catalog.xml VERSION *.css i18n.xml release/common/xml/tei/stylesheet
 
 profiles: 
 	@echo BUILD Build for P5, profiles
