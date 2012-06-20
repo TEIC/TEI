@@ -208,8 +208,9 @@ valid: check
 	@echo BUILD: Check validity with local XSLT script
 	${SAXON} ${SAXON_ARGS}  -s:${DRIVER} -xsl:Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
 	${SAXON} ${SAXON_ARGS}  -o:ValidatorLog.xml -s:${DRIVER} -xsl:Utilities/validator.xsl 
-	cat ValidatorLog.xml
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo ERROR found; false; fi)
+	diff ValidatorLog.xml expected-results/ValidatorLog.xml
+	cat ValidatorLog.xml
 	rm ValidatorLog.xml Utilities/pointerattributes.xsl 
 	#@echo BUILD: Check validity with xmllint
 	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
