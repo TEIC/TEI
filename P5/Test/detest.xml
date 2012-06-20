@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
@@ -12,44 +13,60 @@
       </sourceDesc>
     </fileDesc>
   </teiHeader>
-
   <text>
     <body>
-<p>This document is for testing validation.</p>
-
-<p><delSpan/></p>
-      
-
+      <p>This document is for testing validation.</p>
+      <p>
+        <delSpan/>
+      </p>
       <p>This tests the constraint that every &lt;lg&gt; element should have at least one of &lt;lg&gt;, &lt;lg&gt; or &lt;gap&gt; inside it.</p>
       <p>Added by MDH.</p>
-      
       <div>
-        <lg></lg>
+        <lg/>
       </div>
-
-<div>
-<head>The blort element, just to play with</head>
-<!-- following shd be errors and are correctly detected by emacs -->
-<p>
-<blort truth="no"  numeric="fig" prob="low" sex="yes"
-       temporal="1994-31-12" count="-1"/>
-
-<!-- following shd be errors but are not detected by emacs -->
-<blort xml:lang="wibble" prob="12345"/>
-
-<!-- following shd not be errors -->
-<blort truth="false" xtruth="inapplicable" sex="2" temporal="1994-12-31" count="42"/>
-<blort cert="high" dur="P3M" enumerated=" dog  breath" temporal="--12-25"/>
-<blort key="123// wibble = 1^+ !!! $ ‰ false" language="sa" temporal="1994-12-31T12:00:00"/>
-<blort pointers="#foo #wibble" names="mutt jeff" pattern="[a-z]\w*w\/s" numeric="42"/>
-<blort numeric="-1.3" name="_12-45.dot"/>
-<blort  temporal="1994-12-31"/> 
-<blort pointer="http://www.tei-c.org" name="123"/>
-<blort prob="0.456"/>
-<blort />
-</p>
-</div>
-
-</body>
+      <div>
+        <head>The blort element, just to play with</head>
+        <!-- following shd be errors and are correctly detected by emacs -->
+        <p>
+          <blort truth="no" numeric="fig" prob="low" sex="yes" temporal="1994-31-12" count="-1"/>
+          <!-- following shd be errors but are not detected by emacs -->
+          <blort xml:lang="wibble" prob="12345"/>
+          <!-- following shd not be errors -->
+          <blort truth="false" xtruth="inapplicable" sex="2" temporal="1994-12-31" count="42"/>
+          <blort cert="high" dur="P3M" enumerated=" dog  breath" temporal="--12-25"/>
+          <blort key="123// wibble = 1^+ !!! $ ‰ false" language="sa" temporal="1994-12-31T12:00:00"/>
+          <blort pointers="#foo #wibble" names="mutt jeff" pattern="[a-z]\w*w\/s" numeric="42"/>
+          <blort numeric="-1.3" name="_12-45.dot"/>
+          <blort temporal="1994-12-31"/>
+          <blort pointer="http://www.tei-c.org" name="123"/>
+          <blort prob="0.456"/>
+          <blort/>
+        </p>
+      </div>
+      <div>
+        <head>
+          <lg>
+            <!--  Why doesn't this fail validation? It should, surely. MDH 2012-06-19.          -->
+            <l>Bent double, like old beggars under sacks, </l>
+          </lg>
+        </head>
+      </div>
+      <div>
+        <head>
+          <l>Bent double, like old beggars under sacks, </l>
+          <l>Knock-kneed, coughing like hags, we cursed through sludge, </l>
+        </head>
+        <lg>
+          <l>Bent double, like old beggars under sacks, </l>
+          <l>Knock-kneed, coughing like hags, we cursed through sludge, </l>
+          <l>Till on the haunting flares we turned our backs </l>
+          <l>And towards our distant rest began to trudge. </l>
+          <l>Bent double, like old beggars under sacks, </l>
+          <l>Knock-kneed, coughing like hags, we cursed through sludge, </l>
+          <l>Till on the haunting flares we turned our backs </l>
+          <l>And towards our distant rest began to trudge. </l>
+        </lg>
+      </div>
+    </body>
   </text>
 </TEI>

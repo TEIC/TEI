@@ -7,46 +7,33 @@ XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/../p5subset.xml
 
 TESTFILES= \
-	testClasses.dtd \
 	testbare.dtd \
-	testcardinality.dtd \
-	testdictionaries.dtd \
-	testecco.dtd \
-	testfand.dtd \
-	testfand2.dtd \
-	testfand3.dtd \
-	testfand4.dtd \
-	testfand5.dtd \
-	testfs.dtd \
-	testlite.dtd \
-	testglobals.dtd \
-	testlangs.dtd 
+	testlite.dtd 
 
 TESTFILES2 = \
+	testbasic.xsd \
 	testall.xsd \
-	testconstraint.xsd \
+	testfand2.xsd \
+	testfand3.xsd \
+	testfand5.xsd \
+	testfs.dtd \
 	testconstraint2.xsd \
 	testi18n.xsd \
 	testjustfs.xsd \
-	testmav.xsd \
 	testns.xsd \
-	testp4compat.xsd \
-	testrendition.xsd \
-	testtranscr.xsd 
+	testp4compat.xsd 
 
 TESTSPECIALFILES= \
 	testallplus.special \
 	testits.special \
 	testmathml.special \
 	testodds.special \
-	testtagdocs.special \
 	testplace-gml.special \
 	testplace-kml.special \
-	testrend.special \
 	testsvg.special  
 
 TESTBADFILES= \
-	detest 
+	detest
 
 
 default: normal normaldtd special testmeta2010 test-extns test-frag detest
