@@ -1,4 +1,4 @@
-LANGUAGE=en
+ANGUAGE=en
 ROMA=roma2
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
@@ -8,33 +8,21 @@ ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/
 
 TESTFILES= \
 	testbare.dtd \
-	testlite.dtd 
-
-TESTFILES2 = \
 	testbasic.xsd \
 	testall.xsd \
+	testallplus.special \
 	testfand2.xsd \
 	testfand3.xsd \
 	testfand5.xsd \
-	testfs.dtd \
 	testconstraint2.xsd \
 	testi18n.xsd \
 	testjustfs.xsd \
-	testp4compat.xsd 
-
-TESTSPECIALFILES= \
-	testallplus.special \
+	testp4compat.xsd \
 	testplace-kml.special 
 
-TESTBADFILES= \
-	detest
+default: normal testmeta2010 test-extns test-frag detest
 
-
-default: normal normaldtd special testmeta2010 test-extns test-frag detest
-
-normal: $(TESTFILES2)
-normaldtd: $(TESTFILES)
-special: $(TESTSPECIALFILES)
+normal: $(TESTFILES)
 
 %.rng: %.odd
 	@echo "BUILD: Test schema from $<"

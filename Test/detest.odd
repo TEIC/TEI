@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" n="detest">
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" 
+xmlns:sch="http://purl.oclc.org/dsdl/schematron" n="detest">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -25,8 +27,114 @@
           <moduleRef key="core"/>
           <moduleRef key="tei"/>
           <moduleRef key="textstructure"/>
+          <moduleRef key="analysis"/>
           <moduleRef key="textcrit"/>
           <moduleRef key="transcr"/>
+
+        <elementSpec ident="p" mode="change">
+          <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+            <constraint>
+              <sch:report test="tei:list"> 
+	    lists inside paragraphs not supported </sch:report>
+            </constraint>
+          </constraintSpec>
+          <constraintSpec mode="add" ident="c2" scheme="isoschematron">
+            <constraint>
+              <sch:rule context="tei:p|tei:q">
+                <sch:report test="contains(@rend,' ')"> 
+		multi-valued rend is not supported </sch:report>
+              </sch:rule>
+            </constraint>
+          </constraintSpec>
+          <attList>
+            <attDef ident="rend" mode="change">
+              <valList type="closed" mode="add">
+                <valItem ident="center"/>
+                <valItem ident="boxed"/>
+              </valList>
+            </attDef>
+            <attDef ident="type" mode="change">
+              <datatype>
+                <rng:data type="float"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="distinct" mode="change" module="core">
+          <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
+            <!-- min=0 max=1,2,* -->
+            <attDef ident="o01" usage="opt">
+              <gloss>optional, min 0, max 1</gloss>
+              <datatype minOccurs="0" maxOccurs="1">
+                <rng:ref name="data.count"/>
+              </datatype>
+            </attDef>
+            <attDef ident="o02" usage="opt">
+              <gloss>optional, min 0, max 2</gloss>
+              <datatype minOccurs="0" maxOccurs="2">
+                <rng:ref name="data.count"/>
+              </datatype>
+            </attDef>
+            <attDef ident="o0i" usage="opt">
+              <gloss>optional, min 0, max unbounded</gloss>
+              <datatype minOccurs="0" maxOccurs="unbounded">
+                <rng:ref name="data.count"/>
+              </datatype>
+            </attDef>
+            <!-- min=1 max=1,2,* -->
+            <attDef ident="o11" usage="opt">
+              <gloss>optional, min 1, max 1</gloss>
+              <datatype minOccurs="1" maxOccurs="1">
+                <rng:ref name="data.count"/>
+              </datatype>
+            </attDef>
+            <attDef ident="o12" usage="opt">
+              <gloss>optional, min 1, max 2</gloss>
+              <datatype minOccurs="1" maxOccurs="2">
+                <rng:ref name="data.count"/>
+              </datatype>
+            </attDef>
+            <attDef ident="o1i" usage="opt">
+              <gloss>optional, min 1, max unbounded</gloss>
+              <datatype minOccurs="1" maxOccurs="unbounded">
+                <rng:ref name="data.count"/>
+              </datatype>
+            </attDef>
+            <!-- min=2 max=2,* -->
+            <attDef ident="o22" usage="opt">
+              <gloss>optional, min 2, max 2</gloss>
+              <datatype minOccurs="2" maxOccurs="2">
+                <rng:ref name="data.count"/>
+              </datatype>
+            </attDef>
+            <attDef ident="o2i" usage="opt">
+              <gloss>optional, min 2, max unbounded</gloss>
+              <datatype minOccurs="2" maxOccurs="unbounded">
+                <rng:ref name="data.count"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+
+        <elementSpec ident="div" mode="change">
+          <constraintSpec mode="add" ident="canondiv" scheme="isoschematron">
+            <constraint>
+              <sch:report test="@type='canon' and          parent::tei:div/@type='canon'">
+	      divs of type 'canon' may not be nested
+	    </sch:report>
+              <sch:report test="@type='canon' and          parent::tei:div/@type='register'">
+	      divs of type 'canon' may not be nested within 'register'
+	    </sch:report>
+              <sch:report test="@type='canon' and count          (tei:div[@type='canonText']) &gt;1">
+	      divs of type 'canon' may contain only one 'canonText'
+	    </sch:report>
+              <sch:report test="@type='canonText' and           not(parent::tei:div[@type='canon'])">
+	      divs of type 'canonText' can only occur inside 'canon'
+	    </sch:report>
+            </constraint>
+          </constraintSpec>
+        </elementSpec>
+
           <elementSpec ident="lg" mode="change">
             <content>
               <group xmlns="http://relaxng.org/ns/structure/1.0">
