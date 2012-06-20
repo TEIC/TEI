@@ -31,11 +31,6 @@ special: $(SPECIALFILES)
 	@echo "BUILD: Test schema from $<"
 	@echo Validate $< itself
 	-which rnv && rnv ../p5odds.rnc $< 
-	saxon -o:$*-ex.odd $< ../Utilities/odd2exodd.xsl 
-	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) $*-ex.odd . 
-	@echo check egXML in $<
-	perl -p -e "s/testlite-examples/$*-examples/" ex.nvdl > $*.nvdl
-	../run-onvdl $*.nvdl $< 
 	@echo "Run Roma on $<" 
 	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) $< .
 	@echo Validate using Jing for RELAX NG... 
@@ -47,6 +42,27 @@ special: $(SPECIALFILES)
 	@echo Validate using Schematron
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
 	saxon $*.xml $*.xsl
+
+testall.rng: testall.odd
+	@echo "BUILD: Test schema from testall"
+	@echo Validate testall itself
+	-which rnv && rnv ../p5odds.rnc testall.odd
+	saxon -o:testall-ex.odd testall.odd ../Utilities/odd2exodd.xsl 
+	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) testall-ex.odd . 
+	@echo check egXML in testall.odd
+	perl -p -e "s/testlite-examples/testall-examples/" ex.nvdl > testall.nvdl
+	../run-onvdl testall.nvdl testall.odd
+	@echo "Run Roma on testall" 
+	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) testall.odd .
+	@echo Validate using Jing for RELAX NG... 
+	jing -t testall.rng testall.xml
+	@echo Validate using RNV.... 
+	-which rnv && (xmllint --noent --dropdtd  testall.xml | rnv testall.rnc )
+	@echo Validate using xmllint for DTD  
+	xmllint --dropdtd testall.xml | xmllint --noout --dtdvalid testall.dtd -
+	@echo Validate using Schematron
+	saxon testall.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > testall.xsl
+	saxon testall.xml testall.xsl
 
 %.dtd: %.rng
 	@echo Check file using DOCTYPE in instance
