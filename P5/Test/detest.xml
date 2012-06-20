@@ -24,6 +24,62 @@
       <div>
         <lg/>
       </div>
+
+
+      <div>
+        <head>Testing schematron constraints</head>
+        <p xml:lang="la">sicut erat in <bibl><author>freddy</author></bibl> principia <list><item><num value="0.234"/><num value="0.0234E23"/><num value="1/2"/>
+cats</item></list>
+      </p>
+        <div type="canon">
+          <head>Canon 1</head>
+          <p>hello</p>
+          <div type="canonText">
+            <head>A Canon Text</head>
+            <p>hello</p>
+          </div>
+        </div>
+        <div type="canon">
+          <head>Canon 2</head>
+          <p>hello</p>
+          <div type="canonText">
+            <head>A Canon Text</head>
+            <p>hello</p>
+          </div>
+          <div type="canonText">
+            <head>A 2nd Canon Text</head>
+            <p>hello</p>
+          </div>
+        </div>
+        <div type="canon">
+          <head>Canon 3</head>
+          <div type="canon">
+            <head>Canon 4</head>
+          </div>
+        </div>
+        <div type="register">
+          <head>Register 1</head>
+          <div type="canon">
+            <head>Canon 5</head>
+          </div>
+        </div>
+        <div type="redundant">
+          <p>
+            <s>This sentence contains
+	    <s>an illegally nested phrase</s>
+	    and should trigger a schematron squawk</s>
+          </p>
+        </div>
+      </div>
+      <div type="test">
+        <p>Testing multiple occurences of a datatype in a single attribute
+    value. The following should be valid:
+     <distinct type="valid" o01="0" o02="0" o0i="0" o11="0" o12="1" o1i="1" o22="1 2" o2i="1 2">minimum</distinct>
+     <distinct type="valid" o01="1" o02="1" o0i="1" o11="1" o12="1 2" o1i="1 2" o22="1 2" o2i="1 2 3">min +1 unless ≤, in which case max</distinct> 
+     <distinct type="valid" o01="1" o02="1 2" o0i="1 2 3 4 5 6 7 8 9 0" o11="1" o12="1 2" o1i="1 2 3 4 5 6 7 8 9 0" o22="1 2" o2i="1 2 3 4 5 6 7 8 9 0">max</distinct>
+  </p>
+      </div>
+
       <div>
         <head>The blort element, just to play with</head>
         <!-- following shd be errors and are correctly detected by emacs -->
@@ -46,7 +102,6 @@
       <div>
         <head>
           <lg>
-            <!--  Why doesn't this fail validation? It should, surely. MDH 2012-06-19.          -->
             <l>Bent double, like old beggars under sacks, </l>
           </lg>
         </head>
@@ -67,6 +122,17 @@
           <l>And towards our distant rest began to trudge. </l>
         </lg>
       </div>
+
+      <div>
+        <head>Some transcribed text with subst errors</head>
+        <p>... are all included. <del hand="#RG">It is</del>
+    <subst><add>T</add><del>t</del></subst>he expressed</p>
+        <p> that he and his Sister Miſs D — <lb/>who always lived with him, wd. be <subst><del>very</del><lb/><add>principally</add></subst> remembered in her Will.</p>
+        <p><subst><add>ἐπιτρέψῃ</add><del>ἐπετρέψῃ</del></subst> τῷ ὑποδέκτῃ μὴ ὀχλῆσαι</p>
+        <p>τ<subst><add place="above">ῶν</add><del>α</del></subst> συνκυρόντ<subst><add place="above">ων</add><del>α</del></subst> ἐργαστηρί<subst><add place="above">ων</add><del>α</del></subst></p>
+        <p>While <del xml:id="r112">pondering</del> thus <add xml:id="r113">she mus'd</add>, her pinions fann'd<substJoin target="#r112 #r113"/></p>
+      </div>
+
     </body>
   </text>
 </TEI>
