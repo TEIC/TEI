@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Base test setup</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>just a test file</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>ab initio</p>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <tagsDecl>
+        <rendition xml:id="small" scheme="css">font-size: small;</rendition>
+        <rendition xml:id="large" scheme="css">font-size: large;</rendition>
+        <rendition xml:id="x-large" scheme="css">font-size: x-large;</rendition>
+        <rendition xml:id="xx-large" scheme="css">font-size: xx-large</rendition>
+        <rendition xml:id="expanded" scheme="css">letter-spacing: +3pt;</rendition>
+        <rendition xml:id="x-space" scheme="css">line-height: 150%;</rendition>
+        <rendition xml:id="xx-space" scheme="css">line-height: 200%;</rendition>
+        <rendition xml:id="red" scheme="css">color: red;</rendition>
+      </tagsDecl>
+    </encodingDesc>
+  </teiHeader>
+  <facsimile>
+    <surface xml:id="grave" ulx="358" uly="0" lrx="700" lry="681">
+      <graphic url="gravestone.jpg"/>
+      <zone ulx="437" uly="223" lrx="626" lry="256" xml:id="line1"/>
+      <zone ulx="446" uly="251" lrx="610" lry="282" xml:id="line2"/>
+      <zone ulx="375" uly="281" lrx="684" lry="308" xml:id="line3"/>
+      <zone ulx="390" uly="306" lrx="674" lry="332" xml:id="line4"/>
+      <zone ulx="439" uly="535" lrx="603" lry="556" xml:id="line5"/>
+      <zone ulx="451" uly="556" lrx="595" lry="576" xml:id="line6"/>
+      <zone ulx="412" uly="577" lrx="635" lry="595" xml:id="line7"/>
+      <zone ulx="422" uly="595" lrx="625" lry="613" xml:id="line8"/>
+      <zone points="220,100 300,210 170,250 123,234">
+        <graphic url="handwriting.png "/>
+      </zone>
+    </surface>
+  </facsimile>
+  <text>
+    <front>
+      <titlePage>
+        <docTitle rendition="#center #x-space">
+          <titlePart>
+            <lb/>
+            <hi rendition="#x-large">THE POEMS</hi>
+            <lb/>
+            <hi rendition="#small">OF</hi>
+            <lb/>
+            <hi rendition="#red #xx-large">ALGERNON CHARLES SWINBURNE</hi>
+            <lb/>
+            <hi rendition="#large #xx-space">IN SIX VOLUMES</hi>
+          </titlePart>
+          <titlePart rendition="#xx-space"> VOLUME I.
+	<lb/><hi rendition="#red #x-large">POEMS AND BALLADS</hi>
+	<lb/><hi rendition="#x-space">FIRST SERIES</hi>
+	</titlePart>
+        </docTitle>
+        <docImprint rendition="file:///tmp/morerendition.xml#center">
+          <lb/>
+          <pubPlace rendition="#xx-space">LONDON</pubPlace>
+          <lb/>
+          <publisher rendition="#red #expanded">CHATTO &amp; WINDUS</publisher>
+          <lb/>
+          <docDate when="1904" rendition="#small">1904</docDate>
+        </docImprint>
+      </titlePage>
+    </front>
+    <body>
+      <div>
+        <head>Testing constraints</head>
+        <listPerson>
+          <person xml:id="p1"/>
+          <relation name="fo" passive="#p1"/>
+        </listPerson>
+        <p xml:lang="la">sicut erat in <bibl><author>freddy</author></bibl> principia <list><item><num value="0.234"/><num value="0.0234E23"/><num value="1/2"/>
+cats</item></list>
+      </p>
+        <div type="canon">
+          <head>Canon 1</head>
+          <p>hello</p>
+          <div type="canonText">
+            <head>A Canon Text</head>
+            <p>hello</p>
+          </div>
+        </div>
+        <div type="canon">
+          <head>Canon 2</head>
+          <p>hello</p>
+          <div type="canonText">
+            <head>A Canon Text</head>
+            <p>hello</p>
+          </div>
+          <div type="canonText">
+            <head>A 2nd Canon Text</head>
+            <p>hello</p>
+          </div>
+        </div>
+        <div type="canon">
+          <head>Canon 3</head>
+          <div type="canon">
+            <head>Canon 4</head>
+          </div>
+        </div>
+        <div type="register">
+          <head>Register 1</head>
+          <div type="canon">
+            <head>Canon 5</head>
+          </div>
+        </div>
+        <div type="redundant">
+          <p>
+            <s>This sentence contains
+	    <s>an illegally nested phrase</s>
+	    and should trigger a schematron squawk</s>
+          </p>
+        </div>
+      </div>
+      <div type="test">
+        <p>Testing multiple occurences of a datatype in a single attribute
+    value. The following should be valid:
+     <distinct type="valid" o01="0" o02="0" o0i="0" o11="0" o12="1" o1i="1" o22="1 2" o2i="1 2">minimum</distinct>
+     <distinct type="valid" o01="1" o02="1" o0i="1" o11="1" o12="1 2" o1i="1 2" o22="1 2" o2i="1 2 3">min +1 unless ≤, in which case max</distinct> 
+     <distinct type="valid" o01="1" o02="1 2" o0i="1 2 3 4 5 6 7 8 9 0" o11="1" o12="1 2" o1i="1 2 3 4 5 6 7 8 9 0" o22="1 2" o2i="1 2 3 4 5 6 7 8 9 0">max</distinct>
+  </p>
+      </div>
+      <div facs="#grave">
+        <p>Private Moulds' gravestone</p>
+        <div>
+          <ab>
+            <s facs="#line1">12851 PRIVATE</s>
+            <lb/>
+            <s facs="#line2">H. MOULDS</s>
+            <lb/>
+            <s facs="#line3">NORTHAMPTONSHIRE REGT.</s>
+            <lb/>
+            <s facs="#line4">23RD JULY 1916 AGED 21</s>
+          </ab>
+          <ab>
+            <s facs="#line5">LOVING SON OF </s>
+            <lb/>
+            <s facs="#line6">MRS MOULDS</s>
+            <lb/>
+            <s facs="#line7">PETERBORO, ENGLAND</s>
+            <lb/>
+            <s facs="#line8">FOR EVER WITH US</s>
+            <lb/>
+          </ab>
+        </div>
+      </div>
+      <div>
+        <head>Some drama</head>
+        <gb n="f1234"/>
+        <sp who="#Horatio">
+          <speaker>Horatio</speaker>
+          <addSpan spanTo="#L4"/>
+          <lb n="Ham83"/>
+          <l>In what particular thought to work I know not:  <lb n="Ham84"/></l>
+          <l>But in the gross and scope of mine opinion,  <lb n="Ham85"/></l>
+          <l>This bodes some strange eruption to our state. </l>
+        </sp>
+        <ab>
+          <del>splodge</del>
+        </ab>
+        <sp who="#Marcellus1">
+          <speaker>Marcellus</speaker>
+          <lb n="Ham86"/>
+          <l>Good now, sit down, and tell me, he that knows,  <lb n="Ham87"/></l>
+          <l>Why this same strict and most observant watch  <lb n="Ham88"/></l>
+          <l>So <delSpan spanTo="#Ham92"/>nightly toils the subject of the land,  <lb n="Ham89"/></l>
+          <l>And why such daily cast of brazen cannon,  <lb n="Ham90" ed="Q2"/></l>
+          <l>And foreign mart for implements of war;  <lb n="Ham91"/></l>
+          <l>Why such impress of shipwrights, whose sore task  <lb xml:id="Ham92" n="Ham92"/></l>
+          <delSpan spanTo="#L4"/>
+          <ab>blah blah </ab>
+          <l xml:id="L4">Does not divide the Sunday from the week;  <lb n="Ham93"/></l>
+          <l>What might be toward, that this sweaty haste  <lb n="Ham94"/></l>
+          <l>Doth make the night joint-<lb n="Ham95" break="maybe"/>labourer with the day:  </l>
+          <l part="I">Who is't that can inform me? </l>
+        </sp>
+      </div>
+      <div>
+        <head>Some transcribed text</head>
+        <p>... are all included. <del hand="#RG">It is</del>
+    <subst><add>T</add><del>t</del></subst>he expressed</p>
+        <p> that he and his Sister Miſs D — <lb/>who always lived with him, wd. be <subst><del>very</del><lb/><add>principally</add></subst> remembered in her Will.</p>
+        <p><subst><add>ἐπιτρέψῃ</add><del>ἐπετρέψῃ</del></subst> τῷ ὑποδέκτῃ μὴ ὀχλῆσαι</p>
+        <p>τ<subst><add place="above">ῶν</add><del>α</del></subst> συνκυρόντ<subst><add place="above">ων</add><del>α</del></subst> ἐργαστηρί<subst><add place="above">ων</add><del>α</del></subst></p>
+        <p>While <del xml:id="r112">pondering</del> thus <add xml:id="r113">she mus'd</add>, her pinions fann'd<substJoin target="#r112 #r113"/></p>
+      </div>
+      <div>
+        <head>Dictionary entry</head>
+        <entry>
+          <form>
+            <orth>pamplemousse</orth>
+          </form>
+          <sense n="1">
+            <sense n="a">
+              <date>1677</date>
+              <form>
+                <orth>pampelmous</orth>
+              </form>
+              <def>fruit comestible, peu juteux, d'un arbre épineux originaire des
+	      îles de l'océan Indien</def>
+              <sense>
+                <date>1685</date>
+                <form>
+                  <orth>pamplemousse </orth>
+                </form>
+              </sense>
+            </sense>
+            <sense n="b">
+              <date>1772</date>
+              <def>arbre qui produit ce fruit</def>
+            </sense>
+          </sense>
+          <sense n="2">
+            <sense n="a">
+              <date>1946</date>
+              <def>fruit du Citrus paradisi de grande taille, jaune, de goût acide</def>
+            </sense>
+            <sense n="b">
+              <date>1962</date>
+              <def>arbre qui produit ce fruit</def>
+            </sense>
+            <etym><!-- mode d'enrichissement lexical : emprunt --> Empr. au néerl.
+	      pompelmoes, fém., au sens 1 a, qui est prob. comp.de pompel «gros,
+	      enflé» et de limoes «citron» (Boulan, p.148; König, pp.159-160).
+	      Apparaît d'abord dans des textes fr. qui le donnent comme mot
+	      néerl.: 1665 pompelmoes (J. Le Carpentier, L'Ambassade de la
+	      Compagnie orientale des Provinces Unies... [trad. d'un ouvrage
+	      néerl.], II, p.88 ds Arv.); 1666 pompelmous (M. Thévenot, Relation
+	      de divers voyages curieux... t.3 ds
+	    König). </etym>
+          </sense>
+        </entry>
+      </div>
+      <div>
+        <head>Rend</head>
+        <p rend="center">hello</p>
+        <p rend="boxed">hello</p>
+        <p>
+          <hi rend="italic">hello</hi> <hi rend="bold">hello</hi>
+        </p>
+      </div>
+    </body>
+  </text>
+</TEI>
