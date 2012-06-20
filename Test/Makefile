@@ -10,7 +10,9 @@ TESTFILES= \
 	testbare.dtd \
 	testbasic.xsd \
 	testall.xsd \
-	testallplus.special \
+	testallplus.special 
+
+SPECIALFILES = \
 	testfand2.xsd \
 	testfand3.xsd \
 	testfand5.xsd \
@@ -20,9 +22,10 @@ TESTFILES= \
 	testp4compat.xsd \
 	testplace-kml.special 
 
-default: normal testmeta2010 test-extns test-frag detest
+default: normal special testmeta2010 test-extns test-frag detest
 
 normal: $(TESTFILES)
+special: $(SPECIALFILES)
 
 %.rng: %.odd
 	@echo "BUILD: Test schema from $<"
