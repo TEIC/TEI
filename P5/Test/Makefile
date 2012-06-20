@@ -95,8 +95,8 @@ testmeta2010:
 
 test-frag:
 	@echo BUILD: Testing files which exercise inclusion of fragments
-	test -f testlite.dtd &&	jing -t -c frag.rnc testlite.xml
-	xmllint --dropdtd testlite.xml | rnv frag.rnc 
+	jing -t -c frag.rnc testfrag.xml
+	rnv frag.rnc testfrag.xml 
 
 
 test-extns:
