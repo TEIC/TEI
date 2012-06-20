@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<TEI 
- xmlns="http://www.tei-c.org/ns/1.0">
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns:its="http://www.w3.org/2005/11/its" xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>The TEI Lite Exercise file</title>
+        <title>The TEI All Plus Exercise file</title>
       </titleStmt>
       <publicationStmt>
         <p>Unpublished, as yet </p>
@@ -13,229 +12,269 @@
         <p>All my own invention </p>
       </sourceDesc>
     </fileDesc>
-    <revisionDesc>
-      <list>
-        <item>
-          <date>6 Jul 99</date>Recast in XML for S Rahtz XSL style sheet</item>
-        <item>
-          <date>17 Dec 96</date>First draft for R Lite's DSSSL style
-          sheet</item>
-      </list>
-    </revisionDesc>
   </teiHeader>
   <text>
     <body>
-      <div type="doc">
-    <head>A test document: section 1:   Σὲ γνωρίζω ἀπὸ τὴν κόψη</head>
-    <p>This document exercises various features of the TEI Lite dtd. Nothing in
-      it is mandatory, but very little of it is mendacious. Even the
-    bits in non-English, like <foreign>Entführung Aus Dem Serail</foreign> </p>
-    <p>This is a second paragraph, just to show that paragraphs are not all
-      indented to the same extent.</p>
-    <p>Let's start with various phrase level elements. </p>
-    <div type="sect">
-    <head>This should be 1.1: editorial tags (фис)вв</head>
-    <p>You can use your imagination (or give up) when dealing with most of
-      these... some suggestions are given as comments.</p>
-    <p>The <gi>corr</gi> element marks
-    <choice><sic>boob</sic><corr>correction</corr></choice>s; <!-- shd
-    just put square brackets round element content --> The
-    <gi>reg</gi> element marks
-    <choice><orig>regln</orig><reg>regularisation</reg></choice>s; The
-    <gi>add</gi> element marks <add place="sup">an addition</add> and
-    <!-- the PLACE attribute shd be taken note of --> the <gi>del</gi>
-    element marks <del>deletion</del>. The <gi>gap</gi> element marks
-    <gap reason="inkblot"/>something that's not there, <!-- shd give
-    REASON in square brackets and maybe different font if supplied -->
-    while the <gi>unclear</gi> element marks <unclear reason="smudged">something that's hard to read</unclear>.  <!--
-    how about printing it in a wobbly grayed out manner? -->
-    </p>
-    </div>
-    <div type="sect">
-    <head>This should be 1.2: highlighting tags</head>
-    <p>The <gi>hi</gi> element is used for various forms of highlighting: e.g.
-      <hi rend="bo">bold</hi>, <hi rend="it">italic</hi> and <hi rend="sc">small
-      caps</hi>. You can do what you like when <hi>no rend value</hi> is supplied. 
-    </p>
-    <p>The <gi>emph</gi> element is used for linguistic emph<emph>asis</emph>.
-        
-   <!-- use italic at least -->
-      This should not be confused with cases of
-      <soCalled>highlighting</soCalled> (<gi>soCalled</gi>) nor with
-      <mentioned>shouting</mentioned> (<gi>mentioned</gi>),
-<!-- I prefer single quotes for socalled, italic for mentioned, term -->
-      <term>transmogrification</term>, (a technical <gi>term</gi>), for which
-      the <gi>gloss</gi> tag might be used to supply <gloss>a technical
-      definition</gloss>).</p>
-<p><email>editors@tei-c.org</email></p>
-    </div>
-    <div type="sect">
-    <head>Should be 1.3: milestones and other empties</head>
-    <p>The <gi>mileStone</gi> element can appear <milestone unit="foo" n="bar"/>anywhere a<milestone unit="bar" n="42" ed="XX"/>t all. </p>
-    <p>The <gi>pb</gi> element can appear <pb n="302" ed="XX"/>anywhere too, as
-      can the <gi>lb</gi> element <lb n="302" ed="XX"/> like that.
-<!-- could display these thusly
-   - - - - - - - - - [$unit $n]- - - - - - - -
-   where $unit is 'page' for pb or value of unit attrib on milestone
-   for lb you should break the line, and maybe do clever stuff like
-   displaying the line number ($n) every 10 lines....
--->
-    </p>
-    <p>Now for some links! We will start by cross-referring to the next
-      section.</p>
-    <p>Here is a simple <ptr target="#P1"/> <gi>ptr</gi> to it.</p>
-    <p>Here is a simple 
-      <ref target="#P1">reference to it</ref>.</p>
-    <p>By the way, a <gi>divgen</gi> is legal anywhere, but should appear only
-      where a <gi>div</gi> would be legal.</p><divGen type="toc"/>
-</div></div>
-    <div xml:id="P1">
-    <head>Should be section 2: assorted chunks</head>
-    <p>Various sorts of list are legal within paragraphs... 
-      <list type="ordered"><!-- this should do numbering of  items -->
-        <item>first item in ordered list</item>
-        <item>second item in ordered list</item>
-        <item>third item in ordered list</item>
-      </list></p>
-    <list>
-<!-- list heads should be displayed differently from section heads :
-    suggest italics in text size and centred -->
-      <head>This untyped list has a heading</head>
-      <item>first item </item>
-      <item>second item </item>
-      <item>third item </item>
-    </list>
-    <list type="gloss"><!-- these look ok -->
-      <label>label1</label>
-      <item>first item </item>
-      <label>label2</label>
-      <item>second item </item>
-      <label>label3</label>
-      <item>third item </item>
-    </list>
-    <p>The preceding pair of lists were between paragraphs.</p>
-    <p>
-      <list>
-        <head>This untyped list has a heading and a nested glosslist </head>
-        <item>first item </item>
-        <item>
-          <list type="gloss">
-            <label>label1</label>
-            <item>first item </item>
-            <label>label2</label>
-            <item>second item </item>
-            <label>label3</label>
-            <item>third item </item>
-          </list></item>
-        <item>third item </item>
-      </list>  
+      <div>
+	<head>SVG</head>
+      <p>And here is a picture:
+  <figure><head>This is an SVG image</head><svg xmlns="http://www.w3.org/2000/svg" width="400" height="500"><title xmlns="http://www.w3.org/2000/svg">SGML/XML Processing Model</title><text xmlns="http://www.w3.org/2000/svg" x="30" y="100" style="font-family: sans-serif; font-size: 12pt;              stroke: none; fill: black;">Document Instance (#PCDATA plus markup)</text><line x1="170" y1="101" x2="170" y2="175" style="stroke-width: 5; stroke: black;"/><line x1="100" y1="175" x2="240" y2="175" style="stroke-width: 5; stroke: black;"/><line x1="100" y1="173" x2="100" y2="250" style="stroke-width: 5; stroke: black;"/><line x1="240" y1="173" x2="240" y2="250" style="stroke-width: 5; stroke: black;"/><text xmlns="http://www.w3.org/2000/svg" x="80" y="265" style="font-family: sans-serif; font-size: 12pt;              stroke: none; fill: black;">#PCDATA</text><text xmlns="http://www.w3.org/2000/svg" x="220" y="265" style="font-family: sans-serif; font-size: 12pt;               stroke: none; fill: black;">Markup</text><line x1="240" y1="267" x2="240" y2="321" style="stroke-width: 5; stroke: black;"/><line x1="170" y1="321" x2="310" y2="321" style="stroke-width: 5; stroke: black;"/><line x1="170" y1="319" x2="170" y2="390" style="stroke-width: 5; stroke: black;"/><line x1="310" y1="319" x2="310" y2="390" style="stroke-width: 5; stroke: black;"/><text xmlns="http://www.w3.org/2000/svg" x="150" y="405" style="font-family: sans-serif; font-size: 12pt;               stroke: none; fill: black;">Well-Formed</text><text xmlns="http://www.w3.org/2000/svg" x="290" y="405" style="font-family: sans-serif; font-size: 12pt;               stroke: none; fill: black;">Valid</text></svg><include xmlns="http://www.w3.org/2001/XInclude" href="plan.svg"/></figure>
+  </p>
+      </div>
+  <div>
+    <head>Maths</head>
+        <p>Due to the statistical nature of ionisation energy loss, large fluctuations can occur in
+the amount of energy deposited by a particle traversing an absorber element.
+Continuous processes such as multiple scattering and energy loss play a relevant role
+in the longitudinal and lateral development of electromagnetic and hadronic
+showers, and in the case of sampling calorimeters the measured resolution
+can be significantly affected by such fluctuations in their active layers. The
+description of ionisation fluctuations is characterised by the significance parameter
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula>,
+which is proportional to the ratio of mean energy loss to the maximum
+allowed energy transfer in a single collision with an atomic electron
+<formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mi>κ</mi><mo>=</mo><mfrac><mrow><mi>ξ</mi></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow></mfrac></mrow></math></formula>
+               <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></math></formula> is the
+maximum transferable energy in a single collision with an atomic electron.
+<formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>=</mo><mfrac><mrow><mn>2</mn><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><msup><mi>γ</mi><mrow><mn>2</mn></mrow></msup></mrow><mrow><mn>1</mn><mo>+</mo><mn>2</mn><mi>γ</mi><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub><mo>/</mo><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub><mo>+</mo><msup><mfenced open="(" close=")"><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub><mo>/</mo><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub></mfenced><mrow><mn>2</mn></mrow></msup></mrow></mfrac><mo>,</mo></mrow></math></formula> where
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>γ</mi><mo>=</mo><mi>E</mi><mo>/</mo><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub></math></formula>,
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>E</mi></math></formula> is energy and
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub></math></formula> the mass of the
+incident particle, <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>=</mo><mn>1</mn><mo>-</mo><mn>1</mn><mo>/</mo><msup><mi>γ</mi><mrow><mn>2</mn></mrow></msup></math></formula>
+and <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub></math></formula> is the
+electron mass. <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi></math></formula>
+comes from the Rutherford scattering crosss section and is defined as:
+              <table rend="inline"><row role="data"><cell role="data" cols="1" rows="1"><formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>=</mo><mfrac><mrow><mn>2</mn><mi>π</mi><msup><mi>z</mi><mrow><mn>2</mn></mrow></msup><msup><mi>e</mi><mrow><mn>4</mn></mrow></msup><msub><mi>N</mi><mrow><mi>A</mi><mi>v</mi></mrow></msub><mi>Z</mi><mi>ρ</mi><mi>δ</mi><mi>x</mi></mrow><mrow><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup><mi>A</mi></mrow></mfrac><mo>=</mo><mn>1</mn><mn>5</mn><mn>3</mn><mo>.</mo><mn>4</mn><mfrac><mrow><msup><mi>z</mi><mrow><mn>2</mn></mrow></msup></mrow><mrow><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup></mrow></mfrac><mfrac><mrow><mi>Z</mi></mrow><mrow><mi>A</mi></mrow></mfrac><mi>ρ</mi><mi>δ</mi><mi>x</mi><mspace width="12pt"/><mi>keV </mi><mo>,</mo><mtext/></math></formula></cell></row></table>
+where
 </p>
-    <p>There are also various sorts of note
-<!-- how about acting on the place attribute? marginal notes would be
-    sew kewl!-->
-      <note>The placement of this one is unspecified</note></p>
-    <p>Although no values are currently defined for them, it would be useful to
-      distinguish at least marginal notes, like these: both left 
-      <note place="left">left marginal note</note>right 
-      <note place="right">right marginal note</note>foot 
-      <note place="foot">first foot note</note>
-      <note place="foot">second foot note</note>
-       and end:
-      <note place="end">first end note</note>
-      <note place="end">second end note</note>. </p>
-    <p>And here's a little something I know you're going to enjoy: 
-    <table>
-    <head>Mortality figures from Defoe</head>
-    <row role="data">
-      <cell role="label">St. Leonard's, Shoreditch</cell>
-      <cell>64</cell>
-      <cell>84</cell>
-      <cell>119</cell>
-    </row>
-    <row role="data">
-      <cell role="label">St. Botolph's, Bishopsgate</cell>
-      <cell>65</cell>
-      <cell>105</cell>
-      <cell>116</cell>
-    </row>
-    <row role="data">
-      <cell role="label">St. Giles's, Cripplegate</cell>
-      <cell>213</cell>
-      <cell>421</cell>
-      <cell>554</cell>
-    </row>
-    </table></p>
-    <p>What is life without pictures? 
-      <figure><graphic url="fezziPic.png"/>
-        <head>Mr Fezziwig's Ball</head>
-        <figDesc>A Cruikshank engraving showing Mr Fezziwig leading a group of
-          revellers.</figDesc>
-      </figure></p>
-</div>
-    <div type="literary">
-    <head>Finally, some literary examples</head>
-    <lg n="1" type="stanza">
-      <l>Opinion governs all mankind,</l>
-      <l rend="indent(2)">Like the blind leading of the blind:</l>
-      <l>And like the world, men's jobbernoles</l>
-      <l rend="indent(1)">Turn round upon their ears the poles,</l>
-      <l>And what they're confidently told</l>
-      <l>By no sense else can be control'd.</l>
-    </lg>
-    <p>And now for something dramatic... </p>
-    <stage rend="it">Enter Boteswaine. </stage>
-    <sp>
-      <speaker rend="it">Botes.</speaker>
-      <p>Downe with the top-Mast: ♯yare, lower, lower, bring her to Try
-        with Maine-course. A plague —; 
-        <stage rend="it">A cry within. Enter Sebastian, Anthonio &amp;
-          Gonzalo.</stage> vpon this howling: they are lowder then the weather, or our
-        office: yet againe? What do you heere? Shal we giue ore and drowne, haue you a
-        minde to sinke?</p>
-    </sp>
-    <sp>
-      <speaker rend="it">Sebas.</speaker>
-      <p>Poxe o'your throat, you bawling, blasphemous incharitable Dog. 
-      </p>
-    </sp>
-    <sp>
-      <speaker rend="it">Botes.</speaker>
-      <p>Worke you then.</p>
-    </sp>
-    <sp>
-      <speaker rend="it">Anth.</speaker>
-      <p>Hang cur, hang, you whoreson insolent Noyse-maker, we are lesse afraid
-        to be drownde, then thou art.</p>
-    </sp>
-    <sp>
-      <speaker rend="it">Gonz.</speaker>
-      <p>I'le warrant him for drowning, though the Ship were no stronger then a
-        Nutt-shell, and as leaky as an vnstanched wench.</p>
-    </sp>
-    <sp>
-      <speaker rend="it">Botes.</speaker>
-      <p>Lay her ♯;a hold, ♯a hold, set her two courses off to Sea
-        againe, lay her off.</p>
-    </sp>
-    <stage rend="it">Enter Mariners wet.</stage>
-    <sp>
-      <speaker rend="it">Mari.</speaker>
-      <p>All lost, to prayers, to prayers, all lost.</p>
-    </sp>
-    <sp>
-      <speaker rend="it">Botes.</speaker>
-      <p>What must our mouths be cold?</p>
-    </sp>
-    <sp>
-      <speaker rend="it">Gonz.</speaker>
-      <p>The King, and Prince, at prayers, let's assist them, for our case is
-        as theirs.</p>
-    </sp>
-    <sp>
-      <speaker rend="it">Sebas.</speaker>
-      <p>I'am out of patience. </p>
-    </sp>
-    </div>
+        <p>
+          <table rend="inline">
+            <row role="data">
+              <cell role="data" cols="1" rows="1">
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>z</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell role="data" cols="1" rows="1">charge of the incident particle </cell>
+            </row>
+            <row role="data">
+              <cell role="data" cols="1" rows="1">
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <msub>
+                      <mi>N</mi>
+                      <mrow>
+                        <mi>A</mi>
+                        <mi>v</mi>
+                      </mrow>
+                    </msub>
+                  </math>
+                </formula>
+              </cell>
+              <cell role="data" cols="1" rows="1">Avogadro's number               </cell>
+            </row>
+            <row role="data">
+              <cell role="data" cols="1" rows="1">
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>Z</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell role="data" cols="1" rows="1">atomic number of the material</cell>
+            </row>
+            <row role="data">
+              <cell role="data" cols="1" rows="1">
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>A</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell role="data" cols="1" rows="1">atomic weight of the material </cell>
+            </row>
+            <row role="data">
+              <cell role="data" cols="1" rows="1">
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>ρ</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell role="data" cols="1" rows="1">density                               </cell>
+            </row>
+            <row role="data">
+              <cell role="data" cols="1" rows="1">
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>δ</mi>
+                    <mi>x</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell role="data" cols="1" rows="1">thickness of the material        </cell>
+            </row>
+            <row role="data">
+              <cell role="data" cols="1" rows="1">                                                                  </cell>
+            </row>
+          </table>
+        </p>
+        <p><formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula>
+measures the contribution of the collisions with energy transfer close to
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></math></formula>. For a given absorber,
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula> tends towards large
+values if <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>δ</mi><mi>x</mi></math></formula> is large
+and/or if <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>β</mi></math></formula> is small.
+Likewise, <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula> tends
+towards zero if <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>δ</mi><mi>x</mi></math></formula> is
+small and/or if <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>β</mi></math></formula>
+approaches 1.
+</p>
+        <p>The value of <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula>
+distinguishes two regimes which occur in the description of ionisation fluctuations
+:
+</p>
+        <list type="enumerate">
+          <item>
+            <p>A
+large
+number
+of
+collisions
+involving
+the
+loss
+of
+all
+or
+most
+of
+the
+incident
+particle
+energy
+during
+the
+traversal
+of
+an
+absorber.
+</p>
+            <p>As
+the
+total
+energy
+transfer
+is
+composed
+of
+a
+multitude
+of
+small
+energy
+losses,
+we
+can
+apply
+the
+central
+limit
+theorem
+and
+describe
+the
+fluctuations
+by
+a
+Gaussian
+distribution.
+This
+case
+is
+applicable
+to
+non-relativistic
+particles
+and
+is
+described
+by
+the
+inequality
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi><mo>&gt;</mo><mn>1</mn><mn>0</mn></math></formula>
+(i.e.
+when
+the
+mean
+energy
+loss
+in
+the
+absorber
+is
+greater
+than
+the
+maximum
+energy
+transfer
+in
+a
+single
+collision).
+</p>
+          </item>
+          <item>
+            <p>Particles
+traversing
+thin
+counters
+and
+incident
+electrons
+under
+any
+conditions.
+</p>
+            <p>The
+relevant
+inequalities
+and
+distributions
+are
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mn>0</mn><mo>.</mo><mn>0</mn><mn>1</mn><mo>&lt;</mo><mi>κ</mi><mo>&lt;</mo><mn>1</mn><mn>0</mn></math></formula>, Vavilov distribution,
+and
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi><mo>&lt;</mo><mn>0</mn><mo>.</mo><mn>0</mn><mn>1</mn></math></formula>,
+Landau
+distribution.</p>
+          </item>
+        </list>
+        <p>An additional regime is defined by the contribution of the collisions
+with low energy transfer which can be estimated with the relation
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub></math></formula>,
+where <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub></math></formula>
+is the mean ionisation potential of the atom. Landau theory assumes that
+the number of these collisions is high, and consequently, it has a restriction
+<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub><mo>≫</mo><mn>1</mn></math></formula>. In <code>GEANT</code> (see
+URL http://wwwinfo.cern.ch/asdoc/geant/geantall.html), the limit of Landau theory has
+been set at <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub><mo>=</mo><mn>5</mn><mn>0</mn></math></formula>.
+Below this limit special models taking into account the atomic structure of the material are
+used. This is important in thin layers and gaseous materials. Figure <ptr target="#fg_phys332-1"/> shows the behaviour
+of <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub></math></formula> as
+a function of the layer thickness for an electron of 100 keV and 1 GeV of kinetic
+energy in Argon, Silicon and Uranium.
+</p>
+      </div>
+
+      <div>
+        <head>ITS</head>
+        <p>To be translated.</p>
+        <p its:translate="no">not to be translated.</p>
+      </div>
+
     </body>
   </text>
 </TEI>
