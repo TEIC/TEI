@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
   <teiHeader>
     <fileDesc>
@@ -42,9 +42,9 @@
         a schema that is often more lax than desired.</p>
       <schemaSpec ident="testallplus" prefix="tei_" start="TEI teiCorpus">
         <moduleRef key="tei"/>
-<!-- required -->
+        <!-- required -->
         <moduleRef key="core"/>
-<!-- required -->
+        <!-- required -->
         <moduleRef key="analysis"/>
         <moduleRef key="certainty"/>
         <moduleRef key="corpus"/>
@@ -54,7 +54,7 @@
         <moduleRef key="figures"/>
         <moduleRef key="gaiji"/>
         <moduleRef key="header"/>
-<!-- required -->
+        <!-- required -->
         <moduleRef key="iso-fs"/>
         <moduleRef key="linking"/>
         <moduleRef key="msdescription"/>
@@ -64,62 +64,156 @@
         <moduleRef key="tagdocs"/>
         <moduleRef key="textcrit"/>
         <moduleRef key="textstructure"/>
-<!-- required -->
+        <!-- required -->
         <moduleRef key="transcr"/>
         <moduleRef key="verse"/>
+
+        <moduleRef url="its.rng">
+          <content>
+            <rng:define name="tei_model.teiHeaderPart" combine="choice">
+              <rng:ref name="its_rules"/>
+            </rng:define>
+            <rng:define name="tei_model.inter" combine="choice">
+              <rng:ref name="its_span"/>
+            </rng:define>
+          </content>
+        </moduleRef>
+        <classSpec ident="att.global" type="atts" mode="change">
+          <attList>
+            <attRef name="its_att.translate.attributes"/>
+            <attRef name="its_att.locNote.attributes"/>
+            <attRef name="its_att.term.attributes"/>
+            <attRef name="its_att.dir.attributes"/>
+          </attList>
+        </classSpec>
+
+        <elementSpec ident="geo" mode="change">
+          <content>
+            <rng:ref name="Feature"/>
+          </content>
+        </elementSpec>
         <xi:include href="../Exemplars/tei_svg.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url])">
           <xi:fallback> ERROR: cannot locate ODD changes for SVG </xi:fallback>
         </xi:include>
         <xi:include href="../Exemplars/tei_math.odd" xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url]|//t:elementSpec[@ident='formula'])">
           <xi:fallback> ERROR: cannot locate ODD changes for MathML </xi:fallback>
         </xi:include>
-
-    <elementSpec ident="egXML" mode="change" module="tagdocs"
-     ns="http://www.tei-c.org/ns/Examples">
-      <content>
-	<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	  <choice>
-	    <text/>
-	    <ref name="anyThing"/>
-	    <ref name="svg"/>
-	    <ref name="mathml.math"/>
-	  </choice>
-	</oneOrMore>
-      </content>
-    </elementSpec>
-    
-    <macroSpec ident="anyThing" mode="add">
-      <content>
-	<?NameList?>
-      </content>
-    </macroSpec>
-
-    <macroSpec mode="change" ident="macro.anyXML">
-      <content>
-	<element xmlns="http://relaxng.org/ns/structure/1.0">
-	  <anyName>
-	    <except>
-	      <nsName ns="http://www.tei-c.org/ns/1.0"/>
-	      <nsName ns="http://www.w3.org/1998/Math/MathML"/>
-	      <nsName ns="http://www.w3.org/2000/svg"/>
-	      <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
-	    </except>
-	  </anyName>
-	  <zeroOrMore>
-	    <attribute>
-	      <anyName/>
-	    </attribute>
-	  </zeroOrMore>
-	  <zeroOrMore>
-	    <choice>
-	      <text/>
-	      <ref name="macro.anyXML"/>
-	    </choice>
-	  </zeroOrMore>
-	</element>
-      </content>
-      </macroSpec>
-
+        <elementSpec ident="egXML" mode="change" module="tagdocs" ns="http://www.tei-c.org/ns/Examples">
+          <content>
+            <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <ref name="anyThing"/>
+                <ref name="svg"/>
+                <ref name="mathml.math"/>
+              </choice>
+            </oneOrMore>
+          </content>
+        </elementSpec>
+      <elementSpec 
+	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	  ident="include" 
+	  ns="http://www.w3.org/2001/XInclude" 
+	  mode="add">
+	<desc>The W3C XInclude element</desc>
+	<classes>
+	  <memberOf key="model.common"/>
+	  <memberOf key="model.teiHeaderPart"/>
+	  <memberOf key="model.graphicLike"/>
+	</classes>
+	<content>
+	  <rng:optional>
+	    <rng:ref name="fallback"/>
+	  </rng:optional>
+	</content>
+	<attList>
+	  <attDef ident="href">
+	    <desc>pointer to the resource being included</desc>
+	    <datatype>
+	      <rng:ref name="data.pointer"/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="parse"  usage="opt">
+	    <defaultVal>xml</defaultVal>
+	    <valList type="closed">
+	      <valItem ident="xml"/>
+	      <valItem ident="text"/>
+	    </valList>
+	  </attDef>
+	  
+	  <attDef ident="xpointer" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="encoding"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-charset"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-language"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	</attList>
+      </elementSpec>
+      
+      <elementSpec 
+	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	  ident="fallback" 
+	  ns="http://www.w3.org/2001/XInclude" 
+	  mode="add">
+	<desc>Wrapper for fallback elements if an XInclude fails</desc>
+	<content>
+	  <rng:ref name="anyThing"/>
+	</content>
+      </elementSpec>
+        <macroSpec ident="anyThing" mode="add">
+          <content>
+            <?NameList?>
+          </content>
+        </macroSpec>
+        <macroSpec mode="change" ident="macro.anyXML">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <anyName>
+                <except>
+                  <nsName ns="http://www.tei-c.org/ns/1.0"/>
+                  <nsName ns="http://www.w3.org/1998/Math/MathML"/>
+                  <nsName ns="http://www.w3.org/2000/svg"/>
+                  <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+                </except>
+              </anyName>
+              <zeroOrMore>
+                <attribute>
+                  <anyName/>
+                </attribute>
+              </zeroOrMore>
+              <zeroOrMore>
+                <choice>
+                  <text/>
+                  <ref name="macro.anyXML"/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
       </schemaSpec>
     </body>
   </text>

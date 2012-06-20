@@ -20,17 +20,11 @@ TESTFILES2 = \
 	testconstraint2.xsd \
 	testi18n.xsd \
 	testjustfs.xsd \
-	testns.xsd \
 	testp4compat.xsd 
 
 TESTSPECIALFILES= \
 	testallplus.special \
-	testits.special \
-	testmathml.special \
-	testodds.special \
-	testplace-gml.special \
-	testplace-kml.special \
-	testsvg.special  
+	testplace-gml.special 
 
 TESTBADFILES= \
 	detest
