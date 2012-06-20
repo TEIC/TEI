@@ -28,6 +28,41 @@
           <moduleRef key="core"/>
           <moduleRef key="header"/>
           <moduleRef key="textstructure"/>
+	  <elementSpec ident="lg" mode="change">
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <choice>
+          <ref name="model.divTop"/>
+          <ref name="model.global"/>
+        </choice>
+      </zeroOrMore>
+      <choice>
+        <ref name="model.lLike_sequence"/>
+        <ref name="model.stageLike"/>
+        <ref name="model.labelLike"/>
+        <ref name="lg"/>
+      </choice>
+      <zeroOrMore>
+        <choice>
+          <ref name="model.lLike_sequence"/>
+	  <ref name="model.stageLike"/>
+	  <ref name="model.labelLike"/>
+          <ref name="model.global"/>
+          <ref name="lg"/>
+        </choice>
+      </zeroOrMore>
+      <zeroOrMore>
+        <group>
+          <ref name="model.divBottom"/>
+        </group>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </zeroOrMore>
+    </group>
+  </content>
+</elementSpec>
 	  <elementSpec ident="l" mode="change">
 	    <classes mode="replace">
 	      <memberOf key="att.global"/>
