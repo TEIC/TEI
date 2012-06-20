@@ -9,10 +9,10 @@ ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/
 TESTFILES= \
 	testbare.dtd \
 	testbasic.xsd \
-	testall.xsd \
-	testallplus.special 
+	testplus.special 
 
 SPECIALFILES = \
+	testall.xsd \
 	testfand2.xsd \
 	testfand3.xsd \
 	testfand5.xsd \
