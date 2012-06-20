@@ -24,7 +24,7 @@ TESTFILES2 = \
 
 TESTSPECIALFILES= \
 	testallplus.special \
-	testplace-gml.special 
+	testplace-kml.special 
 
 TESTBADFILES= \
 	detest
