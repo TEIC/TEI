@@ -337,7 +337,8 @@ dist-test.stamp:
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
 	touch dist-test.stamp
 
-dist-exemplars.stamp: p5subset.xml
+dist-exemplars.stamp: 
+	make p5subset.xml
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make dist)
 	touch dist-exemplars.stamp
