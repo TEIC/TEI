@@ -15,6 +15,8 @@
 
   <xsl:param name="inputDir"/>
   <xsl:param name="workDir"/>
+  <xsl:key name="strings" match="sml:si" use="count(preceding-sibling::*)"/>
+
 
   <xsl:function name="tei-spreadsheet:rels">
     <xsl:param name="node"/>
@@ -79,8 +81,6 @@ The root element of this office document is a <xsl:value-of select="$office-docu
     <xsl:apply-templates select="sml:sheets/sml:sheet"/>
   </xsl:template>
 
-  <xsl:key name="strings" match="sml:si" use="count(preceding-sibling::*)"/>
-
   <xsl:template match="sml:sheet">
     <xsl:variable name="rels" select="tei-spreadsheet:rels(.)"/>
     <xsl:variable name="shared-strings" select="document($rels/*[@type='http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings']/@target)/sml:sst"/>
@@ -103,7 +103,9 @@ The root element of this office document is a <xsl:value-of select="$office-docu
             <cell>
               <xsl:choose>
                 <xsl:when test="@t='s'">
-                  <xsl:value-of select="key('strings', number(sml:v/text()), $shared-strings)/sml:t"/>
+                  <xsl:apply-templates select="key('strings',
+					number(sml:v/text()),
+					$shared-strings)"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:value-of select="sml:v"/>
@@ -157,6 +159,51 @@ The root element of this office document is a <xsl:value-of select="$office-docu
         <xsl:with-param name="count" select="$count - 1"/>
       </xsl:call-template>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="sml:si">
+    <xsl:choose>
+      <xsl:when test="sml:r">
+	<xsl:for-each select="sml:r">
+	  <xsl:choose>
+	    <xsl:when test="sml:rPr">
+	      <xsl:variable name="rend">
+		<xsl:if test="sml:rPr/sml:b">bold </xsl:if>
+		<xsl:if test="sml:rPr/sml:i">italic </xsl:if>
+		<xsl:if
+		    test="sml:rPr/sml:color[@rgb]">color(<xsl:value-of
+		    select="sml:rPr/sml:color/@rgb"/>) </xsl:if>
+	      </xsl:variable>
+	      <xsl:choose>
+		<xsl:when test="$rend=''">
+		<xsl:apply-templates/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <hi rend="{normalize-space($rend)}">
+		    <xsl:apply-templates/>
+		  </hi>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:when>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="text()">
+    <xsl:choose>
+      <xsl:when test="starts-with(.,'http://') or
+		      starts-with(.,'https://')">
+	<ptr target="{.}"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
