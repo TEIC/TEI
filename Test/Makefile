@@ -22,7 +22,7 @@ SPECIALFILES = \
 	testp4compat.xsd \
 	testplace-kml.special 
 
-default: normal special testmeta2010 test-extns test-frag detest
+default: normal detest special testmeta2010 test-extns test-frag 
 
 normal: $(TESTFILES)
 special: $(SPECIALFILES)
