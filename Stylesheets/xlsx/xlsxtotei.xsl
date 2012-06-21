@@ -13,18 +13,7 @@
     xmlns:tei-spreadsheet="https://github.com/oucs/tei-spreadsheet">
   <xsl:output method="xml" indent="yes"/>
 
-  <xsl:param name="url"/>
-
-  <!-- This is where we start finding out where things are in the document. -->
-  <xsl:variable name="base-rels"
-    select="document(concat($url, '/_rels/.rels'))/rels:Relationships"/>
-
-  <!-- These are XML documents we expect to be able to find links to from
-       within the rels document -->
-  <xsl:variable name="office-document"
-    select="document(concat($url, $base-rels/rels:Relationship[@Type='http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument']/@Target))"/>
-  <xsl:variable name="core-properties"
-    select="document(concat($url, $base-rels/rels:Relationship[@Type='http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties']/@Target))/cp:coreProperties"/>
+  <xsl:param name="inputDir"/>
 
   <xsl:function name="tei-spreadsheet:rels">
     <xsl:param name="node"/>
@@ -44,7 +33,14 @@
     </tei-spreadsheet:rels>
   </xsl:function>
 
-  <xsl:template name="main">
+  <xsl:template match="/">
+    <!-- These are XML documents we expect to be able to find links to from
+	 within the rels document -->
+    <xsl:variable name="doc" select="concat($inputDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument']/@Target)"/>
+    <xsl:variable name="office-document"
+		  select="document($doc)"/>
+    <xsl:variable name="core-properties"
+		  select="document(concat($inputDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties']/@Target))/cp:coreProperties"/>
     <!-- Let's make sure this looks like a spreadsheet -->
     <xsl:if test="not($office-document/sml:workbook)">
       <xsl:message terminate="yes">This does not look like an Office OpenXML workbook.
@@ -54,21 +50,21 @@ The root element of this office document is a <xsl:value-of select="$office-docu
     <TEI>
       <teiHeader>
         <fileDesc>
-          <xsl:if test="$core-properties/dc:title or $core-properties/dc:creator">
             <titleStmt>
-              <xsl:if test="$core-properties/dc:title">
                 <title>
                   <xsl:value-of select="$core-properties/dc:title"/>
                 </title>
-              </xsl:if>
-              <xsl:if test="$core-properties/dc:creator">
                 <author>
                   <xsl:value-of select="$core-properties/dc:creator"/>
                 </author>
-              </xsl:if>
             </titleStmt>
-          </xsl:if>
         </fileDesc>
+         <publicationStmt>
+            <p>No publication statement</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>A TEI file automatically converted from a XSLX file.</p>
+         </sourceDesc>
       </teiHeader>
       <text>
         <body>
