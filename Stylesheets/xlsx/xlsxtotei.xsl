@@ -14,6 +14,7 @@
   <xsl:output method="xml" indent="yes"/>
 
   <xsl:param name="inputDir"/>
+  <xsl:param name="workDir"/>
 
   <xsl:function name="tei-spreadsheet:rels">
     <xsl:param name="node"/>
@@ -36,11 +37,11 @@
   <xsl:template match="/">
     <!-- These are XML documents we expect to be able to find links to from
 	 within the rels document -->
-    <xsl:variable name="doc" select="concat($inputDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument']/@Target)"/>
+    <xsl:variable name="doc" select="concat($workDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument']/@Target)"/>
     <xsl:variable name="office-document"
 		  select="document($doc)"/>
     <xsl:variable name="core-properties"
-		  select="document(concat($inputDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties']/@Target))/cp:coreProperties"/>
+		  select="document(concat($workDir,'/',/rels:Relationships/rels:Relationship[@Type='http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties']/@Target))/cp:coreProperties"/>
     <!-- Let's make sure this looks like a spreadsheet -->
     <xsl:if test="not($office-document/sml:workbook)">
       <xsl:message terminate="yes">This does not look like an Office OpenXML workbook.
