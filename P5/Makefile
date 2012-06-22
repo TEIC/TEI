@@ -177,7 +177,7 @@ chapterpdfs:
 
 validate: dtds schemas oddschema exampleschema valid 
 
-valid: jing_version=$(wordlist 1,3,$(shell jing))
+#valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
 #	@echo BUILD: Check validity with jing
 #	@echo ${jing_version}
