@@ -58,8 +58,11 @@ $Id$
   <constraintSpec ident="attDefContents" scheme="isoschematron">
     <constraint>
       <assert xmlns="http://purl.oclc.org/dsdl/schematron"
-	      test="tei:datatype or tei:valList[@type='closed']">
-        Attribute [@<value-of select="@ident"/>] from [<value-of select="ancestor::*[@ident]/@ident"/>] must have a closed valList or a datatype</assert>
+	      test="   @mode eq 'change'
+		    or @mode eq 'delete'
+		    or tei:datatype
+		    or tei:valList[@type='closed']
+		    ">Attribute: the definition of the @<value-of select="@ident"/> attribute in the <value-of select="ancestor::*[@ident][1]/@ident"/><value-of select="' '"/><value-of select="local-name(ancestor::*[@ident][1])"/> should have a closed valList or a datatype</assert>
     </constraint>
   </constraintSpec>
   <attList>
