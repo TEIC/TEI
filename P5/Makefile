@@ -219,7 +219,8 @@ valid: check
 	@echo BUILD: do graphics files exist
 	${SAXON} -s:${DRIVER} -xsl:Utilities/listgraphics.xsl | sh
 
-test: debversion
+#test: debversion
+test:
 	make p5subset.xml
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
