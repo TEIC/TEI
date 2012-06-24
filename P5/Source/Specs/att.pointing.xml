@@ -29,29 +29,33 @@ $Id$
       </datatype>
         <constraintSpec ident="targetLang" scheme="isoschematron">
         <constraint>
-          <sch:rule context="tei:*[@targetLang]">
+          <sch:rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
             <sch:assert test="count(@target)">@targetLang can only be used if @target is specified.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
       <valDesc>The value must conform to BCP 47. If the value is a
-        private use code (i.e., starts with <val>x-</val> or contains
-        <val>-x-</val>), a <gi>language</gi> element with a matching value for
-        its <att>ident</att> attribute should be supplied in the TEI
-        Header to document this value. Such documentation may also
-        optionally be supplied for non-private-use codes, though these
-        must remain consistent with their Unicode definitions.</valDesc>
+      private use code (i.e., starts with <val>x-</val> or contains
+      <val>-x-</val>), a <gi>language</gi> element with a matching
+      value for its <att>ident</att> attribute should be supplied in
+      the TEI Header to document this value. Such documentation may
+      also optionally be supplied for non-private-use codes, though
+      these must remain consistent with their
+      <choice><abbr>IETF</abbr><expan>Internet Engineering Task
+      Force</expan></choice> definitions.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <linkGrp xml:id="pol-swh_aln_2.1-linkGrp">
             <ptr xml:id="pol-swh_aln_2.1.1-ptr"
-              target="pol/UDHR/text.xml#pol_txt_1-head" type="tuv" targetLang="pl"/>
-            
+              target="pol/UDHR/text.xml#pol_txt_1-head" type="tuv" targetLang="pl"/>            
             <ptr xml:id="pol-swh_aln_2.1.2-ptr"
               target="swh/UDHR/text.xml#swh_txt_1-head" type="tuv" targetLang="sw"/>
           </linkGrp>
         </egXML>
-        <p>In the example above, the linkGrp combines pointers at parallel fragments of the Universal Declaration of Human Rights: one of them is in Polish, the other in Swahili.</p>
+        <p>In the example above, the <gi>linkGrp</gi> combines
+        pointers at parallel fragments of the <title>Universal
+        Declaration of Human Rights</title>: one of them is in Polish,
+        the other in Swahili.</p>
       </exemplum>
 <!--      <remarks>
         <p>The function of this attribute is to identify not the language/script of the child of the element that uses it, but rather the language/script of the element or attribute addressed by the element that contains <att>refLang</att>, typically a <gi>ptr</gi>:</p>
