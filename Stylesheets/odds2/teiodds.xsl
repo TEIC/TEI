@@ -1139,7 +1139,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:message>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="starts-with($entityContent,&#34;-&#34;)">
+      <xsl:when test="$entityCount = 0 and starts-with($entityContent,&#34;-&#34;)">
         <xsl:if test="$verbose='true'">
           <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of select="@ident"/>
           </xsl:message>
