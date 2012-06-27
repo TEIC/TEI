@@ -697,14 +697,10 @@ of this software, even if advised of the possibility of such damage.
   
   <xsl:template match="sourceDesc/@default"/>
   
-  <xsl:template match="@tei">
-    <xsl:attribute name="tei">
-      <xsl:choose>
-	<xsl:when test="lower-case(.)='yes'">true</xsl:when>
-	<xsl:when test="lower-case(.)='no'">false</xsl:when>
-      </xsl:choose>
-    </xsl:attribute>
-  </xsl:template>
+
+<!-- attributes suppressed in P5 -->
+
+  <xsl:template match="@tei"/>
   
   <xsl:template match="@langKey"/>  
   
