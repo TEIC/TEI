@@ -808,5 +808,21 @@ of this software, even if advised of the possibility of such damage.
     </floatingText>
   </xsl:template>
 
+<!--  and index -->
+
+<xsl:template match="index">
+<index indexName="level1">
+<xsl:value-of select="@level1"/>
+<xsl:if test="@level2">
+<index indexName="level2">
+<xsl:value-of select="@level2"/>
+<xsl:if test="@level3">
+<index indexName="level3">
+<xsl:value-of select="@level3"/>
+</index></xsl:if>
+</index></xsl:if>
+</index>
+</xsl:template>
+
 
 </xsl:stylesheet>
