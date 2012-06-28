@@ -1,22 +1,24 @@
 PREFIX=/usr
 BIN=${PREFIX}/bin
 ODDS= \
-	isofs.rng \
+	tei_bare.dtd \
+	tei_corpus.dtd \
+	tei_dictionaries.dtd	\
+	tei_drama.dtd \
+	tei_minimal.dtd \
+	tei_ms.dtd \
+	tei_speech.dtd \
+	tei_all.dtd 
+
+XODDS=	isofs.rng \
 	tei_allPlus.rng \
 	tei_svg.rng \
+	tei_enrich.dtd \
 	tei_xinclude.rng \
 	tei_its.rng \
 	tei_math.rng \
-	tei_odds.rng	\
-	tei_bare.rng \
-	tei_corpus.rng \
-	tei_dictionaries.rng	\
-	tei_drama.rng \
-	tei_enrich.rng \
-	tei_minimal.rng \
-	tei_ms.rng \
-	tei_speech.rng \
-	tei_all.rng 
+	tei_odds.rng	
+
 DOCODDS=tei_tite.doc.pdf teilite.doc.pdf
 ROMA=roma2
 LANGUAGE=en
@@ -25,6 +27,21 @@ DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--xsl=${XSL} --isoschematron
 SOURCE=--localsource=${P5}/p5subset.xml 
+
+
+%.dtd: %.odd
+	@echo "BUILD: Test schema from $<"
+	xmllint --xinclude $*.odd > $*.xi
+	@echo Validate $< itself
+	which rnv && rnv ../p5odds.rnc $*.xi
+	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
+	@echo Test schema built from $<
+	jing $*.rng $*.xml && echo $* validates OK
+	@echo Validate using xmllint for DTD  
+	xmllint --dropdtd $*.xml | xmllint --noout --dtdvalid $*.dtd -
+	@echo Validate using Schematron
+	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
+	saxon $*.xml $*.xsl
 
 
 %.rng: %.odd
@@ -47,11 +64,13 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	teitoepub ${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
 	@echo Test schema built from $<
 	jing $*.rng $*.xml && echo $* validates OK
+	@echo Validate using xmllint for DTD  
+	xmllint --dropdtd $*.xml | xmllint --noout --dtdvalid $*.dtd -
 	@echo Validate using Schematron
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
 	saxon $*.xml $*.xsl
 
-schemas: $(ODDS) $(DOCODDS)
+schemas: $(ODDS) $(XODDS) $(DOCODDS)
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
