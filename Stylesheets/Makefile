@@ -111,6 +111,7 @@ dist: clean release
 	-rm tei-xsl-`cat VERSION`.zip
 	(cd release/common; zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 	(cd release/p5;     zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
+	(cd release/profiles;    zip -r -q ../../tei-xsl-`cat ../../VERSION`.zip .)
 	-rm -rf dist
 	mkdir dist
 	(cd release/p5; tar cf - .)       | (cd dist; tar xf  -)
