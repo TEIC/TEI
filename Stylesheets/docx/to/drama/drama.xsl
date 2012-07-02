@@ -112,6 +112,19 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
+        A block of verse
+    </desc>
+    </doc>
+    <xsl:template match="tei:lg">
+      <xsl:apply-templates/>
+      <!--
+      <xsl:variable name="me"><tei:p></tei:p></xsl:variable>
+      <xsl:apply-templates select="$me"/>
+      -->
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
         A line of verse
     </desc>
    </doc>
