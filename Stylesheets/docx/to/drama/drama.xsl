@@ -115,11 +115,11 @@ of this software, even if advised of the possibility of such damage.
         A block of verse
     </desc>
     </doc>
-    <xsl:template match="tei:lg">
-      <xsl:apply-templates/>
-      <xsl:variable name="me"><tei:p><tei:text> </tei:text></tei:p></xsl:variable>
-      <xsl:apply-templates select="$me"/>
-
+    <xsl:template match="tei:lg" mode="pass0">
+      <xsl:copy>
+	<xsl:apply-templates mode="pass0" select="*|@*"/>
+	<lb  xmlns="http://www.tei-c.org/ns/1.0"/>
+      </xsl:copy>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

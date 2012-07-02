@@ -343,6 +343,11 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates mode="pass0"/>
       </xsl:variable>
       <xsl:apply-templates select="$pass0/*"/>
+      <!--
+	  <xsl:result-document href="/tmp/x.xml">
+	  <xsl:copy-of select="$pass0"/>
+	  </xsl:result-document>
+      -->
     </xsl:template>
 
   <xsl:template match="/tei:TEI|/tei:teiCorpus">
@@ -2469,13 +2474,13 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:pb" mode="pass0">
     <xsl:choose>
-<!--      <xsl:when test="@rend='none'"/>-->
+      <xsl:when test="@rend='none'"/>
       <xsl:when test="$pagebreakStyle='none'"/>
       <xsl:when test="$pagebreakStyle='visible'">
-	  <tei:note place="margin">
+	  <note place="margin" xmlns="http://www.tei-c.org/ns/1.0">
 	    <xsl:text>p. </xsl:text>
 	    <xsl:value-of select="@n"/>
-	  </tei:note>
+	  </note>
       </xsl:when>
       <xsl:when test="$pagebreakStyle='active'">
 	<xsl:copy-of select="."/>
@@ -2534,14 +2539,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:note[@place='margin'
 		       or @place='marginOuter'
 		       or @place='marginLeft'
-		       or @place='marginRight']" priority="99">
+		       or @place='marginRight']" priority="999">
+    <xsl:message>marg note</xsl:message>
     <xsl:call-template name="marginalNote"/>
   </xsl:template>
   
   <xsl:template name="marginalNote">
 	<xsl:call-template name="block-element">
         <xsl:with-param name="style">
-	<xsl:text>MarginNote</xsl:text>
 	<xsl:value-of select="substring-after(@place,'margin')"/>
 	</xsl:with-param>
     </xsl:call-template>
