@@ -253,10 +253,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-        The starting point in the conversion to docx.
+        The starting points in the conversion to docx.
     </desc>
   </doc>
-  <xsl:template match="/tei:TEI">
+  <xsl:template match="/tei:TEI|/tei:teiCorpus">
+<xsl:message>Outermost match</xsl:message>
     <xsl:call-template name="write-docxfiles"/>
     <xsl:call-template name="create-document-dot-xml"/>
   </xsl:template>
@@ -2377,9 +2378,20 @@ of this software, even if advised of the possibility of such damage.
       </desc>
   </doc>
   <xsl:template match="tei:pb">
-    <w:r>
-      <w:br w:type="page"/>
-    </w:r>
+    <xsl:choose>
+      <xsl:when test="tei:is-inline(..)">
+	<w:r>
+	  <w:br w:type="page"/>
+	</w:r>
+      </xsl:when>
+      <xsl:otherwise>
+	<w:p>
+	  <w:r>
+	    <w:br w:type="page"/>
+	  </w:r>
+	</w:p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
    <xsl:template match="tei:att|tei:hi[@rend='att']">
