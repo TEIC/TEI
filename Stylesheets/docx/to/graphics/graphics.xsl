@@ -299,22 +299,21 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:when test="$Height = -1">
 		  <xsl:value-of select="$maxHeight"/>
 		</xsl:when>
-		<xsl:when test="$Height &gt; $maxHeight">
-		  <xsl:value-of select="$maxHeight"/>
-		</xsl:when>
 		<xsl:when test="$Width &gt; $maxWidth">
 		  <xsl:value-of select="($Height * ($maxWidth div
 					$Width) ) cast as xs:integer"/>
+		</xsl:when>
+		<xsl:when test="$Height &gt; $maxHeight">
+		  <xsl:value-of select="$maxHeight"/>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:value-of select="$Height"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
-	    <!--
-		
+	    <xsl:if test="$debug='true'">
 		<xsl:message>
-		========================
+		====== Graphic <xsl:value-of select="@url"/>============
 		<xsl:for-each select="@*">
 		- @<xsl:value-of select="name(.)"/>: <xsl:value-of select="."/>
 		</xsl:for-each>
@@ -326,7 +325,7 @@ of this software, even if advised of the possibility of such damage.
 		* imageWidth: <xsl:value-of select="$imageWidth"/>
 		* imageHeight: <xsl:value-of select="$imageHeight"/>
 		</xsl:message>
-	    -->
+	    </xsl:if>
 	    <!-- prepare actual graphic -->
 	    <xsl:variable name="generatedID">
 	      <xsl:number level="any"/>
