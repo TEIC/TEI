@@ -2377,20 +2377,20 @@ of this software, even if advised of the possibility of such damage.
       </desc>
   </doc>
   <xsl:template match="tei:pb">
-    <xsl:message>pb with parent <xsl:value-of select="name(..)"/>:     <xsl:if test="tei:is-inline(..)">inline</xsl:if></xsl:message>
+<xsl:message>pb: <xsl:value-of select="@rend"/>, <xsl:value-of select="$pagebreakStyle"/></xsl:message>
     <xsl:choose>
-      <xsl:when test="tei:is-inline(..)">
+      <xsl:when test="@rend='none'"/>
+      <xsl:when test="$pagebreakStyle='none'"/>
+      <xsl:when test="$pagebreakStyle='visible'">
+	<xsl:call-template name="block-element">
+	  <xsl:with-param name="style">MarginNoteOuter</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$pagebreakStyle='active'">
 	<w:r>
 	  <w:br w:type="page"/>
 	</w:r>
       </xsl:when>
-      <xsl:otherwise>
-	<w:p>
-	  <w:r>
-	    <w:br w:type="page"/>
-	  </w:r>
-	</w:p>
-      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 

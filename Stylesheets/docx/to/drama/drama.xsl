@@ -119,15 +119,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="block-element">
 	<xsl:with-param name="style">teil</xsl:with-param>
       </xsl:call-template>
-    </xsl:template>
-
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        A block of verse
-    </desc>
-    </doc>
-    <xsl:template match="tei:lg">
-      <xsl:apply-templates/>
+<!--
+      <xsl:if test="parent::tei:lg and not(following-sibling::tei:l)">
       <w:p>
 	<w:pPr>
 	  <w:pStyle w:val="teilg"/>
@@ -136,8 +129,7 @@ of this software, even if advised of the possibility of such damage.
 	  <w:br/>
         </w:r>
       </w:p>
+      </xsl:if>
+-->
     </xsl:template>
-
-
-
 </xsl:stylesheet>
