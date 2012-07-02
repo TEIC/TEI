@@ -257,7 +257,6 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="/tei:TEI|/tei:teiCorpus">
-<xsl:message>Outermost match</xsl:message>
     <xsl:call-template name="write-docxfiles"/>
     <xsl:call-template name="create-document-dot-xml"/>
   </xsl:template>
@@ -323,7 +322,7 @@ of this software, even if advised of the possibility of such damage.
     <!-- header components -->
     <xsl:call-template name="headerParts"/>
     <!-- The front matter -->
-    <xsl:apply-templates select="tei:text/tei:front"/>
+    <xsl:apply-templates select=".//tei:text/tei:front"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
@@ -334,7 +333,7 @@ of this software, even if advised of the possibility of such damage.
     <!-- document title -->
     <xsl:call-template name="document-title"/>
     <!-- Describes the main part of the document -->
-    <xsl:apply-templates select="tei:text/tei:body"/>
+    <xsl:apply-templates select=".//tei:text/tei:body"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
@@ -343,7 +342,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="write-document-dot-xml-backmatter">
     <!-- Describes the back matter of the document -->
-    <xsl:apply-templates select="tei:text/tei:back"/>
+    <xsl:apply-templates select=".//tei:text/tei:back"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
@@ -2378,6 +2377,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
   </doc>
   <xsl:template match="tei:pb">
+    <xsl:message>pb with parent <xsl:value-of select="name(..)"/>:     <xsl:if test="tei:is-inline(..)">inline</xsl:if></xsl:message>
     <xsl:choose>
       <xsl:when test="tei:is-inline(..)">
 	<w:r>

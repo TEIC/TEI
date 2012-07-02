@@ -1,0 +1,93 @@
+Compiled by Brett Zamir <brettz9@YAHOO.COM>
+
+1) "id" should now be "xml:id", though it should become "ident" if
+inside of <lang>. That is, for each <language>
+element, change its id to ident
+
+2)  As with <TEI.2> changing to <TEI>, if you were using
+<teiCorpus.2>, that should now just be <teiCorpus>
+
+3) There is no "TEIform" attribute.
+
+4) <dateRange> is changed to <date> (its "from" and "to" attributes
+are transferred over).
+
+5) For all of these attributes, each value within them (separated by a
+space) should be preceded by a hash mark ("#"):
+
+ana|active|adj|adjFrom|adjTo|children|children|class|code|code|copyOf|corresp|decls|domains|end|exclude|fVal|feats|follow|from|hand|inst|langKey|location|mergedin|new|next|old|origin|otherLangs|parent|passive|perf|prev|render|resp|sameAs|scheme|script|select|since|start|synch|target|targetEnd|to|to|value|value|who|wit
+6) The "url" attribute should be changed to "target"
+
+7) The "doc" attribute should be changed to "target" and its value
+changed to the URI of the unparsed entity that it references.
+
+8)  The "lang" attribute should be changed to "xml:lang"
+
+9) <xref> should be changed to <ref> and <xptr> to <ptr>
+
+10) Any <figure> with a "url" attribute should be changed to
+<figure><graphic>URI attr. value</graphic>...(transfer over any other
+content already in figure here)...</figure>
+
+11) Any <figure> which has a "entity" attribute, should be changed to
+<figure><graphic url="URI of the unparsed entity referred to
+previously by the "entity" attribute">...(The value of the "entity"
+attribute)...</graphic> ...(transfer over any other content already in
+figure here)... </figure>
+
+12) The <langUsage> element should be removed entirely.
+
+13) To <publicationStmt> may be added: <availability><p>Licensed
+under <ptr
+target="http://creativecommons.org/licenses/by-sa/2.0/uk/"/></p></availability>
+
+14) Every <corr> with a "sic" attribute should be changed to:
+    <choice><corr>...(Former text inside of corr goes
+   here)...</corr><sic>...(value of the "sic" attribute now goes here
+   instead)...</sic></choice>
+
+15) Every <sic> with a "corr" attribute should be:
+   <choice><corr>...(Value of the corr attribute goes
+   here)...</corr><sic>...(text inside of <sic> now goes here
+   instead)...</sic></choice>
+
+16) Every <abbr> with a "expan" attribute or <expan> with an "abbr"
+attribute should be change to:
+   <choice><abbr>......</abbr><expan>......</expan></choice>
+
+17) Change <event> to <incident>
+
+18) Change <state> to <refState>
+
+19) Don't use the default attributes from the P4 DTD.
+
+20) For inside of the <change> element,
+
+   a) <date>'s value should be added as a "when" attribute to the
+   enclosing <change> .
+
+   b) any <resp> inside of <respStmt> inside of <change> should be
+   changed to the "who" attribute of the enclosing <change>
+
+   c) put context of <item> (inside of the <change>) 
+   directly inside <change>
+
+21) Cannot have <imprint> inside of <bibl>
+
+22) <space>'s "extent" attribute should be change to "quantity"
+
+23) The tag orgTitle within an orgName should be removed (but keeping
+its contents)
+
+24) The "mergedin" attribute is now "mergedIn"
+
+25) The "old" attribute no longer exists
+
+26) attributes date.created and date.updated on teiHeader are
+    gone; they can be used to create <change> records
+
+27) witList is renamed listWit
+
+28) @sigil on witList should use @xml:id instead
+
+29) if you detect div0, switch to div1 and all others follow
