@@ -330,10 +330,26 @@ of this software, even if advised of the possibility of such damage.
         The starting points in the conversion to docx.
     </desc>
   </doc>
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	Before main processing starts, pre-process the document
+	elements in a separate mode ('pass0'), in order to add extra 
+	material which implements the footnoting etc.
+      </desc>
+    </doc>
+
+    <xsl:template match="/">
+      <xsl:variable name="pass0">
+	<xsl:apply-templates mode="pass0"/>
+      </xsl:variable>
+      <xsl:apply-templates select="$pass0/*"/>
+    </xsl:template>
+
   <xsl:template match="/tei:TEI|/tei:teiCorpus">
     <xsl:call-template name="write-docxfiles"/>
     <xsl:call-template name="create-document-dot-xml"/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
         Calls templates that are responsible for creating all necessary files besides the
@@ -960,7 +976,8 @@ of this software, even if advised of the possibility of such damage.
     -->
   <xsl:template name="create-footnote">
     <xsl:variable name="num">
-      <xsl:number count="tei:note[@place='foot' or @place='bottom' ]" level="any"/>
+      <xsl:number count="tei:note[@place='foot' or @place='bottom'
+			     ]" level="any"/>
     </xsl:variable>
     <xsl:variable name="id" select="number($num)+1"/>
     <w:r>
@@ -2450,21 +2467,26 @@ of this software, even if advised of the possibility of such damage.
 	Page break
       </desc>
   </doc>
-  <xsl:template match="tei:pb">
+  <xsl:template match="tei:pb" mode="pass0">
     <xsl:choose>
-      <xsl:when test="@rend='none'"/>
+<!--      <xsl:when test="@rend='none'"/>-->
       <xsl:when test="$pagebreakStyle='none'"/>
       <xsl:when test="$pagebreakStyle='visible'">
-	<xsl:call-template name="block-element">
-	  <xsl:with-param name="style">MarginNoteOuter</xsl:with-param>
-	</xsl:call-template>
+	  <tei:note place="margin">
+	    <xsl:text>p. </xsl:text>
+	    <xsl:value-of select="@n"/>
+	  </tei:note>
       </xsl:when>
       <xsl:when test="$pagebreakStyle='active'">
-	<w:r>
-	  <w:br w:type="page"/>
-	</w:r>
+	<xsl:copy-of select="."/>
       </xsl:when>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="tei:pb">
+    <w:r>
+      <w:br w:type="page"/>
+    </w:r>
   </xsl:template>
 
    <xsl:template match="tei:att|tei:hi[@rend='att']">
@@ -2501,4 +2523,42 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="dest"/>
     <xsl:value-of select="$dest"/>
   </xsl:template>
+
+
+    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+      <desc>
+	Marginal notes map to corresponding Word style, albeit named
+	slightly differently
+      </desc>
+    </doc>
+  <xsl:template match="tei:note[@place='margin'
+		       or @place='marginOuter'
+		       or @place='marginLeft'
+		       or @place='marginRight']" priority="99">
+    <xsl:call-template name="marginalNote"/>
+  </xsl:template>
+  
+  <xsl:template name="marginalNote">
+	<xsl:call-template name="block-element">
+        <xsl:with-param name="style">
+	<xsl:text>MarginNote</xsl:text>
+	<xsl:value-of select="substring-after(@place,'margin')"/>
+	</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Templates copying existing markup</desc>
+  </doc>
+    <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass0">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="*" mode="pass0">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
+    </xsl:copy>
+  </xsl:template>
+
+
 </xsl:stylesheet>

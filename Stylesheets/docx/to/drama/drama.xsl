@@ -117,10 +117,9 @@ of this software, even if advised of the possibility of such damage.
     </doc>
     <xsl:template match="tei:lg">
       <xsl:apply-templates/>
-      <!--
-      <xsl:variable name="me"><tei:p></tei:p></xsl:variable>
+      <xsl:variable name="me"><tei:p><tei:text> </tei:text></tei:p></xsl:variable>
       <xsl:apply-templates select="$me"/>
-      -->
+
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -132,17 +131,5 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="block-element">
 	<xsl:with-param name="style">teil</xsl:with-param>
       </xsl:call-template>
-<!--
-      <xsl:if test="parent::tei:lg and not(following-sibling::tei:l)">
-      <w:p>
-	<w:pPr>
-	  <w:pStyle w:val="teilg"/>
-	</w:pPr>
-        <w:r>
-	  <w:br/>
-        </w:r>
-      </w:p>
-      </xsl:if>
--->
     </xsl:template>
 </xsl:stylesheet>

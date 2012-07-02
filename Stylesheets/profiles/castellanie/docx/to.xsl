@@ -72,29 +72,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="shadowGraphics">true</xsl:param>
     <xsl:param name="useNSPrefixes">false</xsl:param>    
 
-    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Before main processing starts, pre-process the document
-	elements in a separate mode ('pass0'), in order to add extra 
-	material which implements the footnoting etc.
-      </desc>
-    </doc>
-
-    <xsl:template match="/">
-      <xsl:variable name="pass0">
-	<xsl:apply-templates mode="pass0"/>
-      </xsl:variable>
-      <!--
-	  <xsl:result-document href="/tmp/x.xml">
-	  <xsl:copy-of select="$pass0"/>
-	  </xsl:result-document>
-      -->
-      <xsl:for-each select="$pass0/*">
-	<xsl:call-template name="write-docxfiles"/>
-	<xsl:call-template name="create-document-dot-xml"/>
-      </xsl:for-each>
-    </xsl:template>
-
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
@@ -267,40 +244,6 @@ of this software, even if advised of the possibility of such damage.
           </xsl:otherwise>
           </xsl:choose>
       </xsl:template>
-
-  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>Templates copying existing markup</desc>
-  </doc>
-    <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass0">
-      <xsl:copy-of select="."/>
-    </xsl:template>
-    <xsl:template match="*" mode="pass0">
-      <xsl:copy>
-	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
-    </xsl:copy>
-  </xsl:template>
-
-    <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Marginal notes map to corresponding Word style, albeit named
-	slightly differently
-      </desc>
-    </doc>
-  <xsl:template match="note[@place='margin'
-		       or @place='marginOuter'
-		       or @place='marginLeft'
-		       or @place='marginRight']">
-    <xsl:call-template name="marginalFloat"/>
-  </xsl:template>
-  
-  <xsl:template name="marginalNote">
-	<xsl:call-template name="block-element">
-        <xsl:with-param name="style">
-	<xsl:text>MarginNote</xsl:text>
-	<xsl:value-of select="substring-after(@place,'margin')"/>
-	</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
 
   <xsl:template name="marginalFloat">
     <w:r>
