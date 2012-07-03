@@ -89,8 +89,9 @@
   <target name="transform">
     <!-- The transformation for DOCX output. -->
     <echo level="info">unzip Word template</echo>
-    <unzip src="${xslDir}/template.docx" dest="${outputTempDir}"  failOnEmptyArchive="true" />
-    <echo level="info">remove custom document properties</echo>
+    <unzip src="${xslDir}/template.docx" dest="${outputTempDir}"/>
+    <echo level="info">remove custom document properties, notes,
+    footers, headers etc from Word template</echo>
     <delete includeEmptyDirs="true" verbose="true">
       <fileset dir="${outputTempDir}">
 	<include name="docProps/custom.xml" />
