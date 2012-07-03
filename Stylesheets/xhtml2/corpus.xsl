@@ -53,57 +53,39 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element catRef</desc>
-   </doc>
-  <xsl:template match="tei:catRef">
-      <xsl:variable name="W">
-         <xsl:choose>
-            <xsl:when test="starts-with(@target,'#')">
-               <xsl:value-of select="substring(@target,2)"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:value-of select="@target"/>
-            </xsl:otherwise>
-         </xsl:choose>
-      </xsl:variable>
-      <xsl:if test="preceding-sibling::tei:catRef">
-         <xsl:text> 
-    </xsl:text>
-      </xsl:if>
-      <em>
-         <xsl:value-of select="@scheme"/>
-      </em>: <xsl:apply-templates select="id($W)/catDesc"/>
-   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element teiCorpus</desc>
    </doc>
+
   <xsl:template match="tei:teiCorpus">
-      <xsl:element name="html" namespace="{$outputNamespace}">
-         <xsl:call-template name="addLangAtt"/>
-         <head>
-            <title>
-               <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text()"/>
-            </title>
-            <xsl:call-template name="includeCSS"/>
-            <xsl:call-template name="cssHook"/>
-         </head>
-         <body class="simple">
-	   <xsl:call-template name="bodyMicroData"/>
-	   <xsl:call-template name="bodyHook"/>
-	   <xsl:call-template name="bodyJavascriptHook"/>
-	   <div class="stdheader">
-	     <xsl:call-template name="stdheader">
-		<xsl:with-param name="title">
-		  <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
-		</xsl:with-param>
-	     </xsl:call-template>
-	    </div>
-	    <xsl:call-template name="corpusBody"/>
-            <xsl:call-template name="stdfooter"/>
-            <xsl:call-template name="bodyEndHook"/>
-         </body>
+    <xsl:element name="html" namespace="{$outputNamespace}">
+      <xsl:call-template name="addLangAtt"/>
+      <head>
+	<title>
+	  <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text()"/>
+	</title>
+	<xsl:call-template name="includeCSS"/>
+	<xsl:call-template name="cssHook"/>
+      </head>
+      <body class="simple">
+	<xsl:call-template name="bodyMicroData"/>
+	<xsl:call-template name="bodyHook"/>
+	<xsl:call-template name="bodyJavascriptHook"/>
+	<div class="stdheader">
+	  <xsl:call-template name="stdheader">
+	    <xsl:with-param name="title">
+	      <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</div>
+	<xsl:apply-templates/>
+	<xsl:call-template name="stdfooter"/>
+	<xsl:call-template name="bodyEndHook"/>
+      </body>
+      <xsl:call-template name="teiEndHook"/>
       </xsl:element>
+
   </xsl:template>
+  
   <xsl:template match="tei:teiCorpus" mode="split">
       <xsl:variable name="BaseFile">
          <xsl:value-of select="$masterFile"/>
@@ -171,10 +153,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="teiEndHook"/>
       <xsl:apply-templates select="tei:TEI" mode="split"/>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
-   </doc>
+
   <xsl:template name="corpusBody">
     <xsl:call-template name="mainTOC"/>
   </xsl:template>
+
 </xsl:stylesheet>

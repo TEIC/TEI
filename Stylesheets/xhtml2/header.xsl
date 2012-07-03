@@ -116,5 +116,28 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element catRef</desc>
+   </doc>
+  <xsl:template match="tei:catRef">
+      <xsl:variable name="W">
+         <xsl:choose>
+            <xsl:when test="starts-with(@target,'#')">
+               <xsl:value-of select="substring(@target,2)"/>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:value-of select="@target"/>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="preceding-sibling::tei:catRef">
+         <xsl:text> 
+    </xsl:text>
+      </xsl:if>
+      <em>
+         <xsl:value-of select="@scheme"/>
+      </em>: <xsl:apply-templates select="id($W)/catDesc"/>
+   </xsl:template>
+
 
 </xsl:stylesheet>

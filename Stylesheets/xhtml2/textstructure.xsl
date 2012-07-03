@@ -407,6 +407,27 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:call-template name="teiEndHook"/>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Process root element TEI when inside a corpus</p>
+      </desc>
+   </doc>
+  <xsl:template match="tei:teiCorpus/tei:TEI">
+    <xsl:if test="$verbose='true'">
+      <xsl:message>TEI HTML inside corpus </xsl:message>
+    </xsl:if>
+    <xsl:if test="not(tei:text/tei:front/tei:titlePage)">
+      <div class="stdheader">
+	<xsl:call-template name="stdheader">
+	  <xsl:with-param name="title">
+	    <xsl:call-template name="generateTitle"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </div>
+    </xsl:if>
+    <xsl:call-template name="simpleBody"/>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Process root element TEI in splitting mode</p>
@@ -1455,9 +1476,6 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:when test="$currentID='' and number($splitLevel)=-1">
             <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:when test="self::teiCorpus.2">
-            <xsl:call-template name="corpusBody"/>
          </xsl:when>
          <xsl:when test="$currentID=''">
         <!-- we need to locate the first interesting object in the file, ie
