@@ -139,7 +139,11 @@ of this software, even if advised of the possibility of such damage.
          </xsl:with-param>
          <xsl:with-param name="text">
             <xsl:choose>
-               <xsl:when test="local-name(.) = 'TEI'"/>
+               <xsl:when test="local-name(.) = 'TEI'">
+		 <xsl:if test="@n">
+		   <xsl:value-of select="@n"/>
+		 </xsl:if>
+	       </xsl:when>
                <xsl:when test="$depth &gt; $numberHeadingsDepth"> </xsl:when>
                <xsl:when test="self::tei:text">
 		 <xsl:number/>
@@ -284,8 +288,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="minimal">false</xsl:param>
       <xsl:variable name="Text">
          <xsl:call-template name="header">
-            <xsl:with-param name="minimal" select="$minimalCrossRef"/>
-	           <xsl:with-param name="display">plain</xsl:with-param>
+	   <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+	   <xsl:with-param name="display">plain</xsl:with-param>
          </xsl:call-template>
       </xsl:variable>
       <xsl:choose>
