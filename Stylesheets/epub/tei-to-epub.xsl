@@ -143,11 +143,11 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="mainTOC"/>
           </TOC>
         </xsl:variable>
-        <!--
+	<!--
 	    <xsl:result-document href="/tmp/TOC">
 	    <xsl:copy-of select="$TOC"/>
 	    </xsl:result-document>
--->
+	-->
         <xsl:for-each select="tokenize($javascriptFiles,',')">
           <xsl:variable name="file" select="normalize-space(.)"/>
           <xsl:variable name="name" select="tokenize($file,'/')[last()]"/>

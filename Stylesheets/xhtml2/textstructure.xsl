@@ -1557,20 +1557,37 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="mainTOC">
       <xsl:choose>
 	<xsl:when test="self::tei:teiCorpus">
-	  <ul class="toc toc_corpus">
-	    <xsl:for-each select="tei:TEI">
-	      <li>
-		<a>
-                  <xsl:attribute name="href">
-		    <xsl:apply-templates mode="generateLink" select="."/>
-                  </xsl:attribute>
-                  <xsl:call-template name="header">
-		    <xsl:with-param name="minimal">false</xsl:with-param>
-		    <xsl:with-param name="display">plain</xsl:with-param>
-                  </xsl:call-template>
-		</a>
-	      </li>
-	    </xsl:for-each>
+	  <ul>
+	  <xsl:for-each select="tei:TEI">
+	    <li>		
+	      <a>
+		<xsl:attribute name="href">
+		  <xsl:apply-templates mode="generateLink" select="."/>
+		</xsl:attribute>
+		<xsl:call-template name="header">
+		  <xsl:with-param name="minimal">false</xsl:with-param>
+		  <xsl:with-param name="display">plain</xsl:with-param>
+		</xsl:call-template>
+	      </a>
+	      <xsl:for-each select="tei:text/tei:front">
+		<xsl:call-template name="partTOC">
+		  <xsl:with-param name="part">front</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	      
+	      <xsl:for-each select="tei:text/tei:body">
+		<xsl:call-template name="partTOC">
+		  <xsl:with-param name="part">body</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	      
+	      <xsl:for-each select="tei:text/tei:back">
+		<xsl:call-template name="partTOC">
+		  <xsl:with-param name="part">back</xsl:with-param>
+		</xsl:call-template>
+	      </xsl:for-each>
+	    </li>
+	  </xsl:for-each>
 	  </ul>
 	</xsl:when>
 	<xsl:when
