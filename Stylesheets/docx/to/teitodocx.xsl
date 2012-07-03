@@ -2323,7 +2323,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <!-- 
-       §< Handle elements from different namespaces, such as wordML, wordMathML, MathML ...
+        Handle elements from different namespaces, such as wordML, wordMathML, MathML ...
         -->
   <xsl:template match="w:drawing">
     <w:r>
@@ -2540,7 +2540,7 @@ of this software, even if advised of the possibility of such damage.
 		       or @place='marginOuter'
 		       or @place='marginLeft'
 		       or @place='marginRight']" priority="999">
-    <xsl:message>marg note</xsl:message>
+    <xsl:if test="$debug='true'"><xsl:message>MARGINAL NOTE</xsl:message></xsl:if>
     <xsl:call-template name="marginalNote"/>
   </xsl:template>
   
