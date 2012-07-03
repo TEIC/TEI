@@ -112,13 +112,16 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-        A block of verse
+        A line of verse in a block gets an extra line at the end of
+	the stanza. add a line break in pass0
     </desc>
     </doc>
-    <xsl:template match="tei:lg" mode="pass0">
+    <xsl:template match="tei:l" mode="pass0">
       <xsl:copy>
-	<xsl:apply-templates mode="pass0" select="*|@*"/>
-	<lb  xmlns="http://www.tei-c.org/ns/1.0"/>
+	<xsl:apply-templates mode="pass0" select="*|@*|text()"/>
+	<xsl:if test="parent::tei:lg and not (following-sibling::tei:l)">
+	  <lb xmlns="http://www.tei-c.org/ns/1.0"/>
+	</xsl:if>
       </xsl:copy>
     </xsl:template>
 

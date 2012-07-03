@@ -48,7 +48,9 @@
   <condition property="makecoverpages">
     <available file="${profileDir}/${profile}/docx/makecoverpages.xsl"/>
   </condition>
+
   <import file="../odds2/build-to.xml"/>
+
   <target name="setup">
     <!-- Recreate temporary output directory -->
     <taskdef name="images" classname="ImageTask" classpath="../tools/ImageInfo/ImageInfo.jar"/>
@@ -87,7 +89,37 @@
   <target name="transform">
     <!-- The transformation for DOCX output. -->
     <echo level="info">unzip Word template</echo>
-    <unzip src="${xslDir}/template.docx" dest="${outputTempDir}"/>
+    <unzip src="${xslDir}/template.docx" dest="${outputTempDir}"  failOnEmptyArchive="true" />
+    <echo level="info">remove custom document properties</echo>
+    <delete includeEmptyDirs="true" verbose="true">
+      <fileset dir="${outputTempDir}">
+	<include name="docProps/custom.xml" />
+	<include name="word/webSettings.xml" />
+	<include name="word/_rels/settings.xml.rels" />
+	<include name="word/endnotes.xml" />
+	<include name="word/footnotes.xml" />
+	<include name="customXml/*" />
+	<include name="word/footer*" />
+	<include name="word/header*" />
+	<include name="word/theme" />
+	<include name="word/glossary" />
+      </fileset>
+    </delete>
+    
+    <echo level="info">fix Word .rels file</echo>
+    <xslt style="tools/fixdotrels.xsl"  in="${outputTempDir}/_rels/.rels"  out="${outputTempDir}/_rels/.rels_" >
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${saxon.jar}"/>
+    </xslt>
+    <move file="${outputTempDir}/_rels/.rels_" tofile="${outputTempDir}/_rels/.rels" verbose="true" />
+    
+    <echo level="info">Fix Word styles file</echo>
+    <xslt style="tools/fixstyle.xsl"  in="${outputTempDir}/word/styles.xml"  out="${outputTempDir}/word/_styles.xml" >
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${saxon.jar}"/>
+    </xslt>
+    <move file="${outputTempDir}/word/_styles.xml" tofile="${outputTempDir}/word/styles.xml" verbose="true" />
+    
     <echo level="info">Get names of graphics files and write an ant task</echo>
     <xslt force="yes" style="${listgraphics}" classpath="classpath" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
