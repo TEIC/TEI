@@ -243,6 +243,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:origDate">true</xsl:when>
         <xsl:when test="self::tei:origPlace">true</xsl:when>
         <xsl:when test="self::tei:origPlace">true</xsl:when>
+        <xsl:when test="self::tei:pc">true</xsl:when>
         <xsl:when test="self::tei:pb">true</xsl:when>
         <xsl:when test="self::tei:persName">true</xsl:when>
         <xsl:when test="self::tei:placeName">true</xsl:when>
