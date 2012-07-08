@@ -13,7 +13,7 @@ makeODD()
     echo "1. expand and simplify ODD "
     if test "x$lang" = "x"
     then
-	xmllint --xinclude $ODD | saxon -s:-  -o:$RESULTS/$ODD.compiled  \
+	 saxon -xi:on -s:$ODD  -o:$RESULTS/$ODD.compiled  \
 	    -xsl:$TEIXSLDIR/odds2/odd2odd.xsl \
 	    $SELECTEDSCHEMA  \
 	    $LANGUAGE\
@@ -23,7 +23,7 @@ makeODD()
 	    autoGlobal=$AUTOGLOBAL $SOURCE $DEBUG  
     else
 	echo  [names translated to language $lang]
-	xmllint --xinclude $ODD |  saxon -s:- -xsl:$TEIXSLDIR/odds2/odd2odd.xsl \
+	saxon -xi:on -s:$ODD -xsl:$TEIXSLDIR/odds2/odd2odd.xsl \
 	    autoGlobal=$AUTOGLOBAL \
 	    currentDirectory=$H \
 	    useVersionFromTEI=$useVersionFromTEI \
@@ -258,7 +258,7 @@ test -d $TEIXSLDIR/odds2 || \
      die "stylesheet location $TEIXSLDIR is not accessible"
 if test "x$schema" = "x"
 then
- schema=$(xmllint --xinclude $1 | saxon -s:- -xsl:$TEIXSLDIR/odds2/extract-schemaSpec-ident.xsl | head -1 )
+ schema=$(saxon -s:$1 -xsl:$TEIXSLDIR/odds2/extract-schemaSpec-ident.xsl | head -1 )
  schema=${schema:?"Unable to ascertain ident= of <schemaSpec>"}
 fi
 echo "Results to: $RESULTS"
