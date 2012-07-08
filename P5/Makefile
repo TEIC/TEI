@@ -530,3 +530,7 @@ clean:
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
 	rm -f teiwebsiteguidelines.zip
+
+mccaskeylists: p5subset.xml
+	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl
+	${SAXON} -s:p5subset.xml -xsl:Utilities/listofattributes.xsl > attlist.txt
