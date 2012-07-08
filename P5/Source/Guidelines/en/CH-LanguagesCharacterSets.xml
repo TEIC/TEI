@@ -100,39 +100,31 @@ recommended (this parallels the modelling of <att>xml:lang</att>):
  Authority (IANA). The tag is assembled from a sequence of subtags
  separated by the hyphen (-, U+002D) character. It gives the language
  (possibly further identified with a sublanguage), a script and a
- region for this language, each possibly followed by a variant subtag.
-<list>
-<item>The identifier consists of at least one <soCalled>primary</soCalled> subtag,
- it may be followed by one or more <soCalled>extended</soCalled> subtags. </item>
-<item>Languages are identified by a language subtag, which may be
-a two letter code taken from ISO 639-1 or a three letter code
-taken from ISO 639-2. Where both two-letter and three-letter codes 
-exist, the two-letter code is preferred.</item>
-<item>ISO 639-2 reserves for private use codes in the range 'qaa' to
-      'qtz'. These codes should be used for non-registered language
-      subtags.</item>
-<item>A single letter primary subtag "x"  indicates that
-the whole language tag is privately used.</item>
-<!-- MDH 2012-06-29: This item commented out because we can find no 
-     evidence that it's true, and lots of evidence that it isn't. -->
-<!--<item>Extended language subtags must begin with the letter "s".
- They must follow the primary subtag and precede subtags that do
- define other properties of the language.  The order is significant.</item>-->
-<item>4 character subtags are interpreted as script identifiers
-  taken from <ptr target="http://unicode.org/iso15924/standard/index.html"/>.</item>
-<item>Region subtags can be either two letter country codes taken
- from ISO 3166 (with exceptions) or 3 digit codes from the UN
- Standard Country Codes for Statistical Use.</item>
-<item>Variant subtags may follow any of the above, but must
- precede private use extensions.</item>
-<item>Private use extensions are separated from the other subtags
- by the single letter subtag "x", which must be followed by at
- least one subtag.  They might consist of several subtags
- separated with "-", but may not exceed a length of 32 characters.</item>
-</list>
+ region for this language, each possibly followed by a variant subtag.</p>
+  
+  <p>The authoritative list of registered subtags is maintained by IANA and 
+    is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
+      For a good general overview of the construction of language tags, see 
+    <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
+    a practical step-by-step guide, see 
+    <ptr target="http://www.w3.org/International/questions/qa-choosing-language-tags"/>.
+    
+<!-- MDH 2012-07-08: commenting out the following examples because 
+    some of them are wrong or implausible, and in any case BCP 47 
+    provides a good set of examples, as do the two W3C documents 
+    linked above. This block can be removed if no-one complains 
+    within a couple of months following the next release. 
+    
+    As a general principle, we should probably avoid including our
+    own explanations of things better explained authoritatively 
+    elsewhere, both in the interests of keeping size of the 
+    Guidelines under control, and to avoid what seems to have 
+    happened in this chapter, where our explanation became not 
+    only obsolete but flat-out wrong, as the authoritative sources
+    gradually clarified the expected practice.
+    -->
    
-   A useful list of language, script and region subtags is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>.<lb/>
-   
+    <!--
 <list>
  <head>Examples of language tags</head>
  <item>
@@ -185,8 +177,10 @@ the whole language tag is privately used.</item>
 It should be noted that capitalization given here follows established
 convention (e.g. capital letters for country codes, small letters
 for language codes), but BPC 47 does not ascribe any meaning to
-differences in capitalization.</p>
-
+differences in capitalization.-->
+</p>
+  
+  
  <p>As can be seen, both BPC 47 and ISO 639-2 provide extensions that
  can be employed by private convention. The constructs mentioned above
  can thus be used to generate identifiers for any language, past and
@@ -216,21 +210,8 @@ mechanism for doing so has been defined.</p>
  attributes where a non-textual datatype has been specified, for
  example tokens, boolean values or predefined value lists.</note>
 </p>
-<!--
-  <listBibl>
-<head>References</head>
-<bibl xml:id="langtag">
-<bibl><editor><name>Cover, Robin</name></editor><title>Language
-Identifiers in the Markup Context</title><ptr target="http://xml.coverpages.org/languageIdentifiers.html"/></bibl>
-<bibl>
- <editor> <name>    Tim Bray </name> <name>    Jean Paoli </name>
-<name>    C. M. Sperberg-McQueen </name> <name>    Eve Maler -
- Second Edition </name> <name>    Francois Yergeau  - Third
- Edition</name> </editor><title>Extensible Markup Language (XML)
-1.0 (Third Edition) W3C Recommendation 04 February 2004
- </title><ptr target="http://www.w3.org/TR/2004/REC-xml-20040204/"/></bibl>
- </listBibl>
--->  </div>
+</div>
+  
   <div type="div2">
    <head>Characters and Character Sets</head>
   <p>All document encoding has to do with representing one thing by
