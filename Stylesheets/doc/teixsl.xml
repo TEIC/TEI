@@ -9,7 +9,7 @@
       </titleStmt>
                <editionStmt>
                   <edition>
-		    <date>2010-02-12</date>
+		    <date>2012-07-12</date>
                   </edition>
                </editionStmt>
       <publicationStmt>
@@ -23,8 +23,13 @@
 	    
 	    <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
 	    <list>
-	      <item>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</item>
-	      <item>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</item>
+	      <item>Redistributions of source code must retain the
+	      above copyright notice, this list of conditions and the
+	      following disclaimer.</item>
+	      <item>Redistributions in binary form must reproduce the
+	      above copyright notice, this list of conditions and the
+	      following disclaimer in the documentation and/or other
+	      materials provided with the distribution.</item>
 </list>
 
 
@@ -58,10 +63,7 @@ the <ref target="mailto:info@tei-c.org">TEI Consortium</ref>.
     <revisionDesc>
          <change>
             <date>$Date$.</date>
-            <respStmt>
-               <name>$Author$</name>
-            </respStmt>
-            <item>$Revision$</item>
+            <name>$Author$, $Revision$</name>
          </change>
     </revisionDesc>
   </teiHeader>
@@ -104,29 +106,61 @@ which implement each of the TEI modules (eg
 are included by a master file <ident>tei.xsl</ident>. This also
 includes a parameterization layer in the file
 <ident>tei-param.xsl</ident>, and the parameterization file from
-the <ident>common</ident> directory. The <ident>tei.xsl</ident> does
+the <ident>common2</ident> directory. The <ident>tei.xsl</ident> does
 any necessary declaration of constants and XSL keys.</p>
 
 <p>There are further directories  for special-purposes
 conversions:
 <list type="gloss">
-<label>epub</label><item>conversion to ePub</item>
-<label>odt</label><item>conversion to and from OpenOffice Writer format</item>
+<label>bibtex</label><item>conversion to BibTeX</item>
+<label>docbook</label><item>conversion from Docbook</item>
 <label>docx</label><item>conversion to and from Word OOXML format</item>
+<label>dtd</label><item>ODD conversion to DTD </item>
+<label>epub</label><item>conversion to ePub</item>
+<label>html5</label><item>conversion to HTML5 </item>
+<label>json</label><item>conversion to JSON</item>
+<label>nlm</label><item>conversion to NLM </item>
 <label>odds2</label><item>processing of TEI ODD files</item>
+<label>odt</label><item>conversion to and from OpenOffice Writer format</item>
 <label>rdf</label><item>conversion to RDF</item>
+<label>relaxng</label><item>ODD conversion to RELAXNG</item>
+<label>rnc</label><item>ODD conversion to RELAXNG (compact)</item>
+<label>slides</label><item>conversion to LaTeX and HTML slides</item>
+<label>tbx</label><item>conversion to TBX</item>
+<label>tcp</label><item>conversion from TCP P4 XML</item>
+<label>tite</label><item>conversion from TEI Tite </item>
 <label>txt</label><item>conversion to plain text</item>
+<label>xlsx</label><item>conversion from Microsoft Office spreadsheet format</item>
+<label>xsd</label><item>ODD conversion to W3C schema</item>
+
+
 </list>
 </p>
 
 <p>The final important directory is <ident>profiles</ident>, which has
 a set of predefined project starting points, each of which may have a file
 <ident>to.xsl</ident> for one or more of the supported output formats
-(<ident>csv</ident>, <ident>dtd</ident>, <ident>html</ident>,
-<ident>odt</ident>, <ident>docbook</ident>, <ident>epub</ident>,
-<ident>latex</ident>, <ident>p4</ident>, <ident>docx</ident>,
-<ident>fo</ident>, <ident>lite</ident>, and
-<ident>relaxng</ident>). There may also be a <ident>from.xsl</ident>
+(<ident>csv</ident>,
+<ident>docbook</ident>,
+<ident>docx</ident>,
+<ident>dtd</ident>,
+<ident>epub3</ident>,
+<ident>epub</ident>,
+<ident>fo</ident>,
+<ident>html5</ident>,
+<ident>html</ident>,
+<ident>ibooks</ident>,
+<ident>json</ident>,
+<ident>latex</ident>,
+<ident>lite</ident>,
+<ident>oddhtml</ident>,
+<ident>odt</ident>,
+<ident>p4</ident>,
+<ident>rdf</ident>,
+<ident>relaxng</ident>,
+<ident>tcp</ident>,
+<ident>txt</ident>, and
+<ident>xlsx</ident>). There may also be a <ident>from.xsl</ident>
 to go <emph>from</emph> the selected format to TEI XML.</p>
 <p>For example, to convert TEI to HTML in the default mannner, the user may run
 <ident>profiles/default/html/to.xsl</ident> on the selected input file. Other starting points are
@@ -145,54 +179,34 @@ implemented using Ant tasks, which are also available within the
 oXygen XML editor as part of the TEI framework.</p>
 
 <p>Any other use of the stylesheets, eg by referencing individual
-modules, is not supported and requires good understanding of XSL.</p>
+modules, requires good understanding of XSL.</p>
 </div>
 
 <div xml:id="start">
   <head>Documentation of generic start points</head>
 <list>
-<item><ref target="profiles/default/csv/from.html">Default conversion from CSV</ref></item>
-<item><ref target="profiles/default/csv/to.html">Default conversion to CSV</ref></item>
-<item><ref target="profiles/default/docbook/from.html">Default conversion to Docbook</ref></item>
-<item><ref target="profiles/default/docx/from.html">Default conversion from docx (OOXML)</ref></item>
-<item><ref target="profiles/default/docx/to.html">Default conversion to docx (OOXML)</ref></item>
-<item><ref target="profiles/default/epub/to.html">Default conversion to ePub</ref></item>
-<item><ref target="profiles/default/fo/to.html">Default conversion to XSL FO</ref></item>
-<item><ref target="profiles/default/html/to.html">Default conversion to XHTML</ref></item>
-<item><ref target="profiles/default/latex/to.html">Default conversion to LaTeX</ref></item>
-<item><ref target="profiles/default/oo/from.html">Default conversion from OpenOffice (odt) </ref></item>
-<item><ref target="profiles/default/oo/to.html">Default conversion to OpenOffice (odt) </ref></item>
-<item><ref target="profiles/default/p4/from.html">Default conversion to TEI P4</ref></item>
-<item><ref target="odds2/odd2odd.html">Conversion of ODD file to expanded ODD</ref></item>
-<item><ref target="odds2/odd2relax.html">Conversion of ODD to RELAX NG schema</ref></item>
-<item><ref target="odds2/odd2dtd.html">Conversion of ODD to DTD</ref></item>
-<item><ref target="slides/teihtml-slides.html">Default conversion to HTML slides</ref></item>
-<item><ref target="slides/teilatex-slides.html">Default conversion to LaTeX slides (using beamer)</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/csv/from.html">Default conversion from CSV</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/csv/to.html">Default conversion to CSV</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/docbook/from.html">Default conversion to Docbook</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/docx/from.html">Default conversion from docx (OOXML)</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/docx/to.html">Default conversion to docx (OOXML)</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/epub/to.html">Default conversion to ePub</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/fo/to.html">Default conversion to XSL FO</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/html/to.html">Default conversion to XHTML</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/latex/to.html">Default conversion to LaTeX</ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/odt/from.html">Default conversion from OpenOffice (odt) </ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/odt/to.html">Default conversion to OpenOffice (odt) </ref></item>
+<item><ref target="../tei-xsl-common2/profiles/default/p4/from.html">Default conversion to TEI P4</ref></item>
+<item><ref target="../tei-xsl-common2/odds2/odd2odd.html">Conversion of ODD file to expanded ODD</ref></item>
+<item><ref target="../tei-xsl-common2/odds2/odd2relax.html">Conversion of ODD to RELAX NG schema</ref></item>
+<item><ref target="../tei-xsl-common2/odds2/odd2dtd.html">Conversion of ODD to DTD</ref></item>
+<item><ref target="../tei-xsl-common2/slides/teihtml-slides.html">Default conversion to HTML slides</ref></item>
+<item><ref
+	  target="../tei-xsl-common2/slides/teilatex-slides.html">Default
+conversion to LaTeX slides (using beamer package)</ref></item>
 </list>
 </div>
 
-<div xml:id="start-enrich">
-  <head>Documentation of start points for ENRICH manuscript
-  description customization</head>
-<list>
-<item><ref target="profiles/enrich/docx/to.html">ENRICH conversion to docx (OOXML)</ref></item>
-<item><ref target="profiles/enrich/fo/to.html">ENRICH conversion to XSL FO</ref></item>
-<item><ref target="profiles/enrich/html/to.html">ENRICH conversion to XHTML</ref></item>
-<item><ref target="profiles/enrich/latex/to.html">ENRICH conversion to LaTeX</ref></item>
-<item><ref target="profiles/enrich/docx/from.html">ENRICH conversion from docx (OOXML)</ref></item>
-</list>
-</div>
-
-<div xml:id="start-iso">
-  <head>Documentation of start points for ISO customization</head>
-<list>
-<item><ref target="profiles/iso/docx/to.html">ISO conversion to docx (OOXML)</ref></item>
-<item><ref target="profiles/iso/fo/to.html">ISO conversion to XSL FO</ref></item>
-<item><ref target="profiles/iso/html/to.html">ISO conversion to XHTML</ref></item>
-<item><ref target="profiles/iso/latex/to.html">ISO conversion to LaTeX</ref></item>
-<item><ref target="profiles/iso/docx/from.html">ISO conversion from docx (OOXML)</ref></item>
-</list>
-</div>
 
 
 <div><head>Customization</head>
