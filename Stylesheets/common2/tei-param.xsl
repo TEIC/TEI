@@ -335,4 +335,12 @@ Default spacing between paragraphs
      a heading</desc>
   </doc>
   <xsl:template name="sectionHeadHook"/>
+  <!-- Addition by Martin Holmes 2012-07-15 for ticket http://purl.org/tei/fr/3511134     -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">
+    <desc>[common] Hook where actions can be inserted when processing an 
+    attDef Used in Guidelines output to create an anchor/link pilcrow.</desc>
+  </doc>
+  <xsl:template name="attDefHook">
+    <xsl:param name="attName"/>
+  </xsl:template>
 </xsl:stylesheet>

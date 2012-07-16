@@ -865,6 +865,33 @@
     </span>
     </xsl:if>
   </xsl:template>
+  
+  <!-- Addition by Martin Holmes 2012-07-15 for ticket http://purl.org/tei/fr/3511134    -->
+  <xsl:template name="attDefHook">
+    <xsl:param name="attName"/>
+    <xsl:variable name="linkId" select="concat('tei_att.', translate($attName, ':', '-'))"/>
+    <xsl:choose>
+      <xsl:when test="string-length($attName) gt 0">
+        <span class="bookmarklink">
+          <a class="bookmarklink" id="{$linkId}" href="#{$linkId}">
+            <xsl:attribute name="title">
+              <xsl:text>link to this attribute </xsl:text>
+            </xsl:attribute>
+            <span class="invisible">
+              <xsl:text>TEI: </xsl:text>
+              <xsl:value-of select="$attName"/>
+            </span>
+            <span class="pilcrow">
+              <xsl:text>¶</xsl:text>
+            </span>
+          </a>
+        </span>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:comment>No linking pilcrow inserted: attname not provided.</xsl:comment>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <xsl:template match="/div"> </xsl:template>
 

@@ -149,11 +149,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:variable>
     <xsl:element namespace="{$outputNS}" name="{$rowName}">
-<!-- Addition by Martin Holmes 2012-07-14 for ticket http://purl.org/tei/fr/3511134     -->
-<!-- This provides an id for a row defining an attribute, so it can be pointed to in a URL fragment.  -->
-<!-- Colons in e.g. @xml:id, @xml:lang cannot be part of an id so they are replaced with dashes.     -->
-      <xsl:variable name="rowId">tei_att.<xsl:value-of select="translate($name, ':', '-')"/></xsl:variable>
-      <xsl:attribute name="id"><xsl:value-of select="$rowId"/></xsl:attribute>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_label</xsl:text>
@@ -163,6 +158,12 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
         </xsl:attribute>
         <xsl:value-of select="$name"/>
+<!-- Addition by Martin Holmes 2012-07-14 for ticket http://purl.org/tei/fr/3511134     -->        
+<!-- Add a pilcrow with a link.      -->
+        <xsl:call-template name="attDefHook">
+          <xsl:with-param name="attName"><xsl:value-of select="$name"/></xsl:with-param>
+        </xsl:call-template>
+        
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
