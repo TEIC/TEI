@@ -388,5 +388,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:copy>
     </xsl:template>
  
+    <xsl:template match="tei:lb[@rend='hidden']" />
 
 </xsl:stylesheet>

@@ -366,5 +366,12 @@ of this software, even if advised of the possibility of such damage.
 
    </xsl:template>
 
+  <xsl:template match="tei:tag">
+    <xsl:text>\texttt{</xsl:text>
+      <xsl:text>&lt;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>&gt;</xsl:text>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
 
 </xsl:stylesheet>
