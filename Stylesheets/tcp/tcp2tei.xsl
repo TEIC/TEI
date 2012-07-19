@@ -51,8 +51,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:output cdata-section-elements="eg" indent="yes" method="xml" encoding="utf-8" omit-xml-declaration="yes"/>
   <xsl:param name="ID"/>
-  <xsl:key name="ROLES" match="p/@role" use="1"/>
-  <xsl:key name="ROLES" match="item/@role" use="1"/>
+  <xsl:key name="ROLES" match="P/@ROLE" use="1"/>
+  <xsl:key name="ROLES" match="ITEM/@ROLE" use="1"/>
   <xsl:param name="intype"> ',)</xsl:param>
   <xsl:variable name="HERE" select="/"/>
   <xsl:variable name="Rendition">
@@ -85,7 +85,13 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="@*|processing-instruction()|comment()">
+  <xsl:template match="@*">
+    <xsl:attribute name="{lower-case(local-name())}">
+      <xsl:copy-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
+
+  <xsl:template match="processing-instruction()|comment()">
     <xsl:copy/>
   </xsl:template>
   
@@ -439,38 +445,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="DIV1|DIV2|DIV3|DIV4|DIV5|DIV6|DIV7">
-    <div>
-      <xsl:apply-templates select="@*" />
-      <xsl:apply-templates select="*" />
-    </div>
-  </xsl:template>
-<!--
-  <xsl:template match="DIV1">
-    <xsl:choose>
-      <xsl:when test="count(parent::BODY/*)=1  and not(child::CLOSER)">
-        <xsl:apply-templates select="*" />
-      </xsl:when>
-      <xsl:otherwise>
-        <div>
-          <xsl:apply-templates select="@*" />
-          <xsl:apply-templates select="*" />
-        </div>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
--->
   <xsl:template match="LANGUSAGE/@ID" />
-  <xsl:template match="LANGUAGE[not(@ID)]">
-    <language id="{../@ID}">
-      <xsl:apply-templates select="@*|text()" />
-    </language>
-  </xsl:template>
-  <xsl:template match="GAP/@DISP">
-    <desc>
-      <xsl:value-of  select="."/>
-    </desc>
-  </xsl:template>
   <xsl:template match="PB/@REF">
     <xsl:attribute name="facs">
       <xsl:value-of select="."/>
@@ -1123,7 +1098,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates />
     </respStmt>
   </xsl:template>
-  <xsl:template match="REVISIONDESC|revdesc">
+  <xsl:template match="REVISIONDESC|REVDESC">
     <revisionDesc>
       <xsl:apply-templates  select="@*"/>
       <xsl:apply-templates />
@@ -1261,7 +1236,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates />
     </timeStruct>
   </xsl:template>
-  <xsl:template match="TITLEPAGE|tpage">
+  <xsl:template match="TITLEPAGE|TPAGE">
     <titlePage>
       <xsl:apply-templates  select="@*"/>
       <xsl:apply-templates />
@@ -1817,40 +1792,45 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </date>
   </xsl:template>
-  <xsl:template match="DATERANGE/@from">
+  <xsl:template match="DATERANGE/@FROM">
     <xsl:copy-of select="."/>
   </xsl:template>
-  <xsl:template match="DATERANGE/@to">
+  <xsl:template match="DATERANGE/@TO">
     <xsl:copy-of select="."/>
   </xsl:template>
   <xsl:template match="LANGUAGE">
     <language>
-      <xsl:if test="@id">
-        <xsl:attribute name="ident">
-          <xsl:value-of select="@id"/>
-        </xsl:attribute>
-      </xsl:if>
+      <xsl:attribute name="ident">
+	<xsl:choose>
+	<xsl:when test="@ID">
+          <xsl:value-of select="@ID"/>
+	</xsl:when>
+	<xsl:when test="../@ID">
+          <xsl:value-of select="../@ID"/>
+	</xsl:when>
+	</xsl:choose>
+    </xsl:attribute>
       <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
     </language>
   </xsl:template>
   <!-- attributes lost -->
   <!-- dropped from TEI. Added as new change records later -->
-  <xsl:template match="@date.created"/>
-  <xsl:template match="@date.updated"/>
+  <xsl:template match="@DATE.CREATED"/>
+  <xsl:template match="@DATE.UPDATED"/>
   <!-- dropped from TEI. No replacement -->
-  <xsl:template match="REFSDECL/@doctype"/>
+  <xsl:template match="REFSDECL/@DOCTYPE"/>
   <!-- attributes changed name -->
-  <xsl:template match="DATE/@value">
+  <xsl:template match="DATE/@VALUE">
     <xsl:attribute name="when">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@doc">
+  <xsl:template match="@DOC">
     <xsl:attribute name="target">
       <xsl:value-of select="unparsed-entity-uri(.)"/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@id">
+  <xsl:template match="@ID">
     <xsl:choose>
       <xsl:when test="parent::LANG">
         <xsl:attribute name="ident">
@@ -1864,19 +1844,19 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="@lang">
+  <xsl:template match="@LANG">
     <xsl:attribute name="xml:lang">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="CHANGE/@date"/>
-  <xsl:template match="DATE/@certainty">
+  <xsl:template match="CHANGE/@DATE"/>
+  <xsl:template match="DATE/@CERTAINTY">
     <xsl:attribute name="cert">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
 
-  <xsl:template match="@facs">
+  <xsl:template match="@FACS">
     <xsl:attribute name="facs">
       <xsl:value-of select="translate(.,' :[]','_')"/>
     </xsl:attribute>
@@ -1890,11 +1870,11 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <!-- all pointing attributes preceded by # -->
-  <xsl:template match="VARIANTENCODING/@location">
+  <xsl:template match="VARIANTENCODING/@LOCATION">
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="@ana|@active|@adj|@adjFrom|@adjTo|@children|@class|@code|@copyOf|@corresp|@decls|@domains|@end|@exclude|@fVal|@feats|@follow|@hand|@inst|@langKey|@location|@mergedin|@new|@next|@old|@origin|@otherLangs|@parent|@passive|@perf|@prev|@render|@resp|@sameAs|@scheme|@script|@select|@since|@start|@synch|@target|@targetEnd|@value|@value|@who|@wit">
+  <xsl:template match="@ANA|@ACTIVE|@ADJ|@ADJFROM|@ADJTO|@CHILDREN|@CLASS|@CODE|@COPYOF|@CORRESP|@DECLS|@DOMAINS|@END|@EXCLUDE|@FVAL|@FEATS|@FOLLOW|@HAND|@INST|@LANGKEY|@LOCATION|@MERGEDIN|@NEW|@NEXT|@OLD|@ORIGIN|@OTHERLANGS|@PARENT|@PASSIVE|@PERF|@PREV|@RENDER|@RESP|@SAMEAS|@SCHEME|@SCRIPT|@SELECT|@SINCE|@START|@SYNCH|@TARGET|@TARGETEND|@VALUE|@VALUE|@WHO|@WIT">
     <xsl:attribute name="{name(.)}">
       <xsl:call-template name="splitter">
         <xsl:with-param name="val">
@@ -1944,7 +1924,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="EDITIONSTMT/EDITOR">
     <respStmt>
       <resp>
-        <xsl:value-of select="@role"/>
+        <xsl:value-of select="@ROLE"/>
       </resp>
       <name>
         <xsl:apply-templates/>
@@ -1956,20 +1936,20 @@ of this software, even if advised of the possibility of such damage.
     <teiHeader>
       <xsl:apply-templates select="@*|*|comment()|processing-instruction()"/>
       <xsl:choose>
-	<xsl:when test="not(REVISIONDESC) and (@date.created or @date.updated)">
+	<xsl:when test="not(REVISIONDESC) and (@DATE.CREATED or @DATE.UPDATED)">
 	  <revisionDesc>
-	    <xsl:if test="@date.updated">
+	    <xsl:if test="@DATE.UPDATED">
             <change>&gt;
 	    <label>updated</label>
-	    <date><xsl:value-of select="@date.updated"/></date>
+	    <date><xsl:value-of select="@DATE.UPDATED"/></date>
 	    <label>Date edited</label>
 	    </change>
           </xsl:if>
-          <xsl:if test="@date.created">
+          <xsl:if test="@DATE.CREATED">
             <change>
               <label>created</label>
               <date>
-                <xsl:value-of select="@date.created"/>
+                <xsl:value-of select="@DATE.CREATED"/>
               </date>
               <label>Date created</label>
             </change>
@@ -1982,7 +1962,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </teiHeader>
   </xsl:template>
-  <xsl:template match="@role">
+  <xsl:template match="@ROLE">
     <xsl:attribute name="ana">
       <xsl:text>#role_</xsl:text>
       <xsl:value-of select="."/>
@@ -1994,8 +1974,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="@*|*|comment()|processing-instruction()"/>
     </revisionDesc>
   </xsl:template>
-  <!-- space does not have @extent any more -->
-  <xsl:template match="SPACE/@extent">
+  <!-- space does not have @EXTENT any more -->
+  <xsl:template match="SPACE/@EXTENT">
     <xsl:attribute name="quantity">
       <xsl:value-of select="."/>
     </xsl:attribute>
@@ -2016,76 +1996,81 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <!-- no need for empty <p> in sourceDesc -->
   <xsl:template match="SOURCEDESC/p[string-length(.)=0]"/>
-  <xsl:template match="GAP/@desc"/>
+
+  <xsl:template match="GAP/@DESC">
+    <xsl:attribute name="reason">
+      <xsl:value-of  select="."/>
+    </xsl:attribute>
+  </xsl:template>
+  <xsl:template match="GAP/@DISP">
+    <desc>
+      <xsl:value-of  select="."/>
+    </desc>
+  </xsl:template>
   <xsl:template match="GAP">
     <gap>
       <xsl:apply-templates select="@*"/>
-      <xsl:if test="@desc">
-        <desc>
-          <xsl:value-of select="@desc"/>
-        </desc>
-      </xsl:if>
     </gap>
   </xsl:template>
   <!--  creating a choice element -->
-  <xsl:template match="CORR[@sic]">
+  <xsl:template match="CORR[@SIC]">
     <choice>
       <corr>
         <xsl:value-of select="text()"/>
       </corr>
       <sic>
-        <xsl:value-of select="@sic"/>
+        <xsl:value-of select="@SIC"/>
       </sic>
     </choice>
   </xsl:template>
-  <xsl:template match="SIC[@corr]">
+  <xsl:template match="SIC[@CORR]">
     <choice>
       <sic>
         <xsl:apply-templates/>
       </sic>
       <corr>
-        <xsl:value-of select="@corr"/>
+        <xsl:value-of select="@CORR"/>
       </corr>
     </choice>
   </xsl:template>
-  <xsl:template match="ORIG[@reg]">
+  <xsl:template match="ORIG[@REG]">
     <choice>
       <orig>
         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
       </orig>
       <reg>
-        <xsl:value-of select="@reg"/>
+        <xsl:value-of select="@REG"/>
       </reg>
     </choice>
   </xsl:template>
-  <xsl:template match="REG[@orig]">
+  <xsl:template match="REG[@ORIG]">
     <choice>
       <reg>
         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
       </reg>
       <orig>
-        <xsl:value-of select="@orig"/>
+        <xsl:value-of select="@ORIG"/>
       </orig>
     </choice>
   </xsl:template>
-  <xsl:template match="@orig|@reg"/>
-  <xsl:template match="ABBR[@expan]">
+  <xsl:template match="@ORIG|@REG"/>
+  <xsl:template match="ABBR[@EXPAN]">
     <choice>
       <abbr>
         <xsl:apply-templates/>
       </abbr>
       <expan>
-        <xsl:value-of select="@expan"/>
+        <xsl:value-of select="@EXPAN"/>
       </expan>
     </choice>
   </xsl:template>
-  <xsl:template match="EXPAN[@abbr]">
+  <xsl:template match="EXPAN[@ABBR]">
     <choice>
       <expan>
         <xsl:apply-templates/>
       </expan>
       <abbr>
-        <xsl:value-of select="@abbr"/>
+        <xsl:value-of select="@ABBR"/>
       </abbr>
     </choice>
   </xsl:template>
@@ -2130,72 +2115,17 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </respStmt>
   </xsl:template>
-  <xsl:template match="Q/@direct"/>
-  <!-- if we are reading the P4 with a DTD,
-       we need to avoid copying the default values
-       of attributes -->
-  <xsl:template match="@targOrder">
-    <xsl:if test="not(lower-case(.) ='u')">
-      <xsl:attribute name="targOrder">
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template match="@opt">
-    <xsl:if test="not(lower-case(.) ='n')">
-      <xsl:attribute name="opt">
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template match="@to">
-    <xsl:if test="not(lower-case(.) ='ditto')">
-      <xsl:attribute name="to">
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template match="@default">
+  <xsl:template match="Q/@DIRECT"/>
+  <xsl:template match="@STATUS">
     <xsl:choose>
-      <xsl:when test="lower-case(.)= 'no'"/>
-      <xsl:otherwise>
-        <xsl:attribute name="default">
-          <xsl:value-of select="."/>
-        </xsl:attribute>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template match="@part">
-    <xsl:if test="not(lower-case(.) ='n')">
-      <xsl:attribute name="part">
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template match="@full">
-    <xsl:if test="not(lower-case(.) ='yes')">
-      <xsl:attribute name="full">
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template match="@from">
-    <xsl:if test="not(lower-case(.) ='root')">
-      <xsl:attribute name="from">
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template match="@status">
-    <xsl:choose>
-      <xsl:when test="parent::teiHeader">
+      <xsl:when test="parent::TEIHEADER">
         <xsl:if test="not(lower-case(.) ='new')">
           <xsl:attribute name="status">
             <xsl:value-of select="."/>
           </xsl:attribute>
         </xsl:if>
       </xsl:when>
-      <xsl:when test="parent::del">
+      <xsl:when test="parent::DEL">
         <xsl:if test="not(lower-case(.) ='unremarkable')">
           <xsl:attribute name="status">
             <xsl:value-of select="."/>
@@ -2209,28 +2139,28 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="@place">
+  <xsl:template match="@PLACE">
     <xsl:if test="not(lower-case(.) ='unspecified')">
       <xsl:attribute name="place">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@sample">
+  <xsl:template match="@SAMPLE">
     <xsl:if test="not(lower-case(.) ='complete')">
       <xsl:attribute name="sample">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="@org">
+  <xsl:template match="@ORG">
     <xsl:if test="not(lower-case(.) ='uniform')">
       <xsl:attribute name="org">
         <xsl:value-of select="."/>
       </xsl:attribute>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="TEIHEADER/@type">
+  <xsl:template match="TEIHEADER/@TYPE">
     <xsl:if test="not(lower-case(.) ='text')">
       <xsl:attribute name="type">
         <xsl:value-of select="."/>
@@ -2238,7 +2168,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <!-- yes|no to boolean -->
-  <xsl:template match="@anchored">
+  <xsl:template match="@ANCHORED">
     <xsl:attribute name="anchored">
       <xsl:choose>
         <xsl:when test="lower-case(.)='yes'">true</xsl:when>
@@ -2246,8 +2176,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="SOURCEDESC/@default"/>
-  <xsl:template match="@tei">
+  <xsl:template match="SOURCEDESC/@DEFAULT"/>
+  <xsl:template match="@TEI">
     <xsl:attribute name="tei">
       <xsl:choose>
         <xsl:when test="lower-case(.)='yes'">true</xsl:when>
@@ -2255,49 +2185,29 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:attribute>
   </xsl:template>
-  <xsl:template match="@langKey"/>
-  <xsl:template match="@TEIform"/>
-  <!-- assorted atts -->
-  <xsl:template match="gi/@TEI">
-    <xsl:if test=".='yes'">
-      <xsl:attribute name="scheme">TEI</xsl:attribute>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template match="@old"/>
-  <xsl:template match="ref/@from"/>
-  <xsl:template match="@mergedin">
+  <xsl:template match="@LANGKEY"/>
+  <xsl:template match="@TEIFORM"/>
+  <xsl:template match="@OLD"/>
+  <xsl:template match="REF/@FROM"/>
+  <xsl:template match="@MERGEDIN">
     <xsl:attribute name="mergedIn">
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
-  <!-- deal with the loss of div0 -->
-  <xsl:template match="DIV1|DIV2|DIV3|DIV4|DIV5|DIV6">
-    <xsl:variable name="divName">
-      <xsl:choose>
-        <xsl:when test="ancestor::div0">
-          <xsl:text>div</xsl:text>
-          <xsl:value-of select="number(substring-after(local-name(.),'div')) + 1"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="local-name()"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:element name="{$divName}" namespace="http://www.tei-c.org/ns/1.0">
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
-    </xsl:element>
+
+  <xsl:template match="DIV0|DIV1|DIV2|DIV3|DIV4|DIV5|DIV6|DIV7">
+    <div>
+      <xsl:apply-templates select="@*" />
+      <xsl:apply-templates select="*" />
+    </div>
   </xsl:template>
-  <xsl:template match="div0">
-    <div1>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
-    </div1>
-  </xsl:template>
+
   <!-- remove default values for attributes -->
-  <xsl:template match="ROW/@role[.='data']"/>
-  <xsl:template match="CELL/@role[.='data']"/>
-  <xsl:template match="CELL/@rows[.='1']"/>
-  <xsl:template match="CELL/@cols[.='1']"/>
-  <xsl:template match="Q/@broken[.='no']"/>
+  <xsl:template match="ROW/@ROLE[.='data']"/>
+  <xsl:template match="CELL/@ROLE[.='data']"/>
+  <xsl:template match="CELL/@ROWS[.='1']"/>
+  <xsl:template match="CELL/@COLS[.='1']"/>
+  <xsl:template match="Q/@BROKEN[.='no']"/>
   <xsl:template match="ENCODINGDESC/PROJECTDESC">
     <projectDesc>
       <p>Created by converting TCP files to TEI P5 using tcp2tei.xsl,
@@ -2312,7 +2222,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
-  <xsl:template match="FIGDESC/HI[@rend='sup']">
+  <xsl:template match="FIGDESC/HI[@REND='sup']">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -2331,7 +2241,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template name="Decls">
-    <xsl:if test="key('ROLES',1) or $Rendition/tagsDecl/rendition">
+    <xsl:if test="key('ROLES',1) or $Rendition/tei:tagsDecl/tei:rendition">
       <encodingDesc>
 	<xsl:if test="key('ROLES',1)">
 	  <classDecl>
@@ -2344,9 +2254,9 @@ of this software, even if advised of the possibility of such damage.
 	    </taxonomy>
 	  </classDecl>
 	</xsl:if>
-	<xsl:if test="$Rendition/tagsDecl/rendition">
+	<xsl:if test="$Rendition/tei:tagsDecl/tei:rendition">
 	  <tagsDecl>
-	    <xsl:for-each select="$Rendition/tagsDecl/rendition">
+	    <xsl:for-each select="$Rendition/tei:tagsDecl/tei:rendition">
 	      <rendition scheme="css">
 		<xsl:apply-templates select="@xml:id"/>
 		<xsl:text>content:</xsl:text>
