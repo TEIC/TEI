@@ -420,7 +420,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="key('REFED',@name)">
 	   <define xmlns="http://relaxng.org/ns/structure/1.0" >
-	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
+	     <xsl:apply-templates  select="@*"    mode="pass2"/>
+	     <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
+		   mode="pass2"/>
 	   </define>
 	 </xsl:when>
 	 <xsl:otherwise>
@@ -431,6 +433,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   
+
+
   <xsl:template match="rng:ref" mode="pass2">
       <xsl:choose>
 	<!--
@@ -464,7 +468,27 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
 
-<!-- and again -->
+  <!-- and again -->
+  
+  <xsl:template match="rng:list|rng:element" mode="pass3">
+    <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
+      <xsl:apply-templates  select="@*"  mode="pass3"/>
+      <xsl:variable name="Contents">
+	<xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
+			      mode="pass3"/>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="$Contents//rng:text or $Contents//rng:ref or
+			$Contents//rng:data or $Contents//rng:name or $Contents//rng:value">
+	  <xsl:copy-of select="$Contents"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:copy-of select="$Contents/a:*"/>
+	  <rng:empty/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:element>
+  </xsl:template>
 
   <xsl:template match="processing-instruction()" mode="pass3">
     <xsl:choose>
@@ -481,24 +505,25 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="rng:choice" mode="pass3">
+  <xsl:template match="rng:choice|rng:group" mode="pass3">
       <xsl:choose>
 	<xsl:when test="rng:value|rng:name|.//rng:ref|.//rng:text|.//rng:data">
-	   <choice xmlns="http://relaxng.org/ns/structure/1.0">
+	   <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
-	   </choice>
+	   </xsl:element>
 	</xsl:when>
 	<xsl:otherwise>
-      <xsl:if test="$verbose='true'">
-        <xsl:message>KILLED <xsl:copy-of select="."/></xsl:message>
-      </xsl:if>
+	  <xsl:if test="$verbose='true'">
+	    <xsl:message>KILLED <xsl:copy-of select="."/></xsl:message>
+	  </xsl:if>
 	  <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
 	</xsl:otherwise>
       </xsl:choose>			   
   </xsl:template>
 
-  <xsl:template match="rng:optional" mode="pass3">
+  <xsl:template match="rng:optional|rng:zeroOrMore|rng:oneOrMore" mode="pass3">
       <xsl:choose>
+	<xsl:when test="count(*)=1 and rng:empty"/>
 	<xsl:when test="rng:zeroOrMore and count(*)=1">
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
 	</xsl:when>
@@ -506,47 +531,11 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <optional xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:element name="{name()}" xmlns="http://relaxng.org/ns/structure/1.0">
 	     <xsl:apply-templates
 		 select="*|@*|processing-instruction()|comment()|text()"
 		 mode="pass3"/>
-	  </optional>
-	</xsl:otherwise>
-      </xsl:choose>			   
-  </xsl:template>
-
-  <xsl:template match="rng:oneOrMore" mode="pass3">
-      <xsl:choose>
-	<xsl:when test="rng:zeroOrMore and count(*)=1">
-	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
-	</xsl:when>
-	<xsl:when test="count(*)=1 and rng:group[count(*)=1 and	rng:zeroOrMore]">
-	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	     <xsl:apply-templates
-		 select="*|@*|processing-instruction()|comment()|text()"
-		 mode="pass3"/>
-	  </oneOrMore>
-	</xsl:otherwise>
-      </xsl:choose>			   
-  </xsl:template>
-
-  <xsl:template match="rng:zeroOrMore" mode="pass3">
-      <xsl:choose>
-	<xsl:when test="rng:zeroOrMore and count(*)=1">
-	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
-	</xsl:when>
-	<xsl:when test="count(*)=1 and rng:group[count(*)=1 and	rng:zeroOrMore]">
-	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	     <xsl:apply-templates
-		 select="*|@*|processing-instruction()|comment()|text()"
-		 mode="pass3"/>
-	  </zeroOrMore>
+	  </xsl:element>
 	</xsl:otherwise>
       </xsl:choose>			   
   </xsl:template>

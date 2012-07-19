@@ -1105,31 +1105,34 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:text> </xsl:text>
       <xsl:variable name="Contents">
-         <BLAH>
-            <xsl:choose>
-	      <xsl:when test="tei:content/rng:element">
-                  <xsl:text> ANY</xsl:text>
-	      </xsl:when>
-	      <xsl:when test="tei:content/rng:element[rng:anyName]">
-		<xsl:text> (#PCDATA)</xsl:text>
-	      </xsl:when>
-	      <xsl:when test="tei:content/rng:ref/@name='data.name'">
-		<xsl:text> (#PCDATA)</xsl:text>
-	      </xsl:when>
-	      <xsl:when test="tei:valList[@type='closed']">
-		<xsl:text> (#PCDATA)</xsl:text>
-	      </xsl:when>
-	      <xsl:when test="tei:content">
-		<xsl:apply-templates select="tei:content/*"/>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:text/>
-	      </xsl:otherwise>
-            </xsl:choose>
-         </BLAH>
+	<Contents>
+	<xsl:choose>
+	  <xsl:when test="tei:content/rng:element">
+	    <xsl:text> ANY</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="tei:content/rng:element[rng:anyName]">
+	    <xsl:text> (#PCDATA)</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="tei:content/rng:ref/@name='data.name'">
+	    <xsl:text> (#PCDATA)</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="tei:valList[@type='closed']">
+	    <xsl:text> (#PCDATA)</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="tei:content">
+	    <xsl:apply-templates select="tei:content/*"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	</Contents>
       </xsl:variable>
       <xsl:choose>
          <xsl:when test="$Contents=''">
+            <xsl:text> EMPTY</xsl:text>
+         </xsl:when>
+         <xsl:when test="$Contents='()'">
             <xsl:text> EMPTY</xsl:text>
          </xsl:when>
          <xsl:otherwise>

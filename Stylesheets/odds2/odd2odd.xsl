@@ -502,7 +502,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test="document($sourceDoc)/id($target)">
 	    <ref  xmlns="http://www.tei-c.org/ns/1.0"
 		  target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/{substring($target,1,2)}.html#{$target}">
-	      <xsl:for-each select="document($DEFAULTSOURCE)/id($target)">
+	      <xsl:for-each select="document($sourceDoc)/id($target)">
 		<xsl:number count="tei:div" format="1.1.1."
 			    level="multiple"/>	  
 		<xsl:text> </xsl:text>
