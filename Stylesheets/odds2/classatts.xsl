@@ -104,6 +104,7 @@ of this software, even if advised of the possibility of such damage.
 	 and seeing if we have overrides on class attributes.
     -->
     <xsl:variable name="E" select="$here"/>
+    <null/>
     <xsl:choose>
       <xsl:when test="not($E//attDef[@mode])">
 	<xsl:for-each select="$here/classes/memberOf">
