@@ -1742,8 +1742,11 @@ so that is only put back in if there is some content
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:sequence select="if ($verbose='true')then 
-			      tei:message(concat('Setting source document to ',$source)) else () ,$source"/>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Setting source document to <xsl:value-of
+	  select="$source"/></xsl:message>
+	</xsl:if>
+	<xsl:sequence select="$source"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>

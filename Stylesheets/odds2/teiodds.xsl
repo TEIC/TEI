@@ -116,12 +116,16 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareMacros" use="@ident"/>
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareMacrosModule" use="@module"/>
   <xsl:key match="tei:macroSpec[@predeclare='true']" name="PredeclareAllMacros" use="1"/>
+
+  <xsl:variable name="BASE" select="base-uri(/tei:TEI)"/>
+
   <xsl:variable name="parameterize">
     <xsl:choose>
       <xsl:when test="key('SCHEMASPECS',1)">false</xsl:when>
       <xsl:otherwise>true</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
+
   <xsl:variable name="whichSchemaSpec">
     <xsl:choose>
       <xsl:when test="$selectedSchema">
@@ -1236,7 +1240,7 @@ select="$makeDecls"/></xsl:message>
               <xsl:comment>Start of import of <xsl:value-of select="@url"/>
               </xsl:comment>
               <div xmlns="http://relaxng.org/ns/structure/1.0">
-                <xsl:for-each select="document(@url)/rng:grammar">
+                <xsl:for-each select="doc(resolve-uri(@url,$BASE))/rng:grammar">
                   <!-- the "expandRNG" processing changed 2011-08-25 by Syd Bauman: -->
                   <!-- added a 'prefix' parameter which value is prefixed to pattern -->
                   <!-- names in the included schema. This prevents collisions in the -->
@@ -1291,7 +1295,8 @@ select="$makeDecls"/></xsl:message>
     </xsl:if>
     <xsl:comment>Start of import of <xsl:value-of select="@href"/></xsl:comment>
     <div xmlns="http://relaxng.org/ns/structure/1.0">
-      <xsl:for-each select="document(@href)/rng:grammar">
+    <xsl:for-each
+	  select="doc(resolve-uri(@href,base-uri(/)))/rng:grammar">
         <xsl:apply-templates mode="expandRNG" select="@*|node()">
           <xsl:with-param name="prefix" select="$prefix"/>
         </xsl:apply-templates>
@@ -1880,9 +1885,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:for-each select="document(@target)">
-          <xsl:apply-templates mode="expandSpecs"/>
-        </xsl:for-each>
+        <xsl:apply-templates select="doc(resolve-uri(@target,$BASE))" mode="expandSpecs"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

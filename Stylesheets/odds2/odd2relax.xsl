@@ -60,6 +60,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:key name="PATTERNS" match="rng:define[rng:element/@name]" use="'true'"/>
+  <xsl:key name="XPATTERNS" match="rng:define[rng:element/@name]" use="@name"/>
   <xsl:key name="REFED" match="rng:ref" use="@name"/>
   <xsl:key name="DEFED" match="rng:define" use="@name"/>
   <xsl:key name="EDEF" match="rng:define[rng:element]" use="1"/>
@@ -313,6 +314,26 @@ of this software, even if advised of the possibility of such damage.
          </xsl:choose>
       </xsl:for-each>
   </xsl:template>
+
+  <xsl:template name="copyright">
+    <xsl:for-each
+	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+      <xsl:if test="count(tei:licence)&gt;1">
+	<xsl:text>This material is dual-licensed.&#10;</xsl:text>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="tei:licence">
+    <xsl:if test="@target">
+      <xsl:text>[</xsl:text>
+      <xsl:value-of select="@target"/>
+      <xsl:text>] </xsl:text>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </xsl:template>
+
   <xsl:template name="NameList">
 <!-- walk over all the elementSpec elements and make list of 
        elements -->
@@ -323,6 +344,7 @@ of this software, even if advised of the possibility of such damage.
          </define>
       </xsl:for-each>
   </xsl:template>
+
   <xsl:template name="predeclare-classes">
       <xsl:comment>0. predeclared classes</xsl:comment>
       <xsl:for-each select="key('predeclaredClasses',1)">
@@ -496,21 +518,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:element>
   </xsl:template>
 
-  <xsl:template match="processing-instruction()" mode="pass3">
-    <xsl:choose>
-      <xsl:when test="name()='NameList'">
-	<xsl:if test="$verbose='true'">
-	  <xsl:message>Expand 'NameList' processing-instruction</xsl:message>
-	</xsl:if>
-	<choice xmlns="http://relaxng.org/ns/structure/1.0">
-	  <xsl:for-each select="key('PATTERNS','true')">
-	    <ref name="{@name}" />
-	  </xsl:for-each>
-	</choice>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-
   <xsl:template match="rng:choice|rng:group" mode="pass3">
       <xsl:choose>
 	<xsl:when test="rng:value|rng:name|.//rng:ref|.//rng:text|.//rng:data">
@@ -546,9 +553,25 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>			   
   </xsl:template>
 
+  <xsl:template match="processing-instruction()" mode="pass3">
+    <xsl:choose>
+      <xsl:when test="name()='NameList'">
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Expand 'NameList' processing-instruction</xsl:message>
+	</xsl:if>
+	<choice xmlns="http://relaxng.org/ns/structure/1.0">
+	  <xsl:for-each select="key('PATTERNS','true')">
+	    <xsl:sort select="@name"/>
+	    <ref name="{@name}" />
+	  </xsl:for-each>
+	</choice>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="rng:define" mode="pass3">
       <xsl:choose>
-         <xsl:when test="key('REFED',@name)">
+         <xsl:when test="key('REFED',@name) or key('XPATTERNS',@name)">
 	   <define xmlns="http://relaxng.org/ns/structure/1.0" >
 	     <xsl:apply-templates  select="@*"    mode="pass3"/>
 	     <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
@@ -571,25 +594,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:copy>
          <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
       </xsl:copy>
-  </xsl:template>
-
-  <xsl:template name="copyright">
-    <xsl:for-each
-	select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
-      <xsl:if test="count(tei:licence)&gt;1">
-	<xsl:text>This material is dual-licensed.&#10;</xsl:text>
-      </xsl:if>
-      <xsl:apply-templates/>
-    </xsl:for-each>
-  </xsl:template>
-
-  <xsl:template match="tei:licence">
-    <xsl:if test="@target">
-      <xsl:text>[</xsl:text>
-      <xsl:value-of select="@target"/>
-      <xsl:text>] </xsl:text>
-    </xsl:if>
-    <xsl:apply-templates/>
   </xsl:template>
 
 </xsl:stylesheet>
