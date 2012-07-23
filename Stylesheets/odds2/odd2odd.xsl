@@ -231,8 +231,9 @@ of this software, even if advised of the possibility of such damage.
 			      select="id(substring(@target,2))/*"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:sequence select="if ($verbose)then tei:message(concat('... read from  ',resolve-uri(@target,base-uri(/tei:TEI))))
-			      else ()"/>
+	  <xsl:if test="$verbose='true'">
+	    <xsl:sequence select="tei:message(concat('... read from ',resolve-uri(@target,base-uri(/tei:TEI))))"/>
+	  </xsl:if>
 	<xsl:for-each 
 	    select="doc(resolve-uri(@target,base-uri(/tei:TEI)))">
 	  <xsl:choose>
@@ -1741,7 +1742,7 @@ so that is only put back in if there is some content
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:sequence select="if ($verbose)then 
+	<xsl:sequence select="if ($verbose='true')then 
 			      tei:message(concat('Setting source document to ',$source)) else () ,$source"/>
       </xsl:otherwise>
     </xsl:choose>

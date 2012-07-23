@@ -14,7 +14,8 @@
                 exclude-result-prefixes="fo a tei html s rng sch xsi teix xs"
                 version="2.0">
   <xsl:import href="../common2/verbatim.xsl"/>
-  <xsl:import href="teiodds.xsl"/>
+  <xsl:import href="teiodds.xsl"/> 
+  <xsl:import href="classatts.xsl"/>
   <xsl:import href="../common2/tei.xsl"/>
   <xsl:include href="../common2/tagdocs.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -95,6 +96,18 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="displayMode">rnc</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="idPrefix">TEI.</xsl:param>
+
+
+  <xsl:template match="/">
+    <xsl:variable name="resolvedClassatts">
+      <xsl:apply-templates  mode="classatts"/>
+    </xsl:variable>
+    <xsl:for-each select="$resolvedClassatts">
+      <xsl:apply-templates/>
+    </xsl:for-each>
+  </xsl:template>
+
+
   <xsl:template name="identifyElement">
       <xsl:param name="id"/>
       <xsl:attribute name="xml:id">

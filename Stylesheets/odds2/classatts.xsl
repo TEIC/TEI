@@ -67,7 +67,7 @@ of this software, even if advised of the possibility of such damage.
     attribute. Process their attList and class list separately,
     to identify attributes overriding those inherited from a class.</desc>
   </doc>
-  <xsl:template match="elementSpec[.//attDef[@mode]]" mode="classatts">
+  <xsl:template match="elementSpec" mode="classatts">
     <xsl:variable name="E" select="."/>
     <xsl:copy>
       <xsl:apply-templates select="@*[not(name()='mode')]"  mode="classatts"/>
@@ -93,7 +93,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Walk over each class membership; visit that class;
     see it has attributes; check each of these against an override
     in original element. If so, merge the two together and make a
-    local copy. If a class has ttriggered this behaviour, return
+    local copy. If a class has triggered this behaviour, return
     pointers to untouched class attributes, and a set of attDefs. 
     Otherwise, return a memberOf.</desc>
   </doc>
@@ -104,23 +104,42 @@ of this software, even if advised of the possibility of such damage.
 	 and seeing if we have overrides on class attributes.
     -->
     <xsl:variable name="E" select="$here"/>
-    <xsl:for-each select="$here/classes/memberOf">
-      <xsl:variable name="overrides">
-	<xsl:call-template name="classAttributes">
-	  <xsl:with-param name="E" select="$E"/>
-	</xsl:call-template>
-      </xsl:variable>
-      <xsl:choose>
-	<xsl:when test="not($overrides/override)">	  
+    <xsl:choose>
+      <xsl:when test="not($E//attDef[@mode])">
+	<xsl:for-each select="$here/classes/memberOf">
 	  <memberOf key="{@key}"/>
-	  <attRef name="{@key}.attributes"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:copy-of select="$overrides/attRef"/>
-	  <xsl:copy-of select="$overrides/attDef"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+	  <xsl:if test="key('ATTCLASSES',@key)">
+	    <attRef name="{@key}.attributes"/>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:for-each select="$here/classes/memberOf">
+	  <xsl:choose>
+	    <xsl:when test="not(key('ATTCLASSES',@key))">
+	      <memberOf key="{@key}"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:variable name="overrides">
+		<xsl:call-template name="classAttributes">
+		  <xsl:with-param name="E" select="$E"/>
+		</xsl:call-template>
+	      </xsl:variable>
+	      <xsl:choose>
+		<xsl:when test="not($overrides/override)">	  
+		  <memberOf key="{@key}"/>
+		  <attRef name="{@key}.attributes"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:copy-of select="$overrides/attRef"/>
+		  <xsl:copy-of select="$overrides/attDef"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
   <xsl:template name="classAttributes">
