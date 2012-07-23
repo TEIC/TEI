@@ -49,13 +49,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:choose>
           <xsl:when test="starts-with(@target,'#')">
             <xsl:variable name="Ancestor">
-              <xsl:value-of select="key(substr(@target,2)/ancestor::tei:div[last()]/@xml:id"/>
+              <xsl:value-of select="id(substring(@target,2))/ancestor::tei:div[last()]/@xml:id"/>
             </xsl:variable>
-<xsl:message>FOO <xsl:value-of select="$Ancestor"/>: <xsl:sequence select="index-of(('AB', 'AI', 'CC', 'CE', 'CH',
-			      'CO', 'DI', 'DR', 'DS', 'FS', 'FT',
-			      'GD', 'HD', 'MS', 'ND', 'NH', 'PH',
-			      'SA', 'SG', 'ST', 'TC', 'TD', 'TS',
-			      'USE', 'VE', 'WD'),$Ancestor)"/></xsl:message>
             <xsl:choose>
               <xsl:when test="index-of(('AB', 'AI', 'CC', 'CE', 'CH',
 			      'CO', 'DI', 'DR', 'DS', 'FS', 'FT',
