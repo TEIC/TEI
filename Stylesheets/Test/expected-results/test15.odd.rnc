@@ -438,13 +438,6 @@ att.global.attribute.xmlspace =
       ##	white space in the source
       "preserve"
   }?
-att.handFeatures.attributes =
-  att.handFeatures.attribute.scribe,
-  att.handFeatures.attribute.scribeRef,
-  att.handFeatures.attribute.script,
-  att.handFeatures.attribute.scriptRef,
-  att.handFeatures.attribute.medium,
-  att.handFeatures.attribute.scope
 att.handFeatures.attribute.scribe =
   
   ## gives a name or other identifier for the scribe
@@ -882,11 +875,6 @@ model.nameLike.agent_sequenceOptional = name?
 model.nameLike.agent_sequenceOptionalRepeatable = name*
 model.nameLike.agent_sequenceRepeatable = name+
 model.segLike = seg
-model.segLike_alternation = seg
-model.segLike_sequence = seg
-model.segLike_sequenceOptional = seg?
-model.segLike_sequenceOptionalRepeatable = seg*
-model.segLike_sequenceRepeatable = seg+
 model.hiLike = hi
 model.hiLike_alternation = hi
 model.hiLike_sequence = hi
@@ -941,17 +929,6 @@ model.emphLike_sequenceRepeatable =
   term+,
   title+
 model.highlighted = model.hiLike | model.emphLike
-model.highlighted_alternation =
-  model.hiLike_alternation | model.emphLike_alternation
-model.highlighted_sequence =
-  model.hiLike_sequence, model.emphLike_sequence
-model.highlighted_sequenceOptional =
-  model.hiLike_sequenceOptional?, model.emphLike_sequenceOptional?
-model.highlighted_sequenceOptionalRepeatable =
-  model.hiLike_sequenceOptionalRepeatable*,
-  model.emphLike_sequenceOptionalRepeatable*
-model.highlighted_sequenceRepeatable =
-  model.hiLike_sequenceRepeatable+, model.emphLike_sequenceRepeatable+
 model.dateLike = date | time
 model.dateLike_alternation = date | time
 model.dateLike_sequence = date, time
@@ -972,12 +949,6 @@ model.egLike_sequenceOptional = empty
 model.egLike_sequenceOptionalRepeatable = empty
 model.egLike_sequenceRepeatable = notAllowed
 model.graphicLike = graphic | binaryObject | formula
-model.graphicLike_alternation = graphic | binaryObject | formula
-model.graphicLike_sequence = graphic, binaryObject, formula
-model.graphicLike_sequenceOptional = graphic?, binaryObject?, formula?
-model.graphicLike_sequenceOptionalRepeatable =
-  graphic*, binaryObject*, formula*
-model.graphicLike_sequenceRepeatable = graphic+, binaryObject+, formula+
 model.pPart.editorial = choice | abbr | expan
 model.pPart.editorial_alternation = choice | abbr | expan
 model.pPart.editorial_sequence = choice, abbr, expan
@@ -998,47 +969,10 @@ model.pPart.transcriptional_sequenceOptionalRepeatable =
 model.pPart.transcriptional_sequenceRepeatable =
   sic+, corr+, reg+, orig+, add+, del+, unclear+
 model.pPart.edit = model.pPart.editorial | model.pPart.transcriptional
-model.pPart.edit_alternation =
-  model.pPart.editorial_alternation
-  | model.pPart.transcriptional_alternation
-model.pPart.edit_sequence =
-  model.pPart.editorial_sequence, model.pPart.transcriptional_sequence
-model.pPart.edit_sequenceOptional =
-  model.pPart.editorial_sequenceOptional?,
-  model.pPart.transcriptional_sequenceOptional?
-model.pPart.edit_sequenceOptionalRepeatable =
-  model.pPart.editorial_sequenceOptionalRepeatable*,
-  model.pPart.transcriptional_sequenceOptionalRepeatable*
-model.pPart.edit_sequenceRepeatable =
-  model.pPart.editorial_sequenceRepeatable+,
-  model.pPart.transcriptional_sequenceRepeatable+
 model.ptrLike = ptr | ref
-model.ptrLike_alternation = ptr | ref
-model.ptrLike_sequence = ptr, ref
-model.ptrLike_sequenceOptional = ptr?, ref?
-model.ptrLike_sequenceOptionalRepeatable = ptr*, ref*
-model.ptrLike_sequenceRepeatable = ptr+, ref+
 model.global.meta =
   index | link | linkGrp | timeline | join | joinGrp | alt | altGrp
-model.global.meta_alternation =
-  index | link | linkGrp | timeline | join | joinGrp | alt | altGrp
-model.global.meta_sequence =
-  index, link, linkGrp, timeline, join, joinGrp, alt, altGrp
-model.global.meta_sequenceOptional =
-  index?, link?, linkGrp?, timeline?, join?, joinGrp?, alt?, altGrp?
-model.global.meta_sequenceOptionalRepeatable =
-  index*, link*, linkGrp*, timeline*, join*, joinGrp*, alt*, altGrp*
-model.global.meta_sequenceRepeatable =
-  index+, link+, linkGrp+, timeline+, join+, joinGrp+, alt+, altGrp+
 model.milestoneLike = milestone | gb | pb | lb | cb | anchor
-model.milestoneLike_alternation = milestone | gb | pb | lb | cb | anchor
-model.milestoneLike_sequence = milestone, gb, pb, lb, cb, anchor
-model.milestoneLike_sequenceOptional =
-  milestone?, gb?, pb?, lb?, cb?, anchor?
-model.milestoneLike_sequenceOptionalRepeatable =
-  milestone*, gb*, pb*, lb*, cb*, anchor*
-model.milestoneLike_sequenceRepeatable =
-  milestone+, gb+, pb+, lb+, cb+, anchor+
 model.gLike = notAllowed
 model.biblLike = bibl | biblStruct | biblFull
 model.biblLike_alternation = bibl | biblStruct | biblFull
@@ -1066,11 +1000,6 @@ model.listLike_sequenceOptional = \list?, listBibl?, table?
 model.listLike_sequenceOptionalRepeatable = \list*, listBibl*, table*
 model.listLike_sequenceRepeatable = \list+, listBibl+, table+
 model.noteLike = note
-model.noteLike_alternation = note
-model.noteLike_sequence = note
-model.noteLike_sequenceOptional = note?
-model.noteLike_sequenceOptionalRepeatable = note*
-model.noteLike_sequenceRepeatable = note+
 model.lLike = l
 model.lLike_alternation = l
 model.lLike_sequence = l
@@ -1091,28 +1020,7 @@ model.stageLike_sequenceOptionalRepeatable = stage*
 model.stageLike_sequenceRepeatable = stage+
 model.entryPart = notAllowed
 model.global.edit = gap
-model.global.edit_alternation = gap
-model.global.edit_sequence = gap
-model.global.edit_sequenceOptional = gap?
-model.global.edit_sequenceOptionalRepeatable = gap*
-model.global.edit_sequenceRepeatable = gap+
 model.divPart = model.lLike | model.pLike | lg | sp
-model.divPart_alternation =
-  model.lLike_alternation | model.pLike_alternation | lg | sp
-model.divPart_sequence =
-  model.lLike_sequence, model.pLike_sequence, lg, sp
-model.divPart_sequenceOptional =
-  model.lLike_sequenceOptional?, model.pLike_sequenceOptional?, lg?, sp?
-model.divPart_sequenceOptionalRepeatable =
-  model.lLike_sequenceOptionalRepeatable*,
-  model.pLike_sequenceOptionalRepeatable*,
-  lg*,
-  sp*
-model.divPart_sequenceRepeatable =
-  model.lLike_sequenceRepeatable+,
-  model.pLike_sequenceRepeatable+,
-  lg+,
-  sp+
 model.publicationStmtPart =
   address
   | date
@@ -1142,16 +1050,6 @@ model.qLike_sequenceRepeatable =
   model.quoteLike_sequenceRepeatable+, said+, q+, floatingText+
 model.respLike =
   author | editor | respStmt | meeting | sponsor | funder | principal
-model.respLike_alternation =
-  author | editor | respStmt | meeting | sponsor | funder | principal
-model.respLike_sequence =
-  author, editor, respStmt, meeting, sponsor, funder, principal
-model.respLike_sequenceOptional =
-  author?, editor?, respStmt?, meeting?, sponsor?, funder?, principal?
-model.respLike_sequenceOptionalRepeatable =
-  author*, editor*, respStmt*, meeting*, sponsor*, funder*, principal*
-model.respLike_sequenceRepeatable =
-  author+, editor+, respStmt+, meeting+, sponsor+, funder+, principal+
 model.divWrapper =
   meeting
   | byline
@@ -1161,60 +1059,7 @@ model.divWrapper =
   | salute
   | docAuthor
   | docDate
-model.divWrapper_alternation =
-  meeting
-  | byline
-  | dateline
-  | argument
-  | epigraph
-  | salute
-  | docAuthor
-  | docDate
-model.divWrapper_sequence =
-  meeting,
-  byline,
-  dateline,
-  argument,
-  epigraph,
-  salute,
-  docAuthor,
-  docDate
-model.divWrapper_sequenceOptional =
-  meeting?,
-  byline?,
-  dateline?,
-  argument?,
-  epigraph?,
-  salute?,
-  docAuthor?,
-  docDate?
-model.divWrapper_sequenceOptionalRepeatable =
-  meeting*,
-  byline*,
-  dateline*,
-  argument*,
-  epigraph*,
-  salute*,
-  docAuthor*,
-  docDate*
-model.divWrapper_sequenceRepeatable =
-  meeting+,
-  byline+,
-  dateline+,
-  argument+,
-  epigraph+,
-  salute+,
-  docAuthor+,
-  docDate+
 model.divTopPart = model.headLike | opener
-model.divTopPart_alternation = model.headLike_alternation | opener
-model.divTopPart_sequence = model.headLike_sequence, opener
-model.divTopPart_sequenceOptional =
-  model.headLike_sequenceOptional?, opener?
-model.divTopPart_sequenceOptionalRepeatable =
-  model.headLike_sequenceOptionalRepeatable*, opener*
-model.divTopPart_sequenceRepeatable =
-  model.headLike_sequenceRepeatable+, opener+
 model.divTop = model.divWrapper | model.divTopPart
 model.pLike.front =
   head
@@ -1228,14 +1073,6 @@ model.pLike.front =
   | docImprint
   | docDate
 model.divBottomPart = trailer | closer | signed | postscript
-model.divBottomPart_alternation = trailer | closer | signed | postscript
-model.divBottomPart_sequence = trailer, closer, signed, postscript
-model.divBottomPart_sequenceOptional =
-  trailer?, closer?, signed?, postscript?
-model.divBottomPart_sequenceOptionalRepeatable =
-  trailer*, closer*, signed*, postscript*
-model.divBottomPart_sequenceRepeatable =
-  trailer+, closer+, signed+, postscript+
 model.divBottom = model.divWrapper | model.divBottomPart
 model.titlepagePart =
   graphic
@@ -1250,24 +1087,9 @@ model.titlepagePart =
   | docEdition
   | docImprint
   | docDate
-model.msQuoteLike = title
-model.msQuoteLike_alternation = title
-model.msQuoteLike_sequence = title
-model.msQuoteLike_sequenceOptional = title?
-model.msQuoteLike_sequenceOptionalRepeatable = title*
-model.msQuoteLike_sequenceRepeatable = title+
 model.choicePart =
   sic | corr | reg | orig | unclear | abbr | expan | seg
 model.imprintPart = publisher | biblScope | pubPlace | distributor
-model.imprintPart_alternation =
-  publisher | biblScope | pubPlace | distributor
-model.imprintPart_sequence = publisher, biblScope, pubPlace, distributor
-model.imprintPart_sequenceOptional =
-  publisher?, biblScope?, pubPlace?, distributor?
-model.imprintPart_sequenceOptionalRepeatable =
-  publisher*, biblScope*, pubPlace*, distributor*
-model.imprintPart_sequenceRepeatable =
-  publisher+, biblScope+, pubPlace+, distributor+
 model.catDescPart = notAllowed
 model.addressLike = email | address
 model.addressLike_alternation = email | address
@@ -1308,31 +1130,6 @@ model.pPart.data =
   | model.measureLike
   | model.addressLike
   | model.nameLike
-model.pPart.data_alternation =
-  model.dateLike_alternation
-  | model.measureLike_alternation
-  | model.addressLike_alternation
-  | model.nameLike_alternation
-model.pPart.data_sequence =
-  model.dateLike_sequence,
-  model.measureLike_sequence,
-  model.addressLike_sequence,
-  model.nameLike_sequence
-model.pPart.data_sequenceOptional =
-  model.dateLike_sequenceOptional?,
-  model.measureLike_sequenceOptional?,
-  model.addressLike_sequenceOptional?,
-  model.nameLike_sequenceOptional?
-model.pPart.data_sequenceOptionalRepeatable =
-  model.dateLike_sequenceOptionalRepeatable*,
-  model.measureLike_sequenceOptionalRepeatable*,
-  model.addressLike_sequenceOptionalRepeatable*,
-  model.nameLike_sequenceOptionalRepeatable*
-model.pPart.data_sequenceRepeatable =
-  model.dateLike_sequenceRepeatable+,
-  model.measureLike_sequenceRepeatable+,
-  model.addressLike_sequenceRepeatable+,
-  model.nameLike_sequenceRepeatable+
 model.inter =
   model.egLike
   | model.biblLike
@@ -1340,41 +1137,6 @@ model.inter =
   | model.listLike
   | model.stageLike
   | model.qLike
-model.inter_alternation =
-  model.egLike_alternation
-  | model.biblLike_alternation
-  | model.labelLike_alternation
-  | model.listLike_alternation
-  | model.stageLike_alternation
-  | model.qLike_alternation
-model.inter_sequence =
-  model.egLike_sequence,
-  model.biblLike_sequence,
-  model.labelLike_sequence,
-  model.listLike_sequence,
-  model.stageLike_sequence,
-  model.qLike_sequence
-model.inter_sequenceOptional =
-  model.egLike_sequenceOptional?,
-  model.biblLike_sequenceOptional?,
-  model.labelLike_sequenceOptional?,
-  model.listLike_sequenceOptional?,
-  model.stageLike_sequenceOptional?,
-  model.qLike_sequenceOptional?
-model.inter_sequenceOptionalRepeatable =
-  model.egLike_sequenceOptionalRepeatable*,
-  model.biblLike_sequenceOptionalRepeatable*,
-  model.labelLike_sequenceOptionalRepeatable*,
-  model.listLike_sequenceOptionalRepeatable*,
-  model.stageLike_sequenceOptionalRepeatable*,
-  model.qLike_sequenceOptionalRepeatable*
-model.inter_sequenceRepeatable =
-  model.egLike_sequenceRepeatable+,
-  model.biblLike_sequenceRepeatable+,
-  model.labelLike_sequenceRepeatable+,
-  model.listLike_sequenceRepeatable+,
-  model.stageLike_sequenceRepeatable+,
-  model.qLike_sequenceRepeatable+
 model.common = model.divPart | model.inter
 model.phrase =
   model.segLike
@@ -1504,6 +1266,8 @@ q =
   ##     passages that are mentioned but not used. [3.3.3. ]
   element q {
     macro.specialPara,
+    att.global.attributes,
+    att.ascribed.attributes,
     
     ## may be used to indicate whether the offset passage is spoken or thought, or to
     ##         characterize it more finely.
@@ -1537,8 +1301,6 @@ q =
         ## refering to itself, not its normal referant
         "mentioned"
     }?,
-    att.global.attributes,
-    att.ascribed.attributes,
     empty
   }
 cit =
@@ -3392,11 +3154,6 @@ change =
     att.docStatus.attributes,
     att.global.attributes,
     att.typed.attributes,
-    
-    ## points to one or more elements that belong to this change.
-    attribute target {
-      list { data.pointer, data.pointer* }
-    }?,
     empty
   }
 listChange =
@@ -3407,10 +3164,6 @@ listChange =
     (listChange | change)+,
     att.global.attributes,
     att.sortable.attributes,
-    
-    ## indicates whether the ordering of its child change
-    ## elements is to be considered significant or not
-    [ a:defaultValue = "true" ] attribute ordered { data.truthValue }?,
     empty
   }
 geoDecl =
