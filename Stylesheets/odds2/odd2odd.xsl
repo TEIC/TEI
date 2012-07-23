@@ -1249,7 +1249,14 @@ so that is only put back in if there is some content
     <!-- first put in the ones we know take precedence as add or
 	 replace, or are class attributes -->
     <xsl:for-each select="tei:attList/tei:attDef[@ident=$ORIGINAL/tei:attList//tei:attDef/@ident
-				 and (@mode='add' or not(@mode) or @mode='replace')]">
+				 and @mode='replace']">
+      <attDef xmlns="http://www.tei-c.org/ns/1.0" >
+	<xsl:apply-templates select="@ident"/>
+	<xsl:apply-templates select="@usage"/>
+	<xsl:apply-templates mode="odd2odd-justcopy"/>
+      </attDef>
+    </xsl:for-each>
+    <xsl:for-each select="tei:attList/tei:attDef[@mode='add' or not(@mode)]">
       <attDef xmlns="http://www.tei-c.org/ns/1.0" >
 	<xsl:apply-templates select="@ident"/>
 	<xsl:apply-templates select="@usage"/>
@@ -1257,7 +1264,8 @@ so that is only put back in if there is some content
       </attDef>
     </xsl:for-each>
     <xsl:apply-templates mode="odd2odd-justcopy"
-			 select="tei:attList/tei:attDef[@mode and not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
+			 select="tei:attList/tei:attDef[(@mode='change'
+				 or @mode='replace') and not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
     <!-- now look at each of the original element's attributes and see
     if we have an update -->
     <xsl:for-each select="$ORIGINAL/tei:attList">
