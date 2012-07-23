@@ -47,26 +47,21 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="ancestor::tei:remarks or ancestor::tei:listRef or ancestor::tei:valDesc">
         <xsl:choose>
-          <xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
-            <xsl:call-template name="makeInternalLink">
-              <xsl:with-param name="target" select="substring(@target,2)"/>
-              <xsl:with-param name="ptr" select="if (self::tei:ptr)
-						 then true() else false()"/>
-              <xsl:with-param name="dest">
-                <xsl:call-template name="generateEndLink">
-                  <xsl:with-param name="where">
-                    <xsl:value-of select="substring(@target,2)"/>
-                  </xsl:with-param>
-                </xsl:call-template>
-              </xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
           <xsl:when test="starts-with(@target,'#')">
-            <xsl:variable name="Chapter">
-              <xsl:value-of select="substring(@target,2,2)"/>
+            <xsl:variable name="Ancestor">
+              <xsl:value-of select="key(substr(@target,2)/ancestor::tei:div[last()]/@xml:id"/>
             </xsl:variable>
+<xsl:message>FOO <xsl:value-of select="$Ancestor"/>: <xsl:sequence select="index-of(('AB', 'AI', 'CC', 'CE', 'CH',
+			      'CO', 'DI', 'DR', 'DS', 'FS', 'FT',
+			      'GD', 'HD', 'MS', 'ND', 'NH', 'PH',
+			      'SA', 'SG', 'ST', 'TC', 'TD', 'TS',
+			      'USE', 'VE', 'WD'),$Ancestor)"/></xsl:message>
             <xsl:choose>
-              <xsl:when test="$Chapter='AB' or        $Chapter='AI' or        $Chapter='CC' or        $Chapter='CE' or        $Chapter='CH' or        $Chapter='CO' or        $Chapter='DI' or        $Chapter='DR' or        $Chapter='DS' or        $Chapter='FS' or        $Chapter='FT' or        $Chapter='GD' or        $Chapter='HD' or        $Chapter='MS' or        $Chapter='ND' or        $Chapter='NH' or        $Chapter='PH' or        $Chapter='SA' or        $Chapter='SG' or        $Chapter='ST' or        $Chapter='TC' or        $Chapter='TD' or        $Chapter='TS' or        $Chapter='USE' or        $Chapter='VE' or        $Chapter='WD'">
+              <xsl:when test="index-of(('AB', 'AI', 'CC', 'CE', 'CH',
+			      'CO', 'DI', 'DR', 'DS', 'FS', 'FT',
+			      'GD', 'HD', 'MS', 'ND', 'NH', 'PH',
+			      'SA', 'SG', 'ST', 'TC', 'TD', 'TS',
+			      'USE', 'VE', 'WD'),$Ancestor) &gt; 0">
                 <xsl:call-template name="makeExternalLink">
 		  <xsl:with-param name="ptr" select="if (self::tei:ptr)
 						 then true() else false()"/>
@@ -74,12 +69,26 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
                     <xsl:value-of select="$documentationLanguage"/>
                     <xsl:text>/html/</xsl:text>
-                    <xsl:value-of select="$Chapter"/>
+                    <xsl:value-of select="$Ancestor"/>
                     <xsl:text>.html</xsl:text>
                     <xsl:value-of select="@target"/>
                   </xsl:with-param>
                 </xsl:call-template>
               </xsl:when>
+	      <xsl:when test="id(substring(@target,2))">
+		<xsl:call-template name="makeInternalLink">
+		  <xsl:with-param name="target" select="substring(@target,2)"/>
+		  <xsl:with-param name="ptr" select="if (self::tei:ptr)
+						     then true() else false()"/>
+		  <xsl:with-param name="dest">
+		    <xsl:call-template name="generateEndLink">
+		      <xsl:with-param name="where">
+			<xsl:value-of select="substring(@target,2)"/>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:when>
               <xsl:otherwise>
                 <xsl:text>«</xsl:text>
                 <xsl:value-of select="@target"/>

@@ -1250,7 +1250,15 @@ so that is only put back in if there is some content
 	 replace, or are class attributes -->
     <xsl:apply-templates mode="odd2odd-justcopy"
 			 select="tei:attList/tei:attDef[@ident=$ORIGINAL/tei:attList//tei:attDef/@ident
-				 and (mode='add' or @mode='replace' or not(@mode))]"/>
+				 and (mode='add' or not(@mode))]"/>
+    <xsl:for-each select="tei:attList/tei:attDef[@ident=$ORIGINAL/tei:attList//tei:attDef/@ident
+				 and @mode='replace']">
+      <attDef xmlns="http://www.tei-c.org/ns/1.0" >
+	<xsl:apply-templates select="@ident"/>
+	<xsl:apply-templates select="@usage"/>
+	<xsl:apply-templates mode="odd2odd-justcopy"/>
+      </attDef>
+    </xsl:for-each>
     <xsl:apply-templates mode="odd2odd-justcopy"
 			 select="tei:attList/tei:attDef[@mode and not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
     <!-- now look at each of the original element's attributes and see
