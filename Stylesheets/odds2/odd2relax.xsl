@@ -15,6 +15,7 @@
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
     version="2.0">
   <xsl:import href="teiodds.xsl"/>
+  <xsl:import href="classatts.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -75,6 +76,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="linkColor"/>
   <xsl:template match="tei:moduleSpec[@type='decls']"/>
   <xsl:template match="/">
+    <xsl:variable name="resolvedClassatts">
+      <xsl:apply-templates  mode="classatts"/>
+    </xsl:variable>
+    <xsl:for-each select="$resolvedClassatts">
       <xsl:choose>
          <xsl:when test="key('SCHEMASPECS',1)">
             <xsl:apply-templates select="key('LISTSCHEMASPECS',$whichSchemaSpec)"/>
@@ -83,6 +88,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates select="key('Modules',1)"/>
          </xsl:otherwise>
       </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
       <xsl:variable name="documentationLanguage">
@@ -538,6 +544,23 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:element>
 	</xsl:otherwise>
       </xsl:choose>			   
+  </xsl:template>
+
+  <xsl:template match="rng:define" mode="pass3">
+      <xsl:choose>
+         <xsl:when test="key('REFED',@name)">
+	   <define xmlns="http://relaxng.org/ns/structure/1.0" >
+	     <xsl:apply-templates  select="@*"    mode="pass3"/>
+	     <xsl:apply-templates  select="*|processing-instruction()|comment()|text()"
+		   mode="pass3"/>
+	   </define>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:if test="$verbose='true'">
+	     <xsl:message>ZAP definition of unused pattern <xsl:value-of select="@name"/></xsl:message>
+	   </xsl:if>
+	 </xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
 
   <xsl:template match="@*|text()|comment()" mode="pass3">

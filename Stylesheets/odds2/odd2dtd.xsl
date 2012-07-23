@@ -10,6 +10,7 @@
                 exclude-result-prefixes="a t tei fo rng xs"
                 version="2.0">
   <xsl:import href="teiodds.xsl"/>
+  <xsl:import href="classatts.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
 
@@ -90,6 +91,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="NSELEMENTS" match="tei:elementSpec[@ns]|tei:attDef[@ns]" use="1"/>
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
   <xsl:template match="/">
+    <xsl:variable name="resolvedClassatts">
+      <xsl:apply-templates  mode="classatts"/>
+    </xsl:variable>
+    <xsl:for-each select="$resolvedClassatts">
       <xsl:choose>
          <xsl:when test="key('SCHEMASPECS',1)">
             <xsl:apply-templates select="key('LISTSCHEMASPECS',$whichSchemaSpec)"/>
@@ -98,6 +103,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="byModule"/>
          </xsl:otherwise>
       </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
   <xsl:template name="byModule">
       <xsl:for-each select="key('Modules',1)">
