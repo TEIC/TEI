@@ -6,7 +6,8 @@ SCRIPTDIR="/home/oxford/newsfeed/"
 #SCRIPTDIR="/home/jamesc/tmp/TEI-newsfeed/"
 INCOMING="incoming.xml"
 EXISTING="atom.xml"
-FEED="https://sourceforge.net/apps/wordpress/tei/feed/atom/"
+#FEED="https://sourceforge.net/apps/wordpress/tei/feed/atom/"
+FEED="https://textencodinginitiative.wordpress.com/feed/atom/"
 
 # move to output directory
 cd $OUTPUTDIR

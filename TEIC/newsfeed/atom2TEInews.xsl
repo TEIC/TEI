@@ -45,7 +45,7 @@ Written 2010-05-29 by James Cummings
         </ul>
       
       	
-      	<p class="bold">Full news archive at: <a href="https://sourceforge.net/apps/wordpress/tei/">TEI Sourceforge Blog</a></p>
+      	<p class="bold">Full news archive at: <a href="http://textencodinginitiative.wordpress.com">TEI-C Wordpress Blog</a></p>
       </div>
       <div class="separator">
         <hr/>
@@ -54,7 +54,7 @@ Written 2010-05-29 by James Cummings
 
       <xsl:apply-templates select="//atom:entry[position() &lt; 25]"/>
 
-    	<p class="bold">Full news archive at: <a href="https://sourceforge.net/apps/wordpress/tei/">TEI Sourceforge Blog</a></p>
+      	<p class="bold">Full news archive at: <a href="http://textencodinginitiative.wordpress.com">TEI-C Wordpress Blog</a></p>
     </div>
 
   </xsl:template>
@@ -67,7 +67,7 @@ Written 2010-05-29 by James Cummings
       <xsl:value-of
         select="translate(translate(substring-after(substring(atom:link[@rel='alternate'][1]/@href, 0,
            string-length(atom:link[@rel='alternate'][1]/@href)),
-      'http://sourceforge.net/apps/wordpress/'), '-', '_'), '/', '-')"
+      'https://textencodinginitiative.wordpress.com/'), '-', '_'), '/', '-')"
       />
     </xsl:variable>
     <li class="toc">
@@ -83,7 +83,7 @@ Written 2010-05-29 by James Cummings
       <xsl:value-of
         select="translate(translate(substring-after(substring(atom:link[@rel='alternate'][1]/@href, 0,
         string-length(atom:link[@rel='alternate'][1]/@href)),
-        'http://sourceforge.net/apps/wordpress/'), '-', '_'), '/', '-')"
+        'https://textencodinginitiative.wordpress.com/'), '-', '_'), '/', '-')"
       />
     </xsl:variable>
 
@@ -114,8 +114,8 @@ Written 2010-05-29 by James Cummings
 
 <xsl:template match="html:script"/>
 
-
-<xsl:template match="html:img">
+<!-- JC/2012-07-24: Just commenting out at time of moving to wordpress.com... can't rely on sourceforge having these any more -->
+<!--<xsl:template match="html:img">
 <xsl:copy>
 <xsl:choose>
 <xsl:when test="not(starts-with(@src, 'http'))"><xsl:attribute name="src" select="concat('https://sourceforge.net', @src)"/>
@@ -126,6 +126,7 @@ Written 2010-05-29 by James Cummings
 <xsl:apply-templates select="@*[not(name()='src')]"/>
 </xsl:copy>
 </xsl:template>
+-->
 
 
 </xsl:stylesheet>
