@@ -17,10 +17,10 @@ SPECIALFILES = \
 	testfand3.xsd \
 	testfand5.xsd \
 	testconstraint2.xsd \
-	testi18n.xsd \
 	testjustfs.xsd \
 	testp4compat.xsd \
 	testplace-kml.special 
+#testi18n.xsd \
 
 default: normal detest special testmeta2010 test-extns test-frag 
 
