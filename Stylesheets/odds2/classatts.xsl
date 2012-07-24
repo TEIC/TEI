@@ -111,7 +111,7 @@ of this software, even if advised of the possibility of such damage.
 	  <memberOf>
 	    <xsl:copy-of select="@*"/>
 	  </memberOf>
-	  <xsl:if test="key('ATTCLASSES',@key)">
+	  <xsl:if test="key('ATTCLASSES',@key) and not($parameterize='true')">
 	    <attRef name="{@key}.attributes"/>
 	  </xsl:if>
 	</xsl:for-each>
@@ -135,7 +135,9 @@ of this software, even if advised of the possibility of such damage.
 		  <memberOf>
 		    <xsl:copy-of select="@*"/>
 		  </memberOf>
-		  <attRef name="{@key}.attributes"/>
+		  <xsl:if test="not($parameterize='true')">
+		    <attRef name="{@key}.attributes"/>
+		  </xsl:if>
 		</xsl:when>
 		<xsl:otherwise>
 		  <xsl:copy-of select="$overrides/attRef"/>
