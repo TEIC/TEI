@@ -105,6 +105,9 @@ of this software, even if advised of the possibility of such damage.
     -->
     <xsl:variable name="E" select="$here"/>
     <null/>
+    <xsl:if test="$autoGlobal='true'">
+      <attRef name="att.global.attributes"/>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="not($E//attDef[@mode])">
 	<xsl:for-each select="$here/classes/memberOf">
