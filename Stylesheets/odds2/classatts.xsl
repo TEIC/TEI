@@ -108,7 +108,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="not($E//attDef[@mode])">
 	<xsl:for-each select="$here/classes/memberOf">
-	  <memberOf key="{@key}"/>
+	  <memberOf>
+	    <xsl:copy-of select="@*"/>
+	  </memberOf>
 	  <xsl:if test="key('ATTCLASSES',@key)">
 	    <attRef name="{@key}.attributes"/>
 	  </xsl:if>
@@ -118,7 +120,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:for-each select="$here/classes/memberOf">
 	  <xsl:choose>
 	    <xsl:when test="not(key('ATTCLASSES',@key))">
-	      <memberOf key="{@key}"/>
+	      <memberOf>
+		<xsl:copy-of select="@*"/>
+	      </memberOf>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:variable name="overrides">
@@ -128,7 +132,9 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:variable>
 	      <xsl:choose>
 		<xsl:when test="not($overrides/override)">	  
-		  <memberOf key="{@key}"/>
+		  <memberOf>
+		    <xsl:copy-of select="@*"/>
+		  </memberOf>
 		  <attRef name="{@key}.attributes"/>
 		</xsl:when>
 		<xsl:otherwise>
