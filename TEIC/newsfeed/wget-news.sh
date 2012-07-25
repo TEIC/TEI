@@ -16,7 +16,7 @@ cd $OUTPUTDIR
 touch $EXISTING
 
 # wget the feed
-wget -q -O $INCOMING $FEED
+wget --no-check-certificate -q -O $INCOMING $FEED
 
 # if identical then stop
 if  cmp $INCOMING $EXISTING &>/dev/null

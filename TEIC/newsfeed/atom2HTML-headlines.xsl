@@ -16,7 +16,7 @@ This xslt stylesheet produces the iframe content for the TEI-C main page.
 -James Cummings 2010-08-23
 -->
 
-  <xsl:param name="newsNum">6</xsl:param>
+  <xsl:param name="newsNum">7</xsl:param>
   <xsl:param name="otherNum">6</xsl:param>
 
 <xsl:template match="/atom:feed">
@@ -27,13 +27,12 @@ This xslt stylesheet produces the iframe content for the TEI-C main page.
            html { margin:0; }
            body {margin-top:0; padding-top: 0;}
            div.news { font-size: 11px; font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif !important;}
-           h2 { color:rgb(0, 72, 125); margin-top: 0; }
-           ul { padding-left: 1.5em; text-indent: -1em; list-style-type:none; }
-           li:before { content: "※ ";}
-           span.newsDate{text-align:right;display:block;font-size:8px;font-style:italic;}
-	   li{margin-bottom:2px;}
+           h2 { color:rgb(0, 72, 125); margin-bottom:6px; font-size:140%;}
+	   ul { margin:0; padding:0; list-style-type:none; }
+	   li {margin:0 0 2px 0;}
 	   li.sticky {font-weight:bold;}
-           
+           span.newsDate{font-size:smaller;font-style:italic; font-weight:normal;}
+	   a { text-decoration:none; }
         </style>
 <meta http-equiv="Pragma" content="no-cache"/> 
   </head>
