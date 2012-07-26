@@ -40,6 +40,14 @@
   <xsl:param name="xrefName"/>
   <xsl:param name="coded">false</xsl:param>
   <xsl:param name="showListRef">false</xsl:param>
+  <xsl:key match="tei:moduleRef" name="ModuleRefs" use="1"/>
+  <xsl:key match="tei:moduleRef" name="MODULEREFS" use="@key"/>
+  <xsl:key match="tei:classRef" name="ClassRefs" use="1"/>
+  <xsl:key match="tei:classRef" name="CLASSREFS" use="@key"/>
+  <xsl:key match="tei:macroRef" name="MacroRefs" use="1"/>
+  <xsl:key match="tei:macroRef" name="MACROREFS" use="@key"/>
+  <xsl:key match="tei:elementRef" name="ElementRefs" use="1"/>
+  <xsl:key match="tei:elementRef" name="ELEMENTREFS" use="@key"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet for making JSON from ODD </p>
@@ -144,7 +152,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="generateTitle"/>
     <xsl:text>","edition": "</xsl:text>
     <xsl:call-template name="generateEdition"/>
-    <xsl:text>","generator": "oddj2son",
+    <xsl:text>","generator": "odd2json",
     "date":"</xsl:text>
     <xsl:call-template name="showDate"/>
     <xsl:text>","modules": [</xsl:text>
@@ -154,6 +162,22 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@ident"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
+      <xsl:call-template name="mode"/>
+      <xsl:text>}</xsl:text>
+      <xsl:if test="not(position() = last())">,</xsl:if>
+      <xsl:text>&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:text>],</xsl:text>
+    
+    <xsl:text>"moduleRefs": [</xsl:text>
+    <xsl:for-each select="key('ModuleRefs',1)">
+      <xsl:sort select="@key"/>
+      <xsl:text>{"key":"</xsl:text>
+      <xsl:value-of select="@key"/>
+      <xsl:text>",</xsl:text>
+      <xsl:call-template name="desc"/>
+      <xsl:text>,</xsl:text>
+      <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
       <xsl:text>&#10;</xsl:text>
@@ -170,6 +194,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@module"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
+      <xsl:text>,</xsl:text>
+      <xsl:call-template name="mode"/>
       <xsl:if test="tei:classes">
 	<xsl:text>,"classes":[</xsl:text>
 	<xsl:for-each select="tei:classes/tei:memberOf">
@@ -224,6 +250,21 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
     <xsl:text>],</xsl:text>
 
+    <xsl:text>"elementRefs": [</xsl:text>
+    <xsl:for-each select="key('ElementRefs',1)">
+      <xsl:sort select="@key"/>
+      <xsl:text>{"key":"</xsl:text>
+      <xsl:value-of select="@key"/>
+      <xsl:text>",</xsl:text>
+      <xsl:call-template name="desc"/>
+      <xsl:text>,</xsl:text>
+      <xsl:call-template name="mode"/>
+      <xsl:text>}</xsl:text>
+      <xsl:if test="not(position() = last())">,</xsl:if>
+      <xsl:text>&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:text>],</xsl:text>
+
     <xsl:text>"modelclasses": [</xsl:text>
     <xsl:for-each select="key('MODELCLASSDOCS',1)">
       <xsl:sort select="@ident"/>
@@ -234,6 +275,23 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of  select="@type"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
+      <xsl:text>,</xsl:text>
+      <xsl:call-template name="mode"/>
+      <xsl:text>}</xsl:text>
+      <xsl:if test="not(position() = last())">,</xsl:if>
+      <xsl:text>&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:text>],</xsl:text>
+
+    <xsl:text>"classRefs": [</xsl:text>
+    <xsl:for-each select="key('ClassRefs',1)">
+      <xsl:sort select="@key"/>
+      <xsl:text>{"key":"</xsl:text>
+      <xsl:value-of select="@key"/>
+      <xsl:text>",</xsl:text>
+      <xsl:call-template name="desc"/>
+      <xsl:text>,</xsl:text>
+      <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
       <xsl:text>&#10;</xsl:text>
@@ -250,6 +308,23 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@type"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
+      <xsl:text>,</xsl:text>
+      <xsl:call-template name="mode"/>
+      <xsl:text>}</xsl:text>
+      <xsl:if test="not(position() = last())">,</xsl:if>
+      <xsl:text>&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:text>],</xsl:text>
+  
+    <xsl:text>"macroRefs": [</xsl:text>
+    <xsl:for-each select="key('MacroRefs',1)">
+      <xsl:sort select="@key"/>
+      <xsl:text>{"key":"</xsl:text>
+      <xsl:value-of select="@key"/>
+      <xsl:text>",</xsl:text>
+      <xsl:call-template name="desc"/>
+      <xsl:text>,</xsl:text>
+      <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
       <xsl:text>&#10;</xsl:text>
@@ -276,6 +351,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:text>"desc":"</xsl:text>
     <xsl:value-of select="replace(normalize-space($d),$dq,$escdq)"/>
+    <xsl:text>"</xsl:text>
+  </xsl:template>
+  
+  <xsl:template name="mode">
+    <xsl:text>"mode":"</xsl:text>
+    <xsl:value-of select="@mode"/>
     <xsl:text>"</xsl:text>
   </xsl:template>
 
