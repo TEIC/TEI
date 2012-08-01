@@ -1348,7 +1348,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-        <xsl:when test="tei:note">
+        <xsl:when test="count(*)=1 and tei:note">
           <xsl:apply-templates/>
         </xsl:when>
         <xsl:otherwise>
