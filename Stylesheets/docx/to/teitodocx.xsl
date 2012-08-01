@@ -208,125 +208,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-        Generic template from msDescription for high-level section
-    </desc>
-  </doc>
-  <xsl:template name="processAsSection">
-    <xsl:param name="level"/>
-    <xsl:param name="implicitBlock"/>
-    <xsl:param name="heading"/>
-    <w:p>
-      <w:pPr>
-        <w:pStyle w:val="tei{local-name()}"/>
-      </w:pPr>
-      <w:r>
-        <w:t>
-          <xsl:value-of select="$heading"/>
-        </w:t>
-      </w:r>
-    </w:p>
-    <xsl:call-template name="block-element"/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template for inline objects
-    </desc>
-  </doc>
-  <xsl:template name="processInline">
-    <xsl:param name="before"/>
-    <xsl:param name="after"/>
-    <xsl:param name="style"/>
-    <xsl:param name="stylename"/>
-    <w:r>
-      <w:rPr>
-        <w:rStyle>
-	  <xsl:attribute name="w:val">
-	    <xsl:choose>
-	      <xsl:when test="$stylename=''">
-		<xsl:text>tei</xsl:text>
-		<xsl:value-of select="local-name()"/>
-	      </xsl:when>
-	      <xsl:otherwise>
-		<xsl:value-of select="$stylename"/>
-	      </xsl:otherwise>
-	    </xsl:choose>
-	  </xsl:attribute>
-	</w:rStyle>
-	<xsl:choose>
-	  <xsl:when test="$style='italic'">
-            <w:i/>
-          </xsl:when>
-          <xsl:when test="$style='bold'">
-            <w:b/>
-          </xsl:when>
-        </xsl:choose>
-        <xsl:if test="$renderAddDel='true' and ancestor-or-self::tei:del">
-          <w:strike/>
-        </xsl:if>
-      </w:rPr>
-      <w:t>
-        <xsl:value-of select="$before"/>
-        <xsl:value-of select="."/>
-        <xsl:value-of select="$after"/>
-      </w:t>
-    </w:r>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template from msDescription for mid-level block
-    </desc>
-  </doc>
-  <xsl:template name="processBlock">
-    <xsl:param name="style"/>
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">
-        <xsl:value-of select="$style"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template from msDescription for labelled object
-    </desc>
-  </doc>
-  <xsl:template name="processWithLabel">
-    <xsl:param name="before"/>
-    <w:r>
-      <w:rPr>
-        <w:i/>
-      </w:rPr>
-      <w:t>
-        <xsl:attribute name="xml:space">preserve</xsl:attribute>
-        <xsl:value-of select="$before"/>
-        <xsl:text>: </xsl:text>
-      </w:t>
-    </w:r>
-    <w:r>
-      <w:rPr>
-        <w:rStyle w:val="tei{local-name()}"/>
-      </w:rPr>
-      <w:t>
-        <xsl:value-of select="."/>
-      </w:t>
-    </w:r>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template from msDescription for literal text
-    </desc>
-  </doc>
-  <xsl:template name="processLiteral">
-    <xsl:param name="text"/>
-    <w:r>
-      <w:rPr/>
-      <w:t>
-        <xsl:attribute name="xml:space">preserve</xsl:attribute>
-        <xsl:value-of select="$text"/>
-      </w:t>
-    </w:r>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
         The starting points in the conversion to docx.
     </desc>
   </doc>
@@ -517,7 +398,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each-group select="current-group()" group-starting-with="*[not(tei:is-inline(.))]">
       <xsl:choose>
         <!-- if the current item is a block element, we process that one,
-                     and then take call this function recursively was all the other
+                     and then call this function recursively over all the other
                      elements -->
         <xsl:when test="self::*[not(tei:is-inline(.))]">
           <!-- process block element -->
@@ -538,12 +419,12 @@ of this software, even if advised of the possibility of such damage.
         <!-- we encountered an inline element. This means that the current group only
                      contains inline elements -->
         <xsl:otherwise>
-          <!--
+	  <!--
 	  <xsl:message>+@@ <xsl:value-of select="name()"/>: pPr:	  <xsl:if test="not(empty($pPr))"><xsl:copy-of
 	  select="$pPr"/></xsl:if>; style: <xsl:if
 	  test="not(empty($style))"><xsl:copy-of
 	  select="$style"/></xsl:if></xsl:message>
--->
+	  -->
           <!-- create all text runs for each item in the current group. we will later
                          on decide whether we are grouping them together in a w:p or not. -->
           <xsl:variable name="innerRuns">
@@ -2563,6 +2444,127 @@ of this software, even if advised of the possibility of such damage.
       <xsl:copy>
 	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
     </xsl:copy>
+  </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+        Generic template from msDescription for high-level section
+    </desc>
+  </doc>
+  <xsl:template name="processAsSection">
+    <xsl:param name="level"/>
+    <xsl:param name="implicitBlock"/>
+    <xsl:param name="heading"/>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="tei{local-name()}"/>
+      </w:pPr>
+      <w:r>
+        <w:t>
+          <xsl:value-of select="$heading"/>
+        </w:t>
+      </w:r>
+    </w:p>
+    <xsl:call-template name="block-element"/>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+        Generic template for inline objects
+    </desc>
+  </doc>
+  <xsl:template name="processInline">
+    <xsl:param name="before"/>
+    <xsl:param name="after"/>
+    <xsl:param name="style"/>
+    <xsl:param name="stylename"/>
+    <w:r>
+      <w:rPr>
+        <w:rStyle>
+	  <xsl:attribute name="w:val">
+	    <xsl:choose>
+	      <xsl:when test="$stylename=''">
+		<xsl:text>tei</xsl:text>
+		<xsl:value-of select="local-name()"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="$stylename"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	</w:rStyle>
+	<xsl:choose>
+	  <xsl:when test="$style='italic'">
+            <w:i/>
+          </xsl:when>
+          <xsl:when test="$style='bold'">
+            <w:b/>
+          </xsl:when>
+        </xsl:choose>
+        <xsl:if test="$renderAddDel='true' and ancestor-or-self::tei:del">
+          <w:strike/>
+        </xsl:if>
+      </w:rPr>
+      <w:t>
+        <xsl:value-of select="$before"/>
+        <xsl:value-of select="."/>
+        <xsl:value-of select="$after"/>
+      </w:t>
+    </w:r>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+        Generic template from msDescription for mid-level block
+    </desc>
+  </doc>
+  <xsl:template name="processBlock">
+    <xsl:param name="style"/>
+    <xsl:call-template name="block-element">
+      <xsl:with-param name="style">
+        <xsl:value-of select="$style"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+        Generic template from msDescription for labelled object
+    </desc>
+  </doc>
+  <xsl:template name="processWithLabel">
+    <xsl:param name="before"/>
+    <w:r>
+      <w:rPr>
+        <w:i/>
+      </w:rPr>
+      <w:t>
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        <xsl:value-of select="$before"/>
+        <xsl:text>: </xsl:text>
+      </w:t>
+    </w:r>
+    <w:r>
+      <w:rPr>
+        <w:rStyle w:val="tei{local-name()}"/>
+      </w:rPr>
+      <w:t>
+        <xsl:value-of select="."/>
+      </w:t>
+    </w:r>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+        Generic template from msDescription for literal text
+    </desc>
+  </doc>
+  <xsl:template name="processLiteral">
+    <xsl:param name="text"/>
+    <w:r>
+      <w:rPr/>
+      <w:t>
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        <xsl:value-of select="$text"/>
+      </w:t>
+    </w:r>
   </xsl:template>
 
 

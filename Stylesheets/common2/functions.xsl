@@ -195,7 +195,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:damage">true</xsl:when>
         <xsl:when test="self::tei:date">true</xsl:when>
         <xsl:when test="self::tei:del">true</xsl:when>
-        <xsl:when test="self::tei:desc">true</xsl:when>
         <xsl:when test="self::tei:depth">true</xsl:when>
         <xsl:when test="self::tei:dim">true</xsl:when>
         <xsl:when test="self::tei:dimensions">true</xsl:when>

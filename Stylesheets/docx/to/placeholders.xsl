@@ -172,6 +172,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:param name="character-style"/>
         <xsl:param name="style"/>
         <xsl:param name="pPr"/>
+
         <xsl:variable name="style">
             <xsl:apply-templates select="." mode="get-style"/>
         </xsl:variable>
