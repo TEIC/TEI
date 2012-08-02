@@ -44,6 +44,9 @@
    </sourceDesc>
   </fileDesc>
   <revisionDesc>
+   <change when="2012-08-02" who="MDH">Fixed <att>xml:lang</att> values to conform with IANA subtag registry and added svn props to file. 
+    Rewrote section on language identification.
+   </change>
    <change when="2011-03-26" who="LB">rename to tei_lite, convert to new
              style ODD; remove application appInfo typeNote scriptNote geoDecl</change>
    <change when="2008-02-01" who="SPQR">remove some unreachable elements,
@@ -1236,8 +1239,7 @@
      Dreigroschenoper</title>?</p><p><mentioned
      xml:lang="fr">Savoir-faire</mentioned> is French
      for know-how.</p><p>The court issued a writ of
-     <term xml:lang="la"
-     >mandamus</term>.</p></egXML></p>
+     <term xml:lang="la">mandamus</term>.</p></egXML></p>
      <p>As these examples show, the <gi>foreign</gi>
      element should not be used to tag foreign words if
      some other more specific element such as
@@ -1250,15 +1252,19 @@
      on the <att>xml:lang</att> attribute, must be
      constructed in a particular way, and must conform
      to common Internet standards<note place="foot">The
-     relevant standards are RFC 3066, and the lists of
-     two and three language identifiers maintained as
-     part of ISO 639 (see
-     http://www.w3.org/WAI/ER/IG/ert/iso639.htm)</note>,
+      relevant standard is <title>Best Current Practice 47</title>
+      (<ptr target="http://tools.ietf.org/html/bcp47"/>). 
+      The authoritative list of registered subtags is maintained by IANA and 
+      is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
+      For a good general overview of the construction of language tags, see 
+      <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
+      a practical step-by-step guide, see 
+      <ptr target="http://www.w3.org/International/questions/qa-choosing-language-tags"/>.</note>,
      as further explained in the relevant section of
      the TEI Guidelines. Some simple example codes for
      a few languages are given here: <table>
      <row>
-     <cell>zh or zho</cell>
+     <cell>zh</cell>
      <cell>Chinese</cell>
      <cell>grc</cell>
      <cell>Ancient Greek</cell>
@@ -1266,25 +1272,25 @@
      <row>
      <cell>en</cell>
      <cell>English</cell>
-     <cell>ell or el</cell>
+     <cell>el</cell>
      <cell>Greek</cell>
      </row>
      <row>
      <cell>enm</cell>
      <cell>Middle English</cell>
-     <cell>ja or jpn</cell>
+     <cell>ja</cell>
      <cell>Japanese</cell>
      </row>
      <row>
-     <cell>fr or fra</cell>
+     <cell>fr</cell>
      <cell>French</cell>
-     <cell>la or lat</cell>
+     <cell>la</cell>
      <cell>Latin</cell>
      </row>
      <row>
-     <cell>de or deu</cell>
+     <cell>de</cell>
      <cell>German</cell>
-     <cell>sa or san</cell>
+     <cell>sa</cell>
      <cell>Sanskrit</cell>
      </row>
      </table>
@@ -3551,7 +3557,7 @@
      <att>lang</att> are replaced by the attributes
      <att>xml:id</att> and <att>xml:lang</att>
      respectively. Values for the latter attribute must
-     conform to RFC 3066</item>
+     conform to the IANA Language Subtag Registry.</item>
      <item>The element <gi>choice</gi> must be used to
      wrap <gi>reg</gi> and <gi>orig</gi> if both are
      supplied. Similarly for <gi>sic</gi> and
