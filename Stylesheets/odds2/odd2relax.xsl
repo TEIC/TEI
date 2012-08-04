@@ -109,6 +109,25 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="$verbose='true'">
          <xsl:message> process schemaSpec [<xsl:value-of select="@ident"/>] </xsl:message>
       </xsl:if>
+      <xsl:variable name="rng">
+	<xsl:choose>
+	  <xsl:when test="tei:specGrpRef">
+	    <xsl:variable name="SPECS">
+	      <tei:schemaSpec>
+		<xsl:copy-of select="@*"/>
+		<xsl:apply-templates mode="expandSpecs"/>
+	      </tei:schemaSpec>
+	    </xsl:variable>
+	    <xsl:for-each select="$SPECS/tei:schemaSpec">
+	      <xsl:call-template name="schemaSpecBody"/>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="schemaSpecBody"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	<xsl:apply-templates select="tei:constraintSpec"/>
+      </xsl:variable>
       <xsl:call-template name="generateOutput">
          <xsl:with-param name="method">xml</xsl:with-param>
          <xsl:with-param name="suffix">.rng</xsl:with-param>
@@ -138,23 +157,12 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:comment>
 		 <xsl:call-template name="copyright"/>
 	       </xsl:comment>
-               <xsl:choose>
-                  <xsl:when test="tei:specGrpRef">
-                     <xsl:variable name="SPECS">
-                        <tei:schemaSpec>
-                           <xsl:copy-of select="@*"/>
-                           <xsl:apply-templates mode="expandSpecs"/>
-                        </tei:schemaSpec>
-                     </xsl:variable>
-                     <xsl:for-each select="$SPECS/tei:schemaSpec">
-                        <xsl:call-template name="schemaSpecBody"/>
-                     </xsl:for-each>
-                  </xsl:when>
-                  <xsl:otherwise>
-                     <xsl:call-template name="schemaSpecBody"/>
-                  </xsl:otherwise>
-               </xsl:choose>
-	              <xsl:apply-templates select="tei:constraintSpec"/>
+	       <xsl:if test="not($rng//sch:ns[@prefix='tei'])">
+		 <xsl:message>ADD</xsl:message>
+		 <sch:ns prefix="tei"
+			 uri="http://www.tei-c.org/ns/1.0"/>
+	       </xsl:if>
+	       <xsl:copy-of select="$rng"/>
             </grammar>
          </xsl:with-param>
       </xsl:call-template>
