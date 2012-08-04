@@ -2072,13 +2072,13 @@ live without God in the world, and only mind earthly things.
        xmlns="http://www.tei-c.org/ns/Examples"><teiHeader>
         <fileDesc>
          <titleStmt>
-          <!-- ... -->
+          <!-- bibliographic description of the digital resource -->
          </titleStmt>
          <publicationStmt>
-          <!-- ... -->
+          <!-- information about how the resource is distributed -->
          </publicationStmt>
          <sourceDesc>
-          <!-- ... -->
+          <!-- information about the sources from which the digital resource is derived -->
          </sourceDesc>
         </fileDesc>
        </teiHeader></egXML></p>
@@ -2092,7 +2092,7 @@ live without God in the world, and only mind earthly things.
         <specDesc key="principal"/>
         <specDesc key="respStmt"/>
        </specList></p>
-      <p> It is recommended that the title should distinguish the computer file from the source
+      <p> The title of a digital resource derived from a non-digital one will obviously be similar. However, it is important to distinguish the title of the  computer file from that of  the source
        text, for example: <eg>[title of source]: a machine readable transcription [title of source]:
         electronic edition A machine readable version of: [title of source]</eg> The
         <gi>respStmt</gi> element contains the following subcomponents: <specList>
@@ -2109,7 +2109,7 @@ live without God in the world, and only mind earthly things.
      </div>
      <div>
       <head>The Edition Statement</head>
-      <p>The <gi>editionStmt</gi> groups information relating to one edition of a text (where
+      <p>The <gi>editionStmt</gi> groups information relating to one edition of the digital resource  (where
         <mentioned>edition</mentioned> is used as elsewhere in bibliography), and may include the
        following elements: <specList>
         <specDesc key="edition"/>
@@ -2123,7 +2123,7 @@ live without God in the world, and only mind earthly things.
      </div>
      <div>
       <head>The Extent Statement</head>
-      <p>The <gi>extent</gi> statement describe the approximate size of a file.</p>
+      <p>The <gi>extent</gi> statement describe the approximate size of the digital resource.</p>
       <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><extent>4532
         bytes</extent></egXML></p>
      </div>
@@ -2141,17 +2141,19 @@ live without God in the world, and only mind earthly things.
         <specDesc key="address"/>
         <specDesc key="idno"/>
         <specDesc key="availability"/>
+        <specDesc key="licence"/>
         <specDesc key="date"/>
        </specList></p>
       <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
-         <publisher>Oxford University Press</publisher>
-         <pubPlace>Oxford</pubPlace>
-         <date>1989</date>
-         <idno type="ISBN"> 0-19-254705-5</idno>
-         <availability>
-          <p>Copyright 1989, Oxford University Press</p>
-         </availability>
-        </publicationStmt></egXML></p>
+       <publisher>University of Victoria Humanities Computing and Media Centre</publisher>
+       <pubPlace>Victoria, BC</pubPlace>
+       <date>2011</date>
+       <availability status="restricted">
+        <licence
+         target="http://creativecommons.org/licenses/by-sa/3.0/"> Distributed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
+        </licence>
+       </availability>
+      </publicationStmt></egXML></p>
      </div>
      <div>
       <head>Series and Notes Statements</head>
@@ -2168,7 +2170,6 @@ live without God in the world, and only mind earthly things.
        sources from which the computer file is derived. It may contain simple prose or a
        bibliographic citation, using one or more of the following elements: <specList>
         <specDesc key="bibl"/>
-        <specDesc key="biblFull"/>
         <specDesc key="listBibl"/>
        </specList></p>
       <p>Examples: <egXML xmlns="http://www.tei-c.org/ns/Examples"><sourceDesc>
@@ -2266,8 +2267,8 @@ live without God in the world, and only mind earthly things.
             tracts</catDesc></category></category>
         </taxonomy></egXML></p>
       <p>Linkage between a particular text and a category within such a taxonomy is made by means of
-       the <gi>catRef</gi> element within the <gi>textClass</gi> element, as further described
-       below.</p>
+       the <gi>catRef</gi> element within the <gi>textClass</gi> element, as  described
+ in the next section      below.</p>
      </div>
     </div>
     <div>
@@ -2285,34 +2286,54 @@ live without God in the world, and only mind earthly things.
      <p>The <gi>langUsage</gi> element is useful where a text contains many different languages. It
       may contain <gi>language</gi> elements to document each particular language used: <specList>
        <specDesc key="language"/>
-      </specList> an example is needed. </p>
-     <p>The <gi>textClass</gi> element classifies a text by reference to the system or systems
-      defined by the <gi>classDecl</gi> element, and contains one or more of the following elements: <specList>
-       <specDesc key="keywords"/>
+      </specList> For example, a text containing predominantly text in French as spoken in Quebec, but also smaller amounts of British and Canadian English might be documented as follows:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><langUsage>
+       <language ident="fr-CA" usage="60">Québecois</language>
+       <language ident="en-CA" usage="20">Canadian business English</language>
+       <language ident="en-GB" usage="20">British English</language>
+      </langUsage>
+      </egXML>
+     
+     </p>
+     <p>The <gi>textClass</gi> element classifies a text. This may be done with reference to a classification system locally defined by means of the <gi>classDecl</gi> element, or by reference to some externally defined established scheme such as the Universal Decimal Classification. Texts may also be classified using lists of keywords, which may themselves be drawn from locally or externally defined control lists. The following elements are used to supply such classifications : <specList>
+      
        <specDesc key="classCode"/>
-       <specDesc key="catRef"/>
+      <specDesc key="catRef"/>
+      <specDesc key="keywords"/>
+   
       </specList>
      </p>
+     <p>The simplest way of classifying a text is by means of the <gi>classCode</gi> element>. For example, a text with classification 410 in the Universal Decimal Classification might be documented as follows: 
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+       <classCode scheme="http://www.udc.org">410</classCode>
+      </egXML>
+     </p>
+     <p>When a classification scheme has been locally defined using the <gi>taxonomy</gi> element discussed in the preceding subsection, the <gi>catRef</gi> element should be used to reference it. To continue the earlier example, a work classified in the Brown Corpus as <code>Press reportage - Sunday</code> and also as <code>Religion</code> might be documented as follows:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+       <catRef target="#B.A3 #B.D">410</catRef>
+      </egXML>
+     </p>
      <p>The element <gi>keywords</gi> contains a list of keywords or phrases identifying the topic
-      or nature of a text. The attribute <att>scheme</att> links these to the classification system
-      defined in <gi>taxonomy</gi>. <egXML xmlns="http://www.tei-c.org/ns/Examples"
-         ><textClass><keywords scheme="LCSH"><list>
+      or nature of a text. As usual, the attribute <att>scheme</att> identifies the source from which these terms are taken. For example, if the LC Subject Headings are used, following declaration of that classification system
+in a <gi>taxonomy</gi> element as above : <egXML xmlns="http://www.tei-c.org/ns/Examples"
+         ><textClass><keywords scheme="#LCSH"><list>
           <item>English literature -- History and criticism -- Data processing.</item>
           <item>English literature -- History and criticism -- Theory etc.</item>
           <item>English language -- Style -- Data processing.</item>
-         </list></keywords></textClass></egXML></p>
+         </list></keywords></textClass></egXML></p><p>Multiple classifications may be supplied using any of the mechanisms described in this section.</p>
     </div>
     <div>
      <head>The Revision Description</head>
      <p>The <gi>revisionDesc</gi> element provides a change log in which each change made to a text
       may be recorded. The log may be recorded as a sequence of <gi>change</gi> elements each of
-      which contains a brief description of the change. The attributes <att>date</att> and
+      which contains a brief description of the change. The attributes <att>when</att> and
        <att>who</att> may be used to identify when the change was carried out and the agency
       responsible for it. </p>
      <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><revisionDesc>
-        <change when="1991-03-06" who="EMB">File format updated</change>
-        <change when="1990-05-25" who="EMB">Stuart's corrections entered</change>
+        <change when="1991-03-06" who="#EMB">File format updated</change>
+        <change when="1990-05-25" who="#EMB">Stuart's corrections entered</change>
        </revisionDesc></egXML></p>
+     <p>In a production environment it will usually be found preferable to use some kind of automated system to track and record changes. Many such <term>version control systems</term>, as they are known, can also be configured to update the TEI Header of a file automatically. </p>
     </div>
    </div>
   </body>
@@ -2335,9 +2356,9 @@ live without God in the world, and only mind earthly things.
       bibl listBibl relatedItem l lg sp speaker stage teiCorpus divGen"/>
      <moduleRef key="header"
       include="teiHeader fileDesc titleStmt sponsor funder principal editionStmt edition 
-      extent publicationStmt distributor authority idno availability seriesStmt 
-      notesStmt sourceDesc biblFull encodingDesc projectDesc samplingDecl editorialDecl 
-      refsDecl cRefPattern refState classDecl taxonomy category catDesc profileDesc 
+      extent publicationStmt distributor authority idno availability licence seriesStmt 
+      notesStmt sourceDesc encodingDesc projectDesc samplingDecl editorialDecl 
+      refsDecl  classDecl taxonomy category catDesc profileDesc 
       creation langUsage language textClass keywords classCode catRef 
       revisionDesc change "/>
      <moduleRef key="textstructure"
