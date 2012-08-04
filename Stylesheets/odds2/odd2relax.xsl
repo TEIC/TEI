@@ -158,7 +158,6 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:call-template name="copyright"/>
 	       </xsl:comment>
 	       <xsl:if test="not($rng//sch:ns[@prefix='tei'])">
-		 <xsl:message>ADD</xsl:message>
 		 <sch:ns prefix="tei"
 			 uri="http://www.tei-c.org/ns/1.0"/>
 	       </xsl:if>
