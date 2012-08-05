@@ -210,13 +210,8 @@
        methods described in the TEI Guidelines;</item>
       <item>it should be as small and simple as is consistent with the other goals.</item>
      </list>
-    </p>
-    <p>The reader may judge our success in meeting these goals for him or herself.
-     <!--At the time of first writing (1995), our confidence that we had at
-     least partially done so was borne out by its rapid take-up in many
-     different centres. -->
-     The Text Encoding Initiative itself continues to use TEI Lite for its current technical
-     documentation — including this document. </p>
+     The reader may judge our success in meeting these goals for him or herself.</p>
+     
     <p>Although we have tried to make this document self-contained, as suits a tutorial text, the
      reader should be aware that it does not cover every detail of the TEI encoding scheme. All of
      the elements described here are fully documented in the TEI Guidelines themselves, which should
@@ -1189,7 +1184,7 @@ live without God in the world, and only mind earthly things.
       the deletion of the superfluous second <mentioned>for</mentioned>, thus: <egXML
        xmlns="http://www.tei-c.org/ns/Examples">The following elements are provided for <del
         resp="#LB">for</del> simple editorial interventions.</egXML> The attribute value
-       <code>LB</code> on the <att>resp</att> attribute indicates that <q>LB</q> corrected the
+       <code>#LB</code> on the <att>resp</att> attribute is used to point to a fuller definition (typically in a <gi>respStmt</gi> element) for the agency responsible for correcting the
       duplication of <mentioned>for</mentioned>.</p>
      <p>If the source read<eg>The following elements provided for simple editorial
        interventions.</eg> (i.e. if the verb had been inadvertently dropped) then the corrected text
@@ -1199,13 +1194,13 @@ live without God in the world, and only mind earthly things.
       authorial changes in manuscripts. A manuscript in which the author has first written <q>How it
        galls me, what a galling shadow</q>, then crossed out the word <mentioned>galls</mentioned>
       and inserted <mentioned>dogs</mentioned> might be encoded thus: <egXML
-       xmlns="http://www.tei-c.org/ns/Examples">How it <del hand="DHL" type="overstrike">galls</del>
-       <add hand="DHL" place="supralinear">dogs</add> me, what a galling shadow</egXML></p>
+       xmlns="http://www.tei-c.org/ns/Examples">How it <del hand="#DHL" type="overstrike">galls</del>
+       <add hand="#DHL" place="supralinear">dogs</add> me, what a galling shadow</egXML> Again, the code <code>#DHL</code> points to another location where more information about the hand concerned is to be found<note place="foot">The full TEI provides a range of elements for encoding metadata about manuscript production and description, which are not however included in TEI Lite</note>. </p>
      <p>Similarly, the <gi>unclear</gi> and <gi>gap</gi> elements may be used together to indicate
       the omission of illegible material; the following example also shows the use of <gi>add</gi>
       for a conjectural emendation: <egXML xmlns="http://www.tei-c.org/ns/Examples">One hundred
        &amp; twenty good regulars joined to me <unclear><gap reason="indecipherable"/></unclear>
-       &amp; instantly, would aid me signally <add hand="ed">in?</add> an enterprise against
+       &amp; instantly, would aid me signally <add hand="#ed">in?</add> an enterprise against
        Wilmington.</egXML></p>
      <p>The <gi>del</gi> element marks material which is transcribed as part of the electronic text
       despite being marked as deleted, while <gi>gap</gi> marks the location of material which is
@@ -2395,6 +2390,9 @@ in a <gi>taxonomy</gi> element as above : <egXML xmlns="http://www.tei-c.org/ns/
      <classSpec type="model" ident="model.msItemPart" module="tei" mode="delete"/> <!-- ??? -->
      <classSpec type="model" ident="model.msQuoteLike" module="tei" mode="delete"/> 
      <classSpec type="model" ident="model.personPart" module="tei" mode="delete"/> 
+     
+  <classSpec type="atts" ident="att.global.change" module="transcr" mode="delete"/>
+    
     </schemaSpec>
    </div>
   </back>
