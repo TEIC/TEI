@@ -1628,14 +1628,26 @@ live without God in the world, and only mind earthly things.
       specify a unique reference for it. If the identifiers used are unique within the document,
       then the <att>xml:id</att> attribute might be used in preference to the <att>n</att> used in
       the above example.</p>
-    </div>
+    </div><div><head>Words and punctuation</head><p>Tokenization, that is, the identification of lexical or non-lexical tokens within a text, is a very common requirement for all kinds of textual analysis, and not an entirely trivial one. The decision as to whether, for example, <q>can't</q> in English or <q>du</q> in French should be treated as one word or two is not simple. Consequently it is often useful to make explicit the preferred tokenization in a marked up text. The following elements are available for this purpose:
+     <specList><specDesc key="w"/><specDesc key="pc"/></specList></p>
+     <p>For example, the output from a part of speech tagger might be recorded in TEI lite as follows:
+      <egXML
+       xmlns="http://www.tei-c.org/ns/Examples">
+       <s n="1">
+        <w ana="#NP0">Marley</w> <w ana="#VBD">was</w> <w ana="#AJ0">dead</w><pc>:</pc> <w ana="#TO0">to</w> <w ana="#VBB">begin</w> <w ana="#PRP">with</w><pc>. </pc>
+       </s></egXML>
+     </p><p>In this example, each word has been decorated with an automatically generated part of speech code, using the <att>ana</att> attribute discussed in section <ptr
+      target="#xatts"/> above. The <gi>w</gi> also provides for each word to be asspociated with a root form or lemma, either explicitly using the <att>lemma</att> attribute, or by reference, using the <att>lemmaRef</att> attribute, as in this example:
+      <egXML
+       xmlns="http://www.tei-c.org/ns/Examples">...<w ana="#VBD" lemma="be" lemmaRef="http://www.myLexicon.com/be"></w> ... </egXML>
+     </p></div>
     <div>
      <head>General-Purpose Interpretation Elements</head>
      <p>A more general purpose segmentation element, the <gi>seg</gi> has already been introduced
       for use in identifying otherwise unmarked targets of cross references and hypertext links (see
       section <ptr target="#U5-ptrs"/>); it identifies some phrase-level portion of text to which
       the encoder may assign a user-specified <att>type</att>, as well as a unique identifier; it
-      may thus be used to tag textual features for which there is no provision in the published TEI
+      may thus be used to tag textual features for which there is no other provision in the published TEI
       Guidelines.</p>
      <p>For example, the Guidelines provide no <soCalled>apostrophe</soCalled> element to mark parts
       of a literary text in which the narrator addresses the reader (or hearer) directly. One
@@ -2297,7 +2309,7 @@ live without God in the world, and only mind earthly things.
       </egXML>
      
      </p>
-     <p>The <gi>textClass</gi> element classifies a text. This may be done with reference to a classification system locally defined by means of the <gi>classDecl</gi> element, or by reference to some externally defined established scheme such as the Universal Decimal Classification. Texts may also be classified using lists of keywords, which may themselves be drawn from locally or externally defined control lists. The following elements are used to supply such classifications : <specList>
+     <p>The <gi>textClass</gi> element classifies a text. This may be done with reference to a classification system locally defined by means of the <gi>classDecl</gi> element, or by reference to some externally defined established scheme such as the Universal Decimal Classification. Texts may also be classified using lists of keywords, which may themselves be drawn from locally or externally defined control lists. The following elements are used to supply such classifications: <specList>
       
        <specDesc key="classCode"/>
       <specDesc key="catRef"/>
@@ -2305,7 +2317,7 @@ live without God in the world, and only mind earthly things.
    
       </specList>
      </p>
-     <p>The simplest way of classifying a text is by means of the <gi>classCode</gi> element>. For example, a text with classification 410 in the Universal Decimal Classification might be documented as follows: 
+     <p>The simplest way of classifying a text is by means of the <gi>classCode</gi> element. For example, a text with classification 410 in the Universal Decimal Classification might be documented as follows: 
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
        <classCode scheme="http://www.udc.org">410</classCode>
       </egXML>
@@ -2359,8 +2371,14 @@ in a <gi>taxonomy</gi> element as above : <egXML xmlns="http://www.tei-c.org/ns/
      <moduleRef key="linking" include="anchor seg"/>
      <moduleRef key="analysis" include="interp interpGrp pc s w"/>
      <moduleRef key="tagdocs" include="att code eg gi ident val"/>
-     <moduleRef key="transcr" include="att.global.facs"/>
-
+ 
+ <!-- this version is compiled against P5 2.1 and no other, so we suppress @version  -->
+     <elementSpec ident="TEI" mode="change">
+  <attList ><attDef ident="version" mode="delete"/></attList>
+ </elementSpec>
+ 
+<classRef key="att.global.facs" />
+     
      <classSpec ident="att.global" type="atts" mode="change" module="tei">
       <attList>
        <attDef ident="rendition" mode="delete"/>
@@ -2390,194 +2408,10 @@ in a <gi>taxonomy</gi> element as above : <egXML xmlns="http://www.tei-c.org/ns/
      <classSpec type="model" ident="model.msItemPart" module="tei" mode="delete"/> <!-- ??? -->
      <classSpec type="model" ident="model.msQuoteLike" module="tei" mode="delete"/> 
      <classSpec type="model" ident="model.personPart" module="tei" mode="delete"/> 
-     
-  <classSpec type="atts" ident="att.global.change" module="transcr" mode="delete"/>
+    
     
     </schemaSpec>
    </div>
   </back>
  </text>
 </TEI>
-<!-- old lists kept for checking
- 
- <specList rend="noatts">
-       <specDesc rend="noatts" key="abbr"/>
-       <specDesc rend="noatts" key="add"/>
-       <specDesc rend="noatts" key="address"/>
-       <specDesc rend="noatts" key="addrLine"/>
-       <specDesc rend="noatts" key="anchor"/>
-       <specDesc rend="noatts" key="argument"/>
-       <specDesc rend="noatts" key="author"/>
-       <specDesc rend="noatts" key="authority"/>
-       <specDesc rend="noatts" key="availability"/>
-       <specDesc rend="noatts" key="back"/>
-       <specDesc rend="noatts" key="bibl"/>
-       <specDesc rend="noatts" key="biblFull"/>
-       <specDesc rend="noatts" key="biblScope"/>
-       <specDesc rend="noatts" key="body"/>
-       <specDesc rend="noatts" key="byline"/>
-       <specDesc rend="noatts" key="catDesc"/>
-       <specDesc rend="noatts" key="category"/>
-       <specDesc rend="noatts" key="catRef"/>
-       <specDesc rend="noatts" key="cell"/>
-       <specDesc rend="noatts" key="change"/>
-       <specDesc rend="noatts" key="choice"/>
-       <specDesc rend="noatts" key="cit"/>
-       <specDesc rend="noatts" key="classCode"/>
-       <specDesc rend="noatts" key="classDecl"/>
-       <specDesc rend="noatts" key="closer"/>
-       <specDesc rend="noatts" key="code"/>
-       <specDesc rend="noatts" key="corr"/>
-       <specDesc rend="noatts" key="creation"/>
-       <specDesc rend="noatts" key="date"/>
-       <specDesc rend="noatts" key="dateline"/>
-       <specDesc rend="noatts" key="del"/>
-       <specDesc rend="noatts" key="distributor"/>
-       <specDesc rend="noatts" key="div"/>
-       <specDesc rend="noatts" key="divGen"/>
-       <specDesc rend="noatts" key="docAuthor"/>
-       <specDesc rend="noatts" key="docDate"/>
-       <specDesc rend="noatts" key="docEdition"/>
-       <specDesc rend="noatts" key="docImprint"/>
-       <specDesc rend="noatts" key="docTitle"/>
-       <specDesc rend="noatts" key="edition"/>
-       <specDesc rend="noatts" key="editionStmt"/>
-       <specDesc rend="noatts" key="editor"/>
-       <specDesc rend="noatts" key="editorialDecl"/>
-       <specDesc rend="noatts" key="eg"/>
-       <specDesc rend="noatts" key="emph"/>
-       <specDesc rend="noatts" key="encodingDesc"/>
-       <specDesc rend="noatts" key="epigraph"/>
-       <specDesc rend="noatts" key="extent"/>
-       <specDesc rend="noatts" key="figure"/>
-       <specDesc rend="noatts" key="fileDesc"/>
-       <specDesc rend="noatts" key="foreign"/>
-       <specDesc rend="noatts" key="formula"/>
-       <specDesc rend="noatts" key="front"/>
-       <specDesc rend="noatts" key="funder"/>
-       <specDesc rend="noatts" key="gap"/>
-       <specDesc rend="noatts" key="gi"/>
-       <specDesc rend="noatts" key="gloss"/>
-       <specDesc rend="noatts" key="group"/>
-       <specDesc rend="noatts" key="head"/>
-       <specDesc rend="noatts" key="hi"/>
-       <specDesc rend="noatts" key="ident"/>
-       <specDesc rend="noatts" key="idno"/>
-       <specDesc rend="noatts" key="index"/>
-       <specDesc rend="noatts" key="interp"/>
-       <specDesc rend="noatts" key="interpGrp"/>
-       <specDesc rend="noatts" key="item"/>
-       <specDesc rend="noatts" key="keywords"/>
-       <specDesc rend="noatts" key="l"/>
-       <specDesc rend="noatts" key="label"/>
-       <specDesc rend="noatts" key="language"/>
-       <specDesc rend="noatts" key="langUsage"/>
-       <specDesc rend="noatts" key="lb"/>
-       <specDesc rend="noatts" key="lg"/>
-       <specDesc rend="noatts" key="list"/>
-       <specDesc rend="noatts" key="listBibl"/>
-       <specDesc rend="noatts" key="mentioned"/>
-       <specDesc rend="noatts" key="milestone"/>
-       <specDesc rend="noatts" key="name"/>
-       <specDesc rend="noatts" key="note"/>
-       <specDesc rend="noatts" key="notesStmt"/>
-       <specDesc rend="noatts" key="num"/>
-       <specDesc rend="noatts" key="opener"/>
-       <specDesc rend="noatts" key="orig"/>
-       <specDesc rend="noatts" key="p"/>
-       <specDesc rend="noatts" key="pb"/>
-       <specDesc rend="noatts" key="principal"/>
-       <specDesc rend="noatts" key="profileDesc"/>
-       <specDesc rend="noatts" key="projectDesc"/>
-       <specDesc rend="noatts" key="ptr"/>
-       <specDesc rend="noatts" key="publicationStmt"/>
-       <specDesc rend="noatts" key="publisher"/>
-       <specDesc rend="noatts" key="pubPlace"/>
-       <specDesc rend="noatts" key="q"/>
-       <specDesc rend="noatts" key="ref"/>
-       <specDesc rend="noatts" key="refsDecl"/>
-       <specDesc rend="noatts" key="reg"/>
-       <specDesc rend="noatts" key="resp"/>
-       <specDesc rend="noatts" key="respStmt"/>
-       <specDesc rend="noatts" key="revisionDesc"/>
-       <specDesc rend="noatts" key="row"/>
-       <specDesc rend="noatts" key="rs"/>
-       <specDesc rend="noatts" key="s"/>
-       <specDesc rend="noatts" key="salute"/>
-       <specDesc rend="noatts" key="samplingDecl"/>
-       <specDesc rend="noatts" key="seg"/>
-       <specDesc rend="noatts" key="seriesStmt"/>
-       <specDesc rend="noatts" key="sic"/>
-       <specDesc rend="noatts" key="signed"/>
-       <specDesc rend="noatts" key="soCalled"/>
-       <specDesc rend="noatts" key="sourceDesc"/>
-       <specDesc rend="noatts" key="sp"/>
-       <specDesc rend="noatts" key="speaker"/>
-       <specDesc rend="noatts" key="sponsor"/>
-       <specDesc rend="noatts" key="stage"/>
-       <specDesc rend="noatts" key="table"/>
-       <specDesc rend="noatts" key="taxonomy"/>
-       <specDesc rend="noatts" key="TEI"/>
-       <specDesc rend="noatts" key="teiHeader"/>
-       <specDesc rend="noatts" key="text"/>
-       <specDesc rend="noatts" key="term"/>
-       <specDesc rend="noatts" key="textClass"/>
-       <specDesc rend="noatts" key="time"/>
-       <specDesc rend="noatts" key="title"/>
-       <specDesc rend="noatts" key="titlePage"/>
-       <specDesc rend="noatts" key="titlePart"/>
-       <specDesc rend="noatts" key="titleStmt"/>
-       <specDesc rend="noatts" key="trailer"/>
-       <specDesc rend="noatts" key="unclear"/>
-      </specList>
-     </p>
-    </div>
-    <head>Formal specification</head>
-    <p>The TEI Lite schema is made by selecting the elements named above from
-     the following standard TEI modules: <ident type="module">tei</ident>,
-      <ident type="module">core</ident>, <ident type="module">header</ident>,
-      <ident type="module">textstructure</ident>, <ident type="module"
-      >figures</ident>, <ident type="module">linking</ident>, <ident
-      type="module">analysis</ident>, and <ident type="module">tagdocs</ident>. </p>
-      
-      <p>The following elements from those modules are excluded
-     from the schema: <gi>ab</gi>, <gi>alt</gi>,
-     <gi>altGrp</gi>, <gi>altIdent</gi>,
-     <gi>analytic</gi>, <gi>attDef</gi>,
-     <gi>attList</gi>, <gi>attRef</gi>,
-     <gi>biblItem</gi>, <gi>biblStruct</gi>,
-     <gi>binaryObject</gi>, <gi>broadcast</gi>,
-     <gi>c</gi>, <gi>cb</gi>, <gi>cl</gi>,
-     <gi>classSpec</gi>, <gi>classes</gi>,
-     <gi>content</gi>, <gi>correction</gi>,
-     <gi>datatype</gi>, <gi>defaultVal</gi>,
-     <gi>desc</gi>, <gi>distinct</gi>, <gi>div1</gi>,
-     <gi>div2</gi>, <gi>div3</gi>, <gi>div4</gi>,
-     <gi>div5</gi>, <gi>div6</gi>, <gi>div7</gi>,
-     <gi>egXML</gi>, <gi>elementSpec</gi>,
-     <gi>equipment</gi>, <gi>equiv</gi>,
-     <gi>exemplum</gi>, <gi>fsdDecl</gi>,
-     <gi>floatingText</gi>, <gi>headItem</gi>,
-     <gi>headLabel</gi>, <gi>hyphenation</gi>,
-     <gi>imprimatur</gi>, <gi>interpretation</gi>,
-     <gi>join</gi>, <gi>joinGrp</gi>, <gi>link</gi>,
-     <gi>linkGrp</gi>, <gi>listRef</gi>, <gi>m</gi>,
-     <gi>macroSpec</gi>, <gi>measure</gi>,
-     <gi>meeting</gi>, <gi>memberOf</gi>,
-     <gi>metDecl</gi>, <gi>metSym</gi>,
-     <gi>moduleRef</gi>, <gi>moduleSpec</gi>,
-     <gi>monogr</gi>, <gi>normalization</gi>,
-     <gi>phr</gi>, <gi>postBox</gi>, <gi>postCode</gi>,
-     <gi>quotation</gi>, 
-     <gi>recording</gi>, <gi>recordingStmt</gi>,
-     <gi>remarks</gi>, <gi>schemaSpec</gi>,
-     <gi>scriptStmt</gi>, <gi>segmentation</gi>,
-     <gi>series</gi>, <gi>span</gi>, <gi>spanGrp</gi>,
-     <gi>specDesc</gi>, <gi>specGrp</gi>,
-     <gi>specGrpRef</gi>, <gi>specList</gi>,
-     <gi>state</gi>, <gi>stdVals</gi>, <gi>street</gi>,
-     <gi>stringVal</gi>, <gi>tag</gi>,
-     <gi>timeline</gi>, <gi>valDesc</gi>,
-     <gi>valItem</gi>, <gi>valList</gi>,
-     <gi>variantEncoding</gi>, <gi>w</gi>,
-     <gi>when</gi></p> -->
