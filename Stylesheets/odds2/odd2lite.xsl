@@ -120,8 +120,22 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:key match="tei:moduleSpec[@ident]" name="FILES" use="@ident"/>
   <xsl:variable name="top" select="/"/>
+
   <xsl:template match="@*|comment()|processing-instruction()">
       <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="@*|comment()|processing-instruction()" mode="egXML">
+      <xsl:copy-of select="."/>
+  </xsl:template>
+
+
+  <xsl:template match="*" mode="egXML"> 
+    <xsl:copy>
+      <xsl:apply-templates
+	  select="*|@*|processing-instruction()|comment()|text()" mode="egXML"/>
+    </xsl:copy>
+
   </xsl:template>
 
   <xsl:template match="teix:egXML">
@@ -131,7 +145,8 @@ of this software, even if advised of the possibility of such damage.
          <xsl:if test="not(@xml:lang)">
 	           <xsl:copy-of select="parent::tei:*/@xml:lang"/>
          </xsl:if>
-         <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|comment()|text()"  mode="egXML"/>
       </xsl:copy>
   </xsl:template>
 

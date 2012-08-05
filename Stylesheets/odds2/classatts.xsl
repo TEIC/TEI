@@ -350,11 +350,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="*" mode="classatts">
     <xsl:copy>
       <xsl:apply-templates
-	  select="*|@*|processing-instruction()|text()" mode="classatts"/>
+	  select="*|@*|comment()|processing-instruction()|text()" mode="classatts"/>
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="@*|text()|processing-instruction()"  mode="classatts">
+  <xsl:template match="@*|text()|comment()|processing-instruction()"  mode="classatts">
     <xsl:copy-of select="."/>
   </xsl:template>
 
