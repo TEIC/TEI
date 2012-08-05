@@ -758,14 +758,14 @@ live without God in the world, and only mind earthly things.
     <head>Page and Line Numbers</head>
     <p>Page and line breaks etc. may be marked with the following elements. <specList>
       <specDesc key="pb"/>
-      <specDesc key="lb"/>
+      <specDesc key="lb" />
       <specDesc key="milestone"/>
      </specList> These elements mark a single point in the text, not a span of text. The global
       <att>n</att> attribute should be used to supply the number of the page or line beginning at
      the tag. </p>
     <p>When working from a paginated original, it is often useful to record its pagination, if only
      to simplify later proof-reading. It is also useful for synchronizing an encoded text with a set
-     of page images. Recording the line breaks may be useful for the same reasons.
+     of page images. Recording the line breaks may be useful for similarreasons.
      <!--; treatment of end-of-line
      hyphenation in printed source texts will require some consideration.--></p>
     <p>If pagination, etc., are marked for more than one edition, specify the edition in question
@@ -776,6 +776,10 @@ live without God in the world, and only mind earthly things.
        I had thus acted. Diana and <pb ed="ED1" n="475"/> Mary approved the step unreservedly. Diana
        announced that she would <pb ed="ED2" n="485"/>just give me time to get over the honeymoon,
        and then she would come and see me.</p></egXML></p>
+    <p>A special attribute <att>break</att> may be used to indicate whether or not this empty element is considered as a word-breaking, irrespective of any adjacent whitespace. For example, in the following encoded sample:
+    
+    
+    </p>
     <p>The <gi>pb</gi> and <gi>lb</gi> elements are special cases of the general class of
       <term>milestone</term> elements which mark reference points within a text. The generic
       <gi>milestone</gi> element can mark any kind of reference point: for example, a column break,
@@ -1336,7 +1340,9 @@ live without God in the world, and only mind earthly things.
        <specDesc key="time"/>
       </specList>
      </p>
-     <p>The <att>value</att> attribute specifies a normalized form for the date or time, using one
+     <p>These elements have a number of attributes which can be used to provide normalised versions of their values. 
+      <specDesc key="att.datable" atts="calendar period when"/>
+      The <att>when</att> attribute specifies a normalized form for the date or time, using one
       of the standard formats defined by ISO 8601. Partial dates or times (e.g. <q>1990</q>,
        <q>September 1990</q>, <q>twelvish</q>) can be expressed by omitting a part of the value
       supplied, as in the following examples: <egXML xmlns="http://www.tei-c.org/ns/Examples"><date
@@ -1354,6 +1360,7 @@ live without God in the world, and only mind earthly things.
        <l>and <time when="15:00:00">three o'clock in the afternoon</time></l>
       </egXML>
      </p>
+     
     </div>
     <div>
      <head>Numbers </head>
@@ -1547,23 +1554,22 @@ live without God in the world, and only mind earthly things.
      will often contain diagrams or illustrations, to say nothing of documents in which image and
      text are inextricably intertwined, or electronic resources in which the two are complementary. </p>
     <p>The encoder may simply record the presence of a graphic within the text, possibly with a
-     brief description of its content, by using the elements described in this section. The same
-     elements may also be used to embed digitized versions of the graphic within an electronic
-     document. <specList>
+     brief description of its content, and may also provide a link to a digitized version of the graphic, using the following elements:
+     <specList>
       <specDesc key="graphic"/>
       <specDesc key="figure"/>
       <specDesc key="figDesc"/>
      </specList></p>
     <p>Any textual information accompanying the graphic, such as a heading and/or caption, may be
      included within the <gi>figure</gi> element itself, in a <gi>head</gi> and one or more
-      <gi>p</gi> elements, as may also any text appearing within the graphic itself. It is strongly
+      <gi>p</gi> elements, as also may any text appearing within the graphic itself. It is strongly
      recommended that a prose description of the image be supplied, as the content of a
       <gi>figDesc</gi> element, for the use of applications which are not able to render the
      graphic, and to render the document accessible to vision-impaired readers. (Such text is not
      normally considered part of the document proper.)</p>
     <p>The simplest use for these elements is to mark the position of a graphic and provide a link
      to it, as in this example; <egXML xmlns="http://www.tei-c.org/ns/Examples"><pb n="412"
-       /><graphic url="p412fig.png"/><pb n="413"/></egXML> This indicates that the graphic contained
+       /><figure><graphic url="p412fig.png"/></figure><pb n="413"/></egXML> This indicates that the graphic contained
      by the file <ident>p412fig.png</ident> appears between pages 412 and 413. </p>
     <p>The <gi>graphic</gi> element can appear anywhere that textual content is permitted, within
      but not between paragraphs or headings. In the following example, the encoder has decided to
@@ -1578,8 +1584,17 @@ live without God in the world, and only mind earthly things.
      kind of graphic <soCalled>block</soCalled>: <egXML xmlns="http://www.tei-c.org/ns/Examples"
         ><figure><graphic url="fessipic.png"/><head>Mr Fezziwig's Ball</head><figDesc>A Cruikshank
         engraving showing Mr Fezziwig leading a group of revellers.</figDesc></figure></egXML></p>
-    <p>When a digitized version of the graphic concerned is available, it may be embedded at the
-     appropriate point within the document in this way.</p>
+    <p>These cases should be carefully distinguished from the case where an encoded text is complemented by a collection of digital images, maintained as a distinct resource. The <att>facs</att> attribute may be used to associate any element in an encoded text with a digital facsimile of it. In the simple case where only page images are available, the <att>facs</att> attribute on the<gi> pb</gi> element may be used to associate each image with an appropriate point in the text:
+     <egXML
+      xmlns="http://www.tei-c.org/ns/Examples">
+      <text>
+       <pb facs="page1.png" n="1"/>
+       <!-- text contained on page 1 is encoded here -->
+       <pb facs="page2.png" n="2"/>
+       <!-- text contained on page 2 is encoded here -->
+      </text>
+     </egXML>
+   This method is only appropriate in the simple case where each digital image file <ident>page1.png</ident> etc. corresponds with a single transcribed and encoded  page. If more detailed alignment of image and transcription is required, for example because the image files actually represent double page spreads, more sophisticated mechanisms are provided in the full TEI Guidelines. </p>
    </div>
    <div xml:id="U5-anal">
     <head>Interpretation and Analysis</head>
@@ -1705,7 +1720,7 @@ live without God in the world, and only mind earthly things.
         type="scene-setting" inst="#P38.1" resp="#LB-MSM">church</interp><interp
         xml:id="set-kitchen-2" type="scene-setting" inst="#P38.1" resp="#LB-MSM"
        >kitchen</interp></egXML></p>
-     <p>The <gi>interp</gi> is not limited to any particular type of analysis, The literary analysis
+     <p>The <gi>interp</gi> element is not limited to any particular type of analysis, The literary analysis
       shown above is but one possibility; one could equally well use <gi>interp</gi> to capture a
       linguistic part-of-speech analysis. For example, the example sentence given in section <ptr
        target="#xatts"/> assumes a linguistic analysis which might be represented as follows: <egXML
@@ -1910,9 +1925,8 @@ live without God in the world, and only mind earthly things.
       <p>Typeface distinctions should be marked with the <att>rend</att> attribute when necessary,
        as described above. Very detailed description of the letter spacing and sizing used in
        ornamental titles is not as yet provided for by the Guidelines. Changes of language should be
-       marked by appropriate use of the <att>lang</att> attribute or the <gi>foreign</gi> element,
-       as necessary. Names, wherever they appear, should be tagged using the <gi>name</gi>, as
-       elsewhere.</p>
+       marked by appropriate use of the <att>xml:lang</att> attribute or the <gi>foreign</gi> element,
+       as necessary. Names of people, places, or organizations, may be tagged using the <gi>name</gi> element wherever they appear if no other element more specific element is available.</p>
       <p>Two example title pages follow: <egXML xmlns="http://www.tei-c.org/ns/Examples"><titlePage
          rend="Roman">
          <docTitle>
@@ -1941,30 +1955,30 @@ live without God in the world, and only mind earthly things.
          <docImprint>Philadelphia: Blanchard and Lea</docImprint>
          <docDate>1860.</docDate>
         </titlePage></egXML></p>
+      <p>As elsewhere, the <att>ref</att> attribute may be used to link a name with a canonical definition of the entity being named. For example:
+       <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <byline>By <docAuthor><name ref="http://en.wikipedia.org/wiki/Agnes_Strickland">Agnes Strickland</name></docAuthor></byline>
+       </egXML></p>
      </div>
      <div xml:id="h52">
       <head>Prefatory Matter</head>
       <p>Major blocks of text within the front matter should be marked as <gi>div</gi> or
         <gi>div</gi> elements; the following suggested values for the <att>type</att> attribute may
-       be used to distinguish various common types of prefatory matter: <list type="gloss">
-        <label>foreword</label>
-        <item>a text addressed to the reader, by the author, editor or publisher, possibly in the
-         form of a letter.</item>
+       be used to distinguish various common types of prefatory matter: <list type="gloss">      
         <label>preface</label>
-        <item>a text addressed to the reader, by the author, editor or publisher, possibly in the
-         form of a letter.</item>
+        <item>A foreword or preface addressed to the reader in which the author or publisher explains the content, purpose, or origin of the text</item>
         <label>dedication</label>
-        <item>a text (often a letter) addressed to someone other than the reader in which the author
-         typically commends the work in hand to the attention of the person concerned.</item>
+        <item>A formal offering or dedication of a text to one or more persons or institutions by the author.</item>
         <label>abstract</label>
-        <item>a prose argument summarizing the content of the work.</item>
+        <item>A summary of the content of a text as continuous prose</item>
         <label>ack</label>
-        <item>Acknowledgements.</item>
+        <item>A formal declaration of acknowledgment by the author in which persons and institutions are thanked for their part in the creation of a text</item>
         <label>contents</label>
-        <item>a table of contents (typically this should be tagged as a <gi>list</gi>).</item>
+        <item>A table of contents, specifying the structure of a work and listing its constituents. The <gi>list</gi> element should be used to mark its structure.</item>
         <label>frontispiece</label>
-        <item>a pictorial frontispiece, possibly including some text.</item>
+        <item>A pictorial frontispiece, possibly including some text.</item>
        </list></p>
+      <p>Where other kinds of prefatory matter are encountered, the encoder is at liberty to invent other values for the <att>type</att> attribute.</p>
       <p>Like any text division, those in front matter may contain low level structural or
        non-structural elements as described elsewhere. They will generally begin with a heading or
        title of some kind which should be tagged using the <gi>head</gi> element. Epistles will
@@ -2010,25 +2024,18 @@ live without God in the world, and only mind earthly things.
         <gi>div</gi> elements, and distinguished by the following suggested values of the
         <att>type</att> attribute: <list type="gloss">
         <label>appendix</label>
-        <item>an appendix.</item>
+         <item>An ancillary self-contained section of a work, often providing additional but in some sense extra-canonical text.</item>
         <label>glossary</label>
-        <item>a list of words and definitions, typically marked up as a <code>&lt;list
-          type="gloss"&gt;</code> element .</item>
+         <item>A list of terms associated with definition texts (‘glosses’): this should be encoded as a <tag>&lt;list type="gloss"></tag> element</item>
         <label>notes</label>
-        <item>a series of <gi>note</gi> elements.</item>
-        <label>bibliography</label>
-        <item>a series of bibliographic references, typically in the form of a special
-         bibliographic-list element <gi>listBibl</gi>, whose items are individual <gi>bibl</gi>
-         elements.</item>
+         <item>A section in which textual or other kinds of notes are gathered together.</item>
+        <label>bibliogr</label>
+         <item>A list of bibliographic citations: this should be encoded as a <gi>listBibl</gi> </item>
         <label>index</label>
-        <item>a set of index entries, possibly represented as a structured list or glossary list,
-         with optional leading <gi>head</gi> and perhaps some paragraphs of introductory or closing
-         text (An index may also be generated for a document by using the <gi>index</gi> element
+         <item>Any form of pre-existing index to the work (An index may also be generated for a document by using the <gi>index</gi> element
          described above).</item>
         <label>colophon</label>
-        <item>a description at the back of the book describing where, when, and by whom it was
-         printed; in modern books it also often gives production details and identifies the type
-         faces used.</item>
+         <item>A statement appearing at the end of a book describing the conditions of its physical production.</item>
        </list></p>
      </div>
     </div>
@@ -2338,26 +2345,24 @@ in a <gi>taxonomy</gi> element as above : <egXML xmlns="http://www.tei-c.org/ns/
    </div>
   </body>
   <back>
-   <head/>
    <div>
     <head>List of Elements Described</head>
     <p>The TEI Lite schema is a pure subset of TEI P5. In the following list of elements and classes
-     used, a link is provided to its canonical definition in TEI P5. Note however that only the
-     elements listed here are available within the TEI Lite schema. </p>
+     used, some information, notably the examples, derives from the canonical definition for the element in TEI P5 and may therefore refer to elements or attributes not provided by TEI Lite. Note however that only the elements listed here are available within the TEI Lite schema. These specifications also refer to many attributes which although available in TEI Lite are not discussed in this tutorial for lack of space. </p>
     <schemaSpec ident="teilite" start="TEI teiCorpus">
 
-     <moduleRef key="tei"/>
+     <moduleRef key="tei" />
 
      <moduleRef key="core"
-      include="abbr add core addrLine address author bibl biblScope choice cit corr date del desc divGen editor emph expan foreign gap gloss graphic head hi index item l label lb lg list listBibl measureGrp mentioned milestone name note num orig p pb ptr pubPlace publisher q ref reg relatedItem resp respStmt rs said sic soCalled sp speaker stage teiCorpus term time title unclear"
+      include="abbr add core addrLine address author bibl biblScope choice cit corr date del desc divGen editor emph expan foreign gap gloss graphic head hi index item l label lb lg list listBibl  mentioned milestone name note num orig p pb ptr pubPlace publisher q ref reg relatedItem resp respStmt rs sic soCalled sp speaker stage teiCorpus term time title unclear"
      />
      <moduleRef key="header"
-      include="authority availability catDesc catRef category change classCode classDecl creation distributor edition editionStmt editorialDecl encodingDesc extent fileDesc funder idno keywords langUsage language licence notesStmt principal profileDesc projectDesc publicationStmt refsDecl revisionDesc samplingDecl seriesStmt sourceDesc sponsor taxonomy teiHeader textClass titleStmtu"/>
+      include="authority availability catRef category change classCode classDecl creation distributor edition editionStmt editorialDecl encodingDesc extent fileDesc funder idno keywords langUsage language licence notesStmt principal profileDesc projectDesc publicationStmt refsDecl revisionDesc samplingDecl seriesStmt sourceDesc sponsor taxonomy teiHeader textClass titleStmt"/>
      <moduleRef key="textstructure"
       include="TEI argument back body byline closer dateline div docAuthor docDate docEdition docImprint docTitle epigraph front group opener postscript salute signed text titlePage titlePart trailer"/>
      <moduleRef key="figures" include="cell figure figDesc formula row table"/>
      <moduleRef key="linking" include="anchor seg"/>
-     <moduleRef key="analysis" include="interp interpGrp pc s"/>
+     <moduleRef key="analysis" include="interp interpGrp pc s w"/>
      <moduleRef key="tagdocs" include="att code eg gi ident val"/>
      <moduleRef key="transcr" include="att.global.facs"/>
 
@@ -2368,7 +2373,28 @@ in a <gi>taxonomy</gi> element as above : <egXML xmlns="http://www.tei-c.org/ns/
        <attDef ident="xml:space" mode="delete"/>
       </attList>
      </classSpec>
-
+     <classSpec type="atts" ident="att.global.linking" module="linking" mode="change">
+  <attList>
+  <attDef ident="corresp" mode="delete"/>
+  <attDef ident="synch" mode="delete"/>
+  <attDef ident="sameAs" mode="delete"/>
+  <attDef ident="copyOf" mode="delete"/>
+  <attDef ident="exclude" mode="delete"/>  
+  <attDef ident="select" mode="delete"/></attList>
+</classSpec>
+ 
+<classSpec type="atts" ident="att.datable.w3c" module="tei" mode="change">
+  <attList>
+   <attDef ident="notBefore" mode="delete"/>
+   <attDef ident="notAfter" mode="delete"/>
+   <attDef ident="from" mode="delete"/>
+   <attDef ident="to" mode="delete"/>
+   </attList>
+ </classSpec>
+     <classSpec type="atts" ident="att.internetMedia" module="tei" mode="delete"/>
+     <classSpec type="model" ident="model.msItemPart" module="tei" mode="delete"/> <!-- ??? -->
+     <classSpec type="model" ident="model.msQuoteLike" module="tei" mode="delete"/> 
+     <classSpec type="model" ident="model.personPart" module="tei" mode="delete"/> 
     </schemaSpec>
    </div>
   </back>
