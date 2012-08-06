@@ -7,7 +7,7 @@
     $Id$
 -->
 <!-- MDH 2012-07-14. -->
-<!-- Spec still under development; no useful examples yet, and not yet added 
+<!-- Spec still under development; only one useful example so far, and not yet added 
 to guidelines-en.xml or guidelines-fr.xml. -->
 
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="listApp">
@@ -39,18 +39,68 @@ to guidelines-en.xml or guidelines-fr.xml. -->
     </group>
   </content>
   
-<!-- TODO: Create at least two useful examples, and possibly add some remarks indicating
-  where you might choose to store listApp elements in documents. -->
-  
-  <exemplum xml:lang="en">
+  <exemplum xml:lang="en" versionDate="2012-08-06">
+    <p>In the following example from the exegetical Yasna, the base text is encoded in the <gi>body</gi> of 
+    the document, and two separate <gi>listApp</gi> elements are used in the <gi>back</gi>, containing 
+    variant readings written in different scripts.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <listApp>
-        <head>Substantive variants</head>
-        <app></app>
-        <app></app>
+      <body>
+        <div>
+          <lg type="stanza" xml:id="Y-36.01" xml:lang="pal-Avst" rend="italic">
+            <l xml:id="Y-36.01_L-1">
+              <w xml:id="Y-36.01_L1_W-01">ahiiā</w> <w xml:id="Y-36.01_L1_W-02">ϑβā</w> <w xml:id="Y-36.01_L1_W-03">āϑrō</w> <w xml:id="Y-36.01_L1_W-04">vərəzə̄nā</w> <w xml:id="Y-36.01_L1_W-05">paouruiiē</w> <w xml:id="Y-36.01_L1_W-06">pairijasāmaiδē</w> <w xml:id="Y-36.01_L1_W-07">mazdā</w> <w xml:id="Y-36.01_L1_W-08">ahurā</w>
+            </l>
+            
+            <!-- ... -->
+            
+          </lg>
+        </div>
+      </body>
+      
+      <!-- ... -->
+      
+      <back>
+        <div>
+          <listApp xml:id="CA_Y-36" xml:lang="pal-Avst">
+            <head>Variants from witnesses in Avestan script</head>
+            <app from="#Y-36.01_L1_W-01">
+              <rdg wit="#Pt4 #F2 #J2 #M1">ahiiā</rdg>
+            </app>
+            <app from="#Y-36.01_L1_W-02">
+              <rdg wit="#Pt4 #F2 #J2 #M1">ϑβā</rdg>
+            </app>
+            <app from="#Y-36.01_L1_W-03">
+              <rdg wit="#Pt4 #J2 #M1">āϑrō</rdg>
+              <rdg wit="#F2">āϑrōi</rdg>
+            </app>
+            
+            <!-- ... -->
+            
+          </listApp>
+          
+          <listApp xml:id="CA_PY-36" xml:lang="pal-Phlv">
+            <head>Variants from witnesses written in Pahlavi script</head>
+            <app from="#PY-36.01_L1_W-01">
+              <rdg wit="#Pt4 #F2 #J2 #M1">ʾytwnˈ</rdg>
+            </app>
+            <app from="#PY-36.01_L1_W-02">
+              <rdg wit="#Pt4 #F2 #J2 #M1">ʾwˈ</rdg>
+            </app>
+            <app from="#PY-36.01_L1_W-03">
+              <rdg wit="#Pt4 #F2 #J2 #M1">ḤNʾ</rdg>
+            </app>
+            
+            <!-- ... -->
+        </div>
+      </back>
       </listApp>
     </egXML>
   </exemplum>
+  
+  <remarks>
+    <p><gi>listApp</gi> elements would normally be located in the <gi>back</gi> part of a document,
+    but they may appear elsewhere.</p>
+  </remarks>
   
   <listRef>
     
