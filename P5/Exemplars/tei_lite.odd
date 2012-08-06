@@ -792,9 +792,9 @@ live without God in the world, and only mind earthly things.
       typically by a change of type font, handwriting style, ink colour etc., which is intended to
       draw the reader's attention to some associated change.</p>
      <p>The global <att>rend</att> attribute can be attached to any element, and used wherever
-      necessary to specify details of the highlighting used for it. For example, a heading rendered
+      necessary to specify details of the highlighting used for it in the source. For example, a heading rendered
       in bold might be tagged <code>&lt;head rend="bold"&gt;</code>, and one in italic
-       <code>&lt;head rend="italic"&gt;</code>.</p>
+       <code>&lt;head rend="italic"&gt;</code>.</p><p>The values to be used for the <att>rend</att> attribute are not specified by the TEI Guidelines, since they will depend entirely on the needs of the particular project. Some typical values might include <code>italic</code>, <code>bold</code>, <code>sup</code>(erior) <code>smcap</code> etc. for font variations; <code>centre</code>, <code>right</code> etc. for alignment; <code>large</code>, <code>small</code> etc. for size. Several such words may be used in combination as necessary, but no formal syntax is proposed. The full TEI Guidelines also provide more rigorous mechanisms, using other W3C standards such as CSS, as an alternative. </p>
      <p>It is not always possible or desirable to interpret the reasons for such changes of
       rendering in a text. In such cases, the element <gi>hi</gi> may be used to mark a sequence of
       highlighted text without making any claim as to its status. <specList>
@@ -844,6 +844,7 @@ live without God in the world, and only mind earthly things.
       marks appear in the text, using the following elements: <specList>
        <specDesc key="q"/>
        <!--specDesc key="quote"/-->
+       <!--specDesc key="said"/-->
        <specDesc key="mentioned"/>
        <specDesc key="soCalled"/>
        <specDesc key="gloss"/>
@@ -876,11 +877,9 @@ live without God in the world, and only mind earthly things.
       tags or whether the tags are added and the quotation marks kept. If the quotation marks are
       removed from the text, the <att>rend</att> attribute may be used to record the way in which
       they were rendered in the copy text.</p>
-     <p>As with highlighting, it is not always possible and may not be considered desirable to
-      interpret the function of quotation marks in a text in this way. In such cases, the tag
-       <code>&lt;hi rend="quoted"&gt;</code> might be used to mark quoted text without making any
-      claim as to its status.</p>
-     <p>The full TEI Guidelines provide additional elements to distinguish direct speech from quotation which should be used in preference to the generic <gi>q</gi> element which may be used for either. For simplicity, only <gi>q</gi> has been included in TEI Lite. </p>
+   
+     <p>The full TEI Guidelines provide additional elements to distinguish direct speech , quotation, and  other typical uses of quotation mark although it is not always possible and may not be considered desirable to
+      interpret the function of quotation marks in a text. For simplicity, only <gi>q</gi> (which may be used for any such case)  has been included in TEI Lite. </p>
     </div>
     <div xml:id="z636">
      <head>Foreign Words or Expressions</head>
@@ -1025,8 +1024,8 @@ live without God in the world, and only mind earthly things.
        xmlns="http://www.tei-c.org/ns/Examples"> Returning to <ref target="#ABCD">the point where I
         dozed off</ref>, I noticed that <ref target="#EFGH">three words</ref> had been circled in
        red by a previous reader</egXML></p>
-     <p>This encoding requires that elements with the specified identifiers (<att>ABCD</att> and
-       <att>EFGH</att> in this example) are to be found somewhere else in the current document.
+     <p>This encoding requires that elements with the specified identifiers (<code>ABCD</code> and
+       <code>EFGH</code> in this example) are to be found somewhere else in the current document.
       Assuming that no element already exists to carry these identifiers, the <gi>anchor</gi> and
        <gi>seg</gi> elements may be used: <egXML xmlns="http://www.tei-c.org/ns/Examples"> ....
         <anchor type="bookmark" xml:id="ABCD"/> .... ....<seg type="target" xml:id="EFGH"> ...
@@ -1637,13 +1636,13 @@ live without God in the world, and only mind earthly things.
         <w ana="#NP0">Marley</w> <w ana="#VBD">was</w> <w ana="#AJ0">dead</w><pc>:</pc> <w ana="#TO0">to</w> <w ana="#VBB">begin</w> <w ana="#PRP">with</w><pc>. </pc>
        </s></egXML>
      </p><p>In this example, each word has been decorated with an automatically generated part of speech code, using the <att>ana</att> attribute discussed in section <ptr
-      target="#xatts"/> above. The <gi>w</gi> also provides for each word to be asspociated with a root form or lemma, either explicitly using the <att>lemma</att> attribute, or by reference, using the <att>lemmaRef</att> attribute, as in this example:
+      target="#xatts"/> above. The <gi>w</gi> also provides for each word to be associated with a root form or lemma, either explicitly using the <att>lemma</att> attribute, or by reference, using the <att>lemmaRef</att> attribute, as in this example:
       <egXML
-       xmlns="http://www.tei-c.org/ns/Examples">...<w ana="#VBD" lemma="be" lemmaRef="http://www.myLexicon.com/be"></w> ... </egXML>
+       xmlns="http://www.tei-c.org/ns/Examples">...<w ana="#VBD" lemma="be" lemmaRef="http://www.myLexicon.com/be">was</w> ... </egXML>
      </p></div>
     <div>
      <head>General-Purpose Interpretation Elements</head>
-     <p>A more general purpose segmentation element, the <gi>seg</gi> has already been introduced
+     <p>The <gi>w</gi> element is a specialisation of  the <gi>seg</gi> element which has already been introduced
       for use in identifying otherwise unmarked targets of cross references and hypertext links (see
       section <ptr target="#U5-ptrs"/>); it identifies some phrase-level portion of text to which
       the encoder may assign a user-specified <att>type</att>, as well as a unique identifier; it
