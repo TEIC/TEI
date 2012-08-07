@@ -2364,6 +2364,18 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
+	Paragraph in list
+      </desc>
+  </doc>
+  <xsl:template match="tei:item/tei:p[not(@rend)]" mode="pass0">
+    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
+    <xsl:if test="following-sibling::tei:p">
+      <tei:lb/>
+    </xsl:if>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
 	Page break
       </desc>
   </doc>
