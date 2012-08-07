@@ -1,5 +1,5 @@
 <xsl:stylesheet
-  exclude-result-prefixes="xlink dbk rng tei teix xhtml a html pantor xd xs xsl fo"
+  exclude-result-prefixes="xlink dbk rng teix xhtml a html pantor xd xs xsl fo"
   version="2.0"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
@@ -8,7 +8,7 @@
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:pantor="http://www.pantor.com/ns/local"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xpath-default-namespace="http://www.tei-c.org/ns/1.0"
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
@@ -19,11 +19,11 @@
   <xsl:import
       href="http://www.tei-c.org/release/xml/tei/stylesheet/odds2/odd2html.xsl"/>
 
-  <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
+  <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::div[last()]/@xml:id,local-name())"/>
 
-  <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
+  <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
 
-  <xsl:key name="HEADS" match="tei:head"
+  <xsl:key name="HEADS" match="head"
 	   use="concat(@xml:lang,@corresp)"/>
 
   <xsl:param name="googleAnalytics"></xsl:param>
@@ -50,14 +50,63 @@
   <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]"
 	   use="substring(@corresp,2)"/>
   
-  <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']"
+  <xsl:key name="BACKLINKS" match="ptr[@type='cit']"
 	 use="substring-after(@target,'#')"/>
 
   <xsl:template match="/">
     <xsl:apply-imports/>
+    <xsl:variable name="name">
+      <xsl:call-template name="generateTitle"/>
+    </xsl:variable>
+    <xsl:result-document doctype-public="{$doctypePublic}"
+			 omit-xml-declaration = "yes"			  
+			 doctype-system="{$doctypeSystem}" 
+			 encoding="{$outputEncoding}"
+			 href="{$outputDir}/TitlePageRecto.html" 
+			 method="{$outputMethod}">
+      <html>
+	<xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (97) </xsl:comment>
+	<head>
+	  <title>
+	    <xsl:value-of select="$name"/>
+	  </title>
+	  <xsl:choose>
+	    <xsl:when test="$cssFile = ''"/>
+	    <xsl:when test="$cssFileInclude='true'">
+	      <style>
+		<include href="{$cssFile}" parse="text" xmlns="http://www.w3.org/2001/XInclude"/>
+	      </style>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <link href="{$cssFile}" rel="stylesheet"
+		    type="text/css"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:if test="not($cssSecondaryFile = '')">
+	    <link href="{$cssSecondaryFile}" rel="stylesheet"
+		  type="text/css"/>
+	  </xsl:if>
+	  <meta
+	      content="Text Encoding Initiative Consortium XSLT stylesheets"
+	      name="generator"/>
+	  <meta content="{$name}" name="DC.Title"/>
+	  <meta content="application/xhtml+xml; charset=utf-8"
+		http-equiv="Content-Type"/>
+	  <xsl:call-template name="includeJavascript"/>
+	  <xsl:call-template name="javascriptHook"/>
+	</head>
+	<body id="TOP">
+	  <xsl:call-template name="bodyHook"/>
+	  <div id="onecol" class="main-content">
+	    <xsl:apply-templates select="/TEI/text/front/titlePage/*"/>
+	  </div>
+	  <xsl:call-template name="stdfooter"/>
+	</body>
+      </html>
+    </xsl:result-document>    
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
-      <xsl:variable name="mychapter" select="ancestor::tei:div[last()]/@xml:id"/>
+      <xsl:variable name="mychapter" select="ancestor::div[last()]/@xml:id"/>
       <xsl:variable name="documentationLanguage">
 	<xsl:call-template name="generateDoc"/>
       </xsl:variable>
@@ -144,7 +193,7 @@
 	      translations of each other, and hence identical from the perspective of 
 	      their encoding.</p>	      
 		<xsl:for-each
-		    select="/tei:TEI/tei:text/tei:body/tei:div[@xml:id=$mychapter]">
+		    select="/TEI/text/body/div[@xml:id=$mychapter]">
 		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
 		    <ul>
 		      <li>
@@ -159,12 +208,12 @@
 		</xsl:for-each>
 	      <xsl:variable name="items">
 		<xsl:for-each
-		    select="/tei:TEI/tei:text/tei:body/tei:div[not(@xml:id=$mychapter)]">
+		    select="/TEI/text/body/div[not(@xml:id=$mychapter)]">
 		  <xsl:if test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
 		    <li>
 		      <a href="#{@xml:id}">
 			<xsl:call-template name="header"/>
-			<xsl:if test="./ancestor::tei:*/@module = $me/ancestor::tei:*/@module">
+			<xsl:if test="./ancestor::*/@module = $me/ancestor::*/@module">
 			  <em>(defining module)</em>
 			</xsl:if>
 		      </a>
@@ -178,7 +227,7 @@
                 </ul>
               </xsl:if>
 	      <xsl:for-each
-		  select="/tei:TEI/tei:text/tei:body/tei:div[@xml:id=$mychapter]">
+		  select="/TEI/text/body/div[@xml:id=$mychapter]">
 		<xsl:if
 		    test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
 		  <xsl:call-template name="showExamplesFromDiv">
@@ -187,7 +236,7 @@
 		</xsl:if>
 	      </xsl:for-each>
 	      <xsl:for-each
-		  select="/tei:TEI/tei:text/tei:body/tei:div[not(@xml:id=$mychapter)]">
+		  select="/TEI/text/body/div[not(@xml:id=$mychapter)]">
 		<xsl:if
 		    test="count(key('EXAMPLES',concat(@xml:id,$me)))&gt;0">
 		  <xsl:call-template name="showExamplesFromDiv">
@@ -223,24 +272,24 @@
 	<hr/>
 	<p>
 	  <xsl:choose>
-	    <xsl:when test="ancestor::tei:elementSpec">
+	    <xsl:when test="ancestor::elementSpec">
 	      <a
-		  href="../../{ancestor::tei:exemplum/@xml:lang}/html/ref-{ancestor::tei:elementSpec/@ident}.html">
+		  href="../../{ancestor::exemplum/@xml:lang}/html/ref-{ancestor::elementSpec/@ident}.html">
 		<xsl:text>&lt;</xsl:text>
 		<xsl:value-of
-		    select="ancestor::tei:elementSpec/@ident"/>
+		    select="ancestor::elementSpec/@ident"/>
 		<xsl:text>&gt;</xsl:text>
 	      </a>
 	    </xsl:when>
-	    <xsl:when test="ancestor::tei:classSpec">
+	    <xsl:when test="ancestor::classSpec">
 	      <a
-		  href="../../{ancestor::tei:exemplum/@xml:lang}/html/ref-{ancestor::tei:classSpec/@ident}.html">
+		  href="../../{ancestor::exemplum/@xml:lang}/html/ref-{ancestor::classSpec/@ident}.html">
 		<xsl:value-of
-		    select="ancestor::tei:classSpec/@ident"/>
+		    select="ancestor::classSpec/@ident"/>
 	      </a>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:for-each select="ancestor::tei:div[@xml:id and tei:head][1]">
+	      <xsl:for-each select="ancestor::div[@xml:id and head][1]">
 		<a>
 		  <xsl:attribute name="href">
 		    <xsl:apply-templates select="." mode="generateLink"/>
@@ -274,10 +323,10 @@
 
   <xsl:template name="startDivHook">
     <xsl:if
-      test="not(parent::tei:div) or not(local-name(preceding::*[1])='head')">
+      test="not(parent::div) or not(local-name(preceding::*[1])='head')">
       <div>
 	<xsl:choose>
-        <xsl:when test="not(parent::tei:div) and child::tei:div">
+        <xsl:when test="not(parent::div) and child::div">
 	  <xsl:attribute name="class">
 	    <xsl:text>miniTOC miniTOC_left</xsl:text>
 	  </xsl:attribute>
@@ -304,7 +353,7 @@
 	  </a></li>
 	  <li class="subtoc">
 	  <xsl:choose>
-	    <xsl:when test="self::tei:elementSpec">
+	    <xsl:when test="self::elementSpec">
 		<a class="navigation" href="REF-ELEMENTS.html">
 		  <xsl:call-template name="showHead">
 		    <xsl:with-param name="ID">
@@ -313,7 +362,7 @@
 		  </xsl:call-template>
 		</a>
 	    </xsl:when>
-	    <xsl:when test="self::tei:classSpec[@type='model']">
+	    <xsl:when test="self::classSpec[@type='model']">
 		<a class="navigation" href="REF-CLASSES-MODEL.html">
 		  <xsl:call-template name="showHead">
 		    <xsl:with-param name="ID">
@@ -322,7 +371,7 @@
 		  </xsl:call-template>
 		</a>
 	    </xsl:when>
-	    <xsl:when test="self::tei:classSpec[@type='atts']">
+	    <xsl:when test="self::classSpec[@type='atts']">
 		<a class="navigation" href="REF-CLASSES-ATTS.html">
 		<xsl:call-template name="showHead">
 		  <xsl:with-param name="ID">
@@ -331,7 +380,7 @@
 		</xsl:call-template>
 		</a>
 	    </xsl:when>
-	    <xsl:when test="self::tei:macroSpec">
+	    <xsl:when test="self::macroSpec">
 		<a class="navigation" href="REF-MACROS.html">
 		  <xsl:call-template name="showHead">
 		    <xsl:with-param name="ID">
@@ -342,11 +391,11 @@
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <!--
-	      <xsl:for-each select="ancestor::tei:div">
+	      <xsl:for-each select="ancestor::div">
 		<div>
 		  <xsl:attribute name="style">
 		    <xsl:text>margin-left:</xsl:text>
-		    <xsl:value-of select="count(ancestor::tei:div) + 1"/>
+		    <xsl:value-of select="count(ancestor::div) + 1"/>
 		    <xsl:text>em;</xsl:text>
 		  </xsl:attribute>
 		  <xsl:text>&#x21B3;</xsl:text>
@@ -568,9 +617,6 @@
                 <xsl:call-template name="javascriptHook"/>
               </head>
               <body id="TOP">
-                <xsl:attribute name="onload">
-                  <xsl:text>startUp()</xsl:text>
-                </xsl:attribute>
                 <xsl:call-template name="bodyHook"/>
 		<div id="onecol" class="main-content">
 		  <xsl:call-template name="mainTOC"/>
@@ -596,10 +642,10 @@
     <xsl:variable name="Here" select="/"/>
     <xsl:for-each select="key('IDS',$ID)">
       <xsl:choose>
-	<xsl:when test="ancestor::tei:front">
+	<xsl:when test="ancestor::front">
 	  <xsl:number format="i"/>
 	</xsl:when>
-	<xsl:when test="ancestor::tei:back">
+	<xsl:when test="ancestor::back">
 	  <xsl:number format="A"/>
 	</xsl:when>
 	<xsl:otherwise>
@@ -619,7 +665,7 @@
 	<xsl:otherwise>
 	  <xsl:for-each select="$Here">
 	    <xsl:for-each select="key('IDS',$ID)">
-	      <xsl:value-of select="tei:head"/>
+	      <xsl:value-of select="head"/>
 	    </xsl:for-each>
 	  </xsl:for-each>
       </xsl:otherwise>
@@ -629,8 +675,8 @@
 
   <xsl:template name="numberFrontDiv">
     <xsl:param name="minimal"/>
-    <xsl:if test="count(ancestor::tei:div)&lt;2">
-      <xsl:number count="tei:div" format="i.1.1." level="multiple"/>
+    <xsl:if test="count(ancestor::div)&lt;2">
+      <xsl:number count="div" format="i.1.1." level="multiple"/>
       <xsl:if test="$minimal='false'">
 	<xsl:value-of select="$numberSpacer"/>
       </xsl:if>
@@ -661,34 +707,34 @@
     <xsl:param name="title" select="'(no title)'"/>
   </xsl:template>
 
-  <xsl:template match="tei:titlePage">
+  <xsl:template match="titlePage">
     <!--
 	<div class="titlePage">
 	<h1>
 	<xsl:apply-templates
-	select="tei:docTitle/tei:titlePart/tei:title"/>
+	select="docTitle/titlePart/title"/>
 	</h1>
 	<h2>
-	<xsl:value-of select="tei:docAuthor"/>
+	<xsl:value-of select="docAuthor"/>
 	</h2>
 	</div>
     -->
   </xsl:template>
 
   <xsl:template name="continuedToc">
-    <xsl:if test="tei:div">
+    <xsl:if test="div">
       <ul class="continuedtoc">
-	<xsl:apply-templates mode="maketoc"  select="tei:div"/>
+	<xsl:apply-templates mode="maketoc"  select="div"/>
       </ul>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="tei:div" mode="maketoc">
+  <xsl:template match="div" mode="maketoc">
     <xsl:param name="forcedepth"/>
     <xsl:variable name="myName">
       <xsl:value-of select="local-name(.)"/>
     </xsl:variable>
-    <xsl:if test="tei:head or $autoHead='true'">
+    <xsl:if test="head or $autoHead='true'">
       <xsl:variable name="Depth">
         <xsl:choose>
           <xsl:when test="not($forcedepth='')">
@@ -700,14 +746,14 @@
         </xsl:choose>
       </xsl:variable>
       <xsl:variable name="thislevel">
-	<xsl:value-of select="count(ancestor::tei:div)"/>
+	<xsl:value-of select="count(ancestor::div)"/>
       </xsl:variable>
       <xsl:variable name="pointer">
         <xsl:apply-templates mode="generateLink" select="."/>
       </xsl:variable>
       <li>
 	  <xsl:choose>
-	    <xsl:when test="not(ancestor::tei:div) and tei:div">
+	    <xsl:when test="not(ancestor::div) and div">
 	      <xsl:attribute name="class">
 		<xsl:text>tocTree</xsl:text>
 	      </xsl:attribute>
@@ -748,11 +794,11 @@
 	  </xsl:call-template>
       </h3>
       <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-	<xsl:if test="tei:div">
+	  select="ancestor-or-self::TEI/text/back">
+	<xsl:if test="div">
 	  <ul class="toc{$force} toc_back">
 	    <xsl:apply-templates mode="maketoc"
-				 select="tei:div">
+				 select="div">
 	      <xsl:with-param name="forcedepth" select="$force"/>
               </xsl:apply-templates>
 	  </ul>
@@ -767,13 +813,21 @@
 	  </xsl:call-template>
       </h3>
       <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-	<xsl:if	    test="tei:div">
+	  select="ancestor-or-self::TEI/text/front">
+	<xsl:if test="div">
 	  <ul class="toc{$force} toc_front">
-	    <xsl:apply-templates mode="maketoc" select="tei:div">
+            <li>
+              <a href="TitlePageRecto.html">
+	      	  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">title</xsl:with-param>
+		  </xsl:call-template>
+	      </a>
+            </li>
+
+	    <xsl:apply-templates mode="maketoc" select="div">
 	      <xsl:with-param name="forcedepth" select="$force"/>
 	    </xsl:apply-templates>
-            </ul>
+	  </ul>
 	</xsl:if>
       </xsl:for-each>
     </div>
@@ -785,11 +839,11 @@
 	  </xsl:call-template>
       </h3>
       <xsl:for-each
-        select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-        <xsl:if          test="tei:div">
+        select="ancestor-or-self::TEI/text/body">
+        <xsl:if          test="div">
           <ul class="toc{$force}  toc_body">
             <xsl:apply-templates mode="maketoc"
-              select="tei:div">
+              select="div">
               <xsl:with-param name="forcedepth" select="$force"/>
             </xsl:apply-templates>
           </ul>
@@ -801,7 +855,7 @@
 
 
 
-  <xsl:template match="tei:divGen[@type='toc']"/>
+  <xsl:template match="divGen[@type='toc']"/>
 
   <xsl:template name="javascriptHook">
     <script type="text/javascript" src="jquery-1.2.6.min.js">	
@@ -855,8 +909,8 @@
 	  <xsl:text>link to this section </xsl:text>
 	</xsl:attribute>
 	<span class="invisible">
-	  <xsl:text>TEI: </xsl:text>
-	  <xsl:value-of select="tei:head[1]"/>
+	  <xsl:text> </xsl:text>
+	  <xsl:value-of select="head[1]"/>
 	</span>
          <span class="pilcrow">
 	<xsl:text>&#x00B6;</xsl:text>
@@ -878,7 +932,7 @@
               <xsl:text>link to this attribute </xsl:text>
             </xsl:attribute>
             <span class="invisible">
-              <xsl:text>TEI: </xsl:text>
+              <xsl:text> </xsl:text>
               <xsl:value-of select="$attName"/>
             </span>
             <span class="pilcrow">
@@ -918,7 +972,7 @@
   </xsl:template>
 
 <!-- only use listBibl if its in right language-->
-<xsl:template match="tei:listBibl">
+<xsl:template match="listBibl">
   <xsl:choose>
     <xsl:when test="@xml:lang and not($documentationLanguage=@xml:lang)">
     </xsl:when>
@@ -929,7 +983,7 @@
 </xsl:template>
 
 <!-- link from bibl back to egXML -->
-<xsl:template match="tei:listBibl/tei:biblStruct|tei:listBibl/tei:bibl">
+<xsl:template match="listBibl/biblStruct|listBibl/bibl">
   <xsl:apply-templates/>
   <xsl:for-each select="key('BACKLINKS',@xml:id)">
     <xsl:if test="self::teix:egXML">
@@ -959,7 +1013,7 @@
 	<xsl:text>&#160;</xsl:text>
     </div>
   </xsl:if>
-  <xsl:for-each select="ancestor::tei:elementSpec">
+  <xsl:for-each select="ancestor::elementSpec">
     <div  style="float: right;">
       <a href="examples-{@ident}.html">
 	<xsl:call-template name="i18n">
@@ -1027,13 +1081,13 @@
         <hr/>
       </xsl:if>
       <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+	  select="ancestor-or-self::TEI/teiHeader/fileDesc/publicationStmt/availability">
 	<div class="availability">
 	  <xsl:apply-templates/>
 	  <xsl:choose>
-	    <xsl:when test="count(tei:licence)&gt;1">
+	    <xsl:when test="count(licence)&gt;1">
 	      <ol>
-		<xsl:for-each select="tei:licence">
+		<xsl:for-each select="licence">
 		  <li>
 		    <xsl:choose>
 		      <xsl:when test="@target">
@@ -1049,7 +1103,7 @@
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <div class="licence">
-		<xsl:for-each select="tei:licence">
+		<xsl:for-each select="licence">
 		  <a href="{@target}">
 		    <xsl:apply-templates/>
 		  </a>
@@ -1063,7 +1117,7 @@
 	<br/>
         <xsl:text>TEI Guidelines Version </xsl:text>
         <xsl:value-of 
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+	    select="ancestor-or-self::TEI/teiHeader/fileDesc/editionStmt/edition"/>
         <xsl:text> This page generated on </xsl:text> 
 	<xsl:call-template name="whatsTheDate"/>
 
@@ -1082,7 +1136,7 @@
       </xsl:if>
   </xsl:template>
 
-  <xsl:template match="tei:licence"/>
+  <xsl:template match="licence"/>
 
 <xsl:template name="bodyHook">
   <xsl:if test="not($googleAnalytics='')">
@@ -1157,7 +1211,7 @@
     </h1>
     <p>      
       <xsl:text>Version </xsl:text>
-      <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+      <xsl:value-of select="ancestor-or-self::TEI/teiHeader/fileDesc/editionStmt/edition"/>
       </p>
   </div>
 </xsl:template>
@@ -1462,10 +1516,10 @@
       <xsl:text>: </xsl:text>
       <ul class="attrefs-class">
 	<xsl:for-each select="key('ATTREFS-CLASS',$this)">
-	  <xsl:sort select="ancestor::tei:classSpec/@ident"/>
+	  <xsl:sort select="ancestor::classSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
 	  <li>
-	    <xsl:for-each select="ancestor::tei:classSpec">
+	    <xsl:for-each select="ancestor::classSpec">
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name">
 		  <xsl:value-of select="@ident"/>
@@ -1476,7 +1530,7 @@
 	      </xsl:call-template>
 	    </xsl:for-each>
 	    <xsl:text>/@</xsl:text>
-	    <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	    <xsl:value-of select="ancestor::attDef/@ident"/>
 	    <xsl:call-template name="showSpace"/>
 	  </li>
 	</xsl:for-each>
@@ -1493,10 +1547,10 @@
       <xsl:text>: </xsl:text>
       <ul  class="attrefs-element">
 	<xsl:for-each select="key('ATTREFS-ELEMENT',$this)">
-	  <xsl:sort select="ancestor::tei:elementSpec/@ident"/>
+	  <xsl:sort select="ancestor::elementSpec/@ident"/>
 	  <xsl:sort select="@ident"/>
 	  <li>
-	    <xsl:for-each select="ancestor::tei:elementSpec">
+	    <xsl:for-each select="ancestor::elementSpec">
 	      <xsl:call-template name="linkTogether">
 		<xsl:with-param name="name">
 		  <xsl:value-of select="@ident"/>
@@ -1507,7 +1561,7 @@
 	      </xsl:call-template>
 	    </xsl:for-each>
 	    <xsl:text>/@</xsl:text>
-	  <xsl:value-of select="ancestor::tei:attDef/@ident"/>
+	  <xsl:value-of select="ancestor::attDef/@ident"/>
 	  <xsl:call-template name="showSpace"/>
 	  </li>
 	</xsl:for-each>
@@ -1519,38 +1573,38 @@
 
   <xsl:template name="calculateFigureNumber">
     <xsl:choose>
-      <xsl:when test="ancestor::tei:front">
+      <xsl:when test="ancestor::front">
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">figureWord</xsl:with-param>
 	</xsl:call-template>
 	<xsl:text> </xsl:text>
-	<xsl:number count="tei:figure[tei:head]" from="tei:div[parent::tei:front]" level="any"/>
-	<xsl:for-each select="ancestor::tei:div[parent::tei:front]">
+	<xsl:number count="figure[head]" from="div[parent::front]" level="any"/>
+	<xsl:for-each select="ancestor::div[parent::front]">
 	  <xsl:number/>
 	</xsl:for-each>
 	<xsl:text>.</xsl:text>
       </xsl:when>
-      <xsl:when test="ancestor::tei:back">
+      <xsl:when test="ancestor::back">
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">figureWord</xsl:with-param>
 	</xsl:call-template>
 	<xsl:text> </xsl:text>
-	<xsl:for-each select="ancestor::tei:div[parent::tei:back]">
+	<xsl:for-each select="ancestor::div[parent::back]">
 	  <xsl:number/>
 	</xsl:for-each>
 	<xsl:text>.</xsl:text>
-	<xsl:number count="tei:figure[tei:head]" from="tei:div[parent::tei:back]" level="any"/>
+	<xsl:number count="figure[head]" from="div[parent::back]" level="any"/>
       </xsl:when>
-      <xsl:when test="ancestor::tei:body">
+      <xsl:when test="ancestor::body">
 	<xsl:call-template name="i18n">
 	  <xsl:with-param name="word">figureWord</xsl:with-param>
 	</xsl:call-template>
 	<xsl:text> </xsl:text>
-	<xsl:for-each select="ancestor::tei:div[parent::tei:body]">
+	<xsl:for-each select="ancestor::div[parent::body]">
 	  <xsl:number/>
 	</xsl:for-each>
 	<xsl:text>.</xsl:text>
-	<xsl:number count="tei:figure[tei:head]" from="tei:div[parent::tei:body]" level="any"/>
+	<xsl:number count="figure[head]" from="div[parent::body]" level="any"/>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
