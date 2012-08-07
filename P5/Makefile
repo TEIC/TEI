@@ -262,7 +262,7 @@ dist-source.stamp: oddschema exampleschema
 	p5subset.xml \
 	p5subset.json \
 	stripspace.xsl.model \
-	p5attlist.txt
+	p5attlist.txt \
 	Makefile \
 	ReleaseNotes  \
 	Source \
@@ -292,7 +292,7 @@ dist-source.stamp: oddschema exampleschema
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	touch dist-source.stamp
-	rm p5subset.xml p5subset.json listatts.txt stripspace.xsl.model
+	rm p5subset.xml p5subset.json p5attlist.txt stripspace.xsl.model
 
 dist-schema.stamp: schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
