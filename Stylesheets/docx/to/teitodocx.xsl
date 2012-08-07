@@ -1024,7 +1024,7 @@ of this software, even if advised of the possibility of such damage.
         <tei:p rend="Special">
 	  <xsl:attribute name="iso:style">
 	    <xsl:text>font-family:</xsl:text>
-	    <xsl:value-of select="typewriterFont"/>
+	    <xsl:value-of select="$typewriterFont"/>
 	    <xsl:text>; font-size:18; text-align:left;</xsl:text>
 	  </xsl:attribute>
           <xsl:call-template name="create-egXML-section"/>
@@ -1043,7 +1043,7 @@ of this software, even if advised of the possibility of such damage.
           <tei:p rend="Special">
 	  <xsl:attribute name="iso:style">
 	    <xsl:text>font-family:</xsl:text>
-	    <xsl:value-of select="typewriterFont"/>
+	    <xsl:value-of select="$typewriterFont"/>
 	    <xsl:text>; font-size:18; text-align:left;</xsl:text>
 	  </xsl:attribute>
 	  <xsl:copy-of select="*|processing-instruction()|comment()|text()"/>
