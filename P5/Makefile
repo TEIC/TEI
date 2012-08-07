@@ -252,11 +252,17 @@ p5subset.xml: Source/Specs/*.xml Source/Guidelines/en/*.xml
 
 dist-source.stamp: oddschema exampleschema
 	make p5subset.xml
+	${SAXON} -o:p5subset.json p5subset.xml ${XSL}/odds2/odd2json.xsl
+	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl.model
+	${SAXON} -s:p5subset.xml -xsl:Utilities/listofattributes.xsl > p5attlist.txt
 	@echo BUILD: Make distribution directory for source
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
 	tar -c -f - --exclude "*~" --exclude .svn 	\
 	p5subset.xml \
+	p5subset.json \
+	stripspace.xsl.model \
+	p5attlist.txt
 	Makefile \
 	ReleaseNotes  \
 	Source \
@@ -286,7 +292,7 @@ dist-source.stamp: oddschema exampleschema
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	touch dist-source.stamp
-	rm p5subset.xml
+	rm p5subset.xml p5subset.json listatts.txt stripspace.xsl.model
 
 dist-schema.stamp: schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
@@ -531,6 +537,3 @@ clean:
 	rm -f tei-p5-*_*build
 	rm -f teiwebsiteguidelines.zip
 
-mccaskeylists: p5subset.xml
-	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl
-	${SAXON} -s:p5subset.xml -xsl:Utilities/listofattributes.xsl > attlist.txt
