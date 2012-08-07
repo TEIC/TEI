@@ -62,6 +62,7 @@
   <xsl:param name="bulletThree">*</xsl:param>
   <xsl:param name="bulletTwo">•</xsl:param>
   <xsl:param name="debug">false</xsl:param>
+  <xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
   <xsl:param name="defaultHeaderFooterFile">templates/default.xml</xsl:param>
   <xsl:param name="docDoc"><xsl:value-of select="concat($wordDirectory, '/word/document.xml')"/></xsl:param>
   <xsl:param name="headInXref">false</xsl:param>
@@ -223,7 +224,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="pass0">
 	<xsl:apply-templates mode="pass0"/>
       </xsl:variable>
-      <xsl:apply-templates select="$pass0/*"/>
+      <xsl:variable name="cleanup">
+	<xsl:apply-templates select="$pass0/*"/>
+      </xsl:variable>
+      <xsl:apply-templates select="$cleanup/*" mode="cleanup"/>
       <!--
 	  <xsl:result-document href="/tmp/x.xml">
 	  <xsl:copy-of select="$pass0"/>
@@ -1017,7 +1021,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="highlight"/>
     <xsl:call-template name="block-element">
       <xsl:with-param name="select">
-        <tei:p rend="Special" iso:style="font-family:DejaVu Sans Mono; font-size:18; text-align:left;">
+        <tei:p rend="Special">
+	  <xsl:attribute name="iso:style">
+	    <xsl:text>font-family:</xsl:text>
+	    <xsl:value-of select="typewriterFont"/>
+	    <xsl:text>; font-size:18; text-align:left;</xsl:text>
+	  </xsl:attribute>
           <xsl:call-template name="create-egXML-section"/>
         </tei:p>
       </xsl:with-param>
@@ -1031,8 +1040,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="block-element">
         <xsl:with-param name="style">Special</xsl:with-param>
         <xsl:with-param name="select">
-          <tei:p rend="Special" iso:style="font-family:DejaVu Sans Mono; font-size:18;text-align:left;">
-            <xsl:copy-of select="*|processing-instruction()|comment()|text()"/>
+          <tei:p rend="Special">
+	  <xsl:attribute name="iso:style">
+	    <xsl:text>font-family:</xsl:text>
+	    <xsl:value-of select="typewriterFont"/>
+	    <xsl:text>; font-size:18; text-align:left;</xsl:text>
+	  </xsl:attribute>
+	  <xsl:copy-of select="*|processing-instruction()|comment()|text()"/>
           </tei:p>
         </xsl:with-param>
       </xsl:call-template>
@@ -2566,6 +2580,60 @@ of this software, even if advised of the possibility of such damage.
       </w:t>
     </w:r>
   </xsl:template>
+
+
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Fallback template copying existing attributes etc in final stage cleanup</desc>
+  </doc>
+    <xsl:template match="@*|comment()|processing-instruction()|text()" mode="cleanup">
+      <xsl:copy-of select="."/>
+    </xsl:template>
+
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Fallback template copying existing elements in final stage cleanup</desc>
+  </doc>
+    <xsl:template match="*" mode="cleanup">
+      <xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>a run as a direct child of body is not allowed, how did it
+    creep through? Wrap up in a p.</desc>
+  </doc>
+
+    <xsl:template match="w:body/w:r" mode="cleanup">
+      <w:p>
+	<xsl:copy>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
+	</xsl:copy>
+      </w:p>
+    </xsl:template>
+
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>A p as a child of a p is not allowed. Group the other
+    siblings in self-contained p elements</desc>
+  </doc>
+
+    <xsl:template match="w:p[w:p]" mode="cleanup">
+      <xsl:variable name="props" select="w:pPr"/>
+      <xsl:for-each-group select="*" group-adjacent="local-name()">
+	<xsl:choose>
+	  <xsl:when test="current-grouping-key()='p'">
+	    <xsl:copy-of select="current-group()"/>
+	  </xsl:when>
+	  <xsl:when test="current-grouping-key()='pPr'"/>
+	  <xsl:otherwise>
+	    <w:p>
+	      <xsl:copy-of select="$props"/>	      
+	      <xsl:copy-of select="current-group()"/>	      
+	    </w:p>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each-group>
+    </xsl:template>
+
 
 
 </xsl:stylesheet>

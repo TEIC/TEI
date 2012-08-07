@@ -46,6 +46,8 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:param name="typewriterFont">Courier</xsl:param>
+  <xsl:param name="pagebreakStyle">active</xsl:param>
   <xsl:param name="tableMethod">cals</xsl:param>
   <xsl:param name="tableWidthPercentage">80</xsl:param>
   <xsl:param name="template">ISO</xsl:param>

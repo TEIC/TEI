@@ -99,14 +99,14 @@ of this software, even if advised of the possibility of such damage.
                 <w:tab/>
             </w:r>
             <xsl:for-each select="following-sibling::tei:item[1]">
-                <xsl:apply-templates>
-                    <xsl:with-param name="nop">true</xsl:with-param>
-                </xsl:apply-templates>
+	      <xsl:apply-templates>
+		<xsl:with-param name="nop">true</xsl:with-param>
+	      </xsl:apply-templates>
             </xsl:for-each>
         </w:p>
     </xsl:template>
 
-    <xsl:template match="tei:item/tei:list">
+    <xsl:template match="tei:item//tei:list">
         <xsl:param name="nop"/>
         <xsl:apply-templates>
             <xsl:with-param name="nop">false</xsl:with-param>
