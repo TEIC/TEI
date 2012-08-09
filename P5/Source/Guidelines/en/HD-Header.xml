@@ -1869,10 +1869,11 @@ such keywords should be taken from a recognized source, such as the
 British Library/Library of Congress Cataloguing in Publication data in
 the case of printed books, or a published thesaurus appropriate to the
 field.</p>
-<p>The mandatory <att>scheme</att> attribute is used to indicate the
-source of the keywords used.  If the keywords are taken from an
-externally defined authority which is available online, this attribute
-should point directly to it, as in the following examples:
+<p>The <att>scheme</att> attribute is used to indicate the source of
+the keywords used, in the case where such a source exists.  If the
+keywords are taken from an externally defined authority which is
+available online, this attribute should point directly to it, as in
+the following examples:
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <keywords scheme="http://classificationweb.net">
           <term>Babbage, Charles</term>
@@ -1907,7 +1908,11 @@ the usual way:
   </bibl>
 </taxonomy>
 </egXML>
-</p><p>Alternatively, if the keyword vocabulary itself is locally defined,
+</p>
+<p>If no authority file exists, perhaps because the keywords used were
+assigned directly by an author, the <att>scheme</att> attribute should
+be omitted.</p>
+<p>Alternatively, if the keyword vocabulary itself is locally defined,
 the <att>scheme</att> attribute will point to the local definition, which will
 typically be held in a <gi>taxonomy</gi> element within the
 <gi>classDecl</gi> part of the encoding description (see section <ptr
@@ -1920,14 +1925,14 @@ corresp="#HD43-eg-123" but I think we dont need to cite source          --></p>
 <p>The <gi>classCode</gi> element also categorizes an individual text,
 by supplying a numerical or other code rather than descriptive
 terms. Such codes constitute a recognized classification scheme, such
-as the Dewey Decimal Classification. The <att>scheme</att> attribute
-is used to indicate the source of the classification scheme in the
-same way as for keywords: this may
-be a pointer of any kind, either to a TEI element, possibly in the
-current document, as in the <gi>keywords</gi> examples above, or to
-some canonical source for the scheme, as in the following example:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classCode
-scheme="http://www.udcc.org/udcsummary/php/index.php">005.756</classCode> 
+as the Dewey Decimal Classification. On this element, the
+<att>scheme</att> attribute is required; it indicates the source of the
+classification scheme in the same way as for keywords: this may be a
+pointer of any kind, either to a TEI element, possibly in the current
+document, as in the <gi>keywords</gi> examples above, or to some
+canonical source for the scheme, as in the following example: <egXML
+xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><classCode
+scheme="http://www.udcc.org/udcsummary/php/index.php">005.756</classCode>
 </egXML>
 </p>
 <p>The <gi>catRef</gi> element categorizes an individual text by
