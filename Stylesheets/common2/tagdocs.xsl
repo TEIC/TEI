@@ -42,6 +42,9 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:key name="CHILDMOD" match="Element" use="@module"/>
 
+  <xsl:param name="teiWeb">
+    <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
+  </xsl:param>
 
   <xsl:template match="tei:ptr|tei:ref" mode="weave">
     <xsl:choose>
@@ -61,9 +64,12 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:with-param name="ptr" select="if (self::tei:ptr)
 						 then true() else false()"/>
                   <xsl:with-param name="dest">
-                    <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
-                    <xsl:value-of select="$documentationLanguage"/>
-                    <xsl:text>/html/</xsl:text>
+		    <xsl:value-of select="$teiWeb"/>
+		    <xsl:if test="not($documentationLanguage='en')">
+		      <xsl:text>../..</xsl:text>
+		      <xsl:value-of select="$documentationLanguage"/>
+		      <xsl:text>/html/</xsl:text>
+		    </xsl:if>
                     <xsl:value-of select="$Ancestor"/>
                     <xsl:text>.html</xsl:text>
                     <xsl:value-of select="@target"/>
