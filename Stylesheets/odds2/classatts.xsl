@@ -285,6 +285,16 @@ of this software, even if advised of the possibility of such damage.
               </xsl:copy>
             </xsl:for-each>
           </xsl:when>
+          <xsl:when test="$New/valList[@mode='change'] and
+			  not($Old/valList)">
+            <xsl:for-each select="$New/valList[1]">
+              <xsl:copy>
+                <xsl:copy-of select="@type"/>
+                <xsl:copy-of select="@repeatable"/>
+                <xsl:copy-of select="*"/>
+              </xsl:copy>
+            </xsl:for-each>
+          </xsl:when>
           <xsl:when test="$New/valList[@mode='change']">
             <xsl:for-each select="$New/valList[1]">
               <xsl:copy>

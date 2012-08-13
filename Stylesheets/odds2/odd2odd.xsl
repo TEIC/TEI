@@ -1415,6 +1415,7 @@ so that is only put back in if there is some content
               <xsl:copy>
                 <xsl:copy-of select="@type"/>
                 <xsl:copy-of select="@repeatable"/>
+		<xsl:copy-of select="$Old/tei:valList/@mode"/>
                 <xsl:copy-of select="*"/>
               </xsl:copy>
             </xsl:for-each>
