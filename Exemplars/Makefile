@@ -19,7 +19,7 @@ XODDS=	isofs.rng \
 	tei_math.rng \
 	tei_odds.rng	
 
-DOCODDS=tei_tite.doc.pdf teilite.doc.pdf
+DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf
 ROMA=roma2
 LANGUAGE=en
 P5=`(cd ..; pwd)`
