@@ -1337,21 +1337,20 @@ so that is only put back in if there is some content
     <xsl:param name="Old"/>
     <attDef xmlns="http://www.tei-c.org/ns/1.0">
       <xsl:attribute name="ident" select="$Old/@ident"/>
-       <xsl:attribute name="usage">
-          <xsl:choose>
-            <xsl:when test="$New/@usage">
-              <xsl:value-of select="$New/@usage"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="$Old/@usage"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-        <xsl:if test="$New/tei:altIdent">
-          <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:altIdent"/>
-        </xsl:if>
-        <!-- equiv, gloss, desc trio -->
-        <xsl:choose>
+      <xsl:copy-of select="$Old/@mode"/>
+      <xsl:choose>
+	<xsl:when test="$New/@usage">
+	  <xsl:copy-of select="$New/@usage"/>
+	</xsl:when>
+	<xsl:when test="$Old/@usage">
+	  <xsl:copy-of select="$Old/@usage"/>
+	</xsl:when>
+      </xsl:choose>
+      <xsl:if test="$New/tei:altIdent">
+	<xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:altIdent"/>
+      </xsl:if>
+      <!-- equiv, gloss, desc trio -->
+      <xsl:choose>
           <xsl:when test="$stripped='true'"/>
           <xsl:when test="$New/tei:equiv">
             <xsl:apply-templates mode="odd2odd-copy" select="$New/tei:equiv"/>
