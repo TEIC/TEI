@@ -7,6 +7,7 @@ $Date$ $Author$
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns="http://www.tei-c.org/ns/1.0" 
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    exclude-namespace-prefixes="tei"
     version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
@@ -54,6 +55,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="ROLES" match="P/@ROLE" use="1"/>
   <xsl:key name="ROLES" match="ITEM/@ROLE" use="1"/>
   <xsl:param name="intype"> ',)</xsl:param>
+  <xsl:param name="debug">false</xsl:param>
+  <xsl:param name="headerDirectory">headers/</xsl:param>
   <xsl:variable name="HERE" select="/"/>
   <xsl:variable name="Rendition">
     <tagsDecl>
@@ -64,6 +67,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:variable>
 
   <xsl:template match="/">
+    <xsl:if test="$debug='true'">
+	<xsl:message>processing <xsl:value-of select="base-uri()"/></xsl:message>
+    </xsl:if>
       <xsl:apply-templates/>
   </xsl:template>
 
@@ -96,7 +102,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="text()">
-    <xsl:analyze-string regex="([^∣]*)∣" select=".">
+    <xsl:analyze-string regex="([^∣]*)∣" select="translate(.,'¦','∣')">
       <xsl:matching-substring>
 	<xsl:value-of select="regex-group(1)"/>
 	<lb rend="hidden" type="hyphenInWord"/>
@@ -176,13 +182,19 @@ of this software, even if advised of the possibility of such damage.
 	 @UNIT='verse'  or 
 	 @UNIT='year'           ">
         <note place="margin" type="milestone" subtype="{@UNIT}">
-          <xsl:message>Milestone 1: <xsl:value-of
-          select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
+	  <xsl:if test="$debug='true'">
+	    <xsl:message>Milestone 1: <xsl:value-of
+	    select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
+	  </xsl:if>
           <xsl:value-of select="@N"/>
         </note>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message>Milestone 2: <xsl:value-of select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of select="@N"/></xsl:message>
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Milestone 2: <xsl:value-of
+	  select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of
+	  select="@N"/></xsl:message>
+	</xsl:if>
         <note place="margin" type="milestone">
           <label>
             <xsl:value-of select="@UNIT"/>
@@ -241,7 +253,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="P[not(parent::SP or parent::HEADNOTE or
 		       parent::POSTSCRIPT or parent::ARGUMENT) and count(*)=1 and
 		       not(text()) and 
-		       (LETTER or LIST or TABLE or FIGURE)]" 
+		       (LETTER or LIST or TABLE)]" 
 		>
     <xsl:apply-templates select="*|text()|processing-instruction()|comment()" />
   </xsl:template>
@@ -375,7 +387,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:variable>
-      <xsl:for-each select="document(concat($name,'.hdr'),$HERE)">
+      <xsl:for-each select="document(concat($headerDirectory,$name,'.hdr'),$HERE)">
         <xsl:apply-templates select="*" />
       </xsl:for-each>
       <xsl:apply-templates />
@@ -1731,7 +1743,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </teiCorpus>
   </xsl:template>
-  <xsl:template match="WITNESS/@sigil">
+  <xsl:template match="WITNESS/@SIGIL">
     <xsl:attribute name="xml:id">
       <xsl:value-of select="."/>
     </xsl:attribute>
@@ -1756,26 +1768,44 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </ptr>
   </xsl:template>
-  <xsl:template match="FIGURE/@entity"/>
-  <xsl:template match="FIGURE[@entity]">
+  <xsl:template match="FIGURE/@ENTITY"/>
+  <xsl:template match="FIGURE">
     <figure>
-      <graphic>
-        <xsl:attribute name="url">
-          <xsl:choose>
-            <xsl:when test="unparsed-entity-uri(@entity)=''">
-              <xsl:text>ENTITY_</xsl:text>
-              <xsl:value-of select="@entity"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="unparsed-entity-uri(@entity)"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:attribute>
-        <xsl:apply-templates select="@*"/>
-      </graphic>
+      <xsl:if test="@ENTITY">
+	<graphic>
+	  <xsl:attribute name="url">
+	    <xsl:choose>
+	      <xsl:when test="unparsed-entity-uri(@ENTITY)=''">
+		<xsl:text>ENTITY_</xsl:text>
+		<xsl:value-of select="@ENTITY"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="unparsed-entity-uri(@ENTITY)"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	  <xsl:apply-templates select="@*"/>
+	</graphic>
+      </xsl:if>
       <xsl:apply-templates/>
     </figure>
   </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	Figures inside paragraphs can generally be free-standing,
+	unless they are the only paragraph of this type (ie inside a
+	div consisting only of pictures).
+      </p>
+    </desc>
+  </doc>
+
+  <xsl:template match="P[parent::*/count(P[not(FIGURE)])&gt;1][FIGURE]">
+    <xsl:apply-templates select="FIGURE"/>
+  </xsl:template>
+
   <xsl:template match="EVENT">
     <incident>
       <xsl:apply-templates select="@*|*|text()|comment()|processing-instruction()"/>
@@ -1875,7 +1905,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="@ANA|@ACTIVE|@ADJ|@ADJFROM|@ADJTO|@CHILDREN|@CLASS|@CODE|@COPYOF|@CORRESP|@DECLS|@DOMAINS|@END|@EXCLUDE|@FVAL|@FEATS|@FOLLOW|@HAND|@INST|@LANGKEY|@LOCATION|@MERGEDIN|@NEW|@NEXT|@OLD|@ORIGIN|@OTHERLANGS|@PARENT|@PASSIVE|@PERF|@PREV|@RENDER|@RESP|@SAMEAS|@SCHEME|@SCRIPT|@SELECT|@SINCE|@START|@SYNCH|@TARGET|@TARGETEND|@VALUE|@VALUE|@WHO|@WIT">
-    <xsl:attribute name="{name(.)}">
+    <xsl:attribute name="{lower-case(name(.))}">
       <xsl:call-template name="splitter">
         <xsl:with-param name="val">
           <xsl:value-of select="."/>
@@ -2139,13 +2169,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="@PLACE">
-    <xsl:if test="not(lower-case(.) ='unspecified')">
-      <xsl:attribute name="place">
-        <xsl:value-of select="."/>
-      </xsl:attribute>
-    </xsl:if>
-  </xsl:template>
   <xsl:template match="@SAMPLE">
     <xsl:if test="not(lower-case(.) ='complete')">
       <xsl:attribute name="sample">
@@ -2222,6 +2245,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </hi>
   </xsl:template>
+
   <xsl:template match="FIGDESC/HI[@REND='sup']">
     <xsl:apply-templates/>
   </xsl:template>
