@@ -66,9 +66,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:with-param name="dest">
 		    <xsl:value-of select="$teiWeb"/>
 		    <xsl:if test="not($documentationLanguage='en')">
-		      <xsl:text>../..</xsl:text>
-		      <xsl:value-of select="$documentationLanguage"/>
-		      <xsl:text>/html/</xsl:text>
+		      <xsl:text>../../en/html/</xsl:text>
 		    </xsl:if>
                     <xsl:value-of select="$Ancestor"/>
                     <xsl:text>.html</xsl:text>
