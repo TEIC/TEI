@@ -2451,7 +2451,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="marginalNote">
 	<xsl:call-template name="block-element">
         <xsl:with-param name="style">
-	<xsl:value-of select="substring-after(@place,'margin')"/>
+	<xsl:value-of select="if (@place='margin') then 'marginOuter' else @place"/>
 	</xsl:with-param>
     </xsl:call-template>
   </xsl:template>

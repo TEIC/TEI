@@ -72,5 +72,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="pageBreakStyle">visible</xsl:param>
 
 
+  <xsl:template match="tei:note[@place='margin'
+		       or @place='marginOuter'
+		       or @place='marginLeft'
+		       or @place='marginRight']" priority="999">
+    <xsl:call-template name="marginalNote"/>
+  </xsl:template>
+
    
 </xsl:stylesheet>
