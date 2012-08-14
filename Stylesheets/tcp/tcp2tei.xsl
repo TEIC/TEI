@@ -182,19 +182,23 @@ of this software, even if advised of the possibility of such damage.
 	 @UNIT='verse'  or 
 	 @UNIT='year'           ">
         <note place="margin" type="milestone" subtype="{@UNIT}">
+<!--
 	  <xsl:if test="$debug='true'">
 	    <xsl:message>Milestone 1: <xsl:value-of
 	    select="@UNIT"/>/<xsl:value-of select="@N"/></xsl:message>
 	  </xsl:if>
+-->
           <xsl:value-of select="@N"/>
         </note>
       </xsl:when>
       <xsl:otherwise>
+<!--
 	<xsl:if test="$debug='true'">
 	  <xsl:message>Milestone 2: <xsl:value-of
 	  select="@UNIT"/><xsl:text> </xsl:text><xsl:value-of
 	  select="@N"/></xsl:message>
 	</xsl:if>
+-->
         <note place="margin" type="milestone">
           <label>
             <xsl:value-of select="@UNIT"/>

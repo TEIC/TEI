@@ -592,7 +592,7 @@ height: </xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
                   <div>
-                    <img width="1200" height="1700" alt="cover picture" src="{$coverImageInside}"/>
+                    <img width="{$viewPortWidth}" height="{$viewPortHeight}" alt="cover picture" src="{$coverImageInside}"/>
                   </div>
                 </xsl:otherwise>
               </xsl:choose>

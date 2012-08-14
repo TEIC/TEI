@@ -1745,7 +1745,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:space">
     <span style="display:inline-block">
-      <xsl:if test="@extent">
+      <xsl:if test="@quantity">
         <xsl:variable name="unit">
           <xsl:choose>
             <xsl:when test="@unit='chars'">
@@ -1758,7 +1758,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
         </xsl:variable>
         <xsl:attribute name="width">
-          <xsl:value-of select="@extent"/>
+          <xsl:value-of select="@quantity"/>
           <xsl:value-of select="$unit"/>
         </xsl:attribute>
       </xsl:if>

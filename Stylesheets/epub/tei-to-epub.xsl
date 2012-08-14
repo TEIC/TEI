@@ -92,6 +92,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="stage1">
       <xsl:apply-templates mode="preflight"/>
     </xsl:variable>
+<xsl:result-document href="/tmp/foo.xml">
+<xsl:copy-of select="$stage1"/>
+</xsl:result-document>
+
     <xsl:for-each select="$stage1">
       <xsl:call-template name="processTEIHook"/>
       <xsl:variable name="coverImageOutside">
@@ -198,7 +202,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
           <xsl:if test="$filePerPage='true'">
             <xsl:text>body { width: </xsl:text>
-            <xsl:value-of select="$viewPortWidth"/>
+            <xsl:value-of select="number($viewPortWidth)-100"/>
             <xsl:text>px;
  height: </xsl:text>
             <xsl:value-of select="$viewPortHeight"/>
@@ -589,7 +593,7 @@ height: </xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
                   <div>
-                    <img width="1200" height="1700" alt="cover picture" src="{$coverImageInside}"/>
+                    <img width="{$viewPortWidth}" height="{$viewPortHeight}" alt="cover picture" src="{$coverImageInside}"/>
                   </div>
                 </xsl:otherwise>
               </xsl:choose>
