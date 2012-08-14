@@ -91,7 +91,7 @@
     <echo level="info">unzip Word template</echo>
     <unzip src="${xslDir}/template.docx" dest="${outputTempDir}"/>
     <echo level="info">remove custom document properties, notes,
-    etc from Word template</echo>
+    footers, headers etc from Word template</echo>
     <delete includeEmptyDirs="true" verbose="true">
       <fileset dir="${outputTempDir}">
 	<include name="docProps/custom.xml" />
@@ -99,6 +99,8 @@
 	<include name="word/_rels/settings.xml.rels" />
 	<include name="word/endnotes.xml" />
 	<include name="word/footnotes.xml" />
+	<include name="word/footer*" />
+	<include name="word/header*" />
       </fileset>
     </delete>
     <delete dir="${outputTempDir}/customXml" />
