@@ -988,28 +988,52 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Show a selected attribute<param name="HERE">the starting node </param>
+    <desc>Show a selected attribute <param name="HERE">the starting node </param>
          <param name="TOKEN">attribute we have been asked to display</param>
       </desc>
   </doc>
   <xsl:template name="doAnAttToken">
     <xsl:param name="HERE"/>
     <xsl:param name="TOKEN"/>
-    <xsl:choose>
-      <xsl:when test="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
-        <xsl:for-each select="$HERE/tei:attList//tei:attDef[@ident=$TOKEN]">
+    <xsl:for-each select="$HERE">
+      <xsl:choose>
+      <xsl:when test="tei:attList//tei:attDef[@ident=$TOKEN]">
+        <xsl:for-each select="tei:attList//tei:attDef[@ident=$TOKEN]">
           <xsl:call-template name="showAnAttribute"/>
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:for-each select="$HERE/tei:classes/tei:memberOf">
-          <xsl:for-each select="key('IDENTS',@key)/tei:attList//tei:attDef[@ident=$TOKEN]">
-            <xsl:call-template name="showAnAttribute"/>
-          </xsl:for-each>
-        </xsl:for-each>
+	<!--Look for $TOKEN in class hierarchy -->
+	<xsl:call-template name="checkClassesForAttribute">
+	  <xsl:with-param name="TOKEN" select="$TOKEN"/>
+	</xsl:call-template>
       </xsl:otherwise>
-    </xsl:choose>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Recursively check class membership, looking for the
+    definition of an attribute</desc>
+  </doc>
+  <xsl:template name="checkClassesForAttribute">
+    <xsl:param name="TOKEN"/>
+      <xsl:for-each select="tei:classes/tei:memberOf/key('IDENTS',@key)">
+	<xsl:choose>
+	  <xsl:when test="tei:attList//tei:attDef[@ident=$TOKEN]">
+	    <xsl:for-each select="tei:attList//tei:attDef[@ident=$TOKEN]">
+	      <xsl:call-template name="showAnAttribute"/>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="checkClassesForAttribute">
+	      <xsl:with-param name="TOKEN" select="$TOKEN"/>
+	    </xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Display of an attribute</desc>
   </doc>
