@@ -48,6 +48,7 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:param name="opfPackageVersion">2.0</xsl:param>
   <xsl:param name="STDOUT">false</xsl:param>
   <xsl:param name="autoHead">true</xsl:param>
   <xsl:param name="autoToc">true</xsl:param>
@@ -260,7 +261,7 @@ height: </xsl:text>
 	  </xsl:analyze-string>
 	</xsl:variable>
 
-          <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="2.0">
+          <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="dcidid" version="{$opfPackageVersion}">
 	    <xsl:call-template name="opfmetadata">
 	      <xsl:with-param name="author" select="$A"/>
 	      <xsl:with-param name="printAuthor" select="$printA"/>

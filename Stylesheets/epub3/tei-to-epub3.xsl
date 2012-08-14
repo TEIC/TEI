@@ -201,7 +201,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
           <xsl:if test="$filePerPage='true'">
             <xsl:text>body { width: </xsl:text>
-            <xsl:value-of select="$viewPortWidth"/>
+            <xsl:value-of select="number($viewPortWidth)-100"/>
             <xsl:text>px;
  height: </xsl:text>
             <xsl:value-of select="$viewPortHeight"/>
@@ -822,6 +822,9 @@ height: </xsl:text>
     <xsl:param name="author"/>
     <xsl:param name="printAuthor"/>
     <xsl:param name="coverImageOutside"/>
+    <xsl:attribute name="prefix">
+      <xsl:text>rendition: http://www.idpf.org/vocab/rendition#</xsl:text>
+    </xsl:attribute>
     <metadata xmlns="http://www.idpf.org/2007/opf"
 	      xmlns:dc="http://purl.org/dc/elements/1.1/"
 	      xmlns:dcterms="http://purl.org/dc/terms/" 
@@ -830,6 +833,11 @@ height: </xsl:text>
       <dc:title id="title">
 	<xsl:call-template name="generateSimpleTitle"/>
       </dc:title>
+      <xsl:if test="$filePerPage='true'">
+	<meta property="rendition:layout">pre-paginated</meta>
+	<meta property="rendition:orientation">auto</meta>
+	<meta property="rendition:spread">both</meta>
+      </xsl:if>
       <meta refines="#title" property="title-type">main</meta>
       <dc:creator id="creator">
 	<xsl:sequence select="if ($printAuthor !='') then $printAuthor
