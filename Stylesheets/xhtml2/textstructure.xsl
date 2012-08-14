@@ -363,7 +363,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:TEI">
       <xsl:call-template name="teiStartHook"/>
       <xsl:if test="$verbose='true'">
-         <xsl:message>TEI HTML in single document mode </xsl:message>
+         <xsl:message>TEI HTML creation in single document mode </xsl:message>
       </xsl:if>
       <html>
          <xsl:call-template name="addLangAtt"/>
@@ -2227,19 +2227,11 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:variable name="pass1">	 
 	   <xsl:apply-templates select="tei:text/*"/>
 	 </xsl:variable>
+<xsl:result-document href="/tmp/foo.xml">
+  <xsl:copy-of select="$pass1"/>
+</xsl:result-document>
 	 <xsl:choose>
-	   <xsl:when test="not($pass1/html:PAGEBREAK)">
-	     <xsl:for-each-group select="$pass1/*"
-				 group-ending-with="*[(position() mod 40) = 0]">
-	       <xsl:call-template name="pageperfile">
-		 <xsl:with-param name="page">
-		   <xsl:text>page</xsl:text>
-		   <xsl:value-of select="position()"/>
-		 </xsl:with-param>
-	       </xsl:call-template>
-	     </xsl:for-each-group>
-	   </xsl:when>
-	   <xsl:otherwise>
+	   <xsl:when test="$pass1/html:PAGEBREAK">
 	     <xsl:for-each-group select="$pass1/*"
 				 group-starting-with="html:PAGEBREAK">
 	       <xsl:choose>
@@ -2252,6 +2244,33 @@ of this software, even if advised of the possibility of such damage.
 		   <xsl:copy-of select="current-group()"/>
 		 </xsl:otherwise>
 	       </xsl:choose>
+	     </xsl:for-each-group>
+	   </xsl:when>
+	   <xsl:when test="$pass1/html:div[@class='tei_front' or
+			   @class='tei_body' or @class='tei_back']/html:PAGEBREAK">
+	     <xsl:for-each-group select="$pass1/*/*"
+				 group-starting-with="html:PAGEBREAK">
+	       <xsl:choose>
+		 <xsl:when test="self::html:PAGEBREAK">
+		   <xsl:call-template name="pageperfile">
+		     <xsl:with-param name="page" select="self::html:PAGEBREAK/@name"/>
+		   </xsl:call-template>
+		 </xsl:when>
+		 <xsl:otherwise>
+		   <xsl:copy-of select="current-group()"/>
+		 </xsl:otherwise>
+	       </xsl:choose>
+	     </xsl:for-each-group>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:for-each-group select="$pass1/*"
+				 group-ending-with="*[(position() mod 40) = 0]">
+	       <xsl:call-template name="pageperfile">
+		 <xsl:with-param name="page">
+		   <xsl:text>page</xsl:text>
+		   <xsl:value-of select="position()"/>
+		 </xsl:with-param>
+	       </xsl:call-template>
 	     </xsl:for-each-group>
 	   </xsl:otherwise>
 	 </xsl:choose>

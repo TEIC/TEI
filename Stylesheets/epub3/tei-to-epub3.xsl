@@ -366,7 +366,7 @@ height: </xsl:text>
                       </item>
                     </xsl:if>
                     <item href="{$target}.xhtml" media-type="application/xhtml+xml">
-                      <xsl:if test="$mediaoverlay='true'">
+                      <xsl:if test="$mediaoverlay='true'  and key('Timeline',1)">
                         <xsl:attribute name="media-overlay">
                           <xsl:value-of select="$target"/>
                           <xsl:text>-audio</xsl:text>
@@ -832,10 +832,12 @@ height: </xsl:text>
       </dc:title>
       <meta refines="#title" property="title-type">main</meta>
       <dc:creator id="creator">
-	<xsl:value-of select="$printAuthor"/>
+	<xsl:sequence select="if ($printAuthor !='') then $printAuthor
+			      else 'not recorded'"/>
       </dc:creator>
       <meta refines="#creator" property="file-as">
-	<xsl:value-of select="$author"/>
+	<xsl:sequence select="if ($author !='') then $author
+			      else 'not recorded'"/>
       </meta>
       <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
       <dc:language>
@@ -873,9 +875,11 @@ height: </xsl:text>
       <xsl:if test="not($coverImageOutside='')">
 	<meta name="cover" content="cover-image"/>
       </xsl:if>
-      <meta property="dcterms:modified">
-	<xsl:call-template name="generateRevDate"/>
-      </meta>
+        <xsl:variable name="now" select="tei:whatsTheDate()"/>
+	
+	<meta property="dcterms:modified">
+	  <xsl:value-of select="$now"/>
+	</meta>
     </metadata>
   </xsl:template>
 

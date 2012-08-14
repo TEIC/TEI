@@ -231,12 +231,5 @@ of this software, even if advised of the possibility of such damage.
     </xsl:function>
     
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-		Returns the current date.</desc></doc>
-
-	  <xsl:function name="tei:whatsTheDate">
-        <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
-    </xsl:function>
 
 </xsl:stylesheet>

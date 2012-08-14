@@ -139,11 +139,6 @@ of this software, even if advised of the possibility of such damage.
 
 
   <xsl:template match="/">
-    <!--
-    <xsl:result-document href="/tmp/foo.xml">
-      <xsl:copy-of select="$ODD"/>
-    </xsl:result-document>
-    -->
     <xsl:apply-templates mode="odd2odd-pass1" select="$ODD"/>
   </xsl:template>
 

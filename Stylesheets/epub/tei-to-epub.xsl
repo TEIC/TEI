@@ -92,9 +92,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="stage1">
       <xsl:apply-templates mode="preflight"/>
     </xsl:variable>
-<xsl:result-document href="/tmp/foo.xml">
-<xsl:copy-of select="$stage1"/>
-</xsl:result-document>
 
     <xsl:for-each select="$stage1">
       <xsl:call-template name="processTEIHook"/>
