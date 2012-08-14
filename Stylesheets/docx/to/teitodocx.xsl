@@ -750,9 +750,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="tei:render-bold(.)">
         <w:b/>
       </xsl:when>
-      <xsl:when test="self::tei:hi[not(@rend)]">
-        <w:b/>
-      </xsl:when>
       <xsl:when test="self::tbx:hi[@style='bold']">
         <w:i/>
       </xsl:when>
