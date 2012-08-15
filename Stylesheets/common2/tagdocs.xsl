@@ -55,25 +55,6 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="id(substring(@target,2))/ancestor::tei:div[last()]/@xml:id"/>
             </xsl:variable>
             <xsl:choose>
-              <xsl:when test="index-of(('AB', 'AI', 'CC', 'CE', 'CH',
-			      'CO', 'DI', 'DR', 'DS', 'FS', 'FT',
-			      'GD', 'HD', 'MS', 'ND', 'NH', 'PH',
-			      'SA', 'SG', 'ST', 'TC', 'TD', 'TS',
-			      'USE', 'VE', 'WD'),$Ancestor) &gt; 0">
-                <xsl:call-template name="makeExternalLink">
-		  <xsl:with-param name="ptr" select="if (self::tei:ptr)
-						 then true() else false()"/>
-                  <xsl:with-param name="dest">
-		    <xsl:value-of select="$teiWeb"/>
-		    <xsl:if test="not($documentationLanguage='en')">
-		      <xsl:text>../../en/html/</xsl:text>
-		    </xsl:if>
-                    <xsl:value-of select="$Ancestor"/>
-                    <xsl:text>.html</xsl:text>
-                    <xsl:value-of select="@target"/>
-                  </xsl:with-param>
-                </xsl:call-template>
-              </xsl:when>
 	      <xsl:when test="id(substring(@target,2))">
 		<xsl:call-template name="makeInternalLink">
 		  <xsl:with-param name="target" select="substring(@target,2)"/>
@@ -88,6 +69,24 @@ of this software, even if advised of the possibility of such damage.
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </xsl:when>
+              <xsl:when test="index-of(('AB', 'AI', 'CC', 'CE', 'CH',
+			      'CO', 'DI', 'DR', 'DS', 'FS', 'FT',
+			      'GD', 'HD', 'MS', 'ND', 'NH', 'PH',
+			      'SA', 'SG', 'ST', 'TC', 'TD', 'TS',
+			      'USE', 'VE', 'WD'),$Ancestor) &gt; 0">
+                <xsl:call-template name="makeExternalLink">
+		  <xsl:with-param name="ptr" select="if (self::tei:ptr)
+						 then true() else false()"/>
+                  <xsl:with-param name="dest">
+		    <xsl:value-of select="$teiWeb"/>
+		    <xsl:value-of select="$documentationLanguage"/>
+                    <xsl:text>/html/</xsl:text>
+                    <xsl:value-of select="$Ancestor"/>
+                    <xsl:text>.html</xsl:text>
+                    <xsl:value-of select="@target"/>
+                  </xsl:with-param>
+                </xsl:call-template>
+              </xsl:when>
               <xsl:otherwise>
                 <xsl:text>«</xsl:text>
                 <xsl:value-of select="@target"/>
