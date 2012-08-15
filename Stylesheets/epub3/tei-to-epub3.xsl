@@ -833,11 +833,17 @@ height: </xsl:text>
       <dc:title id="title">
 	<xsl:call-template name="generateSimpleTitle"/>
       </dc:title>
-      <xsl:if test="$filePerPage='true'">
-	<meta property="rendition:layout">pre-paginated</meta>
-	<meta property="rendition:orientation">auto</meta>
-	<meta property="rendition:spread">both</meta>
-      </xsl:if>
+      <xsl:choose>
+	<xsl:when test="$filePerPage='true'">
+	  <meta property="rendition:layout">pre-paginated</meta>
+	  <meta property="rendition:orientation">auto</meta>
+	  <meta property="rendition:spread">both</meta>
+	</xsl:when>
+	<xsl:otherwise>
+	  <meta property="rendition:layout">reflowable</meta>
+	  <meta property="rendition:spread">auto</meta>
+	</xsl:otherwise>
+      </xsl:choose>
       <meta refines="#title" property="title-type">main</meta>
       <dc:creator id="creator">
 	<xsl:sequence select="if ($printAuthor !='') then $printAuthor

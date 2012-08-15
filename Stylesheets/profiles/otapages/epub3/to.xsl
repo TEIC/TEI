@@ -66,7 +66,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="splitLevel">-1</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="mediaoverlay">true</xsl:param>
-    <xsl:param name="cssFile">../profiles/otapages/epub/ota.css</xsl:param>
+    <xsl:param name="cssFile">../profiles/otapages/epub3/ota.css</xsl:param>
     <xsl:param name="subject">Oxford Text Archive</xsl:param>
     <xsl:param name="pagebreakStyle">none</xsl:param>
 
