@@ -114,9 +114,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each-group select="node()" group-starting-with="tei:pb|tei:figure">
         <xsl:choose>
           <xsl:when test="self::tei:pb">
-	      <tei:pb>
-		<xsl:copy-of select="@*"/>
-	      </tei:pb>
+	      <xsl:apply-templates select="." mode="preflight"/>
 	      <tei:hi>
 		<xsl:copy-of select="$atts"/>
 		<xsl:copy-of select="current-group() except ."/>
