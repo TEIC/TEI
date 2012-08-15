@@ -138,6 +138,9 @@ Use real name of graphics files rather than pointers
 \usepackage[normalem]{ulem}
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\itshape\footnotesize}
+\setlength\marginparwidth{.75in}
 \usepackage{graphicx}
 </xsl:text>
 <xsl:if test="key('ENDNOTES',1)">

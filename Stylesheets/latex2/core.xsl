@@ -301,7 +301,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="rendering">
       <xsl:variable name="cmd">
          <xsl:choose>
-            <xsl:when test="not(@rend)">\textbf</xsl:when>
+            <xsl:when test="not(@rend)">\textit</xsl:when>
             <xsl:when test="starts-with(@rend,'color')">\textcolor</xsl:when>
             <xsl:when test="@rend='bold'">\textbf</xsl:when>
             <xsl:when test="@rend='calligraphic'">\textcal</xsl:when>
@@ -412,8 +412,24 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element lb</desc>
    </doc>
   <xsl:template match="tei:lb">
+    <xsl:choose>
+      <xsl:when test="parent::tei:body"/>
+      <xsl:when test="parent::tei:back"/>
+      <xsl:when test="parent::tei:front"/>
+      <xsl:when test="@type='hyphenInWord' and @rend='hidden'"/>
+      <xsl:when test="@rend='hidden'">
+        <xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:when test="@rend='-' or @type='hyphenInWord'">
+        <xsl:text>-</xsl:text>
+	<xsl:text>{\hskip1pt}\newline </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
       <xsl:text>{\hskip1pt}\newline </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element list</desc>
    </doc>
@@ -562,6 +578,16 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:when>
 	<xsl:when test="@place='end'">
 	  <xsl:text>\endnote{</xsl:text>
+	  <xsl:if test="@xml:id">
+	    <xsl:text>\label{</xsl:text>
+	    <xsl:value-of select="@xml:id"/>
+	    <xsl:text>}</xsl:text>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:when>
+	<xsl:when test="@place='margin'">
+	  <xsl:text>\marginnote{</xsl:text>
 	  <xsl:if test="@xml:id">
 	    <xsl:text>\label{</xsl:text>
 	    <xsl:value-of select="@xml:id"/>
