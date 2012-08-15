@@ -2227,9 +2227,6 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:variable name="pass1">	 
 	   <xsl:apply-templates select="tei:text/*"/>
 	 </xsl:variable>
-<xsl:result-document href="/tmp/foo.xml">
-  <xsl:copy-of select="$pass1"/>
-</xsl:result-document>
 	 <xsl:choose>
 	   <xsl:when test="$pass1/html:PAGEBREAK">
 	     <xsl:for-each-group select="$pass1/*"
