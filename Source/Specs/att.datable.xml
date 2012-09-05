@@ -42,6 +42,13 @@ $Id$
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
+      <constraintSpec ident="calendar" scheme="isoschematron">
+        <constraint>
+          <sch:rule context="tei:*[@calendar]">
+            <sch:assert test="string-length(.) gt 0">@calendar indicates the system or calendar to which the date represented by the content of this element belongs, but this element has no textual content.</sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">He was born on <date calendar="#Gregorian">Feb. 22, 1732</date> 
           (<date calendar="#Julian" when="1732-02-22"> Feb. 11, 1731/32, O.S.</date>).</egXML>
