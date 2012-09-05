@@ -92,14 +92,15 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
+	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
 	cp `ls *.xml | grep -v '\.doc\.'` ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	cp *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	cp *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	cp *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
-	cp *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
-	cp *.doc.epub ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
+	cp *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf 
+	cp *.doc.epub ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:
