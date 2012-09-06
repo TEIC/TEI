@@ -1067,8 +1067,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element note</desc>
   </doc>
   <xsl:template match="tei:note">
-<xsl:message>go with <xsl:sequence select="tei:is-inline(.)"/></xsl:message>
-
+    <!--<xsl:message>go with <xsl:sequence select="tei:is-inline(.)"/></xsl:message>-->
     <xsl:variable name="identifier">
       <xsl:call-template name="noteID"/>
     </xsl:variable>
