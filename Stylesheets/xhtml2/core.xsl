@@ -166,7 +166,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </span>
       </xsl:when>
-      <xsl:when test="parent::tei:cit[@rend='display'] | parent::tei:q">
+      <xsl:when test="parent::tei:cit[@rend='display'] or
+		      (parent::tei:cit and tei:p) or  parent::tei:q">
         <div class="citbibl">
           <xsl:apply-templates/>
         </div>
@@ -248,7 +249,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="(@rend='display' and tei:quote) or tei:quote/tei:l">
+      <xsl:when test="(@rend='display' and tei:quote) or
+		      tei:quote/tei:l or tei:quote/tei:p">
         <div>
           <xsl:call-template name="rendToClass"/>
           <xsl:if test="@n">
@@ -296,7 +298,7 @@ of this software, even if advised of the possibility of such damage.
         </span>
       </xsl:when>
       <xsl:otherwise>
-        <span>
+        <div>
           <xsl:call-template name="rendToClass"/>
           <xsl:if test="@n">
             <xsl:text>(</xsl:text>
@@ -304,7 +306,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>) </xsl:text>
           </xsl:if>
           <xsl:apply-templates/>
-        </span>
+        </div>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1643,7 +1645,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:quote">
     <xsl:choose>
-      <xsl:when test="parent::tei:cit[@rend='display']">
+      <xsl:when test="parent::tei:cit[@rend='display'] or
+		      parent::tei:cit and (tei:p or tei:l)">
         <div class="citquote">
           <xsl:apply-templates/>
         </div>
