@@ -221,6 +221,7 @@ of this software, even if advised of the possibility of such damage.
     </doc>
 
     <xsl:template match="/">
+      <xsl:call-template name="write-docxfiles"/>
       <xsl:variable name="pass0">
 	<xsl:apply-templates mode="pass0"/>
       </xsl:variable>
@@ -236,9 +237,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
   <xsl:template match="/tei:TEI|/tei:teiCorpus">
-    <xsl:call-template name="write-docxfiles"/>
     <xsl:call-template name="create-document-dot-xml"/>
   </xsl:template>
+
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>

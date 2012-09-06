@@ -843,6 +843,7 @@ of this software, even if advised of the possibility of such damage.
             auxiliary files. </desc>
   </doc>
   <xsl:template name="write-docxfiles">
+
     <xsl:if test="$isofreestanding='true'">
       <!-- header and footers -->
       <xsl:call-template name="write-docxfile-header-files"/>
@@ -869,6 +870,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="write-docxfile-comments-file"/>
     <xsl:call-template name="write-docxfile-docprops-core"/>
     <xsl:call-template name="write-docxfile-docprops-custom"/>
+
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc> Writes the main document.xml file, that contains all "real" content. </desc>
@@ -1180,7 +1182,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:copy>
     </xsl:variable>
     <xsl:for-each select="$phase1/tei:TEI">
-      <xsl:call-template name="write-docxfiles"/>
       <xsl:call-template name="create-document-dot-xml"/>
     </xsl:for-each>
   </xsl:template>
