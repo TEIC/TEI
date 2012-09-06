@@ -166,7 +166,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </span>
       </xsl:when>
-      <xsl:when test="parent::tei:cit | parent::tei:q">
+      <xsl:when test="parent::tei:cit[@rend='display'] | parent::tei:q">
         <div class="citbibl">
           <xsl:apply-templates/>
         </div>
@@ -185,7 +185,13 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="@type"/>
             </xsl:if>
           </xsl:attribute>
+	  <xsl:if test="parent::tei:cit">
+	    <xsl:text> (</xsl:text>
+	  </xsl:if>
           <xsl:apply-templates/>
+	  <xsl:if test="parent::tei:cit">
+	    <xsl:text>)</xsl:text>
+	  </xsl:if>
         </span>
       </xsl:otherwise>
     </xsl:choose>
@@ -242,7 +248,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:cit">
     <xsl:choose>
-      <xsl:when test="@rend='display' and tei:quote">
+      <xsl:when test="(@rend='display' and tei:quote) or tei:quote/tei:l">
         <div>
           <xsl:call-template name="rendToClass"/>
           <xsl:if test="@n">
@@ -279,7 +285,7 @@ of this software, even if advised of the possibility of such damage.
         </blockquote>
       </xsl:when>
       <xsl:when test="tei:bibl">
-        <div>
+        <span>
           <xsl:call-template name="rendToClass"/>
           <xsl:if test="@n">
             <xsl:text>(</xsl:text>
@@ -287,7 +293,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>) </xsl:text>
           </xsl:if>
           <xsl:apply-templates/>
-        </div>
+        </span>
       </xsl:when>
       <xsl:otherwise>
         <span>
@@ -1067,7 +1073,6 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element note</desc>
   </doc>
   <xsl:template match="tei:note">
-    <!--<xsl:message>go with <xsl:sequence select="tei:is-inline(.)"/></xsl:message>-->
     <xsl:variable name="identifier">
       <xsl:call-template name="noteID"/>
     </xsl:variable>
@@ -1219,7 +1224,7 @@ of this software, even if advised of the possibility of such damage.
         </span>
       </xsl:when>
       <xsl:otherwise>
-        <div>
+        <span>
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
@@ -1241,7 +1246,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:choose>
           </span>
           <xsl:apply-templates/>
-        </div>
+        </span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1638,7 +1643,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:quote">
     <xsl:choose>
-      <xsl:when test="parent::tei:cit">
+      <xsl:when test="parent::tei:cit[@rend='display']">
         <div class="citquote">
           <xsl:apply-templates/>
         </div>
