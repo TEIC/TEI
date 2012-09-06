@@ -235,14 +235,28 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:list" mode="metadata">
-    <ul>
-      <xsl:apply-templates mode="metadata"/>
-    </ul>
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:availability">
+	<xsl:apply-templates mode="metadata"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<ul>
+	  <xsl:apply-templates mode="metadata"/>
+	</ul>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:item" mode="metadata">
-    <li>
-      <xsl:apply-templates mode="metadata"/>
-    </li>
+    <xsl:choose>
+      <xsl:when test="ancestor::tei:availability">
+	*  <xsl:apply-templates mode="metadata"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<li>
+	  <xsl:apply-templates mode="metadata"/>
+	</li>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:relatedItem[@target]" mode="metadata" priority="10">
     <a href="{@target}">

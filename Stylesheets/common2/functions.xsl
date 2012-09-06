@@ -186,6 +186,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:biblScope">true</xsl:when>
         <xsl:when test="self::tei:br">true</xsl:when>
         <xsl:when test="self::tei:byline">true</xsl:when>
+        <xsl:when test="self::tei:note[tei:cit/tei:bibl]">false</xsl:when>
         <xsl:when test="self::tei:c">true</xsl:when>
         <xsl:when test="self::tei:caesura">true</xsl:when>
         <xsl:when test="self::tei:choice">true</xsl:when>

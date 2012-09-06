@@ -86,20 +86,20 @@ of this software, even if advised of the possibility of such damage.
                                  select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
          </xsl:when>
          <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-            <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-               <xsl:apply-templates/>
-               <xsl:choose>
-            <xsl:when test="count(following-sibling::tei:author)=1">
-              <xsl:if test="count(preceding-sibling::tei:author)>1">
-                <xsl:text>,</xsl:text>
-              </xsl:if>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">and</xsl:with-param>
-              </xsl:call-template>
-            </xsl:when>
-                  <xsl:when test="following-sibling::tei:author">, </xsl:when>
-               </xsl:choose>
-            </xsl:for-each>
+	   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+	     <xsl:apply-templates/>
+	     <xsl:choose>
+	       <xsl:when test="count(following-sibling::tei:author)=1">
+		 <xsl:if test="count(preceding-sibling::tei:author)>1">
+		   <xsl:text>,</xsl:text>
+		 </xsl:if>
+		 <xsl:call-template name="i18n">
+		   <xsl:with-param name="word">and</xsl:with-param>
+		 </xsl:call-template>
+	       </xsl:when>
+	       <xsl:when test="following-sibling::tei:author">, </xsl:when>
+	     </xsl:choose>
+	   </xsl:for-each>
          </xsl:when>
          <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
             <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
