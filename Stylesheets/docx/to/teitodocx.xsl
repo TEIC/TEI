@@ -2261,7 +2261,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="style">Subtitle</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <xsl:template match="tei:titlePage/tei:docAuthor" priority="99">
+  <xsl:template match="tei:docAuthor" priority="99">
     <xsl:call-template name="block-element">
       <xsl:with-param name="style">Author</xsl:with-param>
     </xsl:call-template>

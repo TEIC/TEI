@@ -26,7 +26,7 @@
   <!-- Path where the output docx file will be saved. -->
   <property name="outputFile" value=""/>
   <!-- which profile directory-->
-  <property name="profileDir" value="../profiles"/>
+  <property name="profiledir" value="../profiles"/>
   <!-- which profile -->
   <property name="profile" value="default"/>
   <!-- which language -->
@@ -34,7 +34,7 @@
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="teitoDocx"       value="${profileDir}/${profile}/docx/to.xsl"/>
+  <property name="teitoDocx"       value="${profiledir}/${profile}/docx/to.xsl"/>
   <property name="listgraphics"    value="../tools/makegraphicsanttask.xsl"/>
   <dirname property="xslDir"       file="${teitoDocx}"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
@@ -46,7 +46,7 @@
   </path>
 
   <condition property="makecoverpages">
-    <available file="${profileDir}/${profile}/docx/makecoverpages.xsl"/>
+    <available file="${profiledir}/${profile}/docx/makecoverpages.xsl"/>
   </condition>
 
   <import file="../odds2/build-to.xml"/>
@@ -65,7 +65,7 @@
   <target name="coverpages" if="makecoverpages">
     <echo>Make cover pages</echo>
     <xslt
-	  style="${profileDir}/${profile}/docx/makecoverpages.xsl" 
+	  style="${profiledir}/${profile}/docx/makecoverpages.xsl" 
 	  in="${outputTempDir}/word/document.xml" 
 	  out="${outputTempDir}/tmp3.xml" 
 	  classpath="classpath">
