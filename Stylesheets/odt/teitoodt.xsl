@@ -946,6 +946,12 @@ of this software, even if advised of the possibility of such damage.
       </text:p>
   </xsl:template>
 
+  <xsl:template match="tei:ab">
+      <text:p>
+	<xsl:apply-templates/>
+      </text:p>
+  </xsl:template>
+
   <!-- tables-->
 
   <xsl:template match="tei:table">
