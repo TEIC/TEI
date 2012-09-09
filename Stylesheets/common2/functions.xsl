@@ -316,4 +316,20 @@ of this software, even if advised of the possibility of such damage.
     </xsl:function>
 
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Whether an element has any more (useful) text in its parent</desc>
+  </doc>
+  <xsl:function name="tei:is-last" as="xs:boolean">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+	<xsl:when
+	    test="count(following-sibling::node())=1 and normalize-space(following-sibling::node()/text())=''">true</xsl:when>
+<!--	<xsl:when
+	    test="count(preceding-sibling::node())=1 and normalize-space(preceding-sibling::node()/text())=''">true</xsl:when>-->
+        <xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
 </xsl:stylesheet>

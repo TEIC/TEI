@@ -234,11 +234,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates select="$pass0/*"/>
       </xsl:variable>
       <xsl:apply-templates select="$cleanup/*" mode="cleanup"/>
-      <!--
-	  <xsl:result-document href="/tmp/x.xml">
-	  <xsl:copy-of select="$pass0"/>
-	  </xsl:result-document>
-      -->
     </xsl:template>
 
   <xsl:template match="/tei:TEI|/tei:teiCorpus">
@@ -2005,9 +2000,18 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
   </xsl:template>
   <xsl:template match="tei:lb">
-    <w:r>
-      <w:br/>
-    </w:r>
+    <xsl:choose>
+      <xsl:when test="parent::tei:div"/>
+      <xsl:when test="parent::tei:body"/>
+      <xsl:when test="parent::tei:back"/>
+      <xsl:when test="parent::tei:front"/>
+      <xsl:when test="tei:is-last(.)"/>
+      <xsl:otherwise>
+	<w:r>
+	  <w:br/>
+	</w:r>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <!-- hyperlink -->
   <xsl:template match="tei:ptr">
