@@ -927,7 +927,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:stage">
     <xsl:choose>
-      <xsl:when test="parent::tei:sp">
+      <xsl:when test="parent::tei:sp or parent::tei:div">
 	<text:p text:style-name="Stage">
 	  <xsl:apply-templates/>
 	</text:p>
