@@ -38,6 +38,7 @@
   <property name="listgraphics"    value="../tools/makegraphicsanttask.xsl"/>
   <dirname property="xslDir"       file="${teitoDocx}"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
+  <property name="inputFilePath" location="${inputFile}"/>
   <dirname property="outputDir"    file="${outputFile}"/>
   <property name="outputTempDir"   value="${outputDir}/temp-dir-for-ant"/>
 
@@ -133,6 +134,7 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="inputDir" expression="${inputFileDir}"/>
+      <param name="inputFile" expression="${inputFilePath}"/>
       <param name="mediaDir" expression="word/media"/>
     </xslt>
     <echo level="info">Copy image files by running ant task</echo>
@@ -141,7 +143,7 @@
     <images outputFile="${outputTempDir}/image-size-info.xml">
       <fileset dir="${outputTempDir}/word" includes="media/*.*"/>
     </images>
-    <echo level="info">XSLT generate files for docx </echo>
+    <echo level="info">Generate new files for docx </echo>
     <xslt force="yes" style="${teitoDocx}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
@@ -151,7 +153,11 @@
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="word-directory" expression="file:///${outputTempDir}"/>
+      <param name="word-directory"
+	     expression="file:///${outputTempDir}"/>
+      <!-- name of original input file -->
+      <param name="inputFile" expression="${inputFilePath}"/>
+      <!-- directory of original input file -->
       <param name="inputDir" expression="${inputFileDir}"/>
       <!-- supply name of language-->
       <param name="lang" expression="${lang}" if="lang"/>

@@ -67,6 +67,7 @@
   <xsl:param name="docDoc"><xsl:value-of select="concat($wordDirectory, '/word/document.xml')"/></xsl:param>
   <xsl:param name="headInXref">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
+  <xsl:param name="inputFile"></xsl:param>
   <xsl:param name="pageHeight">890</xsl:param>
   <xsl:param name="pageWidth">576</xsl:param>
   <xsl:param name="postQuote">’</xsl:param>
@@ -221,6 +222,10 @@ of this software, even if advised of the possibility of such damage.
     </doc>
 
     <xsl:template match="/">
+      <xsl:if test="$debug='true'">
+	<xsl:message>Processing file <xsl:value-of
+	select="$inputFile"/></xsl:message>
+      </xsl:if>
       <xsl:call-template name="write-docxfiles"/>
       <xsl:variable name="pass0">
 	<xsl:apply-templates mode="pass0"/>
