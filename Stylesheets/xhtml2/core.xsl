@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" exclude-result-prefixes="a fo html rng tei teix teidocx" version="2.0">
+<xsl:stylesheet                 xmlns:m="http://www.w3.org/1998/Math/MathML"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+				xmlns:fo="http://www.w3.org/1999/XSL/Format"
+				xmlns:html="http://www.w3.org/1999/xhtml"
+				xmlns:rng="http://relaxng.org/ns/structure/1.0"
+				xmlns:tei="http://www.tei-c.org/ns/1.0"
+				xmlns:teix="http://www.tei-c.org/ns/Examples"
+				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+				xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
+				exclude-result-prefixes="m a fo html rng tei teix teidocx" version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module, making
@@ -84,6 +94,10 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="class">
           <xsl:text>toc</xsl:text>
           <xsl:if test="not($autoHead='true') and not(tei:head or @n)"> headless</xsl:if>
+	  <xsl:if test=".//m:math and  $outputTarget='epub3'">
+	      <xsl:attribute
+		  name="class"> contains-mathml</xsl:attribute>
+	  </xsl:if>
         </xsl:attribute>
         <xsl:call-template name="header">
           <xsl:with-param name="toc" select="$pointer"/>

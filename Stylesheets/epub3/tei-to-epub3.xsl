@@ -8,7 +8,7 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
-		version="2.0" exclude-result-prefixes="iso tei teix dc html ncx"
+		version="2.0" exclude-result-prefixes="iso tei teix dc html ncx m"
 		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 >
   <xsl:import href="../html5/tei.xsl"/>
@@ -399,7 +399,7 @@ height: </xsl:text>
                       <xsl:when test="starts-with(html:a/@href,'#')"/>
                       <xsl:otherwise>
                         <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
-			  <xsl:if test="$TEXT//m:math">
+			  <xsl:if test="contains(@class,'contains-mathml')">
 			    <xsl:attribute
 				name="properties">mathml</xsl:attribute>
 			  </xsl:if>
