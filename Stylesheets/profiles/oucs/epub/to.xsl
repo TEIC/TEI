@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"
-		xmlns:mathml="http://www.w3.org/1998/Math/MathML"
-		xmlns:svg="http://www.w3.org/2000/svg"
 		xmlns:xlink="http://www.w3.org/1999/xlink"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
 		xmlns:iso="http://www.iso.org/ns/1.0"
@@ -75,11 +73,4 @@ of this software, even if advised of the possibility of such damage.
       </span>
     </xsl:template>
 
-    <xsl:template match="tei:figure[svg:svg]">
-      <xsl:copy-of select="svg:svg"/>
-    </xsl:template>
-
-    <xsl:template match="tei:formula[mathml:math]">
-      <xsl:copy-of select="mathml:math"/>
-    </xsl:template>
 </xsl:stylesheet>

@@ -1,0 +1,714 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Simulation of Energy Loss Straggling</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>TEI</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>converted from a LaTeX source</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <front>
+      <docTitle>
+        <titlePart type="main">Simulation of Energy Loss Straggling</titlePart>
+      </docTitle>
+      <docAuthor>Maria Physicist</docAuthor>
+      <docDate>January 17, 1999</docDate>
+    </front>
+    <body>
+      <div xml:id="intro">
+        <head>Introduction</head>
+        <p>Due to the statistical nature of ionisation energy loss,
+        large fluctuations can occur in the amount of energy deposited
+        by a particle traversing an absorber element.  Continuous
+        processes such as multiple scattering and energy loss play a
+        relevant role in the longitudinal and lateral development of
+        electromagnetic and hadronic showers, and in the case of
+        sampling calorimeters the measured resolution can be
+        significantly affected by such fluctuations in their active
+        layers. The description of ionisation fluctuations is
+        characterised by the significance parameter <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula>, which is
+        proportional to the ratio of mean energy loss to the maximum
+        allowed energy transfer in a single collision with an atomic
+        electron <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mi>κ</mi><mo>=</mo><mfrac><mrow><mi>ξ</mi></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow></mfrac></mrow></math></formula>
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></math></formula>
+        is the maximum transferable energy in a single collision with
+        an atomic electron.  <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>=</mo><mfrac><mrow><mn>2</mn><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><msup><mi>γ</mi><mrow><mn>2</mn></mrow></msup></mrow><mrow><mn>1</mn><mo>+</mo><mn>2</mn><mi>γ</mi><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub><mo>/</mo><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub><mo>+</mo><msup><mfenced open="(" close=")"><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub><mo>/</mo><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub></mfenced><mrow><mn>2</mn></mrow></msup></mrow></mfrac><mo>,</mo></mrow></math></formula>
+        where <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>γ</mi><mo>=</mo><mi>E</mi><mo>/</mo><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub></math></formula>,
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>E</mi></math></formula> is energy and
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub></math></formula>
+        the mass of the incident particle, <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>=</mo><mn>1</mn><mo>-</mo><mn>1</mn><mo>/</mo><msup><mi>γ</mi><mrow><mn>2</mn></mrow></msup></math></formula>
+        and <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub></math></formula>
+        is the electron mass. <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi></math></formula> comes from the
+        Rutherford scattering crosss section and is defined as: <table rend="inline"><row><cell cols="1" rows="1"><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>=</mo><mfrac><mrow><mn>2</mn><mi>π</mi><msup><mi>z</mi><mrow><mn>2</mn></mrow></msup><msup><mi>e</mi><mrow><mn>4</mn></mrow></msup><msub><mi>N</mi><mrow><mi>A</mi><mi>v</mi></mrow></msub><mi>Z</mi><mi>ρ</mi><mi>δ</mi><mi>x</mi></mrow><mrow><msub><mi>m</mi><mrow><mi>e</mi></mrow></msub><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup><mi>A</mi></mrow></mfrac><mo>=</mo><mn>1</mn><mn>5</mn><mn>3</mn><mo>.</mo><mn>4</mn><mfrac><mrow><msup><mi>z</mi><mrow><mn>2</mn></mrow></msup></mrow><mrow><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup></mrow></mfrac><mfrac><mrow><mi>Z</mi></mrow><mrow><mi>A</mi></mrow></mfrac><mi>ρ</mi><mi>δ</mi><mi>x</mi><mspace width="12pt"/><mi>keV
+        </mi><mo>,</mo><mtext/></math></formula></cell></row></table>
+        where
+       </p>
+        <p>
+          <table rend="inline">
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>z</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell>charge of the incident particle</cell>
+            </row>
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <msub>
+                      <mi>N</mi>
+                      <mrow>
+                        <mi>A</mi>
+                        <mi>v</mi>
+                      </mrow>
+                    </msub>
+                  </math>
+                </formula>
+              </cell>
+              <cell>Avogadro's number</cell>
+            </row>
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>Z</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell>atomic number of the material</cell>
+            </row>
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>A</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell>atomic weight of the material</cell>
+            </row>
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>ρ</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell>density</cell>
+            </row>
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>δ</mi>
+                    <mi>x</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell>thickness of the material</cell>
+            </row>
+            <row>
+              <cell/>
+            </row>
+          </table>
+        </p>
+        <p><formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula> measures the
+        contribution of the collisions with energy transfer close to
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></math></formula>. For
+        a given absorber, <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula> tends towards
+        large values if <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>δ</mi><mi>x</mi></math></formula> is
+        large and/or if <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>β</mi></math></formula> is small.
+        Likewise, <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula> tends towards
+        zero if <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>δ</mi><mi>x</mi></math></formula> is
+        small and/or if <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>β</mi></math></formula> approaches 1.
+       </p>
+        <p>The value of <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula> distinguishes
+        two regimes which occur in the description of ionisation
+        fluctuations :
+       </p>
+        <list type="enumerate">
+          <item>
+            <p>A large number of collisions involving the loss of all
+            or most of the incident particle energy during the
+            traversal of an absorber.
+    </p>
+            <p>As the total energy transfer is composed of a multitude
+            of small energy losses, we can apply the central limit
+            theorem and describe the fluctuations by a Gaussian
+            distribution.  This case is applicable to non-relativistic
+            particles and is described by the inequality <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi><mo>&gt;</mo><mn>1</mn><mn>0</mn></math></formula>
+            (i.e.  when the mean energy loss in the absorber is
+            greater than the maximum energy transfer in a single
+            collision).
+    </p>
+          </item>
+          <item>
+            <p>Particles traversing thin counters and incident
+            electrons under any conditions.
+    </p>
+            <p>The relevant inequalities and distributions are
+            <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mn>0</mn><mo>.</mo><mn>0</mn><mn>1</mn><mo>&lt;</mo><mi>κ</mi><mo>&lt;</mo><mn>1</mn><mn>0</mn></math></formula>,
+            Vavilov distribution, and <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi><mo>&lt;</mo><mn>0</mn><mo>.</mo><mn>0</mn><mn>1</mn></math></formula>,
+            Landau distribution.</p>
+          </item>
+        </list>
+        <p>An additional regime is defined by the contribution of the
+        collisions with low energy transfer which can be estimated
+        with the relation <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub></math></formula>,
+        where <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub></math></formula>
+        is the mean ionisation potential of the atom. Landau theory
+        assumes that the number of these collisions is high, and
+        consequently, it has a restriction <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub><mo>
+        ≫</mo><mn>1</mn></math></formula>. In <code>GEANT</code> (see
+        URL http://wwwinfo.cern.ch/asdoc/geant/geantall.html), the
+        limit of Landau theory has been set at <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub><mo>=</mo><mn>5</mn><mn>0</mn></math></formula>.
+        Below this limit special models taking into account the atomic
+        structure of the material are used. This is important in thin
+        layers and gaseous materials. <ptr target="#fg_phys332-1"/> shows the behaviour of <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub></math></formula>
+        as a function of the layer thickness for an electron of 100
+        keV and 1 GeV of kinetic energy in Argon, Silicon and Uranium.
+       </p>
+        <p>
+          <figure xml:id="fg_phys332-1">
+            <graphic url="phys332-1.jpg"/>
+            <head>The variable <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ξ</mi><mo>/</mo><msub><mi>I</mi><mrow><mn>0</mn></mrow></msub></math></formula>
+            can be used to measure the validity range of the Landau
+            theory.  It depends on the type and energy of the
+            particle, <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Z</mi></math></formula>, <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>A</mi></math></formula> and the
+            ionisation potential of the material and the layer
+            thickness. </head>
+          </figure>
+        </p>
+        <p>In the following sections, the different theories and
+        models for the energy loss fluctuation are described. First,
+        the Landau theory and its limitations are discussed, and then,
+        the Vavilov and Gaussian straggling functions and the methods
+        in the thin layers and gaseous materials are presented.
+       </p>
+      </div>
+      <div xml:id="sec_phys332-1">
+        <head>Landau theory</head>
+        <p>For a particle of mass <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>m</mi><mrow><mi>x</mi></mrow></msub></math></formula>
+        traversing a thickness of material <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>δ</mi><mi>x</mi></math></formula>, the
+        Landau probability distribution may be written in terms of the
+        universal Landau function <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>φ</mi><mrow><mo>(</mo><mi>λ</mi><mo>)</mo></mrow></math></formula>
+        as<ptr target="#bib-LAND"/>: <table rend="inline"><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>f</mi><mrow><mo>(</mo><mi>ε</mi><mo>,</mo><mi>δ</mi><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>ξ</mi></mrow></mfrac><mi>φ</mi><mrow><mo>(</mo><mi>λ</mi><mo>)</mo></mrow><mtext/></math></formula></cell></row></table>
+        where <table rend="eqnarray"><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>φ</mi><mrow><mo>(</mo><mi>λ</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn><mi>π</mi><mi>i</mi></mrow></mfrac><msubsup><mo>
+        ∫</mo><mrow><mi>c</mi><mo>+</mo><mi>i</mi><mi>∞
+        </mi></mrow><mrow><mi>c</mi><mo>-</mo><mi>i</mi><mi>∞
+        </mi></mrow></msubsup><mo>exp</mo><mfenced open="(" close=")"><mi>u</mi><mo>ln</mo><mi>u</mi><mo>+</mo><mi>λ</mi><mi>u</mi></mfenced><mi>d</mi><mi>u</mi><mspace width="2cm"/><mi>c</mi><mo>≥
+        </mo><mn>0</mn><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>λ</mi><mo>=</mo><mfrac><mrow><mi>ε</mi><mo>-</mo><munderover accent="true"><mo>¯</mo><mi>ε</mi><mrow/></munderover></mrow><mrow><mi>ξ</mi></mrow></mfrac><mo>-</mo><mi>γ</mi><mi>′</mi><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>-</mo><mo>ln</mo><mfrac><mrow><mi>ξ</mi></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow></mfrac><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>γ</mi><mi>′</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>4</mn><mn>2</mn><mn>2</mn><mn>7</mn><mn>8</mn><mn>4</mn><mo>.</mo><mo>.</mo><mo>.</mo><mo>=</mo><mn>1</mn><mo>-</mo><mi>γ</mi><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>γ</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>5</mn><mn>7</mn><mn>7</mn><mn>2</mn><mn>1</mn><mn>5</mn><mo>.</mo><mo>.</mo><mo>.</mo><mtext>(Euler's constant)</mtext><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><munderover accent="true"><mo>¯</mo><mi>ε</mi><mrow/></munderover><mo>=</mo><mtext>average energy loss</mtext><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ε</mi><mo>=</mo><mtext>actual energy loss</mtext><mtext/></math></formula></cell></row></table>
+   </p>
+        <div>
+          <head>
+     Restrictions</head>
+          <p>The Landau formalism makes two restrictive assumptions :
+     </p>
+          <list type="enumerate">
+            <item>
+              <p>The typical energy loss is small compared to the
+              maximum energy loss in a single collision.  This
+              restriction is removed in the Vavilov theory (see
+              section <ptr target="#vavref"/>).
+  </p>
+            </item>
+            <item>
+              <p>The typical energy loss in the absorber should be
+              large compared to the binding energy of the most tightly
+              bound electron.  For gaseous detectors, typical energy
+              losses are a few keV which is comparable to the binding
+              energies of the inner electrons.  In such cases a more
+              sophisticated approach which accounts for atomic energy
+              levels<ptr target="#bib-TALM"/> is necessary to
+              accurately simulate data distributions.  In
+              <code>GEANT</code>, a parameterised model by L.  Urbán
+              is used (see section <ptr target="#urban"/>).</p>
+            </item>
+          </list>
+          <p>In addition, the average value of the Landau distribution
+          is infinite.  Summing the Landau fluctuation obtained to the
+          average energy from the <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>d</mi><mi>E</mi><mo>/</mo><mi>d</mi><mi>x</mi></math></formula>
+          tables, we obtain a value which is larger than the one
+          coming from the table. The probability to sample a large
+          value is small, so it takes a large number of steps
+          (extractions) for the average fluctuation to be
+          significantly larger than zero. This introduces a dependence
+          of the energy loss on the step size which can affect
+          calculations.
+     </p>
+          <p>A solution to this has been to introduce a limit on the
+          value of the variable sampled by the Landau distribution in
+          order to keep the average fluctuation to 0. The value
+          obtained from the <code>GLANDO</code> routine is: <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mi>δ</mi><mi>d</mi><mi>E</mi><mo>/</mo><mi>d</mi><mi>x</mi><mo>=</mo><mi>ε</mi><mo>-</mo><munderover accent="true"><mo>¯</mo><mi>ε</mi><mrow/></munderover><mo>=</mo><mi>ξ</mi><mrow><mo>(</mo><mi>λ</mi><mo>-</mo><mi>γ</mi><mi>
+          ′
+          </mi><mo>+</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>+</mo><mo>ln</mo><mfrac><mrow><mi>ξ</mi></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow></mfrac><mo>)</mo></mrow></mrow></math></formula>
+          In order for this to have average 0, we must impose that:
+          <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><munderover accent="true"><mo>¯</mo><mi>λ</mi><mrow/></munderover><mo>=</mo><mo>-</mo><mi>γ</mi><mi>
+          ′
+          </mi><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>-</mo><mo>ln</mo><mfrac><mrow><mi>ξ</mi></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow></mfrac></mrow></math></formula>
+     </p>
+          <p>This is realised introducing a <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>λ</mi><mrow><mtext>max</mtext></mrow></msub><mrow><mo>(</mo><munderover accent="true"><mo>¯</mo><mi>λ</mi><mrow/></munderover><mo>)</mo></mrow></math></formula>
+          such that if only values of <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>λ</mi><mo>≤
+          </mo><msub><mi>λ</mi><mrow><mtext>max</mtext></mrow></msub></math></formula>
+          are accepted, the average value of the distribution is
+          <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><munderover accent="true"><mo>¯</mo><mi>λ</mi><mrow/></munderover></math></formula>.
+     </p>
+          <p>A parametric fit to the universal Landau distribution has
+          been performed, with following result: <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><msub><mi>λ</mi><mrow><mtext>max</mtext></mrow></msub><mo>=</mo><mn>0</mn><mo>.</mo><mn>6</mn><mn>0</mn><mn>7</mn><mn>1</mn><mn>5</mn><mo>+</mo><mn>1</mn><mo>.</mo><mn>1</mn><mn>9</mn><mn>3</mn><mn>4</mn><munderover accent="true"><mo>¯</mo><mi>λ</mi><mrow/></munderover><mo>+</mo><mrow><mo>(</mo><mn>0</mn><mo>.</mo><mn>6</mn><mn>7</mn><mn>7</mn><mn>9</mn><mn>4</mn><mo>+</mo><mn>0</mn><mo>.</mo><mn>0</mn><mn>5</mn><mn>2</mn><mn>3</mn><mn>8</mn><mn>2</mn><munderover accent="true"><mi>λ</mi><mrow/><mo>¯</mo></munderover><mo>)</mo></mrow><mo>exp</mo><mrow><mo>(</mo><mn>0</mn><mo>.</mo><mn>9</mn><mn>4</mn><mn>7</mn><mn>5</mn><mn>3</mn><mo>+</mo><mn>0</mn><mo>.</mo><mn>7</mn><mn>4</mn><mn>4</mn><mn>4</mn><mn>2</mn><munderover accent="true"><mi>λ</mi><mrow/><mo>¯</mo></munderover><mo>)</mo></mrow></mrow></math></formula>
+          only values smaller than <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>λ</mi><mrow><mtext>max</mtext></mrow></msub></math></formula>
+          are accepted, otherwise the distribution is resampled.
+     </p>
+        </div>
+      </div>
+      <div xml:id="vavref">
+        <head>
+   Vavilov theory</head>
+        <p>Vavilov<ptr target="#bib-VAVI"/> derived a more accurate
+        straggling distribution by introducing the kinematic limit on
+        the maximum transferable energy in a single collision, rather
+        than using <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>=</mo><mi>
+        ∞</mi></math></formula>. Now we can write<ptr target="#bib-SCH1"/>: <table rend="inline"><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>f</mi><mfenced open="(" close=")"><mi>ε</mi><mo>,</mo><mi>δ</mi><mi>s</mi></mfenced><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>ξ</mi></mrow></mfrac><msub><mi>φ</mi><mrow><mi>v</mi></mrow></msub><mfenced open="(" close=")"><msub><mi>λ</mi><mrow><mi>v</mi></mrow></msub><mo>,</mo><mi>κ</mi><mo>,</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup></mfenced><mtext/></math></formula></cell></row></table>
+        where <table rend="eqnarray"><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>φ</mi><mrow><mi>v</mi></mrow></msub><mfenced open="(" close=")"><msub><mi>λ</mi><mrow><mi>v</mi></mrow></msub><mo>,</mo><mi>κ</mi><mo>,</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup></mfenced><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn><mi>π</mi><mi>i</mi></mrow></mfrac><msubsup><mo>
+        ∫</mo><mrow><mi>c</mi><mo>+</mo><mi>i</mi><mi>∞
+        </mi></mrow><mrow><mi>c</mi><mo>-</mo><mi>i</mi><mi>∞
+        </mi></mrow></msubsup><mi>φ</mi><mfenced open="(" close=")"><mi>s</mi></mfenced><msup><mi>e</mi><mrow><mi>λ</mi><mi>s</mi></mrow></msup><mi>d</mi><mi>s</mi><mspace width="2cm"/><mi>c</mi><mo>≥
+        </mo><mn>0</mn><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>φ</mi><mfenced open="(" close=")"><mi>s</mi></mfenced><mo>=</mo><mo>exp</mo><mfenced open="[" close="]"><mi>κ</mi><mrow><mo>(</mo><mn>1</mn><mo>+</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mi>γ</mi><mo>)</mo></mrow></mfenced><mo>exp</mo><mfenced open="[" close="]"><mi>ψ</mi><mfenced open="(" close=")"><mi>s</mi></mfenced></mfenced><mo>,</mo><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>ψ</mi><mfenced open="(" close=")"><mi>s</mi></mfenced><mo>=</mo><mi>s</mi><mo>ln</mo><mi>κ</mi><mo>+</mo><mrow><mo>(</mo><mi>s</mi><mo>+</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mi>κ</mi><mo>)</mo></mrow><mfenced open="[" close="]"><mo>ln</mo><mrow><mo>(</mo><mi>s</mi><mo>/</mo><mi>κ</mi><mo>)</mo></mrow><mo>+</mo><msub><mi>E</mi><mrow><mn>1</mn></mrow></msub><mrow><mo>(</mo><mi>s</mi><mo>/</mo><mi>κ</mi><mo>)</mo></mrow></mfenced><mo>-</mo><mi>κ</mi><msup><mi>e</mi><mrow><mo>-</mo><mi>s</mi><mo>/</mo><mi>κ</mi></mrow></msup><mo>,</mo><mtext/></math></formula></cell></row></table>
+     and
+     <table rend="inline"><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mn>1</mn></mrow></msub><mrow><mo>(</mo><mi>z</mi><mo>)</mo></mrow><mo>=</mo><msubsup><mo>∫</mo><mrow><mi>∞</mi></mrow><mrow><mi>z</mi></mrow></msubsup><msup><mi>t</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><msup><mi>e</mi><mrow><mo>-</mo><mi>t</mi></mrow></msup><mi>d</mi><mi>t</mi><mspace width="1cm"/><mtext>(the exponential integral)</mtext><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>λ</mi><mrow><mi>v</mi></mrow></msub><mo>=</mo><mi>κ</mi><mfenced open="[" close="]"><mfrac><mrow><mi>ε</mi><mo>-</mo><munderover accent="true"><mo>¯</mo><mi>ε</mi><mrow/></munderover></mrow><mrow><mi>ξ</mi></mrow></mfrac><mo>-</mo><mi>γ</mi><mi>′</mi><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup></mfenced><mtext/></math></formula></cell></row></table>
+   </p>
+        <p>The Vavilov parameters are simply related to the Landau
+        parameter by <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>λ</mi><mrow><mi>L</mi></mrow></msub><mo>=</mo><msub><mi>λ</mi><mrow><mi>v</mi></mrow></msub><mo>/</mo><mi>κ</mi><mo>-</mo><mo>ln</mo><mi>κ</mi></math></formula>. It
+        can be shown that as <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi><mo>→
+        </mo><mn>0</mn></math></formula>, the distribution of the
+        variable <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>λ</mi><mrow><mi>L</mi></mrow></msub></math></formula>
+        approaches that of Landau. For <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi><mo>≤
+        </mo><mn>0</mn><mo>.</mo><mn>0</mn><mn>1</mn></math></formula>
+        the two distributions are already practically
+        identical. Contrary to what many textbooks report, the Vavilov
+        distribution <emph>does not</emph> approximate the Landau
+        distribution for small <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi></math></formula>, but rather the
+        distribution of <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>λ</mi><mrow><mi>L</mi></mrow></msub></math></formula>
+        defined above tends to the distribution of the true <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>λ</mi></math></formula> from the Landau
+        density function. Thus the routine <code>GVAVIV</code> samples
+        the variable <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>λ</mi><mrow><mi>L</mi></mrow></msub></math></formula>
+        rather than <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>λ</mi><mrow><mi>v</mi></mrow></msub></math></formula>.
+        For <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi><mo>≥
+        </mo><mn>1</mn><mn>0</mn></math></formula> the Vavilov
+        distribution tends to a Gaussian distribution (see next
+        section).
+   </p>
+      </div>
+      <div>
+        <head>
+   Gaussian Theory</head>
+        <p>Various conflicting forms have been proposed for Gaussian
+        straggling functions, but most of these appear to have little
+        theoretical or experimental basis. However, it has been
+        shown<ptr target="#bib-SELT"/> that for <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>κ</mi><mo>≥
+        </mo><mn>1</mn><mn>0</mn></math></formula> the Vavilov
+        distribution can be replaced by a Gaussian of the form: <table rend="inline"><row><cell cols="1" rows="1"><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>f</mi><mrow><mo>(</mo><mi>ε</mi><mo>,</mo><mi>δ</mi><mi>s</mi><mo>)</mo></mrow><mo>
+        ≈
+        </mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>ξ</mi><msqrt><mfrac><mrow><mn>2</mn><mi>π</mi></mrow><mrow><mi>κ</mi></mrow></mfrac><mfenced open="(" close=")"><mn>1</mn><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>/</mo><mn>2</mn></mfenced></msqrt></mrow></mfrac><mo>exp</mo><mfenced open="[" close="]"><mfrac><mrow><msup><mrow><mo>(</mo><mi>ε</mi><mo>-</mo><munderover accent="true"><mo>¯</mo><mi>ε</mi><mrow/></munderover><mo>)</mo></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow><mn>2</mn></mrow></mfrac><mfrac><mrow><mi>κ</mi></mrow><mrow><msup><mi>ξ</mi><mrow><mn>2</mn></mrow></msup><mrow><mo>(</mo><mn>1</mn><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>/</mo><mn>2</mn><mo>)</mo></mrow></mrow></mfrac></mfenced><mtext/></math></formula></cell></row></table>
+        thus implying <table rend="inline"><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>mean</mi><mo>=</mo><munderover accent="true"><mo>¯</mo><mi>ε</mi><mrow/></munderover><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msup><mi>σ</mi><mrow><mn>2</mn></mrow></msup><mo>=</mo><mfrac><mrow><msup><mi>ξ</mi><mrow><mn>2</mn></mrow></msup></mrow><mrow><mi>κ</mi></mrow></mfrac><mrow><mo>(</mo><mn>1</mn><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>/</mo><mn>2</mn><mo>)</mo></mrow><mo>=</mo><mi>ξ</mi><msub><mi>E</mi><mrow><mi>
+        max</mi></mrow></msub><mrow><mo>(</mo><mn>1</mn><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><mo>/</mo><mn>2</mn><mo>)</mo></mrow><mtext/></math></formula></cell></row></table>
+      </p>
+      </div>
+      <div xml:id="urban">
+        <head>
+Urbán model</head>
+        <p>The method for computing restricted energy losses with
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>δ</mi></math></formula>-ray production
+        above given threshold energy in <code>GEANT</code> is a Monte
+        Carlo method that can be used for thin layers. It is fast and
+        it can be used for any thickness of a medium. Approaching the
+        limit of the validity of Landau's theory, the loss
+        distribution approaches smoothly the Landau form as shown in
+         <ptr target="#fg_phys332-2"/>.
+      </p>
+        <p>
+          <figure xml:id="fg_phys332-2">
+            <graphic url="phys332-2.jpg"/>
+            <head>Energy loss distribution for a 3 GeV electron in
+            Argon as given by standard GEANT. The width of the layers
+            is given in centimeters.</head>
+          </figure>
+        </p>
+        <p>It is assumed that the atoms have only two energy levels
+        with binding energy <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mn>1</mn></mrow></msub></math></formula>
+        and <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mn>2</mn></mrow></msub></math></formula>.
+        The particle--atom interaction will then be an excitation with
+        energy loss <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mn>1</mn></mrow></msub></math></formula>
+        or <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mn>2</mn></mrow></msub></math></formula>,
+        or an ionisation with an energy loss distributed according to
+        a function <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>g</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow><mo>
+        ∼
+        </mo><mn>1</mn><mo>/</mo><msup><mi>E</mi><mrow><mn>2</mn></mrow></msup></math></formula>:
+        <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>g</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mrow><mo>(</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>)</mo></mrow><mi>I</mi></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow></mfrac><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>E</mi><mrow><mn>2</mn></mrow></msup></mrow></mfrac></math></formula>
+      </p>
+        <p>The macroscopic cross-section for excitations (<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn></math></formula>)
+        is <formula notation="MathML" xml:id="eq_sigex" rend="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>Σ</mi><mrow><mi>i</mi></mrow></msub><mo>=</mo><mi>C</mi><mfrac><mrow><msub><mi>f</mi><mrow><mi>i</mi></mrow></msub></mrow><mrow><msub><mi>E</mi><mrow><mi>i</mi></mrow></msub></mrow></mfrac><mfrac><mrow><mo>ln</mo><mrow><mo>(</mo><mn>2</mn><mi>m</mi><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><msup><mi>γ</mi><mrow><mn>2</mn></mrow></msup><mo>/</mo><msub><mi>E</mi><mrow><mi>i</mi></mrow></msub><mo>)</mo></mrow><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup></mrow><mrow><mo>ln</mo><mrow><mo>(</mo><mn>2</mn><mi>m</mi><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup><msup><mi>γ</mi><mrow><mn>2</mn></mrow></msup><mo>/</mo><mi>I</mi><mo>)</mo></mrow><mo>-</mo><msup><mi>β</mi><mrow><mn>2</mn></mrow></msup></mrow></mfrac><mrow><mo>(</mo><mn>1</mn><mo>-</mo><mi>r</mi><mo>)</mo></mrow></math></formula>and
+        the macroscopic cross-section for ionisation is <formula notation="MathML" xml:id="eq_sigion" rend="equation"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>Σ</mi><mrow><mn>3</mn></mrow></msub><mo>=</mo><mi>C</mi><mfrac><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow><mrow><mi>I</mi><mrow><mo>(</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>)</mo></mrow><mo>ln</mo><mrow><mo>(</mo><mfrac><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi></mrow><mrow><mi>I</mi></mrow></mfrac><mo>)</mo></mrow></mrow></mfrac><mi>r</mi></math></formula>
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></math></formula>
+        is the <code>GEANT</code> cut for <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>δ</mi></math></formula>-production, or
+        the maximum energy transfer minus mean ionisation energy, if
+        it is smaller than this cut-off value. The following notation
+        is used:
+ </p>
+        <p>
+          <table rend="inline">
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>r</mi>
+                    <mo>,</mo>
+                    <mi>C</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell>parameters of the model</cell>
+            </row>
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <msub>
+                      <mi>E</mi>
+                      <mrow>
+                        <mi>i</mi>
+                      </mrow>
+                    </msub>
+                  </math>
+                </formula>
+              </cell>
+              <cell>atomic energy levels</cell>
+            </row>
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mi>I</mi>
+                  </math>
+                </formula>
+              </cell>
+              <cell>mean ionisation energy</cell>
+            </row>
+            <row>
+              <cell>
+                <formula notation="MathML">
+                  <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <msub>
+                      <mi>f</mi>
+                      <mrow>
+                        <mi>i</mi>
+                      </mrow>
+                    </msub>
+                  </math>
+                </formula>
+              </cell>
+              <cell>oscillator strengths</cell>
+            </row>
+          </table>
+        </p>
+        <p>The model has the parameters <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>f</mi><mrow><mi>i</mi></mrow></msub></math></formula>,
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mi>i</mi></mrow></msub></math></formula>,
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>C</mi></math></formula> and <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>r</mi><mrow><mo>(</mo><mn>0</mn><mo>≤
+        </mo><mi>r</mi><mo>≤
+        </mo><mn>1</mn><mo>)</mo></mrow></math></formula>. The
+        oscillator strengths <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>f</mi><mrow><mi>i</mi></mrow></msub></math></formula>
+        and the atomic level energies <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mi>i</mi></mrow></msub></math></formula>
+        should satisfy the constraints <table rend="inline"><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_fisum"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>f</mi><mrow><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>f</mi><mrow><mn>2</mn></mrow></msub><mo>=</mo><mn>1</mn></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_flnsum"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>f</mi><mrow><mn>1</mn></mrow></msub><mo>ln</mo><msub><mi>E</mi><mrow><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>f</mi><mrow><mn>2</mn></mrow></msub><mo>ln</mo><msub><mi>E</mi><mrow><mn>2</mn></mrow></msub><mo>=</mo><mo>ln</mo><mi>I</mi></math></formula></cell></row></table>
+   The parameter <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>C</mi></math></formula>
+ can be defined with the help of the mean energy loss
+ <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>d</mi><mi>E</mi><mo>/</mo><mi>d</mi><mi>x</mi></math></formula> in the following way: The
+   numbers of collisions (<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mi>i</mi></mrow></msub></math></formula>,
+   i = 1,2 for the excitation and 3 for the ionisation) follow the Poisson distribution with a mean
+   number <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mi>i</mi></mrow></msub><mo>&gt;;</mo></mrow></math></formula>. In a step
+   <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Δ</mi><mi>x</mi></math></formula> the mean number
+     of collisions is <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mi>i</mi></mrow></msub><mo>&gt;;</mo></mrow><mo>=</mo><msub><mi>Σ</mi><mrow><mi>i</mi></mrow></msub><mi>Δ</mi><mi>x</mi></math></formula>The
+     mean energy loss <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>d</mi><mi>E</mi><mo>/</mo><mi>d</mi><mi>x</mi></math></formula>
+   in a step is the sum of the excitation and ionisation contributions
+   <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mi>Δ</mi><mi>x</mi><mo>=</mo><mfenced open="[" close="]"><msub><mi>Σ</mi><mrow><mn>1</mn></mrow></msub><msub><mi>E</mi><mrow><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>Σ</mi><mrow><mn>2</mn></mrow></msub><msub><mi>E</mi><mrow><mn>2</mn></mrow></msub><mo>+</mo><msub><mi>Σ</mi><mrow><mn>3</mn></mrow></msub><msubsup><mo>∫</mo><mrow><mi>I</mi></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi></mrow></msubsup><mi>E</mi><mi>g</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow><mi>d</mi><mi>E</mi></mfenced><mi>Δ</mi><mi>x</mi></math></formula>From
+     this, using the equations (<ptr target="#eq_sigex"/>), (<ptr target="#eq_sigion"/>), (<ptr target="#eq_fisum"/>) and (<ptr target="#eq_flnsum"/>), one can define the parameter
+     <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>C</mi></math></formula>
+     <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>C</mi><mo>=</mo><mfrac><mrow><mi>d</mi><mi>E</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac></math></formula>
+   </p>
+        <p>The following values have been chosen in <code>GEANT</code>
+        for the other parameters: <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mtable equalrows="false" equalcolumns="false"><mtr><mtd><msub><mi>f</mi><mrow><mn>2</mn></mrow></msub><mo>=</mo><mfenced open="{"><mtable equalrows="false" equalcolumns="false"><mtr><mtd><mn>0</mn></mtd><mtd><mi>if</mi><mi>Z</mi><mo>
+        ≤
+        </mo><mn>2</mn></mtd></mtr><mtr><mtd><mn>2</mn><mo>/</mo><mi>Z</mi></mtd><mtd><mi>if</mi><mi>Z</mi><mo>&gt;</mo><mn>2</mn></mtd></mtr><mtr><mtd>
+        </mtd></mtr></mtable></mfenced></mtd><mtd><mo>↠</mo></mtd><mtd><msub><mi>f</mi><mrow><mn>1</mn></mrow></msub><mo>=</mo><mn>1</mn><mo>-</mo><msub><mi>f</mi><mrow><mn>2</mn></mrow></msub></mtd></mtr><mtr><mtd><msub><mi>E</mi><mrow><mn>2</mn></mrow></msub><mo>=</mo><mn>1</mn><mn>0</mn><msup><mi>Z</mi><mrow><mn>2</mn></mrow></msup><mi>eV
+        </mi></mtd><mtd><mo>↠</mo></mtd><mtd><msub><mi>E</mi><mrow><mn>1</mn></mrow></msub><mo>=</mo><msup><mfenced open="(" close=")"><mfrac><mrow><mi>I</mi></mrow><mrow><msubsup><mi>E</mi><mrow><mn>2</mn></mrow><mrow><msub><mi>f</mi><mrow><mn>2</mn></mrow></msub></mrow></msubsup></mrow></mfrac></mfenced><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><msub><mi>f</mi><mrow><mn>1</mn></mrow></msub></mrow></mfrac></mrow></msup></mtd></mtr><mtr><mtd><mi>r</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>4</mn></mtd><mtd>
+        </mtd><mtd> </mtd></mtr><mtr><mtd>
+        </mtd></mtr></mtable></mrow></math></formula> With these
+        values the atomic level <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mn>2</mn></mrow></msub></math></formula>
+        corresponds approximately the K-shell energy of the atoms and
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Z</mi><msub><mi>f</mi><mrow><mn>2</mn></mrow></msub></math></formula>
+        the number of K-shell electrons. <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>r</mi></math></formula> is the only
+        variable which can be tuned freely. It determines the relative
+        contribution of ionisation and excitation to the energy loss.
+   </p>
+        <p>The energy loss is computed with the assumption that the
+        step length (or the relative energy loss) is small, and—in
+        consequence—the cross-section can be considered constant
+        along the path length. The energy loss due to the excitation
+        is <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Δ</mi><msub><mi>E</mi><mrow><mi>e</mi></mrow></msub><mo>=</mo><msub><mi>n</mi><mrow><mn>1</mn></mrow></msub><msub><mi>E</mi><mrow><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mn>2</mn></mrow></msub><msub><mi>E</mi><mrow><mn>2</mn></mrow></msub></math></formula>where
+        <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>1</mn></mrow></msub></math></formula>
+        and <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>2</mn></mrow></msub></math></formula>
+        are sampled from Poisson distribution as discussed above. The
+        loss due to the ionisation can be generated from the
+        distribution <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>g</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow></math></formula>
+        by the inverse transformation method: <table rend="inline"><row><cell cols="1" rows="1"><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>u</mi><mo>=</mo><mi>F</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow><mo>=</mo><msubsup><mo>
+        ∫
+        </mo><mrow><mi>I</mi></mrow><mrow><mi>E</mi></mrow></msubsup><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>d</mi><mi>x</mi><mtext/></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>E</mi><mo>=</mo><msup><mi>F</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup><mrow><mo>(</mo><mi>u</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mi>I</mi></mrow><mrow><mn>1</mn><mo>-</mo><mi>u</mi><mfrac><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi></mrow></mfrac></mrow></mfrac></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row></table>
+  where <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>u</mi></math></formula> is a uniform random
+  number between <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>F</mi><mrow><mo>(</mo><mi>I</mi><mo>)</mo></mrow><mo>=</mo><mn>0</mn></math></formula> and
+  <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>F</mi><mrow><mo>(</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>)</mo></mrow><mo>=</mo><mn>1</mn></math></formula>. The contribution from the
+    ionisations will be <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Δ</mi><msub><mi>E</mi><mrow><mi>i</mi></mrow></msub><mo>=</mo><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mrow><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub></mrow></msubsup><mfrac><mrow><mi>I</mi></mrow><mrow><mn>1</mn><mo>-</mo><msub><mi>u</mi><mrow><mi>j</mi></mrow></msub><mfrac><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi></mrow></mfrac></mrow></mfrac></math></formula>where
+    <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub></math></formula> is the
+      number of ionisation (sampled from Poisson distribution). The energy loss in a step will
+      then be <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Δ</mi><mi>E</mi><mo>=</mo><mi>Δ</mi><msub><mi>E</mi><mrow><mi>e</mi></mrow></msub><mo>+</mo><mi>Δ</mi><msub><mi>E</mi><mrow><mi>i</mi></mrow></msub></math></formula>.
+    </p>
+        <div>
+          <head>
+        Fast simulation for <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>≥</mo><mn>1</mn><mn>6</mn></math></formula>
+      </head>
+          <p>If the number of ionisation <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub></math></formula>
+          is bigger than 16, a faster sampling method can be used. The
+          possible energy loss interval is divided in two parts: one
+          in which the number of collisions is large and the sampling
+          can be done from a Gaussian distribution and the other in
+          which the energy loss is sampled for each collision. Let us
+          call the former interval <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>[</mo><mi>I</mi><mo>,</mo><mi>α</mi><mi>I</mi><mo>]</mo></mrow></math></formula>
+          the interval A, and the latter <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>[</mo><mi>α</mi><mi>I</mi><mo>,</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>]</mo></mrow></math></formula>
+          the interval B. <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>α</mi></math></formula> lies between 1
+          and <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>/</mo><mi>I</mi></math></formula>.
+          A collision with a loss in the interval A happens with the
+          probability <formula notation="MathML" rend="display" xml:id="eq_phys332-5"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>P</mi><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow><mo>=</mo><msubsup><mo>
+          ∫
+          </mo><mrow><mi>I</mi></mrow><mrow><mi>α</mi><mi>I</mi></mrow></msubsup><mi>g</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow><mi>d</mi><mi>E</mi><mo>=</mo><mfrac><mrow><mrow><mo>(</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>)</mo></mrow><mrow><mo>(</mo><mi>α</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mi>α</mi></mrow></mfrac></math></formula>The
+          mean energy loss and the standard deviation for this type of
+          collision are <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><mi>Δ</mi><mi>E</mi><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow><mo>&gt;;</mo></mrow><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>P</mi><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow></mrow></mfrac><msubsup><mo>
+          ∫
+          </mo><mrow><mi>I</mi></mrow><mrow><mi>α</mi><mi>I</mi></mrow></msubsup><mi>E</mi><mi>g</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow><mi>d</mi><mi>E</mi><mo>=</mo><mfrac><mrow><mi>I</mi><mi>α</mi><mo>ln</mo><mi>α</mi></mrow><mrow><mi>α</mi><mo>-</mo><mn>1</mn></mrow></mfrac></math></formula>and
+          <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msup><mi>σ</mi><mrow><mn>2</mn></mrow></msup><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>P</mi><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow></mrow></mfrac><msubsup><mo>
+          ∫
+          </mo><mrow><mi>I</mi></mrow><mrow><mi>α</mi><mi>I</mi></mrow></msubsup><msup><mi>E</mi><mrow><mn>2</mn></mrow></msup><mi>g</mi><mrow><mo>(</mo><mi>E</mi><mo>)</mo></mrow><mi>d</mi><mi>E</mi><mo>=</mo><msup><mi>I</mi><mrow><mn>2</mn></mrow></msup><mi>α</mi><mfenced open="(" close=")"><mn>1</mn><mo>-</mo><mfrac><mrow><mi>α</mi><msup><mo>ln</mo><mrow><mn>2</mn></mrow></msup><mi>α</mi></mrow><mrow><msup><mrow><mo>(</mo><mi>α</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mrow><mn>2</mn></mrow></msup></mrow></mfrac></mfenced></math></formula>If
+          the collision number is high, we assume that the number of
+          the type A collisions can be calculated from a Gaussian
+          distribution with the following mean value and standard
+          deviation: <table rend="inline"><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_phys332-1"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mi>A</mi></mrow></msub><mo>&gt;;</mo></mrow><mo>=</mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mi>P</mi><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_phys332-2"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msubsup><mi>σ</mi><mrow><mi>A</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mo>=</mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mi>P</mi><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow><mrow><mo>(</mo><mn>1</mn><mo>-</mo><mi>P</mi><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow><mo>)</mo></mrow></math></formula></cell></row></table>
+   It is further assumed that the energy loss in these collisions has a Gaussian
+   distribution with
+   <table rend="inline"><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_phys332-3"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><mi>Δ</mi><msub><mi>E</mi><mrow><mi>A</mi></mrow></msub><mo>&gt;;</mo></mrow><mo>=</mo><msub><mi>n</mi><mrow><mi>A</mi></mrow></msub><mrow><mo>&lt;</mo><mi>Δ</mi><mi>E</mi><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow><mo>&gt;;</mo></mrow></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_phys332-4"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msubsup><mi>σ</mi><mrow><mi>E</mi><mo>,</mo><mi>A</mi></mrow><mrow><mn>2</mn></mrow></msubsup><mo>=</mo><msub><mi>n</mi><mrow><mi>A</mi></mrow></msub><msup><mi>σ</mi><mrow><mn>2</mn></mrow></msup><mrow><mo>(</mo><mi>α</mi><mo>)</mo></mrow></math></formula></cell></row></table>
+   The energy loss of these collision can then be sampled from the Gaussian
+   distribution.
+        </p>
+          <p>The collisions where the energy loss is in the interval B
+          are sampled directly from <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Δ</mi><msub><mi>E</mi><mrow><mi>B</mi></mrow></msub><mo>=</mo><msubsup><mo>
+          ∑
+          </mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>-</mo><msub><mi>n</mi><mrow><mi>A</mi></mrow></msub></mrow></msubsup><mfrac><mrow><mi>α</mi><mi>I</mi></mrow><mrow><mn>1</mn><mo>-</mo><msub><mi>u</mi><mrow><mi>i</mi></mrow></msub><mfrac><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>-</mo><mi>α</mi><mi>I</mi></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi></mrow></mfrac></mrow></mfrac></math></formula>The
+          total energy loss is the sum of these two types of
+          collisions: <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Δ</mi><mi>E</mi><mo>=</mo><mi>Δ</mi><msub><mi>E</mi><mrow><mi>A</mi></mrow></msub><mo>+</mo><mi>Δ</mi><msub><mi>E</mi><mrow><mi>B</mi></mrow></msub></math></formula>
+        </p>
+          <p>The approximation of equations (<ptr target="#eq_phys332-1"/>), (<ptr target="#eq_phys332-2"/>),
+          (<ptr target="#eq_phys332-3"/>) and (<ptr target="#eq_phys332-4"/>) can be used under the following
+          conditions: <table rend="inline"><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_phys332-6"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mi>A</mi></mrow></msub><mo>&gt;;</mo></mrow><mo>-</mo><mi>c</mi><msub><mi>σ</mi><mrow><mi>A</mi></mrow></msub><mo>
+          ≥</mo><mn>0</mn></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_phys332-7"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mi>A</mi></mrow></msub><mo>&gt;;</mo></mrow><mo>+</mo><mi>c</mi><msub><mi>σ</mi><mrow><mi>A</mi></mrow></msub><mo>≤</mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub></math></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn"></formula></cell></row><row><cell><formula notation="MathML" rend="subeqn" xml:id="eq_phys332-8"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><mi>Δ</mi><msub><mi>E</mi><mrow><mi>A</mi></mrow></msub><mo>&gt;;</mo></mrow><mo>-</mo><mi>c</mi><msub><mi>σ</mi><mrow><mi>E</mi><mo>,</mo><mi>A</mi></mrow></msub><mo>≥</mo><mn>0</mn></math></formula></cell></row></table>
+        where <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>c</mi><mo>≥</mo><mn>4</mn></math></formula>. From
+        the equations (<ptr target="#eq_phys332-5"/>), (<ptr target="#eq_phys332-1"/>) and (<ptr target="#eq_phys332-3"/>) and from the conditions (<ptr target="#eq_phys332-6"/>) and (<ptr target="#eq_phys332-7"/>) the following limits can be
+        <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>α</mi><mrow><mi>min</mi></mrow></msub><mo>=</mo><mfrac><mrow><mrow><mo>(</mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>+</mo><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup><mo>)</mo></mrow><mrow><mo>(</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>)</mo></mrow></mrow><mrow><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mrow><mo>(</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>)</mo></mrow><mo>+</mo><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup><mi>I</mi></mrow></mfrac><mo>≤</mo><mi>α</mi><mo>≤</mo><msub><mi>α</mi><mrow><mtext>max</mtext></mrow></msub><mo>=</mo><mfrac><mrow><mrow><mo>(</mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>+</mo><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup><mo>)</mo></mrow><mrow><mo>(</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>)</mo></mrow></mrow><mrow><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup><mrow><mo>(</mo><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><mi>I</mi><mo>)</mo></mrow><mo>+</mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mi>I</mi></mrow></mfrac></math></formula>This
+   conditions gives a lower limit to number of the ionisations
+   <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub></math></formula> for which the fast
+     <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>≥</mo><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup></math></formula>As
+       in the conditions (<ptr target="#eq_phys332-6"/>), (<ptr target="#eq_phys332-7"/>) and (<ptr target="#eq_phys332-8"/>) the value of
+       <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>c</mi></math></formula> is as minimum
+         4, one gets <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>≥</mo><mn>1</mn><mn>6</mn></math></formula>.
+         In order to speed the simulation, the maximum value is used for
+         <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>α</mi></math></formula>.
+         </p>
+          <p>The number of collisions with energy loss in the interval
+          B (the number of interactions which has to be simulated
+          directly) increases slowly with the total number of
+          collisions <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub></math></formula>.
+          The maximum number of these collisions can be estimated as
+          <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mi>B</mi><mo>,</mo><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><mo>=</mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>-</mo><msub><mi>n</mi><mrow><mi>A</mi><mo>,</mo><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub><mo>
+          ≈
+          </mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mrow><mo>(</mo><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mi>A</mi></mrow></msub><mo>&gt;;</mo></mrow><mo>-</mo><msub><mi>σ</mi><mrow><mi>A</mi></mrow></msub><mo>)</mo></mrow></math></formula>From
+          the previous expressions for <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mi>A</mi></mrow></msub><mo>&gt;;</mo></mrow></math></formula>
+          and <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>σ</mi><mrow><mi>A</mi></mrow></msub></math></formula>
+          one can derive the <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>n</mi><mrow><mi>B</mi></mrow></msub><mo>
+          ≤
+          </mo><msub><mi>n</mi><mrow><mi>B</mi><mo>,</mo><mi>m</mi><mi>a</mi><mi>x</mi></mrow></msub><mo>=</mo><mfrac><mrow><mn>2</mn><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup></mrow><mrow><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>+</mo><msup><mi>c</mi><mrow><mn>2</mn></mrow></msup></mrow></mfrac></math></formula>The
+          following values are obtained with <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>c</mi><mo>=</mo><mn>4</mn></math></formula>:
+         </p>
+          <p>
+            <table rend="inline">
+              <row>
+                <cell>
+                  <formula notation="MathML">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                      <msub>
+                        <mi>n</mi>
+                        <mrow>
+                          <mn>3</mn>
+                        </mrow>
+                      </msub>
+                    </math>
+                  </formula>
+                </cell>
+                <cell>
+                  <formula notation="MathML">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                      <msub>
+                        <mi>n</mi>
+                        <mrow>
+                          <mi>B</mi>
+                          <mo>,</mo>
+                          <mi>m</mi>
+                          <mi>a</mi>
+                          <mi>x</mi>
+                        </mrow>
+                      </msub>
+                    </math>
+                  </formula>
+                </cell>
+                <cell/>
+                <cell>
+                  <formula notation="MathML">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                      <msub>
+                        <mi>n</mi>
+                        <mrow>
+                          <mn>3</mn>
+                        </mrow>
+                      </msub>
+                    </math>
+                  </formula>
+                </cell>
+                <cell>
+                  <formula notation="MathML">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                      <msub>
+                        <mi>n</mi>
+                        <mrow>
+                          <mi>B</mi>
+                          <mo>,</mo>
+                          <mi>m</mi>
+                          <mi>a</mi>
+                          <mi>x</mi>
+                        </mrow>
+                      </msub>
+                    </math>
+                  </formula>
+                </cell>
+              </row>
+              <row>
+                <cell>16</cell>
+                <cell>16</cell>
+                <cell/>
+                <cell>200</cell>
+                <cell>29.63</cell>
+              </row>
+              <row>
+                <cell>20</cell>
+                <cell>17.78</cell>
+                <cell/>
+                <cell>500</cell>
+                <cell>31.01</cell>
+              </row>
+              <row>
+                <cell>50</cell>
+                <cell>24.24</cell>
+                <cell/>
+                <cell>1000</cell>
+                <cell>31.50</cell>
+              </row>
+              <row>
+                <cell>100</cell>
+                <cell>27.59</cell>
+                <cell/>
+                <cell>
+                  <formula notation="MathML">
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                      <mi>∞</mi>
+                    </math>
+                  </formula>
+                </cell>
+                <cell>32.00</cell>
+              </row>
+            </table>
+          </p>
+        </div>
+        <div>
+          <head>
+         Special sampling for lower part of the spectrum</head>
+          <p>If the step length is very small (<formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mo>≤</mo><mn>5</mn></math></formula> mm
+          in gases, <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mo>≤</mo></math></formula> 2-3 <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>μ</mi></math></formula>m in solids)
+          the model gives 0 energy loss for some events. To avoid
+          this, the probability of 0 energy loss is <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>P</mi><mrow><mo>(</mo><mi>Δ</mi><mi>E</mi><mo>=</mo><mn>0</mn><mo>)</mo></mrow><mo>=</mo><msup><mi>e</mi><mrow><mo>-</mo><mrow><mo>(</mo><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mn>1</mn></mrow></msub><mo>&gt;;</mo></mrow><mo>+</mo><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mn>2</mn></mrow></msub><mo>&gt;;</mo></mrow><mo>+</mo><mrow><mo>&lt;</mo><msub><mi>n</mi><mrow><mn>3</mn></mrow></msub><mo>&gt;;</mo></mrow><mo>)</mo></mrow></mrow></msup></math></formula>If
+          the probability is bigger than 0.01 a special sampling is
+          done, taking into account the fact that in these cases the
+          projectile interacts only with the outer electrons of the
+          atom. An energy level <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><msub><mi>E</mi><mrow><mn>0</mn></mrow></msub><mo>=</mo><mn>1</mn><mn>0</mn></math></formula>
+          eV is chosen to correspond to the outer electrons. The mean
+          number of collisions can be calculated from <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mrow><mo>&lt;</mo><mi>n</mi><mo>&gt;;</mo></mrow><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msub><mi>E</mi><mrow><mn>0</mn></mrow></msub></mrow></mfrac><mfrac><mrow><mi>d</mi></mrow><mrow><mi>E</mi></mrow></mfrac></math></formula>The
+          number of collisions <formula notation="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>n</mi></math></formula> is sampled
+          from Poisson distribution. In the case of the thin layers,
+          all the collisions are considered as ionisations and the
+          energy loss is computed as <formula notation="MathML" rend="display"><math xmlns="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mi>Δ</mi><mi>E</mi><mo>=</mo><msubsup><mo>
+          ∑
+          </mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><mfrac><mrow><msub><mi>E</mi><mrow><mn>0</mn></mrow></msub></mrow><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub></mrow><mrow><msub><mi>E</mi><mrow><mtext>max</mtext></mrow></msub><mo>+</mo><msub><mi>E</mi><mrow><mn>0</mn></mrow></msub></mrow></mfrac><msub><mi>u</mi><mrow><mi>i</mi></mrow></msub></mrow></mfrac></math></formula>
+       </p>
+        </div>
+      </div>
+      <div type="star">
+        <head> References</head>
+        <list type="bibliography">
+          <item xml:id="bib-LAND">
+            <p>L.Landau.  On the Energy Loss of Fast Particles by
+            Ionisation.  Originally published in <emph>J.
+            Phys.</emph>, 8:201, 1944.  Reprinted in D.ter Haar,
+            Editor, <emph>L.D.Landau, Collected papers</emph>, page
+            417.  Pergamon Press, Oxford, 1965.
+         </p>
+          </item>
+          <item xml:id="bib-SCH1">
+            <p>B.Schorr.  Programs for the Landau and the Vavilov
+            distributions and the corresponding random numbers.
+            <emph>Comp.  Phys.  Comm.</emph>, 7:216, 1974.
+         </p>
+          </item>
+          <item xml:id="bib-SELT">
+            <p>S.M.Seltzer and M.J.Berger.  Energy loss straggling of
+            protons and mesons.  In <emph>Studies in Penetration of
+            Charged Particles in Matter</emph>, Nuclear Science Series
+            39, Nat.  Academy of Sciences, Washington DC, 1964.  </p>
+          </item>
+          <item xml:id="bib-TALM">
+            <p>R.Talman.  On the statistics of particle identification
+            using ionization.  <emph>Nucl.  Inst.  Meth.</emph>,
+            159:189, 1979.  </p>
+          </item>
+          <item xml:id="bib-VAVI">
+            <p>P.V.Vavilov.  Ionisation losses of high energy heavy
+            particles.  <emph>Soviet Physics JETP</emph>, 5:749,
+            1957.</p>
+          </item>
+        </list>
+      </div>
+    </body>
+  </text>
+</TEI>

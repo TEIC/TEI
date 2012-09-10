@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:iso="http://www.iso.org/ns/1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/" version="2.0" exclude-result-prefixes="iso tei teix dc html ncx" xpath-default-namespace="http://www.tei-c.org/ns/1.0">
+<xsl:stylesheet xmlns:dc="http://purl.org/dc/elements/1.1/"
+		xmlns:iso="http://www.iso.org/ns/1.0"
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:html="http://www.w3.org/1999/xhtml"
+		xmlns:tei="http://www.tei-c.org/ns/1.0"
+		xmlns:teix="http://www.tei-c.org/ns/Examples"
+		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/"
+                xmlns:m="http://www.w3.org/1998/Math/MathML"
+		version="2.0" exclude-result-prefixes="iso tei teix dc html ncx"
+		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+>
   <xsl:import href="../html5/tei.xsl"/>
   <xsl:import href="../epub/epub-common.xsl"/>
   <xsl:import href="../epub/epub-preflight.xsl"/>
@@ -83,6 +94,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>(extensible) wrapper for root element</desc>
   </doc>
+  <xsl:variable name="TEXT" select="/tei:TEI/text"/>
   <xsl:template match="/">
     <xsl:call-template name="processTEI"/>
   </xsl:template>
@@ -286,7 +298,8 @@ height: </xsl:text>
                     <xsl:text>.</xsl:text>
                     <xsl:value-of select="tokenize(@corresp,'\.')[last()]"/>
                   </xsl:variable>
-                  <item id="timeline-audio{$TLnumber}" href="{$audio}">
+                  <item id="timeline-audio{$TLnumber}"
+			href="{$audio}">
                     <xsl:attribute name="media-type">
                       <xsl:choose>
                         <xsl:when test="contains($audio,'.m4a')">audio/m4a</xsl:when>
@@ -386,6 +399,10 @@ height: </xsl:text>
                       <xsl:when test="starts-with(html:a/@href,'#')"/>
                       <xsl:otherwise>
                         <item href="{html:a[1]/@href}" media-type="application/xhtml+xml">
+			  <xsl:if test="$TEXT//m:math">
+			    <xsl:attribute
+				name="properties">mathml</xsl:attribute>
+			  </xsl:if>
                           <xsl:attribute name="id">
                             <xsl:text>section</xsl:text>
                             <xsl:number count="html:li" level="any"/>

@@ -23,7 +23,7 @@
                     <xsl:apply-templates select=".//tei:formula"/>
                 </fotex:eqnarray>
             </xsl:when>
-            <xsl:when test=".//tei:formula[@type='subeqn'] and $foEngine='passivetex'">
+            <xsl:when test=".//tei:formula[@rend='subeqn'] and $foEngine='passivetex'">
                 <fotex:eqnarray>
                     <xsl:apply-templates select=".//tei:formula"/>
                 </fotex:eqnarray>

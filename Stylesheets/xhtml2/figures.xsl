@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:mathml="http://www.w3.org/1998/Math/MathML"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:svg="http://www.w3.org/2000/svg"
@@ -372,7 +373,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:attribute>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>[html] display graphic file</desc>
    </doc>
   <xsl:template name="showGraphic">
       <xsl:variable name="File">
@@ -537,5 +538,36 @@ echo base64_decode($data[1]);
   <xsl:template match="svg:*">
       <xsl:copy-of select="."/>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[html] figures containing SVG markup </desc>
+   </doc>
+
+    <xsl:template match="tei:figure[svg:svg]">
+      <xsl:copy-of select="svg:svg"/>
+    </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] figures containing MathML Markup </desc>
+   </doc>
+
+    <xsl:template match="tei:formula[mathml:math]">
+      <xsl:choose>
+	<xsl:when test="@xml:id and (@rend='display' or
+			@rend='equation' or @rend='subeqn')">
+	  <div id="{@xml:id}">
+	    <xsl:copy-of select="mathml:math"/>
+	  </div>
+	</xsl:when>
+	<xsl:when test="@xml:id">
+	  <span id="{@xml:id}">
+	    <xsl:copy-of select="mathml:math"/>
+	  </span>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:copy-of select="mathml:math"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:template>
 
 </xsl:stylesheet>
