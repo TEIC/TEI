@@ -56,15 +56,16 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="text/body|text/back|text/front">
-    <xsl:copy>
-      <xsl:apply-templates select="@*"/>
       <xsl:variable name="pages">
-        <xsl:apply-templates select="*|processing-instruction()|comment()|text()"/>
+	<xsl:copy>
+	  <xsl:apply-templates select="@*"/>
+	  <xsl:apply-templates
+	      select="*|processing-instruction()|comment()|text()"/>
+	</xsl:copy>
       </xsl:variable>
       <xsl:for-each select="$pages">
-        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="pass2"/>
+	<xsl:apply-templates  mode="pass2"/>
       </xsl:for-each>
-    </xsl:copy>
   </xsl:template>
 
 
@@ -97,7 +98,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:with-param name="Name" select="$eName"/>
 	  </xsl:call-template>
         </xsl:variable>
-	<xsl:apply-templates select="$pass"/>
+	<xsl:for-each select="$pass">
+	  <xsl:apply-templates/>
+	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -127,7 +130,7 @@ of this software, even if advised of the possibility of such damage.
 
   <!-- second pass. group by <pb> (now all at top level) and wrap groups
        in <page> -->
-  <xsl:template match="*" mode="pass2" priority="99">
+  <xsl:template match="*" mode="pass2">
     <xsl:copy>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="pass2"/>
     </xsl:copy>
@@ -137,7 +140,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="*[pb]" mode="pass2">
+  <xsl:template match="*[pb]" mode="pass2" >
     <xsl:copy>
       <xsl:apply-templates select="@*"/>
       <xsl:for-each-group select="*" group-starting-with="pb">
