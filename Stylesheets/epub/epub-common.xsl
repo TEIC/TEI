@@ -231,7 +231,14 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:respStmt" mode="metadata">
     <p><i><xsl:value-of select="tei:resp"/></i>:
-      <xsl:value-of select="tei:name"/></p>
+    <xsl:for-each select="tei:name">
+      <xsl:apply-templates select="."/>
+      <xsl:choose>
+	<xsl:when test="following-sibling::tei:name">, </xsl:when>
+	<xsl:otherwise>.</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+    </p>
   </xsl:template>
 
   <xsl:template match="tei:list" mode="metadata">
