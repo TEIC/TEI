@@ -104,7 +104,9 @@ dist: schemas
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:
-	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.* *~ *.xi
+	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.* *~ *.xi *.isosch 
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
 	rm -f names.xml
+	for i in $(ODDS); do echo rm `basename $$i .dtd`.xsl;done
+	for i in $(XODDS); do echo rm `basename $$i .rng`.xsl;done
