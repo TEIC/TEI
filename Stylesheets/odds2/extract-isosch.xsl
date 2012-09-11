@@ -98,6 +98,11 @@ of this software, even if advised of the possibility of such damage.
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
+      <xsl:if test="not(sch:ns[@prefix='tei'])">
+	<sch:ns prefix="tei"
+		uri="http://www.tei-c.org/ns/1.0"/>
+      </xsl:if>
+
 
       <xsl:comment>keys:</xsl:comment>
       <xsl:for-each select="key('KEYs',1)">
