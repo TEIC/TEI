@@ -110,3 +110,4 @@ clean:
 	rm -f names.xml
 	for i in $(ODDS); do echo rm `basename $$i .dtd`.xsl;done
 	for i in $(XODDS); do echo rm `basename $$i .rng`.xsl;done
+	for i in $(DOCODDS); do echo rm `basename $$i .doc.pdf`.xsl;done
