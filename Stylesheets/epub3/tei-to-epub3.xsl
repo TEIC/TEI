@@ -595,6 +595,7 @@ height: </xsl:text>
                 <xsl:when test="$coverImageInside=''">
                   <div>
                     <xsl:attribute name="style">
+		      -webkit-hyphens:none;
 		      font-family: serif; 
 		      height:860;          
 		      font-size:30pt; 
