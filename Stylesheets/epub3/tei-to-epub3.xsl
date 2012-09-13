@@ -593,18 +593,7 @@ height: </xsl:text>
             <body>
               <xsl:choose>
                 <xsl:when test="$coverImageInside=''">
-                  <div>
-                    <xsl:attribute name="style">
-		      -webkit-hyphens:none;
-		      font-family: serif; 
-		      height:860;          
-		      font-size:30pt; 
-		      font-weight: bold;
-		      padding-top: 15pt;
-		      margin: 12pt;
-		      border: solid red 1pt; 
-		      text-align:center;
-		    </xsl:attribute>
+                  <div class="EpubCoverPage">
                     <xsl:call-template name="generateTitle"/>
                   </div>
                 </xsl:when>
