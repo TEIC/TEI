@@ -176,7 +176,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'List')]">true</xsl:when>
-            <xsl:when test="$p[w:pPr/w:pStyle/@w:val='dl']">true</xsl:when>
+            <xsl:when
+		test="$p[w:pPr/w:pStyle/@w:val='dl']">true</xsl:when>
+	    <xsl:when test="$p/w:pPr/w:numPr[not(w:ins)]">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>

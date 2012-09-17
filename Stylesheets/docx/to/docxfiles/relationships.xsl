@@ -32,10 +32,10 @@
                 exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso      tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
     
     
-  <!-- <xsl:key name="TARGETS" use="1" match="tei:ref[@target]|tei:ptr[@target]"/>-->
-    <xsl:key name="GRAPHICS" use="1" match="tei:graphic[@url]"/>
-    <xsl:key name="OLEOBJECTS" use="1" match="o:OLEObject"/>
-    <xsl:key name="IMAGEDATA" use="1" match="v:imagedata"/>
+  <xsl:key name="TARGETS" use="1" match="tei:ref[@target]|tei:ptr[@target]"/>
+  <xsl:key name="GRAPHICS" use="1" match="tei:graphic[@url]"/>
+  <xsl:key name="OLEOBJECTS" use="1" match="o:OLEObject"/>
+  <xsl:key name="IMAGEDATA" use="1" match="v:imagedata"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -190,7 +190,7 @@ of this software, even if advised of the possibility of such damage.
                 
                 <!-- hyperlinks -->
 
-		<!-- 
+
 		<xsl:for-each select="key('TARGETS',1)">
 		  <xsl:if test="not(starts-with(@target,'#'))">
                     <Relationship 
@@ -207,7 +207,7 @@ of this software, even if advised of the possibility of such damage.
 		    </Relationship>
 		  </xsl:if>
 		</xsl:for-each>
-		-->
+
 
                 <!-- Formulas -->
                 <xsl:for-each select="key('IMAGEDATA',1)">

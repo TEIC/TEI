@@ -2055,6 +2055,13 @@ of this software, even if advised of the possibility of such damage.
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
+      <xsl:when test="starts-with(@target,'http')">
+        <xsl:call-template name="linkMeUsingHyperlink">
+          <xsl:with-param name="anchor">
+            <xsl:apply-templates/>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates/>
       </xsl:otherwise>
