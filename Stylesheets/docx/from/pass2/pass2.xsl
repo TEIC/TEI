@@ -464,4 +464,6 @@ of this software, even if advised of the possibility of such damage.
       </head>
     </xsl:template>
 
+    <xsl:template match="tei:div[count(*)=1 and tei:head[not(text())]]" mode="pass2"/>
+
 </xsl:stylesheet>
