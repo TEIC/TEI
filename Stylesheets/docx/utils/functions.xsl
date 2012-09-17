@@ -163,9 +163,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:param name="p"/>
 	<xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
         <xsl:choose>
-            <xsl:when test="starts-with($s,'Heading')">true</xsl:when>
-            <xsl:when test="starts-with($s,'heading')">true</xsl:when>
+            <xsl:when test="matches($s,'[Hh]eading.+')">true</xsl:when>
             <xsl:when test="matches($s,'[Cc]aption')">true</xsl:when>
+            <xsl:when test="matches($s,'Figure[ ]?title')">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
@@ -200,6 +200,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:choose>
             <xsl:when test="$p[matches(w:pPr/w:pStyle/@w:val,'[Ff]igure')]">true</xsl:when>
             <xsl:when test="$p[matches(w:pPr/w:pStyle/@w:val,'[Cc]aption')]">true</xsl:when>
+            <xsl:when test="$p[matches(w:pPr/w:pStyle/@w:val,'Figuretitle')]">true</xsl:when>
             <xsl:when test="$p[w:r/w:drawing and not(w:r/w:t)]">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
