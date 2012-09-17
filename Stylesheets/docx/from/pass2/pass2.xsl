@@ -453,6 +453,15 @@ of this software, even if advised of the possibility of such damage.
       </sp>
     </xsl:template>
 
+    <xsl:template match="tei:figure/tei:p[tei:graphic and
+			 count(*)=1]" mode="pass2">
+      <xsl:apply-templates mode="pass2"/>      
+    </xsl:template>
 
+    <xsl:template match="tei:p[@rend='caption']" mode="pass2">
+      <head>
+	<xsl:apply-templates mode="pass2"/>      
+      </head>
+    </xsl:template>
 
 </xsl:stylesheet>

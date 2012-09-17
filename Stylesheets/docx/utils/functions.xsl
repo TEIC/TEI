@@ -162,10 +162,10 @@ of this software, even if advised of the possibility of such damage.
     <xsl:function name="tei:is-heading" as="xs:boolean">
         <xsl:param name="p"/>
 	<xsl:variable name="s" select="$p/w:pPr/w:pStyle/@w:val"/>
-      
         <xsl:choose>
             <xsl:when test="starts-with($s,'Heading')">true</xsl:when>
             <xsl:when test="starts-with($s,'heading')">true</xsl:when>
+            <xsl:when test="matches($s,'[Cc]aption')">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
@@ -198,8 +198,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:function name="tei:is-figure" as="xs:boolean">
         <xsl:param name="p"/>        
         <xsl:choose>
-            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Figure')]">true</xsl:when>
-            <xsl:when test="$p[contains(w:pPr/w:pStyle/@w:val,'Caption')]">true</xsl:when>
+            <xsl:when test="$p[matches(w:pPr/w:pStyle/@w:val,'[Ff]igure')]">true</xsl:when>
+            <xsl:when test="$p[matches(w:pPr/w:pStyle/@w:val,'[Cc]aption')]">true</xsl:when>
+            <xsl:when test="$p[w:r/w:drawing and not(w:r/w:t)]">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>
