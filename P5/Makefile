@@ -264,12 +264,12 @@ p5odds-examples.rng: p5subset.xml p5odds-examples.odd
 	which ${ROMA} || exit 1
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
 
-p5subset.xml: p5.xml
+p5subset.xml: check
 	@echo BUILD make subset of P5 with just the module/element/class/macro Spec elements
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  p5.xml Utilities/subset.xsl || echo "failed to extract subset from p5.xml." 
 	touch p5subset.xml
 
-dist-source.stamp: oddschema exampleschema p5subset.xml
+dist-source.stamp: check oddschema exampleschema
 	${SAXON} -o:p5subset.json p5subset.xml ${XSL}/odds2/odd2json.xsl
 	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl.model
 	${SAXON} -s:p5subset.xml -xsl:Utilities/listofattributes.xsl > p5attlist.txt
@@ -312,7 +312,7 @@ dist-source.stamp: oddschema exampleschema p5subset.xml
 	touch dist-source.stamp
 	rm p5subset.json p5attlist.txt stripspace.xsl.model
 
-dist-schema.stamp: schemas dtds oddschema exampleschema
+dist-schema.stamp:check  schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
 	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
@@ -324,7 +324,7 @@ dist-schema.stamp: schemas dtds oddschema exampleschema
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	touch dist-schema.stamp
 
-dist-doc.stamp:  
+dist-doc.stamp:  check
 	@echo BUILD: Make distribution directory for doc
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
@@ -353,7 +353,7 @@ dist-doc.stamp:
 	-test -f Guidelines.mobi  && cp Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
 	touch dist-doc.stamp
 
-dist-test.stamp:
+dist-test.stamp: check
 	@echo BUILD: Make distribution directory for test
 	rm -rf release/tei-p5-test*
 	mkdir -p release/tei-p5-test/share/xml/tei
@@ -362,12 +362,12 @@ dist-test.stamp:
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
 	touch dist-test.stamp
 
-dist-exemplars.stamp: p5subset.xml
+dist-exemplars.stamp: check
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make dist)
 	touch dist-exemplars.stamp
 
-dist-database.stamp: 
+dist-database.stamp: check
 	@echo BUILD: Make distribution directory for database
 	rm -rf release/tei-p5-database*
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
@@ -453,7 +453,7 @@ install: clean install-schema install-doc install-test install-exemplars install
 
 epub: epub.stamp
 
-epub.stamp: driver
+epub.stamp: check
 	@echo BUILD: Make epub version of Guidelines
 	teitoepub --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
@@ -468,12 +468,12 @@ changelog:
 	rm newchanges oldchanges
 
 
-catalogue:
+catalogue: check
 	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml p5.xml  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
 	teitohtml catalogue.xml catalogue.html
 	@echo Made catalogue.html
 
-catalogue-print:
+catalogue-print: check
 	${SAXON} ${SAXON_ARGS} p5.xml  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
 sfupload:
