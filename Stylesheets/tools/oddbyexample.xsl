@@ -47,12 +47,25 @@ $Id$
    saxon -it:main -o:myodd /usr/share/xml/tei/stylesheet/tools2/oddbyexample.xsl   corpus=`pwd`/
 
 -->
-  <xsl:import href="getfiles.xsl"/>
   <!-- 
-read a corpus of TEI P5 documents and construct
+Read a corpus of TEI P5 documents and construct
 an ODD customization file which expresses the subset
 of the TEI you need to validate that corpus
 -->
+
+  <!-- How does this work?
+
+1) start a variable and copy in all of the TEI 
+2) read the corpus and get a list of all the elements and their
+attributes that it uses, put that in the same variable
+3) process the variable and read the TEI section. if an element or
+ attribute is not present in the corpus section, put out a delete
+ customization
+4) for every attribute which is of type "enumerated", construct a
+valList
+
+-->
+
   <xsl:output indent="yes"/>
   <!-- name of odd -->
   <xsl:param name="schema">oddbyexample</xsl:param>
@@ -69,6 +82,23 @@ of the TEI you need to validate that corpus
   <xsl:param name="processNonTEI">false</xsl:param>
   <!-- which attributes should be make valLists for, regardless -->
   <xsl:param name="attributeList"/>
+  <!-- do you want moduleRef generated with @include or @except? -->
+  <xsl:param name="method">include</xsl:param>
+  <!-- turn on debug messages -->
+  <xsl:param name="debug">false</xsl:param>
+  <!-- turn on messages -->
+  <xsl:param name="verbose">false</xsl:param>
+  <!-- which files to look at? provide suffix -->
+  <xsl:param name="suffix">xml</xsl:param>
+  <!-- provide specific list of files -->
+  <xsl:param name="corpusList"/>
+  <!-- should P4 files be considered? -->
+  <xsl:param name="processP4">false</xsl:param>
+  <!-- should P5 files be considered? -->
+  <xsl:param name="processP5">true</xsl:param>
+
+
+
   <xsl:variable name="checkAtts">
     <xsl:text>,</xsl:text>
     <xsl:value-of select="$attributeList"/>
@@ -83,17 +113,90 @@ of the TEI you need to validate that corpus
   <xsl:key name="CLASSMEMBERS" use="@key" match="classSpec/classes/memberOf"/>
   <xsl:key name="Used" use="@ident" match="docs/elementSpec"/>
   <xsl:key name="UsedAtt" use="concat(../@ident,@ident)" match="docs/elementSpec/attDef"/>
-  <!--
-1) start a variable and copy in all of the TEI 
-2) read the corpus and get a list of all the elements and their
-attributes that it uses, put that in the same variable
-3) process the variable and read the TEI section. if an element or
- attribute is not present in the corpus section, put out a delete
- customization
-4) for every attribute which is of type "enumerated", construct a
-valList
+  <xsl:key name="All" match="*" use="1"/>
+  <xsl:key name="AllTEI" match="tei:*" use="1"/>
+  <xsl:key name="E" match="*" use="local-name()"/>
 
--->
+  <xsl:key name="EbyM" match="elementSpec" use="@module"/>
+  <xsl:key name="deletedE" match="elementSpec[@mode='delete']" use="@ident"/>
+  <xsl:key name="changedE" match="elementSpec[@mode='change']" use="@ident"/>
+  <xsl:key name="changedE" match="elementSpec[@mode='replace']" use="@ident"/>
+
+
+  <xsl:template name="main">
+      <xsl:variable name="pathlist">
+         <xsl:choose>
+	   <xsl:when test="$corpusList=''">
+	     <xsl:value-of select="concat($corpus,'?select=*.',$suffix,';recurse=yes;on-error=warning')"/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:value-of select="$corpusList"/>
+	   </xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="$debug='true'">
+	<xsl:message>Process <xsl:value-of select="$pathlist"/></xsl:message>
+      </xsl:if>
+      <xsl:variable name="docs" select="collection($pathlist)"/> 
+      <xsl:variable name="all">
+         <n:ROOT>
+	   <xsl:if test="$processP4='true'">
+	     <xsl:for-each select="$docs/TEI.2">
+	       <xsl:if test="$verbose='true'">
+		 <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
+		 </xsl:message>
+	       </xsl:if>
+	       <TEI.2 xn="{base-uri(.)}">
+		 <xsl:apply-templates select="*|@*" mode="copy"/>
+	       </TEI.2>
+	     </xsl:for-each>
+	   </xsl:if>
+	   <xsl:if test="$processP5='true'">
+	     <xsl:for-each select="$docs/tei:*">
+	       <xsl:if test="$verbose='true'">
+		 <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
+		 </xsl:message>
+	       </xsl:if>
+	       <tei:TEI xn="{base-uri(.)}">
+		 <xsl:apply-templates select="*|@*" mode="copy"/>
+	       </tei:TEI>
+	     </xsl:for-each>
+	     <xsl:for-each select="$docs/tei:teiCorpus">
+	       <xsl:if test="$verbose='true'">
+		 <xsl:message>processing <xsl:value-of select="base-uri(.)"/>
+		 </xsl:message>
+	       </xsl:if>
+	       <tei:teiCorpus xn="{base-uri(.)}">
+		 <xsl:copy-of select="@*|*"/>
+	       </tei:teiCorpus>
+	     </xsl:for-each>
+	   </xsl:if>
+         </n:ROOT>
+      </xsl:variable>
+      <xsl:variable name="stage3">
+	<xsl:for-each select="$all/*">
+	  <xsl:call-template name="processAll"/>
+	</xsl:for-each>
+      </xsl:variable>
+      <xsl:variable name="stage4">
+	<xsl:apply-templates select="$stage3" mode="stage3"/>
+      </xsl:variable>
+      <xsl:apply-templates select="$stage4" mode="stage4"/>
+  </xsl:template>
+
+  <xsl:template match="text()" mode="copy"/>
+
+  <xsl:template match="@*" mode="copy">
+      <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="copy">
+      <xsl:copy>
+         <xsl:apply-templates select="*|@*|text()" mode="copy"/>
+      </xsl:copy>
+  </xsl:template>
+  
+
   <xsl:template name="processAll">
     <xsl:variable name="count">
       <xsl:value-of select="count(/n:ROOT/*)"/>
@@ -168,7 +271,7 @@ valList
     <xsl:variable name="stage2">
       <stage2>
         <!-- for every attribute class, see if its members should be
-     deleted, by seeing if they are used anywhere-->
+	     deleted, by seeing if they are used anywhere-->
         <xsl:for-each select="$stage1/stage1/tei/classSpec">
           <classSpec ident="{@ident}" module="{@module}" type="atts" mode="change">
             <attList>
@@ -220,7 +323,7 @@ valList
                 <elementSpec ident="{current-grouping-key()}" mode="add" ns="{namespace-uri()}">
                   <xsl:text>&#10;</xsl:text>
                   <xsl:comment>add an &lt;equiv/&gt; to point to an named  template
-in an XSLT file which will transform this to pure TEI</xsl:comment>
+		  in an XSLT file which will transform this to pure TEI</xsl:comment>
                   <xsl:text>&#10;</xsl:text>
                   <equiv filter="somefile.xsl" mimeType="text/xsl" name="{current-grouping-key()}"/>
                   <desc>
@@ -367,6 +470,7 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
       </text>
     </TEI>
   </xsl:template>
+
   <xsl:template name="classmembers">
     <xsl:choose>
       <xsl:when test="@ident='att.global'">
@@ -429,6 +533,167 @@ in an XSLT file which will transform this to pure TEI</xsl:comment>
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="text()" mode="copy"/>
+
+<!-- odd 2 nuodd -->
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="stage3">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="@*|text()|comment()|processing-instruction()" mode="stage4">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="stage3">
+    <xsl:copy>
+      <xsl:apply-templates
+	  select="*|@*|processing-instruction()|comment()|text()"  mode="stage3"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="*" mode="stage4">
+    <xsl:copy>
+      <xsl:apply-templates
+	  select="*|@*|processing-instruction()|comment()|text()" mode="stage4"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  
+  <!-- ignore elementSpec @mode='delete' -->
+  <xsl:template match="elementSpec[@mode='delete']"  mode="stage3"/>
+  
+  <xsl:template match="moduleRef/@include"  mode="stage3"/>
+  <xsl:template match="moduleRef/@except"  mode="stage3"/>
+
+  <!-- for any moduleRef, look up all the members of it in P5;
+       if they are not deleted by this odd, add them to a list to be
+       included -->
+  <xsl:template match="moduleRef[@key]" mode="stage3">
+    <xsl:variable name="orig" select="/"/>
+    <xsl:variable name="here" select="."/>
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="stage3"/>
+      <xsl:variable name="module" select="@key"/>
+      <xsl:choose>
+	<xsl:when test="$method='include' and @include">
+	  <xsl:copy-of select="@include"/>
+	</xsl:when>	
+	<xsl:when test="$method='except' and @except">
+	  <xsl:copy-of select="@except"/>
+	</xsl:when>	
+	<xsl:when test="$method='include' and @except">
+	  <xsl:variable name="not">
+	    <xsl:for-each select="tokenize($here/@except,' ')">
+	      <not ident="{.}"/>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:variable name="includelist">
+	    <xsl:for-each select="document($tei)">
+	      <xsl:for-each select="key('EbyM',$module)">
+		<xsl:sort select="@ident"/>
+		<xsl:variable name="e" select="@ident"/>
+		<xsl:if test="not($not/not[@ident=$e])">
+		  <xsl:value-of select="$e"/>
+		    <xsl:text> </xsl:text>
+		</xsl:if>
+	      </xsl:for-each>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:if test="not($includelist='')">
+	    <xsl:attribute name="include" select="normalize-space($includelist)"/>
+	  </xsl:if>
+	</xsl:when>
+	<xsl:when test="$method='include'">
+	  <xsl:variable name="includelist">
+	    <xsl:for-each select="document($tei)">
+	      <xsl:for-each select="key('EbyM',$module)">
+		<xsl:sort select="@ident"/>
+		<xsl:variable name="e" select="@ident"/>
+		<xsl:for-each select="$orig">
+		  <xsl:choose>
+		  <xsl:when test="key('deletedE',$e)"/>
+		  <xsl:otherwise>
+		    <xsl:value-of select="$e"/>
+		    <xsl:text> </xsl:text>
+		  </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:for-each>
+	      </xsl:for-each>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:if test="not($includelist='')">
+	    <xsl:attribute name="include"
+			   select="normalize-space($includelist)"/>
+	  </xsl:if>
+	</xsl:when>
+	<xsl:when test="$method='except' and @include">
+	  <xsl:variable name="yes">
+	    <xsl:for-each select="tokenize($here/@include,' ')">
+	      <yes ident="{.}"/>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:variable name="exceptlist">
+	    <xsl:for-each select="document($tei)">
+	      <xsl:for-each select="key('EbyM',$module)">
+		<xsl:sort select="@ident"/>
+		<xsl:variable name="e" select="@ident"/>
+		<xsl:for-each select="$orig">
+		  <xsl:if test="not($yes/yes[@ident=$e])">
+		    <xsl:value-of select="$e"/>
+		    <xsl:text> </xsl:text>
+		  </xsl:if>
+		</xsl:for-each>
+	      </xsl:for-each>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:if test="not($exceptlist='')">
+	    <xsl:attribute name="except"  select="normalize-space($exceptlist)"/>
+	  </xsl:if>
+	</xsl:when>
+	<xsl:when test="$method='except'">
+	  <xsl:variable name="exceptlist">
+	    <xsl:for-each select="document($tei)">
+	      <xsl:for-each select="key('EbyM',$module)">
+		<xsl:sort select="@ident"/>
+		<xsl:variable name="e" select="@ident"/>
+		<xsl:for-each select="$orig">
+		  <xsl:if test="key('deletedE',$e)">
+		    <xsl:value-of select="$e"/>
+		    <xsl:text> </xsl:text>
+		  </xsl:if>
+		</xsl:for-each>
+	      </xsl:for-each>
+	    </xsl:for-each>
+	  </xsl:variable>
+	  <xsl:if test="not($exceptlist='')">
+	    <xsl:attribute name="except" select="normalize-space($exceptlist)"/>
+	  </xsl:if>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:message terminate="yes">Method <xsl:value-of
+	  select="$method"/> not supported</xsl:message>
+	</xsl:otherwise>
+      </xsl:choose>
+	</xsl:copy>
+      </xsl:template>
+
+  <xsl:template mode="stage4" match="specGrp[not(*)]"/>
+
+  <xsl:template mode="stage4" match="specGrpRef">
+    <xsl:choose>
+      <xsl:when test="starts-with(@target,'#')">
+	<xsl:for-each
+	    select="id(substring(@target,2))">
+	  <xsl:if test="*">
+	    <specGrpRef target="#{@xml:id}"/>
+	  </xsl:if>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 
 </xsl:stylesheet>
