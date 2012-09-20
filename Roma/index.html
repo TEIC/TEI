@@ -37,13 +37,19 @@ function changeRadioTemplate()
 </div>
 
 <div class="main">
- <p>These pages will help you design your own TEI customization,
-from which you can generate DTD, RELAX NG, W3C Schema and Schematron
- schemas, or produce documentation.</p>
-  
+ <p>TEI Roma is a tool for working with TEI customizations. A TEI 
+customization is a document from which you can generate a schema
+defining which elements and attributes from the TEI system you want to 
+use, along with customized HTML or PDF documentation of it. The schema 
+generated can be expressed in any of DTD, RELAXNG W3C Schema or 
+Schematron languages.</p>
+
+
  <form action="startroma.php" enctype="multipart/form-data" method="POST">
 
-<p class="headline">Create a new or upload existing customization</p>
+<p class="headline">
+You can make or modify your TEI customization in several different ways:
+</p>
 
 <ul class="inputList">
 <li>
@@ -62,7 +68,7 @@ Reduce: create a new customization by removing elements and modules from
 
 <li>
 <input id="Template" class="radio" type="radio" name="option" value="template">
-Create customization from template
+Create a new customization starting from a predefined template
  <select name="tei_template" onClick="changeRadioTemplate()">
 <option value="tei_bare.odd">TEI Absolutely Bare</option>
 <option value="tei_corpus.odd">TEI for Linguistic Corpora</option>
@@ -79,7 +85,7 @@ Create customization from template
 
 <li>
 <input id="Other" class="radio" type="radio" name="option" value="other">
-Edit model customization
+Create a new customization starting from an existing TEI-defined customization
  <select name="tei_other" onClick="changeRadioOther()">
 <option value="tei_lite.odd">TEI Lite</option>
 <option value="tei_tite.odd">TEI Tite</option>
@@ -89,11 +95,12 @@ Edit model customization
 <li>
 <input  id="uploadFile" class="radio" type="radio" name="option"
 		value="upload">
-Edit your own previously created customization
+Upload and use an existing customization
 <input onClick="changeRadioUpload()" type="file" name="customization">
-<br/>A number of community-maintained customizations are listed on
-the <a href="http://wiki.tei-c.org/index.php/Category:Customization">TEI wiki</a>; you
-can download their ODD files, and upload them to Roma here.
+<br/><br/>
+A number of community-maintained customizations are listed on
+the <a
+		    href="http://wiki.tei-c.org/index.php/Category:Customization">TEI wiki</a>
        </li>
     
    </li>
@@ -101,6 +108,8 @@ can download their ODD files, and upload them to Roma here.
  <input class="submit" value="Start" type="submit"/>
 
  </form>
+<p rend="italic">A TEI customization is informally referred to as an ODD
+	(for "One Document Does it all")</p>
 
 <div class="footer">
 <p class="author">Roma was written by Arno Mittelbach and is maintained by
