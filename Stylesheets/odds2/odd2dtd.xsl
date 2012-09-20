@@ -552,12 +552,15 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       <xsl:choose>
          <xsl:when test="$body=''"> </xsl:when>
-         <xsl:otherwise>
+	 <xsl:when test="matches($body,'\*$')">
+            <xsl:value-of select="$body"/>
+	 </xsl:when>
+	 <xsl:otherwise>
             <xsl:call-template name="checkStart"/>
             <xsl:value-of select="$body"/>
             <xsl:text>?</xsl:text>
             <xsl:call-template name="checkEnd"/>
-         </xsl:otherwise>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <xsl:template match="rng:choice">
