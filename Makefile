@@ -54,6 +54,8 @@ check.stamp:
 	@which roma2 || exit 1
 	@echo -n onvdl: 
 	@which onvdl || exit 1
+	@echo -n XeLaTeX: 
+	@which xelatex || exit 1
 	touch check.stamp
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
@@ -156,8 +158,6 @@ pdf.stamp: check
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	@echo BUILD: build LaTeX version of Guidelines from Lite
-	@echo Checking you have a running ${XELATEX} before trying to make TeX...
-	which ${XELATEX} || exit 1
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
@@ -187,9 +187,7 @@ pdf.stamp: check
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 	touch pdf.stamp
 
-chapterpdfs:
-	@echo Checking you have a running ${LATEX} before trying to make PDF...
-	which ${XELATEX} || exit 1
+chapterpdfs: check
 	for i in `grep "\\include{" Guidelines.tex | sed 's/.*{\(.*\)}.*/\\1/'`; \
 	do echo PDF for chapter $$i; \
 	echo  $$i | ${XELATEX} Guidelines; \
