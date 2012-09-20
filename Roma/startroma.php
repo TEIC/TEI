@@ -19,6 +19,9 @@ switch( $_REQUEST[ 'option' ] )
     case 'other':
       $oRoma = new roma( roma_startupOption_other );
       break;
+    case 'template':
+      $oRoma = new roma( roma_startupOption_other );
+      break;
     default:
       $oRoma = new roma( '' );
       break;

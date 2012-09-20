@@ -19,6 +19,14 @@ function changeRadioOther()
         oInput.checked = 'true';
       }
  }
+function changeRadioTemplate()
+  {
+    oInput = document.getElementById( "Template" );
+    if ( oInput )
+      {
+        oInput.checked = 'true';
+      }
+ }
 </script>
 </head>
 <body>
@@ -30,7 +38,9 @@ function changeRadioOther()
 
 <div class="main">
  <p>These pages will help you design your own TEI customization,
-as a DTD, RELAX NG or W3C Schema.</p>
+from which you can generate DTD, RELAX NG, W3C Schema and Schematron
+ schemas, or produce documentation.</p>
+  
  <form action="startroma.php" enctype="multipart/form-data" method="POST">
 
 <p class="headline">Create a new or upload existing customization</p>
@@ -51,26 +61,39 @@ Reduce: create a new customization by removing elements and modules from
 </li>
 
 <li>
-<input id="Other" class="radio" type="radio" name="option" value="other">
+<input id="Template" class="radio" type="radio" name="option" value="template">
 Create customization from template
- <select name="tei_other" onClick="changeRadioOther()">
+ <select name="tei_template" onClick="changeRadioTemplate()">
 <option value="tei_bare.odd">TEI Absolutely Bare</option>
-<option value="teilite.odd">TEI Lite</option>
-<option value="tei_tite.odd">TEI Tite</option>
+<option value="tei_corpus.odd">TEI for Linguistic Corpora</option>
+<option value="tei_ms.odd">TEI for Manuscript Description</option>
+<option value="tei_drama.odd">TEI with Drama</option>
+<option value="tei_speech.odd">TEI for Speech Representation</option>
 <option value="tei_odds.odd">TEI for authoring ODD</option>
 <option value="tei_svg.odd">TEI with SVG</option>
 <option value="tei_math.odd">TEI with MathML</option>
 <option value="tei_xinclude.odd">TEI with XInclude</option>
-<option value="tei_its.odd">TEI with W3C ITS</option>
+<option value="tei_its.odd">TEI with W3C internationalisation elements</option>
  </select>		  
-       
+      
 </li>
-       
+
+<li>
+<input id="Other" class="radio" type="radio" name="option" value="other">
+Create customization from 
+ <select name="tei_other" onClick="changeRadioOther()">
+<option value="tei_lite.odd">TEI Lite</option>
+<option value="tei_tite.odd">TEI Tite</option>
+</li>
+
 <li>
 <input  id="uploadFile" class="radio" type="radio" name="option"
 		value="upload">
 Open existing customization
 <input onClick="changeRadioUpload()" type="file" name="customization">
+A number of community-maintained customizations are listed on
+the <a href="http://wiki.tei-c.org/index.php">TEI wiki</a>; you
+can download their ODD files, and upload them to Roma here.
        </li>
     
    </li>
@@ -79,14 +102,6 @@ Open existing customization
 
  </form>
 
-<!--
-<p>If you want to validate a TEI customization file, there is
-a RELAXNG schema in <a
-	  href="http://www.tei-c.org/release/xml/tei/custom/relaxng/p5odds.rnc">compact syntax</a>, and
-<a
-	  href="http://www.tei-c.org/release/xml/tei/custom/relaxng/p5odds.rng">XML syntax</a>,
-</p>
--->
 <div class="footer">
 <p class="author">Roma was written by Arno Mittelbach and is maintained by
 Sebastian Rahtz. Sanity check written  by Ioan Bernevig.
