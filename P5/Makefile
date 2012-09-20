@@ -36,35 +36,58 @@ default: validate exemplars test html-web
 
 convert: dtds schemas
 
+check: check.stamp  p5.xml
+
+check.stamp:
+	@echo Checking you have running XML tools and Perl before trying to run transform...
+	@echo -n Perl: 
+	@which perl || exit 1
+	@echo -n xmllint: 
+	@which xmllint || exit 1
+	@echo -n trang: 
+	@which ${TRANG} || exit 1
+	@echo -n jing: 
+	@which ${JING} || exit 1
+	@echo -n saxon: 
+	@which ${SAXON} || exit 1
+	@echo -n roma2: 
+	@which roma2 || exit 1
+	@echo -n onvdl: 
+	@which onvdl || exit 1
+	touch check.stamp
+
+p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
+	xmllint --xinclude --dropdtd --noent ${DRIVER} > p5.xml
+
 dtds: check
 	rm -rf DTD
 	mkdir DTD
 	@echo BUILD: Generate modular DTDs
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} ${ODD2DTD} outputDir=DTD 	\
+	${SAXON} ${SAXON_ARGS}  p5.xml ${ODD2DTD} outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
 	${VERBOSE}
 
 schemas:check schema-relaxng schema-sch
 
-schema-relaxng:
+schema-relaxng:  check
 	rm -rf Schema
 	mkdir Schema
 	@echo BUILD: Generate modular RELAX NG schemas
-	${SAXON} ${SAXON_ARGS}  ${DRIVER}  ${ODD2RELAX} outputDir=Schema \
+	${SAXON} ${SAXON_ARGS}  p5.xml  ${ODD2RELAX} outputDir=Schema \
 	lang=${LANGUAGE}  \
 	${VERBOSE}
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 
-schema-sch:
+schema-sch:  check
 	@echo BUILD: Extract schema rules to make p5.isosch
-	${SAXON} ${SAXON_ARGS}  ${DRIVER} `dirname ${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
+	${SAXON} ${SAXON_ARGS}  p5.xml `dirname ${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
 
 
 html-web: html-web.stamp check.stamp
 
-html-web.stamp:
+html-web.stamp:  check
 	@echo BUILD: Making HTML Guidelines for language ${LANGUAGE}
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
@@ -77,7 +100,7 @@ html-web.stamp:
 	cp odd.css guidelines.css guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html
 	(cd Source/Guidelines/${INPUTLANGUAGE}; tar --exclude .svn -c -f - Images) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
 	(cd webnav; tar --exclude .svn -c -f - .) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
-	${SAXON} ${SAXON_ARGS}  ${DRIVER}  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
+	${SAXON} ${SAXON_ARGS}  p5.xml  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
 		pageLayout=CSS \
 	        lang=${LANGUAGE} \
@@ -127,9 +150,9 @@ fontcheck:
 	fi
 	rm -f fonttest.*
 
-pdf.stamp: check
+pdf.stamp: check 
 	@echo BUILD: build Lite version of Guidelines
-	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml ${DRIVER}  ${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
+	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml p5.xml  ${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	@echo BUILD: build LaTeX version of Guidelines from Lite
@@ -188,14 +211,14 @@ valid: check
 #	with grep -v. Note that we discard *all* such messages, even
 #	though fewer than 500 of the 17,576 possible combinations
 #	(i.e. < 3%) are valid codes.
-#	$(JING) -t p5odds.rng ${DRIVER} 
+#	$(JING) -t p5odds.rng p5.xml 
 #
 	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
-	./run-onvdl p5.nvdl ${DRIVER} 
+	./run-onvdl p5.nvdl p5.xml 
 	@echo BUILD: Check validity with rnv if we have it
-	-which rnv && (xmllint --noent --xinclude ${DRIVER} > Source.xml; rnv -v p5odds.rnc Source.xml; rm -f Source.xml)
+	-which rnv && (xmllint --noent --xinclude p5.xml > Source.xml; rnv -v p5odds.rnc Source.xml; rm -f Source.xml)
 	@echo BUILD: Check full validity of relevant examples with nvdl
-	${SAXON} ${DRIVER} Utilities/extractegXML.xsl > v.body
+	${SAXON} p5.xml Utilities/extractegXML.xsl > v.body
 	echo "<!DOCTYPE p [" > v.header
 	(cd valid; ls | perl -p -e  "s+(.*)+<\!ENTITY \1 SYSTEM \"valid/\1\">+") >> v.header
 	echo "]>" >> v.header
@@ -204,33 +227,29 @@ valid: check
 	rm v.body v.header
 	@echo BUILD: Check validity with Schematron
 	${SAXON} ${SAXON_ARGS}  -s:p5.isosch -xsl:Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
-	${SAXON} ${SAXON_ARGS}  -s:${DRIVER} -xsl:p5.isosch.xsl
+	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:p5.isosch.xsl
 	@echo BUILD: Check validity with local XSLT script
-	${SAXON} ${SAXON_ARGS}  -s:${DRIVER} -xsl:Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
-	${SAXON} ${SAXON_ARGS}  -o:ValidatorLog.xml -s:${DRIVER} -xsl:Utilities/validator.xsl 
+	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
+	${SAXON} ${SAXON_ARGS}  -o:ValidatorLog.xml -s:p5.xml -xsl:Utilities/validator.xsl 
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo ERROR found; false; fi)
 	diff ValidatorLog.xml expected-results/ValidatorLog.xml
 	cat ValidatorLog.xml
 	rm ValidatorLog.xml Utilities/pointerattributes.xsl 
 	#@echo BUILD: Check validity with xmllint
-	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout ${DRIVER}
+	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout p5.xml
 	@echo BUILD: Check for places with no examples
-	${SAXON} -s:${DRIVER} -xsl:Utilities/listspecwithnoexample.xsl 
+	${SAXON} -s:p5.xml -xsl:Utilities/listspecwithnoexample.xsl 
 	@echo BUILD: do graphics files exist
-	${SAXON} -s:${DRIVER} -xsl:Utilities/listgraphics.xsl | sh
+	${SAXON} -s:p5.xml -xsl:Utilities/listgraphics.xsl | sh
 
 #test: debversion
-test:
-	make p5subset.xml
+test: p5subset.xml
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
-	rm p5subset.xml
 
-exemplars: 
-	make p5subset.xml
+exemplars:  p5subset.xml
 	@echo BUILD TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
-	rm p5subset.xml
 
 oddschema: p5odds.rng 
 
@@ -245,13 +264,12 @@ p5odds-examples.rng: p5subset.xml p5odds-examples.odd
 	which ${ROMA} || exit 1
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
 
-p5subset.xml: Source/Specs/*.xml Source/Guidelines/en/*.xml
+p5subset.xml: p5.xml
 	@echo BUILD make subset of P5 with just the module/element/class/macro Spec elements
-	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  ${DRIVER} Utilities/subset.xsl || echo "failed to extract subset from ${DRIVER}." 
+	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  p5.xml Utilities/subset.xsl || echo "failed to extract subset from p5.xml." 
 	touch p5subset.xml
 
-dist-source.stamp: oddschema exampleschema
-	make p5subset.xml
+dist-source.stamp: oddschema exampleschema p5subset.xml
 	${SAXON} -o:p5subset.json p5subset.xml ${XSL}/odds2/odd2json.xsl
 	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl.model
 	${SAXON} -s:p5subset.xml -xsl:Utilities/listofattributes.xsl > p5attlist.txt
@@ -292,7 +310,7 @@ dist-source.stamp: oddschema exampleschema
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	touch dist-source.stamp
-	rm p5subset.xml p5subset.json p5attlist.txt stripspace.xsl.model
+	rm p5subset.json p5attlist.txt stripspace.xsl.model
 
 dist-schema.stamp: schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
@@ -344,8 +362,7 @@ dist-test.stamp:
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
 	touch dist-test.stamp
 
-dist-exemplars.stamp: 
-	make p5subset.xml
+dist-exemplars.stamp: p5subset.xml
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make dist)
 	touch dist-exemplars.stamp
@@ -434,34 +451,12 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-check: check.stamp
-
-check.stamp:
-	@echo Checking you have running XML tools and Perl before trying to run transform...
-	@echo -n Perl: 
-	@which perl || exit 1
-	@echo -n xmllint: 
-	@which xmllint || exit 1
-	@echo -n trang: 
-	@which ${TRANG} || exit 1
-	@echo -n jing: 
-	@which ${JING} || exit 1
-	@echo -n saxon: 
-	@which ${SAXON} || exit 1
-	@echo -n roma2: 
-	@which roma2 || exit 1
-	@echo -n onvdl: 
-	@which onvdl || exit 1
-	touch check.stamp
-
 epub: epub.stamp
 
-epub.stamp:
+epub.stamp: driver
 	@echo BUILD: Make epub version of Guidelines
-	xmllint --dropdtd --noent Source/guidelines-en.xml > teip5.xml
-	teitoepub --coverimage=Utilities/cover.jpg --profile=tei teip5.xml Guidelines.epub
+	teitoepub --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
-	rm teip5.xml
 	touch epub.stamp
 	-which kindlegen && kindlegen Guidelines.epub
 
@@ -474,12 +469,12 @@ changelog:
 
 
 catalogue:
-	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml ${DRIVER}  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
+	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml p5.xml  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
 	teitohtml catalogue.xml catalogue.html
 	@echo Made catalogue.html
 
 catalogue-print:
-	${SAXON} ${SAXON_ARGS} ${DRIVER}  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
+	${SAXON} ${SAXON_ARGS} p5.xml  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
 sfupload:
 	rsync -e ssh tei-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/TEIP5-all
@@ -516,7 +511,7 @@ clean:
 	*.isosch.xsl \
 	tei-*.zip \
 	Test/*.isosch \
-	p5subset.xml \
+	ps5ubset.xml p5.xml \
 	Utilities/guidelines.xsl Utilities-1/guidelines.xsl
 	find . -name "semantic.cache" | xargs rm -f
 	(cd Test; make clean)

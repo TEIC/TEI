@@ -47,7 +47,7 @@ testall.rng: testall.odd
 	@echo "BUILD: Test schema from testall"
 	@echo Validate testall itself
 	-which rnv && rnv ../p5odds.rnc testall.odd
-	saxon -o:testall-ex.odd testall.odd ../Utilities/odd2exodd.xsl 
+	saxon -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl 
 	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) testall-ex.odd . 
 	@echo check egXML in testall.odd
 	perl -p -e "s/testlite-examples/testall-examples/" ex.nvdl > testall.nvdl
