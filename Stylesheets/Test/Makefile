@@ -55,7 +55,7 @@ odd2odd:
 
 oddbyexample:
 	saxon -it:main -o:oddbyexample.odd  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare 
-	roma2 oddbyexample.odd .
+	roma2 --xsl=`pwd`/.. oddbyexample.odd .
 	jing -c oddbyexample.rnc bare/test2.xml
 	jing oddbyexample.xsd bare/test2.xml
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test2.xml
@@ -120,7 +120,7 @@ conversions-from:
 	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
 
 conversions-to:
-	roma2 --nodtd --noxsd test.odd .
+	roma2 --xsl=`pwd`/.. --nodtd --noxsd test.odd .
 	../odttotei test7.odt test7.xml
 	jing test.rng test7.xml
 	diff test7.xml expected-results/test7.xml
