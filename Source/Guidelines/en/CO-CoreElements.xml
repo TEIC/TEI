@@ -3757,7 +3757,7 @@ although he may never have actually read it.</p></egXML>
  </p>
 <p>Some bibliographic references are extremely elliptical, often only a
 string of the form <mentioned>Baxter, 1983</mentioned>.  If no further details of
-Baxter's book are given in the source text and none are supplied by the
+Baxter's book are given in the source text and none is supplied by the
 encoder, then the reference thus given should be tagged as a
 <gi>bibl</gi>:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">All of this is of course much more fully treated
@@ -4222,10 +4222,8 @@ of their responsibility more exactly.
 of author names using unique identifiers. Both the <gi>author</gi> and 
 <gi>editor</gi> elements may contain one or more <gi>idno</gi> elements, 
 each containing an identifier. Alternatively, if only a single identifier 
-will be recorded, the <att>key</att> or 
-<att>ref</att> attributes may be used. As explained in <ptr target="#CONARS"/>, 
-interchange is improved by use of tag URIs in <att>ref</att> instead of 
-<att>key</att>.</p>
+is to be recorded, the <att>key</att> or 
+<att>ref</att> attribute may be used, as further discussed in <ptr target="#CONARS"/>.</p>
 <p>For anyone else with responsibility for the work, the
 <gi>respStmt</gi> element should be used. The nature of the
 responsibility is indicated by means of a <gi>resp</gi> element, and
@@ -4374,6 +4372,7 @@ reports:
       <author>Nicholas, Charles K.</author>
       <author>Welsch, Lawrence A.</author>
       <title>On the interchangeability of SGML and ODA</title>
+      <idno type="NIST">NISTIR 4681</idno>
       <imprint>
          <pubPlace>Gaithersburg, MD</pubPlace>
          <publisher>
@@ -4383,7 +4382,7 @@ reports:
       </imprint>
       <extent>19 pp.</extent>
    </monogr>
-   <idno type="NIST">NISTIR 4681</idno>
+
 </biblStruct></egXML>
 and with dissertations:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOI-eg-264"><biblStruct>
@@ -4549,11 +4548,11 @@ associated items:
 <specDesc key="relatedItem"/>
 </specList></p>
 
-<p>In the following example, the first <gi>biblStruct</gi>
-describes a facsimile edition, and the second describes the work of
-which it is a facsimile. The relation between the facsimile and its source is represented
-by means of a <gi>relatedItem</gi> within the first description, which
-points to the description of the source.
+<p>In the following example, the first <gi>biblStruct</gi> describes a
+facsimile edition, and the second describes the work of which it is a
+facsimile. The relation between the facsimile and its source is
+represented by means of a <gi>relatedItem</gi> within the first
+description, which points to the description of the source.
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct xml:id="bibl03">
 <monogr>
@@ -4768,28 +4767,37 @@ qualifying information which is to be kept but distinguished from the
 surrounding text, the <gi>ref</gi> element should be used, as in the
 following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Nelson claims <ref target="#NEL80">(ibid, passim)</ref> ...</egXML>
-<!--Following suggestion is only possible if <biblScope> becomes a phrase. -->
-	<!--Which it currently isnt.  -->
-	<!--<p>When it is desired to distinguish the short form of the reference -->
-	<!--itself from the additional qualifying information added to it, the -->
-	<!--additional information may be marked as a <gi>biblScope</gi> element: -->
-	<!--  -->
-	<!--<egXML xmlns="http://www.tei-c.org/ns/Examples">-->
-	<!--Nelson claims (<ref target='NEL80'>Nelson [1980], <biblScope>especially -->
-	<!--pages 13&ndash;37</ref>) ... -->
-	<!--]]> -->
-	<!--</egXML> -->
-	<!--  -->
-	<!--(This distinction between the short form and the qualifying information -->
-	<!--may be useful in the context of document production or normalization of -->
-	<!--bibliographic references.) -->
 It may be important to distinguish between the short form of a
 bibliographic reference and some qualifying or additional information.
 The latter should not appear within the scope of the <gi>ref</gi>
 element when this is the case, as for example in an application
 concerned to normalize bibliographic references:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Nelson claims (<ref target="#NEL80">Nelson [1980]</ref> pages 13–37) ...</egXML>
- </p></div>
+ </p>
+<p>The <gi>ref</gi> element may also be used to provide a reference to a copy of the bibliographic item itself, particularly if this is available online, as in the following example: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<biblStruct xml:id="Sukovic2002">
+<analytic>
+<author>
+<forename>Suzana</forename>
+<surname>Sukovic</surname>
+</author>
+<title level="a">Beyond the Scriptorium: The Role of the Library in Text
+Encoding</title>
+</analytic>
+<monogr>
+<title level="j">D-Lib</title>
+<imprint>
+<biblScope type="vol">8</biblScope>
+<biblScope type="issue">1</biblScope>
+<date>2002</date>
+</imprint>
+</monogr>
+<ref type="url">http://www.dlib.org/dlib/january02/sukovic/01sukovic.html</ref>
+</biblStruct>
+</egXML>
+  </p>
+</div>
 
 <div type="div3" xml:id="COBIOT"><head>Relationship to Other Bibliographic Schemes</head>
 
