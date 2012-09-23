@@ -176,7 +176,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@key"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
-      <xsl:text>,</xsl:text>
       <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
@@ -194,7 +193,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@module"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
-      <xsl:text>,</xsl:text>
       <xsl:call-template name="mode"/>
       <xsl:if test="tei:classes">
 	<xsl:text>,"classes":[</xsl:text>
@@ -257,7 +255,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@key"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
-      <xsl:text>,</xsl:text>
       <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
@@ -275,7 +272,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of  select="@type"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
-      <xsl:text>,</xsl:text>
       <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
@@ -290,7 +286,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@key"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
-      <xsl:text>,</xsl:text>
       <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
@@ -308,7 +303,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@type"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
-      <xsl:text>,</xsl:text>
       <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
@@ -323,7 +317,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@key"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
-      <xsl:text>,</xsl:text>
       <xsl:call-template name="mode"/>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
@@ -355,9 +348,12 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template name="mode">
-    <xsl:text>"mode":"</xsl:text>
-    <xsl:value-of select="@mode"/>
-    <xsl:text>"</xsl:text>
+    <xsl:if test="@mode">
+      <xsl:text>,</xsl:text>
+      <xsl:text>"mode":"</xsl:text>
+      <xsl:value-of select="@mode"/>
+      <xsl:text>"</xsl:text>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="atts">
