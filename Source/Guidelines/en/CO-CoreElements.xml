@@ -2267,14 +2267,17 @@ cross-reference, the <gi>ref</gi> element may be used without a
 target="#SA"/>. The complete XPointer specification is managed bythe W3C<note place="foot"><ptr target="http://www.w3.org/TR/xptr-framework/"/>, <ptr target="http://www.w3.org/TR/xptr-element/"/>, <ptr target="http://www.w3.org/TR/xptr-xmlns/"/>, and <ptr target="http://www.w3.org/TR/xptr-xpointer/#xpointer(id('chum'))"/></note>; for a discussion of
 TEI schemes for XPointer, see <ptr target="#SATS"/>.</p>
 <p>
-<specList><specDesc key="ptr" atts="cRef"/><specDesc key="ref" atts="cRef"/></specList>
+<specList><specDesc key="ptr" /><specDesc key="ref"/></specList>
  </p>
 <p>The elements <gi>ptr</gi> and <gi>ref</gi> are the default members
 of the phrase-level model class <ident type="class">model.ptrLike</ident>. As
-members of the classes <ident type="class">att.pointing</ident>, <ident type="class">att.typed</ident> and <ident type="class">att.internetMedia</ident> they
+members of the classes <ident type="class">att.pointing</ident>,
+<ident type="class">att.typed</ident>, <ident
+type="class">att.cReferencing</ident>,  and <ident type="class">att.internetMedia</ident> they
 also carry the following
 attributes:
 <specList><specDesc key="att.pointing" atts="target evaluate"/>
+<specDesc key="att.cReferencing" atts="cRef"/>
 <specDesc key="att.typed" atts="type subtype"/>
   <specDesc key="att.internetMedia" atts="mimeType"/></specList>
  </p>
@@ -2288,7 +2291,8 @@ need not identify its target in any other way. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">See <ref>section 12 on page 34</ref>.</egXML>
  </p>
 <p>More usually, it will be desirable to identify the target of the
-cross-reference using the <att>target</att> attribute, so that
+cross-reference using either the <att>target</att> or the
+<att>cRef</att>  attribute, so that
 processing software can access it directly, for example to implement a
 linkage, to generate an appropriate reference, or to give an error
 message if it cannot be found. Assuming that section
@@ -2298,12 +2302,21 @@ message if it cannot be found. Assuming that section
 then the same cross-reference might more exactly be encoded as 
 <egXML xmlns="http://www.tei-c.org/ns/Examples">See especially <ref target="#SEC12">section 12 on page 34</ref>.</egXML>
 </p>
-<p>If the text for the cross-reference is to be generated according to a
+<p>If the cross-reference itself is to be generated according to a
 fixed pattern, or if no text is to appear in the body of the 
 cross-reference, the <gi>ptr</gi> element would be used as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">See in particular <ptr target="#SEC12"/>.</egXML>
  </p>
-<p>A cross-reference may point to any number of locations simultaneously,
+<p>The <att>cRef</att> attribute may be used to express the target of
+a cross reference using some canonical referencing scheme, such as
+those typically used for ancient texts.  In this case, the referencing
+scheme must be defined using the <gi>cRefPattern</gi> element
+discussed below (<ptr target="#CORS6"/>); the definition it provides is used
+to translate the value of the <att>cRef</att> attribute into a
+conventional pointer value, such as one that might be supplied by the
+<att>target</att> attribute. It is an error to supply both
+<att>cRef</att> and <att>target</att> values. </p>
+<p>When the <att>target</att> attribute is used, a cross reference may point to any number of locations simultaneously,
 simply by giving more than one identifier as the value of its
 <att>target</att> attribute.  This may be particularly useful where
 an analytic index is to be encoded, as in the following example:
