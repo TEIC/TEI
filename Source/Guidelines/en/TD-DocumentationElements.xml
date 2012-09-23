@@ -915,7 +915,9 @@ describe further constraints. For example, to specify that an attribute
 <att>age</att> can take positive integer values less than 100, the
 datatype <ident type="datatype">data.numeric</ident> might be used in combination with
 a <gi>valDesc</gi> such as <q>values must be positive integers less
-than 100</q>. </p>
+than 100</q>. Constraints expressed in this way are purely
+documentary ; to enforce them, the <gi>constraintSpec</gi> element
+described in section <ptr target="#TDTAG"/> must be used.</p>
 <p>More usually, however, where constraints on values are explicitly
 enumerated, the <gi>valList</gi> element is used, as in the
 following example:
@@ -935,8 +937,11 @@ fragment generated. </p>
 of the kinds of values expected. In such cases
 the <att>type</att> attribute will have the value <val>open</val> and
 the datatype will usually be <ident type="datatype">data.enumerated</ident>.</p>
-
-
+<p>The <gi>valList</gi> element may also be used (as a child of the
+<gi>content</gi> element) to put constraints on the
+permitted content of an element, as noted at <ptr target="#TDTAGCONT"/>. This use is not however supported by
+all schema languages, and is therefore not recommended if
+support for non-RELAXNG systems is a consideration.</p>
 <p>Note that the <gi>gloss</gi> element is needed to explain the
 significance of the identifier for an item only when this is not
 apparent, for example because it is abbreviated, as in the above
