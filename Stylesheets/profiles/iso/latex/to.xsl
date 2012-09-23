@@ -105,7 +105,7 @@ of this software, even if advised of the possibility of such damage.
 \fancyfoot[LE]{}
 \fancyfoot[CE]{\thepage}
 \fancyfoot[RE]{}
-\hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true,letterpaper}
+\hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
 \def\l@section{\@dottedtocline{1}{3em}{2.3em}}
 \def\l@subsection{\@dottedtocline{2}{4em}{3.2em}}
 \def\l@subsubsection{\@dottedtocline{3}{5em}{4.1em}}
@@ -208,7 +208,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="beginDocumentHook"/>
    </xsl:template>
 
-   <xsl:param name="latexGeometryOptions">twoside,letterpaper,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
+   <xsl:param name="latexGeometryOptions">twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
 
    <xsl:template match="tei:byline"/>
    <xsl:template match="tei:titlePage/tei:note"/>
