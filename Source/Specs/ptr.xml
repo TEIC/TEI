@@ -27,6 +27,7 @@
     <memberOf key="att.internetMedia"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.declaring"/>
+    <memberOf key="att.cReferencing"/>
   </classes>
   <content>
     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
@@ -37,104 +38,21 @@
 	attributes 'target' and 'cRef' may be supplied.</report>
     </constraint>
   </constraintSpec>
-  <attList>
-    <!--    <attDef ident="target" usage="req">
-      <equiv/>
-      <desc>specifies the destination of the pointer by supplying one or more URI References</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">하나 혹은 다수의 URI 참조를 이용하여 포인터의 목적지를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一個或多個統一資源識別符參照 (URI References) 來具體說明指標所指的位置。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> 当該ポインタの参照場所を，ひとつ以上のURIで示す． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">précise la cible du pointeur en fournissant une ou
-        plusieurs références URI.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica la destinación del señalizador
-         proporcionando una o más referencias URI.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione del puntatore fornendo uno
-        o più URI</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-      <valDesc>One or more syntactically valid URI references, separated by whitespace. Because
-        whitespace is used to separate URIs, no whitespace is permitted inside a single URI. If a
-        whitespace character is required in a URI, it should be escaped with the normal mechanism,
-        e.g. <code>TEI%20Consortium</code>.</valDesc>
 
-      <valDesc xml:lang="fr">Une ou plusieurs références URI syntactiquement valables , séparée par
-        un espace. Puisqu' un espace blanc est employé pour séparer des URIs, aucun espace blanc
-        n’est autorisé à l'intérieur d' un URI. Si un espace blanc est requis dans un URI, il
-        devrait être traité normalement , par exemple avec le mécanisme
-        <code>TEI%20Consortium</code>.</valDesc>
-    </attDef>-->
-    <attDef ident="cRef" usage="opt">
-      <gloss>canonical reference</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">표준 참조</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">referencia canónica</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">référence canonique</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">riferimento canonico</gloss>
-      <desc>specifies the destination of the pointer by supplying a canonical reference from a
-        scheme defined in a <gi>refsDecl</gi> element in the TEI header</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">TEI 헤더의 <gi>refsDecl</gi> 요소에서 정의된 체계의 표준 참조를 이용하여
-        포인터의 목적지를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">用元素<gi>refsDecl</gi>在TEI標頭內所定義的標準參照來說明指標所指位置。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> TEIヘダー内の要素<gi>refsDecl</gi>で定義されているスキームにある，
-        標準的な参照により，当該ポインタの参照場所を示す． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">précise la cible du pointeur en fournissant une
-        référence canonique issue d'un modèle défini par un élément <gi>refsDecl</gi>dans l'En-tête
-        TEI.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica la destinación de un señalizador
-        proporcionando una referencia canónica de un esquema definido en un elemento
-        <gi>refsDecl</gi> en el encabezado TEI. </desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione di un puntatore usando un
-        riferimento canonico a partire da uno schema definito in un elemento <gi>refsDecl</gi>
-        nell'intestazione TEI</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-      </datatype>
-      <valDesc>the value of <att>cRef</att> should be constructed so
-      that when the algorithm for the resolution of canonical
-      references (described in section <ptr target="#SACR"/>) is
-      applied to it the result is a valid URI reference to the
-      intended target</valDesc>
-      <valDesc xml:lang="fr">le résultat de l’application de l'algorithme pour la résolution des
-        références canoniques (décrit à la section <ptr target="#SACR"/>) sera une référence URI
-        valide pour la cible prévue. </valDesc>
-      <remarks>
-        <p>The <gi>refsDecl</gi> to use may be indicated with the <att>decls</att> attribute.</p>
-        <p>Currently these Guidelines only provide for a single canonical reference to be encoded on
-          any given <gi>ptr</gi> element.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>La <gi>refsDecl</gi> à utiliser peut être indiquée à l'aide de l'attribut
-          <att>decls</att>.</p>
-        <p>Actuellement ces Principes directeurs ne permettent que l'encodage d'une unique référence
-          canonique pour tout élément <gi>ptr</gi> donné.</p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p> 要素<gi>refsDecl</gi>は，属性<att>decls</att>を伴い，使用され るだろう． </p>
-        <p> 現行ガイドラインでは，要素<gi>ptr</gi>は，ひつとの標準的な参照 をとることを想定している． </p>
-      </remarks>
-    </attDef>
-  </attList>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <ptr target="#p143 #p144"/>
       <ptr target="http://www.tei-c.org"/>
+      <ptr cRef="1.3.4"/>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <ptr target="#fr_p143 #fr_p144"/>
       <ptr target="http://www.tei-c.org"/>
+      <ptr cRef="1.3.4"/>
     </egXML>
   </exemplum>
-  <!--  <remarks>
-    <p>The <att>target</att> and <att>cRef</att> attributes are mutually exclusive.</p>
-  </remarks>
-  <remarks xml:lang="fr">
-    <p>Les attributs <att>target</att> et <att>cRef</att> sont exclusifs l'un de l'autre.</p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p> 属性<att>target</att>と<att>cRef</att>は，排他的に使用される． </p>
-  </remarks>-->
   <listRef>
     <ptr target="#COXR"/>
     <ptr target="#SAPT"/>
