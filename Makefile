@@ -229,7 +229,7 @@ valid: check
 	@echo BUILD: Check validity with local XSLT script
 	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
 	${SAXON} ${SAXON_ARGS}  -o:ValidatorLog.xml -s:p5.xml -xsl:Utilities/validator.xsl 
-	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo ERROR found; false; fi)
+	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo "Oh dear me. ERROR found"; grep "<ERROR>" ValidatorLog.xml;false; fi)
 	diff ValidatorLog.xml expected-results/ValidatorLog.xml
 	cat ValidatorLog.xml
 	rm ValidatorLog.xml Utilities/pointerattributes.xsl 
