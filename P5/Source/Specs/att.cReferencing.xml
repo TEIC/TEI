@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date: 2012-07-15 00:41:31 +0100 (Sun, 15 Jul 2012) $
+    $Id: att.canonical.xml 10657 2012-07-14 23:41:31Z martindholmes $
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.cReferencing">
+  <desc>provides an attribute which may be used to supply a
+  <term>canonical reference</term> as a means of identifying the
+  target of a pointer.</desc>
+  <attList>
+    <attDef ident="cRef">
+      <gloss>canonical reference</gloss>
+      <gloss versionDate="2007-12-20" xml:lang="ko">표준 참조</gloss>
+      <gloss versionDate="2008-04-06" xml:lang="es">referencia canónica</gloss>
+      <gloss versionDate="2008-03-30" xml:lang="fr">référence canonique</gloss>
+      <gloss versionDate="2007-11-06" xml:lang="it">riferimento canonico</gloss>
+      <desc>specifies the destination of the pointer by supplying a canonical reference from a
+        scheme defined in a <gi>refsDecl</gi> element in the TEI header</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">TEI 헤더의 <gi>refsDecl</gi> 요소에서 정의된 체계의 표준 참조를 이용하여
+        포인터의 목적지를 명시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">用元素<gi>refsDecl</gi>在TEI標頭內所定義的標準參照來說明指標所指位置。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja"> TEIヘダー内の要素<gi>refsDecl</gi>で定義されているスキームにある，
+        標準的な参照により，当該ポインタの参照場所を示す． </desc>
+      <desc versionDate="2009-01-06" xml:lang="fr">précise la cible du pointeur en fournissant une
+        référence canonique issue d'un modèle défini par un élément <gi>refsDecl</gi>dans l'En-tête
+        TEI.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">especifica la destinación de un señalizador
+        proporcionando una referencia canónica de un esquema definido en un elemento
+        <gi>refsDecl</gi> en el encabezado TEI. </desc>
+      <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione di un puntatore usando un
+        riferimento canonico a partire da uno schema definito in un elemento <gi>refsDecl</gi>
+        nell'intestazione TEI</desc>
+      <datatype maxOccurs="1">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
+      </datatype>
+      <valDesc>the value of <att>cRef</att> should be constructed so
+      that when the algorithm for the resolution of canonical
+      references (described in section <ptr target="#SACR"/>) is
+      applied to it the result is a valid URI reference to the
+      intended target </valDesc>
+      <valDesc xml:lang="fr">le résultat de l’application de l'algorithme pour la résolution des
+        références canoniques (décrit à la section <ptr target="#SACR"/>) sera une référence URI
+        valide pour la cible prévue. </valDesc>
+      <remarks>
+        <p>The <gi>refsDecl</gi> to use may be indicated with the <att>decls</att> attribute.</p>
+        <p>Currently these Guidelines only provide for a single canonical reference to be encoded on
+          any given <gi>ptr</gi> element.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>La <gi>refsDecl</gi> à utiliser peut être indiquée à l'aide de l'attribut
+          <att>decls</att>.</p>
+        <p>Actuellement ces Principes directeurs ne permettent que l'encodage d'une unique référence
+          canonique pour tout élément <gi>ptr</gi> donné.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p> 要素<gi>refsDecl</gi>は，属性<att>decls</att>を伴い，使用され るだろう． </p>
+        <p> 現行ガイドラインでは，要素<gi>ptr</gi>は，ひつとの標準的な参照 をとることを想定している． </p>
+      </remarks>
+    </attDef>
+  </attList>
+</classSpec>
