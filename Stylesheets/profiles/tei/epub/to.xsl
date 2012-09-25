@@ -40,6 +40,7 @@
   <xsl:template name="copyrightStatement">Copyright TEI Consortium 2011</xsl:template>
   
   <xsl:template name="epubManifestHook">
+<xsl:message
     <item xmlns="http://www.idpf.org/2007/opf" media-type="application/xhtml+xml" id="index-toc" href="index-toc.html"/>
     <xsl:for-each select="key('ATTCLASSDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
