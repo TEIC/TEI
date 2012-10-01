@@ -621,7 +621,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="@text:style-name"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="string-length(.)=0"/>
+      <xsl:when test="string-length(.)=0 and not (text:s)"/>
       <xsl:when test="text:note">
 	<xsl:apply-templates/>
       </xsl:when>
@@ -1133,7 +1133,9 @@ These seem to have no obvious translation
 
   <xsl:template match="text:outline-style"/>
 
-  <xsl:template match="text:s"/>
+  <xsl:template match="text:s">
+    <xsl:text> </xsl:text>
+  </xsl:template>
 
 
   <xsl:template match="text:*"> [[[UNTRANSLATED <xsl:value-of
