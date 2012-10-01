@@ -131,9 +131,29 @@ of this software, even if advised of the possibility of such damage.
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Returns a listtype for a given stylename (return empty string to figure it out dynamically).</desc></doc>
+
     <xsl:function name="tei:get-listtype" as="xs:string">
         <xsl:param name="style"/>
-        <xsl:text/>
+        <xsl:choose>
+            <xsl:when test="starts-with($style,'dl')">
+                <xsl:text>gloss</xsl:text>
+            </xsl:when>
+            <xsl:when test="starts-with($style,$ListBullet)">
+                <xsl:text>unordered</xsl:text>
+            </xsl:when>
+            <xsl:when test="starts-with($style,$ListContinue)">
+                <xsl:text>unordered</xsl:text>
+            </xsl:when>
+            <xsl:when test="starts-with($style,$ListNumber)">
+                <xsl:text>ordered</xsl:text>
+            </xsl:when>
+            <xsl:when test="$style=$List">
+                <xsl:text>ordered</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:function>
     
         <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

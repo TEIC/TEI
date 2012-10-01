@@ -2720,5 +2720,57 @@ of this software, even if advised of the possibility of such damage.
     <xsl:if test="tei:biblStruct/tei:analytic"><xsl:apply-templates select="tei:biblStruct/tei:analytic" mode="mla"/></xsl:if>
     <xsl:if test="tei:biblStruct/tei:monogr"><xsl:apply-templates select="tei:biblStruct/tei:monogr" mode="mla"/></xsl:if>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] Look for rendition of an element  </desc>
+  </doc>
+  <xsl:template name="Rendition">
+    <RENDITION>
+      <xsl:choose>
+	<xsl:when test="@rend">
+	  <xsl:for-each select="tokenize(normalize-space(@rend),' ')">
+	    <xsl:with-param name="value">
+	      <xsl:value-of select="."/>
+	    </xsl:with-param>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:for-each select="tokenize(normalize-space(@rendition),' ')">
+	  <xsl:call-template name="lookupRendition">
+	    <xsl:with-param name="value">
+	      <xsl:value-of select="."/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:for-each>
+	<xsl:when test="key('TAGREND','local-name(.)')">
+	  <xsl:for-each select="key('TAGREND',local-name())">
+	    <xsl:call-template name="findRendition">
+	      <xsl:with-param name="value">
+		<xsl:value-of select="@render"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:for-each>
+	</xsl:when>
+      </xsl:choose>
+    </RENDITION>  
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] Look up rendition value <param name="value">value</param>
+      </desc>
+  </doc>
+  <xsl:template name="lookupRendition">
+    <xsl:param name="value"/>
+    <xsl:choose>
+      <xsl:when test="starts-with($value,'#')">
+        <xsl:value-of select="substring-after($value,'#')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="document($value)">
+          <xsl:apply-templates select="@xml:id"/>
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text> </xsl:text>
+  </xsl:template>
   
 </xsl:stylesheet>

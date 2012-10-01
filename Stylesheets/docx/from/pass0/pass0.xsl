@@ -74,7 +74,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:otherwise>
 	  <w:p>
 	    <w:pPr>
-	      <w:pStyle w:val="Heading 1"/>
+	      <w:pStyle w:val="heading 1"/>
 	    </w:pPr>
 	    <w:r>
 	      <w:rPr>

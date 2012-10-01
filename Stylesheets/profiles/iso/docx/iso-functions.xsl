@@ -72,32 +72,6 @@ of this software, even if advised of the possibility of such damage.
       </desc>
     </doc>
     
-    <xsl:function name="tei:get-listtype" as="xs:string">
-      <xsl:param name="style"/>
-      <xsl:choose>
-	<xsl:when test="$style=$Terms">
-	  <xsl:text>termlist</xsl:text>
-	</xsl:when>
-	<xsl:when test="$style=$TermNum">
-	  <xsl:text>termlist</xsl:text>
-	</xsl:when>
-	<xsl:when test="starts-with($style,$ListBullet)">
-	  <xsl:text>unordered</xsl:text>
-	</xsl:when>
-	<xsl:when test="starts-with($style,$ListContinue)">
-	  <xsl:text>unordered</xsl:text>
-	</xsl:when>
-	<xsl:when test="starts-with($style,$ListNumber)">
-	  <xsl:text>ordered</xsl:text>
-	</xsl:when>
-	<xsl:when test="$style=$List">
-	  <xsl:text>ordered</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:text/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:function>
     
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>

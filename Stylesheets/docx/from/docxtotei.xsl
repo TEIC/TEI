@@ -170,11 +170,11 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:apply-templates/>
        </xsl:for-each>
      </xsl:variable>		  
-     <!-- debug
+
 	 <xsl:result-document href="/tmp/foo.xml">
-	 <xsl:copy-of select="$pass1"/>
+	 <xsl:copy-of select="$pass0"/>
 	 </xsl:result-document>
-     -->
+     <!-- debug     -->
      <!-- Do the final parse and create valid TEI -->
 
      <xsl:apply-templates select="$pass1" mode="pass2"/>
@@ -399,6 +399,7 @@ of this software, even if advised of the possibility of such damage.
        <xsl:call-template name="generate-section-heading">
 	 <xsl:with-param name="Style" select="$Style"/>
        </xsl:call-template>
+
        <!-- Process sub-sections -->
        <xsl:for-each-group select="current-group() except ."
 			   group-starting-with="w:p[w:pPr/w:pStyle/@w:val=$NextHeader]">

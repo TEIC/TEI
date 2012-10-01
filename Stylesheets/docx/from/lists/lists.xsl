@@ -77,15 +77,18 @@ of this software, even if advised of the possibility of such damage.
         This template handles lists and takes care of nested lists.
     -->
     <xsl:template name="listSection">
-        <xsl:variable name="level">
+        <xsl:variable name="type">
             <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
+        </xsl:variable>
+        <xsl:variable name="level">
+            <xsl:value-of select="number(w:pPr/w:numPr/w:ilvl/@w:val)"/>
         </xsl:variable>
         <list>
 	  <xsl:call-template name="listType"/>
-	  
-	  <!-- ISO Notes are be handled by a specific handler -->
 	  <xsl:for-each-group select="current-group()"
-			      group-adjacent="if(w:pPr/w:pStyle/@w:val=$level)  then 0 
+			      group-adjacent="if
+					      (w:pPr/w:numPr/w:ilvl/@w:val  &gt; $level) then 1
+					      else if(w:pPr/w:pStyle/@w:val=$type)  then 0 
 					      else if(w:pPr/w:pStyle/@w:val='Note') then 0                 
 					      else if(w:pPr/w:pStyle/@w:val='dl') then 1                
 					      else 1">
