@@ -2721,11 +2721,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:if test="tei:biblStruct/tei:monogr"><xsl:apply-templates select="tei:biblStruct/tei:monogr" mode="mla"/></xsl:if>
   </xsl:template>
 
+<!--
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Look for rendition of an element  </desc>
   </doc>
   <xsl:template name="Rendition">
-<!--
 	<xsl:for-each select="tokenize(normalize-space(@rendition),' ')">
 	  <xsl:call-template name="lookupRendition">
 	    <xsl:with-param name="value">
@@ -2733,7 +2733,7 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:with-param>
 	  </xsl:call-template>
 	</xsl:for-each>
--->
+
     <RENDITION>
       <xsl:choose>
 	<xsl:when test="@rend">
@@ -2755,7 +2755,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </RENDITION>  
   </xsl:template>
-
+-->
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Look up rendition value <param name="value">value</param>
       </desc>
