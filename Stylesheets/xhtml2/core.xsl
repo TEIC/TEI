@@ -2725,6 +2725,15 @@ of this software, even if advised of the possibility of such damage.
     <desc>[html] Look for rendition of an element  </desc>
   </doc>
   <xsl:template name="Rendition">
+<!--
+	<xsl:for-each select="tokenize(normalize-space(@rendition),' ')">
+	  <xsl:call-template name="lookupRendition">
+	    <xsl:with-param name="value">
+	      <xsl:value-of select="."/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:for-each>
+-->
     <RENDITION>
       <xsl:choose>
 	<xsl:when test="@rend">
@@ -2734,13 +2743,6 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:with-param>
 	  </xsl:for-each>
 	</xsl:when>
-	<xsl:for-each select="tokenize(normalize-space(@rendition),' ')">
-	  <xsl:call-template name="lookupRendition">
-	    <xsl:with-param name="value">
-	      <xsl:value-of select="."/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:for-each>
 	<xsl:when test="key('TAGREND','local-name(.)')">
 	  <xsl:for-each select="key('TAGREND',local-name())">
 	    <xsl:call-template name="findRendition">
