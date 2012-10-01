@@ -171,10 +171,11 @@ of this software, even if advised of the possibility of such damage.
        </xsl:for-each>
      </xsl:variable>		  
 
+     <!-- debug   
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass0"/>
 	 </xsl:result-document>
-     <!-- debug     -->
+     -->
      <!-- Do the final parse and create valid TEI -->
 
      <xsl:apply-templates select="$pass1" mode="pass2"/>
