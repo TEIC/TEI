@@ -456,7 +456,7 @@ epub: epub.stamp
 epub.stamp: check
 	@echo BUILD: Make epub version of Guidelines
 	teitoepub --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
-	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
+	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
 	touch epub.stamp
 	-command -v  kindlegen && kindlegen Guidelines.epub
 
