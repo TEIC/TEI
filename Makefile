@@ -41,21 +41,21 @@ check: check.stamp  p5.xml
 check.stamp:
 	@echo Checking you have running XML tools and Perl before trying to run transform...
 	@echo -n Perl: 
-	@which perl || exit 1
+	@command -v  perl || exit 1
 	@echo -n Java: 
-	@which java || exit 1
+	@command -v  java || exit 1
 	@echo -n xmllint: 
-	@which xmllint || exit 1
+	@command -v  xmllint || exit 1
 	@echo -n trang: 
-	@which ${TRANG} || exit 1
+	@command -v  ${TRANG} || exit 1
 	@echo -n jing: 
-	@which ${JING} || exit 1
+	@command -v  ${JING} || exit 1
 	@echo -n saxon: 
-	@which ${SAXON} || exit 1
+	@command -v  ${SAXON} || exit 1
 	@echo -n roma2: 
-	@which roma2 || exit 1
+	@command -v  roma2 || exit 1
 	@echo -n XeLaTeX: 
-	@which xelatex || exit 1
+	@command -v  xelatex || exit 1
 	touch check.stamp
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
@@ -214,7 +214,7 @@ valid: check
 	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
 	./run-onvdl p5.nvdl p5.xml 
 	@echo BUILD: Check validity with rnv if we have it
-	-which rnv && (xmllint --noent --xinclude p5.xml > Source.xml; rnv -v p5odds.rnc Source.xml; rm -f Source.xml)
+	-command -v  rnv && (xmllint --noent --xinclude p5.xml > Source.xml; rnv -v p5odds.rnc Source.xml; rm -f Source.xml)
 	@echo BUILD: Check full validity of relevant examples with nvdl
 	${SAXON} p5.xml Utilities/extractegXML.xsl > v.body
 	echo "<!DOCTYPE p [" > v.header
@@ -253,13 +253,13 @@ oddschema: p5odds.rng
 
 p5odds.rng: p5subset.xml p5odds.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds.rng ...
-	which ${ROMA} || exit 1
+	command -v  ${ROMA} || exit 1
 	${ROMA} ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
 
 exampleschema:  p5odds-examples.rng p5subset.xml
 p5odds-examples.rng: p5subset.xml p5odds-examples.odd
 	@echo Checking you have a running ${ROMA} before trying to make p5odds-examples.rng ...
-	which ${ROMA} || exit 1
+	command -v  ${ROMA} || exit 1
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
 
 p5subset.xml: check
@@ -458,7 +458,7 @@ epub.stamp: check
 	teitoepub --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.1.jar Guidelines.epub
 	touch epub.stamp
-	-which kindlegen && kindlegen Guidelines.epub
+	-command -v  kindlegen && kindlegen Guidelines.epub
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
@@ -530,4 +530,5 @@ clean:
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
 	rm -f teiwebsiteguidelines.zip
+	rm -rf bin
 
