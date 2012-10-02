@@ -42,6 +42,8 @@ check.stamp:
 	@echo Checking you have running XML tools and Perl before trying to run transform...
 	@echo -n Perl: 
 	@which perl || exit 1
+	@echo -n Java: 
+	@which java || exit 1
 	@echo -n xmllint: 
 	@which xmllint || exit 1
 	@echo -n trang: 
@@ -52,8 +54,6 @@ check.stamp:
 	@which ${SAXON} || exit 1
 	@echo -n roma2: 
 	@which roma2 || exit 1
-	@echo -n onvdl: 
-	@which onvdl || exit 1
 	@echo -n XeLaTeX: 
 	@which xelatex || exit 1
 	touch check.stamp
@@ -483,7 +483,6 @@ dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
 	@echo	jing
 	@echo	msttcorefonts
-	@echo	onvdl
 	@echo	rnv
 	@echo	saxon
 	@echo	tei-oxygen
