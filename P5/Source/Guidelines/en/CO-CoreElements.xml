@@ -3964,6 +3964,9 @@ In the same way, an article in a journal requires at least two levels of
 information:  the analytic level describing the article itself, and the
 monographic level describing the journal.
 </p>
+<p>A different identifying number may be supplied for any of these
+three items, that is, for the analytic item, the monographic item, or
+the series. </p>
   <p>Within <gi>bibl</gi>, these three levels may be distinguished simply by the use
     of the <att>level</att> attribute on <gi>title</gi>. They may also be distinguished through
     the practice of employing nested <gi>bibl</gi> elements. In this example, for
@@ -3983,7 +3986,7 @@ monographic level describing the journal.
       </egXML>
   </p>
   
-  <p>Within <gi>biblStruct</gi>, the levels must be distinguished by the use of the
+  <p>Within <gi>biblStruct</gi>, the levels afre distinguished by the use of the
     following elements:
 
 <specList><specDesc key="analytic"/><specDesc key="monogr"/><specDesc key="series"/></specList>
@@ -4056,13 +4059,50 @@ German language series:
 should be distinguished from the practice of including within one
 citation a reference to another work, which the encoder considers
 to be related to in some way: see further <ptr target="#COBIRI"/> below.</p>
+<p>If an identifier is available for the analytic item, it should be
+represented by means of an <gi>idno</gi> element placed within the
+<gi>analytic</gi> element, as in the following example where a DOI
+(Digital Object identifier) is supplied for the article in question.</p>
 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<biblStruct>
+<analytic>
+<author>
+<forename>James</forename>
+<forename>H.</forename>
+<surname>Coombs</surname>
+</author>
+<author>
+<forename>Allen</forename>
+<surname>Renear</surname>
+</author>
+<author>
+<forename>Steven</forename>
+<forename>J.</forename>
+<surname>DeRose</surname>
+</author>
+<title level="a">Markup Systems and The Future of Scholarly Text
+Processing</title>
+<idno type="DOI">http://doi.acm.org/10.1145/32206.32209</idno>
+</analytic>
+<monogr>
+<title level="j">Communications of the ACM</title>
+<imprint>
+<biblScope type="vol">30</biblScope>
+<biblScope type="issue">11</biblScope>
+<date>1987</date>
+<biblScope type="pp">933–947</biblScope>
+</imprint>
+</monogr>
+<ref type="url">http://xml.coverpages.org/coombs.html</ref>
+</biblStruct>
+</egXML>
 <p>Punctuation should not appear between the elements within a
 structured bibliographic entry encoded with <gi>biblStruct</gi> or <gi>biblFull</gi>,
-unless it is contained within the elements it delimits.  As the
-example shows, it is possible to encode the entry without any
-inter-element punctuation: this facilitates use of the
-<gi>biblStruct</gi> element in systems which can render bibliographic
+unless it is contained within the elements it delimits.  When (as in
+most of the examples in this chapter) entries are encoded without any
+inter-element punctuation, they can be usually be processed more
+easily by rendering systems able to output bibliographic
 references in any of several styles.
  </p>
 <p>Within a <gi>bibl</gi> however, it is possible and often convenient
@@ -4357,7 +4397,7 @@ pages in a print publication (or equivalent information for non-print
 materials), or the specific location of the material being cited
 within its containing publication.  The following elements are
 provided to hold this information: <specList><specDesc key="imprint"/><specDesc key="address"/><specDesc key="pubPlace"/><specDesc key="publisher"/><specDesc key="date"/><specDesc key="idno"/><specDesc key="extent"/><specDesc key="biblScope"/></specList> The elements <gi>biblScope</gi>,
-<gi>pubPlace</gi>, <gi>publisher</gi>, <gi>distributor</gi> and <gi>respStmt</gi> constitute the special class
+<gi>pubPlace</gi>, <gi>publisher</gi>, <gi>distributor</gi> and <gi>respStmt</gi> constitute the model class
 <ident type="class">model.imprintPart</ident>; members of this class
 may appear with a date inside an <gi>imprint</gi> element in a specific
 location within a <gi>biblStruct</gi>, or alternatively, they may
@@ -4395,7 +4435,6 @@ reports:
       </imprint>
       <extent>19 pp.</extent>
    </monogr>
-
 </biblStruct></egXML>
 and with dissertations:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COBICOI-eg-264"><biblStruct>
@@ -4403,6 +4442,7 @@ and with dissertations:
       <author>Hansen, W.</author>
       <title level="u">Creation of hierarchic text
       with a computer display</title>
+      <idno type="ANL">ANL-7818</idno>
       <note place="inline">Ph.D. dissertation</note>
       <imprint>
          <publisher>Dept. of Computer Science, Stanford Univ.</publisher>
@@ -4415,6 +4455,11 @@ and with dissertations:
 Teitelbaum, The Synthesizer Generator:  A system for  constructing
 language-based editors. or could maybe use a respStmt - if this were allowed in imprint -->
 </p>
+<p>In this second example, the <gi>idno</gi> element is used to
+provide the identifier allocated to the thesis by the Argonne
+National Laboratory. Since it applies to the monographic element,
+the <gi>idno</gi> should be provided as a direct child of the <gi>monogr</gi>
+element, rather than elsewhere in the <gi>biblStruct</gi> element. </p>
  <p>The specialist elements <gi>publisher</gi> and <gi>distributor</gi> 
   are provided to cover the most common roles related to the production
   and distribution of a bibliographical item, but other roles such as 
@@ -4544,10 +4589,10 @@ title of the series may be tagged <tag>title level="s"</tag>, the
 volume number <tag>biblScope type="vol"</tag>, and responsibility
 statements for the series (e.g. the name and affiliation of the editor,
 as in the example in section <ptr target="#COBICOL"/>) may be tagged
-<gi>editor</gi> or <gi>respStmt</gi>.
+<gi>editor</gi> or <gi>respStmt</gi>. Any identifier associated with
+the series itself should be marked using the <gi>idno</gi> element.
  </p></div>
 <div type="div4" xml:id="COBIRI"><head>Related items</head>
-
 <p>In bibliographic parlance, a <term>related item</term> is any
 bibliographic item which, though related to that being defined, is
 distinct from it. The distinction between analytic and monographic
