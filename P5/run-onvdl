@@ -8,9 +8,24 @@
 #	required to make it finished) we end up throwing out all such
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
-java -Xmx1200m -jar Utilities/onvdl.jar $1 $2 | grep -v ": error: unfinished element .exemplum" \
+if which onvdl
+then
+    onvdl $1 $2 | grep -v ": error: unfinished element .exemplum" \
       | grep -v "unknown element .egXML" \
       | sed 's/error: unfinished element/warning: unfinished element/' > $$.nvdl.log
+else
+    if  test ! -f oNVDL/bin/onvdl.jar
+	then
+	echo download ONVDL from http://www.oxygenxml.com/InstData/Editor/onvdl/onvdl-20070517.zip
+	curl -s -O http://www.oxygenxml.com/InstData/Editor/onvdl/onvdl-20070517.zip
+	unzip -q onvdl-20070517.zip oNVDL/bin/*
+	rm onvdl-20070517.zip
+    fi
+    java -Xmx1200m -jar oNVDL/bin/onvdl.jar $1 $2 | grep -v ": error: unfinished element .exemplum" \
+	| grep -v "unknown element .egXML" \
+	| sed 's/error: unfinished element/warning: unfinished element/' > $$.nvdl.log
+fi
+
 grep error $$.nvdl.log
 if [ $? -eq 0 ] 
 then
