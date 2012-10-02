@@ -8,8 +8,7 @@
 #	required to make it finished) we end up throwing out all such
 #	messages via the grep -v command so we're not annoyed by the
 #	over 800 that are not really problems.
-which onvdl || exit 1
-onvdl $1 $2 | grep -v ": error: unfinished element .exemplum" \
+java -Xmx1200m -jar Utilities/onvdl.jar $1 $2 | grep -v ": error: unfinished element .exemplum" \
       | grep -v "unknown element .egXML" \
       | sed 's/error: unfinished element/warning: unfinished element/' > $$.nvdl.log
 grep error $$.nvdl.log
