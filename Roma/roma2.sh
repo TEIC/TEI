@@ -187,7 +187,7 @@ exit 1
 }
 
 # --------- main routine starts here --------- #
-TEIXSLDIR=/usr/share/xml/tei/stylesheet
+TEIXSLDIR=http://www.tei-c.org/release/xml/tei/stylesheet
 useVersionFromTEI=true
 LOCALSOURCE=
 AUTOGLOBAL=false
