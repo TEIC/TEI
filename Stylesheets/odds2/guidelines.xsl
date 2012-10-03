@@ -709,9 +709,11 @@
                 <xsl:value-of select="$name"/>
               </title>
               <xsl:call-template name="includeCSS"/>
-              <meta content="Text Encoding Initiative Consortium XSLT stylesheets" name="generator"/>
-              <meta content="{$name}" name="DC.Title"/>
-              <meta content="application/xhtml+xml; charset=utf-8" http-equiv="Content-Type"/>
+              <meta content="Text Encoding Initiative Consortium XSLT
+			     stylesheets" name="generator"/>
+		<xsl:call-template name="metaHTML">
+		  <xsl:with-param name="title" select="$name"/>
+		</xsl:call-template>
               <xsl:call-template name="includeJavascript"/>
               <xsl:call-template name="javascriptHook"/>
             </head>

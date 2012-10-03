@@ -370,7 +370,7 @@ select="$result"/></xsl:message>
             </xsl:otherwise>
         </xsl:choose>
 
-         <xsl:if test="@type">
+         <xsl:if test="@type and not($outputTarget='epub3' or $outputTarget='html5')">
             <xsl:attribute name="type">
                <xsl:value-of select="@type"/>
             </xsl:attribute>

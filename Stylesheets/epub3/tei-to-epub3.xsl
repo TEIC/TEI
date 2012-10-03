@@ -81,7 +81,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="odd">false</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <xsl:param name="outputMethod">xml</xsl:param>
-  <xsl:param name="outputSuffix">.xhtml</xsl:param>
+  <xsl:param name="outputSuffix">.html</xsl:param>
   <xsl:param name="outputTarget">epub3</xsl:param>
   <xsl:param name="publisher"/>
   <xsl:param name="splitLevel">0</xsl:param>
@@ -324,7 +324,7 @@ height: </xsl:text>
                               <xsl:for-each select="$TL">
                                 <xsl:for-each select="key('Object',$object)">
                                   <par id="{@xml:id}">
-                                    <text src="{$target}.xhtml{@corresp}"/>
+                                    <text src="{$target}.html{@corresp}"/>
                                     <audio src="{$audio}" clipBegin="{@from}{../@unit}" clipEnd="{@to}{../@unit}"/>
                                   </par>
                                 </xsl:for-each>
@@ -349,17 +349,17 @@ height: </xsl:text>
               </xsl:for-each>
               <item id="css" href="stylesheet.css" media-type="text/css"/>
               <item id="print.css" href="print.css" media-type="text/css"/>
-              <item href="titlepage.xhtml" id="titlepage" media-type="application/xhtml+xml"/>
+              <item href="titlepage.html" id="titlepage" media-type="application/xhtml+xml"/>
               <xsl:if test="$filePerPage='true'">
-                <item href="titlepageverso.xhtml" id="titlepageverso" media-type="application/xhtml+xml"/>
+                <item href="titlepageverso.html" id="titlepageverso" media-type="application/xhtml+xml"/>
               </xsl:if>
               <xsl:for-each select="tei:text/tei:front/tei:titlePage">
                 <xsl:variable name="N" select="position()"/>
-                <item href="titlepage{$N}.xhtml" id="titlepage{$N}" media-type="application/xhtml+xml"/>
+                <item href="titlepage{$N}.html" id="titlepage{$N}" media-type="application/xhtml+xml"/>
               </xsl:for-each>
-              <item href="titlepageback.xhtml" id="titlepageback" media-type="application/xhtml+xml"/>
-              <item id="toc" properties="nav" href="toc.xhtml" media-type="application/xhtml+xml"/>
-              <item id="start" href="index.xhtml" media-type="application/xhtml+xml"/>
+              <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>
+              <item id="toc" properties="nav" href="toc.html" media-type="application/xhtml+xml"/>
+              <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:choose>
                 <xsl:when test="$filePerPage='true'">
                   <xsl:for-each select="key('PB',1)">
@@ -369,7 +369,7 @@ height: </xsl:text>
                     <xsl:if test="@facs">
                       <xsl:variable name="facstarget">
                         <xsl:apply-templates select="." mode="ident"/>
-                        <xsl:text>-facs.xhtml</xsl:text>
+                        <xsl:text>-facs.html</xsl:text>
                       </xsl:variable>
                       <item href="{$facstarget}" media-type="application/xhtml+xml">
                         <xsl:attribute name="id">
@@ -378,7 +378,7 @@ height: </xsl:text>
                         </xsl:attribute>
                       </item>
                     </xsl:if>
-                    <item href="{$target}.xhtml" media-type="application/xhtml+xml">
+                    <item href="{$target}.html" media-type="application/xhtml+xml">
                       <xsl:if test="$mediaoverlay='true'  and key('Timeline',1)">
                         <xsl:attribute name="media-overlay">
                           <xsl:value-of select="$target"/>
@@ -538,8 +538,8 @@ height: </xsl:text>
               <xsl:call-template name="epubSpineHook"/>
             </spine>
             <guide>
-              <reference type="text" href="titlepage.xhtml" title="Cover"/>
-              <reference type="text" title="Start" href="index.xhtml"/>
+              <reference type="text" href="titlepage.html" title="Cover"/>
+              <reference type="text" title="Start" href="index.html"/>
               <xsl:choose>
                 <xsl:when test="$filePerPage='true'">
 		</xsl:when>
@@ -570,14 +570,14 @@ height: </xsl:text>
                   </xsl:for-each>
                 </xsl:otherwise>
               </xsl:choose>
-              <reference href="titlepageback.xhtml" type="text" title="About this book"/>
+              <reference href="titlepageback.html" type="text" title="About this book"/>
             </guide>
           </package>
         </xsl:result-document>
         <xsl:if test="$verbose='true'">
-          <xsl:message>write file OPS/titlepage.xhtml</xsl:message>
+          <xsl:message>write file OPS/titlepage.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OPS/titlepage.xhtml')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/titlepage.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
               <xsl:call-template name="metaHTML">
@@ -609,9 +609,9 @@ height: </xsl:text>
         <xsl:for-each select="tei:text/tei:front/tei:titlePage">
           <xsl:variable name="N" select="position()"/>
           <xsl:if test="$verbose='true'">
-            <xsl:message>write file OPS/titlepage<xsl:value-of select="$N"/>.xhtml</xsl:message>
+            <xsl:message>write file OPS/titlepage<xsl:value-of select="$N"/>.html</xsl:message>
           </xsl:if>
-          <xsl:result-document href="{concat($directory,'/OPS/titlepage',$N,'.xhtml')}" method="xml">
+          <xsl:result-document href="{concat($directory,'/OPS/titlepage',$N,'.html')}" method="xml">
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
               <head>
                 <xsl:call-template name="metaHTML">
@@ -633,9 +633,9 @@ height: </xsl:text>
         </xsl:for-each>
         <xsl:if test="$filePerPage='true'">
           <xsl:if test="$verbose='true'">
-            <xsl:message>write file OPS/titlepageverso.xhtml</xsl:message>
+            <xsl:message>write file OPS/titlepageverso.html</xsl:message>
           </xsl:if>
-          <xsl:result-document href="{concat($directory,'/OPS/titlepageverso.xhtml')}" method="xml">
+          <xsl:result-document href="{concat($directory,'/OPS/titlepageverso.html')}" method="xml">
             <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
               <head>
                 <xsl:call-template name="metaHTML">
@@ -650,9 +650,9 @@ height: </xsl:text>
           </xsl:result-document>
         </xsl:if>
         <xsl:if test="$verbose='true'">
-          <xsl:message>write file OPS/titlepageback.xhtml</xsl:message>
+          <xsl:message>write file OPS/titlepageback.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OPS/titlepageback.xhtml')}" method="xml">
+        <xsl:result-document href="{concat($directory,'/OPS/titlepageback.html')}" method="xml">
           <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
             <head>
               <xsl:call-template name="metaHTML">
@@ -698,7 +698,7 @@ height: </xsl:text>
                   <navLabel>
                     <text>[Cover]</text>
                   </navLabel>
-                  <content src="titlepage.xhtml"/>
+                  <content src="titlepage.html"/>
                 </navPoint>
                 <xsl:for-each select="tei:text/tei:front/tei:titlePage[1]">
                   <xsl:variable name="N" select="position()"/>
@@ -706,7 +706,7 @@ height: </xsl:text>
                     <navLabel>
                       <text>[Title page]</text>
                     </navLabel>
-                    <content src="titlepage{$N}.xhtml"/>
+                    <content src="titlepage{$N}.html"/>
                   </navPoint>
                 </xsl:for-each>
                 <xsl:choose>
@@ -718,7 +718,7 @@ height: </xsl:text>
                       <navLabel>
                         <text>[The book]</text>
                       </navLabel>
-                      <content src="index.xhtml"/>
+                      <content src="index.html"/>
                     </navPoint>
                     <xsl:for-each select="$TOC/html:TOC/html:ul[contains(@class,'group')]">
                       <xsl:apply-templates select=".//html:li[not(contains(html:a/@href,'#'))]"/>
@@ -737,7 +737,7 @@ height: </xsl:text>
                   <navLabel>
                     <text>[About this book]</text>
                   </navLabel>
-                  <content src="titlepageback.xhtml"/>
+                  <content src="titlepageback.html"/>
                 </navPoint>
               </xsl:variable>
               <xsl:for-each select="$navPoints/ncx:navPoint">
@@ -764,7 +764,7 @@ height: </xsl:text>
         <xsl:if test="$debug='true'">
           <xsl:message>write file OPS/toc.html</xsl:message>
         </xsl:if>
-        <xsl:result-document href="{concat($directory,'/OPS/toc.xhtml')}" method="xml" doctype-system="">
+        <xsl:result-document href="{concat($directory,'/OPS/toc.html')}" method="xml" doctype-system="">
           <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
             <head>
               <title>
@@ -798,7 +798,7 @@ height: </xsl:text>
                       </xsl:choose>
                     </xsl:for-each>
                     <li>
-                      <a href="titlepageback.xhtml">[About this book]</a>
+                      <a href="titlepageback.html">[About this book]</a>
                     </li>
                   </ol>
                 </nav>
@@ -806,13 +806,13 @@ height: </xsl:text>
                   <h2>Guide</h2>
                   <ol>
                     <li>
-                      <a epub:type="titlepage" href="titlepage.xhtml">[Title page]</a>
+                      <a epub:type="titlepage" href="titlepage.html">[Title page]</a>
                     </li>
                     <li>
-                      <a epub:type="bodymatter" href="index.xhtml">[The book]</a>
+                      <a epub:type="bodymatter" href="index.html">[The book]</a>
                     </li>
                     <li>
-                      <a epub:type="colophon" href="titlepageback.xhtml">[About this book]</a>
+                      <a epub:type="colophon" href="titlepageback.html">[About this book]</a>
                     </li>
                   </ol>
                 </nav>
