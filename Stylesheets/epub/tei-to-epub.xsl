@@ -569,6 +569,9 @@ height: </xsl:text>
               <style type="text/css" title="override_css">
 		@page {padding: 0pt; margin:0pt}
 		body { text-align: center; padding:0pt; margin: 0pt; }
+		div.titlepage { text-align: center; padding:0pt; margin: 0pt; font-size: 225% ; font-family: Arial,Helvetica,sans-serif;}
+		p.covertitle { font-weight: bold; color: #FFFFFF ; background-color: #012148; margin: 5%; padding: 5%}
+		p.covertitle {margin: 10%}
 	      </style>
             </head>
             <body>
@@ -586,7 +589,14 @@ height: </xsl:text>
 		      border: solid red 1pt; 
 		      text-align:center;
 		    </xsl:attribute>
-                    <xsl:call-template name="generateTitle"/>
+		    <div class="titlepage">
+		      <p class="covertitle">
+			<xsl:call-template name="generateTitle"/>
+		      </p>
+		      <p class="coverauthor">
+			<xsl:call-template  name="generateAuthor"/>
+		      </p>
+		    </div>
                   </div>
                 </xsl:when>
                 <xsl:otherwise>
