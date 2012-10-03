@@ -41,8 +41,8 @@
     <head xml:lang="fr" corresp="TS">Transcriptions de la parole</head>
     <head xml:lang="fr" corresp="USE">Utiliser la TEI</head>
     <head xml:lang="fr" corresp="VE">Poésie</head>
-    <head xml:lang="fr" corresp="WD">Représentation des caractères et des
-glyphes non standard</head>
+    <head xml:lang="fr" corresp="WD">Représentation des caractères et
+    des glyphes non standard</head>
     <head xml:lang="zh-TW" corresp="AI">簡易分析機制</head>
     <head xml:lang="zh-TW" corresp="CE">確定程度與不確定程度</head>
     <head xml:lang="zh-TW" corresp="CO">所有TEI文件所通用的元素</head>
@@ -303,9 +303,10 @@ glyphes non standard</head>
               </xsl:call-template>
             </title>
             <xsl:call-template name="includeCSS"/>
-            <meta content="Text Encoding Initiative Consortium XSLT stylesheets" name="generator"/>
-            <meta name="DC.Title">
-              <xsl:attribute name="content">
+            <meta content="Text Encoding Initiative Consortium XSLT
+			   stylesheets" name="generator"/>
+	    <xsl:call-template name="metaHTML">
+	      <xsl:with-param name="title">
                 <xsl:call-template name="i18n">
                   <xsl:with-param name="word">Example</xsl:with-param>
                 </xsl:call-template>
@@ -315,9 +316,8 @@ glyphes non standard</head>
                 <xsl:call-template name="makeGloss">
                   <xsl:with-param name="langs" select="$langs"/>
                 </xsl:call-template>
-              </xsl:attribute>
-            </meta>
-            <meta content="application/xhtml+xml; charset=utf-8" http-equiv="Content-Type"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
             <xsl:call-template name="includeJavascript"/>
             <xsl:call-template name="javascriptHook"/>
           </head>
@@ -443,7 +443,15 @@ glyphes non standard</head>
     <meta name="DC.Language" content="(SCHEME=iso639) {$documentationLanguage}"/>
     <meta name="DC.Creator" content="TEI, Oxford University Computing Services, 13 Banbury Road, Oxford OX2 6NN, United Kingdom"/>
     <meta name="DC.Creator.Address" content="tei@oucs.ox.ac.uk"/>
-    <meta content="application/xhtml+xml; charset=utf-8" http-equiv="Content-Type"/>
+      <xsl:choose>
+	<xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
+	  <meta charset="{$outputEncoding}"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <meta http-equiv="Content-Type" content="text/html;
+						   charset={$outputEncoding}"/>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
   <xsl:template name="startDivHook">
       <xsl:if test="($outputTarget='epub' or $outputTarget='epub3') and not(parent::tei:div)">

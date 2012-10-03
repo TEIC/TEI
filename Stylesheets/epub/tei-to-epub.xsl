@@ -564,7 +564,6 @@ height: </xsl:text>
               <xsl:call-template name="metaHTML">
                 <xsl:with-param name="title">Title page</xsl:with-param>
               </xsl:call-template>
-              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
               <meta name="calibre:cover" content="true"/>
               <title>Title page</title>
               <style type="text/css" title="override_css">
@@ -610,8 +609,7 @@ height: </xsl:text>
                 <xsl:call-template name="metaHTML">
                   <xsl:with-param name="title">Title page</xsl:with-param>
                 </xsl:call-template>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-                <xsl:call-template name="linkCSS">
+                   <xsl:call-template name="linkCSS">
 		  <xsl:with-param
 		      name="file">stylesheet.css</xsl:with-param>
 		</xsl:call-template>
@@ -635,7 +633,6 @@ height: </xsl:text>
                 <xsl:call-template name="metaHTML">
                   <xsl:with-param name="title">title page verso</xsl:with-param>
                 </xsl:call-template>
-                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
                 <title>title page verso</title>
               </head>
               <body>
@@ -653,8 +650,7 @@ height: </xsl:text>
               <xsl:call-template name="metaHTML">
                 <xsl:with-param name="title">About this book</xsl:with-param>
               </xsl:call-template>
-              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-              <title>About this book</title>
+                  <title>About this book</title>
             </head>
             <body>
               <div style="text-align: left; font-size: larger">
