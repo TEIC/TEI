@@ -55,7 +55,6 @@
 	 use="substring-after(@target,'#')"/>
 
   <xsl:template match="/">
-    <xsl:apply-imports/>
     <xsl:variable name="name">
       <xsl:call-template name="generateTitle"/>
     </xsl:variable>
@@ -102,6 +101,7 @@
 	</body>
       </html>
     </xsl:result-document>    
+    <xsl:apply-imports/>
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
       <xsl:variable name="mychapter" select="ancestor::div[last()]/@xml:id"/>
@@ -1195,7 +1195,7 @@
     </h1>
     <p>      
       <xsl:text>Version </xsl:text>
-      <xsl:value-of select="ancestor-or-self::TEI/teiHeader/fileDesc/editionStmt/edition"/>
+      <xsl:value-of select="/TEI/teiHeader/fileDesc/editionStmt/edition"/>
       </p>
   </div>
 </xsl:template>
