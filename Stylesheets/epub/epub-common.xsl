@@ -329,7 +329,7 @@ of this software, even if advised of the possibility of such damage.
     </div>
   </xsl:template>
 
-  <xsl:template match="tei:bibl/tei:title" mode="metadata" priority="99">
+  <xsl:template match="tei:title" mode="metadata" priority="99">
     <i>
       <xsl:apply-templates/>
     </i>
@@ -342,7 +342,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:bibl/tei:date" mode="metadata"
 		priority="99">
-    <i>Date</i>:     <xsl:apply-templates/>
+    <xsl:text> (</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>)</xsl:text>
   </xsl:template>
   <xsl:template match="tei:note" mode="metadata">
     <xsl:text> [</xsl:text>
