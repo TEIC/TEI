@@ -113,7 +113,17 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="$publisher"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="normalize-space(ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt)"/>
+        <xsl:for-each
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt">
+	  <xsl:for-each
+	      select="tei:authority|tei:publisher|tei:distributor|tei:p">
+	    <xsl:value-of select="normalize-space(.)"/>
+	    <xsl:if
+		test="following-sibling::tei:authority|tei:publisher|tei:distributor|tei:p">
+	      <xsl:text>, </xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
