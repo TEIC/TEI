@@ -212,30 +212,6 @@ validated against the schema is specified by means of the
 <att>start</att> attribute.  Further information about the processing
 of an ODD specification is given in <ptr target="#IM"/>.
 </p>
-<!--
-<p>The same effect might be obtained by means of a RELAX NG
-schema like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-include "tei.rnc" 
-include "core.rnc"
-include "header.rnc"
-include "textstructure.rnc"
-start = TEI 
-</egXML>
-which combines the declarations from the filenames specified to form a
-schema with the given start point.</p>
-<p>The same effect might be obtained in a DTD processing environment
-by prefixing the document with a <term>DOCTYPE declaration</term> like the following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[<!DOCTYPE TEI
-PUBLIC "-//TEI P5//DTD Main Document Type//EN" "tei.dtd" [
-      <!ENTITY % TEI.header 'INCLUDE' >
-      <!ENTITY % TEI.core 'INCLUDE' >
-      <!ENTITY % TEI.textstructure 'INCLUDE' >
-]>]]></egXML>
-This uses an indirect method of nominating the DTD schema fragments
-from which the DTD is to be constructed, based on the use of parameter
-entities, as further discussed in section <ptr target="#STPE"/>.
-</p> -->
 </div>
 
 <div type="div3" xml:id="STINlargerExample"><head>A Larger Customization</head>
@@ -352,23 +328,6 @@ such a situation, we also say that class B is a
 superclass are inherited by all members of its subclasses.
  </p>
 
-<!--
-<p>In the RELAX NG fragments which express the TEI scheme, attribute
-and model classes are represented by patterns whose names begin with
-<ident>att.</ident> or <ident>model.</ident> respectively. The same
-names are used in the XML DTD fragments for the parameter entities
-used to implement the class system.
- </p>
-
-<p>In both cases, the <ident type="module">tei</ident> module provides
-an appropriate initial declaration for the class, so that it can
-subsequently be referenced, either by a subclass, or by someone
-wishing to extend the class with a new element. In the TEI DTD
-fragments, each class is fully defined by its associated parameter
-entity declaration; in the RELAX NG schema fragment, each class is
-incrementally defined as each element declaration modifies the initial
-pattern provided by the TEI infrastructure module.</p>
--->
 
 <p>A basic understanding of the classes into which the TEI scheme is
 organized is strongly recommended and is essential for any successful
@@ -435,28 +394,12 @@ the next section. A full list of all attribute classes is given in
 
 <p>The following attributes are defined for every TEI element.
 
-<specList><specDesc key="att.global" atts="xml:id n xml:lang rend
+<specList><specDesc key="att.global" atts="xml:id n xml:lang rend style
 rendition xml:base xml:space"/></specList>
  </p>
 
 <p>These attributes are optionally available for any TEI element; none
-of them is required. Their usage is discussed in the following subsections.<!--may be given values for <att>xml:id</att>, <att>n</att>,
-<att>xml:lang</att>, <att>rend</att>, or <att>rendition</att>, simply by
-specifying values for these attributes.
-The following two examples convey the same information about the text:
-that the material transcribed occurs within a <gi>p</gi> element
-(paragraph).  They differ only in that the second provides an identifier
-for the paragraph, to which other elements (e.g. notes or hypertext
-links) can conveniently refer.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>If to do were as easy as to know what were
-good to do, chapels had been churches and poor men's cottages
-princes' palaces.  It is a good divine that follows his own
-instructions ...</p></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p xml:id="mv1.2.5">If to do were as easy as to know what were
-good to do, chapels had been churches and poor men's cottages
-princes' palaces.  It is a good divine that follows his own
-instructions ...</p></egXML>-->
-<!-- Merchant of Venice, I.ii, speech 5 (Portia)              -->
+of them is required. Their usage is discussed in the following subsections.
 </p>
 
 <div xml:id="STGAid"><head>Element Identifiers and Labels</head>
@@ -626,9 +569,10 @@ may be supplied in the <gi>language</gi> element within the header (see
 section <ptr target="#HD41"/>).</p>
 </div>
 <div xml:id="STGAre"><head>Rendition Indicators</head>
-<p>The <att>rend</att> attribute is used to give information about the
+<p>The <att>rend</att>, <att>rendition</att>, and <att>style</att>
+attributes are all used to give information about the
 physical presentation of the text in the source.  In the following
-example, it is used to indicate that both the emphasized word and the
+example, <att>rend</att> is used to indicate that both the emphasized word and the
 proper name are printed in italics:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-11"><p> ... Their motives <emph rend="italics">might</emph> be
  pure and pious; but he was equally alarmed by his knowledge
@@ -646,8 +590,8 @@ discussed below) and specify a <att>rend</att> value
 only for any elements which deviate from the stated rendition.
  </p>
 <p>Although the contents of the <att>rend</att> attribute are free
-text, in any given project, encoders are advised to adopt a
-standard vocabulary with which to describe typographic or manuscript
+text, in any given project, encoders are recommended to document
+the vocabulary they used to describe typographic or manuscript
 rendition of the text.</p>
 <p>The  <gi>rendition</gi>
 element defined in <ptr target="#HD57"/> may be used to hold such
@@ -657,7 +601,6 @@ either by default, or by means of the global <att>rendition</att>
 attribute. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"> 
 <!-- define italic style using CSS -->
-
 <rendition xml:id="IT" scheme="css">font-style: italic</rendition>
 <!-- set italic style as default for the emph and hi elements -->
    <tagUsage gi="emph" render="#IT"/>
@@ -666,35 +609,51 @@ attribute. For example:
    <p rendition="#IT"/>
 </egXML>
 </p>
+
 <p>The <att>rendition</att> attribute always points to one or more
 <gi>rendition</gi> elements, each of which defines some aspect of the
 rendering or appearance of the text in its original form. These
-details may be described using a formal language, such as CSS (<ptr target="#CSS1"/>) or XSL-FO (<ptr target="#XSL11"/>); <!--ref
-target="http://www.w3.org/Style/CSS">Cascading Style Sheets</ref>
-(CSS) or <ref target="http://www.w3.org/TR/xsl/">Extensible Stylesheet
-Language</ref> (XSL-FO);--> in some other formal language developed for a
-specific project; or informally in running prose. Although languages
-such as CSS and XSL-FO are generally used to describe document output
-to screen or print, they nonetheless provide formal and precise
-mechanisms for describing the appearance of many source documents,
-especially print documents, but also many aspects of manuscript
-documents. For example, both CSS and XSL-FO provide mechanisms for
-describing typefaces, weight, and styles; character
-and line spacing; and so on.</p>
-<p>If both <att>rendition</att> and <att>rend</att> attributes are
-provided for a given element, the latter always takes precedence.
-<!--The combination of the global <att>rendition</att> and
-<att>rend</att> attributes provide a robust system for describing
-rendition information for source documents. --> The
+details may be described using a formal style definition language,
+such as CSS (<ptr target="#CSS1"/>) or XSL-FO (<ptr
+target="#XSL11"/>); in some other formal language developed for a
+specific project; or even informally in running prose. Although
+languages such as CSS and XSL-FO are generally used to describe
+document output to screen or print, they nonetheless provide formal
+and precise mechanisms for describing the appearance of source
+documents, especially print documents, but also many aspects of
+manuscript documents. For example, both CSS and XSL-FO provide
+mechanisms for describing typefaces, weight, and styles; character and
+line spacing; and so on.</p>
+
+<p>The <att>style</att> attribute is provided for encoders wishing to
+describe the appearance of individual source elements using a
+language such as CSS directly rather than by reference to a
+<gi>rendition</gi> element. Its value may be any  expression in the
+chosen formal style definition language.  Using it one
+might specify that a paragraph is in italics simply as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"> 
+<p style="font-style: italic"/>
+</egXML>
+</p>
+
+<p>As noted above, the <att>scheme</att> attribute is used to indicate
+the formal style definition language used within <gi>rendition</gi>
+elements. The <att>style</att> attribute will normally use the same
+language if any <gi>rendition</gi> element is provided. </p>
+<!-- &winita -->
+<p>If both <att>rendition</att> and <att>style</att> attributes are
+provided for a given element, the latter always takes precedence.  The
 <att>rendition</att> attribute is analogous to the HTML or XHTML
 <att>class</att> attribute, which references style declarations in a
 Cascading Style Sheet. The <att>rend</att> attribute is analogous to
-the (X)HTML <att scheme="XHTML">style</att> attribute, which
-provides a mechanism for embedding inline rendition information at the
-point of use within a document. Note that, in either case, the TEI
-attributes describe the rendition or appearance of the source
-document, <emph>not</emph> intended output renditions, although often
-the two may be closely related.  </p>
+the (X)HTML <att scheme="XHTML">style</att> attribute, which provides
+a mechanism for embedding inline rendition information at the point of
+use within a document. 
+</p>
+<p>Note that these TEI attributes always
+describe the rendition or appearance of the source document,
+<emph>not</emph> intended output renditions, although often the two
+may be closely related.  </p>
 
 </div>
 

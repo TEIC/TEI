@@ -255,8 +255,8 @@ function in the text (for example, quotation), it may be debated
 whether they should be excluded or left as part of the text. In the
 case of quotation marks, it may be more convenient to distinguish
 opening from closing marks simply by using the appropriate Unicode
-character than to use the <gi>q</gi> element, with or without a
-<att>rend</att> attribute. </p>
+character than to use the <gi>q</gi> element, with or without an
+indication of rendition. </p>
 
 <p>Where segmentation of a text is performed automatically, the
 accuracy of the result may be considerably enhanced by a first pass in
@@ -464,27 +464,36 @@ in roman, but in roman if the surrounding text is in italics.)  For this
 reason, these Guidelines distinguish between the encoding of rendering
 itself and the encoding of the underlying feature expressed by it.
  </p>
-<p>Highlighting as such may be encoded by using either of the global
-attributes <att>rend</att> or <att>rendition</att> attributes (see
-<ptr target="#STGA"/>).  This allows the encoder both to specify the
-function of a highlighted phrase or word, by selecting the appropriate
-element described here or elsewhere in the Guidelines, and to further
-describe the way in which it is highlighted, by means of the
-<att>rend</att> attribute. If the encoder wishes to offer no
-interpretation of the feature underlying the use of highlighting in
-the source text, then the <gi>hi</gi> element may be used, which
-indicates only that the text so tagged was highlighted in some way.
+<p>Highlighting as such may be encoded by using one of the global
+attributes <att>rend</att>, <att>rendition</att>, or <att>style</att>
+(see further <ptr target="#STGA"/>).  This allows the encoder both to
+specify the function of a highlighted phrase or word, by selecting the
+appropriate element described here or elsewhere in the Guidelines, and
+to further describe the way in which it is highlighted, by means of an
+attribute. If the encoder wishes to offer no interpretation of the
+feature underlying the use of highlighting in the source text, then
+the <gi>hi</gi> element may be used, which indicates only that the
+text so tagged was highlighted in some way.
 <specList>
 <specDesc key="hi"/>
 </specList>
 The <gi>hi</gi> element is provided by the <ident type="class">model.hiLike</ident> class. </p>
-<p>The possible values carried by the <att>rend</att> attribute are not
-formally defined in this version of the Guidelines. Since the
-<att>rend</att> attribute may be used to document any peculiarity of the
-way a given segment of text was rendered in the original source text, it
-may need to express a very large range of typographic features, by no
-means restricted to typeface, type size, etc.
+
+<p>The possible values carried by the <att>rend</att> attribute are
+not formally defined in this version of the Guidelines. It may be used
+to document any peculiarity of the way a given segment of text was
+rendered in the original source text, and may thus express a very
+large range of typographic or other features, by no means restricted
+to typeface, type size, etc. The <att>style</att> attribute, by
+contrast, defines the way the source text was rendered using a
+formally defined style language, such as the W3C standard Cascading
+Stylesheet Language (<ptr target="#CSS1"/>). The complementary
+<att>rendition</att> attribute is used to point to one or more
+fragments expressed using such a language which have been predefined
+in the TEI Header using the <gi>rendition</gi> element discussed in
+section <ptr target="#HD57"/>.
  </p>
+
 <p>Where it is both appropriate and feasible, these Guidelines recommend
 that the textual feature marked by the highlighting should be encoded,
 rather than just the simple fact of the highlighting. This is for the
@@ -550,14 +559,6 @@ corresp="#COHQHF-eg-5"><q>Aren't you confusing <foreign
 xml:lang="la">post hoc</foreign> with <foreign xml:lang="la">propter
 hoc</foreign>?</q> said the Bee Master. <q>Wax-moth only succeed when
 weak bees let them in.</q></egXML>
-
-<!--
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHF-eg-5"><p>The
-usual atrial extrasystole or premature beat (APB) has three features: a
-<lb/>premature, ectopic P wave (the <foreign xml:lang="la">sine qua non</foreign>
-and often labelled <label>P'</label>); a QRS
-<lb/>unchanged from that of the conducted sinus beats; and a post-extrasystolic cylce
-<lb/>that is less than compensatory.</p></egXML>-->
 </p>
 
 <p>The <gi>foreign</gi> element should not be used to represent foreign words
@@ -579,41 +580,51 @@ therefore, it is recommended practice to supply a default value for
 as further discussed in section <ptr target="#STGAla"/></p>
 
 <specGrp xml:id="DCOHQ" n="Highlighted phrases">
-  <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/foreign.xml"/>
+<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/foreign.xml"/>
 <specGrpRef target="#DCOHQ1"/><specGrpRef target="#DCOHQ3"/><specGrpRef target="#DCOHQQ"/><specGrpRef target="#DCOHQU"/></specGrp>
  </div>
 <div type="div4" xml:id="COHQHE"><head>Emphatic Words and Phrases</head>
-<p>The <gi>emph</gi> element is provided to mark words or phrases which
-are <emph>linguistically</emph> emphatic or stressed. Text which is
-only typographically <soCalled>emphasized</soCalled> falls into the
+<p>The <gi>emph</gi> element is provided to mark words or phrases
+which are <emph>linguistically</emph> emphatic or stressed. Text which
+is only typographically <soCalled>emphasized</soCalled> falls into the
 class of highlighted text, and may be tagged with the <gi>hi</gi>
 element. In printed works, emphasis is generally indicated by devices
-such as the use of an italic font, a large typeface, or extra wide letter
-spacing; in manuscripts and typescripts, it is usually indicated by the
-use of underlining.
-As the following examples demonstrate, an encoder may choose whether or
-not to make explicit the particular type of rendition associated with
-the emphasis by use of the <att>rend</att> attribute. If a source text
-consistently renders a particular feature (e.g. emphasis or words in
-foreign languages) in a particular way, the rendering associated with
-that feature may be described in the TEI header using the
-<gi>rendition</gi> element. The <att>rend</att>
-attribute may then be used to describe examples which deviate from the
-norm. For example, assuming that the TEI Header has defined a default
-rendering for the <gi>emph</gi> element, the following encoding would
-use it:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHE-eg-10"><q>Sex, sir, is <emph>purely</emph> a
-question of appetite!</q> Tarr exclaimed.</egXML>
-If on the other hand no such default has been defined for the
-element, the encoder may specify it informally using the
-<att>rend</att> attribute:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHE-eg-11"><q>What it all comes to is this,</q> he said.
-<q><emph rend="italic">What does Christopher
-Robin do in the morning nowadays?</emph></q></egXML>
-or, if a <gi>rendition</gi> element has been provided in the header
-(but not necessarily associated with any other element), the
-<att>rendition</att> attribute may be used to point to it:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHE-eg-12"><l>Here Thou, great <name rend="italics">Anna</name>!
+such as the use of an italic font, a large typeface, or extra wide
+letter spacing; in manuscripts and typescripts, it is usually
+indicated by the use of underlining.  As the following examples
+demonstrate, an encoder may choose whether or not to make explicit the
+particular type of rendition associated with the emphasis. If a source
+text consistently renders a particular feature (e.g. emphasis or words
+in foreign languages) in a particular way, the rendering associated
+with that feature may be described in the TEI header using the
+<gi>rendition</gi> element. The <att>rend</att>, <att>rendition</att>, or <att>style</att>
+attributes may then be used to describe examples which deviate from
+the norm. For example, assuming that the TEI Header has defined a
+default rendering for the <gi>emph</gi> element, the following
+encoding would use it: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+corresp="#COHQHE-eg-10"><q>Sex, sir, is <emph>purely</emph> a question
+of appetite!</q> Tarr exclaimed.</egXML> If on the other hand no such
+default has been defined for the element, the encoder may specify it
+informally using the <att>rend</att> attribute: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"
+corresp="#COHQHE-eg-11"><q>What it all comes to is this,</q> he said.
+<q><emph rend="italic">What does Christopher Robin do in the morning
+nowadays?</emph></q></egXML> If the encoder wishes to express
+information about the rendition used in the source using a formal
+language such as CSS, then the <att>style</att> attribute can be used
+in a similar way: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+corresp="#COHQHE-eg-11"><q>What it all comes to is this,</q> he said.
+<q><emph style="text-style:italic">What does Christopher Robin do in
+the morning nowadays?</emph></q></egXML>
+</p>
+<p>In cases where the rendition of a source needs to be indicated 
+several times in a document, it may be more convenient to provide a
+default value using the <gi>rendition</gi> element  in the header. If
+a small number of distinct values are required, it may also be
+convenient to define them all by means of a series of <gi>rendition</gi> elements
+which can then be referenced from the elements in question by means of
+the global <att>rendition</att> attribute:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHE-eg-12"><l>Here Thou, great <name rendition="#italic">Anna</name>!
    whom three Realms obey,</l>
 <l>Doth sometimes Counsel take —
    and sometimes <emph rendition="#italic">Tea</emph>.</l>
@@ -622,11 +633,13 @@ or, if a <gi>rendition</gi> element has been provided in the header
 </egXML>
 Further information on the use of the <gi>rendition</gi> element is
 provided at <ptr target="#HD57"/>. </p>
+
+
 <p>The <gi>hi</gi> element is used to mark words or phrases which are
 highlighted in some way, but for which identification of the intended
 distinction is difficult, controversial, or impossible. It enables an
 encoder simply to record the fact of highlighting, possibly describing
-it by the use of a <att>rend</att> or <att>rendition</att> attribute, as discussed above,
+it by the use of a <att>rend</att>, <att>style</att>, or <att>rendition</att> attribute, as discussed above,
 without however taking a position as to the function of the
 highlighting. This may also be useful if the text is to be processed in
 two stages:  representing simply typographic distinctions during a first
@@ -639,23 +652,25 @@ that the said <hi rend="italic">Walter Shandy</hi>, merchant,
 in consideration of the said intended marriage ...</egXML>
 
 In this example, the first highlighted phrase uses black letter or
-gothic print to mimic the appearance of a legal document, and italic to
-mark <mentioned>Walter Shandy</mentioned> as a name. In a second pass, the
-elements <gi>head</gi> or <gi>label</gi> might be appropriate for the
-first use, and the element <gi>name</gi> for the second.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHE-eg-14">The heaviest rain, and snow, and hail, and sleet, could
-boast of the advantage over him in only one respect. They
-often <hi rend="quoted">came down</hi> handsomely, and
-Scrooge never did.</egXML>
-In this example, the phrase <mentioned>came down</mentioned> uses
-inverted commas to indicate a play on words.<note place="bottom">The
-Oxford English Dictionary documents the phrase <mentioned>to come
-down</mentioned> in the sense <q>to bring or put down; <hi rend="it">esp.</hi> to lay down money; to make a disbursement</q> as being in use, mostly in colloquial or humorous contexts, from at
-least 1700 to the latter half of the 19th century.
+gothic print to mimic the appearance of a legal document, and italic
+to mark <mentioned>Walter Shandy</mentioned> as a name. In a second
+pass, the elements <gi>head</gi> or <gi>label</gi> might be
+appropriate for the first use, and the element <gi>name</gi> for the
+second.  <egXML xmlns="http://www.tei-c.org/ns/Examples"
+corresp="#COHQHE-eg-14">The heaviest rain, and snow, and hail, and
+sleet, could boast of the advantage over him in only one respect. They
+often <hi rend="quoted">came down</hi> handsomely, and Scrooge never
+did.</egXML> In this example, the phrase <mentioned>came
+down</mentioned> uses inverted commas to indicate a play on
+words.<note place="bottom">The Oxford English Dictionary documents the
+phrase <mentioned>to come down</mentioned> in the sense <q>to bring or
+put down; <hi rend="italic">esp.</hi> to lay down money; to make a
+disbursement</q> as being in use, mostly in colloquial or humorous
+contexts, from at least 1700 to the latter half of the 19th century.
 	</note>
-<!-- ?chceck a ref to OED would be handy here if you have time to find one -->
-In a second pass, the element <gi>soCalled</gi> might be preferred.
-<!-- WWP proofer asks why. (msm)                              -->
+In a second pass, the element <gi>soCalled</gi> might be preferred as
+a means of indicating that the narrator is distancing himself from
+this usage.
  </p>
 <specGrp xml:id="DCOHQ1">
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/emph.xml"/>
@@ -791,45 +806,8 @@ or, if this is not possible, a
  <p>For many purposes, however, it will be preferable either to
  suppress the quotation marks entirely, or to describe them using some
  appropriate set of conventions in the <att>rend</att>
- attribute. <!--Where this is done, the following list of names (taken
- from the public entity sets <ident type="entset">ISOpub</ident> and
- <ident type="entset">ISOnum</ident>) may be found useful to describe
- quotation-mark styles common in European and American typesetting:-->
- <!-- list restored under (mild) protest and with one necessary  -->
- <!-- addition                                     LB, oct 92    -->
-<!--  <list type="gloss">
-   <label>ldquo</label>
-   <item>double inverted comma (shaped like 66, superscript)</item>
-   <label>lsquo</label>
-   <item>single inverted comma (shaped like 6, superscript)</item>
-   <label>rdquo</label>
-   <item>double apostrophe (shaped like 99, superscript)</item>
-   <label>rsquo</label>
-   <item>single apostrophe (shaped like 9, superscript)</item>
-   <label>ldquor</label>
-   <item>double comma (shaped like 99, printed on base line)</item>
-   <label>lsquor</label>
-   <item>single comma (shaped like 9, printed on base line)</item>
-   <label>laquo</label>
-   <item>double guillemet open to the right</item>
-   <label>lsaquo</label>
-   <item>single guillemet open to the right</item>
-   <label>raquo</label>
-   <item>double guillemet open to the left</item>
-   <label>rsaquo</label>
-   <item>single guillemet open to the left</item>
-   <label>mdash</label>
-   <item>dash the width of an uppercase <mentioned>M</mentioned></item>
- </list> -->
- <!-- J.Lavagnino suggests revisiting the issue of mdash in    -->
- <!-- P4:  perhaps this is too print-centered?  (msm)          -->
-Some examples are shown below:
-<!-- These may be used in the <att>rend</att> attribute to show how the
- quotation was opened and closed. For example, if the words
- <mentioned>pre</mentioned> and <mentioned>post</mentioned> are used to indicate
- preceding and following punctuation, then the following example would
- describe a conventional American book printed using single quotation
- marks:-->
+ attribute. Some examples are shown below:
+
  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DSHD-eg-30"><said rend="PRE lsquo POST rsquo">Who-e debel
  you?</said> — he at last said — 
  <said rend="PRE lsquo POST rsquo">you no speak-e,
@@ -1553,34 +1531,8 @@ person responsible for the conjectured reading.</p><p>For example:
 <l><unclear reason="ink blot">The</unclear> sea between
 yet hence his pray'r prevail'd</l></egXML>
 or from a spoken text:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>... and then <unclear reason="passing-truck">marbled queen</unclear>...</p></egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><p>... and then <unclear reason="passingTruck">marbled queen</unclear>...</p></egXML>
 </p>
-<!--
-<p>Where there is doubt about the reading of the material affected,
-the <att>cert</att> attribute may be used to indicate a degree of
-confidence in the reading provided as the content of
-<gi>unclear</gi>. 
-In cases where the reading of an unclear passage is ambiguous, the
-various possible readings can be simultaneously encoded using the
-<soCalled>choice</soCalled> mechanism. Simultaneously, the
-<att>cert</att> attribute may be used to indicate differing degrees of
-confidence about the variant readings.
--->
-<!--Need better, preferably believable if not real, example:-->
-<!--The following fictitious
-example is illustrative, although in this case it is easy to verify
-the correct reading from other witnesses.
-<egXML xmlns="http://www.tei-c.org/ns/Examples">His senses were all
-alert, his breath was suspended, his blood had stilled its tides as if
-to assist the silence. Who—what had <choice> 
-  <unclear cert="high">woken</unclear>
-  <unclear cert="low">waken</unclear>
-  <unclear cert="medium">waked</unclear>
-</choice> him, and where was it?</egXML>
-<note type="cit">Ambrose Bierce, <title>The Boarded
-Window</title>; p. 370 of my wife's 1927 First Modern Library edition
-of <title>In the Midst of Life</title>.</note>
--->
 <p>Where the material affected is entirely illegible or inaudible, the
 <gi>gap</gi> element discussed above should be used in preference.</p>
 <p>The <gi>del</gi> element is used to mark material which is deleted in
