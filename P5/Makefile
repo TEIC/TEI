@@ -469,7 +469,7 @@ changelog:
 
 catalogue: check
 	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml p5.xml  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
-	teitohtml catalogue.xml catalogue.html
+	teitohtml --profiledir=${XSL}/profiles catalogue.xml catalogue.html
 	@echo Made catalogue.html
 
 catalogue-print: check
