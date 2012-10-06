@@ -937,6 +937,7 @@ class. By default, this class makes available the following elements:
 <specDesc key="samplingDecl"/>
 <specDesc key="editorialDecl"/>
 <specDesc key="tagsDecl"/>
+<specDesc key="styleDefDecl"/>
 <specDesc key="refsDecl"/>
 <specDesc key="classDecl"/>
   <specDesc key="schemaSpec"/>
@@ -1232,14 +1233,14 @@ elements are to use a different set, identified as <val>style2</val>:
 
 <p>As noted above, the content of a <gi>rendition</gi> element may
 describe the appearance of the source material using prose, a
-project-defined formal language, or either of the existing standard
-languages: the Cascading Stylesheet Language (<ptr target="#CSS1"/>)
-and the XML vocabulary for specifying formatting semantics which forms
-a part of the W3C's Extensible Stylesheet Language (<ptr
-target="#XSL11"/>). The <gi>styleDefDecl</gi> element (<ptr
-target="#HD57-1a"/>) may be used to specify which of these applies by default;
-it may be over-riden for one or more specific  <gi>rendition</gi>
-elements using the <att>source</att> attribute. 
+project-defined formal language, or any standard languages such as the
+Cascading Stylesheet Language (<ptr target="#CSS1"/>) or the XML
+vocabulary for specifying formatting semantics which forms a part of
+the W3C's Extensible Stylesheet Language (<ptr target="#XSL11"/>). A
+<gi>styleDefDecl</gi> element (<ptr target="#HD57-1a"/>) may be
+supplied within the <gi>encodingDesc</gi> to specify which of these
+applies by default; it may be over-riden for one or more specific
+<gi>rendition</gi> elements using the <att>source</att> attribute.
 </p> 
 
 <p>In the following extended example we consider how to capture the
@@ -1325,34 +1326,7 @@ ago...</q>
 </egXML>
 </p>
 </div>
-<div xml:id="HD57-1a"><head>Setting the style definition
-language</head>
-<p>The content of  the <gi>rendition</gi> element and the value of the
-<att>style</att> attribute are expressed using one of a small number
-of formally defined languages. For ease of processing, it is strongly
-recommended to use a single such language throughout an encoding
-project, although the TEI system permits a mixture. </p>
-<p>The element <gi>styleDefDecl</gi> is used to supply the name of the
-default style definition language. The name is supplied as the value
-of the <att>source</att> attribute and may take any of the
-following values:
-<!-- why can't i do a specList for a valList? -->
-<list type="gloss">
-<label>free</label><item>Informal free text description</item>
-<label>css</label><item>Cascading Stylesheet Language</item>
-<label>xslfo</label><item>Extensible Stylesheet Language Formatting Objects</item>
-<label>other</label><item>A user-defined formal description
-language</item> </list>. The content of this element, if any, may
-supply additional information, such as the specific version of CSS
-used.
-</p>
-<p>When the <att>style</att> attribute is used, its value must always
-be expressed using whichever default style definition language is in
-force for the context in which it appears. That context may be varied
-using the <att>decls</att> attribute to select a specific
-<gi>styleDefDecl</gi> in the usual way; see further <ptr
-target="#CCAS"/>. </p>
-</div>
+
 
 
 <div xml:id="HD57-2"><head>Tag usage</head>
@@ -1404,6 +1378,38 @@ with the number of such elements present in the document.<specGrp xml:id="DHD57"
 
 </specGrp></p></div>
 </div>
+
+<div xml:id="HD57-1a"><head>The default style definition
+language declaration</head>
+<p>The content of  the <gi>rendition</gi> element and the value of the
+<att>style</att> attribute are expressed using one of a small number
+of formally defined style definition languages. For ease of processing, it is strongly
+recommended to use a single such language throughout an encoding
+project, although the TEI system permits a mixture. </p>
+<p>The element <gi>styleDefDecl</gi>, a sibling of the
+<gi>tagsDecl</gi> element,   is used to supply the name of the
+default style definition language. The name is supplied as the value
+of the <att>source</att> attribute and may take any of the
+following values:
+<!-- why can't i do a specList for a valList? -->
+<list type="gloss">
+<label>free</label><item>Informal free text description</item>
+<label>css</label><item>Cascading Stylesheet Language</item>
+<label>xslfo</label><item>Extensible Stylesheet Language Formatting Objects</item>
+<label>other</label><item>A user-defined formal description
+language</item> </list>. The content of this element, if any, may
+supply additional information, such as the specific version of CSS
+used.
+</p>
+<p>When the <att>style</att> attribute is used, its value must always
+be expressed using whichever default style definition language is in
+force. If more than one occurrence of the <gi>styleDefDecl</gi> is
+provided, there will be more than one default available, and the
+<att>decls</att> attribute must be used to select which is applicable
+in a given context, as discussed in section <ptr
+target="#CCAS"/>. </p>
+</div>
+
 <div type="div3" xml:id="HD54"><head>The Reference System Declaration</head>
 <p>The <gi>refsDecl</gi> element is  used to
 document the way in which any standard referencing scheme built into
