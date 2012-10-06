@@ -5,20 +5,23 @@
     version="2.0">
   <xsl:param name="file"/>
   <xsl:template name="main">
-    <xsl:for-each select="doc(concat($file,'.xml'))">
+    <xsl:for-each select="doc(concat($file,'.template'))">
       <xsl:variable name="Name" select="/*/@n"/>
+      <xsl:message>Create template <xsl:value-of select="$Name"/> from <xsl:value-of select="$file"/></xsl:message>
       <xsl:result-document href="{$Name}.xml" indent="yes">
       <xsl:processing-instruction name="xml-model">
 	<xsl:text>href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/</xsl:text>
 	<xsl:value-of select="$file"/>
-	<xsl:text>" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:text>
+	<xsl:text>.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:text>
       </xsl:processing-instruction>
+      <xsl:text>&#10;</xsl:text>
       <xsl:processing-instruction name="xml-model">
 	<xsl:text>href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/</xsl:text>
 	<xsl:value-of select="$file"/>
-	<xsl:text>" type="application/xml"
+	<xsl:text>.rng" type="application/xml"
 	schematypens="http://purl.oclc.org/dsdl/schematron"</xsl:text>
       </xsl:processing-instruction>
+      <xsl:text>&#10;</xsl:text>
       <xsl:apply-templates select="*|text()|comment|processing-instruction()"/>
     </xsl:result-document>
 
@@ -29,7 +32,7 @@ bigIcon=../icons/TEI_48.png
     </xsl:for-each>
   </xsl:template>
   
-  <xsl:template match="TEI/@n"/>
+  <xsl:template match="/*/@n"/>
 
   <xsl:template match="*">
     <xsl:copy>
