@@ -597,11 +597,12 @@ particular type of rendition associated with the emphasis. If a source
 text consistently renders a particular feature (e.g. emphasis or words
 in foreign languages) in a particular way, the rendering associated
 with that feature may be described in the TEI header using the
-<gi>rendition</gi> element. The <att>rend</att>, <att>rendition</att>, or <att>style</att>
-attributes may then be used to describe examples which deviate from
-the norm. For example, assuming that the TEI Header has defined a
-default rendering for the <gi>emph</gi> element, the following
-encoding would use it: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+<gi>rendition</gi> element.  The <att>rend</att>,
+<att>rendition</att>, or <att>style</att> attributes may then be used
+to describe examples which deviate from the norm. For example,
+assuming that the TEI Header has defined a default rendering for the
+<gi>emph</gi> element, the following encoding would use it: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"
 corresp="#COHQHE-eg-10"><q>Sex, sir, is <emph>purely</emph> a question
 of appetite!</q> Tarr exclaimed.</egXML> If on the other hand no such
 default has been defined for the element, the encoder may specify it
@@ -639,12 +640,13 @@ provided at <ptr target="#HD57"/>. </p>
 highlighted in some way, but for which identification of the intended
 distinction is difficult, controversial, or impossible. It enables an
 encoder simply to record the fact of highlighting, possibly describing
-it by the use of a <att>rend</att>, <att>style</att>, or <att>rendition</att> attribute, as discussed above,
-without however taking a position as to the function of the
-highlighting. This may also be useful if the text is to be processed in
-two stages:  representing simply typographic distinctions during a first
-pass, and then replacing the <gi>hi</gi> elements with more specific elements
-in a second pass.
+it by the use of a <att>rend</att>, <att>style</att>, or
+<att>rendition</att> attribute, as discussed above, without however
+taking a position as to the function of the highlighting. This may
+also be useful if the text is to be processed in two stages:
+representing simply typographic distinctions during a first pass, and
+then replacing the <gi>hi</gi> elements with more specific elements in
+a second pass.
  </p>
 <p>Some simple examples:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQHE-eg-13"><hi rend="gothic">And this Indenture further witnesseth</hi>
@@ -795,38 +797,57 @@ permitted both within and between paragraph-level elements.</p>
  <p>Quotation marks themselves may, like other punctuation marks, be
  felt for some purposes to be worth retaining within a text, quite
  independently of their description by the <att>rend</att> attribute.
-This should generally be done using the appropriate Unicode character,
-or, if this is not possible, a
- numeric character reference (see <ptr target="#SG-er"/>). If the
- encoder decides both to retain the quotation marks and to represent
- their function by means of an explicit tag such as <gi>quote</gi>,
- the quotation marks should be included within the element, rather
- than outside it. 
-</p>
- <p>For many purposes, however, it will be preferable either to
- suppress the quotation marks entirely, or to describe them using some
- appropriate set of conventions in the <att>rend</att>
- attribute. Some examples are shown below:
-
- <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#DSHD-eg-30"><said rend="PRE lsquo POST rsquo">Who-e debel
- you?</said> — he at last said — 
- <said rend="PRE lsquo POST rsquo">you no speak-e,
- damme, I kill-e.</said>  And so saying,
- the lighted tomahawk began flourishing
- about me in the dark.</egXML>
+ This should generally be done using the appropriate Unicode
+ character, or, if this is not possible, a numeric character reference
+ (see <ptr target="#SG-er"/>). If the encoder decides both to retain
+ the quotation marks and to represent their function by means of an
+ explicit tag such as <gi>quote</gi>, the quotation marks should be
+ included within the element, rather than outside it, as in the first
+ example below:
 
  <egXML xmlns="http://www.tei-c.org/ns/Examples"
 	corresp="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
  <said>— Alors, Albert, quoi de neuf?</said>
  <said>— Pas grand-chose.</said>
  <said>— Il fait beau,</said> dit Robert.</egXML>
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
- <said rend="PRE mdash">Alors, 
+
+Alternatively, since this use of the leading mdash is very common
+typographic practice, it may be predefined using a <gi>rendition</gi>
+element, which can then be referenced using the <att>rendition</att>
+attribute as follows:
+
+ <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
+ <said rendition="#dashBefore">Alors, 
  Albert, quoi de neuf ?</said>
- <said rend="PRE mdash">Pas grand-chose.</said>
- <said rend="PRE mdash">Il fait beau,</said>
- dit Robert.</egXML>
+ <said rend="#dashBefore">Pas grand-chose.</said>
+ <said rend="#dashBefore">Il fait beau,</said>
+ dit Robert.
+<!-- ... elsewhere in the document -->
+<rendition xml:id="dashBefore" scope="before">content: '— '</rendition>
+</egXML>
  </p>
+
+<p>Whichever policy is  adopted, the encoder should document the
+decision in some way, for example by using the <gi>quotation</gi>
+element provided in the TEI Header (see <ptr target="#HD53"/>).
+</p>
+
+ <p>Whether or not the quotation marks are suppressed, their presence
+ and nature may be described using some appropriate set of conventions
+ in the <att>rend</att> attribute. These conventions may be entirely
+ idiosyncratic, and hence not necessarily useful for interchange, as
+ in the following example :
+
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"
+	corresp="#DSHD-eg-30"><said rend="PRE+lsquo POST+rsquo">Who-e debel
+ you?</said> — he at last said — 
+ <said rend="PRE+lsquo POST+rsquo">you no speak-e,
+ damme, I kill-e.</said>  And so saying,
+ the lighted tomahawk began flourishing
+ about me in the dark.</egXML>
+</p>
+
+
 <p>As  members of the <ident type="class">att.ascribed</ident> class,
  elements <gi>said</gi> and <gi>q</gi>  share the following attribute:
 <specList><specDesc key="att.ascribed" atts="who"/></specList>
@@ -838,7 +859,7 @@ This may be used to make explicit who is speaking:
  <said who="#Albert">— Pas grand-chose.</said>
  <said who="#Robert">— Il fait beau,</said>
  dit Robert.
- <!-- .... -->
+<!-- ... elsewhere in the document -->
  <list type="speakers">
    <item xml:id="Adolphe"/>
    <item xml:id="Albert"/>
