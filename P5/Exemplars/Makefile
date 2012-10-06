@@ -95,7 +95,7 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
-	for i in *.template; do saxon make_template.xsl file=`basename $$i .template`;done
+	for i in *.template; do saxon -it:main make_template.xsl file=`basename $$i .template`;done
 	cp `ls *.xml | grep -v '\.doc\.'` ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	cp *.tei *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
