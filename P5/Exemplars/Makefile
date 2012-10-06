@@ -35,13 +35,13 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	which rnv && rnv ../p5odds.rnc $*.xi
 	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
 	@echo Test schema built from $<
-	jing $*.rng $*.xml && echo $* test validates OK
+	jing $*.rng $*.tei && echo $* test validates OK
 	jing $*.rng $*.template && echo $* template validates OK
 	@echo Validate using xmllint for DTD  
-	xmllint --dropdtd $*.xml | xmllint --noout --dtdvalid $*.dtd -
+	xmllint --dropdtd $*.tei | xmllint --noout --dtdvalid $*.dtd -
 	@echo Validate using Schematron
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
-	saxon $*.xml $*.xsl
+	saxon $*.tei $*.xsl
 
 
 %.rng: %.odd
@@ -51,11 +51,11 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	which rnv && rnv ../p5odds.rnc $*.xi
 	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
 	@echo Test schema built from $<
-	jing $*.rng $*.xml && echo $* test validates OK
+	jing $*.rng $*.tei && echo $* test validates OK
 	jing $*.rng $*.template && echo $* template validates OK
 	@echo Validate using Schematron
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
-	saxon $*.xml $*.xsl
+	saxon $*.tei $*.xsl
 
 %.doc.pdf: %.odd
 	@echo "BUILD: Test schema from $<"
@@ -64,13 +64,14 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	${ROMA} ${ROMAOPTS} ${SOURCE}--docflags="summaryDoc=true" --docpdf --dochtml $< .
 	teitoepub ${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
 	@echo Test schema built from $<
-	jing $*.rng $*.xml && echo $* test validates OK
+	jing $*.rng $*.tei && echo $* test validates OK
 	jing $*.rng $*.template && echo $* template validates OK
 	@echo Validate using xmllint for DTD  
-	xmllint --dropdtd $*.xml | xmllint --noout --dtdvalid $*.dtd -
+	xmllint --dropdtd $*.tei | xmllint --noout --dtdvalid $*.dtd -
 	@echo Validate using Schematron
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
-	saxon $*.xml $*.xsl
+	saxon $*.tei $*.xsl
+	rm $*.doc.xml
 
 schemas: $(ODDS) $(XODDS) $(DOCODDS)
 	-rm tei_odds.dtd tei_odds.xsd
@@ -94,11 +95,11 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
-	cp `ls *.xml | grep -v '\.doc\.'` ../release/tei-p5-exemplars/share/xml/tei/custom/odd
-	cp *.template  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
+	for i in *.template; do saxon make_template.xsl file=`basename $$i .template`;done
+	cp `ls *.xml | grep -v '\.doc\.'` ../release/tei-p5-exemplars/share/xml/tei/custom/templates
+	cp *.tei *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
-	cp *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	cp *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
 	cp *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf 
