@@ -578,42 +578,54 @@ proper name are printed in italics:
  pure and pious; but he was equally alarmed by his knowledge
  of the ambitious <name rend="italics">Bohemond</name>, and
  his ignorance of the Transalpine chiefs: ...</p></egXML>
-<!-- Gibbon, Decline and Fall, chapter 58, para beginning     -->
-	<!-- 'In some Oriental tale I have read ...', p. 391 of       -->
-	<!-- Britannica edition.                                      -->
-	<!--  ... played fast and loose with by LB for pedagogic purposes -->
-	<!-- Shame, shame.                                            -->
+The same effect might be achieved using the <att>style</att>
+attribute, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#STGA-eg-11"><p> ... Their motives <emph style="text-style:italic">might</emph> be
+ pure and pious; but he was equally alarmed by his knowledge
+ of the ambitious <name style="text-style:italic">Bohemond</name>, and
+ his ignorance of the Transalpine chiefs: ...</p></egXML>
 If all or most <gi>emph</gi> and <gi>name</gi> elements are rendered in
 the text by italics, it will be more convenient to register that fact in
 the TEI header once and for all (using the <gi>rendition</gi> element
-discussed below) and specify a <att>rend</att> value
+discussed below) and specify a <att>rend</att> or <att>style</att> value
 only for any elements which deviate from the stated rendition.
  </p>
-<p>Although the contents of the <att>rend</att> attribute are free
-text, in any given project, encoders are recommended to document
-the vocabulary they used to describe typographic or manuscript
-rendition of the text.</p>
+<p>The main difference between  <att>rend</att> attribute and
+<att>style</att> is that the values used for the former are
+unconstrained tokens, whereas the values used for the latter must be
+taken from a formally-defined style definition language such as CSS.</p>
 <p>The  <gi>rendition</gi>
-element defined in <ptr target="#HD57"/> may be used to hold such
-descriptions, expressed in free text, or using a formal language. A
+element defined in <ptr target="#HD57"/> may be used to hold repeatedly-used
+format descriptions. A
 <gi>rendition</gi> element can then be associated with any element,
 either by default, or by means of the global <att>rendition</att>
 attribute. For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"> 
+<tagsDecl>
 <!-- define italic style using CSS -->
 <rendition xml:id="IT" scheme="css">font-style: italic</rendition>
+<!-- define a serif font family -->
+<rendition xml:id="FontRoman" scheme="css">font-family: serif</rendition>
 <!-- set italic style as default for the emph and hi elements -->
    <tagUsage gi="emph" render="#IT"/>
    <tagUsage gi="hi" render="#IT"/>
-<!-- indicate that a specific p element is also in italic style -->
-   <p rendition="#IT"/>
+<!-- set the default font-family for the text element -->
+   <tagUsage gi="text" render="#FontRoman"/>
+</tagsDecl>
+<!-- ... -->
+<text>
+<div>
+   <p rendition="#IT"><!-- this paragraph uses the seriffed font, but is in italic--></p>
+   <p> <!-- this paragraph uses the seriffed font, but is not in
+   italic --></p>
+</div></text>
 </egXML>
 </p>
 
 <p>The <att>rendition</att> attribute always points to one or more
 <gi>rendition</gi> elements, each of which defines some aspect of the
 rendering or appearance of the text in its original form. These
-details may be described using a formal style definition language,
+details may most conveniently be described using a formal style definition language,
 such as CSS (<ptr target="#CSS1"/>) or XSL-FO (<ptr
 target="#XSL11"/>); in some other formal language developed for a
 specific project; or even informally in running prose. Although
@@ -624,32 +636,48 @@ documents, especially print documents, but also many aspects of
 manuscript documents. For example, both CSS and XSL-FO provide
 mechanisms for describing typefaces, weight, and styles; character and
 line spacing; and so on.</p>
-
-<p>The <att>style</att> attribute is provided for encoders wishing to
+<p>As noted above, the <att>style</att> attribute is provided for encoders wishing to
 describe the appearance of individual source elements using a
 language such as CSS directly rather than by reference to a
 <gi>rendition</gi> element. Its value may be any  expression in the
-chosen formal style definition language.  Using it one
-might specify that a paragraph is in italics simply as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"> 
-<p style="font-style: italic"/>
-</egXML>
+chosen formal style definition language.  </p>
+<p>Formal definition languages such as CSS typically identity a series
+of <term>properties</term> (such as font-style or margin-left) for
+which <term>values</term> are specified. A sequence of such
+property-value pairs makes up a stylesheet. The TEI uses such
+languages simply to describe the appearance of a source document,
+rather than to control how it should be formatted. 
+</p>
+<p>In the TEI scheme, it is possible to supply information about the
+appearance of elements within a source document in the following
+distinct ways:
+<list type="ordered">
+<item>One or more properties may be specified as the default for all
+elements of a given type, using the <att>render</att> attribute to
+point to <gi>rendition</gi> elements ;</item>
+<item>One or more properties may be specified for individual element
+occurrences, using the <att>rendition</att> attribute to point to
+<gi>rendition</gi> elements; </item>
+<item>One or more properties may be supplied explicitly for individual element
+occurrences, using the <att>style</att> attribute. </item>
+</list>
+</p>
+<p>If the same property is specified in more than one of the above
+ways, the one with the highest number in the list above is understood
+to be applicable.  The resulting properties from each way are then
+combined to provide the full set of property-value pairs applicable to
+the given element, and (by default) to all of its children. 
+</p>
+<p>For simplicity of processing, the same formal style definition
+should be used throughout; however, the architecture does permit this
+to be varied, by using the <att>scheme</att> attribute to indicate
+a different language for one or more <gi>rendition</gi>
+elements. Care should be taken to ensure that such values can be
+meaningfully combined. Similar considerations apply to the use of the
+<att>rend</att> attribute, if this is used in combination with either
+<att>rendition</att> or <att>style</att>. 
 </p>
 
-<p>As noted above, the <att>scheme</att> attribute is used to indicate
-the formal style definition language used within <gi>rendition</gi>
-elements. The <att>style</att> attribute will normally use the same
-language if any <gi>rendition</gi> element is provided. </p>
-<!-- &winita -->
-<p>If both <att>rendition</att> and <att>style</att> attributes are
-provided for a given element, the latter always takes precedence.  The
-<att>rendition</att> attribute is analogous to the HTML or XHTML
-<att>class</att> attribute, which references style declarations in a
-Cascading Style Sheet. The <att>rend</att> attribute is analogous to
-the (X)HTML <att scheme="XHTML">style</att> attribute, which provides
-a mechanism for embedding inline rendition information at the point of
-use within a document. 
-</p>
 <p>Note that these TEI attributes always
 describe the rendition or appearance of the source document,
 <emph>not</emph> intended output renditions, although often the two
@@ -782,6 +810,7 @@ att.testCritical -->
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.sortable.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.sourced.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.spanning.xml"/>
+<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.styleDef.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.tableDecoration.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.timed.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.transcriptional.xml"/>

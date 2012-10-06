@@ -1150,7 +1150,9 @@ text.  Instead, the <att>decls</att> attribute of each text (or
 subdivision of the text) to which it applies may
 be used to supply a cross-reference to it, as further described in
 section <ptr target="#CCAS"/>.
-	</p></div><div type="div3" xml:id="HD57"><head>The Tagging Declaration</head>
+	</p></div>
+
+<div type="div3" xml:id="HD57"><head>The Tagging Declaration</head>
 <p>The <gi>tagsDecl</gi> element is used to record
 the following information about the tagging used within a particular
 text:
@@ -1177,9 +1179,11 @@ for each distinct element from that namespace occurring within the outermost
 <gi>text</gi> element of a TEI document. Note that these
 <gi>tagUsage</gi> elements must be nested within a <gi>namespace</gi>
 element, and cannot appear directly within the <gi>tagsDecl</gi>
-element. </p><div xml:id="HD57-1"><head>Rendition</head><p>The <gi>rendition</gi> element allows the encoder to specify how
-one or more elements are rendered in the original source in any of the
-following ways:
+element. </p>
+
+<div xml:id="HD57-1"><head>Rendition</head><p>The <gi>rendition</gi>
+element allows the encoder to specify how one or more elements are
+rendered in the original source in any of the following ways:
 <list type="simple">
 <item>using an informal prose description</item>
 <item>using a standard stylesheet language such as CSS or
@@ -1195,13 +1199,15 @@ element may be used to indicate a default rendition for all occurrences of the n
 element</item>
 <item>the global <att>rendition</att> attribute may be used on any
 element to
-indicate its rendition, over-riding any supplied default value
+indicate its rendition, over-riding or complementing any supplied default value
 </item>
 </list>
-The global <att>rend</att> attribute may also be used to supply an informal
-description of the rendering for an element; if this is supplied in
-addition to the <att>rendition</att> attribute it takes precedence,
-just as it also overrides any default specified for that  element.</p><p>For example, the following schematic shows how an encoder might
+The global <att>rend</att> and <att>style</att> attributes may also be
+used to  describe the rendering of an element. See further <ptr
+target="#STGAre"/>
+</p>
+
+<p>For example, the following schematic shows how an encoder might
 specify that all <gi>p</gi> elements are by default to be rendered using one
 set of specifications identified as <val>style1</val>,
 while <gi>hi</gi>
@@ -1222,21 +1228,18 @@ elements are to use a different set, identified as <val>style2</val>:
 <hi>rendered in style2</hi></p>
 <p rendition="#style2">This paragraph is all rendered in style2</p>
 <p>This is back to style1</p>
-</egXML></p><p>As noted above, the content of the <gi>rendition</gi> element may
+</egXML></p>
+
+<p>As noted above, the content of a <gi>rendition</gi> element may
 describe the appearance of the source material using prose, a
 project-defined formal language, or either of the existing standard
 languages: the Cascading Stylesheet Language (<ptr target="#CSS1"/>)
 and the XML vocabulary for specifying formatting semantics which forms
-a part of the W3C's Extensible Stylesheet Language (<ptr target="#XSL11"/>). The <att>scheme</att> attribute indicates which of
-these applies to a given <gi>rendition</gi> element, and takes the
-following values:
-<!-- why can't i do a specList for a valList? -->
-<list type="gloss">
-<label>free</label><item>Informal free text description</item>
-<label>css</label><item>Cascading Stylesheet Language</item>
-<label>xslfo</label><item>Extensible  Stylesheet Language Formatting Objects</item>
-<label>other</label><item>A user-defined formal description language</item>
-</list>
+a part of the W3C's Extensible Stylesheet Language (<ptr
+target="#XSL11"/>). The <gi>styleDefDecl</gi> element (<ptr
+target="#HD57-1a"/>) may be used to specify which of these applies by default;
+it may be over-riden for one or more specific  <gi>rendition</gi>
+elements using the <att>source</att> attribute. 
 </p> 
 
 <p>In the following extended example we consider how to capture the
@@ -1252,16 +1255,19 @@ as font size and style, letter and line spacing, colour, etc. Note
 that the purpose of this encoding is to describe the original, rather
 than specify how it should be reproduced, although the two are
 obviously closely linked.
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><tagsDecl>
-  <rendition xml:id="center" scheme="css">text-align: center;</rendition>
-  <rendition xml:id="small" scheme="css">font-size: small;</rendition>
-  <rendition xml:id="large" scheme="css">font-size: large;</rendition>
-  <rendition xml:id="x-large" scheme="css">font-size: x-large;</rendition>
-  <rendition xml:id="xx-large" scheme="css">font-size: xx-large</rendition>
-  <rendition xml:id="expanded" scheme="css">letter-spacing: +3pt;</rendition>
-  <rendition xml:id="x-space" scheme="css">line-height: 150%;</rendition>
-  <rendition xml:id="xx-space" scheme="css">line-height: 200%;</rendition>
-  <rendition xml:id="red" scheme="css">color: red;</rendition>
+  <egXML xml:lang="und"
+	 xmlns="http://www.tei-c.org/ns/Examples"><styleDefDecl scheme="css"/>
+<!-- ... -->
+<tagsDecl>
+  <rendition xml:id="center" >text-align: center;</rendition>
+  <rendition xml:id="small" >font-size: small;</rendition>
+  <rendition xml:id="large" >font-size: large;</rendition>
+  <rendition xml:id="x-large" >font-size: x-large;</rendition>
+  <rendition xml:id="xx-large" >font-size: xx-large</rendition>
+  <rendition xml:id="expanded" >letter-spacing: +3pt;</rendition>
+  <rendition xml:id="x-space" >line-height: 150%;</rendition>
+  <rendition xml:id="xx-space" >line-height: 200%;</rendition>
+  <rendition xml:id="red" >color: red;</rendition>
 </tagsDecl>             </egXML>
 </p>
 <p>The global <att>rendition</att> attribute can now be used to
@@ -1288,16 +1294,17 @@ follows:
     </docImprint>
     </titlePage>
     </egXML></p>
-<p>When CSS is used as the underlying language, the <att>scope</att>
+<p>When CSS is used as the style definition language, the <att>scope</att>
 attribute may be used to specify CSS pseudo-elements. These
-pseudo-elements are used to target styling for only a portion of the
-given text. For example, there is a <code>first-letter</code>
-pseudo-element to target styling of the first letter in the targeted
-element, while there are the useful <code>before</code> and
-<code>after</code> pseudo-elements, used often in conjunction with the
-"content" property to add some styling characters (Unicode provides
-quite a few) before or after the element content, where these are
-useful to document the appearance of the source.</p>
+pseudo-elements are used to specify styling applicable to only a portion of the
+given text. For example, the  <code>first-letter</code>
+pseudo-element defines styling to be applied  to the first letter in the targeted
+element, while the <code>before</code> and
+<code>after</code> pseudo-elements can be used often in conjunction with the
+"content" property to add additional characters which need to be added
+before or after the
+element content to
+make it more closely resemble the appearance of the source.</p>
 <p>For example, assuming that a text has been encoded using the <gi>q</gi>
 element to enclose passages in quotation marks, but the quotation
 marks themselves have been routinely omitted from the encoding, a set of
@@ -1318,10 +1325,38 @@ ago...</q>
 </egXML>
 </p>
 </div>
-<div xml:id="HD57-2"><head>Tag usage</head><!--
-<p>A <gi>tagsDecl</gi> need not specify any <gi>rendition</gi>
-elements, but if there are any, they must precede any
-<gi>namescape</gi> element.-->
+<div xml:id="HD57-1a"><head>Setting the style definition
+language</head>
+<p>The content of  the <gi>rendition</gi> element and the value of the
+<att>style</att> attribute are expressed using one of a small number
+of formally defined languages. For ease of processing, it is strongly
+recommended to use a single such language throughout an encoding
+project, although the TEI system permits a mixture. </p>
+<p>The element <gi>styleDefDecl</gi> is used to supply the name of the
+default style definition language. The name is supplied as the value
+of the <att>source</att> attribute and may take any of the
+following values:
+<!-- why can't i do a specList for a valList? -->
+<list type="gloss">
+<label>free</label><item>Informal free text description</item>
+<label>css</label><item>Cascading Stylesheet Language</item>
+<label>xslfo</label><item>Extensible Stylesheet Language Formatting Objects</item>
+<label>other</label><item>A user-defined formal description
+language</item> </list>. The content of this element, if any, may
+supply additional information, such as the specific version of CSS
+used.
+</p>
+<p>When the <att>style</att> attribute is used, its value must always
+be expressed using whichever default style definition language is in
+force for the context in which it appears. That context may be varied
+using the <att>decls</att> attribute to select a specific
+<gi>styleDefDecl</gi> in the usual way; see further <ptr
+target="#CCAS"/>. </p>
+</div>
+
+
+<div xml:id="HD57-2"><head>Tag usage</head>
+
 <p>As noted above, each <gi>namespace</gi> element, if present,
 should contain exactly one occurrence of a <gi>tagUsage</gi> element
 for each distinct element from the given namespace that occurs within
@@ -1362,7 +1397,11 @@ with the number of such elements present in the document.<specGrp xml:id="DHD57"
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/tagsDecl.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/tagUsage.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/namespace.xml"/>
-<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/rendition.xml"/>
+<include xmlns="http://www.w3.org/2003/XInclude"
+	 href="../../Specs/rendition.xml"/>
+<include xmlns="http://www.w3.org/2003/XInclude"
+	 href="../../Specs/styleDefDecl.xml"/>
+
 </specGrp></p></div>
 </div>
 <div type="div3" xml:id="HD54"><head>The Reference System Declaration</head>
