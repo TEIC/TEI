@@ -6,7 +6,8 @@
   <xsl:param name="file"/>
   <xsl:template name="main">
     <xsl:for-each select="doc(concat($file,'.xml'))">
-      <xsl:result-document href="{/TEI/@n}.xml" indent="yes">
+      <xsl:variable name="Name" select="/*/@n"/>
+      <xsl:result-document href="{$Name}.xml" indent="yes">
       <xsl:processing-instruction name="xml-model">
 	<xsl:text>href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/</xsl:text>
 	<xsl:value-of select="$file"/>
@@ -21,7 +22,7 @@
       <xsl:apply-templates select="*|text()|comment|processing-instruction()"/>
     </xsl:result-document>
 
-    <xsl:result-document href="{/TEI/@n}.properties">
+    <xsl:result-document href="{$Name}.properties">
 smallIcon=../icons/TEI_16.gif
 bigIcon=../icons/TEI_48.png
     </xsl:result-document>

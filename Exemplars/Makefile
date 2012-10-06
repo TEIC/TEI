@@ -3,7 +3,6 @@ BIN=${PREFIX}/bin
 ODDS= \
 	tei_bare.dtd \
 	tei_corpus.dtd \
-	tei_dictionaries.dtd	\
 	tei_drama.dtd \
 	tei_minimal.dtd \
 	tei_ms.dtd \
@@ -36,7 +35,8 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	which rnv && rnv ../p5odds.rnc $*.xi
 	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
 	@echo Test schema built from $<
-	jing $*.rng $*.xml && echo $* validates OK
+	jing $*.rng $*.xml && echo $* test validates OK
+	jing $*.rng $*.template && echo $* template validates OK
 	@echo Validate using xmllint for DTD  
 	xmllint --dropdtd $*.xml | xmllint --noout --dtdvalid $*.dtd -
 	@echo Validate using Schematron
@@ -51,7 +51,8 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	which rnv && rnv ../p5odds.rnc $*.xi
 	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
 	@echo Test schema built from $<
-	jing $*.rng $*.xml && echo $* validates OK
+	jing $*.rng $*.xml && echo $* test validates OK
+	jing $*.rng $*.template && echo $* template validates OK
 	@echo Validate using Schematron
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
 	saxon $*.xml $*.xsl
@@ -63,7 +64,8 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	${ROMA} ${ROMAOPTS} ${SOURCE}--docflags="summaryDoc=true" --docpdf --dochtml $< .
 	teitoepub ${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
 	@echo Test schema built from $<
-	jing $*.rng $*.xml && echo $* validates OK
+	jing $*.rng $*.xml && echo $* test validates OK
+	jing $*.rng $*.template && echo $* template validates OK
 	@echo Validate using xmllint for DTD  
 	xmllint --dropdtd $*.xml | xmllint --noout --dtdvalid $*.dtd -
 	@echo Validate using Schematron
@@ -92,7 +94,8 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
-	cp `ls *.xml | grep -v '\.doc\.'` ../release/tei-p5-exemplars/share/xml/tei/custom/templates
+	cp `ls *.xml | grep -v '\.doc\.'` ../release/tei-p5-exemplars/share/xml/tei/custom/odd
+	cp *.template  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	cp *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	cp *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
@@ -107,6 +110,6 @@ clean:
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
 	rm -f names.xml
-	for i in $(ODDS); do echo rm `basename $$i .dtd`.xsl;done
-	for i in $(XODDS); do echo rm `basename $$i .rng`.xsl;done
-	for i in $(DOCODDS); do echo rm `basename $$i .doc.pdf`.xsl;done
+	for i in $(ODDS); do  rm -f  `basename $$i .dtd`.xsl;done
+	for i in $(XODDS); do  rm -f  `basename $$i .rng`.xsl;done
+	for i in $(DOCODDS); do  rm -f  `basename $$i .doc.pdf`.xsl;done
