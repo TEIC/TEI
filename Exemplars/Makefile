@@ -98,6 +98,7 @@ dist: schemas
 	for i in *.template; do saxon -it:main make_template.xsl file=`basename $$i .template`;done
 	cp *.tei *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.xml  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
+	cp *.properties  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	rm ../release/tei-p5-exemplars/share/xml/tei/custom/templates/*.doc.xml
 	cp *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
