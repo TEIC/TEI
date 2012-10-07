@@ -9,49 +9,16 @@
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
     <memberOf key="att.transcriptional"/>
-    <!--<memberOf key="model.pPart.editorial"/>-->
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="model.glossLike"/>
+      <choice>
+      <ref name="model.descLike"/>
+      <ref name="model.certLike"/>
+</choice>
     </zeroOrMore>
   </content>
-  <!--<attList>
-    <attDef ident="scope" usage="rec">
-      <equiv/>
-      <desc>indicates whether the targets to be joined include the entire element indicated (the entire subtree including its root), or just the children of the target (the branches of the subtree).</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">결합된 대상이 제시된 전체 요소(그 뿌리를 포함하는 전체 하부수형도) 또는 대상의 자식노드(하부수형도의 가지)의 포함 여부를 제시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出被連結的目標是否包含所指元素的完整部份 (完整樹狀圖包含根節點) ，或僅包含該目標的子元素 (樹狀分支部份) 。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> まとめられる対象が，要素全体(すなわち当該要素をルートとする部分 木全体)，またはその子要素(すなわち部分木の枝)であるかどうかを示 す． </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique si les cibles à réunir incluent l'intégralité de l'élément indiqué (le sous-arbre entier y compris sa racine) ou seulement les enfants de la cible (les branches du sous-arbre).</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica si las metas a enlazar incluyen el elemento entero indicado (el árbol entero con la raíz inclusive) o sólo los elementos que tienen como padre la misma meta (las ramas del árbol).</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica se le destinazioni da collegare includono l'intero elemento indicato (l'intero albero compresa la radice) oppure solo gli elementi che hanno come genitore la stessa destinazione (i rami dell'albero)</desc>
-      <defaultVal>root</defaultVal>
-      <valList type="closed">
-        <valItem ident="root">
-          <equiv/>
-          <desc>the rooted subtrees indicated by the targets attribute are joined, each subtree become a child of the virtual element created by the join</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">대상 속성에 의해 지시된 한 뿌리에 대한 하부수형도가 결합되고, 각 하부수형도는 결합에 의해 생성된 실제 요소의 자식 노드가 된다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">由屬性target所指明、具根節點的樹狀圖彼此連結，每個樹狀圖成為該連結所產生之虛擬元素的子元素。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">las subárboles arraigados indicados por los atributos targets</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 属性で示された根付き部分木がまとめられ，各部分木は，当該要素 で作られた仮想要素の子となる． </desc>
-          <desc versionDate="2009-10-06" xml:lang="fr">les sous-arbres dotés de leur racine qui sont désignés par l'attribut <att>targets</att> sont joints ; chaque sous-arbre devient un fils de l'élément virtuel créé par la jointure. </desc>
-          <desc versionDate="2007-01-21" xml:lang="it">gli alberi dotati di radice e indicati dall'attributo delle destinazioni sono collegati e ogni albero diventa un discendente dell'elemento virtuale ottenuto dal collegamento</desc>
-        </valItem>
-        <valItem ident="branches">
-          <equiv/>
-          <desc>the children of the subtrees indicated by the targets attribute become the children of the virtual element (i.e. the roots of the subtrees are discarded)</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">대상 속성에 의해 지시된 하부수형도의 자식은 실제 요소의 자식이 된다.(즉, 하부수형도의 뿌리는 없어진다)</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">由屬性target所指明的樹狀圖的子元素成為虛擬元素的子元素 (例如捨去樹狀圖的根節點) 。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">los hijos de los sub-árboles indicados por el atributo de los target se inician con los hijos del elemento virtual (es decir, las raíces de los sub-árboles se desechan)</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 属性で示された部分木の子は，仮想要素の子となる(すなわち，当 該部分木の根は捨てられる． </desc>
-          <desc versionDate="2009-10-06" xml:lang="fr">les fils des sous-arbres désignés par l'attribut <att>targets</att> deviennent les fils de l'élément virtuel (c'est-à-dire que les racines des sous-arbres disparaissent).</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">i discendenti degli alberi indicati dall'attributo delle destinazioni diventano i discendenti dell'elemento virtuale (cioè vengono rimosse le radici dei vari alberi)</desc>
-        </valItem>
-      </valList>
-    </attDef>
-  </attList>-->
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       While <del xml:id="r112">pondering</del> thus <add xml:id="r113">she mus'd</add>, her pinions fann'd<substJoin target="#r112 #r113"/>
