@@ -6,7 +6,16 @@
   <xsl:param name="file"/>
   <xsl:template name="main">
     <xsl:for-each select="doc(concat($file,'.template'))">
-      <xsl:variable name="Name" select="/*/@n"/>
+      <xsl:variable name="Name">
+	<xsl:choose>
+	  <xsl:when test="*/processing-instruction()[name()='name']">
+	    <xsl:value-of select="*/processing-instruction()[name()='name']"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="/*/@n"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:variable>
       <xsl:message>Create template <xsl:value-of select="$Name"/> from <xsl:value-of select="$file"/></xsl:message>
       <xsl:result-document href="{$Name}.xml" indent="yes">
       <xsl:processing-instruction name="xml-model">
@@ -32,6 +41,8 @@ bigIcon=../icons/TEI_48.png
     </xsl:for-each>
   </xsl:template>
   
+  <xsl:template match="/*/processing-instruction()[name()='name']"/>
+
   <xsl:template match="/*/@n"/>
 
   <xsl:template match="*">
