@@ -139,5 +139,55 @@ of this software, even if advised of the possibility of such damage.
       </em>: <xsl:apply-templates select="id($W)/catDesc"/>
    </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[html] create a list of authors, editors etc as a paragraph</desc>
+   </doc>
+  <xsl:template name="generateAuthorList">
+      <xsl:variable name="realauthor">
+         <xsl:call-template name="generateAuthor"/>
+      </xsl:variable>
+      <xsl:variable name="revauthor">
+         <xsl:call-template name="generateRevAuthor"/>
+      </xsl:variable>
+      <xsl:variable name="editor">
+        <xsl:call-template name="generateEditor"/>
+      </xsl:variable>
+      <xsl:if test="not($realauthor = '')">
+        <p xmlns="http://www.w3.org/1999/xhtml" class="mainAuthor">
+         <xsl:text> </xsl:text>
+         <xsl:call-template name="i18n">
+            <xsl:with-param name="word">authorWord</xsl:with-param>
+         </xsl:call-template>
+          <xsl:text>: </xsl:text>
+         <xsl:copy-of select="$realauthor"/>
+        </p>
+      </xsl:if>
+      <xsl:if test="not($revauthor = '')">
+      <p class="mainRevAuthor" xmlns="http://www.w3.org/1999/xhtml">
+         <xsl:text> (</xsl:text>
+         <xsl:call-template name="i18n">
+            <xsl:with-param name="word">revisedWord</xsl:with-param>
+         </xsl:call-template>
+         <xsl:text> </xsl:text>
+         <xsl:copy-of select="$revauthor"/>
+         <xsl:text>)</xsl:text>
+      </p>
+    </xsl:if>
+    <xsl:if test="not($editor = '')">
+      <p class="mainEditor" xmlns="http://www.w3.org/1999/xhtml">
+         <xsl:call-template name="i18n">
+            <xsl:with-param name="word">editorWord</xsl:with-param>
+         </xsl:call-template>
+        <xsl:text>: </xsl:text>
+        <xsl:copy-of select="$editor"/>
+      </p>
+      </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="generateEdition">
+    <p xmlns="http://www.w3.org/1999/xhtml" class="editionStmt">
+      <xsl:apply-templates select="/(tei:teiCorpus|tei:TEI)/tei:teiHeader/tei:fileDesc/tei:editionStmt"/>
+    </p>
+  </xsl:template>
 
 </xsl:stylesheet>
