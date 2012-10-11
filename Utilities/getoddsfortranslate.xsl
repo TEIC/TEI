@@ -6,9 +6,9 @@
  exclude-result-prefixes="teix rng tei"
  version="2.0">
 
-<xsl:param name="translang">de</xsl:param>
+<xsl:param name="translang">ru</xsl:param>
 
-<xsl:param name="transdate">2011-02-18</xsl:param>
+<xsl:param name="transdate">2012-10-11</xsl:param>
 
 <xsl:key name="MOD" match="tei:moduleSpec" use="1"/>
 <xsl:output method="xml"/>
