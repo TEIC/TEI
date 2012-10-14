@@ -157,12 +157,6 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element figure</desc>
    </doc>
   <xsl:template match="tei:figure">
-    <xsl:variable name="container">
-      <xsl:choose>
-	<xsl:when test="$outputTarget='html5'">figure</xsl:when>
-	<xsl:otherwise>div</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
     <xsl:choose>
       <xsl:when test="ancestor::tei:head or @rend='inline' or @place='inline'">
 	<xsl:apply-templates/>
@@ -171,23 +165,10 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:element name="{$container}">
-	  <xsl:choose>
-	    <xsl:when test="@rend">
-	      <xsl:attribute name="class">
-		<xsl:text>figure </xsl:text>
-		<xsl:value-of select="@rend"/>
-	      </xsl:attribute>
-	    </xsl:when>
-	    <xsl:when test="@rendition">
-	      <xsl:call-template name="applyRendition"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:attribute name="class">
-		<xsl:text>figure</xsl:text>
-	      </xsl:attribute>
-	    </xsl:otherwise>
-	  </xsl:choose>
+	<xsl:element name="{if ($outputTarget='html5') then 'figure'  else 'div'}">
+          <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="auto">figure</xsl:with-param>
+	  </xsl:call-template>
 	  <xsl:if test="@xml:id">
 	    <xsl:attribute name="id">
 	      <xsl:value-of select="@xml:id"/>
@@ -211,10 +192,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$outputTarget='html5'">
 	<figcaption>
-	  <xsl:if test="@rend">
-	    <xsl:attribute name="class" select="@rend"/>
-	  </xsl:if>
-	  <xsl:call-template name="rendering"/>
+          <xsl:call-template name="makeRendition"/>
 	  <xsl:if test="not($captionlabel='')">
 	    <xsl:text>. </xsl:text>
 	  </xsl:if>
@@ -223,7 +201,8 @@ of this software, even if advised of the possibility of such damage.
 	</figcaption>
       </xsl:when>
       <xsl:otherwise>
-	<span class="caption {@rend}">
+	<span class="caption">
+          <xsl:call-template name="makeRendition"/>
 	  <xsl:copy-of select="$captionlabel"/>
 	  <xsl:if test="not($captionlabel='')">
 	    <xsl:text>. </xsl:text>
@@ -251,15 +230,15 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:row">
       <tr>
-         <xsl:call-template name="rendToClass">
-	           <xsl:with-param name="default"/>
-         </xsl:call-template>
-         <xsl:if test="@role">
-            <xsl:attribute name="class">
-               <xsl:value-of select="@role"/>
-            </xsl:attribute>
-         </xsl:if>
-         <xsl:apply-templates/>
+	<xsl:call-template name="makeRendition">
+	  <xsl:with-param name="default">false</xsl:with-param>
+	</xsl:call-template>
+	<xsl:if test="@role">
+	  <xsl:attribute name="class">
+	    <xsl:value-of select="@role"/>
+	  </xsl:attribute>
+	</xsl:if>
+	<xsl:apply-templates/>
       </tr>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -278,9 +257,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:call-template name="makeAnchor"/>
 	 </xsl:if>
 	 <table>
-	   <xsl:call-template name="rendToClass">
-	     <xsl:with-param name="id">false</xsl:with-param>
-	   </xsl:call-template>
+	   <xsl:call-template name="makeRendition"/>
 	   <xsl:if test="@rend='frame' or @rend='rules'">
 	     <xsl:attribute name="rules">all</xsl:attribute>
 	     <xsl:attribute name="border">1</xsl:attribute>
@@ -325,7 +302,7 @@ of this software, even if advised of the possibility of such damage.
                </xsl:attribute>
 	           </xsl:when>
 	           <xsl:when test="@rendition">
-	              <xsl:call-template name="applyRendition"/>
+	              <xsl:call-template name="makeRendition"/>
 	           </xsl:when>
          </xsl:choose>
          <xsl:for-each select="@*">
@@ -439,7 +416,7 @@ of this software, even if advised of the possibility of such damage.
 		    <xsl:value-of select="@xml:id"/>
 		  </xsl:attribute>
 		</xsl:if>
-		<xsl:call-template name="rendToClass"/>
+		<xsl:call-template name="makeRendition"/>
 		<xsl:if test="@width">
 		  <xsl:call-template name="setDimension">
 		    <xsl:with-param name="value">

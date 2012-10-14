@@ -125,30 +125,16 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:roleDesc">
       <blockquote>
-	        <xsl:choose>
-	           <xsl:when test="@rend">
-	              <xsl:attribute name="class">
-		                <xsl:value-of select="@rend"/>
-	              </xsl:attribute>
-	           </xsl:when>
-	           <xsl:when test="@rendition">
-		             <xsl:call-template name="applyRendition"/>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:attribute name="class">
-		                <xsl:text>roleDesc</xsl:text>
-	              </xsl:attribute>
-	           </xsl:otherwise>
-	        </xsl:choose>
+	<xsl:call-template name="makeRendition"/>
          <xsl:choose>
-            <xsl:when test="tei:p">
-               <xsl:apply-templates/>
-            </xsl:when>
-            <xsl:otherwise>
-               <p>
-                  <xsl:apply-templates/>
-               </p>
-            </xsl:otherwise>
+	   <xsl:when test="tei:p">
+	     <xsl:apply-templates/>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <p>
+	       <xsl:apply-templates/>
+	     </p>
+	   </xsl:otherwise>
          </xsl:choose>
       </blockquote>
   </xsl:template>
@@ -196,20 +182,21 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:apply-templates select="."/>
 	      <div>
 		<xsl:for-each select="..">
-		  <xsl:call-template name="rendToClass">      
-		    <xsl:with-param name="default">p-in-sp</xsl:with-param>
-		    <xsl:with-param name="id">
-		      <xsl:choose>
-			<xsl:when test="@xml:id">
-			  <xsl:value-of select="@xml:id"/>
-			  <xsl:text>continued</xsl:text>
-			</xsl:when>
-			<xsl:otherwise>
-			  <xsl:text>false</xsl:text>
-			</xsl:otherwise>
-		      </xsl:choose>
-		    </xsl:with-param>
+		  <xsl:call-template name="makeRendition">
+		    <xsl:with-param
+			name="default">p-in-sp</xsl:with-param>
 		  </xsl:call-template>
+		  <xsl:attribute name="id">
+		    <xsl:choose>
+		      <xsl:when test="@xml:id">
+			<xsl:value-of select="@xml:id"/>
+			<xsl:text>continued</xsl:text>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:text>false</xsl:text>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:attribute>
 		</xsl:for-each>
 		<xsl:apply-templates select="current-group() except ."/>
 	      </div>
@@ -217,7 +204,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:otherwise>
 	      <div>
 		<xsl:for-each select="..">
-		  <xsl:call-template name="rendToClass">      
+		  <xsl:call-template name="makeRendition">
 		    <xsl:with-param name="default">p-in-sp</xsl:with-param>
 		  </xsl:call-template>
 		</xsl:for-each>
@@ -229,7 +216,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
 	<div>
-	  <xsl:call-template name="rendToClass">      
+	  <xsl:call-template name="makeRendition">      
 	    <xsl:with-param name="default">p-in-sp</xsl:with-param>
 	  </xsl:call-template>
 	  <xsl:apply-templates/>
@@ -243,7 +230,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:stage">
     <xsl:element name="{if (tei:blockContext(.) or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
-      <xsl:call-template name="rendToClass">
+      <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default">
 	  <xsl:choose>
 	    <xsl:when

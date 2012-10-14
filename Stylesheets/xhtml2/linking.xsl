@@ -344,33 +344,10 @@ select="$result"/></xsl:message>
       <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/>
       </xsl:param>
       <a>
-        <xsl:choose>
-            <xsl:when test="@rend">
-	              <xsl:attribute name="class">
-	                 <xsl:value-of select="@rend"/>
-	              </xsl:attribute>
-            </xsl:when>
-	           <xsl:when test="@rendition">
-	              <xsl:call-template name="applyRendition"/>
-	           </xsl:when>
-            <xsl:when test="parent::tei:item/parent::tei:list[@rend]">
-	              <xsl:attribute name="class">
-	                 <xsl:value-of select="parent::tei:item/parent::tei:list/@rend"/>
-	              </xsl:attribute>
-            </xsl:when>
-	           <xsl:when test="parent::tei:item[@rend]">
-	              <xsl:attribute name="class">
-	                 <xsl:value-of select="parent::tei:item/@rend"/>
-	              </xsl:attribute>
-            </xsl:when>
-            <xsl:otherwise>
-	              <xsl:attribute name="class">
-	                 <xsl:value-of select="$class"/>
-	              </xsl:attribute>
-            </xsl:otherwise>
-        </xsl:choose>
-
-         <xsl:if test="@type and not($outputTarget='epub3' or $outputTarget='html5')">
+	<xsl:call-template name="makeRendition">
+	  <xsl:with-param name="default" select="$class"/>
+	</xsl:call-template>
+	<xsl:if test="@type and not($outputTarget='epub3' or $outputTarget='html5')">
             <xsl:attribute name="type">
                <xsl:value-of select="@type"/>
             </xsl:attribute>
@@ -502,23 +479,9 @@ select="$result"/></xsl:message>
 	     <xsl:otherwise>
 	       <a href="{$eventualtarget}">
 		 <xsl:call-template name="htmlAttributes"/>
-		 <xsl:choose>
-		   <xsl:when test="@rend">
-		     <xsl:attribute name="class">
-		       <xsl:value-of select="@rend"/>
-		     </xsl:attribute>
-		   </xsl:when>
-		   <xsl:when test="@rendition">
-		     <xsl:call-template name="applyRendition"/>
-		   </xsl:when>
-		   <xsl:when test="string-length($class)=0"/>
-		   <xsl:otherwise>
-		     <xsl:attribute name="class">
-		       <xsl:value-of select="$class"/>
-		     </xsl:attribute>
-		   </xsl:otherwise>
-		 </xsl:choose>
-		 
+		 <xsl:call-template name="makeRendition">
+		   <xsl:with-param name="default" select="$class"/>
+		 </xsl:call-template>		 
 		 <xsl:for-each select="id($W)">
 		     <xsl:choose>
 		       <xsl:when test="starts-with(local-name(.),'div')">

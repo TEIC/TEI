@@ -779,34 +779,13 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template match="tei:docTitle|tei:docAuthor|tei:docImprint|tei:titlePage/tei:titlePart|tei:docDate">
-    <xsl:variable name="container">
-      <xsl:choose>
-	<xsl:when test="parent::tei:titlePage">
-	 <xsl:text>div</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	 <xsl:text>span</xsl:text>
-	</xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:element name="{$container}">
+    <xsl:element name="{if (parent::tei:titlePage) then 'div' else 'span'}">
       <xsl:call-template name="microdata"/>
-      <xsl:choose>
-	<xsl:when test="@rendition">
-	  <xsl:call-template name="applyRendition"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:call-template name="rendToClass">
-	    <xsl:with-param name="default">
-	      <xsl:value-of select="local-name()"/>
-	    </xsl:with-param>
-	  </xsl:call-template>
-	</xsl:otherwise>
-      </xsl:choose>
+      <xsl:call-template name="makeRendition"/>
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
-
+  
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element opener</desc>
@@ -971,12 +950,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="doDivBody">
       <xsl:param name="Depth"/>
       <xsl:param name="nav">false</xsl:param>
-      <xsl:variable name="container">
-	<xsl:choose>
-	  <xsl:when test="$outputTarget='html5'">section</xsl:when>
-	  <xsl:otherwise>div</xsl:otherwise>
-	</xsl:choose>
-      </xsl:variable>
       <xsl:choose>
 	<xsl:when test="$filePerPage='true'">
 	    <xsl:call-template name="startDivHook"/>
@@ -986,7 +959,7 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:call-template>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:element name="{$container}">
+	  <xsl:element name="{if ($outputTarget='html5') then 'section' else 'div'}">
 	    <xsl:call-template name="microdata"/>
 	    <xsl:call-template name="divClassAttribute">
 	      <xsl:with-param name="depth" select="$Depth"/>
@@ -1018,10 +991,17 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:if test="not($Depth = '')">
 		<xsl:element name="h{$Depth + $divOffset}">
 		  <xsl:for-each select="tei:head[1]">		
-		    <xsl:call-template name="rendToClass">
-		      <xsl:with-param name="default"/>
+		    <xsl:call-template name="makeRendition">
+		      <xsl:with-param name="default">false</xsl:with-param>
 		    </xsl:call-template>
 		 </xsl:for-each>
+		 <xsl:if test="@xml:id">
+		   <xsl:call-template name="makeAnchor">
+		     <xsl:with-param name="name">
+		       <xsl:value-of select="@xml:id"/>
+		     </xsl:with-param>
+		   </xsl:call-template>
+		 </xsl:if>
 		 <xsl:call-template name="header">
 		   <xsl:with-param name="display">full</xsl:with-param>
 		 </xsl:call-template>
@@ -1046,22 +1026,23 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:if test="not($Depth = '')">
 	     <xsl:variable name="Heading">
 	       <xsl:element name="{if (number($Depth)+$divOffset &gt;6) then 'div'
-				  else concat('h',number($Depth) + $divOffset)}">
+				  else concat('h',number($Depth) +
+				  $divOffset)}">
 		 <xsl:choose>
 		   <xsl:when test="@rend">
-		     <xsl:call-template name="rendToClass">
-		       <xsl:with-param
-			   name="id">false</xsl:with-param>
-		     </xsl:call-template>
+		     <xsl:call-template name="makeRendition"/>
 		   </xsl:when>
 		   <xsl:otherwise>
 		     <xsl:for-each select="tei:head[1]">
-		       <xsl:call-template name="rendToClass">
+		       <xsl:call-template name="makeRendition">
 			 <xsl:with-param name="default">
-			   <xsl:if test="number($Depth)&gt;5">
+			   <xsl:choose>
+			     <xsl:when test="number($Depth)&gt;5">
 			     <xsl:text>div</xsl:text>
 			     <xsl:value-of select="$Depth"/>
-			   </xsl:if>
+			   </xsl:when>
+			   <xsl:otherwise>false</xsl:otherwise>
+			   </xsl:choose>
 			 </xsl:with-param>
 		       </xsl:call-template>
 		     </xsl:for-each>
