@@ -506,7 +506,7 @@ clean:
 	*.isosch.xsl \
 	tei-*.zip \
 	Test/*.isosch \
-	ps5ubset.xml p5.xml \
+	p5subset.xml p5subset.json p5.xml \
 	Utilities/guidelines.xsl Utilities-1/guidelines.xsl
 	find . -name "semantic.cache" | xargs rm -f
 	(cd Test; make clean)
