@@ -134,7 +134,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <div>
-          <xsl:call-template name="makeRendition"/>
+          <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default">false</xsl:with-param>
+	  </xsl:call-template>
           <xsl:apply-templates/>
         </div>
       </xsl:otherwise>

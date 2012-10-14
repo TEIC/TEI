@@ -257,7 +257,9 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:call-template name="makeAnchor"/>
 	 </xsl:if>
 	 <table>
-	   <xsl:call-template name="makeRendition"/>
+	   <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default">false</xsl:with-param>
+	  </xsl:call-template>
 	   <xsl:if test="@rend='frame' or @rend='rules'">
 	     <xsl:attribute name="rules">all</xsl:attribute>
 	     <xsl:attribute name="border">1</xsl:attribute>
