@@ -2347,7 +2347,12 @@ of this software, even if advised of the possibility of such damage.
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] Look up rend value <param name="value">value</param>
+    <desc>[html] Look up rend value <param
+    name="value">value</param>. We recognize some
+    simple cases, and turn them into inline @style, otherwise
+    we use the @rend to make a corresponding @class reference.
+    The special cases for super and subscript have been dealt with
+    separately, so ignore them.
       </desc>
   </doc>
   <xsl:function name="tei:applyRend" as="node()*">
