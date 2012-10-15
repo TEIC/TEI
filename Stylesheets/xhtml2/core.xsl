@@ -1493,14 +1493,6 @@ of this software, even if advised of the possibility of such damage.
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element p[@rend='box']</desc>
-  </doc>
-  <xsl:template match="tei:p[@rend='box']">
-    <p class="box">
-      <xsl:apply-templates/>
-    </p>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element q and tei:said</desc>
   </doc>
   <xsl:template match="tei:q[@rend='inline margQuotes' or

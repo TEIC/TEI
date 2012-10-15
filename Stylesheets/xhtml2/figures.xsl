@@ -297,16 +297,9 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:table[@rend='simple']">
       <table>
-         <xsl:choose>
-	           <xsl:when test="@rend">
-	              <xsl:attribute name="class">
-	                 <xsl:value-of select="@rend"/>
-               </xsl:attribute>
-	           </xsl:when>
-	           <xsl:when test="@rendition">
-	              <xsl:call-template name="makeRendition"/>
-	           </xsl:when>
-         </xsl:choose>
+	<xsl:call-template name="makeRendition">
+	  <xsl:with-param name="default">false</xsl:with-param>
+	</xsl:call-template>
          <xsl:for-each select="@*">
             <xsl:if test="name(.)='summary'    or name(.) = 'width'    or name(.) = 'border'    or name(.) = 'frame'    or name(.) = 'rules'    or name(.) = 'cellspacing'    or name(.) = 'cellpadding'">
                <xsl:copy-of select="."/>
