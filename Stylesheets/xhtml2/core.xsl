@@ -2267,61 +2267,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="auto"/>
     <xsl:choose>
       <xsl:when test="@rend">
-	<xsl:variable name="values">
-	  <values xmlns="">
-	  <xsl:if test="not($auto='')">	    
-	    <c><xsl:value-of select="$auto"/></c>
-	  </xsl:if>
-	  <xsl:for-each select="tokenize(normalize-space(@rend),' ')">
-	    <xsl:choose>
-	      <xsl:when test=".='bold' or .='bo'"><s>font-weight:bold</s></xsl:when>
-	      <xsl:when test=".='calligraphic' or .='cursive'"><s>font-family:cursive</s></xsl:when>
-	      <xsl:when test="starts-with(.,'color(')"><s>
-		<xsl:text>color:</xsl:text>
-		<xsl:value-of select="substring-before(substring-after(.,'('),')')"/>
-	      </s>
-	      </xsl:when>
-	      <xsl:when test=".='center'"><s>text-align: center</s></xsl:when>
-	      <xsl:when test=".='expanded'"><s>letter-spacing: 0.15em</s></xsl:when>
-	      <xsl:when test=".='gothic'"><s>font-family: Papyrus, fantasy</s></xsl:when>
-	      <xsl:when test=".='italics' or .='italic' or  .='cursive' or .='it' or .='ital'"><s>font-style: italic</s></xsl:when>
-	      <xsl:when test=".='large'"><s>font-size: 150%</s></xsl:when>
-	      <xsl:when test=".='larger'"><s>font-size: 200%</s></xsl:when>
-	      <xsl:when test=".='overbar'"><s>text-decoration:overline</s></xsl:when>
-	      <xsl:when test=".='ro' or .='roman'"><s>font-style: normal</s></xsl:when>
-	      <xsl:when test=".='sc' or .='smcap' or .='smallcaps'"><s>font-variant: small-caps</s></xsl:when>
-	      <xsl:when test=".='small'"><s>font-size: 75%</s></xsl:when>
-	      <xsl:when test=".='smaller'"><s>font-size: 50%</s></xsl:when>
-	      <xsl:when test=".='strike'"><s>text-decoration: line-through</s></xsl:when>
-	      <xsl:when test=".='ul'"><s>text-decoration:underline</s></xsl:when>
-	      <xsl:when test=".='underline'"><s>text-decoration:underline</s></xsl:when>
-	      <xsl:when test=".='sub' or .='sup' or .='code' or	.='superscript' or .='subscript'"/>
-	      <xsl:when test=".='plain'"/>
-	      <xsl:otherwise><c><xsl:value-of select="."/></c></xsl:otherwise>
-	    </xsl:choose>	  
-	  </xsl:for-each>
-	  </values>
-	</xsl:variable>
-	<xsl:if test="$values/values/c">
-	  <xsl:attribute name="class">
-	    <xsl:value-of select="$values/values/c"/>
-	  </xsl:attribute>
-	</xsl:if>
-	<xsl:if test="$values/values/s">
-	  <xsl:attribute name="style">
-	    <xsl:value-of select="$values/values/s" separator=';'/>
-	  </xsl:attribute>
-	</xsl:if>
+	<xsl:sequence select="tei:applyRend(@rend,$auto)"/>
       </xsl:when>
       <xsl:when test="@rendition or @style">
-	<xsl:for-each select="@rendition">
-	  <xsl:attribute name="class">
-	    <xsl:if test="not($auto='')">
-	      <xsl:value-of select="$auto"/>
-	      <xsl:text> </xsl:text>
-	    </xsl:if>
-	    <xsl:sequence select="tei:findRendition(.)"/>
-	  </xsl:attribute>
+	<xsl:for-each select="@rendition">	  
+	  <xsl:sequence select="tei:applyRendition(.,$auto)"/>
 	</xsl:for-each>
 	<xsl:for-each select="@style">
 	  <xsl:attribute name="style">
@@ -2331,13 +2281,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="key('TAGREND','local-name(.)')">
 	<xsl:for-each select="key('TAGREND',local-name())">
-	  <xsl:attribute name="class">
-	    <xsl:if test="not($auto='')">
-	      <xsl:value-of select="$auto"/>
-	      <xsl:text> </xsl:text>
-	    </xsl:if>
-	    <xsl:sequence select="tei:findRendition(@render)"/>
-	  </xsl:attribute>
+	  <xsl:sequence select="tei:applyRendition(@render,$auto)"/>
 	</xsl:for-each>
       </xsl:when>
       <xsl:when test="$default='false'"/>
@@ -2370,30 +2314,91 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="microdata"/>
     </xsl:if>  
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Look up rendition value <param name="value">value</param>
       </desc>
   </doc>
-  <xsl:function name="tei:findRendition" as="xs:string">
+  <xsl:function name="tei:applyRendition" as="node()*">
     <xsl:param name="value"/>
-    <xsl:variable name="values">
-      <xsl:for-each select="tokenize(normalize-space($value),' ')">
-	<xsl:choose>
-	  <xsl:when test="starts-with(.,'#')">
-	    <xsl:value-of select="substring-after(.,'#')"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:for-each select="document(.)">
-	      <xsl:apply-templates select="@xml:id"/>
-	    </xsl:for-each>
-	  </xsl:otherwise>
-	</xsl:choose>
+    <xsl:param name="auto"/>
+    <xsl:attribute name="class">
+      <xsl:if test="not($auto='')">
+	<xsl:value-of select="$auto"/>
 	<xsl:text> </xsl:text>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:value-of select="normalize-space($values)"/>
+      </xsl:if>      
+      <xsl:variable name="values">
+	<xsl:for-each select="tokenize(normalize-space($value),' ')">
+	  <xsl:choose>
+	    <xsl:when test="starts-with(.,'#')">
+	      <xsl:value-of select="substring-after(.,'#')"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:for-each select="document(.)">
+		<xsl:apply-templates select="@xml:id"/>
+	      </xsl:for-each>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:text> </xsl:text>
+	</xsl:for-each>
+      </xsl:variable>
+      <xsl:value-of select="normalize-space($values)"/>
+    </xsl:attribute>
   </xsl:function>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] Look up rend value <param name="value">value</param>
+      </desc>
+  </doc>
+  <xsl:function name="tei:applyRend" as="node()*">
+    <xsl:param name="value"/>
+    <xsl:param name="auto"/>
+    <xsl:variable name="values">
+      <values xmlns="">
+	<xsl:if test="not($auto='')">	    
+	  <c><xsl:value-of select="$auto"/></c>
+	</xsl:if>
+	<xsl:for-each select="tokenize(normalize-space($value),' ')">
+	  <xsl:choose>
+	    <xsl:when test=".='bold' or .='bo'"><s>font-weight:bold</s></xsl:when>
+	    <xsl:when test=".='calligraphic' or .='cursive'"><s>font-family:cursive</s></xsl:when>
+	    <xsl:when test="starts-with(.,'color(')"><s>
+	      <xsl:text>color:</xsl:text>
+	      <xsl:value-of select="substring-before(substring-after(.,'('),')')"/>
+	    </s>
+	    </xsl:when>
+	    <xsl:when test=".='center'"><s>text-align: center</s></xsl:when>
+	    <xsl:when test=".='expanded'"><s>letter-spacing: 0.15em</s></xsl:when>
+	    <xsl:when test=".='gothic'"><s>font-family: Papyrus, fantasy</s></xsl:when>
+	    <xsl:when test=".='italics' or .='italic' or  .='cursive' or .='it' or .='ital'"><s>font-style: italic</s></xsl:when>
+	    <xsl:when test=".='large'"><s>font-size: 150%</s></xsl:when>
+	    <xsl:when test=".='larger'"><s>font-size: 200%</s></xsl:when>
+	    <xsl:when test=".='overbar'"><s>text-decoration:overline</s></xsl:when>
+	    <xsl:when test=".='ro' or .='roman'"><s>font-style: normal</s></xsl:when>
+	    <xsl:when test=".='sc' or .='smcap' or .='smallcaps'"><s>font-variant: small-caps</s></xsl:when>
+	    <xsl:when test=".='small'"><s>font-size: 75%</s></xsl:when>
+	    <xsl:when test=".='smaller'"><s>font-size: 50%</s></xsl:when>
+	    <xsl:when test=".='strike'"><s>text-decoration: line-through</s></xsl:when>
+	    <xsl:when test=".='ul'"><s>text-decoration:underline</s></xsl:when>
+	    <xsl:when test=".='underline'"><s>text-decoration:underline</s></xsl:when>
+	    <xsl:when test=".='sub' or .='sup' or .='code' or	.='superscript' or .='subscript'"/>
+	    <xsl:when test=".='plain'"/>
+	    <xsl:otherwise><c><xsl:value-of select="."/></c></xsl:otherwise>
+	  </xsl:choose>	  
+	</xsl:for-each>
+      </values>
+    </xsl:variable>
+    <xsl:if test="$values/values/c">
+      <xsl:attribute name="class">
+	<xsl:value-of select="$values/values/c"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="$values/values/s">
+      <xsl:attribute name="style">
+	<xsl:value-of select="$values/values/s" separator=';'/>
+      </xsl:attribute>
+    </xsl:if>    
+  </xsl:function>
 </xsl:stylesheet>
 <!--
       <xsl:when test="$value='quoted'">
