@@ -267,7 +267,7 @@ p5subset.xml: check
 	touch p5subset.xml
 
 p5subset.json: p5subset.xml
-	${SAXON} -o:p5subset.json p5subset.xml ${XSL}/odds2/odd2json.xsl
+	${SAXON} -o:p5subset.json p5subset.xml ${XSL}/odds2/odd2json.xsl callback=teijs
 
 dist-source.stamp: check p5subset.json oddschema exampleschema
 	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl.model
