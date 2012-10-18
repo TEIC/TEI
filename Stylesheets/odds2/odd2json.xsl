@@ -182,7 +182,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:for-each select="distinct-values(//*[@module]/@module)">
 	  <xsl:text>{"ident":"</xsl:text>
 	  <xsl:value-of select="."/>
-	  <xsl:text>}</xsl:text>
+	  <xsl:text>"}</xsl:text>
 	  <xsl:if test="not(position() = last())">,</xsl:if>
 	  <xsl:text>&#10;</xsl:text>
 	</xsl:for-each>
