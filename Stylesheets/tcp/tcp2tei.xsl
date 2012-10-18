@@ -305,57 +305,75 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="HEADNOTE[P/FIGURE and
 		       not(following-sibling::HEAD or following-sibling::OPENER)]">
-    <xsl:apply-templates />
+    <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
   </xsl:template>
 
   <xsl:template match="ARGUMENT[count(*)=1]/HEAD">
     <p>
-      <xsl:apply-templates />
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </p>
   </xsl:template>
 
   <xsl:template match="HEADNOTE[count(*)=1]/HEAD">
     <p>
-      <xsl:apply-templates />
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </p>
   </xsl:template>
 
   <xsl:template match="HEADNOTE">
     <argument>
-      <xsl:apply-templates />
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </argument>
   </xsl:template>
 
   <xsl:template match="TAILNOTE[count(*)=1]/HEAD">
     <p>
-      <xsl:apply-templates />
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </p>
   </xsl:template>
 
   <xsl:template match="TAILNOTE">
     <argument>
-      <xsl:apply-templates />
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </argument>
   </xsl:template>
 
   <xsl:template match="FIGURE/BYLINE">
     <signed>
-      <xsl:apply-templates />
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </signed>
   </xsl:template>
 
   <xsl:template match="STAGE/STAGE">
-    <xsl:apply-templates />
+    <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
   </xsl:template>
 
   <xsl:template match="STAGE[following-sibling::HEAD]">
     <head type="sub">
       <stage>
-	<xsl:apply-templates />
+	<xsl:apply-templates  select="@*|*|processing-instruction()|comment()|text()" />
       </stage>
     </head>
   </xsl:template>
 
+  <xsl:template match="CLOSER">
+    <xsl:choose>
+      <xsl:when test="POSTSCRIPT">
+	<closer>
+	  <xsl:apply-templates
+	      select="@*|*[not(self::POSTSCRIPT)]|processing-instruction()|comment()|text()"
+	      />
+	</closer>
+	<xsl:apply-templates select="POSTSCRIPT"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<closer>
+	  <xsl:apply-templates
+	      select="@*|*|processing-instruction()|comment()|text()" />
+	</closer>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   <!-- TCP non-controversial transforms -->
   <xsl:template match="ROW/PB" />
   <xsl:template match="ROW[PB]">
