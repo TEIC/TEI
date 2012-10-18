@@ -88,7 +88,8 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
-   
+   <xsl:param name="callback"/>
+
    <xsl:template name="emphasize">
       <xsl:param name="class"/>
       <xsl:param name="content"/>
@@ -148,6 +149,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="dq">"</xsl:variable>
   <xsl:variable name="escdq">\\"</xsl:variable>
   <xsl:template match="/">
+    <xsl:if test="not($callback='')">
+      <xsl:value-of select="$callback"/>
+      <xsl:text>(</xsl:text>
+    </xsl:if>
     <xsl:text>{"title": "</xsl:text>
     <xsl:call-template name="generateTitle"/>
     <xsl:text>","edition": "</xsl:text>
@@ -160,6 +165,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:sort select="@ident"/>
       <xsl:text>{"ident":"</xsl:text>
       <xsl:value-of select="@ident"/>
+      <xsl:text>",</xsl:text>
+      <xsl:text>"id":"</xsl:text>
+      <xsl:value-of select="ancestor::tei:div[last()]/@xml:id"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
       <xsl:call-template name="mode"/>
@@ -324,6 +332,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
     <xsl:text>]</xsl:text>
     <xsl:text>}</xsl:text>
+    <xsl:if test="not($callback='')">
+      <xsl:text>)</xsl:text>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="bitOut">
