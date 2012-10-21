@@ -2897,7 +2897,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:attribute name="dir" select="@its:dir"/>
       </xsl:if>
       <xsl:call-template name="makeRendition">
-	<xsl:with-param name="auto">
+	<xsl:with-param name="default">
 	  <xsl:choose>
 	    <xsl:when test="@type">
 	      <xsl:value-of select="@type"/>
