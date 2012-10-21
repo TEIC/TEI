@@ -470,7 +470,7 @@ the new attribute, but also an <gi>attList</gi> to hold it. </p>
 <p>We begin by  adding the new <att>source</att> attribute:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change">
 <attList>
-<attDef ident="source" mode="add" ns="http://www.example.org/ns/nonTEI">
+<attDef ident="source" mode="add" ns="http://www.example.com/ns/nonTEI">
 <desc>specifies the source of an example by pointing to a
 single bibliographic reference for it</desc>
 <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" maxOccurs="1">
@@ -519,9 +519,10 @@ source of our examples is that each comes from one of three predefined
 sources, which we call A, B, and C. A declaration like the following
 might be appropriate:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full">
+<elementSpec ident="eg" module="tagdocs" mode="change">
 <attList>
-<attDef ident="source" ns="http://example.com/ns" mode="add">
+<attDef ident="source" ns="http://www.example.com/ns/notTEI" mode="add">
 <desc>specifies the source of an example by supplying one of three
 predefined codes for it.</desc>
 <datatype xmlns:rng="http://relaxng.org/ns/structure/1.0" maxOccurs="1">
@@ -570,7 +571,7 @@ all that is needed is to supply a  new <gi>memberOf</gi> element
 within the <gi>classes</gi> element for the element concerned.
 For example, to add an element to the <ident type="class">att.typed</ident> class, we include a declaration like
 the following:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change" ns="http://example.com/ns">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="eg" module="tagdocs" mode="change"  ns="http://www.example.com/ns/notTEI">
   <classes mode="change">
     <memberOf key="att.typed"/>
   </classes>
@@ -578,8 +579,6 @@ the following:
 being changed are not affected because the <att>mode</att> attribute
 of the <gi>classes</gi> element is set to <val>change</val> (rather
 than its default value of <val>replace</val>). 
-<!--The <att>mode</att> attribute <gi>memberOf</gi> has an implicit
-value here <val>add</val>. -->
 Consequently, in this
 case, the <gi>eg</gi> element retains its membership of the two
 classes (<ident type="class">model.common</ident> and <ident type="class">model.graphicLike</ident>) to which it already belongs.
@@ -592,7 +591,7 @@ attribute classes, <ident type="class">att.typed</ident> and <ident type="class"
 <att>type</att> and <att>subtype</att> from the former, and the
 attribute <att>decls</att> from the latter. To remove the last of these
 attributes from this element, we need to remove it from that class:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change" ns="http://example.com/ns">
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change">
   <classes mode="change">
     <memberOf key="att.declaring" mode="delete"/>
   </classes>
@@ -607,7 +606,7 @@ indicating that the memberships indicated by
 its child <gi>memberOf</gi> elements are the only ones
 applicable. 
 Thus the following
-declaration: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change" ns="http://example.com/ns">
+declaration: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="term" module="core" mode="change" ns="http://www.example.com/ns/notTEI">
   <classes mode="replace">
     <memberOf key="att.interpLike"/>
   </classes>
@@ -690,7 +689,7 @@ inaccessible within a TEI document. </p>
 <gi scheme="imaginary">myBibl</gi>) to this class, we need to include in the
 <gi>elementSpec</gi> defining our new element a <gi>memberOf</gi>
 element which nominates the intended class:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="myBibl" mode="add" ns="http://www.example.com/ns/">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><elementSpec ident="myBibl" mode="add" ns="http://www.example.com/ns/notTEI">
 <classes><memberOf key="model.biblLike"/></classes> 
 <!-- other parts of the new declaration here -->
 </elementSpec></egXML> The other parts
@@ -1443,7 +1442,7 @@ also used to process the source of these Guidelines, adopt this approach.</p>
 <head>Making a Unified ODD</head>
 <p>An ODD  customization must contain a single <gi>schemaSpec</gi>
 element, which defines the schema to be constructed.  
- <specList> <specDesc key="schemaSpec" atts="ns start prefix  targetLang docLang"/> 
+ <specList> <specDesc key="schemaSpec" atts="start prefix  targetLang docLang"/> 
  </specList>
 Amongst other attributes inherited from the <ident type="class">att.identified</ident> class, this element also carries a
 required <att>ident</att> attribute. This provides a name for the

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -27,16 +27,16 @@ $Id$
     <memberOf key="att.global"/>
     <memberOf key="model.oddDecl"/>
     <memberOf key="att.identified"/>
+    <memberOf key="att.namespaceable"/>
   </classes>
   <content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
-
       <zeroOrMore>
-<choice>
-        <ref name="model.glossLike"/>
-    <ref name="model.descLike"/>
-</choice>      </zeroOrMore>
-
+        <choice>
+          <ref name="model.glossLike"/>
+          <ref name="model.descLike"/>
+        </choice>
+      </zeroOrMore>
       <optional>
         <ref name="classes"/>
       </optional>
@@ -65,38 +65,14 @@ $Id$
   </content>
   <constraintSpec ident="elementspec-in-module" scheme="isoschematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" 
-        test="not( @module )
-              or
-              //tei:moduleSpec[ @ident = current()/@module ]
-              or
-              //tei:moduleRef[ @key = current()/@module ]">Element <value-of select="@ident"/>: the value of the module attribute ("<value-of select="@module"/>") should correspond to an existing module, via a moduleSpec or moduleRef</assert>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="not( @module )
+               or
+               //tei:moduleSpec[ @ident = current()/@module ]
+               or
+               //tei:moduleRef[ @key = current()/@module ]">Element <value-of select="@ident"/>: the value of the module attribute ("<value-of select="@module"/>") should correspond to an existing module, via a moduleSpec or moduleRef</assert>
     </constraint>
   </constraintSpec>
   <attList>
-    <attDef ident="ns" usage="opt">
-      <equiv/>
-      <gloss>namespace</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">이름 공간</gloss>
-      <gloss versionDate="2007-05-02" xml:lang="zh-TW">名稱空間</gloss>
-      <gloss versionDate="2007-06-12" xml:lang="fr">espace de noms</gloss>
-      <gloss versionDate="2007-05-04" xml:lang="es">espacio de nombre</gloss>
-      <gloss versionDate="2007-01-21" xml:lang="it">spazio del nome</gloss>
-      <desc>specifies the namespace to which this element belongs</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 소속된 이름 공간을 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該元素所屬的名稱空間。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> 当該要素が属する名前空間を示す． </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet
-        élément.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica el espacio de nombre al que pertenece tal
-        elemento.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene tale
-        elemento</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
-      </datatype>
-      <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
-    </attDef>
     <attDef ident="prefix" usage="opt">
       <equiv/>
       <desc>specifies a default prefix which will be prepended to all patterns
