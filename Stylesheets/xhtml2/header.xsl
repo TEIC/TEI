@@ -72,9 +72,13 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:for-each select="key('ALL-LOCALRENDITION',1)">
 	     <xsl:text>&#10;.</xsl:text>
 	     <xsl:value-of select="@xml:id"/>
+	     <xsl:if test="@scope">
+	       <xsl:text>:</xsl:text>
+	       <xsl:value-of select="@scope"/>
+	     </xsl:if>
 	     <xsl:text> {&#10;	</xsl:text>
 	     <xsl:value-of select="."/>
-	     <xsl:text>;&#10;}</xsl:text>
+	     <xsl:text>&#10;}</xsl:text>
 	   </xsl:for-each>
 	   <xsl:text>&#10;</xsl:text>
          </style>
@@ -89,9 +93,13 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:for-each select="document($pointer)">
 		 <xsl:text>&#10;.</xsl:text>
 		 <xsl:value-of select="@xml:id"/>
+		 <xsl:if test="@scope">
+		   <xsl:text>:</xsl:text>
+		   <xsl:value-of select="@scope"/>
+		 </xsl:if>
 		 <xsl:text> {&#10;</xsl:text>
 		 <xsl:value-of select="."/>
-		 <xsl:text>;&#10;}</xsl:text>
+		 <xsl:text>&#10;}</xsl:text>
 	       </xsl:for-each>
 	     </xsl:for-each>
 	   </xsl:for-each>

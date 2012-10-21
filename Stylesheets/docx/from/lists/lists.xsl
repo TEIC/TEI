@@ -91,7 +91,7 @@ of this software, even if advised of the possibility of such damage.
 					      else if(w:pPr/w:pStyle/@w:val=$type)  then 0 
 					      else if(w:pPr/w:pStyle/@w:val='Note') then 0                 
 					      else if(w:pPr/w:pStyle/@w:val='dl') then 1                
-					      else 1">
+					      else 0">
 	    <xsl:choose>
 	      <!-- we are still on the same level -->
 	      <xsl:when test="current-grouping-key()=0">
