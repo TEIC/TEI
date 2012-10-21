@@ -12,12 +12,20 @@
       </sourceDesc>
       <encodingDesc>
 	<tagsDecl>
-	  <rendition xml:id="it" scheme="css">font-style:bold;</rendition>
+	  <rendition xml:id="it" scheme="css">font-style:italic;</rendition>
 	  <rendition xml:id="green" scheme="css">color:green</rendition>
+	  <rendition xml:id="red" scheme="css">color:red;</rendition>
+	  <rendition xml:id="blue" scheme="css">color:blue;</rendition>
 	  <rendition xml:id="bold" scheme="css">font-weight:bold;</rendition>
 	  <rendition xml:id="initcaps" scope="first-letter" scheme="css">font-size: xx-large</rendition>
 	</tagsDecl>
-	<tagUsage gi="foreign" render="#green">Used to mark non-English words in the copy text.</tagUsage>
+	<namespace name="http://www.tei-c.org/ns/1.0">
+          <tagUsage gi="persName" render="#red">Makes persName red</tagUsage>
+          <tagUsage gi="placeName" render="#blue">Makes placeName blue</tagUsage>
+          <tagUsage gi="date" render="#it">Makes date italic</tagUsage>
+	  <tagUsage gi="p" render="#green">Makes p green</tagUsage>	  
+	  <tagUsage gi="foreign" render="#green">Used to mark non-English words in the copy text.</tagUsage>
+        </namespace>
       </encodingDesc>
     </fileDesc>
   </teiHeader>
@@ -116,8 +124,20 @@
 	    <cell>unclear</cell>
 	    <cell>This word is <unclear>unclear</unclear></cell>
 	  </row>
+	  <row>
+	    <cell>persName</cell>
+	    <cell>This word is a <persName>persName</persName></cell>
+	  </row>
+	  <row>
+	    <cell>placeName</cell>
+	    <cell>This word is a <placeName>placeName</placeName></cell>
+	  </row>
+	  <row>
+	    <cell>date</cell>
+	    <cell>This word is a <date>date</date></cell>
+	  </row>
         </table>
-
+	<p>This is a simple paragraph</p>
     </body>
   </text>
 </TEI>

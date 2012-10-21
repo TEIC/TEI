@@ -19,6 +19,8 @@ test-html:
 	rm -rf files
 	saxon -o:test.html  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test.html expected-results/test.html
+	saxon -o:test20.html  test20.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test20.html expected-results/test20.html
 	saxon -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:test4.html -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test4.html test3.html
