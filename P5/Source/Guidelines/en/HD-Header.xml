@@ -933,21 +933,20 @@ using the <gi>p</gi> element, along with more specialized
 elements taken from the <ident type="class">model.encodingDescPart</ident>
 class. By default, this class makes available the following elements:
 <specList>
-<specDesc key="projectDesc"/>
-<specDesc key="samplingDecl"/>
-<specDesc key="editorialDecl"/>
-<specDesc key="tagsDecl"/>
-<specDesc key="styleDefDecl"/>
-<specDesc key="refsDecl"/>
-<specDesc key="classDecl"/>
+  <specDesc key="projectDesc"/>
+  <specDesc key="samplingDecl"/>
+  <specDesc key="editorialDecl"/>
+  <specDesc key="tagsDecl"/>
+  <specDesc key="styleDefDecl"/>
+  <specDesc key="refsDecl"/>
+  <specDesc key="classDecl"/>
+  <specDesc key="geoDecl"/>
   <specDesc key="schemaSpec"/>
-<specDesc key="appInfo"/>
 </specList>Each of these elements is further described 
 in the appropriate section below. Other modules have the ability to
 extend this class; examples are noted in section <ptr target="#HDENCOTH"/>
 </p>
 <specGrp xml:id="D225">
-<!--&model.encodingDescPart;-->
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/encodingDesc.xml"/>
 <specGrpRef target="#D2251"/>
 <specGrpRef target="#D2252"/>
@@ -956,7 +955,9 @@ extend this class; examples are noted in section <ptr target="#HDENCOTH"/>
 <specGrpRef target="#D2254"/>
 <specGrpRef target="#D2255"/>
 <specGrpRef target="#DHDAPP"/>
-</specGrp><div type="div3" xml:id="HD51"><head>The Project Description</head><p>The <gi>projectDesc</gi> element may be used to describe, in prose,
+</specGrp>
+
+<div type="div3" xml:id="HD51"><head>The Project Description</head><p>The <gi>projectDesc</gi> element may be used to describe, in prose,
 the purpose for which a digital resource was created, together with
 any other relevant information concerning the process by which it was
 assembled or collected.  This is of particular importance for corpora
@@ -972,7 +973,7 @@ rather than another.
       <p>Texts collected for use in the
         Claremont Shakespeare Clinic, June 1990.</p>
    </projectDesc>
-</encodingDesc></egXML></p><specGrp xml:id="D2251" n="The project       description">
+</encodingDesc></egXML></p><specGrp xml:id="D2251" n="The project description">
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/projectDesc.xml"/></specGrp>
 </div><div type="div3" xml:id="HD52"><head>The Sampling Declaration</head>
 <p>The <gi>samplingDecl</gi> element may be used to describe, in
@@ -1660,7 +1661,20 @@ more than one language, as in the following example:
 </specGrp>
 </div>
   
-<!-- MDH: 2012-04-26 new section on <schemaSpec> availability in <encodingDesc>. -->
+
+  <div type="div3" xml:id="HDGDECL">
+    <head>The Geographic Coordinates Declaration</head>
+    <p>The following element is provided to indicate (within the
+    header of a document, or in an external location) that a
+    particular coordinate notation, or a particular datum, has been
+    employed in a text. The default notation
+    is  a string containing two real numbers separated by
+    whitespace, of which the first indicates latitude and the second
+    longitude according to the 1984 World Geodetic System (WGS84).
+    <specList><specDesc key="geoDecl" atts="datum"/></specList>
+    </p>
+    <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/geoDecl.xml"/>
+  </div>
   <div type="div3" xml:id="HDSCHSPEC">
     
     <head>The Schema Specification</head>

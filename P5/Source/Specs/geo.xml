@@ -31,32 +31,40 @@
     <text xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <exemplum xml:lang="und">
+    <!--  RIB 262. A tombstone plus six lines of
+	 Anglo-Saxon text. Still in situ at Church of St. Mary-le-Wigford in
+	 Lincoln. Prose description is: "built into the west tower (on the south side
+	 of the archway, at 8 ft. above the ground)" -->
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <geoDecl xml:id="WGS" datum="WGS84">World Geodetic System</geoDecl>
+      <geoDecl xml:id="OS" datum="OSGB36">Ordnance Survey</geoDecl>
+      <!-- .... -->
+      <location>
+	<geo decls="#WGS">53.226658 -0.541254</geo>
+	<geo decls="#OS">SK 97481 70947</geo>
+      </location>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <geo>41.687142 -74.870109</geo>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <geo>W 8°37'--W 6°00'/N 34°00'--N 31°57'</geo>
+      <geo decls="#BYDEGREES">W 8°37'--W 6°00'/N 34°00'--N 31°57'</geo>
     </egXML>
   </exemplum>
   <remarks>
-    <p>All uses of <gi>geo</gi> within a document are required to use the same coordinate system, which is that defined by a <gi>geoDecl</gi>
-            element supplied in the TEI Header. If no such element is supplied, the assumption is that the content of each <gi>geo</gi> element will
-            be a pair of numbers separated by whitespace, to be interpreted as latitude followed by longitude according to the World Geodetic
-            System.</p>
-  </remarks>
-  <remarks versionDate="2008-12-09" xml:lang="fr">
-    <p>Toutes les utilisations de l'élément <gi>geo</gi> à l'intérieur d'un document doivent obligatoirement recourir au même système de
-            coordonnées, qui est celui défini par un élément <gi>geoDecl</gi> fourni dans l'En-tête TEI. En l'absence d'un tel élément, il est supposé
-            que le contenu de chaque élément <gi>geo</gi> est un couple de nombres séparés par une espace, à interpréter comme une latitude suivie
-            d'une longitude, conformément au système géodésique mondial.</p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p> 文書中の全要素<gi>geo</gi>は，同じ座標システムを使う必要がある．使 用される座標システムは，TEIヘダー中の要素<gi>geoDecl</gi>で定義さ れる．もし座標システムが宣言されていない場合は，世界測地システムに 従い，緯度，経度の順にある数値とされる．
-        </p>
+    <p>Uses of <gi>geo</gi> can be associated with a coordinate
+    system, defined by a <gi>geoDecl</gi> element supplied in the TEI
+    Header, using the <att>decls</att> attribute. If no such link is
+    made, the assumption is that the content of each <gi>geo</gi>
+    element will be a pair of numbers separated by whitespace, to be
+    interpreted as latitude followed by longitude according to the
+    World Geodetic System.</p>
   </remarks>
   <listRef>
-    <ptr target="#NDGEOGva"/>
+    <ptr target="#HDGEOGva" type="div3"/>
   </listRef>
 </elementSpec>
