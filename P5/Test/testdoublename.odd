@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI 
+    xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:example="http://www.example.org/ns"
+    xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+	<title>testfile for same name in two namespaces</title>
+      </titleStmt>
+      <publicationStmt>
+	<p>Unpublished as yet </p>
+      </publicationStmt>
+      <sourceDesc>
+	<p>Made up by Lou </p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc>
+      <change when="2010-05-11">First draft</change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      
+
+	<schemaSpec
+	    start="TEI" 
+	    prefix="tei_"
+	    ident="testdoublename" >
+	  <moduleRef key="tei"/>
+	  <moduleRef key="header"/>
+	  <moduleRef key="textstructure"/>
+	  <moduleRef key="core"/>
+	  
+	  <elementSpec 
+	      mode="add"
+	      prefix="example_"
+	      ns="http://www.example.org/ns"
+	      ident="p">
+	    <desc>Its not clear what a p is, but its not a TEI p</desc>
+	    <classes>
+	      <memberOf key="model.pLike"/>
+	    </classes>
+	    <content>
+	      <rng:ref name="macro.paraContent"/>
+	    </content>
+	  </elementSpec>
+	  <elementSpec 
+	      ns="http://www.tei-c.org/ns/1.0"
+	      mode="change"
+	      ident="p">
+	    <desc>MY PARA</desc>
+	  </elementSpec>
+	  <elementSpec 
+	      mode="change"
+	      ident="body">
+	    <content autoPrefix="false">
+	      <rng:oneOrMore>
+		<rng:choice>
+		  <rng:ref name="tei_p"/>
+		  <rng:ref name="example_p"/>
+		</rng:choice>
+	      </rng:oneOrMore>
+	    </content>
+	  </elementSpec>
+      </schemaSpec>     
+    </body>
+  </text>
+</TEI>
+
+
+
