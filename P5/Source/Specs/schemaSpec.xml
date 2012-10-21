@@ -27,18 +27,18 @@ $Id$
     <memberOf key="model.divPart"/>
     <memberOf key="model.encodingDescPart"/>
     <memberOf key="att.identified"/>
+    <memberOf key="att.namespaceable"/>
     <memberOf key="att.readFrom"/>
   </classes>
   <content>
     <rng:group>
       <rng:zeroOrMore>
 	<rng:choice>
-        <rng:ref name="model.glossLike"/>
-	<rng:ref name="model.descLike"/>
-</rng:choice>
-      </rng:zeroOrMore>
-  
-    <rng:zeroOrMore>
+	  <rng:ref name="model.glossLike"/>
+	  <rng:ref name="model.descLike"/>
+	</rng:choice>
+      </rng:zeroOrMore>      
+      <rng:zeroOrMore>
         <rng:choice>
           <rng:ref name="model.oddRef"/>
           <rng:ref name="model.oddDecl"/>
@@ -70,27 +70,6 @@ $Id$
         <rng:ref name="data.name"/>
       </datatype>
       <defaultVal>TEI</defaultVal>
-    </attDef>
-    <attDef ident="ns" usage="opt">
-      <gloss>namespace</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">이름 공간</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">espace de nommage</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">nome dello spazio</gloss>
-      <desc>specifies the default namespace (if any) applicable to 
-      components of the schema.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">스키마의 성분으로 적용가능한 기본 이름 공간을 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出適用於該模型元件的預設名稱空間 (若有名稱空間) 。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
-      当該スキーマで使用されるデフォルトの名前空間を示す．
-      </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms par défaut (s'il
-					existe) qui s'applique aux composants du schéma.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica el eventual espacio del nombre predefinido adscribible a los componentes del esquema</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica l'eventuale spazio del nome predefinito assegnabile alle componenti dello schema</desc>
-      <datatype>
-        <rng:ref name="data.namespace"/>
-      </datatype>
-      <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
     <attDef ident="prefix" usage="opt">
       <equiv/>
