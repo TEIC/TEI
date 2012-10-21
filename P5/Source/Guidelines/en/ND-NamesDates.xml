@@ -1759,15 +1759,22 @@ finding a place, rather than a name:
 greater or lesser degree of precision, using a variety of means: a
 name, a set of names, or a set of coordinates. The <gi>geo</gi>
 element introduced earlier is by default understood to supply a value
-expressed in a specific (and widely used) notation; this may be
-modified in two ways. </p>
-<p>Firstly,  the content of the <gi>geo</gi> element could be interpreted in
-some other way, that is, according to some different geodetic
-system. By default, a standard known as the World Geodetic System
-(WGS) is employed; the <att>decls</att> attribute can instead point
-to a <gi>geoDecl</gi> element defined in the document header, which
-describes a different datum.</p>
+expressed in a specific (and widely used) notation. If a
+<gi>location</gi> contains more than one <gi>geo</gi>, this is
+interpreted as being really the same place in the universe, but with
+different systems are being used to refer to it. If there is really
+lack of consensus about the location (of, for example, Camelot), 
+more than one <gi>location</gi> should be used, each with its own
+<gi>geo</gi>.</p>
 
+<p>By default, the content of <gi>geo</gi> is interpreted as following
+the standard known as the World Geodetic System (WGS).  This
+may be modified, however, in two ways.</p>
+<p>Firstly, the content of the <gi>geo</gi> element can be expressed
+some other way, that is, according to some different geodetic
+system. The <att>decls</att> attribute is used point to a
+<gi>geoDecl</gi> element defined in the document header, which
+describes a different datum.</p>
 <p>Secondly, the element <gi>geo</gi> may be redefined to contain
 markup from a different XML vocabulary which is specifically designed
 to represent this kind of information. This technique is used
@@ -1808,7 +1815,13 @@ work. GML is also an ISO standard (ISO
 
   <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to
   indicate the source of the location information.</p>
-  <!-- example needed -->
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <location>
+	<geo>53.226658 -0.541254</geo>
+	<bibl><title>Roman Inscriptions of Britain</title>, <idno>262</idno></bibl>
+      </location>
+    </egXML>
+
 </div>
 <div xml:id="NDGEOGmp">
   <head>Multiple Places</head>
