@@ -2896,21 +2896,19 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="@its:dir">
 	<xsl:attribute name="dir" select="@its:dir"/>
       </xsl:if>
-      <xsl:attribute name="class">
-         <xsl:choose>
-	   <xsl:when test="@type">
-	     <xsl:value-of select="@type"/>
-	   </xsl:when>
-	   <xsl:otherwise>
-	     <xsl:text>teidiv</xsl:text>
-	     <xsl:value-of select="$depth"/>
-	   </xsl:otherwise>
-         </xsl:choose>
-         <xsl:if test="@rend">
-	   <xsl:text> </xsl:text>
-	   <xsl:value-of select="@rend"/>
-         </xsl:if>
-      </xsl:attribute>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="auto">
+	  <xsl:choose>
+	    <xsl:when test="@type">
+	      <xsl:value-of select="@type"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>teidiv</xsl:text>
+	      <xsl:value-of select="$depth"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:with-param>
+      </xsl:call-template>
       <xsl:variable name="ident">
          <xsl:apply-templates mode="ident" select="."/>
       </xsl:variable>
