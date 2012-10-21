@@ -90,4 +90,18 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="textstructure.xsl"/>
   <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>
+
+  <xsl:template name="processBlock">
+    <xsl:param name="style"/>
+    <xsl:apply-templates/>
+  </xsl:template>
+  <xsl:template name="processInline">
+    <xsl:param name="before"/>
+    <xsl:param name="after"/>
+    <xsl:param name="style"/>
+    <xsl:value-of select="$before"/>
+    <xsl:apply-templates/>
+    <xsl:value-of select="$after"/>
+  </xsl:template>
+
 </xsl:stylesheet>

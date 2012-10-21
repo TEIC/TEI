@@ -313,4 +313,28 @@ Stylesheet constant setting the name of the main output file.
     </xsl:attribute>
   </xsl:function>
 
+  <xsl:template name="processInline">
+    <xsl:param name="before"/>
+    <xsl:param name="after"/>
+    <xsl:param name="style"/>
+    <span>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default" select="$style"/>
+      </xsl:call-template>
+      <xsl:value-of select="$before"/>
+      <xsl:apply-templates/>
+      <xsl:value-of select="$after"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template name="processBlock">
+    <xsl:param name="style"/>
+    <div>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default" select="$style"/>
+      </xsl:call-template>
+      <xsl:apply-templates/>
+    </div>
+  </xsl:template>
+
 </xsl:stylesheet>

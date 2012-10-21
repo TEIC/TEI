@@ -261,9 +261,6 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Process element cit</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> quoting </p>
-      </p>
     </desc>
   </doc>
   <xsl:template match="tei:cit">
@@ -338,17 +335,22 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:code">
     <code>
-      <xsl:call-template name="makeRendition"/>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default">false</xsl:with-param>
+      </xsl:call-template>
       <xsl:apply-templates/>
     </code>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-    Does not do anything yet.
+    Correction 
   </desc>
   </doc>
   <xsl:template match="tei:corr">
-    <xsl:apply-templates/>
+    <span>
+      <xsl:apply-templates/>
+      <xsl:call-template name="makeRendition"/>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Decorate date</desc>
@@ -364,22 +366,31 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:del">
     <del>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="default">false</xsl:with-param>
+      </xsl:call-template>
       <xsl:apply-templates/>
     </del>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>The del element</desc>
+    <desc>The add element</desc>
   </doc>
   <xsl:template match="tei:add">
       <xsl:choose>
          <xsl:when test="@place='sup' or @place='above'">
             <sup>
+	      <xsl:call-template name="makeRendition">
+		<xsl:with-param name="default">false</xsl:with-param>
+	      </xsl:call-template>
                <xsl:apply-templates/>
             </sup>
          </xsl:when>
          <xsl:when test="@place='sub' or @place='below'">
             <sub>
+	      <xsl:call-template name="makeRendition">
+		<xsl:with-param name="default">false</xsl:with-param>
+	      </xsl:call-template>
                <xsl:apply-templates/>
             </sub>
          </xsl:when>
@@ -450,7 +461,10 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element caesura</desc>
   </doc>
   <xsl:template match="tei:caesura">
-    <span class="caesura">    </span>
+    <span>
+      <xsl:call-template name="makeRendition"/>
+      <xsl:text>    </xsl:text>
+    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element gap</desc>
@@ -468,6 +482,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="substring-after(@rend,'content:')"/>
         </xsl:when>
         <xsl:otherwise>
+	  <xsl:call-template name="makeRendition"/>
           <xsl:text> [...]</xsl:text>
         </xsl:otherwise>
       </xsl:choose>
@@ -482,7 +497,8 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="tei:att">
-    <span class="gi">
+    <span>
+      <xsl:call-template name="makeRendition"/>
       <xsl:text>@</xsl:text>
       <xsl:apply-templates/>
     </span>
@@ -491,7 +507,8 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process gloss element</desc>
   </doc>
   <xsl:template match="tei:gloss">
-    <span class="gloss">
+    <span>
+      <xsl:call-template name="makeRendition"/>
       <xsl:apply-templates/>
     </span>
   </xsl:template>
@@ -711,11 +728,12 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@rend='below'">
         <xsl:text>⌞</xsl:text>
       </xsl:when>
-      <xsl:when test="@rend">
-        <br class="{@rend}"/>
-      </xsl:when>
       <xsl:otherwise>
-        <br/>
+        <br>
+	  <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default">false</xsl:with-param>
+	  </xsl:call-template>
+	</br>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

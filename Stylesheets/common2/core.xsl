@@ -851,18 +851,19 @@ of this software, even if advised of the possibility of such damage.
 
    </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element name and tei:persName</desc>
-   </doc>
-  <xsl:template match="tei:name|tei:persName">
-      <xsl:apply-templates/>
+  <xsl:template match="tei:name|tei:persName|tei:placeName">
       <xsl:choose>
-         <xsl:when test="not(ancestor::tei:person|ancestor::tei:biblStruct)"/>
+         <xsl:when test="not(ancestor::tei:person|ancestor::tei:biblStruct)">
+	   <xsl:call-template name="makeSpan"/>
+	 </xsl:when>
          <xsl:when test="following-sibling::tei:name|following-sibling::tei:persName">
 	   <xsl:call-template name="tei:makeText">
 	     <xsl:with-param name="letters">, </xsl:with-param>
 	   </xsl:call-template>
          </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:call-template name="makeSpan"/>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
 
