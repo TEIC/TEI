@@ -16,7 +16,7 @@ $Id$
   <gloss versionDate="2007-05-04" xml:lang="es">entrada de aparato crítico</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">voce dell'apparato</gloss>
   <desc>contains one entry in a critical apparatus, with an optional
-lemma and at least one reading.</desc>
+lemma and usually one or more reading or a note on the relevant passage.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">수의적 레마와 적어도 하나의 독법을 포함하여 비평적 참조 도구에서 하나의 표제 항목을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">一項學術編輯註解，內含一個不必備主題以及至少一個對應本。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">
@@ -83,12 +83,6 @@ lemma and at least one reading.</desc>
       <sch:assert test="count( descendant::tei:lem[ generate-id(       current() ) = generate-id( ancestor::tei:app[1] ) ]) &lt;       2">Only one &lt;lem&gt; element may appear within a single
       apparatus entry, whether it appears outside a &lt;rdgGrp&gt;
       element or within it.</sch:assert>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec scheme="isoschematron" ident="atleast1rdg">
-    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-      <sch:assert test="count(descendant::tei:rdg[generate-id(current() ) = generate-id(ancestor::tei:app[1])]) &gt; 0">An &lt;app&gt; 
-        must contain at least one &lt;rdg&gt; element.</sch:assert>
     </constraint>
   </constraintSpec>
   <attList>
