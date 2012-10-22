@@ -19,7 +19,7 @@ Description
   <xsl:param name="TEIWEB">http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:param>
   <xsl:template match="/">
     <p class="roma">
-      <form method="POST">
+      <form  accept-charset="utf-8"  method="POST">
         <table>
           <tr>
             <td class="headline" colspan="4">

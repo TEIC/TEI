@@ -57,7 +57,7 @@ Description
         <a><xsl:attribute name="href">?mode=changeModule&amp;module=<xsl:value-of select="$module"/></xsl:attribute>go back to list</a>
         <br/>
       </xsl:if>
-      <form method="POST">
+      <form accept-charset="utf-8"  method="POST">
         <xsl:attribute name="action">
           <xsl:if test="$selectedMode='addElement'">?mode=elementAdded</xsl:if>
           <xsl:if test="$selectedMode='changeElement'">?mode=elementChanged</xsl:if>

@@ -48,7 +48,7 @@ Description
         <xsl:text>go back to list</xsl:text>
       </a>
       <br/>
-      <form method="POST" action="?mode=attributeAdded">
+      <form  accept-charset="utf-8"  method="POST" action="?mode=attributeAdded">
 	<xsl:attribute name="onsubmit">
 	  <xsl:text>javascript:return ValidateFormDesc(this)</xsl:text>
 	</xsl:attribute>

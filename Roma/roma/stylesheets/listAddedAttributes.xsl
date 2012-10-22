@@ -18,7 +18,7 @@ Description
   <xsl:param name="class"/>
   <xsl:template match="/">
     <p class="roma">
-      <form method="POST">
+      <form  accept-charset="utf-8"  method="POST">
         <xsl:attribute name="action">?mode=changeListAddedAttributes</xsl:attribute>
         <input type="hidden" name="module">
           <xsl:attribute name="value">

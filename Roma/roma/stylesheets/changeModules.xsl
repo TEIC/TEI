@@ -23,7 +23,7 @@ Description
     <p class="roma">
       <a href="?mode=main"> back </a>
       <br/>
-      <form method="POST">
+      <form  accept-charset="utf-8"  method="POST">
         <xsl:attribute name="action">
 	  <xsl:text>?mode=moduleChanged&amp;module=</xsl:text>
 	  <xsl:value-of select="$module"/>

@@ -15,7 +15,7 @@ Description
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <xsl:template match="/">
     <p class="roma">
-      <form method="POST">
+      <form  accept-charset="utf-8"  method="POST">
         <xsl:attribute name="action">?mode=changeListAddedElements</xsl:attribute>
         <table>
           <tr>
