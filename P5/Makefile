@@ -267,9 +267,12 @@ p5subset.xml: check
 	touch p5subset.xml
 
 p5subset.json: p5subset.xml
-	${SAXON} -o:p5subset.json p5subset.xml ${XSL}/odds2/odd2json.xsl callback=teijs
+	${SAXON} -o:p5subset.json p5subset.xml ${XSL}/odds2/odd2json.xsl callback=
 
-dist-source.stamp: check p5subset.json oddschema exampleschema
+p5subset.js: p5subset.xml
+	${SAXON} -o:p5subset.js p5subset.xml ${XSL}/odds2/odd2json.xsl callback=teijs
+
+dist-source.stamp: check p5subset.json p5subset.js oddschema exampleschema
 	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl.model
 	${SAXON} -s:p5subset.xml -xsl:Utilities/listofattributes.xsl > p5attlist.txt
 	@echo BUILD: Make distribution directory for source
@@ -278,6 +281,7 @@ dist-source.stamp: check p5subset.json oddschema exampleschema
 	tar -c -f - --exclude "*~" --exclude .svn 	\
 	p5subset.xml \
 	p5subset.json \
+	p5subset.js \
 	stripspace.xsl.model \
 	p5attlist.txt \
 	Makefile \
@@ -309,7 +313,7 @@ dist-source.stamp: check p5subset.json oddschema exampleschema
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
 	touch dist-source.stamp
-	rm p5subset.json p5attlist.txt stripspace.xsl.model
+	rm p5subset.json p5subset.js p5attlist.txt stripspace.xsl.model
 
 dist-schema.stamp:check  schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
@@ -506,7 +510,7 @@ clean:
 	*.isosch.xsl \
 	tei-*.zip \
 	Test/*.isosch \
-	p5subset.xml p5subset.json p5.xml \
+	p5subset.xml p5subset.json p5subset.js p5.xml \
 	Utilities/guidelines.xsl Utilities-1/guidelines.xsl
 	find . -name "semantic.cache" | xargs rm -f
 	(cd Test; make clean)
