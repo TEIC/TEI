@@ -70,6 +70,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-DELETECONSTRAINT" match="tei:constraintSpec[@mode='delete']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-ELEMENT_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:elementSpec"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:macroSpec" use="@ident"/>
+  <xsl:key name="odd2odd-IDENTS" match="tei:moduleSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:classSpec" use="@ident"/>
   <xsl:key name="odd2odd-IDENTS" match="tei:elementSpec" use="@ident"/>
   <xsl:key name="odd2odd-MACROS" use="@ident" match="tei:macroSpec"/>
@@ -434,7 +435,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
 
-<!-- pass2 -->      
+<!-- pass 2 -->      
   <xsl:template match="rng:ref" mode="odd2odd-pass2">
     <xsl:variable name="N">
       <xsl:value-of select="@name"/>
@@ -497,6 +498,24 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="tei:schemaSpec" mode="odd2odd-pass2">
+    <xsl:variable name="orig" select="document(@source)"/>
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates mode="odd2odd-pass2" select="text()|comment()|*"/>
+      <xsl:for-each select="distinct-values(//*[@module]/@module)">
+	<xsl:variable name="m" select="."/>
+	  <xsl:for-each select="$orig/key('odd2odd-IDENTS',$m)">
+	    <xsl:copy>
+	      <xsl:attribute name="n"
+			     select="ancestor::tei:div[last()]/@xml:id"/>
+	      <xsl:copy-of select="@*"/>
+	    </xsl:copy>
+	  </xsl:for-each>
+	</xsl:for-each>
+    </xsl:copy>
   </xsl:template>
 
   <xsl:template match="@*|text()|comment()" mode="odd2odd-pass2">

@@ -161,33 +161,28 @@ of this software, even if advised of the possibility of such damage.
     "date":"</xsl:text>
     <xsl:call-template name="showDate"/>
     <xsl:text>","modules": [</xsl:text>
-    <xsl:choose>
-      <xsl:when test="count(key('Modules',1))&gt;0">
-	<xsl:for-each select="key('Modules',1)">
-	  <xsl:sort select="@ident"/>
-	  <xsl:text>{"ident":"</xsl:text>
-	  <xsl:value-of select="@ident"/>
-	  <xsl:text>",</xsl:text>
-	  <xsl:text>"id":"</xsl:text>
+    <xsl:for-each select="key('Modules',1)">
+      <xsl:sort select="@ident"/>
+      <xsl:text>{"ident":"</xsl:text>
+      <xsl:value-of select="@ident"/>
+      <xsl:text>",</xsl:text>
+      <xsl:text>"id":"</xsl:text>
+      <xsl:choose>
+	<xsl:when test="@n">
+	  <xsl:value-of select="@n">
+	  </xsl:value-of>
+	</xsl:when>
+	<xsl:otherwise>
 	  <xsl:value-of select="ancestor::tei:div[last()]/@xml:id"/>
-	  <xsl:text>",</xsl:text>
-	  <xsl:call-template name="desc"/>
-	  <xsl:call-template name="mode"/>
-	  <xsl:text>}</xsl:text>
-	  <xsl:if test="not(position() = last())">,</xsl:if>
-	  <xsl:text>&#10;</xsl:text>
-	</xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:for-each select="distinct-values(//*[@module]/@module)">
-	  <xsl:text>{"ident":"</xsl:text>
-	  <xsl:value-of select="."/>
-	  <xsl:text>"}</xsl:text>
-	  <xsl:if test="not(position() = last())">,</xsl:if>
-	  <xsl:text>&#10;</xsl:text>
-	</xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>      
+      <xsl:text>",</xsl:text>
+      <xsl:call-template name="desc"/>
+      <xsl:call-template name="mode"/>
+      <xsl:text>}</xsl:text>
+      <xsl:if test="not(position() = last())">,</xsl:if>
+      <xsl:text>&#10;</xsl:text>
+    </xsl:for-each>
     <xsl:text>],</xsl:text>
     
     <xsl:text>"moduleRefs": [</xsl:text>
