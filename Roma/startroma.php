@@ -2,6 +2,7 @@
 
 require_once( 'roma/roma.php' );
 
+ini_set('default_charset', 'UTF-8');
 
 $_SESSION['docLang'] = 'en';
 
