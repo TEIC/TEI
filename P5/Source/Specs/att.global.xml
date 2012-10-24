@@ -200,7 +200,7 @@ and that a single TEI document may contain texts in many languages.</p>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>may contain any number of tokens, each of which may
-      contain letters, punctuation marks, or symbols, but not
+      contain letters, punctuation marks, or symbols, but not whitespace or 
       word-separating characters.</valDesc>
       <valDesc versionDate="2009-05-25" xml:lang="fr">toute chaîne de caractères ; si la restitution
         typographique d'un texte doit être systématiquement notée, un jeu systématique de
@@ -228,7 +228,8 @@ and that a single TEI document may contain texts in many languages.</p>
           attribute; the characteristics of visual presentation vary too much from text to text and
           the decision to record or ignore individual characteristics varies too much from project
           to project. Some potentially useful conventions are noted from time to time at appropriate
-          points in the Guidelines.</p>
+          points in the Guidelines. The values of the <att>rend</att> attribute are a set of 
+	sequence-indeterminate individual tokens separated by whitespace.</p>
       </remarks>
       <remarks xml:lang="fr">
         <p>Ces Principes directeurs ne font aucune recommandation contraignante pour les valeurs de
@@ -262,7 +263,8 @@ used for this element in the source text </desc>
           <head style="text-align: center; font-variant: small-caps"><lb/>To The <lb/>Duchesse <lb/>of <lb/>Newcastle, <lb/>On Her
               <lb/><hi style="font-variant: normal">New Blazing-World</hi>. </head>
 </egXML></exemplum>
-<remarks><p/></remarks>
+<remarks><p>Unlike the attribute values of <att>rend</att>, the <att>style</att> attribute may contain whitespace. This attribute 
+is intended for recording inline stylistic information concerning the source, not any particular output.</p></remarks>
 </attDef>
 
     <attDef ident="rendition" usage="opt">
@@ -457,7 +459,7 @@ used for this element in the source text </desc>
         </valItem>
       </valList>
       <remarks>
-        <p>The <ref target="http://www.w3.org/TR/REC-xml/#sec-white-space"> XML
+        <p>The <ref target="http://www.w3.org/TR/REC-xml/#sec-white-space">XML
       specification</ref> provides further guidance on the use of this
       attribute. Note that many parsers may not handle xml:space correctly.</p>
       </remarks>
