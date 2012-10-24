@@ -1163,9 +1163,12 @@ class romaDom extends domDocument
     public function changeElementNameInModule( $szOldName, $szNewName, $szModule )
       {
 	$errResult = false;
-
-	if ( preg_match( '/^[\w\d]+$/', $szNewName ) )
+	mb_internal_encoding('UTF-8');
+	mb_regex_encoding('utf-8');
+	
+	if ( mb_ereg_match( '^[\w\d]+$', $szNewName ) )
 	  {
+		  
 	    $this->getXPath( $oXPath );
             $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);
             $oModule = $oXPath->query( "//tei:schemaSpec/tei:moduleRef[@key='$szModule']" )->item(0);
@@ -1178,6 +1181,7 @@ class romaDom extends domDocument
 
   	    if (! is_object( $oElementSpec ) )
  	      {
+			  
                 $theElementSpec = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'elementSpec' );
  	        $oElementSpec = $oSchema->appendChild( $theElementSpec );
 	        $oElementSpec->setAttribute( 'module', $szModule );
@@ -1186,7 +1190,8 @@ class romaDom extends domDocument
 		
                 $theAltIdent = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'altIdent' );
    	        $oAltIdent = $oElementSpec->appendChild( $theAltIdent );
-	        $oAltIdent->appendChild( new domText( $szNewName ) );
+	        $oAltIdent->appendChild( new domText($szNewName ) );
+			
 	      }
   	    else
   	      {
