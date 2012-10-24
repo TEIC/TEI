@@ -1542,7 +1542,7 @@ select="$makeDecls"/></xsl:message>
         </xsl:choose>
       </xsl:variable>
       <xsl:choose>
-        <xsl:when test="tei:datatype/rng:text  or  not( tei:datatype )  or  $max=1">
+        <xsl:when test="tei:datatype/rng:text  or  not( tei:datatype )	or  $max=1">
           <!-- If there is only going to be one output RELAX NG node   --> 
           <!-- in the attribute definition, then we don't need to      -->
           <!-- bother with the complex min & max code below (in the    -->
@@ -1577,33 +1577,44 @@ select="$makeDecls"/></xsl:message>
           <!-- current node, but since I didn't write 'attributeData', I've -->
           <!-- chosen this method so I don't have to muck with it. -Syd -->
           <xsl:variable name="thisNode" select="."/>
-          <list>
-            <xsl:if test="$min > 0">
-              <xsl:for-each select="1 to $min">
-                <xsl:for-each select="$thisNode">
-                  <xsl:call-template name="attributeData"/>
-                </xsl:for-each>
-              </xsl:for-each>
-            </xsl:if>
+	  <list>
             <xsl:choose>
-              <xsl:when test="$max= -1"><!-- i.e., unbounded -->
-                <zeroOrMore>
+              <xsl:when test="$max= -1 and $min=1">
+                <oneOrMore>
                   <xsl:for-each select="$thisNode">
                     <xsl:call-template name="attributeData"/>
                   </xsl:for-each>
-                </zeroOrMore>
+                </oneOrMore>
               </xsl:when>
-              <xsl:otherwise>
-                <xsl:for-each select="xs:integer( $min + 1 ) to $max">
-                  <optional>
-                    <xsl:for-each select="$thisNode">
-                      <xsl:call-template name="attributeData"/>
-                    </xsl:for-each>
-                  </optional>
-                </xsl:for-each>
-              </xsl:otherwise>
-            </xsl:choose>
-          </list>
+	      <xsl:otherwise>
+		  <xsl:if test="$min > 1">
+		    <xsl:for-each select="1 to $min">
+		      <xsl:for-each select="$thisNode">
+			<xsl:call-template name="attributeData"/>
+		      </xsl:for-each>
+		    </xsl:for-each>
+		  </xsl:if>
+		  <xsl:choose>
+		    <xsl:when test="$max= -1"><!-- i.e., unbounded -->
+		      <zeroOrMore>
+			<xsl:for-each select="$thisNode">
+			  <xsl:call-template name="attributeData"/>
+			</xsl:for-each>
+		      </zeroOrMore>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:for-each select="xs:integer( $min + 1 ) to $max">
+			<optional>
+			  <xsl:for-each select="$thisNode">
+			    <xsl:call-template name="attributeData"/>
+			  </xsl:for-each>
+			</optional>
+		      </xsl:for-each>
+		    </xsl:otherwise>
+		  </xsl:choose>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </list>
         </xsl:otherwise>
       </xsl:choose>
     </attribute>
