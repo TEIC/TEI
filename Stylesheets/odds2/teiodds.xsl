@@ -1587,7 +1587,7 @@ select="$makeDecls"/></xsl:message>
                 </oneOrMore>
               </xsl:when>
 	      <xsl:otherwise>
-		  <xsl:if test="$min > 1">
+		  <xsl:if test="$min > 0">
 		    <xsl:for-each select="1 to $min">
 		      <xsl:for-each select="$thisNode">
 			<xsl:call-template name="attributeData"/>
