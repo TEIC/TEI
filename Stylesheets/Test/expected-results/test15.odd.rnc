@@ -61,7 +61,7 @@ att.ascribed.attribute.who =
   
   ## indicates the person, or group of people, to whom the element content is ascribed.
   attribute who {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.canonical.attributes =
   att.canonical.attribute.key, att.canonical.attribute.ref
@@ -75,7 +75,7 @@ att.canonical.attribute.ref =
   ## (reference) provides an explicit means of locating a full definition for the entity being named by
   ##         means of one or more URIs.
   attribute ref {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.ranging.attributes =
   att.ranging.attribute.atLeast,
@@ -215,7 +215,7 @@ att.datcat.attribute.datcat =
   ## contains a PID (persistent identifier) that aligns the given element with the appropriate 
   ##         Data Category (or categories) in ISOcat.
   attribute ns1:datcat {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.datcat.attribute.valueDatcat =
   
@@ -223,7 +223,7 @@ att.datcat.attribute.valueDatcat =
   ##         element or the value of the given attribute with the appropriate simple Data
   ##         Category (or categories) in ISOcat.
   attribute ns1:valueDatcat {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.declarable.attributes = att.declarable.attribute.default
 att.declarable.attribute.default =
@@ -247,7 +247,7 @@ att.declaring.attribute.decls =
   ## header, which are understood to apply to the element bearing this
   ## attribute and its content.
   attribute decls {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.divLike.attributes =
   att.divLike.attribute.org,
@@ -332,7 +332,7 @@ att.responsibility.attribute.resp =
   ## (responsible party) indicates the agency responsible for the intervention or interpretation, for example an
   ##         editor or transcriber.
   attribute resp {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.editLike.attributes =
   att.dimensions.attributes,
@@ -357,18 +357,7 @@ att.editLike.attribute.evidence =
          ## the intervention or interpretation has been made by the editor, cataloguer, or
          ##             scholar on the basis of their expertise.
          "conjecture"
-       | xsd:Name),
-      (
-       ## there is internal evidence to support the intervention.
-       "internal"
-       | 
-         ## there is external evidence to support the intervention.
-         "external"
-       | 
-         ## the intervention or interpretation has been made by the editor, cataloguer, or
-         ##             scholar on the basis of their expertise.
-         "conjecture"
-       | xsd:Name)*
+       | xsd:Name)+
     }
   }?
 att.editLike.attribute.source =
@@ -376,7 +365,7 @@ att.editLike.attribute.source =
   ## contains a list of one or more pointers indicating sources
   ##       supporting the given  intervention or interpretation.
   attribute source {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.editLike.attribute.instant =
   
@@ -410,14 +399,14 @@ att.global.attribute.rend =
   
   ## (rendition) indicates how the element in question was rendered or presented in the source text.
   attribute rend {
-    list { data.word, data.word* }
+    list { data.word+ }
   }?
 att.global.attribute.rendition =
   
   ## points to a description of the rendering or presentation used for this element in the
   ##         source text.
   attribute rendition {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.global.attribute.xmlbase =
   
@@ -448,14 +437,14 @@ att.handFeatures.attribute.scribeRef =
   ## points to a full description of the scribe concerned, typically supplied by a person element
   ##       elsewhere in the description.
   attribute scribeRef {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.handFeatures.attribute.script =
   
   ## characterizes the particular script or writing style used by
   ## this hand, for example secretary, copperplate, Chancery, Italian, etc.
   attribute script {
-    list { data.name, data.name* }
+    list { data.name+ }
   }?
 att.handFeatures.attribute.scriptRef =
   
@@ -463,7 +452,7 @@ att.handFeatures.attribute.scriptRef =
   ## this hand, typically supplied by a scriptNote element
   ##       elsewhere in the description.
   attribute scriptRef {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.handFeatures.attribute.medium =
   
@@ -489,7 +478,7 @@ att.internetMedia.attribute.mimeType =
   
   ## (MIME media type) specifies the applicable multimedia internet mail extension (MIME) media type
   attribute mimeType {
-    list { data.word, data.word* }
+    list { data.word+ }
   }?
 att.measurement.attributes =
   att.measurement.attribute.unit,
@@ -569,7 +558,7 @@ att.measurement.attribute.commodity =
   
   ## indicates the substance that is being measured
   attribute commodity {
-    list { data.word, data.word* }
+    list { data.word+ }
   }?
 att.naming.attributes =
   att.canonical.attributes,
@@ -587,7 +576,7 @@ att.naming.attribute.nymRef =
   ##        named by
   ##       the element bearing it.
   attribute nymRef {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.placement.attributes = att.placement.attribute.place
 att.placement.attribute.place =
@@ -626,38 +615,7 @@ att.placement.attribute.place =
        | 
          ##  in a predefined space, for example left by an earlier scribe.
          "inspace"
-       | xsd:Name),
-      (
-       ## below the line
-       "below"
-       | 
-         ## at the foot of the page
-         "bottom"
-       | 
-         ## in the margin (left, right, or both)
-         "margin"
-       | 
-         ## at the top of the page
-         "top"
-       | 
-         ## on the opposite, i.e. facing, page
-         "opposite"
-       | 
-         ## on the other side of the leaf
-         "overleaf"
-       | 
-         ## above the line
-         "above"
-       | 
-         ## at the end of e.g. chapter or volume.
-         "end"
-       | 
-         ## within the body of the text.
-         "inline"
-       | 
-         ##  in a predefined space, for example left by an earlier scribe.
-         "inspace"
-       | xsd:Name)*
+       | xsd:Name)+
     }
   }?
 att.typed.attributes =
@@ -702,7 +660,7 @@ att.pointing.attribute.target =
   
   ## specifies the destination of the reference by supplying one or more URI References
   attribute target {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.pointing.attribute.evaluate =
   
@@ -790,7 +748,7 @@ att.sourced.attribute.ed =
   ##       the associated feature (for example, a  page, column, or line
   ##       break) occurs at this point in the text.
   attribute ed {
-    list { data.code, data.code* }
+    list { data.code+ }
   }?
 att.spanning.attributes = att.spanning.attribute.spanTo
 att.spanning.attribute.spanTo =
@@ -1432,7 +1390,7 @@ gap =
     ## gives the reason for omission. Sample values include sampling,
     ##         inaudible, irrelevant, cancelled.
     attribute reason {
-      list { data.word, data.word* }
+      list { data.word+ }
     }?,
     
     ## in the case of text omitted from the transcription because of deliberate deletion by an
@@ -1479,7 +1437,7 @@ unclear =
     
     ## indicates why the material is hard to transcribe.
     attribute reason {
-      list { data.word, data.word* }
+      list { data.word+ }
     }?,
     
     ## Where the difficulty in transcription arises from action (partial deletion, etc.)
@@ -1679,7 +1637,7 @@ ptr =
     ## (canonical reference) specifies the destination of the pointer by supplying a canonical reference from a
     ##         scheme defined in a refsDecl element in the TEI header
     attribute cRef {
-      list { data.word, data.word* }
+      list { data.word+ }
     }?,
     empty
   }
@@ -1716,7 +1674,7 @@ ref =
     ## (canonical reference) specifies the destination of the reference by supplying a canonical reference from a
     ##         scheme defined in a refsDecl element in the TEI header
     attribute cRef {
-      list { data.word, data.word* }
+      list { data.word+ }
     }?,
     empty
   }
@@ -1811,7 +1769,7 @@ note =
     ## points to the end of the span to which the note is attached, if the note is not embedded
     ##         in the text at that point.
     attribute targetEnd {
-      list { data.pointer, data.pointer* }
+      list { data.pointer+ }
     }?,
     empty
   }
@@ -1869,7 +1827,7 @@ binaryObject =
     ## The encoding used to encode the binary data. If not specified, this is assumed to be
     ##           Base64.
     attribute encoding {
-      list { data.word, data.word* }
+      list { data.word+ }
     }?,
     empty
   }
@@ -4059,14 +4017,14 @@ att.global.linking.attribute.corresp =
   ## (corresponds) points to elements that correspond to the current
   ##       element in some way.
   attribute corresp {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.global.linking.attribute.synch =
   
   ## (synchronous) points to elements that are synchronous with the current
   ##       element.
   attribute synch {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.global.linking.attribute.sameAs =
   
@@ -4093,7 +4051,7 @@ att.global.linking.attribute.exclude =
   ## points to elements that are in exclusive alternation
   ##       with the current element.
   attribute exclude {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 att.global.linking.attribute.select =
   
@@ -4103,7 +4061,7 @@ att.global.linking.attribute.select =
   ##       uncertainty is marked as reduced by the number of alternants not
   ##       selected.
   attribute select {
-    list { data.pointer, data.pointer* }
+    list { data.pointer+ }
   }?
 table =
   
