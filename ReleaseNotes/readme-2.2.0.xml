@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Copyright TEI Consortium.
+	Dual-licensed under CC-by and BSD2 licences
+	See the file COPYING.txt for details
+	$Date: 2012-10-25 18:15:02+0100 (Thu, 25 Oct 2012) $
+	$Id: readme-2.2.0.xml 10532 2012-10-25 19:15:02Z jamesc $
+-->
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>TEI P5 version 2.2.0 release notes</title>
+            </titleStmt>
+            <editionStmt>
+                <edition>
+                    <date when="2012-10-25">25 October 2012</date>
+                </edition>
+            </editionStmt>
+            <publicationStmt>
+                <authority>The Text Encoding Initiative</authority>
+            </publicationStmt>
+            <sourceDesc>
+                <p>created retrospectively from svn ChangeLog and SourceForge
+                    trackers</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <p> This version of the TEI introduces new features and resolves a
+                number of issues raised by the TEI community. As always, the
+                majority of these changes and corrections are a consequence of
+                feature requests or bugs reported by the TEI community, using
+                the Sourceforge tracking system. If you find something you think
+                needs to change in the TEI Guidelines, schemas, tools, or
+                website, please do submit a ticket a <ref
+                    target="http://tei.sf.net/">http://tei.sf.net/</ref> for
+                consideration.</p>
+            <p> Since the last release (16 June 2012), the Council has closed at
+                least 82 tickets entered in the sourceforge tracking system,
+                from 25 different members of the TEI community (10 more than in
+                the previous release!). Full details may be found at <ref
+                    target="http://tei.sf.net/">http://tei.sf.net/</ref> and an
+                    <ref
+                    target="https://sourceforge.net/search/index.php?words=&amp;sort=artifact_id&amp;sortdir=desc&amp;offset=0&amp;group_id=106328&amp;type_of_search=artifact&amp;last_update_date_start=2012-06-16&amp;last_update_date_end=2012-10-25&amp;status_id%5B%5D=2"
+                    > active list sorted by ticket number is also
+                    available</ref>. Ticket numbers are also referenced in the
+                subversion ChangeLog, as usual, which records around 490 commits
+                during this period. </p>
+            <div>
+                <head>Schema Changes</head>
+                <p> Some of the important or interesting schema-related changes
+                    include: </p>
+                <list type="unordered">
+                    <item> After much discussion the datatype and usage of the
+                        global attribute @rend was clarified. In response to
+                            <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3519866&amp;group_id=106328&amp;atid=644065"
+                            >3519866</ref>, a new global @style attribute was
+                        created to allow local description of the source
+                        document’s appearance using a formal style definition
+                        language such as CSS. </item>
+                    <item> Increasingly the Technical Council is attempting to
+                        provide more consistent Schematron constraints for
+                        additional validation (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3557497&amp;group_id=106328&amp;atid=644062"
+                            >3557497</ref>, <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3548772&amp;group_id=106328&amp;atid=644062"
+                            >3548772</ref>, <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3064757&amp;group_id=106328&amp;atid=644065"
+                            >3064757</ref>) </item>
+                    <item> A new &lt;listApp&gt; element was added, along with
+                        other improvements for recording critical apparatus
+                            (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3497356&amp;group_id=106328&amp;atid=644062"
+                            >3497356</ref>) </item>
+                    <item> The model.glossLike class was subdivided, to ensure
+                        that only members such as &lt;desc&gt;,
+                        &lt;precision&gt;, or &lt;equiv&gt; appeared only in the
+                        content of appropriate elements. (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3565137&amp;group_id=106328&amp;atid=644062"
+                            >3565137</ref>) </item>
+                    <item> The @scheme attribute on &lt;keywords&gt; was made
+                        optional (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3554050&amp;group_id=106328&amp;atid=644065"
+                            >3554050</ref>) </item>
+                    <item> A new att.milestoneUnit class was created to ensure
+                        consistency in use of @unit (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3537452&amp;group_id=106328&amp;atid=644062"
+                            >3537452</ref>) </item>
+                    <item> Tighter restrictions were imposed on the content
+                        model of &lt;gi&gt; and &lt;att&gt; (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3535672&amp;group_id=106328&amp;atid=644062"
+                            >3535672</ref>) </item>
+                    <item> The content model of &lt;table&gt; was changed to
+                        allow model.divBottom (footers, etc.) at the bottom
+                            (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3531957&amp;group_id=106328&amp;atid=644065"
+                            >3531957</ref>) </item>
+                    <item> The &lt;idno&gt; element is now allowed inside
+                        &lt;person&gt; and &lt;place&gt; (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3440977&amp;group_id=106328&amp;atid=644065"
+                            >3440977</ref>) </item>
+                    <item> The &lt;lg&gt; element, after much debate, is now
+                        allowed inside &lt;p&gt; (<ref
+                            target="https://sourceforge.net/tracker/?func=detail&amp;group_id=106328&amp;atid=644062&amp;aid=3532022"
+                            >3532022</ref>) </item>
+                    <item> In the content model of &lt;editionStmt&gt;, explicit
+                        reference to &lt;respStmt&gt; has been replaced with
+                        model.respLike for greater flexibility (<ref
+                            target="https://sourceforge.net/tracker/?func=detail&amp;group_id=106328&amp;atid=644062&amp;aid=3439587"
+                            >3439587</ref>) </item>
+                </list>
+            </div>
+            <div>
+                <head> Textual Changes </head>
+                <p> Some of important textual changes in the Guidelines include: </p>
+                <list type="unordered">
+                    <item> Correction of typos, clearer explanations, or
+                        provision of new examples in various sections of the
+                        Guidelines: (e.g. <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3576189&amp;group_id=106328&amp;atid=644062"
+                            >3576189</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3573757&amp;group_id=106328&amp;atid=644062"
+                            >3573757</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3572375&amp;group_id=106328&amp;atid=644062"
+                            >3572375</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3571101&amp;group_id=106328&amp;atid=644062"
+                            >3571101</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3561766&amp;group_id=106328&amp;atid=644062"
+                            >3561766</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3553911&amp;group_id=106328&amp;atid=644062"
+                            >3553911</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3552973&amp;group_id=106328&amp;atid=644062"
+                            >3552973</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3549757&amp;group_id=106328&amp;atid=644062"
+                            >3549757</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3547934&amp;group_id=106328&amp;atid=644062"
+                            >3547934</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3545113&amp;group_id=106328&amp;atid=644062"
+                            >3545113</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3539329&amp;group_id=106328&amp;atid=644062"
+                            >3539329</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3538141&amp;group_id=106328&amp;atid=644062"
+                            >3538141</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3537574&amp;group_id=106328&amp;atid=644062"
+                            >3537574</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3536504&amp;group_id=106328&amp;atid=644062"
+                            >3536504</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3535717&amp;group_id=106328&amp;atid=644062"
+                            >3535717</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3522019&amp;group_id=106328&amp;atid=644062"
+                            >3522019</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3521714&amp;group_id=106328&amp;atid=644062"
+                            >3521714</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3521288&amp;group_id=106328&amp;atid=644065"
+                            >3521288</ref> , <ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3519772&amp;group_id=106328&amp;atid=644062"
+                            >3519772</ref> , and others) </item>
+                    <item> Standardization of use of em and en dashes in the
+                        Guidelines (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3471119&amp;group_id=106328&amp;atid=644062"
+                            >3471119</ref>) </item>
+                    <item> Clarification on the use of XPath to point to
+                        readings from an external apparatus (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3497369&amp;group_id=106328&amp;atid=644062"
+                            >3497369</ref>) </item>
+                    <item> New section (23.1) added referencing the
+                        application/tei+xml IANA-registered media type (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3565152&amp;group_id=106328&amp;atid=644065"
+                            >3565152</ref>) </item>
+                    <item> Greater clarification of ISO language codes and
+                        consistency in our recommendations and use of @xml:lang
+                            (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3454803&amp;group_id=106328&amp;atid=644062"
+                            >3454803</ref>) </item>
+                </list>
+            </div>
+            <div>
+                <head> Environment Changes </head>
+                <p> The TEI Technical Council continually strives to improve the
+                    underlying infrastructure used to edit, store, test, and
+                    publish the outputs it creates. During this release cycle
+                    some of these infrastructure changes include: </p>
+                <list type="unordered">
+                    <item> The TEI source code now references its component
+                        parts by means of XInclude rather than by using system
+                        entities (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3547869&amp;group_id=106328&amp;atid=644065"
+                            >3547869</ref>) </item>
+                    <item> TEI ODD processing now supports local modification of
+                        classes, so an element can claim membership of an
+                        attribute class (e.g. att.typed) while still redefining
+                        an element provided by the class locally (e.g. the @type
+                        attribute’s value list) </item>
+                    <item> The HTML generated from the Guidelines now uses
+                        relative links to make browsing them in the Jenkins
+                        continuous integration servers easier (<ref
+                            target="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=3556966&amp;group_id=106328&amp;atid=644062"
+                            >3556966</ref>) </item>
+                    <item> Various improvements to ODD processing, improvements
+                        to the TEI build infrastructure, especially in the
+                        testing framework and schematron constraints </item>
+                    <item> The marking of TEI P4 as 'deprecated' in oxygen
+                        packages </item>
+                    <item> Improvements to the handling of exemplars during the
+                        build process </item>
+                    <item> Provision of additional outputs (e.g. JSON and JSONP
+                        see release/xml/tei/odd/) as default release items </item>
+                    <item> Many changes have been made to the TEI-C Stylesheet
+                        library to support these changes, fix reported bugs, and
+                        provide new features </item>
+                </list>
+            </div>
+        </body>
+    </text>
+</TEI>
