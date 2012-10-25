@@ -87,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="attDef[@mode]" mode="classatts"/>
+  <xsl:template match="attDef[@mode and not(@mode='add')]" mode="classatts"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Walk over each class membership; visit that class;

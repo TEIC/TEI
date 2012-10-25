@@ -1658,7 +1658,6 @@ so that is only put back in if there is some content
     </xsl:for-each>
   </xsl:template>
 
-
    <xsl:template match="@*|text()|processing-instruction()" mode="odd2odd-justcopy">
       <xsl:copy-of select="."/>
    </xsl:template>
