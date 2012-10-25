@@ -3112,6 +3112,11 @@ change =
     att.docStatus.attributes,
     att.global.attributes,
     att.typed.attributes,
+    
+    ## points to one or more elements that belong to this change.
+    attribute target {
+      list { data.pointer+ }
+    }?,
     empty
   }
 listChange =
@@ -3122,6 +3127,10 @@ listChange =
     (listChange | change)+,
     att.global.attributes,
     att.sortable.attributes,
+    
+    ## indicates whether the ordering of its child change
+    ## elements is to be considered significant or not
+    [ a:defaultValue = "true" ] attribute ordered { data.truthValue }?,
     empty
   }
 geoDecl =
