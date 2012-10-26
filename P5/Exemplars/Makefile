@@ -28,7 +28,7 @@ ROMAOPTS=--xsl=${XSL} --isoschematron
 SOURCE=--localsource=${P5}/p5subset.xml 
 
 
-%.dtd: %.odd
+%.dtd: %.odd ${SOURCE}
 	@echo "BUILD: Test schema from $<"
 	xmllint --xinclude $*.odd > $*.xi
 	@echo Validate $< itself
@@ -44,7 +44,7 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	saxon $*.tei $*.xsl
 
 
-%.rng: %.odd
+%.rng: %.odd ${SOURCE}
 	@echo "BUILD: Test schema from $<"
 	xmllint --xinclude $*.odd > $*.xi
 	@echo Validate $< itself
@@ -57,7 +57,7 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
 	saxon $*.tei $*.xsl
 
-%.doc.pdf: %.odd
+%.doc.pdf: %.odd  ${SOURCE}
 	@echo "BUILD: Test schema from $<"
 	@echo Validate $< itself
 	which rnv && rnv ../p5odds.rnc $< 
@@ -71,7 +71,7 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	@echo Validate using Schematron
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
 	saxon $*.tei $*.xsl
-	rm $*.doc.xml
+	-rm $*.doc.xml
 
 schemas: $(ODDS) $(XODDS) $(DOCODDS)
 	-rm tei_odds.dtd tei_odds.xsd
@@ -98,8 +98,8 @@ dist: schemas
 	for i in *.template; do saxon -it:main make_template.xsl file=`basename $$i .template`;done
 	cp *.tei *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.xml  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
+	-rm ../release/tei-p5-exemplars/share/xml/tei/custom/templates/*.doc.xml
 	cp *.properties  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
-	rm ../release/tei-p5-exemplars/share/xml/tei/custom/templates/*.doc.xml
 	cp *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
 	cp *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	cp *.rnc *.rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
