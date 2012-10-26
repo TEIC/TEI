@@ -848,7 +848,7 @@ of this software, even if advised of the possibility of such damage.
                 </xsl:for-each>
               </xsl:when>
               <xsl:when test="tei:classes">
-                <xsl:for-each select="tei:classes/tei:memberOf">
+                <xsl:for-each select="tei:classes/tei:memberOf[not(@mode='delete')]">
                   <xsl:copy-of select="."/>
                 </xsl:for-each>
               </xsl:when>
