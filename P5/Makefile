@@ -117,7 +117,7 @@ html-web.stamp:  check
 
 validate-html:
 	@echo BUILD: Validate HTML version of Guidelines
-	export J=`which jing`;export CLASSPATH=`dirname $$J`/jing.jar;cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant -f ../../../validatehtml.xml;rm z_*
+	export CLASSPATH="`locate jing.jar | head -1`";cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant -f ../../../validatehtml.xml;rm z_*
 
 teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
