@@ -25,9 +25,9 @@ SAXON=saxon
 SAXON_ARGS=-ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
-ODD2DTD=${XSL}/odds2/odd2dtd.xsl
-ODD2RELAX=${XSL}/odds2/odd2relax.xsl
-ODD2LITE=${XSL}/odds2/odd2lite.xsl
+ODD2DTD=odds2/odd2dtd.xsl
+ODD2RELAX=odds2/odd2relax.xsl
+ODD2LITE=odds2/odd2lite.xsl
 
 .PHONY: convert dtds schemas html validate valid test clean dist exemplars
 
@@ -64,7 +64,7 @@ dtds: check
 	rm -rf DTD
 	mkdir DTD
 	@echo BUILD: Generate modular DTDs
-	${SAXON} ${SAXON_ARGS}  p5.xml ${ODD2DTD} outputDir=DTD 	\
+	${SAXON} ${SAXON_ARGS}  p5.xml ${XSL}/${ODD2DTD} outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
 	${VERBOSE}
@@ -75,7 +75,7 @@ schema-relaxng:  check
 	rm -rf Schema
 	mkdir Schema
 	@echo BUILD: Generate modular RELAX NG schemas
-	${SAXON} ${SAXON_ARGS}  p5.xml  ${ODD2RELAX} outputDir=Schema \
+	${SAXON} ${SAXON_ARGS}  p5.xml  ${XSL}/${ODD2RELAX} outputDir=Schema \
 	lang=${LANGUAGE}  \
 	${VERBOSE}
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
@@ -83,7 +83,7 @@ schema-relaxng:  check
 
 schema-sch:  check
 	@echo BUILD: Extract schema rules to make p5.isosch
-	${SAXON} ${SAXON_ARGS}  p5.xml `dirname ${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
+	${SAXON} ${SAXON_ARGS}  p5.xml `dirname ${XSL}/${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
 
 
 html-web: html-web.stamp check.stamp
@@ -148,7 +148,7 @@ fontcheck:
 
 pdf.stamp: check 
 	@echo BUILD: build Lite version of Guidelines
-	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml p5.xml  ${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
+	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml p5.xml  ${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	@echo BUILD: build LaTeX version of Guidelines from Lite
