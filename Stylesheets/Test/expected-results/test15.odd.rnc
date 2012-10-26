@@ -6,13 +6,13 @@ namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
 # Schema 
-# Edition: 2.1.0. Last updated on 17th June 2012.
-# Edition Location: http://www.tei-c.org/Vault/P5/2.1.0/
+# Edition: 2.2.0. Last updated on 25th October 2012.
+# Edition Location: http://www.tei-c.org/Vault/P5/2.2.0/
 #
 
 #
 macro.paraContent =
-  (text | model.gLike | model.phrase | model.inter | model.global)*
+  (text | model.gLike | model.phrase | model.inter | model.global | lg)*
 macro.limitedContent = (text | model.limitedPhrase | model.inter)*
 macro.phraseSeq = (text | model.gLike | model.phrase | model.global)*
 macro.phraseSeq.limited = (text | model.limitedPhrase | model.global)*
@@ -163,6 +163,12 @@ att.breaking.attribute.break =
   ##	bearing this attribute should be considered to mark the end of
   ##	an orthographic token in the same way as whitespace.
   attribute break { data.enumerated }?
+att.cReferencing.attributes = att.cReferencing.attribute.cRef
+att.cReferencing.attribute.cRef =
+  
+  ## (canonical reference) specifies the destination of the pointer by supplying a canonical reference from a
+  ##         scheme defined in a refsDecl element in the TEI header
+  attribute cRef { data.text }?
 att.datable.w3c.attributes =
   att.datable.w3c.attribute.when,
   att.datable.w3c.attribute.notBefore,
@@ -202,6 +208,24 @@ att.datable.attribute.calendar =
   ## indicates the system or calendar to which the date represented by the content of this
   ##         element belongs.
   attribute calendar { data.pointer }?
+sch:pattern [
+  id = "calendar-constraint-calendar"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "tei:*[@calendar]"
+    "\x{a}" ~
+    "            "
+    sch:assert [
+      test = "string-length(.) gt 0"
+      "@calendar indicates the system or calendar to which the date represented by the content of this element belongs, but this element has no textual content."
+    ]
+    "\x{a}" ~
+    "          "
+  ]
+  "\x{a}" ~
+  "   "
+]
 att.datable.attribute.period =
   
   ## supplies a pointer to some location defining a named
@@ -377,6 +401,7 @@ att.global.attributes =
   att.global.attribute.n,
   att.global.attribute.xmllang,
   att.global.attribute.rend,
+  att.global.attribute.style,
   att.global.attribute.rendition,
   att.global.attribute.xmlbase,
   att.global.attribute.xmlspace
@@ -401,6 +426,12 @@ att.global.attribute.rend =
   attribute rend {
     list { data.word+ }
   }?
+att.global.attribute.style =
+  
+  ## contains an expression in some formal style definition language
+  ## which defines the rendering or presentation
+  ## used for this element in the source text 
+  attribute style { data.text }?
 att.global.attribute.rendition =
   
   ## points to a description of the rendering or presentation used for this element in the
@@ -419,12 +450,10 @@ att.global.attribute.xmlspace =
   ##       managed by  applications. 
   attribute xml:space {
     
-    ## the processor should treat white space according to the
-    ##	default XML white space handling rules
+    ## signals that the application's default white-space processing modes are acceptable
     "default"
     | 
-      ## the processor should preserve unchanged any and all
-      ##	white space in the source
+      ## indicates the intent that applications preserve all white space
       "preserve"
   }?
 att.handFeatures.attribute.scribe =
@@ -581,7 +610,7 @@ att.naming.attribute.nymRef =
 att.placement.attributes = att.placement.attribute.place
 att.placement.attribute.place =
   
-  ## 
+  ## specifies where this item is placed
   ## Suggested values include: 1] below; 2] bottom; 3] margin; 4] top; 5] opposite; 6] overleaf; 7] above; 8] end; 9] inline; 10] inspace
   attribute place {
     list {
@@ -643,7 +672,7 @@ sch:pattern [
   "\x{a}" ~
   "      "
   sch:rule [
-    context = "tei:*[@targetLang]"
+    context = "tei:*[not(self::tei:schemaSpec)][@targetLang]"
     "\x{a}" ~
     "            "
     sch:assert [
@@ -756,6 +785,24 @@ att.spanning.attribute.spanTo =
   ## indicates the end of a span initiated by the element
   ##	bearing this attribute.
   attribute spanTo { data.pointer }?
+att.styleDef.attributes = att.styleDef.attribute.scheme
+att.styleDef.attribute.scheme =
+  
+  ## identifies the language used to describe the rendition.
+  attribute scheme {
+    
+    ## Cascading Stylesheet Language
+    "css"
+    | 
+      ## Extensible Stylesheet Language Formatting Objects
+      "xslfo"
+    | 
+      ## Informal free text description
+      "free"
+    | 
+      ## A user-defined rendition description language
+      "other"
+  }?
 att.tableDecoration.attributes =
   att.tableDecoration.attribute.role,
   att.tableDecoration.attribute.rows,
@@ -989,7 +1036,9 @@ model.publicationStmtPart =
   | idno
   | availability
 model.availabilityPart = licence
-model.glossLike = desc | gloss
+model.certLike = notAllowed
+model.descLike = desc
+model.glossLike = gloss
 model.quoteLike = quote | cit
 model.quoteLike_alternation = quote | cit
 model.quoteLike_sequence = quote, cit
@@ -1126,10 +1175,11 @@ model.encodingDescPart =
   | samplingDecl
   | editorialDecl
   | tagsDecl
+  | styleDefDecl
   | refsDecl
   | classDecl
-  | appInfo
   | geoDecl
+  | appInfo
 model.editorialDeclPart =
   correction
   | normalization
@@ -1140,6 +1190,79 @@ model.editorialDeclPart =
   | interpretation
 model.profileDescPart = creation | langUsage | textClass | calendarDesc
 model.resourceLike = notAllowed
+att.personal.attributes =
+  att.naming.attributes,
+  att.personal.attribute.full,
+  att.personal.attribute.sort
+att.personal.attribute.full =
+  
+  ## indicates whether the name component is given in full, as an
+  ## abbreviation or simply as an initial.
+  [ a:defaultValue = "yes" ]
+  attribute full {
+    
+    ## the name component is spelled out in full.
+    "yes"
+    | 
+      ## (abbreviated) the name component is given in an abbreviated form.
+      "abb"
+    | 
+      ## (initial letter) the name component is indicated only by
+      ## one initial.
+      "init"
+  }?
+att.personal.attribute.sort =
+  
+  ## specifies the sort order of the name component in relation
+  ## to others within the name.
+  attribute sort { data.count }?
+att.milestoneUnit.attributes = att.milestoneUnit.attribute.unit
+att.milestoneUnit.attribute.unit =
+  
+  ## provides a conventional name for the kind of section changing at this milestone.
+  ## Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] canto; 7] speaker; 8] stanza; 9] act; 10] scene; 11] section; 12] absent; 13] unnumbered
+  attribute unit {
+    
+    ## physical page breaks (synonymous with the pb element).
+    "page"
+    | 
+      ## column breaks.
+      "column"
+    | 
+      ## line breaks (synonymous with the lb element).
+      "line"
+    | 
+      ## any units termed book, liber, etc.
+      "book"
+    | 
+      ## individual poems in a collection.
+      "poem"
+    | 
+      ## cantos or other major sections of a poem.
+      "canto"
+    | 
+      ## changes of speaker or narrator.
+      "speaker"
+    | 
+      ## stanzas within a poem, book, or canto.
+      "stanza"
+    | 
+      ## acts within a play.
+      "act"
+    | 
+      ## scenes within a play or act.
+      "scene"
+    | 
+      ## sections of any kind.
+      "section"
+    | 
+      ## passages not present in the reference edition.
+      "absent"
+    | 
+      ## passages present in the text, but not to be included as part of the reference.
+      "unnumbered"
+    | xsd:Name
+  }
 p =
   
   ## (paragraph) marks paragraphs in prose. [3.1.  7.2.5. ]
@@ -1307,10 +1430,7 @@ gloss =
     att.translatable.attributes,
     att.typed.attributes,
     att.pointing.attributes,
-    
-    ## (canonical reference) identifies the associated term element using a canonical reference from a
-    ##         scheme defined in a refsDecl element in the TEI header
-    attribute cRef { data.pointer }?,
+    att.cReferencing.attributes,
     empty
   }
 term =
@@ -1325,10 +1445,7 @@ term =
     att.typed.attributes,
     att.canonical.attributes,
     att.sortable.attributes,
-    
-    ## identifies the associated gloss element using a canonical reference from a
-    ##           scheme defined in a refsDecl element in the TEI header
-    attribute cRef { data.pointer }?,
+    att.cReferencing.attributes,
     empty
   }
 sic =
@@ -1383,7 +1500,7 @@ gap =
   ##     reasons described in the TEI header, as part of sampling practice, or because the material is
   ##     illegible, invisible, or inaudible. [3.4.3. ]
   element gap {
-    model.glossLike*,
+    (model.descLike | model.certLike)*,
     att.global.attributes,
     att.editLike.attributes,
     
@@ -1456,7 +1573,9 @@ name =
   element name {
     macro.phraseSeq,
     att.global.attributes,
-    att.naming.attributes,
+    att.personal.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
     att.typed.attributes,
     empty
   }
@@ -1588,11 +1707,7 @@ abbr =
     macro.phraseSeq,
     att.global.attributes,
     att.responsibility.attributes,
-    
-    ## allows the encoder to classify the abbreviation according to some convenient
-    ##                 typology.
-    ## Sample values include: 1] suspension; 2] contraction; 3] brevigraph; 4] superscription; 5] acronym; 6] title; 7] organization; 8] geographic
-    attribute type { data.enumerated }?,
+    att.typed.attributes,
     empty
   }
 expan =
@@ -1633,12 +1748,7 @@ ptr =
     att.internetMedia.attributes,
     att.typed.attributes,
     att.declaring.attributes,
-    
-    ## (canonical reference) specifies the destination of the pointer by supplying a canonical reference from a
-    ##         scheme defined in a refsDecl element in the TEI header
-    attribute cRef {
-      list { data.word+ }
-    }?,
+    att.cReferencing.attributes,
     empty
   }
 ref =
@@ -1670,12 +1780,7 @@ ref =
     att.internetMedia.attributes,
     att.typed.attributes,
     att.declaring.attributes,
-    
-    ## (canonical reference) specifies the destination of the reference by supplying a canonical reference from a
-    ##         scheme defined in a refsDecl element in the TEI header
-    attribute cRef {
-      list { data.word+ }
-    }?,
+    att.cReferencing.attributes,
     empty
   }
 \list =
@@ -1781,7 +1886,8 @@ index =
     att.global.attributes,
     att.spanning.attributes,
     
-    ## supplies a name to specify which index (of several) the index entry belongs to.
+    ## a single word which follows the rules defining a
+    ##         legal XML name (see ), supplying a name to specify which index (of several) the index entry belongs to.
     attribute indexName { data.name }?,
     empty
   }
@@ -1789,7 +1895,7 @@ graphic =
   
   ## indicates the location of an inline graphic, illustration, or figure. [3.9. ]
   element graphic {
-    model.glossLike*,
+    model.descLike*,
     att.global.attributes,
     att.internetMedia.attributes,
     att.declaring.attributes,
@@ -1839,55 +1945,11 @@ milestone =
   element milestone {
     empty,
     att.global.attributes,
+    att.milestoneUnit.attributes,
     att.typed.attributes,
     att.sourced.attributes,
     att.spanning.attributes,
     att.breaking.attributes,
-    
-    ## provides a conventional name for the kind of section changing at this milestone.
-    ## Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] canto; 7] speaker; 8] stanza; 9] act; 10] scene; 11] section; 12] absent; 13] unnumbered
-    attribute unit {
-      
-      ## physical page breaks (synonymous with the pb element).
-      "page"
-      | 
-        ## column breaks.
-        "column"
-      | 
-        ## line breaks (synonymous with the lb element).
-        "line"
-      | 
-        ## any units termed book, liber, etc.
-        "book"
-      | 
-        ## individual poems in a collection.
-        "poem"
-      | 
-        ## cantos or other major sections of a poem.
-        "canto"
-      | 
-        ## changes of speaker or narrator.
-        "speaker"
-      | 
-        ## stanzas within a poem, book, or canto.
-        "stanza"
-      | 
-        ## acts within a play.
-        "act"
-      | 
-        ## scenes within a play or act.
-        "scene"
-      | 
-        ## sections of any kind.
-        "section"
-      | 
-        ## passages not present in the reference edition.
-        "absent"
-      | 
-        ## passages present in the text, but not to be included as part of the reference.
-        "unnumbered"
-      | xsd:Name
-    },
     empty
   }
 gb =
@@ -1965,7 +2027,8 @@ monogr =
        title+,
        (idno | textLang | editor | respStmt)*)
       | ((title | ref)+,
-         (idno | textLang | author | editor | respStmt)*))?,
+         (idno | textLang | author | editor | respStmt)*)
+      | (authority, idno))?,
      (model.noteLike | meeting)*,
      (edition, (idno | editor | respStmt)*)*,
      imprint,
@@ -2035,6 +2098,7 @@ title =
     macro.paraContent,
     att.global.attributes,
     att.canonical.attributes,
+    att.typed.attributes,
     
     ## indicates the bibliographic level for a title, that is, whether
     ##                                         it identifies an article, book, journal, series, or
@@ -2062,10 +2126,6 @@ title =
         ##                                                   published by a commercial press)
         "u"
     }?,
-    
-    ## classifies the title according to some convenient typology.
-    ## Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
-    attribute type { data.enumerated }?,
     empty
   }
 meeting =
@@ -2079,6 +2139,7 @@ imprint =
   ## groups information relating to the publication or distribution
   ##         of a bibliographic item. [3.11.2.3. ]
   element imprint {
+    (classCode, catRef)*,
     ((model.imprintPart | model.dateLike), respStmt*, model.global*)+,
     att.global.attributes,
     empty
@@ -2154,6 +2215,7 @@ bibl =
     att.declarable.attributes,
     att.typed.attributes,
     att.sortable.attributes,
+    att.docStatus.attributes,
     empty
   }
 biblStruct =
@@ -2163,11 +2225,12 @@ biblStruct =
   element biblStruct {
     (analytic*,
      (monogr, series*)+,
-     (model.noteLike | idno | relatedItem)*),
+     (model.noteLike | idno | model.ptrLike | relatedItem)*),
     att.global.attributes,
     att.declarable.attributes,
     att.typed.attributes,
     att.sortable.attributes,
+    att.docStatus.attributes,
     empty
   }
 listBibl =
@@ -2286,8 +2349,8 @@ lg =
            sch:assert [
              test =
                "count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) > 0"
-             "An <lg> \x{a}" ~
-             "        must contain at least one child <l>, <lg> or <gap>."
+             "An lg element\x{a}" ~
+             "        must contain at least one child l, lg or gap element."
            ]
            "\x{a}" ~
            "            "
@@ -2466,7 +2529,7 @@ editionStmt =
   
   ## (edition statement) groups information relating to one edition of a text. [2.2.2.  2.2. ]
   element editionStmt {
-    (model.pLike+ | (edition, respStmt*)),
+    (model.pLike+ | (edition, model.respLike*)),
     att.global.attributes,
     empty
   }
@@ -2496,7 +2559,7 @@ distributor =
 authority =
   
   ## (release authority) supplies the name of a person or other agency responsible for
-  ##   making an electronic file available, other than a publisher or
+  ##   making a work available, other than a publisher or
   ##   distributor. [2.2.4. ]
   element authority {
     macro.phraseSeq.limited, att.global.attributes, empty
@@ -2592,6 +2655,7 @@ biblFull =
     att.global.attributes,
     att.declarable.attributes,
     att.sortable.attributes,
+    att.docStatus.attributes,
     empty
   }
 encodingDesc =
@@ -2851,10 +2915,21 @@ rendition =
     attribute scope { data.enumerated }?,
     empty
   }
+styleDefDecl =
+  
+  ##  (style definition language declaration) specifies the name of the formal language in which style or
+  ##   renditional information is supplied elsewhere in the document.
+  element styleDefDecl {
+    model.pLike*,
+    att.global.attributes,
+    att.declarable.attributes,
+    att.styleDef.attributes,
+    empty
+  }
 refsDecl =
   
   ## (references declaration) specifies how canonical references are constructed for this
-  ##   text. [2.3.5.3.  2.3.  2.3.5. ]
+  ##   text. [2.3.6.3.  2.3.  2.3.6. ]
   element refsDecl {
     (model.pLike+ | cRefPattern+ | refState+),
     att.global.attributes,
@@ -2864,7 +2939,7 @@ refsDecl =
 cRefPattern =
   
   ## (canonical reference pattern) specifies an expression and replacement pattern for transforming a canonical reference into
-  ##     a URI.  [2.3.5.3.  2.3.5.  2.3.5.2. ]
+  ##     a URI.  [2.3.6.3.  2.3.6.  2.3.6.2. ]
   element cRefPattern {
     model.pLike*,
     att.global.attributes,
@@ -2880,50 +2955,12 @@ cRefPattern =
   }
 refState =
   
-  ## (reference state) specifies one component of a canonical reference defined by the milestone method. [2.3.5.3.  2.3.5. ]
+  ## (reference state) specifies one component of a canonical reference defined by the milestone method. [2.3.6.3.  2.3.6. ]
   element refState {
     empty,
     att.global.attributes,
+    att.milestoneUnit.attributes,
     att.sourced.attributes,
-    
-    ## indicates what kind of state is changing at this milestone.
-    ## Suggested values include: 1] page; 2] column; 3] line; 4] book; 5] poem; 6] canto; 7] stanza; 8] act; 9] scene; 10] section; 11] absent
-    attribute unit {
-      
-      ## page breaks in the reference edition. 
-      "page"
-      | 
-        ## column breaks. 
-        "column"
-      | 
-        ## line breaks. 
-        "line"
-      | 
-        ## any units termed book, liber, etc. 
-        "book"
-      | 
-        ## individual poems in a collection. 
-        "poem"
-      | 
-        ## cantos or other major sections of a poem. 
-        "canto"
-      | 
-        ## stanzas within a poem, book, or canto. 
-        "stanza"
-      | 
-        ## acts within a play. 
-        "act"
-      | 
-        ## scenes within a play or act. 
-        "scene"
-      | 
-        ## sections of any kind. 
-        "section"
-      | 
-        ## passages not present in the reference edition.
-        "absent"
-      | xsd:Name
-    },
     
     ## specifies the fixed length of the reference component.
     attribute length { data.count }?,
@@ -2935,33 +2972,67 @@ refState =
 classDecl =
   
   ## (classification declarations) contains one or more taxonomies defining any classificatory
-  ## codes used elsewhere in the text. [2.3.6.  2.3. ]
+  ## codes used elsewhere in the text. [2.3.7.  2.3. ]
   element classDecl { taxonomy+, att.global.attributes, empty }
 taxonomy =
   
   ## defines a typology either implicitly, by means of a bibliographic
-  ##     citation, or explicitly by a structured taxonomy. [2.3.6. ]
+  ##     citation, or explicitly by a structured taxonomy. [2.3.7. ]
   element taxonomy {
-    (model.glossLike* | category+ | (model.biblLike, category*)),
+    ((model.glossLike | model.descLike)*
+     | category+
+     | (model.biblLike, category*)),
     att.global.attributes,
     empty
   }
 category =
   
   ## contains an individual descriptive category, possibly nested within a superordinate
-  ##     category, within a user-defined taxonomy. [2.3.6. ]
+  ##     category, within a user-defined taxonomy. [2.3.7. ]
   element category {
-    ((catDesc+ | model.glossLike*), category*),
+    ((catDesc+ | (model.descLike | model.glossLike)*),
+     category*),
     att.global.attributes,
     empty
   }
 catDesc =
   
   ## (category description) describes some category within a taxonomy or text typology, either in the form of a brief
-  ##     prose description or in terms of the situational parameters used by the TEI formal textDesc. [2.3.6. ]
+  ##     prose description or in terms of the situational parameters used by the TEI formal textDesc. [2.3.7. ]
   element catDesc {
     (text | model.limitedPhrase | model.catDescPart)*,
     att.global.attributes,
+    empty
+  }
+geoDecl =
+  
+  ## (geographic coordinates declaration) documents the notation and the datum used for geographic coordinates expressed as content of
+  ##     the geo element elsewhere within the document. [2.3.8. ]
+  element geoDecl {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.declarable.attributes,
+    
+    ## supplies a commonly used code name for the datum employed.
+    ## Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Grid Reference System) ; 3] OSGB36(ordnance survey great britain) ; 4] ED50(European Datum coordinate system) 
+    [ a:defaultValue = "WGS84" ]
+    attribute datum {
+      
+      ## (World Geodetic System) a pair of numbers to be interpreted as latitude followed by longitude according to
+      ##             the World Geodetic System.
+      "WGS84"
+      | 
+        ## (Military Grid Reference System) the values supplied are geospatial entity object codes, based on
+        "MGRS"
+      | 
+        ## (ordnance survey great britain) the value supplied is to be interpreted as a British National Grid Reference.
+        "OSGB36"
+      | 
+        ## (European Datum coordinate system) the value supplied is to be interpreted as latitude followed by longitude according
+        ##             to the European Datum coordinate system.
+        "ED50"
+      | xsd:Name
+    }?,
     empty
   }
 appInfo =
@@ -3054,7 +3125,7 @@ keywords =
     
     ## identifies the controlled vocabulary within which the set of keywords concerned is
     ##         defined. 
-    attribute scheme { data.pointer },
+    attribute scheme { data.pointer }?,
     empty
   }
 classCode =
@@ -3131,37 +3202,6 @@ listChange =
     ## indicates whether the ordering of its child change
     ## elements is to be considered significant or not
     [ a:defaultValue = "true" ] attribute ordered { data.truthValue }?,
-    empty
-  }
-geoDecl =
-  
-  ## (geographic coordinates declaration) documents the notation and the datum used for geographic coordinates expressed as content of
-  ##     the geo element elsewhere within the document.
-  element geoDecl {
-    macro.phraseSeq,
-    att.global.attributes,
-    att.declarable.attributes,
-    
-    ## supplies a commonly used code name for the datum employed.
-    ## Suggested values include: 1] WGS84(World Geodetic System) ; 2] MGRS(Military Grid Reference System) ; 3] OSGB36(ordnance survey great britain) ; 4] ED50(European Datum coordinate system) 
-    [ a:defaultValue = "WGS84" ]
-    attribute datum {
-      
-      ## (World Geodetic System) a pair of numbers to be interpreted as latitude followed by longitude according to
-      ##             the World Geodetic System.
-      "WGS84"
-      | 
-        ## (Military Grid Reference System) the values supplied are geospatial entity object codes, based on
-        "MGRS"
-      | 
-        ## (ordnance survey great britain) the value supplied is to be interpreted as a British National Grid Reference.
-        "OSGB36"
-      | 
-        ## (European Datum coordinate system) the value supplied is to be interpreted as latitude followed by longitude according
-        ##             to the European Datum coordinate system.
-        "ED50"
-      | xsd:Name
-    }?,
     empty
   }
 TEI =
@@ -3442,7 +3482,7 @@ signed =
   
   ## (signature) contains the closing salutation, etc., appended to a foreword,
   ## dedicatory epistle, or other division of a text.  [4.2.2. ]
-  element signed { macro.phraseSeq, att.global.attributes, empty }
+  element signed { macro.paraContent, att.global.attributes, empty }
 postscript =
   
   ## contains a postscript, e.g. to a letter. [4.2. ]
@@ -3802,7 +3842,7 @@ join =
   
   ## identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it. [16.7. ]
   element join {
-    (model.glossLike*)
+    ((model.descLike | model.certLike)*)
     >> sch:pattern [
          id = "join-constraint-joinTargets1"
          "\x{a}" ~
@@ -4077,7 +4117,8 @@ table =
   ## contains text displayed in tabular form, in rows and columns. [14.1.1. ]
   element table {
     ((model.headLike | model.global)*,
-     ((row, model.global*)+ | (model.graphicLike, model.global*)+)),
+     ((row, model.global*)+ | (model.graphicLike, model.global*)+),
+     (model.divBottom, model.global*)*),
     att.global.attributes,
     
     ## indicates the number of rows in the table.
