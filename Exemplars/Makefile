@@ -25,15 +25,15 @@ P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--xsl=${XSL} --isoschematron
-SOURCE=--localsource=${P5}/p5subset.xml 
+SOURCE=${P5}/p5subset.xml 
 
 
-%.dtd: %.odd ${SOURCE}
+%.dtd: %.odd 
 	@echo "BUILD: Test schema from $<"
 	xmllint --xinclude $*.odd > $*.xi
 	@echo Validate $< itself
 	which rnv && rnv ../p5odds.rnc $*.xi
-	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
+	${ROMA} ${ROMAOPTS} --localsource=${SOURCE} $*.odd .
 	@echo Test schema built from $<
 	jing $*.rng $*.tei && echo $* test validates OK
 	jing $*.rng $*.template && echo $* template validates OK
@@ -44,12 +44,12 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	saxon $*.tei $*.xsl
 
 
-%.rng: %.odd ${SOURCE}
+%.rng: %.odd 
 	@echo "BUILD: Test schema from $<"
 	xmllint --xinclude $*.odd > $*.xi
 	@echo Validate $< itself
 	which rnv && rnv ../p5odds.rnc $*.xi
-	${ROMA} ${ROMAOPTS} ${SOURCE} $*.odd .
+	${ROMA} ${ROMAOPTS} --localsource=${SOURCE} $*.odd .
 	@echo Test schema built from $<
 	jing $*.rng $*.tei && echo $* test validates OK
 	jing $*.rng $*.template && echo $* template validates OK
@@ -57,12 +57,12 @@ SOURCE=--localsource=${P5}/p5subset.xml
 	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
 	saxon $*.tei $*.xsl
 
-%.doc.pdf: %.odd  ${SOURCE}
+%.doc.pdf: %.odd 
 	@echo "BUILD: Test schema from $<"
 	@echo Validate $< itself
 	which rnv && rnv ../p5odds.rnc $< 
-	${ROMA} ${ROMAOPTS} ${SOURCE}--docflags="summaryDoc=true" --docpdf --dochtml $< .
-	teitoepub ${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
+	${ROMA} ${ROMAOPTS} --localsource=${SOURCE} --docflags="summaryDoc=true" --docpdf --dochtml $< .
+	teitoepub --localsource=${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
 	@echo Test schema built from $<
 	jing $*.rng $*.tei && echo $* test validates OK
 	jing $*.rng $*.template && echo $* template validates OK
