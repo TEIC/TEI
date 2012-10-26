@@ -20,6 +20,10 @@ class romaDom extends domDocument
 	parent::__construct();
 
 	$this->preserveWhiteSpace = false;
+	
+	//making sure Roma can deal with multibyte regex (for non-Latin tags, attributes etc.)
+	mb_internal_encoding('UTF-8');
+	mb_regex_encoding('utf-8');
 
 	if ( $szXML == '' )
 	  {
@@ -995,7 +999,7 @@ class romaDom extends domDocument
 
     public function addElement( $aszConfig )
       {
-	if (! preg_match( '/^[\w\d]+$/', $aszConfig[ 'name' ] ) )
+	if (! mb_ereg_match( '^[\w\d]+$', $aszConfig[ 'name' ] ) )
 	  {
 	    throw new falseTagnameException( '', $aszConfig[ 'name' ] );
 	  }
@@ -1163,8 +1167,6 @@ class romaDom extends domDocument
     public function changeElementNameInModule( $szOldName, $szNewName, $szModule )
       {
 	$errResult = false;
-	mb_internal_encoding('UTF-8');
-	mb_regex_encoding('utf-8');
 	
 	if ( mb_ereg_match( '^[\w\d]+$', $szNewName ) )
 	  {
@@ -1369,7 +1371,7 @@ class romaDom extends domDocument
     public function addAttribute( $aszConfig )
       {
 	$errResult = false;
-	if (! preg_match( '/^[\w\d:-]+$/', $aszConfig[ 'name' ] ) )
+	if (! mb_ereg_match( '^[\w\d:-]+$', $aszConfig[ 'name' ] ) )
 	  {
 	    $errResult = true;
 	    throw new falseTagnameException( '', $aszConfig[ 'name' ] );
@@ -1823,7 +1825,7 @@ class romaDom extends domDocument
       {
 	$errResult = false;
 
-	if ( preg_match( '/^[:\w\d]+$/', $szNewName ) )
+	if ( mb_ereg_match( '^[:\w\d]+$', $szNewName ) )
 	  {
 	    $this->getXPath( $oXPath );
 	    $oSchema = $oXPath->query( "//tei:schemaSpec" )->item(0);	    
