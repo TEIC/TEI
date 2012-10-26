@@ -192,7 +192,8 @@ chapterpdfs: check
 
 validate: dtds schemas oddschema exampleschema valid 
 
-#valid: jing_version=$(wordlist 1,3,$(shell jing))
+#The following line commented out in 10605 by MDH. Restored 2012-10-26 to see if it was the source of 2.2.0 release problems.
+valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check
 #	@echo BUILD: Check validity with jing
 #	@echo ${jing_version}
