@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="testtei">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id: build-to.xml 9887 2011-12-04 22:52:05Z rahtz $
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+      run ODD document through to different schemas, and validate
+      test file using those schemas
+ -->
+  <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask"/>
+  <!-- Path to TEI XML file. -->
+  <property name="inputFile" value=""/>
+  <property name="profile" value="default"/>
+  <!-- where does oxygen keep stuff -->
+  <property name="oxygenlib" value=""/>
+  <!-- Stylesheet for transformation -->
+  <property name="odd2dtd" value="../../Stylesheets/profiles/${profile}/dtd/to.xsl"/>
+  <property name="odd2relax" value="../../Stylesheets/profiles/${profile}/relaxng/to.xsl"/>
+  <property name="odd2oddxsl" value="../../Stylesheets/odds2/odd2odd.xsl"/>
+  <dirname property="file" file="${inputFile}"/>
+  <dirname property="fileDir" file="${fileName}"/>
+  <basename property="fileName" file="${inputFile}" suffix=".odd"/>
+  <path id="classpath">
+    <pathelement path="${java.class.path}"/>
+  </path>
+  <target name="setup">
+  </target>
+  <target name="odd">
+    <echo>Do ODD processing</echo>
+    <xslt force="yes" style="${odd2oddxsl}" in="${inputFile}" out="${fileName}.odd.compiled" classpath="classpath">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+  <target name="dist" depends="setup,odd,dtd,rng,rnc,cleanup"/>
+  <target name="dtd">
+    <echo level="info">XSLT generate DTD file</echo>
+    <xslt force="yes" style="${odd2dtd}" in="${fileName}.odd.compiled" out="${fileName}.dtd" classpath="classpath">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="directory" expression="file:///${outputTempDir}"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+  <target name="rng">
+    <echo level="info">XSLT generate RELAXNG files</echo>
+    <xslt force="yes" style="${odd2relax}" in="${fileName}.odd.compiled" out="${fileName}.rng" classpath="classpath">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="directory" expression="file:///${outputTempDir}"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+  <!-- Use the Relax NG target to obtain a Relax NG schema and afterward transform it
+        to RNC using TRANG. -->
+  <target name="rnc">
+    <echo level="info">TRANG generate RNC from RELAXNG files</echo>
+    <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+      <classpath>
+        <path refid="classpath"/>
+        <pathelement location="${oxygenlib}/trang.jar"/>
+      </classpath>
+      <!-- Even though the output type is inferred from the output file extension,
+                make sure it's the right one. -->
+      <arg value="-O"/>
+      <arg value="rnc"/>
+      <arg value="${trangInputFile}"/>
+      <arg value="${fileName}.rng"/>
+    </java>
+  </target>
+  <target name="cleanup" unless="debug">
+    <delete dir="${outputTempDir}"/>
+  </target>
+  <target name="validate">
+    <jing rngfile="${fileName}.rng">
+      <fileset dir="xsl" includes="**/*.xsl"/>
+    </jing>
+  </target>
+</project>
