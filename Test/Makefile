@@ -5,14 +5,14 @@ DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/../p5subset.xml
-ANT=ant -lib /usr/share/jing/jing.jar -Dsaxon=/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml
+ANT=ant -lib /usr/share/java/jing.jar -Dsaxon=/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml
 
-TESTFILES= \
+NORMALFILES= \
 	testbare.dtd \
 	testbasic.xsd \
 	testplus.special 
 
-SPECIALFILES = \
+EXTENDEDFILES = \
 	testall.xsd \
 	testfand2.xsd \
 	testfand3.xsd \
@@ -25,8 +25,8 @@ SPECIALFILES = \
 
 default: normal detest special testmeta2010 test-extns test-frag 
 
-normal: $(TESTFILES)
-special: $(SPECIALFILES)
+normal: $(NORMALFILES)
+special: $(EXTENDEDFILES)
 
 %.rng: %.odd
 	@echo "BUILD: Test schema from $<"
