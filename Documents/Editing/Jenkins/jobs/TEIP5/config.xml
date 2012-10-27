@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Build distribution packages as zip archives and Debian packages</description>
+  <description>Build P5 distribution packages as zip archives and Debian packages</description>
   <logRotator>
     <daysToKeep>-1</daysToKeep>
     <numToKeep>2</numToKeep>
@@ -10,7 +10,7 @@
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.scm.SubversionSCM">
+  <scm class="hudson.scm.SubversionSCM" plugin="subversion@1.40">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
         <remote>https://tei.svn.sourceforge.net/svnroot/tei/trunk/P5</remote>
@@ -26,28 +26,16 @@
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
-  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenDownstreamBuilding>true</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <hudson.plugins.copyartifact.CopyArtifact>
-      <projectName>TEIP5-Test</projectName>
-      <filter>Test/**,Exemplars/**</filter>
-      <target></target>
-      <selector class="hudson.plugins.copyartifact.WorkspaceSelector"/>
-    </hudson.plugins.copyartifact.CopyArtifact>
-    <hudson.plugins.copyartifact.CopyArtifact>
-      <projectName>TEIP5-Documentation</projectName>
-      <filter>release/**,*.stamp,Guidelines.*</filter>
-      <target></target>
-      <selector class="hudson.plugins.copyartifact.WorkspaceSelector"/>
-    </hudson.plugins.copyartifact.CopyArtifact>
     <hudson.tasks.Shell>
       <command>rm -f dist-source.stamp dist-schema.stamp dist-test.stamp dist-database.stamp dist-exemplars.stamp</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>make XSL=`pwd`/../../Stylesheets/lastSuccessful/archive/dist/xml/tei/stylesheet dist deb</command>
+      <command>make XSL=`pwd`/../../Stylesheets/lastSuccessful/archive/dist/xml/tei/stylesheet clean dist deb</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>make XSL=`pwd`/../../Stylesheets/lastSuccessful/archive/dist/xml/tei/stylesheet teiwebsiteguidelines</command>
@@ -58,17 +46,17 @@
       <artifacts>release/xml/**, release/doc/**,*.zip,tei-p5-*_*,teiwebsiteguidelines.zip</artifacts>
       <latestOnly>false</latestOnly>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.logparser.LogParserPublisher>
+    <hudson.plugins.logparser.LogParserPublisher plugin="log-parser@1.0.8">
       <unstableOnWarning>true</unstableOnWarning>
       <failBuildOnError>false</failBuildOnError>
       <parsingRulesPath>/var/lib/jenkins/hudson-log-parse-rules</parsingRulesPath>
     </hudson.plugins.logparser.LogParserPublisher>
     <hudson.tasks.Mailer>
-      <recipients>sebastian.rahtz@oucs.ox.ac.uk mholmes@uvic.ca</recipients>
+      <recipients>sebastian.rahtz@it.ox.ac.uk</recipients>
       <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.tasks.Mailer>
-    <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher/>
+    <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher plugin="emotional-hudson@1.3"/>
   </publishers>
   <buildWrappers/>
 </project>

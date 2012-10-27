@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Build HTML, PDF and ePub of Guidelines. Check HTML for validity</description>
+  <description>Build HTML, PDF and ePub of Guidelines. Check HTML and ePub for validity</description>
   <logRotator>
     <daysToKeep>-1</daysToKeep>
     <numToKeep>2</numToKeep>
@@ -10,7 +10,7 @@
   </logRotator>
   <keepDependencies>false</keepDependencies>
   <properties/>
-  <scm class="hudson.scm.SubversionSCM">
+  <scm class="hudson.scm.SubversionSCM" plugin="subversion@1.40">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
         <remote>https://tei.svn.sourceforge.net/svnroot/tei/trunk/P5</remote>
@@ -26,20 +26,27 @@
   </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
-  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenDownstreamBuilding>true</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>make XSL=`pwd`/../../Stylesheets/lastSuccessful/archive/dist/xml/tei/stylesheet clean dist-doc validate-html</command>
+      <command>make XSL=`pwd`/../../Stylesheets/lastSuccessful/archive/dist/xml/tei/stylesheet clean html-web validate-html epub pdf</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.ArtifactArchiver>
-      <artifacts>Guidelines-web/**,Guidelines.pdf,Guidelines.mobi,Guidelines.epub,Guidelines.log</artifacts>
-      <latestOnly>false</latestOnly>
-    </hudson.tasks.ArtifactArchiver>
+    <hudson.plugins.logparser.LogParserPublisher plugin="log-parser@1.0.8">
+      <unstableOnWarning>false</unstableOnWarning>
+      <failBuildOnError>true</failBuildOnError>
+      <parsingRulesPath>/var/lib/jenkins/hudson-log-parse-rules</parsingRulesPath>
+    </hudson.plugins.logparser.LogParserPublisher>
+    <hudson.tasks.Mailer>
+      <recipients>sebastian.rahtz@it.ox.ac.uk mholmes@uvic.ca</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>true</sendToIndividuals>
+    </hudson.tasks.Mailer>
+    <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher plugin="emotional-hudson@1.3"/>
     <hudson.tasks.BuildTrigger>
       <childProjects>TEIP5</childProjects>
       <threshold>
@@ -48,17 +55,6 @@
         <color>BLUE</color>
       </threshold>
     </hudson.tasks.BuildTrigger>
-    <hudson.plugins.logparser.LogParserPublisher>
-      <unstableOnWarning>false</unstableOnWarning>
-      <failBuildOnError>true</failBuildOnError>
-      <parsingRulesPath>/var/lib/jenkins/hudson-log-parse-rules</parsingRulesPath>
-    </hudson.plugins.logparser.LogParserPublisher>
-    <hudson.tasks.Mailer>
-      <recipients>sebastian.rahtz@oucs.ox.ac.uk mholmes@uvic.ca</recipients>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>true</sendToIndividuals>
-    </hudson.tasks.Mailer>
-    <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher/>
   </publishers>
   <buildWrappers/>
 </project>
