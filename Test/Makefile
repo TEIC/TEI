@@ -5,6 +5,7 @@ DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/../p5subset.xml
+ANT=ant -lib /usr/share/jing/jing.jar -Dsaxon=/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml
 
 TESTFILES= \
 	testbare.dtd \
@@ -64,11 +65,23 @@ testall.rng: testall.odd
 	saxon testall.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > testall.xsl
 	saxon testall.xml testall.xsl
 
-%.dtd: %.rng
+%.dtd: %.odd
+	$(ANT) -f antruntest.xml -DinputFile=$*.odd -DXSL=$(XSL) validateodd compileodd dtd rng validaterng cleanup
 	@echo Check file using DOCTYPE in instance
 	xmllint --noout --valid $*.xml 
 
-%.xsd: %.rng
+%.xsd: %.odd
+	$(ANT) -f antruntest.xml -DinputFile=$*.odd -DXSL=$(XSL) validateodd compileodd dtd rng rnc xsd validaterng  isoschematron validateschematron cleanup
+	@echo Validate XSD using Jing ...
+	cp xml.xsd.w3c xml.xsd
+	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
+	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
+	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
+	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
+	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
+	jing $*.xsd $*.xml
+
+oldxsdtoodd:
 	@echo Validate XSD using Jing ...
 	cp xml.xsd.w3c xml.xsd
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
