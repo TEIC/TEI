@@ -5,7 +5,7 @@ DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/../p5subset.xml
-ANT=ant -lib /usr/share/java/jing.jar -Dsaxon=/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
+ANT=ant -q -lib /usr/share/java/jing.jar -Dsaxon=/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
 
 NORMALFILES= \
 	testbare.dtd \
@@ -71,7 +71,8 @@ testall.rng: testall.odd
 	xmllint --noout --valid $*.xml 
 
 %.xsd: %.odd
-	$(ANT) -f antruntest.xml -DinputFile=$*.odd validateodd compileodd rng xsd validaterng  isoschematron validateschematron cleanup
+	$(ANT) -f antruntest.xml -DinputFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
+	trang   -o disable-abstract-elements $*.rng $*.xsd
 	@echo Validate XSD using Jing ...
 	cp xml.xsd.w3c xml.xsd
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
