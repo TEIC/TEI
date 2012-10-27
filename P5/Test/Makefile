@@ -71,7 +71,7 @@ testall.rng: testall.odd
 	xmllint --noout --valid $*.xml 
 
 %.xsd: %.odd
-	$(ANT) -f antruntest.xml -DinputFile=$*.odd validateodd compileodd dtd rng rnc xsd validaterng  isoschematron validateschematron cleanup
+	$(ANT) -f antruntest.xml -DinputFile=$*.odd validateodd compileodd rng xsd validaterng  isoschematron validateschematron cleanup
 	@echo Validate XSD using Jing ...
 	cp xml.xsd.w3c xml.xsd
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
