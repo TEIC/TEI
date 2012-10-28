@@ -501,7 +501,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:schemaSpec" mode="odd2odd-pass2">
-    <xsl:variable name="orig" select="document(@source)"/>
+    <xsl:variable name="orig" select="tei:workOutSource(.)"/>
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:apply-templates mode="odd2odd-pass2" select="text()|comment()|*"/>
