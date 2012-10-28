@@ -22,12 +22,11 @@
       run ODD document through to different schemas, and validate
       test file using those schemas
  -->
-  <taskdef name="runjing" classname="com.thaiopensource.relaxng.util.JingTask"/>
-
   <property name="inputFile" value=""/>
   <property name="profile" value="default"/>
   <property name="saxon" value="/usr/share/saxon/saxon9he.jar"/>
   <property name="trang" value="/usr/share/trang/trang.jar"/>
+  <property name="jing" value="/usr/share/java/jing.jar"/>
   <property name="XSL" value="../../Stylesheets"/>
   <property name="odd2dtd" value="${XSL}/profiles/${profile}/dtd/to.xsl"/>
   <property name="odd2html"  value="${XSL}/odds2/odd2html.xsl"/>
@@ -41,6 +40,8 @@
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
+
+  <taskdef name="runjing" classpath="${jing}" classname="com.thaiopensource.relaxng.util.JingTask"/>
 
   <target name="dist" depends="setup,validateodd,compileodd,dtd,rng,rnc,xsd,validaterng,isoschematron,validateschematron,dochtml,cleanup"/>
 
