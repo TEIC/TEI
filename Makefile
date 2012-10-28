@@ -209,7 +209,7 @@ valid: check
 	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
 	./run-onvdl p5.nvdl p5.xml 
 	@echo BUILD: Check validity with rnv if we have it
-	-command -v  rnv && (xmllint --noent --xinclude p5.xml > Source.xml; rnv -v p5odds.rnc Source.xml; rm -f Source.xml)
+	-command -v  rnv && rnv -v p5odds.rnc p5.xml
 	@echo BUILD: Check full validity of relevant examples with nvdl
 	${SAXON} p5.xml Utilities/extractegXML.xsl > v.body
 	echo "<!DOCTYPE p [" > v.header
