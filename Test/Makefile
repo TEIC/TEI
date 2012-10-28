@@ -89,6 +89,7 @@ detest:
 	@echo BUILD: Test file with deliberate mistakes
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	echo -jing -t detest.rng detest.xml  > detest.log.all
+	trang detest.rng detest.rnc
 	-rnv detest.rnc detest.xml 2>> detest.log.all
 	@echo Validate using Schematron
 	saxon detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
