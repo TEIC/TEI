@@ -804,11 +804,19 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="contains(@rend,'color(')">
         <w:color w:val="{substring-before(substring-after(@rend,'color('),')')}"/>
       </xsl:when>
+      <xsl:when test="starts-with(@rend,'color=')">
+        <w:color w:val="{substring(@rend,7)}"/>
+      </xsl:when>
     </xsl:choose>
     <!-- background color -->
-    <xsl:if test="contains(@rend,'background(')">
-      <w:highlight w:val="{substring-before(substring-after(@rend,'background('),')')}"/>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="contains(@rend,'background(')">
+	<w:highlight w:val="{substring-before(substring-after(@rend,'background('),')')}"/>
+      </xsl:when>
+      <xsl:when test="starts-with(@rend,'background=')">
+	<w:highlight w:val="{substring(@rend,12)}"/>
+      </xsl:when>
+    </xsl:choose>
     <!-- underline -->
     <xsl:choose>
       <xsl:when test="contains(@rend,'underline') ">
