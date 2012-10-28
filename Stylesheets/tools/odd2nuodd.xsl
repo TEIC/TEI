@@ -15,7 +15,7 @@
       
   -->
   <!-- where is a copy of P5? -->
-  <xsl:param name="P5">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
+  <xsl:param name="defaultSource">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
   
   <!-- do you want moduleRef generated with @include or @except? -->
   <xsl:param name="method">include</xsl:param>
@@ -91,7 +91,7 @@
 	    </xsl:for-each>
 	  </xsl:variable>
 	  <xsl:variable name="includelist">
-	    <xsl:for-each select="document($P5)">
+	    <xsl:for-each select="document($defaultSource)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
@@ -108,7 +108,7 @@
 	</xsl:when>
 	<xsl:when test="$method='include'">
 	  <xsl:variable name="includelist">
-	    <xsl:for-each select="document($P5)">
+	    <xsl:for-each select="document($defaultSource)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
@@ -136,7 +136,7 @@
 	    </xsl:for-each>
 	  </xsl:variable>
 	  <xsl:variable name="exceptlist">
-	    <xsl:for-each select="document($P5)">
+	    <xsl:for-each select="document($defaultSource)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
@@ -155,7 +155,7 @@
 	</xsl:when>
 	<xsl:when test="$method='except'">
 	  <xsl:variable name="exceptlist">
-	    <xsl:for-each select="document($P5)">
+	    <xsl:for-each select="document($defaultSource)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>

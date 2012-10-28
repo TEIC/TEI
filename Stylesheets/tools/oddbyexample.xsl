@@ -74,7 +74,7 @@ valList
   <!-- the document corpus -->
   <xsl:param name="corpus">./</xsl:param>
   <!-- the source of the TEI (just needs *Spec)-->
-  <xsl:param name="tei">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
+  <xsl:param name="defaultSource">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
   <!-- should we make valList for @rend -->
   <xsl:param name="enumerateRend">false</xsl:param>
   <xsl:param name="enumerateType">false</xsl:param>
@@ -207,7 +207,7 @@ valList
     <xsl:variable name="stage1">
       <stage1>
         <tei>
-          <xsl:for-each select="document($tei)">
+          <xsl:for-each select="document($defaultSource)">
             <xsl:for-each select="key('CLASSES',1)">
               <classSpec>
                 <xsl:copy-of select="@ident"/>
@@ -588,7 +588,7 @@ valList
 	    </xsl:for-each>
 	  </xsl:variable>
 	  <xsl:variable name="includelist">
-	    <xsl:for-each select="document($tei)">
+	    <xsl:for-each select="document($defaultSource)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
@@ -605,7 +605,7 @@ valList
 	</xsl:when>
 	<xsl:when test="$method='include'">
 	  <xsl:variable name="includelist">
-	    <xsl:for-each select="document($tei)">
+	    <xsl:for-each select="document($defaultSource)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
@@ -633,7 +633,7 @@ valList
 	    </xsl:for-each>
 	  </xsl:variable>
 	  <xsl:variable name="exceptlist">
-	    <xsl:for-each select="document($tei)">
+	    <xsl:for-each select="document($defaultSource)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
@@ -652,7 +652,7 @@ valList
 	</xsl:when>
 	<xsl:when test="$method='except'">
 	  <xsl:variable name="exceptlist">
-	    <xsl:for-each select="document($tei)">
+	    <xsl:for-each select="document($defaultSource)">
 	      <xsl:for-each select="key('EbyM',$module)">
 		<xsl:sort select="@ident"/>
 		<xsl:variable name="e" select="@ident"/>
