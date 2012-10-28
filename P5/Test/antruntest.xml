@@ -23,8 +23,11 @@
       test file using those schemas
  -->
   <property name="oddFile" value=""/>
-  <property name="fileName" value=""/>
+  <property name="outputname" value=""/>
+  <property name="testfile" value=""/>
   <property name="profile" value="default"/>
+  <property name="lang" value="en"/>
+  <property name="patternprefix" value="tei_"/>
   <property name="saxon" value="/usr/share/saxon/saxon9he.jar"/>
   <property name="trang" value="/usr/share/trang/trang.jar"/>
   <property name="jing" value="/usr/share/java/jing.jar"/>
@@ -35,7 +38,7 @@
   <property name="odd2relax" value="${XSL}/profiles/${profile}/relaxng/to.xsl"/>
   <property name="odd2odd" value="${XSL}/odds2/odd2odd.xsl"/>
   <property name="odd2isosch" value="${XSL}/odds2/extract-isosch.xsl"/>
-  <dirname property="fileDir" file="${fileName}"/>
+  <dirname property="fileDir" file="${outputname}"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
@@ -49,7 +52,7 @@
 
   <target name="compileodd">
     <echo>Do ODD processing using ${saxon} and source ${defaultSource}</echo>
-    <xslt processor="trax"  force="yes" style="${odd2odd}" in="${oddFile}" out="${fileName}.odd.compiled">
+    <xslt processor="trax"  force="yes" style="${odd2odd}" in="${oddFile}" out="${outputname}.odd.compiled">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -58,14 +61,16 @@
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
-      <param name="patternprefix" expression="tei_"/>
+      <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
+      <param name="schema" expression="${schema}" if="schema"/>
+      <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
   </target>
   <target name="dtd">
     <echo level="info">XSLT generate DTD file</echo>
-    <xslt processor="trax"  force="yes" style="${odd2dtd}" in="${fileName}.odd.compiled" out="${fileName}.dtd">
+    <xslt processor="trax"  force="yes" style="${odd2dtd}" in="${outputname}.odd.compiled" out="${outputname}.dtd">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -73,17 +78,18 @@
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <!-- supply name of language-->
       <param name="lang" expression="${lang}" if="lang"/>
-      <!-- emit some diagnostics"-->
       <param name="debug" expression="${debug}" if="debug"/>
-      <!-- be verbose-->
+      <param name="schema" expression="${schema}" if="schema"/>
+      <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
+      <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
     </xslt>
   </target>
   <target name="rng">
     <echo level="info">XSLT generate RELAXNG files</echo>
-    <xslt processor="trax"  force="yes" style="${odd2relax}" in="${fileName}.odd.compiled" out="${fileName}.rng">
+    <xslt processor="trax"  force="yes" style="${odd2relax}" in="${outputname}.odd.compiled" out="${outputname}.rng">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -91,11 +97,12 @@
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <!-- supply name of language-->
+      <param name="schema" expression="${schema}" if="schema"/>
+      <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="lang" expression="${lang}" if="lang"/>
-      <!-- emit some diagnostics"-->
       <param name="debug" expression="${debug}" if="debug"/>
-      <!-- be verbose-->
+      <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
   </target>
@@ -107,29 +114,29 @@
       <classpath location="${trang}"/>
       <arg value="-O"/>
       <arg value="rnc"/>
-      <arg value="${fileName}.rng"/>
-      <arg value="${fileName}.rnc"/>
+      <arg value="${outputname}.rng"/>
+      <arg value="${outputname}.rnc"/>
     </java>
   </target>
 
   <target name="cleanup" unless="debug">
-    <delete file="${fileName}.odd.compiled"/>
+    <delete file="${outputname}.odd.compiled"/>
   </target>
 
   <target name="validateodd">
-    <echo level="info">Validate ODD</echo>
+    <echo level="info">Validate ${oddFile} as ODD </echo>
     <runjing rngfile="../p5odds.rng" file="${oddFile}"/>
   </target>
 
   <target name="validaterng">
-    <echo level="info">Validate against RELAXNG</echo>
-    <runjing rngfile="${fileName}.rng" file="${fileName}.xml"/>
+    <echo level="info">Validate ${testfile} against RELAXNG ${outputname}.rng</echo>
+    <runjing rngfile="${outputname}.rng" file="${testfile}"/>
   </target>
 
   <target name="validatedtd">
-    <echo level="info">Validate against DTD</echo>
-    <xmlvalidate failonerror="yes" file="${fileName}.xml">
-      <dtd location="${fileName}.dtd"/>
+    <echo level="info">Validate ${testfile} against DTD ${outputname}.dtd</echo>
+    <xmlvalidate failonerror="yes" file="${testfile}">
+      <dtd location="${outputname}.dtd"/>
     </xmlvalidate>
   </target>
 
@@ -141,24 +148,24 @@
       <classpath location="${trang}"/>
       <arg value="-O"/>
       <arg value="xsd"/>
-      <arg value="${fileName}.rng"/>
-      <arg value="${fileName}.xsd"/>
+      <arg value="${outputname}.rng"/>
+      <arg value="${outputname}.xsd"/>
     </java>
   </target>
 
   <target name="isoschematron">
     <echo level="info">XSLT generate ISO schematron from compiled ODD </echo>
-    <xslt processor="trax"  force="yes" style="${odd2isosch}" in="${fileName}.odd.compiled" out="${fileName}.isosch">
+    <xslt processor="trax"  force="yes" style="${odd2isosch}" in="${outputname}.odd.compiled" out="${outputname}.isosch">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
-    <xslt processor="trax"  force="yes" style="../Utilities/iso_schematron_message_xslt2.xsl" in="${fileName}.isosch" out="${fileName}.xsl">
+    <xslt processor="trax"  force="yes" style="../Utilities/iso_schematron_message_xslt2.xsl" in="${outputname}.isosch" out="${outputname}.xsl">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
 
   <target name="validateschematron">
     <echo level="info">Validate using Schematron</echo>
-    <xslt processor="trax"  force="yes" style="${fileName}.xsl" in="${fileName}.xml"
+    <xslt processor="trax"  force="yes" style="${outputname}.xsl" in="${testfile}"
 	  out="stdout">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
@@ -166,7 +173,7 @@
 
   <target name="dochtml">
     <echo level="info">XSLT generate HTML from compiled ODD</echo>
-   <xslt processor="trax"  force="yes" style="${odd2html}" in="${fileName}.odd.compiled" out="${fileName}.doc.html">
+   <xslt processor="trax"  force="yes" style="${odd2html}" in="${outputname}.odd.compiled" out="${outputname}.doc.html">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
@@ -176,7 +183,7 @@
 
   <target name="doclite">
     <echo level="info">XSLT generate TEI Lite from compiled ODD</echo>
-    <xslt processor="trax"  force="yes" style="${odd2lite}" in="${fileName}.odd.compiled" out="${fileName}.doc.xml">
+    <xslt processor="trax"  force="yes" style="${odd2lite}" in="${outputname}.odd.compiled" out="${outputname}.doc.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
