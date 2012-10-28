@@ -5,7 +5,7 @@ DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/../p5subset.xml
-ANT=ant -q -lib /usr/share/java/jing.jar -Dsaxon=/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
+ANT=ant -Djing=/usr/share/java/jing.jar -Dsaxon=/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
 
 NORMALFILES= \
 	testbare.dtd \
