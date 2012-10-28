@@ -36,12 +36,12 @@ testall.examples: testall.xsd
 	../run-onvdl testall.nvdl testall.odd
 
 %.dtd: %.odd
-	$(ANT) -f antruntest.xml -DfileName=$* -DoddFile=$*.odd validateodd compileodd dtd rng validaterng cleanup
+	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd dtd rng validaterng cleanup
 	@echo Check file using DOCTYPE in instance
 	xmllint --noout --valid $*.xml 
 
 %.xsd: %.odd
-	$(ANT) -f antruntest.xml -DfileName=$* -DoddFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
+	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
 	trang   -o disable-abstract-elements $*.rng $*.xsd
 	@echo Validate XSD using Jing ...
 	cp xml.xsd.w3c xml.xsd
@@ -55,29 +55,19 @@ testall.examples: testall.xsd
 %.special: %.odd
 	@echo "BUILD:  Test schema from (special) $<" 
 	xmllint --xinclude $< > xi_$<
-	$(ANT) -f antruntest.xml -DoddFile=xi_$*.odd -DfileName=$* validateodd compileodd rng validaterng cleanup
+	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
 	trang $*.rng $*.rnc
 	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc  
 	rm xi_$*.odd
 
 testmeta2010:
-	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _old `; do \
+	$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml validateodd
 		echo found schemaSpec $$j in testmeta2010; \
-		$(ROMA) $(ROMAOPTS) --autoglobal --nodtd --noxsd --xsl=$(XSL) --schema=$$j  testmeta2010.odd .; \
-		echo Now validating instances documents against $$j schema; \
-		echo Validate using Jing for RelaxNG... ; \
-		jing -t $$j.rng testmeta2010.xml; \
-		echo Validate using RNV.... ; \
-		xmllint --noent --dropdtd  testmeta2010.xml | rnv $$j.rnc ;   \
+		$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml -Doutputname=$$j -DautoGlobal=true -Dschema=$$j  compileodd rng validaterng cleanup; \
 	done
 	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _new `; do \
 		echo found schemaSpec $$j in testmeta2010; \
-		$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) --schema=$$j  testmeta2010.odd .; \
-		echo Now validating instances documents against $$j schema; \
-		echo Validate using Jing for RelaxNG... ; \
-		jing -t $$j.rng testmeta2010.xml; \
-		echo Validate using RNV.... ; \
-		xmllint --noent --dropdtd  testmeta2010.xml | rnv $$j.rnc ;   \
+		$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml -Doutputname=$$j -Dschema=$$j  compileodd rng validaterng cleanup; \
 	done
 
 test-frag:
