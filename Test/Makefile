@@ -30,7 +30,7 @@ special: $(EXTENDEDFILES)
 
 testall.examples: testall.xsd
 	saxon -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl 
-	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) testall-ex.odd . 
+	$(ANT) -f antruntest.xml -Doutputname=testall-examples -DoddFile=testall-ex.odd compileodd rng cleanup
 	@echo check egXML in testall.odd
 	perl -p -e "s/testlite-examples/testall-examples/" ex.nvdl > testall.nvdl
 	../run-onvdl testall.nvdl testall.odd
@@ -87,7 +87,7 @@ test-sgml:
 
 detest:
 	@echo BUILD: Test file with deliberate mistakes
-	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --isoschematron --xsl=$(XSL) detest.odd .
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	echo -jing -t detest.rng detest.xml  > detest.log.all
 	-rnv detest.rnc detest.xml 2>> detest.log.all
 	@echo Validate using Schematron
