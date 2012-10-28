@@ -22,7 +22,8 @@
       run ODD document through to different schemas, and validate
       test file using those schemas
  -->
-  <property name="inputFile" value=""/>
+  <property name="oddFile" value=""/>
+  <property name="fileName" value=""/>
   <property name="profile" value="default"/>
   <property name="saxon" value="/usr/share/saxon/saxon9he.jar"/>
   <property name="trang" value="/usr/share/trang/trang.jar"/>
@@ -34,9 +35,7 @@
   <property name="odd2relax" value="${XSL}/profiles/${profile}/relaxng/to.xsl"/>
   <property name="odd2odd" value="${XSL}/odds2/odd2odd.xsl"/>
   <property name="odd2isosch" value="${XSL}/odds2/extract-isosch.xsl"/>
-  <dirname property="file" file="${inputFile}"/>
   <dirname property="fileDir" file="${fileName}"/>
-  <basename property="fileName" file="${inputFile}" suffix=".odd"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
@@ -50,7 +49,7 @@
 
   <target name="compileodd">
     <echo>Do ODD processing using ${saxon} and source ${defaultSource}</echo>
-    <xslt processor="trax"  force="yes" style="${odd2odd}" in="${inputFile}" out="${fileName}.odd.compiled">
+    <xslt processor="trax"  force="yes" style="${odd2odd}" in="${oddFile}" out="${fileName}.odd.compiled">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -59,6 +58,7 @@
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
+      <param name="patternprefix" expression="tei_"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
@@ -118,7 +118,7 @@
 
   <target name="validateodd">
     <echo level="info">Validate ODD</echo>
-    <runjing rngfile="../p5odds.rng" file="${fileName}.odd"/>
+    <runjing rngfile="../p5odds.rng" file="${oddFile}"/>
   </target>
 
   <target name="validaterng">
