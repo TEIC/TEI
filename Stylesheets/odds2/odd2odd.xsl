@@ -274,7 +274,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:schemaSpec" mode="odd2odd-pass1">
     <xsl:variable name="sourceDoc" select="tei:workOutSource(.)"/>
-
     <xsl:variable name="oddsource">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
@@ -507,7 +506,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates mode="odd2odd-pass2" select="text()|comment()|*"/>
       <xsl:for-each select="distinct-values(//*[@module]/@module)">
 	<xsl:variable name="m" select="."/>
-	  <xsl:for-each select="$orig/key('odd2odd-MODULES',$m)">
+	  <xsl:for-each select="document($orig)/key('odd2odd-MODULES',$m)">
 	    <xsl:copy>
 	      <xsl:attribute name="n"
 			     select="ancestor::tei:div[last()]/@xml:id"/>
