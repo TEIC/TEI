@@ -13,7 +13,7 @@ NORMALFILES= \
 	testplus.special 
 
 EXTENDEDFILES = \
-	testall.xsd \
+	testall.examples \
 	testfand2.xsd \
 	testfand3.xsd \
 	testfand5.xsd \
@@ -28,61 +28,21 @@ default: normal detest special testmeta2010 test-extns test-frag
 normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
 
-%.rng: %.odd
-	@echo "BUILD: Test schema from $<"
-	@echo Validate $< itself
-	-which rnv && rnv ../p5odds.rnc $< 
-	@echo "Run Roma on $<" 
-	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) $< .
-	@echo Validate using Jing for RELAX NG... 
-	jing -t $*.rng $*.xml
-	@echo Validate using RNV.... 
-	-which rnv && (xmllint --noent --dropdtd  $*.xml | rnv $*.rnc )
-	@echo Validate using xmllint for DTD  
-	xmllint --dropdtd $*.xml | xmllint --noout --dtdvalid $*.dtd -
-	@echo Validate using Schematron
-	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
-	saxon $*.xml $*.xsl
-
-testall.rng: testall.odd
-	@echo "BUILD: Test schema from testall"
-	@echo Validate testall itself
-	-which rnv && rnv ../p5odds.rnc testall.odd
+testall.examples: testall.xsd
 	saxon -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl 
 	$(ROMA) $(ROMAOPTS) --nodtd --noxsd --xsl=$(XSL) testall-ex.odd . 
 	@echo check egXML in testall.odd
 	perl -p -e "s/testlite-examples/testall-examples/" ex.nvdl > testall.nvdl
 	../run-onvdl testall.nvdl testall.odd
-	@echo "Run Roma on testall" 
-	$(ROMA) $(ROMAOPTS) --xsl=$(XSL) testall.odd .
-	@echo Validate using Jing for RELAX NG... 
-	jing -t testall.rng testall.xml
-	@echo Validate using RNV.... 
-	-which rnv && (xmllint --noent --dropdtd  testall.xml | rnv testall.rnc )
-	@echo Validate using xmllint for DTD  
-	xmllint --dropdtd testall.xml | xmllint --noout --dtdvalid testall.dtd -
-	@echo Validate using Schematron
-	saxon testall.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > testall.xsl
-	saxon testall.xml testall.xsl
 
 %.dtd: %.odd
-	$(ANT) -f antruntest.xml -DinputFile=$*.odd validateodd compileodd dtd rng validaterng cleanup
+	$(ANT) -f antruntest.xml -DfileName=$* -DoddFile=$*.odd validateodd compileodd dtd rng validaterng cleanup
 	@echo Check file using DOCTYPE in instance
 	xmllint --noout --valid $*.xml 
 
 %.xsd: %.odd
-	$(ANT) -f antruntest.xml -DinputFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
+	$(ANT) -f antruntest.xml -DfileName=$* -DoddFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
 	trang   -o disable-abstract-elements $*.rng $*.xsd
-	@echo Validate XSD using Jing ...
-	cp xml.xsd.w3c xml.xsd
-	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
-	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
-	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
-	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
-	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
-	jing $*.xsd $*.xml
-
-oldxsdtoodd:
 	@echo Validate XSD using Jing ...
 	cp xml.xsd.w3c xml.xsd
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
@@ -94,12 +54,8 @@ oldxsdtoodd:
 
 %.special: %.odd
 	@echo "BUILD:  Test schema from (special) $<" 
-	@echo Try  to validate $<
 	xmllint --xinclude $< > xi_$<
-	rnv ../p5odds.rnc xi_$*.odd
-	$(ROMA) --noxsd --nodtd --patternprefix=tei_ $(ROMAOPTS) --xsl=$(XSL)   xi_$< .
-	@echo JING RelaxNG... 
-	jing -t $*.rng $*.xml
+	$(ANT) -f antruntest.xml -DoddFile=xi_$*.odd -DfileName=$* validateodd compileodd rng rnc validaterng  cleanup
 	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc  
 	rm xi_$*.odd
 
