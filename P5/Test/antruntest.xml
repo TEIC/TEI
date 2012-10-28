@@ -49,7 +49,7 @@
   </target>
 
   <target name="compileodd">
-    <echo>Do ODD processing using ${saxon}</echo>
+    <echo>Do ODD processing using ${saxon} and source ${defaultSource}</echo>
     <xslt force="yes" style="${odd2odd}" in="${inputFile}" out="${fileName}.odd.compiled" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
@@ -149,7 +149,7 @@
   </target>
 
   <target name="isoschematron">
-    <echo level="info">XSLT generate ISO schematron from compiled ODD</echo>
+    <echo level="info">XSLT generate ISO schematron from compiled ODD </echo>
     <xslt force="yes" style="${odd2isosch}" in="${fileName}.odd.compiled" out="${fileName}.isosch" classpath="classpath">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${saxon}"/>
