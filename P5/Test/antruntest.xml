@@ -50,7 +50,7 @@
 
   <target name="compileodd">
     <echo>Do ODD processing using ${saxon} and source ${defaultSource}</echo>
-    <xslt force="yes" style="${odd2odd}" in="${inputFile}" out="${fileName}.odd.compiled" classpath="classpath">
+    <xslt processor="trax"  force="yes" style="${odd2odd}" in="${inputFile}" out="${fileName}.odd.compiled" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -58,7 +58,6 @@
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${saxon}"/>
       <param name="lang" expression="${lang}" if="lang"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
@@ -66,7 +65,7 @@
   </target>
   <target name="dtd">
     <echo level="info">XSLT generate DTD file</echo>
-    <xslt force="yes" style="${odd2dtd}" in="${fileName}.odd.compiled" out="${fileName}.dtd" classpath="classpath">
+    <xslt processor="trax"  force="yes" style="${odd2dtd}" in="${fileName}.odd.compiled" out="${fileName}.dtd" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -74,7 +73,6 @@
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${saxon}"/>
       <!-- supply name of language-->
       <param name="lang" expression="${lang}" if="lang"/>
       <!-- emit some diagnostics"-->
@@ -85,7 +83,7 @@
   </target>
   <target name="rng">
     <echo level="info">XSLT generate RELAXNG files</echo>
-    <xslt force="yes" style="${odd2relax}" in="${fileName}.odd.compiled" out="${fileName}.rng" classpath="classpath">
+    <xslt processor="trax"  force="yes" style="${odd2relax}" in="${fileName}.odd.compiled" out="${fileName}.rng" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -93,7 +91,6 @@
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${saxon}"/>
       <!-- supply name of language-->
       <param name="lang" expression="${lang}" if="lang"/>
       <!-- emit some diagnostics"-->
@@ -105,7 +102,8 @@
 
   <target name="rnc">
     <echo level="info">TRANG generate RNC from RELAXNG files</echo>
-    <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+    <java classname="com.thaiopensource.relaxng.translate.Driver"
+	  fork="no">
       <classpath location="${trang}"/>
       <arg value="-O"/>
       <arg value="rnc"/>
@@ -138,9 +136,9 @@
   <target name="xsd">
     <echo level="info">TRANG generate XSD from RELAXNG files</echo>
     <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
-      <classpath location="${trang}"/>
       <!-- Even though the output type is inferred from the output file extension,
 	   make sure it's the right one. -->
+      <classpath location="${trang}"/>
       <arg value="-O"/>
       <arg value="xsd"/>
       <arg value="${fileName}.rng"/>
@@ -150,30 +148,26 @@
 
   <target name="isoschematron">
     <echo level="info">XSLT generate ISO schematron from compiled ODD </echo>
-    <xslt force="yes" style="${odd2isosch}" in="${fileName}.odd.compiled" out="${fileName}.isosch" classpath="classpath">
+    <xslt processor="trax"  force="yes" style="${odd2isosch}" in="${fileName}.odd.compiled" out="${fileName}.isosch" classpath="classpath">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${saxon}"/>
     </xslt>
-    <xslt force="yes" style="../Utilities/iso_schematron_message_xslt2.xsl" in="${fileName}.isosch" out="${fileName}.xsl" classpath="classpath">
+    <xslt processor="trax"  force="yes" style="../Utilities/iso_schematron_message_xslt2.xsl" in="${fileName}.isosch" out="${fileName}.xsl" classpath="classpath">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${saxon}"/>
     </xslt>
   </target>
 
   <target name="validateschematron">
     <echo level="info">Validate using Schematron</echo>
-    <xslt force="yes" style="${fileName}.xsl" in="${fileName}.xml"
+    <xslt processor="trax"  force="yes" style="${fileName}.xsl" in="${fileName}.xml"
 	  classpath="classpath" out="stdout">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${saxon}"/>
     </xslt>
   </target>
 
   <target name="dochtml">
     <echo level="info">XSLT generate HTML from compiled ODD</echo>
-   <xslt force="yes" style="${odd2html}" in="${fileName}.odd.compiled" out="${fileName}.doc.html" classpath="classpath">
+   <xslt processor="trax"  force="yes" style="${odd2html}" in="${fileName}.odd.compiled" out="${fileName}.doc.html" classpath="classpath">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${saxon}"/>
       <param name="lang" expression="${lang}" if="lang"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
@@ -182,9 +176,8 @@
 
   <target name="doclite">
     <echo level="info">XSLT generate TEI Lite from compiled ODD</echo>
-    <xslt force="yes" style="${odd2lite}" in="${fileName}.odd.compiled" out="${fileName}.doc.xml" classpath="classpath">
+    <xslt processor="trax"  force="yes" style="${odd2lite}" in="${fileName}.odd.compiled" out="${fileName}.doc.xml" classpath="classpath">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${saxon}"/>
       <param name="lang" expression="${lang}" if="lang"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
