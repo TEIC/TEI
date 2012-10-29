@@ -6,7 +6,8 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="SPANNING" type="atts" ident="att.spanning">
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei"
+	   xmlns:sch="http://purl.oclc.org/dsdl/schematron" type="atts" ident="att.spanning">
   <desc>provides attributes for elements which delimit a span of text by pointing mechanisms rather than by enclosing it.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">포함보다는 포인터 메카니즘을 통하여 구분된 텍스트 구간을 나타내는 요소의 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供元素的屬性，這些元素使用參照機制來限定某一文字段，而非包含此文字段。
@@ -18,6 +19,7 @@ $Id$
   <desc versionDate="2007-06-12" xml:lang="fr">fournit des attributs pour les éléments qui délimitent un passage de texte par des mécanismes de pointage plutôt qu'en entourant le passage.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para elementos que delimitan un fragmento de texto utilizando los señalizadores en lugar de cerrando el texto.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi agli elementi che delimitano una porzione di testo utilizzando dei puntatori invece di racchiudere il testo stesso</desc>
+
   <attList>
     <attDef ident="spanTo" usage="opt">
       <equiv/>
@@ -34,16 +36,66 @@ $Id$
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
+
+<!-- this can only work if it is applied to individual members of the
+class because the test has to look at the element as well as the
+attribute -->
+    <!--  <constraintSpec ident="spanTo-1" scheme="isoschematron">
+        <desc>Either content or a  <att>spanTo</att>  attribute is required</desc>
+                <constraint>
+          <sch:assert test="string-length(.)=0 and not(@spanTo)">The
+	  spanTo attribute is required if  <sch:name/> has no content</sch:assert>     </constraint>
+      </constraintSpec>
+-->
+
+<!-- this one is invalid because position() has no args 
+      <constraintSpec ident="spanTo-2" scheme="isoschematron">
+        <desc>The @spanTo attribute must point to an element following the
+	current element</desc>
+        <constraint>
+<sch:report test="position(id(substring(@spanTo,2))) &gt; position(.)">
+The element indicated by @spanTo must  follow the current element</sch:report>
+      </constraint>
+      </constraintSpec>
+-->
+
+     <constraintSpec ident="spanTo-2" scheme="isoschematron">
+        <desc>The @spanTo attribute must point to an element following the
+	current element</desc>
+        <constraint>
+<sch:rule context="tei:*[@spanTo]">
+<sch:assert test="following::*[@xml:id=substring(current()/@target,2)]">
+The element indicated by @spanTo must  follow the current element</sch:assert>
+</sch:rule>      </constraint>
+      </constraintSpec>
+
+
+      <constraintSpec ident="spanTo-3" scheme="isoschematron">
+        <desc xml:lang="fr">La valeur de @spanTo doit identifier un element
+	dans le document actuel</desc>
+        <constraint>
+<sch:rule context="tei:*[@spanTo]">
+<sch:assert test="id(substring(@spanTo,2))">
+     @spanTo must point to  the identifier of some element  in this document</sch:assert>
+</sch:rule>
+     </constraint>
+      </constraintSpec>
+
+
       <valDesc>points to an element following this one in the current document. </valDesc>
       <valDesc versionDate="2009-05-28" xml:lang="fr">pointe vers un élément qui suit celui présent dans le document courant.</valDesc>
+
     </attDef>
   </attList>
+
   <remarks>
     <p>The span is defined as running in document order from the start
-    of the content of the pointing element (if any) to the end of the
+    of the content of the pointing element  to the end of the
     content of the element pointed to by the spanTo attribute (if
     any). If no value is supplied for the attribute, the assumption is that the span is
-    coextensive with the pointing element.</p>
+    coextensive with the pointing element. If no content is present,
+    the assumption is that the starting point of the span is
+    immediately following the element itself. </p>
   </remarks>
   <remarks xml:lang="fr">
     <p> Le passage est défini comme courant depuis le début du contenu de l'élément pointeur (s'il y en a un) jusqu'à la fin du contenu de l'élément
