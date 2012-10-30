@@ -203,7 +203,7 @@ echo ""
 #TEI packages
 echo "Installing TEI packages."
 apt-get -y --force-yes install psgml xmlstarlet debiandoc-sgml linuxdoc-tools jing jing-trang-doc libjing-java texlive-xetex &&
-apt-get -y --force-yes install trang-java tei-p5-doc tei-p5-database tei-p5-source tei-schema saxon tei-p5-xsl tei-p5-xsl2 tei-p5-xslprofiles tei-roma onvdl tei-oxygen zip &&
+apt-get -y --force-yes install trang-java saxon onvdl tei-p5-exemplars tei-p5-xsl2 tei-p5-xslprofiles tei-roma tei-p5-doc tei-xsl-common tei-p5-source tei-p5-schema tei-oxygen zip &&
 echo ""
 
 echo "The Han Nom font is not available in repositories, 
