@@ -195,7 +195,7 @@ apt-get -y install maven2
 echo ""
 
 echo "Installing core packages we need."
-apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc debhelper subversion trang &&
+apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc debhelper subversion trang zip &&
 echo "Installing curl, required for some tei building stuff."
 apt-get -y install curl &&
 echo ""
