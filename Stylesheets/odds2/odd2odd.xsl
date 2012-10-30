@@ -1274,8 +1274,11 @@ so that is only put back in if there is some content
 	<xsl:apply-templates mode="odd2odd-justcopy"/>
       </attDef>
     </xsl:for-each>
+    <!-- class attributes are ones where there is no direct correspondence in
+    the source for this element -->
     <xsl:apply-templates mode="odd2odd-justcopy"
 			 select="tei:attList/tei:attDef[(@mode='change'
+				 or @mode='delete'
 				 or @mode='replace') and not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
     <!-- now look at each of the original element's attributes and see
     if we have an update -->
