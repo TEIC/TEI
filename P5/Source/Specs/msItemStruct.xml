@@ -34,8 +34,11 @@ $Id$
   <content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
       <optional>
-        <ref name="locus"/>
-      </optional>
+       <choice>
+          <ref name="locus"/>
+          <ref name="locusGrp"/>
+        </choice>
+       </optional>
       <choice>
         <oneOrMore>
           <ref name="model.pLike"/>
@@ -75,10 +78,13 @@ $Id$
             <ref name="listBibl"/>
           </zeroOrMore>
           <zeroOrMore>
-            <ref name="bibl"/>
+            <ref name="model.biblLike"/>
           </zeroOrMore>
           <zeroOrMore>
-            <ref name="filiation"/>
+	    <choice>
+            <ref name="bibl"/>
+            <ref name="biblStruct"/>
+</choice>
           </zeroOrMore>
           <zeroOrMore>
             <ref name="model.noteLike"/>
