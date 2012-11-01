@@ -281,6 +281,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>{"ident":"</xsl:text>
       <xsl:value-of  select="@ident"/>
       <xsl:text>",</xsl:text>
+      <xsl:text>"module":"</xsl:text>
+      <xsl:value-of  select="@module"/>
+      <xsl:text>",</xsl:text>
       <xsl:text>"type":"</xsl:text>
       <xsl:value-of  select="@type"/>
       <xsl:text>",</xsl:text>
@@ -310,6 +313,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:sort select="@ident"/>
       <xsl:text>{"ident":"</xsl:text>
       <xsl:value-of  select="@ident"/>
+      <xsl:text>",</xsl:text>
+      <xsl:text>"module":"</xsl:text>
+      <xsl:value-of  select="@module"/>
       <xsl:text>",</xsl:text>
       <xsl:text>"type":"</xsl:text>
       <xsl:value-of  select="@type"/>
@@ -341,6 +347,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:sort select="@ident"/>
       <xsl:text>{"ident":"</xsl:text>
       <xsl:value-of select="@ident"/>
+      <xsl:text>",</xsl:text>
+      <xsl:text>"module":"</xsl:text>
+      <xsl:value-of  select="@module"/>
       <xsl:text>",</xsl:text>
       <xsl:text>"type":"</xsl:text>
       <xsl:value-of select="@type"/>
