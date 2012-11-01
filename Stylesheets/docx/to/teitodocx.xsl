@@ -2321,6 +2321,9 @@ of this software, even if advised of the possibility of such damage.
       </w:tblGrid>
       <xsl:for-each select="tei:change">
 	<w:tr>
+	  <w:trPr>
+	    <w:trHeight w:val="380"/>
+	  </w:trPr>
 	  <w:tc>
 	    <w:p>
 	      <w:r>

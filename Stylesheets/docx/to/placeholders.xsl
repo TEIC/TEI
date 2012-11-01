@@ -117,25 +117,29 @@ of this software, even if advised of the possibility of such damage.
         <xsl:choose>
          <xsl:when
 	     test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-	   <xsl:variable name="A">
-	     <tei:docAuthor>
-	     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-	       <xsl:apply-templates/>
-	       <xsl:choose>
-		 <xsl:when test="count(following-sibling::tei:author)=1">
-		   <xsl:if test="count(preceding-sibling::tei:author)>1">
-		     <xsl:text>,</xsl:text>
-		   </xsl:if>
-		   <xsl:call-template name="i18n">
-		     <xsl:with-param name="word">and</xsl:with-param>
-		   </xsl:call-template>
-		 </xsl:when>
-		 <xsl:when test="following-sibling::tei:author">, </xsl:when>
-	       </xsl:choose>
-	     </xsl:for-each>
-	     </tei:docAuthor>
-	   </xsl:variable>
-	   <xsl:apply-templates select="$A"/>
+	   <w:p>
+	     <w:pPr>
+	       <w:pStyle w:val="Author"/>
+	     </w:pPr>
+	     <w:r>
+	       <w:t>
+		 <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+		   <xsl:apply-templates/>
+		   <xsl:choose>
+		     <xsl:when test="count(following-sibling::tei:author)=1">
+		       <xsl:if test="count(preceding-sibling::tei:author)>1">
+			 <xsl:text>,</xsl:text>
+		       </xsl:if>
+		       <xsl:call-template name="i18n">
+			 <xsl:with-param name="word">and</xsl:with-param>
+		       </xsl:call-template>
+		     </xsl:when>
+		     <xsl:when test="following-sibling::tei:author">, </xsl:when>
+		   </xsl:choose>
+		 </xsl:for-each>
+	       </w:t>
+	     </w:r>
+	   </w:p>
          </xsl:when>
          <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
             <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
