@@ -2305,6 +2305,55 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="getStyleFonts">
     <xsl:param name="css"/>
   </xsl:template>
+
+  <!-- revisionDesc -->
+  <xsl:template match="tei:revisionDesc">
+    <w:tbl>
+      <w:tblPr>
+        <w:tblStyle w:val="revisionDesc"/>
+        <w:tblW w:w="0" w:type="auto"/>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="2366"/>
+        <w:gridCol w:w="2366"/>
+        <w:gridCol w:w="2366"/>
+        <w:gridCol w:w="2366"/>
+      </w:tblGrid>
+      <xsl:for-each select="tei:change">
+	<w:tr>
+	  <w:tc>
+	    <w:p>
+	      <w:r>
+		<w:t><xsl:value-of select="@n"/></w:t>
+	      </w:r>
+	    </w:p>
+	  </w:tc>
+	  <w:tc>
+	    <w:p>
+	      <w:r>
+		<w:t><xsl:value-of select="@when"/></w:t>
+	      </w:r>
+	    </w:p>
+	  </w:tc>
+	  <w:tc>
+	    <w:p>
+	      <w:r>
+		<w:t><xsl:value-of select="@who"/></w:t>
+	      </w:r>
+	    </w:p>
+	  </w:tc>
+	  <w:tc>
+	    <w:p>
+	      <w:r>
+		<w:t><xsl:value-of select="."/></w:t>
+	      </w:r>
+	    </w:p>
+	  </w:tc>
+	</w:tr>
+      </xsl:for-each>
+    </w:tbl>
+  </xsl:template>
+
   <!-- no handling of index terms -->
   <xsl:template match="tei:index"/>
   <xsl:template name="applyRendition"/>

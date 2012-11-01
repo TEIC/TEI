@@ -148,7 +148,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A &lt;seg&gt; which does nothing is not worth having </p>
+         <p>     A &lt;p&gt; or &lt;seg&gt; which does nothing is not worth having </p>
       </desc>
     </doc>
     <xsl:template match="tei:seg[not(@*)]" mode="pass2">
@@ -162,7 +162,6 @@ of this software, even if advised of the possibility of such damage.
             </xsl:when>
 	    <xsl:when test="parent::tei:hi[count(*)=1]">
 	      <xsl:value-of select="."/>
-
 	    </xsl:when>
             <xsl:otherwise>
                 <xsl:copy-of select="."/>
@@ -471,6 +470,8 @@ of this software, even if advised of the possibility of such damage.
 	mode="pass2">
       <xsl:value-of select="substring(.,9)"/>
     </xsl:template>
+
+    <xsl:template match="tei:p[normalize-space(.)='']" mode="pass2"/>
 
 
 </xsl:stylesheet>

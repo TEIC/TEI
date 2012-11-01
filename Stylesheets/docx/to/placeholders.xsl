@@ -90,29 +90,63 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template name="document-title">
         <xsl:choose>
-            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"/>
-            <xsl:when test="/tei:TEI/tei:text/tei:front/tei:docTitle"/>
-            <xsl:when
-		test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">GeneratedTitle</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-                <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
-                    <xsl:call-template name="block-element">
-                        <xsl:with-param name="style">GeneratedSubtitle</xsl:with-param>
-                    </xsl:call-template>
-                </xsl:for-each>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title">
-		<xsl:call-template name="block-element">
-		  <xsl:with-param name="style">GeneratedTitle</xsl:with-param>
-		</xsl:call-template>
-	      </xsl:for-each>
-	    </xsl:otherwise>  
+	  <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"/>
+	  <xsl:when test="/tei:TEI/tei:text/tei:front/tei:docTitle"/>
+	  <xsl:when
+	      test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+	    <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='main']">
+	      <xsl:call-template name="block-element">
+		<xsl:with-param name="style">GeneratedTitle</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	    <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='sub']">
+	      <xsl:call-template name="block-element">
+		<xsl:with-param name="style">GeneratedSubtitle</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:for-each select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title">
+	      <xsl:call-template name="block-element">
+		<xsl:with-param name="style">GeneratedTitle</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:for-each>
+	  </xsl:otherwise>  
         </xsl:choose>
+
+        <xsl:choose>
+         <xsl:when
+	     test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+	   <xsl:variable name="A">
+	     <tei:docAuthor>
+	     <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
+	       <xsl:apply-templates/>
+	       <xsl:choose>
+		 <xsl:when test="count(following-sibling::tei:author)=1">
+		   <xsl:if test="count(preceding-sibling::tei:author)>1">
+		     <xsl:text>,</xsl:text>
+		   </xsl:if>
+		   <xsl:call-template name="i18n">
+		     <xsl:with-param name="word">and</xsl:with-param>
+		   </xsl:call-template>
+		 </xsl:when>
+		 <xsl:when test="following-sibling::tei:author">, </xsl:when>
+	       </xsl:choose>
+	     </xsl:for-each>
+	     </tei:docAuthor>
+	   </xsl:variable>
+	   <xsl:apply-templates select="$A"/>
+         </xsl:when>
+         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author']">
+            <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='author'][1]/tei:name"/>
+         </xsl:when>
+         <xsl:when test="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
+            <xsl:apply-templates 
+                                 select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
+         </xsl:when>
+      </xsl:choose>
+
+	<xsl:apply-templates select="/tei:TEI/tei:teiHeader/tei:revisionDesc"/>
     </xsl:template>
     
     
