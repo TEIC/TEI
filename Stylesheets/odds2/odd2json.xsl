@@ -89,6 +89,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
    <xsl:param name="callback">teijs</xsl:param>
+   <xsl:param name="showChildren">false</xsl:param>
 
    <xsl:template name="emphasize">
       <xsl:param name="class"/>
@@ -227,13 +228,18 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>,"model":"</xsl:text>
       <xsl:call-template name="generateSummaryChildren"/>
       <xsl:text>"</xsl:text>
-      <xsl:text>,"children":[</xsl:text>
-      <xsl:call-template name="generateChildren"/>
-      <xsl:text>]</xsl:text>
-      <xsl:text>,"attributes":[</xsl:text>
+      <xsl:if test="$showChildren='true'">
+	<xsl:text>,"children":[</xsl:text>
+	<xsl:call-template name="generateChildren"/>
+	<xsl:text>]</xsl:text>
+      </xsl:if>
       <xsl:variable name="a">
 	<xsl:call-template name="atts"/>
       </xsl:variable>
+      <xsl:variable name="classa">
+	<xsl:call-template name="classatts"/>
+      </xsl:variable>
+      <xsl:text>,"attributes":[</xsl:text>
       <xsl:for-each select="$a/tei:attDef">
 	<xsl:text>{"ident":"</xsl:text>
 	<xsl:value-of select="@ident"/>
@@ -243,8 +249,29 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:if test="position()!=last()">,</xsl:if>
       </xsl:for-each>
       <xsl:text>]</xsl:text>
+      <xsl:text>,"classattributes":[</xsl:text>
+      <xsl:for-each-group select="$classa/tei:attDef"
+			  group-by="@class">
+	<xsl:text>{"class":"</xsl:text>
+	<xsl:value-of select="@class"/>
+	<xsl:text>","module":"</xsl:text>
+	<xsl:value-of select="@module"/>
+	<xsl:text>", "attributes":[</xsl:text>
+	<xsl:for-each select="current-group()">
+	  <xsl:text>{"ident":"</xsl:text>
+	  <xsl:value-of select="@ident"/>
+	  <xsl:text>",</xsl:text>
+	  <xsl:value-of select="desc"/>
+	  <xsl:text>}</xsl:text>
+	  <xsl:if test="position()!=last()">,</xsl:if>
+	</xsl:for-each>
+        <xsl:text>]</xsl:text>
+	<xsl:text>}</xsl:text>
+	<xsl:if test="position()!=last()">,</xsl:if>
+      </xsl:for-each-group>
+      <xsl:text>]</xsl:text>
       <xsl:text>}</xsl:text>
-      <xsl:if test="not(position() = last())">,</xsl:if>
+      <xsl:if test="position()!=last()">,</xsl:if>
       <xsl:text>&#10;</xsl:text>
     </xsl:for-each>
     <xsl:text>],</xsl:text>
@@ -376,7 +403,16 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="atts">
-    <xsl:call-template name="listAtts"/>
+    <xsl:for-each select=".//tei:attDef">
+      <tei:attDef ident="{@ident}">
+	<desc>
+	  <xsl:call-template name="desc"/>
+	</desc>
+      </tei:attDef>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="classatts">
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:call-template name="classA">
 	<xsl:with-param name="i" select="@key"/>
@@ -385,13 +421,15 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="listAtts">
-    <xsl:for-each select=".//tei:attDef">
-      <tei:attDef ident="{@ident}">
+   <xsl:for-each select=".//tei:attDef">
+      <tei:attDef ident="{@ident}"
+		  module="{ancestor::tei:classSpec/@module}" class="{ancestor::tei:classSpec/@ident}">
 	<desc>
 	  <xsl:call-template name="desc"/>
 	</desc>
       </tei:attDef>
     </xsl:for-each>
+
   </xsl:template>
 
   <xsl:template name="classA">
@@ -407,13 +445,13 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
-    <xsl:template name="generateEdition">
-      <xsl:value-of
-	  select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
-    </xsl:template>
-
-    <xsl:template name="generateTitle">
-      <xsl:for-each
+  <xsl:template name="generateEdition">
+    <xsl:value-of
+	select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+  </xsl:template>
+  
+  <xsl:template name="generateTitle">
+    <xsl:for-each
 	  select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
 	<xsl:choose>
 	  <xsl:when test="tei:title[@type='main']">
