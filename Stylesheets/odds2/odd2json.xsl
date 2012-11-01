@@ -256,17 +256,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:value-of select="@class"/>
 	<xsl:text>","module":"</xsl:text>
 	<xsl:value-of select="@module"/>
-	<xsl:text>", "attributes":[</xsl:text>
-	<xsl:for-each select="current-group()">
-	  <xsl:text>{"ident":"</xsl:text>
-	  <xsl:value-of select="@ident"/>
-	  <xsl:text>",</xsl:text>
-	  <xsl:value-of select="desc"/>
-	  <xsl:text>}</xsl:text>
-	  <xsl:if test="position()!=last()">,</xsl:if>
-	</xsl:for-each>
-        <xsl:text>]</xsl:text>
-	<xsl:text>}</xsl:text>
+	<xsl:text>"}</xsl:text>
 	<xsl:if test="position()!=last()">,</xsl:if>
       </xsl:for-each-group>
       <xsl:text>]</xsl:text>
@@ -278,16 +268,22 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>"attclasses": [</xsl:text>
     <xsl:for-each select="key('ATTCLASSDOCS',1)">
       <xsl:sort select="@ident"/>
-      <xsl:text>{"ident":"</xsl:text>
-      <xsl:value-of  select="@ident"/>
-      <xsl:text>",</xsl:text>
-      <xsl:text>"module":"</xsl:text>
-      <xsl:value-of  select="@module"/>
-      <xsl:text>",</xsl:text>
-      <xsl:text>"type":"</xsl:text>
-      <xsl:value-of  select="@type"/>
-      <xsl:text>",</xsl:text>
+      <xsl:text>{"ident":"</xsl:text><xsl:value-of  select="@ident"/><xsl:text>",</xsl:text>
+      <xsl:text>"module":"</xsl:text><xsl:value-of  select="@module"/><xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
+      <xsl:variable name="a">
+	<xsl:call-template name="atts"/>
+      </xsl:variable>
+      <xsl:text>,"attributes":[</xsl:text>
+      <xsl:for-each select="$a/tei:attDef">
+	<xsl:text>{"ident":"</xsl:text>
+	<xsl:value-of select="@ident"/>
+	<xsl:text>",</xsl:text>
+	<xsl:value-of select="desc"/>
+	<xsl:text>}</xsl:text>
+	<xsl:if test="position()!=last()">,</xsl:if>
+      </xsl:for-each>
+      <xsl:text>]</xsl:text>
       <xsl:text>}</xsl:text>
       <xsl:if test="not(position() = last())">,</xsl:if>
       <xsl:text>&#10;</xsl:text>
@@ -316,9 +312,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>",</xsl:text>
       <xsl:text>"module":"</xsl:text>
       <xsl:value-of  select="@module"/>
-      <xsl:text>",</xsl:text>
-      <xsl:text>"type":"</xsl:text>
-      <xsl:value-of  select="@type"/>
       <xsl:text>",</xsl:text>
       <xsl:call-template name="desc"/>
       <xsl:call-template name="mode"/>
