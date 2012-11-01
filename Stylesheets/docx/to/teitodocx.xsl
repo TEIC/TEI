@@ -226,7 +226,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:message>Processing file <xsl:value-of
 	select="$inputFile"/></xsl:message>
       </xsl:if>
-      <xsl:call-template name="write-docxfiles"/>
+      <xsl:for-each select="*">
+	<xsl:call-template name="write-docxfiles"/>
+      </xsl:for-each>
       <xsl:variable name="pass0">
 	<xsl:apply-templates mode="pass0"/>
       </xsl:variable>
