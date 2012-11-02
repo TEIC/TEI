@@ -25,12 +25,12 @@ DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--xsl=${XSL} --isoschematron
 SOURCE=${P5}/p5subset.xml 
-ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
+ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -Dbasedir=`pwd`
 
 default: schemas
 
 %.rng: %.odd 
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron 
+	$(ANT) -DXSL=${XSL}  -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron 
 	trang   -o disable-abstract-elements $*.rng $*.xsd
 	trang  $*.rng $*.rnc
 	@echo Validate XSD using Jing ...
@@ -41,20 +41,20 @@ default: schemas
 	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
 
 %.dtd: %.rng
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd  dtd cleanup
+	$(ANT) -DXSL=${XSL}  -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd  dtd cleanup
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
 
 %.doc.pdf: %.rng
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd dtd docepub docpdf dochtml cleanup
+	$(ANT) -DXSL=${XSL}  -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd dtd docepub docpdf dochtml cleanup
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 	-rm $*.doc.xml
 
 schemas: $(ODDS) $(XODDS) $(DOCODDS)
 	xmllint --xinclude tei_allPlus.odd > tei_allPlus.odd.xinclude
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=tei_allPlus -Dtestfile2=tei_allPlus.template -Dtestfile=tei_allPlus.tei -DoddFile=tei_allPlus.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
+	$(ANT) -DXSL=${XSL}  -f ../Test/antruntest.xml -Doutputname=tei_allPlus -Dtestfile2=tei_allPlus.template -Dtestfile=tei_allPlus.tei -DoddFile=tei_allPlus.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
 	rm tei_allPlus.odd.xinclude
 	trang  tei_allPlus.rng tei_allPlus.rnc
 	trang   -o disable-abstract-elements tei_allPlus.rng tei_allPlus.xsd
