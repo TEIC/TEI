@@ -71,7 +71,7 @@
     </xslt>
   </target>
   <target name="dtd">
-    <echo level="info">XSLT generate DTD file</echo>
+    <echo level="info">XSLT generate DTD ${outputname}.dtd</echo>
     <xslt processor="trax" force="yes" style="${odd2dtd}" in="${outputname}.odd.compiled" out="${outputname}.dtd">
       <xmlcatalog>
         <catalogpath>
@@ -90,7 +90,7 @@
     </xslt>
   </target>
   <target name="rng">
-    <echo level="info">XSLT generate RELAXNG files</echo>
+    <echo level="info">XSLT generate RELAXNG ${outputname}.rng</echo>
     <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}.odd.compiled" out="${outputname}.rng">
       <xmlcatalog>
         <catalogpath>
@@ -149,7 +149,7 @@
     </java>
   </target>
   <target name="isoschematron">
-    <echo level="info">XSLT generate ISO schematron from compiled ODD </echo>
+    <echo level="info">XSLT generate ISO schematron ${outputname}.isosch from compiled ODD </echo>
     <xslt processor="trax" force="yes" style="${odd2isosch}" in="${outputname}.odd.compiled" out="${outputname}.isosch">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
@@ -164,7 +164,7 @@
     </xslt>
   </target>
   <target name="dochtml">
-    <echo level="info">XSLT generate HTML from compiled ODD</echo>
+    <echo level="info">XSLT generate HTML ${outputname}.doc.html from compiled ODD</echo>
     <xslt processor="trax" force="yes" style="${odd2html}" in="${outputname}.odd.compiled" out="${outputname}.doc.html">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
@@ -173,7 +173,7 @@
     </xslt>
   </target>
   <target name="doclite">
-    <echo level="info">XSLT generate TEI Lite from compiled ODD</echo>
+    <echo level="info">XSLT generate TEI Lite ${outputname}.doc.xml from compiled ODD</echo>
     <xslt processor="trax" force="yes" style="${odd2lite}" in="${outputname}.odd.compiled" out="${outputname}.doc.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
@@ -197,7 +197,7 @@
   </target>
 
   <target name="docpdf" depends="doclatex">
-    <echo level="info">Generate PDF from LaTeX</echo>
+    <echo level="info">Generate PDF ${outputname}.doc.pdf from LaTeX</echo>
     <exec executable="xelatex" failonerror="true">
       <arg value="-interaction=batchmode"/>
       <arg value="${outputname}.doc.tex" />
@@ -214,7 +214,7 @@
 
   <target name="docepub" depends="compileodd">
     <!-- The transformation for EPUB output. -->
-    <echo level="info">XSLT generate ePub file</echo>
+    <echo level="info">XSLT generate ePub ${outputname}.epub</echo>
     <xslt force="yes" style="${teitoepub}" in="${outputname}.odd.compiled" out="${outputTempDir}/OPS/index.html">
       <xmlcatalog>
         <catalogpath>
