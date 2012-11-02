@@ -364,7 +364,7 @@ dist-test.stamp: check
 
 dist-exemplars.stamp: check
 	@echo BUILD: Make distribution directory for exemplars
-	(cd Exemplars; make dist)
+	(cd Exemplars; make XSL=${XSL})
 	touch dist-exemplars.stamp
 
 dist-database.stamp: check
