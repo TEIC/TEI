@@ -198,14 +198,18 @@
 
   <target name="docpdf" depends="doclatex">
     <echo level="info">Generate PDF from LaTeX</echo>
-    <exec executable="xelatex">
+    <exec executable="xelatex" failonerror="true">
       <arg value="-interaction=batchmode"/>
       <arg value="${outputname}.doc.tex" />
     </exec>
-    <exec executable="xelatex">
+    <exec executable="xelatex" failonerror="true">
       <arg value="-interaction=batchmode"/>
       <arg value="${outputname}.doc.tex" />
     </exec>
+    <delete file="${outputname}.doc.aux"/>
+    <delete file="${outputname}.doc.html"/>
+    <delete file="${outputname}.doc.log"/>
+    <delete file="${outputname}.doc.out"/>
   </target>
 
   <target name="docepub" depends="compileodd">
@@ -280,3 +284,4 @@
   </target>
 
 </project>
+
