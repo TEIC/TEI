@@ -31,6 +31,7 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib /usr/share/java/jing.jar:/usr/share/saxo
 %.rng: %.odd 
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron 
 	trang   -o disable-abstract-elements $*.rng $*.xsd
+	trang  $*.rng $*.rnc
 	@echo Validate XSD using Jing ...
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
 	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
@@ -54,6 +55,7 @@ schemas: $(ODDS) $(XODDS) $(DOCODDS)
 	xmllint --xinclude tei_allPlus.odd > tei_allPlus.odd.xinclude
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=tei_allPlus -Dtestfile2=tei_allPlus.template -Dtestfile=tei_allPlus.tei -DoddFile=tei_allPlus.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
 	rm tei_allPlus.odd.xinclude
+	trang  $*.rng $*.rnc
 	trang   -o disable-abstract-elements tei_allPlus.rng tei_allPlus.xsd
 	-rm *.odd.compiled
 	-rm tei_odds.dtd tei_odds.xsd
