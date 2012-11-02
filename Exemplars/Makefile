@@ -26,54 +26,33 @@ DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--xsl=${XSL} --isoschematron
 SOURCE=${P5}/p5subset.xml 
-
-
-%.dtd: %.odd 
-	@echo "BUILD: Test schema from $<"
-	xmllint --xinclude $*.odd > $*.xi
-	@echo Validate $< itself
-	which rnv && rnv ../p5odds.rnc $*.xi
-	${ROMA} ${ROMAOPTS} --localsource=${SOURCE} $*.odd .
-	@echo Test schema built from $<
-	jing $*.rng $*.tei && echo $* test validates OK
-	jing $*.rng $*.template && echo $* template validates OK
-	@echo Validate using xmllint for DTD  
-	xmllint --dropdtd $*.tei | xmllint --noout --dtdvalid $*.dtd -
-	@echo Validate using Schematron
-	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
-	saxon $*.tei $*.xsl
+ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
 
 
 %.rng: %.odd 
-	@echo "BUILD: Test schema from $<"
-	xmllint --xinclude $*.odd > $*.xi
-	@echo Validate $< itself
-	which rnv && rnv ../p5odds.rnc $*.xi
-	${ROMA} ${ROMAOPTS} --localsource=${SOURCE} $*.odd .
-	@echo Test schema built from $<
-	jing $*.rng $*.tei && echo $* test validates OK
-	jing $*.rng $*.template && echo $* template validates OK
-	@echo Validate using Schematron
-	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
-	saxon $*.tei $*.xsl
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron 
+	trang   -o disable-abstract-elements $*.rng $*.xsd
+	@echo Validate XSD using Jing ...
+	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
+	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
+	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
+	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
+	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
 
-%.doc.pdf: %.odd 
-	@echo "BUILD: Test schema from $<"
-	@echo Validate $< itself
-	which rnv && rnv ../p5odds.rnc $< 
-	${ROMA} ${ROMAOPTS} --localsource=${SOURCE} --docflags="summaryDoc=true" --docpdf --dochtml $< .
-	teitoepub --localsource=${SOURCE} --summaryDoc --profile=tei --odd $< $*.doc.epub
-	@echo Test schema built from $<
-	jing $*.rng $*.tei && echo $* test validates OK
-	jing $*.rng $*.template && echo $* template validates OK
+%.dtd: %.rng
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd  dtd cleanup
 	@echo Validate using xmllint for DTD  
-	xmllint --dropdtd $*.tei | xmllint --noout --dtdvalid $*.dtd -
-	@echo Validate using Schematron
-	saxon $*.isosch ../Utilities/iso_schematron_message_xslt2.xsl  > $*.xsl
-	saxon $*.tei $*.xsl
+	xmllint --noout --dtdvalid $*.dtd $*.tei
+
+
+%.doc.pdf: %.rng
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd dtd docepub docpdf dochtml cleanup
+	@echo Validate using xmllint for DTD  
+	xmllint --noout --dtdvalid $*.dtd $*.tei
 	-rm $*.doc.xml
 
 schemas: $(ODDS) $(XODDS) $(DOCODDS)
+	-rm *.odd.compiled
 	-rm tei_odds.dtd tei_odds.xsd
 	-rm tei_allPlus.dtd tei_allPlus.xsd
 	-rm tei_svg.dtd tei_svg.xsd
