@@ -52,7 +52,7 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib /usr/share/java/jing.jar:/usr/share/saxo
 
 schemas: $(ODDS) $(XODDS) $(DOCODDS)
 	xmllint --xinclude tei_allPlus.odd > tei_allPlus.odd.xinclude
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=tei_allPlus -Dtestfile2=tei_allPlus.template -Dtestfile=tei_allPlus.tei -DoddFile=tei_allPlus.odd.xinclude compileodd rng validaterng validatesecondrng isoschematron validateschematron 
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=tei_allPlus -Dtestfile2=tei_allPlus.template -Dtestfile=tei_allPlus.tei -DoddFile=tei_allPlus.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
 	rm tei_allPlus.odd.xinclude
 	trang   -o disable-abstract-elements tei_allPlus.rng tei_allPlus.xsd
 	-rm *.odd.compiled
