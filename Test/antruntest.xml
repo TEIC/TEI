@@ -214,7 +214,7 @@
 
   <target name="docepub" depends="compileodd">
     <!-- The transformation for EPUB output. -->
-    <echo level="info">XSLT generate ePub ${outputname}.epub</echo>
+    <echo level="info">XSLT generate ePub ${outputname}.doc.epub</echo>
     <xslt force="yes" style="${teitoepub}" in="${outputname}.odd.compiled" out="${outputTempDir}/OPS/index.html">
       <xmlcatalog>
         <catalogpath>
@@ -271,11 +271,11 @@
     </xslt>
     <echo level="info">Copy image files</echo>
     <ant antfile="${outputTempDir}/copy.xml"/>
-    <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputname}.epub</echo>
-    <delete file="${outputname}.epub"/>
-    <zip destfile="${outputname}.epub" basedir="${outputTempDir}"
+    <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputname}.doc.epub</echo>
+    <delete file="${outputname}.doc.epub"/>
+    <zip destfile="${outputname}.doc.epub" basedir="${outputTempDir}"
 	 compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
-    <zip destfile="${outputname}.epub" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+    <zip destfile="${outputname}.doc.epub" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
   </target>
 
   <target name="cleanup" unless="debug">
