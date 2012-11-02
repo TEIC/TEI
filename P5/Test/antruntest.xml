@@ -25,6 +25,7 @@
   <property name="oddFile" value=""/>
   <property name="outputname" value=""/>
   <property name="testfile" value=""/>
+  <property name="testfile2" value=""/>
   <property name="profile" value="default"/>
   <property name="lang" value="en"/>
   <property name="patternprefix" value="tei_"/>
@@ -35,10 +36,15 @@
   <property name="odd2dtd" value="${XSL}/profiles/${profile}/dtd/to.xsl"/>
   <property name="odd2html" value="${XSL}/odds2/odd2html.xsl"/>
   <property name="odd2lite" value="${XSL}/odds2/odd2lite.xsl"/>
+  <property name="lite2latex" value="${XSL}/profiles/${profile}/latex/to.xsl"/>
   <property name="odd2relax" value="${XSL}/profiles/${profile}/relaxng/to.xsl"/>
   <property name="odd2odd" value="${XSL}/odds2/odd2odd.xsl"/>
   <property name="odd2isosch" value="${XSL}/odds2/extract-isosch.xsl"/>
-  <dirname property="fileDir" file="${outputname}"/>
+  <property name="teitoepub"  value="${XSL}/profiles/${profile}/epub/to.xsl"/>
+  <property name="listgraphics" value="${XSL}/tools/makegraphicsanttask.xsl"/>
+  <dirname property="inputDir" file="${oddFile}"/>
+  <property name="outputTempDir" value="${inputDir}/temp-dir-for-ant"/>
+
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
@@ -112,9 +118,6 @@
       <arg value="${outputname}.rnc"/>
     </java>
   </target>
-  <target name="cleanup" unless="debug">
-    <delete file="${outputname}.odd.compiled"/>
-  </target>
   <target name="validateodd">
     <echo level="info">Validate ${oddFile} as ODD </echo>
     <runjing rngfile="../p5odds.rng" file="${oddFile}"/>
@@ -122,6 +125,10 @@
   <target name="validaterng">
     <echo level="info">Validate ${testfile} against RELAXNG ${outputname}.rng</echo>
     <runjing rngfile="${outputname}.rng" file="${testfile}"/>
+  </target>
+  <target name="validatesecondrng">
+    <echo level="info">Validate ${testfile2} against RELAXNG ${outputname}.rng</echo>
+    <runjing rngfile="${outputname}.rng" file="${testfile2}"/>
   </target>
   <target name="validatedtd">
     <echo level="info">Validate ${testfile} against DTD ${outputname}.dtd</echo>
@@ -174,4 +181,102 @@
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
   </target>
+
+  <target name="doclatex" depends="doclite">
+    <echo level="info">XSLT generate LaTeX from Lite</echo>
+    <xslt processor="trax" force="yes" style="${lite2latex}" in="${outputname}.doc.xml" out="${outputname}.doc.tex">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+      <param name="useHeaderFrontMatter"  expression="true"/>
+      <param name="reencode"  expression="false"/>
+      <param name="preQuote"  expression=""/>
+      <param name="postQuote"  expression=""/>
+    </xslt>
+  </target>
+
+  <target name="docpdf" depends="doclatex">
+    <echo level="info">Generate PDF from LaTeX</echo>
+    <exec executable="xelatex">
+      <arg value="-interaction=batchmode"/>
+      <arg value="${outputname}.doc.tex" />
+    </exec>
+    <exec executable="xelatex">
+      <arg value="-interaction=batchmode"/>
+      <arg value="${outputname}.doc.tex" />
+    </exec>
+  </target>
+
+  <target name="docepub" depends="compileodd">
+    <!-- The transformation for EPUB output. -->
+    <echo level="info">XSLT generate ePub file</echo>
+    <xslt force="yes" style="${teitoepub}" in="${outputname}.odd.compiled" out="${outputTempDir}/OPS/index.html">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="directory" expression="file:///${outputTempDir}"/>
+      <param name="inputDir" expression="${inputFileDir}/"/>
+      <param name="fixgraphicsurl" expression="true"/>
+      <param name="summaryDoc"  expression="true"/>
+      <!-- supply unique URN for ebook-->
+      <param name="uid" expression="${uid}" if="uid"/>
+      <!-- set splitting level-->
+      <param name="splitLevel" expression="${splitLevel}" if="splitLevel"/>
+      <!-- supply name of publisher for ebook-->
+      <param name="publisher" expression="${publisher}" if="publisher"/>
+      <!-- supply subject/category for ebook-->
+      <param name="subject" expression="${subject}" if="subject"/>
+      <!-- supply name of JPEG file for ebook cover-->
+      <param name="coverimage" expression="${coverimage}" if="coverimage"/>
+      <!-- supply name of CSS file-->
+      <param name="cssFile" expression="${cssFile}" if="cssFile"/>
+      <!-- name of media overlay file -->
+      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+      <!-- file per page -->
+      <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+      <!-- epub viewport -->
+      <param name="viewPortHeight" expression="${viewPortHeight}" if="viewPortHeight"/>
+      <param name="viewPortWidth" expression="${viewPortWidth}" if="viewPortWidth"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+      <!-- disable compression on the output ZIP -->
+      <param name="nocompress" expression="${nocompress}" if="nocompress"/>
+    </xslt>
+    <echo level="info">Get names of graphics files and write an ant task</echo>
+    <xslt force="yes" style="${listgraphics}" in="${outputname}.odd.compiled" out="${outputTempDir}/copy.xml">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="inputDir" expression="${inputFileDir}"/>
+      <param name="mediaDir" expression="OPS/media"/>
+      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+      <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+    </xslt>
+    <echo level="info">Copy image files</echo>
+    <ant antfile="${outputTempDir}/copy.xml"/>
+    <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputname}.epub</echo>
+    <delete file="${outputname}.epub"/>
+    <zip destfile="${outputname}.epub" basedir="${outputTempDir}"
+	 compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+    <zip destfile="${outputname}.epub" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+  </target>
+
+  <target name="cleanup" unless="debug">
+    <delete file="${outputname}.odd.compiled"/>
+    <delete dir="${outputTempDir}"/>
+  </target>
+
 </project>
