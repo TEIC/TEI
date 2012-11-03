@@ -9,13 +9,15 @@ ODDS= \
 	tei_speech.dtd \
 	tei_all.dtd 
 
-XODDS=	isofs.rng \
+MOREODDS=	isofs.rng \
 	tei_svg.rng \
 	tei_enrich.dtd \
 	tei_xinclude.rng \
 	tei_its.rng \
 	tei_math.rng \
-	tei_odds.rng	
+	tei_odds.rng
+
+XODDS = tei_allPlus.special	
 
 DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf
 ROMA=roma2
@@ -29,8 +31,25 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib /usr/share/java/jing.jar:/usr/share/saxo
 
 default: schemas
 
+%.special: %.odd
+	xmllint --xinclude $*.odd > $*.odd.xinclude
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
+	rm $*.odd.xinclude
+	trang $*.rng $*.rnc
+	trang -o disable-abstract-elements $*.rng $*.xsd
+	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
+	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
+	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
+	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
+	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
+	jing $*.xsd $*.tei
+
 %.rng: %.odd 
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron 
+	trang  $*.rng $*.rnc
+
+%.dtd: %.odd
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd cleanup
 	trang   -o disable-abstract-elements $*.rng $*.xsd
 	trang  $*.rng $*.rnc
 	@echo Validate XSD using Jing ...
@@ -39,32 +58,19 @@ default: schemas
 	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
 	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
 	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
-
-%.dtd: %.rng
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd  dtd cleanup
+	jing $*.xsd $*.tei
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
 
-%.doc.pdf: %.rng
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd dtd docepub docpdf dochtml cleanup
+%.doc.pdf: %.odd
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd docepub docpdf dochtml cleanup
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 	-rm $*.doc.xml
 
-schemas: $(ODDS) $(XODDS) $(DOCODDS)
-	xmllint --xinclude tei_allPlus.odd > tei_allPlus.odd.xinclude
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=tei_allPlus -Dtestfile2=tei_allPlus.template -Dtestfile=tei_allPlus.tei -DoddFile=tei_allPlus.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
-	rm tei_allPlus.odd.xinclude
-	trang  tei_allPlus.rng tei_allPlus.rnc
-	trang   -o disable-abstract-elements tei_allPlus.rng tei_allPlus.xsd
-	-rm *.odd.compiled
-	-rm tei_odds.dtd tei_odds.xsd
-	-rm tei_allPlus.dtd tei_allPlus.xsd
-	-rm tei_svg.dtd tei_svg.xsd
-	-rm tei_math.dtd tei_math.xsd
-	-rm tei_its.dtd tei_its.xsd
-	-rm tei_xinclude.dtd tei_xinclude.xsd
+schemas: $(ODDS) $(MOREODDS) $(DOCODDS) $(XODDS)
+	echo Done
 
 names:
 	saxon -o:exnames.xml ../Source/Guidelines/${LANGUAGE}/${DRIVER} ../Utilities/makeexnames.xsl  
@@ -94,10 +100,8 @@ dist: schemas
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:
-	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.rng *.compiled.* *~ *.xi *.isosch 
+	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled.* *~ *.xi *.isosch 
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
 	rm -f names.xml
-	for i in $(ODDS); do  rm -f  `basename $$i .dtd`.xsl;done
-	for i in $(XODDS); do  rm -f  `basename $$i .rng`.xsl;done
-	for i in $(DOCODDS); do  rm -f  `basename $$i .doc.pdf`.xsl;done
+
