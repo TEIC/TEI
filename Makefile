@@ -420,12 +420,14 @@ deb: dist debversion
 	rm -f tei-p5-*_*deb
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
-	(cd debian-tei-p5-database; debclean;debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-doc; debclean;debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-exemplars; debclean;debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-schema; debclean;debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-source; debclean;debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-test; debclean;debuild --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-database; debclean;debuild XSL=${XSL}--no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-doc; debclean;debuild XSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-exemplars; debclean;debuild XSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-schema; debclean;debuild XSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-source; debclean;debuild XSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-test; debclean;debuild −XSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+foo:
+	(cd debian-tei-p5-exemplars; debclean;debuild XSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
