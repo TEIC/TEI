@@ -364,7 +364,7 @@ dist-test.stamp: check
 
 dist-exemplars.stamp: check
 	@echo BUILD: Make distribution directory for exemplars
-	(cd Exemplars; make XSL=${XSL})
+	(cd Exemplars; make XSL=${XSL} dist)
 	tar --exclude "*~" --exclude .svn -c -f - Exemplars \
 	| (cd release/tei-p5-exemplars/share/xml/tei; tar xf - )
 	touch dist-exemplars.stamp
