@@ -117,7 +117,7 @@ html-web.stamp:  check
 
 validate-html:
 	@echo BUILD: Validate HTML version of Guidelines
-	export CLASSPATH="`locate jing.jar | head -1`";cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant -f ../../../validatehtml.xml;rm z_*
+	cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant  -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f ../../../validatehtml.xml;rm z_*
 
 teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
@@ -365,6 +365,8 @@ dist-test.stamp: check
 dist-exemplars.stamp: check
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make XSL=${XSL})
+	tar --exclude "*~" --exclude .svn -c -f - Exemplars \
+	| (cd release/tei-p5-exemplars/share/xml/tei; tar xf - )
 	touch dist-exemplars.stamp
 
 dist-database.stamp: check
