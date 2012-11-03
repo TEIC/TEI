@@ -3841,12 +3841,16 @@ element, though the following example combines both fully structured
             <pubPlace>Amsterdam</pubPlace>
             <date when="1980"/>
          </imprint>
-         <biblScope type="pp" from="1013" to="1023">1013–23</biblScope>
+         <biblScope type="pp" from="1013"
+		    to="1023">1013–23</biblScope>
       </monogr>
       <note>Apparently a draft of section 4 of 
           <title level="m">Literary Machines</title>.</note>
-   </biblStruct>   <bibl xml:id="NELSON88">Ted Nelson:  <title>Literary Machines</title>
-       (privately published, 1987)</bibl>   <bibl xml:id="BAXTER88">    
+   </biblStruct>   
+
+<bibl xml:id="NELSON88">Ted Nelson:  <title>Literary Machines</title>
+       (privately published, 1987)</bibl>   
+<bibl xml:id="BAXTER88">    
       <author>Baxter, Glen</author>
       <title>Glen Baxter His Life: the years of struggle</title>
        London: Thames and Hudson, 1988.
@@ -3962,9 +3966,9 @@ the series. </p>
       </bibl>
       </egXML>
   </p>
-  
-  <p>Within <gi>biblStruct</gi>, the levels afre distinguished by the use of the
-    following elements:
+
+  <p>Within <gi>biblStruct</gi>, the levels are distinguished by the use of the
+    following distinct elements:
 
 <specList><specDesc key="analytic"/><specDesc key="monogr"/><specDesc key="series"/></specList>
  </p>
@@ -3985,9 +3989,47 @@ typically use a different entry for each publication, while academic
 footnoting practice typically treats all publications of the same
 article in a single entry.)
  </p>
-<p>For example, the article cited in this example has been published
-twice, once in a journal and once in a collection which appeared in a
-German language series:
+<p>The <gi>biblScope</gi> element is used to supply further
+information about the location of some part of a bibliographic
+reference. It specifies where to find the component in which it appears
+within the immediately preceding component of a different level.  </p>
+<p>In the following example, Schacter's article
+<title>Iolaos</title> appeared on pages 64 to 70 of a volume entitled
+<title>Herakles to Poseidon</title>, which was itself the second of a
+four volumes published together under the title <title>Cults of
+Boitia</title>;  this last title constituted the 38th volume in the
+series of <title>Bulletin of the Institute of Classical Studies
+Supplements</title>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+<analytic>
+<author>Albert Schachter</author>
+<title>Iolaos</title>
+</analytic>
+<monogr>
+<title>Herakles to Poseidon</title>
+<imprint><date>1986</date></imprint>
+<biblScope type="pp">64-70</biblScope>
+</monogr>
+<monogr>
+<title>Cults of Boiotia</title>
+<imprint><pubPlace>London</pubPlace></imprint>
+<extent>4 vols.</extent>
+<biblScope type="part">2</biblScope>
+</monogr>
+<series>
+<title>Bulletin of the Institute of Classical Studies
+Supplements</title>
+<biblScope type="vol">38</biblScope>
+</series>
+</biblStruct>
+</egXML>
+</p>
+
+<p>In the following example, the article cited  has been published
+twice, once in a journal (where it appeared in volume 40, on pages 3
+-46 of the issue of October 1986)  and once as a free standing item,
+which appeared as number 11 of  a
+German language series. 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
    <analytic>
       <author>
@@ -3995,15 +4037,15 @@ German language series:
       <forename>Manfred</forename></persName></author>
       <title level="a">A Draft Proposal for a Standard for the
                        Coding of Machine Readable Sources</title>
+
    </analytic>
    <monogr>
       <title level="j">Historical Social Research</title>
       <imprint>
-         <biblScope type="vol">40</biblScope>
          <date when="1986-10">October 1986</date>
-         <biblScope type="pp" from="3" to="46">3-46</biblScope>
       </imprint>
-   </monogr>
+         <biblScope type="vol">40</biblScope>
+         <biblScope type="pp" from="3" to="46">3-46</biblScope>   </monogr>
    <monogr>
       <title level="m">Modelling Historical Data:
                        Towards a Standard for Encoding and 
@@ -4031,6 +4073,7 @@ German language series:
    </series>
 </biblStruct></egXML>
  </p>
+
 
 <p>The practice of analytic vs. monographic citation, as described here,
 should be distinguished from the practice of including within one
@@ -4064,12 +4107,10 @@ Processing</title>
 </analytic>
 <monogr>
 <title level="j">Communications of the ACM</title>
-<imprint>
+<imprint><date>1987</date></imprint>
 <biblScope type="vol">30</biblScope>
 <biblScope type="issue">11</biblScope>
-<date>1987</date>
 <biblScope type="pp">933–947</biblScope>
-</imprint>
 </monogr>
 <ref type="url">http://xml.coverpages.org/coombs.html</ref>
 </biblStruct>
@@ -4114,7 +4155,7 @@ according to the Chicago style<?tei winita (Reference needed)?>, with all the re
 markup approach can provide easy rendering, if only one styleguide is
 targetted, or an original source document uses a specific styleguide,
 while still allowing for automated recovery of key data items such as
-names of authors, titles etc.</p>
+names of authors, titles etc. </p>
 
 <specGrp xml:id="DCOBILV" n="Levels of bibliographic information"><include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/analytic.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/monogr.xml"/>
@@ -4171,19 +4212,16 @@ following example:
    </analytic>
    <monogr>
       <title level="j">PMLA</title>
-      <imprint>
+         <imprint><date>1913</date></imprint>
          <biblScope type="vol">8</biblScope>
-         <date>1913</date>
-         <biblScope type="pp">122</biblScope>
-      </imprint>
-   </monogr>
+         <biblScope type="pp">122</biblScope>   </monogr>
 </biblStruct></egXML>
 In this case, the analytic title <q>Notes on Manuscripts of the
 <title>Prophécies de Merlin</title></q> needs no <att>level</att>
-attribute because it is directly contained by the <gi>analytic</gi>
-level; the monographic title contained within it, <q>Prophécies
-de Merlin,</q> is not semantically erroneous  because it is not
-directly contained by the <gi>analytic</gi> element.
+attribute because it is directly contained by an <gi>analytic</gi>
+element. The  monographic title it contains similarly needs no
+<att>level</att> attribute, since it is a constituent of the analytic
+title. 
  </p>
 <p>In some bibliographic applications, it may prove useful to
 distinguish main titles from subordinate titles, parallel titles, etc.
@@ -4233,12 +4271,13 @@ New York:  Broude Brothers; [1951] (B.B. 59). vi, 685 p.</bibl></egXML>
 <!-- example from ANSI Z39.29, sec. A.12.2, p.63 -->
  </p>
 
-<p>The elements <gi>author</gi> and <gi>editor</gi> have, for printed
-books and articles, a fairly obvious significance; for other kinds of
+<p>The elements <gi>author</gi> and <gi>editor</gi> have fairly
+obvious significance for printed
+books and articles; for other kinds of
 bibliographic items their proper usage may be less obvious.  The
 <gi>author</gi> element should be used for the person or agency with
 primary responsibility for a work's intellectual content, and the
-element <gi>editor</gi> for any others with some responsibility for
+element <gi>editor</gi> for other people or agencies with some responsibility for
 that content, whether or not they are called
 <soCalled>editor</soCalled>.  An organization such as a radio or
 television station is usually accounted <soCalled>author</soCalled> of
@@ -4251,7 +4290,7 @@ of their responsibility more exactly.
 <p>Many bibliographic and Linked Data applications require disambiguation 
 of author names using unique identifiers. Both the <gi>author</gi> and 
 <gi>editor</gi> elements may contain one or more <gi>idno</gi> elements, 
-each containing an identifier. Alternatively, if only a single identifier 
+to supply such identifiers. Alternatively, if only a single identifier 
 is to be recorded, the <att>key</att> or 
 <att>ref</att> attribute may be used, as further discussed in <ptr target="#CONARS"/>.</p>
 <p>For anyone else with responsibility for the work, the
@@ -4300,10 +4339,11 @@ a whole, not merely to the first edition:
    <title xml:lang="ru" level="m">Ciklotronnye volny v plazme</title>.
    </note>
 </bibl></egXML>
+<!-- is ru the correct xml:lang value for russian in roman letters? -->
 <!-- from ISO 690: 1987, clause 4.1, p. 2. -->
  </p>
-<p>In this example, by contrast, the <gi>respStmt</gi> element applies
-to the edition, and not to the collection per se (Moser and Tervooren
+<p>In the following example, by contrast, the <gi>respStmt</gi> element applies
+to the edition, and not to the collection <foreign>per se</foreign> (Moser and Tervooren
 were not responsible for the first thirty-five printings); the elements
 of the reference have been reordered from their appearance on the title
 page of the volume in order to ensure the correct relationship of the
@@ -4321,13 +4361,13 @@ responsibility.
          <name>Hugo Moser</name>
          <name>Helmut Tervooren</name>
       </respStmt>
-      <imprint>
-	<biblScope type="vol">I Texte</biblScope>
+         <imprint>
 	<pubPlace>Stuttgart</pubPlace>
 	<publisher>S. Hirzel Verlag</publisher>
 	<date>1977</date>
       </imprint>
-   </monogr>
+      <biblScope type="vol">I Texte</biblScope>
+</monogr>
 </biblStruct></egXML><!-- reference taken from book in hand by MSM. -->
 	<!-- note that from the book it is impossible to -->
 	<!-- tell whether this is the 36th edition of -->
@@ -4369,9 +4409,9 @@ whose authority and in whose name a bibliographic entity such as a
 book is made public or distributed (whether a commercial publisher or
 some other organization), the place and the date of publication.  It
 may also include a full address for the publisher or organization.
-Full bibliographic references usually specify either the number of
+A full bibliographic references will usually also specify the number of
 pages in a print publication (or equivalent information for non-print
-materials), or the specific location of the material being cited
+materials), and possibly also the specific location of the material being cited
 within its containing publication.  The following elements are
 provided to hold this information: <specList><specDesc key="imprint"/><specDesc key="address"/><specDesc key="pubPlace"/><specDesc key="publisher"/><specDesc key="date"/><specDesc key="idno"/><specDesc key="extent"/><specDesc key="biblScope"/></specList> The elements <gi>biblScope</gi>,
 <gi>pubPlace</gi>, <gi>publisher</gi>, <gi>distributor</gi> and <gi>respStmt</gi> constitute the model class
@@ -4484,17 +4524,17 @@ statement here applies only to the second <gi>monogr</gi> element.
 often include some additional information specifying its location, for
 example as a volume number, page number, range of page numbers, or name
 or number of a subdivision of the host work.  The element
-<gi>biblScope</gi> may be used to identify such information if it is
+<gi>biblScope</gi> may be used to mark such information if it is
 present.  Where it is desired to distinguish different classes of such
 information (volume number, page number, chapter number, etc.), the
 <att>type</att> attribute may be used with any convenient typology
 (see the element definition for <gi>biblScope</gi> for some suggested values).
  </p>
-<p>When the item being cited is a journal article, the
+<!--<p>When the item being cited is a journal article, the
 <gi>imprint</gi> element describing the issue in which it appeared
 may contain <gi>biblScope</gi> elements for volume and
 page numbers, together with a <gi>date</gi> element.
- </p>
+ </p>-->
 <p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
    <analytic>
@@ -4508,9 +4548,9 @@ page numbers, together with a <gi>date</gi> element.
          <pubPlace>London</pubPlace>
          <publisher>Society of Genealogists</publisher>
          <date when="1968"/>
+      </imprint>
          <biblScope type="vol">1</biblScope>
          <biblScope type="pp" from="155" to="167">155–167</biblScope>
-      </imprint>
          </monogr>
 </biblStruct></egXML>
  </p>
@@ -4526,11 +4566,11 @@ both the following are legal examples:
    <monogr>
       <title level="j">Literary &amp; Linguistic Computing</title>
       <imprint>
+         <date>1992</date>
+      </imprint>
          <biblScope type="vol">7</biblScope>
          <biblScope type="issue">2</biblScope>
-         <date>1992</date>
          <biblScope type="pp">110-112</biblScope>
-      </imprint>
    </monogr>
 </biblStruct></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
@@ -4541,10 +4581,10 @@ both the following are legal examples:
    <monogr>
       <title level="j">Computers and the Humanities</title>
       <imprint>
-         <biblScope>25.6</biblScope>
          <date when="1991-12">(December, 1991):</date>
-         <biblScope from="377" to="280">377–380</biblScope>
       </imprint>
+         <biblScope>25.6</biblScope>
+         <biblScope from="377" to="280">377–380</biblScope>
    </monogr>
 </biblStruct></egXML>
 <!-- TYPE attribute dropped from biblScope in Chesnutt        -->
