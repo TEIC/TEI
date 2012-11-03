@@ -2099,7 +2099,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:if>
           </w:rPr>
           <w:t>
-            <xsl:copy-of select="$anchor"/>
+            <xsl:value-of select="$anchor"/>
           </w:t>
         </w:r>
         <w:r>
@@ -2120,7 +2120,7 @@ of this software, even if advised of the possibility of such damage.
               <w:rStyle w:val="Hyperlink"/>
             </w:rPr>
             <w:t>
-              <xsl:copy-of select="$anchor"/>
+              <xsl:value-of select="$anchor"/>
             </w:t>
           </w:r>
         </w:hyperlink>
