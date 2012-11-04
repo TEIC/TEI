@@ -180,7 +180,8 @@ may be significantly ambiguous. To some extent, the availability of
 the Unicode character set addresses the first of these problems, since
 it provides specific code points for most punctuation marks, and also
 the second to the extent that it distinguishes glyphs (such as stop,
-comma, and hyphen) which are used with different functions. <!-- Thus, for
+comma, and hyphen) which are used with different functions. 
+<!-- Thus, for
 example, different Unicode code points are available for the hyphen
 used as a minus sign (<val>x2212</val>), as a word breaking hyphen
 (<val>x2010</val>), and as a soft or
@@ -365,8 +366,7 @@ will rely on character class information to determine where they are
 to be found: some punctuation characters are considered to be
 word-breaking, while others are not. In XML, the newline character in
 text data is a kind of white space, and is therefore word
-breaking. <!-- XML mixed-content rules are notoriously confusing on this
-issue. --> However, it is generally unsafe to assume that whitespace
+breaking.  However, it is generally unsafe to assume that whitespace
 adjacent to markup tags will always be preserved, and it is decidedly
 unsafe to assume that markup tags themselves are equivalent to
 whitespace. </p>
@@ -823,17 +823,21 @@ referenced using the <att>rendition</att> attribute as follows:
  <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQQ-eg-23" xml:lang="fr">Adolphe se tourna vers lui :
  <said rendition="#dashBefore">Alors, 
  Albert, quoi de neuf ?</said>
- <said rend="#dashBefore">Pas grand-chose.</said>
- <said rend="#dashBefore">Il fait beau,</said>
+ <said rendition="#dashBefore">Pas grand-chose.</said>
+ <said rendition="#dashBefore">Il fait beau,</said>
  dit Robert.
-<!-- ... elsewhere in the document -->
+<!-- ...  within the header  -->
 <rendition xml:id="dashBefore" scope="before">content: '— '</rendition>
-</egXML>
+<!-- ... -->
+<quotation marks="none"/></egXML>
  </p>
 
-<p>Whichever policy is  adopted, the encoder should document the
+<p>Whatever policy is  adopted, the encoder should document the
 decision in some way, for example by using the <gi>quotation</gi>
-element provided in the TEI Header (see <ptr target="#HD53"/>).
+element provided in the TEI Header (see <ptr target="#HD53"/>) to
+indicate that quotation marks have not been retained in the encoding;
+their presence in the source is implied by the <att>rendition</att>
+attribute values supplied.
 </p>
 
  <p>Whether or not the quotation marks are suppressed, their presence
@@ -850,6 +854,26 @@ element provided in the TEI Header (see <ptr target="#HD53"/>).
  the lighted tomahawk began flourishing
  about me in the dark.</egXML>
 </p>
+
+<p>Such passages might more effectively be encoded without loss of
+rendering information by using the <att>rendition</att> attribute and
+its associated <gi>rendition</gi> element as described in section <ptr
+target="#HD57-1"/>. If the rendition of passages tagged as
+<gi>said</gi> is uniform throughout a text, then the <att>render</att>
+attribute of the <gi>tagUsage</gi> element in the header may be used
+to specify a default rendering, in which case the same section might
+simply be tagged: 
+
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"
+	corresp="#DSHD-eg-30">
+<said>Who-e debel
+ you?</said> — he at last said — 
+ <said>you no speak-e,
+ damme, I kill-e.</said>  And so saying,
+ the lighted tomahawk began flourishing
+ about me in the dark.</egXML>
+</p>
+
 
 
 <p>As  members of the <ident type="class">att.ascribed</ident> class,
@@ -869,7 +893,7 @@ This may be used to make explicit who is speaking:
    <item xml:id="Albert"/>
    <item xml:id="Robert"/>
  </list></egXML>
- <!-- should show QUOTATION declarations for these -->
+
  The <att>who</att> attribute may be supplied whether
  or not an indication of the speaker is given explicitly in the
  text. It may take the form (as above) of  a
@@ -1463,23 +1487,7 @@ world may judge: for my part I <choice><orig>thinke</orig><reg>think</reg></choi
 there <choice><orig>canot</orig><reg>cannot</reg></choice> be a greater
 <choice><orig>sacryfice</orig><reg>sacrifice</reg></choice> to God.</p></egXML>
  </p><p>As elsewhere, the <att>resp</att> attribute may be used to specify the agency
-responsible for the regularization. <!--This may be an identifiable
-individual, for example an editor, or a descriptive phrase such as
-<mentioned>copyist</mentioned>. --> 
-
-<!--
-For example, in the first stanza of the Old
-Norse poem <title>Grógaldr</title>, the manuscript form
-<mentioned>dura</mentioned> is usually regularized in modern editions to
-<mentioned>dyra</mentioned> <gloss>doors</gloss>. The manuscript's <q>vek ek
-þik dauðra dura</q> might thus be recorded together with its
-regularization in two ways, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">vek ek þik dauðra
-<choice>
-  <orig>dura</orig>
-  <reg resp="#MSM">dyra</reg>
-</choice></egXML>
--->
+responsible for the regularization. 
 </p>
 <specGrp xml:id="DCOEDR" n="Editorial tags for regularization">
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/reg.xml"/>
@@ -1597,37 +1605,6 @@ the transcriber or editor, this may be indicated by use of the
  not others may thus be represented by one or more <gi>gap</gi>
  elements intermingled with text, all contained by a <gi>del</gi>
  element.
-<!-- Observe
-that the distinction between recommended uses of the <gi>del</gi>,
-<gi>corr</gi>, and <gi>gap</gi> tags parallels the distinction drawn
-between the <gi>add</gi>, <gi>corr</gi>, and <gi>supplied</gi> tags in
-section <ptr target="#COEDCOR"/> and section <ptr target="#PHCC"/>:
-<list type="simple">
-<item>where the correction is a deletion by a scribe or author in a
-manuscript or other primary source (typescript, proof, galley, etc.)
-then either <gi>corr</gi> (or <gi>sic</gi>) or <gi>del</gi> might be
-appropriate, depending on the circumstances. The <gi>del</gi> tag is
-more expressive, and may convey information on just how the deletion
-was performed (hand, place, etc.) which the <gi>corr</gi> tag cannot.
-See further the discussion in section <ptr target="#PHSU"/>.
- </item>
-<item>where the correction is a deletion by a transcriber or editor,
-correcting a perceived superfluity in the text but in circumstances
-where there is no clearly assertable reason for the superfluity (as a
-spurious addition) the <gi>corr</gi> tag should be used. The
-<gi>del</gi> tag should not be used in this case.
- </item>
-<item>where the correction is a deletion by a transcriber or editor,
-correcting a perceived superfluity in the text where there is a
-clearly assertable reason for the superfluity (as a spurious
-addition) the <gi>gap</gi> tag should be used with the
-<att>reason</att> attribute carrying the reason for the superfluity
-and hence the deletion of text. Neither the <gi>del</gi> nor
-<gi>corr</gi> tag should be used in these cases.</item></list>
- </p><p>For any detailed transcription of a manuscript or typescript with
-more than trivial amounts of alteration, the reader should consult
-chapter <ptr target="#TC"/>, and chapter <ptr target="#PH"/>.</p>
--->
 </p>
 <specGrp xml:id="DCOEDA" n="Other editorial tags">
 
@@ -2433,8 +2410,6 @@ divided into <list>
    <item n="m">those that have just broken a flower vase, </item>
    <item n="n">those that resemble flies from a distance. </item>
    </list></egXML>
-<!-- Borges, tr. R. Simms 'The analytical language of John Wilkins' -->
-	<!-- in Monegal & Reid, Borges: a reader, (Dutton, 1981), p 141 -->
  </p>
 <p>A list may be given a heading or title, for which the <gi>head</gi>
 element should be used, as in the next example, which also demonstrates
@@ -2452,7 +2427,6 @@ a numeric or alphabetic enumerator:
  <item>Not satisfactory, on account of his great 
     unpunctuality and inattention to duties</item>
 </list></egXML>
-<!-- S Butler, Way of all Flesh, -->
  </p>
 <p>In such a list, the individual items have internal structure.  In
 complex cases, where list items contain many components, the list is
@@ -2498,8 +2472,6 @@ section <ptr target="#CHSH"/>.  A more elaborate markup for this
 glossary would distinguish the headword forms from the grammatical
 information (principal parts and gender), perhaps using elements taken
 from <ptr target="#DI"/>.
-<!--tags described more
-fully in chapters <ptr target="#TE" type="div1"/> or <ptr target="#DI" type="div1"/>.-->
  </p>
 <p>In addition to the <gi>head</gi> element used to supply
 a title or heading for the whole list, headings for the two
@@ -2516,7 +2488,6 @@ preferable to the use of a worn-out expression.
   <label>fair and square   </label> <item>completely honest</item>
   <label>at death's door   </label> <item>near death</item>
 </list></egXML>
-<!-- Warriner's English Composition p. 280                    -->
  </p>
 <p>The elements <gi>label</gi>, <gi>head</gi>, <gi>headLabel</gi>, and
 <gi>headItem</gi> may contain only phrase-level elements.  The
@@ -2547,7 +2518,6 @@ glossary list contains two items, each of which is itself a simple list:
       </list>
    </item>
 </list></egXML>
-<!-- D Defoe,  Robinson Crusoe  -->
  </p>
 <p>Lists of different types may be nested to arbitrary depths in this
 way.
@@ -2837,7 +2807,6 @@ elements, which consequently may have to repeat words or phrases from the
 text proper. This need not be done verbatim, thus giving scope for
 normalization of spelling (as in the example above) or other modifications which may assist
 generation of an index in a desired form or sequence.</p>
-<!-- sorting -->
 <p>Sometimes, for example when
 index terms are taken from a different language or consist of
 mathematical formulae or other expressions, even a
@@ -2862,7 +2831,7 @@ glyph has been provided using the elements described in chapter <ptr target="#WD
 Note that if no value is supplied for the sortKey attribute, a sorting
 application should always use the content of the <gi>term</gi> element
 as a sort key.</p>
-<!-- multiple indexes -->
+
 <p>It is common practice to compile more than one index for a given text.
 A biography of a poet, for example, may offer an index of references to
 poems by the subject of the study, another index of works by other writers,
@@ -2874,7 +2843,7 @@ more specific indexes:
 coincidentally, born in 
 <index indexName="INDEX-PLACES"><term>Ashford
 (Kent)</term></index>Ashford...</p></egXML></p>
-<!-- multi-level indexing -->
+
 <p>Multi-level indexing is particularly common in scholarly
 documents. For example, as well as entries
 such as <term>TEI</term>, or <term>markup</term>, an index  may contain structured entries like <term>TEI,
@@ -2898,8 +2867,6 @@ then be encoded with  nested
 ...</p></egXML></p>
 <p>The  index entry from Burton's <title>Anatomy of
 Melancholy</title> quoted above might be generated in a similar way. 
-<!--<q rend="display">Women, how cause of mel. 193; their vanity in apparell taxed, 527;
-their counterfeit tears 547; their vices 601, commended, 624.</q> -->
 To generate such an entry, the body of the text might include, at page
 193, an <gi>index</gi> element such as
     <egXML xmlns="http://www.tei-c.org/ns/Examples"   corresp="#COXR-eg-164">
@@ -2933,7 +2900,7 @@ like the following:
 required to make the structure explicit will normally be removed, so
 as to produce entries like those quoted above. However, this is not
 required by the encoding recommended here. </p>
-<!-- generating the index -->
+
 <p>As noted above, either a processing instruction or a <gi>divGen</gi>
 element may be used to mark the place at which an index
 generated from  <gi>index</gi> elements should be inserted into the
@@ -3053,9 +3020,7 @@ there with the Lady Baussiere and her
 page, -- I have not taken the least frisk 	
 ...</p>	
 </egXML>	
-<!--<note type="cit">Sterne, Tristram Shandy, vol VI, chap XL, downloaded
-from <ptr target="http://www.tristramshandyweb.it/home.htm"/> on 12
-sep 04</note>-->
+
 </p>	
 <p>The <gi>graphic</gi> and <gi>binaryObject</gi> elements  are phrase
 level  elements which may be used
@@ -3258,9 +3223,8 @@ element type is to be selected.  (The hyphen and number may be omitted
 if there is only one element of the given type.)  In the <term>untyped
 path</term> form of identifier, each component consists of a number,
 indicating which element in the sequence of nodes at each level is to be
-selected.  <!--A fixed prefix beginning with a letter may be used to make
-the untyped path legal as an <code type="kw">ID</code> value.-->
- </p>
+selected.  To make the resulting identifier a valid XML identifier, it
+may need to be prefixed with an unchanging alphabetic letter.</p>
 <p>Identifiers generated with these methods should use the <gi>text</gi>
 element as their starting point, rather than the <gi>TEI</gi> or
 <gi>body</gi> elements. The <gi>TEI</gi> element may be taken
@@ -3315,14 +3279,7 @@ used, the elements which can bear standard reference identifiers, and
 the method for constructing standard reference identifiers, should all
 be declared in the header as described in section <ptr target="#HD54"/>.
  </p>
-<!-- <p>When the hierarchy of the encoded document and that of the
-reference system differ (e.g. for reference systems based on page and
-line numbers) or when more than one reference system is to be encoded,
-the encoder of an SGML (but not XML) TEI text may choose to represent the alternative reference system(s)
-as elements in one or more concurrent document hierarchies.  For an
-introduction to the concept of concurrent hierarchies, see section <ptr target="#SG152" type="div1"/>.  For further discussion of this and other
-mechanisms, see chapter <ptr target="#NH"/>.
- </p>--></div>
+</div>
 <div type="div3" xml:id="CORS5"><head>Milestone
 Elements</head><p>Where the desired reference system does not
 correspond to any particular structural hierarchy, or the document
@@ -3663,10 +3620,7 @@ systems or after conversion to some other bibliographic markup formats
 such as BibTeXML or MODS. Punctuation delimiting the components of a
 print citation is not permitted directly within a <gi>biblStruct</gi>
 element; instead,  the presence and order of child elements must be used to
-reconstruct the punctuation required by a particular style.  <!--While <gi>biblStruct</gi> offers enough
-flexibility for encoding bibliographic references to simple print
-works, for many documents, especially electronic ones, it proves
-problematic.--> <!-- no problems presented -->
+reconstruct the punctuation required by a particular style.  
 </p>
 
 <p>By contrast, <gi>bibl</gi> allows for considerable flexibility in
@@ -3699,9 +3653,6 @@ TEI. Second, <gi>biblFull</gi> and <gi>fileDesc</gi> use the child
 element <gi>publicationStmt</gi> to cover not only the <term>publication,
 production, distribution, etc. area</term> but also the <term>resource identifier
 and terms of availability area</term> associated with that publication.
-<!-- LB: how else would you show that something was published by X with
-     one identifier and by Y with a different one? --> 
-  <!-- KSH: I was just noting the differences between ISBD and TEI, not trying to say that TEI is wrong. In cataloging practice, the need to assocaite different identifiers with different publishers doesn't arise because a cataloger creates a single record for a unique edition. So, for example, even if a book was simultaneously published in two cities or co-published by two publishers, the assumption is that any identifier applies equally to both cities or publishers. While line of argument might be used to justify the placement of <idno> inside <publicationStmt>, I note that both <fileDesc> and <bilbFull> allow only one <publicationStmt> anyway.  -->
 Despite these inconsistencies, users
 encoding citations and attempting to format them according to a
 standard that closely adheres to ISBD may find that <gi>biblFull</gi>,
@@ -3711,10 +3662,6 @@ easily be rendered for the reader. However, it is important to note that some
 ISBD-derived citation formats (such as ANSI/NISO Z39.29 and 
 ГОСТ 7.1) are not entirely conformant to ISBD either, since they may begin with a statement of authorship that does not map to
 the ISBD statement of responsibility.  
-<!-- KSH: and which, therefore, cannot be encoded anywhere inside of a
-     <gi>biblFull</gi> (or <gi>fileDesc</gi>). -->
-<!-- LB: not so: you can use respStmt with an appropriate @type surely? -->
-<!-- KSH: Fair enough.  I was speaking about ease of rendering. Anything is possible. -->
 </p>
 
 
@@ -3975,7 +3922,7 @@ the series. </p>
 
 <p>For purposes of TEI encoding, journals and anthologies are both
 treated as monographs; a journal title should thus be tagged as a
-<tag>title level="j"</tag> element <!--, or simply as a <gi>title</gi> -->within
+<tag>title level="j"</tag> element within
 a <gi>monogr</gi> element.  Individual articles in the journal or
 collected texts should be treated at the <soCalled>analytic</soCalled>
 level.  When an article has been printed in more than one journal or
@@ -4336,12 +4283,13 @@ a whole, not merely to the first edition:
    <extent>206 p.</extent>
    <title level="s">International series in natural philosophy</title>.
    <note place="inline">Translation of:
-   <title xml:lang="ru" level="m">Ciklotronnye volny v plazme</title>.
+   <title xml:lang="ru-Latn" level="m">Ciklotronnye volny v
+   plazme</title>
+   <title xml:lang="ru" level="m">Циклотронные волны в плазме</title>.
    </note>
 </bibl></egXML>
-<!-- is ru the correct xml:lang value for russian in roman letters? -->
 <!-- from ISO 690: 1987, clause 4.1, p. 2. -->
- </p>
+<!-- transliterated back into russian per ISO 9 (1995)  --> </p>
 <p>In the following example, by contrast, the <gi>respStmt</gi> element applies
 to the edition, and not to the collection <foreign>per se</foreign> (Moser and Tervooren
 were not responsible for the first thirty-five printings); the elements
@@ -4468,9 +4416,6 @@ and with dissertations:
       </imprint>
    </monogr>
 </biblStruct></egXML>
-<!-- reference is from p. 304, bibliography, of Reps and 
-Teitelbaum, The Synthesizer Generator:  A system for  constructing
-language-based editors. or could maybe use a respStmt - if this were allowed in imprint -->
 </p>
 <p>In this second example, the <gi>idno</gi> element is used to
 provide the identifier allocated to the thesis by the Argonne
@@ -4520,23 +4465,19 @@ statement here applies only to the second <gi>monogr</gi> element.
 <p>An alternative way of handling the above situation would be to use the
 <gi>relatedItem</gi> element described in section <ptr target="#COBIRI"/> below.</p>
 
-<p>A bibliographic description, particularly for an analytic title, will
-often include some additional information specifying its location, for
-example as a volume number, page number, range of page numbers, or name
-or number of a subdivision of the host work.  The element
-<gi>biblScope</gi> may be used to mark such information if it is
-present.  Where it is desired to distinguish different classes of such
-information (volume number, page number, chapter number, etc.), the
-<att>type</att> attribute may be used with any convenient typology
-(see the element definition for <gi>biblScope</gi> for some suggested values).
- </p>
-<!--<p>When the item being cited is a journal article, the
-<gi>imprint</gi> element describing the issue in which it appeared
-may contain <gi>biblScope</gi> elements for volume and
-page numbers, together with a <gi>date</gi> element.
- </p>-->
-<p>For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+<p>When the item being described is a journal article, the date of its
+publication should be supplied within an <gi>imprint</gi> element,
+together with other imprint-related information such as the name or
+location of the journal publisher.  This should precede any
+<gi>biblScope</gi> elements used to provide additional information,
+for example a volume number, page number, range of page numbers, or
+name or number of a subdivision of the host work.  Where it is desired
+to distinguish different classes of such information (volume number,
+page number, chapter number, etc.), the <att>type</att> attribute may
+be used with any convenient typology (see the element definition for
+<gi>biblScope</gi> for some suggested values). </p>
+<p>For example: <egXML
+xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
    <analytic>
       <author>Wrigley, E. A.</author>
       <title level="a">Parish registers and the historian</title>
@@ -5009,7 +4950,7 @@ starts  within a metrical line, as in the following example:
 <l>Brought Death into the World,<lb/> and all our woe,</l>
 <l>With loss of Eden, till one greater Man</l>
 <l>Restore us, and regain the blissful Seat...</l>
-</egXML><!-- amusingly not COVE-eg-284 which is the Mikado -->
+</egXML>
 
 In the original copy text, the presence of an ornamental capital at
 the start of the poem means that the measure is not wide enough to
@@ -5083,21 +5024,6 @@ element described in chapter <ptr target="#DS"/>. For example:
       alas! in vain.”</l>
   </lg>
 </lg></egXML>
-<!-- From WWP first edition of -->
-	<!-- The Works of Anna Laetitia Barbauld, 1826     -->
-	<!-- wwp idno=TR00283          -->
-	<!-- I think this is Barbauld's daughter quoting   -->
-	<!-- a sonnet written by her uncle (ALB's borther) -->
-	<!-- about her mother (ALB).   -->
-	<!-- I have removed some of the WWP markup; in     -->
-	<!-- particular, the overlapping Q element is now  -->
-	<!-- just a pair of entity references.             -->
-	<!--                  - Syd 2001-11-04             -->
-	<!-- P.S., this .odd file had the following comment -->
-	<!-- instead of a real example; I don't know where  -->
-	<!-- fo find whatever stanza is being referred to,  -->
-	<!-- so I ignored it:           -->
-	<!-- quote stanza from Sir Gawayn -->
  </p>
 <p>It is often the case that verse line boundaries conflict with the
 boundaries of other structural elements. In the following example, the
@@ -5149,7 +5075,7 @@ following example:
       <l>And closes from behind.</l>
    </lg>
 </sp></egXML>
-<!-- Rime of the Ancient Marynere from Lyrical Ballads 1798 -->
+
  </p>
 <p>For alternative methods of aligning groups of lines which do not form
 simple hierarchic groups, or which are discontinuous, see the more
@@ -5193,7 +5119,7 @@ paragraph:
       <p>Tom Gagg, sir, is found guilty.</p>
    </sp>
 </div2></egXML>
-<!-- Gay's Beggars Opera -->
+
  </p>
 <p>In the following example, each speech consists of a sequence of verse
 lines, some of them being marked as metrically incomplete:
@@ -5230,7 +5156,7 @@ lines, some of them being marked as metrically incomplete:
       </sp>
    </div2>
 </div1></egXML>
-<!-- Wells & Taylor, Hamlet I.i -->
+
  </p>
 <p>In some cases, as here in the First Quarto of <title>Hamlet</title>,
 the printed speaker attributions need to be supplemented by use of the
@@ -5257,7 +5183,7 @@ incomplete:
 </sp>
 <stage>Enter Horatio and Marcellus.</stage>
 </egXML>
-<!-- Hamlet I.i, Q1 (edited, from old file) -->
+
  </p>
 <p>By contrast with the preceding examples, the following encodes an
 early printed edition without making any assumption about which parts
@@ -5290,7 +5216,7 @@ are prose or verse:
       </sp>
    </div2>
 </div1></egXML>
-<!-- Tempest first folio -->
+
  </p>
 <p>The <gi>sp</gi> and <gi>stage</gi> elements should also be used to
 mark parts of a text otherwise in prose which are presented as if they
@@ -5309,7 +5235,7 @@ were dialogue in a play.  The following example is taken  from a 19th century
    <p>Fish, Miss Gryll — I could discourse to you on fish by the
      hour: but for the present I will forbear ...</p>
 </sp></egXML>
-<!-- Peacock, Gryll Grange, p 778 -->
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#CODR-eg-296"><sp>
    <speaker>Lord Curryfin</speaker>
    <stage>(after a pause).</stage>
@@ -5317,7 +5243,7 @@ were dialogue in a play.  The following example is taken  from a 19th century
      in <title>Hamlet</title>, <q>I cannot tell.</q></p>
 </sp>
 <p>A chorus of laughter dissolved the sitting.</p></egXML>
-<!-- ib. p 885 -->
+
  </p>
 
 <specGrp xml:id="DCODR" n="Drama">
@@ -5328,8 +5254,7 @@ were dialogue in a play.  The following example is taken  from a 19th century
 </div></div>
  <div type="div2" xml:id="COOV"><head>Overview of the Core Module </head>
 <p>All the elements described in this chapter
-<!--(except for those tags designed to be used in concurrent markup
-streams, which are available in SGML only) -->are provided by the
+are provided by the
 <ident type="module">core</ident> module.
 <moduleSpec xml:id="DCO" ident="core">
 <altIdent type="FPI">Common Core</altIdent>
@@ -5341,10 +5266,6 @@ TEI</desc>
 The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
-<!--
-<p>The specifications making up this module are provided in the
-following order:
--->
 <specGrpRef target="#DCOPA"/>
 <specGrpRef target="#DCOHQ"/>
 <specGrpRef target="#DCONA"/>
