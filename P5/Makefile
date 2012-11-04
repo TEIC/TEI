@@ -425,7 +425,7 @@ deb: dist debversion
 	(cd debian-tei-p5-exemplars; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-schema; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 	(cd debian-tei-p5-source; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
-	(cd debian-tei-p5-test; debclean;debuild −eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-test; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
@@ -456,7 +456,7 @@ install: clean install-schema install-doc install-test install-exemplars install
 epub: epub.stamp
 
 epub.stamp: check
-	@echo BUILD: Make epub version of Guidelines
+	@echo BUILD: Make epub version of Gui;delines
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
 	touch epub.stamp
