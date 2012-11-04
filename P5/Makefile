@@ -456,7 +456,7 @@ install: clean install-schema install-doc install-test install-exemplars install
 epub: epub.stamp
 
 epub.stamp: check
-	@echo BUILD: Make epub version of Gui;delines
+	@echo BUILD: Make epub version of Guidelines
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
 	touch epub.stamp
