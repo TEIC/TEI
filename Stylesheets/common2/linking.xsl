@@ -44,6 +44,12 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
+  <xsl:param name="linkElement">a</xsl:param>
+  <xsl:param name="linkAttribute">href</xsl:param>
+  <xsl:param name="linkElementNamespace"></xsl:param>
+  <xsl:param name="urlMarkup">span</xsl:param>
+  <xsl:param name="linkAttributeNamespace">http://www.w3.org/1999/xlink</xsl:param>
+  <xsl:param name="outputSuffix">freddy</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element  in xref mode</desc>
    </doc>
@@ -359,9 +365,213 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:otherwise>
 	</xsl:choose>
 	</xsl:for-each> 
-	<xsl:if test="position() != last()">
-	  <xsl:text> </xsl:text>
-	</xsl:if>
+	<xsl:call-template name="multiTargetSeparator"/>
       </xsl:for-each>      
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>[common] separate two links in one target attribute</p>
+      </desc>
+   </doc>
+  <xsl:template name="multiTargetSeparator">
+    <xsl:choose>
+      <xsl:when test="position() eq last()"/>
+      <xsl:when test="position() eq last()-1">
+	<xsl:if test="position()&gt;1">
+	  <xsl:text>,</xsl:text>
+	</xsl:if>
+	<xsl:text> </xsl:text>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">and</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text> </xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>, </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] create external link<param name="ptr">ptr</param>
+         <param name="dest">dest</param>
+         <param name="class">class</param>
+      </desc>
+   </doc>
+  <xsl:template name="makeExternalLink">
+      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
+      <xsl:param name="dest"/>
+      <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/>
+      </xsl:param>
+      <xsl:element name="{$linkElement}" namespace="{$linkElementNamespace}">
+	<xsl:call-template name="makeRendition">
+	  <xsl:with-param name="default" select="$class"/>
+	</xsl:call-template>
+	<xsl:if test="@type and not($outputTarget='epub3' or $outputTarget='html5')">
+            <xsl:attribute name="type">
+               <xsl:value-of select="@type"/>
+            </xsl:attribute>
+         </xsl:if>
+         <xsl:attribute name="{$linkAttribute}" namespace="{$linkAttributeNamespace}">
+            <xsl:value-of select="$dest"/>
+            <xsl:if test="contains(@from,'id (')">
+               <xsl:text>#</xsl:text>
+               <xsl:value-of select="substring(@from,5,string-length(normalize-space(@from))-1)"/>
+            </xsl:if>
+         </xsl:attribute>
+	 <xsl:choose>
+	   <xsl:when test="@n">
+	     <xsl:attribute name="title">
+	       <xsl:value-of select="@n"/>
+	     </xsl:attribute>
+	   </xsl:when>
+	 </xsl:choose>
+         <xsl:call-template name="xrefHook"/>
+         <xsl:choose>
+	   <xsl:when test="$dest=''">??</xsl:when>
+            <xsl:when test="$ptr">
+               <xsl:element name="{$urlMarkup}" namespace="{$linkElementNamespace}">
+                  <xsl:choose>
+                     <xsl:when test="starts-with($dest,'mailto:')">
+                        <xsl:value-of select="substring-after($dest,'mailto:')"/>
+                     </xsl:when>
+                     <xsl:when test="starts-with($dest,'file:')">
+                        <xsl:value-of select="substring-after($dest,'file:')"/>
+                     </xsl:when>
+                     <xsl:otherwise>
+                        <xsl:value-of select="$dest"/>
+                     </xsl:otherwise>
+                  </xsl:choose>
+               </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:apply-templates/>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:element>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] create an internal link<param name="target">target</param>
+         <param name="ptr">ptr</param>
+         <param name="dest">dest</param>
+         <param name="body">body</param>
+         <param name="class">class</param>
+      </desc>
+   </doc>
+  <xsl:template name="makeInternalLink">
+      <xsl:param name="target"/>
+      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
+      <xsl:param name="dest"/>
+      <xsl:param name="body"/>
+      <xsl:param name="class">
+         <xsl:text>link_</xsl:text>
+         <xsl:value-of select="local-name(.)"/>
+      </xsl:param>
+      <xsl:variable name="W">
+         <xsl:choose>
+            <xsl:when test="$target">
+               <xsl:value-of select="$target"/>
+            </xsl:when>
+            <xsl:when test="contains($dest,'#')">
+               <xsl:value-of select="substring-after($dest,'#')"/>
+            </xsl:when>
+            <xsl:otherwise>
+               <xsl:value-of select="$dest"/>
+            </xsl:otherwise>
+         </xsl:choose>
+      </xsl:variable>
+
+      <xsl:choose>
+         <xsl:when test="$dest=''">
+            <xsl:choose>
+               <xsl:when test="not($body='')">
+                  <xsl:value-of select="$body"/>
+               </xsl:when>
+               <xsl:when test="$ptr">
+                  <xsl:apply-templates mode="xref" select="id($W)">
+                     <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+                  </xsl:apply-templates>
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:apply-templates/>
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:when>
+         <xsl:otherwise>
+	   <xsl:variable name="eventualtarget">
+	     <xsl:choose>
+	       <xsl:when test="starts-with($dest,'#') or  contains($dest,$outputSuffix) or contains($dest,'ID=')">
+		 <xsl:value-of select="$dest"/>
+	       </xsl:when>
+	       <xsl:when test="id($W)"/>
+	       <xsl:otherwise>
+		 <xsl:apply-templates mode="generateLink" select="id($W)"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:variable>
+	   <xsl:variable name="linktext">
+	     <xsl:choose>
+	       <xsl:when test="not($body='')">
+		 <xsl:value-of select="$body"/>
+	       </xsl:when>
+               <xsl:when test="$ptr and @type='footnote'">
+		 <xsl:text>[</xsl:text>
+		 <xsl:number level="any"/>
+		 <xsl:text>]</xsl:text>
+	       </xsl:when>
+	       <xsl:when test="$ptr and id($W)">
+		 <xsl:apply-templates mode="xref" select="id($W)">
+		   <xsl:with-param name="minimal" select="$minimalCrossRef"/>
+		 </xsl:apply-templates>
+	       </xsl:when>
+	       <xsl:when test="$ptr">
+		 <xsl:value-of select="$dest"/>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:apply-templates/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="$eventualtarget=''">
+	       <xsl:copy-of select="$linktext"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:element name="{$linkElement}"
+			    namespace="{$linkElementNamespace}">
+		 <xsl:if test="$outputTarget='odt'">
+		   <xsl:attribute name="type" namespace="{$linkAttributeNamespace}">simple</xsl:attribute>
+		 </xsl:if>
+		 <xsl:attribute  name="{$linkAttribute}"
+				 namespace="{$linkAttributeNamespace}"
+				 select="$eventualtarget"/>
+		 <xsl:call-template name="htmlAttributes"/>
+		 <xsl:call-template name="makeRendition">
+		   <xsl:with-param name="default" select="$class"/>
+		 </xsl:call-template>		 
+		 <xsl:for-each select="id($W)">
+		     <xsl:choose>
+		       <xsl:when test="starts-with(local-name(.),'div')">
+			 <xsl:attribute name="title">
+			   <xsl:value-of
+			       select="translate(normalize-space(tei:head[1]),'&gt;&lt;','')"/>
+			 </xsl:attribute>
+		       </xsl:when>
+		     </xsl:choose>
+		 </xsl:for-each>
+	       <xsl:copy-of select="$linktext"/>
+	       </xsl:element>
+	     </xsl:otherwise>
+	   </xsl:choose>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="htmlAttributes"/>
+  <xsl:template name="xrefHook"/>
+  <xsl:template name="makeRendition">
+    <xsl:param name="default"/>
+  </xsl:template>
+
 </xsl:stylesheet>

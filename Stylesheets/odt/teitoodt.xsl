@@ -39,6 +39,9 @@
     >
 
   <xsl:import href="../common2/core.xsl"/>
+  <xsl:import href="../common2/linking.xsl"/>
+  <xsl:import href="../common2/tei-param.xsl"/>
+  <xsl:import href="../common2/i18n.xsl"/>
   <xsl:param name="useFixedDate">false</xsl:param>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -98,6 +101,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="preQuote">‘</xsl:param>
   <xsl:param name="outputDir">.</xsl:param>
   <xsl:param name="freestanding">false</xsl:param>
+  <xsl:param name="outputTarget">odt</xsl:param>
+  <xsl:param name="urlMarkup"></xsl:param>
+  <xsl:param name="linkElement">a</xsl:param>
+  <xsl:param name="linkAttribute">href</xsl:param>
+  <xsl:param name="linkElementNamespace">urn:oasis:names:tc:opendocument:xmlns:text:1.0</xsl:param>
+  <xsl:param
+      name="linkAttributeNamespace">http://www.w3.org/1999/xlink</xsl:param>
+
   <xsl:key name='IDS' match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name='GRAPHICS' match="tei:graphic" use="1"/>
   <xsl:key name="Page" match="style:page-layout-properties" use="1"/>
@@ -708,28 +719,6 @@ of this software, even if advised of the possibility of such damage.
 	</text:p>
       </text:note-body>
     </text:note>
-  </xsl:template>
-
-
-  <xsl:template match="tei:ref">
-    <text:a xlink:type="simple" xlink:href="{@target}">
-      <xsl:apply-templates/>
-    </text:a>
-  </xsl:template>
-
-  <xsl:template match="tei:ptr">
-    <text:a xlink:type="simple" xlink:href="{@target}">
-      <xsl:choose>
-	<xsl:when test="starts-with(@target,'#')">
-	  <xsl:for-each select="id(substring(@target,2))">
-	    <xsl:apply-templates select="." mode="crossref"/>
-	  </xsl:for-each>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:value-of select="@target"/>
-	</xsl:otherwise>
-      </xsl:choose>
-    </text:a>
   </xsl:template>
 
   <xsl:template match="tei:table|tei:figure|tei:item" mode="crossref">
@@ -1944,6 +1933,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="$before"/>
     <xsl:apply-templates/>
     <xsl:value-of select="$after"/>
+  </xsl:template>
+
+  <xsl:template name="generateEndLink">
+      <xsl:param name="where"/>
+      <xsl:value-of select="$where"/>
   </xsl:template>
  
 </xsl:stylesheet>

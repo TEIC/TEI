@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:choose>
             <xsl:when test="count(following-sibling::tei:editor)=1">
               <xsl:if test="count(preceding-sibling::tei:editor)>=1">
-                <xsl:text>,</xsl:text>
+                <xsl:text>, </xsl:text>
               </xsl:if>
               <xsl:call-template name="i18n">
                 <xsl:with-param name="word">and</xsl:with-param>

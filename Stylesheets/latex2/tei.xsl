@@ -5,6 +5,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="s xs tei"
                 version="2.0">
+  <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="core.xsl"/>
   <xsl:import href="corpus.xsl"/>
   <xsl:import href="drama.xsl"/>
@@ -17,7 +18,6 @@
   <xsl:import href="transcr.xsl"/>
   <xsl:import href="verse.xsl"/>
   <xsl:import href="textcrit.xsl"/>
-  <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <xsl:import href="../common2/verbatim.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

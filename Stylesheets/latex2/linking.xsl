@@ -60,6 +60,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>[latex] <param name="where">where</param>
       </desc>
    </doc>
+
   <xsl:template name="generateEndLink">
       <xsl:param name="where"/>
       <xsl:value-of select="$where"/>
