@@ -358,7 +358,10 @@ of this software, even if advised of the possibility of such damage.
             </xsl:call-template>
 	  </xsl:otherwise>
 	</xsl:choose>
-	</xsl:for-each>
+	</xsl:for-each> 
+	<xsl:if test="position() != last()">
+	  <xsl:text> </xsl:text>
+	</xsl:if>
       </xsl:for-each>      
   </xsl:template>
 </xsl:stylesheet>
