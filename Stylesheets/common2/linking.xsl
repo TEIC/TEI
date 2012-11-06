@@ -313,88 +313,52 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template name="makeTEILink">
-      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
       <!-- is this a ptr or a ref? -->
-
-    <xsl:choose>
-      <!-- If there is a target attribute starting with #, it is always a local reference -->
-      <xsl:when test="@target and starts-with(@target,'#')">
+      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
+      <xsl:variable name="here" select="."/>
+      <xsl:for-each select="tokenize(@target|@url,' ')">
+	<xsl:variable name="a" select="."/>
+	<xsl:for-each select="$here">
+	<xsl:choose>
+	  <!-- If there is a target attribute starting with #, it is always a local reference -->
+	  <xsl:when test="starts-with($a,'#')">
             <xsl:call-template name="makeInternalLink">
-               <xsl:with-param name="target" select="substring(@target,2)"/>
-               <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="dest">
-                  <xsl:call-template name="generateEndLink">
-                     <xsl:with-param name="where">
-                        <xsl:value-of select="substring(@target,2)"/>
-                     </xsl:with-param>
-                  </xsl:call-template>
-               </xsl:with-param>
+	      <xsl:with-param name="target" select="substring($a,2)"/>
+	      <xsl:with-param name="ptr" select="$ptr"/>
+	      <xsl:with-param name="dest">
+		<xsl:call-template name="generateEndLink">
+		  <xsl:with-param name="where">
+		    <xsl:value-of select="substring($a,2)"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:with-param>
             </xsl:call-template>
-         </xsl:when>
-         <!-- if we are doing TEI P4, all targets are local -->
-      <xsl:when test="@target and $teiP4Compat='true'">
+	  </xsl:when>
+	  <!-- if we are doing TEI P4, all targets are local -->
+	  <xsl:when test="$teiP4Compat='true'">
             <xsl:call-template name="makeInternalLink">
-               <xsl:with-param name="target" select="@target"/>
-               <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="dest">
-                  <xsl:call-template name="generateEndLink">
-                     <xsl:with-param name="where">
-                        <xsl:value-of select="@target"/>
-                     </xsl:with-param>
-                  </xsl:call-template>
-               </xsl:with-param>
+	      <xsl:with-param name="target" select="$a"/>
+	      <xsl:with-param name="ptr" select="$ptr"/>
+	      <xsl:with-param name="dest">
+		<xsl:call-template name="generateEndLink">
+		  <xsl:with-param name="where">
+		    <xsl:value-of select="$a"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:with-param>
             </xsl:call-template>
-         </xsl:when>
-         <!-- other uses of target means it is external -->
-      <xsl:when test="@target">
+	  </xsl:when>
+	  <!-- other uses of target means it is external -->
+	  <xsl:otherwise>
             <xsl:call-template name="makeExternalLink">
-               <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="dest">
-                  <xsl:value-of select="@target"/>
-               </xsl:with-param>
+	      <xsl:with-param name="ptr" select="$ptr"/>
+	      <xsl:with-param name="dest">
+		<xsl:value-of select="$a"/>
+	      </xsl:with-param>
             </xsl:call-template>
-         </xsl:when>
-         <!-- If there is a url attribute starting with #, it is a local
-       reference -->
-      <xsl:when test="@url and starts-with(@url,'#')">
-            <xsl:call-template name="makeInternalLink">
-               <xsl:with-param name="target" select="substring(@url,2)"/>
-               <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="dest">
-                  <xsl:call-template name="generateEndLink">
-                     <xsl:with-param name="where">
-                        <xsl:value-of select="substring(@url,2)"/>
-                     </xsl:with-param>
-                  </xsl:call-template>
-               </xsl:with-param>
-            </xsl:call-template>
-         </xsl:when>
-         <!-- otherwise it is an external URL -->
-      <xsl:when test="@url">
-            <xsl:call-template name="makeExternalLink">
-               <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="dest">
-                  <xsl:value-of select="@url"/>
-               </xsl:with-param>
-            </xsl:call-template>
-         </xsl:when>
-         <!-- A doc attribute means an external reference -->
-      <xsl:when test="@doc">
-            <xsl:call-template name="makeExternalLink">
-               <xsl:with-param name="ptr" select="$ptr"/>
-               <xsl:with-param name="dest">
-                  <xsl:value-of select="unparsed-entity-uri(@doc)"/>
-               </xsl:with-param>
-            </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-        <!--
-      <xsl:for-each select="@*">
-	[[markup error: <xsl:value-of select="name(.)"/>=<xsl:value-of select="."/>]]
-      </xsl:for-each>
--->
-        <xsl:apply-templates/>
-         </xsl:otherwise>
-      </xsl:choose>
+	  </xsl:otherwise>
+	</xsl:choose>
+	</xsl:for-each>
+      </xsl:for-each>      
   </xsl:template>
 </xsl:stylesheet>
