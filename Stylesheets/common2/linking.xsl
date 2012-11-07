@@ -321,6 +321,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeTEILink">
       <!-- is this a ptr or a ref? -->
       <xsl:param name="ptr" as="xs:boolean" select="false()"/>
+      <xsl:variable name="xmllang" select="@xml:lang"/>
       <xsl:variable name="here" select="."/>
       <xsl:for-each select="tokenize(@target|@url,' ')">
 	<xsl:variable name="a" select="."/>
@@ -365,7 +366,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:otherwise>
 	</xsl:choose>
 	</xsl:for-each> 
-	<xsl:call-template name="multiTargetSeparator"/>
+	<xsl:call-template name="multiTargetSeparator">
+	  <xsl:with-param name="lang" select="$xmllang"/>
+	</xsl:call-template>
       </xsl:for-each>      
   </xsl:template>
 
@@ -375,8 +378,9 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template name="multiTargetSeparator">
+    <xsl:param name="xmllang"/>
     <xsl:choose>
-      <xsl:when test="@xml:lang='zh-TW'">
+      <xsl:when test="$xmllang='zh-TW'">
 	<xsl:if test="position()&lt;last()">
 	  <xsl:text>&#x3001;</xsl:text>
 	</xsl:if>
