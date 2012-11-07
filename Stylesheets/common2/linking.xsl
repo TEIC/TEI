@@ -367,7 +367,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:choose>
 	</xsl:for-each> 
 	<xsl:call-template name="multiTargetSeparator">
-	  <xsl:with-param name="lang" select="$xmllang"/>
+	  <xsl:with-param name="xmllang" select="$xmllang"/>
 	</xsl:call-template>
       </xsl:for-each>      
   </xsl:template>
