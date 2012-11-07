@@ -376,6 +376,11 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="multiTargetSeparator">
     <xsl:choose>
+      <xsl:when test="@xml:lang='zh-TW'">
+	<xsl:if test="position()&lt;last()">
+	  <xsl:text>&#x3001;</xsl:text>
+	</xsl:if>
+      </xsl:when>
       <xsl:when test="position() eq last()"/>
       <xsl:when test="position() eq last()-1">
 	<xsl:if test="position()&gt;1">
