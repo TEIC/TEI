@@ -181,11 +181,13 @@ of this software, even if advised of the possibility of such damage.
             <xsl:for-each select="tei:fw">
                 <xsl:copy-of select="."/>
             </xsl:for-each>
+	    <xsl:apply-templates select="tei:front" mode="pass2"/>
             <body>
-                <xsl:for-each select="tei:body/tei:*">
-                    <xsl:apply-templates select="." mode="pass2"/>
-                </xsl:for-each>
+	      <xsl:for-each select="tei:body/tei:*">
+		<xsl:apply-templates select="." mode="pass2"/>
+	      </xsl:for-each>
             </body>
+	    <xsl:apply-templates select="tei:back" mode="pass2"/>
         </text>
     </xsl:template>
     
