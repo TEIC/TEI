@@ -877,4 +877,171 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] How to identify a note</desc>
+  </doc>
+  <xsl:template name="noteID">
+    <xsl:choose>
+      <xsl:when test="@xml:id">
+        <xsl:value-of select="@xml:id"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>Note</xsl:text>
+        <xsl:number count="tei:note" level="any"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] How to label a note</desc>
+  </doc>
+  <xsl:template name="noteN">
+    <xsl:choose>
+      <xsl:when test="@n">
+        <xsl:value-of select="@n"/>
+      </xsl:when>
+      <xsl:when test="not(@place) and $consecutiveFNs='true'">
+        <xsl:number count="tei:note[not(@place)]" level="any"/>
+      </xsl:when>
+      <xsl:when test="not(@place)">
+        <xsl:choose>
+          <xsl:when test="ancestor::tei:front">
+            <xsl:number count="tei:note[not(@place)]" from="tei:front" level="any"/>
+          </xsl:when>
+          <xsl:when test="ancestor::tei:back">
+            <xsl:number count="tei:note[not(@place)]" from="tei:back" level="any"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:number count="tei:note[not(@place)]" from="tei:body" level="any"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:when test="@place='end'">
+        <xsl:choose>
+          <xsl:when test="$consecutiveFNs = 'true'">
+            <xsl:number count="tei:note[./@place='end']" level="any"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:choose>
+              <xsl:when test="ancestor::tei:front">
+                <xsl:number count="tei:note[./@place='end' ]" from="tei:front" level="any"/>
+              </xsl:when>
+              <xsl:when test="ancestor::tei:back">
+                <xsl:number count="tei:note[./@place='end' ]" from="tei:back" level="any"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:number count="tei:note[./@place='end' ]" from="tei:body" level="any"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="$consecutiveFNs = 'true'">
+            <xsl:number count="tei:note[@place='foot' or @place='bottom']" level="any"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:choose>
+              <xsl:when test="ancestor::tei:front">
+                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:front" level="any"/>
+              </xsl:when>
+              <xsl:when test="ancestor::tei:back">
+                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:back" level="any"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:body" level="any"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>  
+
+  <xsl:template match="tei:note">
+
+    <xsl:choose>
+      <xsl:when test="tei:note[@place='none']"/>
+      <xsl:when test="ancestor::tei:listBibl or
+		      ancestor::tei:biblFull or
+		      ancestor::tei:biblStruct">
+	<xsl:text>[</xsl:text>
+	<xsl:apply-templates/>
+	<xsl:text>] </xsl:text>
+      </xsl:when>
+
+      <xsl:when test="@place='comment'">
+	<xsl:call-template name="commentNote"/>
+      </xsl:when>
+      
+      <xsl:when test="@place='inline'">
+	<xsl:call-template name="plainNote"/>
+      </xsl:when>
+
+      <xsl:when test="@place='end' or $autoEndNotes='true'">
+	<xsl:call-template name="endNote"/>
+      </xsl:when>
+
+      <xsl:when test="@place='foot' or 
+		      @place='bottom' or
+		      @place='tablefoot'">
+	<xsl:call-template name="footNote"/>
+      </xsl:when>
+
+      <xsl:when test="(@place='display' or tei:q)">
+	<xsl:call-template name="displayNote"/>
+      </xsl:when>
+
+      <xsl:when test="@place='margin' or
+		      @place='marginOuter' or
+		      @place='marginLeft' or
+		      @place='marginRight'">
+	<xsl:call-template name="marginalNote"/>
+      </xsl:when>
+      <xsl:when test="@place">
+	<xsl:message terminate="yes">unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="plainNote"/>
+      </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="marginalNote">
+    <xsl:call-template name="plainNote"/>
+  </xsl:template>
+
+  <xsl:template name="endNote">
+    <xsl:call-template name="plainNote"/>
+  </xsl:template>
+
+  <xsl:template name="footNote">
+    <xsl:call-template name="plainNote"/>
+  </xsl:template>
+
+  <xsl:template name="commentNote">
+    <xsl:call-template name="plainNote"/>
+  </xsl:template>
+
+  <xsl:template name="displayNote">
+    <xsl:call-template name="plainNote"/>
+  </xsl:template>
+
+  <xsl:template name="plainNote">
+    <xsl:text> [</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@n">
+	<xsl:value-of select="@n"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Note</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:apply-templates/>
+    <xsl:text>] </xsl:text>
+  </xsl:template>
+
 </xsl:stylesheet>

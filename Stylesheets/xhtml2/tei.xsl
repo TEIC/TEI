@@ -288,7 +288,7 @@ Stylesheet constant setting the name of the main output file.
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Process @style attribute. It is simply
-    mapped to an HTML @style attribute. If its not using CSS, that
+    mapped to an HTML @style attribute. If it is not using CSS, that
     will fail.</desc>
   </doc>
   <xsl:function name="tei:processStyle" as="node()*">

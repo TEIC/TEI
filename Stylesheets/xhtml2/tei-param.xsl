@@ -81,10 +81,6 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="viewPortHeight">1700</xsl:param>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
-      <desc>Number footnotes consecutively</desc>
-   </doc>
-  <xsl:param name="consecutiveFNs">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
       <desc>Link back from footnotes to reference</desc>
@@ -537,13 +533,6 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
    </doc>
 
   <xsl:param name="verbose">false</xsl:param>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
-      <desc>Make all notes into endnotes
-  </desc>
-   </doc>
-  <xsl:param name="autoEndNotes">false</xsl:param>
-
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>An ID passed to the stylesheet to indicate which section to display</desc>

@@ -1,21 +1,21 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: conversions-from conversions-to test-html test-latex test-fo oddbyexample odd2odd p4top5
+default: test-html test-latex test-fo test-docx conversions-from oddbyexample p4top5 conversions-to odd2odd 
 
 p4top5:
 	saxon -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
 	diff test17.tei expected-results/test17.tei
 
 test-html:
-	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
+	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	diff -r -x .svn files expected-results/testnotes
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false)
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	diff -r -x .svn files expected-results/testnotes2
 	rm -rf files
-	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false)
-	diff -r -x .svn files expected-results/testnotes
+	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
+	diff -r -x .svn files expected-results/testnotes3
 	rm -rf files
 	saxon -o:test.html  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test.html expected-results/test.html
@@ -44,6 +44,9 @@ test-latex:
 	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test5.tex
 	diff test5.tex expected-results/test5.tex
+	saxon -o:testnotes1.tex testnotes1.xml ../latex2/tei.xsl  $(SAXONOPT)
+	perl -p -i -e 's/Date{[^}]*}/Date{}/' testnotes1.tex
+	diff testnotes1.tex expected-results/testnotes1.tex
 
 test-fo:
 	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
@@ -68,10 +71,6 @@ oddbyexample:
 conversions-from:
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf expected-results/test12.rdf
-	../teitohtml --summaryDoc --profile=tei --odd test15.odd test.odd.html
-	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
-	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
-	diff test.odd.html expected-results/test.odd.html
 	../teitornc  test15.odd test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
 	diff test15.odd.rnc expected-results/test15.odd.rnc 
@@ -95,10 +94,6 @@ conversions-from:
 	unzip -t test.xml.odt > test.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
 	rm test.xml.odt.listing
-	../teitodocx test.xml 
-	unzip -t test.xml.docx > test.xml.docx.listing
-	diff test.xml.docx.listing expected-results/test.xml.docx.listing
-	rm test.xml.docx.listing
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
@@ -120,6 +115,20 @@ conversions-from:
 	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test9.odt \
 	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
+	../teitohtml --summaryDoc --profile=tei --odd test15.odd test.odd.html
+	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
+	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
+	diff test.odd.html expected-results/test.odd.html
+
+test-docx:
+	../teitodocx test.xml 
+	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
+	diff test.xml.docx.document expected-results/test.xml.docx.document
+	rm test.xml.docx.document
+	../teitodocx testnotes1.xml 
+	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
+	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
+	rm testnotes1.xml.docx.document
 
 conversions-to:
 	roma2 --xsl=`pwd`/.. --nodtd --noxsd test.odd .

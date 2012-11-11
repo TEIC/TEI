@@ -561,41 +561,76 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element note</desc>
+      <desc>Process a note element which has a @place attribute
+      pointing to margin</desc>
    </doc>
-  <xsl:template match="tei:note">
+  <xsl:template name="marginalNote">
+    <xsl:text>\marginnote{</xsl:text>
+    <xsl:if test="@xml:id">
+      <xsl:text>\label{</xsl:text>
+      <xsl:value-of select="@xml:id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
+    <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process a note element which has a @place attribute for
+      display style note</desc>
+   </doc>
+  <xsl:template name="displayNote">
+    <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>\end{quote}&#10;</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process a note element which has a @place attribute for endnote</desc>
+   </doc>
+  <xsl:template name="endNote">
+    <xsl:text>\endnote{</xsl:text>
+    <xsl:if test="@xml:id">
+      <xsl:text>\label{</xsl:text>
+      <xsl:value-of select="@xml:id"/>
+      <xsl:text>}</xsl:text>
+    </xsl:if>
+    <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process a plain note element</desc>
+   </doc>
+  <xsl:template name="plainNote">
+    <xsl:text> {\small\itshape [</xsl:text>
+    <xsl:choose>
+      <xsl:when test="@n">
+	<xsl:value-of select="@n"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="i18n">
+	  <xsl:with-param name="word">Note</xsl:with-param>
+	</xsl:call-template>
+	<xsl:text>: </xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:apply-templates/>
+    <xsl:text>]} </xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process a note element which has a @place for footnote</desc>
+   </doc>
+  <xsl:template name="footNote">
     <xsl:if test="@xml:id">
       <xsl:text>\hypertarget{</xsl:text>
       <xsl:value-of select="@xml:id"/>
       <xsl:text>}{}</xsl:text>
     </xsl:if>
     <xsl:choose>
-	<xsl:when test="@place='inline' or ancestor::tei:bibl or ancestor::tei:biblStruct"> 
-	  <xsl:text>(</xsl:text>
-	  <xsl:apply-templates/>
-	  <xsl:text>) </xsl:text>
-	</xsl:when>
-	<xsl:when test="@place='end'">
-	  <xsl:text>\endnote{</xsl:text>
-	  <xsl:if test="@xml:id">
-	    <xsl:text>\label{</xsl:text>
-	    <xsl:value-of select="@xml:id"/>
-	    <xsl:text>}</xsl:text>
-	  </xsl:if>
-	  <xsl:apply-templates/>
-	  <xsl:text>}</xsl:text>
-	</xsl:when>
-	<xsl:when test="@place='margin'">
-	  <xsl:text>\marginnote{</xsl:text>
-	  <xsl:if test="@xml:id">
-	    <xsl:text>\label{</xsl:text>
-	    <xsl:value-of select="@xml:id"/>
-	    <xsl:text>}</xsl:text>
-	  </xsl:if>
-	  <xsl:apply-templates/>
-	  <xsl:text>}</xsl:text>
-	</xsl:when>
 	<xsl:when test="@target">
 	  <xsl:text>\footnotetext{</xsl:text>
 	  <xsl:apply-templates/>
@@ -606,7 +641,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
-      <xsl:otherwise>
+	<xsl:otherwise>
 	  <xsl:text>\footnote{</xsl:text>
 	  <xsl:if test="@xml:id">
 	    <xsl:text>\label{</xsl:text>

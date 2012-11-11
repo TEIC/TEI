@@ -236,6 +236,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
         <xsl:when test="self::tei:note[@place='inline']">true</xsl:when>
+        <xsl:when test="self::tei:note[not(@place)]">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:biblStruct]">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:bibl]">true</xsl:when>
         <xsl:when test="self::tei:num">true</xsl:when>

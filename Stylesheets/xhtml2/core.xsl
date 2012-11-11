@@ -1028,84 +1028,100 @@ of this software, even if advised of the possibility of such damage.
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element note</desc>
+    <desc>Process plain note without any @place attribute</desc>
   </doc>
-  <xsl:template match="tei:note">
+
+  <xsl:template name="plainNote">
+    <xsl:variable name="identifier">
+      <xsl:call-template name="noteID"/>
+    </xsl:variable>
+    <span>
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="auto">note</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="makeAnchor">
+	<xsl:with-param name="name" select="$identifier"/>
+      </xsl:call-template>
+      <span class="noteLabel">
+	<xsl:choose>
+	  <xsl:when test="@n">
+	    <xsl:value-of select="@n"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Note</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text>: </xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </span>
+      <xsl:apply-templates/>
+    </span>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process footnotes and endnotes</desc>
+  </doc>
+  <xsl:template name="endNote">
+    <xsl:call-template name="footNote"/>
+  </xsl:template>
+
+  <xsl:template name="footNote">
+    <xsl:variable name="identifier">
+      <xsl:call-template name="noteID"/>
+    </xsl:variable>
+    <xsl:element name="{if (parent::tei:head or parent::tei:hi)  then 'span'           else if (parent::tei:l) then 'span'           else if (parent::tei:bibl/parent::tei:head) then 'span' else if (parent::tei:stage/parent::tei:q) then 'span'           else if  (parent::tei:body or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
+      <xsl:call-template name="makeAnchor">
+	<xsl:with-param name="name" select="concat($identifier,'_return')"/>
+      </xsl:call-template>
+      <xsl:variable name="note-title">
+	<xsl:variable name="note-text">
+	  <xsl:apply-templates mode="plain"/>
+	</xsl:variable>
+	<xsl:value-of select="substring($note-text,1,500)"/>
+	<xsl:if test="string-length($note-text) &gt; 500">
+	  <xsl:text>…</xsl:text>
+	</xsl:if>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="$footnoteFile='true'">
+	  <a class="notelink" title="{normalize-space($note-title)}" href="{$masterFile}-notes.html#{$identifier}">
+	    <xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
+	      <xsl:call-template name="noteN"/>
+	    </xsl:element>
+	  </a>
+	  <xsl:if test="following-sibling::node()[1][self::tei:note]">
+	    <xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
+	      <xsl:text>,</xsl:text>
+	    </xsl:element>
+	  </xsl:if>
+	</xsl:when>
+	<xsl:otherwise>
+	  <a class="notelink" title="{normalize-space($note-title)}" href="#{$identifier}">
+	    <xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">				  
+	      <xsl:call-template name="noteN"/>
+	    </xsl:element>
+	  </a>
+	  <xsl:if test="following-sibling::node()[1][self::tei:note]">
+	    <xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
+	      <xsl:text>,</xsl:text>
+	    </xsl:element>
+	  </xsl:if>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:element>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process display-style note</desc>
+  </doc>
+  <xsl:template name="displayNote">
     <xsl:variable name="identifier">
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="@place='none'"/>
-      <xsl:when test="ancestor::tei:listBibl or ancestor::tei:biblFull         or ancestor::tei:biblStruct">
-        <xsl:text> [</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>]</xsl:text>
-      </xsl:when>
-      <xsl:when test="@place='foot' or @place='bottom' or @place='end' or $autoEndNotes='true'">
-        <xsl:element name="{if (parent::tei:head or parent::tei:hi)  then 'span'           else if (parent::tei:l) then 'span'           else if (parent::tei:bibl/parent::tei:head) then 'span'           else if (parent::tei:stage/parent::tei:q) then 'span'           else if  (parent::tei:body or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="concat($identifier,'_return')"/>
-          </xsl:call-template>
-          <xsl:variable name="note-title">
-            <xsl:variable name="note-text">
-              <xsl:apply-templates mode="plain"/>
-            </xsl:variable>
-            <xsl:value-of select="substring($note-text,1,500)"/>
-            <xsl:if test="string-length($note-text) &gt; 500">
-              <xsl:text>…</xsl:text>
-            </xsl:if>
-          </xsl:variable>
-          <xsl:choose>
-            <xsl:when test="$footnoteFile='true'">
-              <a class="notelink" title="{normalize-space($note-title)}" href="{$masterFile}-notes.html#{$identifier}">
-		<xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
-                  <xsl:call-template name="noteN"/>
-		</xsl:element>
-              </a>
-              <xsl:if test="following-sibling::node()[1][self::tei:note]">
-		<xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
-                  <xsl:text>,</xsl:text>
-                </xsl:element>
-              </xsl:if>
-            </xsl:when>
-            <xsl:otherwise>
-              <a class="notelink" title="{normalize-space($note-title)}" href="#{$identifier}">
-		<xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">				  
-                  <xsl:call-template name="noteN"/>
-                </xsl:element>
-              </a>
-              <xsl:if test="following-sibling::node()[1][self::tei:note]">
-		<xsl:element name="{if (@rend='nosup') then 'span' else 'sup'}">
-                  <xsl:text>,</xsl:text>
-                </xsl:element>
-              </xsl:if>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:element>
-      </xsl:when>
-      <xsl:when test="parent::tei:head and @place='margin'">
-        <span class="margnote">
-          <xsl:apply-templates/>
-        </span>
-      </xsl:when>
-      <xsl:when test="parent::tei:head">
-        <xsl:text> [</xsl:text>
-        <xsl:apply-templates/>
-        <xsl:text>]</xsl:text>
-      </xsl:when>
-      <xsl:when test="@type='footnote'">
-        <div class="note">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
-          </xsl:call-template>
-          <span class="noteNumber">
-            <xsl:number/>
-          </span>
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
-      <xsl:when test="(@place='display' or tei:q)          and (parent::tei:div or parent::tei:p or parent::tei:body)">
-        <div class="note">
+      <xsl:when test="parent::tei:div or parent::tei:p or parent::tei:body">
+	<div class="note">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
@@ -1125,7 +1141,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@place='display'">
+      <xsl:otherwise>
         <blockquote>
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
@@ -1147,7 +1163,18 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
           </xsl:choose>
         </blockquote>
-      </xsl:when>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process  note with a @place attribute in the margin</desc>
+  </doc>
+  <xsl:template name="marginalNote">
+    <xsl:variable name="identifier">
+      <xsl:call-template name="noteID"/>
+    </xsl:variable>
+    <xsl:choose>
       <xsl:when test="@place='margin' and parent::tei:hi and not(*)">
         <span class="margnote">
           <xsl:call-template name="makeAnchor">
@@ -1165,51 +1192,19 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@place='margin'">
-        <span class="margnote">
+      <xsl:when test="@place='margin'	or    @place='marginOuter' or
+		      @place='marginLeft' or
+		      @place='marginRight'">
+        <span class="note{@place}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
           <xsl:apply-templates/>
         </span>
       </xsl:when>
-      <xsl:when test="@place='inline' or (parent::tei:p or parent::tei:hi or parent::tei:head)">
-        <span class="note">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
-          </xsl:call-template>
-          <xsl:text> [</xsl:text>
-          <xsl:apply-templates/>
-          <xsl:text>]</xsl:text>
-        </span>
-      </xsl:when>
-      <xsl:otherwise>
-        <span>
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
-          </xsl:call-template>
-          <xsl:attribute name="class">
-            <xsl:text>note </xsl:text>
-            <xsl:value-of select="@type"/>
-          </xsl:attribute>
-          <span class="noteLabel">
-            <xsl:choose>
-              <xsl:when test="@n">
-                <xsl:value-of select="@n"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Note</xsl:with-param>
-                </xsl:call-template>
-                <xsl:text>: </xsl:text>
-              </xsl:otherwise>
-            </xsl:choose>
-          </span>
-          <xsl:apply-templates/>
-        </span>
-      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+    
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Check whether a note should be processed if we are at the top</desc>
   </doc>
@@ -1810,86 +1805,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates mode="maketoc" select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"/>
       </ul>
     </xsl:if>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] How to identify a note</desc>
-  </doc>
-  <xsl:template name="noteID">
-    <xsl:choose>
-      <xsl:when test="@xml:id">
-        <xsl:value-of select="@xml:id"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>Note</xsl:text>
-        <xsl:number count="tei:note" level="any"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] How to label a note</desc>
-  </doc>
-  <xsl:template name="noteN">
-    <xsl:choose>
-      <xsl:when test="@n">
-        <xsl:value-of select="@n"/>
-      </xsl:when>
-      <xsl:when test="not(@place) and $consecutiveFNs='true'">
-        <xsl:number count="tei:note[not(@place)]" level="any"/>
-      </xsl:when>
-      <xsl:when test="not(@place)">
-        <xsl:choose>
-          <xsl:when test="ancestor::tei:front">
-            <xsl:number count="tei:note[not(@place)]" from="tei:front" level="any"/>
-          </xsl:when>
-          <xsl:when test="ancestor::tei:back">
-            <xsl:number count="tei:note[not(@place)]" from="tei:back" level="any"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:number count="tei:note[not(@place)]" from="tei:body" level="any"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:when test="@place='end'">
-        <xsl:choose>
-          <xsl:when test="$consecutiveFNs = 'true'">
-            <xsl:number count="tei:note[./@place='end']" level="any"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:choose>
-              <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[./@place='end' ]" from="tei:front" level="any"/>
-              </xsl:when>
-              <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[./@place='end' ]" from="tei:back" level="any"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:number count="tei:note[./@place='end' ]" from="tei:body" level="any"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="$consecutiveFNs = 'true'">
-            <xsl:number count="tei:note[@place='foot' or @place='bottom']" level="any"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:choose>
-              <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:front" level="any"/>
-              </xsl:when>
-              <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:back" level="any"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:body" level="any"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Show relevant footnotes <param name="currentID">currentID</param>

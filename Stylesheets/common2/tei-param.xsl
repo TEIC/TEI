@@ -305,6 +305,16 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="tableAlign">left</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
+      <desc>Number footnotes consecutively</desc>
+   </doc>
+  <xsl:param name="consecutiveFNs">false</xsl:param>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
+      <desc>Make all notes into endnotes
+  </desc>
+   </doc>
+  <xsl:param name="autoEndNotes">false</xsl:param>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
     <desc>
 Whether to make simplified display of ODD
 </desc>

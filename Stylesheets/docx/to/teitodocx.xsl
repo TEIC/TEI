@@ -870,12 +870,45 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
   <!-- 
-        Footnotes
+        plain note
     -->
-  <xsl:template name="create-footnote">
+  <xsl:template name="plainNote">
+    <w:r>
+      <w:t>
+	<xsl:attribute name="xml:space">preserve</xsl:attribute>
+	<xsl:text> [</xsl:text>
+	<xsl:choose>
+	  <xsl:when test="@n">
+	    <xsl:value-of select="@n"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="i18n">
+	      <xsl:with-param name="word">Note</xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text>: </xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </w:t>
+    </w:r>
+    <xsl:apply-templates/>
+    <w:r>
+      <w:t>
+	<xsl:attribute name="xml:space">preserve</xsl:attribute>
+	<xsl:text>] </xsl:text>
+      </w:t>
+    </w:r>
+  </xsl:template>
+
+
+  <xsl:template name="displayNote">
+    <xsl:call-template name="block-element">
+        <xsl:with-param name="style">Quote</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="footNote">
     <xsl:variable name="num">
-      <xsl:number count="tei:note[@place='foot' or @place='bottom'
-			     ]" level="any"/>
+      <xsl:number count="tei:note[@place='foot' or @place='bottom']" level="any"/>
     </xsl:variable>
     <xsl:variable name="id" select="number($num)+1"/>
     <w:r>
@@ -888,7 +921,7 @@ of this software, even if advised of the possibility of such damage.
       <w:t xml:space="preserve"> </w:t>
     </w:r>
   </xsl:template>
-  <xsl:template name="create-comment">
+  <xsl:template name="commentNote">
     <w:r>
       <w:rPr>
         <w:rStyle w:val="CommentReference"/>
@@ -903,7 +936,7 @@ of this software, even if advised of the possibility of such damage.
   <!-- 
         Endnotes
     -->
-  <xsl:template name="create-endnote">
+  <xsl:template name="endNote">
     <xsl:variable name="num">
       <xsl:number count="tei:note[@place='end']" level="any"/>
     </xsl:variable>
@@ -2519,16 +2552,8 @@ of this software, even if advised of the possibility of such damage.
 	slightly differently
       </desc>
     </doc>
-  <xsl:template match="tei:note[@place='margin'
-		       or @place='marginOuter'
-		       or @place='marginLeft'
-		       or @place='marginRight']" priority="999">
-    <xsl:if test="$debug='true'"><xsl:message>MARGINAL NOTE</xsl:message></xsl:if>
-    <xsl:call-template name="marginalNote"/>
-  </xsl:template>
-  
   <xsl:template name="marginalNote">
-	<xsl:call-template name="block-element">
+    <xsl:call-template name="block-element">
         <xsl:with-param name="style">
 	<xsl:value-of select="if (@place='margin') then 'marginOuter' else @place"/>
 	</xsl:with-param>

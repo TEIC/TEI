@@ -188,29 +188,7 @@ of this software, even if advised of the possibility of such damage.
                 </w:r>
             </xsl:if>
         </w:p>
-    </xsl:template>
-    
-     
-    <!-- 
-        Special Notes (Footnotes) .. 
-        @TODO: Ideally this should go into the general template, but for some
-        reason xsl always calls the less specific tei:note template in here. 
-    -->
-    <xsl:template match="tei:note[@place]">
-        <xsl:choose>
-            <xsl:when test="@place='foot'  or @place='bottom' or @place='tablefoot' ">
-                <xsl:call-template name="create-footnote"/>
-            </xsl:when>
-            <xsl:when test="@place='end'">
-                <xsl:call-template name="create-endnote"/>
-            </xsl:when>
-	    <xsl:when test="@place='comment'">
-	      <xsl:call-template name="create-comment"/>
-	    </xsl:when>
-	</xsl:choose>
-    </xsl:template>
-    
-    
+    </xsl:template>   
     
     <!-- Paragraphs in the front matter -->
     <xsl:template match="tei:front/tei:div/tei:p">
