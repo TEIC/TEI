@@ -194,7 +194,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
    </xsl:template>
 
-
   <xsl:template name="Text">
       <xsl:param name="words"/>
       <xsl:value-of select="tei:escapeChars($words)"/>

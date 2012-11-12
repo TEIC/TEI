@@ -94,7 +94,11 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element code</desc>
    </doc>
-  <xsl:template match="tei:code">\texttt{<xsl:apply-templates/>}</xsl:template>
+  <xsl:template match="tei:code">
+    <xsl:text>\texttt{</xsl:text>
+    <xsl:apply-templates/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process &lt;corr&gt;</desc></doc>
   <xsl:template match="tei:corr">
@@ -106,7 +110,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:with-param name="word">appearsintheoriginalas</xsl:with-param>
                 </xsl:call-template>
                 <xsl:text> \emph{</xsl:text>
-                <xsl:value-of select="./@sic"/>
+                <xsl:value-of select="@sic"/>
             <xsl:text>}.}</xsl:text>
          </xsl:when>
       </xsl:choose>

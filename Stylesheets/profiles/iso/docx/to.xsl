@@ -373,13 +373,13 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:note[@place]">
     <xsl:choose>
       <xsl:when test="@place='comment'">
-        <xsl:call-template name="create-comment"/>
+        <xsl:call-template name="commentNote"/>
       </xsl:when>
       <xsl:when test="@place='foot'  or @place='bottom' or @place='tablefoot'">
-        <xsl:call-template name="create-footnote"/>
+        <xsl:call-template name="footNote"/>
       </xsl:when>
       <xsl:when test="@place='end'">
-        <xsl:call-template name="create-endnote"/>
+        <xsl:call-template name="endNote"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:cell or ancestor::cals:entry">
         <xsl:call-template name="create-inlinenote"/>
@@ -467,7 +467,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template name="create-footnote">
+  <xsl:template name="footNote">
     <xsl:variable name="pPr">
       <xsl:choose>
         <xsl:when test="(@place='tablefoot') and  (ancestor::tei:cell or ancestor::cals:entry)">

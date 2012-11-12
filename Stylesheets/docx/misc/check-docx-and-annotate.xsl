@@ -113,7 +113,7 @@
     </xsl:template>    
 
     <!-- comment helper -->
-    <xsl:template name="create-comment">
+    <xsl:template name="commentNote">
         <xsl:param name="id"/>
         <xsl:param name="text"/>
         <w:comment w:id="{$id}" w:author="TEIISO" w:date="2008-09-28T14:17:00Z" w:initials="SPQR">

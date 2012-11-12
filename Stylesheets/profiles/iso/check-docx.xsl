@@ -97,7 +97,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:number select="." level="any"/>
         </xsl:variable>
         <xsl:variable name="id" select="$number"/>
-        <xsl:call-template name="create-comment">
+        <xsl:call-template name="commentNote">
             <xsl:with-param name="id" select="$id"/>
             <xsl:with-param name="text">Use of unsupported style detected: <xsl:value-of select="w:pPr/w:pStyle/@w:val"/>
          </xsl:with-param>
@@ -129,7 +129,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:number select="." level="any"/>
         </xsl:variable>
         <xsl:variable name="id" select="$number+5000"/>
-        <xsl:call-template name="create-comment">
+        <xsl:call-template name="commentNote">
             <xsl:with-param name="id" select="$id"/>
             <xsl:with-param name="text">Use of unsupported style detected: <xsl:value-of select="w:rPr/w:rStyle/@w:val"/>
          </xsl:with-param>
@@ -180,7 +180,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:variable>
         <xsl:analyze-string select="$text" regex="^\w\.\d">
             <xsl:matching-substring>
-                <xsl:call-template name="create-comment">
+                <xsl:call-template name="commentNote">
                     <xsl:with-param name="id" select="$id"/>
                     <xsl:with-param name="text">Probably wrong use of numbering</xsl:with-param>
                 </xsl:call-template>
