@@ -275,7 +275,6 @@ of this software, even if advised of the possibility of such damage.
             <xsl:if test="tei:head">
                <block>
                   <xsl:call-template name="tableCaptionstyle"/>
-                  <xsl:call-template name="addID"/>
                   <xsl:if test="$makeTableCaption='true'">
 		    <xsl:call-template name="calculateTableNumber"/>
                      <xsl:text>. </xsl:text>

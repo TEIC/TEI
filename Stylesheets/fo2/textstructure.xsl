@@ -407,7 +407,7 @@ of this software, even if advised of the possibility of such damage.
       </page-sequence>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>Show endnotes</desc>
    </doc>
   <xsl:template match="tei:group/tei:text/tei:body">
       <xsl:apply-templates/>
@@ -418,6 +418,16 @@ of this software, even if advised of the possibility of such damage.
          </block>
          <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
       </xsl:if>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Show one endnote</desc>
+   </doc>
+  <xsl:template match="tei:note" mode="endnote">
+      <block id="{generate-id()}">
+         <xsl:call-template name="calculateEndNoteNumber"/>
+         <xsl:text>. </xsl:text>
+         <xsl:apply-templates/>
+      </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

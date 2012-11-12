@@ -607,94 +607,60 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:note" mode="endnote">
-      <block id="{generate-id()}">
-         <xsl:call-template name="calculateEndNoteNumber"/>
-         <xsl:text>. </xsl:text>
-         <xsl:apply-templates/>
-      </block>
-  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>end note</desc>
    </doc>
-  <xsl:template match="tei:note">
-      <xsl:choose>
-         <xsl:when test="ancestor::tei:p or ancestor::tei:item or ancestor::tei:cit">
-            <xsl:apply-templates select="." mode="real"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <block>
-               <xsl:apply-templates select="." mode="real"/>
-            </block>
-         </xsl:otherwise>
-      </xsl:choose>
+  <xsl:template name="endNote">    
+    <basic-link>
+      <xsl:attribute name="internal-destination">
+	<xsl:value-of select="generate-id()"/>
+      </xsl:attribute>
+      <inline font-size="{$footnotenumSize}" vertical-align="super">
+	<xsl:choose>
+	  <xsl:when test="@n">
+	    <xsl:value-of select="@n"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="calculateEndNoteNumber"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </inline>
+    </basic-link>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:note" mode="real">
+
+  <xsl:template name="plainNote">
+    <inline font-size="{$footnoteSize}" font-style="italic">
+      <xsl:text> [</xsl:text>
       <xsl:choose>
-         <xsl:when test="@place='end'">
-            <basic-link>
-               <xsl:attribute name="internal-destination">
-                  <xsl:value-of select="generate-id()"/>
-               </xsl:attribute>
-               <inline font-size="{$footnotenumSize}" vertical-align="super">
-                  <xsl:choose>
-                     <xsl:when test="@n">
-                        <xsl:value-of select="@n"/>
-                     </xsl:when>
-                     <xsl:otherwise>
-                        <xsl:call-template name="calculateEndNoteNumber"/>
-                     </xsl:otherwise>
-                  </xsl:choose>
-               </inline>
-            </basic-link>
-         </xsl:when>
-         <xsl:when test="@place='inline'">
-            <inline>
-               <xsl:text> (</xsl:text>
-               <xsl:apply-templates/>
-               <xsl:text>)</xsl:text>
-            </inline>
-         </xsl:when>
-         <xsl:when test="@place='display'">
-            <block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}"
-                   font-size="{$exampleSize}"
-                   space-before.optimum="{$exampleBefore}"
-                   space-after.optimum="{$exampleAfter}">
-               <xsl:apply-templates/>
-            </block>
-         </xsl:when>
-         <xsl:when test="@place='divtop'">
-            <block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}"
-                   font-style="italic"
-                   font-size="{$exampleSize}"
-                   space-before.optimum="{$exampleBefore}"
-                   space-after.optimum="{$exampleAfter}">
-               <xsl:apply-templates/>
-            </block>
-         </xsl:when>
-         <xsl:otherwise>
-	           <xsl:choose>
-	              <xsl:when test="parent::tei:item">
-	                 <block>
-	                    <xsl:call-template name="makeFootnote"/>
-	                 </block>
-	              </xsl:when>
-	              <xsl:otherwise>
-	                 <xsl:call-template name="makeFootnote"/>
-	              </xsl:otherwise>
-	           </xsl:choose>
-         </xsl:otherwise>
+	<xsl:when test="@n">
+	  <xsl:value-of select="@n"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="i18n">
+	    <xsl:with-param name="word">Note</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:text>: </xsl:text>
+	</xsl:otherwise>
       </xsl:choose>
+      <xsl:apply-templates/>
+      <xsl:text>] </xsl:text>
+    </inline>
+  </xsl:template>
+
+  <xsl:template name="displayNote">
+    <block text-indent="0pt" end-indent="{$exampleMargin}" start-indent="{$exampleMargin}"
+	   font-size="{$exampleSize}"
+	   space-before.optimum="{$exampleBefore}"
+	   space-after.optimum="{$exampleAfter}">
+      <xsl:apply-templates/>
+    </block>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Create a footnote</desc>
    </doc>
     
-  <xsl:template name="makeFootnote">
+  <xsl:template name="footNote">
         <xsl:variable name="FootID">
           <xsl:choose>
             <xsl:when test="@n">
@@ -1097,7 +1063,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>[fo] </desc>
    </doc>
   <xsl:template name="calculateFootnoteNumber">
-      <xsl:number from="tei:text" level="any" count="tei:note"/>
+      <xsl:number from="tei:text" level="any" count="tei:note[@place='foot']"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[fo] </desc>
