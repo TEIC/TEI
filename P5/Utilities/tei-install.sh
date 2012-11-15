@@ -57,12 +57,12 @@ ${ECHO} curl -O -s $dir/${pname}-${version}.zip || \
 ${ECHO} mkdir -p ${Vault}/${name}/${version}
 echo unpack to ${Vault}/${name}/${version}
 ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
-${ECHO} rm ${pname}-${version}.zip 
 ${ECHO} rm ${Vault}/${name}/current
 echo link ${Vault}/${name}/${version} to ${Vault}/${name}/current
 ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
 echo upload ${pname}-${version}.zip to Sourceforge ${SFNAME} as user ${SFUSER}
 ${ECHO} rsync -e ssh ${pname}-${version}.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/${SFNAME}/${pname}-${version}.zip
+${ECHO} rm ${pname}-${version}.zip 
 
 case $package in 
   Roma)
@@ -72,6 +72,6 @@ case $package in
 	echo Get special HTML pages for TEI web site;
 	${ECHO} curl -O -s $dir/teiwebsiteguidelines.zip || die "Unable to fetch package $dir/teiwebsiteguidelines.zip";
 	echo unpack web guidelines to ${Vault}/${name}/${version};
-	${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;;
-        ${ECHO} rm teiwebsiteguidelines.zip
+	${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;
+        ${ECHO} rm teiwebsiteguidelines.zip;;
 esac
