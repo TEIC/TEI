@@ -1284,7 +1284,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
       <xsl:choose>
-        <xsl:when test="not(text()) and count(*)=1 and tei:note">
+        <xsl:when test="not(text()) and count(*)=1 and not(tei:is-inline(*))">
           <xsl:apply-templates/>
         </xsl:when>
         <xsl:otherwise>

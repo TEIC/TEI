@@ -227,18 +227,10 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:series">true</xsl:when>
         <xsl:when test="self::tei:msName">true</xsl:when>
         <xsl:when test="self::tei:name">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='margin']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='marginOuter']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='marginLeft']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='marginRight']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='inline']">true</xsl:when>
-        <xsl:when test="self::tei:note[not(@place)]">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:biblStruct]">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:bibl]">true</xsl:when>
+        <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
+        <xsl:when test="self::tei:note">true</xsl:when>
         <xsl:when test="self::tei:num">true</xsl:when>
         <xsl:when test="self::tei:orgName">true</xsl:when>
         <xsl:when test="self::tei:orig">true</xsl:when>
