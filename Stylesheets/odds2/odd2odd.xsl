@@ -370,10 +370,13 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS_MODEL',$name)">
-	      <xsl:call-template name="odd2odd-checkObject">
-		<xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
-		<xsl:with-param name="why">module (auto from include) <xsl:value-of select="$name"/></xsl:with-param>
-	      </xsl:call-template>
+	      <xsl:if
+		  test="not($top//tei:classRef[@key=current()/@ident])">
+		<xsl:call-template name="odd2odd-checkObject">
+		  <xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
+		  <xsl:with-param name="why">module (auto from include) <xsl:value-of select="$name"/></xsl:with-param>
+		</xsl:call-template>
+	      </xsl:if>
 	    </xsl:for-each>
 	    <xsl:for-each
 		select="key('odd2odd-MODULE_MEMBERS',$name)">
@@ -396,7 +399,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:if>
 	  <xsl:for-each select="document($sourceDoc,$top)">
 	    <xsl:for-each select="key('odd2odd-MODULE_MEMBERS',$name)">
-	      <xsl:if test="not(contains($exc,concat(' ',@ident,' ')))">
+	      <xsl:if test="not(
+			    contains($exc,concat(' ',@ident,' '))
+			    or $top//tei:classRef[@key=current()/@ident])">
 		<xsl:call-template name="odd2odd-checkObject">
 		  <xsl:with-param name="Source" select="$sourceDoc" tunnel="yes"/>
 		  <xsl:with-param name="why">(exclusion) module <xsl:value-of select="$name"/></xsl:with-param>
