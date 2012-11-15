@@ -11,6 +11,9 @@
     <xsl:import href="../../../xhtml2/tei.xsl"/>
 
   <xsl:param name="feedbackURL">http://www.tei-c.org/About/contact.xml</xsl:param>
+  <xsl:param name="institution">TEI Consortium</xsl:param>
+  <xsl:template name="copyrightStatement">released under the Creative
+  Commons Attribution-ShareAlike 3.0 license</xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -73,5 +76,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:div[@type='illustration']">
       <xsl:apply-templates/>
   </xsl:template>
+
 
 </xsl:stylesheet>

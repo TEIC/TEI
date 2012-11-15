@@ -197,7 +197,7 @@ HTML width and height (in pixels) from supplied dimensions.</desc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="i18n">
       <desc>[html] Make a copyright claim</desc>
    </doc>
-  <xsl:template name="copyrightStatement">This page is copyrighted</xsl:template>
+  <xsl:template name="copyrightStatement"></xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>[html] Banner for top of column</desc>
    </doc>
