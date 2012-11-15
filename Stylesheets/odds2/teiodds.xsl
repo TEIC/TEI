@@ -168,11 +168,11 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="generateDoc">
     <xsl:choose>
-      <xsl:when test="string-length($doclang)&gt;0">
-        <xsl:value-of select="$doclang"/>
-      </xsl:when>
       <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang">
         <xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang"/>
+      </xsl:when>
+      <xsl:when test="string-length($doclang)&gt;0">
+        <xsl:value-of select="$doclang"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>en</xsl:text>

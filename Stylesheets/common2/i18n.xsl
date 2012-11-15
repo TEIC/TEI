@@ -125,7 +125,7 @@ of this software, even if advised of the possibility of such damage.
       <desc> The language the text is in
     (use ISO 2-letter codes)</desc>
    </doc>
-  <xsl:param name="doclang">en</xsl:param>
+  <xsl:param name="doclang"></xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="localisation">
       <desc>[common] Prefix text before an auto-generated table of contents </desc>
    </doc>
