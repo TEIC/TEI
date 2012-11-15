@@ -74,6 +74,9 @@ conversions-from:
 	../teitornc  test15.odd test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
 	diff test15.odd.rnc expected-results/test15.odd.rnc 
+	../teitornc  test21.odd test21.odd.rnc
+	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
+	diff test21.odd.rnc expected-results/test21.odd.rnc 
 	../teitotxt test14.xml test.text
 	diff test.text expected-results/test.text
 	../teitolatex test.xml

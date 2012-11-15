@@ -947,6 +947,7 @@ select="$makeDecls"/></xsl:message>
 
   <xsl:template name="summarizeAttributes">
     <xsl:for-each select=".//tei:attDef">x</xsl:for-each>
+    <xsl:for-each select=".//tei:attRef">x</xsl:for-each>
     <xsl:for-each select="tei:classes/tei:memberOf">
       <xsl:for-each select="key('CLASSES',@key)">
         <xsl:if test="@type='atts'">x</xsl:if>
