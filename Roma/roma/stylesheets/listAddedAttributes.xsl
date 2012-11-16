@@ -84,6 +84,7 @@ Description
   <xsl:template name="generateList">
     <xsl:for-each select="//Element/att">
       <xsl:sort select="name"/>
+      <xsl:if test="not(preceding-sibling::att[name=current()/name])">
       <tr>
         <td>
           <a>
@@ -139,6 +140,7 @@ Description
           </xsl:if>
         </td>
       </tr>
+      </xsl:if>
     </xsl:for-each>
   </xsl:template>
 </xsl:stylesheet>
