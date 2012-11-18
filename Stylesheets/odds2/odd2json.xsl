@@ -39,7 +39,6 @@
   <xsl:param name="urlName"/>
   <xsl:param name="xrefName"/>
   <xsl:param name="coded">false</xsl:param>
-  <xsl:param name="showListRef">false</xsl:param>
   <xsl:key match="tei:moduleRef" name="ModuleRefs" use="1"/>
   <xsl:key match="tei:moduleRef" name="MODULEREFS" use="@key"/>
   <xsl:key match="tei:classRef" name="ClassRefs" use="1"/>
@@ -388,7 +387,9 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="desc">
     <xsl:variable name="d">      
-      <xsl:call-template name="makeDescription"/>
+      <xsl:call-template name="makeDescription">
+	<xsl:with-param name="showListRef">false</xsl:with-param>
+      </xsl:call-template>
     </xsl:variable>
     <xsl:text>"desc":"</xsl:text>
     <xsl:value-of select="replace(normalize-space($d),$dq,$escdq)"/>
