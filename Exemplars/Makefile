@@ -42,7 +42,7 @@ default: schemas
 	trang  $*.rng $*.rnc
 
 %.dtd: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd cleanup
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd isoschematron validateschematron cleanup
 	trang   -o disable-abstract-elements $*.rng $*.xsd
 	trang  $*.rng $*.rnc
 	@echo Validate XSD using Jing ...
