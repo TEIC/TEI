@@ -570,6 +570,7 @@ valList
 	<xsl:copy>
 	  <xsl:copy-of select="@*"/>
 	  <xsl:copy-of select="classmember"/>
+	  <xsl:copy-of select="attList"/>
 	</xsl:copy>
       </xsl:when>
       <xsl:when test="attList/attDef">
@@ -618,12 +619,12 @@ valList
 	<xsl:when
 	    test="../classSpec[@ident=current()/classmember/@ident]">
 	  <xsl:attribute name="mode">change</xsl:attribute>
+	  <xsl:copy-of select="attList"/>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:attribute name="mode">delete</xsl:attribute>
 	</xsl:otherwise>
       </xsl:choose>
-      <xsl:copy-of select="attList"/>
     </xsl:copy>
   </xsl:template>
   
