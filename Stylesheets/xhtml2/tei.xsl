@@ -165,6 +165,7 @@ Stylesheet constant setting the name of the main output file.
   <xsl:template name="makeRendition">
     <xsl:param name="default"/>
     <xsl:param name="auto"/>
+    <xsl:call-template name="makeLang"/>
     <xsl:choose>
       <xsl:when test="@rend">
 	<xsl:sequence select="tei:processRend(@rend,$auto)"/>
