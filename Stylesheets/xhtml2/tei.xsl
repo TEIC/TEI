@@ -145,6 +145,14 @@ Stylesheet constant setting the name of the main output file.
 
   <xsl:template name="bodyMicroData"/>
 
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] Work out language code </desc>
+  <xsl:template name="makeLang">
+    <xsl:if test="@xml:lang">
+      <xsl:attribute name="lang" select="@xml:lang"/>
+    </xsl:if>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Work out rendition. In order of precedence, we first
     look at @rend; if that does not exist, @rendition and @style values are
@@ -156,9 +164,6 @@ Stylesheet constant setting the name of the main output file.
   <xsl:template name="makeRendition">
     <xsl:param name="default"/>
     <xsl:param name="auto"/>
-    <xsl:if test="@xml:lang">
-      <xsl:attribute name="lang" select="@xml:lang"/>
-    </xsl:if>
     <xsl:choose>
       <xsl:when test="@rend">
 	<xsl:sequence select="tei:processRend(@rend,$auto)"/>

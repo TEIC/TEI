@@ -1696,6 +1696,7 @@ of this software, even if advised of the possibility of such damage.
     <span>
       <xsl:choose>
         <xsl:when test="@type">
+	  <xsl:call-template name="makeLang">
           <xsl:attribute name="class">
             <xsl:value-of select="@type"/>
           </xsl:attribute>
