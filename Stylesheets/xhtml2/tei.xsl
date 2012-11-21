@@ -147,6 +147,7 @@ Stylesheet constant setting the name of the main output file.
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Work out language code </desc>
+   </doc>
   <xsl:template name="makeLang">
     <xsl:if test="@xml:lang">
       <xsl:attribute name="lang" select="@xml:lang"/>
