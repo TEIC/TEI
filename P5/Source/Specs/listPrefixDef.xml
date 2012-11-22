@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+-->
+
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="listPrefixDef">
+  <equiv/>
+  <gloss>list of prefix definitions</gloss>
+  <desc>contains a list of definitions of a prefixing schemes used in data.pointer values,
+    showing how abbreviated URIs using each scheme may be expanded into full URIs.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.encodingDescPart"/>
+  </classes>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <choice>
+          <ref name="prefixDef"/>
+          <ref name="listPrefixDef"/>
+        </choice>
+      </oneOrMore>
+    </group>
+  </content>
+  
+  <exemplum xml:lang="en" versionDate="2012-11-22">
+    <p>In this example, two private URI scheme prefixes are defined and patterns are provided 
+    for dereferencing them. Each prefix is also supplied with a human-readable explanation in a
+    <gi>p</gi> element.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPrefixDef>
+        <prefixDef ident="psn" matchPattern="([A-Z]+)" replacementPattern="personography.xml#$1">
+          <p>Private URIs using the <code>psn</code> prefix are pointers to <gi>person</gi> elements in 
+          the personography.xml file. For example, <code>psn:MDH</code> dereferences to <code>personography.xml#MDH</code>.</p>
+        </prefixDef>
+        <prefixDef ident="bibl" matchPattern="([a-z]+[a-z0-9]*)" replacementPattern="http://www.example.com/getBibl.xql?id=$1">
+          <p>Private URIs using the <code>bibl</code> prefix can be expanded to form URIs which retrieve the 
+            relevant bibliographical reference from www.example.com.</p>
+        </prefixDef>
+      </listPrefixDef>
+    </egXML>
+  </exemplum>
+  <!--<listRef>
+    <ptr target="#SAPU"/>
+  </listRef>-->
+
+</elementSpec>
