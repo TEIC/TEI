@@ -711,7 +711,7 @@ chapter and elsewhere in these Guidelines. </p>
         How is this different from a <soCalled>magic token</soCalled>? Essentially, it isn't, except that TEI provides a structured method of dereferencing it (turning it into a computable path, such as <val>../../references/people/personography.xml#fred</val>) by means of a declaration inside <gi>encodingDesc</gi> in the TEI header, using the elements and attributes for prefix declaration: 
       
         <specList>
-          <specDesc key="listPrefixDefs"/>
+          <specDesc key="listPrefixDef"/>
           <specDesc key="prefixDef" atts="ident"/>
           <specDesc key="att.patternReplacement" atts="matchPattern replacementPattern"/>
         </specList>
@@ -722,16 +722,16 @@ chapter and elsewhere in these Guidelines. </p>
         <p>This is how you might document a Private URI Scheme using the <val>psn:</val> prefix:
         
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <listPrefixDefs>
+          <listPrefixDef>
             <prefixDef ident="psn" matchPattern="([a-z]+)" replacementPattern="../../references/people/personography.xml#$1">
               <p>In the context of this project, private URIs with the prefix "psn" point to <gi>person</gi> elements in the project's personography.xml file.</p>
             </prefixDef>
-          </listPrefixDefs>
+          </listPrefixDef>
         </egXML>
         
-        This specifies that where a <val>data.pointer</val> value is constructed with a <val>psn:</val> prefix, a regular expression operation can be performed on it to construct the full or relative URI to the target document or fragment. <gi>listPrefixDefs</gi> is a child of <gi>encodingDesc</gi>, and it contains any number of <gi>prefixDef</gi> elements. Each <gi>prefixDef</gi> element provides a method of dereferencing or expanding an abbreviated pointer, based on a regular expression. The <att>ident</att> attribute specifies the prefix to which the expansion applies (without the colon). The <att>matchPattern</att> attribute contains a regular expression which is matched against the component of the pointer following the first colon, and the <att>replacementPattern</att> provides the string which will be used as a replacement. In this example, using <val>psn:fred</val>, the value <val>fred</val> would be matched by the <att>matchPattern</att>, and also captured (through the parentheses in the regular expression); it would then be replaced by the value <val>../../references/people/personography.xml#fred</val> (with the the <val>$1</val> in the <att>replacementPattern</att> being replaced by the captured value). The <gi>p</gi> element inside the <gi>prefixDef</gi> can be used to provide a human-readable explanation of the usage of this prefix.</p>
+        This specifies that where a <val>data.pointer</val> value is constructed with a <val>psn:</val> prefix, a regular expression operation can be performed on it to construct the full or relative URI to the target document or fragment. <gi>listPrefixDef</gi> is a child of <gi>encodingDesc</gi>, and it contains any number of <gi>prefixDef</gi> elements. Each <gi>prefixDef</gi> element provides a method of dereferencing or expanding an abbreviated pointer, based on a regular expression. The <att>ident</att> attribute specifies the prefix to which the expansion applies (without the colon). The <att>matchPattern</att> attribute contains a regular expression which is matched against the component of the pointer following the first colon, and the <att>replacementPattern</att> provides the string which will be used as a replacement. In this example, using <val>psn:fred</val>, the value <val>fred</val> would be matched by the <att>matchPattern</att>, and also captured (through the parentheses in the regular expression); it would then be replaced by the value <val>../../references/people/personography.xml#fred</val> (with the the <val>$1</val> in the <att>replacementPattern</att> being replaced by the captured value). The <gi>p</gi> element inside the <gi>prefixDef</gi> can be used to provide a human-readable explanation of the usage of this prefix.</p>
       
-      <p>Through this mechanism, any processor which encounters a <val>data.pointer</val> with a protocol unknown to it can check the <gi>listPrefixDefs</gi> in the header to see if there is an available expansion for it, and if there is, it can automatically provide the expansion and generate a full or relative URI.</p>
+      <p>Through this mechanism, any processor which encounters a <val>data.pointer</val> with a protocol unknown to it can check the <gi>listPrefixDef</gi> in the header to see if there is an available expansion for it, and if there is, it can automatically provide the expansion and generate a full or relative URI.</p>
       
       <p>For any given prefix, it may be useful to supply more than one expansion. For instance, in addition to pointing at the <gi>person</gi> element in the personography file, it might also be useful to point to an external source which is available on the network, representing the same information in a different way. So there might be a second <gi>prefixDef</gi> like this:
         
@@ -741,7 +741,7 @@ chapter and elsewhere in these Guidelines. </p>
           </prefixDef>
         </egXML>
         
-        Any number of <gi>prefixDef</gi> elements may be provided for the same prefix. A processor may decide to process one or all of them; if it processes only one, it should choose the first one with the correct <att>ident</att> value, so the primary or most important <gi>prefixDef</gi> for any given prefix should appear first in its parent <gi>listPrefixDefs</gi>.</p>
+        Any number of <gi>prefixDef</gi> elements may be provided for the same prefix. A processor may decide to process one or all of them; if it processes only one, it should choose the first one with the correct <att>ident</att> value, so the primary or most important <gi>prefixDef</gi> for any given prefix should appear first in its parent <gi>listPrefixDef</gi>.</p>
       
       <p>When creating private URI schemes, it is recommended that you avoid using any existing registered prefix. A list of registered prefixes is maintained by IANA at <ref target="http://www.iana.org/assignments/uri-schemes.html">http://www.iana.org/assignments/uri-schemes.html</ref>.</p>
       
