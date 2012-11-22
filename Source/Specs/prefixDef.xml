@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="prefixDef">
+  <equiv/>
+  <gloss>prefixing scheme used in data.pointer values</gloss>
+  <desc>definition of a prefixing scheme used in data.pointer values,
+  showing how abbreviated URIs using the scheme may be expanded into full URIs.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.patternReplacement"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="model.pLike"/>
+    </rng:zeroOrMore>
+  </content>
+  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <attDef ident="ident" usage="req">
+        <equiv/>
+        <desc>Supplies the identifier which functions as the prefix for an abbreviated
+          pointing scheme such as a private URI scheme. The prefix constitutes the 
+        text preceding the first colon.</desc>
+      <datatype>
+        <rng:ref name="data.name"/>
+      </datatype>
+      <valDesc>an XML name</valDesc>
+    </attDef>
+  </attList>
+    <exemplum xml:lang="en" versionDate="2012-11-22">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <prefixDef ident="ref" matchPattern="([a-z]+)" replacementPattern="../../references/references.xml#$1">
+        <p>In the context of this project, private URIs with the prefix "ref" point to <gi>div</gi> elements in the project's global references.xml file.</p>
+      </prefixDef>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Where <att>matchPattern</att> and <att>replacementPattern</att> are both supplied, the abbreviated pointer may be dereferenced to produce either an absolute or a relative URI reference. In the
+      latter case it is combined with the value of <att>xml:base</att> in force at the place where
+      the <att>cRef</att> attribute occurs to form an absolute URI in the usual manner as prescribed
+      by <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
+  </remarks>
+  <!--<listRef>
+    <ptr target="#SAPU"/>
+  </listRef>-->
+</elementSpec>
