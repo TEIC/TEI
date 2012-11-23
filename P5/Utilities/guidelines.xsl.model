@@ -27,7 +27,6 @@
 	   use="concat(@xml:lang,@corresp)"/>
 
   <xsl:param name="googleAnalytics"></xsl:param>
-  <xsl:param name="outputMethod">xhtml</xsl:param>
   <xsl:param name="lang"/>
   <xsl:param name="doclang"/>
   <xsl:param name="STDOUT">false</xsl:param>
@@ -47,6 +46,7 @@
   <xsl:param name="cssSecondaryFile">odd.css</xsl:param>
   <xsl:param name="cssPrintFile">guidelines-print.css</xsl:param>
   <xsl:param name="teiWeb"></xsl:param>
+  <xsl:param name="divOffset">2</xsl:param>
 
   <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]"
 	   use="substring(@corresp,2)"/>
@@ -325,7 +325,6 @@
 	</xsl:choose>
 	<ul class="subtoc">
 	  <li class="subtoc"><xsl:call-template name="previousLink"/></li>
-	  <li class="subtoc"><xsl:call-template name="nextLink"/></li>
 	  <li class="subtoc"><a class="navigation" href="index.html">
 	  <xsl:call-template name="i18n">
 	    <xsl:with-param name="word">homeWord</xsl:with-param>
@@ -336,9 +335,9 @@
 	    <xsl:with-param name="word">tocWords</xsl:with-param>
 	  </xsl:call-template>
 	  </a></li>
-	  <li class="subtoc">
 	  <xsl:choose>
-	    <xsl:when test="self::elementSpec">
+	      <xsl:when test="self::elementSpec">
+		<li class="subtoc">
 		<a class="navigation" href="REF-ELEMENTS.html">
 		  <xsl:call-template name="showHead">
 		    <xsl:with-param name="ID">
@@ -346,8 +345,10 @@
 		    </xsl:with-param>
 		  </xsl:call-template>
 		</a>
+		</li>
 	    </xsl:when>
-	    <xsl:when test="self::classSpec[@type='model']">
+	      <xsl:when test="self::classSpec[@type='model']">
+		<li class="subtoc">
 		<a class="navigation" href="REF-CLASSES-MODEL.html">
 		  <xsl:call-template name="showHead">
 		    <xsl:with-param name="ID">
@@ -355,8 +356,10 @@
 		    </xsl:with-param>
 		  </xsl:call-template>
 		</a>
+		</li>
 	    </xsl:when>
-	    <xsl:when test="self::classSpec[@type='atts']">
+	      <xsl:when test="self::classSpec[@type='atts']">
+		<li class="subtoc">
 		<a class="navigation" href="REF-CLASSES-ATTS.html">
 		<xsl:call-template name="showHead">
 		  <xsl:with-param name="ID">
@@ -364,8 +367,10 @@
 		  </xsl:with-param>
 		</xsl:call-template>
 		</a>
+		</li>
 	    </xsl:when>
-	    <xsl:when test="self::macroSpec">
+	      <xsl:when test="self::macroSpec">
+		<li class="subtoc">
 		<a class="navigation" href="REF-MACROS.html">
 		  <xsl:call-template name="showHead">
 		    <xsl:with-param name="ID">
@@ -373,6 +378,7 @@
 		    </xsl:with-param>
 		  </xsl:call-template>
 		</a>
+		</li>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <!--
@@ -399,7 +405,7 @@
 	      -->
 	    </xsl:otherwise>
 	  </xsl:choose>
-	  </li>
+
 	</ul>
       </div>
     </xsl:if>
@@ -842,18 +848,9 @@
   <xsl:template match="divGen[@type='toc']"/>
 
   <xsl:template name="javascriptHook">
-    <script type="text/javascript" src="jquery-1.2.6.min.js">	
-       <xsl:comment>JQuery</xsl:comment>
-    </script>
-<!--
-    <script type="text/javascript" src="jquery.treeview.js">	
-       <xsl:comment>JQuery treeview</xsl:comment>
-    </script>
--->
-    <script type="text/javascript" src="columnlist.js">	
-       <xsl:comment>JQuery columnlist</xsl:comment>
-    </script>
-    
+    <script type="text/javascript" src="jquery-1.2.6.min.js"/>
+    <script type="text/javascript" src="columnlist.js"/>
+     
     <script type="text/javascript">
         $(function() {
          $('ul.attrefs-class').columnizeList({cols:3,width:30,unit:'%'});
@@ -1596,26 +1593,40 @@
 
   <xsl:template name="metaHTML">
     <xsl:param name="title"/>
-    <meta name="Language" content="{$documentationLanguage}"/>
-    <meta name="DC.Title" content="{$title}"/>
-    <meta name="DC.Language" content="(SCHEME=iso639) {$documentationLanguage}"/>
-    <meta name="DC.Creator" content="TEI, Oxford University Computing Services, 13 Banbury Road, Oxford OX2 6NN, United Kingdom"/>
-    <meta name="DC.Creator.Address" content="tei@oucs.ox.ac.uk"/>
+    <meta>
+      <xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">Language</xsl:attribute>
+      <xsl:attribute name="content" select="$documentationLanguage"/>
+    </meta>
+    <meta>
+      <xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Title</xsl:attribute>
+      <xsl:attribute name="content" select="$title"/>
+    </meta>
+    <meta>
+      <xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Language</xsl:attribute>
+      <xsl:attribute name="content">SCHEME=iso639 <xsl:value-of select="$documentationLanguage"/></xsl:attribute>
+    </meta>
+    <meta>
+	<xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Creator.Address</xsl:attribute>
+	<xsl:attribute name="content">tei@oucs.ox.ac.uk</xsl:attribute>
+    </meta>
       <xsl:choose>
 	<xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
 	  <meta charset="{$outputEncoding}"/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <meta http-equiv="Content-Type" content="text/html;
-						   charset={$outputEncoding}"/>
+	  <meta http-equiv="Content-Type" content="text/html; charset={$outputEncoding}"/>
 	</xsl:otherwise>
       </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="text()">
+    <xsl:value-of select="normalize-unicode(.,'NFC')"/>
+  </xsl:template>
+<!--
   <xsl:template name="makeLang">
     <xsl:if test="@xml:lang">
-	  <xsl:attribute name="xml:lang" select="@xml:lang"/>
+      <xsl:attribute name="xml:lang" select="@xml:lang"/>
     </xsl:if>
   </xsl:template>
-  
+-->
 </xsl:stylesheet>
