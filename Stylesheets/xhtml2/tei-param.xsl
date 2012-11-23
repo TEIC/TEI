@@ -770,6 +770,5 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
    </xsl:template>
 
   <xsl:param name="mediaoverlay">false</xsl:param>
-  <xsl:param name="langAttributeName">xml:lang</xsl:param>
 
 </xsl:stylesheet>

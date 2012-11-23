@@ -353,4 +353,7 @@ Default spacing between paragraphs
   <xsl:template name="attDefHook">
     <xsl:param name="attName"/>
   </xsl:template>
+
+  <xsl:param name="langAttributeName">xml:lang</xsl:param>
+
 </xsl:stylesheet>

@@ -339,8 +339,11 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
-      <xsl:attribute name="{$name}">
-         <xsl:value-of select="$calcvalue"/>
+      <xsl:attribute name="style">
+         <xsl:value-of select="$name"/>
+	 <xsl:text>:</xsl:text>
+	 <xsl:value-of select="$calcvalue"/>
+	 <xsl:text>;</xsl:text>
       </xsl:attribute>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
