@@ -665,12 +665,12 @@ chapter and elsewhere in these Guidelines. </p>
           <list>
             <item>poetry
               <list>
-                <item>poem.xml</item>
+                <item><ident type="file">poem.xml</ident></item>
               </list>
             </item>
             <item>prose
               <list>
-                <item>novel.xml</item>
+                <item><ident type="file">novel.xml</ident></item>
               </list>
             </item>
           </list>
@@ -679,7 +679,7 @@ chapter and elsewhere in these Guidelines. </p>
           <list>
             <item>people
               <list>
-                <item>personography.xml</item>
+                <item><ident type="file">personography.xml</ident></item>
               </list>
             </item>
           </list>
@@ -687,7 +687,7 @@ chapter and elsewhere in these Guidelines. </p>
       </list>
       
       
-      <p>If you want to link a <gi>name</gi> in the novel.xml file to a <gi>person</gi> in the personography.xml file, the link will look like this:
+      <p>If you want to link a <gi>name</gi> in the <ident type="file">novel.xml</ident> file to a <gi>person</gi> in the <ident type="file">personography.xml</ident> file, the link will look like this:
         
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <name ref="../../references/people/personography.xml#fred">Fred</name>
@@ -702,7 +702,7 @@ chapter and elsewhere in these Guidelines. </p>
         
         and document the meaning of the key using (for instance) a <gi>taxonomy</gi> element in the TEI header, as described in <ptr target="#CONARS"/>. However, such a link cannot be mechanically processed by an external system that does not know how to interpret it; a human will have to read the header explanation and write code explicitly to reconstruct the intended link.</p>
       
-      <p>A more robust alternative is to use a <term>private URI scheme</term>. This is a method of constructing a simple, key-like token which functions as a <val>data.pointer</val>, and can therefore be used as the value of any attribute which has that datatype, such as <att>ref</att> and <att>target</att>. Such a scheme consists of a prefix with a colon, and then a value. You might, for example, use the prefix <val>psn</val> (for "person"), and structure your name tags like this:
+      <p>A more robust alternative is to use a <term>private URI scheme</term>. This is a method of constructing a simple, key-like token which functions as a <ident type="datatype">data.pointer</ident>, and can therefore be used as the value of any attribute which has that datatype, such as <att>ref</att> and <att>target</att>. Such a scheme consists of a prefix with a colon, and then a value. You might, for example, use the prefix <val>psn</val> (for "person"), and structure your name tags like this:
         
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <name ref="psn:fred">Fred</name>
@@ -719,7 +719,7 @@ chapter and elsewhere in these Guidelines. </p>
       </p>
         
         
-        <p>This is how you might document a Private URI Scheme using the <val>psn:</val> prefix:
+        <p>This is how you might document a private URI scheme using the <val>psn:</val> prefix:
         
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <listPrefixDef>
@@ -729,9 +729,9 @@ chapter and elsewhere in these Guidelines. </p>
           </listPrefixDef>
         </egXML>
         
-        This specifies that where a <val>data.pointer</val> value is constructed with a <val>psn:</val> prefix, a regular expression operation can be performed on it to construct the full or relative URI to the target document or fragment. <gi>listPrefixDef</gi> is a child of <gi>encodingDesc</gi>, and it contains any number of <gi>prefixDef</gi> elements. Each <gi>prefixDef</gi> element provides a method of dereferencing or expanding an abbreviated pointer, based on a regular expression. The <att>ident</att> attribute specifies the prefix to which the expansion applies (without the colon). The <att>matchPattern</att> attribute contains a regular expression which is matched against the component of the pointer following the first colon, and the <att>replacementPattern</att> provides the string which will be used as a replacement. In this example, using <val>psn:fred</val>, the value <val>fred</val> would be matched by the <att>matchPattern</att>, and also captured (through the parentheses in the regular expression); it would then be replaced by the value <val>../../references/people/personography.xml#fred</val> (with the the <val>$1</val> in the <att>replacementPattern</att> being replaced by the captured value). The <gi>p</gi> element inside the <gi>prefixDef</gi> can be used to provide a human-readable explanation of the usage of this prefix.</p>
+        This specifies that where a <ident type="datatype">data.pointer</ident> value is constructed with a <val>psn:</val> prefix, a regular-expression replace operation can be performed on it to construct the full or relative URI to the target document or fragment. <gi>listPrefixDef</gi> is a child of <gi>encodingDesc</gi>, and it contains any number of <gi>prefixDef</gi> elements. Each <gi>prefixDef</gi> element provides a method of dereferencing or expanding an abbreviated pointer, based on a regular expression. The <att>ident</att> attribute specifies the prefix to which the expansion applies (without the colon). The <att>matchPattern</att> attribute contains a regular expression which is matched against the component of the pointer following the first colon, and the <att>replacementPattern</att> provides the string which will be used as a replacement. In this example, using <val>psn:fred</val>, the value <val>fred</val> would be matched by the <att>matchPattern</att>, and also captured (through the parentheses in the regular expression); it would then be replaced by the value <val>../../references/people/personography.xml#fred</val> (with the the <val>$1</val> in the <att>replacementPattern</att> being replaced by the captured value). The <gi>p</gi> element inside the <gi>prefixDef</gi> can be used to provide a human-readable explanation of the usage of this prefix.</p>
       
-      <p>Through this mechanism, any processor which encounters a <val>data.pointer</val> with a protocol unknown to it can check the <gi>listPrefixDef</gi> in the header to see if there is an available expansion for it, and if there is, it can automatically provide the expansion and generate a full or relative URI.</p>
+      <p>Through this mechanism, any processor which encounters a <ident type="datatype">data.pointer</ident> with a protocol unknown to it can check the <gi>listPrefixDef</gi> in the header to see if there is an available expansion for it, and if there is, it can automatically provide the expansion and generate a full or relative URI.</p>
       
       <p>For any given prefix, it may be useful to supply more than one expansion. For instance, in addition to pointing at the <gi>person</gi> element in the personography file, it might also be useful to point to an external source which is available on the network, representing the same information in a different way. So there might be a second <gi>prefixDef</gi> like this:
         
