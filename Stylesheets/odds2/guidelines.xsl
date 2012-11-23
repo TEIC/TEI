@@ -438,19 +438,29 @@
   </xsl:template>
   <xsl:template name="metaHTML">
     <xsl:param name="title"/>
-    <meta name="Language" content="{$documentationLanguage}"/>
-    <meta name="DC.Title" content="{$title}"/>
-    <meta name="DC.Language" content="(SCHEME=iso639) {$documentationLanguage}"/>
-    <meta name="DC.Creator" content="TEI, Oxford University Computing Services, 13 Banbury Road, Oxford OX2 6NN, United Kingdom"/>
-    <meta name="DC.Creator.Address" content="tei@oucs.ox.ac.uk"/>
-      <xsl:choose>
-	<xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
-	  <meta charset="{$outputEncoding}"/>
-	</xsl:when>
-	<xsl:otherwise>
-	  <meta http-equiv="Content-Type" content="text/html;
-						   charset={$outputEncoding}"/>
-	</xsl:otherwise>
+    <meta>
+      <xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">Language</xsl:attribute>
+      <xsl:attribute name="content" select="$documentationLanguage"/>
+    </meta>
+    <meta>
+      <xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Title</xsl:attribute>
+      <xsl:attribute name="content" select="$title"/>
+    </meta>
+    <meta>
+      <xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Language</xsl:attribute>
+      <xsl:attribute name="content">SCHEME=iso639 <xsl:value-of select="$documentationLanguage"/></xsl:attribute>
+    </meta>
+    <meta>
+	<xsl:attribute name="{if ($outputTarget='html5') then 'property' else 'name'}">DC.Creator.Address</xsl:attribute>
+	<xsl:attribute name="content">tei@oucs.ox.ac.uk</xsl:attribute>
+    </meta>
+    <xsl:choose>
+      <xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
+	<meta charset="{$outputEncoding"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<meta http-equiv="Content-Type" content="text/html; charset={$outputEncoding}"/>
+      </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <xsl:template name="startDivHook">

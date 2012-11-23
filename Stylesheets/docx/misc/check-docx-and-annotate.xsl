@@ -44,7 +44,7 @@
             <xsl:apply-templates select="doc(concat($wordDirectory,'/word/_rels/document.xml.rels'))"
                               mode="relations"/>
         </xsl:variable>
-        <xsl:variable name="content-types">
+        <xsl:variable name="content-typeS">
             <xsl:apply-templates mode="content-types" select="doc(concat($wordDirectory,'/Content_Types.xml'))"/>
         </xsl:variable>
         

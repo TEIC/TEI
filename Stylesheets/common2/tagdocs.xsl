@@ -190,7 +190,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$rendName}">
                   <xsl:text>label</xsl:text>
                 </xsl:attribute>
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:call-template name="i18n">
@@ -204,7 +204,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text>odd_value</xsl:text>
               </xsl:attribute>
               <xsl:element namespace="{$outputNS}" name="{$segName}">
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:choose>
@@ -262,7 +262,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>odd_label</xsl:text>
         </xsl:attribute>
         <xsl:element namespace="{$outputNS}" name="{$hiName}">
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:attribute name="{$rendName}">
@@ -304,7 +304,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="$maxOccurs"/>
           <xsl:text> </xsl:text>
           <xsl:element namespace="{$outputNS}" name="{$segName}">
-            <xsl:attribute name="xml:lang">
+            <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
             <xsl:call-template name="i18n">
@@ -324,7 +324,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:call-template>
         <xsl:if test="$minOccurs != '1'  or  $maxOccurs != '1'">
           <xsl:element namespace="{$outputNS}" name="{$segName}">
-            <xsl:attribute name="xml:lang">
+            <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
             <xsl:call-template name="i18n">
@@ -348,12 +348,12 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:classSpec">
     <xsl:if test="parent::tei:specGrp">
-      <xsl:element namespace="{$outputNS}" name="{$dtName}"><xsl:element namespace="{$outputNS}" name="{$hiName}"><xsl:attribute name="{$rendName}"><xsl:text>label</xsl:text></xsl:attribute><xsl:attribute name="xml:lang"><xsl:value-of select="$documentationLanguage"/></xsl:attribute><xsl:call-template name="i18n"><xsl:with-param name="word">Class</xsl:with-param></xsl:call-template></xsl:element>: <xsl:value-of select="@ident"/></xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$dtName}"><xsl:element namespace="{$outputNS}" name="{$hiName}"><xsl:attribute name="{$rendName}"><xsl:text>label</xsl:text></xsl:attribute><xsl:attribute name="{$langAttributeName}"><xsl:value-of select="$documentationLanguage"/></xsl:attribute><xsl:call-template name="i18n"><xsl:with-param name="word">Class</xsl:with-param></xsl:call-template></xsl:element>: <xsl:value-of select="@ident"/></xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$ddName}">
         <xsl:apply-templates mode="tangle" select="."/>
         <xsl:text>(</xsl:text>
         <xsl:element namespace="{$outputNS}" name="{$segName}">
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:call-template name="i18n">
@@ -421,7 +421,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:text>wovenodd-col1</xsl:text>
               </xsl:attribute>
               <xsl:element namespace="{$outputNS}" name="{$segName}">
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:call-template name="i18n">
@@ -452,7 +452,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$rendName}">
                   <xsl:text>label</xsl:text>
                 </xsl:attribute>
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:call-template name="i18n">
@@ -479,7 +479,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
               </xsl:attribute>
-              <xsl:attribute name="xml:lang">
+              <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:call-template name="i18n">
@@ -504,7 +504,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$rendName}">
                   <xsl:text>label</xsl:text>
                 </xsl:attribute>
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:call-template name="i18n">
@@ -546,7 +546,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:if test="parent::tei:specGrp">
       <xsl:element namespace="{$outputNS}" name="{$dtName}">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:call-template name="i18n">
@@ -663,7 +663,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$rendName}">
                   <xsl:text>label</xsl:text>
                 </xsl:attribute>
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:call-template name="i18n">
@@ -704,7 +704,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
               </xsl:attribute>
-              <xsl:attribute name="xml:lang">
+              <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:call-template name="i18n">
@@ -730,7 +730,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
               </xsl:attribute>
-              <xsl:attribute name="xml:lang">
+              <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:call-template name="i18n">
@@ -754,7 +754,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
               </xsl:attribute>
-              <xsl:attribute name="xml:lang">
+              <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:call-template name="i18n">
@@ -798,7 +798,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$rendName}">
             <xsl:text>label</xsl:text>
           </xsl:attribute>
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:call-template name="i18n">
@@ -857,7 +857,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$rendName}">
             <xsl:text>label</xsl:text>
           </xsl:attribute>
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:text>Schematron</xsl:text>
@@ -1116,7 +1116,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
               </xsl:attribute>
-              <xsl:attribute name="xml:lang">
+              <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:call-template name="i18n">
@@ -1226,7 +1226,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:attribute name="{$rendName}">
                     <xsl:text>label</xsl:text>
                   </xsl:attribute>
-                  <xsl:attribute name="xml:lang">
+                  <xsl:attribute name="{$langAttributeName}">
                     <xsl:value-of select="$documentationLanguage"/>
                   </xsl:attribute>
                   <xsl:call-template name="i18n">
@@ -1262,7 +1262,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$rendName}">
             <xsl:text>label</xsl:text>
           </xsl:attribute>
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:call-template name="i18n">
@@ -1318,7 +1318,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>moduleSpecHead</xsl:text>
         </xsl:attribute>
         <xsl:element namespace="{$outputNS}" name="{$segName}">
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:call-template name="i18n">
@@ -1335,7 +1335,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:if test="key('ElementModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
               <xsl:element namespace="{$outputNS}" name="{$hiName}">
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:call-template name="i18n">
@@ -1376,7 +1376,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:if test="key('ClassModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
               <xsl:element namespace="{$outputNS}" name="{$hiName}">
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:call-template name="i18n">
@@ -1417,7 +1417,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:if test="key('MacroModule',@ident)">
             <xsl:element namespace="{$outputNS}" name="{$itemName}">
               <xsl:element namespace="{$outputNS}" name="{$segName}">
-                <xsl:attribute name="xml:lang">
+                <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
                 <xsl:call-template name="i18n">
@@ -1473,7 +1473,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$rendName}">
               <xsl:text>label</xsl:text>
             </xsl:attribute>
-            <xsl:attribute name="xml:lang">
+            <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
             <xsl:call-template name="i18n">
@@ -1538,7 +1538,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$rendName}">
                 <xsl:text>label</xsl:text>
               </xsl:attribute>
-              <xsl:attribute name="xml:lang">
+              <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:call-template name="i18n">
@@ -1605,7 +1605,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$rendName}">
             <xsl:text>label</xsl:text>
           </xsl:attribute>
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:choose>
@@ -1674,7 +1674,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$rendName}">
                 <xsl:text>defaultVal</xsl:text>
               </xsl:attribute>
-              <xsl:attribute name="xml:lang">
+              <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:text> [</xsl:text>
@@ -1702,7 +1702,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$rendName}">
               <xsl:text>label</xsl:text>
             </xsl:attribute>
-            <xsl:attribute name="xml:lang">
+            <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
             <xsl:call-template name="i18n">
@@ -1973,7 +1973,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:if test="count($list/PattList/Item)&gt;0">
       <xsl:element namespace="{$outputNS}" name="{$segName}">
-        <xsl:attribute name="xml:lang">
+        <xsl:attribute name="{$langAttributeName}">
           <xsl:value-of select="$documentationLanguage"/>
         </xsl:attribute>
         <xsl:call-template name="i18n">
@@ -2027,7 +2027,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:if test="count($list2/PattList/Item)&gt;0">
       <xsl:element namespace="{$outputNS}" name="{$segName}">
-	<xsl:attribute name="xml:lang">
+	<xsl:attribute name="{$langAttributeName}">
 	  <xsl:value-of select="$documentationLanguage"/>
 	</xsl:attribute>
 	<xsl:call-template name="i18n">
@@ -2206,7 +2206,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:text>odd_label</xsl:text>
         </xsl:attribute>
         <xsl:element namespace="{$outputNS}" name="{$hiName}">
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:attribute name="{$rendName}">
@@ -2367,7 +2367,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="not($clatts='')">
         <xsl:if test="ancestor::tei:schemaSpec and key('CLASSES','att.global')">
           <xsl:element namespace="{$outputNS}" name="{$segName}">
-            <xsl:attribute name="xml:lang">
+            <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
             <xsl:call-template name="i18n">
@@ -2578,7 +2578,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:text>ANY</xsl:text>
@@ -2586,7 +2586,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="tei:content/rng:empty">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:call-template name="i18n">
@@ -2596,7 +2596,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="tei:content/rng:text and    count(tei:content/rng:*)=1">
         <xsl:element namespace="{$outputNS}" name="{$segName}">
-          <xsl:attribute name="xml:lang">
+          <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
           <xsl:call-template name="i18n">
@@ -2625,7 +2625,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
         <xsl:when test="Element[@type='TEXT'] and count(Element)=1">
           <xsl:element namespace="{$outputNS}" name="{$segName}">
-            <xsl:attribute name="xml:lang">
+            <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
             <xsl:call-template name="i18n">
@@ -2635,7 +2635,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:when test="count(Element)=0">
           <xsl:element namespace="{$outputNS}" name="{$segName}">
-            <xsl:attribute name="xml:lang">
+            <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
             <xsl:call-template name="i18n">

@@ -10,10 +10,10 @@
     <xsl:import href="textstructure.xsl"/>
     <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
     <xsl:param name="outputTarget">html5</xsl:param>
-    <xsl:param name="doctype-system">about:legacy-compat</xsl:param>
-    <xsl:param name="doctype-public"/>
+    <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
+    <xsl:param name="doctypePublic"/>
     <xsl:param name="divOffset">1</xsl:param>
-
+    <xsl:param name="langAttributeName">lang</xsl:param>
     <xsl:template match="/">
 	<xsl:call-template name="processTEI"/>
     </xsl:template>

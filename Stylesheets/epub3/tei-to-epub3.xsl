@@ -583,7 +583,6 @@ height: </xsl:text>
               <xsl:call-template name="metaHTML">
                 <xsl:with-param name="title">Title page</xsl:with-param>
               </xsl:call-template>
-              <meta name="calibre:cover" content="true"/>
               <title>Title page</title>
               <style type="text/css" title="override_css">
 		@page {padding: 0pt; margin:0pt}
