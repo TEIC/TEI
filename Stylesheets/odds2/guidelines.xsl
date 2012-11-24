@@ -456,7 +456,7 @@
     </meta>
     <xsl:choose>
       <xsl:when test="$outputTarget='html5' or $outputTarget='epub3'">
-	<meta charset="{$outputEncoding"/>
+	<meta charset="{$outputEncoding}"/>
       </xsl:when>
       <xsl:otherwise>
 	<meta http-equiv="Content-Type" content="text/html; charset={$outputEncoding}"/>
