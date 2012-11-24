@@ -21,8 +21,7 @@ XSLP4=/usr/share/xml/teip4/stylesheet
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 JING=jing
 TRANG=trang
-SAXON=saxon
-SAXON_ARGS=-ext:on
+SAXON=java -Xmx2000m -jar Utilities/lib/saxon-9.1.0.8.jar -ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 ODD2DTD=odds2/odd2dtd.xsl
@@ -49,8 +48,6 @@ check.stamp:
 	@command -v  ${TRANG} || exit 1
 	@echo -n jing: 
 	@command -v  ${JING} || exit 1
-	@echo -n saxon: 
-	@command -v  ${SAXON} || exit 1
 	@echo -n roma2: 
 	@command -v  roma2 || exit 1
 	@echo -n XeLaTeX: 
@@ -64,7 +61,7 @@ dtds: check
 	rm -rf DTD
 	mkdir DTD
 	@echo BUILD: Generate modular DTDs
-	${SAXON} ${SAXON_ARGS}  p5.xml ${XSL}/${ODD2DTD} outputDir=DTD 	\
+	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:${XSL}/${ODD2DTD} outputDir=DTD 	\
 	lang=${LANGUAGE} \
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
 	${VERBOSE}
@@ -75,7 +72,7 @@ schema-relaxng:  check
 	rm -rf Schema
 	mkdir Schema
 	@echo BUILD: Generate modular RELAX NG schemas
-	${SAXON} ${SAXON_ARGS}  p5.xml  ${XSL}/${ODD2RELAX} outputDir=Schema \
+	${SAXON} ${SAXON_ARGS}  -s:p5.xml  -xsl:${XSL}/${ODD2RELAX} outputDir=Schema \
 	lang=${LANGUAGE}  \
 	${VERBOSE}
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
@@ -83,7 +80,7 @@ schema-relaxng:  check
 
 schema-sch:  check
 	@echo BUILD: Extract schema rules to make p5.isosch
-	${SAXON} ${SAXON_ARGS}  p5.xml `dirname ${XSL}/${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
+	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:`dirname ${XSL}/${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
 
 
 html-web: html-web.stamp check.stamp
@@ -101,7 +98,7 @@ html-web.stamp:  check
 	cp odd.css guidelines.css guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html
 	(cd Source/Guidelines/${INPUTLANGUAGE}; tar --exclude .svn -c -f - Images) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
 	(cd webnav; tar --exclude .svn -c -f - .) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
-	${SAXON} ${SAXON_ARGS}  p5.xml  Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
+	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl: Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
 		pageLayout=CSS \
 	        lang=${LANGUAGE} \
@@ -117,9 +114,7 @@ html-web.stamp:  check
 
 validate-html:
 	@echo BUILD: Validate HTML version of Guidelines
-	@ echo TEMPORARILY SUSPENDED
-	#for i in Guidelines-web/en/html/*html; do python Utilities/html5check.py  -g $$i; done
-
+	@ echo SUSPENDED FOR NOW
 #	cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant  -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f ../../../validatehtml.xml;rm z_*
 
 teiwebsiteguidelines:
@@ -151,7 +146,7 @@ fontcheck:
 
 pdf.stamp: check 
 	@echo BUILD: build Lite version of Guidelines
-	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml p5.xml  ${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
+	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml -s:p5.xml -xsl: ${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	@echo BUILD: build LaTeX version of Guidelines from Lite
@@ -214,7 +209,7 @@ valid: check
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
 	@echo BUILD: Check full validity of relevant examples with nvdl
-	${SAXON} p5.xml Utilities/extractegXML.xsl > v.body
+	${SAXON} -s:p5.xml -xsl:Utilities/extractegXML.xsl > v.body
 	echo "<!DOCTYPE p [" > v.header
 	(cd valid; ls | perl -p -e  "s+(.*)+<\!ENTITY \1 SYSTEM \"valid/\1\">+") >> v.header
 	echo "]>" >> v.header
@@ -262,7 +257,7 @@ p5odds-examples.rng: p5subset.xml p5odds-examples.odd
 
 p5subset.xml: check
 	@echo BUILD make subset of P5 with just the module/element/class/macro Spec elements
-	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  p5.xml Utilities/subset.xsl || echo "failed to extract subset from p5.xml." 
+	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  -s:p5.xml -xsl:Utilities/subset.xsl || echo "failed to extract subset from p5.xml." 
 	touch p5subset.xml
 
 p5subset.json: p5subset.xml
@@ -460,6 +455,8 @@ epub: epub.stamp
 
 epub.stamp: check
 	@echo BUILD: Make epub version of Guidelines
+	teitoepub3 --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
+	java -jar Utilities/epubcheck3.jar Guidelines.epub
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
 	touch epub.stamp
@@ -476,12 +473,12 @@ changelog:
 
 
 catalogue: check
-	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml p5.xml  Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
+	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml -s:p5.xml -xsl: Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
 	teitohtml --profiledir=${XSL}/profiles catalogue.xml catalogue.html
 	@echo Made catalogue.html
 
 catalogue-print: check
-	${SAXON} ${SAXON_ARGS} p5.xml  Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
+	${SAXON} ${SAXON_ARGS} -s:p5.xml -xsl: Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
 dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
@@ -535,4 +532,3 @@ clean:
 	rm -f tei-p5-*_*build
 	rm -f teiwebsiteguidelines.zip
 	rm -rf bin
-
