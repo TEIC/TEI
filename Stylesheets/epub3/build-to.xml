@@ -25,13 +25,14 @@
   <property name="inputFile" value=""/>
   <!-- Path where the output ePUB file will be saved. -->
   <property name="outputFile" value=""/>
-  <!-- which profile -->
-  <property name="profile" value="default"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
+  <!-- which profile directory-->
+  <property name="profiledir" value="../profiles"/>
+  <!-- which profile -->
+  <property name="profile" value="default"/>
   <!-- Stylesheet for transformation -->
-  <property name="stylesheetFile"
-	    value="../profiles/${profile}/epub3/to.xsl"/>
+  <property name="teitoepub3" value="${profiledir}/${profile}/epub3/to.xsl"/>
   <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
@@ -50,7 +51,7 @@
     <!-- Recreate temporary output directory -->
     <!-- The transformation for EPUB output. -->
     <echo level="info">XSLT generate epub3 files</echo>
-    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.html" classpath="classpath">
+    <xslt force="yes" style="${teitoepub3}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.html" classpath="classpath">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
