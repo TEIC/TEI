@@ -21,7 +21,7 @@ XSLP4=/usr/share/xml/teip4/stylesheet
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 JING=jing
 TRANG=trang
-SAXON=java -Xmx2000m -jar Utilities/lib/saxon-9.1.0.8.jar -ext:on
+SAXON=java -Xmx752m -jar Utilities/lib/saxon-9.1.0.8.jar -ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 ODD2DTD=odds2/odd2dtd.xsl
@@ -98,7 +98,7 @@ html-web.stamp:  check
 	cp odd.css guidelines.css guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html
 	(cd Source/Guidelines/${INPUTLANGUAGE}; tar --exclude .svn -c -f - Images) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
 	(cd webnav; tar --exclude .svn -c -f - .) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
-	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl: Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
+	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
 		displayMode=both \
 		pageLayout=CSS \
 	        lang=${LANGUAGE} \
@@ -146,7 +146,7 @@ fontcheck:
 
 pdf.stamp: check 
 	@echo BUILD: build Lite version of Guidelines
-	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml -s:p5.xml -xsl: ${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
+	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml -s:p5.xml -xsl:${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
 	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
 	@echo BUILD: build LaTeX version of Guidelines from Lite
@@ -473,12 +473,12 @@ changelog:
 
 
 catalogue: check
-	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml -s:p5.xml -xsl: Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
+	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml -s:p5.xml -xsl:Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
 	teitohtml --profiledir=${XSL}/profiles catalogue.xml catalogue.html
 	@echo Made catalogue.html
 
 catalogue-print: check
-	${SAXON} ${SAXON_ARGS} -s:p5.xml -xsl: Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
+	${SAXON} ${SAXON_ARGS} -s:p5.xml -xsl:Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
 dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
