@@ -908,6 +908,12 @@ height: </xsl:text>
 	<meta name="cover" content="cover-image"/>
       </xsl:if>
     </metadata>
-</xsl:template>
+  </xsl:template>
+
+  <xsl:template name="makeLang">
+    <xsl:if test="@xml:lang">
+      <xsl:attribute name="xml:lang" select="@xml:lang"/>
+    </xsl:if>
+  </xsl:template>
 
 </xsl:stylesheet>
