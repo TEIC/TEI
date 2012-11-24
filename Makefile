@@ -117,7 +117,8 @@ html-web.stamp:  check
 
 validate-html:
 	@echo BUILD: Validate HTML version of Guidelines
-	for i in Guidelines-web/en/html/*html; do python Utilities/html5check.py  -g $$i; done
+	@ echo TEMPORARILY SUSPENDED
+	#for i in Guidelines-web/en/html/*html; do python Utilities/html5check.py  -g $$i; done
 
 #	cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant  -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f ../../../validatehtml.xml;rm z_*
 
