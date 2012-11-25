@@ -193,10 +193,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$outputTarget='html5'">
 	<figcaption>
           <xsl:call-template name="makeRendition"/>
+	  <xsl:copy-of select="$captionlabel"/>
 	  <xsl:if test="not($captionlabel='')">
 	    <xsl:text>. </xsl:text>
 	  </xsl:if>
-	  <xsl:copy-of select="$captionlabel"/>
 	  <xsl:apply-templates/>
 	</figcaption>
       </xsl:when>
@@ -319,30 +319,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="setDimension">
       <xsl:param name="name"/>
       <xsl:param name="value"/>
-
-      <xsl:variable name="calcvalue">
-         <xsl:choose>
-            <xsl:when test="contains($value,'in')">
-               <xsl:value-of select="round($dpi * number(substring-before($value,'in')))"/>
-            </xsl:when>
-            <xsl:when test="contains($value,'pt')">
-               <xsl:value-of select="round($dpi * (number(substring-before($value,'pt')) div 72))"/>
-            </xsl:when>
-            <xsl:when test="contains($value,'cm')">
-               <xsl:value-of select="round($dpi * (number(substring-before($value,'cm')) div 2.54 ))"/>
-            </xsl:when>
-            <xsl:when test="contains($value,'px')">
-               <xsl:value-of select="substring-before($value,'px')"/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:value-of select="$value"/>
-            </xsl:otherwise>
-         </xsl:choose>
-      </xsl:variable>
       <xsl:attribute name="style">
          <xsl:value-of select="$name"/>
 	 <xsl:text>:</xsl:text>
-	 <xsl:value-of select="$calcvalue"/>
+	 <xsl:value-of select="$value"/>
 	 <xsl:text>;</xsl:text>
       </xsl:attribute>
   </xsl:template>
@@ -359,8 +339,7 @@ of this software, even if advised of the possibility of such damage.
                </xsl:if>
             </xsl:when>
             <xsl:otherwise>
-               <xsl:message terminate="yes">Cannot work out how to do a graphic
-          </xsl:message>
+               <xsl:message terminate="yes">Cannot work out how to do a graphic, needs a URL</xsl:message>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:variable>
