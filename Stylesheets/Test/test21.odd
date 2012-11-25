@@ -5,7 +5,7 @@
    <teiHeader>
       <fileDesc>
          <titleStmt>
-            <title>Exploratory ODD for attribute classes</title>
+            <title>Exploratory ODD testing various features</title>
             <author>Sebastian Rahtz</author>
          </titleStmt>
          <publicationStmt>
@@ -26,7 +26,9 @@
          <moduleRef key="namesdates"/>
          <moduleRef key="header"/>
          <moduleRef key="linking"/>
+         <moduleRef key="transcr"/>
          <moduleRef key="textstructure"/>
+	 <!-- Delete an attribute from an attribute class -->
 	 <classSpec ident="att.global" mode="change">
 	   <attList>
 	     <attDef ident="n" mode="delete"/>
@@ -35,38 +37,26 @@
 	     </attDef>
 	   </attList>
 	 </classSpec>
+
+	 <!-- change an attribute in an attribute class to have a fixed vallist-->
 	 <classSpec ident="att.typed" mode="change">
 	   <attList>
 	     <attDef ident="type" mode="change">
 	       <valList mode="add" type="closed">
-		 <valItem ident="A"/>
-		 <valItem ident="B"/>
+		 <valItem ident="A"><desc>first type</desc></valItem>
+		 <valItem ident="B"><desc>second type</desc></valItem>
 	       </valList>
 	     </attDef>
 	   </attList>
 	 </classSpec>
-	 <!-- four overrides for type attribute -->
-	 <elementSpec ident="div" mode="change">
-	   <attList>
-	     <attDef ident="type" mode="replace">
-	       <desc>freddy</desc>
-	       <datatype>
-		 <rng:data type="integer"/>
-	       </datatype>
-	     </attDef>
-	   </attList>
-	 </elementSpec>
-	 <elementSpec ident="ptr" mode="change">
-	   <attList>
-	     <attDef ident="type" mode="change" usage="req"/>
-	   </attList>
-	 </elementSpec>
+
+	 <!-- Provide suggested valList for an attribute-->
 	 <elementSpec ident="text" mode="change">
 	   <attList>
 	     <attDef ident="type" mode="change">
 	       <valList mode="add"  type="closed">
-		 <valItem ident="A"/>
-		 <valItem ident="B"/>
+		 <valItem ident="X"/>
+		 <valItem ident="Y"/>
 	       </valList>
 	     </attDef>
 	   </attList>
@@ -109,7 +99,7 @@
 	     </attDef>
 	   </attList>
 	 </elementSpec>
-	 <!-- delete a class attribute -->
+	 <!-- Provide fixed valList for an attribute-->
 	 <elementSpec ident="author" mode="change">
 	   <attList>
 	     <attDef ident="role" mode="delete">
@@ -120,6 +110,7 @@
 	     </attDef>
 	   </attList>
 	 </elementSpec>
+	 <!-- delete a class attribute -->
         <elementSpec ident="hi" mode="change">
           <attList>
             <attDef ident="n" mode="delete"/>
@@ -128,6 +119,100 @@
             <attDef ident="facs" mode="delete"/>
           </attList>
         </elementSpec>
+	
+	<!-- Delete an element-->
+	<elementSpec mode="delete" ident="floatingText"/>
+	
+	<!-- Add a new attribute to an element-->
+	<elementSpec mode="change" ident="placeName">
+	  <attList>
+	    <attDef ident="alt" mode="add">
+	      <desc>alternative</desc>
+	      <datatype>
+		<rng:text/>
+	      </datatype>
+	    </attDef>
+	  </attList>
+	</elementSpec>
+	
+	<!-- Add a new attribute to an attribute class-->
+	<classSpec ident="att.naming" mode="change">
+	  <attList>
+	    <attDef ident="altname" mode="add">
+	      <desc>alternative name</desc>
+	      <datatype>
+		<rng:text/>
+	      </datatype>
+	    </attDef>
+	  </attList>
+	</classSpec>
+
+	<!-- Delete an attribute from an element-->
+	<elementSpec ident="supplied" mode="change">
+	  <attList>
+	    <attDef ident="reason" mode="delete"/>
+	  </attList>
+	</elementSpec>
+
+	<!-- Add a new element-->
+	<elementSpec mode="add" ident="homer">
+	  <desc>A Simpsons character</desc>
+	  <classes>
+	    <memberOf key="model.divLike"/>
+	  </classes>
+	  <content>
+	    <rng:ref name="p"/>
+	  </content>
+	</elementSpec>
+	
+	<!-- Add an existing attribute class to an element-->
+	<elementSpec ident="seg" mode="change">
+	  <classes mode="change">
+	    <memberOf key="att.certLike" mode="add"/>
+	  </classes>
+	</elementSpec>
+
+	<!-- Create a new attribute class and add it to a couple of elements-->
+        <classSpec ident="att.magical" mode="add" type="atts">
+	  <attList>
+	    <attDef ident="degree">
+	      <valList type="closed">
+		<valItem ident="abit"/>
+		<valItem ident="alot"/>
+		<valItem ident="entirely"/>
+	      </valList>
+	    </attDef>
+	  </attList>
+	</classSpec>
+	<elementSpec ident="body" mode="change">
+	  <classes mode="change">
+	    <memberOf key="att.magical" mode="add"/>
+	  </classes>
+	</elementSpec>
+	<elementSpec ident="back" mode="change">
+	  <classes mode="change">
+	    <memberOf key="att.magical" mode="add"/>
+	  </classes>
+	</elementSpec>
+
+
+	 <!-- four overrides for type attribute -->
+	 <elementSpec ident="div" mode="change">
+	   <attList>
+	     <attDef ident="type" mode="replace">
+	       <desc>freddy</desc>
+	       <datatype>
+		 <rng:data type="integer"/>
+	       </datatype>
+	     </attDef>
+	   </attList>
+	 </elementSpec>
+	 <elementSpec ident="ptr" mode="change">
+	   <attList>
+	     <attDef ident="type" mode="change" usage="req"/>
+	   </attList>
+	 </elementSpec>
+
        </schemaSpec>
      </body>
    </text>

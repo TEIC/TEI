@@ -2,6 +2,7 @@ default namespace = "http://www.tei-c.org/ns/1.0"
 namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
 namespace ns1 = "http://www.isocat.org/ns/dcr"
 namespace rng = "http://relaxng.org/ns/structure/1.0"
+namespace s = "http://www.ascc.net/xml/schematron"
 namespace sch = "http://purl.oclc.org/dsdl/schematron"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
@@ -51,6 +52,8 @@ data.outputMeasurement =
       "[\-+]?\d+(\.\d+)?(%|cm|mm|in|pt|pc|px|em|ex|gd|rem|vw|vh|vm)"
   }
 data.pattern = xsd:token
+data.point =
+  xsd:token { pattern = "(\-?[0-9]+\.?[0-9]*,\-?[0-9]+\.?[0-9]*)" }
 data.pointer = xsd:anyURI
 data.version = xsd:token { pattern = "[\d]+(\.[\d]+){0,2}" }
 data.word = xsd:token { pattern = "(\p{L}|\p{N}|\p{P}|\p{S})+" }
@@ -168,6 +171,33 @@ att.dimensions.attribute.scope =
   ##         of this measurement.
   ## Sample values include: 1] all; 2] most; 3] range
   attribute scope { data.enumerated }?
+att.damaged.attributes =
+  att.dimensions.attributes,
+  att.damaged.attribute.hand,
+  att.damaged.attribute.agent,
+  att.damaged.attribute.degree,
+  att.damaged.attribute.group
+att.damaged.attribute.hand =
+  
+  ## In the case of damage (deliberate defacement, inking out, etc.) assignable to a distinct
+  ##         hand, signifies the hand responsible for the damage.
+  attribute hand { data.pointer }?
+att.damaged.attribute.agent =
+  
+  ## categorizes the cause of the damage, if it can be identified.
+  ## Sample values include: 1] rubbing; 2] mildew; 3] smoke
+  attribute agent { data.enumerated }?
+att.damaged.attribute.degree =
+  
+  ## Signifies the degree of damage according to a convenient scale. The damage tag
+  ##         with the degree attribute should only be used where the text may be read with
+  ##         some confidence; text supplied from other sources should be tagged as supplied.
+  attribute degree { data.probability | data.certainty }?
+att.damaged.attribute.group =
+  
+  ## assigns an arbitrary number to each stretch of damage regarded as forming part of the
+  ##         same physical phenomenon.
+  attribute group { data.count }?
 att.breaking.attributes = att.breaking.attribute.break
 att.breaking.attribute.break =
   
@@ -411,6 +441,8 @@ att.editLike.attribute.instant =
   [ a:defaultValue = "false" ] attribute instant { data.xTruthValue }?
 att.global.attributes =
   att.global.linking.attributes,
+  att.global.facs.attributes,
+  att.global.change.attributes,
   att.global.attribute.xmlid,
   att.global.attribute.xmllang,
   att.global.attribute.rend,
@@ -464,6 +496,13 @@ att.global.attribute.xmlspace =
       ## indicates the intent that applications preserve all white space
       "preserve"
   }?
+att.handFeatures.attributes =
+  att.handFeatures.attribute.scribe,
+  att.handFeatures.attribute.scribeRef,
+  att.handFeatures.attribute.script,
+  att.handFeatures.attribute.scriptRef,
+  att.handFeatures.attribute.medium,
+  att.handFeatures.attribute.scope
 att.handFeatures.attribute.scribe =
   
   ## gives a name or other identifier for the scribe
@@ -599,8 +638,13 @@ att.measurement.attribute.commodity =
   }?
 att.naming.attributes =
   att.canonical.attributes,
+  att.naming.attribute.altname,
   att.naming.attribute.role,
   att.naming.attribute.nymRef
+att.naming.attribute.altname =
+  
+  ## alternative name
+  attribute altname { text }?
 att.naming.attribute.role =
   
   ## may be used to specify further information about the entity referenced by
@@ -663,10 +707,10 @@ att.typed.attribute.type =
   ##  classification scheme or typology.
   attribute type {
     
-    ##
+    ## first type
     "A"
     | 
-      ##
+      ## second type
       "B"
   }?
 att.typed.attribute.subtype =
@@ -948,30 +992,139 @@ model.offsetLike_sequence = offset, geogFeat
 model.offsetLike_sequenceOptional = offset?, geogFeat?
 model.offsetLike_sequenceOptionalRepeatable = offset*, geogFeat*
 model.offsetLike_sequenceRepeatable = offset+, geogFeat+
-model.pPart.editorial = choice | abbr | expan
-model.pPart.editorial_alternation = choice | abbr | expan
-model.pPart.editorial_sequence = choice, abbr, expan
-model.pPart.editorial_sequenceOptional = choice?, abbr?, expan?
+model.pPart.editorial = choice | abbr | expan | ex | am | subst
+model.pPart.editorial_alternation =
+  choice | abbr | expan | ex | am | subst
+model.pPart.editorial_sequence = choice, abbr, expan, ex, am, subst
+model.pPart.editorial_sequenceOptional =
+  choice?, abbr?, expan?, ex?, am?, subst?
 model.pPart.editorial_sequenceOptionalRepeatable =
-  choice*, abbr*, expan*
-model.pPart.editorial_sequenceRepeatable = choice+, abbr+, expan+
+  choice*, abbr*, expan*, ex*, am*, subst*
+model.pPart.editorial_sequenceRepeatable =
+  choice+, abbr+, expan+, ex+, am+, subst+
 model.pPart.transcriptional =
-  sic | corr | reg | orig | add | del | unclear
+  sic
+  | corr
+  | reg
+  | orig
+  | add
+  | del
+  | unclear
+  | damage
+  | handShift
+  | restore
+  | supplied
+  | surplus
+  | mod
+  | redo
+  | retrace
+  | undo
 model.pPart.transcriptional_alternation =
-  sic | corr | reg | orig | add | del | unclear
+  sic
+  | corr
+  | reg
+  | orig
+  | add
+  | del
+  | unclear
+  | damage
+  | handShift
+  | restore
+  | supplied
+  | surplus
+  | mod
+  | redo
+  | retrace
+  | undo
 model.pPart.transcriptional_sequence =
-  sic, corr, reg, orig, add, del, unclear
+  sic,
+  corr,
+  reg,
+  orig,
+  add,
+  del,
+  unclear,
+  damage,
+  handShift,
+  restore,
+  supplied,
+  surplus,
+  mod,
+  redo,
+  retrace,
+  undo
 model.pPart.transcriptional_sequenceOptional =
-  sic?, corr?, reg?, orig?, add?, del?, unclear?
+  sic?,
+  corr?,
+  reg?,
+  orig?,
+  add?,
+  del?,
+  unclear?,
+  damage?,
+  handShift?,
+  restore?,
+  supplied?,
+  surplus?,
+  mod?,
+  redo?,
+  retrace?,
+  undo?
 model.pPart.transcriptional_sequenceOptionalRepeatable =
-  sic*, corr*, reg*, orig*, add*, del*, unclear*
+  sic*,
+  corr*,
+  reg*,
+  orig*,
+  add*,
+  del*,
+  unclear*,
+  damage*,
+  handShift*,
+  restore*,
+  supplied*,
+  surplus*,
+  mod*,
+  redo*,
+  retrace*,
+  undo*
 model.pPart.transcriptional_sequenceRepeatable =
-  sic+, corr+, reg+, orig+, add+, del+, unclear+
+  sic+,
+  corr+,
+  reg+,
+  orig+,
+  add+,
+  del+,
+  unclear+,
+  damage+,
+  handShift+,
+  restore+,
+  supplied+,
+  surplus+,
+  mod+,
+  redo+,
+  retrace+,
+  undo+
 model.pPart.edit = model.pPart.editorial | model.pPart.transcriptional
+model.linePart =
+  model.segLike
+  | model.hiLike
+  | model.pPart.transcriptional
+  | choice
+  | zone
+  | line
 model.ptrLike = ptr | ref
 model.global.meta =
-  index | link | linkGrp | timeline | join | joinGrp | alt | altGrp
-model.milestoneLike = milestone | gb | pb | lb | cb | anchor
+  index
+  | link
+  | linkGrp
+  | timeline
+  | join
+  | joinGrp
+  | alt
+  | altGrp
+  | substJoin
+  | listTranspose
+model.milestoneLike = milestone | gb | pb | lb | cb | anchor | fw
 model.gLike = notAllowed
 model.biblLike =
   bibl | biblStruct | listRelation | relationGrp | biblFull
@@ -1059,7 +1212,7 @@ model.stageLike_sequenceOptional = stage?
 model.stageLike_sequenceOptionalRepeatable = stage*
 model.stageLike_sequenceRepeatable = stage+
 model.entryPart = notAllowed
-model.global.edit = gap
+model.global.edit = gap | addSpan | damageSpan | delSpan | space
 model.divPart = model.lLike | model.pLike | lg | sp
 model.persStateLike =
   persName
@@ -1179,16 +1332,15 @@ model.quoteLike_sequence = quote, cit
 model.quoteLike_sequenceOptional = quote?, cit?
 model.quoteLike_sequenceOptionalRepeatable = quote*, cit*
 model.quoteLike_sequenceRepeatable = quote+, cit+
-model.qLike = model.quoteLike | said | q | floatingText
-model.qLike_alternation =
-  model.quoteLike_alternation | said | q | floatingText
-model.qLike_sequence = model.quoteLike_sequence, said, q, floatingText
+model.qLike = model.quoteLike | said | q
+model.qLike_alternation = model.quoteLike_alternation | said | q
+model.qLike_sequence = model.quoteLike_sequence, said, q
 model.qLike_sequenceOptional =
-  model.quoteLike_sequenceOptional?, said?, q?, floatingText?
+  model.quoteLike_sequenceOptional?, said?, q?
 model.qLike_sequenceOptionalRepeatable =
-  model.quoteLike_sequenceOptionalRepeatable*, said*, q*, floatingText*
+  model.quoteLike_sequenceOptionalRepeatable*, said*, q*
 model.qLike_sequenceRepeatable =
-  model.quoteLike_sequenceRepeatable+, said+, q+, floatingText+
+  model.quoteLike_sequenceRepeatable+, said+, q+
 model.respLike =
   author | editor | respStmt | meeting | sponsor | funder | principal
 model.divWrapper =
@@ -1229,7 +1381,7 @@ model.titlepagePart =
   | docImprint
   | docDate
 model.choicePart =
-  sic | corr | reg | orig | unclear | abbr | expan | seg
+  sic | corr | reg | orig | unclear | abbr | expan | seg | ex | am
 model.imprintPart = publisher | biblScope | pubPlace | distributor
 model.catDescPart = notAllowed
 model.addressLike = email | address | affiliation
@@ -1286,6 +1438,7 @@ model.global =
   | model.milestoneLike
   | model.noteLike
   | model.global.edit
+  | metamark
 model.biblPart =
   model.respLike
   | model.imprintPart
@@ -1323,7 +1476,7 @@ model.limitedPhrase =
   | model.pPart.editorial
   | model.ptrLike
   | model.pPart.data
-model.divLike = \div
+model.divLike = \div | homer
 model.divGenLike = divGen
 model.div1Like = div1
 model.div2Like = div2
@@ -1353,8 +1506,14 @@ model.editorialDeclPart =
   | segmentation
   | stdVals
   | interpretation
-model.profileDescPart = creation | langUsage | textClass | calendarDesc
-model.resourceLike = notAllowed
+model.profileDescPart =
+  creation
+  | langUsage
+  | textClass
+  | calendarDesc
+  | handNotes
+  | listTranspose
+model.resourceLike = facsimile | sourceDoc
 att.personal.attributes =
   att.naming.attributes,
   att.personal.attribute.full,
@@ -1448,6 +1607,8 @@ p =
     att.global.linking.attribute.prev,
     att.global.linking.attribute.exclude,
     att.global.linking.attribute.select,
+    att.global.facs.attribute.facs,
+    att.global.change.attribute.change,
     att.declaring.attributes,
     
     ## (corresponds) points to elements that correspond to the current
@@ -1485,6 +1646,7 @@ hi =
     att.global.linking.attribute.prev,
     att.global.linking.attribute.exclude,
     att.global.linking.attribute.select,
+    att.global.change.attribute.change,
     empty
   }
 distinct =
@@ -1954,10 +2116,10 @@ ptr =
     ##  classification scheme or typology.
     attribute type {
       
-      ##
+      ## first type
       "A"
       | 
-        ##
+        ## second type
         "B"
     },
     empty
@@ -2273,6 +2435,7 @@ author =
   element author {
     macro.phraseSeq,
     att.global.attributes,
+    att.naming.attribute.altname,
     att.naming.attribute.nymRef,
     att.canonical.attribute.key,
     att.canonical.attribute.ref,
@@ -2286,6 +2449,7 @@ editor =
   element editor {
     macro.phraseSeq,
     att.global.attributes,
+    att.naming.attribute.altname,
     att.naming.attribute.nymRef,
     att.canonical.attribute.key,
     att.canonical.attribute.ref,
@@ -2600,10 +2764,10 @@ lg =
     [ a:defaultValue = "A" ]
     attribute type {
       
-      ##
+      ## first type
       "A"
       | 
-        ##
+        ## second type
         "B"
     }?,
     empty
@@ -2869,6 +3033,9 @@ placeName =
     att.global.attributes,
     att.personal.attributes,
     att.typed.attributes,
+    
+    ## alternative
+    attribute alt { text }?,
     empty
   }
 bloc =
@@ -4278,6 +4445,15 @@ profileDesc =
   element profileDesc {
     model.profileDescPart*, att.global.attributes, empty
   }
+handNote =
+  
+  ## (note on hand) describes a particular style or hand distinguished within a manuscript. [10.7.2. ]
+  element handNote {
+    macro.specialPara,
+    att.global.attributes,
+    att.handFeatures.attributes,
+    empty
+  }
 creation =
   
   ## contains information about the creation of a text. [2.4.1.  2.4. ]
@@ -4892,6 +5068,559 @@ att.global.linking.attribute.select =
   attribute select {
     list { data.pointer+ }
   }?
+facsimile =
+  
+  ## contains a representation of some written source in the form of
+  ## a set of images rather than as transcribed or encoded text. [11.1. ]
+  element facsimile {
+    (front?, (model.graphicLike | surface | surfaceGrp)+, back?),
+    att.global.attributes,
+    att.declaring.attributes,
+    empty
+  }
+sourceDoc =
+  
+  ##  contains a transcription or other representation of a single
+  ##  source document potentially forming part of a dossier
+  ##  génétique or collection of sources.
+  element sourceDoc {
+    (model.global | model.graphicLike | surface | surfaceGrp)+,
+    att.global.attributes,
+    att.declaring.attributes,
+    empty
+  }
+att.global.facs.attributes = att.global.facs.attribute.facs
+att.global.facs.attribute.facs =
+  
+  ## (facsimile) points to all or part of an image which corresponds with the content of the element.
+  attribute facs {
+    list { data.pointer+ }
+  }?
+att.global.change.attributes = att.global.change.attribute.change
+att.global.change.attribute.change =
+  
+  ## points to one or more change elements documenting
+  ##       a state or revision campaign to which the element bearing this
+  ##       attribute and its children have been assigned by the encoder.
+  attribute change {
+    list { data.pointer+ }
+  }?
+surface =
+  
+  ## defines a written surface as a two-dimensional 
+  ## coordinate space, optionally grouping one or more graphic representations of
+  ## that space, zones of interest within that space, and transcriptions of the
+  ##   writing within them.
+  element surface {
+    ((model.global | model.labelLike | model.graphicLike)*,
+     ((zone | line | surface | surfaceGrp), model.global*)*),
+    att.global.attributes,
+    att.coordinated.attributes,
+    att.declaring.attributes,
+    att.typed.attributes,
+    
+    ## describes the method by which this surface is or was
+    ##          connected to the main surface
+    ## Sample values include: 1] glued; 2] pinned; 3] sewn
+    attribute attachment { data.enumerated }?,
+    
+    ## indicates whether the
+    ##       surface is attached and folded in such a way as to provide two
+    ##       writing surfaces
+    attribute flipping { data.truthValue }?,
+    empty
+  }
+surfaceGrp =
+  
+  ## defines any kind of useful grouping of written surfaces, for
+  ##   example the recto and verso of a single leaf, which the encoder
+  ##   wishes to treat as a single unit. 
+  element surfaceGrp {
+    (model.global | surface | surfaceGrp)+,
+    att.global.attributes,
+    att.coordinated.attributes,
+    att.declaring.attributes,
+    att.typed.attributes,
+    empty
+  }
+att.coordinated.attributes =
+  att.coordinated.attribute.start,
+  att.coordinated.attribute.ulx,
+  att.coordinated.attribute.uly,
+  att.coordinated.attribute.lrx,
+  att.coordinated.attribute.lry
+att.coordinated.attribute.start =
+  
+  ## indicates the element within a transcription of the text
+  ## containing at least the start of the writing represented by this zone
+  ## or surface.
+  attribute start { data.pointer }?
+att.coordinated.attribute.ulx =
+  
+  ## gives the x coordinate value for the upper left corner of a
+  ## rectangular space.
+  attribute ulx { data.numeric }?
+att.coordinated.attribute.uly =
+  
+  ## gives the y coordinate value for the upper left corner of a
+  ## rectangular space.
+  attribute uly { data.numeric }?
+att.coordinated.attribute.lrx =
+  
+  ## gives the x coordinate value for the lower right corner of a
+  ## rectangular space.
+  attribute lrx { data.numeric }?
+att.coordinated.attribute.lry =
+  
+  ## gives the y coordinate value for the lower right corner of a
+  ## rectangular space.
+  attribute lry { data.numeric }?
+zone =
+  
+  ## defines any two-dimensional area within a surface
+  ## element. 
+  element zone {
+    (text
+     | model.graphicLike
+     | model.global
+     | surface
+     | model.linePart)*,
+    att.global.attributes,
+    att.coordinated.attributes,
+    att.typed.attributes,
+    
+    ## identifies a two dimensional area within the bounding box
+    ## specified by the other attributes by means of
+    ## a series of pairs of numbers, each of which gives the x,y coordinates
+    ## of a point on a line enclosing the area.
+    attribute points {
+      list { data.point, data.point, data.point, data.point* }
+    }?,
+    
+    ## indicates the amount by which this zone has been
+    ##          rotated clockwise, with respect to the normal orientation of
+    ##          the parent surface element as implied by the
+    ##          dimensions given in the msDesc element or by the
+    ##          coordinates of the surface itself. The orientation
+    ##          is expressed in arc degrees.
+    [ a:defaultValue = "0" ] attribute rotate { data.count }?,
+    empty
+  }
+addSpan =
+  
+  ## (added span of text) marks the beginning of a longer sequence of text added by an
+  ##   author, scribe, annotator or corrector (see also add). [11.3.1.4. ]
+  element addSpan {
+    empty
+    >> sch:pattern [
+         id = "addSpan-constraint-spanTo"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:addSpan"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@spanTo"
+             "The spanTo= attribute of "
+             sch:name [ ]
+             " is required."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id = "addSpan-constraint-spanTo_fr"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:addSpan"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@spanTo"
+             "L'attribut spanTo est requis."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.transcriptional.attributes,
+    att.placement.attributes,
+    att.typed.attributes,
+    att.spanning.attributes,
+    empty
+  }
+damage =
+  
+  ## contains an area of damage to the text witness. [11.3.3.1. ]
+  element damage {
+    macro.paraContent,
+    att.global.attributes,
+    att.typed.attributes,
+    att.damaged.attributes,
+    empty
+  }
+damageSpan =
+  
+  ## (damaged span of text) marks the beginning of a longer sequence of text which is
+  ##   damaged in some way but still legible. [11.3.3.1. ]
+  element damageSpan {
+    empty
+    >> sch:pattern [
+         id = "damageSpan-constraint-spanTo"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:damageSpan"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@spanTo"
+             "The spanTo= attribute of\x{a}" ~
+             "	"
+             sch:name [ ]
+             " is required."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id = "damageSpan-constraint-spanTo_fr"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:damageSpan"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@spanTo"
+             "L'attribut spanTo est requis."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.damaged.attributes,
+    att.typed.attributes,
+    att.spanning.attributes,
+    empty
+  }
+delSpan =
+  
+  ## (deleted span of text) marks the beginning of a longer sequence of text deleted,
+  ## marked as deleted, or otherwise signaled as superfluous or spurious by an
+  ## author, scribe, annotator, or corrector. [11.3.1.4. ]
+  element delSpan {
+    empty
+    >> sch:pattern [
+         id = "delSpan-constraint-spanTo"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:delSpan"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@spanTo"
+             "The spanTo= attribute of "
+             sch:name [ ]
+             " is required."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id = "delSpan-constraint-spanTo_fr"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:delSpan"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "@spanTo"
+             "L'attribut spanTo est requis."
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.transcriptional.attributes,
+    att.typed.attributes,
+    att.spanning.attributes,
+    empty
+  }
+ex =
+  
+  ## (editorial expansion) contains a sequence of letters added by an editor or
+  ##   transcriber when expanding an abbreviation. [11.3.1.2. ]
+  element ex {
+    macro.xtext, att.global.attributes, att.editLike.attributes, empty
+  }
+fw =
+  
+  ## (forme work) contains a running head (e.g. a header, footer), catchword, or
+  ##   similar material appearing on the current page. [11.6. ]
+  element fw {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.placement.attributes,
+    
+    ## classifies the material encoded according to some useful typology.
+    ## Sample values include: 1] header; 2] footer; 3] pageNum(page number) ; 4] lineNum(line number) ; 5] sig(signature) ; 6] catch(catchword) 
+    attribute type { data.enumerated }?,
+    empty
+  }
+handNotes =
+  
+  ## contains one or more handNote elements documenting the
+  ## different hands identified within the source texts. [11.3.2.1. ]
+  element handNotes { handNote+, att.global.attributes, empty }
+handShift =
+  
+  ## marks the beginning of a sequence of text written in a new
+  ## hand, or the beginning of a scribal stint. [11.3.2.1. ]
+  element handShift {
+    empty,
+    att.global.attributes,
+    att.handFeatures.attributes,
+    att.responsibility.attributes,
+    
+    ## identifies the new hand.
+    attribute new { data.pointer }?,
+    empty
+  }
+am =
+  
+  ## (abbreviation marker) contains a sequence of letters or signs present in an
+  ##   abbreviation which are omitted or replaced in the expanded form of
+  ##   the abbreviation. [11.3.1.2. ]
+  element am {
+    (text | model.gLike | model.pPart.transcriptional)*,
+    att.global.attributes,
+    att.editLike.attributes,
+    empty
+  }
+restore =
+  
+  ## indicates restoration of text to an earlier state by
+  ## cancellation of an editorial or authorial marking or instruction. [11.3.1.6. ]
+  element restore {
+    macro.paraContent,
+    att.global.attributes,
+    att.transcriptional.attributes,
+    att.typed.attributes,
+    empty
+  }
+space =
+  
+  ## indicates the location of a significant space in the copy text. [11.5.1. ]
+  element space {
+    model.descLike*,
+    att.global.attributes,
+    att.dimensions.attributes,
+    
+    ## (dimension) indicates whether the space is horizontal or vertical.
+    attribute dim {
+      
+      ## the space is horizontal.
+      "horizontal"
+      | 
+        ## the space is vertical.
+        "vertical"
+    }?,
+    
+    ## (responsible party) indicates the individual responsible for identifying and measuring
+    ## the space.
+    attribute resp { data.pointer }?,
+    empty
+  }
+subst =
+  
+  ## (substitution) groups one or more deletions with one or more additions when
+  ##   the combination is to be regarded as a single intervention in the text.
+  element subst {
+    ((add | del | model.milestoneLike)+)
+    >> sch:pattern [
+         id = "subst-constraint-substContents1"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:subst"
+           "\x{a}" ~
+           "               "
+           sch:assert [
+             test = "child::tei:add and child::tei:del"
+             "\x{a}" ~
+             "        Subst must have at least one child add and at least one child del"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.transcriptional.attributes,
+    empty
+  }
+substJoin =
+  
+  ## (substitution join) identifies a series of  possibly fragmented additions, deletions or other revisions on a manuscript that combine to make up a single intervention in the text
+  element substJoin {
+    (model.descLike | model.certLike)*,
+    att.global.attributes,
+    att.pointing.attributes,
+    att.transcriptional.attributes,
+    empty
+  }
+supplied =
+  
+  ## signifies text supplied by the transcriber or editor for any
+  ##   reason, typically because the original cannot be read because of
+  ##   physical damage or loss to the original. [11.3.3.1. ]
+  element supplied {
+    macro.paraContent,
+    att.global.attributes,
+    att.editLike.attributes,
+    empty
+  }
+surplus =
+  
+  ## marks text present in the source which the editor believes to
+  ##   be superfluous or redundant. [11.3.3.1. ]
+  element surplus {
+    macro.paraContent,
+    att.global.attributes,
+    att.editLike.attributes,
+    
+    ## indicates the grounds for believing this text to be superfluous.
+    attribute reason {
+      list { data.word+ }
+    }?,
+    empty
+  }
+line =
+  
+  ## contains the transcription of a topographic line in the source
+  ##    document
+  element line {
+    (text | model.global | model.linePart)*,
+    att.typed.attributes,
+    att.global.attributes,
+    att.coordinated.attributes,
+    empty
+  }
+listTranspose =
+  
+  ## supplies a list of transpositions, each of which is  indicated at some point in
+  ##    a document typically by means of metamarks.
+  element listTranspose { transpose+, att.global.attributes, empty }
+metamark =
+  
+  ## contains or describes any kind of graphic or written signal
+  ##    within a document the function of which is to determine how it
+  ##    should be read rather than forming part of the actual content of
+  ##    the document.
+  element metamark {
+    macro.specialPara,
+    att.spanning.attributes,
+    att.placement.attributes,
+    att.global.attributes,
+    
+    ## describes the function (for example  status, insertion,
+    ##	 deletion, transposition) of the mark.
+    attribute function { data.word }?,
+    
+    ## identifies one or more elements to which the function
+    ##	 indicated by the metamark applies. 
+    attribute target {
+      list { data.pointer+ }
+    }?,
+    empty
+  }
+mod =
+  
+  ## represents any kind of modification identified within a single document.
+  element mod {
+    macro.paraContent,
+    att.global.attributes,
+    att.transcriptional.attributes,
+    att.typed.attributes,
+    att.spanning.attributes,
+    empty
+  }
+redo =
+  
+  ## indicates one or more cancelled interventions in a
+  ##		  document which have subsequently been
+  ##		  marked as reaffirmed or repeated.
+  element redo {
+    empty,
+    att.global.attributes,
+    att.spanning.attributes,
+    att.transcriptional.attributes,
+    
+    ## points to one or more elements representing the
+    ##	 interventions which are being reasserted.
+    attribute target {
+      list { data.pointer+ }
+    }?,
+    empty
+  }
+retrace =
+  
+  ## contains a sequence of writing which has been retraced, for
+  ##       example by over-inking, to clarify or fix it.
+  element retrace {
+    macro.paraContent,
+    att.global.attributes,
+    att.spanning.attributes,
+    att.transcriptional.attributes,
+    empty
+  }
+transpose =
+  
+  ##  describes a single textual transposition as an ordered list
+  ##    of at least two pointers specifying the order in which the elements
+  ##    indicated should be re-combined. 
+  element transpose { (ptr, ptr+), att.global.attributes, empty }
+undo =
+  
+  ## indicates one or more marked-up interventions in a document
+  ##    which have subsequently been marked for cancellation.
+  element undo {
+    empty,
+    att.global.attributes,
+    att.spanning.attributes,
+    att.transcriptional.attributes,
+    
+    ## points to one or more elements representing the
+    ##	 interventions which are to be reverted or undone.
+    attribute target {
+      list { data.pointer+ }
+    }?,
+    empty
+  }
 TEI =
   
   ## (TEI document) contains a single TEI-conformant document,
@@ -4931,10 +5660,10 @@ TEI =
     attribute type {
       
       ##
-      "A"
+      "X"
       | 
         ##
-        "B"
+        "Y"
     }?,
     empty
   }
@@ -4951,6 +5680,7 @@ body =
          ((model.divLike, (model.global | model.divGenLike)*)+
           | (model.div1Like, (model.global | model.divGenLike)*)+)?)),
      (model.divBottom, model.global*)*),
+    att.magical.attributes,
     att.global.attributes,
     att.declaring.attributes,
     empty
@@ -4966,21 +5696,6 @@ group =
      model.divBottom*),
     att.global.attributes,
     att.declaring.attributes,
-    empty
-  }
-floatingText =
-  
-  ## contains a single text of any kind, whether unitary or composite, which interrupts the text
-  ##     containing it at any point and after which the surrounding text resumes. [4.3.2. ]
-  element floatingText {
-    (model.global*,
-     (front, model.global*)?,
-     (body | group),
-     model.global*,
-     (back, model.global*)?),
-    att.global.attributes,
-    att.declaring.attributes,
-    att.typed.attributes,
     empty
   }
 \div =
@@ -5328,8 +6043,28 @@ back =
       | (model.divLike,
          (model.frontPart | model.divLike | model.global)*))?,
      (model.divBottomPart, (model.divBottomPart | model.global)*)?),
+    att.magical.attributes,
     att.global.attributes,
     att.declaring.attributes,
     empty
   }
+att.magical.attributes = att.magical.attribute.degree
+att.magical.attribute.degree =
+  
+  ##
+  attribute degree {
+    
+    ##
+    "abit"
+    | 
+      ##
+      "alot"
+    | 
+      ##
+      "entirely"
+  }?
+homer =
+  
+  ## A Simpsons character
+  element homer { p }
 start = TEI
