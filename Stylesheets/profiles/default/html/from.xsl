@@ -8,7 +8,7 @@
     version="2.0">
     <!-- import base conversion style -->
 
-    <xsl:import href="../../../tools/html2tei.xsl"/>
+    <xsl:import href="../../../html/html2tei.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
