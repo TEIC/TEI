@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+-->
 <xsl:stylesheet xmlns:n="www.example.com" xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
