@@ -60,6 +60,7 @@ odd2odd:
 
 oddbyexample:
 	saxon -it:main -o:oddbyexample.odd  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare 
+	diff oddbyexample.odd expected-results/oddbyexample.odd
 	roma2 --xsl=`pwd`/.. oddbyexample.odd .
 	jing -c oddbyexample.rnc bare/test2.xml
 	jing oddbyexample.xsd bare/test2.xml

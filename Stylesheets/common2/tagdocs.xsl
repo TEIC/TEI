@@ -1066,7 +1066,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:exemplum" mode="doc">
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDoc"/>
+      <xsl:call-template name="generateDocumentationLang"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="parent::tei:exemplum">
@@ -1521,7 +1521,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:valDesc" mode="weave">
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDoc"/>
+      <xsl:call-template name="generateDocumentationLang"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="@xml:lang and         not(@xml:lang=$documentationLanguage)">
@@ -2160,7 +2160,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:desc|tei:gloss" mode="weave"/>
   <xsl:template match="tei:remarks" mode="weave">
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDoc"/>
+      <xsl:call-template name="generateDocumentationLang"/>
     </xsl:variable>
     <xsl:variable name="langs">
       <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
@@ -2457,7 +2457,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="showElement">
     <xsl:param name="name"/>
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDoc"/>
+      <xsl:call-template name="generateDocumentationLang"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$oddmode='tei'">

@@ -166,7 +166,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:variable>
 
 
-  <xsl:template name="generateDoc">
+  <xsl:template name="generateDocumentationLang">
     <xsl:choose>
       <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang">
         <xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang"/>
@@ -1699,7 +1699,7 @@ select="$makeDecls"/></xsl:message>
     <xsl:param name="class">link_odd</xsl:param>
 
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDoc"/>
+      <xsl:call-template name="generateDocumentationLang"/>
     </xsl:variable>
     <xsl:variable name="partialname">
       <xsl:choose>

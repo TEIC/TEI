@@ -282,7 +282,7 @@
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
       <xsl:variable name="documentationLanguage">
-        <xsl:call-template name="generateDoc"/>
+        <xsl:call-template name="generateDocumentationLang"/>
       </xsl:variable>
       <xsl:variable name="langs">
         <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>

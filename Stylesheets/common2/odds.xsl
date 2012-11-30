@@ -47,7 +47,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="coded">true</xsl:param>
     <xsl:param name="showListRef">true</xsl:param>
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDoc"/>
+      <xsl:call-template name="generateDocumentationLang"/>
     </xsl:variable>
     <xsl:variable name="langs">
       <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
@@ -123,7 +123,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:variable name="documentationLanguage">
-            <xsl:call-template name="generateDoc"/>
+            <xsl:call-template name="generateDocumentationLang"/>
           </xsl:variable>
           <xsl:variable name="langs">
             <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
@@ -162,7 +162,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
           </xsl:choose>
           <xsl:variable name="documentationLanguage">
-            <xsl:call-template name="generateDoc"/>
+            <xsl:call-template name="generateDocumentationLang"/>
           </xsl:variable>
           <xsl:variable name="langs">
             <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>

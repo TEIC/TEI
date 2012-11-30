@@ -146,7 +146,7 @@ of this software, even if advised of the possibility of such damage.
                </xsl:message>
         </xsl:if>
         <xsl:variable name="documentationLanguage">
-          <xsl:call-template name="generateDoc"/>
+          <xsl:call-template name="generateDocumentationLang"/>
         </xsl:variable>
         <xsl:variable name="langs">
           <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>

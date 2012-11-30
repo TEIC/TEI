@@ -18,7 +18,7 @@
   
   <XSL:namespace-alias stylesheet-prefix="xsl" result-prefix="XSL"/>
 
-  <XSL:template name="generateDoc">
+  <XSL:template name="generateDocumentationLang">
     <XSL:choose>
       <XSL:when test="string-length($doclang)&gt;0">
         <XSL:value-of select="$doclang"/>

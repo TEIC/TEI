@@ -84,6 +84,7 @@ valList
   <xsl:param name="defaultSource">http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml</xsl:param>
   <!-- should we make valList for @rend -->
   <xsl:param name="enumerateRend">false</xsl:param>
+  <!-- should we make valList for @type -->
   <xsl:param name="enumerateType">false</xsl:param>
   <!-- should we deal with non-TEI namespaces -->
   <xsl:param name="processNonTEI">false</xsl:param>
@@ -189,6 +190,16 @@ valList
 	<xsl:apply-templates select="$stage3" mode="stage3"/>
       </xsl:variable>
       <xsl:apply-templates select="$stage4" mode="stage4"/>
+
+      <!-- debug
+	   <xsl:result-document href="/tmp/stage3.xml">
+	   <xsl:copy-of select="$stage3"/>
+	   </xsl:result-document>
+	   <xsl:result-document href="/tmp/stage4.xml">
+	   <xsl:copy-of select="$stage4"/>
+	   </xsl:result-document>
+      -->
+
   </xsl:template>
 
   <xsl:template match="text()" mode="copy"/>
@@ -419,28 +430,22 @@ valList
       </teiHeader>
       <text>
         <body>
-<!--
-	  <xsl:result-document href="/tmp/stage1.xml">
-	    <xsl:copy-of select="$stage1"/>
-	  </xsl:result-document>
-	  <xsl:result-document href="/tmp/stage2.xml">
-	    <xsl:copy-of select="$stage2"/>
-	  </xsl:result-document>
--->
+
           <schemaSpec ident="{$schema}">
             <xsl:attribute name="start">
               <xsl:if test="$stage2/stage2/elementSpec[@mode='keep' and @ident='TEI']">TEI</xsl:if>
               <xsl:text> </xsl:text>
               <xsl:if test="$stage2/stage2/elementSpec[@mode='keep' and @ident='teiCorpus']">teiCorpus</xsl:if>
             </xsl:attribute>
-            <moduleRef key="tei"/>
-            <xsl:apply-templates select="$stage2/stage2/classSpec[@module='tei']"/>
-            <moduleRef key="core"/>
-            <!-- we need to list only modules from which elements or classes have been used -->
+            <!-- 
+		 We need to list only modules from which elements or
+		 classes have been used, but we always need tei module
+	    -->
+	    <moduleRef key="tei"/>
             <xsl:for-each-group select="$stage2/stage2/*[@mode='keep']" group-by="@module">
               <xsl:sort select="current-grouping-key()"/>
               <xsl:choose>
-                <xsl:when test="@module='core'"/>
+                <xsl:when test="@module='tei'"/>
                 <xsl:otherwise>
                   <moduleRef key="{@module}"/>
                 </xsl:otherwise>
@@ -491,7 +496,8 @@ valList
               </xsl:for-each>
               <xsl:copy-of
 		  select="$stage2/stage2/elementSpec[@mode='delete' and @module=current-grouping-key()]"/>
-              <xsl:apply-templates select="$stage2/stage2/classSpec[@module=current-grouping-key()]"/>
+	      <xsl:apply-templates 
+		  select="$stage2/stage2/classSpec[@module=current-grouping-key()]"/>
             </xsl:for-each-group>
             <xsl:for-each select="$stage2/stage2/elementSpec[@mode='add']">
               <xsl:text>
@@ -618,6 +624,7 @@ valList
   <!-- ignore elementSpec @mode='delete' -->
   <xsl:template match="elementSpec[@mode='delete']"  mode="stage3"/>
   <xsl:template match="classSpec[@mode='delete']"  mode="stage3">
+ <xsl:message>look at <xsl:value-of select="@ident"/></xsl:message>
     <xsl:copy>
       <xsl:copy-of select="@ident"/>
       <xsl:copy-of select="@module"/>

@@ -93,7 +93,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
       <xsl:variable name="documentationLanguage">
-         <xsl:call-template name="generateDoc"/>
+         <xsl:call-template name="generateDocumentationLang"/>
       </xsl:variable>
       <xsl:if test="$verbose='true'">
          <xsl:message> 
