@@ -283,7 +283,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <!-- figures -->
   <xsl:template match="tei:figure">
-    <xsl:call-template name="startHook"/>
     <text:p text:style-name="Standard">
       <xsl:call-template name="test.id"/>
       <xsl:apply-templates select="tei:graphic"/>
@@ -301,7 +300,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates select="tei:head" mode="show"/>
       </text:p>
     </xsl:if>
-    <xsl:call-template name="endHook"/>
   </xsl:template>
   <xsl:template match="tei:graphic">
     <xsl:variable name="id">
@@ -351,12 +349,12 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$filename and  ( ($origwidth and $origheight) or (@width and @height))">
         <!-- work out page width / height and subtract 1inch on all sides -->
         <xsl:variable name="pageWidth">
-          <xsl:for-each select="document(concat($outputDir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
+          <xsl:for-each select="document(concat($outputDir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout[1]/style:page-layout-properties">
             <xsl:value-of select="number(tei:convert-dim-pt(@fo:page-width) - 144)"/>
           </xsl:for-each>
         </xsl:variable>
         <xsl:variable name="pageHeight">
-          <xsl:for-each select="document(concat($outputDir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout/style:page-layout-properties">
+          <xsl:for-each select="document(concat($outputDir,'/styles.xml'))/office:document-styles/office:automatic-styles/style:page-layout[1]/style:page-layout-properties">
             <xsl:value-of select="number(tei:convert-dim-pt(@fo:page-height) - 144)"/>
           </xsl:for-each>
         </xsl:variable>
@@ -441,7 +439,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-        <!--
+<!--
 <xsl:message>
   <xsl:for-each select="@*">
     - @<xsl:value-of select="name(.)"/>: <xsl:value-of select="."/>
@@ -561,14 +559,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:caesura">
     <xsl:text>   </xsl:text>
   </xsl:template>
-  <xsl:template match="tei:q">
-    <text:span text:style-name="q">
-      <xsl:text>‘</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>’</xsl:text>
-    </text:span>
-  </xsl:template>
-  <xsl:template match="tei:q">
+  <xsl:template match="tei:q[not(tei:l)]">
     <text:span text:style-name="q">
       <xsl:text>‘</xsl:text>
       <xsl:apply-templates/>
@@ -700,22 +691,18 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:index"/>
   <xsl:template match="tei:eg">
-    <xsl:call-template name="startHook"/>
     <xsl:call-template name="Literal">
       <xsl:with-param name="Text">
         <xsl:value-of select="."/>
       </xsl:with-param>
     </xsl:call-template>
-    <xsl:call-template name="endHook"/>
   </xsl:template>
   <xsl:template match="teix:egXML">
-    <xsl:call-template name="startHook"/>
     <xsl:call-template name="Literal">
       <xsl:with-param name="Text">
         <xsl:apply-templates mode="verbatim"/>
       </xsl:with-param>
     </xsl:call-template>
-    <xsl:call-template name="endHook"/>
   </xsl:template>
   <!-- safest to drop comments entirely, I think -->
   <xsl:template match="comment()"/>
@@ -744,10 +731,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:l">
     <xsl:choose>
-      <xsl:when test="parent::tei:q">
-        <xsl:apply-templates/>
-        <text:line-break/>
-      </xsl:when>
       <xsl:when test="parent::tei:lg">
         <xsl:apply-templates/>
         <text:line-break/>
@@ -802,6 +785,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
+  <xsl:template match="tei:quote">
+    <text:p text:style-name="Quote">
+      <xsl:apply-templates/>
+    </text:p>
+  </xsl:template>
   <xsl:template match="tei:ab">
     <text:p>
       <xsl:apply-templates/>
@@ -809,7 +797,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <!-- tables-->
   <xsl:template match="tei:table">
-    <xsl:call-template name="startHook"/>
     <xsl:variable name="tablenum">
       <xsl:choose>
         <xsl:when test="@xml:id">
@@ -830,7 +817,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:apply-templates select="tei:head" mode="show"/>
       </text:p>
     </xsl:if>
-    <xsl:call-template name="endHook"/>
   </xsl:template>
   <xsl:template match="tei:row[@role='label']">
     <table:table-header-rows>
@@ -1504,34 +1490,6 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
     </text:a>
-  </xsl:template>
-  <xsl:template name="startHook">
-    <xsl:choose>
-      <xsl:when test="self::tei:list and parent::tei:item">
-        <xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
-        <xsl:text disable-output-escaping="yes">&lt;/text:list&gt;</xsl:text>
-      </xsl:when>
-      <xsl:when test="parent::tei:p">
-        <xsl:text disable-output-escaping="yes">&lt;/text:p&gt;</xsl:text>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template name="endHook">
-    <xsl:choose>
-      <xsl:when test="self::tei:list and parent::tei:item">
-        <xsl:text disable-output-escaping="yes">&lt;text:list
-	</xsl:text>
-        <xsl:choose>
-          <xsl:when test="parent::tei:list[@type='ordered']">
-	  </xsl:when>
-        </xsl:choose>
-        <xsl:text>&gt;</xsl:text>
-        <xsl:text disable-output-escaping="yes">&lt;text:p  text:style-name="List Contents&gt;</xsl:text>
-      </xsl:when>
-      <xsl:when test="parent::tei:p">
-        <xsl:text disable-output-escaping="yes">&lt;text:p&gt;</xsl:text>
-      </xsl:when>
-    </xsl:choose>
   </xsl:template>
   <xsl:template name="generateRevDate">
     <xsl:variable name="when">
