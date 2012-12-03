@@ -549,7 +549,7 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:otherwise>
 	       <xsl:element name="{$linkElement}"
 			    namespace="{$linkElementNamespace}">
-		 <xsl:if test="@xml:id">
+		 <xsl:if test="(self::tei:ptr or self::tei:ref) and @xml:id">
 		   <xsl:attribute name="id" select="@xml:id"/>
 		 </xsl:if>
 		 <xsl:if test="$outputTarget='odt'">
