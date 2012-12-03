@@ -549,6 +549,9 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:otherwise>
 	       <xsl:element name="{$linkElement}"
 			    namespace="{$linkElementNamespace}">
+		 <xsl:if test="@xml:id">
+		   <xsl:attribute name="id" select="@xml:id"/>
+		 </xsl:if>
 		 <xsl:if test="$outputTarget='odt'">
 		   <xsl:attribute name="type" namespace="{$linkAttributeNamespace}">simple</xsl:attribute>
 		 </xsl:if>
