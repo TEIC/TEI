@@ -414,6 +414,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="class">link_<xsl:value-of select="local-name(.)"/>
       </xsl:param>
       <xsl:element name="{$linkElement}" namespace="{$linkElementNamespace}">
+	<xsl:if test="(self::tei:ptr or self::tei:ref) and @xml:id">
+	  <xsl:attribute name="id" select="@xml:id"/>
+	</xsl:if>
 	<xsl:call-template name="makeRendition">
 	  <xsl:with-param name="default" select="$class"/>
 	</xsl:call-template>
@@ -552,6 +555,9 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:if test="(self::tei:ptr or self::tei:ref) and @xml:id">
 		   <xsl:attribute name="id" select="@xml:id"/>
 		 </xsl:if>
+		 <xsl:call-template name="makeRendition">
+		   <xsl:with-param name="default" select="$class"/>
+		 </xsl:call-template>		 
 		 <xsl:if test="$outputTarget='odt'">
 		   <xsl:attribute name="type" namespace="{$linkAttributeNamespace}">simple</xsl:attribute>
 		 </xsl:if>
@@ -559,9 +565,6 @@ of this software, even if advised of the possibility of such damage.
 				 namespace="{$linkAttributeNamespace}"
 				 select="$eventualtarget"/>
 		 <xsl:call-template name="htmlAttributes"/>
-		 <xsl:call-template name="makeRendition">
-		   <xsl:with-param name="default" select="$class"/>
-		 </xsl:call-template>		 
 		 <xsl:for-each select="id($W)">
 		     <xsl:choose>
 		       <xsl:when test="starts-with(local-name(.),'div')">
