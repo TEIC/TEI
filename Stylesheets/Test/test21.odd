@@ -68,7 +68,7 @@
 	     </attDef>
 	   </attList>
 	 </elementSpec>
-	 <elementSpec ident="p" mode="change">
+	 <elementSpec ident="ab" mode="change">
 	   <attList>
 	     <attDef ident="corresp" mode="change">
 	       <datatype>
@@ -211,6 +211,23 @@
 	   <attList>
 	     <attDef ident="type" mode="change" usage="req"/>
 	   </attList>
+	 </elementSpec>
+
+	 <!-- using anyName -->
+	 <elementSpec ident="p" module="core" mode="change">
+	   <content>
+	     <rng:ref name="macro.paraContent"/>
+	     <rng:zeroOrMore>
+	       <rng:element>
+		 <rng:anyName/>
+		 <rng:zeroOrMore>
+		   <rng:attribute>
+		     <rng:anyName/>
+		   </rng:attribute>
+		 </rng:zeroOrMore>
+	       </rng:element>
+	     </rng:zeroOrMore>  
+	   </content>	   
 	 </elementSpec>
 
        </schemaSpec>

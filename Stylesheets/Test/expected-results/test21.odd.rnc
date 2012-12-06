@@ -1593,27 +1593,11 @@ p =
   ## (paragraph) marks paragraphs in prose. [3.1.  7.2.5. ]
   element p {
     macro.paraContent,
-    att.global.attribute.xmlid,
-    att.global.attribute.xmllang,
-    att.global.attribute.rend,
-    att.global.attribute.style,
-    att.global.attribute.rendition,
-    att.global.attribute.xmlbase,
-    att.global.attribute.xmlspace,
-    att.global.linking.attribute.synch,
-    att.global.linking.attribute.sameAs,
-    att.global.linking.attribute.copyOf,
-    att.global.linking.attribute.next,
-    att.global.linking.attribute.prev,
-    att.global.linking.attribute.exclude,
-    att.global.linking.attribute.select,
-    att.global.facs.attribute.facs,
-    att.global.change.attribute.change,
+    element * {
+      attribute * { text }*
+    }*,
+    att.global.attributes,
     att.declaring.attributes,
-    
-    ## (corresponds) points to elements that correspond to the current
-    ##       element in some way.
-    attribute corresp { xsd:integer }?,
     empty
   }
 foreign =
@@ -4672,9 +4656,28 @@ ab =
   ## (anonymous block) contains any arbitrary component-level unit of text, acting as an anonymous container for phrase or inter level elements analogous to, but without the semantic baggage of, a paragraph. [16.3. ]
   element ab {
     macro.paraContent,
-    att.global.attributes,
+    att.global.attribute.xmlid,
+    att.global.attribute.xmllang,
+    att.global.attribute.rend,
+    att.global.attribute.style,
+    att.global.attribute.rendition,
+    att.global.attribute.xmlbase,
+    att.global.attribute.xmlspace,
+    att.global.linking.attribute.synch,
+    att.global.linking.attribute.sameAs,
+    att.global.linking.attribute.copyOf,
+    att.global.linking.attribute.next,
+    att.global.linking.attribute.prev,
+    att.global.linking.attribute.exclude,
+    att.global.linking.attribute.select,
+    att.global.facs.attribute.facs,
+    att.global.change.attribute.change,
     att.typed.attributes,
     att.declaring.attributes,
+    
+    ## (corresponds) points to elements that correspond to the current
+    ##       element in some way.
+    attribute corresp { xsd:integer }?,
     
     ## specifies whether or not the block is complete. 
     [ a:defaultValue = "N" ]

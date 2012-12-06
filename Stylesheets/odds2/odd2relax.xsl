@@ -404,9 +404,8 @@ of this software, even if advised of the possibility of such damage.
 
 
 <!-- pass 2, clean up unused elements -->
-  <xsl:template
-      match="rng:anyName[parent::rng:define]"
-      mode='pass2'>
+  <xsl:template  match="rng:anyName[parent::rng:define]"
+		 mode='pass2'>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
       <choice>
 	<xsl:for-each select="key('EDEF',1)">	  
@@ -485,6 +484,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:variable>
       <xsl:choose>
 	<xsl:when test="$Contents//rng:text or $Contents//rng:ref or
+			$Contents//rng:anyName or
+			$Contents//rng:attribute or
 			$Contents//rng:data or $Contents//rng:name or $Contents//rng:value">
 	  <xsl:copy-of select="$Contents"/>
 	</xsl:when>
