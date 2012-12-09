@@ -41,6 +41,15 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
+      <desc>Whether it should be attempted to make quotes into block
+      quotes if they are over a certain length</desc></doc>
+  <xsl:param name="autoBlockQuote">false</xsl:param>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="integer">
+      <desc>Length beyond which a quote is a block quote</desc></doc>
+  <xsl:param name="autoBlockQuoteLength">150</xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether a section is "identifiable"</desc>
   </doc>
@@ -173,6 +182,17 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
+        <xsl:when test="tei:figure or tei:lg or tei:l or tei:p or tei:bibl or tei:sp or tei:floatingText">false</xsl:when>
+	<xsl:when test="parent::tei:div">false</xsl:when>
+	<xsl:when test="parent::tei:titlePage">false</xsl:when>
+	<xsl:when test="parent::tei:cit[@rend='display']">false</xsl:when>
+	<xsl:when test="parent::tei:cit and (tei:p or tei:l)">false</xsl:when>
+	<xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">false</xsl:when>
+	<xsl:when test="parent::tei:body">false</xsl:when>
+	<xsl:when test="parent::tei:titlePage">false</xsl:when>
+	<xsl:when test="@rend='inline'">true</xsl:when>
+	<xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
+        <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
         <xsl:when test="self::mml:math">true</xsl:when>
         <xsl:when test="self::tei:abbr">true</xsl:when>
         <xsl:when test="self::tei:affiliation">true</xsl:when>
@@ -229,13 +249,10 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:name">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:biblStruct]">true</xsl:when>
         <xsl:when test="self::tei:note[parent::tei:bibl]">true</xsl:when>
-        <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
-        <xsl:when test="self::tei:note">true</xsl:when>
         <xsl:when test="self::tei:num">true</xsl:when>
         <xsl:when test="self::tei:orgName">true</xsl:when>
         <xsl:when test="self::tei:orig">true</xsl:when>
         <xsl:when test="self::tei:origDate">true</xsl:when>
-        <xsl:when test="self::tei:origPlace">true</xsl:when>
         <xsl:when test="self::tei:origPlace">true</xsl:when>
         <xsl:when test="self::tei:pc">true</xsl:when>
         <xsl:when test="self::tei:pb">true</xsl:when>
@@ -244,16 +261,18 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:ptr">true</xsl:when>
         <xsl:when test="self::tei:publisher">true</xsl:when>
         <xsl:when test="self::tei:pubPlace">true</xsl:when>
+        <xsl:when test="self::tei:note">true</xsl:when>
         <xsl:when test="self::tei:q[tei:l]">false</xsl:when>
-        <xsl:when test="self::tei:q[tei:figure or tei:p or tei:note or
-			tei:bibl or tei:sp or tei:floatingText]">false</xsl:when>
+	<xsl:when test="self::tei:quote and tei:lb">false</xsl:when>
+	<xsl:when test="self::tei:quote and $autoBlockQuote='true' and string-length(.)&gt;$autoBlockQuoteLength">false</xsl:when>
         <xsl:when test="self::tei:q">true</xsl:when>
-        <xsl:when test="self::tei:said">true</xsl:when>
+        <xsl:when test="self::tei:quote">true</xsl:when>
         <xsl:when test="self::tei:ref">true</xsl:when>
         <xsl:when test="self::tei:region">true</xsl:when>
         <xsl:when test="self::tei:repository">true</xsl:when>
         <xsl:when test="self::tei:roleName">true</xsl:when>
         <xsl:when test="self::tei:rubric">true</xsl:when>
+        <xsl:when test="self::tei:said">true</xsl:when>
         <xsl:when test="self::tei:seg">true</xsl:when>
         <xsl:when test="self::tei:sic">true</xsl:when>
         <xsl:when test="self::tei:settlement">true</xsl:when>
@@ -282,31 +301,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Is given an element and says whether the context is at the
-    level of a block</desc>
+    <desc>Returns the current date.</desc>
   </doc>
-  <xsl:function name="tei:blockContext" as="xs:boolean">
-    <xsl:param name="element"/>
-    <xsl:for-each select="$element">
-      <xsl:choose>
-	<xsl:when test="parent::tei:note[@place='foot'] and self::tei:gap">false</xsl:when>
-	<xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">true</xsl:when>
-	<xsl:when test="parent::tei:body">true</xsl:when>
-	<xsl:when test="tei:floatingText">true</xsl:when>
-	<xsl:when test="parent::tei:div">true</xsl:when>
-	<xsl:when test="parent::tei:titlePage">true</xsl:when>
-	<xsl:otherwise>false</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
+  <xsl:function name="tei:whatsTheDate">
+    <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
   </xsl:function>
-
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-		Returns the current date.</desc></doc>
-
-	  <xsl:function name="tei:whatsTheDate">
-        <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
-    </xsl:function>
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -324,5 +323,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
 
 </xsl:stylesheet>

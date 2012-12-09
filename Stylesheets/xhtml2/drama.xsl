@@ -229,7 +229,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element stage</desc>
    </doc>
   <xsl:template match="tei:stage">
-    <xsl:element name="{if (tei:blockContext(.) or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
+    <xsl:element name="{if (not(tei:is-inline(.)) or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default">
 	  <xsl:choose>

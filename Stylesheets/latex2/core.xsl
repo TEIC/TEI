@@ -737,13 +737,13 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elementq</desc>
    </doc>
-  <xsl:template match="tei:q">
+  <xsl:template match="tei:q|tei:said">
       <xsl:choose>
-         <xsl:when test="tei:p"> \begin{quote}<xsl:apply-templates/> \end{quote} </xsl:when>
-         <xsl:when test="tei:text">
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:when test="tei:lg"> \begin{quote}<xsl:apply-templates/> \end{quote} </xsl:when>
+	<xsl:when test="not(tei:is-inline(.))">
+	  <xsl:text>&#10;\begin{quote}</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>\end{quote}&#10;</xsl:text>
+	</xsl:when>
          <xsl:otherwise>
 	   <xsl:call-template name="makeQuote"/>
          </xsl:otherwise>
@@ -758,20 +758,13 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="parent::tei:cit">
 	  <xsl:apply-templates/>
 	</xsl:when>
-	<xsl:when test="@rend='inline'">
-	  <xsl:value-of select="$preQuote"/>
-	  <xsl:apply-templates/>
-	  <xsl:value-of select="$postQuote"/>
-	</xsl:when>
-	<xsl:when test="@rend='display' or tei:p or tei:l or string-length(.)&gt;150">
+	<xsl:when test="not(tei:is-inline(.))">
 	  <xsl:text>\begin{quote}</xsl:text>
 	  <xsl:apply-templates/>
 	  <xsl:text>\end{quote}</xsl:text>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:value-of select="$preQuote"/>
-	  <xsl:apply-templates/>
-	  <xsl:value-of select="$postQuote"/>
+	   <xsl:call-template name="makeQuote"/>
 	</xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -789,12 +782,6 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element q with @rend='display'</desc>
    </doc>
-  <xsl:template match="tei:q[@rend='display']"> 
-      <xsl:text>&#10;\begin{quote}&#10;</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>\end{quote}&#10;</xsl:text>
-  </xsl:template>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element ref[@type='cite']</desc>
    </doc>

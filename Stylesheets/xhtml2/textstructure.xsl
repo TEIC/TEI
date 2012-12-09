@@ -109,7 +109,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:choose>
        <!-- there are various choices of how to proceed, driven by
 	    
-	    $pageLayout: Simple, CSS, Table
+	    $pageLayout: Simple, CSS
 	    
 	    $STDOUT: true or false
 	    
@@ -118,13 +118,13 @@ of this software, even if advised of the possibility of such damage.
 	    $requestedID: requests a particular page
        -->
        <!-- we are making a composite layout and there is a TEI or teiCorpus element -->
-       <xsl:when test="($pageLayout = 'CSS' or $pageLayout = 'Table') and (tei:TEI or tei:teiCorpus)">
+       <xsl:when test="($pageLayout = 'CSS') and (tei:TEI or tei:teiCorpus)">
 	 <xsl:if test="$verbose='true'">
 	   <xsl:message>case 1: pageLayout <xsl:value-of select="$pageLayout"/>
 	   </xsl:message>
 	 </xsl:if>
 	 <xsl:for-each select="tei:TEI|tei:teiCorpus">
-	   <xsl:call-template name="doPageTable">
+	   <xsl:call-template name="doPage">
 	     <xsl:with-param name="currentID" select="$requestedID"/>
 	   </xsl:call-template>
 	 </xsl:for-each>
@@ -316,7 +316,7 @@ of this software, even if advised of the possibility of such damage.
                      <xsl:with-param name="style" select="'toclist'"/>
                   </xsl:call-template>
                </xsl:when>
-               <xsl:when test="starts-with(local-name(),'div') and      $pageLayout='Table'      or      $pageLayout='CSS'">
+               <xsl:when test="starts-with(local-name(),'div')   or      $pageLayout='CSS'">
                   <xsl:call-template name="doDivBody">
 		    <xsl:with-param name="Depth">2</xsl:with-param>
 		    <xsl:with-param name="nav">true</xsl:with-param>
@@ -739,13 +739,6 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:with-param>
 	    </xsl:call-template>
 	  </xsl:when>
-	  <xsl:when test="$pageLayout='Table'">
-	    <xsl:call-template name="pageLayoutTable">
-	      <xsl:with-param name="currentID">
-		<xsl:apply-templates mode="ident" select="."/>
-	      </xsl:with-param>
-	    </xsl:call-template>
-	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:call-template name="writeDiv"/>
 	  </xsl:otherwise>
@@ -1101,7 +1094,7 @@ of this software, even if advised of the possibility of such damage.
                <xsl:variable name="currentID">
                   <xsl:apply-templates mode="ident" select="."/>
                </xsl:variable>
-               <xsl:call-template name="doPageTable">
+               <xsl:call-template name="doPage">
                   <xsl:with-param name="currentID" select="$currentID"/>
                </xsl:call-template>
             </xsl:for-each>
@@ -1109,77 +1102,55 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] <param name="currentID">currentID</param>
+      <desc>[html] make an output page for ID <param name="currentID">currentID</param>
       </desc>
    </doc>
-  <xsl:template name="doPageTable">
-      <xsl:param name="currentID"/>
-      <xsl:variable name="BaseFile">
-         <xsl:value-of select="$masterFile"/>
-         <xsl:call-template name="addCorpusID"/>
-      </xsl:variable>
-      <xsl:choose>
-         <xsl:when test="$STDOUT='true'">
-	           <xsl:choose>
-	              <xsl:when test="$pageLayout='CSS'">
-                  <xsl:call-template name="pageLayoutCSS">
-                     <xsl:with-param name="currentID" select="$currentID"/>
-                  </xsl:call-template>
-               </xsl:when>
-               <xsl:when test="$pageLayout='Table'">
-                  <xsl:call-template name="pageLayoutTable">
-                     <xsl:with-param name="currentID" select="$currentID"/>
-                  </xsl:call-template>
-               </xsl:when>
-            </xsl:choose>
-         </xsl:when>
-         <xsl:otherwise>
-
-
-	           <xsl:variable name="outName">
-	              <xsl:call-template name="outputChunkName">
-	                 <xsl:with-param name="ident">
-	                    <xsl:choose>
-		                      <xsl:when test="not($currentID='')">
-		                         <xsl:value-of select="$currentID"/>
-		                      </xsl:when>
-		                      <xsl:otherwise>
-		                         <xsl:value-of select="$BaseFile"/>
-	                       </xsl:otherwise>
-	                    </xsl:choose>
-	                 </xsl:with-param>
-	              </xsl:call-template>
-	           </xsl:variable>
-	
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>Opening file <xsl:value-of select="$outName"/>
-               </xsl:message>
-	           </xsl:if>
-	           <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
-                                 encoding="{$outputEncoding}"
-                                 href="{$outName}"
-                                 method="{$outputMethod}">
-	              <xsl:choose>
-	                 <xsl:when test="$pageLayout='CSS'">
-		                   <xsl:call-template name="pageLayoutCSS">
-		                      <xsl:with-param name="currentID" select="$currentID"/>
-		                   </xsl:call-template>
-	                 </xsl:when>
-	                 <xsl:when test="$pageLayout='Table'">
-		                   <xsl:call-template name="pageLayoutTable">
-		                      <xsl:with-param name="currentID" select="$currentID"/>
-		                   </xsl:call-template>
-	                 </xsl:when>
-	              </xsl:choose>
-	           </xsl:result-document>
-	
-	           <xsl:if test="$verbose='true'">
-	              <xsl:message>Closing file <xsl:value-of select="$outName"/>
-               </xsl:message>
-	           </xsl:if>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
+   <xsl:template name="doPage">
+     <xsl:param name="currentID"/>
+     <xsl:variable name="BaseFile">
+       <xsl:value-of select="$masterFile"/>
+       <xsl:call-template name="addCorpusID"/>
+     </xsl:variable>
+     <xsl:choose>
+       <xsl:when test="$STDOUT='true'">
+	 <xsl:call-template name="pageLayoutCSS">
+	   <xsl:with-param name="currentID" select="$currentID"/>
+	 </xsl:call-template>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:variable name="outName">
+	   <xsl:call-template name="outputChunkName">
+	     <xsl:with-param name="ident">
+	       <xsl:choose>
+		 <xsl:when test="not($currentID='')">
+		   <xsl:value-of select="$currentID"/>
+		 </xsl:when>
+		 <xsl:otherwise>
+		   <xsl:value-of select="$BaseFile"/>
+		 </xsl:otherwise>
+	       </xsl:choose>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	 </xsl:variable>	
+	 <xsl:if test="$verbose='true'">
+	   <xsl:message>Opening file <xsl:value-of select="$outName"/>
+	   </xsl:message>
+	 </xsl:if>
+	 <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}"
+			      encoding="{$outputEncoding}"
+			      href="{$outName}"
+			      method="{$outputMethod}">
+	   <xsl:call-template name="pageLayoutCSS">
+	     <xsl:with-param name="currentID" select="$currentID"/>
+	   </xsl:call-template>
+	 </xsl:result-document>	
+	 <xsl:if test="$verbose='true'">
+	   <xsl:message>Closing file <xsl:value-of select="$outName"/>
+	   </xsl:message>
+	 </xsl:if>
+       </xsl:otherwise>
+     </xsl:choose>
+   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>plain text version of title for div [html] </desc>
@@ -2057,108 +2028,7 @@ of this software, even if advised of the possibility of such damage.
       </html>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] Generate a page using table layout<param name="currentID">currentID</param>
-      </desc>
-   </doc>
-  <xsl:template name="pageLayoutTable">
-      <xsl:param name="currentID"/>
-      <html>
-         <xsl:call-template name="addLangAtt"/>
-         <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (1)</xsl:comment>
-         <xsl:text>&#10;</xsl:text>
-         <head>
-            <xsl:variable name="pagetitle">
-               <xsl:choose>
-                  <xsl:when test="$currentID=''">
-                     <xsl:call-template name="generateTitle"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                     <xsl:call-template name="generateTitle"/>: <xsl:choose>
-                        <xsl:when test="count(id($currentID))&gt;0">
-                           <xsl:for-each select="id($currentID)">
-                              <xsl:apply-templates mode="xref" select="."/>
-                           </xsl:for-each>
-                        </xsl:when>
-                        <xsl:otherwise>
-                           <xsl:apply-templates mode="xpath" select="descendant-or-self::tei:TEI/tei:text">
-                              <xsl:with-param name="xpath" select="$currentID"/>
-                              <xsl:with-param name="action" select="'header'"/>
-                           </xsl:apply-templates>
-                        </xsl:otherwise>
-                     </xsl:choose>
-                  </xsl:otherwise>
-               </xsl:choose>
-            </xsl:variable>
-            <title>
-               <xsl:value-of select="$htmlTitlePrefix"/>
-               <xsl:value-of select="$pagetitle"/>
-            </title>
-            <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
-            <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-            <xsl:call-template name="headHook"/>
-            <xsl:call-template name="metaHTML">
-               <xsl:with-param name="title" select="$pagetitle"/>
-            </xsl:call-template>
-            <xsl:call-template name="includeCSS"/>
-            <xsl:call-template name="cssHook"/>
-            <xsl:call-template name="includeJavascript"/>
-            <xsl:call-template name="javascriptHook"/>
-         </head>
-         <body class="pagetable">
-            <xsl:call-template name="bodyMicroData"/>
-            <xsl:call-template name="bodyJavascriptHook"/>
-	    <xsl:call-template name="bodyHook"/>
-            <xsl:call-template name="pageHeader">
-               <xsl:with-param name="mode">table</xsl:with-param>
-            </xsl:call-template>
-            <xsl:call-template name="pageLayoutTableBody">
-               <xsl:with-param name="currentID" select="$currentID"/>
-            </xsl:call-template>
-            <xsl:call-template name="bodyEndHook"/>
-         </body>
-      </html>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] The page body, when using table layout<param name="currentID">currentID</param>
-      </desc>
-   </doc>
-  <xsl:template name="pageLayoutTableBody">
-      <xsl:param name="currentID"/>
-      <table>
-         <tr>
-            <td class="hdr" colspan="2">
-               <xsl:call-template name="hdr"/>
-            </td>
-         </tr>
-         <tr>
-            <td class="hdr2" colspan="2">
-               <xsl:call-template name="hdr2"/>
-            </td>
-         </tr>
-         <tr>
-            <td class="hdr3" colspan="2">
-               <xsl:call-template name="hdr3"/>
-            </td>
-         </tr>
-         <tr>
-            <td align="left" class="sidetext" rowspan="2" style="vertical-align:top;" width="{$linksWidth}">
-               <xsl:call-template name="searchbox"/>
-               <xsl:call-template name="leftHandFrame">
-                  <xsl:with-param name="currentID" select="$requestedID"/>
-               </xsl:call-template>
-            </td>
-         </tr>
-         <tr>
-            <td class="maintext" colspan="2" style="vertical-align:top;">
-               <xsl:call-template name="mainFrame">
-                  <xsl:with-param name="currentID" select="$currentID"/>
-               </xsl:call-template>
-            </td>
-         </tr>
-      </table>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>[html] create a link to previous section</desc>
    </doc>
   <xsl:template name="previousLink">
       <xsl:variable name="myName">

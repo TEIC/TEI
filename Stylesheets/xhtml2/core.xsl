@@ -191,7 +191,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="tei:blockContext(.)">
+      <xsl:when test="not(tei:is-inline(.))">
         <div class="biblfree">
           <xsl:apply-templates/>
         </div>
@@ -282,9 +282,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="@rend='display'">
         <blockquote>
-          <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="auto">quote</xsl:with-param>
-	  </xsl:call-template>
+          <xsl:call-template name="makeRendition"/>
           <xsl:variable name="contents">
             <xsl:if test="@n">
               <xsl:text>(</xsl:text>
@@ -470,7 +468,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element gap</desc>
   </doc>
   <xsl:template match="tei:gap">
-    <xsl:element name="{if (tei:blockContext(.)) then 'div' else 'span'}">
+    <xsl:element name="{if (not(tei:is-inline(.))) then 'div' else 'span'}">
       <xsl:attribute name="class">gap</xsl:attribute>
       <xsl:if test="tei:desc">
         <xsl:attribute name="title">
@@ -833,7 +831,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:list">
     <xsl:if test="tei:head">
-      <xsl:element name="{if (tei:blockContext(.)) then 'div' else 'span' }">
+      <xsl:element name="{if (not(tei:is-inline(.))) then 'div' else 'span' }">
         <xsl:attribute name="class">listhead</xsl:attribute>
         <xsl:apply-templates select="tei:head"/>
       </xsl:element>
@@ -1146,9 +1144,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
-          <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="auto">quote</xsl:with-param>
-	  </xsl:call-template>
+          <xsl:call-template name="makeRendition"/>
           <xsl:choose>
             <xsl:when test="$outputTarget='html5'">
               <xsl:apply-templates/>
@@ -1377,51 +1373,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element p</desc>
   </doc>
   <xsl:template match="tei:p">
-    <xsl:variable name="wrapperElement">
-      <xsl:choose>
-        <xsl:when test="tei:specList">div</xsl:when>
-        <xsl:when test="parent::tei:figure and (tei:q/tei:l or tei:figure or parent::tei:figure/parent::tei:div)">div</xsl:when>
-        <xsl:when test="parent::tei:figure">span</xsl:when>
-        <xsl:when test="parent::tei:head or    parent::tei:q/parent::tei:head or    parent::tei:note[@place='margin']/parent::tei:head">span</xsl:when>
-        <xsl:when test="ancestor::tei:notesStmt">div</xsl:when>
-        <xsl:when test="tei:table">div</xsl:when>
-        <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
-        <xsl:when test="$outputTarget='epub' or $outputTarget='epub3'">div</xsl:when>
-        <xsl:when test="tei:eg">div</xsl:when>
-        <xsl:when test="tei:figure">div</xsl:when>
-        <xsl:when test="tei:floatingText">div</xsl:when>
-        <xsl:when test="tei:l">div</xsl:when>
-        <xsl:when test="tei:list">div</xsl:when>
-        <xsl:when test="tei:moduleSpec">div</xsl:when>
-        <xsl:when test="tei:note[@place='display']">div</xsl:when>
-        <xsl:when test="tei:note[@place='margin']">div</xsl:when>
-        <xsl:when test="tei:note[tei:q]">div</xsl:when>
-        <xsl:when test="tei:q/tei:figure">div</xsl:when>
-        <xsl:when test="tei:q/tei:list">div</xsl:when>
-        <xsl:when test="tei:q[@rend='display']">div</xsl:when>
-        <xsl:when test="tei:q[@rend='inline' and tei:note/@place]">div</xsl:when>
-        <xsl:when test="tei:q[tei:l]">div</xsl:when>
-        <xsl:when test="tei:q[tei:lg]">div</xsl:when>
-        <xsl:when test="tei:q[tei:p]">div</xsl:when>
-        <xsl:when test="tei:q[tei:sp]">div</xsl:when>
-        <xsl:when test="tei:q[tei:floatingText]">div</xsl:when>
-        <xsl:when test="tei:quote">div</xsl:when>
-        <xsl:when test="tei:specGrp">div</xsl:when>
-        <xsl:when test="tei:specGrpRef">div</xsl:when>
-        <xsl:when test="tei:specList">div</xsl:when>
-        <xsl:when test="tei:table">div</xsl:when>
-        <xsl:when test="teix:egXML">div</xsl:when>
-        <xsl:when test="ancestor::tei:floatingText">div</xsl:when>
-        <xsl:when test="ancestor::tei:closer">div</xsl:when>
-        <xsl:when test="parent::tei:p">div</xsl:when>
-        <xsl:when test="parent::tei:q">div</xsl:when>
-        <xsl:when test="parent::tei:note">div</xsl:when>
-        <xsl:when test="parent::tei:remarks">div</xsl:when>
-        <xsl:otherwise>
-          <xsl:text>p</xsl:text>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
+    <xsl:variable name="wrapperElement" select="tei:is-DivOrP(.)"/>
     <xsl:choose>
       <xsl:when test="$filePerPage='true'">
         <xsl:for-each-group select="node()" group-starting-with="tei:pb">
@@ -1514,7 +1466,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:q[not(@place) and tei:l]">
     <xsl:choose>
-      <xsl:when test="tei:blockContext(.)">
+      <xsl:when test="not(tei:is-inline(.))">
         <div class="blockquote">
           <xsl:apply-templates/>
         </div>
@@ -1526,29 +1478,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
-      <xsl:when test="parent::tei:q/tei:note[@place='bottom']">
-        <span class="inlineq">
-          <xsl:call-template name="makeQuote"/>
-        </span>
-      </xsl:when>
-      <xsl:when test="parent::tei:note[@place='bottom'] and not(*)">
-        <span class="inlineq">
-          <xsl:call-template name="makeQuote"/>
-        </span>
-      </xsl:when>
-      <xsl:when test="tei:blockContext(.)">
-        <div>
-	  <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="auto">blockquote</xsl:with-param>
-	  </xsl:call-template>
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
-      <xsl:when test="parent::tei:q[@rend=current()/@rend] or parent::tei:hi or ancestor::tei:head">
-        <span class="inlineq {@rend}">
-          <xsl:call-template name="makeQuote"/>
-        </span>
-      </xsl:when>
       <xsl:when test="not(tei:is-inline(.)) or *[not(tei:is-inline(.))]">
         <div>
 	  <xsl:call-template name="makeRendition">
@@ -1557,64 +1486,15 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@rend='display'">
-        <p>
-	  <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="auto">blockquote</xsl:with-param>
-	  </xsl:call-template>
-          <xsl:apply-templates/>
-        </p>
-      </xsl:when>
-      <xsl:when test="tei:lg">
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:when test="@rend or @rendition or @style">
-	<span>
-	  <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="auto">q</xsl:with-param>
-	  </xsl:call-template>
-          <xsl:apply-templates/>
-        </span>
-      </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="makeQuote"/>
+        <span>
+	  <xsl:call-template name="makeRendition"/>
+          <xsl:call-template name="makeQuote"/>
+        </span>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element q[@rend='display']</desc>
-  </doc>
-  <xsl:template match="tei:q[@rend='display']">
-    <blockquote>
-      <xsl:call-template name="makeRendition">
-	<xsl:with-param name="auto">quote</xsl:with-param>
-      </xsl:call-template>
-      <xsl:choose>
-        <xsl:when test="tei:p">
-          <xsl:apply-templates/>
-        </xsl:when>
-        <xsl:when test="$outputTarget='html5'">
-          <xsl:apply-templates/>
-        </xsl:when>
-        <xsl:otherwise>
-          <p>
-            <xsl:apply-templates/>
-          </p>
-        </xsl:otherwise>
-      </xsl:choose>
-    </blockquote>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element q[@rend='eg']</desc>
-  </doc>
-  <xsl:template match="tei:q[@rend='eg']">
-    <div>
-      <xsl:if test="$cssFile">
-        <xsl:attribute name="class">eg</xsl:attribute>
-      </xsl:if>
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element quote</desc>
   </doc>
@@ -1626,19 +1506,9 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </div>
       </xsl:when>
-      <xsl:when test="@rend='quoted'">
-        <span class="quote_inline">
-          <xsl:value-of select="$preQuote"/>
-          <xsl:apply-templates/>
-          <xsl:value-of select="$postQuote"/>
-        </span>
-      </xsl:when>
-      <xsl:when test="@rend='display' or @rend='block' or tei:lg or tei:lb or tei:p or tei:l or
-		      ($autoBlockQuote='true' and string-length(.)&gt;$autoBlockQuoteLength)">
+      <xsl:when test="not(tei:is-inline(.))">
         <blockquote>
-          <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="auto">quote</xsl:with-param>
-	  </xsl:call-template>
+          <xsl:call-template name="makeRendition"/>
           <xsl:choose>
             <xsl:when test="$outputTarget='html5'">
               <xsl:apply-templates/>
@@ -1655,8 +1525,9 @@ of this software, even if advised of the possibility of such damage.
         </blockquote>
       </xsl:when>
       <xsl:otherwise>
-        <span class="quote_inline">
-          <xsl:apply-templates/>
+	<span>
+	  <xsl:call-template name="makeRendition"/>
+	  <xsl:call-template name="makeQuote"/>
         </span>
       </xsl:otherwise>
     </xsl:choose>
@@ -2040,7 +1911,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="makeSpan">
-    <xsl:element name="{if (tei:blockContext(.)) then 'div' else 'span'}">
+    <xsl:element name="{if (not(tei:is-inline(.))) then 'div' else 'span'}">
       <xsl:call-template name="makeRendition"/>
       <xsl:apply-templates/>
     </xsl:element>

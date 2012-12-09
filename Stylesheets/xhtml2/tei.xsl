@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml"                  
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -8,7 +9,8 @@
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:html="http://www.w3.org/1999/xhtml"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="html a fo rng tei teix teidocx"
+                exclude-result-prefixes="html a fo rng tei teix
+					 teidocx xs"
                 version="2.0">
   <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
@@ -167,6 +169,14 @@ Stylesheet constant setting the name of the main output file.
     <xsl:param name="auto"/>
     <xsl:call-template name="makeLang"/>
     <xsl:choose>
+      <xsl:when test="(self::tei:q or self::tei:said or
+		      self::tei:quote) and @rend='inline'">
+	<xsl:sequence select="tei:processClass(local-name(),'')"/>
+      </xsl:when>
+      <xsl:when test="(self::tei:q or self::tei:said or
+		      self::tei:quote) and @rend='display'">
+	<xsl:sequence select="tei:processClass(local-name(),'')"/>
+      </xsl:when>
       <xsl:when test="@rend">
 	<xsl:sequence select="tei:processRend(@rend,$auto)"/>
       </xsl:when>
@@ -309,6 +319,60 @@ Stylesheet constant setting the name of the main output file.
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Is given a TEI paragraph element and says what the HTML wrapper element
+    should be (ie plain &lt;p&gt; or &lt;div class="p"&gt; if the
+    content is complex).</desc>
+  </doc>
+  <xsl:function name="tei:is-DivOrP" as="node()*">
+    <xsl:param name="element"/>
+    <xsl:for-each select="$element">
+      <xsl:choose>
+        <xsl:when test="tei:specList">div</xsl:when>
+        <xsl:when test="parent::tei:figure and (tei:q/tei:l or tei:figure or parent::tei:figure/parent::tei:div)">div</xsl:when>
+        <xsl:when test="parent::tei:figure">span</xsl:when>
+        <xsl:when test="parent::tei:head or    parent::tei:q/parent::tei:head or    parent::tei:note[@place='margin']/parent::tei:head">span</xsl:when>
+        <xsl:when test="ancestor::tei:notesStmt">div</xsl:when>
+        <xsl:when test="tei:table">div</xsl:when>
+        <xsl:when test="parent::tei:note[not(@place or @rend)]">span</xsl:when>
+        <xsl:when test="$outputTarget='epub' or $outputTarget='epub3'">div</xsl:when>
+        <xsl:when test="tei:eg">div</xsl:when>
+        <xsl:when test="tei:figure">div</xsl:when>
+        <xsl:when test="tei:floatingText">div</xsl:when>
+        <xsl:when test="tei:l">div</xsl:when>
+        <xsl:when test="tei:list">div</xsl:when>
+        <xsl:when test="tei:moduleSpec">div</xsl:when>
+        <xsl:when test="tei:note[@place='display']">div</xsl:when>
+        <xsl:when test="tei:note[@place='margin']">div</xsl:when>
+        <xsl:when test="tei:note[tei:q]">div</xsl:when>
+        <xsl:when test="tei:q/tei:figure">div</xsl:when>
+        <xsl:when test="tei:q/tei:list">div</xsl:when>
+        <xsl:when test="tei:q[@rend='display']">div</xsl:when>
+        <xsl:when test="tei:q[@rend='inline' and tei:note/@place]">div</xsl:when>
+        <xsl:when test="tei:q[tei:l]">div</xsl:when>
+        <xsl:when test="tei:q[tei:lg]">div</xsl:when>
+        <xsl:when test="tei:q[tei:p]">div</xsl:when>
+        <xsl:when test="tei:q[tei:sp]">div</xsl:when>
+        <xsl:when test="tei:q[tei:floatingText]">div</xsl:when>
+        <xsl:when test="tei:quote[not(tei:is-inline(.))]">div</xsl:when>
+        <xsl:when test="tei:specGrp">div</xsl:when>
+        <xsl:when test="tei:specGrpRef">div</xsl:when>
+        <xsl:when test="tei:specList">div</xsl:when>
+        <xsl:when test="tei:table">div</xsl:when>
+        <xsl:when test="teix:egXML">div</xsl:when>
+        <xsl:when test="ancestor::tei:floatingText">div</xsl:when>
+        <xsl:when test="ancestor::tei:closer">div</xsl:when>
+        <xsl:when test="parent::tei:p">div</xsl:when>
+        <xsl:when test="parent::tei:q">div</xsl:when>
+        <xsl:when test="parent::tei:note">div</xsl:when>
+        <xsl:when test="parent::tei:remarks">div</xsl:when>
+        <xsl:otherwise>
+          <xsl:text>p</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>    
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Create a class attribute.</desc>
   </doc>
   <xsl:function name="tei:processClass" as="node()*">
@@ -323,6 +387,9 @@ Stylesheet constant setting the name of the main output file.
     </xsl:attribute>
   </xsl:function>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>what to do with an inline object</desc>
+  </doc>
   <xsl:template name="processInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>
@@ -337,6 +404,9 @@ Stylesheet constant setting the name of the main output file.
     </span>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>what to do with a block-level object</desc>
+  </doc>
   <xsl:template name="processBlock">
     <xsl:param name="style"/>
     <div>

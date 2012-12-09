@@ -17,7 +17,7 @@ test-html:
 	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
 	diff -r -x .svn files expected-results/testnotes3
 	rm -rf files
-	saxon -o:test.html  test.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	saxon -o:test.html  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT)
 	diff test.html expected-results/test.html
 	saxon -o:test20.html  test20.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test20.html expected-results/test20.html
@@ -29,7 +29,7 @@ test-html:
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
 	diff test.html5 expected-results/test.html5
 	echo differences:
-	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  $(SAXONOPT)
+	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
 

@@ -143,6 +143,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="processor">
       <xsl:value-of select="system-property('xsl:vendor')"/>
   </xsl:variable>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] turn names into quote characters<param name="quote">quote</param>
       </desc>
@@ -180,44 +181,44 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template name="makeQuote">
       <xsl:variable name="pre">
-         <xsl:choose>
-            <xsl:when test="contains(@rend,'PRE')">
-	              <xsl:choose>
-	                 <xsl:when test="contains(@rend,'POST')">
-	                    <xsl:call-template name="getQuote">
-	                       <xsl:with-param name="quote"
-                                        select="normalize-space(substring-before(substring-after(@rend,'PRE'),'POST'))"/>
-	                    </xsl:call-template>
-	                 </xsl:when>
-	                 <xsl:otherwise>
-	                    <xsl:call-template name="getQuote">
-	                       <xsl:with-param name="quote" select="normalize-space(substring-after(@rend,'PRE'))"/>
-	                    </xsl:call-template>
-	                 </xsl:otherwise>
-	              </xsl:choose>
-            </xsl:when>
+	<xsl:choose>
+	  <xsl:when test="contains(@rend,'PRE')">
+	    <xsl:choose>
+	      <xsl:when test="contains(@rend,'POST')">
+		<xsl:call-template name="getQuote">
+		  <xsl:with-param name="quote"
+				  select="normalize-space(substring-before(substring-after(@rend,'PRE'),'POST'))"/>
+		</xsl:call-template>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:call-template name="getQuote">
+		  <xsl:with-param name="quote" select="normalize-space(substring-after(@rend,'PRE'))"/>
+		</xsl:call-template>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:when>
             <xsl:otherwise>
-	              <xsl:value-of select="$preQuote"/>
+	      <xsl:value-of select="$preQuote"/>
             </xsl:otherwise>
-         </xsl:choose>
+	</xsl:choose>
       </xsl:variable>
       <xsl:variable name="post">
-         <xsl:choose>
-            <xsl:when test="contains(@rend,'POST')">
-	              <xsl:call-template name="getQuote">
-	                 <xsl:with-param name="quote" select="normalize-space(substring-after(@rend,'POST'))"/>
-	              </xsl:call-template>
-            </xsl:when>
-            <xsl:otherwise>
-	              <xsl:value-of select="$postQuote"/>
-            </xsl:otherwise>
-         </xsl:choose>
+	<xsl:choose>
+	  <xsl:when test="contains(@rend,'POST')">
+	    <xsl:call-template name="getQuote">
+	      <xsl:with-param name="quote" select="normalize-space(substring-after(@rend,'POST'))"/>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="$postQuote"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </xsl:variable>
       <xsl:value-of select="$pre"/>
       <xsl:apply-templates/>
       <xsl:value-of select="$post"/>
    </xsl:template>
-
+   
   <xsl:template name="tei:makeText">
     <xsl:param name="letters"/>
     <xsl:value-of select="$letters"/>
