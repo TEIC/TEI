@@ -1416,7 +1416,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
 	<xsl:variable name="CLASS">
 	  <freddy>
-	    <xsl:call-template name="makeRendition"/>
+	    <xsl:call-template name="makeRendition">
+	      <xsl:with-param name="default">false</xsl:with-param>
+	    </xsl:call-template>
 	  </freddy>
 	</xsl:variable>
 	<xsl:variable name="ID">
@@ -1446,6 +1448,7 @@ of this software, even if advised of the possibility of such damage.
 			      group-adjacent="if (self::html:ol or
 					    self::html:ul or
 					    self::html:dl or
+					    self::html:figure or
 					    self::html:blockquote or
 					    self::html:div) then 1
 					    else 2">
@@ -1455,9 +1458,9 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:when>
 		<xsl:otherwise>
 		  <p>
-		    <xsl:copy-of select="$CLASS/freddy/@*"/>
+		    <xsl:copy-of select="$CLASS/html:freddy/@*"/>
 		    <xsl:if test="position()=1">
-		      <xsl:copy-of select="$ID/freddy/@*"/>
+		      <xsl:copy-of select="$ID/html:freddy/@*"/>
 		    </xsl:if>
 		    <xsl:copy-of select="current-group()"/>
 		  </p>

@@ -9,12 +9,23 @@ p4top5:
 
 test-html:
 	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	xmllint --format files/index.html > x ; mv x files/index.html
+	xmllint --format files/one.html > x ; mv x files/one.html
+	xmllint --format files/two.html > x ; mv x files/two.html
+	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r -x .svn files expected-results/testnotes
 	rm -rf files
 	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=0 useFixedDate=true STDOUT=false cssFile=../../tei.css)
+	xmllint --format files/index.html > x ; mv x files/index.html
+	xmllint --format files/one.html > x ; mv x files/one.html
+	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r -x .svn files expected-results/testnotes2
 	rm -rf files
 	(mkdir files; cd files; saxon ../testnotes2.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false  cssFile=../../tei.css)
+	xmllint --format files/index.html > x ; mv x files/index.html
+	xmllint --format files/one.html > x ; mv x files/one.html
+	xmllint --format files/two.html > x ; mv x files/two.html
+	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r -x .svn files expected-results/testnotes3
 	rm -rf files
 	saxon -o:test.html  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT)

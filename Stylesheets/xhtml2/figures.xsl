@@ -192,7 +192,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$outputTarget='html5'">
 	<figcaption>
-          <xsl:call-template name="makeRendition"/>
+          <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default">caption</xsl:with-param>
+	  </xsl:call-template>
 	  <xsl:copy-of select="$captionlabel"/>
 	  <xsl:if test="not($captionlabel='')">
 	    <xsl:text>. </xsl:text>
@@ -201,14 +203,14 @@ of this software, even if advised of the possibility of such damage.
 	</figcaption>
       </xsl:when>
       <xsl:otherwise>
-	<span class="caption">
+	<div class="caption">
           <xsl:call-template name="makeRendition"/>
 	  <xsl:copy-of select="$captionlabel"/>
 	  <xsl:if test="not($captionlabel='')">
 	    <xsl:text>. </xsl:text>
 	  </xsl:if>
 	  <xsl:apply-templates/>
-	</span>
+	</div>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
