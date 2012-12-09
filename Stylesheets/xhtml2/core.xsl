@@ -1414,38 +1414,56 @@ of this software, even if advised of the possibility of such damage.
         </xsl:for-each-group>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{$wrapperElement}">
-          <xsl:call-template name="makeRendition">
-            <xsl:with-param name="default">
-              <xsl:choose>
-		<xsl:when test="$wrapperElement ='p'">false</xsl:when>
+	<xsl:variable name="CLASS">
+	  <freddy>
+	    <xsl:call-template name="makeRendition"/>
+	  </freddy>
+	</xsl:variable>
+	<xsl:variable name="ID">
+	  <freddy>
+	    <xsl:choose>
+	      <xsl:when test="@xml:id">
+		<xsl:call-template name="makeAnchor">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="@xml:id"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:when>
+	      <xsl:when test="$generateParagraphIDs='true'">
+		<xsl:call-template name="makeAnchor">
+		  <xsl:with-param name="name">
+		    <xsl:value-of select="generate-id()"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:when>
+	    </xsl:choose>
+	  </freddy>
+	</xsl:variable>
+	  <xsl:variable name="pContent">
+	    <xsl:apply-templates/>
+	  </xsl:variable>
+	  <xsl:for-each-group select="$pContent/node()" 		
+			      group-adjacent="if (self::html:ol or
+					    self::html:ul or
+					    self::html:dl or
+					    self::html:blockquote or
+					    self::html:div) then 1
+					    else 2">
+	      <xsl:choose>
+		<xsl:when test="current-grouping-key()=1">
+		  <xsl:copy-of select="current-group()"/>
+		</xsl:when>
 		<xsl:otherwise>
-                <xsl:text>p</xsl:text>
+		  <p>
+		    <xsl:copy-of select="$CLASS/freddy/@*"/>
+		    <xsl:if test="position()=1">
+		      <xsl:copy-of select="$ID/freddy/@*"/>
+		    </xsl:if>
+		    <xsl:copy-of select="current-group()"/>
+		  </p>
 		</xsl:otherwise>
 	      </xsl:choose>
-            </xsl:with-param>
-          </xsl:call-template>
-	  <xsl:choose>
-	    <xsl:when test="@xml:id">
-	      <xsl:call-template name="makeAnchor">
-		<xsl:with-param name="name">
-		  <xsl:value-of select="@xml:id"/>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:when>
-	    <xsl:when test="$generateParagraphIDs='true'">
-	      <xsl:call-template name="makeAnchor">
-		<xsl:with-param name="name">
-		  <xsl:value-of select="generate-id()"/>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:when>
-	  </xsl:choose>
-          <xsl:if test="$numberParagraphs='true'">
-	    <xsl:call-template name="numberParagraph"/>
-          </xsl:if>
-          <xsl:apply-templates/>
-        </xsl:element>
+	  </xsl:for-each-group>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
