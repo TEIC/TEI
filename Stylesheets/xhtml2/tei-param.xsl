@@ -728,6 +728,12 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
    </doc>
    <xsl:param name="refDocFooterURL">index.html</xsl:param>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="boolean">
+      <desc>When a TEI &lt;p&gt; generates an HTML &lt;p&gt; (possibly
+      split) or a &lt;div class="p"&gt;
+  </desc>
+   </doc>
+   <xsl:param name="generateDivFromP">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="anyURI">
       <desc>Gap between elements in navigation list

@@ -1444,6 +1444,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:variable name="pContent">
 	    <xsl:apply-templates/>
 	  </xsl:variable>
+	<div class="p">
 	  <xsl:for-each-group select="$pContent/node()" 		
 			      group-adjacent="if (self::html:ol or
 					    self::html:ul or
@@ -1467,6 +1468,7 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:otherwise>
 	      </xsl:choose>
 	  </xsl:for-each-group>
+	</div>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
