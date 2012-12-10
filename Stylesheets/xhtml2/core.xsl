@@ -1413,6 +1413,33 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
         </xsl:for-each-group>
       </xsl:when>
+      <xsl:when test="$generateDivFromP='true' or teix:egXML">
+	<div>
+	  <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default">p</xsl:with-param>
+	  </xsl:call-template>
+	  <xsl:choose>
+	    <xsl:when test="@xml:id">
+	      <xsl:call-template name="makeAnchor">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="@xml:id"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:when>
+	    <xsl:when test="$generateParagraphIDs='true'">
+	      <xsl:call-template name="makeAnchor">
+		<xsl:with-param name="name">
+		  <xsl:value-of select="generate-id()"/>
+		</xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:when>
+	  </xsl:choose>
+	  <xsl:if test="$numberParagraphs='true'">
+	    <xsl:call-template name="numberParagraph"/>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	</div>
+      </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="CLASS">
 	  <freddy>
@@ -1441,11 +1468,13 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:choose>
 	  </freddy>
 	</xsl:variable>
-	  <xsl:variable name="pContent">
-	    <xsl:apply-templates/>
-	  </xsl:variable>
-	<div class="p">
-	  <xsl:for-each-group select="$pContent/node()" 		
+	<xsl:variable name="pContent">
+	  <xsl:if test="$numberParagraphs='true'">
+	    <xsl:call-template name="numberParagraph"/>
+	  </xsl:if>
+	  <xsl:apply-templates/>
+	</xsl:variable>
+	<xsl:for-each-group select="$pContent/node()" 		
 			      group-adjacent="if (self::html:ol or
 					    self::html:ul or
 					    self::html:dl or
@@ -1468,7 +1497,6 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:otherwise>
 	      </xsl:choose>
 	  </xsl:for-each-group>
-	</div>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
