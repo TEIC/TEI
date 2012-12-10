@@ -153,7 +153,7 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:attribute>
        </xsl:if>
        <xsl:choose>
-	 <xsl:when test="w:pPr/w:rPr/w:ins">
+	 <xsl:when test="w:pPr/w:rPr/w:ins and $processChangeInformation='true'">
 	   <add when="{w:pPr/w:rPr/w:ins/@w:date}" 
 		type="para">
 	     <xsl:call-template name="identifyChange">

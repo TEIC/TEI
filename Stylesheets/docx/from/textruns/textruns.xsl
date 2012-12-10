@@ -608,12 +608,19 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
     <xsl:template match="w:del">
-      <del when="{@w:date}">
-	<xsl:call-template name="identifyChange">
-	  <xsl:with-param name="who" select="@w:author"/>
-	</xsl:call-template>
-	<xsl:apply-templates/>
-      </del>
+      <xsl:choose>
+	<xsl:when test="$processChangeInformation='true'">
+	  <del when="{@w:date}">
+	    <xsl:call-template name="identifyChange">
+	      <xsl:with-param name="who" select="@w:author"/>
+	    </xsl:call-template>
+	    <xsl:apply-templates/>
+	  </del>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
 
     <xsl:template match="w:rPr/w:del"/>
@@ -623,14 +630,24 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <xsl:template match="w:ins">
-      <add when="{@w:date}">
-	<xsl:call-template name="identifyChange">
-	   <xsl:with-param name="who" select="@w:author"/>
-	</xsl:call-template>
-	<xsl:call-template name="processTextrun"/>
-      </add>
+      <xsl:choose>
+	<xsl:when test="$processChangeInformation='true'">
+	  <add when="{@w:date}">
+	    <xsl:call-template name="identifyChange">
+	      <xsl:with-param name="who" select="@w:author"/>
+	    </xsl:call-template>
+	    <xsl:call-template name="processTextrun"/>
+	  </add>
+	</xsl:when>
+	<xsl:when test="w:r">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="processTextrun"/>
+	</xsl:otherwise>
+      </xsl:choose>      
     </xsl:template>
-
+	
     <xsl:template match="w:rPr/w:ins"/>
  
     

@@ -93,4 +93,6 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:param name="pageWidth">0</xsl:param>
 
+    <xsl:param name="processChangeInformation">false</xsl:param>
+
 </xsl:stylesheet>
