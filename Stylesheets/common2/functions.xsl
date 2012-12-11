@@ -182,7 +182,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="tei:figure or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
+        <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
 	<xsl:when test="parent::tei:div">false</xsl:when>
 	<xsl:when test="parent::tei:titlePage">false</xsl:when>
 	<xsl:when test="parent::tei:cit[@rend='display']">false</xsl:when>
