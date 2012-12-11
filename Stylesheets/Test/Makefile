@@ -39,10 +39,11 @@ test-html:
 	perl -p -i -e 's/on 20.*Z--/--/' test.html5
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
 	diff test.html5 expected-results/test.html5
-	echo differences:
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
+	saxon -o:test22.html test22.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test22.html expected-results/test22.html
 
 testsplit:
 	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
