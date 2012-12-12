@@ -708,7 +708,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Used by</xsl:with-param>
+                <xsl:with-param name="word">Member of</xsl:with-param>
               </xsl:call-template>
             </xsl:element>
           </xsl:element>
