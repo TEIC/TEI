@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date$
+    $Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="citedRange">
+  <equiv/>
+  <gloss>cited range</gloss>
+  <desc>defines the range of cited content, often represented by pages or other units</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.pointing"/>
+    <memberOf key="model.biblPart"/>
+  </classes>
+  <content>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <equiv/>
+      <desc>identifies the type of information conveyed by the element, e.g.
+                <val>columns</val>, <val>pages</val>, <val>volume</val>.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="vol">
+          <gloss>volume</gloss>
+          <desc>the element contains a volume number.</desc>
+        </valItem>
+        <valItem ident="issue">
+          <equiv/>
+          <desc>the element contains an issue number, or volume and
+                        issue numbers.</desc>
+        </valItem>
+        <valItem ident="pp">
+          <gloss>pages</gloss>
+          <desc>the element contains a page number or page range.</desc>
+        </valItem>
+        <valItem ident="ll">
+          <gloss>lines</gloss>
+          <desc>the element contains a line number or line range.</desc>
+        </valItem>
+        <valItem ident="chap">
+          <gloss>chapter</gloss>
+          <desc>the element contains a chapter indication (number
+                        and/or title)</desc>
+        </valItem>
+        <valItem ident="part">
+          <equiv/>
+          <desc>the element identifies a part of a book or collection.</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="from">
+      <equiv/>
+      <desc>specifies the starting point of the range of units indicated by the <att>type</att> attribute.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+    </attDef>
+    <attDef ident="to">
+      <equiv/>
+      <desc>specifies the end-point of the range of units indicated by the <att>type</att> attribute.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <citedRange>pp 12–13</citedRange>
+      <citedRange type="pp" from="12" to="13"/>
+      <citedRange type="vol">II</citedRange>
+      <citedRange type="pp">12</citedRange>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <bibl><ptr target="#mueller01"/>, <citedRange
+        target="http://example.com/mueller3.xml#page4">vol. 3, pp.
+        4-5</citedRange></bibl>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#COBICOI"/>
+  </listRef>
+</elementSpec>
