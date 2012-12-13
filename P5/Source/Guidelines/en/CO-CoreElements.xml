@@ -4374,7 +4374,19 @@ A full bibliographic references will usually also specify the number of
 pages in a print publication (or equivalent information for non-print
 materials), and possibly also the specific location of the material being cited
 within its containing publication.  The following elements are
-provided to hold this information: <specList><specDesc key="imprint"/><specDesc key="address"/><specDesc key="pubPlace"/><specDesc key="publisher"/><specDesc key="date"/><specDesc key="idno"/><specDesc key="extent"/><specDesc key="biblScope"/></specList> The elements <gi>biblScope</gi>,
+provided to hold this information: 
+  <specList>
+    <specDesc key="imprint"/>
+    <specDesc key="address"/>
+    <specDesc key="pubPlace"/>
+    <specDesc key="publisher"/>
+    <specDesc key="date"/>
+    <specDesc key="idno"/>
+    <specDesc key="extent"/>
+    <specDesc key="biblScope"/>
+    <specDesc key="citedRange"/>
+  </specList> 
+  The elements <gi>biblScope</gi>,
 <gi>pubPlace</gi>, <gi>publisher</gi>, <gi>distributor</gi> and <gi>respStmt</gi> constitute the model class
 <ident type="class">model.imprintPart</ident>; members of this class
 may appear with a date inside an <gi>imprint</gi> element in a specific
@@ -4477,20 +4489,25 @@ statement here applies only to the second <gi>monogr</gi> element.
  </p>
 <p>An alternative way of handling the above situation would be to use the
 <gi>relatedItem</gi> element described in section <ptr target="#COBIRI"/> below.</p>
-
-<p>When the item being described is a journal article, the date of its
-publication should be supplied within an <gi>imprint</gi> element,
-together with other imprint-related information such as the name or
-location of the journal publisher.  This should precede any
-<gi>biblScope</gi> elements used to provide additional information,
-for example a volume number, page number, range of page numbers, or
-name or number of a subdivision of the host work.  Where it is desired
-to distinguish different classes of such information (volume number,
-page number, chapter number, etc.), the <att>type</att> attribute may
-be used with any convenient typology (see the element definition for
-<gi>biblScope</gi> for some suggested values). </p>
-<p>For example: <egXML
-xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+</div>
+<div type="div4" xml:id="COBICOB">
+<head>Scopes and ranges in bibliographic citations</head>
+<p>Many bibliographic citations contain data limiting the citation to one 
+or more volumes, issues, or pages, or to a name or number of a subdivion 
+of the host work. These come in two varieties:
+<ul>
+<li>the scope of a bibliographic reference (encoded using <gi>biblScope</gi>)</li>
+<li>the range of a work cited (encoded using <gi>citedRange</gi>)</li>
+</ul>
+Where it is desired to distinguish different classes of such information 
+(volume number, page number, chapter number, etc.), the <att>type</att> 
+attribute may be used with any convenient typology (see the element 
+definitions for <gi>biblScope</gi> and <gi>citedRange</gi> for some 
+suggested values). 
+</p>
+<p>A scope of a bibliographic reference defines that the <emph>entire work 
+cited</emph> may be found in particular volumes, issues, pages, etc. For example: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
    <analytic>
       <author>Wrigley, E. A.</author>
       <title level="a">Parish registers and the historian</title>
@@ -4545,10 +4562,32 @@ both the following are legal examples:
 	<!-- example, as per WWP suggestion (otherwise lead-in makes  -->
 	<!-- no sense) (msm)                                          -->
  </p>
+<p>On the other hand, a cited range defines that the author <emph>cited 
+only the portion</emph> defined by this range. For example, a footnote 
+following a quotation from page 378 of <title level="a">Historical 
+Editions in the States</title> that includes a full bibliographic 
+reference would be encoded using <gi>biblStruct</gi> as follows:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples"><biblStruct>
+    <analytic>
+      <author>Chesnutt, David</author>
+      <title>Historical Editions in the States</title>
+    </analytic>
+    <monogr>
+      <title level="j">Computers and the Humanities</title>
+      <imprint>
+        <date when="1991-12">(December, 1991):</date>
+      </imprint>
+      <biblScope>25.6</biblScope>
+      <biblScope from="377" to="280">377–380</biblScope>
+    </monogr>
+    <citedRange>378</citedRange>
+  </biblStruct></egXML>
+</p>
 <specGrp xml:id="DCOPUB" >
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/imprint.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/publisher.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/biblScope.xml"/>
+<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/citedRange.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/pubPlace.xml"/>
 </specGrp>
 </div>
@@ -4752,13 +4791,16 @@ see: <ptr target="#mslangs"/>.</p>
 <p>In <gi>biblStruct</gi> elements, the <gi>analytic</gi> element, if
 it occurs, must come first, followed by one or more <gi>monogr</gi> and
 <gi>series</gi> elements, which may appear intermingled (as long as a
-<gi>monogr</gi> element comes first).  Within <gi>analytic</gi>, the
+<gi>monogr</gi> element comes first), and then zero or more of the 
+following in any order: <gi>note</gi>, <gi>witDetail</gi>, <gi>idno</gi>, 
+<gi>ptr</gi>, <gi>ref</gi>, <gi>relatedItem</gi>, and <gi>citedRange</gi>.  
+Within <gi>analytic</gi>, the
 title(s), author(s), editor(s), and other statements of responsibility
 may appear in any order; it is recommended that all forms of the title
 be given together.  Within <gi>monogr</gi>, the author, editor, and
 statements of responsibility may either come first or else follow the
-monographic title(s).  Following these, the elements must appear in the
-following order:
+monographic title(s).  Following these, the elements listed below, if 
+present, must appear in the following order:
 <list type="simple">
 <item><gi>note</gi>s on the publication (and <gi>meeting</gi> elements
 describing the conference, in the case of a proceedings volume)</item>
