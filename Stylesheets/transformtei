@@ -9,7 +9,9 @@
 script=`basename $0`
 scriptdir=`dirname $0`
 APPHOME=`(cd $scriptdir; pwd)`
+defaultAPPHOME=`(cd $scriptdir; pwd)`
 profiledir=$APPHOME/profiles
+defaultprofiledir=$APPHOME/profiles
 oxygenlib=/usr/share/oxygen/lib
 die()
 {
@@ -139,7 +141,13 @@ while test $# -gt 0; do
   esac
   shift
 done
-
+if test "$defaultAPPHOME" != "$APPHOME"
+then
+    if test "$profiledir" = "$defaultprofiledir"
+    then
+	profiledir=$APPHOME/profiles
+    fi
+fi
 if test "x$TEISOURCE" = "x"
 then
   localsource=""
