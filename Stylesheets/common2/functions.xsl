@@ -182,16 +182,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
+	<xsl:when test="not(self::*)">true</xsl:when>
+	<xsl:when test="@rend='inline'">true</xsl:when>
+	<xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
         <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
 	<xsl:when test="parent::tei:div">false</xsl:when>
 	<xsl:when test="parent::tei:titlePage">false</xsl:when>
 	<xsl:when test="parent::tei:cit[@rend='display']">false</xsl:when>
 	<xsl:when test="parent::tei:cit and (tei:p or tei:l)">false</xsl:when>
-	<xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">false</xsl:when>
 	<xsl:when test="parent::tei:body">false</xsl:when>
 	<xsl:when test="parent::tei:titlePage">false</xsl:when>
-	<xsl:when test="@rend='inline'">true</xsl:when>
-	<xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
         <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
         <xsl:when test="self::mml:math">true</xsl:when>
         <xsl:when test="self::tei:abbr">true</xsl:when>
@@ -289,6 +289,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:dynamicContent">true</xsl:when>
         <xsl:when test="self::w:drawing">true</xsl:when>
         <xsl:when test="self::m:oMath">true</xsl:when>
+	<xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">false</xsl:when>
         <xsl:otherwise>
           <xsl:choose>
             <xsl:when test="empty($element/..)">false</xsl:when>

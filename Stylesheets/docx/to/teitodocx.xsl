@@ -1010,10 +1010,14 @@ of this software, even if advised of the possibility of such damage.
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
   <!-- quoted text; if it surrounds egXML, just pass on -->
-  <xsl:template match="tei:q|tei:said|tei:soCalled">
+  <xsl:template match="tei:quote|tei:q|tei:said|tei:soCalled">
     <xsl:choose>
       <xsl:when test="*[not(tei:is-inline(.))] or parent::tei:cit|parent::tei:div">
+        <xsl:call-template name="block-element"/>
+      </xsl:when>
+      <xsl:when test="not(tei:is-inline(.))">
         <xsl:call-template name="block-element"/>
       </xsl:when>
       <xsl:when test="tei:l">
