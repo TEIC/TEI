@@ -133,7 +133,8 @@ conversions-from:
 	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test9.odt \
 	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
-	../teitohtml --summaryDoc --profile=tei --odd test15.odd test.odd.html
+	../teitohtml --debug --summaryDoc --profile=tei --odd test15.odd test.odd.html
+	xmllint --format test.odd.html > x ; mv x test.odd.html
 	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
 	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
 	diff test.odd.html expected-results/test.odd.html
