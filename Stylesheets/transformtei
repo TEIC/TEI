@@ -141,6 +141,13 @@ while test $# -gt 0; do
   esac
   shift
 done
+
+if [ $# -gt 2 ]
+then
+    echo Error: only two parameters \(input file and output file\) allowed: $*
+    exit 1
+fi
+
 if test "$defaultAPPHOME" != "$APPHOME"
 then
     if test "$profiledir" = "$defaultprofiledir"
