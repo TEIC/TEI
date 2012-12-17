@@ -2716,6 +2716,15 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
+    <desc>Only the first paragraph in a footnote has the footnote marker</desc>
+  </doc>
+  <xsl:template
+      match="w:footnote/w:p[position()&gt;1]/w:r[w:footnoteRef]"
+      mode="cleanup">
+  </xsl:template>
+
+
+  <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>a run as a direct child of body is not allowed, how did it
     creep through? Wrap up in a p.</desc>
   </doc>

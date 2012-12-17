@@ -82,7 +82,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="$debug='true'">
 	<xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/footnotes.xml')"/>    </xsl:message>
       </xsl:if>
-        <xsl:result-document href="{concat($wordDirectory,'/word/footnotes.xml')}">
+      <xsl:variable name="fnotes">
             <w:footnotes>
                 <w:footnote w:type="separator" w:id="-1">
                     <w:p>
@@ -141,6 +141,12 @@ of this software, even if advised of the possibility of such damage.
                     </w:footnote>
                 </xsl:for-each>
             </w:footnotes>
+      </xsl:variable>
+        <xsl:result-document
+	    href="{concat($wordDirectory,'/word/footnotes.xml')}">
+	  <xsl:for-each select="$fnotes">
+	    <xsl:apply-templates mode="cleanup"/>
+	  </xsl:for-each>
         </xsl:result-document>
     </xsl:template>
     
