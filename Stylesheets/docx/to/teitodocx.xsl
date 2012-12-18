@@ -14,19 +14,19 @@
   <xsl:import href="../../common2/figures.xsl"/>
   <xsl:import href="../../common2/msdescription.xsl"/>
   <!-- Deals with dynamic text creation such as toc -->
-  <xsl:include href="dynamic/dynamic.xsl"/>
+  <xsl:include href="dynamic.xsl"/>
   <!-- Templates transforming graphic elements -->
-  <xsl:include href="graphics/graphics.xsl"/>
+  <xsl:include href="graphics.xsl"/>
   <!-- Templates transforming elements from drama -->
-  <xsl:include href="drama/drama.xsl"/>
+  <xsl:include href="drama.xsl"/>
   <!-- Templates transforming lists -->
-  <xsl:include href="lists/lists.xsl"/>
+  <xsl:include href="lists.xsl"/>
   <!-- Templates transforming math elements -->
-  <xsl:include href="maths/maths.xsl"/>
+  <xsl:include href="maths.xsl"/>
   <!-- Templates transforming ODD-related elements -->
-  <xsl:include href="odds/tagdocs.xsl"/>
+  <xsl:include href="tagdocs.xsl"/>
   <!-- Templates transforming tei milestones into sectPr -->
-  <xsl:include href="wordsections/wordsections.xsl"/>
+  <xsl:include href="wordsections.xsl"/>
   <!-- Load stylesheets helping with the creation of special files -->
   <xsl:include href="docxfiles/application.xsl"/>
   <xsl:include href="docxfiles/content-types.xsl"/>
