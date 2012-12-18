@@ -1269,7 +1269,7 @@ so that is only put back in if there is some content
     <xsl:for-each select="tei:attList/tei:attDef[@ident=$ORIGINAL/tei:attList//tei:attDef/@ident
 				 and @mode='replace']">
       <attDef xmlns="http://www.tei-c.org/ns/1.0" >
-	<xsl:apply-templates select="@*"/>
+	<xsl:apply-templates select="@*[not(name()='mode')]"/>
 	<xsl:apply-templates mode="odd2odd-justcopy"/>
       </attDef>
     </xsl:for-each>

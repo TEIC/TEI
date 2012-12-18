@@ -82,7 +82,7 @@ of this software, even if advised of the possibility of such damage.
       <attList>
 	<xsl:copy-of select="$results//attRef"/>
 	<xsl:copy-of select="$results//attDef"/>
-	<xsl:apply-templates select="$E/attList/*"  mode="classatts"/>
+	<xsl:apply-templates select="$E/attList/*"  mode="classatts"/>	
       </attList>
     </xsl:copy>
   </xsl:template>
@@ -109,7 +109,7 @@ of this software, even if advised of the possibility of such damage.
       <attRef name="att.global.attributes"/>
     </xsl:if>
     <xsl:choose>
-      <xsl:when test="not($E//attDef[@mode])">
+      <xsl:when test="not($E//attDef)">
 	<xsl:for-each select="$here/classes/memberOf">
 	  <memberOf>
 	    <xsl:copy-of select="@*"/>
@@ -161,14 +161,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select=".//attDef">
 	<xsl:variable name="A" select="."/>
 	<xsl:choose>
-	  <xsl:when test="$E//attDef[@mode  and
-			  @ident=current()/@ident]">
+	  <xsl:when test="$E//attDef[@ident=current()/@ident]">
 	    <override/>
 	    <xsl:for-each
 		select="$E//attDef[@ident=current()/@ident]">
 	      <xsl:choose>
 		<xsl:when test="@mode='delete'"/>
-		<xsl:when test="@mode='replace'">
+		<xsl:when test="not(@mode) or @mode='replace'">
 		  <xsl:copy-of select="."/>
 		</xsl:when>
 		<xsl:otherwise>
