@@ -9,6 +9,7 @@
   <xsl:import href="../common2/msdescription.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
   <xsl:param name="useFixedDate">false</xsl:param>
+  <xsl:param name="debug">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for making OpenOffice files from TEI XML.
@@ -396,6 +397,9 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="@scale and $origheight">
               <xsl:value-of select="($origheight *         number(@scale)) div 127 cast as xs:integer"/>
             </xsl:when>
+	    <xsl:when test="@width[contains(.,'%')]">
+	      <xsl:value-of select="number($pageHeight * (number(substring-before(@width,'%')))) cast as xs:integer"/>
+	    </xsl:when>	  
             <xsl:when test="@width[not(contains(.,'%'))] and $origheight and $origwidth">
               <xsl:variable name="w">
                 <xsl:value-of select="number(tei:convert-dim-pt(@width))"/>
@@ -406,8 +410,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="number($origheight) div 127"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:message terminate="yes">no way to work out image height for
-	      <xsl:value-of select="$filename"/>
+              <xsl:message terminate="yes">no way to work out image height for  <xsl:value-of select="$filename"/>
 	      </xsl:message>
             </xsl:otherwise>
           </xsl:choose>
@@ -439,7 +442,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
-<!--
+	<xsl:if test="$debug='true'">
 <xsl:message>
   <xsl:for-each select="@*">
     - @<xsl:value-of select="name(.)"/>: <xsl:value-of select="."/>
@@ -451,7 +454,7 @@ of this software, even if advised of the possibility of such damage.
     - imageWidth: <xsl:value-of select="$imageWidth"/>
     - imageHeight: <xsl:value-of select="$imageHeight"/>
 </xsl:message>
--->
+	</xsl:if>
         <draw:frame draw:style-name="fr1" draw:name="{$id}" draw:z-index="0">
           <xsl:attribute name="text:anchor-type">
             <xsl:choose>

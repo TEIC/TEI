@@ -224,7 +224,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element graphic</desc>
    </doc>
-  <xsl:template match="tei:graphic">
+  <xsl:template match="tei:graphic|tei:binaryObject">
       <xsl:call-template name="showGraphic"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -314,26 +314,12 @@ of this software, even if advised of the possibility of such damage.
       </table>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] <param name="name">name</param>
-         <param name="value">value</param>
-      </desc>
-   </doc>
-  <xsl:template name="setDimension">
-      <xsl:param name="name"/>
-      <xsl:param name="value"/>
-      <xsl:attribute name="style">
-         <xsl:value-of select="$name"/>
-	 <xsl:text>:</xsl:text>
-	 <xsl:value-of select="$value"/>
-	 <xsl:text>;</xsl:text>
-      </xsl:attribute>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[html] display graphic file</desc>
    </doc>
   <xsl:template name="showGraphic">
       <xsl:variable name="File">
          <xsl:choose>
+	   <xsl:when test="self::tei:binaryObject"/>
             <xsl:when test="@url">
                <xsl:value-of select="@url"/>
                <xsl:if test="not(contains(@url,'.'))">
@@ -385,34 +371,63 @@ of this software, even if advised of the possibility of such damage.
 	      </video>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <img src="{$graphicsPrefix}{$File}">
-		<xsl:attribute name="alt">
-		  <xsl:value-of select="$Alt"/>
-		</xsl:attribute>
-		<xsl:call-template name="imgHook"/>
-		<xsl:if test="@xml:id">
-		  <xsl:attribute name="id">
-		    <xsl:value-of select="@xml:id"/>
-		  </xsl:attribute>
-		</xsl:if>
-		<xsl:call-template name="makeRendition"/>
+	      <xsl:variable name="sizes">
 		<xsl:if test="@width">
-		  <xsl:call-template name="setDimension">
-		    <xsl:with-param name="value">
-		      <xsl:value-of select="@width"/>
-		    </xsl:with-param>
-		    <xsl:with-param name="name">width</xsl:with-param>
-		  </xsl:call-template>
+		  <xsl:text> width:</xsl:text>
+		  <xsl:value-of select="@width"/>
+		  <xsl:text>;</xsl:text>
 		</xsl:if>
 		<xsl:if test="@height">
-		  <xsl:call-template name="setDimension">
-		    <xsl:with-param name="value">
-		      <xsl:value-of select="@height"/>
-		    </xsl:with-param>
-		    <xsl:with-param name="name">height</xsl:with-param>
-		  </xsl:call-template>
+		  <xsl:text> height:</xsl:text>
+		  <xsl:value-of select="@height"/>
+		  <xsl:text>;</xsl:text>
 		</xsl:if>
-	      </img>
+	      </xsl:variable>
+	      <xsl:variable name="i">
+		<img>
+		  <xsl:attribute name="src">
+		    <xsl:choose>
+		      <xsl:when test="self::tei:binaryObject">
+			<xsl:text>data:</xsl:text>
+			<xsl:value-of select="@mimetype"/>
+			<xsl:text>;base64,</xsl:text>
+			<xsl:copy-of select="text()"/>
+		      </xsl:when>
+		      <xsl:otherwise>
+			<xsl:value-of
+			    select="concat($graphicsPrefix,$File)"/>
+		      </xsl:otherwise>
+		    </xsl:choose>
+		  </xsl:attribute>
+		  <xsl:attribute name="alt">
+		    <xsl:value-of select="$Alt"/>
+		  </xsl:attribute>
+		  <xsl:call-template name="imgHook"/>
+		  <xsl:if test="@xml:id">
+		    <xsl:attribute name="id">
+		      <xsl:value-of select="@xml:id"/>
+		    </xsl:attribute>
+		  </xsl:if>
+		  <xsl:call-template name="makeRendition"/>
+		</img>
+	      </xsl:variable>
+	      <xsl:for-each select="$i/*">
+		<xsl:copy>
+		  <xsl:copy-of select="@*[not(name()='style')]"/>
+		  <xsl:choose>
+		    <xsl:when test="$sizes=''">
+		      <xsl:copy-of select="@style"/>
+		    </xsl:when>
+		    <xsl:when test="not(@style)">
+		      <xsl:attribute name="style" select="$sizes"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:attribute name="style"
+				     select="concat(@style,';' ,$sizes)"/>
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</xsl:copy>
+	      </xsl:for-each>
 	    </xsl:otherwise>
 	  </xsl:choose>	  
          </xsl:when>
@@ -433,61 +448,6 @@ of this software, even if advised of the possibility of such damage.
 	    </div>
          </xsl:otherwise>
       </xsl:choose>
-  </xsl:template>
-  <xsl:template match="tei:binaryObject">
-      <img>
-         <xsl:attribute name="src">
-            <xsl:text>data:</xsl:text>
-            <xsl:value-of select="@mimetype"/>
-            <xsl:text>;base64,</xsl:text>
-            <xsl:copy-of select="text()"/>
-         </xsl:attribute>
-         <xsl:if test="@width">
-            <xsl:call-template name="setDimension">
-               <xsl:with-param name="value">
-                  <xsl:value-of select="@width"/>
-               </xsl:with-param>
-               <xsl:with-param name="name">width</xsl:with-param>
-            </xsl:call-template>
-         </xsl:if>
-         <xsl:if test="@height">
-            <xsl:call-template name="setDimension">
-               <xsl:with-param name="value">
-                  <xsl:value-of select="@height"/>
-               </xsl:with-param>
-               <xsl:with-param name="name">height</xsl:with-param>
-            </xsl:call-template>
-         </xsl:if>
-      </img>
-      <!-- also alt -->
-    <!-- this is what we'll need for IE:
-<style type="text/css">
-   img {behavior: expression(fixBase64(this));}
-  </style>
-  <script type="text/javascript">
-  	// a regular expression to test for Base64 data
-	var BASE64_DATA = /^data:.*;base64/i;
-	// path to the PHP module that will decode the encoded data
-	var base64Path = "/my/base64.php";
-	function fixBase64(img) {
-		// stop the CSS expression from being endlessly evaluated
-		img.runtimeStyle.behavior = "none";
-		// check the image src
-		if (BASE64_DATA.test(img.src)) {
-		// pass the data to the PHP routine
-		img.src = base64Path + "?" + img.src.slice(5);
-		}
-	};
-  </script>
-  Dean Edwards http://dean.edwards.name/weblog/2005/06/base64-sexy/
-<?php
-$data = split(";", $_SERVER["REDIRECT_QUERY_STRING"]);
-$type = $data[0];
-$data = split(",", $data[1]);
-header("Content-type: ".$type);
-echo base64_decode($data[1]);
-?>
--->
   </xsl:template>
 
   <xsl:template match="svg:*">

@@ -255,5 +255,113 @@ of this software, even if advised of the possibility of such damage.
     </xsl:function>
     
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Work out the size of included graphics</desc>
+  </doc>
+  <xsl:function name="tei:graphicSizes" as="element()">
+    <xsl:param name="element"/>
+    <xsl:param name="filename"/>
+    <xsl:for-each select="$element">
+      <xsl:variable name="origheight">
+        <xsl:choose>
+          <xsl:when test="@teidocx:height">
+            <xsl:value-of select="@teidocx:height"/>
+          </xsl:when>
+          <xsl:when test="doc-available(concat($wordDirectory,'/image-size-info.xml'))">
+            <xsl:for-each select="document(concat($wordDirectory,'/image-size-info.xml'))">
+              <xsl:value-of select="(number(key('H',$filename)/height) div 72) * 9144"/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>0</xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="origwidth">
+        <xsl:choose>
+          <xsl:when test="@teidocx:width">
+            <xsl:value-of select="@teidocx:width"/>
+          </xsl:when>
+          <xsl:when test="doc-available(concat($wordDirectory,'/image-size-info.xml'))">
+            <xsl:for-each select="document(concat($wordDirectory,'/image-size-info.xml'))">
+              <xsl:value-of select="(number(key('W',$filename)/width) div 72) * 9144"/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>0</xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <!--
+                
+                is there a number present?
+                
+                not(number(substring(@width,0,string-length(@width)-1))=NAN) and 
+                not(number(substring(@height,0,string-length(@height)-1))=NAN)">
+                
+            -->
+      <xsl:variable name="Width">
+        <!-- remembering that pageWidth is already divided by 100 -->
+        <xsl:choose>
+          <xsl:when test="contains(@width,'%')">
+            <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>
+          </xsl:when>
+          <xsl:when test="@width">
+            <xsl:value-of select="tei:convert-dim-emu(@width)"/>
+          </xsl:when>
+          <xsl:when test="@scale and $origwidth">
+            <xsl:value-of select="($origwidth *  number(@scale)) cast as xs:integer"/>
+          </xsl:when>
+          <xsl:when test="@height and $origheight and $origwidth">
+            <xsl:variable name="h">
+              <xsl:choose>
+                <xsl:when test="contains(@height,'%')">
+                  <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="tei:convert-dim-emu(@height)"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:value-of select="number(($h * $origwidth) div $origheight)    cast as xs:integer"/>
+          </xsl:when>
+          <xsl:when test="$origwidth">
+            <xsl:value-of select="$origwidth"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message terminate="yes">no way to work out image width for
+                            <xsl:value-of select="$filename"/>
+                        </xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="Height">
+        <xsl:choose>
+          <xsl:when test="contains(@height,'%')">
+            <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
+          </xsl:when>
+          <xsl:when test="@height">
+            <xsl:value-of select="tei:convert-dim-emu(@height)"/>
+          </xsl:when>
+          <xsl:when test="@scale and $origheight">
+            <xsl:value-of select="($origheight * number(@scale)) cast as xs:integer"/>
+          </xsl:when>
+          <xsl:when test="@width[contains(.,'%')]">
+            <xsl:value-of select="number($pageHeight * (number(substring-before(@width,'%')))) cast as xs:integer"/>
+          </xsl:when>
+          <xsl:when test="@width[not(contains(.,'%'))] and $origheight and $origwidth">
+            <xsl:value-of select="number(  (number($Width) *  number($origheight)) div number($origwidth)) cast as xs:integer"/>
+          </xsl:when>
+          <xsl:when test="$origheight">
+            <xsl:value-of select="$origheight"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message terminate="yes">no way to work out image height for
+                            <xsl:value-of select="$filename"/>
+                        </xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <sizes Height="{$Height}" Width="{$Width}" origheight="{$origheight}" origwidth="{$origwidth}"/>
+    </xsl:for-each>
+  </xsl:function>
+
+
 
 </xsl:stylesheet>

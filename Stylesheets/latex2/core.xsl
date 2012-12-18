@@ -871,7 +871,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:text>}</xsl:text> 
                </xsl:when>
                <xsl:otherwise>
-                  <xsl:text>\leftline{\makebox[3em][r]{}\quad{}</xsl:text>
+                  <xsl:text>&#10;\leftline{\makebox[3em][r]{}\quad{}</xsl:text>
                   <xsl:apply-templates/>
                   <xsl:text>}</xsl:text> 
                </xsl:otherwise>
@@ -885,7 +885,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:text>\hfill\\</xsl:text>
 	 </xsl:when>
 	 <xsl:otherwise>
-	   <xsl:text>\leftline{</xsl:text>
+	   <xsl:text>&#10;\leftline{</xsl:text>
 	   <xsl:apply-templates/>
 	   <xsl:text>}</xsl:text>
 	 </xsl:otherwise>

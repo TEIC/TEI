@@ -8,6 +8,22 @@ p4top5:
 	diff test17.tei expected-results/test17.tei
 
 test-html:
+	saxon -o:test.html  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT)
+	diff test.html expected-results/test.html
+	saxon -o:test20.html  test20.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test20.html expected-results/test20.html
+	saxon -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	saxon -o:test4.html -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test4.html test3.html
+	../teitohtml5 test.xml test.html5
+	perl -p -i -e 's/on 20.*Z--/--/' test.html5
+	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
+	diff test.html5 expected-results/test.html5
+	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
+	diff test5.xhtml expected-results/test5.xhtml
+	jing -c xhtml.rnc test5.xhtml
+	saxon -o:test22.html test22.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test22.html expected-results/test22.html
 	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)
 	xmllint --format files/index.html > x ; mv x files/index.html
 	xmllint --format files/one.html > x ; mv x files/one.html
@@ -28,22 +44,6 @@ test-html:
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r -x .svn files expected-results/testnotes3
 	rm -rf files
-	saxon -o:test.html  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT)
-	diff test.html expected-results/test.html
-	saxon -o:test20.html  test20.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	diff test20.html expected-results/test20.html
-	saxon -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	saxon -o:test4.html -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	diff test4.html test3.html
-	../teitohtml5 test.xml test.html5
-	perl -p -i -e 's/on 20.*Z--/--/' test.html5
-	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
-	diff test.html5 expected-results/test.html5
-	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
-	diff test5.xhtml expected-results/test5.xhtml
-	jing -c xhtml.rnc test5.xhtml
-	saxon -o:test22.html test22.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	diff test22.html expected-results/test22.html
 
 testsplit:
 	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
@@ -105,9 +105,6 @@ conversions-from:
 	unzip -t test-pages.epub > test.epub.listing2
 	diff test.epub.listing2 expected-results/test.epub.listing2
 	rm test.epub.listing2
-	../teitoepub  test8.xml test8.epub
-	unzip -t test8.epub > test8.epub.listing
-	diff test8.epub.listing expected-results/test8.epub.listing
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
@@ -172,15 +169,9 @@ clean:
 	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html
 	rm -f  oddbyexample.* xml.xsd index*div*html
 	rm -f  test.tex test.xml.odt test.xml.docx test.epub
-	rm -f  test8.pdf
-	rm -f  test8.log
 	rm -f  test5.odt
-	rm -f  test8.aux
 	rm -f  test7.xml test11.xml test18.xml test19.xml
-	rm -f  test8.tex
 	rm -f  test7.zip
-	rm -f  test8.doc
-	rm -f  test8.out
 	rm -f  test12.rdf
 	rm -f  test9.docx test9.odt
 	rm -f  test*listing*

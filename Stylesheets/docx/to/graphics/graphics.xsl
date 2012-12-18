@@ -179,135 +179,39 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text>.</xsl:text>
 	  <xsl:value-of select="tokenize(@url,'\.')[last()]"/>
 	</xsl:variable>
-	<xsl:variable name="origheight">
-	  <xsl:choose>
-	    <xsl:when test="@teidocx:height">
-	      <xsl:value-of select="@teidocx:height"/>
-	    </xsl:when>
-	    <xsl:when test="doc-available(concat($wordDirectory,'/image-size-info.xml'))">
-		<xsl:for-each select="document(concat($wordDirectory,'/image-size-info.xml'))">
-		  <xsl:value-of select="(number(key('H',$filename)/height) div 72) * 9144"/>
-		</xsl:for-each>
-	    </xsl:when>
-	    <xsl:otherwise>0</xsl:otherwise>
-	  </xsl:choose>
-	</xsl:variable>
 
-	<xsl:variable name="origwidth">
-	  <xsl:choose>
-	    <xsl:when test="@teidocx:width">
-	      <xsl:value-of select="@teidocx:width"/>
-	    </xsl:when>
-	    <xsl:when test="doc-available(concat($wordDirectory,'/image-size-info.xml'))">
-		<xsl:for-each select="document(concat($wordDirectory,'/image-size-info.xml'))">
-		  <xsl:value-of select="(number(key('W',$filename)/width) div 72) * 9144"/>
-		</xsl:for-each>
-	    </xsl:when>
-	    <xsl:otherwise>0</xsl:otherwise>
-	  </xsl:choose>
-	</xsl:variable>
+	<xsl:variable name="S"
+		      select="tei:graphicSizes(.,$filename)"/>
 	<xsl:choose>
-	  <xsl:when test="$filename and  ( ($origwidth &gt; 0 and $origheight &gt; 0) or (@width and @height))">
-            
-            <!--
-                
-                is there a number present?
-                
-                not(number(substring(@width,0,string-length(@width)-1))=NAN) and 
-                not(number(substring(@height,0,string-length(@height)-1))=NAN)">
-                
-            -->
-            
-            <xsl:variable name="Width">
-	      <!-- remembering that pageWidth is already divided by 100 -->
-                <xsl:choose>
-                    <xsl:when test="contains(@width,'%')">
-                        <xsl:value-of select="number($pageWidth * number(substring-before(@width,'%'))) cast as xs:integer"/>
-                    </xsl:when>
-                    <xsl:when test="@width">
-                        <xsl:value-of select="tei:convert-dim-emu(@width)"/>
-                    </xsl:when>
-                    <xsl:when test="@scale and $origwidth">
-                        <xsl:value-of select="($origwidth *  number(@scale)) cast as xs:integer"/>
-                    </xsl:when>
-                    <xsl:when test="@height and $origheight and $origwidth">
-		      <xsl:variable name="h">
-			<xsl:choose>
-			  <xsl:when test="contains(@height,'%')">
-			    <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
-			  </xsl:when>
-			  <xsl:otherwise>
-			    <xsl:value-of
-				select="tei:convert-dim-emu(@height)"/>
-			  </xsl:otherwise>
-			</xsl:choose>
-		      </xsl:variable>
-		      <xsl:value-of select="number(($h * $origwidth) div $origheight)    cast as xs:integer"/>
-                    </xsl:when>
-                    <xsl:when test="$origwidth">
-                        <xsl:value-of select="$origwidth"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:message terminate="yes">no way to work out image width for
-                            <xsl:value-of select="$filename"/>
-                        </xsl:message>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
-            
-            <xsl:variable name="Height">
-                <xsl:choose>
-                    <xsl:when test="contains(@height,'%')">
-                        <xsl:value-of select="number($pageHeight * (number(substring-before(@height,'%')))) cast as xs:integer"/>
-                    </xsl:when>
-                    <xsl:when test="@height">
-                        <xsl:value-of select="tei:convert-dim-emu(@height)"/>
-                    </xsl:when>
-                    <xsl:when test="@scale and $origheight">
-                        <xsl:value-of select="($origheight * number(@scale)) cast as xs:integer"/>
-                    </xsl:when>
-                    <xsl:when test="@width and $origheight and $origwidth">
-                        <xsl:value-of select="number(  ($Width *  $origheight) div $origwidth) cast as xs:integer"/>
-                    </xsl:when>
-                    <xsl:when test="$origheight">
-                        <xsl:value-of select="$origheight"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:message terminate="yes">no way to work out image height for
-                            <xsl:value-of select="$filename"/>
-                        </xsl:message>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
-            
+	  <xsl:when test="$filename and  ( (number($S/@origwidth) &gt; 0 and number($S/@origheight) &gt; 0) or (@width and @height))">
 	    <!-- check for sense -->
             <xsl:variable name="imageWidth">
 	      <xsl:choose>
-		<xsl:when test="$Width = -1">
+		<xsl:when test="$S/@Width = -1">
 		  <xsl:value-of select="$maxWidth"/>
 		</xsl:when>
-		<xsl:when test="$Width &gt; $maxWidth">
+		<xsl:when test="$S/@Width &gt; $maxWidth">
 		  <xsl:value-of select="$maxWidth"/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="$Width"/>
+		  <xsl:value-of select="$S/@Width"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
             <xsl:variable name="imageHeight">
 	      <xsl:choose>
-		<xsl:when test="$Height = -1">
+		<xsl:when test="$S/@Height = -1">
 		  <xsl:value-of select="$maxHeight"/>
 		</xsl:when>
-		<xsl:when test="$Width &gt; $maxWidth">
-		  <xsl:value-of select="($Height * ($maxWidth div
-					$Width) ) cast as xs:integer"/>
+		<xsl:when test="$S/@Width &gt; $maxWidth">
+		  <xsl:value-of select="($S/@Height * ($maxWidth div
+					$S/@Width) ) cast as xs:integer"/>
 		</xsl:when>
-		<xsl:when test="$Height &gt; $maxHeight">
+		<xsl:when test="$S/@Height &gt; $maxHeight">
 		  <xsl:value-of select="$maxHeight"/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="$Height"/>
+		  <xsl:value-of select="$S/@Height"/>
 		</xsl:otherwise>
 	      </xsl:choose>
 	    </xsl:variable>
@@ -320,8 +224,8 @@ of this software, even if advised of the possibility of such damage.
 		
 		- maxWidth: <xsl:value-of select="$maxWidth"/>
 		- maxHeight: <xsl:value-of select="$maxHeight"/>
-		- Width: <xsl:value-of select="$Width"/>
-		- Height: <xsl:value-of select="$Height"/>
+		- Width: <xsl:value-of select="$S/@Width"/>
+		- $S/@Height: <xsl:value-of select="$S/@Height"/>
 		* imageWidth: <xsl:value-of select="$imageWidth"/>
 		* imageHeight: <xsl:value-of select="$imageHeight"/>
 		</xsl:message>

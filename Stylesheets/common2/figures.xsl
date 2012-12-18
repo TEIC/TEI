@@ -278,4 +278,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:number level="any"/>
   </xsl:template>
 
+  <xsl:template match="tei:binaryObject">
+    <xsl:text>Sorry,  &lt;binaryObject&gt; is not supported</xsl:text>
+  </xsl:template>
+
 </xsl:stylesheet>

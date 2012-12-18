@@ -41,15 +41,16 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <xsl:param name="wordDirectory"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
-      <desc>Whether it should be attempted to make quotes into block
-      quotes if they are over a certain length</desc></doc>
+    <desc>Whether it should be attempted to make quotes into block
+      quotes if they are over a certain length</desc>
+  </doc>
   <xsl:param name="autoBlockQuote">false</xsl:param>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="integer">
-      <desc>Length beyond which a quote is a block quote</desc></doc>
+    <desc>Length beyond which a quote is a block quote</desc>
+  </doc>
   <xsl:param name="autoBlockQuoteLength">150</xsl:param>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether a section is "identifiable"</desc>
   </doc>
@@ -70,7 +71,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether a section is "transcribable"</desc>
   </doc>
@@ -78,13 +78,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-	<xsl:when test="self::tei:p and parent::tei:sp">true</xsl:when>
+        <xsl:when test="self::tei:p and parent::tei:sp">true</xsl:when>
         <xsl:when test="self::tei:l">true</xsl:when>
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in small caps.</desc>
   </doc>
@@ -98,7 +97,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in smart quotes.</desc>
   </doc>
@@ -112,8 +110,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether to render text in bold.</desc>
   </doc>
@@ -182,16 +178,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-	<xsl:when test="not(self::*)">true</xsl:when>
-	<xsl:when test="@rend='inline'">true</xsl:when>
-	<xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
+        <xsl:when test="not(self::*)">true</xsl:when>
+        <xsl:when test="@rend='inline'">true</xsl:when>
+        <xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
         <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
-	<xsl:when test="parent::tei:div">false</xsl:when>
-	<xsl:when test="parent::tei:titlePage">false</xsl:when>
-	<xsl:when test="parent::tei:cit[@rend='display']">false</xsl:when>
-	<xsl:when test="parent::tei:cit and (tei:p or tei:l)">false</xsl:when>
-	<xsl:when test="parent::tei:body">false</xsl:when>
-	<xsl:when test="parent::tei:titlePage">false</xsl:when>
+        <xsl:when test="parent::tei:div">false</xsl:when>
+        <xsl:when test="parent::tei:titlePage">false</xsl:when>
+        <xsl:when test="parent::tei:cit[@rend='display']">false</xsl:when>
+        <xsl:when test="parent::tei:cit and (tei:p or tei:l)">false</xsl:when>
+        <xsl:when test="parent::tei:body">false</xsl:when>
+        <xsl:when test="parent::tei:titlePage">false</xsl:when>
         <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
         <xsl:when test="self::mml:math">true</xsl:when>
         <xsl:when test="self::tei:abbr">true</xsl:when>
@@ -263,8 +259,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:pubPlace">true</xsl:when>
         <xsl:when test="self::tei:note">true</xsl:when>
         <xsl:when test="self::tei:q[tei:l]">false</xsl:when>
-	<xsl:when test="self::tei:quote and tei:lb">false</xsl:when>
-	<xsl:when test="self::tei:quote and $autoBlockQuote='true' and string-length(.)&gt;$autoBlockQuoteLength">false</xsl:when>
+        <xsl:when test="self::tei:quote and tei:lb">false</xsl:when>
+        <xsl:when test="self::tei:quote and $autoBlockQuote='true' and string-length(.)&gt;$autoBlockQuoteLength">false</xsl:when>
         <xsl:when test="self::tei:q">true</xsl:when>
         <xsl:when test="self::tei:quote">true</xsl:when>
         <xsl:when test="self::tei:ref">true</xsl:when>
@@ -289,7 +285,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:dynamicContent">true</xsl:when>
         <xsl:when test="self::w:drawing">true</xsl:when>
         <xsl:when test="self::m:oMath">true</xsl:when>
-	<xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">false</xsl:when>
+        <xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">false</xsl:when>
         <xsl:otherwise>
           <xsl:choose>
             <xsl:when test="empty($element/..)">false</xsl:when>
@@ -300,15 +296,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Returns the current date.</desc>
   </doc>
   <xsl:function name="tei:whatsTheDate">
     <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
   </xsl:function>
-
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Whether an element has any more (useful) text in its parent</desc>
   </doc>
@@ -316,14 +309,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-	<xsl:when
-	    test="count(following-sibling::node())=1 and normalize-space(following-sibling::node()/text())=''">true</xsl:when>
-<!--	<xsl:when
+        <xsl:when test="count(following-sibling::node())=1 and normalize-space(following-sibling::node()/text())=''">true</xsl:when>
+        <!--	<xsl:when
 	    test="count(preceding-sibling::node())=1 and normalize-space(preceding-sibling::node()/text())=''">true</xsl:when>-->
         <xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
 
 </xsl:stylesheet>
