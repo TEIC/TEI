@@ -279,7 +279,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:binaryObject">
-    <xsl:text>Sorry,  &lt;binaryObject&gt; is not supported</xsl:text>
+    <xsl:message terminate="yes">ERROR:  binaryObject element is not supported</xsl:message>
   </xsl:template>
 
 </xsl:stylesheet>

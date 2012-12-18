@@ -390,7 +390,10 @@ of this software, even if advised of the possibility of such damage.
 		      <xsl:when test="self::tei:binaryObject">
 			<xsl:text>data:</xsl:text>
 			<xsl:value-of select="@mimetype"/>
-			<xsl:text>;base64,</xsl:text>
+			<xsl:variable name="enc" select="if (@encoding) then @encoding else 'base64'"/>
+			<xsl:text>;</xsl:text>
+			<xsl:value-of select="$enc"/>
+			<xsl:text>,</xsl:text>
 			<xsl:copy-of select="text()"/>
 		      </xsl:when>
 		      <xsl:otherwise>

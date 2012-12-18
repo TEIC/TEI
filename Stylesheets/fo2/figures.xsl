@@ -456,9 +456,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:binaryObject">
+    <xsl:variable name="enc" select="if (@encoding) then @encoding
+      else 'base64'"/>
     <external-graphic>
       <xsl:attribute name="src">
-	<xsl:text>url('data:image/auto;base64,</xsl:text>
+	<xsl:text>url('data:image/auto;{$enc},</xsl:text>
 	<xsl:value-of select="."/>
 	<xsl:text>')</xsl:text>
       </xsl:attribute>

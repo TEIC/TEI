@@ -917,7 +917,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="office:binary-data">    
-    <binaryObject mimeType="image/jpg">
+    <binaryObject encoding="base64" mimeType="image/jpg">
       <xsl:value-of select="."/>
     </binaryObject>
   </xsl:template>
