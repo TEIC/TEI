@@ -38,22 +38,34 @@
 	  <xsl:import href="../utils/variables.xsl"/>
 	  <xsl:import href="../utils/identity/identity.xsl"/>
 
-	  <xsl:import href="parameters.xsl"/>
-	  <xsl:include href="pass0/pass0.xsl"/>
-	  <xsl:include href="pass2/pass2.xsl"/>
+	  <xsl:param name="convert-graphics">true</xsl:param>	  
+	  <xsl:param name="convert-headers">true</xsl:param>	  
+	  <xsl:param name="mathMethod">mml</xsl:param>	  
+	  <xsl:param name="termMethod">tei</xsl:param>	  
+	  <xsl:param name="tableMethod">tei</xsl:param>	  
+	  <xsl:param name="preserveWordSections">false</xsl:param>	  
+	  <xsl:param name="preserveWordHeadersFooters">false</xsl:param>    	  
+	  <xsl:param name="preserveEffects">false</xsl:param>	  
+	  <xsl:param name="verbose">false</xsl:param>	  
+	  <xsl:param name="processChangeInformation">false</xsl:param>
+	  <xsl:param name="pageHeight">890</xsl:param>
+	  <xsl:param name="pageWidth">576</xsl:param>
+
+	  <xsl:include href="pass0.xsl"/>
+	  <xsl:include href="pass2.xsl"/>
 	
-	  <xsl:include href="dynamic/fields.xsl"/>
-	  <xsl:include href="dynamic/toc.xsl"/>
-	  <xsl:include href="graphics/graphics.xsl"/>
-	  <xsl:include href="lists/lists.xsl"/>
-	  <xsl:include href="marginals/marginals.xsl"/>
-	  <xsl:include href="maths/maths.xsl"/>
-	  <xsl:include href="paragraphs/paragraphs.xsl"/>
-	  <xsl:include href="tables/tables.xsl"/>
-	  <xsl:include href="templates/tei-templates.xsl"/>
-	  <xsl:include href="textruns/textruns.xsl"/>
-	  <xsl:include href="utils/utility-templates.xsl"/>
-	  <xsl:include href="wordsections/wordsections.xsl"/>
+	  <xsl:include href="fields.xsl"/>
+	  <xsl:include href="toc.xsl"/>
+	  <xsl:include href="graphics.xsl"/>
+	  <xsl:include href="lists.xsl"/>
+	  <xsl:include href="marginals.xsl"/>
+	  <xsl:include href="maths.xsl"/>
+	  <xsl:include href="paragraphs.xsl"/>
+	  <xsl:include href="tables.xsl"/>
+	  <xsl:include href="tei-templates.xsl"/>
+	  <xsl:include href="textruns.xsl"/>
+	  <xsl:include href="utility-templates.xsl"/>
+	  <xsl:include href="wordsections.xsl"/>
 	
 	
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
