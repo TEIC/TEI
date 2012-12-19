@@ -115,7 +115,9 @@ html-web.stamp:  check
 validate-html:
 	@echo BUILD: Validate HTML version of Guidelines
 	@ echo SUSPENDED FOR NOW
-#	cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant  -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f ../../../validatehtml.xml;rm z_*
+
+old-validate-html:
+	cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant  -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f ../../../validatehtml.xml;rm z_*
 
 teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
