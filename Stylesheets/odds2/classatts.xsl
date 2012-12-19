@@ -80,7 +80,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:copy-of select="$results//memberOf"/>
       </classes>
       <attList>
-<xsl:message><xsl:value-of select="@ident"/>: <xsl:copy-of select="$results"/></xsl:message>
 	<xsl:copy-of select="$results//attRef"/>
 	<xsl:copy-of select="$results//attDef"/>
 	<xsl:for-each select="$E/attList/*">
