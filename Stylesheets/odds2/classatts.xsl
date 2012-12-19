@@ -80,14 +80,25 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:copy-of select="$results//memberOf"/>
       </classes>
       <attList>
+<xsl:message><xsl:value-of select="@ident"/>: <xsl:copy-of select="$results"/></xsl:message>
 	<xsl:copy-of select="$results//attRef"/>
 	<xsl:copy-of select="$results//attDef"/>
-	<xsl:apply-templates select="$E/attList/*"  mode="classatts"/>	
+	<xsl:for-each select="$E/attList/*">
+	  <xsl:choose>
+	    <xsl:when test="@mode='replace' and
+			    not($results/encounter[@ident=current()/@ident])">
+	      <xsl:apply-templates select="." mode="classatts"/>	      
+	    </xsl:when>
+	    <xsl:when test="@mode and not(@mode='add')"/>
+	    <xsl:otherwise>
+	      <xsl:apply-templates select="." mode="classatts"/>	      
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
       </attList>
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="attDef[@mode and not(@mode='add')]" mode="classatts"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Walk over each class membership; visit that class;
@@ -95,7 +106,9 @@ of this software, even if advised of the possibility of such damage.
     in original element. If so, merge the two together and make a
     local copy. If a class has triggered this behaviour, return
     pointers to untouched class attributes, and a set of attDefs. 
-    Otherwise, return a memberOf.</desc>
+    Otherwise, return a memberOf. A note is made of any class
+    attribute (encounter element), so that we can distinguish
+    overridding attributes as to whether or not they are from a class.</desc>
   </doc>
   <xsl:function name="tei:attclasses" as="node()+">
     <xsl:param name="here" as="element()"/>
@@ -143,6 +156,7 @@ of this software, even if advised of the possibility of such damage.
 		  </xsl:if>
 		</xsl:when>
 		<xsl:otherwise>
+		  <xsl:copy-of select="$overrides/encounter"/>
 		  <xsl:copy-of select="$overrides/attRef"/>
 		  <xsl:copy-of select="$overrides/attDef"/>
 		</xsl:otherwise>
@@ -159,6 +173,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="k" select="current()/@key"/>
     <xsl:for-each select="key('ATTCLASSES',$k)">
       <xsl:for-each select=".//attDef">
+	<encounter ident="{@ident}"/>
 	<xsl:variable name="A" select="."/>
 	<xsl:choose>
 	  <xsl:when test="$E//attDef[@ident=current()/@ident]">

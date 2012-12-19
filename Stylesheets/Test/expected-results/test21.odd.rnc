@@ -2053,7 +2053,16 @@ abbr =
     macro.phraseSeq,
     att.global.attributes,
     att.responsibility.attributes,
-    att.typed.attributes,
+    
+    ##
+    attribute type {
+      
+      ##  
+      "CHECK-THIS-OUT"
+      | 
+        ##  
+        "MY-PARENT-SHOULD-HAVE-ONLY-1-DECL-OF-TYPE"
+    },
     empty
   }
 expan =
@@ -2840,10 +2849,27 @@ divGen =
     model.headLike*,
     att.global.attributes,
     
-    ## specifies what type of generated text division (e.g. index,
-    ##                 table of contents, etc.) is to appear.
-    ## Sample values include: 1] index; 2] toc; 3] figlist; 4] tablist
-    attribute type { data.enumerated }?,
+    ##
+    attribute type {
+      
+      ##  (Catalogue of Attributes) 
+      "attcat"
+      | 
+        ##  (Catalogue of Attribute Classes) 
+        "attclasscat"
+      | 
+        ##  ( Catalogue of Elements) 
+        "elementcat"
+      | 
+        ##  ( Catalogue of Macros) 
+        "macrocat"
+      | 
+        ##  (Catalogue of Model Classes) 
+        "modelclasscat"
+      | 
+        ##  (Table of Contents) 
+        "toc"
+    }?,
     empty
   }
 textLang =
