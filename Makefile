@@ -463,8 +463,10 @@ epub.stamp: check
 	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
 	touch epub.stamp
 
-mobi: epub.stamp
-	-command -v  kindlegen && kindlegen Guidelines.epub
+mobi: check
+	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=teikindle p5.xml Guidelines-kindle.epub
+	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
+	rm Guidelines-kindle.epub
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
