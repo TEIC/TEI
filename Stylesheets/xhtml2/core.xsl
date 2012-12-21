@@ -705,7 +705,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text> </xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element lb</desc>
+    <desc>Process element lb. ignore if at very start or very end of a
+    block-level context</desc>
   </doc>
   <xsl:template match="tei:lb">
     <xsl:choose>
@@ -726,6 +727,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@rend='below'">
         <xsl:text>⌞</xsl:text>
       </xsl:when>
+      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or
+		      tei:is-first(.))"/>
       <xsl:otherwise>
         <br>
 	  <xsl:call-template name="makeRendition">

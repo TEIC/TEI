@@ -12,6 +12,7 @@
   <xsl:import href="../../common2/tei-param.xsl"/>
   <xsl:import href="../../common2/core.xsl"/>
   <xsl:import href="../../common2/figures.xsl"/>
+  <xsl:import href="../../common2/linking.xsl"/>
   <xsl:import href="../../common2/msdescription.xsl"/>
   <!-- Deals with dynamic text creation such as toc -->
   <xsl:include href="dynamic.xsl"/>
@@ -900,12 +901,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
-  <xsl:template name="displayNote">
-    <xsl:call-template name="block-element">
-        <xsl:with-param name="style">Quote</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-
   <xsl:template name="footNote">
     <xsl:variable name="num">
       <xsl:number count="tei:note[@place='foot' or @place='bottom']" level="any"/>
@@ -975,6 +970,21 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="parent::tei:div/@xml:id">
             <xsl:value-of select="parent::tei:div/@xml:id"/>
           </xsl:when>
+          <xsl:when test="parent::tei:div1/@xml:id">
+            <xsl:value-of select="parent::tei:div1/@xml:id"/>
+          </xsl:when>
+          <xsl:when test="parent::tei:div2/@xml:id">
+            <xsl:value-of select="parent::tei:div2/@xml:id"/>
+          </xsl:when>
+          <xsl:when test="parent::tei:div3/@xml:id">
+            <xsl:value-of select="parent::tei:div3/@xml:id"/>
+          </xsl:when>
+          <xsl:when test="parent::tei:div4/@xml:id">
+            <xsl:value-of select="parent::tei:div4/@xml:id"/>
+          </xsl:when>
+          <xsl:when test="parent::tei:div5/@xml:id">
+            <xsl:value-of select="parent::tei:div5/@xml:id"/>
+          </xsl:when>
           <xsl:otherwise>
             <xsl:text>_SECTION_</xsl:text>
             <xsl:value-of select="1000+$number"/>
@@ -1015,10 +1025,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:quote|tei:q|tei:said|tei:soCalled">
     <xsl:choose>
       <xsl:when test="*[not(tei:is-inline(.))] or parent::tei:cit|parent::tei:div">
-        <xsl:call-template name="block-element"/>
+        <xsl:call-template name="block-element">
+	  <xsl:with-param name="style">Quote</xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:when test="not(tei:is-inline(.))">
-        <xsl:call-template name="block-element"/>
+        <xsl:call-template name="block-element">
+	  <xsl:with-param name="style">Quote</xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:when test="tei:l">
         <xsl:apply-templates/>
@@ -1108,7 +1122,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="."/>
-          <tei:lb/>
+          <tei:lb rend="show"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
@@ -2052,7 +2066,12 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="parent::tei:body"/>
       <xsl:when test="parent::tei:back"/>
       <xsl:when test="parent::tei:front"/>
-      <xsl:when test="tei:is-last(.)"/>
+      <xsl:when test="@rend='show'">
+	<w:r>
+	  <w:br/>
+	</w:r>
+      </xsl:when>
+      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
       <xsl:otherwise>
 	<w:r>
 	  <w:br/>
@@ -2080,7 +2099,8 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:when>
 	</xsl:choose>
 	<xsl:choose>
-	  <xsl:when test="starts-with(@target,'#')  and id(substring(@target,2))">
+	  <xsl:when test="starts-with(@target,'#')  and
+			  id(substring(@target,2))">
 	    <xsl:apply-templates select="id(substring(@target,2))" mode="xref"/>
 	  </xsl:when>
 	  <xsl:otherwise>
@@ -2483,8 +2503,26 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:item/tei:p[not(@rend)]" mode="pass0">
     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
     <xsl:if test="following-sibling::tei:p">
-      <tei:lb/>
+      <tei:lb rend="show"/>
     </xsl:if>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+	remove confusing line breaks
+      </desc>
+  </doc>
+  <xsl:template match="tei:lb" mode="pass0">
+    <xsl:choose>
+      <xsl:when test="parent::tei:div"/>
+      <xsl:when test="parent::tei:body"/>
+      <xsl:when test="parent::tei:back"/>
+      <xsl:when test="parent::tei:front"/>
+      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
+      <xsl:otherwise>
+	<xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2761,5 +2799,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
 
+  <xsl:template name="generateEndLink">
+      <xsl:param name="where"/>
+      <xsl:value-of select="$where"/>
+  </xsl:template>
 
+  <xsl:template name="displayNote">
+    <xsl:call-template name="block-element">
+        <xsl:with-param name="style">Quote</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
 </xsl:stylesheet>

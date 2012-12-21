@@ -713,7 +713,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates/>
   </xsl:template>
   <xsl:template match="tei:lb">
-    <text:line-break/>
+    <xsl:choose>
+      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
+      <xsl:otherwise>
+	<text:line-break/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:biblStruct">
     <text:list-item>

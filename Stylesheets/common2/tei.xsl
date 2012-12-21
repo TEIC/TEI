@@ -137,6 +137,9 @@ of this software, even if advised of the possibility of such damage.
 			    tei:valList tei:vocal"/>
 
   <xsl:key name="APP" match="tei:app" use="1"/>
+  <xsl:key name="TAGREND" match="tei:tagUsage[@render]" use="@gi"/>
+
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc> Name of XSLT processor.</desc>
    </doc>
@@ -164,7 +167,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="$quote='rsaquo'">›</xsl:when>
          <xsl:when test="$quote='rsquo'">’</xsl:when>
          <xsl:when test="$quote='rsquor'">‛</xsl:when>
-         <xsl:otherwise>?</xsl:otherwise>
+         <xsl:otherwise><xsl:value-of select="$quote"/></xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   
@@ -185,38 +188,24 @@ of this software, even if advised of the possibility of such damage.
 	   test="/*/tei:teiHeader//tei:editorialDecl/tei:quotation[@marks='all']">
 	 <xsl:apply-templates/>
        </xsl:when>
-       <xsl:otherwise>
-	 <xsl:choose>
-	   <xsl:when test="contains(@rend,'PRE')">
-	     <xsl:choose>
-	       <xsl:when test="contains(@rend,'POST')">
-		 <xsl:call-template name="getQuote">
-		   <xsl:with-param name="quote"
-				   select="normalize-space(substring-before(substring-after(@rend,'PRE'),'POST'))"/>
-		 </xsl:call-template>
-	       </xsl:when>
-	       <xsl:otherwise>
-		 <xsl:call-template name="getQuote">
-		   <xsl:with-param name="quote" select="normalize-space(substring-after(@rend,'PRE'))"/>
-		 </xsl:call-template>
-	       </xsl:otherwise>
-	     </xsl:choose>
-	   </xsl:when>
-	   <xsl:otherwise>
-	     <xsl:value-of select="$preQuote"/>
-	   </xsl:otherwise>
-	 </xsl:choose>
+       <xsl:when test="@rend='inline'">
+	 <xsl:value-of select="$preQuote"/>
 	 <xsl:apply-templates/>
-	 <xsl:choose>
-	   <xsl:when test="contains(@rend,'POST')">
-	     <xsl:call-template name="getQuote">
-	       <xsl:with-param name="quote" select="normalize-space(substring-after(@rend,'POST'))"/>
-	     </xsl:call-template>
-	   </xsl:when>
-	   <xsl:otherwise>
-	     <xsl:value-of select="$postQuote"/>
-	   </xsl:otherwise>
-	 </xsl:choose>
+	 <xsl:value-of select="$postQuote"/>
+       </xsl:when>
+       <xsl:when test="$outputTarget='latex'">
+	 <xsl:value-of select="$preQuote"/>
+	 <xsl:apply-templates/>
+	 <xsl:value-of select="$postQuote"/>
+       </xsl:when>
+       <xsl:when test="@rend or @rendition or
+		       key('TAGREND',local-name(.))">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <xsl:value-of select="$preQuote"/>
+	 <xsl:apply-templates/>
+	 <xsl:value-of select="$postQuote"/>
        </xsl:otherwise>
      </xsl:choose>
    </xsl:template>

@@ -65,7 +65,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:output method="text" encoding="utf8"/>
 
   <xsl:preserve-space elements="tei:hi tei:emph tei:foreign tei:p"/>
-
+<xsl:param name="outputTarget">latex</xsl:param>
   <xsl:param name="startNamespace">\color{red}</xsl:param>
   <xsl:param name="startElement">{</xsl:param>
   <xsl:param name="highlightStartElementName">\textcolor{red}{</xsl:param>

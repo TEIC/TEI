@@ -428,6 +428,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text>-</xsl:text>
 	<xsl:text>{\hskip1pt}\newline </xsl:text>
       </xsl:when>
+      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
       <xsl:otherwise>
       <xsl:text>{\hskip1pt}\newline </xsl:text>
       </xsl:otherwise>

@@ -55,8 +55,6 @@ of this software, even if advised of the possibility of such damage.
 	   match="tei:note[not(@place='margin' or @place='inline' or @place='display')
 		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)]"/>
 
-  <xsl:key name="TAGREND" match="tei:tagUsage[@render]" use="@gi"/>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="string">
     <desc>  CSS class for links derived from &lt;ptr&gt;    </desc>
   </doc>

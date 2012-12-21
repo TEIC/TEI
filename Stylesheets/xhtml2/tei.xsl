@@ -170,11 +170,13 @@ Stylesheet constant setting the name of the main output file.
     <xsl:call-template name="makeLang"/>
     <xsl:choose>
       <xsl:when test="(self::tei:q or self::tei:said or
-		      self::tei:quote) and @rend='inline'">
+		      self::tei:quote) and @rend='inline' and
+		      not(@rendition) and not(key('TAGREND',local-name(.)))">
 	<xsl:sequence select="tei:processClass(local-name(),'')"/>
       </xsl:when>
       <xsl:when test="(self::tei:q or self::tei:said or
-		      self::tei:quote) and @rend='display'">
+		      self::tei:quote) and @rend='display' and
+		      not(@rendition) and not(key('TAGREND',local-name(.)))">
 	<xsl:sequence select="tei:processClass(local-name(),'')"/>
       </xsl:when>
       <xsl:when test="@rend">
@@ -266,6 +268,12 @@ Stylesheet constant setting the name of the main output file.
 	</xsl:if>
 	<xsl:for-each select="tokenize(normalize-space($value),' ')">
 	  <xsl:choose>
+	    <xsl:when test="starts-with(.,'pre(')">
+	      <xsl:message terminate="yes">no support for pre() pattern in @rend</xsl:message>
+	    </xsl:when>
+	    <xsl:when test="starts-with(.,'post(')">
+	      <xsl:message terminate="yes">no support for post() pattern in @rend</xsl:message>
+	    </xsl:when>
 	    <xsl:when test=".='bold' or .='bo'"><s>font-weight:bold</s></xsl:when>
 	    <xsl:when test=".='calligraphic' or .='cursive'"><s>font-family:cursive</s></xsl:when>
 	    <xsl:when test="starts-with(.,'color(')"><s>

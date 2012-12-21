@@ -450,6 +450,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:lb">
       <xsl:choose>
+      <xsl:when test="not(tei:is-inline(..)) and (tei:is-last(.) or tei:is-first(.))"/>
 	<xsl:when test="$activeLinebreaks='true'">
 	  <xsl:choose>
 	    <!-- this is a *visible* linebreak character 
