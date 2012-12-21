@@ -847,9 +847,9 @@ attribute values supplied.
  in the following example :
 
  <egXML xmlns="http://www.tei-c.org/ns/Examples"
-	corresp="#DSHD-eg-30"><said rend="PRE+lsquo POST+rsquo">Who-e debel
+	corresp="#DSHD-eg-30"><said rend="pre(‘) post(’)">Who-e debel
  you?</said> — he at last said — 
- <said rend="PRE+lsquo POST+rsquo">you no speak-e,
+ <said rend="pre(‘) post(’)">you no speak-e,
  damme, I kill-e.</said>  And so saying,
  the lighted tomahawk began flourishing
  about me in the dark.</egXML>
@@ -871,7 +871,16 @@ simply be tagged:
  <said>you no speak-e,
  damme, I kill-e.</said>  And so saying,
  the lighted tomahawk began flourishing
- about me in the dark.</egXML>
+ about me in the dark.
+<!-- in the header -->
+<tagsDecl>
+  <rendition xml:id="prequote" scheme="css" scope="before">content:"‘";</rendition>
+  <rendition xml:id="postquote" scheme="css" scope="before">content:"’";</rendition>
+  <namespace name="http://www.tei-c.org/ns/1.0">    
+    <tagUsage gi="said" rend="#prequote #postquote"/>
+  </namespace>
+</tagsDecl>
+</egXML>
 </p>
 
 
