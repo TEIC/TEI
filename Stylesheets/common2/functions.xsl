@@ -184,6 +184,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
         <xsl:when test="parent::tei:div">false</xsl:when>
         <xsl:when test="parent::tei:titlePage">false</xsl:when>
+        <xsl:when test="self::tei:cit[not(@rend)]">true</xsl:when>
         <xsl:when test="parent::tei:cit[@rend='display']">false</xsl:when>
         <xsl:when test="parent::tei:cit and (tei:p or tei:l)">false</xsl:when>
         <xsl:when test="parent::tei:body">false</xsl:when>
@@ -328,5 +329,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
 
 </xsl:stylesheet>

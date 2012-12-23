@@ -543,4 +543,35 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
 
+  <xsl:template name="processInline">
+    <xsl:param name="before"/>
+    <xsl:param name="after"/>
+    <xsl:param name="style"/>
+    <hi>
+      <xsl:if test="not($style='')">
+	<xsl:attribute name="rend">
+	  <xsl:value-of select="$style"/>
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:value-of select="$before"/>
+      <xsl:apply-templates/>
+      <xsl:value-of select="$after"/>
+    </hi>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>what to do with a block-level object</desc>
+  </doc>
+  <xsl:template name="processBlock">
+    <xsl:param name="style"/>
+    <p>
+      <xsl:if test="not($style='')">
+	<xsl:attribute name="rend">
+	  <xsl:value-of select="$style"/>
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </p>
+  </xsl:template>
+
 </xsl:stylesheet>

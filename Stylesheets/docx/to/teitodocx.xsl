@@ -1024,7 +1024,7 @@ of this software, even if advised of the possibility of such damage.
   <!-- quoted text; if it surrounds egXML, just pass on -->
   <xsl:template match="tei:quote|tei:q|tei:said|tei:soCalled">
     <xsl:choose>
-      <xsl:when test="*[not(tei:is-inline(.))] or parent::tei:cit|parent::tei:div">
+      <xsl:when test="*[not(tei:is-inline(.))] or parent::tei:div">
         <xsl:call-template name="block-element">
 	  <xsl:with-param name="style">Quote</xsl:with-param>
 	</xsl:call-template>
@@ -2646,18 +2646,19 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
-    <xsl:param name="stylename"/>
     <w:r>
       <w:rPr>
         <w:rStyle>
 	  <xsl:attribute name="w:val">
 	    <xsl:choose>
-	      <xsl:when test="$stylename=''">
+	      <xsl:when test="$style='italic'"/>
+	      <xsl:when test="$style='bold'"/>
+	      <xsl:when test="$style=''">
 		<xsl:text>tei</xsl:text>
 		<xsl:value-of select="local-name()"/>
 	      </xsl:when>
 	      <xsl:otherwise>
-		<xsl:value-of select="$stylename"/>
+		<xsl:value-of select="$style"/>
 	      </xsl:otherwise>
 	    </xsl:choose>
 	  </xsl:attribute>
@@ -2675,6 +2676,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:if>
       </w:rPr>
       <w:t>
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
         <xsl:value-of select="$before"/>
         <xsl:value-of select="."/>
         <xsl:value-of select="$after"/>
@@ -2809,4 +2811,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:with-param name="style">Quote</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
+
 </xsl:stylesheet>

@@ -510,27 +510,6 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element tei:bibl</desc>
-   </doc>
-   <xsl:template match="tei:bibl">
-     <xsl:choose>
-       <xsl:when test="parent::tei:div|tei:listBibl">
-	 <xsl:text>\par \bgroup\itshape&#10;</xsl:text>
-	 <xsl:apply-templates/> 
-	 <xsl:text>\egroup\vskip6pt\par&#10;</xsl:text>
-       </xsl:when>
-       <xsl:when test="parent::tei:cit">
-	 <xsl:apply-templates/>
-       </xsl:when>
-       <xsl:otherwise>
-	 <xsl:text>\bgroup\itshape </xsl:text>
-	 <xsl:apply-templates/>
-	 <xsl:text>\egroup </xsl:text>
-       </xsl:otherwise>
-     </xsl:choose>
-   </xsl:template>
-   
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element listBibl/tei:bibl</desc>
    </doc>
   <xsl:template match="tei:listBibl/tei:bibl"> \bibitem {<xsl:choose>

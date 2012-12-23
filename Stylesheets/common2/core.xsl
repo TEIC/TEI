@@ -665,9 +665,11 @@ of this software, even if advised of the possibility of such damage.
 	     </xsl:call-template>
 	   </xsl:if>
          </xsl:when>
+<!--
          <xsl:when test="ancestor::tei:bibl">
 	   <xsl:apply-templates/>
          </xsl:when>
+-->
          <xsl:otherwise>
 	   <xsl:call-template name="emphasize">
 	     <xsl:with-param name="class">
@@ -1042,6 +1044,44 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
     <xsl:apply-templates/>
     <xsl:text>] </xsl:text>
+  </xsl:template>
+
+  <xsl:template match="tei:bibl">
+    <xsl:choose>
+      <xsl:when test="parent::tei:q/parent::tei:head or parent::tei:q[@rend='inline']">
+        <xsl:call-template name="processBlock">
+	  <xsl:with-param name="style">citbibl</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:when test="parent::tei:cit[@rend='display'] or
+		      (parent::tei:cit and tei:p) or  parent::tei:q">
+        <xsl:call-template name="processInline">
+	  <xsl:with-param name="style">citbibl</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:when test="not(tei:is-inline(.))">
+        <xsl:call-template name="processBlock">
+	  <xsl:with-param name="style">biblfree</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="processInline">
+	  <xsl:with-param name="style">
+            <xsl:text>bibl</xsl:text>
+	  </xsl:with-param>
+	  <xsl:with-param name="before">
+	    <xsl:if test="parent::tei:cit">
+	      <xsl:text> (</xsl:text>
+	    </xsl:if>
+	  </xsl:with-param>
+	  <xsl:with-param name="after">
+	    <xsl:if test="parent::tei:cit">
+	      <xsl:text>)</xsl:text>
+	    </xsl:if>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>

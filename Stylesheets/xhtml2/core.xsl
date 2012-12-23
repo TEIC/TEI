@@ -176,47 +176,6 @@ of this software, even if advised of the possibility of such damage.
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element bibl</desc>
-  </doc>
-  <xsl:template match="tei:bibl">
-    <xsl:choose>
-      <xsl:when test="parent::tei:q/parent::tei:head or parent::tei:q[@rend='inline']">
-        <span class="citbibl">
-          <xsl:apply-templates/>
-        </span>
-      </xsl:when>
-      <xsl:when test="parent::tei:cit[@rend='display'] or
-		      (parent::tei:cit and tei:p) or  parent::tei:q">
-        <div class="citbibl">
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
-      <xsl:when test="not(tei:is-inline(.))">
-        <div class="biblfree">
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
-        <span>
-          <xsl:attribute name="class">
-            <xsl:text>bibl</xsl:text>
-            <xsl:if test="@type">
-              <xsl:text> bibl-</xsl:text>
-              <xsl:value-of select="@type"/>
-            </xsl:if>
-          </xsl:attribute>
-	  <xsl:if test="parent::tei:cit">
-	    <xsl:text> (</xsl:text>
-	  </xsl:if>
-          <xsl:apply-templates/>
-	  <xsl:if test="parent::tei:cit">
-	    <xsl:text>)</xsl:text>
-	  </xsl:if>
-        </span>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element change</desc>
   </doc>
   <xsl:template match="tei:change">

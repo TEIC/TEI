@@ -526,21 +526,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Bibl elements</desc>
-   </doc>
-  <xsl:template match="tei:bibl">
-    <xsl:choose>
-      <xsl:when test="parent::tei:listBibl">
-	<xsl:call-template name="makeItem"/>
-      </xsl:when>
-      <xsl:otherwise>
-	<block>
-	  <xsl:apply-templates/>
-	</block>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
   <xsl:template match="tei:list[@type='catalogue']">

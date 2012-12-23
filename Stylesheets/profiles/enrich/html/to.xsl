@@ -88,31 +88,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
-    <xsl:template name="processInline">
-      <xsl:param name="before"/>
-      <xsl:param name="after"/>
-      <xsl:param name="style"/>
-      <span class="{local-name()}">
-	        <xsl:value-of select="$before"/>
-	        <xsl:choose>
-	           <xsl:when test="$style='italic'">
-	              <i>
-	                 <xsl:value-of select="normalize-space(.)"/>
-	              </i>
-	           </xsl:when>
-	           <xsl:when test="$style='bold'">
-	              <b>
-	                 <xsl:value-of select="normalize-space(.)"/>
-	              </b>
-	           </xsl:when>
-	           <xsl:otherwise>
-	              <xsl:value-of select="normalize-space(.)"/>
-	           </xsl:otherwise>
-	        </xsl:choose>
-	        <xsl:value-of select="$after"/>
-      </span>
-    </xsl:template>
-
     <xsl:template name="processBlock">
       <xsl:param name="style"/>
       <div class="{$style}">
