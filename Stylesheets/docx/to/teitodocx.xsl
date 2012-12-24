@@ -233,10 +233,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="pass0">
 	<xsl:apply-templates mode="pass0"/>
       </xsl:variable>
-      <xsl:variable name="cleanup">
+      <xsl:variable name="pass2">
 	<xsl:apply-templates select="$pass0/*"/>
       </xsl:variable>
-      <xsl:apply-templates select="$cleanup/*" mode="cleanup"/>
+      <xsl:apply-templates select="$pass2/*" mode="pass2"/>
     </xsl:template>
 
   <xsl:template match="/tei:TEI|/tei:teiCorpus">
@@ -385,8 +385,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>
       <p>
             This template processes block elements (or better to say the children of a block element)
-            and should never be called directly 
-            (call block-element instead). The function processes all children and puts
+            and should never be called directly (call block-element instead). The function processes all children and puts
             all inline elements into one w:p. If it encounters a nested block element
             (e.g. a note inside a p) then it closes the previous w:p processes that block
             element and then again starts putting all following inline elements into another
@@ -427,12 +426,6 @@ of this software, even if advised of the possibility of such damage.
         <!-- we encountered an inline element. This means that the current group only
                      contains inline elements -->
         <xsl:otherwise>
-	  <!--
-	  <xsl:message>+@@ <xsl:value-of select="name()"/>: pPr:	  <xsl:if test="not(empty($pPr))"><xsl:copy-of
-	  select="$pPr"/></xsl:if>; style: <xsl:if
-	  test="not(empty($style))"><xsl:copy-of
-	  select="$style"/></xsl:if></xsl:message>
-	  -->
           <!-- create all text runs for each item in the current group. we will later
                          on decide whether we are grouping them together in a w:p or not. -->
           <xsl:variable name="innerRuns">
@@ -2742,16 +2735,16 @@ of this software, even if advised of the possibility of such damage.
   <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Fallback template copying existing attributes etc in final stage cleanup</desc>
   </doc>
-    <xsl:template match="@*|comment()|processing-instruction()|text()" mode="cleanup">
+    <xsl:template match="@*|comment()|processing-instruction()|text()" mode="pass2">
       <xsl:copy-of select="."/>
     </xsl:template>
 
   <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
     <desc>Fallback template copying existing elements in final stage cleanup</desc>
   </doc>
-    <xsl:template match="*" mode="cleanup">
+    <xsl:template match="*" mode="pass2">
       <xsl:copy>
-	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
     </xsl:copy>
   </xsl:template>
 
@@ -2760,7 +2753,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template
       match="w:footnote/w:p[position()&gt;1]/w:r[w:footnoteRef]"
-      mode="cleanup">
+      mode="pass2">
   </xsl:template>
 
 
@@ -2769,20 +2762,20 @@ of this software, even if advised of the possibility of such damage.
     creep through? Wrap up in a p.</desc>
   </doc>
 
-    <xsl:template match="w:body/w:r" mode="cleanup">
+    <xsl:template match="w:body/w:r" mode="pass2">
       <w:p>
 	<xsl:copy>
-	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="cleanup"/>
+	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
 	</xsl:copy>
       </w:p>
     </xsl:template>
 
   <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>A p as a child of a p is not allowed. Group the other
-    siblings in self-contained p elements</desc>
+    <desc>A p as a child of a p is not allowed, this should not
+    happen. If it does, group the other siblings in self-contained p elements.</desc>
   </doc>
 
-    <xsl:template match="w:p[w:p]" mode="cleanup">
+    <xsl:template match="w:p[w:p]" mode="pass2">
       <xsl:variable name="props" select="w:pPr"/>
       <xsl:for-each-group select="*" group-adjacent="local-name()">
 	<xsl:choose>

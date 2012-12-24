@@ -22,6 +22,9 @@ test-html:
 	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
+	saxon -o:test6.html test6.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
+	diff test6.html expected-results/test6.html
+	jing -c xhtml.rnc test6.html
 	saxon -o:test22.html test22.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test22.html expected-results/test22.html
 	(mkdir files; cd files; saxon ../testnotes1.xml ../../xhtml2/tei.xsl splitLevel=4 useFixedDate=true STDOUT=false cssFile=../../tei.css)

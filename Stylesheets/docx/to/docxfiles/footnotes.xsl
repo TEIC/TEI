@@ -145,7 +145,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:result-document
 	    href="{concat($wordDirectory,'/word/footnotes.xml')}">
 	  <xsl:for-each select="$fnotes">
-	    <xsl:apply-templates mode="cleanup"/>
+	    <xsl:apply-templates mode="pass2"/>
 	  </xsl:for-each>
         </xsl:result-document>
     </xsl:template>
