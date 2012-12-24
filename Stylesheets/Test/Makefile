@@ -116,23 +116,6 @@ conversions-from:
 	unzip -t test.xml.odt > test.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
 	rm test.xml.odt.listing
-	test -d $(OXY) || exit 1
-	java -Xmx256m \
-	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
-	-Dant.home=$(OXY)/tools/ant \
-	org.apache.tools.ant.launch.Launcher \
-	-f ../docx/build-to.xml \
-	-lib $(OXY)/lib/saxon9ee.jar \
-	-DoutputFile=`pwd`/test9.docx \
-	-DinputFile=`pwd`/test9.xml -Dprofile=default 
-	java -Xmx256m \
-	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
-	-Dant.home=$(OXY)/tools/ant \
-	org.apache.tools.ant.launch.Launcher \
-	-f ../odt/build-to.xml \
-	-lib $(OXY)/lib/saxon9ee.jar \
-	-DoutputFile=`pwd`/test9.odt \
-	-DinputFile=`pwd`/test9.xml -Dprofile=default -Dverbose=true -Ddebug=true 
 	../teitohtml --debug --summaryDoc --profile=tei --odd test15.odd test.odd.html
 	xmllint --format test.odd.html > x ; mv x test.odd.html
 	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
@@ -144,6 +127,10 @@ test-docx:
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
 	diff test.xml.docx.document expected-results/test.xml.docx.document
 	rm test.xml.docx.document
+	../teitodocx test6.xml 
+	unzip -p test6.xml.docx word/document.xml | xmllint --format - > test6.xml.docx.document
+	diff test6.xml.docx.document expected-results/test6.xml.docx.document
+	rm test6.xml.docx.document
 	../teitodocx testnotes1.xml 
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
