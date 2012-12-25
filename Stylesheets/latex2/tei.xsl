@@ -245,6 +245,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="after"/>
       <xsl:value-of select="$before"/>
       <xsl:choose>
+	<xsl:when test="$style='bibl'">
+	  <xsl:text>\textit{</xsl:text>
+	  <xsl:value-of select="normalize-space(.)"/>
+	  <xsl:text>}</xsl:text>
+	</xsl:when>
 	<xsl:when test="$style='italic'">
 	  <xsl:text>\textit{</xsl:text>
 	  <xsl:value-of select="normalize-space(.)"/>

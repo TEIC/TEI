@@ -176,8 +176,11 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:function name="tei:is-inline" as="xs:boolean">
     <xsl:param name="element"/>
-    <xsl:for-each select="$element">
-      <xsl:choose>
+    <xsl:choose>
+      <xsl:when test="empty($element)">true</xsl:when>
+      <xsl:otherwise>	
+	<xsl:for-each select="$element">
+	  <xsl:choose>
         <xsl:when test="not(self::*)">true</xsl:when>
         <xsl:when test="@rend='inline'">true</xsl:when>
         <xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
@@ -199,7 +202,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:am">true</xsl:when>
         <xsl:when test="self::tei:att">true</xsl:when>
         <xsl:when test="self::tei:author">true</xsl:when>
-        <xsl:when test="self::tei:bibl and tei:is-inline($element/..)">true</xsl:when>
+        <xsl:when test="self::tei:bibl and not (tei:is-inline(preceding-sibling::*[1]))">false</xsl:when>
+        <xsl:when test="self::tei:bibl and not (parent::tei:listBibl)">true</xsl:when>
         <xsl:when test="self::tei:biblScope">true</xsl:when>
         <xsl:when test="self::tei:br">true</xsl:when>
         <xsl:when test="self::tei:byline">true</xsl:when>
@@ -296,6 +300,8 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+  </xsl:otherwise>
+</xsl:choose>
   </xsl:function>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Returns the current date.</desc>
