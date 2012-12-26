@@ -18,10 +18,10 @@
     <xsl:for-each select="key('E',1)">
       <xsl:sort select="@module"/>
       <xsl:sort select="@ident"/>
-      <xsl:if test="not(./tei:exemplum/teix:egXML)">
-	<xsl:text>* Warning: elementSpec for </xsl:text>
+      <xsl:if test="not(@ident='egXML') and not(tei:exemplum/teix:egXML/*)">
+	<xsl:text>* Error: elementSpec for </xsl:text>
 	<xsl:value-of select="@ident"/>
-	<xsl:text> has no example&#10;</xsl:text>
+	<xsl:text> has no proper example&#10;</xsl:text>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
