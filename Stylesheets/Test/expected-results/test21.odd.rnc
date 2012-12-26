@@ -11,7 +11,7 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 # Edition Location: http://www.tei-c.org/Vault/P5/2.2.0/
 #
 
-#              
+#           
 macro.paraContent =
   (text | model.gLike | model.phrase | model.inter | model.global | lg)*
 macro.limitedContent = (text | model.limitedPhrase | model.inter)*
@@ -972,13 +972,19 @@ model.dateLike_sequence = date, time
 model.dateLike_sequenceOptional = date?, time?
 model.dateLike_sequenceOptionalRepeatable = date*, time*
 model.dateLike_sequenceRepeatable = date+, time+
-model.measureLike = num | measure | measureGrp | geo
-model.measureLike_alternation = num | measure | measureGrp | geo
-model.measureLike_sequence = num, measure, measureGrp, geo
-model.measureLike_sequenceOptional = num?, measure?, measureGrp?, geo?
+model.dimLike = height | depth | width
+model.measureLike =
+  num | measure | measureGrp | geo | dim | height | depth | width
+model.measureLike_alternation =
+  num | measure | measureGrp | geo | dim | height | depth | width
+model.measureLike_sequence =
+  num, measure, measureGrp, geo, dim, height, depth, width
+model.measureLike_sequenceOptional =
+  num?, measure?, measureGrp?, geo?, dim?, height?, depth?, width?
 model.measureLike_sequenceOptionalRepeatable =
-  num*, measure*, measureGrp*, geo*
-model.measureLike_sequenceRepeatable = num+, measure+, measureGrp+, geo+
+  num*, measure*, measureGrp*, geo*, dim*, height*, depth*, width*
+model.measureLike_sequenceRepeatable =
+  num+, measure+, measureGrp+, geo+, dim+, height+, depth+, width+
 model.egLike = notAllowed
 model.egLike_alternation = notAllowed
 model.egLike_sequence = empty
@@ -992,6 +998,20 @@ model.offsetLike_sequence = offset, geogFeat
 model.offsetLike_sequenceOptional = offset?, geogFeat?
 model.offsetLike_sequenceOptionalRepeatable = offset*, geogFeat*
 model.offsetLike_sequenceRepeatable = offset+, geogFeat+
+model.pPart.msdesc =
+  catchwords
+  | dimensions
+  | heraldry
+  | locus
+  | locusGrp
+  | material
+  | objectType
+  | origDate
+  | origPlace
+  | secFol
+  | signatures
+  | stamp
+  | watermark
 model.pPart.editorial = choice | abbr | expan | ex | am | subst
 model.pPart.editorial_alternation =
   choice | abbr | expan | ex | am | subst
@@ -1127,17 +1147,17 @@ model.global.meta =
 model.milestoneLike = milestone | gb | pb | lb | cb | anchor | fw
 model.gLike = notAllowed
 model.biblLike =
-  bibl | biblStruct | listRelation | relationGrp | biblFull
+  bibl | biblStruct | listRelation | relationGrp | biblFull | msDesc
 model.biblLike_alternation =
-  bibl | biblStruct | listRelation | relationGrp | biblFull
+  bibl | biblStruct | listRelation | relationGrp | biblFull | msDesc
 model.biblLike_sequence =
-  bibl, biblStruct, listRelation, relationGrp, biblFull
+  bibl, biblStruct, listRelation, relationGrp, biblFull, msDesc
 model.biblLike_sequenceOptional =
-  bibl?, biblStruct?, listRelation?, relationGrp?, biblFull?
+  bibl?, biblStruct?, listRelation?, relationGrp?, biblFull?, msDesc?
 model.biblLike_sequenceOptionalRepeatable =
-  bibl*, biblStruct*, listRelation*, relationGrp*, biblFull*
+  bibl*, biblStruct*, listRelation*, relationGrp*, biblFull*, msDesc*
 model.biblLike_sequenceRepeatable =
-  bibl+, biblStruct+, listRelation+, relationGrp+, biblFull+
+  bibl+, biblStruct+, listRelation+, relationGrp+, biblFull+, msDesc+
 model.headLike = head
 model.headLike_alternation = head
 model.headLike_sequence = head
@@ -1380,10 +1400,34 @@ model.titlepagePart =
   | docEdition
   | docImprint
   | docDate
+model.msQuoteLike =
+  title | colophon | explicit | finalRubric | incipit | rubric
+model.msItemPart =
+  model.quoteLike
+  | model.respLike
+  | model.msQuoteLike
+  | bibl
+  | listBibl
+  | textLang
+  | filiation
+  | msItem
+  | msItemStruct
+  | decoNote
 model.choicePart =
   sic | corr | reg | orig | unclear | abbr | expan | seg | ex | am
 model.imprintPart = publisher | biblScope | pubPlace | distributor
 model.catDescPart = notAllowed
+model.physDescPart_sequenceOptional =
+  objectDesc?,
+  handDesc?,
+  typeDesc?,
+  scriptDesc?,
+  musicNotation?,
+  decoDesc?,
+  additions?,
+  bindingDesc?,
+  sealDesc?,
+  accMat?
 model.addressLike = email | address | affiliation
 model.addressLike_alternation = email | address | affiliation
 model.addressLike_sequence = email, address, affiliation
@@ -1448,6 +1492,7 @@ model.biblPart =
   | textLang
   | edition
   | extent
+  | msIdentifier
 model.frontPart = divGen | titlePage
 model.addrPart = model.nameLike | addrLine | street | postCode | postBox
 model.pPart.data =
@@ -1467,12 +1512,14 @@ model.phrase =
   model.segLike
   | model.highlighted
   | model.graphicLike
+  | model.pPart.msdesc
   | model.pPart.edit
   | model.ptrLike
   | model.pPart.data
 model.limitedPhrase =
   model.hiLike
   | model.emphLike
+  | model.pPart.msdesc
   | model.pPart.editorial
   | model.ptrLike
   | model.pPart.data
@@ -1682,6 +1729,7 @@ quote =
     macro.specialPara,
     att.global.attributes,
     att.typed.attributes,
+    att.msExcerpt.attributes,
     empty
   }
 q =
@@ -4582,6 +4630,26 @@ change =
     }?,
     empty
   }
+typeNote =
+  
+  ## describes a particular font or other significant typographic feature distinguished within
+  ##     the description of a printed resource. [10.7.2. ]
+  element typeNote {
+    macro.specialPara,
+    att.global.attributes,
+    att.handFeatures.attributes,
+    empty
+  }
+scriptNote =
+  
+  ## describes a particular script distinguished within
+  ##     the description of a manuscript or similar resource. [10.7.2. ]
+  element scriptNote {
+    macro.specialPara,
+    att.global.attributes,
+    att.handFeatures.attributes,
+    empty
+  }
 listChange =
   
   ## groups a number of change descriptions associated 
@@ -5097,6 +5165,796 @@ att.global.linking.attribute.select =
   attribute select {
     list { data.pointer+ }
   }?
+msDesc =
+  
+  ## (manuscript description) contains a description of a single identifiable
+  ## manuscript or other text-bearing object. [10.1. ]
+  element msDesc {
+    (msIdentifier,
+     model.headLike*,
+     (model.pLike+
+      | (msContents?, physDesc?, history?, additional?, msPart*))),
+    att.global.attributes,
+    att.sortable.attributes,
+    att.typed.attributes,
+    empty
+  }
+catchwords =
+  
+  ## describes the system used to ensure
+  ## correct ordering of the quires making up a codex or incunable,
+  ## typically by means of annotations at the foot of the page. [10.3.7. ]
+  element catchwords { macro.phraseSeq, att.global.attributes, empty }
+dimensions =
+  
+  ## contains a dimensional specification. [10.3.4. ]
+  element dimensions {
+    ((dim | model.dimLike)*)
+    >> sch:pattern [
+         id = "dimensions-constraint-duplicateDim1"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:dimensions"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "count(tei:width)> 1"
+             "\x{a}" ~
+             "	Width element may appear once only\x{a}" ~
+             "      "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id = "dimensions-constraint-duplicateDim2"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:dimensions"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "count(tei:height)> 1"
+             "\x{a}" ~
+             "	Height element may appear once only\x{a}" ~
+             "      "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ]
+    >> sch:pattern [
+         id = "dimensions-constraint-duplicateDim3"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:dimensions"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test = "count(tei:depth)> 1"
+             "\x{a}" ~
+             "	Depth element may appear once only\x{a}" ~
+             "      "
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    att.dimensions.attributes,
+    
+    ## indicates which aspect of the object is being measured. 
+    ## Sample values include: 1] leaves; 2] ruled; 3] pricked; 4] written; 5] miniatures; 6] binding; 7] box
+    attribute type { data.enumerated }?,
+    empty
+  }
+dim =
+  
+  ## contains any single measurement forming part of a dimensional
+  ## specification of some sort. [10.3.4. ]
+  element dim {
+    macro.xtext,
+    att.global.attributes,
+    att.typed.attributes,
+    att.dimensions.attributes,
+    empty
+  }
+height =
+  
+  ## contains a measurement measured along the
+  ##   axis at right angles to the bottom of the written surface,
+  ##   i.e. parallel to the spine for a codex or book.  [10.3.4. ]
+  element height {
+    macro.xtext, att.global.attributes, att.dimensions.attributes, empty
+  }
+depth =
+  
+  ## contains a measurement measured across the
+  ##   spine of a book or codex, or (for other text-bearing objects) perpendicular to the measurement given by the
+  ##   width element.  [10.3.4. ]
+  element depth {
+    macro.xtext, att.global.attributes, att.dimensions.attributes, empty
+  }
+width =
+  
+  ## contains a measurement measured along the
+  ##   axis parallel to the bottom of the written surface, i.e. 
+  ## perpendicular to the spine of a book or codex.  [10.3.4. ]
+  element width {
+    macro.xtext, att.global.attributes, att.dimensions.attributes, empty
+  }
+heraldry =
+  
+  ## contains a heraldic formula
+  ## or phrase, typically found as part of a blazon, coat of arms, etc. 
+  ##  [10.3.8. ]
+  element heraldry { macro.phraseSeq, att.global.attributes, empty }
+locus =
+  
+  ## defines a location within a manuscript or manuscript part, usually as a
+  ##     (possibly discontinuous) sequence of folio references.  [10.3.5. ]
+  element locus {
+    macro.xtext,
+    att.global.attributes,
+    att.pointing.attributes,
+    
+    ## identifies the foliation scheme in terms of which the location is being
+    ##         specified.
+    attribute scheme { data.pointer }?,
+    
+    ## specifies the starting point of the location in a normalized form.
+    attribute from { data.word }?,
+    
+    ## specifies the end-point of the location in a normalized form.
+    attribute to { data.word }?,
+    empty
+  }
+locusGrp =
+  
+  ## groups a number of locations which together form a
+  ##   distinct but discontinuous item within a manuscript or manuscript
+  ##   part, according to a specific foliation.
+  ##    [10.3.5. ]
+  element locusGrp {
+    locus+,
+    att.global.attributes,
+    
+    ## identifies the foliation scheme in terms of which all the
+    ##       locations contained by the group are specified.
+    attribute scheme { data.pointer }?,
+    empty
+  }
+material =
+  
+  ## contains a word or phrase describing the
+  ##   material of which  the object being described is composed.
+  ##    [10.3.2. ]
+  element material {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
+  }
+objectType =
+  
+  ## contains a word or phrase describing the type of object being refered to.
+  ##    [10.3.2. ]
+  element objectType {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.canonical.attributes,
+    empty
+  }
+origDate =
+  
+  ## (origin date) contains any form of date, used to
+  ##   identify the date of origin for a manuscript or manuscript part.
+  ##    [10.3.1. ]
+  element origDate {
+    (text | model.gLike | model.phrase | model.global)*,
+    att.global.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.typed.attributes,
+    empty
+  }
+origPlace =
+  
+  ## (origin place) contains any form of place name, used to identify the
+  ## place of origin for a manuscript or manuscript part.  [10.3.1. ]
+  element origPlace {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.naming.attributes,
+    att.datable.attributes,
+    att.editLike.attributes,
+    att.typed.attributes,
+    empty
+  }
+secFol =
+  
+  ## (second folio) The word or words taken from a fixed point
+  ## in a codex (typically the beginning of the
+  ## second leaf) in order
+  ## to provide a unique identifier for it.
+  ## 
+  ##  [10.3.7. ]
+  element secFol { macro.phraseSeq, att.global.attributes, empty }
+signatures =
+  
+  ## contains discussion of the leaf or quire signatures found within a codex. [10.3.7. ]
+  element signatures { macro.phraseSeq, att.global.attributes, empty }
+stamp =
+  
+  ## contains a word or phrase describing a
+  ## stamp or similar device. [10.3.3. ]
+  element stamp {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    empty
+  }
+watermark =
+  
+  ## contains a word or phrase describing a
+  ## watermark or similar device. [10.3.3. ]
+  element watermark { macro.phraseSeq, att.global.attributes, empty }
+msIdentifier =
+  
+  ## (manuscript identifier) contains the information required to identify
+  ## the  manuscript being described.  [10.4. ]
+  element msIdentifier {
+    ((model.placeNamePart_sequenceOptional,
+      institution?,
+      repository?,
+      collection*,
+      idno?),
+     (msName | altIdentifier)*)
+    >> sch:pattern [
+         id = "msIdentifier-constraint-msId_minimal"
+         "\x{a}" ~
+         "            "
+         sch:rule [
+           context = "tei:msIdentifier"
+           "\x{a}" ~
+           "               "
+           sch:report [
+             test =
+               "local-name(*[1])='idno' or                              local-name(*[1])='altIdentifier' or        .='' "
+             "\x{a}" ~
+             "	    You must supply either a locator of some type or a\x{a}" ~
+             "	    name"
+           ]
+           "\x{a}" ~
+           "            "
+         ]
+         "\x{a}" ~
+         "         "
+       ],
+    att.global.attributes,
+    empty
+  }
+institution =
+  
+  ## contains the name of an organization such as a university or
+  ##   library, with which a manuscript is identified, generally its
+  ##   holding institution. [10.4. ]
+  element institution {
+    macro.xtext, att.global.attributes, att.naming.attributes, empty
+  }
+repository =
+  
+  ## contains the name of a repository within which manuscripts are stored, possibly forming part of an institution. [10.4. ]
+  element repository {
+    macro.xtext, att.global.attributes, att.naming.attributes, empty
+  }
+collection =
+  
+  ## contains the name of a collection of
+  ## manuscripts, not necessarily located within a single repository.  [10.4. ]
+  element collection {
+    macro.xtext,
+    att.global.attributes,
+    att.naming.attributes,
+    att.typed.attributes,
+    empty
+  }
+altIdentifier =
+  
+  ## (alternative identifier) contains an alternative or former structured identifier used for
+  ## a manuscript, such as a former catalogue number. [10.4. ]
+  element altIdentifier {
+    (model.placeNamePart_sequenceOptional,
+     institution?,
+     repository?,
+     collection?,
+     idno,
+     note?),
+    att.global.attributes,
+    att.typed.attributes,
+    empty
+  }
+msName =
+  
+  ## (alternative name) contains any form of unstructured alternative
+  ## name used for a manuscript, such as an  ocellus
+  ## nominum, or nickname.  [10.4. ]
+  element msName {
+    macro.xtext, att.global.attributes, att.typed.attributes, empty
+  }
+colophon =
+  
+  ## contains the  colophon
+  ## of a  manuscript item: that is, a statement providing information regarding the date, place, agency, or reason for production of the manuscript. [10.6.1. ]
+  element colophon { macro.phraseSeq, att.global.attributes, empty }
+explicit =
+  
+  ## contains the  explicit of a
+  ## manuscript item, that is, the closing words of the text proper,
+  ## exclusive of any rubric or colophon which might follow it.
+  ##    [10.6.1. ]
+  element explicit {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.typed.attributes,
+    att.msExcerpt.attributes,
+    empty
+  }
+filiation =
+  
+  ## contains information concerning the manuscript's filiation, i.e. its relationship to other surviving manuscripts of the same text, its protographs, antigraphs and apographs. [10.6.1. ]
+  element filiation {
+    macro.specialPara,
+    att.global.attributes,
+    att.typed.attributes,
+    empty
+  }
+finalRubric =
+  
+  ## contains the string of words that denotes the end of a text division, often with an assertion as to its author and title, usually set off from the text itself by red ink, by a different size or type of script, or by some other such visual device. [10.6.1. ]
+  element finalRubric {
+    macro.phraseSeq, att.global.attributes, att.typed.attributes, empty
+  }
+incipit =
+  
+  ## contains the incipit of a manuscript item, that is the opening words of the text proper, exclusive of any rubric which might precede it, of sufficient length to identify the work uniquely; such incipts were, in fomer times, frequently used a means of reference to a work, in place of a title. [10.6.1. ]
+  element incipit {
+    macro.phraseSeq,
+    att.global.attributes,
+    att.typed.attributes,
+    att.msExcerpt.attributes,
+    empty
+  }
+msContents =
+  
+  ## (manuscript contents) describes the intellectual content of a manuscript or manuscript
+  ##     part, either as a series of paragraphs or as a series of structured manuscript items. [10.6. ]
+  element msContents {
+    (model.pLike+
+     | (summary?, textLang?, titlePage?, (msItem | msItemStruct)*)),
+    att.global.attributes,
+    att.msExcerpt.attributes,
+    
+    ## identifies the text types or classifications applicable to this object.
+    attribute class {
+      list { data.pointer+ }
+    }?,
+    empty
+  }
+msItem =
+  
+  ## (manuscript item) describes an individual work or item within the intellectual
+  ##   content of a manuscript or manuscript part.  [10.6.1. ]
+  element msItem {
+    ((locus | locusGrp)*,
+     (model.pLike+
+      | (model.titlepagePart | model.msItemPart | model.global)+)),
+    att.global.attributes,
+    att.msExcerpt.attributes,
+    
+    ## identifies the text types or classifications applicable to this
+    ## item
+    attribute class {
+      list { data.pointer+ }
+    }?,
+    empty
+  }
+msItemStruct =
+  
+  ## (structured manuscript item) contains a structured description for an
+  ##   individual work or item within the intellectual content of a
+  ##   manuscript or manuscript part. [10.6.1. ]
+  element msItemStruct {
+    (locus?,
+     (model.pLike+
+      | (author*,
+         respStmt*,
+         title*,
+         rubric?,
+         incipit?,
+         msItemStruct*,
+         explicit?,
+         finalRubric?,
+         colophon*,
+         decoNote*,
+         listBibl*,
+         bibl*,
+         filiation*,
+         model.noteLike*,
+         textLang?))),
+    att.global.attributes,
+    att.msExcerpt.attributes,
+    
+    ## identifies the text types or classifications applicable to this
+    ## item
+    attribute class {
+      list { data.pointer+ }
+    }?,
+    empty
+  }
+rubric =
+  
+  ## contains the text of any rubric or heading attached to a particular manuscript item, that is, a string of words through which a
+  ## manuscript signals the beginning of a text division, often with an assertion as to its author and title, which is in some way set off from the text itself, usually in red ink, or by use of different size or type of script, or some other such visual device. [10.6.1. ]
+  element rubric {
+    macro.phraseSeq, att.global.attributes, att.typed.attributes, empty
+  }
+summary =
+  
+  ## contains an overview of the available
+  ##   information concerning some aspect of an item (for example, its
+  ## intellectual content, history, layout, typography etc.) as a
+  ## complement or alternative to the  more detailed information  carried by
+  ##   more specific elements.
+  element summary { macro.phraseSeq, att.global.attributes, empty }
+att.msExcerpt.attributes = att.msExcerpt.attribute.defective
+att.msExcerpt.attribute.defective =
+  
+  ## indicates whether the passage being quoted is defective,
+  ##       i.e. incomplete through loss or damage.
+  [ a:defaultValue = "false" ] attribute defective { data.xTruthValue }?
+physDesc =
+  
+  ## (physical description) contains a full physical description of a
+  ## manuscript or manuscript part, optionally subdivided using more
+  ## specialized elements from the model.physDescPart class. [10.7. ]
+  element physDesc {
+    (model.pLike*, model.physDescPart_sequenceOptional),
+    att.global.attributes,
+    empty
+  }
+objectDesc =
+  
+  ## contains a description of the physical
+  ##   components making up the object which is being described. [10.7.1. ]
+  element objectDesc {
+    (model.pLike+ | (supportDesc?, layoutDesc?)),
+    att.global.attributes,
+    
+    ## a short  project-specific name identifying the physical form of
+    ##       the carrier, for example as a codex, roll, fragment, partial leaf,
+    ##       cutting etc.
+    attribute form { data.enumerated }?,
+    empty
+  }
+supportDesc =
+  
+  ## (support description) groups elements describing the physical support for the written part of a manuscript. [10.7.1. ]
+  element supportDesc {
+    (model.pLike+
+     | (support?, extent?, foliation*, collation?, condition?)),
+    att.global.attributes,
+    
+    ## a short project-defined name for the material composing
+    ##       the majority of the support
+    ## Suggested values include: 1] paper (paper) ; 2] parch(parchment) ; 3] mixed
+    attribute material {
+      
+      ##  (paper) 
+      "paper"
+      | 
+        ## (parchment) 
+        "parch"
+      | 
+        ##
+        "mixed"
+      | xsd:Name
+    }?,
+    empty
+  }
+support =
+  
+  ## contains a description of the materials
+  ## etc. which make up the physical support for the written part of a manuscript. [10.7.1. ]
+  element support { macro.specialPara, att.global.attributes, empty }
+collation =
+  
+  ## contains a description of how the leaves or bifolia are physically
+  ## arranged. [10.7.1. ]
+  element collation { macro.specialPara, att.global.attributes, empty }
+foliation =
+  
+  ## describes the numbering system or systems used to 
+  ## count the leaves or pages in a codex. [10.7.1.4. ]
+  element foliation { macro.specialPara, att.global.attributes, empty }
+condition =
+  
+  ## contains a description of the physical
+  ## condition of the manuscript.  [10.7.1.5. ]
+  element condition { macro.specialPara, att.global.attributes, empty }
+layoutDesc =
+  
+  ## (layout description) collects the set of layout descriptions applicable to a manuscript. [10.7.2. ]
+  element layoutDesc {
+    (model.pLike+ | (summary?, layout+)),
+    att.global.attributes,
+    empty
+  }
+layout =
+  
+  ## describes how text is laid out on the
+  ##   page, including information about any ruling, pricking, or other
+  ##   evidence of page-preparation techniques. [10.7.2. ]
+  element layout {
+    macro.specialPara,
+    att.global.attributes,
+    
+    ## specifies the number of columns per page
+    attribute columns {
+      list { data.count, data.count? }
+    }?,
+    
+    ## specifies the number of ruled lines per column
+    attribute ruledLines {
+      list { data.count, data.count? }
+    }?,
+    
+    ## specifies the number of written lines per
+    ##       column
+    attribute writtenLines {
+      list { data.count, data.count? }
+    }?,
+    empty
+  }
+handDesc =
+  
+  ## (description of hands) contains a description of all the different kinds of writing  used in a manuscript. [10.7.2. ]
+  element handDesc {
+    (model.pLike+ | (summary?, handNote+)),
+    att.global.attributes,
+    
+    ## specifies the number of distinct hands identified within the manuscript
+    attribute hands { data.count }?,
+    empty
+  }
+typeDesc =
+  
+  ## contains a description of the typefaces or other aspects of
+  ##   the printing of an incunable or other printed source. [10.7.2.1. ]
+  element typeDesc {
+    (model.pLike+ | (summary?, typeNote+)),
+    att.global.attributes,
+    empty
+  }
+scriptDesc =
+  
+  ## contains a description of the scripts used in a manuscript or similar source. [10.7.2.1. ]
+  element scriptDesc {
+    (model.pLike+ | (summary?, scriptNote+)),
+    att.global.attributes,
+    empty
+  }
+musicNotation =
+  
+  ## contains description of type of musical notation. [10.7.2. ]
+  element musicNotation {
+    macro.specialPara, att.global.attributes, empty
+  }
+decoDesc =
+  
+  ## (decoration description) contains a description of the decoration of a manuscript, either as a sequence of paragraphs, or as a sequence of topically organized decoNote elements. [10.7.3. ]
+  element decoDesc {
+    (model.pLike+ | (summary?, decoNote+)),
+    att.global.attributes,
+    empty
+  }
+decoNote =
+  
+  ## (note on decoration) contains a note describing either a
+  ## decorative component of a manuscript, or a fairly homogenous class of
+  ## such components. [10.7.3. ]
+  element decoNote {
+    macro.specialPara,
+    att.global.attributes,
+    att.typed.attributes,
+    empty
+  }
+additions =
+  
+  ## contains a description of any significant additions found
+  ## within a manuscript, such as marginalia or other annotations.  [10.7.2. ]
+  element additions { macro.specialPara, att.global.attributes, empty }
+bindingDesc =
+  
+  ## (binding description) describes the present and former bindings of a manuscript, either
+  ## as a series of paragraphs or as a series of distinct binding elements,
+  ## one for each binding of the manuscript.  [10.7.3.1. ]
+  element bindingDesc {
+    ((model.pLike | decoNote | condition)+ | binding+),
+    att.global.attributes,
+    empty
+  }
+binding =
+  
+  ## contains a description of one binding, i.e. type of covering, boards,
+  ##     etc. applied to a manuscript. [10.7.3.1. ]
+  element binding {
+    (model.pLike | condition | decoNote)+,
+    att.global.attributes,
+    att.datable.attributes,
+    
+    ## specifies whether or not the binding is contemporary with the majority of its
+    ##         contents
+    attribute contemporary { data.xTruthValue }?,
+    empty
+  }
+sealDesc =
+  
+  ## (seal description) describes the seals or other external items attached to a manuscript, either
+  ## as a series of paragraphs or as a series of distinct seal elements,
+  ## possibly with additional decoNotes.  [10.7.3.2. ]
+  element sealDesc {
+    (model.pLike+ | (decoNote | seal | condition)+),
+    att.global.attributes,
+    empty
+  }
+seal =
+  
+  ## contains a description of one seal or similar
+  ##   attachment applied to a manuscript. [10.7.3.2. ]
+  element seal {
+    (model.pLike | decoNote)+,
+    att.global.attributes,
+    att.typed.attributes,
+    att.datable.attributes,
+    
+    ## specifies whether or not the seal is contemporary with the
+    ##       item to which it is affixed
+    attribute contemporary { data.xTruthValue }?,
+    empty
+  }
+accMat =
+  
+  ## (accompanying material) contains details of any significant additional
+  ## material which may be closely associated with the manuscript being
+  ## described, such as non-contemporaneous documents or fragments bound in
+  ## with the manuscript at some earlier historical period. [10.7.3.3. ]
+  element accMat {
+    macro.specialPara,
+    att.global.attributes,
+    att.typed.attributes,
+    empty
+  }
+history =
+  
+  ##  groups elements
+  ## describing the full history of a manuscript or manuscript part. [10.8. ]
+  element history {
+    (model.pLike+ | (summary?, origin?, provenance*, acquisition?)),
+    att.global.attributes,
+    empty
+  }
+origin =
+  
+  ## contains any descriptive or other information
+  ## concerning the origin of  a manuscript or manuscript part.  [10.8. ]
+  element origin {
+    macro.specialPara,
+    att.global.attributes,
+    att.editLike.attributes,
+    att.datable.attributes,
+    empty
+  }
+provenance =
+  
+  ## contains any descriptive or other information
+  ## concerning a single identifiable episode during the history of a manuscript
+  ## or manuscript part, after its creation but before its acquisition.  [10.8. ]
+  element provenance {
+    macro.specialPara,
+    att.global.attributes,
+    att.datable.attributes,
+    att.typed.attributes,
+    att.responsibility.attributes,
+    empty
+  }
+acquisition =
+  
+  ## contains any descriptive or other information
+  ## concerning the process by which a manuscript or manuscript part entered the holding
+  ## institution.  [10.8. ]
+  element acquisition {
+    macro.specialPara,
+    att.global.attributes,
+    att.datable.attributes,
+    empty
+  }
+additional =
+  
+  ## groups additional information, combining
+  ## bibliographic information about a manuscript, or surrogate copies of
+  ## it with  curatorial or administrative information.  [10.9. ]
+  element additional {
+    (adminInfo?, surrogates?, listBibl?), att.global.attributes, empty
+  }
+adminInfo =
+  
+  ## (administrative information) contains information about the present
+  ## custody and availability of the manuscript, and also about the record
+  ## description itself.  [10.9.1. ]
+  element adminInfo {
+    (recordHist?, availability?, custodialHist?, model.noteLike?),
+    att.global.attributes,
+    empty
+  }
+recordHist =
+  
+  ## (recorded history) provides information about the source and
+  ## revision status of the parent manuscript description itself.  [10.9.1. ]
+  element recordHist {
+    (model.pLike+ | (source, change*)),
+    att.global.attributes,
+    empty
+  }
+source =
+  
+  ## describes the original source for the information contained with a manuscript description.  [10.9.1.1. ]
+  element source { macro.specialPara, att.global.attributes, empty }
+custodialHist =
+  
+  ## (custodial history) contains a description of a manuscript's custodial history, either
+  ## as running prose or as a series of dated custodial events.  [10.9.1.2. ]
+  element custodialHist {
+    (model.pLike+ | custEvent+), att.global.attributes, empty
+  }
+custEvent =
+  
+  ## (custodial event) describes a single event during the custodial history of a manuscript. [10.9.1.2. ]
+  element custEvent {
+    macro.specialPara,
+    att.global.attributes,
+    att.datable.attributes,
+    att.typed.attributes,
+    empty
+  }
+surrogates =
+  
+  ## contains information about any representations of the manuscript being described which
+  ## may exist in the holding institution or elsewhere.  [10.9. ]
+  element surrogates { macro.specialPara, att.global.attributes, empty }
+msPart =
+  
+  ## (manuscript part) contains information about an originally
+  ## distinct manuscript or part of a manuscript, now forming part of a composite manuscript. [10.10. ]
+  element msPart {
+    ((altIdentifier | msIdentifier),
+     model.headLike*,
+     (model.pLike+
+      | (msContents?, physDesc?, history?, additional?, msPart*))),
+    att.global.attributes,
+    empty
+  }
 facsimile =
   
   ## contains a representation of some written source in the form of

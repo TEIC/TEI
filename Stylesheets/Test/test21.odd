@@ -1,116 +1,117 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TEI xml:lang="en"
-     xmlns="http://www.tei-c.org/ns/1.0"
-     xmlns:rng="http://relaxng.org/ns/structure/1.0">
-   <teiHeader>
-      <fileDesc>
-         <titleStmt>
-            <title>Exploratory ODD testing various features</title>
-            <author>Sebastian Rahtz</author>
-         </titleStmt>
-         <publicationStmt>
-           <availability status="free">
-             <p></p>
-           </availability>
-         </publicationStmt>
-         <sourceDesc>
-            <p>Written from scratch.</p>
-         </sourceDesc>
-      </fileDesc>
-   </teiHeader>
-   <text>
-     <body>
-       <schemaSpec ident="test21" start="TEI" >
-         <moduleRef key="tei"/>
-         <moduleRef key="core"/>
-         <moduleRef key="namesdates"/>
-         <moduleRef key="header"/>
-         <moduleRef key="linking"/>
-         <moduleRef key="transcr"/>
-         <moduleRef key="textstructure"/>
-	 <!-- Delete an attribute from an attribute class -->
-	 <classSpec ident="att.global" mode="change">
-	   <attList>
-	     <attDef ident="n" mode="delete"/>
-	     <attDef ident="rend" mode="change">
-	       <desc>foobar</desc>
-	     </attDef>
-	   </attList>
-	 </classSpec>
-
-	 <!-- change an attribute in an attribute class to have a fixed vallist-->
-	 <classSpec ident="att.typed" mode="change">
-	   <attList>
-	     <attDef ident="type" mode="change">
-	       <valList mode="add" type="closed">
-		 <valItem ident="A"><desc>first type</desc></valItem>
-		 <valItem ident="B"><desc>second type</desc></valItem>
-	       </valList>
-	     </attDef>
-	   </attList>
-	 </classSpec>
-
-	 <!-- Provide suggested valList for an attribute-->
-	 <elementSpec ident="text" mode="change">
-	   <attList>
-	     <attDef ident="type" mode="change">
-	       <valList mode="add"  type="closed">
-		 <valItem ident="X"/>
-		 <valItem ident="Y"/>
-	       </valList>
-	     </attDef>
-	   </attList>
-	 </elementSpec>
-	 <elementSpec ident="lg" mode="change">
-	   <attList>
-	     <attDef ident="type" mode="change">
-	       <defaultVal>A</defaultVal>
-	     </attDef>
-	   </attList>
-	 </elementSpec>
-	 <elementSpec ident="ab" mode="change">
-	   <attList>
-	     <attDef ident="corresp" mode="change">
-	       <datatype>
-		 <rng:data type="integer"/>
-	       </datatype>
-	     </attDef>
-	   </attList>
-	 </elementSpec>
-	 <!-- change a local attribute -->
-	 <elementSpec ident="person" mode="change">
-	   <attList>
-	     <attDef ident="role" mode="change">
-	       <valList mode="add"  type="closed">
-		 <valItem ident="for"/>
-		 <valItem ident="against"/>
-	       </valList>
-	     </attDef>
-	   </attList>
-	 </elementSpec>
-	 <!-- change a change attribute -->
-	 <elementSpec ident="editor" mode="change">
-	   <attList>
-	     <attDef ident="role" mode="change">
-	       <valList mode="add"  type="closed">
-		 <valItem ident="them"/>
-		 <valItem ident="us"/>
-	       </valList>
-	     </attDef>
-	   </attList>
-	 </elementSpec>
-	 <!-- Provide fixed valList for an attribute-->
-	 <elementSpec ident="author" mode="change">
-	   <attList>
-	     <attDef ident="role" mode="delete">
-	       <valList mode="add"  type="closed">
-		 <valItem ident="for"/>
-		 <valItem ident="against"/>
-	       </valList>
-	     </attDef>
-	   </attList>
-	 </elementSpec>
-	 <!-- delete a class attribute -->
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Exploratory ODD testing various features</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+        <availability status="free">
+          <p/>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Written from scratch.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec ident="test21" start="TEI">
+        <moduleRef key="tei"/>
+        <moduleRef key="core"/>
+        <moduleRef key="namesdates"/>
+        <moduleRef key="header"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="msdescription"/>
+        <moduleRef key="transcr"/>
+        <moduleRef key="textstructure"/>
+        <!-- Delete an attribute from an attribute class -->
+        <classSpec ident="att.global" mode="change">
+          <attList>
+            <attDef ident="n" mode="delete"/>
+            <attDef ident="rend" mode="change">
+              <desc>foobar</desc>
+            </attDef>
+          </attList>
+        </classSpec>
+        <!-- change an attribute in an attribute class to have a fixed vallist-->
+        <classSpec ident="att.typed" mode="change">
+          <attList>
+            <attDef ident="type" mode="change">
+              <valList mode="add" type="closed">
+                <valItem ident="A">
+                  <desc>first type</desc>
+                </valItem>
+                <valItem ident="B">
+                  <desc>second type</desc>
+                </valItem>
+              </valList>
+            </attDef>
+          </attList>
+        </classSpec>
+        <!-- Provide suggested valList for an attribute-->
+        <elementSpec ident="text" mode="change">
+          <attList>
+            <attDef ident="type" mode="change">
+              <valList mode="add" type="closed">
+                <valItem ident="X"/>
+                <valItem ident="Y"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="lg" mode="change">
+          <attList>
+            <attDef ident="type" mode="change">
+              <defaultVal>A</defaultVal>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="ab" mode="change">
+          <attList>
+            <attDef ident="corresp" mode="change">
+              <datatype>
+                <rng:data type="integer"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <!-- change a local attribute -->
+        <elementSpec ident="person" mode="change">
+          <attList>
+            <attDef ident="role" mode="change">
+              <valList mode="add" type="closed">
+                <valItem ident="for"/>
+                <valItem ident="against"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <!-- change a change attribute -->
+        <elementSpec ident="editor" mode="change">
+          <attList>
+            <attDef ident="role" mode="change">
+              <valList mode="add" type="closed">
+                <valItem ident="them"/>
+                <valItem ident="us"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <!-- Provide fixed valList for an attribute-->
+        <elementSpec ident="author" mode="change">
+          <attList>
+            <attDef ident="role" mode="delete">
+              <valList mode="add" type="closed">
+                <valItem ident="for"/>
+                <valItem ident="against"/>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <!-- delete a class attribute -->
         <elementSpec ident="hi" mode="change">
           <attList>
             <attDef ident="n" mode="delete"/>
@@ -119,153 +120,154 @@
             <attDef ident="facs" mode="delete"/>
           </attList>
         </elementSpec>
-	
-	<!-- Delete an element-->
-	<elementSpec mode="delete" ident="floatingText"/>
-	
-	<!-- Add a new attribute to an element-->
-	<elementSpec mode="change" ident="placeName">
-	  <attList>
-	    <attDef ident="alt" mode="add">
-	      <desc>alternative</desc>
-	      <datatype>
-		<rng:text/>
-	      </datatype>
-	    </attDef>
-	  </attList>
-	</elementSpec>
-	
-	<!-- Add a new attribute to an attribute class-->
-	<classSpec ident="att.naming" mode="change">
-	  <attList>
-	    <attDef ident="altname" mode="add">
-	      <desc>alternative name</desc>
-	      <datatype>
-		<rng:text/>
-	      </datatype>
-	    </attDef>
-	  </attList>
-	</classSpec>
-
-	<!-- Delete an attribute from an element-->
-	<elementSpec ident="supplied" mode="change">
-	  <attList>
-	    <attDef ident="reason" mode="delete"/>
-	  </attList>
-	</elementSpec>
-
-	<!-- Add a new element-->
-	<elementSpec mode="add" ident="homer">
-	  <desc>A Simpsons character</desc>
-	  <classes>
-	    <memberOf key="model.divLike"/>
-	  </classes>
-	  <content>
-	    <rng:ref name="p"/>
-	  </content>
-	</elementSpec>
-	
-	<!-- Add an existing attribute class to an element-->
-	<elementSpec ident="seg" mode="change">
-	  <classes mode="change">
-	    <memberOf key="att.certLike" mode="add"/>
-	  </classes>
-	</elementSpec>
-
-	<!-- Create a new attribute class and add it to a couple of elements-->
+        <!-- Delete an element-->
+        <elementSpec mode="delete" ident="floatingText"/>
+        <!-- Add a new attribute to an element-->
+        <elementSpec mode="change" ident="placeName">
+          <attList>
+            <attDef ident="alt" mode="add">
+              <desc>alternative</desc>
+              <datatype>
+                <rng:text/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <!-- Add a new attribute to an attribute class-->
+        <classSpec ident="att.naming" mode="change">
+          <attList>
+            <attDef ident="altname" mode="add">
+              <desc>alternative name</desc>
+              <datatype>
+                <rng:text/>
+              </datatype>
+            </attDef>
+          </attList>
+        </classSpec>
+        <!-- Delete an attribute from an element-->
+        <elementSpec ident="supplied" mode="change">
+          <attList>
+            <attDef ident="reason" mode="delete"/>
+          </attList>
+        </elementSpec>
+        <!-- Add a new element-->
+        <elementSpec mode="add" ident="homer">
+          <desc>A Simpsons character</desc>
+          <classes>
+            <memberOf key="model.divLike"/>
+          </classes>
+          <content>
+            <rng:ref name="p"/>
+          </content>
+        </elementSpec>
+        <!-- Add an existing attribute class to an element-->
+        <elementSpec ident="seg" mode="change">
+          <classes mode="change">
+            <memberOf key="att.certLike" mode="add"/>
+          </classes>
+        </elementSpec>
+        <!-- Create a new attribute class and add it to a couple of elements-->
         <classSpec ident="att.magical" mode="add" type="atts">
-	  <attList>
-	    <attDef ident="degree">
-	      <valList type="closed">
-		<valItem ident="abit"/>
-		<valItem ident="alot"/>
-		<valItem ident="entirely"/>
-	      </valList>
-	    </attDef>
-	  </attList>
-	</classSpec>
-	<elementSpec ident="body" mode="change">
-	  <classes mode="change">
-	    <memberOf key="att.magical" mode="add"/>
-	  </classes>
-	</elementSpec>
-	<elementSpec ident="back" mode="change">
-	  <classes mode="change">
-	    <memberOf key="att.magical" mode="add"/>
-	  </classes>
-	</elementSpec>
-
-
-	 <!-- four overrides for type attribute -->
-	 <elementSpec ident="div" mode="change">
-	   <attList>
-	     <attDef ident="type" mode="replace">
-	       <desc>freddy</desc>
-	       <datatype>
-		 <rng:data type="integer"/>
-	       </datatype>
-	     </attDef>
-	   </attList>
-	 </elementSpec>
-	 <elementSpec ident="ptr" mode="change">
-	   <attList>
-	     <attDef ident="type" mode="change" usage="req"/>
-	   </attList>
-	 </elementSpec>
-
-	 <!-- using anyName -->
-	 <elementSpec ident="p" module="core" mode="change">
-	   <content>
-	     <rng:ref name="macro.paraContent"/>
-	     <rng:zeroOrMore>
-	       <rng:element>
-		 <rng:anyName/>
-		 <rng:zeroOrMore>
-		   <rng:attribute>
-		     <rng:anyName/>
-		   </rng:attribute>
-		 </rng:zeroOrMore>
-	       </rng:element>
-	     </rng:zeroOrMore>  
-	   </content>	   
-	 </elementSpec>
-
-	<!-- alter type of abbr, which is inherited from a class -->
-	<elementSpec module="core" ident="abbr" mode="change">
-	  <attList>
-	    <attDef ident="type" mode="replace" usage="req">
-	      <datatype>
-		<rng:ref name="data.enumerated"/>
-	      </datatype>
-	      <valList type="closed">
-		<valItem ident="CHECK-THIS-OUT">
-		  <desc> </desc>
-		</valItem>
-		<valItem ident="MY-PARENT-SHOULD-HAVE-ONLY-1-DECL-OF-TYPE">
-		  <desc> </desc>
-		</valItem>
-	      </valList>
-	    </attDef>
-	  </attList>
-	</elementSpec>
-
-	<!-- alter type of divGen, which is NOT inherited from a class -->
-    <elementSpec ident="divGen" mode="change">
-      <attList>
-	<attDef mode="replace" ident="type">
-	  <valList type="closed">
-	    <valItem ident="attcat"><gloss>Catalogue of Attributes</gloss></valItem>
-	    <valItem ident="attclasscat"><gloss>Catalogue of Attribute Classes</gloss></valItem>
-	    <valItem ident="elementcat"><gloss> Catalogue of Elements</gloss></valItem>
-	    <valItem ident="macrocat"><gloss> Catalogue of Macros</gloss></valItem>
-	    <valItem ident="modelclasscat"><gloss>Catalogue of Model Classes</gloss></valItem>
-	    <valItem ident="toc"><gloss>Table of Contents</gloss></valItem>
-	  </valList>
-	</attDef>
-      </attList>
-    </elementSpec>
-
-       </schemaSpec>
-     </body>
-   </text>
+          <attList>
+            <attDef ident="degree">
+              <valList type="closed">
+                <valItem ident="abit"/>
+                <valItem ident="alot"/>
+                <valItem ident="entirely"/>
+              </valList>
+            </attDef>
+          </attList>
+        </classSpec>
+        <elementSpec ident="body" mode="change">
+          <classes mode="change">
+            <memberOf key="att.magical" mode="add"/>
+          </classes>
+        </elementSpec>
+        <elementSpec ident="back" mode="change">
+          <classes mode="change">
+            <memberOf key="att.magical" mode="add"/>
+          </classes>
+        </elementSpec>
+        <!-- four overrides for type attribute -->
+        <elementSpec ident="div" mode="change">
+          <attList>
+            <attDef ident="type" mode="replace">
+              <desc>freddy</desc>
+              <datatype>
+                <rng:data type="integer"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <elementSpec ident="ptr" mode="change">
+          <attList>
+            <attDef ident="type" mode="change" usage="req"/>
+          </attList>
+        </elementSpec>
+        <!-- using anyName -->
+        <elementSpec ident="p" module="core" mode="change">
+          <content>
+            <rng:ref name="macro.paraContent"/>
+            <rng:zeroOrMore>
+              <rng:element>
+                <rng:anyName/>
+                <rng:zeroOrMore>
+                  <rng:attribute>
+                    <rng:anyName/>
+                  </rng:attribute>
+                </rng:zeroOrMore>
+              </rng:element>
+            </rng:zeroOrMore>
+          </content>
+        </elementSpec>
+        <!-- alter type of abbr, which is inherited from a class -->
+        <elementSpec module="core" ident="abbr" mode="change">
+          <attList>
+            <attDef ident="type" mode="replace" usage="req">
+              <datatype>
+                <rng:ref name="data.enumerated"/>
+              </datatype>
+              <valList type="closed">
+                <valItem ident="CHECK-THIS-OUT">
+                  <desc> </desc>
+                </valItem>
+                <valItem ident="MY-PARENT-SHOULD-HAVE-ONLY-1-DECL-OF-TYPE">
+                  <desc> </desc>
+                </valItem>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <!-- alter type of divGen, which is NOT inherited from a class -->
+        <elementSpec ident="divGen" mode="change">
+          <attList>
+            <attDef mode="replace" ident="type">
+              <valList type="closed">
+                <valItem ident="attcat">
+                  <gloss>Catalogue of Attributes</gloss>
+                </valItem>
+                <valItem ident="attclasscat">
+                  <gloss>Catalogue of Attribute Classes</gloss>
+                </valItem>
+                <valItem ident="elementcat">
+                  <gloss> Catalogue of Elements</gloss>
+                </valItem>
+                <valItem ident="macrocat">
+                  <gloss> Catalogue of Macros</gloss>
+                </valItem>
+                <valItem ident="modelclasscat">
+                  <gloss>Catalogue of Model Classes</gloss>
+                </valItem>
+                <valItem ident="toc">
+                  <gloss>Table of Contents</gloss>
+                </valItem>
+              </valList>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <!-- explicit ns -->
+        <elementSpec ident="incipit" ns="http://www.tei-c.org/ns/1.0" mode="delete"/>
+      </schemaSpec>
+    </body>
+  </text>
 </TEI>

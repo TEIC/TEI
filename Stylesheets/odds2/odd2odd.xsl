@@ -619,6 +619,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="Current" select="."/>
       <xsl:variable name="specName">
 	<xsl:choose>
+	  <xsl:when test="@ns='http://www.tei-c.org/ns/1.0'"/>
 	  <xsl:when test="@ns">
 	    <xsl:value-of select="@ns"/>
 	  </xsl:when>

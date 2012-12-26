@@ -87,14 +87,14 @@ oddbyexample:
 	xmllint --noout --dtdvalid oddbyexample.dtd bare/test.xml
 
 conversions-from:
-	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
-	diff test12.rdf expected-results/test12.rdf
-	../teitornc  test15.odd test15.odd.rnc
-	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
-	diff test15.odd.rnc expected-results/test15.odd.rnc 
 	../teitornc  test21.odd test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
 	diff test21.odd.rnc expected-results/test21.odd.rnc 
+	../teitornc  test15.odd test15.odd.rnc
+	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
+	diff test15.odd.rnc expected-results/test15.odd.rnc 
+	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
+	diff test12.rdf expected-results/test12.rdf
 	../teitotxt test14.xml test.text
 	diff test.text expected-results/test.text
 	../teitolatex test.xml
@@ -158,6 +158,7 @@ conversions-to:
 clean:
 	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html
 	rm -f  oddbyexample.* xml.xsd index*div*html
+	rm -f testdrama.compiled.xml
 	rm -f  test.tex test.xml.odt test.xml.docx test.epub
 	rm -f  test5.odt
 	rm -f  test7.xml test11.xml test18.xml test19.xml
