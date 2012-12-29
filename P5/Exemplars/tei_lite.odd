@@ -37,6 +37,9 @@
    </sourceDesc>
   </fileDesc>
   <revisionDesc>
+    <change when="2012-12-27" who="LB">Remove @style since it's no use
+    without <gi>tagsDecl</gi>; also restored @corresp removed in error
+    and added some discussion of editorial vs authorial change</change>
    <change when="2012-08-02" who="MDH">Fixed <att>xml:lang</att> values to conform with IANA subtag
     registry and added svn props to file. Rewrote section on language identification. </change>
    <change when="2011-03-26" who="LB">rename to tei_lite, convert to new style ODD; remove
@@ -1185,7 +1188,7 @@ live without God in the world, and only mind earthly things.
        interventions.</eg> (i.e. if the verb had been inadvertently dropped) then the corrected text
       might read: <egXML xmlns="http://www.tei-c.org/ns/Examples">The following elements <add
         resp="#LB">are</add> provided for simple editorial interventions.</egXML></p>
-     <p>These elements are not limited to changes made by an editor; they can also be used to record
+     <p>These elements are also used to record
       authorial changes in manuscripts. A manuscript in which the author has first written <q>How it
        galls me, what a galling shadow</q>, then crossed out the word <mentioned>galls</mentioned>
       and inserted <mentioned>dogs</mentioned> might be encoded thus: <egXML
@@ -1202,7 +1205,7 @@ live without God in the world, and only mind earthly things.
        &amp; twenty good regulars joined to me <unclear><gap reason="indecipherable"/></unclear>
        &amp; instantly, would aid me signally <add hand="#ed">in?</add> an enterprise against
        Wilmington.</egXML></p>
-     <p>The <gi>del</gi> element marks material which is transcribed as part of the electronic text
+     <p>The <gi>del</gi> element marks material which has been transcribed as part of the electronic text
       despite being marked as deleted, while <gi>gap</gi> marks the location of material which is
       omitted from the electronic text, whether it is legible or not. A language corpus, for
       example, might omit long quotations in foreign languages: <egXML
@@ -1218,6 +1221,11 @@ live without God in the world, and only mind earthly things.
         to find, values for search and replace, and so on. <gap reason="graphic"><desc>diagram of
           Emacs screen</desc></gap>
        </p></egXML></p>
+<p>The full TEI scheme provides more precise ways of capturing
+different aspects of  a transcription, distinguishing for example
+between text added or supplied by the encoder and text indicated as
+supplied or deleted in the source. TEI Lite does not provide different
+tags for these purposes.</p>
     </div>
     <div>
      <head>Abbreviations and their Expansion</head>
@@ -1253,7 +1261,9 @@ live without God in the world, and only mind earthly things.
       source. One simple means of achieving that would be an encoding such as the follow<egXML
        xmlns="http://www.tei-c.org/ns/Examples"><expan>w<hi rend="it">i</hi>t<hi rend="it"
         >h</hi></expan></egXML>
-     </p>
+     The full TEI also provides elements <gi>ex</gi> and <gi>am</gi>
+     for use in this situation, but these are not included in the TEI Lite
+     schema.</p>
      <p>To record both an abbreviation and its expansion, the <gi>choice</gi> element mentioned
       above may be used to group the abbreviated form with its proposed expansion: <egXML
        xmlns="http://www.tei-c.org/ns/Examples"
@@ -1581,7 +1591,7 @@ live without God in the world, and only mind earthly things.
      complemented by a collection of digital images, maintained as a distinct resource. The
       <att>facs</att> attribute may be used to associate any element in an encoded text with a
      digital facsimile of it. In the simple case where only page images are available, the
-      <att>facs</att> attribute on the<gi> pb</gi> element may be used to associate each image with
+      <att>facs</att> attribute on the <gi>pb</gi> element may be used to associate each image with
      an appropriate point in the text: <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <text>
        <pb facs="page1.png" n="1"/>
@@ -1692,11 +1702,14 @@ live without God in the world, and only mind earthly things.
       and the particular instance of that class which the interpretation involves. Thus, whereas
       with <gi>seg</gi> one can say simply that something is an apostrophe, with <gi>interp</gi> one
       can say that it is an instance (apostrophe) of a larger class (rhetorical figures).</p>
-     <p>Moreover, <gi>interp</gi> is an empty element, which must be linked to the passage to which
-      it applies either by means of the <att>ana</att> attribute discussed in section <ptr
+     <p>Moreover, <gi>interp</gi> is a <soCalled>stand off</soCalled>
+     element: it does not surround the segments of text which it
+     describes, but instead is  linked to the passage in question
+      either by means of the <att>ana</att> attribute discussed in section <ptr
        target="#xatts"/> above, or by means of its own <att>inst</att> attribute. This means that
-      any kind of analysis can be represented, with no need to respect the document hierarchy, and
-      also facilitates the grouping of analyses of a particular type together. A special purpose
+      any kind of analysis can be represented, independently of the
+      document hierarchy, as well as
+       facilitating the grouping of analyses of a particular type together. A special purpose
        <gi>interpGrp</gi> element is provided for the latter purpose.</p>
      <p>For example, suppose that you wish to mark such diverse aspects of a text as themes or
       subject matter, rhetorical figures, and the locations of individual scenes of the narrative.
@@ -1743,7 +1756,7 @@ live without God in the world, and only mind earthly things.
         type="scene-setting" inst="#P38.1" resp="#LB-MSM">church</interp><interp
         xml:id="set-kitchen-2" type="scene-setting" inst="#P38.1" resp="#LB-MSM"
        >kitchen</interp></egXML></p>
-     <p>The <gi>interp</gi> element is not limited to any particular type of analysis.m The literary
+     <p>The <gi>interp</gi> element is not limited to any particular type of analysis. The literary
       analysis shown above is but one possibility; one could equally well use <gi>interp</gi> to
       capture a linguistic part-of-speech analysis. For example, the example sentence given in
       section <ptr target="#xatts"/> assumes a linguistic analysis which might be represented as
@@ -2418,13 +2431,14 @@ live without God in the world, and only mind earthly things.
      <classSpec ident="att.global" type="atts" mode="change" module="tei">
       <attList>
        <attDef ident="rendition" mode="delete"/>
+       <attDef ident="style" mode="delete"/>
+<!-- not much use having @rendition or @style without tagsDecl -->
        <attDef ident="xml:base" mode="delete"/>
        <attDef ident="xml:space" mode="delete"/>
       </attList>
      </classSpec>
      <classSpec type="atts" ident="att.global.linking" module="linking" mode="change">
       <attList>
-       <attDef ident="corresp" mode="delete"/>
        <attDef ident="synch" mode="delete"/>
        <attDef ident="sameAs" mode="delete"/>
        <attDef ident="copyOf" mode="delete"/>
