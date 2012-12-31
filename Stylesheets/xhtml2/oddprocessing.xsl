@@ -409,13 +409,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$summaryDoc='true'">
         <h2>Schema <xsl:value-of select="@ident"/>: changed components</h2>
         <xsl:for-each select="tei:classSpec[@mode or @rend='change']        | tei:macroSpec[(@mode or @rend='change')]        | tei:elementSpec[(@mode or @rend='change')]">
-          <xsl:sort select="@ident"/>
+          <xsl:sort select="lower-case(@ident)"/>
           <xsl:apply-templates mode="weave" select="."/>
         </xsl:for-each>
         <h2>Schema <xsl:value-of select="@ident"/>:  unchanged  components</h2>
         <table>
           <xsl:for-each select="tei:classSpec[not(@mode or @rend)]          | tei:macroSpec[not(@mode or  @rend)]          | tei:elementSpec[not(@mode or @rend)]">
-            <xsl:sort select="@ident"/>
+            <xsl:sort select="lower-case(@ident)"/>
             <tr>
               <td id="{@ident}"><a href="http://www.tei-c.org/release/doc/tei-p5-doc/{$documentationLanguage}/html/ref-{@ident}.html"><xsl:value-of select="@ident"/></a>:
 		     <xsl:call-template name="makeDescription"/></td>
@@ -426,24 +426,24 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
         <h2>Schema <xsl:value-of select="@ident"/>: Elements</h2>
         <xsl:apply-templates mode="weave" select="tei:elementSpec">
-          <xsl:sort select="@ident"/>
+          <xsl:sort select="lower-case(@ident)"/>
         </xsl:apply-templates>
         <xsl:if test="tei:classSpec[@type='model']">
           <h2>Schema <xsl:value-of select="@ident"/>: Model classes</h2>
           <xsl:apply-templates mode="weave" select="tei:classSpec[@type='model']">
-            <xsl:sort select="@ident"/>
+            <xsl:sort select="lower-case(@ident)"/>
           </xsl:apply-templates>
         </xsl:if>
         <xsl:if test="tei:classSpec[@type='atts']">
           <h2>Schema <xsl:value-of select="@ident"/>: Attribute classes</h2>
           <xsl:apply-templates mode="weave" select="tei:classSpec[@type='atts']">
-            <xsl:sort select="@ident"/>
+            <xsl:sort select="lower-case(@ident)"/>
           </xsl:apply-templates>
         </xsl:if>
         <xsl:if test="tei:macroSpec">
           <h2>Schema <xsl:value-of select="@ident"/>: Macros</h2>
           <xsl:apply-templates mode="weave" select="tei:macroSpec">
-            <xsl:sort select="@ident"/>
+            <xsl:sort select="lower-case(@ident)"/>
           </xsl:apply-templates>
         </xsl:if>
       </xsl:otherwise>
@@ -585,7 +585,7 @@ of this software, even if advised of the possibility of such damage.
       <hr/>
       <xsl:for-each select="tei:classSpec">
         <xsl:sort select="tei:altIdent"/>
-        <xsl:sort select="@ident"/>
+        <xsl:sort select="lower-case(@ident)"/>
         <xsl:element name="{$tocElement}">
           <xsl:attribute name="class">toclist0</xsl:attribute>
           <a class="toclist" href="#{@ident}">
@@ -603,7 +603,7 @@ of this software, even if advised of the possibility of such damage.
       <hr/>
       <xsl:for-each select="tei:elementSpec">
         <xsl:sort select="tei:altIdent"/>
-        <xsl:sort select="@ident"/>
+        <xsl:sort select="lower-case(@ident)"/>
         <xsl:element name="{$tocElement}">
           <xsl:attribute name="class">toclist0</xsl:attribute>
           <a class="toclist" href="#{@ident}">
@@ -621,7 +621,7 @@ of this software, even if advised of the possibility of such damage.
       <hr/>
       <xsl:for-each select="tei:macroSpec">
         <xsl:sort select="tei:altIdent"/>
-        <xsl:sort select="@ident"/>
+        <xsl:sort select="lower-case(@ident)"/>
         <xsl:element name="{$tocElement}">
           <xsl:attribute name="class">toclist0</xsl:attribute>
           <a class="toclist" href="#{@ident}">
@@ -738,14 +738,14 @@ of this software, even if advised of the possibility of such damage.
             </xsl:for-each>
           </h3>
           <xsl:for-each select="key('MACRO-MODULE',@module)">
-            <xsl:sort select="@ident"/>
+            <xsl:sort select="lower-case(@ident)"/>
             <xsl:call-template name="refDocLink"/>
           </xsl:for-each>
         </div>
       </xsl:if>
     </xsl:for-each>
     <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
-      <xsl:sort select="@ident"/>
+      <xsl:sort select="lower-case(@ident)"/>
     </xsl:apply-templates>
   </xsl:template>
   <xsl:template match="tei:divGen[@type='elementcat']"  priority="100">
@@ -929,7 +929,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
     </div>
     <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
+      <xsl:sort select="lower-case(@ident)"/>
     </xsl:apply-templates>
   </xsl:template>
   <xsl:template name="javascriptHook">
