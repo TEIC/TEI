@@ -765,7 +765,7 @@ of this software, even if advised of the possibility of such damage.
             </span>
             <ul class="atoz">
               <xsl:for-each select="key('ELEMENT-ALPHA',$letter)">
-                <xsl:sort select="@ident"/>
+                <xsl:sort select="lower-case(@ident)"/>
                 <li>
 		  <xsl:call-template name="refDocLink"/>
                 </li>
