@@ -951,14 +951,13 @@ to nest within each other.
 <p>Where segments of different kinds are to be distinguished within the
 same stretch of speech, the <att>type</att> attribute may be used, as in
 the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="false" xmlns:ext="http://www.example.org/ns/nonTEI"><u who="#T1">
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="true" xmlns:ext="http://www.example.org/ns/nonTEI"><u who="#T1">
 <seg type="C">I think </seg>
 <seg type="C">this chap was writing </seg>
 <seg type="C">and he <del type="repeated">said hello</del> said </seg>
 <seg type="M">hello </seg>
 <seg type="C">and he said </seg>
-<seg type="C">I'm going to a 
-<ext:paraphasia>gate</ext:paraphasia>
+<seg type="C">I'm going to a gate
             at twenty past seven </seg>
 <seg type="C">he said </seg>
 <seg type="M">ok </seg>
@@ -971,8 +970,20 @@ the following example:
 In this example, recoded from a corpus of language-impaired speech
 prepared by Fletcher and Garman, the speaker's utterance has been fully
 segmented into clausal (<code>type="C"</code>) 
-or minor (<code>type="M"</code>) units.  An additional 
-element, <gi scheme="imaginary">ext:paraphasia</gi> has been used to define a particular
+or minor (<code>type="M"</code>) units.</p> 
+
+<p>For some features, it may be 
+more appropriate or convenient to introduce a new element in a custom namespace:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" valid="false" xmlns:ext="http://www.example.org/ns/nonTEI"><u who="#T1">
+<!-- ... --> 
+<seg type="C">and he said </seg>
+<seg type="C">I'm going to a 
+<ext:paraphasia>gate</ext:paraphasia>
+at twenty past seven </seg> 
+<!-- ... --> 
+</u></egXML>
+
+Here, <gi scheme="imaginary">ext:paraphasia</gi> has been used to define a particular
 characteristic of this corpus for which no element exists in the TEI scheme.
 See further chapter <ptr target="#MD"/> for a discussion of the way in
 which this kind of user-defined extension of the TEI scheme may be
