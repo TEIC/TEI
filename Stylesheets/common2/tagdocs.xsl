@@ -2049,22 +2049,22 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:divGen[@type='modelclasscat']">
     <xsl:apply-templates mode="weave" select="key('MODELCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
+      <xsl:sort select="lower-case(@ident)"/>
     </xsl:apply-templates>
   </xsl:template>
   <xsl:template match="tei:divGen[@type='attclasscat']">
     <xsl:apply-templates mode="weave" select="key('ATTCLASSDOCS',1)">
-      <xsl:sort select="@ident"/>
+      <xsl:sort select="lower-case(@ident)"/>
     </xsl:apply-templates>
   </xsl:template>
   <xsl:template match="tei:divGen[@type='macrocat']">
     <xsl:apply-templates mode="weave" select="key('MACRODOCS',1)">
-      <xsl:sort select="@ident"/>
+      <xsl:sort select="lower-case(@ident)"/>
     </xsl:apply-templates>
   </xsl:template>
   <xsl:template match="tei:divGen[@type='elementcat']">
     <xsl:apply-templates mode="weave" select="key('ELEMENTDOCS',1)">
-      <xsl:sort select="@ident"/>
+      <xsl:sort select="lower-case(@ident)"/>
     </xsl:apply-templates>
   </xsl:template>
   <xsl:template match="tei:divGen[@type='attcat']">
@@ -2073,7 +2073,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text>attcat</xsl:text>
       </xsl:attribute>
       <xsl:for-each select="key('ATTDOCS',1)">
-        <xsl:sort select="@ident"/>
+        <xsl:sort select="lower-case(@ident)"/>
         <xsl:variable name="this" select="@ident"/>
         <xsl:if test="generate-id()=generate-id(key('ATTRIBUTES',$this)[1])">
           <xsl:element namespace="{$outputNS}" name="{$rowName}">
