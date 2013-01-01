@@ -39,6 +39,15 @@ rm -f $INCOMING
 exit 1
 fi
 
+# Create updated.txt and check if it says YES
+saxon -it:main -o:updated.txt -xsl:$SCRIPTDIR/isUpdated.xsl incoming=$INCOMING existing=$EXISTING ;
+if ! grep -q "YES" updated.txt &>/dev/null
+then echo "ERROR: NOT UPDATED FEED DATE"
+rm -f $INCOMING
+rm -f updated.txt
+exit 1
+fi
+
 #Commented out below test for file size to help with corrections.
 
 #get bytesizes of files for later comparison
@@ -53,7 +62,7 @@ fi
 #fi
 
 # create temporary news body file
-saxon -o news-body-temp.html $INCOMING $SCRIPTDIR/atom2TEInews.xsl ;
+saxon -o:news-body-temp.html -s:$INCOMING -xsl:$SCRIPTDIR/atom2TEInews.xsl ;
 
 # if temporary news body file is not well formed, error
 if ! xmllint --noout news-body-temp.html &>/dev/null
@@ -63,7 +72,7 @@ exit 1
 fi
 
 # create temporary news headlines file
-saxon -o news-headlines-temp.html $INCOMING $SCRIPTDIR/atom2HTML-headlines.xsl ;
+saxon -o:news-headlines-temp.html -s:$INCOMING -xsl:$SCRIPTDIR/atom2HTML-headlines.xsl ;
 
 # if temporary news headlines file is not well formed, error
 if ! xmllint --noout news-headlines-temp.html &>/dev/null
