@@ -72,7 +72,7 @@ exit 1
 fi
 
 # create temporary news headlines file
-saxon -o:news-headlines-temp.html -s:$INCOMING -xsl:$SCRIPTDIR/atom2HTML-headlines.xsl ;
+saxon -o news-headlines-temp.html -s $INCOMING $SCRIPTDIR/atom2HTML-headlines.xsl ;
 
 # if temporary news headlines file is not well formed, error
 if ! xmllint --noout news-headlines-temp.html &>/dev/null
