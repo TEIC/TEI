@@ -40,7 +40,7 @@ exit 1
 fi
 
 # Create updated.txt and check if it says YES
-saxon -it main -o updated.txt $SCRIPTDIR/isUpdated.xsl incoming=$INCOMING existing=$EXISTING ;
+saxon -it main -o updated.txt $SCRIPTDIR/isUpdated.xsl incoming=$OUTPUTDIR$INCOMING existing=$OUTPUTDIR$EXISTING ;
 if ! grep -q "YES" updated.txt &>/dev/null
 then echo "ERROR: NOT UPDATED FEED DATE"
 rm -f $INCOMING
