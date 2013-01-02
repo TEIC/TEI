@@ -2692,7 +2692,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="followRef">
-      <xsl:if test=".//rng:text">
+      <xsl:if test=".//rng:text or .//rng:data">
 	<Element type="TEXT"/>
       </xsl:if>
     <xsl:for-each select=".//rng:ref">
@@ -2729,7 +2729,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="self::tei:macroSpec">
               <xsl:for-each select="tei:content">
                 <xsl:choose>
-                  <xsl:when test="rng:text and count(rng:*)=1">
+                  <xsl:when test="(rng:text or rng:data) and count(rng:*)=1">
                     <Element type="TEXT"/>
                   </xsl:when>
                   <xsl:otherwise>
