@@ -10,6 +10,8 @@ p4top5:
 test-html:
 	saxon -o:test.html  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT)
 	diff test.html expected-results/test.html
+	saxon -o:test-css.html  test.xml ../xhtml2/tei.xsl cssFile=../tei.css pageLayout=CSS  $(SAXONOPT)
+	diff test-css.html expected-results/test-css.html
 	saxon -o:test20.html  test20.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test20.html expected-results/test20.html
 	saxon -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)

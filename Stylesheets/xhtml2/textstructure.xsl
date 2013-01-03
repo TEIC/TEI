@@ -844,7 +844,7 @@ of this software, even if advised of the possibility of such damage.
       </li>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[html] </desc>
+      <desc>[html] corpus identifier</desc>
    </doc>
   <xsl:template name="addCorpusID">
       <xsl:if test="ancestor-or-self::tei:teiCorpus">
@@ -1871,7 +1871,7 @@ of this software, even if advised of the possibility of such damage.
       </div>
       <xsl:if test="not($contentStructure='all' or @rend='all')">
          <div id="hdr3">
-	           <xsl:call-template name="hdr3"/>
+	   <xsl:call-template name="hdr3"/>
          </div>
       </xsl:if>
       <xsl:choose>
