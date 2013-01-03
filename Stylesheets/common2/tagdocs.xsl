@@ -141,7 +141,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:element>
   </xsl:template>
-  <xsl:template match="tei:elementSpec" mode="summary">
+  <xsl:template match="tei:classSpec|tei:elementSpec" mode="summary">
     <xsl:variable name="name">
       <xsl:choose>
         <xsl:when test="tei:altIdent">
@@ -200,7 +200,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_value</xsl:text>
         </xsl:attribute>
-        <xsl:call-template name="makeDescription"/>
+        <xsl:call-template name="makeDescription">
+	  <xsl:with-param name="showListRef">false</xsl:with-param>
+	</xsl:call-template>
         <xsl:apply-templates select="valList"/>
       </xsl:element>
     </xsl:element>
@@ -1015,12 +1017,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
     <xsl:choose>
       <xsl:when test="self::tei:classSpec and @type='model'">
-	<xsl:element namespace="{$outputNS}" name="{$tableName}">
-	  <xsl:attribute name="{$rendName}">
-	    <xsl:text>elementList</xsl:text>
-	  </xsl:attribute>
-	  <xsl:apply-templates mode="summary" select="key('CLASSMEMBERS',@ident)"/>
-	</xsl:element>
+	<xsl:if test="key('CLASSMEMBERS',@ident)">
+	  <xsl:element namespace="{$outputNS}" name="{$tableName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>elementList</xsl:text>
+	    </xsl:attribute>
+	    <xsl:apply-templates mode="summary" select="key('CLASSMEMBERS',@ident)"/>
+	  </xsl:element>
+	</xsl:if>
       </xsl:when>
       <xsl:when test="$atts='-'"/>
       <xsl:when test="$atts='+'">
