@@ -454,8 +454,8 @@ of this software, even if advised of the possibility of such damage.
       </sp>
     </xsl:template>
 
-    <xsl:template match="tei:figure/tei:p[tei:graphic and
-			 count(*)=1]" mode="pass2">
+    <xsl:template match="tei:figure/tei:p[tei:graphic and count(*)=1]"
+		  mode="pass2" priority="99">
       <xsl:apply-templates mode="pass2"/>      
     </xsl:template>
 
