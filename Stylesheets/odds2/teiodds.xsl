@@ -91,8 +91,9 @@ of this software, even if advised of the possibility of such damage.
     name="ATTREFS-CLASS" use="@name"/>
   <xsl:key match="tei:macroSpec/tei:content//rng:ref" name="MACROREFS"  use="@name"/>
 
-  <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS"
-    use="tei:classes/tei:memberOf/@key"/>
+  <xsl:key match="tei:elementSpec|tei:classSpec" name="CLASSMEMBERS" use="tei:classes/tei:memberOf/@key"/>
+  <xsl:key match="tei:elementSpec" name="CLASSMEMBERS-ELEMENTS" use="tei:classes/tei:memberOf/@key"/>
+  <xsl:key match="tei:classSpec" name="CLASSMEMBERS-CLASSES" use="tei:classes/tei:memberOf/@key"/>
   <xsl:key match="tei:elementSpec|tei:classSpec|tei:macroSpec" name="IDENTS" use="@ident"/>
 
   <xsl:key match="tei:macroSpec[@type='dt']" name="DATATYPES" use="1"/>

@@ -1017,12 +1017,26 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
     <xsl:choose>
       <xsl:when test="self::tei:classSpec and @type='model'">
-	<xsl:if test="key('CLASSMEMBERS',@ident)">
+	<xsl:if test="key('CLASSMEMBERS-CLASSES',@ident)">
+	  <xsl:element namespace="{$outputNS}" name="{$tableName}">
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>classList</xsl:text>
+	    </xsl:attribute>
+	    <xsl:apply-templates mode="summary"
+				 select="key('CLASSMEMBERS-CLASSES',@ident)">
+	      <xsl:sort select="lower-case(@ident)"/>
+	    </xsl:apply-templates>
+	  </xsl:element>
+	</xsl:if>
+	<xsl:if test="key('CLASSMEMBERS-ELEMENTS',@ident)">
 	  <xsl:element namespace="{$outputNS}" name="{$tableName}">
 	    <xsl:attribute name="{$rendName}">
 	      <xsl:text>elementList</xsl:text>
 	    </xsl:attribute>
-	    <xsl:apply-templates mode="summary" select="key('CLASSMEMBERS',@ident)"/>
+	    <xsl:apply-templates mode="summary"
+				 select="key('CLASSMEMBERS-ELEMENTS',@ident)">
+	      <xsl:sort select="lower-case(@ident)"/>
+	    </xsl:apply-templates>
 	  </xsl:element>
 	</xsl:if>
       </xsl:when>
