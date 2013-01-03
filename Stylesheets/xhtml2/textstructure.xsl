@@ -1270,7 +1270,9 @@ of this software, even if advised of the possibility of such damage.
 	<style type="text/css" title="inline_css">
 	  <xsl:for-each select="tokenize(unparsed-text($cssInlineFile),
 				'\r?\n')">
-	    <xsl:value-of select="normalize-space(.)"/>
+	    <xsl:if test="not(starts-with(.,'$Id:'))">
+	      <xsl:value-of select="normalize-space(.)"/>
+	    </xsl:if>
 	    <xsl:text>&#10;</xsl:text>
 	  </xsl:for-each>
 	</style>
