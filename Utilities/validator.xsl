@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:pantor="http://www.pantor.com/ns/local" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="rng tei a pantor teix">
+<xsl:stylesheet xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="rng tei a teix">
   <xsl:include href="pointerattributes.xsl"/>
   <xsl:key name="IDENTS" match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
   <xsl:key name="EXIDS" match="teix:*[@xml:id]" use="@xml:id"/>
@@ -63,6 +63,14 @@
     <xsl:if test="not(id(substring(@corresp,2)))">
       <xsl:call-template name="Error">
         <xsl:with-param name="value" select="@corresp"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+  <!-- content of <ident type="class"> must point to something -->
+  <xsl:template match="tei:ident[@type='class']">
+    <xsl:if test="not(key('IDENTS',.))">
+      <xsl:call-template name="Error">
+        <xsl:with-param name="value" select="."/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
