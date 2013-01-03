@@ -68,7 +68,7 @@
   </xsl:template>
   <!-- content of <ident type="class"> must point to something -->
   <xsl:template match="tei:ident[@type='class']">
-    <xsl:if test="not(key('IDENTS',.))">
+    <xsl:if test="not(key('IDENTS',replace(.,'_[A-z]*','')))">
       <xsl:call-template name="Error">
         <xsl:with-param name="value" select="."/>
       </xsl:call-template>
