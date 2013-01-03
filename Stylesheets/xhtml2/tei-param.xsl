@@ -266,7 +266,7 @@ will generate an &lt;h2&gt;</p>
       </a>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
-      <desc>[html]Bottom of left-hand column<param name="currentID">ID of selected section</param>
+      <desc>[html]Bottom of left-hand column <param name="currentID">ID of selected section</param>
       </desc>
    </doc>
   <xsl:template name="lh-col-bottom">

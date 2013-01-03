@@ -141,6 +141,70 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:element>
   </xsl:template>
+  <xsl:template match="tei:elementSpec" mode="summary">
+    <xsl:variable name="name">
+      <xsl:choose>
+        <xsl:when test="tei:altIdent">
+          <xsl:value-of select="tei:altIdent"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@ident"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>odd_label</xsl:text>
+          <xsl:if test="@status">
+            <xsl:text> status_</xsl:text>
+            <xsl:value-of select="@status"/>
+          </xsl:if>
+        </xsl:attribute>
+	<xsl:element namespace="{$outputNS}" name="{$xrefName}">
+	  <xsl:attribute name="{$urlName}">
+	    <xsl:choose>
+	      <xsl:when test="number($splitLevel)=-1">
+		<xsl:text>#</xsl:text>
+		<xsl:value-of select="$idPrefix"/>
+		<xsl:value-of select="$name"/>
+	      </xsl:when>
+	      <xsl:when test="$STDOUT='true'">
+		<xsl:for-each select="key('IDENTS',$name)">
+		  <xsl:call-template name="getSpecURL">
+		    <xsl:with-param name="name">
+		      <xsl:value-of select="$name"/>
+		    </xsl:with-param>
+		    <xsl:with-param name="type">
+		      <xsl:value-of select="substring-before(local-name(),'Spec')"/>
+		    </xsl:with-param>
+		  </xsl:call-template>
+		</xsl:for-each>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:text>ref-</xsl:text>
+		<xsl:value-of select="$name"/>
+		<xsl:text>.html</xsl:text>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:attribute>
+	  <xsl:value-of select="$name"/>
+	  <xsl:for-each select="key('IDENTS',$name)">
+	    <xsl:if test="tei:content/rng:empty">
+	      <xsl:text>/</xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+        </xsl:element>
+      </xsl:element>
+      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+        <xsl:attribute name="{$rendName}">
+          <xsl:text>odd_value</xsl:text>
+        </xsl:attribute>
+        <xsl:call-template name="makeDescription"/>
+        <xsl:apply-templates select="valList"/>
+      </xsl:element>
+    </xsl:element>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element attDef</desc>
   </doc>
@@ -950,6 +1014,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="showListRef">false</xsl:with-param>
     </xsl:call-template>
     <xsl:choose>
+      <xsl:when test="self::tei:classSpec and @type='model'">
+	<xsl:element namespace="{$outputNS}" name="{$tableName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:text>elementList</xsl:text>
+	  </xsl:attribute>
+	  <xsl:apply-templates mode="summary" select="key('CLASSMEMBERS',@ident)"/>
+	</xsl:element>
+      </xsl:when>
       <xsl:when test="$atts='-'"/>
       <xsl:when test="$atts='+'">
         <xsl:call-template name="showAttClasses">
