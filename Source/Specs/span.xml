@@ -20,30 +20,35 @@ $Id$
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.interpLike"/>
+    <memberOf key="att.pointing"/>
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq.limited"/>
   </content>
+  <constraintSpec ident="targetfrom" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@from and @target">Only one of the attributes
+	'target' and 'from' may be supplied</report>
+    </constraint></constraintSpec>
+  <constraintSpec ident="tonotfrom" scheme="isoschematron">    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@to
+								 and
+								 not(@from)">If
+      'to' is supplied, 'from' must be supplied as well</report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="tofrom" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron"
+	      test="contains(@to,' ') or contains(@from,' ')">The
+      attributes  'to' and 'from' may each contain only a single value</report>
+    </constraint>
+  </constraintSpec>
+
+
   <attList>
-    <!-- 
-    <attDef ident="value" usage="req">
-      <equiv/>
-      <desc>identifies the specific phenomenon being annotated.</desc>
-      <datatype><rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
-      <valDesc>Any string of characters.</valDesc>
-      <remarks>
-	<p>The specific phenomenon being annotated may be represented either using
-	this attribute or in the content of the <gi>span</gi> element. Alternatively, the
-	content of <gi>span</gi> may be used to provide a more detailed, human-readable
-	explanation of the phenomenon.</p>
-	<p>It is a syntactic error, which the TEI schema files do not
-	enforce, to specify neither a <att>value</att> attribute nor
-	content of the <gi>span</gi> element.</p>
-      </remarks>
-    </attDef>
--->
-    <attDef ident="from" usage="req">
+    <attDef ident="from" usage="opt">
       <equiv/>
       <desc>specifies the beginning of the passage being annotated; if not accompanied by a
         <att>to</att> attribute, then specifies the entire passage.</desc>
