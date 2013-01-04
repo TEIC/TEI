@@ -1270,5 +1270,56 @@ of this software, even if advised of the possibility of such damage.
             </Properties>
         </xsl:result-document>
     </xsl:template>
+    <xsl:template name="write-docxfile-settings">
+	     <xsl:if test="$debug='true'">
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/settings.xml')"/>
+         </xsl:message>
+	     </xsl:if>
+
+        <xsl:result-document href="{concat($wordDirectory,'/word/settings.xml')}" standalone="yes">
+            
+            <w:settings xmlns:sl="http://schemas.openxmlformats.org/schemaLibrary/2006/main">
+                <w:zoom w:percent="100"/>
+                <w:stylePaneSortMethod w:val="0000"/>
+                <w:defaultTabStop w:val="720"/>
+                <w:evenAndOddHeaders/>
+                <w:characterSpacingControl w:val="doNotCompress"/>
+                <w:footnotePr>
+                    <w:footnote w:id="-1"/>
+                    <w:footnote w:id="0"/>
+                </w:footnotePr>
+                <w:endnotePr>
+                    <w:endnote w:id="-1"/>
+                    <w:endnote w:id="0"/>
+                </w:endnotePr>
+                <w:compat/>
+                <m:mathPr>
+                    <m:mathFont m:val="Cambria Math"/>
+                    <m:brkBin m:val="before"/>
+                    <m:brkBinSub m:val="--"/>
+                    <m:smallFrac/>
+                    <m:dispDef/>
+                    <m:lMargin m:val="432"/>
+                    <m:rMargin m:val="0"/>
+                    <m:defJc m:val="left"/>
+                    <m:wrapIndent m:val="1440"/>
+                    <m:intLim m:val="subSup"/>
+                    <m:naryLim m:val="undOvr"/>
+                </m:mathPr>
+                <w:attachedSchema w:val="ActionsPane3"/>
+                <w:themeFontLang w:val="en-US"/>
+                <w:clrSchemeMapping w:bg1="light1" w:t1="dark1" w:bg2="light2" w:t2="dark2" w:accent1="accent1"
+                                w:accent2="accent2"
+                                w:accent3="accent3"
+                                w:accent4="accent4"
+                                w:accent5="accent5"
+                                w:accent6="accent6"
+                                w:hyperlink="hyperlink"
+                                w:followedHyperlink="followedHyperlink"/>
+                <w:decimalSymbol w:val="."/>
+                <w:listSeparator w:val=","/>
+            </w:settings>
+        </xsl:result-document>
+    </xsl:template>
 
 </xsl:stylesheet>

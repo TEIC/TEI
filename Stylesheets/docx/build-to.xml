@@ -97,7 +97,6 @@
       <fileset dir="${outputTempDir}">
 	<include name="docProps/custom.xml" />
 	<include name="word/webSettings.xml" />
-	<include name="word/_rels/settings.xml.rels" />
 	<include name="word/endnotes.xml" />
 	<include name="word/footnotes.xml" />
 	<include name="word/footer*" />
@@ -106,8 +105,6 @@
     </delete>
     <delete dir="${outputTempDir}/customXml" />
     <delete dir="${outputTempDir}/word/printerSettings" />
-    <delete dir="${outputTempDir}/word/theme" />
-    <delete dir="${outputTempDir}/word/glossary" />
     
     <echo level="info">fix Word .rels file</echo>
     <xslt style="tools/fixdotrels.xsl"  in="${outputTempDir}/_rels/.rels"  out="${outputTempDir}/_rels/.rels_" >

@@ -140,23 +140,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
 
-    <xsl:template name="write-docxfile-docprops-app">
-	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/app.xml')"/>
-         </xsl:message>
-	     </xsl:if>
-
-        <xsl:result-document href="{concat($wordDirectory,'/docProps/app.xml')}" standalone="yes">
-            <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
-                     xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-                <Template>STD_3_0_0.dotx</Template>
-                <Application>TEIISO tei-docx.xsl</Application>
-                <DocSecurity>0</DocSecurity>
-                <SharedDoc>true</SharedDoc>
-                <AppVersion>1.0</AppVersion>
-            </Properties>
-        </xsl:result-document>
-    </xsl:template>
+    <xsl:template name="write-docxfile-docprops-app"/>
 
     <!-- after opening custom.xml, we cannot write back to it; so save
 	 under new name -->
