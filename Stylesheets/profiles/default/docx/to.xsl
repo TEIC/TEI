@@ -84,14 +84,16 @@ of this software, even if advised of the possibility of such damage.
     
     <!-- Styles -->
     
-    <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
+    <xsl:template match="tei:abbr" mode="get-style">tei_abbr</xsl:template>
     <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:date" mode="get-style">date</xsl:template>
     <xsl:template match="tei:foreign" mode="get-style">teiforeign</xsl:template>
     <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
-    <xsl:template match="tei:mentioned" mode="get-style">teimentioned</xsl:template>
-    <xsl:template match="tei:orgName" mode="get-style">orgName</xsl:template>
+    <xsl:template match="tei:mentioned" mode="get-style">tei_mentioned</xsl:template>
+    <xsl:template match="tei:orgName" mode="get-style">tei_orgName</xsl:template>
     <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
+    <xsl:template match="tei:q" mode="get-style">tei_q</xsl:template>
+    <xsl:template match="tei:bibl" mode="get-style">tei_bibl</xsl:template>
     <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
     <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
 

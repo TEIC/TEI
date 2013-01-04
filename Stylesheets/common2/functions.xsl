@@ -190,6 +190,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:cit[not(@rend)]">true</xsl:when>
         <xsl:when test="parent::tei:cit[@rend='display']">false</xsl:when>
         <xsl:when test="parent::tei:cit and (tei:p or tei:l)">false</xsl:when>
+        <xsl:when test="parent::tei:cit and parent::cit/tei:bibl">false</xsl:when>
         <xsl:when test="parent::tei:body">false</xsl:when>
         <xsl:when test="parent::tei:titlePage">false</xsl:when>
         <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
