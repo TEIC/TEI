@@ -503,15 +503,48 @@ that the annotations are of specific types, for example thematic or
 structural. The annotation itself is supplied as the content of the
 <gi>span</gi> or <gi>interp</gi> element. 
 In the case of the <gi>span</gi> element, the span of text being
-annotated is indicated by values of the <att>from</att> and
-<att>to</att> attributes, the value of each being a pointer.  If
-the optional <att>to</att> attribute is omitted, the span consists just
-of the element pointed at by the obligatory <att>from</att> attribute.
+annotated is indicated by values of the <att>from</att>,
+<att>to</att> or <att>target</att> attributes, used in combination as
+follows. If only the <att>from</att> attribute is supplied, then the
+span is coterminous with the element indicated by its value; if both
+<att>from</att> and <att>to</att> are supplied, the span runs from the
+start of the element indicated by the <att>from</att> attribute up to
+the end of the element indicated by the <att>to</att> attribute; if
+the <att>target</att> attribute is used, the span is defined by
+aggregating the contents of the (possibly non-contiguous) elements pointed to by its values. It
+is an error to supply only the <att>to</att> attribute; to supply more
+than one pointer value for either <att>to</att> or <att>from</att>
+attributes; or to supply either of these in conjunction with the
+<att>target</att> attribute. 
 In the case of <gi>interp</gi> (see below), the span is indicated by a
 pointer from a <gi>link</gi> element or some similar mechanism.  The
 <att>resp</att> attribute indicates the annotator responsible for this annotation.
-Here is
-an example of the <gi>span</gi> element.
+</p>
+<p>The <gi>span</gi> element provides a simple way of indicating such
+features as phrasal verbs in a linguistic analysis, as in this
+example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<s><w>What</w><w>did</w><w>you</w><w xml:id="mk01">make</w><w xml:id="up01">up</w></s>
+<span from="#mk01" to="#up01">phrasal verb "make up"</span>
+</egXML>
+Here the two components of the span follow each other, so the
+<att>to</att> and <att>from</att> attributes may be used. The
+same effect could however be achieved by using the <att>target</att>
+attribute:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<s><w>What</w><w>did</w><w>you</w><w xml:id="mk02">make</w><w xml:id="up02">up</w></s>
+<span target="#mk02 #up02">phrasal verb "make up"</span>
+</egXML>
+This second approach might be cumbersome if the number of components
+to be combined is very large. It is however essential if the 
+components do not follow each other, as in this example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" >
+<s><w>Did</w><w>you</w><w xml:id="mk03">make</w><w>it</w><w xml:id="up03">up</w></s>
+<span target="#mk03 #up03">phrasal verb "make up"</span>
+</egXML>
+</p>
+<p>The <gi>span</gi> element can be used for any kind of
+annotation. In this example it is used in a narratological analysis:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#AI-BIBL-4"><p xml:id="MaQp1s2p114">
 <s xml:id="MaQp1s2p114s1">There was certainly a definite point at which the
   thing began.</s>
@@ -716,9 +749,9 @@ units.
 <p>One obvious advantage of using <gi>interp</gi> rather than
 <gi>span</gi> elements for the Sigmund text is that the <gi>interp</gi>
 elements can be reused for marking up other texts in the same document,
-whereas the <gi>span</gi> elements cannot.  Another is that the
+whereas the <gi>span</gi> elements cannot.  <!--Another is that the
 <gi>interp</gi> element can be used to provide interpretations for
-discontinuous text elements (represented by <gi>join</gi> elements).  On
+discontinuous text elements (represented by <gi>join</gi> elements).  -->On
 the other hand, the use of <gi>interp</gi> elements may require the
 creation of special text elements not otherwise needed (e.g. the
 <gi>seg</gi> and the <gi>join</gi> in the revised encoding of the text),
