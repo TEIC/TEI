@@ -181,7 +181,7 @@ of this software, even if advised of the possibility of such damage.
 	    <CharactersWithSpaces>0</CharactersWithSpaces>
 	    <SharedDoc>false</SharedDoc>
 	    <HyperlinksChanged>false</HyperlinksChanged>
-	    <AppVersion>6.22</AppVersion>>
+	    <AppVersion>6.23</AppVersion>>>
 	  </Properties>
         </xsl:result-document>
     </xsl:template>
