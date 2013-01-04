@@ -655,7 +655,7 @@ of this software, even if advised of the possibility of such damage.
 	      select="$specName"/> from <xsl:value-of
 	      select="$Source"/> (<xsl:value-of select="$why"/>)</xsl:message>
             </xsl:if>
-            <xsl:apply-templates mode="odd2odd-copy" select="$Current"/>
+            <xsl:apply-templates mode="odd2odd-justcopy" select="$Current"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
@@ -669,6 +669,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy>
       <xsl:apply-templates mode="odd2odd-change" select="*|@*|processing-instruction()|text()"/>
     </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="rng:*" mode="odd2odd-change">
+    <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{local-name()}">
+      <xsl:apply-templates mode="odd2odd-change" select="*|@*|processing-instruction()|text()"/>
+    </xsl:element>
   </xsl:template>
 
   <xsl:template match="@*|processing-instruction()|text()" mode="odd2odd-copy">
@@ -1670,11 +1676,18 @@ so that is only put back in if there is some content
       <xsl:copy-of select="."/>
    </xsl:template>
 
+   <xsl:template match="rng:*" mode="odd2odd-justcopy">
+     <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{local-name()}">
+       <xsl:apply-templates
+	   select="*|@*|processing-instruction()|text()" mode="odd2odd-justcopy"/>
+     </xsl:element>
+   </xsl:template>
+
    <xsl:template match="*" mode="odd2odd-justcopy">
-      <xsl:copy>
-         <xsl:apply-templates
-	     select="*|@*|processing-instruction()|text()" mode="odd2odd-justcopy"/>
-      </xsl:copy>
+     <xsl:copy>
+       <xsl:apply-templates
+	   select="*|@*|processing-instruction()|text()" mode="odd2odd-justcopy"/>
+     </xsl:copy>
    </xsl:template>
 
 
