@@ -199,13 +199,11 @@ of this software, even if advised of the possibility of such damage.
 	  select="@N"/></xsl:message>
 	</xsl:if>
 -->
-        <note place="margin" type="milestone">
-          <label>
+          <label place="margin" type="milestone">
             <xsl:value-of select="@UNIT"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="@N"/>
           </label>
-        </note>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
