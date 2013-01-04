@@ -464,7 +464,7 @@ for the first release of a computer file; it is mandatory for
 each later release, though this requirement cannot be enforced by the
 parser.
 </p>
-<p>Note that <emph>all</emph> changes in a file, whether or not they are
+<p>Note that <emph>all</emph> changes in a file considered significant, whether or not they are
 regarded as constituting a new edition or simply a new revision, should
 be independently noted in the revision description section of the file
 header (see section <ptr target="#HD6"/>).
@@ -2081,10 +2081,11 @@ modified as well as extremely useful documentation for files being
 passed from researcher to researcher or system to system. Without
 change logs, it is easy to confuse different versions of a file, or to
 remain unaware of small but important changes made in the file by some
-earlier link in the chain of distribution.  No change should be made in
+earlier link in the chain of distribution.  No significant change should be made in
 any TEI-conformant file without corresponding entries being made in the
 change log.<specList>
 <specDesc key="revisionDesc"/>
+<specDesc key="listChange"/>
 <specDesc key="change"/>
 </specList>
 </p>
@@ -2095,9 +2096,10 @@ header itself (other than the revision description itself, of
 course). At the very least, an entry should be supplied indicating the
 date of creation of the header.</p>
 <p>The log consists of a list of entries, one for each change. This
-may be encoded using either the regular <gi>list</gi> element, as
-described in section <ptr target="#COLI"/> or as a series of special
-purpose <gi>change</gi> elements, each of which contains a more
+may be encoded using the <gi>listChange</gi> element described in
+section <ptr target="#PH-changes"/> or the simple <gi>list</gi> element
+described in section <ptr target="#COLI"/>. Alternatively, a series of 
+<gi>change</gi> elements may be used, each containing a more
 detailed description of the changes made. The attributes
 <att>when</att> and <att>who</att> are used to indicate the date of
 the change and the person responsible for it respectively. The
