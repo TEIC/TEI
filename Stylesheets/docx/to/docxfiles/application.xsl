@@ -24,12 +24,12 @@
                 xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
                 xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-                
+		xmlns:ep="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso      tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
+                exclude-result-prefixes="cp ep ve o r m v wp w10 w wne mml tbx iso      tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -140,7 +140,51 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
 
-    <xsl:template name="write-docxfile-docprops-app"/>
+    <xsl:template name="write-docxfile-docprops-app">
+        <xsl:variable name="appFile">
+            <xsl:value-of select="$wordDirectory"/>
+            <xsl:text>/docProps/app.xml</xsl:text>
+        </xsl:variable>
+        <xsl:variable name="template">
+            <xsl:choose>
+                <xsl:when test="doc-available($appFile)">
+                    <xsl:for-each select="document($appFile)">
+                        <xsl:value-of select="ep:Properties/ep:Template"/>
+                    </xsl:for-each>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Normal.dotm</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <!-- after opening app.xml, we cannot write back to it; so save
+            under new name -->
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/newapp.xml')"/>
+	  </xsl:message>
+	</xsl:if>
+
+        <xsl:result-document href="{concat($wordDirectory,'/docProps/newapp.xml')}" standalone="yes">
+	  <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
+	    <Template><xsl:value-of select="$template"/></Template>
+	    <TotalTime>1</TotalTime>
+	    <Pages>1</Pages>
+	    <Words>0</Words>
+	    <Characters>0</Characters>
+	    <Application>TEI XSL stylesheets</Application>
+	    <DocSecurity>0</DocSecurity>
+	    <Lines>0</Lines>
+	    <Paragraphs>0</Paragraphs>
+	    <ScaleCrop>false</ScaleCrop>
+	    <Company>Text Encoding Initiative</Company>
+	    <LinksUpToDate>false</LinksUpToDate>
+	    <CharactersWithSpaces>0</CharactersWithSpaces>
+	    <SharedDoc>false</SharedDoc>
+	    <HyperlinksChanged>false</HyperlinksChanged>
+	    <AppVersion>6.22</AppVersion>>
+	  </Properties>
+        </xsl:result-document>
+    </xsl:template>
 
     <!-- after opening custom.xml, we cannot write back to it; so save
 	 under new name -->
