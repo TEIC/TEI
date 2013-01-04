@@ -40,13 +40,12 @@
 	supply either @target or @targets</report>
     </constraint>
   </constraintSpec>
-  <constraintSpec ident="altTargets3" scheme="isoschematron">
-    <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@target,' ')">You must supply at least two
-values for @target</assert>
-    </constraint>
-  </constraintSpec>
   <attList>
+    <attDef ident="target" usage="opt" mode="change">
+      <datatype minOccurs="2" maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>      
+    </attDef>
     <attDef ident="targets" usage="opt" status="deprecated">
       <equiv/>
       <desc>specifies the identifiers of the alternative elements or passages.</desc>
@@ -167,9 +166,6 @@ other must be present.</p>
       <datatype minOccurs="2" maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.probability"/>
       </datatype>
-      <valDesc>a whitespace-separated list of probability values in the range from 0 to 1.</valDesc>
-      <valDesc xml:lang="fr" versionDate="2009-10-06">une liste de valeurs comprises entre 0 et 1,
-                séparées par des espaces.</valDesc>
       <remarks>
         <p>If <att>mode</att> is <code>excl</code>, the sum of weights must be 1. If
                         <att>mode</att> is <code>incl</code>, the sum of weights must be in the
