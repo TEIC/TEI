@@ -2535,7 +2535,10 @@ title =
     macro.paraContent,
     att.global.attributes,
     att.canonical.attributes,
-    att.typed.attributes,
+    
+    ## classifies the title according to some convenient typology.
+    ## Sample values include: 1] main; 2] sub(subordinate) ; 3] alt(alternate) ; 4] short; 5] desc(descriptive) 
+    attribute type { data.enumerated }?,
     
     ## indicates the bibliographic level for a title, that is, whether
     ##                                         it identifies an article, book, journal, series, or
@@ -3640,11 +3643,6 @@ relation =
     
     ## supplies a name for the kind of relationship of which this is an instance.
     attribute name { data.enumerated },
-    
-    ## identifies the passive participants in a non-mutual relationship.
-    attribute passive {
-      list { data.pointer+ }
-    }?,
     (
      ## identifies the active participants in a non-mutual relationship, or all the participants in a mutual
      ##                     one.
@@ -3656,6 +3654,11 @@ relation =
        attribute mutual {
          list { data.pointer+ }
        }?),
+    
+    ## identifies the passive participants in a non-mutual relationship.
+    attribute passive {
+      list { data.pointer+ }
+    }?,
     empty
   }
 residence =
