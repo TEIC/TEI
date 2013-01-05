@@ -1400,8 +1400,7 @@ model.titlepagePart =
   | docEdition
   | docImprint
   | docDate
-model.msQuoteLike =
-  title | colophon | explicit | finalRubric | incipit | rubric
+model.msQuoteLike = title | colophon | explicit | finalRubric | rubric
 model.msItemPart =
   model.quoteLike
   | model.respLike
@@ -5529,16 +5528,6 @@ finalRubric =
   element finalRubric {
     macro.phraseSeq, att.global.attributes, att.typed.attributes, empty
   }
-incipit =
-  
-  ## contains the incipit of a manuscript item, that is the opening words of the text proper, exclusive of any rubric which might precede it, of sufficient length to identify the work uniquely; such incipts were, in fomer times, frequently used a means of reference to a work, in place of a title. [10.6.1. ]
-  element incipit {
-    macro.phraseSeq,
-    att.global.attributes,
-    att.typed.attributes,
-    att.msExcerpt.attributes,
-    empty
-  }
 msContents =
   
   ## (manuscript contents) describes the intellectual content of a manuscript or manuscript
@@ -5585,7 +5574,6 @@ msItemStruct =
          respStmt*,
          title*,
          rubric?,
-         incipit?,
          msItemStruct*,
          explicit?,
          finalRubric?,

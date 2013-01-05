@@ -93,15 +93,15 @@ of this software, even if advised of the possibility of such damage.
    <!-- all of these use a combination of @ident _and_ @ns (where
    present), in case of duplication of names across schemes -->
 
-  <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="concat(@ns,@ident)"/>
-  <xsl:key name="odd2odd-CHANGE" match="tei:elementSpec[@mode='change']" use="concat(@ns,@ident)"/>
-  <xsl:key name="odd2odd-CHANGE" match="tei:macroSpec[@mode='change']" use="concat(@ns,@ident)"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:classSpec[@mode='delete']" use="concat(@ns,@ident)"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:elementSpec[@mode='delete']" use="concat(@ns,@ident)"/>
-  <xsl:key name="odd2odd-DELETE" match="tei:macroSpec[@mode='delete']" use="concat(@ns,@ident)"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:classSpec[@mode='replace']" use="concat(@ns,@ident)"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode='replace']" use="concat(@ns,@ident)"/>
-  <xsl:key name="odd2odd-REPLACE" match="tei:macroSpec[@mode='replace']" use="concat(@ns,@ident)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:classSpec[@mode='change']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:elementSpec[@mode='change']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
+  <xsl:key name="odd2odd-CHANGE" match="tei:macroSpec[@mode='change']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:classSpec[@mode='delete']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:elementSpec[@mode='delete']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
+  <xsl:key name="odd2odd-DELETE" match="tei:macroSpec[@mode='delete']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:classSpec[@mode='replace']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:elementSpec[@mode='replace']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
+  <xsl:key name="odd2odd-REPLACE" match="tei:macroSpec[@mode='replace']" use="concat(@ns[not(.='http://www.tei-c.org/ns/1.0')],@ident)"/>
   <xsl:key name="odd2odd-REPLACEATT" match="tei:attDef[@mode='replace']" use="concat(../../@ident,'_',@ident)"/>
 
   <xsl:variable name="DEFAULTSOURCE">
@@ -617,18 +617,7 @@ of this software, even if advised of the possibility of such damage.
         done
   -->
       <xsl:variable name="Current" select="."/>
-      <xsl:variable name="specName">
-	<xsl:choose>
-	  <xsl:when test="@ns='http://www.tei-c.org/ns/1.0'"/>
-	  <xsl:when test="@ns">
-	    <xsl:value-of select="@ns"/>
-	  </xsl:when>
-	  <xsl:when test="ancestor::tei:schemaSpec/@ns">
-	    <xsl:value-of select="ancestor::tei:schemaSpec/@ns"/>
-	  </xsl:when>
-	</xsl:choose>
-	<xsl:value-of select="@ident"/>
-      </xsl:variable>
+      <xsl:variable name="specName" select="tei:uniqueName(.)"/>
       <xsl:variable name="N" select="local-name(.)"/>
       <xsl:for-each select="$ODD">
         <xsl:choose>
@@ -769,10 +758,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:elementSpec" mode="odd2odd-change">
-    <xsl:variable name="elementName">
-      <xsl:value-of select="concat(@ns,@ident)"/>
-    </xsl:variable>
-
+    <xsl:variable name="elementName" select="tei:uniqueName(.)"/>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
       <xsl:attribute name="rend">change</xsl:attribute>
@@ -958,9 +944,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
   <xsl:template match="tei:macroSpec" mode="odd2odd-change">
-    <xsl:variable name="elementName">
-      <xsl:value-of select="concat(@ns,@ident)"/>
-    </xsl:variable>
+    <xsl:variable name="specName" select="tei:uniqueName(.)"/>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
       <xsl:attribute name="rend">change</xsl:attribute>
@@ -971,7 +955,7 @@ of this software, even if advised of the possibility of such damage.
 	   If so, use them as is. 
       -->
       <xsl:for-each select="$ODD">
-        <xsl:for-each select="key('odd2odd-CHANGE',$elementName)">
+        <xsl:for-each select="key('odd2odd-CHANGE',$specName)">
           <!-- if there is an altIdent, use it -->
           <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
           <!-- equiv, gloss, desc trio -->
@@ -1069,9 +1053,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
   <xsl:template match="tei:classSpec" mode="odd2odd-change">
-    <xsl:variable name="className">
-	<xsl:value-of select="concat(@ns,@ident)"/>
-    </xsl:variable>
+    <xsl:variable name="className" select="tei:uniqueName(.)"/>
     <xsl:variable name="ORIGINAL" select="."/>
     <xsl:copy>
       <xsl:attribute name="rend">change</xsl:attribute>
@@ -1546,9 +1528,6 @@ so that is only put back in if there is some content
 
   <xsl:template match="tei:elementSpec">
     <xsl:if test="not(//tei:schemaSpec)">
-      <xsl:variable name="elementName">
-        <xsl:value-of select="@ident"/>
-      </xsl:variable>
       <xsl:copy>
         <xsl:apply-templates mode="odd2odd-copy" select="@*"/>
         <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
@@ -1810,5 +1789,15 @@ so that is only put back in if there is some content
     <xsl:text/>
   </xsl:function>
 
+  <xsl:function name="tei:uniqueName" as="xs:string">
+    <xsl:param name="e"/>
+    <xsl:for-each select="$e">
+      <xsl:sequence select="concat(
+	if (@ns='http://www.tei-c.org/ns/1.0') then ''
+	else if (@ns) then @ns
+	else if (ancestor::tei:schemaSpec/@ns) then
+	ancestor::tei:schemaSpec/@ns else '',@ident)"/>
+    </xsl:for-each>
+  </xsl:function>
 
 </xsl:stylesheet>
