@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date: $
+$Id:  $
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.fragmentable">
+  <desc>groups structural elements which may be fragmented, usually as
+  a consequence of some overlapping hierarchy.</desc>
+  <attList>
+    <attDef ident="part" usage="opt">
+      <equiv/>
+      <desc>specifies whether or not its parent element is fragmented
+      in some way, typically by some other overlapping structure : for
+      example a speech which is divided between two or more verse
+      stanzas, a paragraph which is split across a page division, a
+      verse line which is divided between two speakers.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>N</defaultVal>
+      <valList type="closed">
+        <valItem ident="Y">
+          <gloss>yes</gloss>
+          <desc>the element is fragmented in some (unspecified) respect</desc>
+        </valItem>
+        <valItem ident="N">
+          <gloss>no</gloss>
+          <desc>either the element is not fragmented, or no claim is made as to its completeness.</desc>
+        </valItem>
+        <valItem ident="I">
+          <gloss>initial</gloss>
+          <desc>this is the initial part of a fragmented element</desc>
+        </valItem>
+        <valItem ident="M">
+          <gloss>medial</gloss>
+          <desc>this is a medial part of a fragmented element</desc>
+        </valItem>
+        <valItem ident="F">
+          <gloss>final</gloss>
+          <desc>this is the final part of a fragmented element</desc>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>The values <val>I</val>, <val>M</val>, or <val>F</val>
+        should be used only where it is clear how the element may be
+        be reconstituted.</p>
+      </remarks>
+    </attDef>
+  </attList>
+</classSpec>

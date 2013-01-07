@@ -925,7 +925,7 @@ elements, in case of doubt as to whether the material should be treated
 as verse or prose.  The following elements, all of which are defined in
 the core, are particularly useful when marking units of prose or verse within
 speeches:
-<specList><specDesc key="p"/><specDesc key="lb" /><specDesc key="l" atts="part"/><specDesc key="lg"/></specList></p>
+<specList><specDesc key="p"/><specDesc key="lb" /><specDesc key="l" /><specDesc key="lg"/></specList></p>
 <p>Like other milestone elements, the element <gi>lb</gi> additionally bears the attribute
 <att>ed</att>, from its membership in the class
 <ident>att.sourced</ident>:
@@ -939,7 +939,9 @@ and <ident type="class">att.divLike</ident>, the
 also bears the following attributes:
 <specList>
 <specDesc key="att.typed" atts="type subtype"/>
-<specDesc key="att.divLike" atts="org sample part"/></specList></p>
+<specDesc key="att.divLike" atts="org sample"/>
+<specDesc key="att.fragmentable" atts="part"/>
+</specList></p>
 
 <p>When the <ident type="module">verse</ident> module is included in a
 schema,  the elements <gi>l</gi>
@@ -962,8 +964,9 @@ header may be used to record explicitly what policy has been adopted.</p>
 contain a mixture of prose (marked as <gi>p</gi>) and verse (marked as
 <gi>l</gi> or—if stanzaic—<gi>lg</gi>).</p>
  
-<p>The <att>part</att> attribute of the <gi>l</gi> and <gi>lg</gi>
-elements provides one simple way of indicating where the boundaries of a
+<p>The <att>part</att> attribute which both <gi>l</gi> and <gi>lg</gi>
+elements inherit from the <ident
+type="class">att.fragmentable</ident> class provides one simple way of indicating where the boundaries of a
 speech and of a verse line or line group do not coincide.  The encoder
 may simply indicate that a line or line group is metrically incomplete by
 specifying the value <val>Y</val> or <val>N</val>, as in the following example:
