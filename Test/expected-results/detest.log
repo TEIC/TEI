@@ -1,28 +1,28 @@
 -jing -t detest.rng detest.xml
 detest.xml
-detest.xml:25:13: error: unfinished content of element http://www.tei-c.org/ns/1.0^lg
+detest.xml:30:13: error: unfinished content of element http://www.tei-c.org/ns/1.0^lg
 required:
 	element http://www.tei-c.org/ns/1.0^l
 	element http://www.tei-c.org/ns/1.0^stage
 	element http://www.tei-c.org/ns/1.0^desc
 	element http://www.tei-c.org/ns/1.0^label
 	element http://www.tei-c.org/ns/1.0^lg
-detest.xml:101:10: error: attribute ^truth with invalid value "no"
+detest.xml:106:10: error: attribute ^truth with invalid value "no"
 required:
 	data http://www.w3.org/2001/XMLSchema-datatypes^boolean
-detest.xml:103:10: error: attribute http://www.w3.org/XML/1998/namespace^lang not allowed
+detest.xml:108:10: error: attribute http://www.w3.org/XML/1998/namespace^lang not allowed
 required:
 	after
-detest.xml:106:10: error: attribute ^enumerated with invalid value " dog  breath"
+detest.xml:111:10: error: attribute ^enumerated with invalid value " dog  breath"
 required:
 	data http://www.w3.org/2001/XMLSchema-datatypes^Name
-detest.xml:111:10: error: attribute ^name with invalid value "123"
+detest.xml:116:10: error: attribute ^name with invalid value "123"
 required:
 	data http://www.w3.org/2001/XMLSchema-datatypes^Name
-detest.xml:120:10: error: unfinished content of element http://www.tei-c.org/ns/1.0^lg
+detest.xml:125:10: error: unfinished content of element http://www.tei-c.org/ns/1.0^lg
 required:
 	element http://www.tei-c.org/ns/1.0^l
-detest.xml:145:37: error: invalid data or text not allowed
+detest.xml:150:37: error: invalid data or text not allowed
 required:
 	element http://www.tei-c.org/ns/1.0^add
 	element http://www.tei-c.org/ns/1.0^del
@@ -33,10 +33,10 @@ required:
 	element http://www.tei-c.org/ns/1.0^cb
 	element http://www.tei-c.org/ns/1.0^fw
 	element http://www.tei-c.org/ns/1.0^anchor
-detest.xml:162:4: error: attribute ^subtype not allowed
+detest.xml:167:4: error: attribute ^subtype not allowed
 required:
 	after
-detest.xml:163:4: error: attribute ^target with invalid value "#spanTest"
+detest.xml:168:4: error: attribute ^target with invalid value "#spanTest"
 required:
 	data http://www.w3.org/2001/XMLSchema-datatypes^anyURI
 error: some documents are invalid
@@ -55,6 +55,8 @@ The element indicated by @spanTo must  follow the current element (following::*[
 	    lists inside paragraphs not supported  (tei:list)
 An lg element
         must contain at least one child l, lg or gap element. (count(descendant::tei:lg|descendant::tei:l|descendant::tei:gap) &gt; 0)
+
+quotation: either the 'marks' attribute should be used, or a paragraph of description provided (not(@marks) and not (tei:p))
 
 	      divs of type 'canon' may contain only one 'canonText'
 	     (@type='canon' and count (tei:div[@type='canonText']) &gt;1)
