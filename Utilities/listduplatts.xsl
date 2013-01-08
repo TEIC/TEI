@@ -22,6 +22,15 @@
       </style>
       <body>
 	<table>
+	  <thead>
+	    <tr>
+	      <th>State</th>
+	      <th>Class name/attribute</th>
+	      <th>Description</th>
+	      <th>Duplicates</th>
+	      <th>Elements in which this attribute occurs</th>
+	    </tr>
+	  </thead>
 	  <xsl:variable name="x">
 	    <xsl:for-each select="//classSpec//attDef[tei:dupl(@ident)]">
 	      <xsl:sort select="ancestor::classSpec/@ident"/>
@@ -32,24 +41,23 @@
 	  <xsl:for-each select="$x/att">
 	    <xsl:variable name="me" select="@me"/>
 	    <tr>
-	      <td><xsl:number/></td>
-	      <td><xsl:value-of select="@them"/>
+	      <td><span style="color:red">Undecided</span></td>
+	      <td><a href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-{@them}"><xsl:value-of select="@them"/></a>
 	      <xsl:text>/@</xsl:text>
-	      <span style="color:red"><xsl:value-of
+	      <span style="color:green"><xsl:value-of
 	      select="$me"/></span>
 	      </td>
 	      <td><xsl:value-of select="@desc"/></td>
 	      <td>
-		<table style="border: solid black 1pt">
+		<ol>
 		  <xsl:for-each
 		      select="$doc//elementSpec//attDef[@ident=$me and not(@mode)]">
 		    <xsl:sort select="ancestor::elementSpec/@ident"/>
-		    <tr>
-		      <td><a href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-{ancestor::elementSpec/@ident}.html"><xsl:value-of select="ancestor::elementSpec/@ident"/></a></td>
-		      <td><xsl:value-of select="desc[not(@xml:lang)]"/></td>
-		    </tr>
+		    <li>
+		      <a href="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-{ancestor::elementSpec/@ident}.html"><xsl:value-of select="ancestor::elementSpec/@ident"/></a>:
+		      <xsl:value-of select="desc[not(@xml:lang)]"/></li>
 		  </xsl:for-each>
-		</table>
+		</ol>
 	      </td>
 	    </tr>
 	  </xsl:for-each>
@@ -59,7 +67,8 @@
 </xsl:template>
 <xsl:function name="tei:dupl" as="xs:boolean">
   <xsl:param name="ident"/>
-  <xsl:sequence select="if ($doc//elementSpec//attDef[@ident=$ident])
+  <xsl:sequence select="if ($doc//elementSpec//attDef[@ident=$ident
+			and not(@mode)])
     then true() else false()"/>
 </xsl:function>
 </xsl:stylesheet>
