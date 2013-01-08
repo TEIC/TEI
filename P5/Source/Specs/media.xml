@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date: 2012-10-07 23:37:24 +0100 (Sun, 07 Oct 2012) $
+    $Id: graphic.xml 10940 2012-10-07 22:37:24Z louburnard $
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core"  ident="media">
+  <desc>indicates the location of any form of external media such as
+  an audio or video clip etc..</desc>
+  <classes>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.global"/>
+    <memberOf key="model.graphicLike"/>
+<!--    <memberOf key="model.titlepagePart"/>-->
+    <memberOf key="att.internetMedia"/>
+    <memberOf key="att.declaring"/>
+    <memberOf key="att.timed"/>
+  </classes>
+  <content>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.descLike"/>
+    </zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="width" usage="opt">
+      <desc>Where the media are displayed, indicates the  display width of the image </desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+      </datatype>
+    </attDef>
+    <attDef ident="height" usage="opt">
+      <desc>Where the media are displayed, indicates the display height of the image</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+      </datatype>
+    </attDef>
+    <attDef ident="scale" usage="opt">
+      <equiv/>
+      <desc>Where the media are displayed, indicates a scale factor to
+      be applied when generating the desired display size</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+      </datatype>
+    </attDef>
+    <attDef ident="url" usage="req">
+      <gloss>uniform resource locator</gloss>
+      <gloss versionDate="2007-12-20" xml:lang="ko">표준 원본 위치 지정소</gloss>
+      <gloss versionDate="2008-04-06" xml:lang="es">localizador de recurso uniforme</gloss>
+      <gloss versionDate="2008-03-30" xml:lang="fr">adresse URL</gloss>
+      <gloss versionDate="2007-11-06" xml:lang="it">URL (localizzatore universale di risorse)</gloss>
+      <desc>specifies the URL from which the media concerned may be obtained.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+<!--
+<attDef ident="type" usage="req">
+<desc></desc>
+<datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0"
+	     name="data.enumerated"/>
+</datatype>
+<valList type="semi">
+<valItem ident="graphic">
+<desc>A two-dimensional graphic</desc></valItem>
+<valItem ident="audio"><desc>An audio recording</desc></valItem>
+<valItem ident="video"><desc>A video recording</desc></valItem>
+</valList>
+</attDef>
+-->
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <figure>
+        <media type="graphic" url="fig1.png"/>
+        <head>Figure One: The View from the Bridge</head>
+        <figDesc>A Whistleresque view showing four or five sailing boats in the foreground, and a
+          series of buoys strung out between them.</figDesc>
+      </figure>
+    </egXML>
+  </exemplum>
+
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <media type="audio" url="dingDong.wav" dur="PT10S">
+	  <desc>Ten seconds of bellringing sound</desc>
+	    </media>
+    </egXML>
+  </exemplum>
+
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <media type="video" url="clip45.mp4" dur="PT45M" width="500px">
+	  <desc>A 45 minute video clip to be displayed in a window 500
+	  px wide </desc>
+	    </media>
+    </egXML>
+  </exemplum>
+
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n5">
+      <figure>
+        <media type="graphic" url="fig1.png"/>
+        <head>維納斯</head>
+        <figDesc> 波提且利 1484-1486年 畫布、蛋彩 佛羅倫斯，烏菲滋美術館</figDesc>
+      </figure>
+    </egXML>
+  </exemplum>
+  <remarks>
+<p>The attributes available for this element are not appropriate in
+all cases. For example, it makes no sense to specify the temporal duration of a
+graphic, or the display  width for an audio recording. Such errors are not
+currently detected.</p>
+<p>The <att>type</att> attribute should be used to indicate what kind
+of media is concerned, using such values as <val>graphic</val>,
+<val>audio</val>, <val>video</val>, etc. The <att>mimeType</att>
+attribute may be used to specify more exactly the MIME media type of
+the resource specified by the <att>url</att> attribute.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#COGR" type="div2"/>
+  </listRef>
+</elementSpec>

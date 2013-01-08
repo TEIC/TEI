@@ -8,7 +8,8 @@
 -->
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" xml:id="BINARYOBJECT" ident="binaryObject">
   <equiv/>
-  <desc>provides encoded binary data representing an inline graphic or other object.</desc>
+  <desc>provides encoded binary data representing an inline graphic,
+  audio, video or other object.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">인라인 그래픽 또는 다른 개체를 표상하는 부호화된 이진 데이터를 제시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標記用來表示文本中圖檔或其他檔案的二進位資料。</desc>
   <desc versionDate="2008-04-21" xml:lang="ja"> 行中の画像やその他のオブジェクトを示す，符号化されたバイナリデータを 示す． </desc>
@@ -24,52 +25,29 @@
     <memberOf key="model.graphicLike"/>
     <memberOf key="model.titlepagePart"/>
     <memberOf key="att.internetMedia"/>
+    <memberOf key="att.timed"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
     <text xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
     <attDef ident="width" usage="opt">
-      <equiv/>
-      <desc>The display width of the object</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">개체의 디스플레이 너비</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">檔案顯示的寬度</desc>
-      <desc versionDate="2008-04-21" xml:lang="ja"> オブジェクトの表示幅． </desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> オブジェクトの表示幅． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">la largeur d'affichage de l'objet </desc>
-      <desc versionDate="2007-05-04" xml:lang="es">La anchura del objeto.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">ampiezza dell'oggetto da visualizzare</desc>
+      <desc>Where the media are displayed, indicates the  display width of the image </desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
       </datatype>
     </attDef>
     <attDef ident="height" usage="opt">
-      <equiv/>
-      <desc>The display height of the object</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">개체의 디스플레이 높이</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">檔案顯示的高度</desc>
-      <desc versionDate="2008-04-21" xml:lang="ja"> オブジェクトの表示の高さ． </desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> オブジェクトの表示の高さ． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">la hauteur d'affichage de l'objet</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">La altura del objeto.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">altezza dell'oggetto da visualizzare</desc>
+      <desc>Where the media are displayed, indicates the display height of the image</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
       </datatype>
     </attDef>
     <attDef ident="scale" usage="opt">
       <equiv/>
-      <desc>A scale factor to be applied to the object to make it the desired display size</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">개체의 디스플레이 크기를 조절하기 위한 척도</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">用來調整檔案顯示大小的比例係數</desc>
-      <desc versionDate="2008-04-21" xml:lang="ja"> オブジェクトを表示する際，大きさを指定する尺度． </desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> オブジェクトを表示する際，大きさを指定する尺度． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">facteur d'échelle à appliquer à l'objet pour
-        l'afficher à la taille désirée.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">Un factor de escala aplicado al objeto para convertir
-        este al tamaño deseado.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">scala da applicare all'oggetto per ottenere la
-        grandezza desiderata</desc>
+      <desc>Where the media are displayed, indicates a scale factor to
+      be applied when generating the desired display size</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
       </datatype>
@@ -104,7 +82,16 @@
     </egXML>
   </exemplum>
   <remarks>
-    <p>The MIME media type specified on the <att>mimeType</att> attribute should describe the object
+
+<p>The attributes available for this element are not appropriate in
+all cases. For example, it makes no sense to specify the temporal duration of a
+graphic, or the display  width for an audio recording. Such errors are not
+currently detected.</p>
+<p>The <att>type</att> attribute should be used to indicate what kind
+of media is concerned, using such values as <val>graphic</val>,
+<val>audio</val>, <val>video</val>, etc. The <att>mimeType</att>
+attribute may be used to specify more exactly the MIME media type of
+the resource specified by the content of the element
       after it has been decoded.</p>
   </remarks>
   <remarks xml:lang="fr">
