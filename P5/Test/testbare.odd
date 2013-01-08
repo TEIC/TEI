@@ -1,10 +1,13 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>Just the words</title>
-        <author>Lou Burnard</author>
+        <title>TEI Absolutely Bare</title>
+        <author>Laurent Romary</author>
+        <editor xml:id="sbauman.emt">Syd Bauman</editor>
+        <editor xml:id="LB">Lou Burnard</editor>
+        <editor xml:id="SR">Sebastian Rahtz</editor>
       </titleStmt>
       <publicationStmt>
         <availability status="free">
@@ -17,248 +20,90 @@
         </availability>
       </publicationStmt>
       <sourceDesc>
-        <p>Hand edited from TEI Bare</p>
+        <p>Initially created on <date when="2006-10-12T05:24:41">Thursday 12th
+            October 2006</date> by the form at
+        http://www.tei-c.org.uk/Roma/.</p>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
-<change when="2010-02-02" who="#LB">first version</change>
+      <change when="2011-03-26" who="#SR">rewrite as new-style ODD </change>
+      <change when="2007-08-12" who="#LB">Removed further elements added
+since this ODD was first created </change>
+      <change when="2007-04-09" who="#LB">Added prose and reorganized
+structure to make it more document-like; changed deletion of attribute
+decls into deletion of att.declaring class; add deletes for elements
+email and floatingText added to P5 since this ODD was first created;
+considered but did not implement removal of all irrelevant datatype specs...</change>
+      <change when="2006-10-14" who="#sbauman.emt"> Made valid: <list><item>removed empty <att>prefix</att> attribute</item><item>added required <att>type</att> attribute to
+          <gi>classSpec</gi>s</item></list><!--. <note>Sebastian had also made the above changes.</note> -->Also
+        removed extraneous <gi>altIdent</gi> elements, improved
+        <gi>sourceDesc</gi>, changed the <att>ident</att> of <gi>schemaSpec</gi>
+        to match the filename, and added this revision description. </change>
     </revisionDesc>
   </teiHeader>
-  <text>    <body>
+  <text>
+    <!--    <front>
+      <divGen type="toc"/>
+    </front>-->
+    <body>
       <p>This customization creates a TEI schema with the bare minimum of tags
-        to make a recognizable document, which can then be made
-	unrecognisable by addition of word-level linguistic
-	analysis. 
-      </p>
-<div><head>Basic text structure</head>
-
-<p>In this very simple schema, a document contains just a
-<gi>body</gi>, though this may be subdivided using nested <gi>div</gi>
-elements. Within the <gi>div</gi> elements only <gi>head</gi> and
-<gi>p</gi> elements are permitted. 
-<specList>
-<specDesc key="div"/>
-<specDesc key="head"/>
-<specDesc key="p"/>
-</specList>
+        to make a recognizable document. It combines the four basic modules, but
+removes most of the available elements and changes several attribute classes.</p>
+      <div>
+        <head>Basic text structure</head>
+        <p>In this very simple schema, a document may contain <gi>front</gi>,
+<gi>body</gi> and <gi>back</gi> elements as in standard TEI. However,
+within these, only the following elements are  permitted:
+<specList><specDesc key="div"/><specDesc key="head"/><specDesc key="list"/><specDesc key="p"/></specList>
 </p>
-<p>The <gi>head</gi> and <gi>p</gi> elements have the same structure:
-they must contain at least one <gi>s</gi> element, representing a
-sentence-like unit. The <gi>s</gi> element can contain any number of
-<gi>w</gi> or <gi>pc</gi> elements, representing lexical and
-punctuation tokens respectively. To make formatting easier, white
-space is also permitted within <gi>s</gi> elements.</p>
-
-<p>The following specification group deletes all the unwanted
-elements:
-<specGrp xml:id="bodydels">
-        <elementSpec ident="abbr" mode="delete" module="core"/>
-        <elementSpec ident="add" mode="delete" module="core"/>
-        <elementSpec ident="addrLine" mode="delete" module="core"/>
-        <elementSpec ident="address" mode="delete" module="core"/>
-        <elementSpec ident="altIdent" mode="delete" module="core"/>
-        <elementSpec ident="analytic" mode="delete" module="core"/>
-        <elementSpec ident="bibl" mode="delete" module="core"/>
-        <elementSpec ident="biblFull" mode="delete" module="core"/>
-        <elementSpec ident="biblItem" mode="delete" module="core"/>
-        <elementSpec ident="biblScope" mode="delete" module="core"/>
-        <elementSpec ident="biblStruct" mode="delete" module="core"/>
-        <elementSpec ident="binaryObject" mode="delete" module="core"/>
-        <elementSpec ident="cb" mode="delete" module="core"/>
-        <elementSpec ident="choice" mode="delete" module="core"/>
-        <elementSpec ident="cit" mode="delete" module="core"/>
-        <elementSpec ident="corr" mode="delete" module="core"/>
-        <elementSpec ident="date" mode="delete" module="core"/>
-        <elementSpec ident="dateRange" mode="delete" module="core"/>
-        <elementSpec ident="del" mode="delete" module="core"/>
-        <elementSpec ident="desc" mode="delete" module="core"/>
-        <elementSpec ident="distinct" mode="delete" module="core"/>
-        <elementSpec ident="divGen" mode="delete" module="core"/>
-        <elementSpec ident="email" mode="delete" module="core"/>
-        <elementSpec ident="editor" mode="delete" module="core"/>
-        <elementSpec ident="emph" mode="delete" module="core"/>
-        <elementSpec ident="equiv" mode="delete" module="core"/>
-        <elementSpec ident="expan" mode="delete" module="core"/>
-        <elementSpec ident="foreign" mode="delete" module="core"/>
-        <elementSpec ident="gap" mode="delete" module="core"/>
-        <elementSpec ident="gloss" mode="delete" module="core"/>
-        <elementSpec ident="graphic" mode="delete" module="core"/>
-        <elementSpec ident="headItem" mode="delete" module="core"/>
-        <elementSpec ident="headLabel" mode="delete" module="core"/>
-        <elementSpec ident="hi" mode="delete" module="core"/>
-        <elementSpec ident="imprint" mode="delete" module="core"/>
-        <elementSpec ident="index" mode="delete" module="core"/>
-        <elementSpec ident="item" mode="delete" module="core"/>
-        <elementSpec ident="l" mode="delete" module="core"/>
-        <elementSpec ident="lb" mode="delete" module="core"/>
-        <elementSpec ident="lg" mode="delete" module="core"/>
-        <elementSpec ident="listBibl" mode="delete" module="core"/>
-        <elementSpec ident="list" mode="delete" module="core"/>
-        <elementSpec ident="measure" mode="delete" module="core"/>
-        <elementSpec ident="meeting" mode="delete" module="core"/>
-        <elementSpec ident="mentioned" mode="delete" module="core"/>
-        <elementSpec ident="milestone" mode="delete" module="core"/>
-        <elementSpec ident="monogr" mode="delete" module="core"/>
-        <elementSpec ident="name" mode="delete" module="core"/>
-        <elementSpec ident="note" mode="delete" module="core"/>
-        <elementSpec ident="num" mode="delete" module="core"/>
-        <elementSpec ident="orig" mode="delete" module="core"/>
-        <elementSpec ident="pb" mode="delete" module="core"/>
-        <elementSpec ident="postBox" mode="delete" module="core"/>
-        <elementSpec ident="postCode" mode="delete" module="core"/>
-        <elementSpec ident="ptr" mode="delete" module="core"/>
-        <elementSpec ident="pubPlace" mode="delete" module="core"/>
-        <elementSpec ident="publisher" mode="delete" module="core"/>
-        <elementSpec ident="q" mode="delete" module="core"/>
-        <elementSpec ident="quote" mode="delete" module="core"/>
-        <elementSpec ident="ref" mode="delete" module="core"/>
-        <elementSpec ident="reg" mode="delete" module="core"/>
-        <elementSpec ident="resp" mode="delete" module="core"/>
-        <elementSpec ident="respStmt" mode="delete" module="core"/>
-        <elementSpec ident="rs" mode="delete" module="core"/>
-        <elementSpec ident="series" mode="delete" module="core"/>
-        <elementSpec ident="sic" mode="delete" module="core"/>
-        <elementSpec ident="soCalled" mode="delete" module="core"/>
-        <elementSpec ident="sp" mode="delete" module="core"/>
-        <elementSpec ident="speaker" mode="delete" module="core"/>
-        <elementSpec ident="stage" mode="delete" module="core"/>
-        <elementSpec ident="street" mode="delete" module="core"/>
-        <elementSpec ident="teiCorpus" mode="delete" module="core"/>
-        <elementSpec ident="term" mode="delete" module="core"/>
-        <elementSpec ident="time" mode="delete" module="core"/>
-        <elementSpec ident="timeRange" mode="delete" module="core"/>
-        <elementSpec ident="unclear" mode="delete" module="core"/>
-        <elementSpec ident="argument" mode="delete" module="textstructure"/>
-        <elementSpec ident="byline" mode="delete" module="textstructure"/>
-        <elementSpec ident="closer" mode="delete" module="textstructure"/>
-        <elementSpec ident="dateline" mode="delete" module="textstructure"/>
-        <elementSpec ident="div0" mode="delete" module="textstructure"/>
-        <elementSpec ident="div1" mode="delete" module="textstructure"/>
-        <elementSpec ident="div2" mode="delete" module="textstructure"/>
-        <elementSpec ident="div3" mode="delete" module="textstructure"/>
-        <elementSpec ident="div4" mode="delete" module="textstructure"/>
-        <elementSpec ident="div5" mode="delete" module="textstructure"/>
-        <elementSpec ident="div6" mode="delete" module="textstructure"/>
-        <elementSpec ident="div7" mode="delete" module="textstructure"/>
-        <elementSpec ident="docAuthor" mode="delete" module="textstructure"/>
-        <elementSpec ident="docDate" mode="delete" module="textstructure"/>
-        <elementSpec ident="docEdition" mode="delete" module="textstructure"/>
-        <elementSpec ident="docImprint" mode="delete" module="textstructure"/>
-        <elementSpec ident="docTitle" mode="delete" module="textstructure"/>
-        <elementSpec ident="epigraph" mode="delete" module="textstructure"/>
-        <elementSpec ident="floatingText" mode="delete" module="textstructure"/>
-        <elementSpec ident="group" mode="delete" module="textstructure"/>
-        <elementSpec ident="imprimatur" mode="delete" module="textstructure"/>
-        <elementSpec ident="opener" mode="delete" module="textstructure"/>
-        <elementSpec ident="salute" mode="delete" module="textstructure"/>
-        <elementSpec ident="signed" mode="delete" module="textstructure"/>
-        <elementSpec ident="titlePage" mode="delete" module="textstructure"/>
-        <elementSpec ident="titlePart" mode="delete" module="textstructure"/>
-	<elementSpec ident="trailer" mode="delete" module="textstructure"/>
-	<elementSpec ident="said" mode="delete"/>
-	<elementSpec ident="measureGrp" mode="delete"/>
-	<elementSpec ident="relatedItem" mode="delete"/>
-	<elementSpec ident="appInfo" mode="delete"/>
-	<elementSpec ident="application" mode="delete"/>
-	<elementSpec ident="geoDecl" mode="delete"/>
-	<elementSpec ident="postscript" mode="delete"/>
-        <elementSpec ident="title" mode="change" module="core">
-
-          <attList>
-            <attDef ident="level" mode="delete"/>
-          </attList>
-        </elementSpec>
-        <elementSpec ident="TEI" mode="change" module="textstructure">
-          <attList>
-            <attDef ident="version" mode="delete"/>
-          </attList>
-        </elementSpec>
+        <p>The <gi>list</gi> element may contain a <gi>head</gi> followed by a
+sequence either of <gi>label</gi>-<gi>item</gi> pairs, or of
+<gi>item</gi> elements alone. </p>
+        <p>The <gi>item</gi> and <gi>p</gi> elements have the same structure:
+either may  contain just text, or a mixture of text with
+<gi>list</gi>, or <gi>title</gi> elements.</p>
+        <p>Similarly, the <gi>div</gi> element may contain a <gi>head</gi>,
+followed by a nested <gi>div</gi>, or one or more <gi>p</gi> elements.
+</p>
+        <p>The <att>version</att> attribute on the <gi>TEI</gi> element is
+removed, as is the <att>level</att> attribute on the <gi>title</gi>
+element. Other attributes are also removed as a consequence of the
+class modifications described below.</p>
+        <p>The following specification group deletes the unwanted attributes:
+<specGrp xml:id="bodyfixes">
+        <elementSpec ident="title" mode="change" module="core"><attList><attDef ident="level" mode="delete"/></attList></elementSpec>
+        <elementSpec ident="TEI" mode="change" module="textstructure"><attList><attDef ident="version" mode="delete"/></attList></elementSpec>
 </specGrp>
 </p>
-</div>
-<div><head>Header structure</head>
-<p>A much simplified version of the TEI Header is defined, again by
+      </div>
+      <div>
+        <head>Header structure</head>
+        <p>A much simplified version of the TEI Header is defined, again by
 the deletion of many elements. For validity, all that is required
 within it is the <gi>fileDesc</gi>, which contains only the following elements:
-<specList>
-<specDesc key="titleStmt"/>
-<specDesc key="publicationStmt"/>
-<specDesc key="sourceDesc"/>
-</specList>
+<specList><specDesc key="titleStmt"/><specDesc key="publicationStmt"/><specDesc key="sourceDesc"/></specList>
 </p>
-<p>Within the <gi>titleStmt</gi> only a <gi>title</gi> is permitted;
-within the other two elements only a <gi>p</gi> is permitted.
-The <att>default</att> attribute on the <gi>sourceDesc</gi> element is
-also removed. </p>
-<p>The following specification group deletes all the other possible
-elements from the header:
-<specGrp xml:id="hdrdels">
-        <elementSpec ident="authority" mode="delete" module="header"/>
-        <elementSpec ident="availability" mode="delete" module="header"/>
-        <elementSpec ident="broadcast" mode="delete" module="header"/>
-        <elementSpec ident="cRefPattern" mode="delete" module="header"/>
-        <elementSpec ident="catDesc" mode="delete" module="header"/>
-        <elementSpec ident="catRef" mode="delete" module="header"/>
-        <elementSpec ident="category" mode="delete" module="header"/>
-        <elementSpec ident="change" mode="delete" module="header"/>
-        <elementSpec ident="classCode" mode="delete" module="header"/>
-        <elementSpec ident="classDecl" mode="delete" module="header"/>
-        <elementSpec ident="correction" mode="delete" module="header"/>
-        <elementSpec ident="creation" mode="delete" module="header"/>
-        <elementSpec ident="distributor" mode="delete" module="header"/>
-        <elementSpec ident="edition" mode="delete" module="header"/>
-        <elementSpec ident="editorialDecl" mode="delete" module="header"/>
-        <elementSpec ident="encodingDesc" mode="delete" module="header"/>
-        <elementSpec ident="equipment" mode="delete" module="header"/>
-        <elementSpec ident="fsdDecl" mode="delete" module="header"/>
-        <elementSpec ident="funder" mode="delete" module="header"/>
-        <elementSpec ident="hyphenation" mode="delete" module="header"/>
-        <elementSpec ident="idno" mode="delete" module="header"/>
-        <elementSpec ident="interpretation" mode="delete" module="header"/>
-        <elementSpec ident="keywords" mode="delete" module="header"/>
-        <elementSpec ident="langUsage" mode="delete" module="header"/>
-        <elementSpec ident="language" mode="delete" module="header"/>
-        <elementSpec ident="metDecl" mode="delete" module="header"/>
-        <elementSpec ident="metSym" mode="delete" module="header"/>
-        <elementSpec ident="namespace" mode="delete" module="header"/>
-        <elementSpec ident="normalization" mode="delete" module="header"/>
-        <elementSpec ident="principal" mode="delete" module="header"/>
-        <elementSpec ident="profileDesc" mode="delete" module="header"/>
-        <elementSpec ident="projectDesc" mode="delete" module="header"/>
-        <elementSpec ident="quotation" mode="delete" module="header"/>
-        <elementSpec ident="recording" mode="delete" module="header"/>
-        <elementSpec ident="recordingStmt" mode="delete" module="header"/>
-        <elementSpec ident="refsDecl" mode="delete" module="header"/>
-        <elementSpec ident="rendition" mode="delete" module="header"/>
-        <elementSpec ident="revisionDesc" mode="delete" module="header"/>
-        <elementSpec ident="samplingDecl" mode="delete" module="header"/>
-        <elementSpec ident="scriptStmt" mode="delete" module="header"/>
-        <elementSpec ident="segmentation" mode="delete" module="header"/>
-        <elementSpec ident="sponsor" mode="delete" module="header"/>
-        <elementSpec ident="state" mode="delete" module="header"/>
-        <elementSpec ident="stdVals" mode="delete" module="header"/>
-        <elementSpec ident="tagUsage" mode="delete" module="header"/>
-        <elementSpec ident="tagsDecl" mode="delete" module="header"/>
-        <elementSpec ident="taxonomy" mode="delete" module="header"/>
-        <elementSpec ident="textClass" mode="delete" module="header"/>
-        <elementSpec ident="variantEncoding" mode="delete" module="header"/>
-        <elementSpec ident="sourceDesc" mode="change" module="header">
-          <attList>
-            <attDef ident="default" mode="delete"/>
-          </attList>
-        </elementSpec>
-</specGrp>
-</p></div>
-
-<div><head>Class modifications</head>
-<p>Finally three of  the TEI attribute
+        <p>Within the <gi>titleStmt</gi> only a <gi>title</gi> is permitted;
+	within the other two elements only a <gi>p</gi> is permitted.
+	The <att>default</att> attribute on the <gi>sourceDesc</gi> element is
+	also removed.
+	<specGrp xml:id="hdrfixes">
+	  <elementSpec ident="sourceDesc"  mode="change" module="header">
+	    <attList><attDef ident="default" mode="delete"/></attList>
+	  </elementSpec>
+	</specGrp>
+	</p>
+      </div>
+      <div>
+        <head>Class modifications</head>
+        <p>Finally three of  the TEI attribute
 classes are simplified. The attributes xml:space, rend, and xml:base
 are removed from the att.global class, so that this now makes
 available to all elements only the following attributes:
 <att>xml:id</att>, <att>n</att>, and
 <att>xml:lang</att>.
 </p>
-<p>Three un-needed attributes are removed from the  att.divLike class so that
+        <p>Three un-needed attributes are removed from the  att.divLike class so that
 the <gi>div</gi> element inherits from it only
 the following attributes: <att>xml:id</att>,
 <att>n</att>,
@@ -266,41 +111,36 @@ the following attributes: <att>xml:id</att>,
 The attribute class <ident>att.declaring</ident> is deleted
 completely, so that none of its members inherit the <att>decls</att>
 attribute defined in the unmodified TEI.</p>
-
-<specGrp xml:id="classmods">
-        <classSpec ident="att.global" mode="change" module="tei" type="atts">
-          <attList>
-            <attDef ident="xml:space" mode="delete"/>
-            <attDef ident="rend" mode="delete"/>
-            <attDef ident="xml:base" mode="delete"/>
-          </attList>
-        </classSpec>
+        <specGrp xml:id="classmods">
+          <classSpec ident="att.global" mode="change" module="tei" type="atts">
+            <attList>
+              <attDef ident="xml:space" mode="delete"/>
+              <attDef ident="rend" mode="delete"/>
+              <attDef ident="xml:base" mode="delete"/>
+            </attList>
+          </classSpec>
         <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
-   
-        <classSpec ident="att.divLike" mode="change" module="tei" type="atts">
-          <attList>
-            <attDef ident="org" mode="delete"/>
-            <attDef ident="sample" mode="delete"/>
-          </attList>
-        </classSpec>
-
-        <classSpec ident="att.declaring" mode="delete" module="tei" type="atts"/>
-<!--          <attList>
-            <attDef ident="decls" mode="delete"/>
-          </attList>
-        </classSpec>
---></specGrp></div>
-<div><head>Formal declaration</head>
-      <schemaSpec ident="testbare" xml:lang="en">
-        <moduleRef key="core"/>
-        <moduleRef key="tei"/>
-        <moduleRef key="header"/>
-        <moduleRef key="textstructure"/>
-	<specGrpRef target="#bodydels"/>
-	<specGrpRef target="#classmods"/>
-	<specGrpRef target="#hdrdels"/>
-      </schemaSpec>
-</div>
+          <classSpec ident="att.divLike" mode="change" module="tei" type="atts">
+            <attList>
+              <attDef ident="org" mode="delete"/>
+              <attDef ident="sample" mode="delete"/>
+            </attList>
+          </classSpec>
+          <classSpec ident="att.declaring" mode="delete" module="tei" type="atts"/>
+        </specGrp>
+      </div>
+      <div>
+        <head>Formal declaration</head>
+        <schemaSpec ident="tei_bare" xml:lang="en">
+          <moduleRef key="core" include="p list item label head author title"/>
+          <moduleRef key="tei"/>
+          <moduleRef key="header" include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
+          <moduleRef key="textstructure" include="TEI text body div front back"/>
+          <specGrpRef target="#classmods"/>
+          <specGrpRef target="#bodyfixes"/>
+          <specGrpRef target="#hdrfixes"/>
+        </schemaSpec>
+      </div>
     </body>
   </text>
 </TEI>
