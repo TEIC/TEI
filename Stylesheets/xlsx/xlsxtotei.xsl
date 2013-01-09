@@ -84,13 +84,13 @@ The root element of this office document is a <xsl:value-of select="$office-docu
                   <xsl:value-of select="$core-properties/dc:creator"/>
                 </author>
             </titleStmt>
+	    <publicationStmt>
+	      <p>No publication statement</p>
+	    </publicationStmt>
+	    <sourceDesc>
+	      <p>A TEI file automatically converted from a XSLX file.</p>
+	    </sourceDesc>
         </fileDesc>
-         <publicationStmt>
-            <p>No publication statement</p>
-         </publicationStmt>
-         <sourceDesc>
-            <p>A TEI file automatically converted from a XSLX file.</p>
-         </sourceDesc>
       </teiHeader>
       <text>
         <body>
