@@ -24,7 +24,7 @@
     <memberOf key="att.global"/>
     <memberOf key="model.graphicLike"/>
     <memberOf key="model.titlepagePart"/>
-    <memberOf key="att.internetMedia"/>
+    <memberOf key="att.media"/>
     <memberOf key="att.timed"/>
     <memberOf key="att.typed"/>
   </classes>
@@ -32,28 +32,8 @@
     <text xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
-    <attDef ident="width" usage="opt">
-      <desc>Where the media are displayed, indicates the  display width of the image </desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
-      </datatype>
-    </attDef>
-    <attDef ident="height" usage="opt">
-      <desc>Where the media are displayed, indicates the display height of the image</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
-      </datatype>
-    </attDef>
-    <attDef ident="scale" usage="opt">
-      <equiv/>
-      <desc>Where the media are displayed, indicates a scale factor to
-      be applied when generating the desired display size</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
-      </datatype>
-    </attDef>
+    <attDef ident="url" mode="delete"/>
     <attDef ident="encoding" usage="opt">
-      <equiv/>
       <desc>The encoding used to encode the binary data. If not specified, this is assumed to be
           <ref target="http://en.wikipedia.org/wiki/Base64">Base64</ref>.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">부호화는 이진 데이터의 부호 변환 방식이다. 별도로 명시되어 있지 않다면, <ref target="http://en.wikipedia.org/wiki/Base64">Base64</ref>로 간주된다.</desc>
@@ -81,24 +61,8 @@
         Nna3F2JQFo97Vriy/Xl4/f1cf5VWzXyym7PH hhx4dbgYKAAA7</binaryObject>
     </egXML>
   </exemplum>
-  <remarks>
+  <listRef>
+    <ptr target="#COGR" type="div2"/>
+  </listRef>
 
-<p>The attributes available for this element are not appropriate in
-all cases. For example, it makes no sense to specify the temporal duration of a
-graphic, or the display  width for an audio recording. Such errors are not
-currently detected.</p>
-<p>The <att>type</att> attribute should be used to indicate what kind
-of media is concerned, using such values as <val>graphic</val>,
-<val>audio</val>, <val>video</val>, etc. The <att>mimeType</att>
-attribute may be used to specify more exactly the MIME media type of
-the resource specified by the content of the element
-      after it has been decoded.</p>
-  </remarks>
-  <remarks xml:lang="fr">
-    <p> Le type MIME spécifié au moyen de l'attribut <att>mimeType</att> doit décrire l'objet après
-      son décodage. </p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p> 属性<att>mimeType</att>で示された当該MIMEタイプは，復号化された後 のオブジェクトを示すものであるべきである． </p>
-  </remarks>
 </elementSpec>
