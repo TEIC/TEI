@@ -963,7 +963,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:note">
 
     <xsl:choose>
-      <xsl:when test="tei:note[@place='none']"/>
+      <xsl:when test="@place='none'"/>
       <xsl:when test="ancestor::tei:listBibl or
 		      ancestor::tei:biblFull or
 		      ancestor::tei:biblStruct">
@@ -994,7 +994,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="displayNote"/>
       </xsl:when>
 
-      <xsl:when test="@place='margin' or
+      <xsl:when test="@place='margin' or @place='margin/inline' or
 		      @place='marginOuter' or
 		      @place='marginLeft' or
 		      @place='marginRight'">

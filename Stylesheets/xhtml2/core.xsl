@@ -305,8 +305,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:corr">
     <span>
-      <xsl:apply-templates/>
       <xsl:call-template name="makeRendition"/>
+      <xsl:apply-templates/>
     </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
