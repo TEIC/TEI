@@ -1223,34 +1223,28 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text> ''&gt;</xsl:text>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:choose>
-               <xsl:when test="$parameterize='true'">
-                  <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
-                  <xsl:value-of select="$thisclass"/>
-                  <xsl:text>.attributes '</xsl:text>
-                  <xsl:call-template name="attclasses"/>
-                  <xsl:call-template name="attributeList"/>
-                  <xsl:text>'&gt; </xsl:text>
-               </xsl:when>
-               <xsl:otherwise>
-                  <xsl:text>&lt;!ENTITY % </xsl:text>
-                  <xsl:value-of select="$thisclass"/>
-                  <xsl:text>.attributes '</xsl:text>
-                  <xsl:call-template name="attclasses"/>
-                  <xsl:call-template name="attributeList"/>
-                  <xsl:text>'&gt; </xsl:text>
-                  <xsl:for-each select="tei:attList/tei:attDef">
-                     <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
-                     <xsl:value-of select="$thisclass"/>
-                     <xsl:text>.attribute.</xsl:text>
-                     <xsl:value-of select="translate(@ident,':','')"/>
-                     <xsl:text> '</xsl:text>
-                     <xsl:apply-templates mode="tangle" select="."/>
-                     <xsl:text>'&gt;&#10;</xsl:text>
-                  </xsl:for-each>
-               </xsl:otherwise>
-            </xsl:choose>
-         </xsl:otherwise>
+	   <xsl:for-each select="tei:attList/tei:attDef">
+	     <xsl:text>&#10;&lt;!ENTITY % </xsl:text>
+	     <xsl:value-of select="$thisclass"/>
+	     <xsl:text>.attribute.</xsl:text>
+	     <xsl:value-of select="translate(@ident,':','')"/>
+	     <xsl:text> '</xsl:text>
+	     <xsl:apply-templates mode="tangle" select="."/>
+	     <xsl:text>'&gt;&#10;</xsl:text>
+	   </xsl:for-each>
+	   <xsl:text>&lt;!ENTITY % </xsl:text>
+	   <xsl:value-of select="$thisclass"/>
+	   <xsl:text>.attributes '</xsl:text>
+	   <xsl:call-template name="attclasses"/>
+	   <xsl:for-each select="tei:attList/tei:attDef">
+	     <xsl:text>&#10; %</xsl:text>
+	     <xsl:value-of select="$thisclass"/>
+	     <xsl:text>.attribute.</xsl:text>
+	     <xsl:value-of select="translate(@ident,':','')"/>
+	     <xsl:text>;</xsl:text>
+	   </xsl:for-each>
+	   <xsl:text>'&gt; </xsl:text>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:classSpec" mode="tagatts">
