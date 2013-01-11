@@ -190,24 +190,7 @@ of this software, even if advised of the possibility of such damage.
                 </w:r>
             </xsl:if>
         </w:p>
-    </xsl:template>   
-    
-    <!-- Paragraphs in the front matter -->
-    <xsl:template match="tei:front/tei:div/tei:p">
-        <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr">
-                <w:pPr>
-                    <w:pStyle>
-                        <xsl:attribute name="w:val">
-                            <xsl:value-of select="concat(upper-case(substring(parent::tei:div/@type,1,1)),substring(parent::tei:div/@type,2))"/>
-                        </xsl:attribute>
-                    </w:pStyle>
-                </w:pPr>
-            </xsl:with-param>
-        </xsl:call-template>
-    </xsl:template>
-   
-    
+    </xsl:template>        
     
     <!-- who created this document -->
     <xsl:template name="created-by">

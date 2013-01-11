@@ -81,7 +81,7 @@
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for making Word docx files from TEI XML </p>
-      <p><h1 xmlns="">Stylesheet documentation</h1><h2 xmlns="">template modes</h2><h3 xmlns="">get-style</h3><h1 xmlns="">License</h1>This software is dual-licensed:
+      <p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
 Unported License http://creativecommons.org/licenses/by-sa/3.0/ 
@@ -368,6 +368,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="nop">false</xsl:param>
     <xsl:param name="bookmark-id"/>
     <xsl:param name="bookmark-name"/>
+<xsl:message>2. <xsl:value-of select="concat(name(),'=',@type)"/>: <xsl:copy-of select="$pPr"/></xsl:message>
+
     <xsl:for-each select="$select">
       <xsl:for-each-group select="*|processing-instruction()|text()" group-adjacent="1">
         <xsl:call-template name="_process-blockelement">
@@ -952,7 +954,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="number">
       <xsl:number level="any"/>
     </xsl:variable>
-    <xsl:variable name="getstyle" select="tei:get-headingstyle(.,$level)"/>
+    <xsl:variable name="getstyle"
+		  select="tei:get-headingstyle(.,$level)"/>
     <xsl:call-template name="block-element">
       <!-- we want a bookmark for referencing this section -->
       <xsl:with-param name="bookmark-id">
