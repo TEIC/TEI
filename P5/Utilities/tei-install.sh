@@ -62,7 +62,6 @@ echo link ${Vault}/${name}/${version} to ${Vault}/${name}/current
 ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
 echo upload ${pname}-${version}.zip to Sourceforge ${SFNAME} as user ${SFUSER}
 ${ECHO} rsync -e ssh ${pname}-${version}.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/${SFNAME}/${pname}-${version}.zip
-${ECHO} rm ${pname}-${version}.zip 
 
 case $package in 
   Roma)
@@ -75,3 +74,4 @@ case $package in
 	${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;
         ${ECHO} rm teiwebsiteguidelines.zip;;
 esac
+${ECHO} rm ${pname}-${version}.zip 
