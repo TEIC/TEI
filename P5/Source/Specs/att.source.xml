@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING for details
+$Date: 2013-01-11 09:49:36 -0800 (Fri, 11 Jan 2013) $
+$Id: att.source.xml 11382 2013-01-11 17:49:36Z martindholmes $
+-->
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.source">
+  <desc>provides attributes for pointing to the source of a bibliographic reference.</desc>
+  <attList>
+    <attDef ident="source" usage="opt">
+      <equiv/>
+      <gloss>pointer to a bibliographical source reference</gloss>
+      <desc>provides a pointer to the bibliographical source from which a quotation or citation is drawn.</desc>
+      <datatype maxOccurs="unbounded">
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>Must point to one or more bibliographic elements
+        in the TEI  header or elsewhere</valDesc>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SOURCE-eg-01"><p>
+      <!-- ... -->
+        As Willard McCarty (<bibl xml:id="mcc_2012">2012, p.2</bibl>) tells us, 
+      <quote source="#mcc_2012">‘Collaboration’  is  a  problematic  and  should  be  a  contested  term.</quote>
+      <!-- ... -->
+      </p>
+    </egXML>
+  </exemplum>
+  
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
+      <!-- ... -->
+      <quote source="#chicago_15_ed">Grammatical theories are in flux, and the more we learn, the less we seem to know.</quote>
+      <!-- ... -->
+    </p>
+      <!-- ... -->
+      <bibl xml:id="chicago_15_ed"><title level="m">The Chicago Manual of Style</title>, <edition>15th edition</edition>. <pubPlace>Chicago</pubPlace>: <publisher>University of Chicago Press</publisher> (<date>2003</date>), <biblScope type="pp">p.147</biblScope>.</bibl>
+    </egXML>
+  </exemplum>
+
+</classSpec>
