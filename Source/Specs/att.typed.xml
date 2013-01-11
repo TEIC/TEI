@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="TYPED" type="atts" ident="att.typed">
+<classSpec  xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="TYPED" type="atts" ident="att.typed">
   <desc>provides attributes which can be used to classify or subclassify elements in any way. </desc>
   <desc versionDate="2007-12-20" xml:lang="ko">요소의 분류 또는 하위분류에서 사용될 수 있는 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供可依任何方法將元素分類或次要分類的一般屬性。</desc>
@@ -17,6 +17,13 @@ $Id$
       utilisés pour classer ou interclasser des éléments de n'importe quelle façon.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos genéricos utilizables para cualquier clasificación o subclasificación de elementos.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi generici utilizzabili per qualsiasi classificazione e sottoclassificazione di elementi</desc>
+  <constraintSpec scheme="isoschematron" ident="subtypeTyped">
+    <constraint>
+      <sch:rule context="@subtype">
+      <sch:assert test="../@type">The <sch:value-of select="name(..)"/> element should not be categorized in detail with @subtype unless also categorized in general with @type</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="type" usage="opt">
       <equiv/>
