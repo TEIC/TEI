@@ -141,25 +141,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:element>
     </xsl:element>
   </xsl:template>
-  <xsl:template match="tei:attRef">
-    <xsl:apply-templates select="." mode="summary"/>
-  </xsl:template>
-  <xsl:template match="tei:attRef" mode="summary">
-    <xsl:element namespace="{$outputNS}" name="{$rowName}">
-      <xsl:element namespace="{$outputNS}" name="{$cellName}">
-	<xsl:attribute name="{$colspan}">2</xsl:attribute>
-        <xsl:attribute name="{$rendName}">
-          <xsl:text>odd_label</xsl:text>
-        </xsl:attribute>
-	<xsl:call-template name="linkTogether">
-	  <xsl:with-param name="name" select="substring-before(@name,'.attribute')"/>
-	  <xsl:with-param name="reftext">
-	    <xsl:value-of select="replace(@name,'.attribute.','/')"/>
-	  </xsl:with-param>
-	</xsl:call-template>
-      </xsl:element>
-    </xsl:element>
-  </xsl:template>
+
+  <xsl:template match="tei:attRef" mode="summary"/>
+
   <xsl:template match="tei:classSpec|tei:elementSpec" mode="summary">
     <xsl:variable name="name">
       <xsl:choose>
@@ -1834,7 +1818,23 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="displayAttList">
     <xsl:param name="mode"/>
     <xsl:call-template name="showAttClasses"/>
-    <xsl:if test=".//tei:attDef|tei:attRef">
+    <xsl:for-each-group select="tei:attRef"
+			group-by="substring-before(@name,'.attribute')">
+      <xsl:call-template name="linkTogether">
+	<xsl:with-param name="name" select="current-grouping-key()"/>
+	<xsl:with-param name="reftext">
+	  <xsl:value-of select="current-grouping-key()"/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:text> ([partial] </xsl:text>
+      <xsl:for-each select="current-group()">
+	<xsl:text>@</xsl:text>
+	<xsl:value-of select="substring-after(@name,'.attribute.')"/>
+	<xsl:if test="position() != last()">, </xsl:if>
+      </xsl:for-each>
+      <xsl:text>) </xsl:text>
+    </xsl:for-each-group>
+    <xsl:if test=".//tei:attDef">
       <xsl:element namespace="{$outputNS}" name="{$tableName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>attList</xsl:text>
