@@ -1818,7 +1818,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="displayAttList">
     <xsl:param name="mode"/>
     <xsl:call-template name="showAttClasses"/>
-    <xsl:for-each-group select="tei:attRef"
+    <xsl:for-each-group select="tei:attRef[not(contains(@name,'.attributes'))]"
 			group-by="substring-before(@name,'.attribute')">
       <xsl:call-template name="linkTogether">
 	<xsl:with-param name="name" select="current-grouping-key()"/>
@@ -1829,9 +1829,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text> ([partial] </xsl:text>
       <xsl:for-each select="current-group()">
 	<xsl:text>@</xsl:text>
-	<xsl:value-of select="substring-after(@name,'.attribute.')"/>
+	<xsl:value-of
+	    select="substring-after(@name,'.attribute.')"/>
 	<xsl:if test="position() != last()">, </xsl:if>
-      </xsl:for-each>
+	</xsl:for-each>
       <xsl:text>) </xsl:text>
     </xsl:for-each-group>
     <xsl:if test=".//tei:attDef">
