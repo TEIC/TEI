@@ -368,8 +368,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="nop">false</xsl:param>
     <xsl:param name="bookmark-id"/>
     <xsl:param name="bookmark-name"/>
-<xsl:message>2. <xsl:value-of select="concat(name(),'=',@type)"/>: <xsl:copy-of select="$pPr"/></xsl:message>
-
     <xsl:for-each select="$select">
       <xsl:for-each-group select="*|processing-instruction()|text()" group-adjacent="1">
         <xsl:call-template name="_process-blockelement">
