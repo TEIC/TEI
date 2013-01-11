@@ -105,6 +105,7 @@ define( 'roma_startupOption_all', 'all' );
 define( 'roma_startupOption_minimum', 'minimum' );
 define( 'roma_startupOption_other', 'other' );
 define( 'roma_startupOption_upload', 'upload' );
+define( 'roma_startupOption_template', 'template' );
 
 define( 'roma_validate_schema', false );
 
@@ -224,6 +225,10 @@ class roma
 	    case roma_startupOption_other:
 	      $this->m_oRomaDom = new romaDom( join( '',
           file('/usr/share/xml/tei/custom/odd/' . $_REQUEST ['tei_other' ] )));
+	       break;
+	    case roma_startupOption_template:
+	      $this->m_oRomaDom = new romaDom( join( '',
+          file('/usr/share/xml/tei/custom/odd/' . $_REQUEST ['tei_template' ] )));
 	       break;
 	    default:
                $this->m_oRomaDom = new romaDom( $_SESSION[ 'romaDom' ] );
