@@ -250,6 +250,37 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$rendName}">
             <xsl:text>attDef</xsl:text>
           </xsl:attribute>
+	  <xsl:if test="@corresp">
+	    <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>odd_label</xsl:text>
+		</xsl:attribute>
+		<xsl:element namespace="{$outputNS}" name="{$hiName}">
+		  <xsl:attribute name="{$rendName}">
+		    <xsl:text>label</xsl:text>
+		  </xsl:attribute>
+		  <xsl:attribute name="{$langAttributeName}">
+		    <xsl:value-of select="$documentationLanguage"/>
+		  </xsl:attribute>
+		  <xsl:call-template name="i18n">
+		    <xsl:with-param name="word">Derivedfrom</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:element>
+	      </xsl:element>
+	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
+		<xsl:attribute name="{$rendName}">
+		  <xsl:text>odd_value</xsl:text>
+		</xsl:attribute>
+		<xsl:call-template name="linkTogether">
+		  <xsl:with-param name="name" select="substring(@corresp,2)"/>
+		  <xsl:with-param name="reftext">
+		    <xsl:value-of select="substring(@corresp,2)"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:element>
+	    </xsl:element>	    
+	  </xsl:if>
           <xsl:element namespace="{$outputNS}" name="{$rowName}">
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
               <xsl:attribute name="{$rendName}">
@@ -1818,19 +1849,22 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="displayAttList">
     <xsl:param name="mode"/>
     <xsl:call-template name="showAttClasses"/>
-    <xsl:for-each-group select="tei:attRef[not(contains(@name,'.attributes'))]"
-			group-by="substring-before(@name,'.attribute')">
+    <xsl:for-each-group select="tei:attRef[not(@rend='none')]"
+			group-by="substring(@corresp,2)">
       <xsl:call-template name="linkTogether">
 	<xsl:with-param name="name" select="current-grouping-key()"/>
 	<xsl:with-param name="reftext">
 	  <xsl:value-of select="current-grouping-key()"/>
 	</xsl:with-param>
       </xsl:call-template>
-      <xsl:text> ([partial] </xsl:text>
+      <xsl:text> (</xsl:text>
+      <xsl:element namespace="{$outputNS}" name="{$segName}">
+	<xsl:attribute name="{$rendName}">highlightelementname</xsl:attribute>
+	<xsl:text>[…] </xsl:text>
+      </xsl:element>
       <xsl:for-each select="current-group()">
 	<xsl:text>@</xsl:text>
-	<xsl:value-of
-	    select="substring-after(@name,'.attribute.')"/>
+ 	<xsl:value-of select="@n"/>
 	<xsl:if test="position() != last()">, </xsl:if>
 	</xsl:for-each>
       <xsl:text>) </xsl:text>
