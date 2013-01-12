@@ -41,6 +41,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:key name="CHILDMOD" match="Element" use="@module"/>
+  <xsl:variable name="Original" select="/"/>
 
   <xsl:param name="teiWeb">
     <xsl:text>http://www.tei-c.org/release/doc/tei-p5-doc/</xsl:text>
@@ -1859,10 +1860,17 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:with-param>
       </xsl:call-template>
       <xsl:text> (</xsl:text>
-      <xsl:element namespace="{$outputNS}" name="{$segName}">
-	<xsl:attribute name="{$rendName}">highlightelementname</xsl:attribute>
-	<xsl:text>[…] </xsl:text>
-      </xsl:element>
+      <xsl:for-each
+	  select="$Original//tei:classSpec[@ident=current-grouping-key()]/tei:attList/tei:attDef">
+	<xsl:variable name="me" select="@ident"/>
+	<xsl:if test="not(current-group()[@n=$me])">
+	  <xsl:element namespace="{$outputNS}" name="{$segName}">
+	    <xsl:attribute name="{$rendName}">unusedattribute</xsl:attribute>
+	      <xsl:value-of select="$me"/>
+	  </xsl:element>
+	  <xsl:text>, </xsl:text>
+	</xsl:if>
+      </xsl:for-each>
       <xsl:for-each select="current-group()">
 	<xsl:text>@</xsl:text>
  	<xsl:value-of select="@n"/>
@@ -2719,7 +2727,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="generateChildren">
     <xsl:variable name="name" select="@ident"/>
-    <xsl:variable name="Original" select="/"/>
     <xsl:choose>
       <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
         <xsl:element namespace="{$outputNS}" name="{$segName}">

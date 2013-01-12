@@ -448,7 +448,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="generateSummaryChildren">
     <xsl:variable name="name" select="@ident"/>
-    <xsl:variable name="Original" select="/"/>
     <xsl:choose>
       <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
           <xsl:text>ANY</xsl:text>
@@ -487,7 +486,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="generateChildren">
     <xsl:variable name="name" select="@ident"/>
-    <xsl:variable name="Original" select="/"/>
     <xsl:choose>
       <xsl:when test="tei:content//rng:ref[@name='macro.anyXML']">
       </xsl:when>
