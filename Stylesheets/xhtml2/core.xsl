@@ -367,7 +367,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element eg</desc>
   </doc>
   <xsl:template match="tei:eg">
-    <div>
+    <pre>
       <xsl:if test="$cssFile">
         <xsl:attribute name="class">
           <xsl:text>pre_eg</xsl:text>
@@ -377,7 +377,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-    </div>
+    </pre>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element emph</desc>
@@ -1440,6 +1440,7 @@ of this software, even if advised of the possibility of such damage.
 			      group-adjacent="if (self::html:ol or
 					    self::html:ul or
 					    self::html:dl or
+					    self::html:pre or
 					    self::html:figure or
 					    self::html:blockquote or
 					    self::html:div) then 1
