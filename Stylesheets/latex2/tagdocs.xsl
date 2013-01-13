@@ -175,6 +175,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
    </xsl:template>
 
+   <xsl:template match="tei:seg[@rend='unusedattribute']">
+      <xsl:text>\unusedattribute{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>}</xsl:text>
+   </xsl:template>
+
    <xsl:template match="tei:seg[@rend='specChild']">
       <xsl:apply-templates/>
    </xsl:template>
