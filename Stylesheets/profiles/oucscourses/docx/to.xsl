@@ -172,7 +172,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:for-each>
       </sessions>
     </xsl:variable>
-    <xsl:for-each-group select="$data2/sessions/session" group-by="concat(weekday,room)">
+    <xsl:for-each-group select="$data/sessions/session" group-by="concat(weekday,room)">
       <w:p>
         <w:pPr>
           <w:pStyle>
