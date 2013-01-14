@@ -155,33 +155,36 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="data">
       <sessions>
         <xsl:for-each select="row">
+	  <xsl:variable name="r" select="."/>
+	  <xsl:for-each select="tokenize(cell[1], ' ')">	    
           <session>
             <weekday>
               <xsl:choose>
-                <xsl:when test="starts-with(cell[2],'Mon')">1</xsl:when>
-                <xsl:when test="starts-with(cell[2],'Tue')">2</xsl:when>
-                <xsl:when test="starts-with(cell[2],'Wed')">3</xsl:when>
-                <xsl:when test="starts-with(cell[2],'Thu')">4</xsl:when>
-                <xsl:when test="starts-with(cell[2],'Fri')">5</xsl:when>
+                <xsl:when test="starts-with($r/cell[2],'Mon')">1</xsl:when>
+                <xsl:when test="starts-with($r/cell[2],'Tue')">2</xsl:when>
+                <xsl:when test="starts-with($r/cell[2],'Wed')">3</xsl:when>
+                <xsl:when test="starts-with($r/cell[2],'Thu')">4</xsl:when>
+                <xsl:when test="starts-with($r/cell[2],'Fri')">5</xsl:when>
               </xsl:choose>
             </weekday>
             <room>
-              <xsl:value-of select="cell[1]"/>
+              <xsl:value-of select="."/>
             </room>
             <xdate>
-              <xsl:value-of select="cell[2]"/>
+              <xsl:value-of select="$r/cell[2]"/>
             </xdate>
-            <time><xsl:value-of select="cell[3]"/>:<xsl:value-of select="cell[4]"/></time>
+            <time><xsl:value-of select="$r/cell[3]"/>:<xsl:value-of select="$r/cell[4]"/></time>
             <title>
-              <xsl:value-of select="cell[5]"/>
+              <xsl:value-of select="$r/cell[5]"/>
             </title>
             <person>
-              <xsl:value-of select="cell[6]"/>
+              <xsl:value-of select="$r/cell[6]"/>
             </person>
             <demons>
-              <xsl:value-of select="cell[7]"/>
+              <xsl:value-of select="$r/cell[7]"/>
             </demons>
           </session>
+	  </xsl:for-each>
         </xsl:for-each>
       </sessions>
     </xsl:variable>
