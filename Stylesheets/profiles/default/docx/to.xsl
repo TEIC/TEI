@@ -109,7 +109,6 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="tei:edition"/> Edition</w:t>
         </w:r>
     </xsl:template>
-
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
         <xsl:param name="nop"/>   
 	<xsl:variable name="pair">
@@ -118,7 +117,9 @@ of this software, even if advised of the possibility of such damage.
 	      <tei:hi rend="bold">
 		<xsl:apply-templates mode="iden"/>
 	      </tei:hi>
-	      <tei:lb/>
+	      <xsl:if test="not(following-sibling::tei:item[1]/tei:list)">
+		<tei:lb/>
+	      </xsl:if>
 	      <xsl:for-each select="following-sibling::tei:item[1]">
 		<xsl:apply-templates mode="iden"/>
 	      </xsl:for-each>
@@ -140,7 +141,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
     </xsl:template>
 
-   
     <xsl:template match="tei:seg[not(@*) and normalize-space(.)='']">
       <w:r>
 	<w:t>
