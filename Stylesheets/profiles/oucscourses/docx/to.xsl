@@ -44,6 +44,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="shadowGraphics">true</xsl:param>
   <xsl:param name="useNSPrefixes">false</xsl:param>
+
   <xsl:template match="teix:egXML|p[@rend='eg']">
     <xsl:param name="simple">false</xsl:param>
     <xsl:param name="highlight"/>
@@ -55,163 +56,136 @@ of this software, even if advised of the possibility of such damage.
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
   <xsl:template match="table[@rend='roomlabel']">
     <xsl:variable name="data">
       <sessions>
         <xsl:for-each select="row">
-          <session>
-            <weekday>
-              <xsl:choose>
-                <xsl:when test="starts-with(cell[2],'Mon')">1</xsl:when>
-                <xsl:when test="starts-with(cell[2],'Tue')">2</xsl:when>
-                <xsl:when test="starts-with(cell[2],'Wed')">3</xsl:when>
-                <xsl:when test="starts-with(cell[2],'Thu')">4</xsl:when>
-                <xsl:when test="starts-with(cell[2],'Fri')">5</xsl:when>
-              </xsl:choose>
-            </weekday>
-            <roomsort>
-              <xsl:choose>
-                <xsl:when test="starts-with(cell[1],'Evenlode')">1</xsl:when>
-                <xsl:when test="starts-with(cell[1],'Isis')">2</xsl:when>
-                <xsl:when test="starts-with(cell[1],'Windrush')">3</xsl:when>
-                <xsl:when test="starts-with(cell[1],'Cherwell')">4</xsl:when>
-              </xsl:choose>
-            </roomsort>
-            <room>
-              <xsl:value-of select="cell[1]"/>
-            </room>
-            <xdate>
-              <xsl:value-of select="cell[2]"/>
-            </xdate>
-            <time><xsl:value-of select="cell[3]"/> - <xsl:value-of select="cell[4]"/></time>
-            <title>
-              <xsl:value-of select="cell[5]"/>
-            </title>
-            <person>
-              <xsl:value-of select="cell[6]"/>
-            </person>
-          </session>
+          <xsl:variable name="r" select="."/>
+          <xsl:for-each select="tokenize(normalize-space(replace(cell[1],' ',' ')),' ')">
+            <session>
+              <weekday>
+                <xsl:choose>
+                  <xsl:when test="starts-with($r/cell[2],'Mon')">1</xsl:when>
+                  <xsl:when test="starts-with($r/cell[2],'Tue')">2</xsl:when>
+                  <xsl:when test="starts-with($r/cell[2],'Wed')">3</xsl:when>
+                  <xsl:when test="starts-with($r/cell[2],'Thu')">4</xsl:when>
+                  <xsl:when test="starts-with($r/cell[2],'Fri')">5</xsl:when>
+                </xsl:choose>
+              </weekday>
+              <roomsort>
+                <xsl:choose>
+                  <xsl:when test="starts-with(.,'Evenlode')">1</xsl:when>
+                  <xsl:when test="starts-with(.,'Isis')">2</xsl:when>
+                  <xsl:when test="starts-with(.,'Windrush')">3</xsl:when>
+                  <xsl:when test="starts-with(.,'Cherwell')">4</xsl:when>
+                  <xsl:otherwise>5</xsl:otherwise>
+                </xsl:choose>
+              </roomsort>
+              <room>
+                <xsl:value-of select="."/>
+              </room>
+              <xdate>
+                <xsl:value-of select="$r/cell[2]"/>
+              </xdate>
+              <time><xsl:value-of select="$r/cell[3]"/> - <xsl:value-of select="$r/cell[4]"/></time>
+              <title>
+                <xsl:value-of select="$r/cell[5]"/>
+              </title>
+              <person>
+                <xsl:value-of select="$r/cell[6]"/>
+              </person>
+            </session>
+          </xsl:for-each>
         </xsl:for-each>
       </sessions>
     </xsl:variable>
-    <xsl:variable name="data2">
-      <sessions>
-        <xsl:for-each select="$data/sessions/session">
-          <xsl:sort select="weekday"/>
-          <xsl:sort select="roomsort"/>
-          <xsl:copy-of select="."/>
-        </xsl:for-each>
-      </sessions>
-    </xsl:variable>
-    <xsl:for-each select="$data2/sessions/session">
-<!--      <xsl:if test="not(weekday=preceding-sibling::session[1]/weekday)">
+    <xsl:for-each-group select="$data/sessions/session" group-by="concat(weekday,room)">
+      <w:p>
+        <w:pPr>
+          <w:pStyle>
+            <xsl:attribute name="w:val">DAY</xsl:attribute>
+          </w:pStyle>
+        </w:pPr>
+        <w:r>
+          <w:t>What's On <xsl:value-of select="xdate"/></w:t>
+        </w:r>
+      </w:p>
+      <w:p>
+        <w:pPr>
+          <w:pStyle>
+            <xsl:attribute name="w:val">ROOM</xsl:attribute>
+          </w:pStyle>
+        </w:pPr>
+        <w:r>
+          <w:t>Room: <xsl:value-of select="room"/></w:t>
+        </w:r>
+      </w:p>
+      <xsl:for-each select="current-group()">
+        <xsl:call-template name="roomtable"/>
+      </xsl:for-each>
+      <xsl:if test="position() != last()">
         <w:p>
-          <w:pPr>
-            <w:pStyle>
-              <xsl:attribute name="w:val">DAY</xsl:attribute>
-            </w:pStyle>
-          </w:pPr>
           <w:r>
-            <w:t>What's On <xsl:value-of select="xdate"/></w:t>
-          </w:r>
-        </w:p>
-      </xsl:if> -->
-      <xsl:if test="not(room=preceding-sibling::session[1]/room) or not(weekday=preceding-sibling::session[1]/weekday)">
-        <w:p>
-          <w:pPr>
-            <w:pStyle>
-              <xsl:attribute name="w:val">DAY</xsl:attribute>
-            </w:pStyle>
-          </w:pPr>
-          <w:r>
-            <w:t>What's On <xsl:value-of select="xdate"/></w:t>
-          </w:r>
-        </w:p>
-        <w:p>
-          <w:pPr>
-            <w:pStyle>
-              <xsl:attribute name="w:val">ROOM</xsl:attribute>
-            </w:pStyle>
-          </w:pPr>
-          <w:r>
-            <w:t>Room: <xsl:value-of select="room"/></w:t>
+            <w:br w:type="page"/>
           </w:r>
         </w:p>
       </xsl:if>
-      <xsl:call-template name="roomtable"/>
-      <xsl:if test="following-sibling::session">
-	<xsl:if test="not(room=following-sibling::session[1]/room) or not(weekday=following-sibling::session[1]/weekday)">
-	  <w:p>
-	    <w:r>
-	      <w:br w:type="page"/>
-	    </w:r>
-	  </w:p>
-	</xsl:if>
-      </xsl:if>
-    </xsl:for-each> 
+    </xsl:for-each-group>
   </xsl:template>
+
   <xsl:template match="table[@rend='roomlabel2']">
     <!-- room, date, start, end, title, person -->
     <xsl:variable name="data">
       <sessions>
         <xsl:for-each select="row">
-	  <xsl:variable name="r" select="."/>
-	  <xsl:for-each select="tokenize(replace(cell[1],'&#160;',' '),' ')">	    
-          <session>
-            <weekday>
-              <xsl:choose>
-                <xsl:when test="starts-with($r/cell[2],'Mon')">1</xsl:when>
-                <xsl:when test="starts-with($r/cell[2],'Tue')">2</xsl:when>
-                <xsl:when test="starts-with($r/cell[2],'Wed')">3</xsl:when>
-                <xsl:when test="starts-with($r/cell[2],'Thu')">4</xsl:when>
-                <xsl:when test="starts-with($r/cell[2],'Fri')">5</xsl:when>
-              </xsl:choose>
-            </weekday>
-            <room>
-              <xsl:value-of select="."/>
-            </room>
-            <xdate>
-              <xsl:value-of select="$r/cell[2]"/>
-            </xdate>
-            <time><xsl:value-of select="$r/cell[3]"/>:<xsl:value-of select="$r/cell[4]"/></time>
-            <title>
-              <xsl:value-of select="$r/cell[5]"/>
-            </title>
-            <person>
-              <xsl:value-of select="$r/cell[6]"/>
-            </person>
-            <demons>
-              <xsl:value-of select="$r/cell[7]"/>
-            </demons>
-          </session>
-	  </xsl:for-each>
+          <xsl:variable name="r" select="."/>
+          <xsl:for-each select="tokenize(normalize-space(replace(cell[1],' ',' ')),' ')">
+            <session>
+              <weekday>
+                <xsl:choose>
+                  <xsl:when test="starts-with($r/cell[2],'Mon')">1</xsl:when>
+                  <xsl:when test="starts-with($r/cell[2],'Tue')">2</xsl:when>
+                  <xsl:when test="starts-with($r/cell[2],'Wed')">3</xsl:when>
+                  <xsl:when test="starts-with($r/cell[2],'Thu')">4</xsl:when>
+                  <xsl:when test="starts-with($r/cell[2],'Fri')">5</xsl:when>
+                </xsl:choose>
+              </weekday>
+              <room>
+                <xsl:value-of select="."/>
+              </room>
+              <xdate>
+                <xsl:value-of select="$r/cell[2]"/>
+              </xdate>
+              <time><xsl:value-of select="$r/cell[3]"/>:<xsl:value-of select="$r/cell[4]"/></time>
+              <title>
+                <xsl:value-of select="$r/cell[5]"/>
+              </title>
+              <person>
+                <xsl:value-of select="$r/cell[6]"/>
+              </person>
+              <demons>
+                <xsl:value-of select="$r/cell[7]"/>
+              </demons>
+            </session>
+          </xsl:for-each>
         </xsl:for-each>
       </sessions>
     </xsl:variable>
-    <xsl:variable name="data2">
-      <sessions>
-        <xsl:for-each select="$data/sessions/session">
-          <xsl:sort select="weekday"/>
-          <xsl:sort select="room"/>
-          <xsl:copy-of select="."/>
-        </xsl:for-each>
-      </sessions>
-    </xsl:variable>
-    <xsl:for-each select="$data2/sessions/session">
-      <xsl:if test="not(room=preceding-sibling::session[1]/room) or not(weekday=preceding-sibling::session[1]/weekday)">
-        <w:p>
-          <w:pPr>
-            <w:pStyle>
-              <xsl:attribute name="w:val">ROOM</xsl:attribute>
-            </w:pStyle>
-          </w:pPr>
-          <w:r>
-            <w:t>Room: <xsl:value-of select="room"/> - <xsl:value-of select="xdate"/></w:t>
-          </w:r>
-        </w:p>
-      </xsl:if>
-      <xsl:call-template name="roomtable2"/>
+    <xsl:for-each-group select="$data2/sessions/session" group-by="concat(weekday,room)">
       <w:p>
+        <w:pPr>
+          <w:pStyle>
+            <xsl:attribute name="w:val">ROOM</xsl:attribute>
+          </w:pStyle>
+        </w:pPr>
+        <w:r>
+          <w:t>Room: <xsl:value-of select="room"/> - <xsl:value-of select="xdate"/></w:t>
+        </w:r>
+      </w:p>
+      <xsl:for-each select="current-group()">
+        <xsl:call-template name="roomtable2"/>
+	<w:p>
         <w:pPr>
           <w:pStyle>
             <xsl:attribute name="w:val">ROOM</xsl:attribute>
@@ -252,20 +226,20 @@ of this software, even if advised of the possibility of such damage.
           <xsl:with-param name="cell2">:</xsl:with-param>
         </xsl:call-template>
       </w:tbl>
+      </xsl:for-each>
       <w:p>
-	<w:r>
-	<xsl:choose>
-	  <xsl:when test="not(room=following-sibling::session[1]/room) or not(weekday=following-sibling::session[1]/weekday)">
-	  <w:br w:type="page"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <w:t> </w:t>
-	  </xsl:otherwise>
-	</xsl:choose>
-	</w:r>
+        <w:r>
+          <xsl:choose>
+            <xsl:when test="position() != last()">
+              <w:br w:type="page"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <w:t> </w:t>
+            </xsl:otherwise>
+          </xsl:choose>
+        </w:r>
       </w:p>
-
-    </xsl:for-each>
+    </xsl:for-each-group>
   </xsl:template>
   <xsl:template match="details">
     <w:p>
@@ -273,7 +247,7 @@ of this software, even if advised of the possibility of such damage.
         <w:br w:type="page"/>
       </w:r>
       <w:r>
-        <w:t>&#160;</w:t>
+        <w:t> </w:t>
       </w:r>
     </w:p>
     <w:tbl>
@@ -333,9 +307,9 @@ of this software, even if advised of the possibility of such damage.
     </w:tbl>
   </xsl:template>
   <xsl:template name="roomtable">
-   <w:p>
+    <w:p>
       <w:r>
-        <w:t>&#160;</w:t>
+        <w:t> </w:t>
       </w:r>
     </w:p>
     <w:tbl>
