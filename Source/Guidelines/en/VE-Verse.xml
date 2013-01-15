@@ -6,786 +6,818 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="VE" n="9"><head>Verse</head>
-<p>This module is intended for use when encoding texts which are
-entirely or predominantly in verse, and for which the elements for
-encoding verse structure already provided by the core module are
-inadequate.</p>
-<p>The tags described in section <ptr target="#COVE"/> include elements for
-the encoding of verse lines and line groups such as stanzas: these are
-available for any TEI document, irrespective of the module it
-uses. Like the modules for prose and for drama, the module
-for verse additionally makes use of the module defined in
-chapter <ptr target="#DS"/> to define the basic formal structure of a text,
-in terms of <gi>front</gi>, <gi>body</gi> and <gi>back</gi> elements and
-the text-division elements into which these may be subdivided.</p>
-<p>The module for verse extends the facilities provided by these
-modules in the following ways:
-<list type="simple">
-<item>a special purpose <gi>caesura</gi> element is provided, to
-allow for segmentation of the verse line
-(see section <ptr target="#VESE"/>)</item>
-<item>a set of attributes is provided for the encoding of rhyme scheme
-and metrical information (see sections <ptr target="#VEME"/>
-and <ptr target="#VERH"/>)</item>
-<item>a special purpose <gi>rhyme</gi> element is provided to support
-simple analysis of rhyming words (see section <ptr target="#VERH"/>)</item></list></p>
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="VE" n="9">
+   <head>Verse</head>
+   <p>This module is intended for use when encoding texts which are entirely or predominantly in
+      verse, and for which the elements for encoding verse structure already provided by the core
+      module are inadequate.</p>
+   <p>The tags described in section <ptr target="#COVE"/> include elements for the encoding of verse
+      lines and line groups such as stanzas: these are available for any TEI document, irrespective
+      of the module it uses. Like the modules for prose and for drama, the module for verse
+      additionally makes use of the module defined in chapter <ptr target="#DS"/> to define the
+      basic formal structure of a text, in terms of <gi>front</gi>, <gi>body</gi> and <gi>back</gi>
+      elements and the text-division elements into which these may be subdivided.</p>
+   <p>The module for verse extends the facilities provided by these modules in the following ways:
+         <list type="simple">
+         <item>a special purpose <gi>caesura</gi> element is provided, to allow for segmentation of
+            the verse line (see section <ptr target="#VESE"/>)</item>
+         <item>a set of attributes is provided for the encoding of rhyme scheme and metrical
+            information (see sections <ptr target="#VEME"/> and <ptr target="#VERH"/>)</item>
+         <item>a special purpose <gi>rhyme</gi> element is provided to support simple analysis of
+            rhyming words (see section <ptr target="#VERH"/>)</item>
+      </list></p>
 
 
-<div type="div2" xml:id="VEST"><head>Structural Divisions of Verse Texts</head>
-<p>Like other kinds of text, texts written in verse may be of widely
-differing lengths and structures. A complete poem, no matter how short,
-may be treated as a free-standing text, and encoded in the same way as
-a distinct prose text. A group of poems functioning as a single unit
-may be encoded either as a <gi>group</gi> or as a <gi>text</gi>,
-depending on the encoder's view of the text. For further discussion,
-including an example encoding for a verse anthology, see chapter <ptr target="#DS"/>.
- </p>
-<p>Many poems consist only of ungrouped lines.<!-- This short poem by Ezra Pound is a simple case:          -->
-	<!--                                                          -->
-	<!-- < egXML>                                                    -->
-	<!-- < ![ CDATA [                                             -->
-	<!-- < text>                                                  -->
-	<!-- < body>                                                  -->
-	<!-- < head>In a Station of the Metro< /head>                 -->
-	<!-- < l>The apparition of those faces in the crowd;< /l>     -->
-	<!-- < l>Petals on a wet, black bough.< /l>                   -->
-	<!-- < /body>                                                 -->
-	<!-- < /text>                                                 -->
-	<!-- ] ] >                                                    -->
-	<!-- < /egXML>                                                   -->
-	<!-- E.Pound in Imagist Poetry ed Jones, Penguin 1972, p.95 -->
-	<!--                                                          -->
-	<!-- The chances of our being allowed to reprint this         -->
-	<!-- copyright poem IN ITS ENTIRETY are minuscule.  We would  -->
-	<!-- do better with Strickland Gilliland, On the Antiquity    -->
-	<!-- of Fleas (which is probably out of copyright):           -->
-	<!--                                                          -->
-	<!-- Adam                                                     -->
-	<!-- Had 'em.                                                 -->
-	<!--                                                          -->
-	<!-- Or Emily Dickinson:                                      -->
-This short poem by Emily Dickinson is a simple case:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-1"><text>
-   <front>
-      <head>1755</head>
-   </front>
-   <body>
-      <l>To make a prairie it takes a clover and one bee,</l>
-      <l>One clover, and a bee,</l>
-      <l>And revery.</l>
-      <l>The revery alone will do,</l>
-      <l>If bees are few.</l>
-   </body>
-</text></egXML>
-<!-- Emily Dickinson, transcribed from the Norton Anthology   -->
-	<!-- of Poetry, ed.  Arthur Eastman et al., NY:  W.W.Norton,  -->
-	<!-- 1970, p. 859, ED no. 1755.                               -->
- </p>
-<p>Often, however, lines are grouped, formally or informally, into
-stanzas, verse paragraphs, etc.  The <gi>lg</gi> element defined in the
-core tag set (in section <ptr target="#COVE"/>) may be used for all such
-groupings.  It may thus serve for informal groupings of lines such as
-those of the following example from Allen Ginsberg:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-2"><text>
-   <body>
-      <head>My Alba</head>
-      <lg>
-         <l>Now that I've wasted</l>
-         <l>five years in Manhattan</l>
-         <l>life decaying</l>
-         <l>talent a blank</l>
-      </lg>
-      <lg>
-         <l>talking disconnected</l>
-         <l>patient and mental</l>
-         <l>sliderule and number</l>
-         <l>machine on a desk</l>
-      </lg>
-   </body>
-</text></egXML>
-<!-- A Ginsberg 'My alba', Reality Sandwiches, 1963 (City Lights) -->
-	<!-- Since this one does not appear in its entirety, this     -->
-	<!-- extract ought to qualify as fair use.  -msm              -->
- </p>
-<p>It may also be used to mark the verse paragraphs into which longer
-poems are often divided, as in the following example from Samuel Taylor
-Coleridge's <title>Frost at Midnight</title>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-3"><lg>
-   <l>The Frost performs its secret ministry,</l>
-   <l>Unhelped by any wind. ...</l>
-   <l>Whose puny flaps and freaks the idling Spirit</l>
-   <l>By its own moods interprets, every where</l>
-   <l>Echo or mirror seeking of itself,</l>
-   <l part="I">And makes a toy of Thought.</l>
-</lg>
-<lg>
-   <l part="F">But O! how oft,</l>
-   <l>How oft, at school, with most believing mind</l>
-   <l>Presageful, have I gazed upon the bars,</l>
-   <l>To watch that fluttering <hi>stranger</hi>! ... </l>
-</lg>
-<lg>
-   <l>Dear Babe, that sleepest cradled by my side,</l>
-</lg></egXML>
-<!-- STC, Frost at Midnight (ed EH Coleridge, OUP, p.240 -->
-Note, in the above example, the use of the <att>part</att> attribute on
-the <gi>l</gi> element, where a verse line is broken between two line
-groups, as discussed in section <ptr target="#COVE"/>.  
- </p>
-<p>Most typically, however, the <gi>lg</gi> element is used to mark the
-highly regular line groups which characterize stanzaic and similar verse
-forms, as in the following example from Chaucer:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-4"><lg>
-   <l>Sire Thopas was a doghty swayn;</l>
-   <l>White was his face as payndemayn,</l>
-   <l>His lippes rede as rose;</l>
-   <l>His rode is lyk scarlet in grayn,</l>
-   <l>And I yow telle in good certayn,</l>
-   <l>He hadde a semely nose.</l>
-</lg>
-<lg>
-   <l>His heer, his ber was lyk saffroun,</l>
-   <l>That to his girdel raughte adoun;</l>
-</lg></egXML>
-<!-- Chaucer, CT, B 1914 ff, ed Robinson p 164 -->
- </p>
-<p>Like other text-division elements, <gi>lg</gi> elements may be nested
-hierarchically.  For example, one particularly common English stanzaic
-form consists of a quatrain or sestet followed by a couplet.  The
-<gi>lg</gi> element may be used to encode both the stanza and its
-components, as in the following example from Byron:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-5"><lg type="stanza">
-   <lg type="sestet">
-      <l>In the first year of Freedom's second dawn</l>
-      <l>Died George the Third; although no tyrant, one</l>
-      <l>Who shielded tyrants, till each sense withdrawn</l>
-      <l>Left him nor mental nor external sun:</l>
-      <l>A better farmer ne'er brushed dew from lawn,</l>
-      <l>A worse king never left a realm undone!</l>
-   </lg>
-   <lg type="couplet">
-      <l>He died — but left his subjects still behind,</l>
-      <l>One half as mad — and t'other no less blind.</l>
-   </lg>
-</lg></egXML>
-<!-- Byron, Vision of Judgment viii ed EH Coleridge 1922) -->
- </p>
-<p>Note the use of the <att>type</att> attribute to name the type of
-unit encoded by the <gi>lg</gi> element; this attribute is common to
-all members of the <ident type="class">att.divLike</ident> class (see
-section <ptr target="#DSDIV1"/>).<note place="bottom">For discussion of
-other attributes of this class, see <ptr target="#DSDIV3X"/>.</note>
-<q>Sestet</q> and <q>couplet</q> might conceivably also be used as the
-values of the <att>rhyme</att> attribute in an analysis of rhyme
-scheme, for which see below, section <ptr target="#VEME"/>.  The
-<att>type</att> attribute is intended solely for conventional names of
-different classes of text block; the <att>met</att> attribute is
-intended for systematic metrical analysis.
- </p>
-<p>As a further example, consider the Shakespearean
-sonnet. This may be divided into two parts: a concluding couplet, and
-a body of twelve lines, itself subdivided into three quatrains:<!-- any suggestions for a better name than 'body' to         -->
-	<!-- describe the twelve lines gratefully accepted ... (lb)   -->
-	<!-- done.  At least, *I* think it's better ... (msm)         -->
-	<!-- But LB preferred 'body' to 'quatrains'     (msm)         -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-6"><text>
-   <body>
-      <lg>
-         <lg type="quatrain">
-            <l>My Mistres eyes are nothing like the Sunne,</l>
-            <l>Currall is farre more red, then her lips red</l>
-            <l>If snow be white, why then her brests are dun:</l>
-            <l>If haires be wiers, black wiers grown on her head:</l>
-         </lg>
-         <lg type="quatrain">
-            <l>I have seene Roses damaskt, red and white,</l>
-            <l>But no such Roses see I in her cheekes,</l>
-            <l>And in some perfumes is there more delight,</l>
-            <l>Then in the breath that from my Mistres reekes.</l>
-         </lg>
-         <lg type="quatrain">
-            <l>I love to heare her speake, yet well I know,</l>
-            <l>That Musicke hath a farre more pleasing sound:</l>
-            <l>I graunt I never saw a goddesse goe,</l>
-            <l>My Mistres when shee walkes treads on the ground.</l>
-         </lg>
-      </lg>
-      <lg type="couplet">
-         <l>And yet by heaven I think my love as rare,</l>
-         <l>As any she beli'd with false compare.</l>
-      </lg>
-   </body>
-</text></egXML>
-<!-- Shakespeare, Sonnets 1609, no 130 -->
- </p>
-<p>Particularly lengthy poetic texts are often subdivided into units
-larger than stanzas or paragraphs, which may themselves be
-subdivided. Spenser's <title>Faery Queene</title>, for example,
-consists of twelve <soCalled>books</soCalled> each of which contains a
-prologue followed by twelve <soCalled>cantos</soCalled>. Each prologue
-and each canto consists of nine-line <soCalled>stanzas</soCalled>,
-each of which follows the same regular pattern. Other examples in the
-same tradition are easy to find.</p>
+   <div type="div2" xml:id="VEST">
+      <head>Structural Divisions of Verse Texts</head>
+      <p>Like other kinds of text, texts written in verse may be of widely differing lengths and
+         structures. A complete poem, no matter how short, may be treated as a free-standing text,
+         and encoded in the same way as a distinct prose text. A group of poems functioning as a
+         single unit may be encoded either as a <gi>group</gi> or as a <gi>text</gi>, depending on
+         the encoder's view of the text. For further discussion, including an example encoding for a
+         verse anthology, see chapter <ptr target="#DS"/>. </p>
+      <p>Many poems consist only of ungrouped lines.<!-- This short poem by Ezra Pound is a simple case:          -->
+         <!--                                                          -->
+         <!-- < egXML>                                                    -->
+         <!-- < ![ CDATA [                                             -->
+         <!-- < text>                                                  -->
+         <!-- < body>                                                  -->
+         <!-- < head>In a Station of the Metro< /head>                 -->
+         <!-- < l>The apparition of those faces in the crowd;< /l>     -->
+         <!-- < l>Petals on a wet, black bough.< /l>                   -->
+         <!-- < /body>                                                 -->
+         <!-- < /text>                                                 -->
+         <!-- ] ] >                                                    -->
+         <!-- < /egXML>                                                   -->
+         <!-- E.Pound in Imagist Poetry ed Jones, Penguin 1972, p.95 -->
+         <!--                                                          -->
+         <!-- The chances of our being allowed to reprint this         -->
+         <!-- copyright poem IN ITS ENTIRETY are minuscule.  We would  -->
+         <!-- do better with Strickland Gilliland, On the Antiquity    -->
+         <!-- of Fleas (which is probably out of copyright):           -->
+         <!--                                                          -->
+         <!-- Adam                                                     -->
+         <!-- Had 'em.                                                 -->
+         <!--                                                          -->
+         <!-- Or Emily Dickinson:                                      --> This short poem by Emily
+         Dickinson is a simple case: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+            corresp="#VEST-eg-1"><text>
+               <front>
+                  <head>1755</head>
+               </front>
+               <body>
+                  <l>To make a prairie it takes a clover and one bee,</l>
+                  <l>One clover, and a bee,</l>
+                  <l>And revery.</l>
+                  <l>The revery alone will do,</l>
+                  <l>If bees are few.</l>
+               </body>
+            </text></egXML>
+         <!-- Emily Dickinson, transcribed from the Norton Anthology   -->
+         <!-- of Poetry, ed.  Arthur Eastman et al., NY:  W.W.Norton,  -->
+         <!-- 1970, p. 859, ED no. 1755.                               -->
+      </p>
+      <p>Often, however, lines are grouped, formally or informally, into stanzas, verse paragraphs,
+         etc. The <gi>lg</gi> element defined in the core tag set (in section <ptr target="#COVE"/>)
+         may be used for all such groupings. It may thus serve for informal groupings of lines such
+         as those of the following example from Allen Ginsberg: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-2"><text>
+               <body>
+                  <head>My Alba</head>
+                  <lg>
+                     <l>Now that I've wasted</l>
+                     <l>five years in Manhattan</l>
+                     <l>life decaying</l>
+                     <l>talent a blank</l>
+                  </lg>
+                  <lg>
+                     <l>talking disconnected</l>
+                     <l>patient and mental</l>
+                     <l>sliderule and number</l>
+                     <l>machine on a desk</l>
+                  </lg>
+               </body>
+            </text></egXML>
+         <!-- A Ginsberg 'My alba', Reality Sandwiches, 1963 (City Lights) -->
+         <!-- Since this one does not appear in its entirety, this     -->
+         <!-- extract ought to qualify as fair use.  -msm              -->
+      </p>
+      <p>It may also be used to mark the verse paragraphs into which longer poems are often divided,
+         as in the following example from Samuel Taylor Coleridge's <title>Frost at
+         Midnight</title>: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-3"><lg>
+               <l>The Frost performs its secret ministry,</l>
+               <l>Unhelped by any wind. ...</l>
+               <l>Whose puny flaps and freaks the idling Spirit</l>
+               <l>By its own moods interprets, every where</l>
+               <l>Echo or mirror seeking of itself,</l>
+               <l part="I">And makes a toy of Thought.</l>
+            </lg>
+            <lg>
+               <l part="F">But O! how oft,</l>
+               <l>How oft, at school, with most believing mind</l>
+               <l>Presageful, have I gazed upon the bars,</l>
+               <l>To watch that fluttering <hi>stranger</hi>! ... </l>
+            </lg>
+            <lg>
+               <l>Dear Babe, that sleepest cradled by my side,</l>
+            </lg></egXML>
+         <!-- STC, Frost at Midnight (ed EH Coleridge, OUP, p.240 --> Note, in the above example,
+         the use of the <att>part</att> attribute on the <gi>l</gi> element, where a verse line is
+         broken between two line groups, as discussed in section <ptr target="#COVE"/>. </p>
+      <p>Most typically, however, the <gi>lg</gi> element is used to mark the highly regular line
+         groups which characterize stanzaic and similar verse forms, as in the following example
+         from Chaucer: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-4"><lg>
+               <l>Sire Thopas was a doghty swayn;</l>
+               <l>White was his face as payndemayn,</l>
+               <l>His lippes rede as rose;</l>
+               <l>His rode is lyk scarlet in grayn,</l>
+               <l>And I yow telle in good certayn,</l>
+               <l>He hadde a semely nose.</l>
+            </lg>
+            <lg>
+               <l>His heer, his ber was lyk saffroun,</l>
+               <l>That to his girdel raughte adoun;</l>
+            </lg></egXML>
+         <!-- Chaucer, CT, B 1914 ff, ed Robinson p 164 -->
+      </p>
+      <p>Like other text-division elements, <gi>lg</gi> elements may be nested hierarchically. For
+         example, one particularly common English stanzaic form consists of a quatrain or sestet
+         followed by a couplet. The <gi>lg</gi> element may be used to encode both the stanza and
+         its components, as in the following example from Byron: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-5"><lg type="stanza">
+               <lg type="sestet">
+                  <l>In the first year of Freedom's second dawn</l>
+                  <l>Died George the Third; although no tyrant, one</l>
+                  <l>Who shielded tyrants, till each sense withdrawn</l>
+                  <l>Left him nor mental nor external sun:</l>
+                  <l>A better farmer ne'er brushed dew from lawn,</l>
+                  <l>A worse king never left a realm undone!</l>
+               </lg>
+               <lg type="couplet">
+                  <l>He died — but left his subjects still behind,</l>
+                  <l>One half as mad — and t'other no less blind.</l>
+               </lg>
+            </lg></egXML>
+         <!-- Byron, Vision of Judgment viii ed EH Coleridge 1922) -->
+      </p>
+      <p>Note the use of the <att>type</att> attribute to name the type of unit encoded by the
+            <gi>lg</gi> element; this attribute is common to all members of the <ident type="class"
+            >att.divLike</ident> class (see section <ptr target="#DSDIV1"/>).<note place="bottom"
+            >For discussion of other attributes of this class, see <ptr target="#DSDIV3X"/>.</note>
+         When used on <gi>lg</gi>, the <att>type</att> attribute is intended solely for conventional
+         names of different classes of text block. For systematic analysis of metrical and rhyme
+         schemes, use the <att>met</att> and <att>rhyme</att> attributes, for which see below,
+         section <ptr target="#VEME"/>. </p>
+      <p>As a further example, consider the Shakespearean sonnet. This may be divided into two
+         parts: a concluding couplet, and a body of twelve lines, itself subdivided into three quatrains:<!-- any suggestions for a better name than 'body' to         -->
+         <!-- describe the twelve lines gratefully accepted ... (lb)   -->
+         <!-- done.  At least, *I* think it's better ... (msm)         -->
+         <!-- But LB preferred 'body' to 'quatrains'     (msm)         -->
+         <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEST-eg-6"><text>
+               <body>
+                  <lg>
+                     <lg type="quatrain">
+                        <l>My Mistres eyes are nothing like the Sunne,</l>
+                        <l>Currall is farre more red, then her lips red</l>
+                        <l>If snow be white, why then her brests are dun:</l>
+                        <l>If haires be wiers, black wiers grown on her head:</l>
+                     </lg>
+                     <lg type="quatrain">
+                        <l>I have seene Roses damaskt, red and white,</l>
+                        <l>But no such Roses see I in her cheekes,</l>
+                        <l>And in some perfumes is there more delight,</l>
+                        <l>Then in the breath that from my Mistres reekes.</l>
+                     </lg>
+                     <lg type="quatrain">
+                        <l>I love to heare her speake, yet well I know,</l>
+                        <l>That Musicke hath a farre more pleasing sound:</l>
+                        <l>I graunt I never saw a goddesse goe,</l>
+                        <l>My Mistres when shee walkes treads on the ground.</l>
+                     </lg>
+                  </lg>
+                  <lg type="couplet">
+                     <l>And yet by heaven I think my love as rare,</l>
+                     <l>As any she beli'd with false compare.</l>
+                  </lg>
+               </body>
+            </text></egXML>
+         <!-- Shakespeare, Sonnets 1609, no 130 -->
+      </p>
+      <p>Particularly lengthy poetic texts are often subdivided into units larger than stanzas or
+         paragraphs, which may themselves be subdivided. Spenser's <title>Faery Queene</title>, for
+         example, consists of twelve <soCalled>books</soCalled> each of which contains a prologue
+         followed by twelve <soCalled>cantos</soCalled>. Each prologue and each canto consists of
+         nine-line <soCalled>stanzas</soCalled>, each of which follows the same regular pattern.
+         Other examples in the same tradition are easy to find.</p>
 
-<p>Large structures of this kind are most conveniently represented by
-<gi>div</gi> or <gi>div1</gi> elements, as described in section <ptr target="#DSDIV"/>.  Thus the start
-of the <title>Faerie Queene</title> might be encoded as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-01"><body>
-   <div n="I" type="book">
-      <div n="1" type="canto">
-         <lg n="I.1.1" type="stanza">
-            <l>A Gentle Knight was pricking on the plain</l>
-            <l>Y cladd in mightie armes and silver shielde,</l>
-         </lg>
-      </div>
+      <p>Large structures of this kind are most conveniently represented by <gi>div</gi> or
+            <gi>div1</gi> elements, as described in section <ptr target="#DSDIV"/>. Thus the start
+         of the <title>Faerie Queene</title> might be encoded as follows: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-01"><body>
+               <div n="I" type="book">
+                  <div n="1" type="canto">
+                     <lg n="I.1.1" type="stanza">
+                        <l>A Gentle Knight was pricking on the plain</l>
+                        <l>Y cladd in mightie armes and silver shielde,</l>
+                     </lg>
+                  </div>
+               </div>
+            </body></egXML> The encoder must choose at which point in the hierarchy of structural
+         units to introduce <gi>lg</gi> elements rather than a yet smaller <gi>div</gi> element: it
+         would (for example) also be possible to encode the above example as follows:<egXML
+            xmlns="http://www.tei-c.org/ns/Examples"><body>
+               <div n="I" type="book">
+                  <div n="I.1" type="canto">
+                     <div n="I.1.1" type="stanza">
+                        <l>A gentle knight was pricking on the plain</l>
+                        <l>Ycladd in mightie armes and silver shielde,</l>
+                     </div>
+                  </div>
+               </div>
+            </body></egXML></p>
+
+      <p>One reason for using <gi>div</gi> rather than <gi>lg</gi> elements is that the former may
+         contain non-metrical elements, such as epigraphs or dedications and other members of the
+            <ident type="class">model.divTop</ident> class, whereas <gi>lg</gi> elements may contain
+         only headings or metrical lines. </p>
    </div>
-</body></egXML>
-The encoder must choose at which point in the hierarchy of structural
-units to introduce <gi>lg</gi> elements rather than a yet smaller
-<gi>div</gi> element: it would (for example) also be possible to encode
-the above example as follows:<egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
-   <div n="I" type="book">
-      <div n="I.1" type="canto">
-         <div n="I.1.1" type="stanza">
-            <l>A gentle knight was pricking on the plain</l>
-            <l>Ycladd in mightie armes and silver shielde,</l>
-         </div>
-      </div>
+   <div type="div2" xml:id="VESE">
+      <head>Components of the Verse Line</head>
+      <p>It is often convenient for various kinds of analysis to encode subdivisions of verse lines.
+         The general purpose <gi>seg</gi> element defined in the tag set for segmentation and
+         alignment (section <ptr target="#SASE"/>) is provided for this purpose: <specList>
+            <specDesc key="seg"/>
+         </specList></p>
+      <p>To use this element together with the module for verse, the module for segmentation and
+         alignment must also be enabled as further described in section <ptr target="#STIN"/>. </p>
+      <p>In Old and Middle English alliterative verse, individual verse lines are typically split
+         into half lines. The <gi>seg</gi> element may be used to mark these explicitly, as in the
+         following example from Langland's <title>Piers Plowman</title>: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples" corresp="#VESE-eg-9"><l><seg>In a somer
+                  seson,</seg>
+               <seg>whan softe was the sonne,</seg></l>
+            <l><seg>I shoop me into shroudes</seg>
+               <seg>as I a sheep were,</seg></l>
+            <l><seg>In habite as an heremite </seg>
+               <seg>unholy of werkes,</seg></l>
+            <l><seg>Went wide in this world </seg>
+               <seg>wondres to here.</seg></l>
+         </egXML>
+         <!-- Langland: The Vision of Piers Plowman B-text ed Schmidt --></p>
+      <p>The <gi>seg</gi> element can be nested hierarchically, in the same way as the <gi>lg</gi>
+         element, down to whatever level of detailed structure is required. In the following
+         example, the line has been divided into <term>feet</term>, each of which has been further
+         subdivided into syllables.<note place="bottom">As elsewhere in these Guidelines, this
+            example has been formatted for clarity of exposition rather than correct display. Note
+            in particular that whether an XML processor retains whitespace within the <gi>seg</gi>
+            element or not (this can be configured by means of the <att>xml:space</att> attribute)
+            this example will still require additional processing, since white space should be
+            retained for the lower level <gi>seg</gi> elements (those of type <val>syll</val>) but
+            not for the higher level one (those of type <val>foot</val>).</note>
+         <egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-02"><l>
+               <seg type="foot"><seg type="syll">Ar</seg><seg type="syll">ma </seg><seg type="syll"
+                     >vi</seg>
+               </seg><seg type="foot"><seg type="syll">rum</seg><seg type="syll">que </seg><seg
+                     type="syll">ca</seg>
+               </seg><seg type="foot"><seg type="syll">no </seg><seg type="syll">Tro</seg>
+               </seg><seg type="foot"><seg type="syll">iae </seg><seg type="syll">qui </seg>
+               </seg><seg type="foot"><seg type="syll">pri</seg><seg type="syll">mus </seg><seg
+                     type="syll">ab </seg>
+               </seg><seg type="foot"><seg type="syll">or</seg><seg type="syll">is </seg>
+               </seg>
+            </l></egXML></p>
+      <p>The <gi>seg</gi> element may be used to identify any subcomponent of a line which has
+         content; its type attribute may characterize such units in any way appropriate to the needs
+         of the encoder. For the specific case of labeling each foot with its formal type
+            (<q>dactyl</q>, <q>spondee</q>, etc.), and each syllable with its metrical or prosodic
+         status (syllables bearing primary or secondary stress, long syllables, short syllables),
+         however, the specialized attributes <att>met</att> and <att>real</att> are defined, which
+         provide a more systematic framework than the <att>type</att> attribute; see section <ptr
+            target="#VEME"/> below.</p>
+      <p>In classical verse, a hexameter like that above may also be formally divided into two
+            <term>cola</term> or <soCalled>hemistiches</soCalled>. This example provides a typical
+         case, in that the boundary of the first colon falls in the middle of one of the feet
+         (between the syllables <q>no</q> and <q>Tro</q>). If both kinds of segmentation are
+         required, the <att>part</att> attribute might be used to mark the overlapping structure as
+         follows. <egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-02"><l>
+               <seg type="hemistich">
+                  <seg type="foot">
+                     <seg type="syll">Ar</seg>
+                     <seg type="syll">ma </seg>
+                     <seg type="syll">vi</seg>
+                  </seg>
+                  <seg type="foot">
+                     <seg type="syll">rum</seg>
+                     <seg type="syll">que </seg>
+                     <seg type="syll">ca</seg>
+                  </seg>
+                  <seg type="foot" part="I">
+                     <seg type="syll">no </seg>
+                  </seg>
+               </seg>
+               <seg type="hemistich">
+                  <seg type="foot" part="F">
+                     <seg type="syll">Tro</seg>
+                  </seg>
+                  <seg type="foot">
+                     <seg type="syll">iae </seg>
+                     <seg type="syll">qui </seg>
+                  </seg>
+               </seg>
+            </l></egXML>
+      </p>
+      <p>Instead of using the <att>part</att> attribute on the <gi>seg</gi> element, it might be
+         simpler just to mark the point at which the caesura occurs. An additional element is
+         provided for analyses of this kind, in which what is to be marked are points <q>between the
+            words</q>, which have some significance within a verse line: <specList>
+            <specDesc key="caesura"/>
+         </specList> In classical prosody, the <term>caesura</term>, which occurs within a foot, is
+         distinguished from a <term>diaeresis</term>, which occurs on a foot boundary (not to be
+         confused with the division of a diphthong into two syllables, or the diacritic symbol used
+         to indicate such division, each of which is also termed <term>diaeresis</term>). This
+         distinction is rarely made nowadays, the term <mentioned>caesura</mentioned> being used for
+         any division irrespective of foot boundaries. No special-purpose <gi scheme="imaginary"
+            >diaeresis</gi> element is therefore provided.</p>
+      <p>As an example of the <gi>caesura</gi> element, we refer again to the example from Langland.
+         An encoder might choose simply to record the location of the caesura within each line,
+         rather than encoding each half-line as a segment in its own right, as follows: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples" corresp="#VESE-eg-9"><l>In a somer seson,
+               <caesura/> whan softe was the sonne, </l>
+            <l>I shoop me into shroudes <caesura/> as I a sheep were, </l>
+            <l>In habite as an heremite <caesura/> unholy of werkes, </l>
+            <l>Went wide in this world <caesura/> wondres to here. </l></egXML>
+         <!-- Langland: The Vision of Piers Plowman B-text ed Schmidt --></p>
+      <p>Logically, the opposite of caesura might be considered to be <term>enjambement</term>. When
+         the <ident type="module">verse</ident> module is included in a schema, an additional class
+         called <ident type="class">att.enjamb</ident> is defined as follows: <specList>
+            <specDesc key="att.enjamb" atts="enjamb"/>
+         </specList> The following lines demonstrate the use of the <att>enjamb</att> attribute to
+         mark places where there is a discrepancy between the boundaries of the <gi>l</gi> elements
+         and the syntactic structure of the verse (a discrepancy of some significance in some
+         schools of verse): <egXML xml:lang="fr" xmlns="http://www.tei-c.org/ns/Examples"
+            corresp="#VESE-eg-13"><l enjamb="y">Un astrologue, un jour, se laissa choir</l>
+            <l>Au fond d'un puits.</l></egXML>
+         <!-- La Fontaine, somewhere (Larousse) -->
+         <!-- There's no way of constraining enjamb to end of line.    -->
+         <!-- I think it wd be better as an attribute of l - like      -->
+         <!-- latching att on u (lb)                                   -->
+         <!-- I agree, but it seems rather late to change it now.      -->
+         <!-- But better late than never.  Changed! (msm)              --></p>
    </div>
-</body></egXML></p>
-
-<p>One reason for using <gi>div</gi> rather than <gi>lg</gi> elements
-is that the former may contain non-metrical elements, such as
-epigraphs or dedications and other members of the
-<ident type="class">model.divTop</ident> class, whereas <gi>lg</gi> elements may
-contain only headings or metrical lines. </p></div>
-<div type="div2" xml:id="VESE"><head>Components of the Verse Line</head>
-<p>It is often convenient for various kinds of analysis to encode
-subdivisions of verse lines.  The general purpose <gi>seg</gi> element
-defined in the tag set for segmentation and alignment (section <ptr target="#SASE"/>) is provided for this purpose:
-<specList><specDesc key="seg"/></specList></p>
-<p>To use this element together with the module for verse, the
-module for segmentation and alignment must also be enabled as further
-described in section <ptr target="#STIN"/>.   </p>
-<p>In Old and Middle English alliterative verse, individual verse lines
-are typically split into half lines. The <gi>seg</gi> element may be
-used to mark these explicitly, as in the following example from
-Langland's <title>Piers Plowman</title>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VESE-eg-9"><l><seg>In a somer seson,</seg>
-   <seg>whan softe was the sonne,</seg></l>
-<l><seg>I shoop me into shroudes</seg>
-   <seg>as I a sheep were,</seg></l>
-<l><seg>In habite as an heremite </seg>
-   <seg>unholy of werkes,</seg></l>
-<l><seg>Went wide in this world </seg>
-   <seg>wondres to here.</seg></l>
-</egXML>
-<!-- Langland: The Vision of Piers Plowman B-text ed Schmidt --></p>
-<p>The <gi>seg</gi> element can be nested hierarchically, in the same
-way as the <gi>lg</gi> element, down to whatever level of detailed
-structure is required.  In the following example, the line has been
-divided into <term>feet</term>, each of which has been further
-subdivided into syllables.<note place="bottom">As elsewhere in these
-Guidelines, this example has been formatted for clarity of exposition
-rather than correct display. Note in particular that whether an XML
-processor retains whitespace within the <gi>seg</gi> element or not
-(this can be configured by means of the
-<att>xml:space</att> attribute) this example will still require
-additional processing, since white space should be retained for the lower level <gi>seg</gi> elements
-(those of type <val>syll</val>) but not for the higher level
-one (those of type <val>foot</val>).</note>
-<egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-02"><l>
-<seg type="foot"><seg type="syll">Ar</seg><seg type="syll">ma </seg><seg type="syll">vi</seg>
-</seg><seg type="foot"><seg type="syll">rum</seg><seg type="syll">que </seg><seg type="syll">ca</seg>
-</seg><seg type="foot"><seg type="syll">no </seg><seg type="syll">Tro</seg>
-</seg><seg type="foot"><seg type="syll">iae </seg><seg type="syll">qui </seg>
-</seg><seg type="foot"><seg type="syll">pri</seg><seg type="syll">mus </seg><seg type="syll">ab </seg>
-</seg><seg type="foot"><seg type="syll">or</seg><seg type="syll">is </seg>
-</seg>
-</l></egXML></p>
-<p>The <gi>seg</gi> element may be used to identify any subcomponent of
-a line which has content; its type attribute may characterize such units
-in any way appropriate to the needs of the encoder.  For the specific
-case of labeling each foot with its formal type (<q>dactyl</q>,
-<q>spondee</q>, etc.), and each syllable with its metrical or prosodic
-status (syllables bearing primary or secondary stress, long syllables,
-short syllables), however, the specialized attributes <att>met</att> and
-<att>real</att> are defined, which provide a more systematic framework
-than the <att>type</att> attribute; see section <ptr target="#VEME"/>
-below.</p>
-<p>In classical verse, a hexameter like that above may also be formally
-divided into two <term>cola</term> or <soCalled>hemistiches</soCalled>.  This example
-provides a typical case, in that the boundary of the first
-colon falls in the middle of one of the feet (between the syllables
-<q>no</q> and <q>Tro</q>).  If both kinds of segmentation are required,
-the <att>part</att> attribute might be used to mark the overlapping
-structure as follows.
-<egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-02"><l>
-   <seg type="hemistich">         
-      <seg type="foot">           
-         <seg type="syll">Ar</seg>
-         <seg type="syll">ma </seg>
-         <seg type="syll">vi</seg>
-      </seg>
-      <seg type="foot">           
-         <seg type="syll">rum</seg>
-         <seg type="syll">que </seg>
-         <seg type="syll">ca</seg>
-      </seg>
-      <seg type="foot" part="I">           
-         <seg type="syll">no </seg>
-      </seg>
-   </seg>
-   <seg type="hemistich">         
-      <seg type="foot" part="F">           
-         <seg type="syll">Tro</seg>
-      </seg>
-      <seg type="foot">            
-         <seg type="syll">iae </seg>
-         <seg type="syll">qui </seg>
-      </seg>
-   </seg>
-</l></egXML>
-</p><p>Instead of using the <att>part</att> attribute on the <gi>seg</gi>
-element, it might be simpler just to mark the point at which the caesura
-occurs.  An additional element is provided for analyses of this kind, in
-which what is to be marked are points <q>between the words</q>, which
-have some significance within a verse line:
-<specList><specDesc key="caesura"/></specList>
-In classical prosody, the <term>caesura</term>, which occurs within a
-foot, is distinguished from a <term>diaeresis</term>, which occurs on a
-foot boundary (not to be confused with the division of a diphthong into
-two syllables, or the diacritic symbol used to indicate such division,
-each of which is also termed <term>diaeresis</term>).  This distinction
-is rarely made nowadays, the term <mentioned>caesura</mentioned> being used for
-any division irrespective of foot boundaries.  No special-purpose <gi scheme="imaginary">diaeresis</gi> element is therefore provided.</p>
-<p>As an example of the <gi>caesura</gi> element, we refer again to the
-example from Langland.  An encoder might choose simply to record the
-location of the caesura within each line, rather than encoding each
-half-line as a segment in its own right, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VESE-eg-9"><l>In a somer seson, <caesura/> whan softe was the sonne, </l>
-<l>I shoop me into shroudes <caesura/> as I a sheep were, </l>
-<l>In habite as an heremite <caesura/> unholy of werkes, </l>
-<l>Went wide in this world <caesura/> wondres to here. </l></egXML>
-<!-- Langland: The Vision of Piers Plowman B-text ed Schmidt --></p>
-<p>Logically, the opposite of caesura might be considered to be
-<term>enjambement</term>.  When the <ident type="module">verse</ident>
-module is included in a schema, an additional class called <ident type="class">att.enjamb</ident> is defined as follows:
-<specList>
-<specDesc key="att.enjamb" atts="enjamb"/>
-</specList>
-The following lines demonstrate
-the use of the <att>enjamb</att> attribute to mark places where there is
-a discrepancy between the boundaries of the <gi>l</gi> elements and the
-syntactic structure of the verse (a discrepancy of some significance in
-some schools of verse):
-<egXML xml:lang="fr" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VESE-eg-13"><l enjamb="y">Un astrologue, un jour, se laissa choir</l>
-<l>Au fond d'un puits.</l></egXML>
-<!-- La Fontaine, somewhere (Larousse) -->
-	<!-- There's no way of constraining enjamb to end of line.    -->
-	<!-- I think it wd be better as an attribute of l - like      -->
-	<!-- latching att on u (lb)                                   -->
-	<!-- I agree, but it seems rather late to change it now.      -->
-	<!-- But better late than never.  Changed! (msm)              --></p>
-</div>
-<div type="div2" xml:id="VEME"><head>Rhyme and Metrical Analysis</head>
-<p>When the module for verse is in use, the following additional
-attributes are available to record information about rhyme and metrical
-form:
-<specList><specDesc key="att.metrical" atts="met real rhyme"/></specList>
- </p>
-<p>These attributes may be attached to the <gi>lg</gi> element, or to the
-higher-level text-division elements <gi>div</gi>, <gi>div1</gi>, etc.
-In general, the attributes should be specified at the highest
-level possible; they may not however be specifiable at the highest level
-if some of the subdivisions of a text are in prose and others in verse.
-All these attributes may also be attached to the <gi>l</gi> and
-<gi>seg</gi> elements, but the default notation for the <att>rhyme</att>
-attribute has no defined meaning when specified on <gi>l</gi> or
-<gi>seg</gi>. The value for these attributes may take any form desired
-by the encoder, but the nature of the notation used will determine how well
-the attribute values can be processed by automatic means.
- </p>
-<p>The primary function of the metrical attributes is to encode the
-conventional metrical or rhyming structure within which the poet is
-working, rather than the actual prosodic realization of each line; the
-latter can be recorded using the <att>real</att> attribute, as further
-discussed below.  A simple mechanism is also provided for recording
-the actual realization of a rhyme pattern; see <ptr target="#VERH"/>.
- </p>
-<div type="div3" xml:id="VEMEsamp"><head>Sample Metrical Analyses</head>
-<p>As a simple example of the use of these attributes, consider the
-following lines from Pope's <title level="a">Essay on Criticism</title>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEsamp-eg-14"><div type="book" n="1" met="-+|-+|-+|-+|-+/" rhyme="aa">
-  <lg n="1" type="paragraph">
-    <l>'Tis hard to say, if greater Want of Skill</l>
-    <l>Appear in <hi>Writing</hi> or in <hi>Judging</hi> ill;</l>
-    <l>But, of the two, less dang'rous is th'Offence,</l>
-    <l>To tire our <hi>Patience</hi>, than mis-lead our <hi>Sense</hi>:</l>
-  </lg>
-</div></egXML>
-<!-- Pope, Essay on Criticism, 1734?-->
- </p>
-<p>This text is written entirely in <term>heroic
-couplets</term>; each line is an iambic pentameter (which, using a common
-notation, can be described with the formula
-<val>-+|-+|-+|-+|-+/</val>, each <val>-</val> denoting a
-metrically unstressed syllable, each <val>+</val> a metrically
-stressed one, each <val>|</val> a foot boundary, and the
-<val>/</val> a line-end), and the couplets rhyme (which can be
-represented with the conventional formula <val>aa</val>).
- </p>
-<p>Because both rhyme pattern and metrical form are consistent
-throughout the poem, they may be conveniently specified on the
-<gi>div</gi> element; the values given for the attributes will be
-inherited by any metrical unit contained within the <gi>div</gi>
-elements of this poem, and must be interpreted in the appropriate way.
- </p>
-<p>Since the notation used in the <att>met</att>, <att>real</att>,	
-and <att>rhyme</att>
-attributes is user-defined, no binding description can be given of its
-details or of how its interpretation must proceed.  (A default notation
-is provided for the <att>rhyme</att> attribute, which however the
-encoder can replace with another; see section <ptr target="#VERH"/>.)  It
-is expected, however, that software should be able to support these
-attributes in useful ways; the more intelligent the software is, and the
-more knowledge of metrics is built into it, the better it will be able
-to support these attributes.  In the extract given above, for example,
-the <att>met</att> and <att>rhyme</att> attribute values specified on
-the <gi>div</gi> element are inherited directly by the <gi>lg</gi>
-elements nested within it.  Since the <att>met</att> value
-specifies the metrical form of a single verse line, the structure of the
-<gi>lg</gi> as a whole is understood to involve as many repetitions of
-the pattern as there are lines in the verse paragraph.  The same
-attribute value, when inherited in turn by the <gi>l</gi> element, must
-be understood <emph>not</emph> to repeat.  With sufficiently
-sophisticated software, segments within the line might even be
-understood as inheriting precisely that portion of the formula which
-applies to the segment in question; this will, however, be easier to
-accomplish for some languages than for others.
- </p>
-<p>The <att>rhyme</att> attribute in this example uses the default
-notation to specify a rhyme scheme applicable only to pairs of lines.
-As elsewhere, the default notation for the <att>rhyme</att> attribute
-has no meaning for metrical units at the line level or below.  In verse
-forms where line-internal rhyme is structurally significant, e.g. in
-some skaldic poetry, the default notation is incapable of expressing the
-required information, since the rhyme pattern may need to be specified
-for units smaller than the line.  In such cases, a user-specified rhyme
-notation must be substituted for the default notation, or else the rhyme
-pattern must be described using some alternative method (e.g. by using
-the <gi>link</gi> mechanism described below).
- </p>
-<p>The precise semantics of the <att>met</att> attribute and the
-inferences which software is expected or able to draw from it, are
-implementation-dependent; so are the semantics and processing of the
-<att>rhyme</att> attribute, when user-specified notations are used.
- </p>
-<p>A formal definition of the significance of each component of the
-pattern given as the value of the <att>met</att> attribute may be
-provided in the <gi>metDecl</gi> element within the
-<gi>encodingDesc</gi> element in the TEI header (see section <ptr target="#HDMN"/>). The encoder is free to invent any notation
-appropriate to his or her analytic needs, provided that it is
-adequately documented in this element. The notation may define
-metrical components using invented or traditional names (such as
-<q>iamb</q> or <q>hexameter</q>) or in terms of basic units such as
-codes for stressed or unstressed syllables, or a combination of the
-two.
- </p>
-<p>The <att>real</att> (for <q>realization</q>) attribute may optionally
-be specified to indicate any deviation from the pattern defined by the
-<att>met</att> attribute which the encoder wishes to record.  By
-default, the <att>real</att> attribute has the same value as the
-<att>met</att> attribute on the same element; it is only necessary to
-provide an explicit value when the realization differs in some way from
-the abstract metrical pattern.  The tension between conventional
-metrical pattern and its realization may thus be recorded explicitly.
-For example, many readers of the above passage would stress the word
-<q>But</q> at the beginning of the third line rather than the word
-<q>of</q> following it, as the metrical pattern would normally require.
-This variation might be encoded as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l real="+-|-+|-+|-+|-+">But, of the two, ...</l></egXML></p><p>Where the <att>real</att> attribute is used to over-ride the default
-or conventional metrical pattern, it applies only to the element on
-which it is specified.  The default pattern for any subsequent lines is
-unaffected.</p><p>As it happens, this particular kind of variation is very common in
-the English iambic pentameter—it even has a name:
-<term>trochaic substitution</term>—an encoder might therefore
-<!-- "anapaestic" changed to "trochaic" in above <term> on advice of Dr -->
-	<!--  Elizabeth Solopova, with which WWPers (Julia Flanders, Tom Hinkle, -->
-	<!--  Paul Caton) agree. 2002-03-13T10:12-05 by Syd -->
-choose to regard this not as an instance of a variant realization, but
-as an instance of a variant metrical form:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l met="+-|-+|-+|-+|-+">But, of the two, ...</l></egXML>
-Alternatively, a different metrical notation might be defined, in which
-this kind of variation was permitted throughout the text.</p><p>In choosing whether to over-ride a metrical specification in this
-way or by using the <att>real</att> attribute, the encoder is required
-to determine whether the change is a systematic or conventional one (as
-in this example) or an occasional variation, perhaps for local effect.
-In the following example, from Goethe's <title level="a">Auf dem See</title>,
-the variation is a matter of local realization:<!-- DR suspects title.  He is right:  dem not den. (msm)     -->
-	<!-- Corrected typos in title, final punctuation. (msm)       -->
-<egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-03">  <lg type="chevy-chase-stanza" met="-+-+-+-+/-+-+-+" rhyme="ababcdcd">
-  <l n="1">                  Und frische Nahrung, neues Blut</l>
-  <l n="2" real="+--+-+">    Saug' ich aus freier Welt;</l>
-  <l n="3" real="+--+-+-+">  Wie ist Natur so hold und gut,</l>
-  <l n="4" real="---+-+">    Die mich am Busen hält!</l>
-  <l n="5">                  Die Welle wieget unsern Kahn</l>
-  <l n="6">                  Im Rudertakt hinauf,</l>
-  <l n="7">                  Und Berge, wolkig himmelan,</l>
-  <l n="8">                  Begegnen unserm Lauf.</l>
-  </lg></egXML>
-On the other hand, the famous inserted alexandrine in Pope's <q>Essay on
-Criticism</q>, might be encoded as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEsamp-eg-14"><l n="356"> A needless alexandrine ends the song, </l>
-<l n="357" met="-+|-+|-+|-+|-+|-+" real="++|-+|-+|+-|++|-+">
-  That, like a wounded snake, drags its slow length along.
-</l></egXML>
-<!-- slow changed from - to + on David Chisholm's             -->
-	<!-- suggestion (msm)                                         -->
-Here the <att>met</att> attribute indicates that a different metrical
-convention (the alexandrine) is in force, while the <att>real</att>
-attribute indicates that there is a variation from that
-convention.  As with many other aspects of metrical analysis, however,
-this is of necessity an entirely interpretive judgment.
- </p></div>
-<div type="div3" xml:id="VEMElevels"><head>Segment-Level versus Line-level Tagging</head>
-<p>The examples given so far have encoded information about the
-realization of metrical conventions at the level of the whole
-verse-line.  This has obvious advantages of simplicity, but the
-disadvantage that any deviation from metrical convention is not
-marked at its precise point of occurrence in the text.  Greater
-precision may be achieved, but only at the cost of marking deviant
-metrical units explicitly.  This may be done
-with the <gi>seg</gi> element, giving the
-variant realization as the value of the <att>real</att> attribute on
-that element.  Using this method, the example given immediately above
-might be encoded as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><l n="356"> A need<seg type="foot" n="2" real="--">less
-   a</seg>lexandrine ends the song,</l>
-<l n="357" met="-+|-+|-+|-+|-+|-+">
-   <seg n="1" real="++"> That, like </seg> a wounded snake,
-   <seg n="4" real="+-"> drags its </seg>
-   <seg n="5" real="++"> slow length </seg>
-   along.
-</l></egXML>
-The marking of the foot boundaries with the symbol <val>|</val> in the
-<att>met</att> attribute value of the <gi>l</gi> element allows the
-human reader, or a sufficiently intelligent software program, to isolate
-the correct portion of that attribute value as the default value for the
-same attribute on the <gi>seg</gi> elements for feet, namely <val>-+</val>.
-It is of course up to the encoder to decide whether or not to include
-the <att>n</att> attribute of <gi>seg</gi> here, and whether or not also
-to tag the feet in the line in which there is no deviation from the
-metrical convention.  The ability of software to infer which foot is
-being marked, if not all are tagged, will depend heavily on the language
-of the text and the knowledge of prosody built into the software; the
-fuller and more explicit the markup, the easier it will be for software
-to handle it.  It may prove useful, however, to mark metrical deviations
-in the manner shown, even if the available software is not sufficiently
-intelligent to scan lines without aid from the markup.  Human readers
-who are interested in prosody may well be able to exploit the markup in
-useful ways even with less sophisticated software.
- </p>
-<p>There are circumstances where it may also be useful to use the
-<att>met</att> attribute of <gi>seg</gi>.  If we wish to identify the
-exact location of the different types of foot in the first line of
-Virgil's <title>Aeneid</title>, the text could be encoded as follows
-(for simplicity's sake the caesura has been omitted):
-<egXML xml:lang="la" xmlns="http://www.tei-c.org/ns/Examples"><l><seg type="foot" met="+--">Arma vi</seg>
-   <seg met="+--">rumque ca</seg>
-   <seg met="++">no Tro</seg>
-   <seg met="++">iae qui </seg>
-   <seg met="+--">primus ab</seg>
-   <seg met="++"> oris</seg>
-</l></egXML>
-An appropriate value of the <att>met</att> attribute might also be
-supplied on the enclosing <gi>div</gi> element, to
-indicate that each foot may be made up of a dactyl or a spondee, so that
-the values given here for <att>met</att> at the level of the foot may be
-considered a series of local variations on this fundamental pattern; in
-cases like this, of course, the local variations may also be considered
-aspects of realization rather than of convention, in which case the
-<att>real</att> attribute may be used instead of <att>met</att>, if
-desired.
- </p></div>
-<div type="div3" xml:id="VEMEana"><head>Metrical Analysis of Stanzaic Verse</head>
-<p>The method described above may be used to encode quite complex verse
-forms, for instance various kinds of fixed-form stanzas.  Let us take
-one of Dante's canzoni, in which each stanza except the last has the
-same combination of eleven-syllable and seven-syllable lines, and the
-same rhyme scheme:
-<egXML xml:lang="it" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEana-eg-23"><div type="canzone" met="E/E/S/E/S/E/E/S/E/S/E/S/S/E/S/E/E/S/S/E/E" rhyme="abbcdaccbdceeffghhhgg">
-<lg n="1" type="stanza">
-<l n="1">Doglia mi reca nello core ardire</l></lg></div></egXML>
-<!-- ref needed: D Robey says any book on Dante will provide one
+   <div type="div2" xml:id="VEME">
+      <head>Rhyme and Metrical Analysis</head>
+      <p>When the module for verse is in use, the following additional attributes are available to
+         record information about rhyme and metrical form: <specList>
+            <specDesc key="att.metrical" atts="met real rhyme"/>
+         </specList>
+      </p>
+      <p>These attributes may be attached to the <gi>lg</gi> element, or to the higher-level
+         text-division elements <gi>div</gi>, <gi>div1</gi>, etc. In general, the attributes should
+         be specified at the highest level possible; they may not however be specifiable at the
+         highest level if some of the subdivisions of a text are in prose and others in verse. All
+         these attributes may also be attached to the <gi>l</gi> and <gi>seg</gi> elements, but the
+         default notation for the <att>rhyme</att> attribute has no defined meaning when specified
+         on <gi>l</gi> or <gi>seg</gi>. The value for these attributes may take any form desired by
+         the encoder, but the nature of the notation used will determine how well the attribute
+         values can be processed by automatic means. </p>
+      <p>The primary function of the metrical attributes is to encode the conventional metrical or
+         rhyming structure within which the poet is working, rather than the actual prosodic
+         realization of each line; the latter can be recorded using the <att>real</att> attribute,
+         as further discussed below. A simple mechanism is also provided for recording the actual
+         realization of a rhyme pattern; see <ptr target="#VERH"/>. </p>
+      <div type="div3" xml:id="VEMEsamp">
+         <head>Sample Metrical Analyses</head>
+         <p>As a simple example of the use of these attributes, consider the following lines from
+            Pope's <title level="a">Essay on Criticism</title>: <egXML
+               xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEsamp-eg-14"><div type="book"
+                  n="1" met="-+|-+|-+|-+|-+/" rhyme="aa">
+                  <lg n="1" type="paragraph">
+                     <l>'Tis hard to say, if greater Want of Skill</l>
+                     <l>Appear in <hi>Writing</hi> or in <hi>Judging</hi> ill;</l>
+                     <l>But, of the two, less dang'rous is th'Offence,</l>
+                     <l>To tire our <hi>Patience</hi>, than mis-lead our <hi>Sense</hi>:</l>
+                  </lg>
+               </div></egXML>
+            <!-- Pope, Essay on Criticism, 1734?-->
+         </p>
+         <p>This text is written entirely in <term>heroic couplets</term>; each line is an iambic
+            pentameter (which, using a common notation, can be described with the formula
+               <val>-+|-+|-+|-+|-+/</val>, each <val>-</val> denoting a metrically unstressed
+            syllable, each <val>+</val> a metrically stressed one, each <val>|</val> a foot
+            boundary, and the <val>/</val> a line-end), and the couplets rhyme (which can be
+            represented with the conventional formula <val>aa</val>). </p>
+         <p>Because both rhyme pattern and metrical form are consistent throughout the poem, they
+            may be conveniently specified on the <gi>div</gi> element; the values given for the
+            attributes will be inherited by any metrical unit contained within the <gi>div</gi>
+            elements of this poem, and must be interpreted in the appropriate way. </p>
+         <p>Since the notation used in the <att>met</att>, <att>real</att>, and <att>rhyme</att>
+            attributes is user-defined, no binding description can be given of its details or of how
+            its interpretation must proceed. (A default notation is provided for the
+               <att>rhyme</att> attribute, which however the encoder can replace with another; see
+            section <ptr target="#VERH"/>.) It is expected, however, that software should be able to
+            support these attributes in useful ways; the more intelligent the software is, and the
+            more knowledge of metrics is built into it, the better it will be able to support these
+            attributes. In the extract given above, for example, the <att>met</att> and
+               <att>rhyme</att> attribute values specified on the <gi>div</gi> element are inherited
+            directly by the <gi>lg</gi> elements nested within it. Since the <att>met</att> value
+            specifies the metrical form of a single verse line, the structure of the <gi>lg</gi> as
+            a whole is understood to involve as many repetitions of the pattern as there are lines
+            in the verse paragraph. The same attribute value, when inherited in turn by the
+               <gi>l</gi> element, must be understood <emph>not</emph> to repeat. With sufficiently
+            sophisticated software, segments within the line might even be understood as inheriting
+            precisely that portion of the formula which applies to the segment in question; this
+            will, however, be easier to accomplish for some languages than for others. </p>
+         <p>The <att>rhyme</att> attribute in this example uses the default notation to specify a
+            rhyme scheme applicable only to pairs of lines. As elsewhere, the default notation for
+            the <att>rhyme</att> attribute has no meaning for metrical units at the line level or
+            below. In verse forms where line-internal rhyme is structurally significant, e.g. in
+            some skaldic poetry, the default notation is incapable of expressing the required
+            information, since the rhyme pattern may need to be specified for units smaller than the
+            line. In such cases, a user-specified rhyme notation must be substituted for the default
+            notation, or else the rhyme pattern must be described using some alternative method
+            (e.g. by using the <gi>link</gi> mechanism described below). </p>
+         <p>The precise semantics of the <att>met</att> attribute and the inferences which software
+            is expected or able to draw from it, are implementation-dependent; so are the semantics
+            and processing of the <att>rhyme</att> attribute, when user-specified notations are
+            used. </p>
+         <p>A formal definition of the significance of each component of the pattern given as the
+            value of the <att>met</att> attribute may be provided in the <gi>metDecl</gi> element
+            within the <gi>encodingDesc</gi> element in the TEI header (see section <ptr
+               target="#HDMN"/>). The encoder is free to invent any notation appropriate to his or
+            her analytic needs, provided that it is adequately documented in this element. The
+            notation may define metrical components using invented or traditional names (such as
+               <q>iamb</q> or <q>hexameter</q>) or in terms of basic units such as codes for
+            stressed or unstressed syllables, or a combination of the two. </p>
+         <p>The <att>real</att> (for <q>realization</q>) attribute may optionally be specified to
+            indicate any deviation from the pattern defined by the <att>met</att> attribute which
+            the encoder wishes to record. By default, the <att>real</att> attribute has the same
+            value as the <att>met</att> attribute on the same element; it is only necessary to
+            provide an explicit value when the realization differs in some way from the abstract
+            metrical pattern. The tension between conventional metrical pattern and its realization
+            may thus be recorded explicitly. For example, many readers of the above passage would
+            stress the word <q>But</q> at the beginning of the third line rather than the word
+               <q>of</q> following it, as the metrical pattern would normally require. This
+            variation might be encoded as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                  ><l real="+-|-+|-+|-+|-+">But, of the two, ...</l></egXML></p>
+         <p>Where the <att>real</att> attribute is used to over-ride the default or conventional
+            metrical pattern, it applies only to the element on which it is specified. The default
+            pattern for any subsequent lines is unaffected.</p>
+         <p>As it happens, this particular kind of variation is very common in the English iambic
+            pentameter—it even has a name: <term>trochaic substitution</term>—an encoder might
+            therefore <!-- "anapaestic" changed to "trochaic" in above <term> on advice of Dr -->
+            <!--  Elizabeth Solopova, with which WWPers (Julia Flanders, Tom Hinkle, -->
+            <!--  Paul Caton) agree. 2002-03-13T10:12-05 by Syd --> choose to regard this not as an
+            instance of a variant realization, but as an instance of a variant metrical form: <egXML
+               xmlns="http://www.tei-c.org/ns/Examples"><l met="+-|-+|-+|-+|-+">But, of the two,
+                  ...</l></egXML> Alternatively, a different metrical notation might be defined, in
+            which this kind of variation was permitted throughout the text.</p>
+         <p>In choosing whether to over-ride a metrical specification in this way or by using the
+               <att>real</att> attribute, the encoder is required to determine whether the change is
+            a systematic or conventional one (as in this example) or an occasional variation,
+            perhaps for local effect. In the following example, from Goethe's <title level="a">Auf
+               dem See</title>, the variation is a matter of local realization:<!-- DR suspects title.  He is right:  dem not den. (msm)     -->
+            <!-- Corrected typos in title, final punctuation. (msm)       -->
+            <egXML xml:lang="de" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-03">
+               <lg type="chevy-chase-stanza" met="-+-+-+-+/-+-+-+" rhyme="ababcdcd">
+                  <l n="1"> Und frische Nahrung, neues Blut</l>
+                  <l n="2" real="+--+-+"> Saug' ich aus freier Welt;</l>
+                  <l n="3" real="+--+-+-+"> Wie ist Natur so hold und gut,</l>
+                  <l n="4" real="---+-+"> Die mich am Busen hält!</l>
+                  <l n="5"> Die Welle wieget unsern Kahn</l>
+                  <l n="6"> Im Rudertakt hinauf,</l>
+                  <l n="7"> Und Berge, wolkig himmelan,</l>
+                  <l n="8"> Begegnen unserm Lauf.</l>
+               </lg></egXML> On the other hand, the famous inserted alexandrine in Pope's <q>Essay
+               on Criticism</q>, might be encoded as follows: <egXML
+               xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEsamp-eg-14"><l n="356"> A
+                  needless alexandrine ends the song, </l>
+               <l n="357" met="-+|-+|-+|-+|-+|-+" real="++|-+|-+|+-|++|-+"> That, like a wounded
+                  snake, drags its slow length along. </l></egXML>
+            <!-- slow changed from - to + on David Chisholm's             -->
+            <!-- suggestion (msm)                                         --> Here the
+               <att>met</att> attribute indicates that a different metrical convention (the
+            alexandrine) is in force, while the <att>real</att> attribute indicates that there is a
+            variation from that convention. As with many other aspects of metrical analysis,
+            however, this is of necessity an entirely interpretive judgment. </p>
+      </div>
+      <div type="div3" xml:id="VEMElevels">
+         <head>Segment-Level versus Line-level Tagging</head>
+         <p>The examples given so far have encoded information about the realization of metrical
+            conventions at the level of the whole verse-line. This has obvious advantages of
+            simplicity, but the disadvantage that any deviation from metrical convention is not
+            marked at its precise point of occurrence in the text. Greater precision may be
+            achieved, but only at the cost of marking deviant metrical units explicitly. This may be
+            done with the <gi>seg</gi> element, giving the variant realization as the value of the
+               <att>real</att> attribute on that element. Using this method, the example given
+            immediately above might be encoded as follows: <egXML
+               xmlns="http://www.tei-c.org/ns/Examples"><l n="356"> A need<seg type="foot" n="2"
+                     real="--">less a</seg>lexandrine ends the song,</l>
+               <l n="357" met="-+|-+|-+|-+|-+|-+">
+                  <seg n="1" real="++"> That, like </seg> a wounded snake, <seg n="4" real="+-">
+                     drags its </seg>
+                  <seg n="5" real="++"> slow length </seg> along. </l></egXML> The marking of the
+            foot boundaries with the symbol <val>|</val> in the <att>met</att> attribute value of
+            the <gi>l</gi> element allows the human reader, or a sufficiently intelligent software
+            program, to isolate the correct portion of that attribute value as the default value for
+            the same attribute on the <gi>seg</gi> elements for feet, namely <val>-+</val>. It is of
+            course up to the encoder to decide whether or not to include the <att>n</att> attribute
+            of <gi>seg</gi> here, and whether or not also to tag the feet in the line in which there
+            is no deviation from the metrical convention. The ability of software to infer which
+            foot is being marked, if not all are tagged, will depend heavily on the language of the
+            text and the knowledge of prosody built into the software; the fuller and more explicit
+            the markup, the easier it will be for software to handle it. It may prove useful,
+            however, to mark metrical deviations in the manner shown, even if the available software
+            is not sufficiently intelligent to scan lines without aid from the markup. Human readers
+            who are interested in prosody may well be able to exploit the markup in useful ways even
+            with less sophisticated software. </p>
+         <p>There are circumstances where it may also be useful to use the <att>met</att> attribute
+            of <gi>seg</gi>. If we wish to identify the exact location of the different types of
+            foot in the first line of Virgil's <title>Aeneid</title>, the text could be encoded as
+            follows (for simplicity's sake the caesura has been omitted): <egXML xml:lang="la"
+               xmlns="http://www.tei-c.org/ns/Examples"><l><seg type="foot" met="+--">Arma vi</seg>
+                  <seg met="+--">rumque ca</seg>
+                  <seg met="++">no Tro</seg>
+                  <seg met="++">iae qui </seg>
+                  <seg met="+--">primus ab</seg>
+                  <seg met="++"> oris</seg>
+               </l></egXML> An appropriate value of the <att>met</att> attribute might also be
+            supplied on the enclosing <gi>div</gi> element, to indicate that each foot may be made
+            up of a dactyl or a spondee, so that the values given here for <att>met</att> at the
+            level of the foot may be considered a series of local variations on this fundamental
+            pattern; in cases like this, of course, the local variations may also be considered
+            aspects of realization rather than of convention, in which case the <att>real</att>
+            attribute may be used instead of <att>met</att>, if desired. </p>
+      </div>
+      <div type="div3" xml:id="VEMEana">
+         <head>Metrical Analysis of Stanzaic Verse</head>
+         <p>The method described above may be used to encode quite complex verse forms, for instance
+            various kinds of fixed-form stanzas. Let us take one of Dante's canzoni, in which each
+            stanza except the last has the same combination of eleven-syllable and seven-syllable
+            lines, and the same rhyme scheme: <egXML xml:lang="it"
+               xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEana-eg-23"><div type="canzone"
+                  met="E/E/S/E/S/E/E/S/E/S/E/S/S/E/S/E/E/S/S/E/E" rhyme="abbcdaccbdceeffghhhgg">
+                  <lg n="1" type="stanza">
+                     <l n="1">Doglia mi reca nello core ardire</l>
+                  </lg>
+               </div></egXML>
+            <!-- ref needed: D Robey says any book on Dante will provide one
 --></p>
-<p>Here the <att>met</att> attribute specifies a metrical pattern for
-each of the twenty-one lines making up a stanza of the
-<term>canzone</term>.  Each stanza inherits this definition from the
-parent <gi>div</gi> element.  The <att>rhyme</att> attribute specifies
-a rhyme scheme for each stanza, in the same way.
- </p>
-<p>In the metrical notation used here, the letter <val>E</val>
-represents a line containing nine syllables which may or may not be
-metrically prominent, a tenth which is prominent and an optional
-non-prominent eleventh syllable.  The letter <q>S</q> is used to
-represent a line containing five syllables which may or may not be
-metrically prominent, a sixth which is prominent and an optional
-non-prominent seventh syllable.  A suitable definition for this
-notation might be given by a <gi>metDecl</gi> element like the
-following:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl type="met" pattern="((E|S)/)+)">
-  <metSym value="E" terminal="false">xxxxxxxxx+o</metSym>
-  <metSym value="S" terminal="false">xxxxx+o</metSym>
-  <metSym value="x">metrically prominent or non-prominent</metSym>
-  <metSym value="+">metrically prominent</metSym>
-  <metSym value="o">optional non prominent</metSym>
-  <metSym value="/">line division</metSym>
-</metDecl></egXML>
- </p>
-<p>As noted above, the metrical pattern specified on the <gi>div</gi>
-applies to each <gi>lg</gi> (stanza) element contained within the
-<gi>div</gi>.  In fact however, after seven stanzas of this type, there
-is a final stanza, known as a <term>commiato</term> or envoi, which
-follows a different metrical and rhyming scheme.  The solution to this
-problem is simply to specify a new <att>met</att> attribute on the
-eighth stanza itself, which will override the default value inherited
-from parent <gi>div</gi>, as follows:
-<egXML xml:lang="it" xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEana-eg-23"><div met=".....">
-  <lg>
-    <l> ... </l>
-  </lg>
-  <lg type="commiato" met="E/S/S/E/S/E/E/S/S/E/E" rhyme="abbccdeeedd">
-    <l n="1">Canzone, presso di qui è une donna</l>
-  </lg>
-</div></egXML></p><p>Note that, in the same way as for the <att>real</att> attribute,
-over-riding of this kind does not affect subsequent elements at the same
-hierarchic level.  Any <gi>lg</gi> element following the
-<term>commiato</term> above would be assumed to use the same metrical
-and rhyming scheme as the one preceding the <term>commiato</term>.
-Moreover, although it is quite regular (in the sense that the last
-stanza of each <term>canzone</term> is a <term>commiato</term>), the
-over-riding must be specified for each case.
- </p></div></div>
-<div type="div2" xml:id="VERH"><head>Rhyme</head>
+         <p>Here the <att>met</att> attribute specifies a metrical pattern for each of the
+            twenty-one lines making up a stanza of the <term>canzone</term>. Each stanza inherits
+            this definition from the parent <gi>div</gi> element. The <att>rhyme</att> attribute
+            specifies a rhyme scheme for each stanza, in the same way. </p>
+         <p>In the metrical notation used here, the letter <val>E</val> represents a line containing
+            nine syllables which may or may not be metrically prominent, a tenth which is prominent
+            and an optional non-prominent eleventh syllable. The letter <q>S</q> is used to
+            represent a line containing five syllables which may or may not be metrically prominent,
+            a sixth which is prominent and an optional non-prominent seventh syllable. A suitable
+            definition for this notation might be given by a <gi>metDecl</gi> element like the
+            following: <egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl type="met"
+                  pattern="((E|S)/)+)">
+                  <metSym value="E" terminal="false">xxxxxxxxx+o</metSym>
+                  <metSym value="S" terminal="false">xxxxx+o</metSym>
+                  <metSym value="x">metrically prominent or non-prominent</metSym>
+                  <metSym value="+">metrically prominent</metSym>
+                  <metSym value="o">optional non prominent</metSym>
+                  <metSym value="/">line division</metSym>
+               </metDecl></egXML>
+         </p>
+         <p>As noted above, the metrical pattern specified on the <gi>div</gi> applies to each
+               <gi>lg</gi> (stanza) element contained within the <gi>div</gi>. In fact however,
+            after seven stanzas of this type, there is a final stanza, known as a
+               <term>commiato</term> or envoi, which follows a different metrical and rhyming
+            scheme. The solution to this problem is simply to specify a new <att>met</att> attribute
+            on the eighth stanza itself, which will override the default value inherited from parent
+               <gi>div</gi>, as follows: <egXML xml:lang="it"
+               xmlns="http://www.tei-c.org/ns/Examples" corresp="#VEMEana-eg-23"><div met=".....">
+                  <lg>
+                     <l> ... </l>
+                  </lg>
+                  <lg type="commiato" met="E/S/S/E/S/E/E/S/S/E/E" rhyme="abbccdeeedd">
+                     <l n="1">Canzone, presso di qui è une donna</l>
+                  </lg>
+               </div></egXML></p>
+         <p>Note that, in the same way as for the <att>real</att> attribute, over-riding of this
+            kind does not affect subsequent elements at the same hierarchic level. Any <gi>lg</gi>
+            element following the <term>commiato</term> above would be assumed to use the same
+            metrical and rhyming scheme as the one preceding the <term>commiato</term>. Moreover,
+            although it is quite regular (in the sense that the last stanza of each
+               <term>canzone</term> is a <term>commiato</term>), the over-riding must be specified
+            for each case. </p>
+      </div>
+   </div>
+   <div type="div2" xml:id="VERH">
+      <head>Rhyme</head>
 
-<p>The <att>rhyme</att> attribute is used to specify the rhyme pattern
-of a verse form.  It should not be confused with the <gi>rhyme</gi>
-element, which is used to mark the actual rhyming word or words:
-<specList><specDesc key="rhyme"/></specList></p>
+      <p>The <att>rhyme</att> attribute is used to specify the rhyme pattern of a verse form. It
+         should not be confused with the <gi>rhyme</gi> element, which is used to mark the actual
+         rhyming word or words: <specList>
+            <specDesc key="rhyme"/>
+         </specList></p>
 
-<p>Like the <att>met</att> attribute, the <att>rhyme</att> attribute can be used with
-a user-specified notation documented by the <gi>metDecl</gi> element
-in the TEI header.  Unlike <att>met</att>, however, the <att>rhyme</att>
-attribute has a default notation; if this default notation is used, no
-<gi>metDecl</gi> element need be given.
- </p>
-<p>The default notation for rhyme offers the ability to record
-patterns of rhyming lines, using the traditional notation in which
-distinct letters stand for rhyming lines.  For a work in rhyming
-couplets, like the Pope example above, the <att>rhyme</att> attribute
-simply specifies <val>aa</val>, indicating that pairs of adjacent
-lines rhyme with each other.  For a slightly more complex scheme,
-applicable to groups of four lines, in which lines 1 and 3 rhyme, as
-do lines 2 and 4, this attribute would have the value
-<val>abab</val>.  The traditional Spenserian stanza has the pattern
-<val>ababbcbcc</val>, indicating that within each nine line stanza,
-lines 1 and 3 rhyme with each other, as do lines 2, 4, 5 and 7, and
-lines 6, 8 and 9.
- </p>
-<p>Non-rhyming lines within such a group may be represented using a
-hyphen or an x, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fitrub">
-<lg rhyme="aa-a"> 
-<l>Why, all the Saints and Sages who discuss'd</l>
-<l>Of the Two Worlds so learnedly, are thrust</l>
-<l>Like foolish Prophets forth; their Words to Scorn</l>
-<l>Are scatter'd, and their Mouths are stopt with Dust. </l>
-</lg>
-</egXML></p>
-<p>The <gi>rhyme</gi> element may be used to mark the 
-words (or parts of words) which rhyme according to a predefined pattern:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VERH-eg-25"><lg type="couplet" rhyme="aa">
-<l>Outside in the distance a wildcat did <rhyme>growl</rhyme></l>
-<l>Two riders were approaching and the wind began to <rhyme>howl</rhyme></l>
-</lg>
-</egXML><!-- Bob Dylan: all along the watchtower-->
-</p>
-<p>The <att>label</att> attribute is used to specify which parts of a
-rhyme scheme a given set of rhyming words represent:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VE-eg-04"><lg type="quatrain" rhyme="abab">
-<l>I wander thro' each charter'd <rhyme label="a">street</rhyme>,</l>
-<l>Near where the charter'd Thames does <rhyme label="b">flow</rhyme>,</l>
-<l>And mark in every face I <rhyme label="a">meet</rhyme></l>
-<l>Marks of weakness, marks of <rhyme label="b">woe</rhyme>.</l></lg>
-<lg rhyme="abab">
-<l>In every cry of every <rhyme label="a">Man</rhyme></l>
-<l>In every Infant's cry of <rhyme label="b">fear</rhyme>,</l>
-<l>In every voice, in every <rhyme label="a">ban</rhyme>,</l>
-<l>The mind-forg'd manacles I <rhyme label="b">hear</rhyme>.</l>
-</lg>
-</egXML></p>
-<p>Within a given   scope, all <gi>rhyme</gi> elements with the same value for
-their <att>label</att> attribute are assumed to rhyme
-	with each other: thus, in the above example, the two rhymes
-	labelled <code>a</code> in the first stanza rhyme with each
-	other, but not necessarily with those labelled <code>a</code>
-	in the second stanza. The scope is defined by the nearest ancestor
-	element for which the <att>rhyme</att> attribute has been supplied.</p>
+      <p>Like the <att>met</att> attribute, the <att>rhyme</att> attribute can be used with a
+         user-specified notation documented by the <gi>metDecl</gi> element in the TEI header.
+         Unlike <att>met</att>, however, the <att>rhyme</att> attribute has a default notation; if
+         this default notation is used, no <gi>metDecl</gi> element need be given. </p>
+      <p>The default notation for rhyme offers the ability to record patterns of rhyming lines,
+         using the traditional notation in which distinct letters stand for rhyming lines. For a
+         work in rhyming couplets, like the Pope example above, the <att>rhyme</att> attribute
+         simply specifies <val>aa</val>, indicating that pairs of adjacent lines rhyme with each
+         other. For a slightly more complex scheme, applicable to groups of four lines, in which
+         lines 1 and 3 rhyme, as do lines 2 and 4, this attribute would have the value
+            <val>abab</val>. The traditional Spenserian stanza has the pattern <val>ababbcbcc</val>,
+         indicating that within each nine line stanza, lines 1 and 3 rhyme with each other, as do
+         lines 2, 4, 5 and 7, and lines 6, 8 and 9. </p>
+      <p>Non-rhyming lines within such a group may be represented using a hyphen or an x, as in the
+         following example: <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#fitrub">
+            <lg rhyme="aa-a">
+               <l>Why, all the Saints and Sages who discuss'd</l>
+               <l>Of the Two Worlds so learnedly, are thrust</l>
+               <l>Like foolish Prophets forth; their Words to Scorn</l>
+               <l>Are scatter'd, and their Mouths are stopt with Dust. </l>
+            </lg>
+         </egXML></p>
+      <p>The <gi>rhyme</gi> element may be used to mark the words (or parts of words) which rhyme
+         according to a predefined pattern: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+            corresp="#VERH-eg-25"><lg type="couplet" rhyme="aa">
+               <l>Outside in the distance a wildcat did <rhyme>growl</rhyme></l>
+               <l>Two riders were approaching and the wind began to <rhyme>howl</rhyme></l>
+            </lg>
+         </egXML><!-- Bob Dylan: all along the watchtower-->
+      </p>
+      <p>The <att>label</att> attribute is used to specify which parts of a rhyme scheme a given set
+         of rhyming words represent: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+            corresp="#VE-eg-04"><lg type="quatrain" rhyme="abab">
+               <l>I wander thro' each charter'd <rhyme label="a">street</rhyme>,</l>
+               <l>Near where the charter'd Thames does <rhyme label="b">flow</rhyme>,</l>
+               <l>And mark in every face I <rhyme label="a">meet</rhyme></l>
+               <l>Marks of weakness, marks of <rhyme label="b">woe</rhyme>.</l></lg>
+            <lg rhyme="abab">
+               <l>In every cry of every <rhyme label="a">Man</rhyme></l>
+               <l>In every Infant's cry of <rhyme label="b">fear</rhyme>,</l>
+               <l>In every voice, in every <rhyme label="a">ban</rhyme>,</l>
+               <l>The mind-forg'd manacles I <rhyme label="b">hear</rhyme>.</l>
+            </lg>
+         </egXML></p>
+      <p>Within a given scope, all <gi>rhyme</gi> elements with the same value for their
+            <att>label</att> attribute are assumed to rhyme with each other: thus, in the above
+         example, the two rhymes labelled <code>a</code> in the first stanza rhyme with each other,
+         but not necessarily with those labelled <code>a</code> in the second stanza. The scope is
+         defined by the nearest ancestor element for which the <att>rhyme</att> attribute has been
+         supplied.</p>
 
-<p>The <gi>rhyme</gi> element can appear anywhere within a verse line,
-and not necessarily around a single word. It
-can thus be used to mark quite complex internal rhyming schemes, as in the
-following example:
+      <p>The <gi>rhyme</gi> element can appear anywhere within a verse line, and not necessarily
+         around a single word. It can thus be used to mark quite complex internal rhyming schemes,
+         as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+            corresp="#VERH-eg-27"><lg rhyme="ABCCBBA">
+               <l>The sunlight on the <rhyme label="A">garden</rhyme></l>
+               <l><rhyme label="A">Harden</rhyme>s and grows <rhyme label="B">cold</rhyme>,</l>
+               <l>We cannot cage the <rhyme label="C">minute</rhyme></l>
+               <l>Wi<rhyme label="C">thin it</rhyme>s nets of <rhyme label="B">gold</rhyme></l>
+               <l>When all is <rhyme label="B">told</rhyme></l>
+               <l>We cannot beg for <rhyme label="A">pardon</rhyme>.</l>
+            </lg></egXML>
+         <!-- from Louis MacNeice, Collected Poems, ed Dodds (1966)  -->
+      </p>
+      <p>This mechanism, although reasonably simple for simple cases, may not be appropriate for
+         more complex applications. In general, rhyme may be considered as a special form of
+            <soCalled>correspondence</soCalled>, and hence encoded using the mechanisms defined for
+         that purpose in section <ptr target="#SACS"/>. Similar considerations apply to other
+         metrical features such as alliteration or assonance. </p>
+      <p>To use the correspondence mechanisms to represent the complex rhyming pattern of the above
+         example, each <gi>rhyme</gi> element must be given a unique identifier, as follows: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples"><lg rhyme="AB-BBA">
+               <l>The sunlight on the <rhyme xml:id="V-A1">garden</rhyme></l>
+               <l><rhyme xml:id="V-A2">Harden</rhyme>s and grows <rhyme xml:id="V-B1"
+                  >cold,</rhyme></l>
+               <l>We cannot cage the <rhyme xml:id="V-C1">minute</rhyme></l>
+               <l>Wi<rhyme xml:id="V-C2">thin it</rhyme>s nets of <rhyme xml:id="V-B2"
+                  >gold</rhyme></l>
+               <l>When all is <rhyme xml:id="V-B3">told</rhyme></l>
+               <l>We cannot beg for <rhyme xml:id="V-A3">pardon</rhyme>.</l>
+            </lg>
+         </egXML> Now that each rhyming word, or part-word, has been tagged and allocated an
+         arbitrary identifier, the general purpose <gi>link</gi> element may be used to indicate
+         which of the <gi>rhyme</gi> elements share the same rhyme, as follows: <egXML
+            xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="rhyme">
+               <link target="#V-A1 #V-A2 #V-A3"/>
+               <link target="#V-B1 #V-B2 #V-B3"/>
+               <link target="#V-C1 #V-C2"/>
+            </linkGrp>
+         </egXML>
+      </p>
+      <p>For further discussion of the <gi>link</gi> and <gi>linkGrp</gi> element, see section <ptr
+            target="#SACS"/>. </p>
+      <p>The <gi>rhyme</gi> and <gi>caesura</gi> phrase level elements are made available by the
+            <ident type="class">model.lPart</ident> class when the module defined by this chapter is
+         included in a schema.</p>
+   </div>
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#VERH-eg-27"><lg rhyme="ABCCBBA">
-<l>The sunlight on the <rhyme label="A">garden</rhyme></l>
-<l><rhyme label="A">Harden</rhyme>s and grows <rhyme label="B">cold</rhyme>,</l>
-<l>We cannot cage the <rhyme label="C">minute</rhyme></l>
-<l>Wi<rhyme label="C">thin it</rhyme>s nets of <rhyme label="B">gold</rhyme></l>
-<l>When all is <rhyme label="B">told</rhyme></l>
-<l>We cannot beg for <rhyme label="A">pardon</rhyme>.</l>
-</lg></egXML>
-<!-- from Louis MacNeice, Collected Poems, ed Dodds (1966)  -->
+   <div xml:id="HDMN">
+      <head>Metrical Notation Declaration</head>
+      <p>When the module defined in this chapter is included in a schema, a specialized element is
+         optionally available in the <gi>encodingDesc</gi> element of the TEI Header to document the
+         metrical notation used in marking up a text. <specList>
+            <specDesc key="metDecl" atts="pattern"/>
+            <specDesc key="metSym" atts="value terminal"/>
+         </specList></p>
+      <p>As with other components of the header, metrical notation may be specified either formally
+         or informally. In a formal specification, every symbol used in the metrical notation must
+         be documented by a corresponding <gi>metSym</gi> element; in an informal one, only a brief
+         prose description of the way in which the notation is used need be given. In either case,
+         the optional <att>pattern</att> attribute may be used to supply a regular expression which
+         a processor can use to validate expressions in the intended notation. The following
+         constraints apply: <list type="simple">
+            <item>if <att>pattern</att> is supplied, any notation used which does not conform to it
+               should be regarded as invalid</item>
+            <item>if any <gi>metSym</gi> is defined, then any notation using undefined symbols
+               should be regarded as invalid</item>
+            <item>if both pattern and symbol are defined, then every symbol appearing explicitly
+               within pattern must be defined</item>
+            <item>symbols which are not matched by <att>pattern</att> may be defined within a
+                  <gi>metDecl</gi> element</item>
+         </list></p>
+      <p>As a simple example, consider the case of the notation in which metrical prominence,
+         metrical feet, and line boundaries are all to be encoded. Legal specifications in this
+         notation may be written for any sequence of metrically prominent or non-prominent features,
+         optionally separated by foot or metrical line boundaries at arbitrary points. Assuming that
+         the symbol <mentioned>1</mentioned> is used for metrical prominence,
+            <mentioned>0</mentioned> for non-prominence, <mentioned>|</mentioned> for foot boundary
+         and <mentioned>/</mentioned> for line boundary, then the following declaration achieves
+         this object: <egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl
+               pattern="((1|0)+\|?/?)*">
+               <metSym value="1">metrical prominence</metSym>
+               <metSym value="0">metrical non-prominence</metSym>
+               <metSym value="|">foot boundary</metSym>
+               <metSym value="/">metrical line boundary</metSym>
+            </metDecl></egXML></p>
+      <p>The same notation might also be specified less formally, as follows: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples"><metDecl>
+               <p>Metrically prominent syllables are marked '1' and other syllables '0'. Foot
+                  divisions are marked by a vertical bar, and line divisions with a solidus.</p>
+               <p>This notation may be applied to any metrical unit, of any size (including, for
+                  example, individual feet as well as groups of lines).</p>
+            </metDecl></egXML> Note that in this case, because the <att>pattern</att> attribute has
+         not been supplied, no processor can validate <att>met</att> attribute values within the
+         text which use this metrical notation.</p>
+      <p>For more complex cases, it will often be more convenient to define a notation
+         incrementally. The <att>terminal</att> attribute should be used to indicate for a given
+         symbol whether or not it may be re-defined in terms of other symbols used within the same
+         notation. For example, here is a notation for encoding classical metres, in which symbols
+         are provided for the most common types of foot.<!--
+feet? -sb 2001-11-03 --> These symbols
+         are themselves documented within the same notation, in terms of more primitive long and
+         short syllables: <egXML xmlns="http://www.tei-c.org/ns/Examples"><metDecl
+               pattern="[DTIS3A]+">
+               <metSym n="dactyl" value="D" terminal="false">-oo</metSym>
+               <metSym n="trochee" value="T" terminal="false">-o</metSym>
+               <metSym n="iamb" value="I" terminal="false">o-</metSym>
+               <metSym n="spondee" value="S" terminal="false">--</metSym>
+               <metSym n="tribrach" value="3" terminal="false">ooo</metSym>
+               <metSym n="anapaest" value="A" terminal="false">oo-</metSym>
+               <metSym value="o">short syllable</metSym>
+               <metSym value="-">long syllable</metSym>
+            </metDecl></egXML> Note here the use of the global <att>n</att> attribute to supply an
+         additional name for the symbols being documented.</p>
 
-</p>
-<p>This mechanism, although reasonably simple for simple cases,
-may not be appropriate for more complex applications. In general,  rhyme may be considered
-as a special form of <soCalled>correspondence</soCalled>, and hence
-encoded using the mechanisms defined for that purpose in section <ptr target="#SACS"/>. Similar considerations apply to other metrical
-features such as alliteration or assonance. 
- </p>
-<p>To use the correspondence mechanisms to represent the complex rhyming
-pattern of the above example, each <gi>rhyme</gi> element must be
-given a unique identifier, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><lg rhyme="AB-BBA">
-<l>The sunlight on the <rhyme xml:id="V-A1">garden</rhyme></l>
-<l><rhyme xml:id="V-A2">Harden</rhyme>s and grows <rhyme xml:id="V-B1">cold,</rhyme></l>
-<l>We cannot cage the <rhyme xml:id="V-C1">minute</rhyme></l>
-<l>Wi<rhyme xml:id="V-C2">thin it</rhyme>s nets of <rhyme xml:id="V-B2">gold</rhyme></l>
-<l>When all is <rhyme xml:id="V-B3">told</rhyme></l>
-<l>We cannot beg for <rhyme xml:id="V-A3">pardon</rhyme>.</l>
-</lg>
- </egXML>
-Now that each rhyming word, or part-word, has been tagged and allocated
-an arbitrary identifier, the general purpose <gi>link</gi> element may
-be used to indicate which of the <gi>rhyme</gi> elements share the same
-rhyme, as follows:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="rhyme">
-<link target="#V-A1 #V-A2 #V-A3"/>
-<link target="#V-B1 #V-B2 #V-B3"/>
-<link target="#V-C1 #V-C2"/>
-</linkGrp>
- </egXML>
- </p>
-<p>For further discussion of the <gi>link</gi> and <gi>linkGrp</gi>
-element, see section <ptr target="#SACS"/>.
- </p>
-<p>The <gi>rhyme</gi> and <gi>caesura</gi> phrase level elements are
-made available by the <ident type="class">model.lPart</ident> class when the module
-defined by this chapter is included in a schema.</p>
-</div>
+      <p>Where an encoder wishes to use more than one different pattern for metrical notation,
+         multiple <gi>metDecl</gi> elements may be included in the <gi>encodingDesc</gi>, each
+         supplied with an <att>xml:id</att>. The <att>decls</att> attribute may be used in the text
+         of the document to specify which <gi>metDecl</gi> is in force at a particular point in the
+         text. In this example, two <gi>metDecl</gi>s are defined in the header, one with an English
+         verse pattern and one with a French pattern. In the body of the document, there are two
+            <gi>div</gi> elements, one declaring the English pattern and one the French:</p>
+
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc>
+            <!-- ... -->
+            <metDecl xml:id="md_en" type="met" pattern="((SU|US)USUSUSUS/)">
+               <metSym value="S">stressed syllable</metSym>
+               <metSym value="U">unstressed syllable</metSym>
+               <metSym value="/">metrical line boundary</metSym>
+            </metDecl>
+            <metDecl xml:id="md_fr" type="met" pattern="(AAAAAT\|AAAAT(A)?)">
+               <metSym value="T">syllabe tonique</metSym>
+               <metSym value="A">syllabe atone</metSym>
+               <metSym value="|">pause métrique</metSym>
+            </metDecl>
+            <!-- ... -->
+         </encodingDesc>
+         <!-- ... -->
+         <body>
+            <div decls="#md_en">
+               <lg>
+                  <l><!-- ... --></l>
+                  <!-- ... -->
+               </lg>
+            </div>
+            <div decls="md_fr">
+               <lg>
+                  <l><!-- ... --></l>
+                  <!-- ... -->
+               </lg>
+            </div>
+         </body>
+      </egXML>
 
 <div xml:id="HDMN"><head>Metrical Notation Declaration</head>
 <p>When the module defined in this chapter is included in a schema,
@@ -908,7 +940,6 @@ additional name for the symbols being documented.</p>
     </body>
   </egXML>
 
-<specGrp xml:id="D2258" n="Metrical Notation Declaration">
 
 
 
@@ -918,8 +949,8 @@ additional name for the symbols being documented.</p>
 
 
 
+         <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/metDecl.xml"/>
 
-<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/metDecl.xml"/>
 
 
 
@@ -934,77 +965,72 @@ additional name for the symbols being documented.</p>
 
 
 
+         <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/metSym.xml"/>
 
-<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/metSym.xml"/>
 
 
 
 
+      </specGrp>
+   </div>
 
-</specGrp></div>
+   <div type="div2" xml:id="VEETC">
+      <head>Encoding Procedures for Other Verse Features</head>
+      <p>A number of procedures that may be of particular concern to encoders of verse texts are
+         dealt with elsewhere in these guidelines. Some aspects of layout and physical appearance,
+         especially important in the case of free verse, are dealt with in chapter <ptr target="#PH"
+         />. Some initial recommendations for the encoding of phonetic or prosodic transcripts,
+         which may be helpful in the analysis of sound structures in poetry, are to be found in
+         chapter <ptr target="#TS"/>; it may also be found convenient to use standard entity names
+         (those proposed for the International Phonetic Alphabet suggest themselves) to mark
+         positions of suprasegmentals such as primary and secondary stress, or other aspects of
+         accentual structure. </p>
 
-<div type="div2" xml:id="VEETC"><head>Encoding Procedures for Other Verse Features</head>
-<p>A number of procedures that may be of particular concern to encoders
-of verse texts are dealt with elsewhere in these guidelines.  Some
-aspects of layout and physical appearance, especially important in the
-case of free verse, are dealt with in chapter <ptr target="#PH"/>.  Some
-initial recommendations for the encoding of phonetic or prosodic
-transcripts, which may be helpful in the analysis of sound structures in
-poetry, are to be found in chapter <ptr target="#TS"/>; it may also be
-found convenient to use standard entity names (those proposed for the
-International Phonetic Alphabet suggest themselves) to mark positions of
-suprasegmentals such as primary and secondary stress, or other aspects
-of accentual structure.
- </p>
+      <p>As already indicated, chapter <ptr target="#SA"/> contains much which will be found useful
+         for the aligning of multiple levels of commentary and structure within verse analysis.
+         Encoders of verse (as of other types of literary text) will frequently wish to attach
+         identifying labels to portions of text that are not part of a system of hierarchical
+         divisions, may overlap with one another, and/or may be discontinuous; for instance passages
+         associated with particular characters, themes, images, allusions, topoi, styles, or modes
+         of narration. Much of the computerized analysis of verse seems likely to require dividing
+         texts up into blocks in this way. The <gi>span</gi> element discussed in <ptr
+            target="#AISP"/> provides the means for doing this. Finally, the procedures for the
+         tagging of feature structures, described in chapter <ptr target="#FS"/>, provide a powerful
+         means of encoding a wide variety of aspects of verse literature, including not only the
+         metrical structures discussed above, but also such stylistic and rhetorical features as
+         metaphor. </p>
+      <p>For other features it must for the time being be left to encoders to devise their own
+         terminology. Elements such as <tag>metaphor tenor="..." vehicle="..."</tag> ...
+            <tag>/metaphor</tag> might well suggest themselves; but given the problems of definition
+         involved, and the great richness of modern metaphor theory, it is clear that any such
+         format, if predefined by these Guidelines, would have seemed objectionable to some and
+         excessively restrictive to many. Leaving the choice of tagging terminology to individual
+         encoders carries with it one vital corollary, however: the encoder must be utterly
+         explicit, in the TEI header, about the methods of tagging used and the criteria and
+         definitions on which they rest. Where no formal elements are currently proposed, such
+         information may readily be given as simple prose description within the
+            <gi>encodingDesc</gi> element defined in section <ptr target="#HD5"/>. </p>
+   </div>
 
-<p>As already indicated, chapter <ptr target="#SA"/> contains much
-which will be found useful for the aligning of multiple levels of
-commentary and structure within verse analysis.  Encoders of verse (as
-of other types of literary text) will frequently wish to attach
-identifying labels to portions of text that are not part of a system
-of hierarchical divisions, may overlap with one another, and/or may be
-discontinuous; for instance passages associated with particular
-characters, themes, images, allusions, topoi, styles, or modes of
-narration.  Much of the computerized analysis of verse seems likely to
-require dividing texts up into blocks in this way.  The <gi>span</gi>
-element discussed in <ptr target="#AISP"/> provides the means for
-doing this.  Finally, the procedures for the tagging of feature
-structures, described in chapter <ptr target="#FS"/>, provide a
-powerful means of encoding a wide variety of aspects of verse
-literature, including not only the metrical structures discussed
-above, but also such stylistic and rhetorical features as metaphor.
- </p>
-<p>For other features it must for the time being be left to encoders to
-devise their own terminology.  Elements such as <tag>metaphor tenor="..."
-vehicle="..."</tag> ... <tag>/metaphor</tag> might well suggest
-themselves; but given the problems of definition involved, and the great
-richness of modern metaphor theory, it is clear that any such format, if
-predefined by these Guidelines, would have seemed objectionable to some
-and excessively restrictive to many.  Leaving the choice of tagging
-terminology to individual encoders carries with it one vital corollary,
-however:  the encoder must be utterly explicit, in the TEI header, about
-the methods of tagging used and the criteria and definitions on which
-they rest.  Where no formal elements are currently proposed, such
-information may readily be given as simple prose description within the
-<gi>encodingDesc</gi> element defined in section <ptr target="#HD5"/>.
-</p></div>
+   <div type="div2" xml:id="VESTR">
+      <head>Module for Verse</head>
 
-<div type="div2" xml:id="VESTR"><head>Module for Verse</head>
+      <p>The module described in this chapter makes available the following components: <moduleSpec
+            xml:id="DVE" ident="verse">
+            <altIdent type="FPI">Verse</altIdent>
+            <desc>Verse structures</desc>
+            <desc xml:lang="fr">Poésie</desc>
+            <desc xml:lang="zh-TW">韻文結構</desc>
+            <desc xml:lang="it">Strutture poetiche</desc>
+            <desc xml:lang="pt">Estrutura dos versos</desc>
+            <desc xml:lang="ja">韻文モジュール</desc>
+         </moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Verse//EN--> The
+         selection and combination of modules to form a TEI schema is described in <ptr
+            target="#STIN"/>. </p>
+      <specGrp>
 
-<p>The module described in this chapter makes available the following
-components:
 
-<moduleSpec xml:id="DVE" ident="verse">
-<altIdent type="FPI">Verse</altIdent>
-<desc>Verse structures</desc>
-<desc xml:lang="fr">Poésie</desc>
-<desc xml:lang="zh-TW">韻文結構</desc>
-<desc xml:lang="it">Strutture poetiche</desc><desc xml:lang="pt">Estrutura dos versos</desc><desc xml:lang="ja">韻文モジュール</desc></moduleSpec><!--publicID:  -//TEI P5//ELEMENTS Base Element Set for Verse//EN-->
 
-The selection and combination of modules to form a TEI schema is described in
-<ptr target="#STIN"/>.
-</p>
-<specGrp>
 
 
 
@@ -1012,10 +1038,10 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+         <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.metrical.xml"/>
 
 
 
-<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.metrical.xml"/>
 
 
 
@@ -1028,10 +1054,10 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+         <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.enjamb.xml"/>
 
 
 
-<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/att.enjamb.xml"/>
 
 
 
@@ -1044,10 +1070,10 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+         <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/caesura.xml"/>
 
 
 
-<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/caesura.xml"/>
 
 
 
@@ -1060,16 +1086,14 @@ The selection and combination of modules to form a TEI schema is described in
 
 
 
+         <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/rhyme.xml"/>
 
 
 
-<include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/rhyme.xml"/>
 
 
-
-
-
-</specGrp></div>
+      </specGrp>
+   </div>
 
 
 </div>
