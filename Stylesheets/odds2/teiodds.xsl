@@ -62,12 +62,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="STDOUT">true</xsl:param>
   <xsl:param name="outputSuffix">.html</xsl:param>
-  <xsl:param name="selectedSchema"/>
   <xsl:param name="outputDir"/>
   <xsl:param name="splitLevel">-1</xsl:param>
   <xsl:param name="localsource"/>
   <xsl:param name="lang"/>
-  <xsl:param name="doclang"/>
   <xsl:param name="patternPrefix"/>
   <xsl:param name="TEIC">false</xsl:param>
   <xsl:param name="autoGlobal">false</xsl:param>
@@ -104,7 +102,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:classSpec//tei:attDef" name="ATTRIBUTES-CLASS" use="@ident"/>
   <xsl:key match="tei:elementSpec//tei:attDef" name="ATTRIBUTES-ELEMENT" use="@ident"/>
   <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
-  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
   <xsl:key match="tei:classSpec[@type='atts']" name="ATTCLASSDOCS" use="1"/>
   <xsl:key match="tei:classSpec[@type='model']" name="MODELCLASSDOCS" use="1"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTDOCS" use="1"/>
@@ -125,17 +122,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="key('SCHEMASPECS',1)">false</xsl:when>
       <xsl:otherwise>true</xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
-  <xsl:variable name="whichSchemaSpec">
-    <xsl:choose>
-      <xsl:when test="$selectedSchema">
-        <xsl:value-of select="$selectedSchema"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="key('SCHEMASPECS',1)[1]/@ident"/>
-      </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
 

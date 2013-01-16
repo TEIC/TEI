@@ -16,7 +16,6 @@
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
     version="2.0">
   <xsl:import href="teiodds.xsl"/>
-  <xsl:import href="../common2/i18n.xsl"/>
   <xsl:import href="../common2/tagdocs.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
   <xsl:namespace-alias stylesheet-prefix="gen" result-prefix="xsl"/>
