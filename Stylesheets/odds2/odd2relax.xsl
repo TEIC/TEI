@@ -515,6 +515,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="rng:optional|rng:zeroOrMore|rng:oneOrMore" mode="pass3">
       <xsl:choose>
+	<xsl:when test="not(*)"/>
 	<xsl:when test="count(*)=1 and rng:empty"/>
 	<xsl:when test="rng:zeroOrMore and count(*)=1">
 	     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
