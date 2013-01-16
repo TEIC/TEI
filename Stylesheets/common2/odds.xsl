@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:cals="http://www.oasis-open.org/specs/tm9901" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:iso="http://www.iso.org/ns/1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" version="2.0" exclude-result-prefixes="cals ve o r m v wp w10 w wne mml tbx iso tei a xs pic fn">
+<xsl:stylesheet     xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:cals="http://www.oasis-open.org/specs/tm9901"
+xmlns:tei="http://www.tei-c.org/ns/1.0"
+xmlns:iso="http://www.iso.org/ns/1.0"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:rng="http://relaxng.org/ns/structure/1.0"
+xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
+xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:fn="http://www.w3.org/2005/02/xpath-functions"
+xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+xmlns:w10="urn:schemas-microsoft-com:office:word"
+xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
+xmlns:mml="http://www.w3.org/1998/Math/MathML"
+xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
+xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"
+xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" version="2.0"
+exclude-result-prefixes="cals ve o r m v wp sch w10 w wne mml tbx iso
+			 tei a xs pic fn rng">
+
+  <xsl:import href="i18n.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI Utility stylesheet defining templates for use in
@@ -42,6 +68,46 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+
+  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
+  <xsl:param name="defaultSource"></xsl:param>
+  <xsl:param name="defaultTEIVersion">current</xsl:param>
+  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+  <xsl:param name="currentDirectory"/>
+  <xsl:param name="verbose">false</xsl:param>
+  <xsl:param name="configDirectory"/>
+  <xsl:param name="doclang"/>
+  <xsl:param name="selectedSchema"/>
+
+  <xsl:variable name="whichSchemaSpec">
+    <xsl:choose>
+      <xsl:when test="$selectedSchema">
+        <xsl:value-of select="$selectedSchema"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="key('SCHEMASPECS',1)[1]/@ident"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+
+  <xsl:variable name="DEFAULTSOURCE">
+    <xsl:choose>
+      <xsl:when test="$defaultSource != ''">
+        <xsl:value-of select="$defaultSource"/>
+      </xsl:when>
+      <xsl:when test="$configDirectory != ''">
+        <xsl:value-of select="$configDirectory"/>
+        <xsl:text>odd/p5subset.xml</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$defaultTEIServer"/>
+        <xsl:value-of select="$defaultTEIVersion"/>
+	<xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
   <xsl:template name="makeDescription">
     <xsl:param name="includeValList">false</xsl:param>
     <xsl:param name="coded">true</xsl:param>
@@ -191,6 +257,23 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
   </xsl:template>
 
+
+  <xsl:template name="generateDocumentationLang">
+    <xsl:choose>
+      <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang">
+        <xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang"/>
+      </xsl:when>
+      <xsl:when test="string-length($doclang)&gt;0">
+        <xsl:value-of select="$doclang"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>en</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
+
   <xsl:template name="makeGloss">
     <xsl:param name="langs"/>
     <xsl:variable name="firstLang">
@@ -251,5 +334,148 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+
+  <xsl:function name="tei:workOutSource" as="xs:string*">
+    <xsl:param name="e"/>
+    <xsl:variable name="loc">
+      <xsl:choose>
+	<xsl:when test="$e/@source">
+	  <xsl:value-of select="$e/@source"/>
+	</xsl:when>
+	<xsl:when test="$e/ancestor::tei:schemaSpec/@source">
+	  <xsl:value-of select="$e/ancestor::tei:schemaSpec/@source"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$DEFAULTSOURCE"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="source">
+      <xsl:choose>
+	<xsl:when test="starts-with($loc,'/')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'file:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'http:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'https:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'tei:')">
+	  <xsl:value-of
+	      select="replace($loc,'tei:',$defaultTEIServer)"/>
+	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$currentDirectory"/>
+	  <xsl:value-of select="$loc"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="not(doc-available($source))">
+	<xsl:call-template name="die">
+	  <xsl:with-param name="message">
+	    <xsl:text>Source </xsl:text>
+	   <xsl:value-of select='$source'/>
+	   <xsl:text> not readable</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Setting source document to <xsl:value-of
+	  select="$source"/></xsl:message>
+	</xsl:if>
+	<xsl:sequence select="$source"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="tei:message" as="xs:string">
+    <xsl:param name="message"/>
+    <xsl:message><xsl:copy-of select="$message"/></xsl:message>
+    <xsl:text/>
+  </xsl:function>
+
+  <xsl:function name="tei:uniqueName" as="xs:string">
+    <xsl:param name="e"/>
+    <xsl:for-each select="$e">
+      <xsl:sequence select="concat(
+	if (@ns='http://www.tei-c.org/ns/1.0') then ''
+	else if (@ns) then @ns
+	else if (ancestor::tei:schemaSpec/@ns) then
+	ancestor::tei:schemaSpec/@ns else '',@ident)"/>
+    </xsl:for-each>
+  </xsl:function>
+
+  <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
+    <xsl:param name="e"/>
+    <xsl:for-each select="$e">
+      <xsl:variable name="myns" select="ancestor::tei:elementSpec/@ns"/>
+      <xsl:choose>
+	<xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
+	  <xsl:text>tei:</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:choose>
+	    <xsl:when test="sch:ns[@uri=$myns]">
+	      <xsl:value-of
+		  select="concat(sch:ns[@uri=$myns]/@prefix,':')"/>
+	    </xsl:when>
+	    <xsl:when test="parent::*/sch:ns[@uri=$myns]">
+	      <xsl:value-of
+		  select="concat(parent::*/sch:ns[@uri=$myns]/@prefix,':')"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="../@ident"/></xsl:message>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <xsl:template name="die">
+    <xsl:param name="message"/>
+    <xsl:message terminate="yes">
+      <xsl:text>Error: odd2odd.xsl: </xsl:text> 
+      <xsl:value-of select="$message"/>
+    </xsl:message>
+  </xsl:template>
+
+   <xsl:template match="@*|text()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="processing-instruction()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="*" mode="justcopy">
+     <xsl:copy>
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+     </xsl:copy>
+   </xsl:template>
+
+   <xsl:template match="a:*" mode="justcopy">
+      <xsl:element  xmlns="http://relaxng.org/ns/compatibility/annotations/1.0" name="{name()}">
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+      </xsl:element>
+   </xsl:template>
+
+   <xsl:template match="rng:*" mode="justcopy">
+     <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{local-name()}">
+       <xsl:apply-templates
+	   select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+     </xsl:element>
+   </xsl:template>
+
 
 </xsl:stylesheet>

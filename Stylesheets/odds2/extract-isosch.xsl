@@ -10,7 +10,7 @@
                 version="2.0"
                 exclude-result-prefixes="tei rng teix sch xi
                                          #default">
-  <xsl:import href="oddfunctions.xsl"/>  
+  <xsl:import href="../common2/odds.xsl"/>  
   <oxdoc:doc scope="stylesheet" type="stylesheet">
     <oxdoc:desc>
       <oxdoc:p> TEI stylesheet for simplifying TEI ODD markup </oxdoc:p>

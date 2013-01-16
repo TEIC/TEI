@@ -15,7 +15,7 @@
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
   version="2.0">
   <xsl:import href="../common2/odds.xsl"/>
-  <xsl:import href="oddfunctions.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for processing TEI ODD markup </p>
@@ -166,21 +166,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-
-
-  <xsl:template name="generateDocumentationLang">
-    <xsl:choose>
-      <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang">
-        <xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang"/>
-      </xsl:when>
-      <xsl:when test="string-length($doclang)&gt;0">
-        <xsl:value-of select="$doclang"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>en</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
 
 
   <xsl:template match="processing-instruction()">
