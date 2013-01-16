@@ -697,17 +697,20 @@ rendition xml:base xml:space"/>
 
         </div>
 
-        <div>
-          <head>Other global attributes</head>
-          <p>The global attributes <att>xml:base</att> and <att>xml:space</att> are also provided by
-            default in any TEI schema. Like <att>xml:id</att> these attributes are defined as part
-            of the XML specification and belong to the XML namespace rather than the TEI namespace.
-            We do not describe them in detail here: reference information for <att>xml:base</att> is
-            provided by <ptr target="#XMLBASE"/>; for <att>xml:space</att> by the <ref
-              target="http://www.w3.org/TR/REC-xml/#sec-white-space">section 2.10 of the XML
-              Specification</ref>. </p>
+        <div xml:id="STGAba">
+          <head>Evaluation of links</head>
+          <p>Several TEI elements carry attributes whose values are
+	  defined as <code>anyURI</code>, meaning that such attributes
+	  supply a link or pointer, typically expressed as a URL. Like
+	  other XML applications, the TEI allows use of a special
+	  attribute to set the context within which relative URLs are
+	  to be evaluated. The global attribute <att>xml:base</att> is defined as part
+            of the XML specification and belongs to the XML namespace rather than the TEI namespace.
+            We do not describe it in detail here: reference
+	    information about <att>xml:base</att> is
+            provided by <ptr target="#XMLBASE"/> </p>
 
-          <p>As noted above, <att>xml:base</att> is used to set the context for all relative URLs
+          <p>In essence <att>xml:base</att> is used to set a context for all relative URLs
             within the scope of the element on which it is specified. For example: <egXML
               xmlns="http://www.tei-c.org/ns/Examples">
               <body>
@@ -732,45 +735,66 @@ rendition xml:base xml:space"/>
             of this element and its effect on TEI linking methods is provided in chapter <ptr
               target="#SA"/>. </p>
 </div>
-<div>
+<div xml:id="STGAxs">
 <head>XML Whitespace</head>
 <p>The global attribute <att>xml:space</att> provides a mechanism for
-signalling to users
-of an XML file how whitespace, that is, consecutive tab (#x09), space
-(#x20), carriage return (#x0D) and/or linefeed (#x0A) characters, should
-be
-treated. There are only two allowed values, <val>preserve</val> and
+indicating to systems processing
+an XML file how they should treat whitespace, that is, any sequences
+of consecutive tab (#x09), space
+(#x20), carriage return (#x0D) or linefeed (#x0A) characters. Like
+<att>xml:id</att> this attribute is defined as part           of the XML specification and belongs to the XML
+namespace rather than the TEI namespace. Complete information about
+this attribute is provided by  <ref
+target="http://www.w3.org/TR/REC-xml/#sec-white-space">section 2.10 of the XML
+Specification</ref>; here we provide a summary of how
+its use affects users of the TEI scheme.</p>
+<p>The <att>xml:space</att> attribute has  only two permitted values: <val>preserve</val> and
 <val>default</val>. The first indicates that whitespace in a text
 node—every
-carriage return, every tab, etc.—should be maintained as is. The second,
-or just exclusion of the attribute, indicates that whitespace should be
-handled as appropriate. What is deemed appropriate is left unspecified by
-the XML Recommendation.</p>
-<p>These Guidelines do not specify a default behaviour, but examples in the
-Guidelines generally presume one of two behaviours. For an element that can
-contain only other elements, a so-called structured element, it is
-presumed that whitespace has no semantic significance and can and indeed will be
-removed. For example, in a <gi>choice</gi> element, such as 
+carriage return, every tab, etc.—should be maintained as is when the
+document is processed. The
+second (which is implied when the attribute is not supplied),
+indicates that whitespace should be
+handled <soCalled>as appropriate</soCalled>. Exactly what is deemed appropriate is left unspecified by
+the XML Recommendation, although most XML processors share some assumptions.</p>
+<p>These Guidelines assume one of two different ways of processing
+whitespace will apply in a given case, depending on an element's
+content model. For an element that can
+contain only other elements with no
+intervening non-whitespace characters, 
+whitespace is considered to have no semantic significance, and should
+therefore be discarded by a processor. For example, in a <gi>choice</gi> element, such as 
    <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <choice>
 <sic>1724</sic>
 <corr>1728</corr>
 </choice>
 </egXML>
-no non-whitespace characters are allowed between opening of the
+since non-whitespace text  is not permitted  between  the
 <gi>choice</gi>
-tag and opening of the <gi>sic</gi> tags or between the <gi>sic</gi> and
-<gi>corr</gi> tags, so
-any space there has no significance and can treated as if not there at
-all. A list of such structured elements is included in the TEI release file
-  <ref target="http://www.tei-c.org/release/xml/tei/odd/stripspace.xsl.model">stripspace.xsl.model</ref>, 
-  formatted there for use as an <gi>xsl:strip-space</gi>command for XSL stylesheets.</p>
-<p>For an element that can contain both text and other elements, so-called
-mixed-content elements, examples in the Guidelines presume that whitespace
+start-tag and  the <gi>sic</gi> tags or between the <gi>sic</gi> and
+<gi>corr</gi> tags, 
+any whitespace found there has no significance and can be ignored
+completely by a processor.</p>
+<p>Similarly,  the <gi>address</gi> element has a content model
+containing only <gi>addrLine</gi> elements: any punctuation or
+whitespace required between the
+lines of an address must therefore be supplied by the processor, as
+any whitespace present in the input document will be ignored. </p>
+
+<p>Elements with content models of this type are comparatively unusual
+in the TEI: a list of them is provided in the TEI release file
+<ident type="file">stripspace.xsl.model</ident>, formatted there for use as an
+<gi>xsl:strip-space</gi>
+command for XSL stylesheets.</p>
+<p>Most TEI elements permit what is known as mixed-content: that is,
+they can contain both text and other elements. Here the assumption of
+these Guidelines is
+that whitespace
 will be normalized. This means that all space, carriage return, linefeed,
 and tab characters are converted into spaces, all consecutive spaces are
-replaced by a single space, and then space immediately after a
-start tag or immediately before an end tag is deleted. The result is that
+then deleted and replaced by one space, and then space immediately after a
+start-tag or immediately before an end-tag is deleted. The result is that
 this encoding,
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <persName>
@@ -782,12 +806,15 @@ this encoding,
 </roleName>
 </persName>
 </egXML>
-might be understood as <q>Edward George Bulwer-Lytton, Baron Lytton of Knebworth</q>.
-The newline space before his forename has been removed, a space included between his
-forenames, the comma preserved, the newlines after his name removed, etc.
+would be rendered as <q>Edward George Bulwer-Lytton, Baron Lytton of Knebworth</q>.
+The space before his name has been removed, a space is included between his
+forenames, the comma is preserved, and the newlines within his name have all been removed.
 </p>
+
+<!--
 <p>The <gi>persName</gi> element is a mixed-content element; punctuation
-such as the comma in the above example lies outside any of the child elements. The
+such as the
+comma in the above example lies outside any of the child elements. The
 <gi>address</gi> element, on the other hand, is like <gi>list</gi> and
 <gi>choice</gi>, a
 structured element. (These three are included in stripspace.xsl.model.) No
@@ -796,22 +823,30 @@ the
 presumed processing behavior is that any space between its components will
 get removed. An application processing an <gi>address</gi> element is then
 responsible for adding any necessary space or punctuation between the
-components of the address. Treating a structured element as a mixed-content
-one, or vice versa, should be done with care.</p>
-<p>Preference for a default whitespace processing other than that
-described above can be indicated in <gi>encodingDesc</gi>. Preference for strict
-retention
-of every space, tab, carriage return and linefeed character in a text node
-can be signaled with <code>xml:space=”preserve”</code>. Had this been
-done on the
-<gi>persName</gi> example above, the man's name would be rendered over
-five lines, indented, and with a blank line following. The
-<code>xml:space="preserve"</code> attribute is rarely used in TEI
-documents because
-whatever could be accomplished by doing so is generally accomplished with
+components of the address. Treating a structured element as a
+mixed-content
+one, or vice versa, should be done with care. </p>
+-->
+
+<p>If the default treatment described above is not appropriate for a
+mixed content element, the processing required may be described in the
+<gi>encodingDesc</gi> element of the TEI header, but generic XML processing
+tools may not take note of this. </p>
+<p>Alternatively, the <att>xml:space</att> attribute may be supplied
+with a value of <val>preserve</val> in order to
+indicate that every space, tab, carriage return and linefeed character
+found within that element in the document being processed is significant. Typically, the result of that processing will be to retain
+the whitespace characters in the output. Thus if the above example
+began  
+<tag>persName xml:space="preserve"</tag>, the resulting text would
+most likely be rendered over
+five lines, indented, and with a blank line following. </p>
+<p>The
+<code>xml:space=”preserve”</code> attribute is rarely used in TEI
+documents because such layout features are generally captured with
 less risk and more precision by using native TEI elements such as
-<gi>l</gi>,
-<gi>lb</gi>, <gi>space</gi>, and others.</p>
+<gi>lb</gi> or <gi>space</gi>, or by using the renditional attributes
+described in section  <ptr target="#STGAre"/>.</p>
 
           <specGrp xml:id="DSTECAT" n="Attribute classes">
 
