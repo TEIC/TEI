@@ -423,13 +423,9 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:choose>
-	    <xsl:when test="sch:ns[@uri=$myns]">
+	    <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
 	      <xsl:value-of
-		  select="concat(sch:ns[@uri=$myns]/@prefix,':')"/>
-	    </xsl:when>
-	    <xsl:when test="parent::*/sch:ns[@uri=$myns]">
-	      <xsl:value-of
-		  select="concat(parent::*/sch:ns[@uri=$myns]/@prefix,':')"/>
+		  select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="../@ident"/></xsl:message>
