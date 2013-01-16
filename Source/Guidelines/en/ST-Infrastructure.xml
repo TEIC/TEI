@@ -731,59 +731,94 @@ rendition xml:base xml:space"/>
             with the value <code>p1</code> for its <att>xml:id</att> attribute. Further discussion
             of this element and its effect on TEI linking methods is provided in chapter <ptr
               target="#SA"/>. </p>
-
-          <p>The XML Recommendation defines <term>whitespace</term> as a single term for the space,
-            tab, and linebreak characters which may appear in a document. By default, XML processors
-            treat whitespace in predictable ways, depending on where it occurs:</p>
-          <list>
-            <item>When whitespace characters occur as part of a text node, within the content of an
-              element, XML generally considers them significant and requires that a processor
-              preserve all of them.</item>
-            <item>When whitespace characters occur within an element that contains mixed content,
-              that is, an element that contains both element and text nodes, XML assumes that they
-              are significant and requires that a processor preserve all of them.</item>
-            <item>When whitespace characters occur between elements (not within the content of those elements or
-              mixed with text), XML generally assumes that they are not significant and may be
-              ignored by an XML processor. This kind of whitespace is most commonly introduced by an
-              encoder or by XML editing software to enhance the readability of the displayed text.
-              This should only happen at locations where the whitespace can be understood as
-              insignificant (so there is no conflict with significant whitespace), but not all
-              processors can detect this reliably.</item>
-          </list>
-
-          <p>Hence, in a document like the following <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <list>
-                <item>apple pie</item>
-                <item>banana custard</item>
-                <item>carrot cake</item>
-              </list></egXML> the whitespace between each <gi>item</gi> is not significant, while
-            that within the <gi>item</gi> elements is. </p>
-
-          <p>The <att>xml:space</att> attribute is available if it is necessary to modify the
-            default treatment of whitespace. This attribute is defined in <ref
-              target="http://www.w3.org/TR/REC-xml/#sec-white-space">section 2.10 of the XML
-              Specification</ref>. However, it is rarely necessary to do this: most TEI elements
-            permit mixed content, and consequently the presence or absence of whitespace is usually
-            significant in a TEI document. In most cases where whitespace may be desired in the
-            output, this should be indicated using native TEI elements (such as <gi>l</gi>) to
-            convey the structure of the text, with whitespace for display introduced in processing,
-            rather than by introducing whitespace into the text and using <val>preserve</val> on
-              <att>xml:space</att>. It is worth noting that while the value of <val>preserve</val>
-            on <att>xml:space</att> indicates the encoder's intention that whitespace be preserved,
-            not all applications will obey this.</p>
-
-          <p>There are a few situations in which it may be essential to use <val>preserve</val> on
-              <att>xml:space</att>, typically where complex markup is being used within the context
-            of a tool that by default introduces whitespace in order to enhance display of the text.
-            For example, when transcribing an inscription with the elements described in chapter
-              <ptr target="#PH"/>, a single word may well gain several additional tags to mark parts
-            of the word which are supplied or conjectural. Such tags do not interrupt the word
-            however, and hence introducing space where they occur would be misleading. The value of
-              <val>preserve</val> for the <att>xml:space</att> attribute on the parent <gi>div</gi>
-            element may be used to indicate that all and only the spaces actually present in the XML
-            source should be regarded as significant; an XML editor or other processor is not then
-            permitted to introduce additional spaces.</p>
-
+<div>
+<head>XML Whitespace</head>
+<p>The global attribute <att>xml:space</att> provides a mechanism for
+signaling to users
+of an XML file how whitespace, that is, consecutive tab (#x09), space
+(#x20), carriage return (#x0D) and/or linefeed (#x0A) characters, should
+be
+treated. There are only two allowed values, <val>preserve</val> and
+<val>default</val>. The first indicates that whitespace in a text
+node—every
+carriage return, every tab, etc.—should be maintained as is. The second,
+or just exclusion of the attribute, indicates that whitespace should be
+handled as appropriate. What is deemed appropriate is left unspecified by
+the XML Recommendation.</p>
+<p>These Guidelines do not specify a default behavior, but examples in the
+Guidelines generally presume one of two behaviors. For an element that can
+contain only other elements, a so-called structured element, it is
+presumed
+that whitespace has no semantic significance and can and indeed will be
+removed. For example, in a <gi>choice</gi> element, such as 
+   <egXML xmlns="http://www.tei-c.org/ns/Examples">
+<choice>
+<sic>1724</sic>
+<corr>1728</corr>
+</choice>
+</egXML>
+no non-whitespace characters are allowed between opening of the
+<gi>choice</gi>
+tag and opening of the <gi>sic</gi> tags or between the <gi>sic</gi> and
+<gi>corr</gi> tags, so
+any space there has no significance and can treated as if not there at
+all.
+A list of such structured elements is included in the TEI release file
+stripspace.xsl.model, formatted there for use as an
+<gi>xsl:strip-space</gi>
+command for XSL stylesheets.</p>
+<p>For an element that can contain both text and other elements, so-called
+mixed-content elements, examples in the Guidelines presume that whitespace
+will be normalized. This means that all space, carriage return, linefeed,
+and tab characters are converted into spaces, all consecutive spaces are
+then deleted and replaced by one space, and then space immediately after a
+start tag or immediately before an end tag is deleted. The result is that
+this encoding,
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<persName>
+<forename>Edward</forename>
+<forename>George</forename>
+<surname type="linked">Bulwer-Lytton</surname>,
+<roleName>Baron Lytton of
+<placeName>Knebworth</placeName>
+</roleName>
+</persName>
+</egXML>
+may be rendered as <q>Edward George Bulwer-Lytton, Baron Lytton of Knebworth</q>.
+The space before his name has been removed, a space included between his
+forenames, the comma preserved, the newlines after his name removed, etc.
+</p>
+<p>The <gi>persName</gi> element is a mixed-content element; punctuation
+such as the
+comma in the above example lies outside any of the child elements. The
+<gi>address</gi> element, on the other hand, is like <gi>list</gi> and
+<gi>choice</gi>, a
+structured element. (These three are included in stripspace.xsl.model.) No
+punctuation is allowed outside the elements within <gi>address</gi>, and
+the
+presumed processing behavior is that any space between its components will
+get removed. An application processing an <gi>address</gi> element is then
+responsible for adding any necessary space or punctuation between the
+components of the address. Treating a structured element as a
+mixed-content
+one, or vice versa, should be done with care. </p>
+<p>Preference for a default whitespace processing other than that
+described
+above can be indicated in <gi>encodingDesc</gi>. Preference for strict
+retention
+of every space, tab, carriage return and linefeed character in a text node
+can be signaled with <code>xml:space=”preserve”</code>. Had this been
+done on the
+<gi>persName</gi> example above, the man’s name would be rendered over
+five
+lines, indented, and with a blank line following. The
+<code>xml:space=”preserve”</code> attribute is rarely used in TEI
+documents because
+whatever could be accomplished by doing so is generally accomplished with
+less risk and more precision by using native TEI elements such as
+<gi>l</gi>,
+<gi>lb</gi>, <gi>space</gi>, and others.</p>
+</div>
 
           <specGrp xml:id="DSTECAT" n="Attribute classes">
 
