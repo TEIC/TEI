@@ -735,7 +735,7 @@ rendition xml:base xml:space"/>
 <div>
 <head>XML Whitespace</head>
 <p>The global attribute <att>xml:space</att> provides a mechanism for
-signaling to users
+signalling to users
 of an XML file how whitespace, that is, consecutive tab (#x09), space
 (#x20), carriage return (#x0D) and/or linefeed (#x0A) characters, should
 be
@@ -746,11 +746,10 @@ carriage return, every tab, etc.—should be maintained as is. The second,
 or just exclusion of the attribute, indicates that whitespace should be
 handled as appropriate. What is deemed appropriate is left unspecified by
 the XML Recommendation.</p>
-<p>These Guidelines do not specify a default behavior, but examples in the
-Guidelines generally presume one of two behaviors. For an element that can
+<p>These Guidelines do not specify a default behaviour, but examples in the
+Guidelines generally presume one of two behaviours. For an element that can
 contain only other elements, a so-called structured element, it is
-presumed
-that whitespace has no semantic significance and can and indeed will be
+presumed that whitespace has no semantic significance and can and indeed will be
 removed. For example, in a <gi>choice</gi> element, such as 
    <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <choice>
@@ -763,16 +762,14 @@ no non-whitespace characters are allowed between opening of the
 tag and opening of the <gi>sic</gi> tags or between the <gi>sic</gi> and
 <gi>corr</gi> tags, so
 any space there has no significance and can treated as if not there at
-all.
-A list of such structured elements is included in the TEI release file
-stripspace.xsl.model, formatted there for use as an
-<gi>xsl:strip-space</gi>
-command for XSL stylesheets.</p>
+all. A list of such structured elements is included in the TEI release file
+  <ref target="http://www.tei-c.org/release/xml/tei/odd/stripspace.xsl.model">stripspace.xsl.model</ref>, 
+  formatted there for use as an <gi>xsl:strip-space</gi>command for XSL stylesheets.</p>
 <p>For an element that can contain both text and other elements, so-called
 mixed-content elements, examples in the Guidelines presume that whitespace
 will be normalized. This means that all space, carriage return, linefeed,
 and tab characters are converted into spaces, all consecutive spaces are
-then deleted and replaced by one space, and then space immediately after a
+replaced by a single space, and then space immediately after a
 start tag or immediately before an end tag is deleted. The result is that
 this encoding,
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -785,13 +782,12 @@ this encoding,
 </roleName>
 </persName>
 </egXML>
-would be rendered as <q>Edward George Bulwer-Lytton, Baron Lytton of Knebworth</q>.
-The space before his name has been removed, a space included between his
+might be understood as <q>Edward George Bulwer-Lytton, Baron Lytton of Knebworth</q>.
+The newline space before his forename has been removed, a space included between his
 forenames, the comma preserved, the newlines after his name removed, etc.
 </p>
 <p>The <gi>persName</gi> element is a mixed-content element; punctuation
-such as the
-comma in the above example lies outside any of the child elements. The
+such as the comma in the above example lies outside any of the child elements. The
 <gi>address</gi> element, on the other hand, is like <gi>list</gi> and
 <gi>choice</gi>, a
 structured element. (These three are included in stripspace.xsl.model.) No
@@ -800,20 +796,17 @@ the
 presumed processing behavior is that any space between its components will
 get removed. An application processing an <gi>address</gi> element is then
 responsible for adding any necessary space or punctuation between the
-components of the address. Treating a structured element as a
-mixed-content
-one, or vice versa, should be done with care. </p>
+components of the address. Treating a structured element as a mixed-content
+one, or vice versa, should be done with care.</p>
 <p>Preference for a default whitespace processing other than that
-described
-above can be indicated in <gi>encodingDesc</gi>. Preference for strict
+described above can be indicated in <gi>encodingDesc</gi>. Preference for strict
 retention
 of every space, tab, carriage return and linefeed character in a text node
 can be signaled with <code>xml:space=”preserve”</code>. Had this been
 done on the
-<gi>persName</gi> example above, the man’s name would be rendered over
-five
-lines, indented, and with a blank line following. The
-<code>xml:space=”preserve”</code> attribute is rarely used in TEI
+<gi>persName</gi> example above, the man's name would be rendered over
+five lines, indented, and with a blank line following. The
+<code>xml:space="preserve"</code> attribute is rarely used in TEI
 documents because
 whatever could be accomplished by doing so is generally accomplished with
 less risk and more precision by using native TEI elements such as
