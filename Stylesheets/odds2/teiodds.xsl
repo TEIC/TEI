@@ -15,6 +15,7 @@
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
   version="2.0">
   <xsl:import href="../common2/odds.xsl"/>
+  <xsl:import href="oddfunctions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for processing TEI ODD markup </p>
@@ -1977,7 +1978,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:attribute>
           <rule>
             <xsl:attribute name="context">
-              <xsl:text>tei:</xsl:text>
+	      <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
               <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
             </xsl:attribute>
             <xsl:apply-templates mode="justcopy" select="."/>
@@ -2017,7 +2018,7 @@ select="$makeDecls"/></xsl:message>
           </xsl:attribute>
           <rule>
             <xsl:attribute name="context">
-              <xsl:text>tei:</xsl:text>
+	      <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
               <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
             </xsl:attribute>
             <xsl:apply-templates mode="justcopy" select="."/>

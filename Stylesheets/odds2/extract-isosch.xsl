@@ -10,7 +10,7 @@
                 version="2.0"
                 exclude-result-prefixes="tei rng teix sch xi
                                          #default">
-
+  <xsl:import href="oddfunctions.xsl"/>  
   <oxdoc:doc scope="stylesheet" type="stylesheet">
     <oxdoc:desc>
       <oxdoc:p> TEI stylesheet for simplifying TEI ODD markup </oxdoc:p>
@@ -58,7 +58,7 @@ of this software, even if advised of the possibility of such damage.
         getting what is intended, we’ll issue an error message as well.</oxdoc:p>
     </oxdoc:desc>
   </oxdoc:doc>
-  
+
   <xsl:output encoding="utf-8" indent="yes" method="xml"/>
   <xsl:param name="lang"></xsl:param>
 
@@ -183,7 +183,7 @@ of this software, even if advised of the possibility of such damage.
               <pattern id="{$patID}">
                 <rule>
                   <xsl:attribute name="context">
-                    <xsl:text>tei:</xsl:text>
+                    <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
                     <xsl:choose>
                       <xsl:when test="ancestor::tei:elementSpec">
                         <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
@@ -204,7 +204,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="sch:rule[not(@context)]">
     <rule>
       <xsl:attribute name="context">
-        <xsl:text>tei:</xsl:text>
+	<xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>        
         <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
       </xsl:attribute>
       <xsl:apply-templates/>

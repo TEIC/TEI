@@ -7,7 +7,10 @@
 		xmlns="http://www.ascc.net/xml/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="tei rng teix sch xi #default">
+                exclude-result-prefixes="tei rng teix sch xi
+					 #default">
+
+  <xsl:import href="oddfunctions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>
@@ -117,7 +120,7 @@ of this software, even if advised of the possibility of such damage.
 		   <pattern id="{$patID}">
 		     <rule>
 		       <xsl:attribute name="context">
-			 <xsl:text>tei:</xsl:text>
+			 <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
 			 <xsl:choose>
 			   <xsl:when test="ancestor::tei:elementSpec">
 			     <xsl:value-of
@@ -139,7 +142,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="sch:rule[not(@context)]">
     <rule>
       <xsl:attribute name="context">
-	<xsl:text>tei:</xsl:text>
+	<xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>
 	<xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
       </xsl:attribute>
       <xsl:apply-templates/>
