@@ -428,7 +428,7 @@ of this software, even if advised of the possibility of such damage.
 		  select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="../@ident"/></xsl:message>
+	      <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:otherwise>
