@@ -186,5 +186,34 @@ of this software, even if advised of the possibility of such damage.
     </xsl:message>
   </xsl:template>
 
+   <xsl:template match="@*|text()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="processing-instruction()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="*" mode="justcopy">
+     <xsl:copy>
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+     </xsl:copy>
+   </xsl:template>
+
+   <xsl:template match="a:*" mode="justcopy">
+      <xsl:element  xmlns="http://relaxng.org/ns/compatibility/annotations/1.0" name="{name()}">
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+      </xsl:element>
+   </xsl:template>
+
+   <xsl:template match="rng:*" mode="justcopy">
+     <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{local-name()}">
+       <xsl:apply-templates
+	   select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+     </xsl:element>
+   </xsl:template>
+
 
 </xsl:stylesheet>

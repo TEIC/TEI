@@ -2029,26 +2029,5 @@ select="$makeDecls"/></xsl:message>
   </xsl:template>
 
 
-   <xsl:template match="@*|text()" mode="justcopy">
-      <xsl:copy-of select="."/>
-   </xsl:template>
-
-   <xsl:template match="processing-instruction()" mode="justcopy">
-      <xsl:copy-of select="."/>
-   </xsl:template>
-
-   <xsl:template match="*" mode="justcopy">
-     <xsl:copy>
-         <xsl:apply-templates
-	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
-     </xsl:copy>
-   </xsl:template>
-
-   <xsl:template match="a:*" mode="justcopy">
-      <xsl:element name="{name()}">
-         <xsl:apply-templates
-	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
-      </xsl:element>
-   </xsl:template>
 
 </xsl:stylesheet>

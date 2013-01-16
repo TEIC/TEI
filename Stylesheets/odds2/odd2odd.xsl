@@ -314,7 +314,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:call-template>
 	</xsl:for-each>
 
-	<xsl:apply-templates mode="odd2odd-justcopy" select="tei:moduleRef[@url]"/>
+	<xsl:apply-templates mode="justcopy" select="tei:moduleRef[@url]"/>
 
       </xsl:copy>
 
@@ -626,7 +626,7 @@ of this software, even if advised of the possibility of such damage.
 	      select="$specName"/> from <xsl:value-of
 	      select="$Source"/> (<xsl:value-of select="$why"/>)</xsl:message>
             </xsl:if>
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$Current"/>
+            <xsl:apply-templates mode="justcopy" select="$Current"/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
@@ -701,13 +701,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="Source" tunnel="yes"/>
       <xsl:variable name="orig" select="."/>
       <xsl:apply-templates mode="odd2odd-copy" select="@*"/>
-      <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
+      <xsl:apply-templates mode="justcopy" select="tei:altIdent"/>
       <xsl:if test="$stripped='false'">
         <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
-        <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
-        <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+        <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
+        <xsl:apply-templates mode="justcopy" select="tei:desc"/>
       </xsl:if>
-      <xsl:apply-templates mode="odd2odd-justcopy" select="tei:classes"/>
+      <xsl:apply-templates mode="justcopy" select="tei:classes"/>
       <xsl:apply-templates mode="odd2odd-copy" select="tei:content"/>
       <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
       <attList xmlns="http://www.tei-c.org/ns/1.0">
@@ -716,23 +716,23 @@ of this software, even if advised of the possibility of such damage.
             <xsl:for-each select="tei:attList">
               <xsl:copy>
                 <xsl:copy-of select="@*"/>
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:attDef[@mode='add' or not(@mode)]"/>
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:attRef"/>
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:attList"/>
+                <xsl:apply-templates mode="justcopy" select="tei:attDef[@mode='add' or not(@mode)]"/>
+                <xsl:apply-templates mode="justcopy" select="tei:attRef"/>
+                <xsl:apply-templates mode="justcopy" select="tei:attList"/>
               </xsl:copy>
             </xsl:for-each>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:attList/tei:attDef[@mode='add' or not(@mode)]"/>
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:attList/tei:attRef"/>
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:attList/tei:attList"/>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attDef[@mode='add' or not(@mode)]"/>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attList"/>
           </xsl:otherwise>
         </xsl:choose>
       </attList>
       <xsl:if test="$stripped='false'">
-        <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
-        <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
-        <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
+        <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
+        <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
+        <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
       </xsl:if>
   </xsl:template>
 
@@ -758,7 +758,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:if>
           <xsl:copy-of select="@ns"/>
           <!-- if there is an altIdent, use it -->
-          <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
+          <xsl:apply-templates mode="justcopy" select="tei:altIdent"/>
           <!-- equiv, gloss, desc trio -->
           <xsl:choose>
             <xsl:when test="tei:equiv">
@@ -772,22 +772,22 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="tei:gloss">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
+              <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
+                <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+              <xsl:apply-templates mode="justcopy" select="tei:desc"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+                <xsl:apply-templates mode="justcopy" select="tei:desc"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -882,7 +882,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:call-template>
           <!-- attList -->
           <attList xmlns="http://www.tei-c.org/ns/1.0">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:attList/@org"/>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/@org"/>
             <xsl:call-template name="odd2odd-processAttributes">
               <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
               <xsl:with-param name="elementName" select="$elementName"/>
@@ -892,32 +892,32 @@ of this software, even if advised of the possibility of such damage.
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:exemplum">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
+              <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
+                <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:remarks">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
+              <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
+                <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="tei:listRef">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
+              <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
+                <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -939,7 +939,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:for-each select="$ODD">
         <xsl:for-each select="key('odd2odd-CHANGE',$specName)">
           <!-- if there is an altIdent, use it -->
-          <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
+          <xsl:apply-templates mode="justcopy" select="tei:altIdent"/>
           <!-- equiv, gloss, desc trio -->
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
@@ -954,29 +954,29 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="tei:gloss">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
+              <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
+                <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+              <xsl:apply-templates mode="justcopy" select="tei:desc"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+                <xsl:apply-templates mode="justcopy" select="tei:desc"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
           <!-- content -->
           <xsl:choose>
             <xsl:when test="tei:content">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:content"/>
+              <xsl:apply-templates mode="justcopy" select="tei:content"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
@@ -986,10 +986,10 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="tei:valList">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:valList[1]"/>
+              <xsl:apply-templates mode="justcopy" select="tei:valList[1]"/>
             </xsl:when>
             <xsl:when test="tei:stringVal">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:stringVal"/>
+              <xsl:apply-templates mode="justcopy" select="tei:stringVal"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
@@ -1001,32 +1001,32 @@ of this software, even if advised of the possibility of such damage.
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:exemplum">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
+              <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
+                <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="tei:remarks">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
+              <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
+                <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:listRef">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
+              <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
+                <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -1050,11 +1050,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
             <xsl:when test="tei:desc">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+              <xsl:apply-templates mode="justcopy" select="tei:desc"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="$ORIGINAL">
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+                <xsl:apply-templates mode="justcopy" select="tei:desc"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -1118,7 +1118,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
               <xsl:with-param name="elementName" select="''"/>
             </xsl:call-template>
-            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:attList/tei:attRef"/>
+            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
           </attList>
         </xsl:for-each>
       </xsl:for-each>
@@ -1241,18 +1241,18 @@ so that is only put back in if there is some content
 				 and @mode='replace']">
       <attDef xmlns="http://www.tei-c.org/ns/1.0" >
 	<xsl:apply-templates select="@*"/>
-	<xsl:apply-templates mode="odd2odd-justcopy"/>
+	<xsl:apply-templates mode="justcopy"/>
       </attDef>
     </xsl:for-each>
     <xsl:for-each select="tei:attList/tei:attDef[@mode='add' or not(@mode)]">
       <attDef xmlns="http://www.tei-c.org/ns/1.0" >
 	<xsl:apply-templates select="@*[not(name()='mode')]"/>
-	<xsl:apply-templates mode="odd2odd-justcopy"/>
+	<xsl:apply-templates mode="justcopy"/>
       </attDef>
     </xsl:for-each>
     <!-- class attributes are ones where there is no direct correspondence in
     the source for this element -->
-    <xsl:apply-templates mode="odd2odd-justcopy"
+    <xsl:apply-templates mode="justcopy"
 			 select="tei:attList/tei:attDef[(@mode='change'
 				 or @mode='delete'
 				 or @mode='replace') and not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
@@ -1339,7 +1339,7 @@ so that is only put back in if there is some content
 	</xsl:when>
       </xsl:choose>
       <xsl:if test="$New/tei:altIdent">
-	<xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:altIdent"/>
+	<xsl:apply-templates mode="justcopy" select="$New/tei:altIdent"/>
       </xsl:if>
       <!-- equiv, gloss, desc trio -->
       <xsl:choose>
@@ -1353,24 +1353,24 @@ so that is only put back in if there is some content
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$New/tei:gloss">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:gloss"/>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:gloss"/>
           </xsl:when>
           <xsl:otherwise>
-              <xsl:apply-templates mode="odd2odd-justcopy" select="$Old/tei:gloss"/>
+              <xsl:apply-templates mode="justcopy" select="$Old/tei:gloss"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
           <xsl:when test="$New/tei:desc">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:desc"/>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:desc"/>
           </xsl:when>
           <xsl:otherwise>
-              <xsl:apply-templates mode="odd2odd-justcopy" select="$Old/tei:desc"/>
+              <xsl:apply-templates mode="justcopy" select="$Old/tei:desc"/>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$New/tei:constraintSpec">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:constraintSpec"/>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:constraintSpec"/>
           </xsl:when>
           <xsl:when test="$Old/tei:constraintSpec">
             <xsl:copy-of select="$Old/tei:constraintSpec"/>
@@ -1378,7 +1378,7 @@ so that is only put back in if there is some content
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$New/tei:datatype">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:datatype"/>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:datatype"/>
           </xsl:when>
           <xsl:when test="$Old/tei:datatype">
             <xsl:copy-of select="$Old/tei:datatype"/>
@@ -1386,7 +1386,7 @@ so that is only put back in if there is some content
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$New/tei:defaultVal">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:defaultVal"/>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:defaultVal"/>
           </xsl:when>
           <xsl:when test="$Old/tei:defaultVal">
             <xsl:copy-of select="$Old/tei:defaultVal"/>
@@ -1394,7 +1394,7 @@ so that is only put back in if there is some content
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$New/tei:valDesc">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:valDesc"/>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:valDesc"/>
           </xsl:when>
           <xsl:when test="$Old/tei:valDesc">
             <xsl:copy-of select="$Old/tei:valDesc"/>
@@ -1434,22 +1434,22 @@ so that is only put back in if there is some content
                         </xsl:choose>
                         <xsl:choose>
                           <xsl:when test="tei:gloss">
-                            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
+                            <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
                           </xsl:when>
                           <xsl:otherwise>
                             <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
-                              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
+                              <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
                             </xsl:for-each>
                           </xsl:otherwise>
                         </xsl:choose>
                         <xsl:choose>
                           <xsl:when test="$stripped='true'"/>
                           <xsl:when test="tei:desc">
-                            <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+                            <xsl:apply-templates mode="justcopy" select="tei:desc"/>
                           </xsl:when>
                           <xsl:otherwise>
                             <xsl:for-each select="$Old/tei:valList/tei:valItem[@ident=$thisme]">
-                              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+                              <xsl:apply-templates mode="justcopy" select="tei:desc"/>
                             </xsl:for-each>
                           </xsl:otherwise>
                         </xsl:choose>
@@ -1457,8 +1457,8 @@ so that is only put back in if there is some content
                     </xsl:copy>
                   </xsl:if>
                 </xsl:for-each>
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:valItem[@mode='add']"/>
-                <xsl:apply-templates mode="odd2odd-justcopy" select="tei:valItem[@mode='replace']"/>
+                <xsl:apply-templates mode="justcopy" select="tei:valItem[@mode='add']"/>
+                <xsl:apply-templates mode="justcopy" select="tei:valItem[@mode='replace']"/>
               </xsl:copy>
             </xsl:for-each>
           </xsl:when>
@@ -1469,22 +1469,22 @@ so that is only put back in if there is some content
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
           <xsl:when test="$New/tei:exemplum">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:exemplum"/>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:exemplum"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:for-each select="$Old">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
+              <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
             </xsl:for-each>
           </xsl:otherwise>
         </xsl:choose>
         <xsl:choose>
           <xsl:when test="$stripped='true'"/>
           <xsl:when test="$New/tei:remarks">
-            <xsl:apply-templates mode="odd2odd-justcopy" select="$New/tei:remarks"/>
+            <xsl:apply-templates mode="justcopy" select="$New/tei:remarks"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:for-each select="$Old">
-              <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
+              <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
             </xsl:for-each>
           </xsl:otherwise>
         </xsl:choose>
@@ -1512,13 +1512,13 @@ so that is only put back in if there is some content
     <xsl:if test="not(//tei:schemaSpec)">
       <xsl:copy>
         <xsl:apply-templates mode="odd2odd-copy" select="@*"/>
-        <xsl:apply-templates mode="odd2odd-justcopy" select="tei:altIdent"/>
+        <xsl:apply-templates mode="justcopy" select="tei:altIdent"/>
         <xsl:if test="$stripped='false'">
           <xsl:apply-templates mode="odd2odd-copy" select="tei:equiv"/>
-          <xsl:apply-templates mode="odd2odd-justcopy" select="tei:gloss"/>
-          <xsl:apply-templates mode="odd2odd-justcopy" select="tei:desc"/>
+          <xsl:apply-templates mode="justcopy" select="tei:gloss"/>
+          <xsl:apply-templates mode="justcopy" select="tei:desc"/>
         </xsl:if>
-        <xsl:apply-templates mode="odd2odd-justcopy" select="tei:classes"/>
+        <xsl:apply-templates mode="justcopy" select="tei:classes"/>
         <xsl:apply-templates mode="odd2odd-copy" select="tei:content"/>
         <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
         <attList xmlns="http://www.tei-c.org/ns/1.0">
@@ -1527,9 +1527,9 @@ so that is only put back in if there is some content
           <xsl:comment>5.</xsl:comment>
         </attList>
         <xsl:if test="$stripped='false'">
-          <xsl:apply-templates mode="odd2odd-justcopy" select="tei:exemplum"/>
-          <xsl:apply-templates mode="odd2odd-justcopy" select="tei:remarks"/>
-          <xsl:apply-templates mode="odd2odd-justcopy" select="tei:listRef"/>
+          <xsl:apply-templates mode="justcopy" select="tei:exemplum"/>
+          <xsl:apply-templates mode="justcopy" select="tei:remarks"/>
+          <xsl:apply-templates mode="justcopy" select="tei:listRef"/>
         </xsl:if>
       </xsl:copy>
     </xsl:if>
@@ -1609,9 +1609,9 @@ so that is only put back in if there is some content
     <xsl:param name="ORIGINAL"/>
     <xsl:param name="elementName"/>
     <!-- first put in the ones we know take precedence -->
-    <xsl:apply-templates mode="odd2odd-justcopy" select="tei:constraintSpec[@mode='add' or not(@mode)]"/>
-    <xsl:apply-templates mode="odd2odd-justcopy" select="tei:constraintSpec[@mode='replace']"/>
-    <xsl:apply-templates mode="odd2odd-justcopy" select="tei:constraintSpec[@mode='change']"/>
+    <xsl:apply-templates mode="justcopy" select="tei:constraintSpec[@mode='add' or not(@mode)]"/>
+    <xsl:apply-templates mode="justcopy" select="tei:constraintSpec[@mode='replace']"/>
+    <xsl:apply-templates mode="justcopy" select="tei:constraintSpec[@mode='change']"/>
     <xsl:for-each select="$ORIGINAL">
       <!-- original source  context -->
       <xsl:for-each select="tei:constraintSpec">
@@ -1632,25 +1632,6 @@ so that is only put back in if there is some content
       </xsl:for-each>
     </xsl:for-each>
   </xsl:template>
-
-   <xsl:template match="@*|text()|processing-instruction()" mode="odd2odd-justcopy">
-      <xsl:copy-of select="."/>
-   </xsl:template>
-
-   <xsl:template match="rng:*" mode="odd2odd-justcopy">
-     <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{local-name()}">
-       <xsl:apply-templates
-	   select="*|@*|processing-instruction()|text()" mode="odd2odd-justcopy"/>
-     </xsl:element>
-   </xsl:template>
-
-   <xsl:template match="*" mode="odd2odd-justcopy">
-     <xsl:copy>
-       <xsl:apply-templates
-	   select="*|@*|processing-instruction()|text()" mode="odd2odd-justcopy"/>
-     </xsl:copy>
-   </xsl:template>
-
 
   <xsl:template match="processing-instruction()" mode="odd2odd-pass2">
     <xsl:copy-of select="."/>
