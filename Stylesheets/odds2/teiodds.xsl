@@ -15,7 +15,7 @@
     exclude-result-prefixes="a fo html i rng s sch tei teix xi xs xsl" 
   version="2.0">
   <xsl:import href="../common2/odds.xsl"/>
-  <xsl:import href="../common2/i18n.xsl"/>
+
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
