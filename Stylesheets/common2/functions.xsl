@@ -351,19 +351,15 @@ of this software, even if advised of the possibility of such damage.
   </doc>
     <xsl:template match="text()">
       <xsl:choose>
-	<xsl:when test="true()">
-	  <xsl:value-of select="tei:escapeChars(.,parent::*)"/>
-	</xsl:when>
 	<xsl:when
 	    test="ancestor::*[@xml:space][1]/@xml:space='preserve'">
 	  <xsl:value-of select="tei:escapeChars(.,parent::*)"/>
 	</xsl:when>
 	<xsl:otherwise>
-
         <!-- Retain one leading space if node isn't first, has
 	     non-space content, and has leading space.-->
 	<xsl:if test="position()!=1 and 
-		      substring(.,1,1) = ' ' and 
+		      matches(.,'^\s') and 
 		      normalize-space()!=''">
 	  <xsl:text> </xsl:text>
 	</xsl:if>
@@ -374,11 +370,11 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:text> </xsl:text>
 	  </xsl:when>
 	  <!-- node isn't last, isn't first, and has trailing space -->
-	  <xsl:when test="position()!=1 and position()!=last() and substring(., string-length()) = ' '">
+	  <xsl:when test="position()!=1 and position()!=last() and matches(.,'\s$')">
 	    <xsl:text> </xsl:text>
 	  </xsl:when>
 	  <!-- node isn't last, is first, has trailing space, and has non-space content   -->
-	  <xsl:when test="position()=1 and substring(., string-length()) = ' ' and normalize-space()!=''">
+	  <xsl:when test="position()=1 and matches(.,'\s$') and normalize-space()!=''">
             <xsl:text> </xsl:text>
 	  </xsl:when>
 	</xsl:choose>
