@@ -17,6 +17,7 @@
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common2/tagdocs.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
+  <xsl:import href="../common2/i18n.xsl"/>
   <xsl:param name="cellName">cell</xsl:param>
   <xsl:param name="codeName">code</xsl:param>
   <xsl:param name="colspan"/>
