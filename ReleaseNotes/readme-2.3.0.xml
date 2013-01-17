@@ -7,156 +7,151 @@
 	$Id$
 -->
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-    <teiHeader>
-        <fileDesc>
-            <titleStmt>
-                <title>TEI P5 version 2.3.0 release notes</title>
-            </titleStmt>
-            <editionStmt>
-                <edition>
-                    <date when="2013-01-17">17 January 2013</date>
-                </edition>
-            </editionStmt>
-            <publicationStmt>
-                <authority>The Text Encoding Initiative</authority>
-            </publicationStmt>
-            <sourceDesc>
-                <p>created retrospectively from svn ChangeLog and SourceForge trackers</p>
-            </sourceDesc>
-        </fileDesc>
-    </teiHeader>
-    <text>
-        <body>
-            <p> This version of the TEI introduces new features and resolves a number of issues
-                raised by the TEI community. As always, the majority of these changes and
-                corrections are a consequence of feature requests or bugs reported by the TEI
-                community, using the SourceForge tracking system. If you find something you think
-                needs to change in the TEI Guidelines, schemas, tools, or website, please submit a
-                feature request or bug ticket at <ref target="http://tei.sf.net/">http://tei.sf.net/</ref> for
-                consideration.</p>
-            <p> Since the last release (25 October 2012), the TEI Technical Council has closed 93
-                tickets entered in the SourceForge tracking system. During the same period 77 new
-                tickets have been opened by the community according to <ref
-                    target="https://sourceforge.net/projects/tei/stats/tracker?tracker=&amp;dates=2012-10-25+to+2013-01-17"
-                    >
-                    https://sourceforge.net/projects/tei/stats/tracker?tracker=&amp;dates=2012-10-25+to+2013-01-17</ref>.</p>
-            
-            <p>Some of the highlights of the TEI P5 2.3.0 release include: <list>
-                    <item>The creation of an <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.sourced.html"
-                            >att.source</ref> class resulting from <ref
-                            target="http://purl.org/tei/bugs/3572502"
-                            >http://purl.org/tei/bugs/3572502</ref> in order to standardise the provision of
-                        the <att>source</att> attribute for pointing to one or more sources of a
-                        bibliographic reference. Currently, the elements <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-quote.html"
-                            >quote</ref>, <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-q.html"
-                            >q</ref>, <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-writing.html"
-                            >writing</ref>, and <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-egXML.html"
-                            >egXML</ref> claim membership in this class.</item>
-                    <item>A change of the <ref
-                            target="http://www.tei-c.org/Vault/P5/2.2.0/doc/tei-p5-doc/en/html/ref-att.sourced.html"
-                            >att.sourced</ref> class to <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.edition.html"
-                            >att.edition</ref> (to avoid confusion with the above), and the creation
-                        of an <att>edRef</att> attribute to provide one or more pointers to the
-                        source edition in which the associated feature (e.g. page, column, or line
-                        break) occurs.</item>
-                    <item>The addition of a schematron constraint to check that there is a <att>type</att>
-                        attribute if there is a <att>subtype</att> attribute; also <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-abbr.html"
-                            >abbr</ref> and <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-title.html"
-                            >title</ref> now get their <att>type</att> from <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.typed.html"
-                            >att.typed</ref> and so will now get a <att>subtype</att> attribute as well. </item>
-                    <item>The creation of a <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-media.html"
-                            >media</ref> element to indicate the location of any form of external
-                        media (such as an audio or video clip); also the creation of a new <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.media.html"
-                            >att.media</ref> class which provides <att>width</att>,
-                            <att>height</att>, and <att>scale</att> attributes. </item>
-                    <item>A change to <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-label.html"
-                            >label</ref> to claim membership in <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.placement.html"
-                            >att.placement</ref> (for the <att>place</att> attribute) and <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.typed.html"
-                            >att.typed</ref> in response to <ref
-                            target="http://purl.org/tei/fr/3527821"
-                            >http://purl.org/tei/fr/3527821</ref></item>
-                    <item>A tightening up of the use of morphological elements inside <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-cit.html"
-                            >cit</ref> necessitating some of them to be wrapped in the <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-gramGrp.html"
-                            >gramGrp</ref> element in response to <ref
-                            target="http://purl.org/tei/bug/3547289"
-                            >http://purl.org/tei/bug/3547289</ref>
-                    </item>
-                    <item>Revising section <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ST.html#STGAxs"
-                            >1.3.1.1.5 on XML Whitespace</ref> for further clarity in response to a
-                        community contribution. </item>
-                    <item>Removal of the default value from the definition of the <att>marks</att>
-                        attribute on <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-quotation.html"
-                            >quotation</ref>. It was decided that a default value is unhelpful since
-                        the element is optional and affects the interpretation of the whole
-                        document; also the content model of <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-quotation.html"
-                            >quotation</ref> was changed from one or more <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.pLike.html"
-                            >model.pLike</ref> elements to zero or more of these allowing it to not have any child elements.</item>
-                    <item>The creation of <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-listPrefixDef.html"
-                            >listPrefixDef</ref> and <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-prefixDef.html"
-                            >prefixDef</ref> to define prefixing schemes used in <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-data.pointer.html"
-                            >data.pointer</ref> values, showing how abbreviated URIs using the
-                        scheme may be expanded into full URIs. This is a powerful mechanism for
-                        providing a method allowing full documentation of private URI schemes which
-                        are then able to be dereferenced using the information in the <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-prefixDef.html"
-                            >prefixDef</ref> element. New prose was added to describe this at <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/SA.html#SAPU"
-                            >16.2.3 - Using Abbreviated Pointers</ref></item>
-                    <item>A change to elements which claim membership in <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.certLike.html"
-                            >model.certLike</ref> in that this class has been added to the content model of <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-space.html"
-                            >space</ref> in response to <ref
-                            target="http://purl.org/tei/bugs/3565137"
-                            >http://purl.org/tei/bugs/3565137</ref> allowing them to now be used here.
-                    </item>
-                    <item>The <att>type</att> attribute on <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.certLike.html"
-                            >biblScope</ref> has been deprecated and replaced with a <att>unit</att>
-                        attribute for greater clarity. The <att>type</att> attribute will be removed
-                        at a future release.</item>
-                    <item>The <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.locusGrp.html"
-                            >locusGrp</ref> element has been added to the content model of <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-msItemStruct.html"
-                            >msItemStruct</ref>, giving encoders a choice between <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.locus.html"
-                            >locus</ref> or <ref
-                            target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.locusGrp.html"
-                            >locusGrp</ref>, in response to <ref
-                            target="http://purl.org/tei/fr/3575433"
-                            >http://purl.org/tei/fr/3575433</ref></item>
-                    <item>Many tickets reporting small bugs such as typos, inconsistencies, or
-                        places where greater clarity was needed in the Guidelines. The TEI Technical
-                        Council would encourage any such reports, so if you spot a problem, please
-                        do let us know by filing a bug at <ref target="http://purl.org/tei/bug"
-                            >http://purl.org/tei/bug</ref>.</item>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI P5 version 2.3.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2013-01-17">17 January 2013</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>created retrospectively from svn ChangeLog and SourceForge trackers</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p> This version of the TEI introduces new features and resolves a number of issues raised by
+        the TEI community. As always, the majority of these changes and corrections are a
+        consequence of feature requests or bugs reported by the TEI community, using the SourceForge
+        tracking system. If you find something you think needs to change in the TEI Guidelines,
+        schemas, tools, or website, please submit a feature request or bug ticket at <ref
+          target="http://tei.sf.net/">http://tei.sf.net/</ref> for consideration.</p>
+      <p> Since the last release (25 October 2012), the TEI Technical Council has closed 93 tickets
+        entered in the SourceForge tracking system. During the same period 77 new tickets have been
+        opened by the community according to <ref
+          target="https://sourceforge.net/projects/tei/stats/tracker?tracker=&amp;dates=2012-10-25+to+2013-01-17"
+          >
+          https://sourceforge.net/projects/tei/stats/tracker?tracker=&amp;dates=2012-10-25+to+2013-01-17</ref>.</p>
 
-                </list>
-            </p>
-        </body>
-    </text>
+      <p>Some of the highlights of the TEI P5 2.3.0 release include: <list>
+          <item>The creation of an <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.sourced.html"
+              >att.source</ref> class resulting from <ref target="http://purl.org/tei/bugs/3572502"
+              >http://purl.org/tei/bugs/3572502</ref> in order to standardise the provision of the
+              <att>source</att> attribute for pointing to one or more sources of a bibliographic
+            reference. Currently, the elements <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-quote.html"
+              >quote</ref>, <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-q.html"
+            >q</ref>, <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-writing.html"
+              >writing</ref>, and <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-egXML.html"
+              >egXML</ref> claim membership in this class.</item>
+          <item>A change of the <ref
+              target="http://www.tei-c.org/Vault/P5/2.2.0/doc/tei-p5-doc/en/html/ref-att.sourced.html"
+              >att.sourced</ref> class to <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.edition.html"
+              >att.edition</ref> (to avoid confusion with the above), and the creation of an
+              <att>edRef</att> attribute to provide one or more pointers to the source edition in
+            which the associated feature (e.g. page, column, or line break) occurs.</item>
+          <item>The addition of a schematron constraint to check that there is a <att>type</att>
+            attribute if there is a <att>subtype</att> attribute; also <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-abbr.html"
+              >abbr</ref> and <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-title.html"
+              >title</ref> now get their <att>type</att> from <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.typed.html"
+              >att.typed</ref> and so will now get a <att>subtype</att> attribute as well. </item>
+          <item>The creation of a <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-media.html"
+              >media</ref> element to indicate the location of any form of external media (such as
+            an audio or video clip); also the creation of a new <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.media.html"
+              >att.media</ref> class which provides <att>width</att>, <att>height</att>, and
+              <att>scale</att> attributes. </item>
+          <item>A change to <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-label.html"
+              >label</ref> to claim membership in <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.placement.html"
+              >att.placement</ref> (for the <att>place</att> attribute) and <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-att.typed.html"
+              >att.typed</ref> in response to <ref target="http://purl.org/tei/fr/3527821"
+              >http://purl.org/tei/fr/3527821</ref></item>
+          <item>A tightening up of the use of morphological elements inside <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-cit.html"
+              >cit</ref> necessitating some of them to be wrapped in the <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-gramGrp.html"
+              >gramGrp</ref> element in response to <ref target="http://purl.org/tei/bug/3547289"
+              >http://purl.org/tei/bug/3547289</ref>
+          </item>
+          <item>Revising section <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ST.html#STGAxs"
+              >1.3.1.1.5 on XML Whitespace</ref> for further clarity in response to a community
+            contribution. </item>
+          <item>Removal of the default value from the definition of the <att>marks</att> attribute
+            on <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-quotation.html"
+              >quotation</ref>. It was decided that a default value is unhelpful since the element
+            is optional and affects the interpretation of the whole document; also the content model
+            of <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-quotation.html"
+              >quotation</ref> was changed from one or more <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.pLike.html"
+              >model.pLike</ref> elements to zero or more of these allowing it to not have any child
+            elements.</item>
+          <item>The creation of <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-listPrefixDef.html"
+              >listPrefixDef</ref> and <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-prefixDef.html"
+              >prefixDef</ref> to define prefixing schemes used in <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-data.pointer.html"
+              >data.pointer</ref> values, showing how abbreviated URIs using the scheme may be
+            expanded into full URIs. This is a powerful mechanism for providing a method allowing
+            full documentation of private URI schemes which are then able to be dereferenced using
+            the information in the <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-prefixDef.html"
+              >prefixDef</ref> element. New prose was added to describe this at <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/SA.html#SAPU"
+              >16.2.3 - Using Abbreviated Pointers</ref></item>
+          <item>A change to elements which claim membership in <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.certLike.html"
+              >model.certLike</ref> in that this class has been added to the content model of <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-space.html"
+              >space</ref> in response to <ref target="http://purl.org/tei/bugs/3565137"
+              >http://purl.org/tei/bugs/3565137</ref> allowing them to now be used here. </item>
+          <item>The <att>type</att> attribute on <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.certLike.html"
+              >biblScope</ref> has been deprecated and replaced with a <att>unit</att> attribute for
+            greater clarity. The <att>type</att> attribute will be removed at a future
+            release.</item>
+          <item>The <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.locusGrp.html"
+              >locusGrp</ref> element has been added to the content model of <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-msItemStruct.html"
+              >msItemStruct</ref>, giving encoders a choice between <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.locus.html"
+              >locus</ref> or <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-model.locusGrp.html"
+              >locusGrp</ref>, in response to <ref target="http://purl.org/tei/fr/3575433"
+              >http://purl.org/tei/fr/3575433</ref></item>
+          <item>The <ref
+              target="http://www.tei-c.org/Vault/P5/2.3.0/doc/tei-p5-doc/en/html/ref-citedRange.html"
+              >citedRange</ref> element has been added to enable users to document in a
+            bibliographic reference the range within a larger text that is being cited.</item>
+          <item>Many tickets reporting small bugs such as typos, inconsistencies, or places where
+            greater clarity was needed in the Guidelines. The TEI Technical Council would encourage
+            any such reports, so if you spot a problem, please do let us know by filing a bug at
+              <ref target="http://purl.org/tei/bug">http://purl.org/tei/bug</ref>.</item>
+        </list>
+      </p>
+    </body>
+  </text>
 </TEI>
