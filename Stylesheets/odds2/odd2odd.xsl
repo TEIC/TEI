@@ -12,8 +12,6 @@
     version="2.0" 
     exclude-result-prefixes="teix a s tei xs rng sch xsi">
 
-  <xsl:import href="../common2/i18n.xsl"/>  
-  <xsl:import href="../common2/odds.xsl"/>  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for simplifying TEI ODD markup </p>
@@ -57,10 +55,16 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:output encoding="utf-8" indent="no"/>
   <xsl:param name="autoGlobal">false</xsl:param>
+  <xsl:param name="configDirectory"/>
+  <xsl:param name="currentDirectory"/>
+  <xsl:param name="defaultSource"></xsl:param>
+  <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
+  <xsl:param name="defaultTEIVersion">current</xsl:param>
+  <xsl:param name="doclang"/>
   <xsl:param name="selectedSchema"/>
-  <xsl:param name="verbose"/>
-  <xsl:param name="useVersionFromTEI">true</xsl:param>
   <xsl:param name="stripped">false</xsl:param>
+  <xsl:param name="useVersionFromTEI">true</xsl:param>
+  <xsl:param name="verbose">false</xsl:param>
   <xsl:key name="odd2odd-CHANGEATT" match="tei:attDef[@mode='change']" use="concat(../../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CHANGECONSTRAINT" match="tei:constraintSpec[@mode='change']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-CLASS_MEMBERED" use="tei:classes/tei:memberOf/@key" match="tei:classSpec"/>
@@ -104,6 +108,177 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REPLACEATT" match="tei:attDef[@mode='replace']" use="concat(../../@ident,'_',@ident)"/>
 
   
+  <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
+
+  <xsl:variable name="whichSchemaSpec">
+    <xsl:choose>
+      <xsl:when test="$selectedSchema">
+        <xsl:value-of select="$selectedSchema"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="key('SCHEMASPECS',1)[1]/@ident"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+
+  <xsl:variable name="DEFAULTSOURCE">
+    <xsl:choose>
+      <xsl:when test="$defaultSource != ''">
+        <xsl:value-of select="$defaultSource"/>
+      </xsl:when>
+      <xsl:when test="$configDirectory != ''">
+        <xsl:value-of select="$configDirectory"/>
+        <xsl:text>odd/p5subset.xml</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$defaultTEIServer"/>
+        <xsl:value-of select="$defaultTEIVersion"/>
+	<xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+
+
+  <xsl:function name="tei:workOutSource" as="xs:string*">
+    <xsl:param name="e"/>
+    <xsl:variable name="loc">
+      <xsl:choose>
+	<xsl:when test="$e/@source">
+	  <xsl:value-of select="$e/@source"/>
+	</xsl:when>
+	<xsl:when test="$e/ancestor::tei:schemaSpec/@source">
+	  <xsl:value-of select="$e/ancestor::tei:schemaSpec/@source"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$DEFAULTSOURCE"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="source">
+      <xsl:choose>
+	<xsl:when test="starts-with($loc,'/')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'file:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'http:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'https:')">
+	  <xsl:value-of select="$loc"/>
+	</xsl:when>
+	<xsl:when test="starts-with($loc,'tei:')">
+	  <xsl:value-of
+	      select="replace($loc,'tei:',$defaultTEIServer)"/>
+	  <xsl:text>/xml/tei/odd/p5subset.xml</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$currentDirectory"/>
+	  <xsl:value-of select="$loc"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="not(doc-available($source))">
+	<xsl:call-template name="die">
+	  <xsl:with-param name="message">
+	    <xsl:text>Source </xsl:text>
+	   <xsl:value-of select='$source'/>
+	   <xsl:text> not readable</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:if test="$verbose='true'">
+	  <xsl:message>Setting source document to <xsl:value-of
+	  select="$source"/></xsl:message>
+	</xsl:if>
+	<xsl:sequence select="$source"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="tei:message" as="xs:string">
+    <xsl:param name="message"/>
+    <xsl:message><xsl:copy-of select="$message"/></xsl:message>
+    <xsl:text/>
+  </xsl:function>
+
+  <xsl:function name="tei:uniqueName" as="xs:string">
+    <xsl:param name="e"/>
+    <xsl:for-each select="$e">
+      <xsl:sequence select="concat(
+	if (@ns='http://www.tei-c.org/ns/1.0') then ''
+	else if (@ns) then @ns
+	else if (ancestor::tei:schemaSpec/@ns) then
+	ancestor::tei:schemaSpec/@ns else '',@ident)"/>
+    </xsl:for-each>
+  </xsl:function>
+
+  <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
+    <xsl:param name="e"/>
+    <xsl:for-each select="$e">
+      <xsl:variable name="myns" select="ancestor::tei:elementSpec/@ns"/>
+      <xsl:choose>
+	<xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
+	  <xsl:text>tei:</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:choose>
+	    <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
+	      <xsl:value-of
+		  select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <xsl:template name="die">
+    <xsl:param name="message"/>
+    <xsl:message terminate="yes">
+      <xsl:text>Error: odd2odd.xsl: </xsl:text> 
+      <xsl:value-of select="$message"/>
+    </xsl:message>
+  </xsl:template>
+
+   <xsl:template match="@*|text()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="processing-instruction()" mode="justcopy">
+      <xsl:copy-of select="."/>
+   </xsl:template>
+
+   <xsl:template match="*" mode="justcopy">
+     <xsl:copy>
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+     </xsl:copy>
+   </xsl:template>
+
+   <xsl:template match="a:*" mode="justcopy">
+      <xsl:element  xmlns="http://relaxng.org/ns/compatibility/annotations/1.0" name="{name()}">
+         <xsl:apply-templates
+	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+      </xsl:element>
+   </xsl:template>
+
+   <xsl:template match="rng:*" mode="justcopy">
+     <xsl:element xmlns="http://relaxng.org/ns/structure/1.0" name="{local-name()}">
+       <xsl:apply-templates
+	   select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+     </xsl:element>
+   </xsl:template>
+
+
+
   <xsl:variable name="ODD">
     <xsl:for-each select="/tei:TEI">
       <xsl:copy>
