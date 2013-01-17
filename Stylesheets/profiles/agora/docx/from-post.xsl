@@ -125,9 +125,6 @@
  </xsl:copy>
 </xsl:template>
 
-<xsl:template match="text()">
-    <xsl:value-of select="."/> <!-- could normalize() here -->
-</xsl:template>
 
 
 

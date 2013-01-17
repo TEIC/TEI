@@ -171,6 +171,10 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] work out the date and time, unless we have been
+      told not to</desc>
+   </doc>
   <xsl:template name="whatsTheDate">
     <xsl:choose>
       	<xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
@@ -182,6 +186,10 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] whether to put quotes around something. check the
+      quotation element, @rend, @rendition etc</desc>
+   </doc>
    <xsl:template name="makeQuote">
      <xsl:choose>
        <xsl:when
@@ -231,6 +239,5 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="text"/>
     <xsl:value-of select="$text"/>
   </xsl:template>
-
 
 </xsl:stylesheet>

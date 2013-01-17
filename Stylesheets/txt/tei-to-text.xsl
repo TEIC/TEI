@@ -70,27 +70,33 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="facsimile"/>
 
    <!-- for when we need some context -->
-   <xsl:template match="text()">
+  <xsl:function name="tei:escapeChars" as="xs:string">
+    <xsl:param name="letters"/>
+    <xsl:param name="context"/>
      <xsl:choose>
-       <xsl:when test="normalize-space()=''"/>
+       <xsl:when test="normalize-space($letters)=''">
+	 <xsl:text/>
+       </xsl:when>
        <xsl:when test="$makeCSV='true'">
+	 <xsl:variable name="result">
 	 <xsl:text>"</xsl:text>
-	 <xsl:value-of select="replace(normalize-space(),'$q','$q$q')"/>
+	 <xsl:value-of select="replace(normalize-space($letters),'$q','$q$q')"/>
 	 <xsl:text>","</xsl:text>
-	 <xsl:for-each select="ancestor::*">
+	 <xsl:for-each select="$context/ancestor::*">
 	   <xsl:value-of select="name()"/>
 	   <xsl:text>[</xsl:text>
 	   <xsl:number/>
 	   <xsl:text>]/</xsl:text>
 	 </xsl:for-each>
 	 <xsl:text>"&#10;</xsl:text>
+	 </xsl:variable>
+	 <xsl:value-of select="$result"/>
        </xsl:when>
        <xsl:otherwise>
-	 <xsl:value-of select="normalize-space()"/>
-	 <xsl:text>&#10;</xsl:text>
+	 <xsl:value-of select="concat(normalize-space($letters),'&#10;')"/>
        </xsl:otherwise>
        </xsl:choose>
-   </xsl:template>
+  </xsl:function>
 
    
    <xsl:function name="tei:preflight" as="element()+">

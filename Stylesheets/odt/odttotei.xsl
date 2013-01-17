@@ -1175,12 +1175,6 @@ These seem to have no obvious translation
 
   <xsl:template match="meta:user-defined"/>
 
-  <!--
-<xsl:template match="text()">
-  <xsl:apply-templates select="normalize-space(.)"/>
-</xsl:template>
--->
-
 <xsl:template match="text:section">
   <xsl:apply-templates/>
 </xsl:template>

@@ -519,40 +519,8 @@ of this software, even if advised of the possibility of such damage.
      </xsl:choose>
    </xsl:template>
    
-   <xsl:template match="tei:surname">
-      <xsl:if test="../tei:forename">
-         <xsl:apply-templates select="../tei:forename" mode="use"/>
-         <xsl:call-template name="tei:makeText">
-	   <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
-	 </xsl:call-template>
-      </xsl:if>
-      <xsl:if test="../tei:nameLink">
-         <xsl:apply-templates select="../tei:nameLink" mode="use"/>
-         <xsl:call-template name="tei:makeText">
-	   <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
-	 </xsl:call-template>
-      </xsl:if>
-      <xsl:apply-templates/>
-   </xsl:template>
-
-   <xsl:template match="tei:forename">
-   </xsl:template>
-
    <xsl:template match="tei:nameLink">
 </xsl:template>
-
-   <xsl:template match="tei:forename" mode="use">
-      <xsl:if test="preceding-sibling::tei:forename">
-         <xsl:call-template name="tei:makeText">
-	   <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
-	 </xsl:call-template>
-      </xsl:if>
-      <xsl:apply-templates/>
-   </xsl:template>
-
-   <xsl:template match="tei:nameLink" mode="use">
-      <xsl:apply-templates/>
-   </xsl:template>
 
    <!-- title  -->
    <xsl:template match="tei:titlePart" mode="simple">

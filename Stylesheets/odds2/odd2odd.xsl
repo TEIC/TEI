@@ -12,6 +12,7 @@
     version="2.0" 
     exclude-result-prefixes="teix a s tei xs rng sch xsi">
 
+  <xsl:import href="../common2/i18n.xsl"/>  
   <xsl:import href="../common2/odds.xsl"/>  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>

@@ -364,7 +364,7 @@ XSL LaTeX stylesheet to make slides
             <xsl:text>&amp;amp;</xsl:text>
 	</xsl:matching-substring>
 	<xsl:non-matching-substring>
-	  <xsl:value-of select="tei:escapeChars(.)"/>
+	  <xsl:value-of select="tei:escapeChars(.,.)"/>
 	</xsl:non-matching-substring>
       </xsl:analyze-string>
   </xsl:template>
@@ -379,12 +379,12 @@ XSL LaTeX stylesheet to make slides
 	                 <xsl:text> </xsl:text>
 	              </xsl:with-param>
 	              <xsl:with-param name="text">
-	                 <xsl:value-of select="normalize-space(tei:escapeChars(.))"/>
+	                 <xsl:value-of select="normalize-space(tei:escapeChars(.,parent::*))"/>
 	              </xsl:with-param>
             </xsl:call-template>
          </xsl:when>
          <xsl:otherwise>
-	           <xsl:value-of select="tei:escapeChars(.)"/>
+	           <xsl:value-of select="tei:escapeChars(.,parent::*)"/>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>

@@ -158,8 +158,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="translate($letters, '\{}','⃥❴❵')"/>
   </xsl:function>
 
-  <xsl:function name="tei:escapeChars" as="xs:string">
+  <xsl:function name="tei:escapeChars" as="xs:string" override="yes">
     <xsl:param name="letters"/>
+    <xsl:param name="context"/>
       <xsl:value-of
 	  select="replace(replace(replace(replace(translate($letters,'&#10;',' '), 
 		  '\\','\\textbackslash '),
@@ -196,7 +197,7 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="Text">
       <xsl:param name="words"/>
-      <xsl:value-of select="tei:escapeChars($words)"/>
+      <xsl:value-of select="tei:escapeChars($words,.)"/>
   </xsl:template>
 
   <xsl:template name="applyRendition"/>
@@ -207,22 +208,13 @@ of this software, even if advised of the possibility of such damage.
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process text(), escaping the LaTeX command characters.</p>
-      </desc>
-   </doc>
-  <xsl:template match="text()"> 
-      <xsl:value-of select="tei:escapeChars(.)"/>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
          <p>Process attributes in text mode, escaping the LaTeX
     command characters.</p>
          <p>as with text()</p>
       </desc>
    </doc>
   <xsl:template match="@*" mode="attributetext">
-      <xsl:value-of select="tei:escapeChars(.)"/>
+      <xsl:value-of select="tei:escapeChars(.,parent::*)"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

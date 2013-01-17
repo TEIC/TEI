@@ -24,7 +24,6 @@ xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" version="2.0"
 exclude-result-prefixes="cals ve o r m v wp sch w10 w wne mml tbx iso
 			 tei a xs pic fn rng">
 
-  <xsl:import href="i18n.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
