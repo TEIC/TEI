@@ -134,7 +134,7 @@ teiwebsiteguidelines:
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 	rm Utilities/teic-index.xml
 
-pdf: pdf.stamp
+pdf: Guidelines.pdf
 
 fontcheck:
 	xelatex --interaction=batchmode Utilities/fonttest 
@@ -146,7 +146,7 @@ fontcheck:
 	fi
 	rm -f fonttest.*
 
-pdf.stamp: check.stamp p5.xm Utilities/guidelines-latex.xsl
+Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo BUILD: build Lite version of Guidelines
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml -s:p5.xml -xsl:${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
@@ -179,7 +179,6 @@ pdf.stamp: check.stamp p5.xm Utilities/guidelines-latex.xsl
 	rm pdfbuild.log
 	rm Guidelines.xml
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
-	touch pdf.stamp
 
 chapterpdfs: check
 	for i in `grep "\\include{" Guidelines.tex | sed 's/.*{\(.*\)}.*/\\1/'`; \
@@ -459,19 +458,19 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-epub: epub.stamp
+epub: Guidelines.epub
 
-epub.stamp: check.stamp p5.xml 
+Guidelines.epub: check.stamp p5.xml 
 	@echo BUILD: Make epub version of Guidelines
 	teitoepub3 --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
-	touch epub.stamp
+	touch Guidelines.epub
 
-mobi:  mobi.stamp
+mobi:  Guidelines.mobi
 
-mobi.stamp: check.stamp p5.xml 
+Guidelines.mobi: check.stamp p5.xml 
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=teikindle p5.xml Guidelines-kindle.epub
 	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
