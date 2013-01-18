@@ -418,7 +418,7 @@ debversion:
 	sh ./mydch debian-tei-p5-source/debian/changelog
 	sh ./mydch debian-tei-p5-test/debian/changelog
 
-deb: dist debversion
+deb: debversion
 	rm -f tei-p5-*_*deb
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
