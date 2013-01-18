@@ -83,7 +83,7 @@ schema-sch:  check
 	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:`dirname ${XSL}/${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
 
 
-html-web: html-web.stamp check.stamp
+html-web: check.stamp html-web.stamp
 
 html-web.stamp:  check
 	@echo BUILD: Making HTML Guidelines for language ${LANGUAGE}
@@ -134,9 +134,7 @@ teiwebsiteguidelines:
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 	rm Utilities/teic-index.xml
 
-pdf: check
-	if [ debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.pdf -nt p5.xml ] ; then cp debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.pdf .; else make pdf.stamp; fi
-
+pdf: check pdf.stamp
 
 fontcheck:
 	xelatex --interaction=batchmode Utilities/fonttest 
@@ -364,7 +362,7 @@ dist-test.stamp: check
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
 	touch dist-test.stamp
 
-dist-exemplars.stamp: check
+dist-exemplars.stamp: check oddschema
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make XSL=${XSL} dist)
 	tar --exclude "*~" --exclude .svn -c -f - Exemplars \
@@ -461,8 +459,7 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-epub: check
-	if [ debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.epub -nt p5.xml ] ; then cp debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.epub .; else make epub.stamp; fi
+epub: check epub.stamp
 
 epub.stamp: check
 	@echo BUILD: Make epub version of Guidelines
@@ -472,8 +469,7 @@ epub.stamp: check
 	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
 	touch epub.stamp
 
-mobi: check
-	if [ debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.mobi -nt p5.xml ] ; then cp debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.mobi .; else make mobi.stamp; fi
+mobi: check mobi.stamp
 
 mobi.stamp:
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=teikindle p5.xml Guidelines-kindle.epub
