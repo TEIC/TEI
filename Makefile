@@ -422,11 +422,17 @@ deb: debversion
 	rm -f tei-p5-*_*deb
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
+	@echo BUILD: make Debian tei-p5-database package
 	(cd debian-tei-p5-database; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	@echo BUILD: make Debian tei-p5-doc package
 	(cd debian-tei-p5-doc; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	@echo BUILD: make Debian tei-p5-exemplars package
 	(cd debian-tei-p5-exemplars; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	@echo BUILD: make Debian tei-p5-schema package
 	(cd debian-tei-p5-schema; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	@echo BUILD: make Debian tei-p5-source package
 	(cd debian-tei-p5-source; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	@echo BUILD: make Debian tei-p5-test package
 	(cd debian-tei-p5-test; debclean;debuild -eXSL=${XSL} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 
 install-schema: dist-schema
