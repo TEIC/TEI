@@ -134,7 +134,9 @@ teiwebsiteguidelines:
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 	rm Utilities/teic-index.xml
 
-pdf: pdf.stamp
+pdf: check
+	if [ debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.pdf -nt p5.xml ] ; then cp debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.pdf .; else make pdf.stamp; fi
+
 
 fontcheck:
 	xelatex --interaction=batchmode Utilities/fonttest 
@@ -453,7 +455,8 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-epub: epub.stamp
+epub: check
+	if [ debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.epub -nt p5.xml ] ; then cp debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.epub .; else make epub.stamp; fi
 
 epub.stamp: check
 	@echo BUILD: Make epub version of Guidelines
@@ -464,6 +467,9 @@ epub.stamp: check
 	touch epub.stamp
 
 mobi: check
+	if [ debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.mobi -nt p5.xml ] ; then cp debian-tei-p5-doc/debian/tei-p5-doc/usr/share/doc/tei-p5-doc/en/Guidelines.mobi .; else make mobi.stamp; fi
+
+mobi.stamp:
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=teikindle p5.xml Guidelines-kindle.epub
 	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
