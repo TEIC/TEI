@@ -36,7 +36,7 @@ convert: dtds schemas
 
 check: check.stamp  p5.xml
 
-check.stamp:
+check.stamp: 
 	@echo Checking you have running XML tools and Perl before trying to run transform...
 	@echo -n Perl: 
 	@command -v  perl || exit 1
@@ -57,7 +57,7 @@ check.stamp:
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
 	xmllint --xinclude --dropdtd --noent ${DRIVER} > p5.xml
 
-dtds: check
+dtds: check.stamp p5.xml 
 	rm -rf DTD
 	mkdir DTD
 	@echo BUILD: Generate modular DTDs
@@ -66,9 +66,9 @@ dtds: check
 	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
 	${VERBOSE}
 
-schemas:check schema-relaxng schema-sch
+schemas:check.stamp p5.xml  schema-relaxng schema-sch
 
-schema-relaxng:  check
+schema-relaxng:  check.stamp p5.xml 
 	rm -rf Schema
 	mkdir Schema
 	@echo BUILD: Generate modular RELAX NG schemas
@@ -78,14 +78,14 @@ schema-relaxng:  check
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 
-schema-sch:  check
+schema-sch:  check.stamp p5.xml 
 	@echo BUILD: Extract schema rules to make p5.isosch
 	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:`dirname ${XSL}/${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
 
 
-html-web: check.stamp html-web.stamp
+html-web: check.stamp p5.xml  html-web.stamp
 
-html-web.stamp:  check
+html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 	@echo BUILD: Making HTML Guidelines for language ${LANGUAGE}
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
@@ -134,7 +134,7 @@ teiwebsiteguidelines:
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 	rm Utilities/teic-index.xml
 
-pdf: check pdf.stamp
+pdf: pdf.stamp
 
 fontcheck:
 	xelatex --interaction=batchmode Utilities/fonttest 
@@ -146,7 +146,7 @@ fontcheck:
 	fi
 	rm -f fonttest.*
 
-pdf.stamp: check 
+pdf.stamp: check.stamp p5.xm Utilities/guidelines-latex.xsl
 	@echo BUILD: build Lite version of Guidelines
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml -s:p5.xml -xsl:${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
@@ -194,7 +194,7 @@ validate: dtds schemas oddschema exampleschema valid
 
 #The following line commented out in 10605 by MDH. Restored 2012-10-26 to see if it was the source of 2.2.0 release problems.
 valid: jing_version=$(wordlist 1,3,$(shell jing))
-valid: check
+valid: check.stamp p5.xml 
 #	@echo BUILD: Check validity with jing
 #	@echo ${jing_version}
 #	We have discovered that jing reports 3-letter language codes
@@ -257,7 +257,7 @@ p5odds-examples.rng: p5subset.xml p5odds-examples.odd
 	command -v  ${ROMA} || exit 1
 	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
 
-p5subset.xml: check
+p5subset.xml: check.stamp p5.xml 
 	@echo BUILD make subset of P5 with just the module/element/class/macro Spec elements
 	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  -s:p5.xml -xsl:Utilities/subset.xsl || echo "failed to extract subset from p5.xml." 
 	touch p5subset.xml
@@ -268,7 +268,7 @@ p5subset.json: p5subset.xml
 p5subset.js: p5subset.xml
 	${SAXON} -o:p5subset.js p5subset.xml ${XSL}/odds2/odd2json.xsl callback=teijs
 
-dist-source.stamp: check p5subset.json p5subset.js oddschema exampleschema
+dist-source.stamp: check.stamp p5.xml  p5subset.json p5subset.js oddschema exampleschema
 	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl.model
 	${SAXON} -s:p5subset.xml -xsl:Utilities/listofattributes.xsl > p5attlist.txt
 	@echo BUILD: Make distribution directory for source
@@ -311,7 +311,7 @@ dist-source.stamp: check p5subset.json p5subset.js oddschema exampleschema
 	touch dist-source.stamp
 	rm p5subset.json p5subset.js p5attlist.txt stripspace.xsl.model
 
-dist-schema.stamp:check  schemas dtds oddschema exampleschema
+dist-schema.stamp:check.stamp p5.xml   schemas dtds oddschema exampleschema
 	@echo BUILD: Make distribution directory for schema
 	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
@@ -323,7 +323,7 @@ dist-schema.stamp:check  schemas dtds oddschema exampleschema
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	touch dist-schema.stamp
 
-dist-doc.stamp:  check
+dist-doc.stamp:  check.stamp p5.xml 
 	@echo BUILD: Make distribution directory for doc
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
@@ -353,7 +353,7 @@ dist-doc.stamp:  check
 	-test -f Guidelines.mobi  && cp Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
 	touch dist-doc.stamp
 
-dist-test.stamp: check
+dist-test.stamp: check.stamp p5.xml 
 	@echo BUILD: Make distribution directory for test
 	rm -rf release/tei-p5-test*
 	mkdir -p release/tei-p5-test/share/xml/tei
@@ -362,14 +362,14 @@ dist-test.stamp: check
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
 	touch dist-test.stamp
 
-dist-exemplars.stamp: check oddschema
+dist-exemplars.stamp: check.stamp p5.xml  oddschema
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make XSL=${XSL} dist)
 	tar --exclude "*~" --exclude .svn -c -f - Exemplars \
 	| (cd release/tei-p5-exemplars/share/xml/tei; tar xf - )
 	touch dist-exemplars.stamp
 
-dist-database.stamp: check
+dist-database.stamp: check.stamp p5.xml 
 	@echo BUILD: Make distribution directory for database
 	rm -rf release/tei-p5-database*
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
@@ -459,9 +459,9 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-epub: check epub.stamp
+epub: epub.stamp
 
-epub.stamp: check
+epub.stamp: check.stamp p5.xml 
 	@echo BUILD: Make epub version of Guidelines
 	teitoepub3 --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
@@ -469,9 +469,9 @@ epub.stamp: check
 	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
 	touch epub.stamp
 
-mobi: check mobi.stamp
+mobi:  mobi.stamp
 
-mobi.stamp:
+mobi.stamp: check.stamp p5.xml 
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=teikindle p5.xml Guidelines-kindle.epub
 	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
@@ -483,14 +483,6 @@ changelog:
 	cat newchanges oldchanges > ReleaseNotes/ChangeLog
 	rm newchanges oldchanges
 
-
-catalogue: check
-	${SAXON} ${SAXON_ARGS}  -o:catalogue.xml -s:p5.xml -xsl:Utilities/catalogue.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE}
-	teitohtml --profiledir=${XSL}/profiles catalogue.xml catalogue.html
-	@echo Made catalogue.html
-
-catalogue-print: check
-	${SAXON} ${SAXON_ARGS} -s:p5.xml -xsl:Utilities/catalogue-print.xsl DOCUMENTATIONLANG=${DOCUMENTATIONLANGUAGE} | xmllint --format - > catalogue.xml
 
 dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
