@@ -271,16 +271,9 @@ Description
             </xsl:if>
           </input>
           <span onMouseover="descriptionPopup_Show( 'modelClass_{className}')" onMouseout="descriptionPopup_Hide( 'modelClass_{className}')" id="descSpan_modelClass_{className}">
-            <a  target="_new">
-	      <xsl:attribute name="href">
-		<xsl:value-of select="$TEIWEB"/>
-		<xsl:value-of select="$doclang"/>
-		<xsl:text>/html/ref-</xsl:text>
-		<xsl:value-of select="className"/>
-		<xsl:text>.html</xsl:text>
-	      </xsl:attribute>
+            <a target="_new" href="{concat($TEIWEB, $doclang, '/html/ref-', className, '.html')}">
+	             <xsl:value-of select="className"/>
             </a>
-	    <xsl:value-of select="className"/>
           </span>
         </span>
       </xsl:for-each>
@@ -313,14 +306,8 @@ Description
               <xsl:value-of select="className"/>
               <xsl:text>' )</xsl:text>
             </xsl:attribute>
-            <a target="_new">
-	      <xsl:attribute name="href">
-		<xsl:value-of select="$doclang"/>
-		<xsl:text>/html/ref-</xsl:text>
-		<xsl:value-of select="className"/>
-		<xsl:text>.html</xsl:text>
-	      </xsl:attribute>
-              <xsl:value-of select="className"/>
+            <a target="_new" href="{concat($TEIWEB, $doclang, '/html/ref-', className, '.html')}">
+	             <xsl:value-of select="className"/>
             </a>
           </span>
         </span>
