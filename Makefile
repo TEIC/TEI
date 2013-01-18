@@ -506,24 +506,24 @@ dependencies:
 
 clean:
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
-	rm -rf Guidelines.??? Guidelines-* \
-	p5odds-examples.rng  p5odds-examples.rnc \
-	p5odds.rng p5odds.rnc \
-	*.xsd \
-	p5.sch p5.isosch \
-	*.isosch.xsl \
-	tei-*.zip \
-	Test/*.isosch \
-	p5subset.xml p5subset.json p5subset.js p5.xml \
-	Utilities/guidelines.xsl Utilities-1/guidelines.xsl
+	rm -rf Guidelines.??? Guidelines-* 
+	rm -f Guidelines.epub
+	rm -f Guidelines.mobi
+	rm -f p5odds-examples.rng  p5odds-examples.rnc 
+	rm -f p5odds.rng p5odds.rnc 
+	rm -f *.xsd 
+	rm -f p5.sch p5.isosch 
+	rm -f *.isosch.xsl 
+	rm -f tei-*.zip 
+	rm -f Test/*.isosch 
+	rm -f p5subset.xml p5subset.json p5subset.js p5.xml 
+	rm -f Utilities/guidelines.xsl Utilities-1/guidelines.xsl
 	find . -name "semantic.cache" | xargs rm -f
 	(cd Test; make clean)
 	(cd Exemplars; make clean)
 	rm -rf FASC-*
 	rm -rf catalogue.* modList
 	rm -f       p5.xml
-	rm -f       Guidelines.epub
-	rm -f       Guidelines.mobi
 	rm -f       Test/detest.rnc
 	rm -f       Test/detest.rng
 	rm -f       Test/detest.dtd
