@@ -41,8 +41,7 @@ chosen because it is a Long-Term Support edition, and
 will be available for around two years from the time 
 of writing the script."
 echo ""
-echo "The script may work on other versions of Ubuntu,
-but only Precise has been tested."
+echo "The script will fail to work on other versions of Ubuntu."
 echo "*******************************************"
 echo "Press return to continue"
 read
