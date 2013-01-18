@@ -79,7 +79,7 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
-	rm *compiled*
+	rm -f *compiled* *.doc.tex
 	for i in *.template; do saxon -it:main make_template.xsl file=`basename $$i .template`;done
 	cp *.tei *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.xml  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
@@ -94,7 +94,7 @@ dist: schemas
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:
-	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html
+	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html 
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
 	rm -f names.xml
