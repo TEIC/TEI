@@ -66,7 +66,7 @@ test-latex:
 	saxon -o:testnotes1.tex testnotes1.xml ../latex2/tei.xsl  $(SAXONOPT)
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' testnotes1.tex
 	diff testnotes1.tex expected-results/testnotes1.tex
-	saxon -o:test23.tex test23.xml ../latex/tei.xsl $(SAXONOPT)
+	saxon -o:test23.tex test23.xml ../latex2/tei.xsl $(SAXONOPT)
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test23.tex
 	diff test23.tex expected-results/test23.tex
 
@@ -167,7 +167,6 @@ oddity:
 	saxon test.odd2odd ../odds2/odd2lite.xsl > test.odd2lite
 	saxon test.odd2odd ../odds2/odd2relax.xsl > test.odd2relax
 	saxon test.odd2odd ../odds2/odd2xslstripspace.xsl > test.odd2xslstripspace
-	exit 1
 	rm test.odd2odd
 	rm test.odd2dtd
 	rm test.odd2html

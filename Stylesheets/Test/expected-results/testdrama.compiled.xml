@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" n="testdrama"><?TEIVERSION 2.2.0. Last updated on 25th October 2012.?>
+<?xml version="1.0" encoding="utf-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:lang="en" n="testdrama"><?TEIVERSION 2.3.0. Last updated on 17th January 2013.?>
    <teiHeader>
       <fileDesc>
          <titleStmt>
@@ -96,8 +96,6 @@
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
       </datatype>
-      <valDesc>any string of Unicode characters</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">toute chaîne de caractères en Unicode</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
 	  <author>
@@ -174,7 +172,7 @@
       </datatype>
     </attDef>
     <attDef ident="confidence">
-      <desc>The degree of statistical confidence (between zero and one) that a value falls within the range
+      <desc>specifies the degree of statistical confidence (between zero and one) that a value falls within the range
         specified by <att>min</att> and <att>max</att>, or the proportion of observed values that fall within that range.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.probability"/>
@@ -423,11 +421,11 @@ to mark the end of any adjacent orthographic token.</desc> </valItem>
       </datatype>
       <valDesc>the value of <att>cRef</att> should be constructed so
       that when the algorithm for the resolution of canonical
-      references (described in section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SACR">16.2.5. </ref>) is
+      references (described in section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SACR">16.2.6. </ref>) is
       applied to it the result is a valid URI reference to the
       intended target </valDesc>
       <valDesc xml:lang="fr">le résultat de l’application de l'algorithme pour la résolution des
-        références canoniques (décrit à la section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SACR">16.2.5. </ref>) sera une référence URI
+        références canoniques (décrit à la section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SACR">16.2.6. </ref>) sera une référence URI
         valide pour la cible prévue. </valDesc>
       <remarks>
         <p>The <gi>refsDecl</gi> to use may be indicated with the <att>decls</att> attribute.</p>
@@ -743,7 +741,9 @@ attribute is  <code>yyyy-mm-dd</code>, but
       <constraintSpec ident="calendar" scheme="isoschematron">
         <constraint>
           <sch:rule context="tei:*[@calendar]">
-            <sch:assert test="string-length(.) gt 0">@calendar indicates the system or calendar to which the date represented by the content of this element belongs, but this element has no textual content.</sch:assert>
+            <sch:assert test="string-length(.) gt 0">
+@calendar indicates the system or calendar to which the date represented by the content of this element
+belongs, but this <sch:name/> element has no textual content.</sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
@@ -1017,6 +1017,50 @@ with individual parts of a TEI text are fully defined in chapter <ref target="ht
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CC.html#CCAS">15.3. </ref>
   </listRef>
+</classSpec><classSpec module="tei" type="atts" ident="att.fragmentable" xml:base="../../Specs/att.fragmentable.xml">
+  <desc>groups structural elements which may be fragmented, usually as
+  a consequence of some overlapping hierarchy.</desc>
+  <attList>
+    <attDef ident="part" usage="opt">
+      <equiv/>
+      <desc>specifies whether or not its parent element is fragmented
+      in some way, typically by some other overlapping structure : for
+      example a speech which is divided between two or more verse
+      stanzas, a paragraph which is split across a page division, a
+      verse line which is divided between two speakers.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>N</defaultVal>
+      <valList type="closed">
+        <valItem ident="Y">
+          <gloss>yes</gloss>
+          <desc>the element is fragmented in some (unspecified) respect</desc>
+        </valItem>
+        <valItem ident="N">
+          <gloss>no</gloss>
+          <desc>either the element is not fragmented, or no claim is made as to its completeness.</desc>
+        </valItem>
+        <valItem ident="I">
+          <gloss>initial</gloss>
+          <desc>this is the initial part of a fragmented element</desc>
+        </valItem>
+        <valItem ident="M">
+          <gloss>medial</gloss>
+          <desc>this is a medial part of a fragmented element</desc>
+        </valItem>
+        <valItem ident="F">
+          <gloss>final</gloss>
+          <desc>this is the final part of a fragmented element</desc>
+        </valItem>
+      </valList>
+      <remarks>
+        <p>The values <val>I</val>, <val>M</val>, or <val>F</val>
+        should be used only where it is clear how the element may be
+        be reconstituted.</p>
+      </remarks>
+    </attDef>
+  </attList>
 </classSpec><classSpec module="tei" xml:id="DIVN" type="atts" ident="att.divLike" xml:base="../../Specs/att.divLike.xml">
   <desc>provides attributes common to all elements which behave in the same way as divisions.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">구역과 동일한 방식으로 처리되는 모든 요소에 공통적인 속성을 제공한다.</desc>
@@ -1031,6 +1075,7 @@ with individual parts of a TEI text are fully defined in chapter <ref target="ht
   <desc versionDate="2007-01-21" xml:lang="it">identifica un insieme di attributi comuni a tutti gli elementi che si comportano come partizioni testuali</desc>
   <classes>
     <memberOf key="att.metrical"/>
+    <memberOf key="att.fragmentable"/>
   </classes>
   <attList>
     <attDef ident="org" usage="opt">
@@ -1174,131 +1219,7 @@ l'échantillon inconnue</desc>
         </valItem>
       </valList>
     </attDef>
-    <attDef ident="part" usage="opt">
-      <equiv/>
-      <desc>specifies whether or not the division is fragmented by
-		some other structural element, for example a speech which is
-		divided between two or more verse stanzas.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">다른 구조적 요소에 의해 파편화된 구역인지에 대해 명시한다. 예를 들어, 둘 이상 운문 연 사이에 분할된 대화 같은 것.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">說明該區段是否被其他結構性元素切割，例如一段話語被兩個或多個詩節分開。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
-      当該区分が，他の構造要素の部分であるかどうかを示す．例えば，複数
-      の連に分けられる発話など．
-      </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise si la division est vraiment fragmentée ou
-          non par quelques autres éléments structurels, par exemple une prise de parole qui est partagée
-          en au moins deux strophes de vers.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica si la división se subdivide en otros elementos estructurales, como p.ej. un discruso que se divide en dos o más estrofas.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica se la partizione è suddivisa in ulteriori elementi strutturali, come per esempio un discorso diviso in due o più strofe</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <defaultVal>N</defaultVal>
-      <valList type="closed">
-        <valItem ident="Y">
-          <gloss>yes</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">예</gloss>
-          <gloss versionDate="2009-05-25" xml:lang="fr">oui</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">sì</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la división es incompleta en algún sentido.</gloss>
-          <desc>the division is incomplete in some respect</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">구역이 어떤 측면에서 불완전하다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">該區段某些方面不完整</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">el fragmento es incompleto en algún aspecto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-	  当該区分は，ある視点では不完全である．
-	  </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">la division est incomplète à certains
-égards</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la partizione è incompleta</desc>
-        </valItem>
-        <valItem ident="N">
-          <gloss>no</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">아니오</gloss>
-          <gloss versionDate="2009-05-25" xml:lang="fr">non</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la división es completa o no se hace ninguna referencia a su complitud.</gloss>
-          <desc>either the division is complete, or no claim is made as to its completeness.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">구역이 완전하거나 그 완전성에 대한 주장이 없다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">該區段完整，或者未說明其完整性。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">o el fragmento es completo, o no se hace ninguna declaración sobre su completez.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-	  当該区分は，完全である，または完全である必要はない．
-	  </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">soit la division est complète, soit
-aucune déclaration n'est faite quant à son intégralité</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la partizione è completa o non viene fatto alcun riferimento alla sua completezza</desc>
-        </valItem>
-        <valItem ident="I">
-          <gloss>initial</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">초반부</gloss>
-          <gloss versionDate="2009-05-25" xml:lang="fr">initiale</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">iniziale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte inicial de una división incompleta.</gloss>
-          <desc>the initial part of an incomplete division</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 구역의 시작부</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整區段的起始部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte inicial de una división incompleta</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-	  当該区分は不完全で，その始めの部分である．
-	  </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">partie initiale d'une division
-incomplète</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte iniziale di una partizione incompleta</desc>
-        </valItem>
-        <valItem ident="M">
-          <gloss>medial</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">중간부</gloss>
-          <gloss versionDate="2009-05-25" xml:lang="fr">médiane</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">mediano</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte central de una división incompleta.</gloss>
-          <desc>a medial part of an incomplete division</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 구역의 중간부</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整區段的中段部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte intermedia de una división incompleta</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-	  当該区分は不完全で，その中部分である．
-	  </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">partie médiane d'une division
-incomplète</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte mediana di una partizione incompleta</desc>
-        </valItem>
-        <valItem ident="F">
-          <gloss>final</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">후반부</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">finale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte final de una división incompleta.</gloss>
-          <desc>the final part of an incomplete division</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 구역의 후반부</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整區段的末端部分 </desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte final de una división incompleta</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-	  当該区分は不完全で，その終わりの部分である．
-	  </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">partie finale d'une division
-incomplète</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte finale di una partizione incompleta</desc>
-        </valItem>
-      </valList>
-      <remarks>
-        <p>The values <val>I</val>, <val>M</val>, or <val>F</val>
-        should be used only where it is clear how the division is to
-        be reconstituted.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>Les valeurs<val>I</val>, <val>M</val>, ou <val>F</val> sont à employer
-                        seulement lorsqu'on sait comment la division va être reconstituée.</p>
-      </remarks>
-      <remarks xml:lang="es">
-        <p>Los valores <val>I</val>, <val>M</val>, o <val>F</val>
-        deben ser utilizados solamente donde sea claro cómo deba ser reconstruida la división.</p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p>
-	属性値<val>I</val>, <val>M</val>, <val>F</val>は，当該区分の再
-      構成が明らかな場合にのみ付与されるべきである．
-	</p>
-      </remarks>
-    </attDef>
+
   </attList>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DS.html#DS">4. </ref>
@@ -1496,7 +1417,7 @@ associated with a dated element, at the time indicated.</desc>
     </attDef>
 
       <attDef ident="instant">
-         <desc>Is this an instant revision?</desc>
+         <desc>indicates whether this is an instant revision or not.</desc>
          <datatype>
             <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
          </datatype>
@@ -1561,9 +1482,7 @@ associated with a dated element, at the time indicated.</desc>
       <datatype>
         <data xmlns="http://relaxng.org/ns/structure/1.0" type="ID"/>
       </datatype>
-      <valDesc>any valid XML identifier.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">tout identifiant XML valide.</valDesc>
-      <remarks>
+     <remarks>
         <p>The <att>xml:id</att> attribute may be used to specify a canonical reference for an
           element; see section <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CORS">3.10. </ref>.</p>
       </remarks>
@@ -1632,7 +1551,7 @@ associated with a dated element, at the time indicated.</desc>
       <gloss versionDate="2008-03-30" xml:lang="fr">langue</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">lingua</gloss>
       <desc>indicates the language of the element content using a <soCalled>tag</soCalled> generated
-        according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>
+        according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>. 
          </desc>
       <desc versionDate="2007-12-20" xml:lang="ko"><ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>에 따라 생성된
         <soCalled>tag</soCalled>를 사용하는 요소 내용의 언어를 나타낸다.</desc>
@@ -1681,6 +1600,12 @@ It is generally good practice to specify xml:lang at the highest
 appropriate level, noticing that a different default may be needed for the
 teiHeader from that needed for the associated resource element or elements,
 and that a single TEI document may contain texts in many languages.</p>
+        <p>The authoritative list of registered language subtags is maintained by IANA and 
+          is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
+          For a good general overview of the construction of language tags, see 
+          <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
+          a practical step-by-step guide, see 
+          <ptr target="http://www.w3.org/International/questions/qa-choosing-language-tags"/>.</p>
       </remarks>
       <remarks xml:lang="fr">
         <p> Si aucune valeur n'est indiquée pour <att>xml:lang</att>, la valeur de
@@ -1777,7 +1702,11 @@ used for this element in the source text </desc>
               <lb/><hi style="font-variant: normal">New Blazing-World</hi>. </head>
 </egXML></exemplum>
 <remarks><p>Unlike the attribute values of <att>rend</att>, the <att>style</att> attribute may contain whitespace. This attribute 
-is intended for recording inline stylistic information concerning the source, not any particular output.</p></remarks>
+is intended for recording inline stylistic information concerning the
+source, not any particular output.</p>
+<p>The formal language in which values for this attribute are
+expressed may be specified using the <gi>styleDefDecl</gi> element in
+the TEI Header.</p> </remarks>
 </attDef>
 
     <attDef ident="rendition" usage="opt">
@@ -1794,8 +1723,6 @@ is intended for recording inline stylistic information concerning the source, no
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>one or more URIs, separated by whitespace.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un ou plusieurs URIs, séparé par des blancs.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <head rendition="#ac #sc"><lb/>To The <lb/>Duchesse <lb/>of <lb/>Newcastle, <lb/>On Her
@@ -1876,8 +1803,6 @@ is intended for recording inline stylistic information concerning the source, no
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>any syntactically valid URI reference.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">toute référence d'URI valide syntaxiquement.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <div type="bibl">
@@ -2209,6 +2134,50 @@ ressource informatique selon une taxinomie normalisée.</desc>
     使用できるタイプ名</ref>の管理は，IANAで行われている．
     </p>
   </remarks>
+</classSpec><classSpec module="tei" type="atts" ident="att.media" xml:base="../../Specs/att.media.xml">
+  <desc>provides attributes for specifying display and related properties of
+  external media.</desc>
+  <classes>
+    <memberOf key="att.internetMedia"/>
+  </classes>
+  <attList>
+    <attDef ident="width" usage="opt">
+      <desc>Where the media are displayed, indicates the  display width </desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+      </datatype>
+    </attDef>
+    <attDef ident="height" usage="opt">
+      <desc>Where the media are displayed, indicates the display height</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
+      </datatype>
+    </attDef>
+    <attDef ident="scale" usage="opt">
+      <equiv/>
+      <desc>Where the media are displayed, indicates a scale factor to
+      be applied when generating the desired display size</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
+      </datatype>
+    </attDef>
+  </attList>
+</classSpec><classSpec module="tei" type="atts" ident="att.resourced" xml:base="../../Specs/att.resourced.xml">
+  <desc>provides attributes by which a resource (such as an externally
+  held media file) may be located.</desc>
+  <attList>
+    <attDef ident="url" usage="req">
+      <gloss>uniform resource locator</gloss>
+      <gloss versionDate="2007-12-20" xml:lang="ko">표준 원본 위치 지정소</gloss>
+      <gloss versionDate="2008-04-06" xml:lang="es">localizador de recurso uniforme</gloss>
+      <gloss versionDate="2008-03-30" xml:lang="fr">adresse URL</gloss>
+      <gloss versionDate="2007-11-06" xml:lang="it">URL (localizzatore universale di risorse)</gloss>
+      <desc>specifies the URL from which the media concerned may be obtained.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
 </classSpec><classSpec module="tei" type="atts" xml:id="MEASUREMENT" ident="att.measurement" xml:base="../../Specs/att.measurement.xml">
   <desc>provides attributes to represent a regularized or normalized measurement.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">정상화 또는 규격화된 측정 방식을 표상하는 속성을 제시한다.</desc>
@@ -2738,8 +2707,6 @@ this name, for example the occupation of a person, or the status of a place. </d
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>One or more valid identifiers, separated by
-      whitespace.</valDesc>
       <remarks>
         <p>The value must point directly to one or more XML elements
         by means of one or more URIs, separated by whitespace. If more
@@ -2914,7 +2881,7 @@ this name, for example the occupation of a person, or the status of a place. </d
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COEDADD">3.4.3. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHAD">11.3.1.4. </ref>
   </listRef>
-</classSpec><classSpec module="tei" xml:id="TYPED" type="atts" ident="att.typed" xml:base="../../Specs/att.typed.xml">
+</classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" xml:id="TYPED" type="atts" ident="att.typed" xml:base="../../Specs/att.typed.xml">
   <desc>provides attributes which can be used to classify or subclassify elements in any way. </desc>
   <desc versionDate="2007-12-20" xml:lang="ko">요소의 분류 또는 하위분류에서 사용될 수 있는 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供可依任何方法將元素分類或次要分類的一般屬性。</desc>
@@ -2925,6 +2892,14 @@ this name, for example the occupation of a person, or the status of a place. </d
       utilisés pour classer ou interclasser des éléments de n'importe quelle façon.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos genéricos utilizables para cualquier clasificación o subclasificación de elementos.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi generici utilizzabili per qualsiasi classificazione e sottoclassificazione di elementi</desc>
+  <constraintSpec scheme="isoschematron" ident="subtypeTyped">
+    <constraint>
+      <sch:rule context="*[@subtype]">
+	<sch:assert test="@type">The <sch:name/> element should not be categorized in detail with @subtype
+ unless also categorized in general with @type</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="type" usage="opt">
       <equiv/>
@@ -2941,14 +2916,18 @@ this name, for example the occupation of a person, or the status of a place. </d
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
-      <exemplum xml:lang="en">
+      <exemplum xml:lang="en" corresp="#NZETC01">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
-	  <div type="poetry">
+	  <div type="verse">
 	    <head>Night in Tarras</head>
-	    <lg type="verse">
+	    <lg type="stanza">
 	      <l>At evening tramping on the hot white road</l>
 	      <l>…</l>
 	    </lg>
+	    <lg type="stanza">
+	      <l>A wind sprang up from nowhere as the sky</l>
+	      <l>…</l>
+            </lg>
 	  </div>
         </egXML>
       </exemplum>
@@ -2977,7 +2956,7 @@ this name, for example the occupation of a person, or the status of a place. </d
       </datatype>
       <remarks>
         <p>The <att>subtype</att> attribute may be used to provide any
-sub-classification for the element, additional to that provided by its
+sub-classification for the element additional to that provided by its
 <att>type</att> attribute.</p>
       </remarks>
       <remarks xml:lang="fr">
@@ -3198,11 +3177,6 @@ sub-classification for the element, additional to that provided by its
       <datatype minOccurs="2" maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>a list of at least two pointers,
-      separated by whitespace.</valDesc>
-      <valDesc xml:lang="fr">une liste d'au moins deux
-      pointeurs, séparés par un espace.</valDesc>
-
       <remarks>
         <p>If this attribute is supplied every element specified as a
 	target must be contained within the element or elements
@@ -3257,8 +3231,6 @@ sub-classification for the element, additional to that provided by its
       <datatype minOccurs="2" maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
-      <valDesc>a list of at least two valid names, separated by whitespace.</valDesc>
-      <valDesc xml:lang="fr">une liste d'aumoins deux noms valides, séparés par un espace.</valDesc>
       <remarks>
         <p>The number of separate values must match the number of
         values in the <att>target</att> attribute in the enclosed
@@ -3304,6 +3276,7 @@ sub-classification for the element, additional to that provided by its
   <classes>
     <memberOf key="att.metrical"/>
     <memberOf key="att.datcat"/>
+    <memberOf key="att.fragmentable"/>
   </classes>
   <attList>
     <attDef ident="function" usage="opt">
@@ -3327,127 +3300,7 @@ subject, predicate etc. may be more appropriate.</valDesc>
       <valDesc versionDate="2009-05-28" xml:lang="fr">Pour un élément <gi>cl</gi>, peut prendre des valeurs telles que coordonné, sujet, adverbial, etc. 
         Pour un élément <gi>phr</gi>, des valeurs telles que sujet, attribut, etc., peuvent être plus appropriées.</valDesc>
     </attDef>
-    <attDef ident="part" usage="opt">
-      <equiv/>
-      <gloss versionDate="2009-05-28" xml:lang="fr">partie</gloss>
-      <desc>specifies whether or not the segment is fragmented by some other
-structural element, for example a clause which is divided between two
-or more sentences.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">예를 들어, 둘 이상의 문장 사이에 분리된 절과 같이, 다른 구조적 요소에 의해 파편화된 분절이 있는지를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">說明該分割段落是否被其他結構性元素所切割，例如一個子句被兩個或多個句子分開。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
-      当該部分が，他の要素によって分割されているかどうかを示す．例えば，
-      複数の文から構成されている句など．
-      </desc>
-      <desc versionDate="2009-05-28" xml:lang="fr">spécifie si le segment est fragmenté ou non par un autre
-          élément structurel, par exemple une clausule qui est divisée en deux phrases ou plus.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica si el segmento es o no fragmentado por algún otro elemento estructural, por ejemplo si una cláusula es divida entre dos o más sintagmas.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica se il segmento è suddiviso in ulteriori elementi strutturali, come per esempio una frase divisa in due o più proposizioni</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <defaultVal>N</defaultVal>
-      <valList type="closed">
-        <valItem ident="Y">
-          <gloss>yes</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">예</gloss>
-          <gloss versionDate="2009-05-28" xml:lang="fr">oui</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">sì</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">el segmento es incompleto en algún sentido.</gloss>
-          <desc>the segment is incomplete in some respect</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">분절이 어떤 측면에서 불완전하다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">該分割的某些方面不完整</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">el segmento es incompleto en algún aspecto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-          当該部分は完全ではない．
-          </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">le segment est incomplet à certains égards.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">il segmento è incompleto</desc>
-        </valItem>
-        <valItem ident="N">
-          <gloss>no</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">아니오</gloss>
-          <gloss versionDate="2009-05-28" xml:lang="fr">non</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">o el segmento es completo, o no viene dada ninguna referencia en cuanto a su complitud</gloss>
-          <desc>either the segment is complete, or no claim is made as to
-its completeness</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">분절이 완전하거나 완전성에 대해 어떤 주장도 없다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">該分割完整，或者未說明其完整性</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">o el segmento es completo, o no se hace ninguna declaración sobre su completez</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-          当該部分は完全である，または完全さが問題にならない．
-          </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">soit le segment est complet, soit aucune déclaration n'est faite quant à son intégralité.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">il segmento è completo o non viene fatto alcun riferimento alla sua completezza</desc>
-        </valItem>
-        <valItem ident="I">
-          <gloss>initial</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">시작부</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">initial</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">iniziale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte inicial de un segmento incompleto.</gloss>
-          <desc>the initial part of an incomplete segment</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 분절의 시작 부분</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整分割的起始部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte inicial de un segmento incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-	  当該部分は，始めの部分が完全ではない．
-	  </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">partie initiale d'un segment incomplet</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte iniziale di un segmento incompleto</desc>
-        </valItem>
-        <valItem ident="M">
-          <gloss>medial</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">중간부</gloss>
-          <gloss versionDate="2009-05-28" xml:lang="fr">médian</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">mediano</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte central de un segmento incompleto.</gloss>
-          <desc>a medial part of an incomplete segment</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 분절의 중간부분</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整分割的中段部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte intermedia de un segmento incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-          当該部分は，中部分が完全ではない．
-          </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">partie médiane d'un segment incomplet</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte mediana di un segmento incompleto</desc>
-        </valItem>
-        <valItem ident="F">
-          <gloss>final</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">종료부</gloss>
-          <gloss versionDate="2009-05-28" xml:lang="fr">final</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">finale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte final de un segmento incompleto.</gloss>
-          <desc>the final part of an incomplete segment</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 분절의 종료 부분</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整分割的末端部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte final de un segmento incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">
-          当該部分は，終わりの部分が完全ではない．
-          </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">partie finale d'un segment incomplet</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte finale di un segmento incompleto</desc>
-        </valItem>
-      </valList>
-      <remarks>
-        <p>The values <val>I</val>, <val>M</val>, or <val>F</val>
-        should be used only where it is clear how the division is to
-        be reconstituted.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>Les valeurs <val>I</val>, <val>M</val>, ou <val>F</val> ne sont à utiliser que là où la division peut être clairement reconstituée.</p>
-      </remarks>
-      <remarks xml:lang="es">
-        <p>Los valores <val>I</val>, <val>M</val>, o <val>F</val>
-        deben ser utilizados solamente donde está claro cómo se debe reconstituir la división.</p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p>
-       値<val>I</val>, <val>M</val>, <val>F</val>は，当該部分がどのよ
-       うに再構成されるかが明確な場合にのみ使用されるべきである．
-       </p>
-      </remarks>
-    </attDef>
+
   </attList>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SASE">16.3. </ref>
@@ -3515,13 +3368,13 @@ its completeness</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ST.html#ST">1. </ref>
   </listRef>
-</classSpec><classSpec module="tei" type="atts" ident="att.sourced" xml:base="../../Specs/att.sourced.xml">
+</classSpec><classSpec module="tei" type="atts" ident="att.edition" xml:base="../../Specs/att.edition.xml">
   <desc>provides attributes identifying the source edition from which
   some encoded feature derives.</desc>
   <desc versionDate="2009-05-28" xml:lang="fr">fournit des attributs identifiant l'édition source dont provient une quelconque caractéristique encodée.</desc>
-<attList>
-    <attDef ident="ed" usage="opt">
-      <gloss>edition</gloss>
+  <attList>
+      <attDef ident="ed" usage="opt">
+	<gloss>edition</gloss>
       <gloss versionDate="2009-05-28" xml:lang="fr">édition</gloss>
       <desc>supplies an arbitrary identifier for the source edition in which
       the associated feature (for example, a  page, column, or line
@@ -3535,6 +3388,15 @@ its completeness</desc>
       conventionally to identify  the edition.</valDesc>
       <valDesc versionDate="2009-05-28" xml:lang="fr">toute chaîne de caractères ; en général une abréviation utilisé conventionnellement pour l'édition.</valDesc>
     </attDef>
+    <attDef ident="edRef" usage="opt">
+      <gloss>edition reference</gloss>
+      <desc>provides a pointer to the source edition in which
+      the associated feature (for example, a  page, column, or line
+      break) occurs at this point in the text.</desc>
+      <datatype maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -3543,8 +3405,27 @@ its completeness</desc>
       <l>Brought Death into the World,<lb ed="1667"/> and all<lb ed="1674"/> our woe,</l>
     </egXML>
   </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
 
-</classSpec><classSpec module="tei" xml:id="SPANNING" type="atts" ident="att.spanning" xml:base="../../Specs/att.spanning.xml">
+      <listBibl>
+	<bibl xml:id="stapledon1937"><author>Olaf Stapledon</author>,
+	<title>Starmaker</title>, <publisher>Methuen</publisher>, <date>1937</date></bibl>
+	<bibl xml:id="stapledon1968"><author>Olaf Stapledon</author>,
+	<title>Starmaker</title>, <publisher>Dover</publisher>, <date>1968</date></bibl>
+      </listBibl>
+	
+	<p>Looking into the future aeons from the supreme moment of
+	  the cosmos, I saw the populations still with all their
+	  strength maintaining the<pb n="411" edRef="#stapledon1968"/>essentials of their ancient culture,
+	  still living their personal lives in zest and endless
+	  novelty of action, … I saw myself still
+	  preserving, though with increasing difficulty, my lucid
+	  con-<pb n="291" edRef="#stapledon1937"/>sciousness;</p>
+    </egXML>
+  </exemplum>
+
+</classSpec><classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.spanning" xml:base="../../Specs/att.spanning.xml">
   <desc>provides attributes for elements which delimit a span of text by pointing mechanisms rather than by enclosing it.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">포함보다는 포인터 메카니즘을 통하여 구분된 텍스트 구간을 나타내는 요소의 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供元素的屬性，這些元素使用參照機制來限定某一文字段，而非包含此文字段。
@@ -3556,6 +3437,7 @@ its completeness</desc>
   <desc versionDate="2007-06-12" xml:lang="fr">fournit des attributs pour les éléments qui délimitent un passage de texte par des mécanismes de pointage plutôt qu'en entourant le passage.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para elementos que delimitan un fragmento de texto utilizando los señalizadores en lugar de cerrando el texto.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi agli elementi che delimitano una porzione di testo utilizzando dei puntatori invece di racchiudere il testo stesso</desc>
+
   <attList>
     <attDef ident="spanTo" usage="opt">
       <equiv/>
@@ -3572,16 +3454,49 @@ its completeness</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
+
+
+    
+
+
+
+     <constraintSpec ident="spanTo-2" scheme="isoschematron">
+        <desc>The @spanTo attribute must point to an element following the
+	current element</desc>
+        <constraint>
+<sch:rule context="tei:*[@spanTo]">
+<sch:assert test="following::*[@xml:id=substring(current()/@target,2)]">
+The element indicated by @spanTo must follow the current element <sch:name/></sch:assert>
+</sch:rule>      </constraint>
+      </constraintSpec>
+
+
+      <constraintSpec ident="spanTo-3" scheme="isoschematron">
+        <desc xml:lang="fr">La valeur de @spanTo doit identifier un element
+	dans le document actuel</desc>
+        <constraint>
+<sch:rule context="tei:*[@spanTo]">
+<sch:assert test="id(substring(@spanTo,2))">
+@spanTo on <sch:name/> must point to  the identifier of some element  in this document</sch:assert>
+</sch:rule>
+     </constraint>
+      </constraintSpec>
+
+
       <valDesc>points to an element following this one in the current document. </valDesc>
       <valDesc versionDate="2009-05-28" xml:lang="fr">pointe vers un élément qui suit celui présent dans le document courant.</valDesc>
+
     </attDef>
   </attList>
+
   <remarks>
     <p>The span is defined as running in document order from the start
-    of the content of the pointing element (if any) to the end of the
+    of the content of the pointing element  to the end of the
     content of the element pointed to by the spanTo attribute (if
     any). If no value is supplied for the attribute, the assumption is that the span is
-    coextensive with the pointing element.</p>
+    coextensive with the pointing element. If no content is present,
+    the assumption is that the starting point of the span is
+    immediately following the element itself. </p>
   </remarks>
   <remarks xml:lang="fr">
     <p> Le passage est défini comme courant depuis le début du contenu de l'élément pointeur (s'il y en a un) jusqu'à la fin du contenu de l'élément
@@ -3661,6 +3576,92 @@ its completeness</desc>
 <remarks><p>If no formal definition language is supplied or implied,
     the default assumption is that CSS is in use. </p></remarks>    </attDef>
   </attList>
+</classSpec><classSpec module="tei" xml:id="TIMED" type="atts" ident="att.timed" xml:base="../../Specs/att.timed.xml">
+  <desc>provides attributes common to those elements which
+  have a duration in time, expressed either absolutely or by reference
+  to an alignment map.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">절대적 또는 배열 지도에 대한 참조에 의해 표현된 시간의 지속을 나타내는 요소들 사이에 공통적 속성을 제공한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一組屬性，通用於帶有時間長度的元素，這些元素以絕對方式表明，或是參照到組序表。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">
+  時間幅を持つ要素に共通する属性を示す．絶対的または関連図への参照で示
+  される．
+  </desc>
+  <desc versionDate="2009-05-28" xml:lang="fr">fournit des attributs communs aux éléments qui
+      expriment une durée dans le temps, soit de manière absolue, soit en se référant à une carte d'alignement.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">proporciona un conjunto de atributos comunes a los elementos que tienen una duración en el tiempo expresada en términs absolutos o por referencia a un esquema de alineamiento</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">assegna un insieme di attributi comuni agli elementi che hanno una durata nel tempo espressa in termini assoluti o rispetto a uno schema di allineamento</desc>
+  <classes>
+    <memberOf key="att.duration"/>
+  </classes>
+  <attList>
+    <attDef ident="start" usage="opt">
+      <desc>indicates the location within a temporal alignment at
+      which this element begins.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 시작된 시간 배열 내의 위치를 제시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出時間組序中此元素的起始位置。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">
+      時間関連図上で，当該要素が始まることを示す時間点を示す．
+      </desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique dans un alignement temporel (un ordre chronologique) l'endroit où commence cet élément.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el punto en el ámbito de un alineamiento temporal en el cual comienza el elemento</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il punto nell'ambito di un allineamento temporale in cui comincia l'elemento</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <remarks>
+        <p>If no value is supplied, the element is assumed to follow
+	the immediately preceding element at the same hierarchic
+	level.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p> Si aucune valeur n'est donnée, il est entendu que l'élément suit l'élément immédiatement précédent au même niveau hiérarchique.</p>
+      </remarks>
+      <remarks xml:lang="es">
+        <p>Si no se suministra ningún valor, el elemento es asumido para seguir el elemento inmediatament anterior en el mismo nivel jerárquico.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	値がない場合は，当該要素は同じ構造レベル上の直前の要素の後に続
+	くものとされる．
+	</p>
+      </remarks>
+    </attDef>
+    <attDef ident="end" usage="opt">
+      <desc>indicates the location within a temporal alignment at
+      which this element ends.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 종료된 시간 배열 내의 위치를 제시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出時間組序 (順序點) 中此元素的結尾位置。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">
+      時間関連図上で，当該要素が終わることを示す時間点を示す．
+      </desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique l'endroit où se termine cet élément dans un alignement temporel.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica el punto en el ámbito de un alineamiento temporal en el cual comienza el elemento</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica il punto nell'ambito di un allineamento temporale in cui termina l'elemento</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <remarks>
+        <p>If no value is supplied, the element is assumed to precede
+        the immediately following element at the same hierarchic
+        level.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Si aucune valeur n'est donnée, il est entendu que l'élément précède l'élément immédiatement suivant au même niveau hiérarchique.</p>
+      </remarks>
+      <remarks xml:lang="es">
+        <p>Si no se suministra ningún valor, el elemento es asumido para preceder el elemento inmediatamente posterior en el mismo nivel jerárquico.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+	値がない場合は，当該要素は同じ構造レベル上の直前の要素の後に続
+	くものとされる．
+	</p>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TS.html#TSBATI">8.3.5. </ref>
+  </listRef>
 </classSpec><classSpec module="tei" type="atts" ident="att.transcriptional" xml:base="../../Specs/att.transcriptional.xml">
 
   <desc>provides attributes specific to elements encoding authorial or
@@ -4431,7 +4432,7 @@ expliquer d'autres parties d'un document.</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DR.html#DROTH">7.3. </ref>
   </listRef>
 </classSpec><classSpec module="tei" xml:id="DIPARTS" type="model" ident="model.entryPart" predeclare="true" xml:base="../../Specs/model.entryPart.xml">
-  <desc>groups elements appearing at any level within a dictionary entry.</desc>
+  <desc>groups non-morphological elements appearing within a dictionary entry.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">사전 표제어 내의 어떤 층위에서도 나타날 수 있는 요소를 모아 놓는다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集所有專為字典所定義的元素。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">
@@ -5431,16 +5432,13 @@ used for transcribing extant documents.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi che esprimono
     una probabilità</desc>
   <content>
-    
-    
     <data xmlns="http://relaxng.org/ns/structure/1.0" type="double">
       <param name="minInclusive">0</param>
       <param name="maxInclusive">1</param>
     </data>
-    
   </content>
   <remarks>
-    <p>Probability is  expressed
+    <p>Probability is expressed
        as a real number between 0 and 1;
       0
       representing <mentioned>certainly false</mentioned> and 1 representing <mentioned>certainly
@@ -5450,9 +5448,9 @@ used for transcribing extant documents.</desc>
     <p>出現度は，0から1までの実数で表現される．0は <mentioned>確実に偽</mentioned>，1は， <mentioned>確実に真</mentioned>を示す． </p>
   </remarks>
   <remarks versionDate="2009-05-25" xml:lang="fr">
-    <p>Le degré de probabilité est  exprimé
+    <p>Le degré de probabilité est exprimé
        par un nombre réel entre 0 et 1;
-      0
+     0
       représentant <mentioned>certainement faux</mentioned> et 1 <mentioned>certainement
         vrai</mentioned>.</p>
   </remarks>
@@ -5538,7 +5536,6 @@ integer value used as a count.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per un numero intero non negativo impiegato come computo</desc>
   <content>
     <data xmlns="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/>
-
   </content>
   <remarks>
     <p>Only positive integer values (including zero) are permitted</p>
@@ -6157,7 +6154,8 @@ resource, either within the current document or elsewhere.</desc>
     <data xmlns="http://relaxng.org/ns/structure/1.0" type="anyURI"/>
   </content>
   <remarks>
-    <p>The range of syntactically valid values is defined by RFC 3986
+    <p>The range of syntactically valid values is defined by
+    <ref target="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986</ref>
     <title>Uniform Resource Identifier (URI): Generic
     Syntax</title>. Note that the values themselves are encoded using
     <ref target="http://www.ietf.org/rfc/rfc3987.txt">RFC
@@ -6262,7 +6260,7 @@ resource, either within the current document or elsewhere.</desc>
     un valore codificato tramite un puntatore rispetto a un altro elemento che ne contiene una
     definizione</desc>
   <content>
-    <data xmlns="http://relaxng.org/ns/structure/1.0" type="anyURI"/>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
   </content>
   <remarks>
     <p>It will usually be the case that the item pointed to is to be found somewhere else in the
@@ -6338,7 +6336,55 @@ resource, either within the current document or elsewhere.</desc>
       de valeurs dans la spécification de l'attribut associé, exprimée par un élément
       <gi>valList</gi>.</p>
   </remarks>
-</macroSpec><classSpec module="tei" type="model" ident="model.resourceLike" predeclare="true" xml:base="../../Specs/model.resourceLike.xml">
+</macroSpec><classSpec module="tei" type="atts" ident="att.source" xml:base="../../Specs/att.source.xml">
+  <desc>provides attributes for pointing to the source of a bibliographic reference.</desc>
+  <attList>
+    <attDef ident="source" usage="opt">
+      <equiv/>
+      <gloss>pointer to a bibliographical source reference</gloss>
+      <desc>provides a pointer to the bibliographical source from which a quotation or citation is drawn.</desc>
+      <datatype maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <valDesc>Must point to one or more bibliographic elements
+        in the TEI  header or elsewhere</valDesc>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#SOURCE-eg-01"><p>
+      
+        As Willard McCarty (<bibl xml:id="mcc_2012">2012, p.2</bibl>) 
+      tells us, <quote source="#mcc_2012">‘Collaboration’  is  a  a 
+        problematic  and  should  be  a  contested  term.</quote>
+      
+      </p>
+    </egXML>
+  </exemplum>
+  
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>
+      
+      <quote source="#chicago_15_ed">Grammatical theories 
+        are in flux, and the more we learn, the less we 
+        seem to know.</quote>
+      
+    </p>
+      
+      <bibl xml:id="chicago_15_ed">
+        <title level="m">The Chicago Manual of Style</title>, 
+        <edition>15th edition</edition>. 
+        <pubPlace>Chicago</pubPlace>: 
+        <publisher>University of Chicago Press</publisher> 
+        (<date>2003</date>), 
+        <biblScope type="pp">p.147</biblScope>.
+      </bibl>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COHQQ">3.3.3. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TS.html#TSBAWR">8.3.4. </ref>
+  </listRef>
+</classSpec><classSpec module="tei" type="model" ident="model.resourceLike" predeclare="true" xml:base="../../Specs/model.resourceLike.xml">
   <desc>groups non-textual elements which may appear together with a
   header and a text to constitute a TEI document.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">TEI 문서를 구성하는 헤더 및 텍스트와 함께 나타날 수 있는 비테스트적 요소를 모아 놓는다.</desc>
@@ -6463,7 +6509,76 @@ to others within the name.</desc>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ND.html#NDPER">13.2.1. </ref>
   </listRef>
-</classSpec><classSpec module="core" type="atts" ident="att.milestoneUnit" xml:base="../../Specs/att.milestoneUnit.xml">
+</classSpec><macroSpec module="tei" type="dt" ident="data.duration.iso" xml:base="../../Specs/data.duration.iso.xml">
+  <desc>defines the range of attribute values available for representation of a duration in time
+    using ISO 8601 standard formats</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">ISO 8601 표준 형식을 사용하여 시간의 지속을 나타내는 속성 값 범위를 정의한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">以ISO 8601標準格式定義表示一段持續性時間的屬性值範圍 </desc>
+  <desc versionDate="2008-04-05" xml:lang="ja"> ISO 8601にある標準形式を使い，時間幅を表現する当該属性値の範囲を定義 する． </desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">définit la gamme de valeurs d'attributs disponibles pour
+    la représentation d'une durée dans le temps utilisant l'ISO 8601 qui concerne les formats
+    standards</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos posibles para
+    representar la duración en el tiempo usando formatos estàndards ISO 8601.</desc>
+  <content>
+    <?tei winita need to improve this regexp to match duration better --sb ?>
+    <data xmlns="http://relaxng.org/ns/structure/1.0" type="token">
+      <param name="pattern">[0-9.,DHMPRSTWYZ/:+\-]+</param>
+    </data>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <time dur-iso="PT0,75H">three-quarters of an hour</time>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date dur-iso="P1,5D">a day and a half</date>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <date dur-iso="P14D">a fortnight</date>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <time dur-iso="PT0.02S">20 ms</time>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>A duration is expressed as a sequence of number-letter pairs, preceded by the letter P; the
+      letter gives the unit and may be Y (year), M (month), D (day), H (hour), M (minute), or S
+      (second), in that order. The numbers are all unsigned integers, except for the last, which may
+      have a decimal component (using either <code>.</code> or <code>,</code> as the decimal point;
+      the latter is preferred). If any number is <mentioned>0</mentioned>, then that number-letter
+      pair may be omitted. If any of the H (hour), M (minute), or S (second) number-letter pairs are
+      present, then the separator <code>T</code> must precede the first <soCalled>time</soCalled>
+      number-letter pair.</p>
+    <p>For complete details, see ISO 8601 <title>Data elements and interchange formats — Information
+        interchange — Representation of dates and times</title>.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 時間幅は，先頭文字Pに続いて，数値-文字のペア列で示される． 文字は単位を示している．Y(年), M(月), D(日), H(時間), M(分), S(秒)
+      の順番になる．数値は符号のない整数である．但し，最後に10進数の 表記記号(小数点を示す<code>.</code>または<code>,</code>．後者が望
+        ましい)をとることはある．数値が<mentioned>0</mentioned>の場合， 数値-文字のペアは省略されることがある． H(時間), M(分),
+      S(秒)が数値-文字のペアを作る場合，区切子 <code>T</code>を先頭にして<soCalled>時間</soCalled>を示す数値-文字 のペアを示す必要がある． </p>
+    <p> 詳細については，ISO 8601<title>Data elements and interchange formats - Information interchange -
+        Representation of dates and times</title>を参照のこと． </p>
+  </remarks>
+  <remarks versionDate="2009-05-25" xml:lang="fr">
+    <p>Une durée est exprimée par une suite de paires alphanumériques, précédée par la lettre P ;
+      la lettre donne l'unité et peut être Y (année), M (mois), D (jour), H (heure), M (minute), ou
+      S (seconde), dans cet ordre. Les nombres sont des entiers non signés à l'exception du dernier,
+      qui peut comporter une décimale (en utilisant soit <code>.</code> soit <code>,</code> pour la
+      virgule ; la dernière possibilité est préférable). Si un nombre est <mentioned>0</mentioned>,
+      alors la paire alphanumérique peut être omise. Si les paires alphanumériques H (heure), M
+      (minute), ou S (seconde) sont présentes, alors le séparateur <code>T</code> doit précéder la
+      première paire alphanumérique <soCalled>time</soCalled>.</p>
+    <p>Pour des détails complets, voir ISO 8601 <title>Data elements and interchange formats —
+        Information interchange — Representation of dates and times</title>.</p>
+  </remarks>
+</macroSpec><classSpec module="core" type="atts" ident="att.milestoneUnit" xml:base="../../Specs/att.milestoneUnit.xml">
   <desc>provides an attribute to indicate the type of section which is changing at a specific milestone.</desc>
  
   <attList>
@@ -6690,6 +6805,7 @@ to others within the name.</desc>
     <memberOf key="att.global"/>
     <memberOf key="model.pLike"/>
     <memberOf key="att.declaring"/>
+    <memberOf key="att.fragmentable"/>
   </classes>
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
@@ -6972,7 +7088,7 @@ to others within the name.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
-      <valDesc>a semi-open user-defined list</valDesc>
+
     </attDef>
     <attDef ident="time" usage="opt">
       <equiv/>
@@ -7090,8 +7206,8 @@ to others within the name.</desc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" corresp="#COHQQ-eg-28">
           <p>
-            Celia thought privately, "<said aloud="false">Dorothea quite despises Sir James Chettam; 
-            I believe she would not accept him.</said>" Celia felt that this was a pity. 
+            Celia thought privately, <said aloud="false">Dorothea quite despises Sir James Chettam; 
+            I believe she would not accept him.</said> Celia felt that this was a pity. 
             
           </p>
         </egXML>
@@ -7134,7 +7250,12 @@ to others within the name.</desc>
       <defaultVal>true</defaultVal>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" corresp="#SAID-DIRECT-eg-1">
-          <p>
+	  
+      <editorialDecl>
+	<quotation marks="none"/>
+      </editorialDecl>
+      
+      <p>
             Tantripp had brought a card, and said that there was a gentleman waiting in the lobby. 
             The courier had told him that <said direct="false">only Mrs. Casaubon was at home</said>, 
             but he said <said direct="false">he was a relation of Mr. Casaubon's: would she see him?</said> 
@@ -7165,12 +7286,16 @@ to others within the name.</desc>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQQ-eg-34">
-      <p><said>Our minstrel here will warm the old man's heart with song, dazzle him with jewels and
-          gold</said>, a troublemaker simpered. <said>He'll trample on the Duke's camellias, spill
+      
+      <editorialDecl>
+	<quotation marks="all"/>
+      </editorialDecl>
+      
+      <p><said>"Our minstrel here will warm the old man's heart with song, dazzle him with jewels and
+          gold"</said>, a troublemaker simpered. <said>"He'll trample on the Duke's camellias, spill
           his wine, and blunt his sword, and say his name begins with X, and in the end the Duke
-          will say, <said>Take Saralinda, with my blessing, O lordly Prince of Rags and Tags, O
-            rider of the sun!</said>
-            </said></p>
+          will say, <said>'Take Saralinda, with my blessing, O lordly Prince of Rags and Tags, O
+            rider of the sun!'</said>"</said></p>
     </egXML>
     
   </exemplum>
@@ -7211,7 +7336,8 @@ to others within the name.</desc>
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQQ-eg-35">
-      <p><said aloud="true" rend="pre(“) post(”)">Hmmm</said>, said a small voice in his ear. <said aloud="true" rend="pre(“) post(”)">Difficult. Very difficult. Plenty of courage, I see.
+      <p><said aloud="true" rend="pre(“) post(”)">Hmmm</said>, said a small voice in his ear. 
+      <said aloud="true" rend="pre(“) post(”)">Difficult. Very difficult. Plenty of courage, I see.
           Not a bad mind either. there's talent, oh my goodness, yes — and a nice thirst to prove
           yourself, now that's interesting. … So where shall I put you?</said></p>
       <p>Harry gripped the edges of the stool and thought, <said aloud="false" rend="italic">Not
@@ -7248,15 +7374,16 @@ to others within the name.</desc>
     <memberOf key="model.quoteLike"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.msExcerpt"/>
+    <memberOf key="att.source"/>
   </classes>
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
   </content>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQQ-eg-29">Lexicography has
-            shown little sign of being affected by the work of followers of J.R. Firth, probably
-            best summarized in his slogan, <quote>You shall know a word by the company it keeps</quote>
-            <ref>(Firth, 1957)</ref>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#COHQQ-eg-29">Lexicography has shown little sign of being affected by the
+      work of followers of J.R. Firth, probably best summarized in his
+      slogan, <quote>You shall know a word by the company it
+      keeps</quote> <ref>(Firth, 1957)</ref>
         </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
@@ -7326,6 +7453,7 @@ to others within the name.</desc>
     <memberOf key="att.global"/>
     <memberOf key="model.qLike"/>
     <memberOf key="att.ascribed"/>
+    <memberOf key="att.source"/>
   </classes>
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
@@ -8444,37 +8572,42 @@ to others within the name.</desc>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <gap extent="4" unit="chars" reason="illegible"/>
+      <gap quantity="4" unit="chars" reason="illegible"/>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <gap extent="4" unit="chars" reason="illegible"/>
+      <gap quantity="4" unit="chars" reason="illegible"/>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <gap extent="1" unit="essay" reason="sampling"/>
+      <gap quantity="1" unit="essay" reason="sampling"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <gap extent="4" unit="字" reason="無法識讀"/>
+      <gap quantity="4" unit="字" reason="無法識讀"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <gap extent="1" unit="文章" reason="抽樣"/>
+      <gap quantity="1" unit="文章" reason="抽樣"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <gap extent="1" unit="essay" reason="sampling"/>
+      <gap quantity="1" unit="essay" reason="sampling"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <del><gap atLeast="4" atMost="8" unit="chars" reason="illegible"/></del>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <gap extent="unknown" unit="lines" reason="lost"/>
     </egXML>
   </exemplum>
   <remarks>
@@ -9228,7 +9361,7 @@ his att<unclear>ention</unclear></egXML>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.3. </ref>
   </listRef>
 </elementSpec><elementSpec module="core" ident="street" xml:base="../../Specs/street.xml">
-  <desc>a full street address including any name or number identifying a
+  <desc>contains a full street address including any name or number identifying a
         building as well as the name of the street or route on which it is
         located.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">거리 또는 도로 이름을 비롯하여 건물을 식별할 수 있는 이름 및 번지를 포함하는 전체 주소.</desc>
@@ -9934,7 +10067,6 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="subtype" mode="delete"/>
     <attDef ident="type" mode="change">
       <desc>allows the encoder to classify the abbreviation according to some convenient
                 typology.</desc>
@@ -10250,7 +10382,7 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
   <constraintSpec scheme="isoschematron" ident="ptrAtts">
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
-	attributes 'target' and 'cRef' may be supplied.</report>
+attributes @target and @cRef may be supplied on <name/>.</report>
     </constraint>
   </constraintSpec>
 
@@ -10304,7 +10436,7 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
   <constraintSpec scheme="isoschematron" ident="refAtts">
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @cRef">Only one of the
-	attributes 'target' and 'cRef' may be supplied.</report>
+	attributes @target' and @cRef' may be supplied on <name/></report>
     </constraint>
   </constraintSpec>
 
@@ -10552,10 +10684,10 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
         <p> [...] et tout autour, la longue cohorte de ses personnages, avec leur histoire, leur
             passé, leurs légendes :</p>
         <list type="ordered">
-          <item> 1 Pélage vainqueur d'Alkhamah se faisant couronner à Covadonga </item>
-          <item> 2 La cantatrice exilée de Russie suivant Schönberg à Amsterdam</item>
-          <item> 3 Le petit chat sourd aux yeux vairons vivant au dernier étage</item>
-          <item>4 Le crétin chef d'îlot faisant préparer des tonneaux de sable</item>
+          <item n="1">Pélage vainqueur d'Alkhamah se faisant couronner à Covadonga </item>
+          <item n="2">La cantatrice exilée de Russie suivant Schönberg à Amsterdam</item>
+          <item n="3">Le petit chat sourd aux yeux vairons vivant au dernier étage</item>
+          <item n="4">Le crétin chef d'îlot faisant préparer des tonneaux de sable</item>
         </list>
       </div>
     </egXML>
@@ -10774,6 +10906,8 @@ my <num type="ordinal" value="21">twenty-first</num> birthday</p>
     nei glossari indica il dermine che viene definito</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.placement"/>
     <memberOf key="model.labelLike"/>
   </classes>
   <content>
@@ -10974,7 +11108,7 @@ division, or to a group of verse lines. Note that, in this case, the
 <lb/>ré meſnage. Or des que le conſente-
 <lb/>ment des parties y eſt le mariage eſt
 <lb/> arreſté, quoy que de faict il ne ſoit
-<label rend="right">Puiſſance maritale 
+<label place="margin">Puiſſance maritale 
 entre les Romains.</label>
 <lb/> conſommé. Depuis la conſomma-
 <lb/>tion du mariage la femme eſt ſoubs
@@ -10987,6 +11121,8 @@ entre les Romains.</label>
 margin of the original source, next to the paragraph it describes, but
 approximately in the middle of it. 
 </p> 
+<p>If so desired the <gi>type</gi> attribute may be used to
+distinguish different categories of label.</p>
 </egXML>
 </exemplum>
   <listRef>
@@ -11308,13 +11444,13 @@ approximately in the middle of it.
       <remarks>
         <p>This attribute is retained for backwards compatibility; it may be removed at a subsequent
           release of the Guidelines. The recommended way of pointing to a span of elements is by
-          means of the <ident>range</ident> function of XPointer, as further described in <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SATSRN">16.2.4.4. </ref>. </p>
+          means of the <ident>range</ident> function of XPointer, as further described in <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SATSRN">16.2.5.4. </ref>. </p>
       </remarks>
       <remarks xml:lang="fr">
         <p>Cet attribut est conservé pour assurer un arrière-plan compatible ; il sera supprimé dans la
           prochaine mise à jour des Recommandations. La procédure recommandée pour pointer en
           direction d'une expansion des éléments est de le faire au moyen de la fonction
-            <ident>range</ident> de XPointer, ainsi qu'e la description en est faite  à <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SATSRN">16.2.4.4. </ref>. </p>
+            <ident>range</ident> de XPointer, ainsi qu'e la description en est faite  à <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SATSRN">16.2.5.4. </ref>. </p>
       </remarks>
     </attDef>
   </attList>
@@ -11388,7 +11524,7 @@ means of a responsibility statement in the associated TEI Header:</p>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONONO">3.8.1. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD27">2.2.6. </ref>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICON">3.11.2.6. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICON">3.11.2.7. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DI.html#DITPNO">9.3.5.4. </ref>
   </listRef>
 </elementSpec><elementSpec module="core" ident="index" xml:base="../../Specs/index.xml">
@@ -11466,6 +11602,74 @@ means of a responsibility statement in the associated TEI Header:</p>
   <listRef>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#CONOIX">3.8.2. </ref>
   </listRef>
+</elementSpec><elementSpec module="core" ident="media" xml:base="../../Specs/media.xml">
+  <desc>indicates the location of any form of external media such as
+  an audio or video clip etc.</desc>
+  <classes>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.global"/>
+    <memberOf key="model.graphicLike"/>
+    <memberOf key="att.media"/>
+    <memberOf key="att.resourced"/>
+    <memberOf key="att.declaring"/>
+    <memberOf key="att.timed"/>  
+</classes>
+  <content>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.descLike"/>
+    </zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="mimeType" usage="req" mode="change"/>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <figure>
+        <media mimeType="image/png" url="fig1.png"/>
+        <head>Figure One: The View from the Bridge</head>
+        <figDesc>A Whistleresque view showing four or five sailing boats in the foreground, and a
+          series of buoys strung out between them.</figDesc>
+      </figure>
+    </egXML>
+  </exemplum>
+
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <media mimeType="audio/wav" url="dingDong.wav" dur="PT10S">
+	  <desc>Ten seconds of bellringing sound</desc>
+	    </media>
+    </egXML>
+  </exemplum>
+
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <media mimeType="video/mp4" url="clip45.mp4" dur="PT45M" width="500px">
+	  <desc>A 45 minute video clip to be displayed in a window 500
+	  px wide </desc>
+	    </media>
+    </egXML>
+  </exemplum>
+
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#biblzh-tw_n5">
+      <figure>
+        <media type="graphic" mimeType="image/png" url="fig1.png"/>
+        <head>維納斯</head>
+        <figDesc> 波提且利 1484-1486年 畫布、蛋彩 佛羅倫斯，烏菲滋美術館</figDesc>
+      </figure>
+    </egXML>
+  </exemplum>
+  <remarks>
+<p>The attributes available for this element are not appropriate in
+all cases. For example, it makes no sense to specify the temporal duration of a
+graphic. Such errors are not
+currently detected.</p>
+<p>The <att>mimeType</att> attribute must be used to specify the MIME media type of
+the resource specified by the <att>url</att> attribute.</p>
+  </remarks>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COGR">3.9. </ref>
+  </listRef>
 </elementSpec><elementSpec module="core" xml:id="GRAPHIC" ident="graphic" xml:base="../../Specs/graphic.xml">
   <equiv/>
   <desc>indicates the location of an inline graphic, illustration, or figure.</desc>
@@ -11482,7 +11686,8 @@ means of a responsibility statement in the associated TEI Header:</p>
     <memberOf key="att.global"/>
     <memberOf key="model.graphicLike"/>
     <memberOf key="model.titlepagePart"/>
-    <memberOf key="att.internetMedia"/>
+    <memberOf key="att.media"/>
+    <memberOf key="att.resourced"/>
     <memberOf key="att.declaring"/>
   </classes>
   <content>
@@ -11490,67 +11695,6 @@ means of a responsibility statement in the associated TEI Header:</p>
       <ref name="model.descLike"/>
     </zeroOrMore>
   </content>
-  <attList>
-    <attDef ident="width" usage="opt">
-      <equiv/>
-      <desc>The display width of the image</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">이미지의 디스플레이 너비</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">圖片顯示的寬度</desc>
-      <desc versionDate="2008-04-06" xml:lang="ja"> 当該画像の表示幅． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">la largeur d’affichage de l’image</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">la anchura de la imagen.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">ampiezza dell'immagine da visualizzare</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
-      </datatype>
-    </attDef>
-    <attDef ident="height" usage="opt">
-      <equiv/>
-      <desc>The display height of the image</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">이미지의 디스플레이 높이</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">圖片顯示的高度</desc>
-      <desc versionDate="2008-04-06" xml:lang="ja"> 当該画像の表示高． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">la hauteur d’affichage de l’image </desc>
-      <desc versionDate="2007-05-04" xml:lang="es">la altura de la imagen.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">altezza dell'immagine da visualizzare</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
-      </datatype>
-    </attDef>
-    <attDef ident="scale" usage="opt">
-      <equiv/>
-      <desc>A scale factor to be applied to the image to make it the desired display size</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">이미지의 디스플레이 크기를 조절하기 위한 척도</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">用來調整圖片顯示大小的比例係數</desc>
-      <desc versionDate="2008-04-06" xml:lang="ja"> 希望する表示の大きさを示す単位． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">facteur d'échelle à appliquer à l'image pour
-        l'afficher à la taille désirée.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">Un factor de escala aplicado a la imagen para
-        convertir esta al tamaño deseado. </desc>
-      <desc versionDate="2007-01-21" xml:lang="it">scala da applicare all'immagine per ottenere la
-        grandezza desiderata</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
-      </datatype>
-    </attDef>
-    <attDef ident="url" usage="req">
-      <gloss>uniform resource locator</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">표준 원본 위치 지정소</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">localizador de recurso uniforme</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">adresse URL</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">URL (localizzatore universale di risorse)</gloss>
-      <desc>A URL which refers to the image itself.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">대상 URL</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">目標統一資源識別符</desc>
-      <desc versionDate="2008-04-06" xml:lang="ja"> URL. </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">l'URL cible</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">La meta URL</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">URL di destinazione</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <figure>
@@ -11566,7 +11710,7 @@ means of a responsibility statement in the associated TEI Header:</p>
       <figure>
         <graphic url="fig1.png"/>
         <head>Figure Une : Jan van Eyck, La Vierge du chancelier Rolin</head>
-        <figDesc>Si, attiré par la curiosité, on a l'imprudence de l'approcher d'un peu trop prés,
+        <p>Si, attiré par la curiosité, on a l'imprudence de l'approcher d'un peu trop prés,
             c'est fini, on est pris pour tout le temps que peut durer l'effort d'une attention
             soutenue ; on s'extasie devant la finesse du détail ; ou regarde, fleuron à fleuron, la
             couronne de la Vierge, une orfèvrerie de rêve ; figure à figure, les groupes qui
@@ -11582,7 +11726,7 @@ means of a responsibility statement in the associated TEI Header:</p>
             clochetons ; il parcourt, sur la gauche, un quai planté d'arbres, peuplé de promeneurs ;
             il va toujours plus loin, franchit une à une les croupes des collines verdoyantes ; se
             repose un moment sur une ligne lointaine de montagnes neigeuses; pour se perdre ensuite
-            dans l'infini d'un ciel à peine bleu, où s'estompent de flottantes nuées. </figDesc>
+            dans l'infini d'un ciel à peine bleu, où s'estompent de flottantes nuées. </p>
       </figure>
     </egXML>
   </exemplum>
@@ -11611,7 +11755,8 @@ means of a responsibility statement in the associated TEI Header:</p>
   </listRef>
 </elementSpec><elementSpec module="core" xml:id="BINARYOBJECT" ident="binaryObject" xml:base="../../Specs/binaryObject.xml">
   <equiv/>
-  <desc>provides encoded binary data representing an inline graphic or other object.</desc>
+  <desc>provides encoded binary data representing an inline graphic,
+  audio, video or other object.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">인라인 그래픽 또는 다른 개체를 표상하는 부호화된 이진 데이터를 제시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標記用來表示文本中圖檔或其他檔案的二進位資料。</desc>
   <desc versionDate="2008-04-21" xml:lang="ja"> 行中の画像やその他のオブジェクトを示す，符号化されたバイナリデータを 示す． </desc>
@@ -11626,59 +11771,16 @@ means of a responsibility statement in the associated TEI Header:</p>
     <memberOf key="att.global"/>
     <memberOf key="model.graphicLike"/>
     <memberOf key="model.titlepagePart"/>
-    <memberOf key="att.internetMedia"/>
+    <memberOf key="att.media"/>
+    <memberOf key="att.timed"/>
+    <memberOf key="att.typed"/>
   </classes>
   <content>
     <text xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
-    <attDef ident="width" usage="opt">
-      <equiv/>
-      <desc>The display width of the object</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">개체의 디스플레이 너비</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">檔案顯示的寬度</desc>
-      <desc versionDate="2008-04-21" xml:lang="ja"> オブジェクトの表示幅． </desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> オブジェクトの表示幅． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">la largeur d'affichage de l'objet </desc>
-      <desc versionDate="2007-05-04" xml:lang="es">La anchura del objeto.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">ampiezza dell'oggetto da visualizzare</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
-      </datatype>
-    </attDef>
-    <attDef ident="height" usage="opt">
-      <equiv/>
-      <desc>The display height of the object</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">개체의 디스플레이 높이</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">檔案顯示的高度</desc>
-      <desc versionDate="2008-04-21" xml:lang="ja"> オブジェクトの表示の高さ． </desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> オブジェクトの表示の高さ． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">la hauteur d'affichage de l'objet</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">La altura del objeto.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">altezza dell'oggetto da visualizzare</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.outputMeasurement"/>
-      </datatype>
-    </attDef>
-    <attDef ident="scale" usage="opt">
-      <equiv/>
-      <desc>A scale factor to be applied to the object to make it the desired display size</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">개체의 디스플레이 크기를 조절하기 위한 척도</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">用來調整檔案顯示大小的比例係數</desc>
-      <desc versionDate="2008-04-21" xml:lang="ja"> オブジェクトを表示する際，大きさを指定する尺度． </desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> オブジェクトを表示する際，大きさを指定する尺度． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">facteur d'échelle à appliquer à l'objet pour
-        l'afficher à la taille désirée.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">Un factor de escala aplicado al objeto para convertir
-        este al tamaño deseado.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">scala da applicare all'oggetto per ottenere la
-        grandezza desiderata</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.numeric"/>
-      </datatype>
-    </attDef>
+    <attDef ident="url" mode="delete"/>
     <attDef ident="encoding" usage="opt">
-      <equiv/>
       <desc>The encoding used to encode the binary data. If not specified, this is assumed to be
           <ref target="http://en.wikipedia.org/wiki/Base64">Base64</ref>.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">부호화는 이진 데이터의 부호 변환 방식이다. 별도로 명시되어 있지 않다면, <ref target="http://en.wikipedia.org/wiki/Base64">Base64</ref>로 간주된다.</desc>
@@ -11706,31 +11808,10 @@ means of a responsibility statement in the associated TEI Header:</p>
         Nna3F2JQFo97Vriy/Xl4/f1cf5VWzXyym7PH hhx4dbgYKAAA7</binaryObject>
     </egXML>
   </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <binaryObject mimeType="image/gif">
-          R0lGODdhMAAwAPAAAAAAAP///ywAAAAAMAAwAAAC8IyPqcvt3wCcDkiLc7C0qwy
-          GHhSWpjQu5yqmCYsapyuvUUlvONmOZtfzgFzByTB10QgxOR0TqBQejhRNzOfkVJ
-          +5YiUqrXF5Y5lKh/DeuNcP5yLWGsEbtLiOSpa/TPg7JpJHxyendzWTBfX0cxOnK
-          PjgBzi4diinWGdkF8kjdfnycQZXZeYGejmJlZeGl9i2icVqaNVailT6F5iJ90m6
-          mvuTS4OK05M0vDk0Q4XUtwvKOzrcd3iq9uisF81M1OIcR7lEewwcLp7tuNNkM3u
-          Nna3F2JQFo97Vriy/Xl4/f1cf5VWzXyym7PH hhx4dbgYKAAA7</binaryObject>
-    </egXML>
-  </exemplum>
-  <remarks>
-    <p>The MIME media type specified on the <att>mimeType</att> attribute should describe the object
-      after it has been decoded.</p>
-  </remarks>
-  <remarks xml:lang="fr">
-    <p> Le type MIME spécifié au moyen de l'attribut <att>mimeType</att> doit décrire l'objet après
-      son décodage. </p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p> 属性<att>mimeType</att>で示された当該MIMEタイプは，復号化された後 のオブジェクトを示すものであるべきである． </p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p> 属性<att>mimeType</att>で示された当該MIMEタイプは，復号化された後 のオブジェクトを示すものであるべきである． </p>
-  </remarks>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COGR">3.9. </ref>
+  </listRef>
+
 </elementSpec><elementSpec module="core" ident="milestone" xml:base="../../Specs/milestone.xml">
   <equiv/>
   <gloss versionDate="2009-01-06" xml:lang="fr">balise de bornage</gloss>
@@ -11757,7 +11838,7 @@ means of a responsibility statement in the associated TEI Header:</p>
     <memberOf key="model.milestoneLike"/>
     <memberOf key="att.milestoneUnit"/>
     <memberOf key="att.typed"/>
-    <memberOf key="att.sourced"/>
+    <memberOf key="att.edition"/>
     <memberOf key="att.spanning"/>
     <memberOf key="att.breaking"/>
   </classes>
@@ -11862,7 +11943,7 @@ means of a responsibility statement in the associated TEI Header:</p>
     <memberOf key="att.global"/>
     <memberOf key="model.milestoneLike"/>
     <memberOf key="att.typed"/>
-    <memberOf key="att.sourced"/>
+    <memberOf key="att.edition"/>
     <memberOf key="att.spanning"/>
    <memberOf key="att.breaking"/>
   </classes>
@@ -11943,7 +12024,7 @@ means of a responsibility statement in the associated TEI Header:</p>
     <memberOf key="att.global"/>
     <memberOf key="model.milestoneLike"/>
     <memberOf key="att.typed"/>
-    <memberOf key="att.sourced"/>
+    <memberOf key="att.edition"/>
     <memberOf key="att.spanning"/>
     <memberOf key="att.breaking"/>
   </classes>
@@ -11982,7 +12063,7 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
       otherwise be marked. </p>
     <p>The <att>type</att> attribute may be used to characterize the
     line break in any respect. The more specialized attributes
-    <att>break</att> and <att>ed</att> should be preferred when the
+    <att>break</att>, <att>ed</att>, or <att>edRef</att> should be preferred when the
     intent is to indicate whether or not the line
     break is word-breaking, or to note the source from which it
     derives.  </p>
@@ -12033,7 +12114,7 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
     <memberOf key="att.global"/>
     <memberOf key="model.milestoneLike"/>
     <memberOf key="att.typed"/>
-    <memberOf key="att.sourced"/>
+    <memberOf key="att.edition"/>
     <memberOf key="att.spanning"/>
     <memberOf key="att.breaking"/>  </classes>
   <content>
@@ -12150,7 +12231,7 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
   <remarks>
     <p rend="dataDesc">May contain titles and statements of responsibility (author, editor, or
       other), in any order.</p>
-    <p>The <gi>analytic</gi> element may only occur only within a <gi>biblStruct</gi>, where its use
+    <p>The <gi>analytic</gi> element may only occur within a <gi>biblStruct</gi>, where its use
       is mandatory for the description of an analytic level bibliographic item.</p>
   </remarks>
   <remarks xml:lang="fr">
@@ -12202,12 +12283,14 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
             <choice>
               <ref name="author"/>
               <ref name="editor"/>
+              <ref name="meeting"/>
               <ref name="respStmt"/>
             </choice>
             <zeroOrMore>
               <choice>
                 <ref name="author"/>
                 <ref name="editor"/>
+                <ref name="meeting"/>
                 <ref name="respStmt"/>
               </choice>
             </zeroOrMore>
@@ -12236,6 +12319,7 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
                 <ref name="textLang"/>
                 <ref name="author"/>
                 <ref name="editor"/>
+                <ref name="meeting"/>
                 <ref name="respStmt"/>
               </choice>
             </zeroOrMore>
@@ -12247,10 +12331,7 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
         </choice>
       </optional>
       <zeroOrMore>
-        <choice>
-          <ref name="model.noteLike"/>
-          <ref name="meeting"/>
-        </choice>
+	<ref name="model.noteLike"/>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="edition"/>
@@ -12258,6 +12339,8 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
           <choice>
             <ref name="idno"/>
             <ref name="editor"/>
+            <ref name="sponsor"/>
+            <ref name="funder"/>
             <ref name="respStmt"/>
           </choice>
         </zeroOrMore>
@@ -12282,10 +12365,10 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
         <monogr>
           <title level="j">Computers and the Humanities</title>
           <imprint>
-            <biblScope>25.6</biblScope>
             <date when="1991-12">(December, 1991):</date>
-            <biblScope>377–380</biblScope>
           </imprint>
+            <biblScope>25.6</biblScope>
+            <biblScope unit="pp" from="377" to="380">377–380</biblScope>
         </monogr>
       </biblStruct>
     </egXML>
@@ -12310,7 +12393,7 @@ soi-<lb break="no"/>xante &amp; dixhuytiesme livre.
         <series>
           <title type="main" level="s">Columbia University Contributions to
                               Anthropology</title>
-          <biblScope type="vol">4</biblScope>
+          <biblScope unit="vol">4</biblScope>
         </series>
       </biblStruct>
     </egXML>
@@ -12481,7 +12564,7 @@ places, in particular where  multiple names are given.</p>
 </elementSpec><elementSpec module="core" ident="editor" xml:base="../../Specs/editor.xml">
   <equiv/>
   
-  <desc>secondary statement of responsibility for a bibliographic item, for example the name of an
+  <desc>contains a secondary statement of responsibility for a bibliographic item, for example the name of an
     individual, institution or organization, (or of several such) acting as editor, compiler,
     translator, etc. </desc>
   <desc versionDate="2007-12-20" xml:lang="ko">서지 항목의 책임에 관한 2차적 진술, 예를 들어, 편집, 번역 등의 작업을 한 편집, 개인, 기관,
@@ -12953,7 +13036,7 @@ doit pas être utilisé.</p>
                                         </p>
       </remarks>
     </attDef>
-    <attDef ident="subtype" mode="delete"/>
+
     <attDef ident="type" mode="change">
       <desc>classifies the title according to some convenient typology.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">어떤 편의적 유형에 따른 제목 분류</desc>
@@ -13402,7 +13485,7 @@ epistemology, methodology and history of
   </listRef>
 </elementSpec><elementSpec module="core" ident="biblScope" xml:base="../../Specs/biblScope.xml">
   <equiv/>
-  <gloss>scope of citation</gloss>
+  <gloss>scope of bibliographic reference</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">인용 범위</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">書目引用範圍</gloss>
   <gloss versionDate="2008-04-05" xml:lang="ja"/>
@@ -13431,7 +13514,99 @@ epistemology, methodology and history of
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
+    <attDef ident="unit" usage="opt">
+      <desc>identifies the unit of information conveyed by the element, e.g. <val>columns</val>, <val>pages</val>, <val>volume</val>.</desc>   
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="vol">
+          <gloss>volume</gloss>
+          <gloss versionDate="2007-12-20" xml:lang="ko">권</gloss>
+          <gloss versionDate="2007-05-04" xml:lang="es">el elemento contiene el número de un volumen.</gloss>
+          <desc>the element contains a volume number.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">권수를 포함한다.</desc>
+          <desc versionDate="2008-10-02" xml:lang="fr"> volume</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素標記的內容為冊號。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">el elemento contiene el número de volumen.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">
+            
+            当該要素の巻番号を示す．
+          </desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">l'élément contient un numéro de volume.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">l'elemento contiene il numero del volume.</desc>
+        </valItem>
+        <valItem ident="issue">
+          <equiv/>
+          <desc>the element contains an issue number, or volume and
+            issue numbers.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">호, 또는 권과 호를 포함한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素標記的內容為一期刊號或冊號與期刊號。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">el elemento contiene el número de la edición, o los números del volumen y de la edición.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">
+            当該要素は，発行番号，巻番と号番を示す．
+          </desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">l'élément contient un numéro de
+            livraison ou bien un numéro de volume et de livraison.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">l'elemento contiene l'indicazione del numero della pubblicazione</desc>
+        </valItem>
+        <valItem ident="pp">
+          <gloss>pages</gloss>
+          <gloss versionDate="2007-12-20" xml:lang="ko">페이지</gloss>
+          <gloss versionDate="2007-11-06" xml:lang="it">pagine</gloss>
+          <gloss versionDate="2007-05-04" xml:lang="es">el elemento contiene un número de página o el intervalo de páginas.</gloss>
+          <desc>the element contains a page number or page range.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">페이지 번호 또는 페이지 범위를 포함한다.</desc>
+          <desc versionDate="2008-10-02" xml:lang="fr"> pages</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素標記的內容為一頁數或頁數範圍。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">el elemento contiene una página o un intervalo de páginas.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">
+            
+            当該要素は，ページ番号またはページ範囲を示す．
+          </desc>
+          <desc versionDate="2008-03-30" xml:lang="fr"> l'élément contient un nombre de pages
+            ou l'étendue de sélection des pages.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">l'elemento contiene l'indicazione di pagina o pagine</desc>
+        </valItem>
+        <valItem ident="ll">
+          <gloss>lines</gloss>
+          <desc>the element contains a line number or line range.</desc>
+        </valItem>
+        <valItem ident="chap">
+          <gloss>chapter</gloss>
+          <gloss versionDate="2007-12-20" xml:lang="ko">장</gloss>
+          <gloss versionDate="2008-04-06" xml:lang="es">capítulo</gloss>
+          <gloss versionDate="2009-01-06" xml:lang="fr">(chapitre) l'élément
+            contient une indication de chapitre (numéro et/ou
+            titre)</gloss>
+          <gloss versionDate="2007-11-06" xml:lang="it">capitolo</gloss>
+          <desc>the element contains a chapter indication (number
+            and/or title)</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">장 표시(숫자와/또는 제목)를 포함한다.</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">el elemento contiene la indicación del capítulo (número y/o el título)</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">
+            当該要素は，章の識別子(番号や名前)を示す．
+          </desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">l'élément contient une indication de
+            chapitre (le numéro et/ou le titre)</desc>
+          <desc versionDate="2007-11-06" xml:lang="it">l'elemento contiene un'indicazione di capitolo (numero e/o titolo</desc>
+        </valItem>
+        <valItem ident="part">
+          <equiv/>
+          <desc>the element identifies a part of a book or collection.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">책 또는 모음집의 부분을 식별한다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">該元素標明的內容為單書或集合作品的一部份。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">el elemento identifica una parte de un libro o de una colección.</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">
+            当該要素は，書籍や叢書の部分を特定する．
+          </desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">l'élément identifie une partie d'un
+            livre ou une anthologie.</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">l'elemento identifica una parte di un libro o di una raccolta</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="type" usage="opt" status="deprecated">
       <equiv/>
       <desc>identifies the type of information conveyed by the element, e.g.
                 <val>columns</val>, <val>pages</val>, <val>volume</val>.</desc>
@@ -13537,14 +13712,14 @@ epistemology, methodology and history of
     </attDef>
     <attDef ident="from">
       <equiv/>
-      <desc>specifies the starting point of the range of units indicated by the <att>type</att> attribute.</desc>
+      <desc>specifies the starting point of the range of units indicated by the <att>unit</att> attribute.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
     </attDef>
     <attDef ident="to">
       <equiv/>
-      <desc>specifies the end-point of the range of units indicated by the <att>type</att> attribute.</desc>
+      <desc>specifies the end-point of the range of units indicated by the <att>unit</att> attribute.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
@@ -13553,25 +13728,106 @@ epistemology, methodology and history of
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblScope>pp 12–34</biblScope>
-      <biblScope type="pp" from="12" to="34"/>
-      <biblScope type="vol">II</biblScope>
-      <biblScope type="pp">12</biblScope>
+      <biblScope unit="pp" from="12" to="34"/>
+      <biblScope unit="vol">II</biblScope>
+      <biblScope unit="pp">12</biblScope>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblScope>pp 12–34</biblScope>      
-      <biblScope type="pp" from="12" to="34"/>
-      <biblScope type="vol">II</biblScope>
-      <biblScope type="pp">12</biblScope>
+      <biblScope unit="pp" from="12" to="34"/>
+      <biblScope unit="vol">II</biblScope>
+      <biblScope unit="pp">12</biblScope>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblScope>頁數 12–34</biblScope>
-      <biblScope type="頁數" from="12" to="34"/>
-      <biblScope type="冊">II</biblScope>
-      <biblScope type="頁數">12</biblScope>
+      <biblScope unit="頁數" from="12" to="34"/>
+      <biblScope unit="冊">II</biblScope>
+      <biblScope unit="頁數">12</biblScope>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.3. </ref>
+  </listRef>
+</elementSpec><elementSpec module="core" ident="citedRange" xml:base="../../Specs/citedRange.xml">
+  <equiv/>
+  <gloss>cited range</gloss>
+  <desc>defines the range of cited content, often represented by pages or other units</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.pointing"/>
+    <memberOf key="model.biblPart"/>
+  </classes>
+  <content>
+    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+  </content>
+  <attList>
+    <attDef ident="unit" usage="opt">
+      <equiv/>
+      <desc>identifies the type of information conveyed by the element, e.g.
+                <val>columns</val>, <val>pages</val>, <val>volume</val>.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="vol">
+          <gloss>volume</gloss>
+          <desc>the element contains a volume number.</desc>
+        </valItem>
+        <valItem ident="issue">
+          <equiv/>
+          <desc>the element contains an issue number, or volume and
+                        issue numbers.</desc>
+        </valItem>
+        <valItem ident="pp">
+          <gloss>pages</gloss>
+          <desc>the element contains a page number or page range.</desc>
+        </valItem>
+        <valItem ident="ll">
+          <gloss>lines</gloss>
+          <desc>the element contains a line number or line range.</desc>
+        </valItem>
+        <valItem ident="chap">
+          <gloss>chapter</gloss>
+          <desc>the element contains a chapter indication (number
+                        and/or title)</desc>
+        </valItem>
+        <valItem ident="part">
+          <equiv/>
+          <desc>the element identifies a part of a book or collection.</desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="from">
+      <equiv/>
+      <desc>specifies the starting point of the range of units indicated by the <att>unit</att> attribute.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+    </attDef>
+    <attDef ident="to">
+      <equiv/>
+      <desc>specifies the end-point of the range of units indicated by the <att>unit</att> attribute.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <citedRange>pp 12–13</citedRange>
+      <citedRange unit="pp" from="12" to="13"/>
+      <citedRange unit="vol">II</citedRange>
+      <citedRange unit="pp">12</citedRange>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <bibl><ptr target="#mueller01"/>, <citedRange target="http://example.com/mueller3.xml#page4">vol. 3, pp.
+        4-5</citedRange></bibl>
     </egXML>
   </exemplum>
   <listRef>
@@ -13758,6 +14014,7 @@ epistemology, methodology and history of
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.biblLike"/>
+    <memberOf key="model.msItemPart"/>
     <memberOf key="att.declarable"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.sortable"/>
@@ -13781,6 +14038,7 @@ epistemology, methodology and history of
 
           <ref name="model.ptrLike"/>
           <ref name="relatedItem"/>
+          <ref name="citedRange"/>
         </choice>
       </zeroOrMore>
     </group>
@@ -13986,8 +14244,9 @@ epistemology, methodology and history of
   </content>
   <constraintSpec ident="targetorcontent1" scheme="isoschematron">
     <constraint>
-      <sch:report test="@target and count( child::* ) &gt; 0">If the 'target' attribute is used, the
-        relatedItem element must be empty</sch:report>
+      <sch:report test="@target and count( child::* ) &gt; 0">
+If the @target attribute on <sch:name/> is used, the
+relatedItem element must be empty</sch:report>
       <sch:assert test="@target or child::*">A relatedItem element should have either a 'target' attribute
         or a child element to indicate the related bibliographic item</sch:assert>
     </constraint>
@@ -14043,7 +14302,7 @@ epistemology, methodology and history of
   empty.</p>
   </remarks>
   <listRef>
-    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBIRI">3.11.2.5. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBIRI">3.11.2.6. </ref>
   </listRef>
 </elementSpec><elementSpec module="core" ident="l" xml:base="../../Specs/l.xml">
   <equiv/>
@@ -14066,113 +14325,13 @@ epistemology, methodology and history of
     <memberOf key="model.lLike"/>
     <memberOf key="att.metrical"/>
     <memberOf key="att.enjamb"/>
+    <memberOf key="att.fragmentable"/>
   </classes>
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
-  <attList>
-    <attDef ident="part" usage="opt">
-      <equiv/>
-      <desc>specifies whether or not the line is metrically complete. </desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">시행의 운율적 완성도 여부를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">說明詩行的韻律表現是否完整。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> 当該行が，韻律上完全であるかどうかを示す． </desc>
-      <desc versionDate="2009-01-06" xml:lang="fr">précise si le vers est métriquement complet ou non.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica si el verso es o no métricamente completo.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica se il verso sia completo dal punto di vista
-        metrico</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <defaultVal>N</defaultVal>
-      <valList type="closed">
-        <valItem ident="Y">
-          <gloss>yes</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">예</gloss>
-          <gloss versionDate="2009-01-06" xml:lang="fr">oui</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">sì</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">el verso es métricamente incompleto.</gloss>
-          <desc>the line is metrically incomplete</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">시행이 운율적으로 미완성이다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">韻律表現不完整的詩行</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">el verso es métricamente incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 当該行は，韻律上，完全ではない． </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">le vers est métriquement incomplet.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">il verso non è completo</desc>
-        </valItem>
-        <valItem ident="N">
-          <gloss>no</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">아니오</gloss>
-          <gloss versionDate="2009-01-06" xml:lang="fr">non</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">o el verso es completo, o no se hace ninguna
-            referencia a su completitud.</gloss>
-          <desc>either the line is complete, or no claim is made as to its completeness</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">완전성에 비추어 볼 때 시행이 완전하거나 흠결이 없는 상태</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">詩行完整或未說明其完整性</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">o el verso es completo, o no se hace ninguna
-            referecia al respecto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 等が行は完全である．または，完全性が問題にはならない． </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">soit le vers est complet, soit aucune rmention
-            n'est faite quant à son intégralité. </desc>
-          <desc versionDate="2007-01-21" xml:lang="it">o il verso è completo, o vi è dichiarazione circa
-            la sua completezza</desc>
-        </valItem>
-        <valItem ident="I">
-          <gloss>initial</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">시작부</gloss>
-          <gloss versionDate="2009-01-06" xml:lang="fr">début</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">iniziale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte inicial de un verso incompleto.</gloss>
-          <desc>the initial part of an incomplete line</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 시행의 시작부</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">le début d'un vers incomplet</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整詩行的起始部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte inicial de un verso incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 未完全である行の，前の部分． </desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la parte iniziale di un verso incompleto</desc>
-        </valItem>
-        <valItem ident="M">
-          <gloss>medial</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">중간부</gloss>
-          <gloss versionDate="2009-01-06" xml:lang="fr">milieu</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">mediano</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte central de un verso incompleto.</gloss>
-          <desc>a medial part of an incomplete line</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 시행의 중간부</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整詩行的中段部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte intermedia de un verso incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 未完全である行の，中の部分． </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">partie médiane d'un vers incomplet</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la parte intermedia di un verso incompleto</desc>
-        </valItem>
-        <valItem ident="F">
-          <gloss>final</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">종료부</gloss>
-          <gloss versionDate="2009-10-08" xml:lang="fr">fin</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">finale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte final de un verso incompleto.</gloss>
-          <desc>the final part of an incomplete line</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 시행의 종료부</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完整詩行的末端部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte final de una línea incompleta</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 未完全である行の，後ろの部分． </desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">la partie finale d'un vers incomplet.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">la parte finale di un verso incompleto</desc>
-        </valItem>
-      </valList>
-      <remarks>
-        <p>The values <val>I</val>, <val>M</val>, or <val>F</val> should be used only where it is
-          clear how the line is to be reconstituted.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>Les valeurs <val>I</val>, <val>M</val> et <val>F</val> ne devraient être utilisées que
-          lorsqu'on sait clairement comment le vers doit être construit.</p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p> 値<val>I</val>, <val>M</val>, <val>F</val>は，当該行の構成が明 確である場合にのみ使われるべきである． </p>
-      </remarks>
-    </attDef>
-  </attList>
+
+
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <l met="-/-/-/-/-/" part="Y"/>
@@ -14341,7 +14500,7 @@ epistemology, methodology and history of
   <gloss versionDate="2009-01-06" xml:lang="fr">langue orale</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">discurso</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">battuta</gloss>
-  <desc>An individual speech in a performance text, or a passage presented as such in a prose or
+  <desc>contains an individual speech in a performance text, or a passage presented as such in a prose or
     verse text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">공연 텍스트에서 개별 대화 또는 산문이나 운문 텍스트에서 공연적 텍스트로 제시된 단락</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">劇本中的個人台詞，或散文、韻文中的個人演說。</desc>
@@ -14474,7 +14633,7 @@ epistemology, methodology and history of
   <gloss/>
   <gloss versionDate="2009-01-06" xml:lang="fr">locuteur</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">講者</gloss>
-  <desc>A specialized form of heading or label, giving the name of one or more speakers in a
+  <desc>contains a specialized form of heading or label, giving the name of one or more speakers in a
         dramatic text or fragment.</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">forme particulière de titre ou de marque qui donne le
         nom d'un ou de  plusieurs locuteurs dans un texte ou dans un fragment de texte écrit pour le
@@ -14991,7 +15150,6 @@ epistemology, methodology and history of
                 </p>
       </remarks>
     </attDef>
-    
   </attList>
   <exemplum xml:lang="en">
     <p>One use for this element is to allow document preparation
@@ -15995,8 +16153,7 @@ creation of an electronic text.</desc>
 </elementSpec><elementSpec module="header" ident="extent" xml:base="../../Specs/extent.xml">
   <equiv/>
   <gloss versionDate="2007-06-12" xml:lang="fr">étendue</gloss>
-  <desc>describes the approximate size of a text as stored on some carrier medium, whether digital
-    or non-digital, specified in any convenient units.</desc>
+  <desc>describes the approximate size of a text stored on some carrier medium or of some other object, digital  or non-digital,  specified in any convenient units.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr"> décrit la taille approximative d’un texte stocké sur son
     support, numérique ou non-numérique, exprimé dans une unité quelconque appropriée.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">전달 매체, 즉, 디지털 또는 비디지털로 저장된 텍스트의, 다양한 단위로 명시되는, 대략적 규모를
@@ -16041,6 +16198,7 @@ creation of an electronic text.</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD23">2.2.3. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD2">2.2. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/CO.html#COBICOI">3.11.2.3. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ms.html#msph1">10.7.1. </ref>
   </listRef>
 </elementSpec><elementSpec module="header" ident="publicationStmt" xml:base="../../Specs/publicationStmt.xml">
   <equiv/>
@@ -16620,7 +16778,7 @@ means of a <gi>glyph</gi> or <gi>char</gi> element referenced here as <code>#sym
           <resp>ed. by</resp>
           <name>Jan Gonda</name>
         </respStmt>
-        <biblScope type="vol">1.2</biblScope>
+        <biblScope unit="vol">1.2</biblScope>
         <idno type="ISSN">0 345 6789</idno>
       </seriesStmt>
     </egXML>
@@ -16650,7 +16808,7 @@ means of a <gi>glyph</gi> or <gi>char</gi> element referenced here as <code>#sym
           <name>珍．崗妲</name>
         </respStmt>
         <idno type="ISSN">0 345 6789</idno>
-        <biblScope type="vol">1.2</biblScope>
+        <biblScope unit="vol">1.2</biblScope>
       </seriesStmt>
     </egXML>
   </exemplum>
@@ -17580,10 +17738,16 @@ during the encoding of a text.</desc>
     <memberOf key="model.editorialDeclPart"/>
   </classes>
   <content>
-    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
       <ref name="model.pLike"/>
-    </oneOrMore>
+    </zeroOrMore>
   </content>
+  <constraintSpec ident="quotationContents" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(@marks) and not (tei:p)">
+On <name/>, either the @marks attribute should be used, or a paragraph of description provided</report>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="marks" usage="opt">
       <gloss>quotation marks</gloss>
@@ -17606,7 +17770,6 @@ during the encoding of a text.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
-      <defaultVal>all</defaultVal>
       <valList type="closed">
         <valItem ident="none">
           <equiv/>
@@ -18122,7 +18285,7 @@ during the encoding of a text.</desc>
       <gloss versionDate="2008-04-06" xml:lang="es">nombre de elemento</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">nom de l'élément</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">nome di elemento</gloss>
-      <desc>the name (generic identifier) of the element indicated by the tag.</desc>
+      <desc>specifies the name (generic identifier) of the element indicated by the tag.</desc>
       <desc versionDate="2009-01-05" xml:lang="fr">nom (identifiant générique) de l’élément indiqué par
         la balise.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">태그로 제시된 요소의 이름(일반적 확인소)</desc>
@@ -18158,8 +18321,6 @@ during the encoding of a text.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
-      <valDesc>an integer number greater than zero</valDesc>
-      <valDesc xml:lang="fr">un nombre entier plus grand que zéro.</valDesc>
     </attDef>
     <attDef ident="withId" usage="rec">
       <gloss>with unique identifier</gloss>
@@ -18184,13 +18345,10 @@ during the encoding of a text.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
-      <valDesc>an integer number greater than zero</valDesc>
-      <valDesc xml:lang="fr">un nombre entier plus grand que zéro.</valDesc>
     </attDef>
     <attDef ident="render" usage="opt">
       <equiv/>
-      <desc>specifies the identifier of a <gi>rendition</gi> element which defines how this element
-        is to be rendered.</desc>
+      <desc>specifies the identifier of a <gi>rendition</gi> element which defines how this element was rendered in the source text.</desc>
       <desc versionDate="2009-01-05" xml:lang="fr">spécifie l’identifiant d’un élément 
           <gi>rendition</gi> qui définit comment cet élément doit être restitué.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 실행되는 방법을 정의한 <gi>rendition</gi> 요소의 확인소를 명시한다.</desc>
@@ -18202,7 +18360,7 @@ during the encoding of a text.</desc>
           <gi>rendition</gi> que define cómo este elemento ha de ser interpretado.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica l'identificatore di un elemento
         <gi>rendition</gi> che definisce in che modo è stato reso l'elemento</desc>
-      <datatype>
+      <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
       <valDesc>an identifier specified as the value of the <att>xml:id</att> attribute on some
@@ -18291,7 +18449,7 @@ during the encoding of a text.</desc>
   <attList>
     <attDef ident="name" usage="req">
       <equiv/>
-      <desc>the full formal name of the namespace concerned.</desc>
+      <desc>specifies the full formal name of the namespace concerned.</desc>
       <desc versionDate="2009-01-05" xml:lang="fr">le nom formel complet de l'espace de noms concerné.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">관련된 네임스페이스의 공식적 전체 이름</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">名稱空間的正式完整名稱。</desc>
@@ -18488,8 +18646,19 @@ the target element</desc>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-    </egXML>
+      <styleDefDecl scheme="css"/>
+      
+      <tagsDecl>
+	<rendition xml:id="boldface">font-weight: bold;</rendition>
+	<rendition xml:id="italicstyle">font-style: italic;</rendition>
+      </tagsDecl>
+      </egXML>
   </exemplum>
+
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD57-1a">2.3.5. </ref>
+  </listRef>
+
 </elementSpec><elementSpec module="header" ident="refsDecl" xml:base="../../Specs/refsDecl.xml">
   <equiv/>
   <gloss>references declaration</gloss>
@@ -18607,28 +18776,55 @@ the target element</desc>
     convertire convertire un riferimento canonico in un URI</desc>
   <classes>
     <memberOf key="att.global"/>
+    <memberOf key="att.patternReplacement"/>
   </classes>
   <content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
       <ref name="model.pLike"/>
     </zeroOrMore>
   </content>
+    <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <cRefPattern matchPattern="([1-9A-Za-z]+)\s+([0-9]+):([0-9]+)" replacementPattern="#xpath(//div[@type='book'][@n='$1']/div[@type='chap'][@n='$2']/div[@type='verse'][@n='$3'])"/>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>The result of the substitution may be either an absolute or a relative URI reference. In the
+      latter case it is combined with the value of <att>xml:base</att> in force at the place where
+      the <att>cRef</att> attribute occurs to form an absolute URI in the usual manner as prescribed
+      by <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>Le résultat de la substitution peut être la référence à une URI relative ou absolue.
+      Dans ce dernier cas, il est combiné avec la valeur de l'attribut <att>xml:base</att> en
+      vigueur à la place où apparaît l'attribut <att>cRef</att> pour former une URI absolue selon
+      l'usage habituel indiqué par <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
+  </remarks>
+  <remarks xml:lang="es">
+    <p>El resultado de la substitución puede ser una referencia URI absoluta o relativa. En el
+      último caso se combina con el valor de <att>xml:base</att> en vigor en el lugar donde el
+      atributo <att>cRef</att> aparece para formar un URI absoluto de manera común según lo
+      prescrito por <ref target="http://www.w3.org/TR/xmlbase/">Base de XML</ref>.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 置換による結果は，絶対・相対URIであるかもしれない．相対URIの場合， <ref target="http://www.w3.org/TR/xmlbase/">XML
+      Base</ref>に示され ているように，属性<att>xml:base</att>の値と共に，属性 <att>cRef</att>が絶対URIを示す場所で使用される． </p>
+  </remarks>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54M">2.3.6.3. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. </ref>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54S">2.3.6.2. </ref>
+  </listRef>
+</elementSpec><classSpec module="header" type="atts" ident="att.patternReplacement" xml:base="../../Specs/att.patternReplacement.xml">
+  <desc>provides attributes for regular-expression matching and replacement.</desc>
   <attList>
     <attDef ident="matchPattern" usage="req">
       <equiv/>
-      <desc>specifies a regular expression against which the values of <att>cRef</att> attributes
+      <desc>specifies a regular expression against which the values of other attributes
         can be matched.</desc>
-      <desc versionDate="2009-01-05" xml:lang="fr">spécifie une expression régulière à laquelle vont
-        être comparées les valeurs des attributs <att>cRef</att>. </desc>
-      <desc versionDate="2007-12-20" xml:lang="ko"><att>cRef</att> 속성 값이 대응하는 정규 표현을 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">標明一個表示屬性<att>cRef</att>屬性值的固定方法。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> 属性<att>cRef</att>の値が対応する正規表現を示す． </desc>
-      <desc versionDate="2006-10-18" xml:lang="de">legt einen regulären Ausdruck fest, gegen den die
-        Werte eines <att>cRef</att>-Attributs abgeglichen werden können. </desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica una expresión regular con la que los
-        valores de los atributos <att>cRef</att> pueden ser combinados.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica un'esressione regolare alla qaule posso
-        corrispondere i valori degli attributi <att>cRef</att>.</desc>
+
+      
+      
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
       </datatype>
@@ -18636,7 +18832,7 @@ the target element</desc>
       <remarks>
         <p>Parenthesized groups are used not only for establishing order of precedence and atoms for
           quantification, but also for creating subpatterns to be referenced by the
-            <att>replacementPattern</att> attribute.</p>
+          <att>replacementPattern</att> attribute.</p>
       </remarks>
       <remarks xml:lang="fr">
         <p>Les groupes parenthésés ne sont pas seulement utilisés pour établir un ordre de priorité
@@ -18660,15 +18856,15 @@ the target element</desc>
         remplacement</soCalled> qui, après avoir opéré les substitutions prévues à chaque nœud,
         génère une URI.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">하위 유형 대치가 실행되면, URI를 제공하는 <soCalled>replacement
-          pattern</soCalled>를 명시한다.</desc>
+        pattern</soCalled>를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">標明一個<soCalled>取代模式</soCalled>，一旦進行次要模式的替換，會自動提供統一資源識別符 (URI) 。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja"><soCalled>変形パタン</soCalled>を示す．下位の置換パタンが実行さ
         れれば，これはURIになる． </desc>
       <desc versionDate="2006-10-18" xml:lang="de">beschreibt ein <soCalled>replacement pattern
-          (Ersetzungsmuster)</soCalled>, das eine URI erstellt, sobald der Austausch der
+        (Ersetzungsmuster)</soCalled>, das eine URI erstellt, sobald der Austausch der
         untergeordneten Ersetzungsmuster durchgeführt wurde. </desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica un <soCalled>replacement pattern (patrón
-          de remplazamiento)</soCalled>, el cual, una vez se ha ejecutado el subpatrón de
+        de remplazamiento)</soCalled>, el cual, una vez se ha ejecutado el subpatrón de
         sustitución, proporciona un URI.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica un <soCalled>replacement pattern</soCalled>
         che, una volta applicato un sub-pattern di sostituzione, fornisce un URI.</desc>
@@ -18713,38 +18909,106 @@ the target element</desc>
       </remarks>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <cRefPattern matchPattern="([1-9A-Za-z]+)\s+([0-9]+):([0-9]+)" replacementPattern="#xpath(//div[@type='book'][@n='$1']/div[@type='chap'][@n='$2']/div[@type='verse'][@n='$3'])"/>
-    </egXML>
-  </exemplum>
-  <remarks>
-    <p>The result of the substitution may be either an absolute or a relative URI reference. In the
-      latter case it is combined with the value of <att>xml:base</att> in force at the place where
-      the <att>cRef</att> attribute occurs to form an absolute URI in the usual manner as prescribed
-      by <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
-  </remarks>
-  <remarks xml:lang="fr">
-    <p>Le résultat de la substitution peut être la référence à une URI relative ou absolue.
-      Dans ce dernier cas, il est combiné avec la valeur de l'attribut <att>xml:base</att> en
-      vigueur à la place où apparaît l'attribut <att>cRef</att> pour former une URI absolue selon
-      l'usage habituel indiqué par <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
-  </remarks>
-  <remarks xml:lang="es">
-    <p>El resultado de la substitución puede ser una referencia URI absoluta o relativa. En el
-      último caso se combina con el valor de <att>xml:base</att> en vigor en el lugar donde el
-      atributo <att>cRef</att> aparece para formar un URI absoluto de manera común según lo
-      prescrito por <ref target="http://www.w3.org/TR/xmlbase/">Base de XML</ref>.</p>
-  </remarks>
-  <remarks xml:lang="ja">
-    <p> 置換による結果は，絶対・相対URIであるかもしれない．相対URIの場合， <ref target="http://www.w3.org/TR/xmlbase/">XML
-      Base</ref>に示され ているように，属性<att>xml:base</att>の値と共に，属性 <att>cRef</att>が絶対URIを示す場所で使用される． </p>
-  </remarks>
   <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPU">16.2.3. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54M">2.3.6.3. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54">2.3.6. </ref>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD54S">2.3.6.2. </ref>
   </listRef>
+</classSpec><elementSpec module="header" ident="prefixDef" xml:base="../../Specs/prefixDef.xml">
+  <equiv/>
+  <gloss>prefixing scheme used in <ident type="datatype">data.pointer</ident> values</gloss>
+  <desc>defines a prefixing scheme used in <ident type="datatype">data.pointer</ident> values,
+  showing how abbreviated URIs using the scheme may be expanded into full URIs.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.patternReplacement"/>
+  </classes>
+  <content>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.pLike"/>
+    </zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="ident" usage="req">
+        <equiv/>
+        <desc>supplies the identifier which functions as the prefix for an abbreviated
+          pointing scheme such as a private URI scheme. The prefix constitutes the 
+        text preceding the first colon.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
+      </datatype>
+      <valDesc>an XML name</valDesc>
+    </attDef>
+  </attList>
+    <exemplum xml:lang="en" versionDate="2012-11-22">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <prefixDef ident="ref" matchPattern="([a-z]+)" replacementPattern="../../references/references.xml#$1">
+        <p>
+          In the context of this project, private URIs with 
+          the prefix "ref" point to <gi>div</gi> elements in 
+          the project's global references.xml file.
+        </p>
+      </prefixDef>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>Where <att>matchPattern</att> and <att>replacementPattern</att> are both supplied, the abbreviated pointer may be dereferenced to produce either an absolute or a relative URI reference. In the
+      latter case it is combined with the value of <att>xml:base</att> in force at the place where
+      the <att>cRef</att> attribute occurs to form an absolute URI in the usual manner as prescribed
+      by <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
+  </remarks>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPU">16.2.3. </ref>
+  </listRef>
+</elementSpec><elementSpec module="header" ident="listPrefixDef" xml:base="../../Specs/listPrefixDef.xml">
+  <equiv/>
+  <gloss>list of prefix definitions</gloss>
+  <desc>contains a list of definitions of prefixing schemes used in <ident type="datatype">data.pointer</ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.encodingDescPart"/>
+  </classes>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <choice>
+          <ref name="prefixDef"/>
+          <ref name="listPrefixDef"/>
+        </choice>
+      </oneOrMore>
+    </group>
+  </content>
+  
+  <exemplum xml:lang="en" versionDate="2012-11-22">
+    <p>In this example, two private URI scheme prefixes are defined and patterns are provided 
+    for dereferencing them. Each prefix is also supplied with a human-readable explanation in a
+    <gi>p</gi> element.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <listPrefixDef>
+        <prefixDef ident="psn" matchPattern="([A-Z]+)" replacementPattern="personography.xml#$1">
+          <p>
+            Private URIs using the <code>psn</code> 
+            prefix are pointers to <gi>person</gi> 
+            elements in the personography.xml file. 
+            For example, <code>psn:MDH</code> 
+            dereferences to <code>personography.xml#MDH</code>.
+          </p>
+        </prefixDef>
+        <prefixDef ident="bibl" matchPattern="([a-z]+[a-z0-9]*)" replacementPattern="http://www.example.com/getBibl.xql?id=$1">
+          <p>
+            Private URIs using the <code>bibl</code> prefix can be 
+            expanded to form URIs which retrieve the relevant 
+            bibliographical reference from www.example.com.
+          </p>
+        </prefixDef>
+      </listPrefixDef>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html#SAPU">16.2.3. </ref>
+  </listRef>
+
 </elementSpec><elementSpec module="header" ident="refState" xml:base="../../Specs/refState.xml">
   <equiv/>
   <gloss>reference state</gloss>
@@ -18766,7 +19030,7 @@ the target element</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.milestoneUnit"/>
-    <memberOf key="att.sourced"/>
+    <memberOf key="att.edition"/>
   </classes>
   <content>
     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
@@ -18787,9 +19051,9 @@ the target element</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
       </datatype>
-      <valDesc>Should be a positive integer; if no value is provided, the length is unlimited and
+      <valDesc>If no value is provided, the length is unlimited and
         goes to the next delimiter or to the end of the value.</valDesc>
-      <valDesc xml:lang="fr">S'il s'agit un nombre entier positif ; si aucune valeur n'est fournie,
+      <valDesc xml:lang="fr">Si aucune valeur n'est fournie,
         la longueur est illimitée et va jusqu'au prochain délimiteur ou jusqu'à la fin de la valeur. </valDesc>
       <remarks>
         <p>When constructing a reference, if the reference component found is of numeric type, the
@@ -19985,8 +20249,6 @@ langues, registres, dialectes, etc. présents à l’intérieur d’un texte.</d
           <param name="maxInclusive">100</param>
         </data>
       </datatype>
-      <valDesc>a whole number between 0 and 100</valDesc>
-      <valDesc xml:lang="fr">un nombre entier entre 0 et 100.</valDesc>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -20840,7 +21102,6 @@ element it documents the set of revision campaigns or stages
 identified during the evolution of the original text. When it appears within
 the <gi>revisionDesc</gi> element, it documents only changes made
 during the evolution of the encoded representation of that text.</p></remarks>
-
 </elementSpec><elementSpec module="textstructure" ident="TEI" xml:base="../../Specs/TEI.xml">
   <equiv/>
   <gloss>TEI document</gloss>
@@ -23026,7 +23287,7 @@ it may optionally be tagged using the <gi>docAuthor</gi> element.</p>
 </elementSpec><elementSpec module="textstructure" ident="argument" xml:base="../../Specs/argument.xml">
   <equiv/>
   <gloss versionDate="2007-06-12" xml:lang="fr">argument</gloss>
-  <desc>A formal list or prose description of the topics addressed by
+  <desc>contains a formal list or prose description of the topics addressed by
 	a subdivision of a text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트의 하위 구역에서 서술된 주제에 대한 형식적 목록 또는 산문체 기술</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">規則列表或文字敘述，說明文本分段內容包含的主題。</desc>
@@ -23687,8 +23948,7 @@ lettre.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
-      <valDesc>Any string, e.g. <mentioned>full</mentioned>, <mentioned>half</mentioned>,
-          <mentioned>Series</mentioned>, etc.</valDesc>
+
       <remarks>
         <p>This attribute allows the same element to be used for volume title pages, series title
           pages, etc., as well as for the<soCalled>main</soCalled> title page of a work.</p>
@@ -24784,19 +25044,19 @@ she has done so inadvertently.
   <constraintSpec ident="linkTargets1" scheme="isoschematron">
     <constraint>
       <sch:report test="@target and @targets">You may not supply both 
-	@target and @targets</sch:report>
+	@target and @targets on <sch:name/></sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="linkTargets2" scheme="isoschematron">
     <constraint>
       <sch:report test="not(@target) and not(@targets)">You must
-	supply either @target or @targets</sch:report>
+	supply either @target or @targets on <sch:name/></sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="linkTargets3" scheme="isoschematron">
     <constraint>
       <sch:assert test="contains(@target,' ')">You must supply at least two
-values for @target</sch:assert>
+values for @target on <sch:name/></sch:assert>
     </constraint>
   </constraintSpec>
   <attList>
@@ -24981,106 +25241,11 @@ other must be present.</p>
     <memberOf key="model.pLike"/>
     <memberOf key="att.typed"/>
     <memberOf key="att.declaring"/>
+    <memberOf key="att.fragmentable"/>
   </classes>
   <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
-  <attList>
-    <attDef ident="part" usage="opt">
-      <equiv/>
-      <desc>specifies whether or not the block is complete. </desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">구역이 완전한지의 여부를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">標明區塊是否完全。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> 当該部分の完全性を示す． </desc>
-      <desc versionDate="2009-10-05" xml:lang="fr">spécifie si le bloc est complet ou non.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica si el bloque es completo o no.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica se il blocco è completo o meno</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <defaultVal>N</defaultVal>
-      <valList type="closed">
-        <valItem ident="Y">
-          <gloss>yes</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">예</gloss>
-          <gloss versionDate="2009-02-03" xml:lang="fr">oui</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">sì</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">el bloque es incompleto.</gloss>
-          <desc>the block is incomplete</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">구역이 불완전하다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">區塊不完全</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">el fragmento es incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 当該部分は完全ででない． </desc>
-          <desc versionDate="2009-02-03" xml:lang="fr">le bloc est incomplet.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">il blocco è incompleto</desc>
-        </valItem>
-        <valItem ident="N">
-          <gloss>no</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">아니오</gloss>
-          <gloss versionDate="2009-02-03" xml:lang="fr">non</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">el bloque es completo, o no se hace ninguna referencia a su complitud.</gloss>
-          <desc>either the block is complete, or no claim is made as to its completeness</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">구역이 완전하거나 완전성에 대한 요구가 없다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">區塊完全，或完全程度不明</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">o el fragmento es completo, o no se hace ninguna referencia a su completez</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 当該部分は完全である，または完全性が問題にならない． </desc>
-          <desc versionDate="2009-10-05" xml:lang="fr">soit le bloc est complet, soit il n'est fait aucune référence à sa complétude.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">il blocco è completo o non viene rivendicata la completezza</desc>
-        </valItem>
-        <valItem ident="I">
-          <gloss>initial</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">시작부</gloss>
-          <gloss versionDate="2009-02-03" xml:lang="fr">initial</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">iniziale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte inicial de un bloque incompleto.</gloss>
-          <desc>the initial part of an incomplete block</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 구역의 시작부</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完全區塊的起始部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte inicial de un fragmento incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 当該部分の，前部分が完全ではない． </desc>
-          <desc versionDate="2009-02-03" xml:lang="fr">la partie initiale d'un bloc incomplet.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte iniziale di un blocco incompleto</desc>
-        </valItem>
-        <valItem ident="M">
-          <gloss>medial</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">중간부</gloss>
-          <gloss versionDate="2009-02-03" xml:lang="fr">médian</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">mediano</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte central de un bloque incompleto.</gloss>
-          <desc>a medial part of an incomplete block</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 구역의 중간부</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完全區塊的中段部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte intermedia de un fragmento incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 当該部分の，中部分が完全ではない． </desc>
-          <desc versionDate="2009-02-03" xml:lang="fr">la partie médiane d'un bloc incomplet.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte intermedia di un blocco incompleto</desc>
-        </valItem>
-        <valItem ident="F">
-          <gloss>final</gloss>
-          <gloss versionDate="2007-12-20" xml:lang="ko">종료부</gloss>
-          <gloss versionDate="2009-02-03" xml:lang="fr">final</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">finale</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">la parte final de un bloque incompleto.</gloss>
-          <desc>the final part of an incomplete block</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">불완전한 구역의 종료부</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">不完全區塊的末端部分</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">la parte final de un fragmento incompleto</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja"> 当該部分の，後部分が完全ではない． </desc>
-          <desc versionDate="2009-02-03" xml:lang="fr">la partie finale d'un bloc incomplet.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">parte finale di un blocco incompleto</desc>
-        </valItem>
-      </valList>
-      <remarks>
-        <p>The values <val>I</val>, <val>M</val>, or <val>F</val> should be used only where it is clear how the block is to be reconstituted.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2009-10-06">
-        <p>Les valeurs <val>I</val>, <val>M</val>, ou <val>F</val> ne seront utilisées que si la méthode de reconstitution du bloc est claire.</p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p> 属性値<val>I</val>, <val>M</val>, <val>F</val>は，当該部分が再構 成されるべき場所のみに使用される． </p>
-      </remarks>
-    </attDef>
-  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <div type="book" n="Genesis">
@@ -25606,20 +25771,20 @@ other must be present.</p>
   </content>
   <constraintSpec ident="joinTargets1" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @targets">You may not supply both 
-	@target and @targets</report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @targets">
+You may not supply both @target and @targets on <name/></report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="joinTargets2" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(@target) and not(@targets)">You must
-	supply either @target or @targets</report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(@target) and not(@targets)">
+You must supply either @target or @targets on <name/></report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="joinTargets3" scheme="isoschematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@target,' ')">You must supply at least two
-values for @target</assert>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@target,' ')">
+You must supply at least two values for @target on <name/></assert>
     </constraint>
   </constraintSpec>
   <attList>
@@ -25656,7 +25821,7 @@ other must be present.</p>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
       </datatype>
-      <valDesc>The generic identifier of an element in the current DTD.</valDesc>
+      <valDesc>The generic identifier of an element in the current schema.</valDesc>
       <valDesc xml:lang="fr" versionDate="2009-10-05">L'identificateur générique d'un élément dans le modèle XML utilisé.</valDesc>
     </attDef>
     <attDef ident="scope" usage="rec">
@@ -25930,22 +26095,21 @@ other must be present.</p>
   <constraintSpec ident="altTargets1" scheme="isoschematron">
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @targets">You may not supply both 
-	@target and @targets</report>
+	@target and @targets on <name/></report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="altTargets2" scheme="isoschematron">
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(@target) and not(@targets)">You must
-	supply either @target or @targets</report>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec ident="altTargets3" scheme="isoschematron">
-    <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@target,' ')">You must supply at least two
-values for @target</assert>
+	supply either @target or @targets on <name/></report>
     </constraint>
   </constraintSpec>
   <attList>
+    <attDef ident="target" mode="change">
+      <datatype minOccurs="2" maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>      
+    </attDef>
     <attDef ident="targets" usage="opt" status="deprecated">
       <equiv/>
       <desc>specifies the identifiers of the alternative elements or passages.</desc>
@@ -26066,9 +26230,6 @@ other must be present.</p>
       <datatype minOccurs="2" maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.probability"/>
       </datatype>
-      <valDesc>a whitespace-separated list of probability values in the range from 0 to 1.</valDesc>
-      <valDesc xml:lang="fr" versionDate="2009-10-06">une liste de valeurs comprises entre 0 et 1,
-                séparées par des espaces.</valDesc>
       <remarks>
         <p>If <att>mode</att> is <code>excl</code>, the sum of weights must be 1. If
                         <att>mode</att> is <code>incl</code>, the sum of weights must be in the
@@ -26285,8 +26446,6 @@ linking is selected.</desc>
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>one or more URIs, separated by whitespace.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un ou plusieurs URIs, séparés par des blancs.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
           <p>
@@ -26343,8 +26502,6 @@ linking is selected.</desc>
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>one or more URIs, separated by whitespace.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un ou plusieurs URIs, séparés par des blancs.</valDesc>
     </attDef>
     <attDef ident="sameAs" usage="opt">
       <equiv/>
@@ -26360,8 +26517,6 @@ linking is selected.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>a URI.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un URI.</valDesc>
     </attDef>
     <attDef ident="copyOf" usage="opt">
       <equiv/>
@@ -26378,8 +26533,6 @@ linking is selected.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>a URI.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un URI.</valDesc>
       <remarks>
         <p>Any content of the current element should be ignored. Its
 	true content is that of the element being pointed at.</p>
@@ -26411,8 +26564,6 @@ linking is selected.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>a URI.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un URI.</valDesc>
     </attDef>
     <attDef ident="prev" usage="opt">
       <gloss>previous</gloss>
@@ -26434,8 +26585,6 @@ linking is selected.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>a URI.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un URI.</valDesc>
     </attDef>
     <attDef ident="exclude" usage="opt">
       <equiv/>
@@ -26453,8 +26602,6 @@ linking is selected.</desc>
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>one or more URIs, separated by whitespace.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un ou plusieurs URIs, séparés par des blancs.</valDesc>
     </attDef>
     <attDef ident="select" usage="opt">
       <equiv/>
@@ -26480,8 +26627,6 @@ linking is selected.</desc>
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>one or more URIs, separated by whitespace.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">un ou plusieurs URIs, séparés par des blancs.</valDesc>
       <remarks>
         <p>This attribute should be placed on an element which is
 	superordinate to all of the alternants from which the
@@ -27665,7 +27810,7 @@ either a single role or a list of non-speaking roles.</desc>
 </elementSpec><elementSpec module="drama" ident="role" xml:base="../../Specs/role.xml">
   <equiv/>
   <gloss versionDate="2007-06-12" xml:lang="fr">rôle</gloss>
-  <desc>the name of a dramatic role, as given in a cast list.</desc>
+  <desc>contains the name of a dramatic role, as given in a cast list.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">배역 목록에 제시되는 드라마 배역의 이름</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">角色名單所列的劇中角色名稱。</desc>
   <desc versionDate="2008-04-06" xml:lang="es">el nombre de un papel dramático, según los dados en el
@@ -27760,7 +27905,7 @@ either a single role or a list of non-speaking roles.</desc>
     <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/DR.html#DRCAST">7.1.4. </ref>
   </listRef>
 </elementSpec><elementSpec module="drama" ident="actor" xml:base="../../Specs/actor.xml">
-  <desc>Name of an actor appearing within a cast list.</desc>
+  <desc>contains the name of an actor appearing within a cast list.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">배역 목록에 나타나는 배우의 이름</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">角色名單中的演員姓名。</desc>
   <desc versionDate="2008-04-06" xml:lang="es">Nombre de un actor que aparece dentro de la lista del reparto.</desc>
@@ -27829,7 +27974,7 @@ either a single role or a list of non-speaking roles.</desc>
 </elementSpec><elementSpec module="drama" ident="spGrp" xml:base="../../Specs/spGrp.xml">
   <equiv/>
   <gloss>speech group</gloss>
-  <desc>A group of speeches or songs in a performance text presented
+  <desc>contains a group of speeches or songs in a performance text presented
   in a source as constituting a single unit or
   <soCalled>number</soCalled>.</desc>
   <classes>
