@@ -428,6 +428,7 @@
   <xsl:template name="linkTogether">
     <xsl:param name="name"/>
     <xsl:param name="reftext"/>
+    <xsl:param name="class"/>
     <xsl:variable name="link">
       <xsl:choose>
 	<xsl:when test="$reftext=''"><xsl:value-of select="$name"/></xsl:when>
