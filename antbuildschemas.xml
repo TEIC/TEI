@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="schemas" name="makeschemas">
+<project basedir="." default="all" name="makeschemas">
   <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -29,78 +29,75 @@
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
+  <target name="all" depends="subset,outputs"/>
 
   <target name="subset">
-     <xslt processor="trax" force="yes" style="Utilities/subset.xsl" in="${inputDir}/p5.xml" out="p5subset.xml">
-       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-     </xslt>
-  </target>
-
-  <target name="json" >
-     <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2json.xsl" in="p5subset.xml" out="p5subset.js">
-       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-       <param name="callback" expression="teijs"/>
-     </xslt>
-     <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2json.xsl" in="p5subset.xml" out="p5subset.json">
-       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-     </xslt>
-  </target>
-
-  <target name="misc" >
-     <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2xslstripspace.xsl" in="p5subset.xml" out="stripspace.xsl.model">
-       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-     </xslt>
-     <xslt processor="trax" force="yes" style="Utilities/listofattributes.xsl" in="${inputDir}/p5.xml" out="p5attlist.txt">
-       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-     </xslt>
-  </target>
-
-  <target name="schemas" >
-     <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2dtd.xsl" in="p5subset.xml" out="anything">
-       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-       <param name="outputDir" expression="DTD"/>
-       <param name="lang" expression="${lang}"/>
-       <param name="documentationLanguage" expression="${documentationLanguage}"/>
-     </xslt>
-     <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5subset.xml" out="anything">
-       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-       <param name="outputDir" expression="Schema"/>
-       <param name="lang" expression="${lang}"/>
-       <param name="documentationLanguage" expression="${documentationLanguage}"/>
-     </xslt>
-     <xslt processor="trax" force="yes" style="${XSL}/odds2/extract-isosch.xsl" in="${inputDir}/p5.xml" out="p5.isosch">
-       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-     </xslt>
-  </target>
-
-  <target name="oddschemas" >
-    <echo>Do ODD processing for p5odds.odd</echo>
-    <xslt force="yes" style="${XSL}/odds2/odd2odd.xsl" in="p5odds.odd" out="p5odds.compiled.xml">
+    <xslt processor="trax" force="yes" style="Utilities/subset.xsl" in="${inputDir}/p5.xml" out="p5subset.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <param name="lang" expression="${lang}" if="lang"/>
-      <param name="defaultSource" expression="${inputDir}/p5subset.xml"/>
-      <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
-    <xslt force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5odds.compiled.xml" out="p5odds.rng">
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <param name="lang" expression="${lang}" if="lang"/>
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
-    <delete file="p5odds.compiled.xml"/>
-    <echo>Do ODD processing for p5odds-examples.odd</echo>
-    <xslt force="yes" style="${XSL}/odds2/odd2odd.xsl" in="p5odds-examples.odd" out="p5odds-examples.compiled.xml">
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <param name="lang" expression="${lang}" if="lang"/>
-      <param name="defaultSource" expression="${inputDir}/p5subset.xml"/>
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
-    <xslt force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5odds-examples.compiled.xml" out="p5odds-examples.rng">
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <param name="lang" expression="${lang}" if="lang"/>
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
-    <delete file="p5odds-examples.compiled.xml"/>
   </target>
 
+  <target name="outputs">
+    <echo>make modular DTDs, RELAXNG schemas, json, odd schemas</echo>
+
+      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2json.xsl" in="p5subset.xml" out="p5subset.js">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <param name="callback" expression="teijs"/>
+      </xslt>
+      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2json.xsl" in="p5subset.xml" out="p5subset.json">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2xslstripspace.xsl" in="p5subset.xml" out="stripspace.xsl.model">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <xslt processor="trax" force="yes" style="Utilities/listofattributes.xsl" in="${inputDir}/p5.xml" out="p5attlist.txt">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2dtd.xsl" in="p5subset.xml" out="anything">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <param name="outputDir" expression="DTD"/>
+        <param name="lang" expression="${lang}"/>
+        <param name="documentationLanguage" expression="${documentationLanguage}"/>
+      </xslt>
+      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5subset.xml" out="anything">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <param name="outputDir" expression="Schema"/>
+        <param name="lang" expression="${lang}"/>
+        <param name="documentationLanguage" expression="${documentationLanguage}"/>
+      </xslt>
+      <xslt processor="trax" force="yes" style="${XSL}/odds2/extract-isosch.xsl" in="${inputDir}/p5.xml" out="p5.isosch">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <sequential>
+        <echo>Do ODD processing for p5odds.odd</echo>
+        <xslt force="yes" style="${XSL}/odds2/odd2odd.xsl" in="p5odds.odd" out="p5odds.compiled.xml">
+          <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+          <param name="lang" expression="${lang}" if="lang"/>
+          <param name="defaultSource" expression="${inputDir}/p5subset.xml"/>
+          <param name="verbose" expression="${verbose}" if="verbose"/>
+        </xslt>
+        <xslt force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5odds.compiled.xml" out="p5odds.rng">
+          <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+          <param name="lang" expression="${lang}" if="lang"/>
+          <param name="verbose" expression="${verbose}" if="verbose"/>
+        </xslt>
+        <delete file="p5odds.compiled.xml"/>
+      </sequential>
+      <sequential>
+        <echo>Do ODD processing for p5odds-examples.odd</echo>
+        <xslt force="yes" style="${XSL}/odds2/odd2odd.xsl" in="p5odds-examples.odd" out="p5odds-examples.compiled.xml">
+          <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+          <param name="lang" expression="${lang}" if="lang"/>
+          <param name="defaultSource" expression="${inputDir}/p5subset.xml"/>
+          <param name="verbose" expression="${verbose}" if="verbose"/>
+        </xslt>
+        <xslt force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5odds-examples.compiled.xml" out="p5odds-examples.rng">
+          <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+          <param name="lang" expression="${lang}" if="lang"/>
+          <param name="verbose" expression="${verbose}" if="verbose"/>
+        </xslt>
+        <delete file="p5odds-examples.compiled.xml"/>
+      </sequential>
+
+  </target>
 </project>
-
