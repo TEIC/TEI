@@ -1,7 +1,7 @@
 # Main makefile for TEI P5
 # $Id$
+ALLLANGUAGES=en
 LANGUAGE=en
-GOOGLEANALYTICS=""
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
@@ -28,7 +28,7 @@ ODD2DTD=odds2/odd2dtd.xsl
 ODD2RELAX=odds2/odd2relax.xsl
 ODD2LITE=odds2/odd2lite.xsl
 
-.PHONY: convert dtds schemas html validate valid test clean dist exemplars
+.PHONY: convert dtds schemas html-web validate valid test clean dist exemplars
 
 default: validate exemplars test html-web
 
@@ -91,25 +91,20 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
-	mkdir -p Guidelines-web
-	rm -rf Guidelines-web-tmp 
-	mkdir Guidelines-web-tmp
-	mkdir -p Guidelines-web-tmp/${LANGUAGE}/html
-	cp odd.css guidelines.css guidelines-print.css Guidelines-web-tmp/${LANGUAGE}/html
-	(cd Source/Guidelines/${INPUTLANGUAGE}; tar --exclude .svn -c -f - Images) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
-	(cd webnav; tar --exclude .svn -c -f - .) | (cd Guidelines-web-tmp/${LANGUAGE}/html; tar xf - )
-	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:Utilities/guidelines.xsl  outputDir=Guidelines-web-tmp/${LANGUAGE}/html \
-		displayMode=both \
-		pageLayout=CSS \
-	        lang=${LANGUAGE} \
-	        doclang=${LANGUAGE} \
-		googleAnalytics=${GOOGLEANALYTICS} \
-	        documentationLanguage=${DOCUMENTATIONLANGUAGE}  ${VERBOSE}
-	(cd Guidelines-web-tmp/${LANGUAGE}/html; for i in *.html; do perl -i ../../../Utilities/cleanrnc.pl $$i;done)
-	(cd Guidelines-web-tmp/${LANGUAGE}/html; perl -p -i -e 's+/logos/TEI-glow+TEI-glow+' guidelines.css)
-	rm -rf Guidelines-web/${LANGUAGE}
-	mv Guidelines-web-tmp/${LANGUAGE} Guidelines-web/${LANGUAGE}
-	rmdir Guidelines-web-tmp
+	rm -rf Guidelines-web
+	if [ -n ${GOOGLEANALYTICS} ] ; then curl -s http://www.tei-c.org/index.xml | sed 's/content="text\/html"/content="text\/html; charset=utf-8"/' | xmllint --html --noent --dropdtd --xmlout - > Utilities/teic-index.xml;fi
+	echo '<project basedir="." default="html" name="buildweb"><import file="antbuildweb.xml"/><target name="html">' > buildweb.xml
+	for i in $(ALLLANGUAGES) ;do \
+		mkdir -p Guidelines-web/$$i/html; \
+		cp odd.css guidelines.css guidelines-print.css Guidelines-web/$$i/html; \
+		(cd Source/Guidelines/${INPUTLANGUAGE}; tar --exclude .svn -c -f - Images) | (cd Guidelines-web/$$i/html; tar xf - );\
+		(cd webnav; tar --exclude .svn -c -f - .) | (cd Guidelines-web/$$i/html; tar xf - ); \
+		echo "<buildweb lang=\"$$i\"/>" >> buildweb.xml; \
+	done
+	echo '</target></project>' >> buildweb.xml
+	cat buildweb.xml
+	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
+	rm -f buildweb.xml Utilities/teic-index.xml
 	touch html-web.stamp
 
 validate-html:
@@ -121,18 +116,10 @@ old-validate-html:
 
 teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
-	rm -rf teiwebsiteguidelines.zip Guidelines-web
-	curl -s http://www.tei-c.org/index.xml | sed 's/content="text\/html"/content="text\/html; charset=utf-8"/' | xmllint --html --noent --dropdtd --xmlout - > Utilities/teic-index.xml
-	rm -f html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=ko DOCUMENTATIONLANGUAGE=ko html-web
-	rm html-web.stamp;make GOOGLEANALYTICS=UA-4372657-1 LANGUAGE=zh-TW DOCUMENTATIONLANGUAGE=zh-TW html-web
+	rm -rf teiwebsiteguidelines.zip 
+	rm -f html-web.stamp
+	make html-web ALLLANGUAGES="es de ja ko fr it zh-TW" GOOGLEANALYTICS=UA-4372657-1
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
-	rm Utilities/teic-index.xml
 
 pdf: Guidelines.pdf
 
@@ -333,16 +320,8 @@ dist-doc.stamp:  check.stamp p5.xml
 		./release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	@echo BUILD: Make web guidelines in all supported languages
-	make html-web
-	rm html-web.stamp;make LANGUAGE=es DOCUMENTATIONLANGUAGE=es html-web
-	rm html-web.stamp;make LANGUAGE=de DOCUMENTATIONLANGUAGE=de html-web
-	rm html-web.stamp;make LANGUAGE=ja DOCUMENTATIONLANGUAGE=ja html-web
-	rm html-web.stamp;make LANGUAGE=ko DOCUMENTATIONLANGUAGE=ko html-web
-	rm html-web.stamp;make LANGUAGE=fr DOCUMENTATIONLANGUAGE=fr html-web
-	rm html-web.stamp;make LANGUAGE=it DOCUMENTATIONLANGUAGE=it html-web
-	rm html-web.stamp;make LANGUAGE=zh-TW DOCUMENTATIONLANGUAGE=zh-TW html-web
-	(cd Guidelines-web; tar --exclude .svn -c -f - . ) \
-	| (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
+	make html-web ALLLANGUAGES="es de ja ko fr it zh-TW"
+	(cd Guidelines-web; tar --exclude .svn -c -f - . ) | (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	@echo BUILD: make PDF version of Guidelines
 	make pdf
 	@echo BUILD: make ePub and Kindle version of Guidelines
@@ -512,6 +491,7 @@ clean:
 	rm -f p5odds-examples.rng  p5odds-examples.rnc 
 	rm -f p5odds.rng p5odds.rnc 
 	rm -f *.xsd 
+	rm -f anything buildweb.xml
 	rm -f p5.sch p5.isosch 
 	rm -f *.isosch.xsl 
 	rm -f tei-*.zip 
