@@ -14,10 +14,6 @@ NORMALFILES= \
 
 EXTENDEDFILES = \
 	testall.examples \
-	testfand2.xsd \
-	testfand3.xsd \
-	testfand5.xsd \
-	testconstraint2.xsd \
 	testjustfs.xsd \
 	testp4compat.xsd \
 	testplace-kml.special 
