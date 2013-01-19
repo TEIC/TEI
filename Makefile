@@ -118,10 +118,10 @@ teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
 	rm -rf teiwebsiteguidelines.zip 
 	rm -f html-web.stamp
-	make html-web ALLLANGUAGES="es de ja ko fr it zh-TW" GOOGLEANALYTICS=UA-4372657-1
+	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW" GOOGLEANALYTICS=UA-4372657-1
 	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
 
-pdf: Guidelines.pdf
+pdf: Guidelines.pdf pdf-complete
 
 fontcheck:
 	xelatex --interaction=batchmode Utilities/fonttest 
@@ -156,6 +156,8 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
 	echo '*' | ${XELATEX}  Guidelines
+
+pdf-complete:
 	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
 	makeindex -s p5.ist Guidelines 
@@ -312,7 +314,7 @@ dist-schema.stamp:check.stamp p5.xml   schemas dtds oddschema exampleschema
 dist-doc.stamp:  check.stamp p5.xml 
 	@echo BUILD: Make distribution directory for doc
 	rm -rf release/tei-p5-doc*
-	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc
+	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/en
 	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
 	@echo BUILD: Make web pages for release notes
 	for i in ReleaseNotes/readme*xml; \
@@ -320,7 +322,7 @@ dist-doc.stamp:  check.stamp p5.xml
 		./release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	@echo BUILD: Make web guidelines in all supported languages
-	make html-web ALLLANGUAGES="es de ja ko fr it zh-TW"
+	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW"
 	(cd Guidelines-web; tar --exclude .svn -c -f - . ) | (cd release/tei-p5-doc/share/doc/tei-p5-doc; tar xf - )
 	@echo BUILD: make PDF version of Guidelines
 	make pdf
@@ -441,11 +443,13 @@ epub: Guidelines.epub
 
 Guidelines.epub: check.stamp p5.xml 
 	@echo BUILD: Make epub version of Guidelines
-	teitoepub3 --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
-	java -jar Utilities/epubcheck3.jar Guidelines.epub
 	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
 	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
 	touch Guidelines.epub
+
+epub3: check.stamp p5.xml 
+	teitoepub3 --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
+	java -jar Utilities/epubcheck3.jar Guidelines.epub
 
 mobi:  Guidelines.mobi
 
