@@ -11,8 +11,6 @@ VERBOSE=
 PREFIX=/usr
 SOURCETREE=Source
 DRIVER=${SOURCETREE}/guidelines-${INPUTLANGUAGE}.xml
-ROMA=roma2
-ROMAOPTS="--localsource=`pwd`/p5subset.xml"
 XSL=/usr/share/xml/tei/stylesheet
 XSLP4=/usr/share/xml/teip4/stylesheet
 # If you have not installed the Debian packages, uncomment one
@@ -28,11 +26,11 @@ ODD2DTD=odds2/odd2dtd.xsl
 ODD2RELAX=odds2/odd2relax.xsl
 ODD2LITE=odds2/odd2lite.xsl
 
-.PHONY: convert dtds schemas html-web validate valid test clean dist exemplars
+.PHONY: convert schemas html-web validate valid test clean dist exemplars
 
 default: validate exemplars test html-web
 
-convert: dtds schemas
+convert: schemas
 
 check: check.stamp  p5.xml
 
@@ -48,8 +46,6 @@ check.stamp:
 	@command -v  ${TRANG} || exit 1
 	@echo -n jing: 
 	@command -v  ${JING} || exit 1
-	@echo -n roma2: 
-	@command -v  roma2 || exit 1
 	@echo -n XeLaTeX: 
 	@command -v  xelatex || exit 1
 	touch check.stamp
@@ -57,31 +53,17 @@ check.stamp:
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
 	xmllint --xinclude --dropdtd --noent ${DRIVER} > p5.xml
 
-dtds: check.stamp p5.xml 
-	rm -rf DTD
-	mkdir DTD
-	@echo BUILD: Generate modular DTDs
-	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:${XSL}/${ODD2DTD} outputDir=DTD 	\
-	lang=${LANGUAGE} \
-	documentationLanguage=${DOCUMENTATIONLANGUAGE} \
-	${VERBOSE}
+schemas: schemas.stamp
 
-schemas:check.stamp p5.xml  schema-relaxng schema-sch
-
-schema-relaxng:  check.stamp p5.xml 
-	rm -rf Schema
-	mkdir Schema
-	@echo BUILD: Generate modular RELAX NG schemas
-	${SAXON} ${SAXON_ARGS}  -s:p5.xml  -xsl:${XSL}/${ODD2RELAX} outputDir=Schema \
-	lang=${LANGUAGE}  \
-	${VERBOSE}
+schemas.stamp: check.stamp p5.xml 
+	rm -rf DTD Schema
+	mkdir DTD Schema
+	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
+	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f antbuildschemas.xml -DXSL=${XSL} subset schemas oddschemas json misc
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
-
-schema-sch:  check.stamp p5.xml 
-	@echo BUILD: Extract schema rules to make p5.isosch
-	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:`dirname ${XSL}/${ODD2RELAX}`/extract-isosch.xsl > p5.isosch
-
+	${TRANG} p5odds.rng p5odds.rnc
+	touch schemas.stamp
 
 html-web: check.stamp p5.xml  html-web.stamp
 
@@ -102,7 +84,6 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 		echo "<buildweb lang=\"$$i\"/>" >> buildweb.xml; \
 	done
 	echo '</target></project>' >> buildweb.xml
-	cat buildweb.xml
 	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
 	rm -f buildweb.xml Utilities/teic-index.xml
 	touch html-web.stamp
@@ -178,7 +159,7 @@ chapterpdfs: check
 	perl -p -i -e 's/.*zf@fam.*//' $$i.aux; \
 	done
 
-validate: dtds schemas oddschema exampleschema valid 
+validate: schemas.stamp valid 
 
 #The following line commented out in 10605 by MDH. Restored 2012-10-26 to see if it was the source of 2.2.0 release problems.
 valid: jing_version=$(wordlist 1,3,$(shell jing))
@@ -224,41 +205,15 @@ valid: check.stamp p5.xml
 	${SAXON} -s:p5.xml -xsl:Utilities/listgraphics.xsl | sh
 
 #test: debversion
-test: p5subset.xml
+test: schemas.stamp
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
 
-exemplars:  p5subset.xml
+exemplars:  schemas.stamp 
 	@echo BUILD TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
 
-oddschema: p5odds.rng 
-
-p5odds.rng: p5subset.xml p5odds.odd
-	@echo Checking you have a running ${ROMA} before trying to make p5odds.rng ...
-	command -v  ${ROMA} || exit 1
-	${ROMA} ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds.odd .
-
-exampleschema:  p5odds-examples.rng p5subset.xml
-p5odds-examples.rng: p5subset.xml p5odds-examples.odd
-	@echo Checking you have a running ${ROMA} before trying to make p5odds-examples.rng ...
-	command -v  ${ROMA} || exit 1
-	${ROMA}  ${ROMAOPTS} --nodtd --noxsd --xsl=${XSL}/ p5odds-examples.odd . 
-
-p5subset.xml: check.stamp p5.xml 
-	@echo BUILD make subset of P5 with just the module/element/class/macro Spec elements
-	${SAXON} ${SAXON_ARGS}  -o:p5subset.xml  -s:p5.xml -xsl:Utilities/subset.xsl || echo "failed to extract subset from p5.xml." 
-	touch p5subset.xml
-
-p5subset.json: p5subset.xml
-	${SAXON} -o:p5subset.json p5subset.xml ${XSL}/odds2/odd2json.xsl callback=
-
-p5subset.js: p5subset.xml
-	${SAXON} -o:p5subset.js p5subset.xml ${XSL}/odds2/odd2json.xsl callback=teijs
-
-dist-source.stamp: check.stamp p5.xml  p5subset.json p5subset.js oddschema exampleschema
-	${SAXON} -s:p5subset.xml -xsl:${XSL}/odds2/odd2xslstripspace.xsl > stripspace.xsl.model
-	${SAXON} -s:p5subset.xml -xsl:Utilities/listofattributes.xsl > p5attlist.txt
+dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	@echo BUILD: Make distribution directory for source
 	rm -rf release/tei-p5-source*
 	mkdir -p release/tei-p5-source/share/xml/tei/odd
@@ -299,7 +254,7 @@ dist-source.stamp: check.stamp p5.xml  p5subset.json p5subset.js oddschema examp
 	touch dist-source.stamp
 	rm p5subset.json p5subset.js p5attlist.txt stripspace.xsl.model
 
-dist-schema.stamp:check.stamp p5.xml   schemas dtds oddschema exampleschema
+dist-schema.stamp:check.stamp p5.xml schemas.stamp 
 	@echo BUILD: Make distribution directory for schema
 	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
@@ -342,7 +297,7 @@ dist-test.stamp: check.stamp p5.xml
 	| (cd release/tei-p5-test/share/xml/tei; tar xf - )
 	touch dist-test.stamp
 
-dist-exemplars.stamp: check.stamp p5.xml  oddschema
+dist-exemplars.stamp: check.stamp p5.xml  schemas.stamp
 	@echo BUILD: Make distribution directory for exemplars
 	(cd Exemplars; make XSL=${XSL} dist)
 	tar --exclude "*~" --exclude .svn -c -f - Exemplars \
@@ -476,7 +431,6 @@ dependencies:
 	@echo	tei-p5-source
 	@echo	tei-p5-xsl
 	@echo	tei-p5-xsl2
-	@echo	tei-roma
 	@echo	tei-xsl-common
 	@echo	trang-java
 	@echo	ttf-arphic-ukai
@@ -488,7 +442,7 @@ dependencies:
 	@echo	zip 
 
 clean:
-	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split RomaResults *~ 
+	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split 
 	rm -rf Guidelines.??? Guidelines-* 
 	rm -f Guidelines.epub
 	rm -f Guidelines.mobi

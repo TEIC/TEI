@@ -21,7 +21,6 @@
   <!--
       make TEI web site guidelines in various forms
  -->
-  <property name="saxon" value="/usr/share/saxon/saxon9he.jar"/>
   <property name="googleAnalytics" value=""/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
@@ -30,12 +29,6 @@
      <attribute name="lang"/>
      <sequential>
      <xslt processor="trax" force="yes" style="Utilities/guidelines.xsl" in="p5.xml" out="anything">
-       <xmlcatalog>
-	 <catalogpath>
-	   <pathelement location="../../../../catalog.xml"/>
-	   <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
-	 </catalogpath>
-       </xmlcatalog>
        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
        <param name="outputDir" expression="Guidelines-web/@{lang}/html"/>
        <param name="displayMode" expression="both"/>
