@@ -1,4 +1,5 @@
 PREFIX=/usr
+SAXON=java -Xmx752m -jar ../Utilities/lib/saxon-9.1.0.8.jar -ext:on
 BIN=${PREFIX}/bin
 ODDS= \
 	tei_bare.dtd \
@@ -65,9 +66,6 @@ default: schemas
 schemas: $(ODDS) $(MOREODDS) $(DOCODDS) $(XODDS)
 	echo Done
 
-names:
-	saxon -o:exnames.xml ../Source/Guidelines/${LANGUAGE}/${DRIVER} ../Utilities/makeexnames.xsl  
-
 dist: schemas
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
@@ -80,7 +78,7 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
 	rm -f *compiled* *.doc.tex
-	for i in *.template; do saxon -it:main make_template.xsl file=`basename $$i .template`;done
+	for i in *.template; do $(SAXON) -it:main make_template.xsl file=`basename $$i .template`;done
 	cp *.tei *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.xml  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	-rm ../release/tei-p5-exemplars/share/xml/tei/custom/templates/*.doc.xml
