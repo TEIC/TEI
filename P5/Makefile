@@ -36,6 +36,8 @@ check: check.stamp  p5.xml
 
 check.stamp: 
 	@echo Checking you have running XML tools and Perl before trying to run transform...
+	@echo -n Ant: 
+	@command -v  ant || exit 1
 	@echo -n Perl: 
 	@command -v  perl || exit 1
 	@echo -n Java: 
@@ -205,6 +207,7 @@ valid: check.stamp p5.xml
 
 #test: debversion
 test: schemas.stamp
+	ant -version
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
 
