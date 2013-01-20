@@ -105,9 +105,7 @@ teiwebsiteguidelines:
 pdf: Guidelines.pdf pdf-complete
 
 
-Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
-	@echo check if XeLaTeX exist
-	@command -v  xelatex || exit 1
+fonttest:
 	-xelatex --interaction=batchmode Utilities/fonttest 
 	if [ -f "missfont.log" ]  ; then  \
 	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/guidelines.xsl ;\
@@ -116,6 +114,10 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	  echo "========================="; \
 	fi
 	rm -f fonttest.*
+
+Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
+	@echo check if XeLaTeX exist
+	@command -v  xelatex || exit 1
 	@echo BUILD: build Lite version of Guidelines
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml -s:p5.xml -xsl:${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \
