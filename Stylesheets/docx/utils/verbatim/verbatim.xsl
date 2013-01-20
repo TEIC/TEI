@@ -500,22 +500,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="verbatim-makeIndent">
     <xsl:variable name="depth" select="count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])"/>
-    <xsl:call-template name="verbatim-makeSpace">
-      <xsl:with-param name="d">
-        <xsl:value-of select="$depth"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template name="verbatim-makeSpace">
-    <xsl:param name="d"/>
-    <xsl:if test="number($d)&gt;1">
-      <xsl:value-of select="$spaceCharacter"/>
-      <xsl:call-template name="verbatim-makeSpace">
-        <xsl:with-param name="d">
-          <xsl:value-of select="$d -1"/>
-        </xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
+    <xsl:sequence select="for $i in 1 to $depth return $spaceCharacter"/>
   </xsl:template>
   <xsl:template match="@*" mode="verbatim">
     <xsl:variable name="L">

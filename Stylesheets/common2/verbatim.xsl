@@ -73,7 +73,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template name="verbatim-getNamespacePrefix">
     <xsl:variable name="ns" select="namespace-uri()"/>
-    <xsl:variable name="prefix" select="tei:getPrefix($ns,ancestor-or-self::*[1])[1]"/>
+    <xsl:variable name="prefix"
+		  select="prefix-from-QName(node-name(ancestor-or-self::*[1]))"/>
     <xsl:choose>
       <xsl:when test="$prefix !=''">
         <xsl:value-of select="$prefix"/>
@@ -579,24 +580,10 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
   <xsl:template name="verbatim-makeIndent">
-    <xsl:variable name="depth" select="count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])"/>
-    <xsl:call-template name="verbatim-makeSpace">
-      <xsl:with-param name="d">
-        <xsl:value-of select="$depth"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template name="verbatim-makeSpace">
-    <xsl:param name="d"/>
-    <xsl:if test="number($d)&gt;1">
-      <xsl:value-of select="$spaceCharacter"/>
-      <xsl:call-template name="verbatim-makeSpace">
-        <xsl:with-param name="d">
-          <xsl:value-of select="$d -1"/>
-        </xsl:with-param>
-      </xsl:call-template>
-    </xsl:if>
+    <xsl:variable name="depth" select="count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])-1"/>
+    <xsl:sequence select="for $i in 1 to $depth return $spaceCharacter"/>
   </xsl:template>
   <xsl:template match="@*" mode="verbatim">
     <xsl:variable name="L">
@@ -611,23 +598,8 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="verbatim-makeIndent"/>
     </xsl:if>
     <xsl:value-of select="$spaceCharacter"/>
-    <xsl:variable name="ns-prefix">
-      <xsl:call-template name="verbatim-getNamespacePrefix"/>
-    </xsl:variable>
-    <xsl:variable name="name">
-      <xsl:choose>
-        <xsl:when test="string-length($ns-prefix) &gt; 0">
-          <xsl:value-of select="$ns-prefix"/>
-          <xsl:text>:</xsl:text>
-          <xsl:value-of select="local-name(.)"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="local-name(.)"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
     <xsl:call-template name="verbatim-createAttribute">
-      <xsl:with-param name="name" select="$name"/>
+      <xsl:with-param name="name" select="name()"/>
     </xsl:call-template>
     <xsl:text>="</xsl:text>
     <xsl:value-of disable-output-escaping="yes" select="$startAttributeValue"/>
