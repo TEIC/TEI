@@ -51,7 +51,7 @@ testall.examples: testall.xsd
 %.special: %.odd
 	@echo "BUILD:  Test schema from (special) $<" 
 	xmllint --xinclude $< > xi_$<
-	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rnc validaterng cleanup
+	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng rnc validaterng cleanup
 	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc  
 	rm xi_$*.odd
 
