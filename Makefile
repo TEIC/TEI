@@ -46,12 +46,10 @@ check.stamp:
 	@command -v  ${TRANG} || exit 1
 	@echo -n jing: 
 	@command -v  ${JING} || exit 1
-	@echo -n XeLaTeX: 
-	@command -v  xelatex || exit 1
 	touch check.stamp
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
-	xmllint --xinclude --dropdtd --noent ${DRIVER} > p5.xml
+	xmllint --xinclude --noxincludenode --dropdtd --noent ${DRIVER} > p5.xml
 
 schemas: schemas.stamp
 
@@ -104,7 +102,10 @@ teiwebsiteguidelines:
 
 pdf: Guidelines.pdf pdf-complete
 
-fontcheck:
+
+Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
+	@echo check if XeLaTeX exist
+	@command -v  xelatex || exit 1
 	xelatex --interaction=batchmode Utilities/fonttest 
 	if [ -f "missfont.log" ]  ; then  \
 	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/guidelines.xsl ;\
@@ -113,8 +114,6 @@ fontcheck:
 	  echo "========================="; \
 	fi
 	rm -f fonttest.*
-
-Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo BUILD: build Lite version of Guidelines
 	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml -s:p5.xml -xsl:${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
 	        doclang=${DOCUMENTATIONLANGUAGE} \

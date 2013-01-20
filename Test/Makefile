@@ -4,6 +4,7 @@ INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
+SAXON=java -Xmx752m -jar ../Utilities/lib/saxon-9.1.0.8.jar -ext:on
 ROMAOPTS=--isoschematron --doclang=${DOCUMENTATIONLANGUAGE} --localsource=`pwd`/../p5subset.xml
 ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
 
@@ -25,7 +26,7 @@ normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
 
 testall.examples: testall.xsd
-	saxon -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl 
+	$(SAXON) -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl 
 	$(ANT) -f antruntest.xml -Doutputname=testall-examples -DoddFile=testall-ex.odd compileodd rng cleanup
 	@echo check egXML in testall.odd
 	perl -p -e "s/testlite-examples/testall-examples/" ex.nvdl > testall.nvdl
@@ -88,8 +89,8 @@ detest:
 	trang detest.rng detest.rnc
 	-rnv detest.rnc detest.xml 2>> detest.log.all
 	@echo Validate using Schematron
-	saxon detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
-	saxon detest.xml detest.xsl 2>> detest.log.all
+	$(SAXON) detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
+	$(SAXON) detest.xml detest.xsl 2>> detest.log.all
 	sed 's/.*detest.xml:/detest.xml:/' < detest.log.all | sed 's/Elapsed time.*//' >  detest.log
 	diff detest.log expected-results/detest.log
 
