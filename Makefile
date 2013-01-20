@@ -207,7 +207,6 @@ valid: check.stamp p5.xml
 
 #test: debversion
 test: schemas.stamp
-	ant -version
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
 

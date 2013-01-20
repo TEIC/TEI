@@ -38,7 +38,8 @@ testall.examples: testall.xsd
 	xmllint --noout --valid $*.xml 
 
 %.xsd: %.odd
-	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd rng validaterng xsd isoschematron validateschematron cleanup
+	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
+	trang   -o disable-abstract-elements $*.rng $*.xsd
 	@echo Validate XSD using Jing ...
 	cp xml.xsd.w3c xml.xsd
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
@@ -51,7 +52,8 @@ testall.examples: testall.xsd
 %.special: %.odd
 	@echo "BUILD:  Test schema from (special) $<" 
 	xmllint --xinclude $< > xi_$<
-	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng rnc validaterng cleanup
+	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
+	trang $*.rng $*.rnc
 	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc  
 	rm xi_$*.odd
 
@@ -82,8 +84,9 @@ test-sgml:
 
 detest:
 	@echo BUILD: Test file with deliberate mistakes
-	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng rnc isoschematron cleanup
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	echo -jing -t detest.rng detest.xml  > detest.log.all
+	trang detest.rng detest.rnc
 	-rnv detest.rnc detest.xml 2>> detest.log.all
 	@echo Validate using Schematron
 	$(SAXON) detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
