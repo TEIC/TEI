@@ -116,11 +116,11 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template name="write-docxfile-relationships">
       <xsl:if test="$debug='true'">
-	<xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
+	<xsl:message>Writing out <xsl:value-of select="$relDoc"/>
 	</xsl:message>
       </xsl:if>
 
-        <xsl:result-document href="{concat($wordDirectory,'/word/_rels/document.xml.rels')}"
+        <xsl:result-document href="{$relDoc}"
                            standalone="yes">
             <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
                 

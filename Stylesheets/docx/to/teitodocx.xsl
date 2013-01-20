@@ -65,7 +65,6 @@
   <xsl:param name="debug">false</xsl:param>
   <xsl:param name="typewriterFont">DejaVu Sans Mono</xsl:param>
   <xsl:param name="defaultHeaderFooterFile">templates/default.xml</xsl:param>
-  <xsl:param name="docDoc"><xsl:value-of select="concat($wordDirectory, '/word/document.xml')"/></xsl:param>
   <xsl:param name="headInXref">false</xsl:param>
   <xsl:param name="inputDir">.</xsl:param>
   <xsl:param name="inputFile"></xsl:param>
@@ -75,9 +74,9 @@
   <xsl:param name="preQuote">‘</xsl:param>
   <xsl:param name="renderAddDel">true</xsl:param>
   <xsl:param name="shadowGraphics">false</xsl:param>
-  <xsl:param name="styleDoc"><xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/></xsl:param>
-  <xsl:param name="tableWidthPercentage"></xsl:param>
   <xsl:param name="word-directory">..</xsl:param>
+  <xsl:param name="tableWidthPercentage"></xsl:param>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -209,6 +208,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="wordDirectory">
     <xsl:value-of select="translate($word-directory,'\\','/')"/>
   </xsl:variable>
+  <xsl:variable name="styleDoc"><xsl:value-of select="concat($wordDirectory, '/word/styles.xml')"/></xsl:variable>
+  <xsl:variable name="numberDoc"><xsl:value-of select="concat($wordDirectory, '/word/numbering.xml')"/></xsl:variable>
+  <xsl:variable name="relDoc"><xsl:value-of select="concat($wordDirectory, '/word/_rels/document.xml.rels')"/></xsl:variable>
+  <xsl:variable name="coreFile"><xsl:value-of select="concat($wordDirectory, '/docProps/core.xml')"/></xsl:variable>
+  <xsl:variable name="appFile"><xsl:value-of select="concat($wordDirectory, '/docProps/app.xml')"/></xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
         The starting points in the conversion to docx.
@@ -218,11 +222,32 @@ of this software, even if advised of the possibility of such damage.
       <desc>
 	Before main processing starts, pre-process the document
 	elements in a separate mode ('pass0'), in order to add extra 
-	material which implements the footnoting etc.
+	material which implements the footnoting etc. Also check that 
+	old files are there to be read.
       </desc>
     </doc>
 
     <xsl:template match="/">
+      <xsl:if test="not(doc-available($styleDoc))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$styleDoc"/> cannot be read</xsl:message>
+      </xsl:if>
+      <xsl:if test="not(doc-available($numberDoc))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$numberDoc"/> cannot be read</xsl:message>
+      </xsl:if>
+      <xsl:if test="not(doc-available($relDoc))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$relDoc"/> cannot be read</xsl:message>
+      </xsl:if>
+      <xsl:if test="not(doc-available($coreFile))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$coreFile"/> cannot be read</xsl:message>
+      </xsl:if>
+      <xsl:if test="not(doc-available($appFile))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$appFile"/> cannot be read</xsl:message>
+      </xsl:if>
       <xsl:if test="$debug='true'">
 	<xsl:message>Processing file <xsl:value-of
 	select="$inputFile"/></xsl:message>

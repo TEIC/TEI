@@ -74,34 +74,16 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template name="write-docxfile-docprops-core">
         <xsl:variable name="now" select="tei:whatsTheDate()"/>
-
-        <xsl:variable name="coreFile">
-            <xsl:value-of select="$wordDirectory"/>
-            <xsl:text>/docProps/core.xml</xsl:text>
-        </xsl:variable>
-
         <xsl:variable name="createdDate">
-            <xsl:choose>
-                <xsl:when test="doc-available($coreFile)">
-                    <xsl:for-each select="document($coreFile)">
-                        <xsl:value-of select="cp:coreProperties/dcterms:created"/>
-                    </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$now"/>
-                </xsl:otherwise>
-            </xsl:choose>
+	  <xsl:for-each select="document($coreFile)">
+	    <xsl:value-of select="cp:coreProperties/dcterms:created"/>
+	  </xsl:for-each>
         </xsl:variable>
 
         <xsl:variable name="revision">
-            <xsl:choose>
-                <xsl:when test="doc-available($coreFile)">
-                    <xsl:for-each select="document($coreFile)">
-                        <xsl:value-of select="cp:coreProperties/cp:revision + 1"/>
-                    </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>1</xsl:otherwise>
-            </xsl:choose>
+	  <xsl:for-each select="document($coreFile)">
+	    <xsl:value-of select="cp:coreProperties/cp:revision + 1"/>
+	  </xsl:for-each>
         </xsl:variable>
 
         <!-- after opening core.xml, we cannot write back to it; so save
@@ -141,21 +123,10 @@ of this software, even if advised of the possibility of such damage.
 
 
     <xsl:template name="write-docxfile-docprops-app">
-        <xsl:variable name="appFile">
-            <xsl:value-of select="$wordDirectory"/>
-            <xsl:text>/docProps/app.xml</xsl:text>
-        </xsl:variable>
         <xsl:variable name="template">
-            <xsl:choose>
-                <xsl:when test="doc-available($appFile)">
-                    <xsl:for-each select="document($appFile)">
-                        <xsl:value-of select="ep:Properties/ep:Template"/>
-                    </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>Normal.dotm</xsl:text>
-                </xsl:otherwise>
-            </xsl:choose>
+	  <xsl:for-each select="document($appFile)">
+	    <xsl:value-of select="ep:Properties/ep:Template"/>
+	  </xsl:for-each>
         </xsl:variable>
         <!-- after opening app.xml, we cannot write back to it; so save
             under new name -->

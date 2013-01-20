@@ -268,7 +268,7 @@ of this software, even if advised of the possibility of such damage.
 						    + 300"/>
 				      </xsl:when>
 				      <xsl:otherwise>
-					<xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$filename]/@Id"/>
+					<xsl:value-of select="document($relDoc)//rel:Relationship[@Target=$filename]/@Id"/>
 				      </xsl:otherwise>
 				    </xsl:choose>
 				  </xsl:attribute>

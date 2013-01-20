@@ -170,7 +170,7 @@ of this software, even if advised of the possibility of such damage.
 				    <xsl:text>2</xsl:text>
 				  </xsl:when>
 				  <xsl:otherwise>
-				    <xsl:for-each select="document(concat($wordDirectory,'/word/numbering.xml'))">
+				    <xsl:for-each select="document($numberDoc)">
 				      <xsl:variable name="abstractNumId"
 						    select="key('AN',$listStyle)/@w:abstractNumId"/>
 				      <xsl:value-of select="key('NUMS',$abstractNumId)/@w:numId"/>

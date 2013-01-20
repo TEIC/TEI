@@ -120,8 +120,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:value-of
 		select="translate($word-directory,'\\','/')"/>
 	  </xsl:variable>
-	  <xsl:variable name="docProps" select="doc(concat($wordDirectory,'/docProps/core.xml'))"/>
-	  <xsl:variable name="styledoc" select="doc(concat($wordDirectory,'/word/styles.xml'))"/>
+	  <xsl:variable name="relsFile" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
+	  <xsl:variable name="numberFile" select="concat($wordDirectory,'/word/numbering.xml')"/>
+	  <xsl:variable name="styleFile" select="concat($wordDirectory,'/word/styles.xml')"/>
 
 	<xsl:strip-space elements="*"/>
 	  <xsl:preserve-space elements="w:t"/>
@@ -172,6 +173,18 @@ of this software, even if advised of the possibility of such damage.
    </doc>
    <xsl:template match="/">
      <!-- Do an initial normalization and store everything in $pass0 -->
+      <xsl:if test="not(doc-available($relsFile))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$relsFile"/> cannot be read</xsl:message>
+      </xsl:if>
+      <xsl:if test="not(doc-available($numberFile))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$numberFile"/> cannot be read</xsl:message>
+      </xsl:if>
+      <xsl:if test="not(doc-available($styleFile))">
+	<xsl:message terminate="yes">The file <xsl:value-of
+	select="$styleFile"/> cannot be read</xsl:message>
+      </xsl:if>
      <xsl:variable name="pass0">
        <xsl:apply-templates mode="pass0"/>
      </xsl:variable>
@@ -456,7 +469,7 @@ of this software, even if advised of the possibility of such damage.
 
 				        <xsl:variable name="rid" select="@r:id"/>
 				        <xsl:variable name="h-file">
-					          <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+					          <xsl:value-of select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
 				        </xsl:variable>
 
 				        <!-- for the moment, just copy content -->
@@ -483,7 +496,7 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:value-of
-		  select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+		  select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:attribute>

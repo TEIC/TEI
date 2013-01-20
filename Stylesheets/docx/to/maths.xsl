@@ -129,7 +129,7 @@ of this software, even if advised of the possibility of such damage.
 		  </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$current]/@Id"/>
+		  <xsl:value-of select="document($relDoc)//rel:Relationship[@Target=$current]/@Id"/>
 		</xsl:otherwise>
 	      </xsl:choose>
             </xsl:attribute>
@@ -158,7 +158,7 @@ of this software, even if advised of the possibility of such damage.
 		  </xsl:for-each>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:value-of select="document(concat($wordDirectory,'/word/_rels/document.xml.rels'))//rel:Relationship[@Target=$current]/@Id"/>
+		  <xsl:value-of select="document($relDoc)//rel:Relationship[@Target=$current]/@Id"/>
 		</xsl:otherwise>
 	      </xsl:choose>
             </xsl:attribute>

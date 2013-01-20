@@ -144,7 +144,7 @@ of this software, even if advised of the possibility of such damage.
                             </xsl:when>
                             <xsl:otherwise>
                                 <!-- we might want to follow the basedOn reference, but not at the moment -->
-                                <xsl:value-of select="document(concat($wordDirectory,'/word/styles.xml'))//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:numId/@w:val"/>
+                                <xsl:value-of select="document($styleFile)//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:numId/@w:val"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
@@ -157,16 +157,16 @@ of this software, even if advised of the possibility of such damage.
                             </xsl:when>
                             <xsl:otherwise>
                                 <!-- we might want to follow the basedOn reference, but not at the moment -->
-                                <xsl:value-of select="document(concat($wordDirectory,'/word/styles.xml'))//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:ilvl/@w:val"/>
+                                <xsl:value-of select="document($styleFile)//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:ilvl/@w:val"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
                     
                     <!-- find the abstract numbering definition and then the corresponding numfmt -->
                     <xsl:variable name="abstract-def"
-                             select="document(concat($wordDirectory,'/word/numbering.xml'))//w:num[@w:numId=$numbering-def]/w:abstractNumId/@w:val"/>
+                             select="document($numberFile)//w:num[@w:numId=$numbering-def]/w:abstractNumId/@w:val"/>
                     <xsl:variable name="numfmt">
-                        <xsl:value-of select="document(concat($wordDirectory,'/word/numbering.xml'))//w:abstractNum[@w:abstractNumId=$abstract-def]/w:lvl[@w:ilvl=$numbering-level]/w:numFmt/@w:val"/>
+                        <xsl:value-of select="document($numberFile)//w:abstractNum[@w:abstractNumId=$abstract-def]/w:lvl[@w:ilvl=$numbering-level]/w:numFmt/@w:val"/>
                     </xsl:variable>
                     
                     
