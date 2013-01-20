@@ -34,18 +34,14 @@ default: schemas
 
 %.special: %.odd
 	xmllint --xinclude $*.odd > $*.odd.xinclude
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng rnc validaterng validatesecondrng isoschematron validateschematron 
 	rm $*.odd.xinclude
-	trang $*.rng $*.rnc
 
 %.rng: %.odd 
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron 
-	trang  $*.rng $*.rnc
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng rnc validaterng validatesecondrng isoschematron validateschematron 
 
 %.dtd: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd isoschematron validateschematron cleanup
-	trang   -o disable-abstract-elements $*.rng $*.xsd
-	trang  $*.rng $*.rnc
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd xsd rnc isoschematron validateschematron cleanup
 	@echo Validate XSD using Jing ...
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
 	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
