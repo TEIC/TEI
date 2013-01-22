@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.renderx.com/XSL/Extensions" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:rx="http://www.renderx.com/XSL/Extensions">
+  <xs:import namespace="http://www.w3.org/1999/XSL/Format" schemaLocation="fo.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2004/10/xml.xsd"/>
+  <xs:attribute name="background-content-type"/>
+  <xs:attribute name="background-content-height"/>
+  <xs:attribute name="background-content-width"/>
+  <xs:attribute name="background-scaling">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="uniform"/>
+        <xs:enumeration value="non-uniform"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="key"/>
+  <xs:element name="meta-info">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="rx:meta-field"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="meta-field">
+    <xs:complexType>
+      <xs:attributeGroup ref="fo:rx.meta-field-attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="page-device">
+    <xs:complexType>
+      <xs:attributeGroup ref="fo:rx.page-device-attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="outline">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="rx:bookmark"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="bookmark">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="rx:bookmark-label"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="rx:bookmark"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="fo:rx.bookmark-attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="bookmark-label" type="xs:string"/>
+  <xs:element name="flow-section">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="fo:blocks"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="fo:rx.flow-section-attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pinpoint" substitutionGroup="fo:basic-inlines">
+    <xs:complexType>
+      <xs:attributeGroup ref="fo:rx.pinpoint-attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="page-index" substitutionGroup="fo:basic-inlines">
+    <xs:complexType>
+      <xs:attributeGroup ref="fo:rx.page-index-attlist"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -73,7 +73,13 @@ test-latex:
 test-fo:
 	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
 	diff test5.fo expected-results/test5.fo
-
+	jing fo.xsd test5.fo
+	saxon -o:testnotes1.fo testnotes1.xml ../fo2/tei.xsl  $(SAXONOPT)
+	diff testnotes1.fo expected-results/testnotes1.fo
+	jing fo.xsd testnotes1.fo
+	saxon -o:test.fo test.xml ../fo2/tei.xsl  $(SAXONOPT)
+	diff test.fo expected-results/test.fo
+	jing fo.xsd test.fo
 
 conversions-from:
 	../teitornc  test21.odd test21.odd.rnc
@@ -176,7 +182,7 @@ oddity:
 	rm test.odd2xslstripspace
 
 clean:
-	rm -f  test6.tex test5.tex test5.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html
+	rm -f  test6.tex test5.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html
 	rm -f  oddbyexample.* xml.xsd index*div*html
 	rm -f testdrama.compiled.xml
 	rm -f  test.tex test.xml.odt test.xml.docx test.epub
