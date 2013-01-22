@@ -242,7 +242,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:idno">true</xsl:when>
         <xsl:when test="self::tei:imprint">true</xsl:when>
         <xsl:when test="self::tei:institution">true</xsl:when>
-        <xsl:when test="self::tei:lb">true</xsl:when>
         <xsl:when test="self::tei:locus">true</xsl:when>
         <xsl:when test="self::tei:mentioned">true</xsl:when>
         <xsl:when test="self::tei:monogr">true</xsl:when>
@@ -257,7 +256,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:origDate">true</xsl:when>
         <xsl:when test="self::tei:origPlace">true</xsl:when>
         <xsl:when test="self::tei:pc">true</xsl:when>
-        <xsl:when test="self::tei:pb">true</xsl:when>
         <xsl:when test="self::tei:persName">true</xsl:when>
         <xsl:when test="self::tei:placeName">true</xsl:when>
         <xsl:when test="self::tei:ptr">true</xsl:when>
@@ -265,6 +263,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:pubPlace">true</xsl:when>
         <xsl:when test="self::tei:note">true</xsl:when>
         <xsl:when test="self::tei:q[tei:l]">false</xsl:when>
+        <xsl:when test="self::tei:lb or self::pb">true</xsl:when>
         <xsl:when test="self::tei:quote and tei:lb">false</xsl:when>
         <xsl:when test="self::tei:quote and $autoBlockQuote='true' and string-length(.)&gt;$autoBlockQuoteLength">false</xsl:when>
         <xsl:when test="self::tei:q">true</xsl:when>

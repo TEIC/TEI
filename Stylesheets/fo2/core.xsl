@@ -723,16 +723,8 @@ of this software, even if advised of the possibility of such damage.
       <desc/>
    </doc>
   <xsl:template match="tei:pb">
-      <xsl:variable name="e">
-         <xsl:choose>
-	   <xsl:when test="parent::tei:body or parent::tei:front or    parent::tei:back or parent::tei:div">
-	     <xsl:text>block</xsl:text>
-	   </xsl:when>
-	   <xsl:otherwise>
-	     <xsl:text>inline</xsl:text>
-	   </xsl:otherwise>
-         </xsl:choose>
-      </xsl:variable>
+      <xsl:variable name="e" select="if (tei:is-inline(..)) then
+	'inline' else 'block'"/>
       <xsl:choose>
          <xsl:when test="parent::tei:list"/>
          <xsl:when test="$pagebreakStyle='active'">
@@ -763,7 +755,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>Quotations</desc>
    </doc>
   <xsl:template match="tei:quote">
       <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}"
@@ -777,7 +769,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>quoted text</desc>
    </doc>
   <xsl:template match="tei:q">
       <xsl:choose>

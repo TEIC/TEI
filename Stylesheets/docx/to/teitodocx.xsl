@@ -892,6 +892,7 @@ of this software, even if advised of the possibility of such damage.
         plain note
     -->
   <xsl:template name="plainNote">
+    <xsl:variable name="note">
     <w:r>
       <w:t>
 	<xsl:attribute name="xml:space">preserve</xsl:attribute>
@@ -916,6 +917,17 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>] </xsl:text>
       </w:t>
     </w:r>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="tei:is-inline(.)">
+	<xsl:copy-of select="$note"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<w:p>
+	<xsl:copy-of select="$note"/>
+	</w:p>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 
@@ -2570,7 +2582,7 @@ of this software, even if advised of the possibility of such damage.
       <w:br w:type="page"/>
     </w:r>
   </xsl:template>
-
+      
    <xsl:template match="tei:att|tei:hi[@rend='att']">
     <xsl:call-template name="processInline">
       <xsl:with-param name="before">@</xsl:with-param>

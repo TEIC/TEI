@@ -436,7 +436,7 @@ Language (for hyphenation)
 By default, no special measures are taken, so
 there are no bookmarks or other such features. Possible values are
 <ul xmlns="http://www.w3.org/1999/XSL/Format">
-               <li>passivetex (the TeX-based PassiveTeX processor</li>
+               <li>passivetex (the TeX-based PassiveTeX processor)</li>
                <li>xep   (XEP)</li>
                <li>fop (FOP)</li>
                <li>antenna  (Antenna House)</li>

@@ -230,7 +230,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="not($s='')">
          <xsl:choose>
             <xsl:when test="$mode='fo'">
-               <xsl:attribute name="scale">
+               <xsl:attribute name="content-width">
                   <xsl:value-of select="$s"/>
                </xsl:attribute>
             </xsl:when>
