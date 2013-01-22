@@ -615,7 +615,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="plainNote">
-    <inline font-size="{$footnoteSize}" font-style="italic">
+    <xsl:element name="{if (tei:is-inline(.)) then 'inline' else 'block'}">
+      <xsl:attribute name="font-size" select="$footnoteSize"/>
+      <xsl:attribute name="font-style">italic</xsl:attribute>
       <xsl:text> [</xsl:text>
       <xsl:choose>
 	<xsl:when test="@n">
@@ -630,7 +632,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:apply-templates/>
       <xsl:text>] </xsl:text>
-    </inline>
+    </xsl:element>
   </xsl:template>
 
   <xsl:template name="displayNote">
