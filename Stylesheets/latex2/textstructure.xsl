@@ -351,4 +351,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
+  <xsl:template match="/tei:text" priority="999">
+    <xsl:call-template name="wrapRootText"/>
+  </xsl:template>
+
+
 </xsl:stylesheet>

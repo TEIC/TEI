@@ -68,20 +68,11 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>root template</desc>
    </doc>
-  <xsl:template match="/">
+  <xsl:template match="/tei:TEI|tei:teiCorpus">
       <root>
          <xsl:call-template name="setupPagemasters"/>
-	 <xsl:apply-templates/>
+	 <xsl:call-template name="mainAction"/>
       </root>
-  </xsl:template>
-
-  <xsl:template match="/tei:TEI">
-    <xsl:call-template name="mainAction"/>
-  </xsl:template>
-  <xsl:template match="/tei:text">
-    <xsl:for-each select="..">
-      <xsl:call-template name="mainAction"/>
-    </xsl:for-each>
   </xsl:template>
 
   <xsl:template match="tei:teiCorpus/tei:TEI">
@@ -1463,5 +1454,10 @@ of this software, even if advised of the possibility of such damage.
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="/tei:text" priority="999">
+    <xsl:call-template name="wrapRootText"/>
+  </xsl:template>
+
 
 </xsl:stylesheet>

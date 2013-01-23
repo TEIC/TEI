@@ -361,7 +361,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Process root element TEI</p>
       </desc>
    </doc>
-  <xsl:template match="tei:TEI|/tei:text">
+  <xsl:template match="tei:TEI">
       <xsl:call-template name="teiStartHook"/>
       <xsl:if test="$verbose='true'">
          <xsl:message>TEI HTML creation in single document mode </xsl:message>
@@ -821,7 +821,7 @@ of this software, even if advised of the possibility of such damage.
 	   </xsl:call-template>
          </xsl:when>
 	 <xsl:otherwise>
-	   <xsl:call-template name="doDivBody"/>
+	   <xsl:call-template name="wrapRootText"/>
 	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>

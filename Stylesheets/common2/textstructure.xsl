@@ -98,5 +98,31 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
+  <xsl:template match="/tei:text" priority="999">
+    <xsl:call-template name="wrapRootText"/>
+  </xsl:template>
+
+  <xsl:template name="wrapRootText">
+    <xsl:variable name="complete">
+      <TEI  xmlns="http://www.tei-c.org/ns/1.0">
+	<teiHeader>
+	  <fileDesc>
+	    <titleStmt>
+	      <title>Unknown title</title>
+	    </titleStmt>
+	    <publicationStmt>
+	      <p/>
+	    </publicationStmt>
+	    <sourceDesc>
+	      <p/>
+	    </sourceDesc>
+	  </fileDesc>
+	</teiHeader>
+	<xsl:copy-of select="."/>
+      </TEI>
+    </xsl:variable>
+    <xsl:apply-templates select="$complete"/>
+  </xsl:template>
+
 
 </xsl:stylesheet>
