@@ -118,7 +118,9 @@ of this software, even if advised of the possibility of such damage.
 	    </sourceDesc>
 	  </fileDesc>
 	</teiHeader>
-	<xsl:copy-of select="."/>
+	<text>
+	  <xsl:apply-templates mode="tite"/>
+	</text>
       </TEI>
     </xsl:variable>
     <xsl:apply-templates select="$complete"/>

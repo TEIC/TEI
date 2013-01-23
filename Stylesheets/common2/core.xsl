@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:tei="http://www.tei-c.org/ns/1.0"
-                
+		xmlns:tite="http://www.tei-c.org/ns/tite/1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="tei"
+                exclude-result-prefixes="tei tite"
                 version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -1049,6 +1049,58 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+<xsl:template match="tite:b" mode="tite">
+  <hi xmlns="http://www.tei-c.org/ns/1.0"  rend="bold">
+    <xsl:apply-templates 
+	select="@*|*|text()|comment()|processing-instruction" mode="tite"/>  
+  </hi>
+</xsl:template>
+
+<xsl:template match="tite:i" mode="tite">
+  <hi xmlns="http://www.tei-c.org/ns/1.0"  rend="italic">
+    <xsl:apply-templates 
+	select="@*|*|text()|comment()|processing-instruction" mode="tite"/>  
+  </hi>
+</xsl:template>
+
+<xsl:template match="tite:ul" mode="tite">
+  <hi xmlns="http://www.tei-c.org/ns/1.0"  rend="underline">
+    <xsl:apply-templates 
+	select="@*|*|text()|comment()|processing-instruction" mode="tite"/>  
+  </hi>
+</xsl:template>
+
+<xsl:template match="tite:sup" mode="tite">
+  <hi xmlns="http://www.tei-c.org/ns/1.0"  rend="sup">
+    <xsl:apply-templates 
+	select="@*|*|text()|comment()|processing-instruction" mode="tite"/>  
+  </hi>
+</xsl:template>
+
+<xsl:template match="tite:sub" mode="tite">
+  <hi xmlns="http://www.tei-c.org/ns/1.0"  rend="sub">
+    <xsl:apply-templates 
+	select="@*|*|text()|comment()|processing-instruction" mode="tite"/>  
+  </hi>
+</xsl:template>
+
+<xsl:template match="tite:smcap" mode="tite">
+  <hi xmlns="http://www.tei-c.org/ns/1.0"  rend="smcap">
+    <xsl:apply-templates 
+	select="@*|*|text()|comment()|processing-instruction" mode="tite"/>  
+  </hi>
+</xsl:template>
+
+  <xsl:template match="*"  mode="tite">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"  mode="tite"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="tite">
+    <xsl:copy-of select="."/>
   </xsl:template>
 
 </xsl:stylesheet>

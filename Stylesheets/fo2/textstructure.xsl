@@ -68,10 +68,16 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>root template</desc>
    </doc>
-  <xsl:template match="/tei:TEI|tei:teiCorpus">
+  <xsl:template match="/tei:TEI">
       <root>
          <xsl:call-template name="setupPagemasters"/>
 	 <xsl:call-template name="mainAction"/>
+      </root>
+  </xsl:template>
+  <xsl:template match="/tei:teiCorpus">
+      <root>
+         <xsl:call-template name="setupPagemasters"/>
+	 <xsl:apply-templates/>
       </root>
   </xsl:template>
 
