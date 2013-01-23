@@ -1441,6 +1441,7 @@ of this software, even if advised of the possibility of such damage.
                <xsl:value-of select="$numbersuffix"/>
             </xsl:if>
          </xsl:when>
+	 <xsl:when test="not(parent::*)"/>
          <xsl:otherwise>
             <xsl:number count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4" from="tei:body"
                         level="multiple"/>

@@ -55,46 +55,6 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:output indent="no"/>
     <!--  -->
-    <xsl:template name="processAsSection">
-      <xsl:param name="level"/>
-      <xsl:param name="heading"/>
-      <xsl:param name="implicitBlock">false</xsl:param>
-      <xsl:element name="h{$level}">
-	        <xsl:value-of select="$heading"/>
-      </xsl:element>
-      <xsl:choose>
-	        <xsl:when test="$implicitBlock='true'">
-	           <p>
-	              <xsl:apply-templates/>
-	           </p>
-	        </xsl:when>
-	        <xsl:when test="*">
-	           <xsl:apply-templates/>
-	        </xsl:when>
-	        <xsl:otherwise>
-	           <p>
-	              <xsl:apply-templates/>
-	           </p>
-	        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:template>
-    
-    <xsl:template name="processWithLabel">
-      <xsl:param name="before"/>
-      <i>
-         <xsl:value-of select="$before"/>
-      </i>
-      <xsl:text>: </xsl:text>
-      <xsl:value-of select="normalize-space(.)"/>
-    </xsl:template>
-
-    <xsl:template name="processBlock">
-      <xsl:param name="style"/>
-      <div class="{$style}">
-	        <xsl:apply-templates/>
-      </div>
-    </xsl:template>
-
     <xsl:template match="tei:body">
       <xsl:apply-templates/>
     </xsl:template>

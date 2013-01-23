@@ -139,6 +139,7 @@ of this software, even if advised of the possibility of such damage.
 }
 \def\TheFullDate{</xsl:text>
       <xsl:call-template name="generateDate"/>
+      <xsl:if test="not($useFixedDate='true')">
       <xsl:variable name="revdate">
          <xsl:call-template name="generateRevDate"/>
       </xsl:variable>
@@ -151,7 +152,9 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:value-of select="$revdate"/>
          <xsl:text>)</xsl:text>
       </xsl:if>
-      <xsl:text>}&#10;\def\TheID{</xsl:text>
+      </xsl:if>
+      <xsl:text>}&#10;</xsl:text>
+      <xsl:text>\def\TheID{</xsl:text>
       <xsl:choose>
          <xsl:when test="not($REQUEST='')">
             <xsl:value-of select="not($REQUEST='')"/>

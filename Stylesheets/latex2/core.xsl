@@ -500,6 +500,9 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:for-each>
 	 <xsl:text>&#10;\end{bibitemlist}&#10;</xsl:text>
        </xsl:when>
+      <xsl:when test="tei:msDesc">
+	<xsl:apply-templates/>
+      </xsl:when>
        <xsl:otherwise>
 	 <xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
 	 <xsl:apply-templates/> 

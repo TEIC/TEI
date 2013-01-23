@@ -14,6 +14,7 @@
   <xsl:import href="textstructure.xsl"/>
   <xsl:import href="header.xsl"/>
   <xsl:import href="linking.xsl"/>
+  <xsl:import href="msdescription.xsl"/>
   <xsl:import href="figures.xsl"/>
   <xsl:import href="textcrit.xsl"/>
   <xsl:import href="i18n.xsl"/>

@@ -2493,7 +2493,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <!-- List Bibl -->
   <xsl:template match="tei:listBibl">
-    <xsl:for-each select="tei:bibl|tei:biblStruct">
+    <xsl:for-each select="*">
       <xsl:choose>
         <xsl:when test="@xml:id">
           <xsl:variable name="number">

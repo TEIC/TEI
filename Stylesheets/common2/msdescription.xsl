@@ -112,6 +112,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+  <xsl:template match="tei:msDesc">
+    <xsl:apply-templates/>
+  </xsl:template>
   <xsl:template match="tei:msIdentifier">
     <xsl:call-template name="processAsSection">
       <xsl:with-param name="level">1</xsl:with-param>

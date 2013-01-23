@@ -946,9 +946,16 @@ of this software, even if advised of the possibility of such damage.
           </xsl:for-each>
         </ol>
       </xsl:when>
+      <xsl:when test="tei:msDesc">
+	<xsl:for-each select="*">
+	  <div class="msDesc">
+	    <xsl:apply-templates/>
+	  </div>
+	</xsl:for-each>
+      </xsl:when>
       <xsl:otherwise>
         <ol class="listBibl">
-          <xsl:for-each select="tei:bibl|tei:biblItem">
+          <xsl:for-each select="*">
             <li>
               <xsl:call-template name="makeAnchor">
                 <xsl:with-param name="name">

@@ -171,6 +171,34 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="style"/>
     <xsl:apply-templates/>
   </xsl:template>
+
+
+    <xsl:template name="processAsSection">
+      <xsl:param name="level"/>
+      <xsl:param name="heading"/>
+      <xsl:param name="implicitBlock">false</xsl:param>
+      <xsl:variable name="temp">
+	<tei:head><xsl:value-of select="$heading"/></tei:head>
+      </xsl:variable>
+      <xsl:for-each select="$temp">
+	<xsl:call-template name="NumberedHeading">
+	  <xsl:with-param name="level" select="$level"/>
+	</xsl:call-template>       
+      </xsl:for-each>
+      <block>
+	<xsl:apply-templates/>
+      </block>
+    </xsl:template>
+    
+    <xsl:template name="processWithLabel">
+      <xsl:param name="before"/>
+      <i>
+         <xsl:value-of select="$before"/>
+      </i>
+      <xsl:text>: </xsl:text>
+      <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+
   <xsl:template name="processInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>

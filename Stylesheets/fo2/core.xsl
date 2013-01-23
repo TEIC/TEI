@@ -496,6 +496,9 @@ of this software, even if advised of the possibility of such damage.
          </block>
       </xsl:if>
       <xsl:choose>
+	<xsl:when test="tei:msDesc">
+               <xsl:apply-templates/>
+	</xsl:when>
          <xsl:when test="@type='runin'">
             <block>
                <xsl:apply-templates mode="runin"/>
