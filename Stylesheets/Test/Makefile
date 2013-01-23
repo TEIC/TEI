@@ -92,7 +92,6 @@ test-fo:
 	jing fo.xsd test24.fo 
 	diff test24.fo expected-results/test24.fo
 	saxon -o:test25.fo test25.xml ../fo2/tei.xsl $(SAXONOPT)
-	jing fo.xsd test25.fo 
 	diff test25.fo expected-results/test25.fo
 	saxon -o:test26.fo test26.xml ../fo2/tei.xsl $(SAXONOPT)
 	jing fo.xsd test26.fo 
