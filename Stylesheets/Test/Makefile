@@ -50,13 +50,12 @@ test-html:
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r -x .svn files expected-results/testnotes3
-foo:
-	saxon -o:test24.html test24.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	diff test24.html expected-results/test24.html
 	saxon -o:test25.html test25.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test25.html expected-results/test25.html
 	saxon -o:test26.html test26.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test26.html expected-results/test26.html
+	saxon -o:test24.html test24.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test24.html expected-results/test24.html
 	rm -rf files
 
 testsplit:
@@ -76,6 +75,10 @@ test-latex:
 	saxon -o:test23.tex test23.xml ../latex2/tei.xsl $(SAXONOPT)
 	perl -p -i -e 's/Date{[^}]*}/Date{}/' test23.tex
 	diff test23.tex expected-results/test23.tex
+	saxon -o:test25.tex test25.xml ../latex2/tei.xsl $(SAXONOPT)
+	diff test25.tex expected-results/test25.tex
+	saxon -o:test26.tex test26.xml ../latex2/tei.xsl $(SAXONOPT)
+	diff test26.tex expected-results/test26.tex
 
 test-fo:
 	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
@@ -87,6 +90,12 @@ test-fo:
 	saxon -o:test.fo test.xml ../fo2/tei.xsl  $(SAXONOPT)
 	diff test.fo expected-results/test.fo
 	jing fo.xsd test.fo
+	saxon -o:test25.fo test25.xml ../fo2/tei.xsl $(SAXONOPT)
+	jing fo.xsd test25.fo 
+	diff test25.fo expected-results/test25.fo
+	saxon -o:test26.fo test26.xml ../fo2/tei.xsl $(SAXONOPT)
+	jing fo.xsd test26.fo 
+	diff test26.fo expected-results/test26.fo
 
 conversions-from:
 	../teitornc  test21.odd test21.odd.rnc
