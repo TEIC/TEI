@@ -118,12 +118,13 @@ of this software, even if advised of the possibility of such damage.
 	    $requestedID: requests a particular page
        -->
        <!-- we are making a composite layout and there is a TEI or teiCorpus element -->
-       <xsl:when test="($pageLayout = 'CSS') and (tei:TEI or tei:teiCorpus)">
+       <xsl:when test="($pageLayout = 'CSS') and (tei:TEI or
+		       tei:teiCorpus or tei:text)">
 	 <xsl:if test="$verbose='true'">
 	   <xsl:message>case 1: pageLayout <xsl:value-of select="$pageLayout"/>
 	   </xsl:message>
 	 </xsl:if>
-	 <xsl:for-each select="tei:TEI|tei:teiCorpus">
+	 <xsl:for-each select="tei:TEI|tei:teiCorpus|tei:text">
 	   <xsl:call-template name="doPage">
 	     <xsl:with-param name="currentID" select="$requestedID"/>
 	   </xsl:call-template>
@@ -360,7 +361,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Process root element TEI</p>
       </desc>
    </doc>
-  <xsl:template match="tei:TEI">
+  <xsl:template match="tei:TEI|/tei:text">
       <xsl:call-template name="teiStartHook"/>
       <xsl:if test="$verbose='true'">
          <xsl:message>TEI HTML creation in single document mode </xsl:message>

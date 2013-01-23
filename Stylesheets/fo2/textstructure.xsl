@@ -78,6 +78,11 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="/tei:TEI">
     <xsl:call-template name="mainAction"/>
   </xsl:template>
+  <xsl:template match="/tei:text">
+    <xsl:for-each select="..">
+      <xsl:call-template name="mainAction"/>
+    </xsl:for-each>
+  </xsl:template>
 
   <xsl:template match="tei:teiCorpus/tei:TEI">
     <xsl:call-template name="mainAction"/>
