@@ -50,6 +50,13 @@ test-html:
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r -x .svn files expected-results/testnotes3
+foo:
+	saxon -o:test24.html test24.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test24.html expected-results/test24.html
+	saxon -o:test25.html test25.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test25.html expected-results/test25.html
+	saxon -o:test26.html test26.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test26.html expected-results/test26.html
 	rm -rf files
 
 testsplit:
