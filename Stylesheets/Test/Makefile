@@ -64,17 +64,15 @@ testsplit:
 
 test-latex:
 	saxon -o:test6.tex test6.xml ../slides/teilatex-slides.xsl $(SAXONOPT)
-	perl -p -i -e 's/Date{[^}]*}/Date{}/' test6.tex
 	diff test6.tex expected-results/test6.tex
 	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
-	perl -p -i -e 's/Date{[^}]*}/Date{}/' test5.tex
 	diff test5.tex expected-results/test5.tex
 	saxon -o:testnotes1.tex testnotes1.xml ../latex2/tei.xsl  $(SAXONOPT)
-	perl -p -i -e 's/Date{[^}]*}/Date{}/' testnotes1.tex
 	diff testnotes1.tex expected-results/testnotes1.tex
 	saxon -o:test23.tex test23.xml ../latex2/tei.xsl $(SAXONOPT)
-	perl -p -i -e 's/Date{[^}]*}/Date{}/' test23.tex
 	diff test23.tex expected-results/test23.tex
+	saxon -o:test24.tex test24.xml ../latex2/tei.xsl $(SAXONOPT)
+	diff test24.tex expected-results/test24.tex
 	saxon -o:test25.tex test25.xml ../latex2/tei.xsl $(SAXONOPT)
 	diff test25.tex expected-results/test25.tex
 	saxon -o:test26.tex test26.xml ../latex2/tei.xsl $(SAXONOPT)
@@ -90,6 +88,9 @@ test-fo:
 	saxon -o:test.fo test.xml ../fo2/tei.xsl  $(SAXONOPT)
 	diff test.fo expected-results/test.fo
 	jing fo.xsd test.fo
+	saxon -o:test24.fo test24.xml ../fo2/tei.xsl $(SAXONOPT)
+	jing fo.xsd test24.fo 
+	diff test24.fo expected-results/test24.fo
 	saxon -o:test25.fo test25.xml ../fo2/tei.xsl $(SAXONOPT)
 	jing fo.xsd test25.fo 
 	diff test25.fo expected-results/test25.fo

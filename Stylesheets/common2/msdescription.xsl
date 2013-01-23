@@ -365,7 +365,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="after">[?]</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <xsl:template match="tei:placeName|tei:genName|tei:geogName|tei:roleName|tei:name|tei:persName">
+  <xsl:template match="tei:genName|tei:geogName|tei:roleName">
     <xsl:choose>
       <xsl:when test="*">
         <xsl:apply-templates/>

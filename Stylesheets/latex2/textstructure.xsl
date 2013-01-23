@@ -57,12 +57,17 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="."/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>Root template</desc>
    </doc>
 
 
-  <xsl:template match="tei:TEI">
+  <xsl:template match="/*">
       <xsl:call-template name="mainDocument"/>
+  </xsl:template>
+
+  <xsl:template match="tei:teiCorpus/tei:TEI">
+    <xsl:apply-templates/>
+    <xsl:text>&#10;\par\noindent\rule{\textwidth}{2pt}&#10;\par </xsl:text>
   </xsl:template>
 
   <xsl:template name="mainDocument">

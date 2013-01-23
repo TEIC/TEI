@@ -60,22 +60,31 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="."/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>anything in heading mode</desc>
    </doc>
   <xsl:template match="tei:*" mode="heading">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>root template</desc>
    </doc>
-  <xsl:template match="tei:TEI">
+  <xsl:template match="/">
       <root>
          <xsl:call-template name="setupPagemasters"/>
-         <xsl:call-template name="mainAction"/>
+	 <xsl:apply-templates/>
       </root>
   </xsl:template>
+
+  <xsl:template match="/tei:TEI">
+    <xsl:call-template name="mainAction"/>
+  </xsl:template>
+
+  <xsl:template match="tei:teiCorpus/tei:TEI">
+    <xsl:call-template name="mainAction"/>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>back matter</desc>
    </doc>
   <xsl:template match="tei:back">
       <xsl:comment>Back matter</xsl:comment>
@@ -110,7 +119,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>body matter</desc>
    </doc>
   <xsl:template match="tei:body">
       <xsl:choose>
