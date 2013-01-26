@@ -1,7 +1,7 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: test-html test-latex test-fo test-docx conversions-from p4top5 conversions-to  oddity
+default: test-html test-latex test-fo test-docx test-other test-epub p4top5 conversions-to  oddity
 
 p4top5:
 	saxon -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -50,12 +50,10 @@ test-html:
 	xmllint --format files/two.html > x ; mv x files/two.html
 	xmllint --format files/three.html > x ; mv x files/three.html
 	diff -r -x .svn files expected-results/testnotes3
-	saxon -o:test25.html test25.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	diff test25.html expected-results/test25.html
-	saxon -o:test26.html test26.xml ../xhtml2/tei.xsl $(SAXONOPT)
-	diff test26.html expected-results/test26.html
 	saxon -o:test24.html test24.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test24.html expected-results/test24.html
+	saxon -o:test25.html test25.xml ../xhtml2/tei.xsl $(SAXONOPT)
+	diff test25.html expected-results/test25.html
 	rm -rf files
 
 testsplit:
@@ -63,41 +61,51 @@ testsplit:
 
 
 test-latex:
-	saxon -o:test6.tex test6.xml ../slides/teilatex-slides.xsl $(SAXONOPT)
-	diff test6.tex expected-results/test6.tex
-	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
-	diff test5.tex expected-results/test5.tex
+	saxon -o:test.tex test.xml ../latex2/tei.xsl  $(SAXONOPT)
+	diff test.tex expected-results/test.tex
 	saxon -o:testnotes1.tex testnotes1.xml ../latex2/tei.xsl  $(SAXONOPT)
 	diff testnotes1.tex expected-results/testnotes1.tex
+	saxon -o:test5.tex test5.xml ../latex2/tei.xsl  $(SAXONOPT)
+	diff test5.tex expected-results/test5.tex
+	saxon -o:test6.tex test6.xml ../slides/teilatex-slides.xsl $(SAXONOPT)
+	diff test6.tex expected-results/test6.tex
 	saxon -o:test23.tex test23.xml ../latex2/tei.xsl $(SAXONOPT)
 	diff test23.tex expected-results/test23.tex
 	saxon -o:test24.tex test24.xml ../latex2/tei.xsl $(SAXONOPT)
 	diff test24.tex expected-results/test24.tex
 	saxon -o:test25.tex test25.xml ../latex2/tei.xsl $(SAXONOPT)
 	diff test25.tex expected-results/test25.tex
-	saxon -o:test26.tex test26.xml ../latex2/tei.xsl $(SAXONOPT)
-	diff test26.tex expected-results/test26.tex
 
 test-fo:
-	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
-	diff test5.fo expected-results/test5.fo
-	jing fo.xsd test5.fo
-	saxon -o:testnotes1.fo testnotes1.xml ../fo2/tei.xsl  $(SAXONOPT)
-	diff testnotes1.fo expected-results/testnotes1.fo
-	jing fo.xsd testnotes1.fo
 	saxon -o:test.fo test.xml ../fo2/tei.xsl  $(SAXONOPT)
-	diff test.fo expected-results/test.fo
 	jing fo.xsd test.fo
+	diff test.fo expected-results/test.fo
+	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
+	jing fo.xsd test5.fo
+	diff test5.fo expected-results/test5.fo
+	saxon -o:testnotes1.fo testnotes1.xml ../fo2/tei.xsl  $(SAXONOPT)
+	jing fo.xsd testnotes1.fo
+	diff testnotes1.fo expected-results/testnotes1.fo
 	saxon -o:test24.fo test24.xml ../fo2/tei.xsl $(SAXONOPT)
 	jing fo.xsd test24.fo 
 	diff test24.fo expected-results/test24.fo
 	saxon -o:test25.fo test25.xml ../fo2/tei.xsl $(SAXONOPT)
 	diff test25.fo expected-results/test25.fo
-	saxon -o:test26.fo test26.xml ../fo2/tei.xsl $(SAXONOPT)
-	jing fo.xsd test26.fo 
-	diff test26.fo expected-results/test26.fo
 
-conversions-from:
+test-epub:
+	../teitoepub3  test.xml test.epub
+	epubcheck3 test.epub
+	../teitoepub  test.xml test.epub
+	epubcheck test.epub
+	unzip -t test.epub > test.epub.listing
+	diff test.epub.listing expected-results/test.epub.listing
+	rm test.epub.listing
+	../teitoepub  --fileperpage test.xml test-pages.epub
+	unzip -t test-pages.epub > test.epub.listing2
+	diff test.epub.listing2 expected-results/test.epub.listing2
+	rm test.epub.listing2
+
+test-other:
 	../teitornc  test21.odd test21.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test21.odd.rnc
 	diff test21.odd.rnc expected-results/test21.odd.rnc 
@@ -108,17 +116,6 @@ conversions-from:
 	diff test12.rdf expected-results/test12.rdf
 	../teitotxt test14.xml test.text
 	diff test.text expected-results/test.text
-	../teitolatex test.xml
-	perl -p -i -e 's/Date{[^}]*}/Date{}/' test.tex
-	diff test.tex expected-results/test.tex
-	../teitoepub  test.xml test.epub
-	unzip -t test.epub > test.epub.listing
-	diff test.epub.listing expected-results/test.epub.listing
-	rm test.epub.listing
-	../teitoepub  --fileperpage test.xml test-pages.epub
-	unzip -t test-pages.epub > test.epub.listing2
-	diff test.epub.listing2 expected-results/test.epub.listing2
-	rm test.epub.listing2
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
@@ -127,11 +124,6 @@ conversions-from:
 	unzip -t test.xml.odt > test.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
 	rm test.xml.odt.listing
-	../teitohtml --debug --summaryDoc --profile=tei --odd test15.odd test.odd.html
-	xmllint --format test.odd.html > x ; mv x test.odd.html
-	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
-	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
-	diff test.odd.html expected-results/test.odd.html
 
 test-docx:
 	../teitodocx test.xml 
@@ -167,6 +159,11 @@ conversions-to:
 	rm test.rng test.rnc
 
 oddity:
+	../teitohtml --debug --summaryDoc --profile=tei --odd test15.odd test.odd.html
+	xmllint --format test.odd.html > x ; mv x test.odd.html
+	perl -p -i -e 's/on 20.*Z--/--/' test.odd.html
+	perl -p -i -e 's/Date: [^<]+<br/<br/' test.odd.html
+	diff test.odd.html expected-results/test.odd.html
 	saxon -it:main -o:oddbyexample.odd  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare 
 	perl -p -i -e 's+<p>generated by oddbyexample.*</p>+<p></p>+' oddbyexample.odd
 	perl -p -i -e 's+<date>.*</date>+<date></date>+' oddbyexample.odd

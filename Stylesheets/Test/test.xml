@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader type="text">
     <fileDesc>
@@ -6,20 +6,24 @@
         <title type="main">A Christmas Carol</title>
         <author>Dickens, Charles, 1812-1870</author>
       </titleStmt>
-      <publicationStmt><p>Stylesheets test file</p></publicationStmt>
+      <publicationStmt>
+        <p>Stylesheets test file</p>
+      </publicationStmt>
       <sourceDesc>
         <p>Transcribed from the 1893 reprint of the first edition by Lou Burnard.</p>
       </sourceDesc>
     </fileDesc>
-    <encodingDesc><tagsDecl>
-      <rendition xml:id="prequote" scheme="css" scope="before">content:"‘";</rendition>
-      <rendition xml:id="postquote" scheme="css" scope="after">content:"’";</rendition>
-      <rendition xml:id="qbefore" scheme="css" scope="before">content:"“";</rendition>
-      <rendition xml:id="qafter" scheme="css" scope="after">content:"“";</rendition>
-      <namespace name="http://www.tei-c.org/ns/1.0">
-	<tagUsage gi="said" rend="#prequote #postquote"/>
-      </namespace>
-    </tagsDecl></encodingDesc>
+    <encodingDesc>
+      <tagsDecl>
+        <rendition xml:id="prequote" scheme="css" scope="before">content:"‘";</rendition>
+        <rendition xml:id="postquote" scheme="css" scope="after">content:"’";</rendition>
+        <rendition xml:id="qbefore" scheme="css" scope="before">content:"“";</rendition>
+        <rendition xml:id="qafter" scheme="css" scope="after">content:"“";</rendition>
+        <namespace name="http://www.tei-c.org/ns/1.0">
+          <tagUsage gi="said" rend="#prequote #postquote"/>
+        </namespace>
+      </tagsDecl>
+    </encodingDesc>
   </teiHeader>
   <text>
     <front>
@@ -49,8 +53,8 @@
         <signed> Their faithful Friend and Servant, C.D. <date>December, 1843.</date></signed>
       </div>
       <div type="toc">
+	<head>Contents.</head>
         <list type="gloss">
-          <head>Contents.</head>
           <label>Stave I</label>
           <item>Marley's ghost <ref target="#S1">1</ref></item>
           <label>Stave II</label>
@@ -69,49 +73,21 @@
     </front>
     <body>
       <head>(Bits of) A CHRISTMAS CAROL, and other things</head>
-      <div1>
-	<head>Rendering tests</head>
-	  <p><said rendition="#qbefore #qafter">Who-e debel
+      <div>
+        <head>Simple rendition tests</head>
+        <p><said rendition="#qbefore #qafter">Who-e debel
 	  you?</said> — he at last said — 
 	  <said rendition="#qbefore #qafter">you no speak-e,
 	  damme, I kill-e.</said>  And so saying,
 	  the lighted tomahawk began flourishing
 	  about me in the dark.</p>
-
-	  <p>
-	  <said>Who-e debel
+        <p><said>Who-e debel
 	  you?</said> — he at last said — 
 	  <said>you no speak-e,
 	  damme, I kill-e.</said>  And so saying,
 	  the lighted tomahawk began flourishing
 	  about me in the dark.</p>
-	<div2>
-        <head>Quotations</head>
-	<p>Consider quotations:
-	<quote>This is a quote which is run on within the text and will 
-	have quote marks of some kind around it.</quote></p>
-	<p>Another quotation:
-	<quote rend="display">This is a block quote set off as such from the rest of the text</quote></p>
-	<p>Here, by contrast is an <q>inline quotation</q>. Another strange thing 
-	about quotes is this:
-	<quote><lb/>You can put line breaks<lb/>to determine where the line breaks<lb/>Inside a block!</quote></p>
-      <p>He used a French <foreign xml:lang="fr-FR">radiateur</foreign>.</p>
-      <p>Languages: 
-<foreign xml:lang="de">Deutsch</foreign>; 
-<foreign xml:lang="it">Italiano</foreign>; 
-<foreign xml:lang="es">Español</foreign>; 
-<foreign xml:lang="fr">Français</foreign>; 
-<foreign xml:lang="pt">Portugues</foreign>; 
-<foreign xml:lang="ru">Russian</foreign>; 
-<foreign xml:lang="sw">Svenska</foreign>; 
-<foreign xml:lang="ja">日本語</foreign>; 
-<foreign xml:lang="zh-TW">中文</foreign>.</p>
-
-	</div2>
-	<pb n="1"/>
-	<div2>
-	  <head>Values of @rend on <gi>hi</gi></head>
-      <table>
+        <table>
           <row role="label">
             <cell>Effect</cell>
             <cell>Example</cell>
@@ -176,32 +152,57 @@
             <cell>superscript</cell>
             <cell>This is <hi rend="superscript">superscript</hi> effect</cell>
           </row>
+          <row>
+            <cell>bold italic smallcaps</cell>
+            <cell>
+              <hi rend="bold italic smallcaps">rend test 1</hi>
+              <note n="[1]" place="foot">Cairns 2003: 11. My work is Muellner
+	1996.</note>
+            </cell>
+          </row>
         </table>
-
-	<p><hi rend="bold italic smallcaps">rend test 1</hi><note n="[1]" place="foot">Cairns 2003: 11. My work is Muellner 1996.</note></p>
-	<p><hi rend="bold;italic smallcaps">rend test 2</hi><note n="[2]" rend="nosup" place="foot">Cairns 2003: 11. My work is Muellner 1996.</note></p>
-	<p>A paragraph with a footnote containing a block-level
-	object<note place="foot">We start with a quotation:<lg>
-<l>This is the way the world ends</l>
-<l>This is the way the world ends</l>
-<l>This is the way the world ends</l>
-<l>Not with a bang but a whimper.</l> </lg>
-which is from TS Eliot's
-<title>Hollow men</title>
-</note>
-</p>
-</div2>
-	<pb n="2"/>
-<div2>
-  <head>del, gap, add, unclear etc</head>
-	<p><del><gap/>. The <hi rend="superscript">interest</hi> &amp; &#x2014; affor <gap/>
+      </div>
+      <div>
+        <head>Quotations</head>
+        <p>A paragraph with a footnote containing a block-level
+	object<note place="foot">We start with a quotation:<lg><l>This is the way the world ends</l><l>This is the way the world ends</l><l>This is the way the world ends</l><l>Not with a bang but a whimper.</l></lg>
+	which is from TS Eliot's
+	<title>Hollow men</title>
+      </note>
+	</p>
+        <p>Consider quotations:
+	<quote>This is a quote which is run on within the text and will 
+	have quote marks of some kind around it.</quote></p>
+        <p>Another quotation:
+	<quote rend="display">This is a block quote set off as such from the rest of the text</quote></p>
+        <p>Here, by contrast is an <q>inline quotation</q>. Another strange thing 
+	about quotes is this:
+	<quote><lb/>You can put line breaks<lb/>to determine where the
+	line breaks<lb/>Inside a block!</quote></p>
+      </div>
+      <div>
+        <head>Use of xml:lang</head>
+        <p>He used a French <foreign xml:lang="fr-FR">radiateur</foreign>.</p>
+        <p>Languages: 
+      <foreign xml:lang="de">Deutsch</foreign>; 
+      <foreign xml:lang="it">Italiano</foreign>; 
+      <foreign xml:lang="es">Español</foreign>; 
+      <foreign xml:lang="fr">Français</foreign>; 
+      <foreign xml:lang="pt">Portugues</foreign>; 
+      <foreign xml:lang="ru">Russian</foreign>; 
+      <foreign xml:lang="sw">Svenska</foreign>; 
+      <foreign xml:lang="ja">日本語</foreign>; 
+      <foreign xml:lang="zh-TW">中文</foreign>.</p>
+      </div>
+      <div>
+        <head>del, gap, add, unclear etc</head>
+        <p><del><gap/>. The <hi rend="superscript">interest</hi> &amp; — affor <gap/>
 	the amount <unclear>over</unclear><lb/> so small</del> the interest afforded
 	<add>compared with cash, <del><gap/></del></add> by the Annuity<lb/> note
 	paper to those who <unclear>tutor</unclear>
 	<add><unclear>think</unclear></add> it, <add>or keep it,</add> with a view <lb/>
 	to circulation, will, <del>when compared with cash</del>
-	<add>be it ever so small</add> be <lb/> so much <hi rend="underline"
-	>profit</hi>: compared with <del>a</del>
+	<add>be it ever so small</add> be <lb/> so much <hi rend="underline">profit</hi>: compared with <del>a</del>
 	<add>the</add> preceding higher <lb/> rate of interest, the <add>reduced</add>
 	rate afforded by the Annuity <lb/> note paper, to those who,
 	<unclear><del>tutor</del></unclear> if they <unclear>tutor</unclear> it,
@@ -210,9 +211,9 @@ which is from TS Eliot's
 	their <add>respective</add> incomes, will, <del><gap/></del>
 	<add>by</add> the <lb/> amount of the difference, <unclear>foremost</unclear>
 	itself as so <lb/> much less.</p>
-</div2>
-      <div2>
-        <head>And now for something dramatic...</head>
+      </div>
+      <div>
+        <head>Drama</head>
         <sp>
           <speaker rend="it">Roderigo</speaker>
           <p>Where shall we meet i' the morning?</p>
@@ -241,15 +242,14 @@ which is from TS Eliot's
           <speaker rend="it">Roderigo</speaker>
           <p>I am changed: I'll go sell all my land.</p>
         </sp>
-      </div2>
-     
-      <div2>
-	<head>Footnotes</head>
-	<div3>
-	<head>1 Zur Entstehung der <hi rend="smcap">Philosophischen 
+      </div>
+      <div>
+        <head>Footnotes</head>
+        <div>
+          <head>1 Zur Entstehung der <hi rend="smcap">Philosophischen 
 	Untersuchungen</hi><note n="8" place="foot">Zu Textauszeichnungen und 
 	Siglen siehe die Legende.</note></head>
-      <p>Iriure dolor in hendrerit in vulputate velit esse molestie
+          <p>Iriure dolor in hendrerit in vulputate velit esse molestie
       consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
       accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
       delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor
@@ -261,31 +261,30 @@ which is from TS Eliot's
       accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
       delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor
       sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod</p>
-	</div3>
-      </div2>
-
-      <div2>
+        </div>
+      </div>
+      <div>
         <head>emph and links</head>
-          <p>The <gi>emph</gi> element is used for linguistic
+        <p>The <gi>emph</gi> element is used for linguistic
           emph<emph>asis</emph>.  <soCalled>highlighting</soCalled>
           (<gi>soCalled</gi>) nor with <mentioned>shouting</mentioned>
           (<gi>mentioned</gi>), <term>transmogrification</term>, (a
           technical <gi>term</gi>), for which the <gi>gloss</gi> tag
           might be used to supply <gloss>a technical
           definition</gloss>).</p>
-          <p>Now for some links! We will start by cross-referring to a later section.</p>
-          <p>Here is a simple
+        <p>Now for some links! We will start by cross-referring to a later section.</p>
+        <p>Here is a simple
             <gi>ptr</gi>
             to it:
             <ptr target="#P1"/>. Here is a simple
             <gi>ref</gi>, a
             <ref target="#P1">reference to it</ref>.</p>
-          <p>An
+        <p>An
             <ref target="http://www.bbc.co.uk">external link</ref>
             as ref and as ptr:
             <ptr target="http://www.bbc.co.uk"/>.</p>
-      </div2>
-      <div2>
+      </div>
+      <div>
         <head>Tables</head>
         <p>Tables may have cells that span multiple columns and rows.</p>
         <table rows="3" cols="3">
@@ -375,8 +374,8 @@ which is from TS Eliot's
             <cell>o</cell>
           </row>
         </table>
-      </div2>
-      <div2 xml:id="P1">
+      </div>
+      <div xml:id="P1">
         <head>Lists</head>
         <p>Various sorts of list are legal within paragraphs...
           <list type="ordered"><item>Dogs</item><item>Zebras</item><item>Birds</item><item>Cats</item></list>
@@ -416,11 +415,93 @@ which is from TS Eliot's
             </item>
           </list>
         </p>
-      </div2>
-
-      </div1>
-      <div1 xml:id="S1" type="stave">
-        <head>MARLEY'S GHOST</head>
+      </div>
+      <div>
+        <head>Pictures</head>
+        <table>
+          <row>
+            <cell/>
+            <cell>
+              <graphic url="portrait.jpg"/>
+            </cell>
+          </row>
+          <row>
+            <cell>width="2.5in" </cell>
+            <cell>
+              <graphic width="2.5in" url="portrait.jpg"/>
+            </cell>
+          </row>
+          <row>
+            <cell>width=".5in" </cell>
+            <cell>
+              <graphic width=".5in" url="portrait.jpg"/>
+            </cell>
+          </row>
+          <row>
+            <cell>scale=".5"</cell>
+            <cell>
+              <graphic url="portrait.jpg" scale=".5"/>
+            </cell>
+          </row>
+          <row>
+            <cell>width="1in"</cell>
+            <cell>
+              <graphic url="portrait.jpg" width="1in"/>
+            </cell>
+          </row>
+          <row>
+            <cell>width="1in" style="border:solid green
+	2pt"</cell>
+            <cell>
+              <graphic url="portrait.jpg" style="border:solid green 2pt" width="1in"/>
+            </cell>
+          </row>
+          <row>
+            <cell>height="1in"</cell>
+            <cell>
+              <graphic url="portrait.jpg" height="1in"/>
+            </cell>
+          </row>
+          <row>
+            <cell>height="1in" width="2in"</cell>
+            <cell>
+              <graphic url="portrait.jpg" height="1in" width="2in"/>
+            </cell>
+          </row>
+          <row>
+            <cell>height="2in" width="1in"</cell>
+            <cell>
+              <graphic url="portrait.jpg" height="2in" width="1in"/>
+            </cell>
+          </row>
+          <row>
+            <cell>width="10%"</cell>
+            <cell>
+              <graphic url="portrait.jpg" width="10%"/>
+            </cell>
+          </row>
+          <row>
+            <cell>height="10%" width="10%"</cell>
+            <cell>
+              <graphic url="portrait.jpg" height="10%" width="10%"/>
+            </cell>
+          </row>
+        </table>
+      </div>
+      <div>
+        <head>MS catalogue</head>
+        <listBibl>
+          <msDesc>
+            <msIdentifier>
+              <settlement>where is it</settlement>
+              <repository>repository name</repository>
+              <idno>identifier</idno>
+            </msIdentifier>
+          </msDesc>
+        </listBibl>
+      </div>
+      <div xml:id="S1" type="stave">
+        <head>Extended prose: MARLEY'S GHOST</head>
         <pb n="1" facs="bar.jpg"/>
         <p>Marley was dead: to begin with.  There is no doubt whatever
 about that.  The register of his burial was signed by the
@@ -457,7 +538,7 @@ Father died before the play began, there would be nothing more
 remarkable in his taking a stroll at night, in an easterly wind, upon
 his own ramparts, than there  <pb n="3"/> would be in any other
 middle-aged gentleman rashly  turning out after dark in a breezy spot
-&#x2014; say Saint  Paul's Churchyard for instance &#x2014; literally to
+— say Saint  Paul's Churchyard for instance — literally to
 astonish his son's weak mind.
 
 </p>
@@ -507,8 +588,8 @@ sympathy to keep its distance, was what the knowing ones call
 <soCalled>nuts</soCalled> to Scrooge.
 
 </p>
-        <p>Once upon a time &#x2014; of all the good days in the year, on
-Christmas Eve &#x2014; old Scrooge sat busy in his counting-house. It
+        <p>Once upon a time — of all the good days in the year, on
+Christmas Eve — old Scrooge sat busy in his counting-house. It
 was cold, bleak, biting weather: foggy withal: and he could hear the
 people in the court outside, go wheezing up and down, beating their
 hands upon their breasts, and stamping their feet upon the pavement
@@ -606,8 +687,8 @@ good, by which I have not profited, I dare say,</said> returned
 the nephew:  <said>Christmas among the rest.  But I am sure I have
 always thought of Christmas<pb n="9"/> time, when it has come
 round
- &#x2014; apart from the veneration due to its sacred name and
-origin, if anything belonging to it can be apart from that &#x2014;
+ — apart from the veneration due to its sacred name and
+origin, if anything belonging to it can be apart from that —
 as a good time: a kind, forgiving, charitable, pleasant time:
 the only time I know of, in the long calendar of the year,
 when men and women seem by one consent to open their
@@ -635,7 +716,7 @@ his nephew.  <said>I wonder you don't go into Parliament.</said><pb n="10"/>
           <said>Don't be angry, uncle.  Come!  Dine with us
 to-morrow.</said>
         </p>
-        <p>Scrooge said that he would see him &#x2014; yes, indeed he
+        <p>Scrooge said that he would see him — yes, indeed he
 did. He went the whole length of the expression, and said that
 he would see him in that extremity first.
 
@@ -785,7 +866,7 @@ go there.</said>
         </p>
         <p><said>If they would rather die,</said> said Scrooge, <said>they had
 better do it, and decrease the surplus population.  Besides
-&#x2014; excuse me &#x2014; I don't know that.</said>
+— excuse me — I don't know that.</said>
 
 </p>
         <p><said>But you might know it,</said> observed the gentleman.
@@ -803,35 +884,6 @@ with an improved opinion of himself, and in a more facetious
 temper than was usual with him. <pb n="15"/>
 
 </p>
-        <p>Meanwhile the fog and darkness thickened so, that people ran
-about with flaring links, proffering their services to go
-before horses in carriages, and conduct them on their way. The
-ancient tower of a church, whose gruff old bell was always
-peeping slily down at Scrooge out of a gothic window in the
-wall, became invisible, and struck the hours and quarters in
-the clouds, with tremulous vibrations afterwards as if its
-teeth were chattering in its frozen head up there. The cold
-became intense.  In the main street, at the corner of the
-court, some labourers were repairing the gas-pipes, and had
-lighted a great fire in a brazier, round which a party of
-ragged men and boys were gathered: warming their hands and
-winking their eyes before the blaze in rapture. The water-plug
-being left in solitude, its overflowings sullenly congealed,
-and turned to misanthropic ice.  The brightness of the shops
-where holly sprigs and berries crackled in the lamp-heat of the
-windows, made pale faces ruddy as they passed.  Poulterers' and
-grocers' trades became a splendid joke: a glorious pageant,
-with which it was next to impossible to <pb n="16"/>believe that
-such dull principles as bargain and sale had anything to do. 
-The Lord Mayor, in the stronghold of the might Mansion House,
-gave orders to his fifty cooks and butlers to keep Christmas as
-a Lord Mayor's household should; and even the little tailor,
-whom he had fined five shillings on the previous Monday for
-being drunk and bloodthirsty in the streets, stirred up
-tomorrow's pudding in his garret, while his lean wife and the
-baby sallied out to buy the beef.
-
-</p>
         <p>Foggier yet, and colder!  Piercing, searching, biting cold.
 If the good Saint Dunstan had but nipped the Evil Spirit's nose
 with a touch of such weather as that, <note>test of a
@@ -845,643 +897,9 @@ the first sound of  <q type="verse"><l>God bless you, merry gentleman!
 with such energy of action<pb n="17"/> that the singer fled in
 terror, leaving the keyhole to the fog and even more congenial
 frost.
-
-</p>
-        <p>At length the hour of shutting up the counting-house
-arrived.  With an ill-will Scrooge dismounted from his stool,
-and tacitly admitted the fact to the expectant clerk in the
-Tank, who instantly snuffed his candle out, and put on his hat.
-
-</p>
-        <p><said>You'll want all day tomorrow, I suppose?</said> said
-Scrooge.
-
-</p>
-        <p>
-          <said>If quite convenient, Sir.</said>
-        </p>
-        <p><said>It's not convenient,</said> said Scrooge, <said>and it's not
-fair. If I was to stop half-a-crown for it, you'd think
-yourself ill-used, I 'll be bound?</said>
-
-</p>
-        <p>The clerk smiled faintly.
-
-</p>
-        <p><said>And yet,</said> said Scrooge, <said>you don't think
-<emph>me</emph> ill-used, when I pay a day's wages for no
-work.</said>
-
-</p>
-        <p>The clerk observed that it was only once a year.
-
-</p>
-        <p><said>A poor excuse for picking a man's pocket every
-twenty-fifth of December!</said> said Scrooge, buttoning his
-great-coat to the chin.  <said>But I suppose you must have the
-whole day. Be here all the earlier next morning!</said> <pb n="18"/>
-
-</p>
-        <p>The clerk promised that he would; and Scrooge walked out
-with a growl.  The office was closed in a twinkling, and the
-clerk, with the long ends of his white comforter dangling below
-his waist (for he boasted no great-coat), went down a slide on
-Cornhill, at the end of a lane of boys, twenty times, in honour
-of its being Christmas Eve, and then ran home to Camden Town as
-hard as he could pelt, to play at blindman's buff.
-
-</p>
-        <p>Scrooge took his melancholy dinner in his usual melancholy
-tavern; and having read all the newspapers, and beguiled the
-rest of the evening with his banker's-book, went home to bed. 
-He lived in chambers which had once belonged to his deceased
-partner.  They were a gloomy suite of rooms, in a lowering pile
-of building up a yard, where it had so little business to be,
-that one could scarcely help fancying it must have run there
-when it was a young house, playing at hide-and-seek with other
-houses, and have forgotten the way out again. It was old enough
-now, and dreary enough, for nobody lived in it but Scrooge, the
-other rooms being<pb n="19"/> all let out as offices. The yard
-was so dark that even Scrooge, who knew its every stone, was
-fain to grope with his hands.  The fog and frost so hung about
-the black old gateway of the house, that it seemed as if the
-Genius of the Weather sat in mournful meditation on the
-threshold.
-
-</p>
-        <p>Now, it is a fact, that there was nothing at all particular
-about the knocker on the door, except that it was very large.
-It is also a fact, that Scrooge had seen it, night and morning,
-during his whole residence in that place; also that Scrooge had
-as little of what is called fancy about him as any man in the
-City of London, even including &#x2014; which is a bold word
-&#x2014; the corporation, aldermen, and livery.  Let it also be
-borne in mind that Scrooge had not bestowed one thought on
-Marley, since his last mention of his seven-year's dead partner
-that afternoon.  And then let any man explain to me, if he can,
-how it happened that Scrooge, having his key in the lock of the
-door, saw in the knocker, without its undergoing any
-intermediate process of change:  not a knocker, but Marley's
-face. <pb n="20"/>
-
-</p>
-        <p>Marley's face.  It was not in impenetrable shadow as the
-other objects in the yard were, but had a dismal light about
-it, like a bad lobster in a dark cellar.  It was not angry or
-ferocious, but looked at Scrooge as Marley used to look: with
-ghostly spectacles turned up upon its ghostly forehead. The
-hair was curiously stirred, as if by breath or hot-air; and,
-though the eyes were wide open, they were perfectly motionless.
- That, and its livid colour, made it horrible; but its horror
-seemed to be in spite of the face and beyond its control,
-rather than a part of its own expression.
-
-</p>
-        <p>As Scrooge looked fixedly at this phenomenon, it was a
-knocker again.
-
-</p>
-        <p>To say that he was not startled, or that his blood was not
-conscious of a terrible sensation to which it had been a
-stranger from infancy, would be untrue.  But he put his hand
-upon the key he had relinquished, turned it sturdily, walked
-in, and lighted his candle.
-
-</p>
-        <p>He <emph>did</emph> pause, with a moment's irresolution,
-before he shut the door; and he <emph>did</emph> look
-cautiously behind<pb n="21"/> it first, as if he half expected
-to be terrified with the sight of Marley's pigtail sticking out
-into the hall.  But there was nothing on the back of the door,
-except the screws and nuts that held the knocker on, so he said
-<said>Pooh, pooh!</said> and closed it with a bang.
-
-</p>
-        <p>The sound resounded through the house like thunder. Every
-room above, and every cask in the wine-merchant's cellars
-below, appeared to have a separate peal of echoes of its own. 
-Scrooge was not a man to be frightened by echoes. He fastened
-the door, and walked across the hall, and up the stairs, slowly
-too: trimming his candle as he went.
-
-</p>
-        <p>You may talk vaguely about driving a coach-and-six up a good
-old flight of stairs, or through a bad young Act of Parliament;
-but I mean to say you might have got a hearse up that
-staircase, and taken it broadwise, with the splinter-bar
-towards the wall and the door towards the balustrades: and done
-it easy.  There was plenty of width for that, and room to
-spare; which is perhaps the reason why Scrooge thought he saw a
-locomotive hearse going on before him in the gloom.
-Half-a-dozen gas-lamps out of<pb n="22"/> the street wouldn't
-have lighted the entry too well, so you may suppose that it was
-pretty dark with Scrooge's dip.
-
-</p>
-        <p>Up Scrooge went, not caring a button for that: darkness is
-cheap, and Scrooge liked it.  But before he shut his heavy
-door, he walked through his rooms to see that all was right. He
-had just enough recollection of the face to desire to do that.
-
-</p>
-        <p>Sitting-room, bed-room, lumber-room.  All as they should be.
- Nobody under the table, nobody under the sofa; a small fire in
-the grate; spoon and basin ready; and the little saucepan of
-gruel (Scrooge has a cold in his head) upon the hob. Nobody
-under the bed; nobody in the closet; nobody in his
-dressing-gown, which was hanging up in a suspicious attitude
-against the wall.  Lumber-room as usual.  Old fire-guard, old
-shoes, two fish-baskets, washing-stand on three legs, and a
-poker.
-
-</p>
-        <p>Quite satisfied, he closed his door, and locked himself in;
-double-locked himself in, which was not his custom.  Thus
-secured against surprise, he took<pb n="23"/> off his cravat;
-put on his dressing-gown and slippers, and his night-cap; and
-sat down before the fire to take his gruel.
-
-</p>
-        <p>It was a very low fire indeed; nothing on such a bitter
-night.  He was obliged to sit close to it, and brood over it,
-before he could extract the least sensation of warmth from such
-a handful of fuel.  The fireplace was an old one, built by some
-Dutch merchant long ago, and paved all round with quaint Dutch
-tiles, designed to illustrate the Scriptures. There were Cains
-and Abels, Pharaoh's daughters, Queens of Sheba, Angelic
-messengers descending through the air on clouds like
-feather-beds, Abrahams, Belshazzars, Apostles putting off to
-sea in butter-boats, hundreds of figures to attract his
-thoughts; and yet that face of Marley, seven years dead, came
-like the ancient Prophet's rod, and swallowed up the whole.  If
-each smooth tile had been a blank at first, with power to shape
-some picture on its surface from the disjointed fragments of
-his thoughts, there would have been a copy of old Marley's head
-on every one. <pb n="24"/>
-
-</p>
-        <p><said>Humbug!</said> said Scrooge; and walked across the room.
-
-</p>
-        <p>After several turns, he sat down again.  As he threw his
-head back in the chair, his glance happened to rest upon a
-bell, a disused bell, that hung in the room, and communicated
-for some purpose now forgotten with a chamber in the highest
-story of the building.  It was with great astonishment, and
-with a strange, inexplicable dread, that as he looked, he saw
-this bell begin to swing.  It swung so softly in the outset
-that it scarcely made a sound; but soon it rang out loudly, and
-so did every bell in the house.
-
-</p>
-        <p>This might have lasted half a minute, or a minute, but it
-seemed an hour.  The bells ceased as they had begun, together. 
-They were succeeded by a clanking noise, deep down below; as if
-some person were dragging a heavy chain over the casks in the
-wine-merchant's cellar.  Scrooge then remembered to have heard
-that ghosts in haunted houses were described as dragging
-chains.
-
-</p>
-        <p>The cellar-door flew open with a booming sound,<pb n="25"/>
-and then he heard the noise much louder, on the floors below;
-then coming up the stairs; then coming straight towards his
-door.
-
-</p>
-        <p><said>It's humbug still!</said> said Scrooge.  <said>I won't believe
-it.</said>
-
-</p>
-        <p>His colour changed though, when, without a pause, it came on
-through the heavy door, and passed into the room before his
-eyes.  Upon its coming in, the dying flame leaped up, as though
-it cried, <said>I know him! Marley's Ghost!</said> and fell again.
-
-</p>
-        <p>The same face: the very same.  Marley in his pigtail, usual
-waistcoat, tights, and boots; the tassels on the latter
-bristling, like his pigtail, and his coat-skirts, and the hair
-upon his head.  The chain he drew was clasped about his middle.
- It was long, and wound about him like a tail; and it was made
-(for Scrooge observed it closely) of cash-boxes, keys,
-padlocks, ledgers, deeds, and heavy purses wrought in steel. 
-His body was transparent; so that Scrooge, observing him, and
-looking through his waistcoat, could see the two buttons on his
-coat behind. <pb n="26"/>
-
-</p>
-        <p>Scrooge had often heard it said that Marley had no bowels,
-but he had never believed it until now.
-
-</p>
-        <p>No, nor did he believe it even now.  Though he looked the
-phantom through and through, and saw it standing before him;
-though he felt the chilling influence of its death-cold eyes;
-and marked the very texture of the folded kerchief bound about
-its head and chin, which wrapper he had not observed before; he
-was still incredulous, and fought against his senses.
-
-</p>
-        <p><said>How now!</said> said Scrooge, caustic and cold as ever.
- <said>What do you want with me?</said>
-
-</p>
-        <p><said>Much!</said> &#x2014; Marley's voice, no doubt about it.
-
-</p>
-        <p>
-          <said>Who are you?</said>
-        </p>
-        <p>
-          <said>Ask me who I <emph>was</emph>.</said>
-        </p>
-        <p><said>Who <emph>were</emph> you then.</said> said Scrooge, raising
-his voice.
- <said>You're particular, for a shade.</said> He was going to say <said><emph>to</emph>
-a shade,</said> but substituted this, as more appropriate.
-
-</p>
-        <p>
-          <said>In life I was your partner, Jacob Marley.</said>
-        </p>
-        <p><said>Can you &#x2014; can you sit down?</said> asked Scrooge,
-looking doubtfully at him. <pb n="27"/>
-
-</p>
-        <p>
-          <said>I can.</said>
-        </p>
-        <p>
-          <said>Do it, then.</said>
-        </p>
-        <p>Scrooge asked the question, because he didn't know whether a
-ghost so transparent might find himself in a condition to take
-a chair; and felt that in the event of its being impossible, it
-might involve the necessity of an embarrassing explanation. But
-the ghost sat down on the opposite side of the fireplace, as if
-he were quite used to it.
-
-</p>
-        <p><said>You don't believe in me,</said> observed the Ghost.
-
-</p>
-        <p><said>I don't,</said> said Scrooge.
-
-</p>
-        <p>
-          <said>What evidence would you have of my reality beyond that of
-your senses?</said>
-        </p>
-        <p><said>I don't know,</said> said Scrooge.
-
-</p>
-        <p>
-          <said>Why do you doubt your senses?</said>
-        </p>
-        <p><said>Because,</said> said Scrooge, <said>a little thing affects
-them.  A slight disorder of the stomach makes them cheats.  You
-may be an undigested bit of beef, a blot of mustard, a crumb of
-cheese, a fragment of an underdone potato.  There's more of
-gravy than of grave about you, whatever you are!</said>
-
-</p>
-        <p>Scrooge was not much in the habit of cracking<pb n="28"/>
-jokes, nor did he feel, in his heart, by any means waggish
-then.  The truth is, that he tried to be smart, as a means of
-distracting his own attention, and keeping down his terror; for
-the spectre's voice disturbed the very marrow in his bones.
-
-</p>
-        <p>To sit, staring at those fixed, glazed eyes, in silence for
-a moment, would play, Scrooge felt, the very deuce with him.
-There was something very awful, too, in the spectre's being
-provided with an infernal atmosphere of its own.  Scrooge could
-not feel it himself, but this was clearly the case; for though
-the Ghost sat perfectly motionless, its hair, and skirts, and
-tassels, were still agitated as by the hot vapour from an oven.
-
-</p>
-        <p><said>You see this toothpick?</said> said Scrooge, returning
-quickly to the charge, for the reason just assigned; and
-wishing, though it were only for a second, to divert the
-vision's stony gaze from himself.
-
-</p>
-        <p><said>I do,</said> replied the Ghost.
-
-</p>
-        <p><said>You are not looking at it,</said> said Scrooge.
-
-</p>
-        <p><said>But I see it,</said> said the Ghost, <said>notwithstanding.</said><pb n="29"/>
-
-</p>
-        <p><said>Well!</said> returned Scrooge, <said>I have but to swallow
-this, and be for the rest of my days persecuted by a legion of
-goblins, all of my own creation.  Humbug, I tell you;
-humbug!</said>
-
-</p>
-        <p>At this the spirit raised a frightful cry, and shook its
-chain with such a dismal and appalling noise, that Scrooge held
-on tight to his chair, to save himself from falling in a swoon.
-But how much greater was his horror, when the phantom taking
-off the bandage round its head, as if it were too warm to wear
-in-doors, its lower jaw dropped down upon its breast!
-
-</p>
-        <p>Scrooge fell upon his knees, and clasped his hands before
-his face.
-
-</p>
-        <p><said>Mercy!</said> he said.  <said>Dreadful apparition, why do you
-trouble me?</said>
-
-</p>
-        <p><said>Man of the worldly mind!</said> replied the Ghost, <said>do you
-believe in me or not?</said>
-
-</p>
-        <p><said>I do,</said> said Scrooge.  <said>I must.  But why do spirits
-walk the earth, and why do they come to me?</said>
-
-</p>
-        <p><said>It is required of every man,</said> the Ghost returned,
-<said>that the spirit within him should walk abroad<pb n="30"/>
-among his fellow-men, and travel far and wide; and if that
-spirit goes not forth in life, it is condemned to do so after
-death.  It is doomed to wander through the world &#x2014; oh,
-woe is me! &#x2014; and witness what it cannot share, but might
-have shared on earth, and turned to happiness!</said>
-
-</p>
-        <p>Again the spectre raised a cry, and shook its chain, and
-wrung its shadowy hands.
-
-</p>
-        <p><said>You are fettered,</said> said Scrooge, trembling.  <said>Tell
-me why?</said>
-
-</p>
-        <p><said>I wear the chain I forged in life,</said> replied the Ghost.
- <said>I made it link by link, and yard by yard; I girded it on
-of my own free will, and of my own free will I wore it.  Is
-its pattern strange to <emph>you</emph>?</said>
-
-</p>
-        <p>Scrooge trembled more and more.
-
-</p>
-        <p><said>Or would you know,</said> pursued the Ghost, <said>the weight
-and length of the strong coil you bear yourself?  It was full
-as heavy and as long as this, seven Christmas Eves ago.  You
-have laboured on it, since.  It is a ponderous chain!</said>
-
-</p>
-        <p>Scrooge glanced about him on the floor, in the expectation
-of finding himself surrounded by some<pb n="31"/> fifty or sixty
-fathoms of iron cable: but he could see nothing.
-
-</p>
-        <p><said>Jacob,</said> he said, imploringly.  <said>Old Jacob Marley,
-tell me more.  Speak comfort to me, Jacob.</said>
-
-</p>
-        <p><said>I have none to give,</said> the Ghost replied.  <said>It comes
-from other regions, Ebenezer Scrooge, and is conveyed by other
-ministers, to other kinds of men.  Nor can I tell you what I
-would.  A very little more, is all permitted to me.  I cannot
-rest, I cannot stay, I cannot linger anywhere.  My spirit never
-walked beyond our counting-house &#x2014; mark me! &#x2014; in
-life my spirit never roved beyond the narrow limits of our
-money-changing hole; and weary journeys lie before me!</said>
-
-</p>
-        <p>It was a habit with Scrooge, whenever he became thoughtful,
-to put his hands in his breeches pockets.  Pondering on what
-the Ghost had said, he did so now, but without lifting up his
-eyes, or getting off his knees.
-
-</p>
-        <p><said>You must have been very slow about it, Jacob,</said> Scrooge
-observed, in a business-like manner, though with humility and
-deference. <pb n="32"/>
-
-</p>
-        <p><said>Slow!</said> the Ghost repeated.
-
-</p>
-        <p><said>Seven years dead,</said> mused Scrooge. <said>And travelling
-all the time?</said>
-
-</p>
-        <p><said>The whole time,</said> said the Ghost.  <said>No rest, no
-peace. Incessant torture of remorse.</said>
-
-</p>
-        <p><said>You travel fast?</said> said Scrooge.
-
-</p>
-        <p><said>On the wings of the wind,</said> replied the Ghost.
-
-</p>
-        <p><said>You might have got over a great quantity of ground in
-seven years,</said> said Scrooge.
-
-</p>
-        <p>The Ghost, on hearing this, set up another cry, and clanked
-its chain so hideously in the dead silence of the night, that
-the Ward would have been justified in indicting it for a
-nuisance.
-
-</p>
-        <p><said>Oh! captive, bound, and double-ironed,</said> cried the
-phantom, <said>not to know, that ages of incessant labour by
-immortal creatures, for this earth must pass into eternity
-before the good of which it is susceptible is all developed.
-Not to know that any Christian spirit working kindly in its
-little sphere, whatever it may be, will find its mortal life
-too short for its vast means of usefulness.  Not to know that
-no space of regret can make amends for one life's<pb n="33"/>
-opportunities misused!  Yet such was I!  Oh! such was I!</said>
-
-</p>
-        <p><said>But you were always a good man of business, Jacob,</said>
-faultered Scrooge, who now began to apply this to himself.
-
-</p>
-        <p><said>Business!</said> cried the Ghost, wringing its hands again.
- <said>Mankind was my business.  The common welfare was my
-business; charity, mercy, forbearance, and benevolence, were,
-all, my business.  The dealings of my trade were but a drop
-of water in the comprehensive ocean of my business!</said>
-
-</p>
-        <p>It held up its chain at arm's length, as if that were the
-cause of all its unavailing grief, and flung it heavily upon
-the ground again.
-
-</p>
-        <p><said>At this time of the rolling year,</said> the spectre said,
-<said>I suffer most.  Why did I walk through crowds of
-fellow-beings with my eyes turned down, and never raise them to
-that blessed Star which led the Wise Men to a poor abode? Were
-there no poor homes to which its light would have conducted
-<emph>me!</emph></said>
-
-</p>
-        <p>Scrooge was very much dismayed to hear the spectre going on
-at this rate, and began to quake exceedingly. <pb n="34"/>
-
-</p>
-        <p><said>Hear me!</said> cried the Ghost.  <said>My time is nearly
-gone.</said>
-
-</p>
-        <p><said>I will,</said> said Scrooge.  <said>But don't be hard upon me!
-Don't be flowery, Jacob!  Pray!</said>
-
-</p>
-        <p>
-          <said>How it is that I appear before you in a shape that you
-can see, I may not tell.  I have sat invisible beside you many
-and many a day.</said>
-        </p>
-        <p>It was not an agreeable idea.  Scrooge shivered, and wiped
-the perspiration from his brow.
-
-</p>
-        <p><said>That is no light part of my penance,</said> pursued the
-Ghost.
- <said>I am here to-night to warn you, that you have yet a chance
-and hope of escaping my fate.  A chance and hope of my
-procuring, Ebenezer.</said>
-
-</p>
-        <p><said>You were always a good friend to me,</said> said Scrooge.
- <said>Thank'ee!</said>
-
-</p>
-        <p><said>You will be haunted,</said> resumed the Ghost, <said>by Three
-Spirits.</said>
-
-</p>
-        <p>Scrooge's countenance fell almost as low as the Ghost's had
-done.
-
-</p>
-        <p><said>Is that the chance and hope you mentioned, Jacob?</said> he
-demanded, in a faltering voice.
-
-</p>
-        <p>
-          <said>It is.</said>
-        </p>
-        <p><said>I &#x2014; I think I'd rather not,</said> said Scrooge. <pb n="35"/>
-
-</p>
-        <p><said>Without their visits,</said> said the Ghost, <said>you cannot
-hope to shun the path I tread.  Expect the first to-morrow,
-when the bell tolls One.</said>
-
-</p>
-        <p><said>Couldn't I take 'em all at once, and have it over,
-Jacob?</said> hinted Scrooge.
-
-</p>
-        <p>
-          <said>Expect the second on the next night at the same hour. The
-third upon the next night when the last stroke of Twelve has
-ceased to vibrate.  Look to see me no more; and look that, for
-your own sake, you remember what has passed between us.</said>
-        </p>
-        <p>When it had said these words, the spectre took its wrapper
-from the table, and bound it round its head, as before. Scrooge
-knew this, by the smart sound its teeth made, when the jaws
-were brought together by the bandage.  He ventured to raise his
-eyes again, and found his supernatural visitor confronting him
-in an erect attitude, with its chain wound over and about its
-arm.
-
-</p>
-        <p>The apparition walked backward from him; and at every step
-it took, the window raised itself a little, so that when the
-spectre reached it, it was wide open.
-
-</p>
-        <p>It beckoned Scrooge to approach, which he did. <pb n="36"/>
-When they were within two paces of each other, Marley's Ghost
-held up its hand, warning him to come no nearer.  Scrooge
-stopped.
-
-</p>
-        <p>Not so much in obedience, as in surprise and fear: for on
-the raising of the hand, he became sensible of confused noises
-in the air; incoherent sounds of lamentation and regret;
-wailings inexpressibly sorrowful and self-accusatory.  The
-spectre, after listening for a moment, joined in the mournful
-dirge; and floated out upon the bleak, dark night. 
-
-</p>
-        <p>Scrooge followed to the window: desperate in his curiosity. 
-He looked out.
-
-</p>
-        <p>The air was filled with phantoms, wandering hither and
-thither in restless haste, and moaning as they went. Every one
-of them wore chains like Marley's Ghost; some few (they might
-be guilty governments) were linked together; none were free.
-Many had been personally known to Scrooge in their lives. He
-had been quite familiar with one old ghost, in a white
-waistcoat, with a monstrous iron safe attached to its ankle,
-who cried piteously at being unable to assist a wretched woman
-with an <pb n="37"/> infant, whom it saw below, upon a
-door-step. The misery with them all was, clearly, that they
-sought to interfere, for good, in human matters, and had lost
-the power for ever. 
-<pb n="38"/>
-
-</p>
-        <p>Whether these creatures faded into mist, or mist enshrouded
-them, he could not tell.  But they and their spirit voices
-faded together; and the night became as it had been when he
-walked home.
-
 </p>
-        <p>Scrooge closed the window, and examined the door by which
-the Ghost had entered.  It was double-locked, as he had locked
-it with his own hands, and the bolts were undisturbed. He tried
-to say <said>Humbug!</said> but stopped at the first syllable.  And
-being, from the emotion he had undergone, or the fatigues of
-the day, or his glimpse of the Invisible World, or the dull
-conversation of the Ghost, or the lateness of the hour, much in
-need of repose; went straight to bed, without undressing, and
-fell asleep upon the instant. </p>
-</div1>
-<div1>
-  <head>Pictures</head>
-<table>
-	<row><cell></cell><cell><graphic url="portrait.jpg"/></cell></row>
-	<row><cell>width="2.5in" </cell><cell><graphic width="2.5in" url="portrait.jpg"/></cell></row>
-	<row><cell>width=".5in" </cell><cell><graphic width=".5in" url="portrait.jpg"/></cell></row>
-	<row><cell>scale=".5"</cell><cell><graphic url="portrait.jpg" scale=".5"/></cell></row>
-	<row><cell>width="1in"</cell><cell><graphic url="portrait.jpg" width="1in"/></cell></row>
-	<row><cell>width="1in" style="border:solid green
-	2pt"</cell><cell><graphic url="portrait.jpg"
-	style="border:solid green 2pt" width="1in"/></cell></row>
-	<row><cell>height="1in"</cell><cell><graphic url="portrait.jpg" height="1in"/></cell></row>
-	<row><cell>height="1in" width="2in"</cell><cell><graphic url="portrait.jpg" height="1in" width="2in"/></cell></row>
-	<row><cell>height="2in" width="1in"</cell><cell><graphic url="portrait.jpg" height="2in" width="1in"/></cell></row>
-	<row><cell>width="10%"</cell><cell><graphic url="portrait.jpg" width="10%"/></cell></row>
-	<row><cell>height="10%" width="10%"</cell><cell><graphic
-	url="portrait.jpg" height="10%" width="10%"/></cell></row>
-      </table>
-      </div1>
 
+      </div>
     </body>
   </text>
 </TEI>
-
-
-
