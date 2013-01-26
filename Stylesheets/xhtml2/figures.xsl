@@ -54,22 +54,28 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements m:*|@*|comment()|processing-instruction()|text()</desc>
+      <desc>Processing MathML to avoid prefixes (upsets browsers)</desc>
    </doc>
-  <xsl:template match="m:*|@*|comment()|processing-instruction()|text()" mode="math">
-      <xsl:copy>
-         <xsl:apply-templates mode="math" select="*|@*|processing-instruction()|text()"/>
+   <xsl:template   match="m:*"   mode="math">
+     <xsl:element name="{local-name()}"
+		  namespace="http://www.w3.org/1998/Math/MathML">
+       <xsl:apply-templates select="node() | @*" mode="math"/>
+     </xsl:element>
+   </xsl:template>
+   
+   <xsl:template match="@*|comment()|processing-instruction()|text()" mode="math">
+     <xsl:copy>
+       <xsl:apply-templates mode="math" select="*|@*|processing-instruction()|text()"/>
       </xsl:copy>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elements m:math</desc>
    </doc>
   <xsl:template match="m:math">
-      <m:math>
-         <xsl:copy-of select="@*"/>
-         <xsl:apply-templates mode="math"/>
-      </m:math>
+    <xsl:apply-templates mode="math" select="."/>
   </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element cell</desc>
    </doc>
@@ -474,16 +480,16 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="@xml:id and (@rend='display' or
 			@rend='equation' or @rend='subeqn')">
 	  <div id="{@xml:id}">
-	    <xsl:copy-of select="m:math"/>
+	    <xsl:apply-templates select="m:math" mode="math"/>
 	  </div>
 	</xsl:when>
 	<xsl:when test="@xml:id">
 	  <span id="{@xml:id}">
-	    <xsl:copy-of select="m:math"/>
+	    <xsl:apply-templates select="m:math" mode="math"/>
 	  </span>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:copy-of select="m:math"/>
+	  <xsl:apply-templates select="m:math" mode="math"/>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>

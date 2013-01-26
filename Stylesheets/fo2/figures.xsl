@@ -191,17 +191,17 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>formulae </desc>
    </doc>
   <xsl:template match="tei:formula">
-      <wrapper>
-         <xsl:if test="@xml:id">
-            <xsl:attribute name="id">
-               <xsl:value-of select="@xml:id"/>
-            </xsl:attribute>
-         </xsl:if>
-         <xsl:apply-templates/>
-      </wrapper>
+    <xsl:element name="{if (m:*) then 'instream-foreign-object' else 'wrapper'}">
+      <xsl:if test="@xml:id">
+	<xsl:attribute name="id">
+	  <xsl:value-of select="@xml:id"/>
+	</xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </xsl:element>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
@@ -210,7 +210,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:number/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>MathML in display formulae</desc>
    </doc>
   <xsl:template match="tei:formula[@rend='display']/m:math">
       <m:math display="block">
@@ -219,13 +219,13 @@ of this software, even if advised of the possibility of such damage.
       </m:math>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>subequations</desc>
    </doc>
   <xsl:template match="tei:formula[@rend='subeqn']/m:math">
       <xsl:apply-templates mode="math"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>handling graphics</desc>
    </doc>
   <xsl:template match="tei:graphic">
       <xsl:call-template name="makePic"/>

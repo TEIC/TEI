@@ -655,6 +655,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>&#x2011;</xsl:text>
   </xsl:template>
 
+ <xsl:template match="tei:hi[@rend='foreign']" mode="pass2">
+  <foreign>
+   <xsl:apply-templates mode="pass2"/>
+  </foreign>
+ </xsl:template>
+
 
 
 </xsl:stylesheet>
