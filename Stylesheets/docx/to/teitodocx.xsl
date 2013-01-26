@@ -76,7 +76,7 @@
   <xsl:param name="shadowGraphics">false</xsl:param>
   <xsl:param name="word-directory">..</xsl:param>
   <xsl:param name="tableWidthPercentage"></xsl:param>
-
+  <xsl:param name="glossListSeparator">tab</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet for making Word docx files from TEI XML </p>
@@ -746,6 +746,27 @@ of this software, even if advised of the possibility of such damage.
 	elements in Word does matter, by the way. 
      </desc>
   </doc>
+
+
+  <xsl:template match="tei:abbr" mode="get-style">tei_abbr</xsl:template>
+  <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
+  <xsl:template match="tei:date" mode="get-style">date</xsl:template>
+  <xsl:template match="tei:foreign" mode="get-style">tei_foreign</xsl:template>
+  <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
+  <xsl:template match="tei:mentioned" mode="get-style">tei_mentioned</xsl:template>
+  <xsl:template match="tei:orgName" mode="get-style">tei_orgName</xsl:template>
+  <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
+  <xsl:template match="tei:q" mode="get-style">tei_q</xsl:template>
+  <xsl:template match="tei:bibl" mode="get-style">tei_bibl</xsl:template>
+  <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
+  <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
+  
+  <xsl:template match="tei:p[@rend]" mode="get-style">
+    <xsl:call-template name="getStyleName">
+      <xsl:with-param name="in" select="@rend"/>
+    </xsl:call-template>
+  </xsl:template>
+  
   <xsl:template name="applyRend">
     <!-- use a custom font -->
     <xsl:choose>
@@ -2842,6 +2863,77 @@ of this software, even if advised of the possibility of such damage.
         <xsl:with-param name="style">Quote</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
+  <xsl:template match="tei:editionStmt">
+    <w:r>
+      <w:t>
+      <xsl:value-of select="tei:edition"/> Edition</w:t>
+    </w:r>
+  </xsl:template>
+
+    <!-- fake listPerson into an unordered list -->
+  <xsl:template match="tei:listPerson">
+      <xsl:variable name="mylist">
+         <tei:list type="unordered">
+	           <xsl:apply-templates/>
+         </tei:list>
+      </xsl:variable>
+      <xsl:apply-templates select="$mylist"/>
+  </xsl:template>
+
+  <xsl:template match="tei:person">
+      <tei:item>
+         <xsl:copy-of select="*|text()"/>
+      </tei:item>
+  </xsl:template>
+
+  <xsl:template match="tei:affiliation">
+      <w:r>
+        <w:br/>
+      </w:r>   
+     <xsl:apply-templates/>
+  </xsl:template>
+
+    <!-- Dates -->
+    <xsl:template match="tei:date[ancestor::tei:teiHeader]">
+        <w:r>
+            <w:rPr>
+                <w:rStyle w:val="date"/>
+            </w:rPr>
+            <w:t>
+                <xsl:value-of select="."/>
+            </w:t>
+        </w:r>
+    </xsl:template>
+
+    <!-- formulas -->
+    <xsl:template match="tei:formula">
+        <w:p>    
+            <w:pPr>
+                <w:pStyle w:val="Formula"/>
+            </w:pPr>
+            <xsl:call-template name="block-element">                   
+                <xsl:with-param name="nop">true</xsl:with-param>
+            </xsl:call-template>
+            <xsl:if test="@n">
+                <w:r>
+                    <w:tab/>
+                </w:r>
+                <w:r>
+                    <w:rPr>
+                        <w:rStyle w:val="FormulaReference"/>
+                    </w:rPr>
+                    <w:t xml:space="preserve"><xsl:value-of select="@n"/></w:t>
+                </w:r>
+            </xsl:if>
+        </w:p>
+    </xsl:template>        
+    
+
+    <!-- who created this document -->
+    <xsl:template name="created-by">
+        <xsl:text>TEI XSL</xsl:text>
+    </xsl:template>
 
 
 </xsl:stylesheet>

@@ -1037,7 +1037,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="identifier">
       <xsl:call-template name="noteID"/>
     </xsl:variable>
-    <xsl:element name="{if (parent::tei:head or parent::tei:hi)  then 'span'           else if (parent::tei:l) then 'span'           else if (parent::tei:bibl/parent::tei:head) then 'span' else if (parent::tei:stage/parent::tei:q) then 'span'           else if  (parent::tei:body or *[not(tei:is-inline(.))]) then 'div' else 'span' }">
+    <xsl:element name="{if (tei:is-inline(.)) then 'span' else 'div' }">
       <xsl:call-template name="makeAnchor">
 	<xsl:with-param name="name" select="concat($identifier,'_return')"/>
       </xsl:call-template>

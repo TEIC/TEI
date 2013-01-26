@@ -86,7 +86,6 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
         <xsl:param name="nop"/>
-
         <w:p>
             <w:pPr>
                 <w:pStyle w:val="dl"/>
@@ -96,7 +95,17 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:with-param name="nop">true</xsl:with-param>
             </xsl:apply-templates>
             <w:r>
-                <w:tab/>
+	      <xsl:choose>
+		<xsl:when test="$glossListSeparator='tab'">
+		  <w:tab/>
+		</xsl:when>
+		<xsl:when test="$glossListSeparator='break'">
+		  <w:br/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:message terminate="yes">the parameter  glossListSeparator can only have values 'break' or 'tab'</xsl:message>
+		</xsl:otherwise>
+	      </xsl:choose>
             </w:r>
             <xsl:for-each select="following-sibling::tei:item[1]">
 	      <xsl:apply-templates>

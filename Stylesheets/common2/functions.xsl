@@ -117,12 +117,19 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="element"/>
     <xsl:for-each select="$element">
       <xsl:choose>
-        <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
-        <xsl:when test="parent::tei:hi[@rend='bold']">true</xsl:when>
-        <xsl:when test="contains(@rend,'bold')">true</xsl:when>
+	<xsl:when test="@rend='label'">true</xsl:when>
+	<xsl:when test="@rend='odd_label'">true</xsl:when>
+	<xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
+	<xsl:when test="self::tei:docAuthor">true</xsl:when>
+	<xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
+	<xsl:when test="starts-with(@rend,'specList-')">true</xsl:when>
+	<xsl:when test="starts-with(parent::tei:hi/@rend,'specList-')">true</xsl:when>
         <xsl:when test="@rend='label'">true</xsl:when>
-        <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
         <xsl:when test="ancestor-or-self::tei:cell[@rend='wovenodd-col1']">true</xsl:when>
+        <xsl:when test="ancestor-or-self::tei:cell[@role='label']">true</xsl:when>
+        <xsl:when test="contains(@rend,'bold')">true</xsl:when>
+        <xsl:when test="parent::tei:hi[@rend='bold']">true</xsl:when>
+        <xsl:when test="parent::tei:hi[starts-with(@rend,'specList-')]">true</xsl:when>
         <xsl:when test="self::tei:cell and parent::tei:row[@role='label']">true</xsl:when>
         <xsl:when test="self::tei:label[following-sibling::tei:item]">true</xsl:when>
         <xsl:when test="self::tei:term">true</xsl:when>
@@ -183,6 +190,8 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:choose>
         <xsl:when test="not(self::*)">true</xsl:when>
         <xsl:when test="@rend='inline'">true</xsl:when>
+        <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
+        <xsl:when test="self::tei:note[@place='foot' or @place='end']">true</xsl:when>
         <xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
         <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
         <xsl:when test="parent::tei:div">false</xsl:when>
@@ -193,7 +202,10 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="parent::tei:cit and parent::cit/tei:bibl">false</xsl:when>
         <xsl:when test="parent::tei:body">false</xsl:when>
         <xsl:when test="parent::tei:titlePage">false</xsl:when>
-        <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
+        <xsl:when test="self::tei:note[tei:cit/tei:bibl]">false</xsl:when>
+        <xsl:when test="self::tei:note[parent::tei:biblStruct]">true</xsl:when>
+        <xsl:when test="self::tei:note[parent::tei:bibl]">true</xsl:when>
+        <xsl:when test="self::tei:note">true</xsl:when>
         <xsl:when test="self::mml:math">true</xsl:when>
         <xsl:when test="self::tei:abbr">true</xsl:when>
         <xsl:when test="self::tei:affiliation">true</xsl:when>
@@ -208,7 +220,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:biblScope">true</xsl:when>
         <xsl:when test="self::tei:br">true</xsl:when>
         <xsl:when test="self::tei:byline">true</xsl:when>
-        <xsl:when test="self::tei:note[tei:cit/tei:bibl]">false</xsl:when>
         <xsl:when test="self::tei:c">true</xsl:when>
         <xsl:when test="self::tei:caesura">true</xsl:when>
         <xsl:when test="self::tei:choice">true</xsl:when>
@@ -248,8 +259,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:series">true</xsl:when>
         <xsl:when test="self::tei:msName">true</xsl:when>
         <xsl:when test="self::tei:name">true</xsl:when>
-        <xsl:when test="self::tei:note[parent::tei:biblStruct]">true</xsl:when>
-        <xsl:when test="self::tei:note[parent::tei:bibl]">true</xsl:when>
         <xsl:when test="self::tei:num">true</xsl:when>
         <xsl:when test="self::tei:orgName">true</xsl:when>
         <xsl:when test="self::tei:orig">true</xsl:when>
@@ -261,7 +270,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:ptr">true</xsl:when>
         <xsl:when test="self::tei:publisher">true</xsl:when>
         <xsl:when test="self::tei:pubPlace">true</xsl:when>
-        <xsl:when test="self::tei:note">true</xsl:when>
         <xsl:when test="self::tei:q[tei:l]">false</xsl:when>
         <xsl:when test="self::tei:lb or self::pb">true</xsl:when>
         <xsl:when test="self::tei:quote and tei:lb">false</xsl:when>
