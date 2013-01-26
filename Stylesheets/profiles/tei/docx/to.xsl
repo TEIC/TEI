@@ -25,9 +25,6 @@
 
     <xsl:import href="../../../docx/to/teitodocx.xsl"/>
     
-    <!-- import functions -->
-    <xsl:import href="default-functions.xsl"/>
-    
     <xsl:param name="renderAddDel">true</xsl:param>
     <xsl:param name="addColour">red</xsl:param>
 
@@ -76,20 +73,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="bulletOne">•</xsl:param>
     <xsl:param name="bulletTwo"></xsl:param>
 
-    <xsl:param name="word-directory">..</xsl:param>
-    <xsl:param name="debug">false</xsl:param>
-    <xsl:param name="styleDoc">
-        <xsl:value-of select="concat($word-directory, '/word/styles.xml')"/>
-    </xsl:param>
-    
-    <!-- Styles -->
-    
-    <xsl:template match="tei:abbr" mode="get-style">abbr</xsl:template>
-    <xsl:template match="tei:cit" mode="get-style">Quote</xsl:template>
-    <xsl:template match="tei:date" mode="get-style">date</xsl:template>
-    <xsl:template match="tei:foreign" mode="get-style">teiforeign</xsl:template>
-    <xsl:template match="tei:formula" mode="get-style">Formula</xsl:template>
-    <xsl:template match="tei:mentioned" mode="get-style">teimentioned</xsl:template>
     <xsl:template match="tei:orgName" mode="get-style">orgName</xsl:template>
     <xsl:template match="tei:quote" mode="get-style">Quote</xsl:template>
     <xsl:template match="tei:note[not(@place)]" mode="get-style">Quote</xsl:template>
@@ -97,147 +80,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template match="tei:ref[@rend and not(@target)]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
     <xsl:template match="tei:seg[@rend]" mode="get-style"><xsl:value-of select="@rend"/></xsl:template>
 
-    <xsl:template match="tei:p[@rend]" mode="get-style">
-        <xsl:call-template name="getStyleName">
-            <xsl:with-param name="in" select="@rend"/>
-        </xsl:call-template>
-    </xsl:template>
-
-       <xsl:template match="tei:editionStmt">
-        <w:r>
-            <w:t>
-            <xsl:value-of select="tei:edition"/> Edition</w:t>
-        </w:r>
-    </xsl:template>
-
-    <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
-        <xsl:param name="nop"/>   
-	<xsl:variable name="pair">
-	  <tei:list>
-	    <tei:glossListEntry count="{count(ancestor::tei:list)}">
-	      <tei:hi rend="bold">
-		<xsl:apply-templates mode="iden"/>
-	      </tei:hi>
-	      <tei:lb/>
-	      <xsl:for-each select="following-sibling::tei:item[1]">
-		<xsl:apply-templates mode="iden"/>
-	      </xsl:for-each>
-	    </tei:glossListEntry>
-	  </tei:list>
-	</xsl:variable>
-	<xsl:apply-templates select="$pair/tei:list/tei:glossListEntry"/>
-    </xsl:template>
-
-    <xsl:template match="tei:glossListEntry">
-      <xsl:call-template name="block-element">
-	<xsl:with-param name="style">dl</xsl:with-param>
-	<xsl:with-param name="pPr">
-	  <w:pPr>
-	    <w:pStyle w:val="dl"/>
-	    <w:ind w:left="360" w:hanging="360"/>
-	  </w:pPr>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:template>
-
-   
-    <xsl:template match="tei:seg[not(@*) and normalize-space(.)='']">
-      <w:r>
-	<w:t>
-	  <xsl:attribute name="xml:space">preserve</xsl:attribute>
-	  <xsl:text> </xsl:text>
-	</w:t>
-      </w:r>
-    </xsl:template>
-
-    
-    <!-- 
-        Block Templates:
-        Here we can overwrite how block elements are rendered
-    -->
-  
-    
-    <!-- Dates -->
-    <xsl:template match="tei:date[ancestor::tei:teiHeader]">
-        <w:r>
-            <w:rPr>
-                <w:rStyle w:val="date"/>
-            </w:rPr>
-            <w:t>
-                <xsl:value-of select="."/>
-            </w:t>
-        </w:r>
-    </xsl:template>
-
-    <!-- formulas -->
-    <xsl:template match="tei:formula">
-        <w:p>    
-            <w:pPr>
-                <w:pStyle w:val="Formula"/>
-            </w:pPr>
-            <xsl:call-template name="block-element">                   
-                <xsl:with-param name="nop">true</xsl:with-param>
-            </xsl:call-template>
-            <xsl:if test="@n">
-                <w:r>
-                    <w:tab/>
-                </w:r>
-                <w:r>
-                    <w:rPr>
-                        <w:rStyle w:val="FormulaReference"/>
-                    </w:rPr>
-                    <w:t xml:space="preserve"><xsl:value-of select="@n"/></w:t>
-                </w:r>
-            </xsl:if>
-        </w:p>
-    </xsl:template>
-    
-     
-    <!-- Paragraphs in the front matter -->
-    <xsl:template match="tei:front/tei:div/tei:p">
-        <xsl:call-template name="block-element">
-            <xsl:with-param name="pPr">
-                <w:pPr>
-                    <w:pStyle>
-                        <xsl:attribute name="w:val">
-                            <xsl:value-of select="concat(upper-case(substring(parent::tei:div/@type,1,1)),substring(parent::tei:div/@type,2))"/>
-                        </xsl:attribute>
-                    </w:pStyle>
-                </w:pPr>
-            </xsl:with-param>
-        </xsl:call-template>
-    </xsl:template>
-   
-    
-    
-    <!-- who created this document -->
-    <xsl:template name="created-by">
-        <xsl:text>TEI XSL</xsl:text>
-    </xsl:template>
-
-
-    <!-- fake listPerson into an unordered list -->
-  <xsl:template match="tei:listPerson">
-      <xsl:variable name="mylist">
-         <tei:list type="unordered">
-	           <xsl:apply-templates/>
-         </tei:list>
-      </xsl:variable>
-      <xsl:apply-templates select="$mylist"/>
-  </xsl:template>
-
-  <xsl:template match="tei:person">
-      <tei:item>
-         <xsl:copy-of select="*|text()"/>
-      </tei:item>
-  </xsl:template>
-
-  <xsl:template match="tei:affiliation">
-      <w:r>
-        <w:br/>
-      </w:r>   
-     <xsl:apply-templates/>
-  </xsl:template>
 
 
     <xsl:template name="defineOrderedLists">
@@ -358,16 +200,5 @@ of this software, even if advised of the possibility of such damage.
                 </w:abstractNum>
 
     </xsl:template>
-
-    <xsl:template match="@*|text()|comment()|processing-instruction()" mode="iden">
-      <xsl:copy-of select="."/>
-    </xsl:template>
-    
-    <xsl:template match="*" mode="iden">
-      <xsl:copy>
-	        <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"/>
-      </xsl:copy>
-    </xsl:template>
- 
 
 </xsl:stylesheet>
