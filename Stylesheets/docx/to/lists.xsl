@@ -103,7 +103,7 @@ of this software, even if advised of the possibility of such damage.
 		  <w:br/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:message terminate="yes">the parameter  glossListSeparator can only have values 'break' or 'tab'</xsl:message>
+		  <xsl:message terminate="yes">the parameter glossListSeparator can only have values 'break' or 'tab'</xsl:message>
 		</xsl:otherwise>
 	      </xsl:choose>
             </w:r>
