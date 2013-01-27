@@ -4,6 +4,7 @@
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
   <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
   <xsl:key name="BACKLINKS" match="teix:egXML[@corresp]" use="substring(@corresp,2)"/>
+  <xsl:key name="BACKLINKS" match="teix:egXML[@source]" use="substring(@source,2)"/>
   <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']" use="substring(@target,2)"/>
   <heads xmlns="http://www.tei-c.org/ns/1.0">
     <head xml:lang="fr" corresp="AB">À propos des Principes directeurs</head>
@@ -1052,18 +1053,32 @@
   </xsl:template>
 
   <xsl:template name="egXMLEndHook">
-    <xsl:if test="@corresp and id(substring(@corresp,2))">
-      <div style="float: right;">
-        <a>
-          <xsl:attribute name="href">
-            <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
-          </xsl:attribute>
-          <xsl:text>bibliography</xsl:text>
-          <!--	  <span class="citLink">&#x270d;</span>-->
-        </a>
-	<xsl:text>&#160;</xsl:text>
-      </div>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="@corresp and id(substring(@corresp,2))">
+	<div style="float: right;">
+	  <a>
+	    <xsl:attribute name="href">
+	      <xsl:apply-templates mode="generateLink" select="id(substring(@corresp,2))"/>
+	    </xsl:attribute>
+	    <xsl:text>bibliography</xsl:text>
+	    <!--	  <span class="citLink">&#x270d;</span>-->
+	  </a>
+	  <xsl:text>&#160;</xsl:text>
+	</div>
+      </xsl:when>
+      <xsl:when test="@source and id(substring(@source,2))">
+	<div style="float: right;">
+	  <a>
+	    <xsl:attribute name="href">
+	      <xsl:apply-templates mode="generateLink" select="id(substring(@source,2))"/>
+	    </xsl:attribute>
+	    <xsl:text>bibliography</xsl:text>
+	    <!--	  <span class="citLink">&#x270d;</span>-->
+	  </a>
+	  <xsl:text>&#160;</xsl:text>
+	</div>
+      </xsl:when>
+    </xsl:choose>
     <xsl:for-each select="ancestor::tei:elementSpec">
       <div style="float: right;">
         <a href="examples-{@ident}.html">
