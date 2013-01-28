@@ -565,7 +565,7 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>title page</desc>
    </doc>
   <xsl:template match="tei:titlePage">
       <block text-align="center">
@@ -573,44 +573,13 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:titlePage//tei:titlePart[@type='main']">
-      <block font-size="{$titleSize}" space-after="8pt" text-align="center">
-         <xsl:apply-templates/>
-      </block>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:titlePage//tei:titlePart[@type='sub']">
-      <block>
-         <block font-size="{$authorSize}" space-after="8pt" text-align="center">
-            <xsl:apply-templates/>
-         </block>
-      </block>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:titlePart">
-      <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:titlePart[@type='running']"/>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>trailer</desc>
    </doc>
   <xsl:template match="tei:trailer">
       <block>
          <xsl:apply-templates/>
       </block>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements  text()</desc>
-   </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[fo] </desc>
    </doc>

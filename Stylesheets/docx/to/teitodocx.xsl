@@ -2372,46 +2372,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:titlePage">
     <xsl:apply-templates/>
   </xsl:template>
-  <xsl:template match="tei:docTitle/tei:titlePart[@type='main']">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">Title</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:docTitle/tei:titlePart[not(@type)]">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">Title</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:titlePage/tei:titlePart">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">Title</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:docTitle/tei:titlePart[@type='sub']">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">Subtitle</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:docTitle/tei:titlePart[2]" priority="99">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">Subtitle</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:docAuthor" priority="99">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">Author</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:titlePage/tei:byline" priority="99">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">Author</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template match="tei:titlePage/tei:docDate" priority="99">
-    <xsl:call-template name="block-element">
-      <xsl:with-param name="style">Docdate</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
   <!-- place holders, used by ISO profile -->
   <xsl:template name="getStyleFonts">
     <xsl:param name="css"/>
@@ -2538,7 +2498,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
-  <xsl:template name="tei:makeText">
+  <xsl:template name="makeText">
     <xsl:param name="letters"/>
     <w:r>
       <w:t>
@@ -2605,7 +2565,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
       
    <xsl:template match="tei:att|tei:hi[@rend='att']">
-    <xsl:call-template name="processInline">
+    <xsl:call-template name="makeInline">
       <xsl:with-param name="before">@</xsl:with-param>
       <xsl:with-param name="style">italic</xsl:with-param>
     </xsl:call-template>
@@ -2618,7 +2578,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:signed">
     <xsl:call-template name="block-element">
-      <xsl:with-param name="style">teisigned</xsl:with-param>
+      <xsl:with-param name="style">tei_signed</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2673,7 +2633,7 @@ of this software, even if advised of the possibility of such damage.
         Generic template from msDescription for high-level section
     </desc>
   </doc>
-  <xsl:template name="processAsSection">
+  <xsl:template name="makeSection">
     <xsl:param name="level"/>
     <xsl:param name="implicitBlock"/>
     <xsl:param name="heading"/>
@@ -2694,7 +2654,7 @@ of this software, even if advised of the possibility of such damage.
         Generic template for inline objects
     </desc>
   </doc>
-  <xsl:template name="processInline">
+  <xsl:template name="makeInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
@@ -2706,7 +2666,7 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:when test="$style='italic'"/>
 	      <xsl:when test="$style='bold'"/>
 	      <xsl:when test="$style=''">
-		<xsl:text>tei</xsl:text>
+		<xsl:text>tei_</xsl:text>
 		<xsl:value-of select="local-name()"/>
 	      </xsl:when>
 	      <xsl:otherwise>
@@ -2737,23 +2697,25 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-        Generic template from msDescription for mid-level block
+        Generic template for mid-level block
     </desc>
   </doc>
-  <xsl:template name="processBlock">
+  <xsl:template name="makeBlock">
     <xsl:param name="style"/>
     <xsl:call-template name="block-element">
       <xsl:with-param name="style">
-        <xsl:value-of select="$style"/>
+        <xsl:value-of select="if ($style='docAuthor') then 'Author'
+			      else if ($style='docTitle') then 'Title'
+			      else $style"/>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-        Generic template from msDescription for labelled object
+        Generic template for labelled object
     </desc>
   </doc>
-  <xsl:template name="processWithLabel">
+  <xsl:template name="makeWithLabel">
     <xsl:param name="before"/>
     <w:r>
       <w:rPr>
@@ -2767,25 +2729,10 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
     <w:r>
       <w:rPr>
-        <w:rStyle w:val="tei{local-name()}"/>
+        <w:rStyle w:val="tei_{local-name()}"/>
       </w:rPr>
       <w:t>
         <xsl:value-of select="."/>
-      </w:t>
-    </w:r>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template from msDescription for literal text
-    </desc>
-  </doc>
-  <xsl:template name="processLiteral">
-    <xsl:param name="text"/>
-    <w:r>
-      <w:rPr/>
-      <w:t>
-        <xsl:attribute name="xml:space">preserve</xsl:attribute>
-        <xsl:value-of select="$text"/>
       </w:t>
     </w:r>
   </xsl:template>

@@ -763,22 +763,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Process element docTitle, docAuthor, docImprint and
-	 tei:docDate</p>
-         <p>
-            <p xmlns="http://www.w3.org/1999/xhtml"> Translate these to a corresponding HTML div </p>
-         </p>
-      </desc>
-   </doc>
-  <xsl:template match="tei:docTitle|tei:docAuthor|tei:docImprint|tei:titlePage/tei:titlePart|tei:docDate">
-    <xsl:element name="{if (parent::tei:titlePage) then 'div' else 'span'}">
-      <xsl:call-template name="microdata"/>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </xsl:element>
-  </xsl:template>
   
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

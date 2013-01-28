@@ -220,12 +220,12 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template match="tei:teiHeader">
       <xsl:choose>
-	        <xsl:when test="not(parent::tei:*)">
-	           <xsl:call-template name="mainDocument"/>
-	        </xsl:when>
-	        <xsl:otherwise>
-	           <xsl:apply-templates select="tei:fileDesc"/>
-	        </xsl:otherwise>
+	<xsl:when test="not(parent::tei:*)">
+	  <xsl:call-template name="mainDocument"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates select="tei:fileDesc"/>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
     

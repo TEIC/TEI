@@ -69,7 +69,7 @@ of this software, even if advised of the possibility of such damage.
        <xsl:apply-templates select="tei:body/tei:head" mode="plain"/>
      </xsl:when>
      <xsl:when test="tei:front//tei:titlePart/tei:title">
-       <xsl:apply-templates select="tei:front//tei:titlePart/tei:titl" mode="plain"/>
+       <xsl:apply-templates select="tei:front//tei:titlePart/tei:title" mode="plain"/>
      </xsl:when>
      <xsl:otherwise>
        <xsl:text>Text </xsl:text>

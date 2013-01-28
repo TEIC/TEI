@@ -275,7 +275,7 @@ of this software, even if advised of the possibility of such damage.
   <desc>Change foreign without @xml:lang to vernacular style</desc>
   </doc>
   <xsl:template match="foreign[not(@xml:lang)]">
-    <xsl:call-template name="processInline">
+    <xsl:call-template name="makeInline">
       <xsl:with-param name="style">vernacular</xsl:with-param>
     </xsl:call-template>
   </xsl:template>

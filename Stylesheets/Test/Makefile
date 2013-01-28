@@ -54,6 +54,8 @@ test-html:
 	diff test24.html expected-results/test24.html
 	saxon -o:test25.html test25.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test25.html expected-results/test25.html
+	saxon -o:test27.html test27.xml ../xhtml2/tei.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../msdescription.css
+	diff test27.html expected-results/test27.html
 	rm -rf files
 
 testsplit:
@@ -75,6 +77,8 @@ test-latex:
 	diff test24.tex expected-results/test24.tex
 	saxon -o:test25.tex test25.xml ../latex2/tei.xsl $(SAXONOPT)
 	diff test25.tex expected-results/test25.tex
+	saxon -o:test27.tex test27.xml ../latex2/tei.xsl $(SAXONOPT)
+	diff test27.tex expected-results/test27.tex
 
 test-fo:
 	saxon -o:test.fo test.xml ../fo2/tei.xsl  $(SAXONOPT)

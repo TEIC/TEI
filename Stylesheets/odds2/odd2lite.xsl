@@ -543,7 +543,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template name="processInline">
+  <xsl:template name="makeInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
@@ -562,7 +562,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>what to do with a block-level object</desc>
   </doc>
-  <xsl:template name="processBlock">
+  <xsl:template name="makeBlock">
     <xsl:param name="style"/>
     <p>
       <xsl:if test="not($style='')">

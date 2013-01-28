@@ -202,14 +202,9 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="applyRendition"/>
 
-  <xsl:template name="makeSpan">
-    <xsl:apply-templates/>
-  </xsl:template>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>Process attributes in text mode, escaping the LaTeX
-    command characters.</p>
+         <p>Process attributes in text mode, escaping the LaTeX command characters.</p>
          <p>as with text()</p>
       </desc>
    </doc>
@@ -231,7 +226,15 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
 
-    <xsl:template name="processInline">
+  <xsl:template name="makeSpan">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>inline objects</desc>
+   </doc>
+
+   <xsl:template name="makeInline">
       <xsl:param name="before"/>
       <xsl:param name="style"/>
       <xsl:param name="after"/>
@@ -252,62 +255,79 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="normalize-space(.)"/>
 	  <xsl:text>}</xsl:text>	    
 	</xsl:when>
-	<xsl:otherwise>
+	<xsl:when test="$style=''">
+	  <xsl:sequence select="concat('\',local-name(),'{')"/>
 	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:sequence select="concat('\',$style,'{')"/>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
 	</xsl:otherwise>
       </xsl:choose>
       <xsl:value-of select="$after"/>
     </xsl:template>
 
 
-    <xsl:template name="processBlock">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>block objects</desc>
+   </doc>
+    <xsl:template name="makeBlock">
       <xsl:param name="style"/>
-      <xsl:text>\par </xsl:text>
+      <xsl:sequence select="concat('\',$style,'{')"/>
       <xsl:apply-templates/>
-      <xsl:text>\par </xsl:text>
+      <xsl:text>}</xsl:text>
     </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>make a line break</desc>
+   </doc>
 
    <xsl:template name="lineBreak">
       <xsl:param name="id"/>
-      <xsl:text>\mbox{}\newline 
-</xsl:text>
+      <xsl:text>\mbox{}\newline &#10;</xsl:text>
    </xsl:template>
 
-    <xsl:template name="processAsSection">
-      <xsl:param name="level"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>division-like object</desc>
+   </doc>
+
+   <xsl:template name="makeSection">
+     <xsl:param name="level"/>
       <xsl:param name="heading"/>
       <xsl:param name="implicitBlock">false</xsl:param>
       <xsl:text>&#10;</xsl:text>
       <xsl:choose>
-	        <xsl:when test="$level=1">\section</xsl:when>
-	        <xsl:when test="$level=2">\subsection</xsl:when>
-	        <xsl:when test="$level=3">\subsubsection</xsl:when>
-	        <xsl:when test="$level=4">\paragraph</xsl:when>
+	<xsl:when test="$level=1">\section</xsl:when>
+	<xsl:when test="$level=2">\subsection</xsl:when>
+	<xsl:when test="$level=3">\subsubsection</xsl:when>
+	<xsl:when test="$level=4">\paragraph</xsl:when>
       </xsl:choose>
-	     <xsl:text>{</xsl:text>
-	     <xsl:value-of select="$heading"/>
-	     <xsl:text>}
-</xsl:text>
+      <xsl:text>{</xsl:text>
+      <xsl:value-of select="$heading"/>
+      <xsl:text>}&#10;</xsl:text>
       <xsl:choose>
-	        <xsl:when test="$implicitBlock='true'">
-\par
-	    <xsl:apply-templates/>
-\par
+	<xsl:when test="$implicitBlock='true'">
+	  <xsl:text>\par&#10;</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>\par&#10;</xsl:text>
 	</xsl:when>
-	        <xsl:when test="*">
-	           <xsl:apply-templates/>
-	        </xsl:when>
-	        <xsl:otherwise>
-\par
-	    <xsl:apply-templates/>
-\par
+	<xsl:when test="*">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>\par&#10;</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>\par&#10;</xsl:text>
 	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
     
-
-    <xsl:template name="processWithLabel">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>text with a label</desc>
+   </doc>
+    <xsl:template name="makeWithLabel">
       <xsl:param name="before"/>
       <xsl:text>\textit{</xsl:text>
       <xsl:value-of select="$before"/>

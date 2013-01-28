@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-                xmlns:m="http://www.w3.org/1998/Math/MathML"
-                xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:fotex="http://www.tug.org/fotex"
-                xmlns="http://www.w3.org/1999/XSL/Format"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="tei fotex m"
-                version="2.0">
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:m="http://www.w3.org/1998/Math/MathML"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:fotex="http://www.tug.org/fotex"
+    xmlns="http://www.w3.org/1999/XSL/Format"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="tei fotex m xs"
+    version="2.0">
   <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -167,13 +168,16 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>
 
-  <xsl:template name="processBlock">
+  <xsl:template name="makeBlock">
     <xsl:param name="style"/>
-    <xsl:apply-templates/>
+      <block font-size="{tei:fontSize($style)}">
+         <inline font-style="{tei:fontStyle($style)}" font-weight="{tei:fontWeight($style)}">
+            <xsl:apply-templates/>
+         </inline>
+      </block>
   </xsl:template>
-
-
-    <xsl:template name="processAsSection">
+  
+  <xsl:template name="makeSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
       <xsl:param name="implicitBlock">false</xsl:param>
@@ -190,7 +194,7 @@ of this software, even if advised of the possibility of such damage.
       </block>
     </xsl:template>
     
-    <xsl:template name="processWithLabel">
+    <xsl:template name="makeWithLabel">
       <xsl:param name="before"/>
       <i>
          <xsl:value-of select="$before"/>
@@ -199,7 +203,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
-  <xsl:template name="processInline">
+  <xsl:template name="makeInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
@@ -208,4 +212,30 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="$after"/>
   </xsl:template>
 
+
+  <xsl:function name="tei:fontSize" as="xs:string">
+    <xsl:param name="style"/>
+    <xsl:choose>
+      <xsl:when test="$style='docAuthor'">14pt</xsl:when>
+      <xsl:when test="$style='docTitle'">16pt</xsl:when>
+      <xsl:when test="$style='docDate'">14pt</xsl:when>
+      <xsl:otherwise>12pt</xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="tei:fontStyle" as="xs:string">
+    <xsl:param name="style"/>
+    <xsl:choose>
+      <xsl:when test="$style='docAuthor'">italic</xsl:when>
+      <xsl:otherwise>normal</xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="tei:fontWeight" as="xs:string">
+    <xsl:param name="style"/>
+    <xsl:choose>
+      <xsl:when test="$style='docTitle'">bold</xsl:when>
+      <xsl:otherwise>normal</xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 </xsl:stylesheet>

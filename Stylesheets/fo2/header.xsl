@@ -55,41 +55,6 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:docAuthor">
-      <block font-size="{$authorSize}">
-         <inline font-style="italic">
-            <xsl:apply-templates/>
-         </inline>
-      </block>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:docDate">
-      <block font-size="{$dateSize}">
-         <xsl:apply-templates/>
-      </block>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:docTitle">
-      <block text-align="left" font-size="{$titleSize}">
-         <xsl:if test="ancestor::tei:group/tei:text/tei:front">
-            <xsl:attribute name="id">
-               <xsl:choose>
-                  <xsl:when test="ancestor::tei:text[1]/@xml:id">
-                     <xsl:value-of select="translate(ancestor::tei:text[1]/@xml:id,'_','-')"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                     <xsl:value-of select="generate-id()"/>
-                  </xsl:otherwise>
-               </xsl:choose>
-            </xsl:attribute>
-         </xsl:if>
-         <xsl:apply-templates select="tei:titlePart"/>
-      </block>
-  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
     
@@ -100,7 +65,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:teiHeader">
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[fo] </desc>
+      <desc>[fo] main title</desc>
    </doc>
   <xsl:template name="textTitle">
       <xsl:param name="N"/>

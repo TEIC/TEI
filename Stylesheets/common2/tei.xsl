@@ -219,26 +219,22 @@ of this software, even if advised of the possibility of such damage.
      </xsl:choose>
    </xsl:template>
    
-  <xsl:template name="tei:makeText">
+  <xsl:template name="makeText">
     <xsl:param name="letters"/>
     <xsl:value-of select="$letters"/>
   </xsl:template>
 
-  <xsl:template name="processAsSection">
+  <xsl:template name="makeSection">
     <xsl:param name="heading"/>
     <xsl:param name="level"/>
     <xsl:param name="implicitBlock"/>
     <xsl:apply-templates/>
   </xsl:template>
-  <xsl:template name="processWithLabel">
+  <xsl:template name="makeWithLabel">
     <xsl:param name="before"/>
     <xsl:value-of select="$before"/>
     <xsl:text>: </xsl:text>
     <xsl:apply-templates/>
-  </xsl:template>
-  <xsl:template name="processLiteral">
-    <xsl:param name="text"/>
-    <xsl:value-of select="$text"/>
   </xsl:template>
 
 </xsl:stylesheet>

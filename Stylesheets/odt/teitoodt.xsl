@@ -802,7 +802,7 @@ of this software, even if advised of the possibility of such damage.
       </text:p>
     </text:list-item>
   </xsl:template>
-  <xsl:template match="tei:bibl|tei:signed|tei:docTitle|tei:byline|tei:docImprint">
+  <xsl:template match="tei:bibl|tei:signed|tei:byline">
     <text:p text:style-name="tei_{local-name(.)}">
       <xsl:apply-templates/>
     </text:p>
@@ -1649,7 +1649,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeSpan">
     <xsl:apply-templates/>
   </xsl:template>
-  <xsl:template name="tei:makeText">
+  <xsl:template name="makeText">
     <xsl:param name="letters"/>
     <xsl:value-of select="$letters"/>
   </xsl:template>
@@ -1688,11 +1688,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </text:span>
   </xsl:template>
-  <xsl:template name="processBlock">
+  <xsl:template name="makeBlock">
     <xsl:param name="style"/>
     <xsl:apply-templates/>
   </xsl:template>
-  <xsl:template name="processInline">
+  <xsl:template name="makeInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
@@ -1704,7 +1704,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="where"/>
     <xsl:value-of select="$where"/>
   </xsl:template>
-  <xsl:template name="processAsSection">
+  <xsl:template name="makeSection">
     <xsl:param name="level"/>
     <xsl:param name="implicitBlock"/>
     <xsl:param name="heading"/>
@@ -1718,11 +1718,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
-  <xsl:template name="processLiteral">
-    <xsl:param name="text"/>
-    <xsl:value-of select="$text"/>
-  </xsl:template>
-  <xsl:template name="processWithLabel">
+  <xsl:template name="makeWithLabel">
     <xsl:param name="before"/>
     <text:span text:style-name="Emphasis">
       <xsl:value-of select="$before"/>

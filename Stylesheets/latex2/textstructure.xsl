@@ -61,7 +61,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
 
-  <xsl:template match="/*">
+  <xsl:template match="/tei:TEI|/tei:teiCorpus">
       <xsl:call-template name="mainDocument"/>
   </xsl:template>
 
@@ -317,29 +317,17 @@ of this software, even if advised of the possibility of such damage.
       <desc/>
    </doc>
 
-  <xsl:template match="tei:titlePage/tei:docTitle">
-      <xsl:text>\title{</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
-  </xsl:template>
-
   <xsl:template match="tei:titlePage">
   \begin{titlepage}
-  <xsl:apply-templates select="tei:docTitle|tei:docAuthor"/>
-  \maketitle
-  <xsl:apply-templates select="*[not(self::tei:docTitle) and not(self::tei:docAuthor)]"/>
+  <xsl:apply-templates/>
   \end{titlepage}
   \cleardoublepage
 </xsl:template>
 
   <xsl:template match="tei:trailer">
-      <xsl:text>
-
-\begin{raggedleft}</xsl:text>
+      <xsl:text>&#10;&#10;\begin{raggedleft}</xsl:text>
       <xsl:apply-templates/>
-      <xsl:text>\end{raggedleft}
-
-</xsl:text>
+      <xsl:text>\end{raggedleft}&#10;</xsl:text>
    </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

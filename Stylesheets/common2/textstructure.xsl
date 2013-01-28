@@ -127,4 +127,68 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
+  <xsl:template match="tei:titlePage">
+    <xsl:call-template name="makeBlock">
+      <xsl:with-param name="style">titlePage</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="tei:titlePart" mode="simple">
+    <xsl:if test="preceding-sibling::tei:titlePart">
+      <xsl:call-template name="makeText">
+	<xsl:with-param name="letters"> — </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:value-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="tei:titlePart">
+    <xsl:call-template name="makeBlock">
+      <xsl:with-param name="style">titlePart</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="tei:titlePage/tei:byline">
+    <xsl:call-template name="makeBlock">
+      <xsl:with-param name="style">byline</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template
+      match="tei:docTitle|tei:docAuthor|tei:docImprint|tei:docDate">
+    <xsl:choose>
+      <xsl:when test="parent::tei:titlePage">
+	<xsl:call-template name="makeBlock">
+	  <xsl:with-param name="style" select="local-name()"/>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="style" select="local-name()"/>
+	</xsl:call-template>
+	<xsl:if
+	    test="local-name(following-sibling::tei:*[1])=local-name(.)">
+	  <xsl:choose>
+	    <xsl:when test="self::tei:docAuthor">
+	      <xsl:choose>
+		<xsl:when test="count(following-sibling::tei:docAuthor)=1"> and </xsl:when>
+		<xsl:when test="following-sibling::tei:docAuthor">, </xsl:when>
+	      </xsl:choose>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:call-template name="makeText">
+		<xsl:with-param name="letters"> — </xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+
+  <xsl:template match="tei:titlePart[@type='running']"/>
+
+
+  
 </xsl:stylesheet>

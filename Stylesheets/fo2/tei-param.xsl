@@ -459,12 +459,6 @@ Alignment of text (ie justified or ragged)
   <xsl:param name="alignment">justify</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
-Font size for display of author name 
-</desc>
-   </doc>
-  <xsl:param name="authorSize">14pt</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
-      <desc>
 Font size for bibliography
 </desc>
    </doc>
@@ -490,12 +484,6 @@ Calculation of normal body font size (add dimension)
       <xsl:value-of select="$bodyMaster"/>
       <xsl:text>pt</xsl:text>
   </xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
-      <desc>
-Font size for display of date
-</desc>
-   </doc>
-  <xsl:param name="dateSize">14pt</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
 Font for section headings
@@ -727,12 +715,6 @@ Create font size for tables, by reference to $bodyMaster
       <xsl:value-of select="$bodyMaster * 0.9"/>
       <xsl:text>pt</xsl:text>
   </xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
-      <desc>
-Font size for display of title
-</desc>
-   </doc>
-  <xsl:param name="titleSize">16pt</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>
 Font size for TOC heading

@@ -48,22 +48,6 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element docAuthor</desc>
-   </doc>
-  <xsl:template match="tei:docAuthor"> 
-      <xsl:if test="not(preceding-sibling::tei:docAuthor)">
-         <xsl:text>\author{</xsl:text>
-      </xsl:if>
-      <xsl:apply-templates/>
-      <xsl:choose>
-         <xsl:when test="count(following-sibling::tei:docAuthor)=1"> and </xsl:when>
-         <xsl:when test="following-sibling::tei:docAuthor">, </xsl:when>
-      </xsl:choose>
-      <xsl:if test="not(following-sibling::tei:docAuthor)">
-         <xsl:text>}</xsl:text>
-      </xsl:if>
-  </xsl:template>
 
   <xsl:template match="tei:docAuthor" mode="author">
       <xsl:apply-templates/>
@@ -73,15 +57,4 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element docDate</desc>
-   </doc>
-  <xsl:template match="tei:docDate">
-  \date{<xsl:apply-templates/>}</xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element docImprint</desc>
-   </doc>
-  <xsl:template match="tei:docImprint">
-  </xsl:template>
 </xsl:stylesheet>

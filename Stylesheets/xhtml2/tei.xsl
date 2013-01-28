@@ -398,7 +398,7 @@ Stylesheet constant setting the name of the main output file.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>what to do with an inline object</desc>
   </doc>
-  <xsl:template name="processInline">
+  <xsl:template name="makeInline">
     <xsl:param name="before"/>
     <xsl:param name="after"/>
     <xsl:param name="style"/>
@@ -415,9 +415,10 @@ Stylesheet constant setting the name of the main output file.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>what to do with a block-level object</desc>
   </doc>
-  <xsl:template name="processBlock">
+  <xsl:template name="makeBlock">
     <xsl:param name="style"/>
     <div>
+      <xsl:call-template name="microdata"/>
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default" select="$style"/>
       </xsl:call-template>
@@ -425,7 +426,7 @@ Stylesheet constant setting the name of the main output file.
     </div>
   </xsl:template>
 
-    <xsl:template name="processAsSection">
+    <xsl:template name="makeSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
       <xsl:param name="implicitBlock">false</xsl:param>
@@ -449,7 +450,7 @@ Stylesheet constant setting the name of the main output file.
       </xsl:choose>
     </xsl:template>
     
-    <xsl:template name="processWithLabel">
+    <xsl:template name="makeWithLabel">
       <xsl:param name="before"/>
       <i>
          <xsl:value-of select="$before"/>

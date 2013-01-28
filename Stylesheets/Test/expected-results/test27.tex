@@ -1,0 +1,512 @@
+\documentclass[11pt,twoside]{article}\makeatletter
+
+\IfFileExists{xcolor.sty}%
+  {\RequirePackage{xcolor}}%
+  {\RequirePackage{color}}
+\usepackage{colortbl}
+      
+\IfFileExists{utf8x.def}%
+ {\usepackage[utf8x]{inputenc}
+    \PrerenderUnicode{–}
+  }%
+ {\usepackage[utf8]{inputenc}}
+
+
+\usepackage[english]{babel}
+
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage[]{ucs}
+\uc@dclc{8421}{default}{\textbackslash }
+\uc@dclc{10100}{default}{\{}
+\uc@dclc{10101}{default}{\}}
+\uc@dclc{8491}{default}{\AA{}}
+\uc@dclc{8239}{default}{\,}
+\uc@dclc{20154}{default}{ }
+\uc@dclc{10148}{default}{>}
+\def\textschwa{\rotatebox{-90}{e}}
+\def\textJapanese{}
+\def\textChinese{}
+
+\DeclareTextSymbol{\textpi}{OML}{25}
+\usepackage{relsize}
+\def\textsubscript#1{%
+  \@textsubscript{\selectfont#1}}
+\def\@textsubscript#1{%
+  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+\def\textquoted#1{‘#1’}
+\def\textsmall#1{{\small #1}}
+\def\textlarge#1{{\large #1}}
+\def\textoverbar#1{\ensuremath{\overline{#1}}}
+\def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
+\def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
+\def\docImprint#1{\vskip 6pt#1\ifvmode\par\fi }
+\def\docDate#1{#1\ifvmode\par\fi }
+\def\docAuthor#1{{\ifvmode\vskip 4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape #1}\ifvmode\par\fi }
+\def\docTitle#1{\vskip 6pt{\bfseries\fontsize{18pt}{22pt}\selectfont#1}\par }
+\def\titlePart#1{#1\par }
+\def\byline#1{\vskip6pt{\itshape\fontsize{16pt}{18pt}\selectfont#1}\par }
+\def\citbibl#1{#1\ifvmode\par\fi }
+\def\biblfree#1{#1\ifvmode\par\fi }
+\def\bibl#1{#1}
+\def\rubric#1{#1}
+\def\gap{}
+\def\msItem#1{\vskip 6pt#1\par }
+\RequirePackage{array}
+\def\@testpach{\@chclass
+ \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
+  \ifnum \@lastchclass=7 5 \else
+   \ifnum \@lastchclass=8 \tw@ \else
+    \ifnum \@lastchclass=9 \thr@@
+   \else \z@
+   \ifnum \@lastchclass = 10 \else
+   \edef\@nextchar{\expandafter\string\@nextchar}%
+   \@chnum
+   \if \@nextchar c\z@ \else
+    \if \@nextchar l\@ne \else
+     \if \@nextchar r\tw@ \else
+   \z@ \@chclass
+   \if\@nextchar |\@ne \else
+    \if \@nextchar !6 \else
+     \if \@nextchar @7 \else
+      \if \@nextchar (8 \else
+       \if \@nextchar )9 \else
+  10
+  \@chnum
+  \if \@nextchar m\thr@@\else
+   \if \@nextchar p4 \else
+    \if \@nextchar b5 \else
+   \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
+   \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
+
+\gdef\arraybackslash{\let\\=\@arraycr}
+\def\textxi{\ensuremath{\xi}}
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
+\definecolor{label}{gray}{0.75}
+\def\unusedattribute#1{\sout{\textcolor{label}{#1}}}
+\DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
+\def\xref@#1#2{\hyper@linkurl{#2}{#1}}
+\def\Div[#1]#2{\section*{#2}}
+\begingroup
+\catcode`\_=\active
+\gdef_#1{\ensuremath{\sb{\mathrm{#1}}}}
+\endgroup
+\mathcode`\_=\string"8000
+\catcode`\_=12\relax
+
+\usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
+\usepackage{framed}
+
+\definecolor{shadecolor}{gray}{0.95}
+\usepackage{longtable}
+\usepackage[normalem]{ulem}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\itshape\footnotesize}
+\setlength\marginparwidth{.75in}
+\usepackage{graphicx}
+
+\def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
+
+\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
+\usepackage{times}
+
+  \pagestyle{fancy} 
+
+\usepackage[pdftitle={AM 62 fol.},
+ pdfauthor={}]{hyperref}
+\hyperbaseurl{}
+
+	 \paperwidth210mm
+	 \paperheight297mm
+              
+\def\@pnumwidth{1.55em}
+\def\@tocrmarg {2.55em}
+\def\@dotsep{4.5}
+\setcounter{tocdepth}{3}
+\clubpenalty=8000
+\emergencystretch 3em
+\hbadness=4000
+\hyphenpenalty=400
+\pretolerance=750
+\tolerance=2000
+\vbadness=4000
+\widowpenalty=10000
+
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+     {-1.75ex \@plus -0.5ex \@minus -.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\Large\bfseries\sffamily}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+     {-1.75ex\@plus -0.5ex \@minus- .2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\Large\sffamily}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+     {-1.5ex\@plus -0.35ex \@minus -.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\large\sffamily}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+     {-1ex \@plus-0.35ex \@minus -0.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\normalsize\sffamily}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+     {1.5ex \@plus1ex \@minus .2ex}%
+     {-1em}%
+     {\reset@font\normalsize\bfseries}}
+
+
+\def\l@section#1#2{\addpenalty{\@secpenalty} \addvspace{1.0em plus 1pt}
+ \@tempdima 1.5em \begingroup
+ \parindent \z@ \rightskip \@pnumwidth 
+ \parfillskip -\@pnumwidth 
+ \bfseries \leavevmode #1\hfil \hbox to\@pnumwidth{\hss #2}\par
+ \endgroup}
+\def\l@subsection{\@dottedtocline{2}{1.5em}{2.3em}}
+\def\l@subsubsection{\@dottedtocline{3}{3.8em}{3.2em}}
+\def\l@paragraph{\@dottedtocline{4}{7.0em}{4.1em}}
+\def\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
+\@ifundefined{c@section}{\newcounter{section}}{}
+\@ifundefined{c@chapter}{\newcounter{chapter}}{}
+\newif\if@mainmatter 
+\@mainmattertrue
+\def\chaptername{Chapter}
+\def\frontmatter{%
+  \pagenumbering{roman}
+  \def\thechapter{\@roman\c@chapter}
+  \def\theHchapter{\alph{chapter}}
+  \def\@chapapp{}%
+}
+\def\mainmatter{%
+  \cleardoublepage
+  \def\thechapter{\@arabic\c@chapter}
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \pagenumbering{arabic}
+  \setcounter{secnumdepth}{6}
+  \def\@chapapp{\chaptername}%
+  \def\theHchapter{\arabic{chapter}}
+}
+\def\backmatter{%
+  \cleardoublepage
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \setcounter{secnumdepth}{0}
+  \def\@chapapp{\appendixname}%
+  \def\thechapter{\@Alph\c@chapter}
+  \def\theHchapter{\Alph{chapter}}
+  \appendix
+}
+\newenvironment{bibitemlist}[1]{%
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+       {\settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}%
+	}%
+  \sloppy
+  \clubpenalty4000
+  \@clubpenalty \clubpenalty
+  \widowpenalty4000%
+  \sfcode`\.\@m}%
+  {\def\@noitemerr
+    {\@latex@warning{Empty `bibitemlist' environment}}%
+    \endlist}
+
+\def\tableofcontents{\section*{\contentsname}\@starttoc{toc}}
+\parskip0pt
+\parindent1em
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\newenvironment{reflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\itshape ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{sansreflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\upshape\sffamily ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{specHead}[2]%
+ {\vspace{20pt}\hrule\vspace{10pt}%
+  \hypertarget{#1}{}%
+  \markright{#2}%
+
+  \pdfbookmark[2]{#2}{#1}%
+  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
+  }{}
+      
+\@ifundefined{chapter}{%
+    \def\DivI{\section}
+    \def\DivII{\subsection}
+    \def\DivIII{\subsubsection}
+    \def\DivIV{\paragraph}
+    \def\DivV{\subparagraph}
+    \def\DivIStar[#1]#2{\section*{#2}}
+    \def\DivIIStar[#1]#2{\subsection*{#2}}
+    \def\DivIIIStar[#1]#2{\subsubsection*{#2}}
+    \def\DivIVStar[#1]#2{\paragraph*{#2}}
+    \def\DivVStar[#1]#2{\subparagraph*{#2}}
+}{%
+    \def\DivI{\chapter}
+    \def\DivII{\section}
+    \def\DivIII{\subsection}
+    \def\DivIV{\subsubsection}
+    \def\DivV{\paragraph}
+    \def\DivIStar[#1]#2{\chapter*{#2}}
+    \def\DivIIStar[#1]#2{\section*{#2}}
+    \def\DivIIIStar[#1]#2{\subsection*{#2}}
+    \def\DivIVStar[#1]#2{\subsubsection*{#2}}
+    \def\DivVStar[#1]#2{\paragraph*{#2}}
+}
+\def\TheFullDate{1970-01-01}
+\def\TheID{\makeatother }
+\def\TheDate{1970-01-01}
+\title{AM 62 fol.}
+\author{}\let\tabcellsep&
+      \catcode`\&=12\relax \makeatletter 
+\makeatletter
+\thispagestyle{empty}
+\markright{\@title}\markboth{\@title}{\@author}
+\renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
+\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip \z@ plus2\p@
+\belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
+\def\@listi{\leftmargin\leftmargini
+               \topsep 2\p@ plus1\p@ minus1\p@
+               \parsep 2\p@ plus\p@ minus\p@
+               \itemsep 1pt}
+}
+\makeatother
+\fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
+\fancyhf{} 
+\setlength{\headheight}{14pt}
+\fancyhead[LE]{\bfseries\leftmark} 
+\fancyhead[RO]{\bfseries\rightmark} 
+\fancyfoot[RO]{}
+\fancyfoot[CO]{\thepage}
+\fancyfoot[LO]{\TheID}
+\fancyfoot[LE]{}
+\fancyfoot[CE]{\thepage}
+\fancyfoot[RE]{\TheID}
+\hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}\makeatother 
+\begin{document}
+
+\makeatletter
+\noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\raggedright\sffamily\selectfont \@title}
+\vskip20pt
+\par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
+\vspace{18pt}
+\makeatother
+
+\catcode`\$=12\relax
+\catcode`\^=12\relax
+\catcode`\#=12\relax
+\catcode`\%=12\relax
+ 
+\section{Identification}
+Denmark, København, Den Arnamagnæanske Samling, AM 62 fol. 74
+\DivI[Ólafs saga Tryggvasonar en mesta; Iceland, s. XIV 2/2. This version of Ólafs saga Tryggvasonar en mesta incorporates various sagas or excerps of sagas and þættir about Ólafur, also at the point, where texts from other redactions of the saga end (here: fol. 51va:24 til englandz af syrlandi).]{\textit{Ólafs saga Tryggvasonar en mesta}; Iceland, s. XIV 2/2. [This version of \textit{Ólafs saga Tryggvasonar en mesta} incorporates various sagas or excerps of sagas and þættir about Ólafur, also at the point, where texts from other redactions of the saga end (here: fol. 51va:24 ‘til englandz af syrlandi’).] }\label{AM02-062-en}
+\section{Contents}
+\msItem{\textbf{1ra-51va:24}:  \textit{Ólafs saga Tryggvasonar en mesta}, \textit{Language of text}: Old Norse/Icelandic
+\subsection{Incipit}
+hann gret þo eigi. ok er Þorolfr vard þessa varr letti hann vpp
+\subsection{Explicit}
+er {\hskip1pt}\newline  þa voro nykomnir til englandz af syrlandi \begin{bibitemlist}{1}
+ \bibitem {bibitem-1}\xref{FMS1}{Fornmanna sögur}I 71-306  (Ed. S);II  (Ed. S); III 1-64 (Ed. S)
+ \bibitem {bibitem-2}Ólafur Halldórsson, \xref{EA-A1}{Óláfs saga Tryggvasonar en mesta} I  73:8-400   (Ed. D\textsuperscript{1}. The text starts in the footnotes.);II  (Ed. D\textsuperscript{1})
+ \bibitem {bibitem-3}Bjarni Einarsson, \xref{Rit15}{Hallfreðar saga 1977} 3-21  (Fols 18va:13-19rb:10)
+ \bibitem {bibitem-4}W. van Eeden, \xref{Hallfr1919}{Hallfreðar saga 1919} 109-112 (Text A. Fols 18va:13-19va:16); 113 (Text B. Fols 22ra:33-b:11); 113-118 (Text C. Fols 24va:12-25vb:32); 118-123 (Text DE. Fols 28ra:9-29ra); 123-126 (Text G. Fols 48ra-va:34)
+
+\end{bibitemlist}
+}\msItem{\textbf{29rb-31va:23}:  \textit{Norna-Gests þáttr}
+\subsection{Incipit}
+ÞAt var a eini nott at
+\subsection{Explicit}
+ok þottí sannaz vm lifdaga hans sva sem hann sagdí\begin{bibitemlist}{1}
+ \bibitem {bibitem-5}Bugge, \xref{NSaSI6}{Söguþáttr af Norna-Gesti}
+ \bibitem {bibitem-6}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  15-38  (Ed. D\textsuperscript{1})
+ \bibitem {bibitem-7}Cipolla, \xref{NornaGestr1996}{Il racconto di Nornagestr} 227-244
+
+\end{bibitemlist}
+}\msItem{\textbf{31va:23-32rb}:  \textit{Helga Þáttr Þórissonar} \rubric{her segir fra {\hskip1pt}\newline  godmun {\hskip1pt}\newline di kkonvngi {\hskip1pt}\newline  af gl {\hskip1pt}\newline asisu{\hskip1pt}\newline ollum}
+\subsection{Incipit}
+Þorir het madr er bío j noregi
+\subsection{Explicit}
+ok hefir engí {\hskip1pt}\newline  madr þav sed sidanok lykr her þessi sǫgv etc.\biblfree{Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  38-44  (Ed. D\textsuperscript{1})}}\msItem{\textbf{33va-37vb}:  \textit{Færeyinga saga} \rubric{her hefir færeyíngar þattr}
+\subsection{Incipit}
+Madr er nefndr grimr kamban
+\subsection{Explicit}
+varist [?] segía henni hvert þat [...]\gap{}dit\biblfree{Ólafur Halldórsson, \xref{Rit30}{Færeyinga saga} 3-5, 8-11, 13-37, 39-41, 43, 49-67  (Bottom text. Ed. D)}}\msItem{\textbf{44rb:3-46ra}:  \textit{Óláfr konungr braut goð þrænda} \rubric{Capitulum}
+\subsection{Incipit}
+[E]\footnote{omitted}n er olafr konvngr hafdi skama stvnd verít i þrandheimi
+\subsection{Explicit}
+ef þer hafít adr illa ok oheyrilí{\hskip1pt}\newline ga af honvm gengít\biblfree{Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  1-14  (Ed. D\textsuperscript{1})}}\msItem{\textbf{50ra:2-b:4}:  \textit{Tryggva Óláfssonar hefnt} \rubric{Capitulum}
+\subsection{Incipit}
+Sva bar at eítt sínn at haralldr konvngr {\hskip1pt}\newline  kom þar
+\subsection{Explicit}
+ok hafdi hann med ser j hírd sínní\biblfree{Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  45-47  (Ed. D\textsuperscript{1})}}\msItem{\textbf{51va:25-52va:36}:  \textit{Halldórs Þáttr Snorrasonar} \rubric{sidasti þattr olaf{\hskip1pt}\newline ssaug{\hskip1pt}\newline o try{\hskip1pt}\newline ggua{\hskip1pt}\newline son[ar]\footnote{omitted} {\hskip1pt}\newline  noreg{\hskip1pt}\newline s konvngs}
+\subsection{Incipit}
+Halldor son snora goda af islandi var med haraldi konvngí sigvrdar syni
+\subsection{Explicit}
+hann hafdi drepit {\hskip1pt}\newline  hirdmann haralldz konvngs ok hafdi [hann]\footnote{omitted} þvi reidi a honvm\begin{bibitemlist}{1}
+ \bibitem {bibitem-12}\xref{FMS3}{Fornmanna sögur} III  152-163:2  (Ed. S)
+ \bibitem {bibitem-13}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  47-57  (Ed. D\textsuperscript{1})
+
+\end{bibitemlist}
+}\msItem{\textbf{52vb:10-53vb:10}:  \textit{Frá Sigurði byskupi}
+\subsection{Incipit}
+Sęmilígr kenní madr ok godrar mínníngar
+\subsection{Explicit}
+voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrnefnd gvnnhillde (sic)gvnnhilldr.\begin{bibitemlist}{1}
+ \bibitem {bibitem-14}\xref{FMS3}{Fornmanna sögur} III  163:4-172  (Ed. S)
+ \bibitem {bibitem-15}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  57-64  (Ed. D\textsuperscript{1})
+
+\end{bibitemlist}
+}\msItem{\textbf{53vb:14-31}:  \textit{Sýn Brestis} \rubric{Kapitulum [...]\gap{}}
+\subsection{Incipit}
+Sva hefir brodir Gvnlavgr ok sagt j latínv
+\subsection{Explicit}
+ok eptir þat hvarf þessi syn fra bresti\biblfree{Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  65  (Ed. D\textsuperscript{1})}}\msItem{\textbf{53vb:32-39}:  \textit{Frá Gunnlaugi ok Oddi}
+\subsection{Incipit}
+Sva segía brędr gvnlavgr ok oddr
+\subsection{Explicit}
+þar sem gízorí þotti þess vid {\hskip1pt}\newline  þvrfa ∴\begin{bibitemlist}{1}
+ \bibitem {bibitem-17}\xref{FMS3}{Fornmanna sögur} III  173:1-13  (Ed. S)
+ \bibitem {bibitem-18}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  66  (Ed. D\textsuperscript{1})
+
+\end{bibitemlist}
+}
+\section{Physical description}
+
+\subsection{Object}
+
+\subsubsection{Support description}
+
+\paragraph{Support}
+\par
+Parchment.
+\paragraph{Extent}
+\par
+53. Fols 32v and 33r are blank. 327mm x 236mm.\par
+\par
+Foliated in the upper right-hand corner of the recto-pages.
+\paragraph{Collation}
+\par
+The manuscript consists of five extant gatherings: \begin{itemize}
+
+\item[1] I: Fols \textbf{1-10}:  make the first extant quire consisting of five, apparently intact, bifolia.
+\item[2] II: Fols \textbf{11-22}:  make a complete quire of six bifolia.
+\item[3] III: Fols \textbf{23-37}:  comprise seven bifolia and a singleton, fol. 28, the sixth leaf of the gathering. Col. 32rb has only 13 lines, the rest of the page and fols 32v and 33r are left blank by the scribe. It can be presumed that between fols 32 and 33 there was another blank leaf which made a pair with fol. 28 and was at some stage severed from it.
+\item[4] IV: Fols \textbf{38-47}:  make the present quire of five bifolia. There is a lacuna between fols 37 and 38, presumably only a single leaf.
+\item[5] V: Fols \textbf{48-53}:  make three pairs of conjoint leaves.
+\end{itemize} \par
+The manuscript is not well-preserved; the beginning is defective and there are lacunae after fols 10, 37 and 47. The extant leaves have all suffered in some degree from wear and damp. Many passages are consequently hard to decipher, but there has been no loss of text as such except on fol. 37, where the vellum has crumbled away leaving a large hole in the outer column. The vellum used for the codex was not particularly well prepared. Many leaves have holes or gashes in them, some of them large, which were sewn together before the scribe began the work.
+\subsubsection{Layout}
+\par
+The manuscript is written in double columns each approx. 250mm x 84mm with 39 to 42 lines. Majuscules occur in varying colours; shades of yellow, red, green and blue. Traces of gold are detectable here and there, e.g. on fols 3r, 22rb, 29rb, though probably not from true gold-leaf. \par
+Most chapter-titles or division marks are in red, but a few are in blue or blue-black with a greenish tint. In some places, instead of chapter-titles, we find examples of a fish sketched in, and occasionally a kind of spiralling line, e.g. on fol. 3. A single example of a small foliage motive occurs on fol. 2vb:21.
+\subsubsection{Hands}
+
+\subsubsection{Decoration}
+\par
+\begin{itemize}
+
+\item[1] Fol. \textbf{15vb}:  has a major initial, a \emph{littera florissa} of a \textbf{Þ} of four lines with an extension down the left margin.
+\item[2] Fol. \textbf{29rb}: : The opening of \textit{Norna-Gests þáttr} contains a \emph{littera florissa} of the letter \textbf{Þ} with dots and branches. The first three lines are set in, but the round bow of the \textbf{Þ} extends up the upper margin, while the descendent runs down to the bottom of the margin. The bar is metamorphosing down the page from a dotted line to some sort of a branch with leaf-like outgrows and is ending in two spirals, and a leaf in the middle, in the lower margin. The top of the \textbf{Þ} is ending in one single spiral.
+\item[3] Fol. \textbf{31va}: The opening of \textit{Helga þáttr Þórissonar} contains a major initial, a \emph{littera florissa} of a \textbf{Þ}. 3 lines are set in, but the letter extends in the margin. The \textbf{Þ} ends with two spirals in the lower margin.
+\item[4] Fol. \textbf{33va}: The opening of \textit{Færeyinga saga} contains a major initial, a \emph{littera florissa} of the letter \textbf{M} with branches and leaves. The four top lines are set in, but the \textbf{M} extends in the upper margin. The right-hand line of the \textbf{M} just intrudes on of the first letters of the text, showing that the illumination was done after the scribe finished his work.
+\item[5] Fol. \textbf{46rb}: contains a major initial a \textbf{Þ} with branches and leaves, with an extention down the margin with one fleur-de-lis-like outgrow, and ends with a fleur-de-lis.
+\item[6] Fol. \textbf{51va}: : The opening of \textit{Halldórs þáttr Snorrasonar} contains a major initial, a \emph{littera florissa} of the letter \textbf{H}. Four lines are set in, but the initial extends nine lines up the margin.
+\end{itemize}  \par
+There are also some little drawings in the margins, e.g. fol. \textbf{10r}: : A man with a fish on the hook of his fishing rod; fol. \textbf{22r}: : A kissing couple; fol. \textbf{26r}: : Three knights fighting a dragon who is eating one of them.\par
+There are a few proper marginalia in the codex and some of them are illegible, some can only be read in part. \begin{itemize}
+
+\item Fol. \textbf{26r}:  ‘Gifur(?) þu kv(?) {\hskip1pt}\newline  sem bezt sem {\hskip1pt}\newline  heiter frut{\hskip1pt}\newline titum’. [the reading of the last word is uncertain.] 
+\item Fol. \textbf{27r}:  between the columns: ‘íon {\hskip1pt}\newline  hef{\hskip1pt}\newline vr g{\hskip1pt}\newline ert og(?) {\hskip1pt}\newline  til {\hskip1pt}\newline  sett {\hskip1pt}\newline  [...]\gap{}br{\hskip1pt}\newline ef’ (sixteenth century).
+\item Fol. \textbf{35v}:  below the text: ‘Ek einar’ (fifteenth century).
+\item Fol. \textbf{36r}:  below the text: ‘Austr ædd’ (c. 1500).
+\item Fol. \textbf{38r}:  below the text: ‘ave maria’ (c. 1500).
+\item Fol. \textbf{46r}:  below the text: ‘olafur [...]\gap{} {\hskip1pt}\newline  ok [...]\gap{}’ (fifteenth century).
+\item The originally blank column 32rb has some nib-trials, including the alphabet, and there is more writing, pen trials, epistolary forms, apophthegms and the like, on the pages originally left blank, fols 32v and 33r.
+\item At the top of fol. 32v a hand from c. 1400 or the first half of the fifteenth century wrote: ‘þeim godvm monnvm sem þetta bref sía edr heyra sennder sira gvdvardr prestr {\hskip1pt}\newline  þorkeli þormrmodzsyní kvedív gvds ok sína kvnnígt gerandi’.
+\item At the top of fol. 32v below the note just mentioned another hand has written: ‘Þeim er eckí þat til mozt er þannen lifa sem wílía hallda síg med heídr ok gozs ok harma fra ser skílía∴ {\hskip1pt}\newline  Hʀafn aurn hane mr þerna haukur stelkur spoe ualur ok kraka. langleítt haufut quad gyllta sá kautt [j]\footnote{damage} myr[kri]\footnote{omitted}’. The stanza is from \textit{Skáld-Helga rímur} but the list of bird-names and the adage are not known from elsewhere.
+\item Parts of these entries are repeated in younger, unpractised hands in other spaces on fols 32v and 33r, as if it had been set them as a copybook model.
+\item Fol. \textbf{32v}:  ‘þoruardur skrifar illa’ (c. 1500).
+\item A little further down the page: ‘helge h.’
+\item Fol. \textbf{33r}:  ‘halur er erlaus þiofs haus’ (sixteenth century), now very faint and perhaps partly scraped off. Elsewhere on the page ‘halur’ is written on its own.
+\item Fol. \textbf{33v}:  in a rather clumsily script with matching spelling, most probably from the sixteenth century: ‘vertv at bok þine {\hskip1pt}\newline  bal fvsa son vel þa skaltu {\hskip1pt}\newline  fara til stehiaríns.’
+\item Fol. \textbf{33v}:  Another entry, doubtless made at or about the same time, and slightly more literate than the first, reads: ‘þeim godvm monnum vertu at bok þine ion narfa son medan ek {\hskip1pt}\newline  er aburtv ellegerar fær þv fleinging’.
+\end{itemize} 
+\subsection{Binding}
+\par
+In his catalogue, , Jón Sigurðsson says that AM 62 fol. was bound in a pasteboard binding. This was probably the work of Mattias Larsen Bloch done at some time in the years 1771-73.\par
+The manuscript was then re-bound three times, first, in the 1880'es and later, in 1934 by Carl Lund. During conservation from 9 March 1981 to 10 July 1984, the manuscript was rebound by Birgitte Dall in a modern standard half-binding.
+\subsection{Accompanying material}
+There is an AM-slip pasted in front of the volume reading: ‘Þetta fragment true eg hafa {\hskip1pt}\newline  heyrt Skalholltz kirkiu til. {\hskip1pt}\newline  iafnvel þott þad eigi stande {\hskip1pt}\newline  i neinu afhendingar registre. {\hskip1pt}\newline  Eitt quer her ur feck eg ur ỏd{\hskip1pt}\newline rum stad enn resten. {\hskip1pt}\newline  Sira Olafur 1699. kallade þad...’
+\section{History}
+
+\subsection{Origin}
+\par
+The manuscript was written in Iceland. Kristian Kålund (\textit{KatalogI41}) dated the manuscript to the fifteenth century. Later, however, Stefán Karlsson (\textit{Ritun Reykjarfjarðarbókar130}) dated it to the end of the fourteenth century. Ólafur Halldórsson (\textit{The Saga of King Olaf Tryggvason18}) means that the manuscript probably was not written later than c. 1370-80.
+\subsection{Provenance}
+\par
+According to Ólafur Halldórsson (\textit{The Saga of King Olaf Tryggvason18}), a note written by bishop Oddur Einarsson in 1612, now in , fol. 6v, should concern AM 62 fol. If this is true, Oddur borrowed the manuscript from Magnús Hjaltason, and then he in turn lent it to Grimur Ormsson. When Oddur borrowed the manuscript from Magnús, it was in poor shape, but was ruined when it was returned to Oddur: ‘Magnus Hialltaßon hefur {\hskip1pt}\newline  fyrer lỏngu ljed mier Olafs {\hskip1pt}\newline  sỏgur lasnar Þær liede {\hskip1pt}\newline  eg Grijme Ormßyne hier {\hskip1pt}\newline  heima vmm veturenn til jdku{\hskip1pt}\newline nar þa hann var hia mjer {\hskip1pt}\newline  og fordiarfade hann þær suo {\hskip1pt}\newline  ad eg hef ecke getad þeim aptur {\hskip1pt}\newline  skilad þuij þær voru lasnar {\hskip1pt}\newline  dur. og fundust kueren {\hskip1pt}\newline  eptter honum aptur og framm {\hskip1pt}\newline  enn þad sem epter er af þeim {\hskip1pt}\newline  er hier til synes hef eg {\hskip1pt}\newline  tid þetta fyrer Magnuse {\hskip1pt}\newline  og hefur hann lofad þad skyllde {\hskip1pt}\newline  kuitt þo hann feinge þær all{\hskip1pt}\newline drej apttur þuj þær være {\hskip1pt}\newline  lijtels verdar. þo eru þær {\hskip1pt}\newline  obitaladar af mier til’. \par
+Two names are written on fol. 33v: They are those of Páll Fúsason (Vigfússon) (‘bal fvsa son’) and Jón Narfason (‘ion narfa son’), who were doubtless boys when they wrote the sentences. They can be identified as Páll Vigfússon, later \textit{lögmaður} and living at Hlíðarendi in Fljótshlíð (1511-70) who was son of Vigfús Erlendsson \textit{lögmaður} (d. 1521). Vigfús had a brother, Narfi, and Narfi’s son Jón must be the other youngster named on fol. 33v of the manuscript. Since the writer of the stanza from \textit{Skáld-Helga rímur} and what follows it on fol. 32v was also the scribe of the document in , it is evident that the codex was in Eyjafjörður region at the time and probably at Mýrka in Hörgárdalur when the document was written in November 1451. Further support for the location of the manuscript in the region around Eyjafjörður may be found in the occurrence of the name Guðvardur on fol. 32v. Eyjafjarðarsýsla appears to be the only part of Iceland where this name was in use.
+\subsection{Acquisition}
+\par
+Árni Magnússon gives the following information about the acquisition of the manuscript on a slip at the front of the volume: ‘Þetta fragment true eg hafa {\hskip1pt}\newline  heyrt Skalholltz kirkiu til. {\hskip1pt}\newline  iafnvel þott þad eigi stande {\hskip1pt}\newline  i neinu afhendingar registre. {\hskip1pt}\newline  Eitt quer her ur feck eg ur ỏd{\hskip1pt}\newline rum stad enn resten. {\hskip1pt}\newline  Sira Olafur 1699. kallade þad...’ The \textit{sira} Ólafur reference is to a list of manuscripts which Jón Vídalín, bishop of Skálholt, sent to Árni in 1699. \par
+The list, written by \textit{sira} Ólafur Jónsson (1672-1702), no longer exists but an extract from it in Árni Magnússon's hand is in , fol. 154r-v: ‘Anno 1699. sende Mag. Jon Th.s. {\hskip1pt}\newline  mier Registur yfir nockrar kalf{\hskip1pt}\newline skinns skrædur, giỏrt af Sira Olafi Jons {\hskip1pt}\newline  syne, sem hann qvadst mier ut{\hskip1pt}\newline vegad geta. Þar i bland voru {\hskip1pt}\newline  fragmenta af Olafs Sỏgu Tryggva{\hskip1pt}\newline sonar in folio. (a)  a] Þetta fragment eignadist eg sidan, er i {\hskip1pt}\newline  storu folio. Item feck eg ur ỏdrum {\hskip1pt}\newline  stad ä Islande nockud sem heyrde þar {\hskip1pt}\newline  til, og lagde eg þad hier sammanvid’. \par
+On fol. 57v in AM 435 a 4to, also in Árni's hand, is the following: ‘Fragmentum af Olafs Sỏgu Tryggvasonar, i storu folio: hefur til forna, öefad, heyrt Skalholltzkirkiu til. Eg feck þetta fragment i tveim stỏdum, ä Islande, nockud þar af Mag. Jone Widalin, og nockud ur ỏdrum stad.’ \par
+An inventory of property of Skálholt was made when Þórður Þorláksson succeeded as bishop in 1674. From it Árni Magnússon produced a list of the Icelandic books the cathedral of Skálholt owned at that time, now found on fols 153 and 156 of AM 435a 4to. No. 6 in the list is \textit{Olafs saga Helga}, here Árni denies that the codex belonged to Skálholt: ‘Þetta mun vera einhvernveiginn mis{\hskip1pt}\newline skrifad, þvi eingin Olafs Helga Saga {\hskip1pt}\newline  hefur fylgt Sklholltz kirkiu so mikid  sem eg hefe skynia orded. Kynne {\hskip1pt}\newline  vera villt mlum, og eiga ad vera {\hskip1pt}\newline  Olafs Tryggvasonar Sỏgu frag{\hskip1pt}\newline mentum, kanskie þad sem er i {\hskip1pt}\newline  stőru folio, og kynne þ hafa fyll{\hskip1pt}\newline ra vered, þő þad sie og ővïst. {\hskip1pt}\newline  Endelega kynne þeir sem afhend{\hskip1pt}\newline ïnguna giỏrdu, hafa lited skagt til, {\hskip1pt}\newline  og tekid qvi pro qvo.’ \par
+Ólafur Haldórsson (\textit{The Saga of King Olaf Tryggvason18}) suggests that it is possible that the codex originally contained the sagas of both kings, \textit{Ólafs saga helga} and \textit{Ólafs saga Tryggvasonar}, and that in 1674 it still had at least parts of \textit{Ólafs saga helga} in it. He asserts that this surmise finds support in the note written by Bishop Oddur Einarsson in 1612 (see above).
+\subsection{Additional}
+\par
+Katalogiseret 19 Oktober 1999 af EW-J.\par
+During the restoration 9 March 1981 to 10 July 1984 by Birgitte Dall the leaves were restored and set on meeting guards and the manuscript was rebound in a modern standard half binding.\par
+The manuscript was photographed twice, the first time in 1968 and for the second time 6 August 1992. The second set of photographs was presumably made for the facsimily-edition.\par
+Supplementary photographs of fols 29-32r and 37, 38r.\par
+In August 1992 photographs in uv-light were taken of fols 1r, 5v, 6r, 9r, 10v, 11r-v, 13r, 20v, 21r-v, 23r, 24v, 25r, 26r, 30r, 33v, 34r, 37v, 38r, 43r, 51v, and 53v.\par
+\begin{bibitemlist}{1}
+ \bibitem {bibitem-24}\textit{plate}  plade 133 6 August 1992.
+ \bibitem {bibitem-25}\textit{plate} plade 21 s.d.  (Supplementary photographs of fols 29-32r, 37, 38r.)
+ \bibitem {bibitem-26}\textit{b/w prints}  AM 62 fol. 6. August 1992
+ \bibitem {bibitem-27}\textit{b/w prints} AM 62 fol. s.d.  (supplementary photographs of fols 29-32r and 37, 38r.)
+ \bibitem {bibitem-28}\textit{b/w prints}  AM 62 fol August 1992  (Supplementary photogrpahs in uv-light of fols 1r, 5v, 6r, 9r, 10v, 11r-v, 13r, 20v, 21r-v, 23r, 24v, 25r, 26r, 30r, 33v, 34r, 37v, 38r, 43r, 51v, and 53v.)
+ \bibitem {bibitem-29}\textit{diapositive} AM 29 fol. s.d.  (fol. 29r)
+
+\end{bibitemlist}
+\begin{bibitemlist}{1}
+ \bibitem {bibitem-30}Kålund, \xref{KKKat}{Katalog} I  41-42
+ \bibitem {bibitem-31}Ólafur Halldórsson, \xref{EIMF20}{The saga of King Olaf Tryggvason: AM 62 fol.} 9-26  (Facsimile-edition)
+ \bibitem {bibitem-32}Ólafur Halldórsson, \xref{OIHalld1963}{Úr sögu skinnbóka}  (With facsimile of fol. 32ra:14-35)
+ \bibitem {bibitem-33}Stefán Karlsson, \xref{StefKarl14}{Ritun Reykjarfjarðarbókar}
+
+\end{bibitemlist}
+
+\end{document}

@@ -809,17 +809,6 @@
     <xsl:call-template name="pageHeader"/>
   </xsl:template>
   <xsl:template match="tei:titlePage">
-    <!--
-	<div class="titlePage">
-	<h1>
-	<xsl:apply-templates
-	select="tei:docTitle/tei:titlePart/tei:title"/>
-	</h1>
-	<h2>
-	<xsl:value-of select="tei:docAuthor"/>
-	</h2>
-	</div>
-    -->
   </xsl:template>
   <xsl:template name="continuedToc">
     <xsl:if test="tei:div">
