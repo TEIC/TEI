@@ -123,59 +123,59 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>body matter</desc>
    </doc>
-  <xsl:template match="tei:body">
-      <xsl:choose>
-         <xsl:when test="ancestor::tei:floatingText">
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:when test="ancestor::tei:p">
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:when test="ancestor::tei:group">
-            <xsl:apply-templates/>
-         </xsl:when>
-         <xsl:otherwise>
-<!-- start page sequence -->
-        <page-sequence format="{$formatBodypage}" text-align="{$alignment}" hyphenate="{$hyphenate}"
-                           language="{$language}"
-                           initial-page-number="1">
-               <xsl:call-template name="choosePageMaster">
-                  <xsl:with-param name="where">
-                     <xsl:value-of select="$bodyMulticolumns"/>
-                  </xsl:with-param>
-               </xsl:call-template>
-               <!-- static areas -->
-          <xsl:choose>
-                  <xsl:when test="$twoSided='true'">
-                     <xsl:call-template name="headers-footers-twoside"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                     <xsl:call-template name="headers-footers-oneside"/>
-                  </xsl:otherwise>
-               </xsl:choose>
-               <!-- now start the main  flow -->
-          <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
-                  <xsl:if test="not($flowMarginLeft='')">
-                     <xsl:attribute name="margin-left">
-                        <xsl:value-of select="$flowMarginLeft"/>
-                     </xsl:attribute>
-                  </xsl:if>
-                  <!--include front matter if there is no separate titlepage -->
-            <xsl:if test="not($titlePage='true') and not(preceding-sibling::tei:front)">
-                     <xsl:call-template name="Header"/>
-                  </xsl:if>
-                  <xsl:apply-templates/>
-                  <xsl:if test=".//tei:note[@place='end']">
-                     <block>
-                        <xsl:call-template name="setupDiv2"/>
-                        <xsl:text>Notes</xsl:text>
-                     </block>
-                     <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
-                  </xsl:if>
-               </flow>
-            </page-sequence>
-         </xsl:otherwise>
-      </xsl:choose>
+   <xsl:template match="tei:body">
+     <xsl:choose>
+       <xsl:when test="ancestor::tei:floatingText">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:when test="ancestor::tei:p">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:when test="ancestor::tei:group">
+	 <xsl:apply-templates/>
+       </xsl:when>
+       <xsl:otherwise>
+	 <!-- start page sequence -->
+	 <page-sequence format="{$formatBodypage}" text-align="{$alignment}" hyphenate="{$hyphenate}"
+			language="{$language}"
+			initial-page-number="1">
+	   <xsl:call-template name="choosePageMaster">
+	     <xsl:with-param name="where">
+	       <xsl:value-of select="$bodyMulticolumns"/>
+	     </xsl:with-param>
+	   </xsl:call-template>
+	   <!-- static areas -->
+	   <xsl:choose>
+	     <xsl:when test="$twoSided='true'">
+	       <xsl:call-template name="headers-footers-twoside"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:call-template name="headers-footers-oneside"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	   <!-- now start the main  flow -->
+	   <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
+	     <xsl:if test="not($flowMarginLeft='')">
+	       <xsl:attribute name="margin-left">
+		 <xsl:value-of select="$flowMarginLeft"/>
+	       </xsl:attribute>
+	     </xsl:if>
+	     <!--include front matter if there is no separate titlepage -->
+	     <xsl:if test="not($titlePage='true') and not(preceding-sibling::tei:front)">
+	       <xsl:call-template name="Header"/>
+	     </xsl:if>
+	     <xsl:apply-templates/>
+	     <xsl:if test=".//tei:note[@place='end']">
+	       <block>
+		 <xsl:call-template name="setupDiv2"/>
+		 <xsl:text>Notes</xsl:text>
+	       </block>
+	       <xsl:apply-templates select=".//tei:note[@place='end']" mode="endnote"/>
+	     </xsl:if>
+	   </flow>
+	 </page-sequence>
+       </xsl:otherwise>
+     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
@@ -340,54 +340,52 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:if test="$titlePage='true'">
-               <page-sequence format="{$formatFrontpage}" force-page-count="end-on-even"
-                              hyphenate="{$hyphenate}"
-                              language="{$language}">
-                  <xsl:call-template name="choosePageMaster">
-                     <xsl:with-param name="where">
-                        <xsl:value-of select="$frontMulticolumns"/>
-                     </xsl:with-param>
-                  </xsl:call-template>
-                  <static-content flow-name="xsl-region-before">
-                     <block/>
-                  </static-content>
-                  <static-content flow-name="xsl-region-after">
-                     <block/>
-                  </static-content>
-                  <flow flow-name="xsl-region-body" font-family="{$bodyFont}">
-                     <xsl:call-template name="Header"/>
-                  </flow>
-               </page-sequence>
-            </xsl:if>
-            <page-sequence format="{$formatFrontpage}" text-align="{$alignment}" hyphenate="{$hyphenate}"
-                           language="{$language}"
-                           initial-page-number="1">
+	   <xsl:if test="$titlePage='true' and not (tei:titlePage)">
+	     <page-sequence format="{$formatFrontpage}" force-page-count="end-on-even"
+			    hyphenate="{$hyphenate}"
+			    language="{$language}">
+	       <xsl:call-template name="choosePageMaster">
+		 <xsl:with-param name="where">
+		   <xsl:value-of select="$frontMulticolumns"/>
+		 </xsl:with-param>
+	       </xsl:call-template>
+	       <static-content flow-name="xsl-region-before">
+		 <block/>
+	       </static-content>
+	       <static-content flow-name="xsl-region-after">
+		 <block/>
+	       </static-content>
+	       <flow flow-name="xsl-region-body" font-family="{$bodyFont}">
+		 <xsl:call-template name="Header"/>
+	       </flow>
+	     </page-sequence>
+	   </xsl:if>
+	   <page-sequence format="{$formatFrontpage}" text-align="{$alignment}" hyphenate="{$hyphenate}"
+			  language="{$language}"
+			  initial-page-number="1">
                <xsl:call-template name="choosePageMaster">
-                  <xsl:with-param name="where">
-                     <xsl:value-of select="$frontMulticolumns"/>
-                  </xsl:with-param>
+		 <xsl:with-param name="where">
+		   <xsl:value-of select="$frontMulticolumns"/>
+		 </xsl:with-param>
                </xsl:call-template>
                <!-- static areas -->
-          <xsl:choose>
-                  <xsl:when test="$twoSided='true'">
-                     <xsl:call-template name="headers-footers-twoside"/>
-                  </xsl:when>
-                  <xsl:otherwise>
-                     <xsl:call-template name="headers-footers-oneside"/>
-                  </xsl:otherwise>
+	       <xsl:choose>
+		 <xsl:when test="$twoSided='true'">
+		   <xsl:call-template name="headers-footers-twoside"/>
+		 </xsl:when>
+		 <xsl:otherwise>
+		   <xsl:call-template name="headers-footers-oneside"/>
+		 </xsl:otherwise>
                </xsl:choose>
                <!-- now start the main flow -->
-          <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
-                  <xsl:for-each select="tei:*">
-                     <xsl:comment>Start <xsl:value-of select="name(.)"/>
-                     </xsl:comment>
-                     <xsl:apply-templates select="."/>
-                     <xsl:comment>End <xsl:value-of select="name(.)"/>
-                     </xsl:comment>
-                  </xsl:for-each>
+	       <flow flow-name="xsl-region-body" font-family="{$bodyFont}" font-size="{$bodySize}">
+		 <xsl:for-each select="tei:*">
+		   <xsl:comment>Start <xsl:value-of select="name(.)"/></xsl:comment>
+		   <xsl:apply-templates select="."/>
+		   <xsl:comment>End <xsl:value-of select="name(.)"/></xsl:comment>
+		 </xsl:for-each>
                </flow>
-            </page-sequence>
+	   </page-sequence>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -562,14 +560,6 @@ of this software, even if advised of the possibility of such damage.
       </block>
       <block font-style="italic" space-after="10pt" space-before="6pt">
          <xsl:apply-templates select="tei:front//tei:docAuthor" mode="heading"/>
-      </block>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>title page</desc>
-   </doc>
-  <xsl:template match="tei:titlePage">
-      <block text-align="center">
-         <xsl:apply-templates/>
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -1433,6 +1423,18 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="/tei:text" priority="999">
     <xsl:call-template name="wrapRootText"/>
   </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[fo] make title page </desc>
+   </doc>
+
+  <xsl:template match="tei:titlePage">
+      <block text-align="center">
+         <xsl:apply-templates/>
+      </block>
+  </xsl:template>
+
 
 
 </xsl:stylesheet>

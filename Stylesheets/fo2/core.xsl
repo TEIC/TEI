@@ -69,13 +69,13 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>abbreviation</desc>
    </doc>
   <xsl:template match="tei:abbr">
       <xsl:apply-templates/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>addition</desc>
    </doc>
   <xsl:template match="tei:add">
       <xsl:choose>
@@ -97,13 +97,8 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc/>
    </doc>
-  <xsl:template match="tei:byline">
-      <block text-align="center">
-         <xsl:apply-templates/>
-      </block>
-  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>line break</desc>
    </doc>
   <xsl:template match="tei:cell//tei:lb">
       <xsl:choose>
@@ -761,6 +756,8 @@ of this software, even if advised of the possibility of such damage.
       <desc>Quotations</desc>
    </doc>
   <xsl:template match="tei:quote">
+    <xsl:choose>
+      <xsl:when test="not(tei:is-inline(.))">
       <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}"
              start-indent="{$exampleMargin}"
              font-size="{$quoteSize}"
@@ -768,23 +765,28 @@ of this software, even if advised of the possibility of such damage.
              space-after.optimum="{$exampleAfter}">
          <xsl:apply-templates/>
       </block>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeQuote"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>quoted text</desc>
    </doc>
-  <xsl:template match="tei:q">
+  <xsl:template match="tei:q|tei:said">
       <xsl:choose>
          <xsl:when test="tei:text">
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="@rend='display' or tei:p or tei:lg">
-            <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}"
+         <xsl:when test="@rend='literal'">
+            <block white-space-collapse="false" wrap-option="no-wrap" font-size="{$exampleSize}"
+                   space-before.optimum="4pt"
+                   space-after.optimum="4pt"
                    start-indent="{$exampleMargin}"
-                   font-size="{$quoteSize}"
-                   space-before.optimum="{$exampleBefore}"
-                   space-after.optimum="{$exampleAfter}">
+                   font-family="{$typewriterFont}">
                <xsl:apply-templates/>
             </block>
          </xsl:when>
@@ -797,94 +799,18 @@ of this software, even if advised of the possibility of such damage.
                <xsl:apply-templates/>
             </block>
          </xsl:when>
-         <xsl:when test="@rend = 'qwic'">
-            <block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
-               <inline-container>
-                  <table font-size="{$exampleSize}" font-family="{$typewriterFont}"
-                         start-indent="{$exampleMargin}">
-                     <table-column column-number="1" column-width="">
-                        <xsl:if test="$foEngine='passivetex'">
-                           <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">p</xsl:attribute>
-                        </xsl:if>
-                     </table-column>
-                     <table-column column-number="2" column-width="">
-                        <xsl:if test="$foEngine='passivetex'">
-                           <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">l</xsl:attribute>
-                        </xsl:if>
-                     </table-column>
-                     <table-body>
-                        <xsl:for-each select="tei:q">
-                           <xsl:for-each select="tei:term">
-                              <table-row>
-                                 <table-cell>
-                                    <block>
-                                       <xsl:apply-templates select="preceding-sibling::node()"/>
-                                    </block>
-                                 </table-cell>
-                                 <table-cell>
-                                    <block>
-                                       <xsl:apply-templates/>
-                                       <xsl:apply-templates select="following-sibling::node()"/>
-                                    </block>
-                                 </table-cell>
-                              </table-row>
-                           </xsl:for-each>
-                        </xsl:for-each>
-                     </table-body>
-                  </table>
-               </inline-container>
-            </block>
+	 <xsl:when test="not(tei:is-inline(.))">
+	   <block text-align="start" text-indent="0pt" end-indent="{$exampleMargin}"
+		  start-indent="{$exampleMargin}"
+		  font-size="{$quoteSize}"
+		  space-before.optimum="{$exampleBefore}"
+		  space-after.optimum="{$exampleAfter}">
+	     <xsl:apply-templates/>
+	   </block>
          </xsl:when>
-         <xsl:when test="starts-with(@rend,'kwic')">
-            <block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
-               <inline-container>
-                  <table font-size="{$exampleSize}" start-indent="{$exampleMargin}"
-                         font-family="{$typewriterFont}">
-                     <table-column column-number="1" column-width="">
-                        <xsl:if test="$foEngine='passivetex'">
-                           <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">r</xsl:attribute>
-                        </xsl:if>
-                     </table-column>
-                     <table-column column-number="2" column-width="">
-                        <xsl:if test="$foEngine='passivetex'">
-                           <xsl:attribute name="column-align" namespace="http://www.tug.org/fotex">l</xsl:attribute>
-                        </xsl:if>
-                     </table-column>
-                     <table-body>
-                        <xsl:for-each select="tei:term">
-                           <table-row>
-                              <table-cell>
-                                 <block>
-                                    <xsl:value-of select="preceding-sibling::node()[1]"/>
-                                 </block>
-                              </table-cell>
-                              <table-cell>
-                                 <block>
-                                    <xsl:apply-templates/>
-                                    <xsl:value-of select="following-sibling::node()[1]"/>
-                                 </block>
-                              </table-cell>
-                           </table-row>
-                        </xsl:for-each>
-                     </table-body>
-                  </table>
-               </inline-container>
-            </block>
-         </xsl:when>
-         <xsl:when test="@rend='literal'">
-            <block white-space-collapse="false" wrap-option="no-wrap" font-size="{$exampleSize}"
-                   space-before.optimum="4pt"
-                   space-after.optimum="4pt"
-                   start-indent="{$exampleMargin}"
-                   font-family="{$typewriterFont}">
-               <xsl:apply-templates/>
-            </block>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:text>“</xsl:text>
-            <xsl:apply-templates/>
-            <xsl:text>”</xsl:text>
-         </xsl:otherwise>
+	 <xsl:otherwise>
+	   <xsl:call-template name="makeQuote"/>
+	 </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -905,19 +831,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:rs">
-      <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:s">
-      <xsl:apply-templates/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>salutation</desc>
    </doc>
   <xsl:template match="tei:salute">
       <block text-align="left">

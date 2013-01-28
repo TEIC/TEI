@@ -115,6 +115,8 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
 
         <xsl:choose>
+	  <xsl:when test="/tei:TEI/tei:text/tei:front/tei:titlePage"/>
+	  <xsl:when test="/tei:TEI/tei:text/tei:front/tei:docTitle"/>
          <xsl:when
 	     test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
 	   <w:p>

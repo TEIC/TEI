@@ -13,6 +13,7 @@
   <xsl:import href="../../common2/core.xsl"/>
   <xsl:import href="../../common2/figures.xsl"/>
   <xsl:import href="../../common2/linking.xsl"/>
+  <xsl:import href="../../common2/textstructure.xsl"/>
   <xsl:import href="../../common2/msdescription.xsl"/>
   <!-- Deals with dynamic text creation such as toc -->
   <xsl:include href="dynamic.xsl"/>
@@ -2369,9 +2370,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:copy>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="tei:titlePage">
-    <xsl:apply-templates/>
-  </xsl:template>
   <!-- place holders, used by ISO profile -->
   <xsl:template name="getStyleFonts">
     <xsl:param name="css"/>
@@ -2706,6 +2704,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="style">
         <xsl:value-of select="if ($style='docAuthor') then 'Author'
 			      else if ($style='docTitle') then 'Title'
+			      else if ($style='titlePart') then 'Title'
 			      else $style"/>
       </xsl:with-param>
     </xsl:call-template>

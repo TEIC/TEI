@@ -170,10 +170,8 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="makeBlock">
     <xsl:param name="style"/>
-      <block font-size="{tei:fontSize($style)}">
-         <inline font-style="{tei:fontStyle($style)}" font-weight="{tei:fontWeight($style)}">
-            <xsl:apply-templates/>
-         </inline>
+      <block font-size="{tei:fontSize($style)}" font-style="{tei:fontStyle($style)}" font-weight="{tei:fontWeight($style)}">
+	<xsl:apply-templates/>
       </block>
   </xsl:template>
   
@@ -208,7 +206,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="after"/>
     <xsl:param name="style"/>
     <xsl:value-of select="$before"/>
-    <xsl:apply-templates/>
+      <inline font-style="{tei:fontStyle($style)}" font-weight="{tei:fontWeight($style)}">
+	<xsl:apply-templates/>
+      </inline>
     <xsl:value-of select="$after"/>
   </xsl:template>
 
@@ -218,6 +218,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="$style='docAuthor'">14pt</xsl:when>
       <xsl:when test="$style='docTitle'">16pt</xsl:when>
+      <xsl:when test="$style='titlePart'">16pt</xsl:when>
       <xsl:when test="$style='docDate'">14pt</xsl:when>
       <xsl:otherwise>12pt</xsl:otherwise>
     </xsl:choose>
@@ -235,6 +236,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="style"/>
     <xsl:choose>
       <xsl:when test="$style='docTitle'">bold</xsl:when>
+      <xsl:when test="$style='titlePart'">bold</xsl:when>
       <xsl:otherwise>normal</xsl:otherwise>
     </xsl:choose>
   </xsl:function>
