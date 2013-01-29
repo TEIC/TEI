@@ -1,4 +1,3 @@
-	
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -1579,7 +1578,7 @@ first of the following two encodings is legal, but the second is
 not.
 <!-- Made up example -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples">Give me <seg type="phrase">a dozen. Or two or three.</seg></egXML>
-<eg><![CDATA[<!-- Illegal! -->
+<eg xml:space="preserve"><![CDATA[<!-- Illegal! -->
 <s>Give me <seg type="phrase">a dozen.</s>
 <s>Or two or three.</s></seg>]]></eg></p>
 <p>The <att>part</att> attribute may be used as one simple
@@ -1816,7 +1815,7 @@ and provides functionality more similar to that of the  <gi>link</gi> and <gi>li
   indicate more precisely what kind of correspondence is
   intended as in the following retagging of the preceding
   example.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><title xml:id="shirley">Shirley</title>, which made
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en"><title xml:id="shirley">Shirley</title>, which made
 its Friday night debut only a month ago, was not
 listed on <name xml:id="nbc">NBC</name>'s new schedule,
 although <seg xml:id="network">the network</seg> says
@@ -1828,18 +1827,20 @@ although <seg xml:id="network">the network</seg> says
 <p>In the following example, we use the same mechanism to
 express a correspondence amongst the anchors introduced following the
 fifth word after <mentioned>English</mentioned> in a text:
-<eg><![CDATA[English language. Except for not very<anchor xml:id="eng1"/>
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples">
+English language. Except for not very<anchor xml:id="en1"/>
 <!-- ... -->
-English at all at the time<anchor xml:id="eng2"/>
+English at all at the time<anchor xml:id="en2"/>
 <!-- ... -->
-English was still full of flaws<anchor xml:id="eng3"/>
+English was still full of flaws<anchor xml:id="en3"/>
 <!-- ... -->
-English. This was revised by young<anchor xml:id="eng4"/>
+English. This was revised by young<anchor xml:id="en4"/>
 <!-- ... -->
-<linkGrp type="five-word collocates">
-  <link type="collocates of ENGLISH" target="#eng1 #eng2 #eng3 #eng4"/>
+<linkGrp type="five-word_collocates">
+  <link type="collocates_of_ENGLISH" target="#en1 #en2 #en3 #en4"/>
   <!-- ... -->
-</linkGrp>]]></eg></p></div>
+</linkGrp>
+</egXML></p></div>
   <div type="div3" xml:id="SACSAL">
     <head>Alignment of Parallel Texts</head>
     <p>One very important application area for the alignment of
@@ -2050,15 +2051,16 @@ simple way of doing this using the TEI-defined markup for alignment of
 facsimiles. In the present chapter we demonstrate a more powerful
 means of aligning arbitrary polygons and points, which uses the XML notation SVG (see <ref target="#SVG-11">SVG</ref>). This provides appropriate facilities for both these
 requirements:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
-  &lt;svg&gt;
-    &lt;image
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+  <svg  xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink">
+    <image
      xlink:href="p1764.png"
      width="597"  height="897"
-     id="p981" /&gt;
-  &lt;rect id="p982" x="75" y="75"  width="25" height="10"/&gt;
-  &lt;rect id="p983" x="55" y="42"  width="25" height="10"/&gt;
-  &lt;/svg&gt;
+     id="p981" />
+  <rect id="p982" x="75" y="75"  width="25" height="10"/>
+  <rect id="p983" x="55" y="42"  width="25" height="10"/>
+  </svg>
 </egXML>
 This example of SVG defines two rectangles 
 at the locations with the specified x and y coordinates. A view is
@@ -2100,24 +2102,26 @@ kind might be represented by using the <gi>gloss</gi> and <gi>term</gi>
 mechanism described in section <ptr target="#COHQU"/>. The third kind of
 alignment might be represented using pointers embedded within the
 texts, for example:
-<eg><![CDATA[...
-<seg xml:id="e9803">where a <ref n="2" target="#p982">Student</ref>,</seg>
-<seg xml:id="l9803">ubi <ref n="2" target="#p982">Studiosus</ref>,</seg>
-...]]></eg>
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples">
+<!--... -->
+<seg xml:id="xe9803">where a <ref n="2" target="#xp982">Student</ref>,</seg>
+<seg xml:id="xl9803">ubi <ref n="2" target="#xp982">Studiosus</ref>,</seg>
+<!--... -->
+</egXML>
 
 We choose however to use
 the <gi>link</gi> element, since this provides a more efficient way of
 representing the three-way alignment between English, Latin, and picture
 without redundancy.
   <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="alignment">
-   <link target="#e9801 #l9801 #p981"/>
-   <link target="#e9802 #l9802"/>
-   <link target="#e9803 #l9803 #p982"/>
-   <link target="#e9804 #l9804"/>
-   <link target="#e9805 #l9805"/>
-   <link target="#e9806 #l9806"/>
-   <link target="#e9807 #l9807"/>
-   <link target="#e9808 #l9808 #p983"/>
+   <link target="#xe9801 #xl9801 #xp981"/>
+   <link target="#xe9802 #xl9802"/>
+   <link target="#xe9803 #xl9803 #xp982"/>
+   <link target="#xe9804 #xl9804"/>
+   <link target="#xe9805 #xl9805"/>
+   <link target="#xe9806 #xl9806"/>
+   <link target="#xe9807 #xl9807"/>
+   <link target="#xe9808 #xl9808 #xp983"/>
 </linkGrp></egXML></p>
 <p>This map, of course, only aligns whole segments and image portions,
 since these are the only parts of our encoding which bear identifiers
@@ -2200,7 +2204,7 @@ has been identified.
 <p>To illustrate the use of these mechanisms for marking synchrony,
 consider the following representation of a spoken text:
 <!-- From BNC, via LB, retranscribed without SGML markup -->
-<eg><![CDATA[B: The first time in twenty five years, we've cooked Christmas
+<eg xml:space="preserve"><![CDATA[B: The first time in twenty five years, we've cooked Christmas
    (unclear) for a blooming great load of people.
 A: So you're [1] (unclear) [2]
 B: [1] It will be [2] nice in a way, but, [3] be strange. [4]
@@ -2351,20 +2355,20 @@ available, and an XML file that assigns identifiers to the various
 temporal spans of sound is available. For example, the following
 Synchronized Multimedia Integration Language (SMIL, pronounced
 "smile") fragment:
-<eg><![CDATA[
-<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
  xml:id="au1" begin="05.2s" />
-<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
  xml:id="au2" begin="05.7s" />
-<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
  xml:id="au3" begin="05.9s" />
-<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
  xml:id="au4" begin="06.3s" />
-<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
  xml:id="au5" begin="06.9s" />
-<audio src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
  xml:id="au6" begin="07.4s" />
-]]></eg>
+</egXML>
 URIs pointing to the <gi scheme="SMIL">audio</gi> elements could also
 be included as a fourth component in each of the above <gi>link</gi>
 elements, thus providing a synchronized audio track to complement the
@@ -2545,11 +2549,11 @@ cooks all with seasoning for some three hours.</s>
 </p>
 <p>Using the <att>prev</att> and <att>next</att> attributes, we can
 link the s-units with identifiers <val>qs3</val> and <val>qs4</val>, either singly or doubly as follows:
-<eg><![CDATA[  <s xml:id="qs3" next="#qs4"><emph>But</emph>,</s>
+<eg xml:space="preserve"><![CDATA[  <s xml:id="qs3" next="#qs4"><emph>But</emph>,</s>
   <s xml:id="qs4">he never stops stirring it!</s>]]></eg>
-<eg><![CDATA[  <s xml:id="qs3"><emph>But</emph>,</s>
+<eg xml:space="preserve"><![CDATA[  <s xml:id="qs3"><emph>But</emph>,</s>
   <s xml:id="qs4" prev="#qs3">he never stops stirring it!</s>]]></eg>
-<eg><![CDATA[  <s xml:id="qs3" next="#qs4"><emph>But</emph>,</s>
+<eg xml:space="preserve"><![CDATA[  <s xml:id="qs3" next="#qs4"><emph>But</emph>,</s>
   <s xml:id="qs4" prev="#qs3">he never stops stirring it!</s>]]></eg>
 Double linking of the two s-units, as illustrated by the last of these
 encodings, is equivalent to specifying a <gi>link</gi> element:
@@ -3271,30 +3275,30 @@ or end of a selected range will be included as wrappers for those of
 their children that are completely or partially selected by the
 range. For example, given the following source document:
  
-  <eg><![CDATA[
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples">
   <body>
   <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
   <p xml:id="par2">That was the <emph>song</emph> that I sang</p>
   </body>
-  ]]></eg>
+</egXML>
   and the following external document:
-  <eg><![CDATA[
-  <body xmlns:xi="http://www.w3.org/2001/XInclude">
-     <div><xi:include href="example1.xml"
+<eg xml:space="preserve"><![CDATA[
+  <body>
+     <div><include href="example1.xml" xmlns="http://www.w3.org/2001/XInclude"
 xpointer="range(xpath1(id(par1)//emph),xpath1(id(par2)//emph))"/>
      </div>
- </body>    ]]></eg>
+ </body>   
+]]></eg>
   the resulting document after XInclude processing of this external document
   would be:
-  <eg><![CDATA[
-   <body xmlns:xi="http://www.w3.org/2001/XInclude">
+<eg xml:space="preserve"><![CDATA[
+   <body>
    <div>
-<p xml:id="par1"><emph>home</emph> on Brokeback Mountain.</p>
-<p xml:id="par2">That was the <emph>song</emph></p>    
+     <p xml:id="par1">home, <emph>home</emph> on Brokeback Mountain.</p>
+     <p xml:id="par2">That was the <emph>song</emph> that I sang</p>
    </div>
    </body>
-  ]]></eg>
-
+]]></eg>
   The result of the inclusion is two paragraph elements, while
   the original range designated in the source document
   overlapped two paragraph fragments. 
@@ -3354,7 +3358,7 @@ The semantics of XInclude require the creation of well-formed XML results even t
 	  <gi>xi:include</gi> elements:
 	  <lb/>	<!-- inappropriate kludge -->
 	 <label rend="it">Source.xml</label>
-	<eg><![CDATA[<content>To make a prairie it takes a clover and one bee,\n
+	<eg xml:space="preserve"><![CDATA[<content>To make a prairie it takes a clover and one bee,\n
 One clover, and a bee,\n
 And revery.\n
 The revery alone will do,\n
@@ -3362,7 +3366,7 @@ If bees are few.\n
 </content>]]></eg>
 	  <lb/>	<!-- inappropriate kludge -->
 	  <label rend="it">External.xml</label>
-	<eg><![CDATA[<text xmlns:xi="http://www.w3.org/2001/XInclude">
+	<eg xml:space="preserve"><![CDATA[<text xmlns:xi="http://www.w3.org/2001/XInclude">
  <body>
   <head>1755</head>
    <l>
@@ -3434,7 +3438,8 @@ If bees are few.\n
 	  document:
 	  <lb/>	<!-- inappropriate kludge -->
 	  <label rend="it">Source.xhtml</label>
-	  <eg><![CDATA[<html>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<html xmlns="http://www.w3.org/1999/xhtml">
     <body>
   <div>To make a prairie it takes a <a href="clover.gif">clover</a>
     and one <a href="bee.gif">bee</a>,</div>
@@ -3444,8 +3449,8 @@ If bees are few.\n
   <div>The revery alone will do,</div>
   <div>If bees are few.</div>
     </body>
-</html>]]></eg>
-	  
+</html>
+</egXML>	  
 the expression
 <code>range(element(/1/2/1.0),element(/1/2/11.1))</code> will select
 the whole poem, text content <emph>and</emph> <gi>div</gi> elements
@@ -3459,7 +3464,7 @@ will only select the text of the poem, with no markup inside.</p>
 	  the <title>Source.xhtml</title> document:
 	  <lb/>	<!-- inappropriate kludge -->
 	  <label rend="it">External2.xml</label>
-	  <eg><![CDATA[<text xmlns:xi="http://www.w3.org/2001/XInclude">
+	  <eg xml:space="preserve"><![CDATA[<text xmlns:xi="http://www.w3.org/2001/XInclude">
  <body>
   <head>1755</head>
   <l>

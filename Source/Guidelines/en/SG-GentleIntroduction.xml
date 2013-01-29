@@ -289,9 +289,9 @@ off element occurrences within the running text, in rather the
 same way as different types of parentheses or quotation marks are used
 in conventional punctuation. For example, a quotation element in a
 text might be tagged as follows:
-<eg><![CDATA[... Rosalind's 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">... Rosalind's 
 remarks <quote>This is the silliest stuff that ere I heard 
-of!</quote> clearly indicate ...]]></eg>
+of!</quote> clearly indicate ...</egXML>
 
 As this example shows, a start-tag takes the form <tag>quote</tag>,
 where the opening angle bracket indicates the start of the start-tag,
@@ -331,7 +331,9 @@ composed. In XML terms, our <term>document type</term> is the
 this model might appear as follows:<note place="bottom">The example is
 taken from William Blake's <title>Songs of innocence and
 experience</title> (1794).</note>
-<eg><![CDATA[<anthology>
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples"
+       valid="false">
+<anthology xmlns="">
   <poem>
     <heading>The SICK ROSE</heading>
     <stanza>
@@ -348,7 +350,7 @@ experience</title> (1794).</note>
     </stanza>
   </poem>
   <!-- more poems go here -->
-</anthology>]]></eg></p>
+</anthology></egXML></p>
 <p>It should be stressed that this example does <emph>not</emph> use
 the names proposed for corresponding elements elsewhere
 in these Guidelines: the above is thus <emph>not</emph> a valid TEI
@@ -409,7 +411,7 @@ lines, or drawn lines. Because of these different meanings, if we wish
 to share data it will be necessary to distinguish the two <q>line</q>
 components in our marked-up texts. This is achieved by including a
 <term>namespace prefix</term> within the markup, for example like
-this: <eg><![CDATA[ <my:line>This is one of my lines</my:line> 
+this: <eg xml:space="preserve"><![CDATA[ <my:line>This is one of my lines</my:line> 
 <!-- ... --> 
 <yr:line>This is one of your lines</yr:line>]]></eg>
 
@@ -507,7 +509,7 @@ for the same purpose. </note> Although we will use the RELAX NG compact syntax
 for illustration in what follows, the reader should bear in mind that analogous
 concepts are expressed differently in other schema languages. </p>
 <p>The following schema might be used to validate our example poem:
-<eg><![CDATA[
+<eg xml:space="preserve"><![CDATA[
 anthology_p = element anthology { poem_p+ }
 poem_p = element poem { heading_p?, stanza_p+ }
 stanza_p = element stanza {line_p+}
@@ -648,11 +650,11 @@ the same content model as the existing <gi scheme="imaginary">line</gi> element.
 therefore add the following two lines to our example schema: <eg><![CDATA[firstLine_p = element firstLine {text} 
 secondLine_p = element secondLine {text}]]></eg>
 Next, we can change the declaration for the <gi scheme="imaginary">poem</gi> element to
-include all three possibilities: <eg><![CDATA[ poem_p = element poem
+include all three possibilities: <eg xml:space="preserve"><![CDATA[ poem_p = element poem
 { heading_p?, (stanza_p+ | couplet_p+ | line_p+) }]]></eg> That is, a poem
 consists of an optional heading, followed by one or several stanzas,
 or one or several couplets, or one or several lines.  Note the
-difference between this declaration and the following: <eg><![CDATA[poem_p = element poem
+difference between this declaration and the following: <eg xml:space="preserve"><![CDATA[poem_p = element poem
 {heading_p?, (stanza_p | couplet_p | line_p)+ }]]></eg> The second version,
 by applying the occurrence indicator to the group rather than to each
 element within it, would allow a single poem to contain a mixture
@@ -664,7 +666,7 @@ intervening stretches of character data. For example, if we wished to
 mark place names wherever they appear inside our verse lines, then,
 assuming we have also added a pattern for the
 <gi scheme="imaginary">name</gi> element, we could change the definition for
-<gi scheme="imaginary">line</gi> to <eg><![CDATA[line_p = element
+<gi scheme="imaginary">line</gi> to <eg xml:space="preserve"><![CDATA[line_p = element
 line { (text | name_p )* }]]></eg>
 </p>
 
@@ -684,7 +686,7 @@ chorus appears.  Like a stanza, a refrain consists of repetitions of
 the line element.  A refrain can appear at the start of a poem only,
 or as an optional addition following each stanza.  This could be
 expressed by a pattern such as the following:
-<eg><![CDATA[refrain_p = element refrain {line_p+}
+<eg xml:space="preserve"><![CDATA[refrain_p = element refrain {line_p+}
 poem_p = element poem   {heading_p?, ( line_p+ | (refrain_p?, (stanza_p,
 refrain_p?)+ )) }]]></eg>
 
@@ -704,7 +706,7 @@ and that if there is both a heading and a stanza they must appear in
 that order.</p>
 <p>Note that the apparent complexity of this model derives from the
 constraints expressed informally above. A simpler model, such as
-<eg><![CDATA[poem_p =
+<eg xml:space="preserve"><![CDATA[poem_p =
 element poem {heading_p?, (line_p | refrain_p | stanza_p)+ }]]></eg> would not enforce any of them, and would therefore permit
 such anomalies as a poem consisting only of refrains, or an arbitrary mixture of
 lines and refrains.</p>
@@ -822,7 +824,10 @@ must always be given inside matching quotation marks, either single or
 double<note place="bottom">In the unlikely event that both kinds of quotation marks are needed within the
 quoted string, either or both can also be presented in escaped form, using the
 predefined character entities <code>&amp;apos;</code> or <code>&amp;quot;</code></note>.</p>
-<p>For example: <eg><![CDATA[<poem xml:id="P1" status="draft"> ... </poem>]]></eg> 
+<p>For example: 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <poem  xmlns="" xml:id="Poem1" status="draft"> ... </poem>
+</egXML>
 Here attribute values are being specified for two attributes
 previously declared for the <gi scheme="imaginary">poem</gi> element: <att>xml:id</att>
 and <att scheme="imaginary">status</att>. For the instance of a <gi scheme="imaginary">poem</gi> in this
@@ -868,7 +873,7 @@ within the definition for every element to which the attribute is
 attached. We therefore modify the definition for the
 <code>poem_p</code> pattern given above as follows:
 
-<eg><![CDATA[poem_p = element poem {att.status?, heading_p?, stanza_p+}
+<eg xml:space="preserve"><![CDATA[poem_p = element poem {att.status?, heading_p?, stanza_p+}
 ]]></eg>
 
 In RELAX NG, an element pattern simply includes any attribute patterns
@@ -893,7 +898,7 @@ because a list of acceptable values is predefined, a parser can check
 that no <gi scheme="imaginary">poem</gi> is defined for which the <att>status</att>
 attribute does not have one of <val>draft</val>, <val>revised</val>,
 or <val>published</val> as its value. By contrast, with a definition
-such as <eg><![CDATA[att.status =
+such as <eg xml:space="preserve"><![CDATA[att.status =
 attribute status {text}]]></eg> a parser would accept almost any
 unbroken string of characters (<code>status="awful"</code>,
 <code>status="awe-ful"</code>, or <code>status="12345678"</code>) as
@@ -958,12 +963,14 @@ the parser may safely ignore the lack of one in those that do not.
 Only poems to which we intend to refer need use this attribute; for
 each such poem we should now include in its start-tag some unique
 identifier, for example:
-<eg><![CDATA[<poem xml:id="Rose"> ... </poem>
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+<poem xmlns="" xml:id="Rose"> ... </poem>
 
-<poem xml:id="P40"> ... </poem>
+<poem xmlns="" xml:id="P40"> ... </poem>
 
-<poem> ... </poem>
-]]></eg></p>
+<poem xmlns="" > ... </poem>
+</egXML>
+</p>
 <p>Next we need to define a new element for the cross-reference
 itself.  This will not have any content—it is only a
 pointer—but it has an attribute, the value of which will be
@@ -987,9 +994,9 @@ attribute pattern, it must be supplied on each occurrence—a
 <p>With these declarations in force, we can now encode a reference to
 the poem whose <att>xml:id</att> attribute specifies that its
 identifier is <val>Rose</val> as follows:
-
-<eg><![CDATA[Blake's poem on the sick rose 
-<poemRef target='#Rose'/> ...]]></eg>
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+Blake's poem on the sick rose 
+<poemRef xmlns="" target='#Rose'/> ...</egXML>
 <!--
 In this example, we have used the special syntax defined by XML for
 representing empty elements in which the end-tag and the start-tag are
@@ -1019,12 +1026,13 @@ containing a reproduction of Blake's original in our anthology, the
 most appropriate method would probably be to define a new element
 called (for the sake of argument) <gi scheme="imaginary">graphic</gi>
 with a <att>target</att> attribute of datatype URI:
-<eg><![CDATA[graphic_p = element graphic {att.url, empty} att.url =
+<eg xml:space="preserve"><![CDATA[graphic_p = element graphic {att.url, empty} att.url =
 attribute url {anyURI}]]></eg> With these additions to the schema, we
 can now represent the location of the illustration within our text
-like this: <eg><![CDATA[<poem><graphic
+like this: <egXML xml:lang="en"
+xmlns="http://www.tei-c.org/ns/Examples" valid="false"><poem xmlns=""><graphic
 url="http://en.wikisource.org/wiki/Image:Blake_sick_rose.jpg"/>
-</poem>]]></eg> By providing a location from which a reproduction of
+</poem></egXML> By providing a location from which a reproduction of
 the required image can be downloaded, this encoding makes it possible
 for appropriate software able to display the image as well as record
 its existence. </p>
@@ -1215,22 +1223,23 @@ use the <soCalled>null</soCalled> namespace. Alternatively, the root element of 
 document may supply a default namespace, understood to apply to all elements which have no namespace prefix. This is the function of the
 <att scheme="XML">xmlns</att> attribute which provides a
 unique name for the default namespace, in the form of a URI:
-<eg><![CDATA[
-<anthology xmlns="http://www.example.net/anthology/ns">
-  ]]><!-- anthology markup elements here --><![CDATA[
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+<anthology  xmlns="">
+<!-- anthology markup elements here -->
 </anthology>
-]]></eg>
+</egXML>
 In exactly the same way, on the root element for each part of our
 document which uses the SVG language, we might introduce the SVG
 namespace name:
-<eg><![CDATA[<anthology xmlns="http://www.example.net/anthology/ns">
-  ]]><!-- anthology markup elements here --><![CDATA[
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+<anthology  xmlns="">
+<!-- anthology markup elements here -->
    <svg xmlns="http://www.w3.org/2000/svg">
- ]]><!-- SVG markup elements here --><![CDATA[
+<!-- SVG markup elements here -->
   </svg>
-  ]]><!-- more anthology markup elements here --><![CDATA[
+<!-- more anthology markup elements here -->
 </anthology>
-]]></eg>
+</egXML>
 Although a namespace name usually uses the URI (Uniform Resource
 Identifier) syntax, it is not treated as an online address
 and an XML processor regards it just as a string, providing a longer name for the
@@ -1240,15 +1249,16 @@ name with the namespace it defines. This is very useful if we want to
 mingle elements from different namespaces within the same document,
 since the prefix can be attached to any element, overriding the
 implicit namespace for itself (but not its children):
-<eg><![CDATA[
-<anthology xmlns="http://www.example.net/anthology/ns"
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+<anthology  xmlns=""
 	   xmlns:svg="http://www.w3.org/2000/svg">
   <!-- anthology markup elements here -->
    <svg:svg>
       <!-- SVG markup elements here -->
    </svg:svg>
   <!-- more anthology markup elements here -->
-</anthology>]]></eg>
+</anthology>
+</egXML>
 </p>
 <p>There is no limit on the number of namespaces that a document can
 use. Provided that each is uniquely identified, an XML processor can
@@ -1256,8 +1266,8 @@ identify those that are relevant, and validate them appropriately. To
 extend our example further, we might decide to add a linguistic
 analysis to each of the poems, using a set of elements such as <gi scheme="imaginary">aux</gi>, <gi scheme="imaginary">adj</gi>, etc.,
 derived from some pre-existing XML vocabulary for linguistic analysis.
-<eg><![CDATA[
-<anthology xmlns="http://www.example.net/anthology/ns"
+<egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+<anthology xmlns=""
            xmlns:gram="http://www.gram.org"
 	   xmlns:svg="http://www.w3.org/2000/svg">
     <!-- anthology markup elements here -->
@@ -1271,7 +1281,8 @@ derived from some pre-existing XML vocabulary for linguistic analysis.
       <gram:aux>art</gram:aux >
       <gram:adj>sick</gram:adj>
 </line>
-</anthology>]]></eg>
+</anthology>
+</egXML>
 </p>
 
 <div type="div3" xml:id="SG-ms"><head>Marked Sections</head>
@@ -1298,7 +1309,7 @@ references encountered are therefore treated as if they were plain
 text. For example, when we come to write the users' manual for our
 anthology, we may find ourselves often producing text like the
 following:
-<eg><![CDATA[
+<eg xml:space="preserve"><![CDATA[
 Here is an example of the use of the <gi>line</gi> element:
 <![CDATA[<line>....</line>]]]]><![CDATA[>
 ]]></eg>
@@ -1354,7 +1365,7 @@ number of facilities, but we are here concerned only with the small
 subset of those facilities recognized by all schema languages.</p>
 <p>Here is an example DOCTYPE statement which we might consider
 prefixing to the final version of our anthology:
-<eg><![CDATA[<!DOCTYPE anthology [
+<eg xml:space="preserve"><![CDATA[<!DOCTYPE anthology [
 <!ENTITY mdash "&#2014;">
 <!ENTITY legalese "This document is available under a Creative Commons
 Share and Enjoy Licence">
@@ -1387,7 +1398,7 @@ standardized method of doing this through the use of a processing instruction:
 The <att>href</att> <term>pseudo-attribute</term> points to the location of the schema. This is the only mandatory
   pseudo-attribute, but others can be added to give more information about the schema:
   
-  <eg><![CDATA[<?xml-model href="burgess.rng" 
+  <eg xml:space="preserve"><![CDATA[<?xml-model href="burgess.rng" 
                        title="Anthony Burgess Project Schema" 
                        schematypens="http://relaxng.org/ns/structure/1.0" 
                        type="application/xml"
@@ -1400,7 +1411,7 @@ how to use them.</p>
 different schemas, each appropriate to a different processing task. 
 All of these may be expressed in the same way:
 
-  <eg><![CDATA[<?xml-model href="tei_tite.xsd" type="application/xml" ?>
+  <eg xml:space="preserve"><![CDATA[<?xml-model href="tei_tite.xsd" type="application/xml" ?>
 <?xml-model href="checkNames.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron" ?>]]></eg>
 
 This example includes a standard schema in XML Schema format, along with a schematron schema which might be 
