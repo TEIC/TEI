@@ -51,7 +51,7 @@
     <!-- Recreate temporary output directory -->
     <!-- The transformation for IBOOKS output. -->
     <echo level="info">XSLT generate ibooks files</echo>
-    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.xhtml" classpath="classpath">
+    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.xhtml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -92,7 +92,7 @@
       <param name="nocompress" expression="${nocompress}" if="nocompress"/>
     </xslt>
     <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" classpath="classpath" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
+    <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>

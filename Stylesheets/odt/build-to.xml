@@ -58,7 +58,7 @@
     <echo level="info">unzip ODT template</echo>
     <unzip src="${xslDir}/template.odt" dest="${outputTempDir}"/>
     <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" classpath="classpath" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
+    <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -77,7 +77,7 @@
       <fileset dir="${outputTempDir}" includes="Pictures/*.*"/>
     </images>
     <echo level="info">XSLT generate files for oo </echo>
-    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml" classpath="classpath">
+    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>

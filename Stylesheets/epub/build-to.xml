@@ -52,7 +52,7 @@
     <!-- Recreate temporary output directory -->
     <!-- The transformation for EPUB output. -->
     <echo level="info">XSLT generate ePub files</echo>
-    <xslt force="yes" style="${teitoepub}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.html" classpath="classpath">
+    <xslt force="yes" style="${teitoepub}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.html">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -93,7 +93,7 @@
       <param name="nocompress" expression="${nocompress}" if="nocompress"/>
     </xslt>
     <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" classpath="classpath" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
+    <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>

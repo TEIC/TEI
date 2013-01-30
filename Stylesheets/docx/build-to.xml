@@ -69,7 +69,7 @@
 	  style="${profiledir}/${profile}/docx/makecoverpages.xsl" 
 	  in="${outputTempDir}/word/document.xml" 
 	  out="${outputTempDir}/tmp3.xml" 
-	  classpath="classpath">
+	 >
       <xmlcatalog>
 	<catalogpath>
 	  <pathelement location="../../../../catalog.xml"/>
@@ -121,7 +121,7 @@
     <move file="${outputTempDir}/word/_styles.xml" tofile="${outputTempDir}/word/styles.xml" verbose="true" />
     
     <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" classpath="classpath" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
+    <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -141,7 +141,7 @@
       <fileset dir="${outputTempDir}/word" includes="media/*.*"/>
     </images>
     <echo level="info">Generate new files for docx </echo>
-    <xslt force="yes" style="${teitoDocx}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml" classpath="classpath">
+    <xslt force="yes" style="${teitoDocx}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
