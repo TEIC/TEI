@@ -7,7 +7,7 @@
   <xsl:key name="BACKLINKS" match="teix:egXML[@source]" use="substring(@source,2)"/>
   <xsl:key name="BACKLINKS" match="tei:ptr[@type='cit']" use="substring(@target,2)"/>
   <heads xmlns="http://www.tei-c.org/ns/1.0">
-    <head xml:lang="fr" corresp="AB">À propos des Principes directeurs</head>
+    <head xml:lang="fr" corresp="AB">À propos des Recommandations</head>
     <head xml:lang="fr" corresp="AI">Mécanismes analytiques simples</head>
     <head xml:lang="fr" corresp="BIB">Bibliographie</head>
     <head xml:lang="fr" corresp="CC">Corpus linguistiques</head>
@@ -29,8 +29,8 @@
     <head xml:lang="fr" corresp="PH">Représentation de sources primaires</head>
     <head xml:lang="fr" corresp="PREF">Préface et remerciements</head>
     <head xml:lang="fr" corresp="PREFS">Notes préliminaires </head>
-    <head xml:lang="fr" corresp="REF-CLASSES-ATTS">Classes attributives</head>
-    <head xml:lang="fr" corresp="REF-CLASSES-MODEL">Classes structurales</head>
+    <head xml:lang="fr" corresp="REF-CLASSES-ATTS">Classes d'attributs</head>
+    <head xml:lang="fr" corresp="REF-CLASSES-MODEL">Classes de structures</head>
     <head xml:lang="fr" corresp="REF-ELEMENTS">Éléments</head>
     <head xml:lang="fr" corresp="REF-MACROS">Types de données et autres macros </head>
     <head xml:lang="fr" corresp="SA">Liens, segmentation et alignement</head>
@@ -38,7 +38,7 @@
     <head xml:lang="fr" corresp="ST">Infrastructure de la TEI</head>
     <head xml:lang="fr" corresp="TC">Apparat critique</head>
     <head xml:lang="fr" corresp="TD">Éléments de déclaration d’un modèle</head>
-    <head xml:lang="fr" corresp="TitlePageVerso">Versions des Principes directeurs</head>
+    <head xml:lang="fr" corresp="TitlePageVerso">Versions des Recommandations</head>
     <head xml:lang="fr" corresp="TS">Transcriptions de la parole</head>
     <head xml:lang="fr" corresp="USE">Utiliser la TEI</head>
     <head xml:lang="fr" corresp="VE">Poésie</head>
