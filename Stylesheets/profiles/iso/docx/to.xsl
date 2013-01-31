@@ -859,8 +859,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="write-docxfile-content-types"/>
       <!--  settings -->
       <xsl:call-template name="write-docxfile-settings"/>
-      <!-- app files -->
-      <xsl:call-template name="write-docxfile-docprops-app"/>
     </xsl:if>
     <!-- footnotes file -->
     <xsl:call-template name="write-docxfile-footnotes-file"/>
@@ -869,6 +867,7 @@ of this software, even if advised of the possibility of such damage.
     <!-- comments file -->
     <xsl:call-template name="write-docxfile-comments-file"/>
     <xsl:call-template name="write-docxfile-docprops-core"/>
+    <xsl:call-template name="write-docxfile-docprops-app"/>
     <xsl:call-template name="write-docxfile-docprops-custom"/>
 
   </xsl:template>
@@ -1255,11 +1254,11 @@ of this software, even if advised of the possibility of such damage.
 
     <xsl:template name="write-docxfile-docprops-app">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/app.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/docProps/newapp.xml')"/>
          </xsl:message>
 	     </xsl:if>
 
-        <xsl:result-document href="{concat($wordDirectory,'/docProps/app.xml')}" standalone="yes">
+        <xsl:result-document href="{concat($wordDirectory,'/docProps/newapp.xml')}" standalone="yes">
             <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
                      xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
                 <Template>STD_3_0_0.dotx</Template>
