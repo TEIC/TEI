@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="variantEncoding">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="variantEncoding" xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <equiv/>
   <gloss versionDate="2007-06-12" xml:lang="fr">Méthode d'encodage des variantes</gloss>
   <desc>declares the method used to encode text-critical variants.</desc>
@@ -120,6 +120,15 @@ or external to it.</desc>
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
+      <constraintSpec ident="variantEncodingLocation" scheme="isoschematron">
+        <constraint>
+          <sch:rule context="tei:variantEncoding">
+            <sch:assert test="(@location != 'external') or (@method != 'parallel-segmentation')">
+              The @location value "external" is inconsistent with the
+              parallel-segmentation method of apparatus markup.</sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
       <valList type="closed">
         <valItem ident="internal">
           <equiv/>
