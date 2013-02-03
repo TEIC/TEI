@@ -200,7 +200,7 @@ of this software, even if advised of the possibility of such damage.
 		      <xsl:attribute name="Id">
 			<xsl:text>rId</xsl:text>
 			<xsl:variable name="n">
-			  <xsl:number level="any"/>
+			  <xsl:number count="tei:ptr|tei:ref" level="any"/>
 			</xsl:variable>
 			<xsl:value-of select="$n + 3000"/>
 		      </xsl:attribute>

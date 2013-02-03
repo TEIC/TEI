@@ -223,6 +223,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="metadata"/>
   </xsl:template>
 
+  <xsl:template match="tei:encodingDesc" mode="metadata">
+    <h3>Encoding</h3>
+    <xsl:apply-templates mode="metadata"/>
+  </xsl:template>
+
+  <xsl:template match="tei:listPrefixDef" mode="metadata"/>
+  <xsl:template match="tei:tagsDecl" mode="metadata"/>
+
   <xsl:template match="tei:projectDesc" mode="metadata">
     <h3>Creation</h3>
     <xsl:apply-templates mode="metadata"/>
