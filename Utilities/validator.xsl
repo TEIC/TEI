@@ -58,13 +58,18 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
-  <!-- corresp on egXML must point to something -->
-  <xsl:template match="teix:egXML[@corresp]">
-    <xsl:if test="not(id(substring(@corresp,2)))">
+  <!-- source on egXML must point to something -->
+  <xsl:template match="teix:egXML[@source]">
+    <xsl:if test="not(id(substring(@source,2)))">
       <xsl:call-template name="Error">
-        <xsl:with-param name="value" select="@corresp"/>
+        <xsl:with-param name="value" select="@source"/>
       </xsl:call-template>
     </xsl:if>
+  </xsl:template>
+  <xsl:template match="teix:egXML[@corresp]">
+    <xsl:call-template name="Error">
+      <xsl:with-param name="value" select="@corresp"/>
+    </xsl:call-template>
   </xsl:template>
   <!-- content of <ident type="class"> must point to something -->
   <xsl:template match="tei:ident[@type='class']">
