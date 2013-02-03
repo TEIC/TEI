@@ -76,7 +76,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="$ptr">
             <xsl:text>\url{</xsl:text>
-            <xsl:value-of select="$dest"/>
+	    <xsl:sequence select="$dest"/>
             <xsl:text>}</xsl:text>
          </xsl:when>
          <xsl:otherwise>

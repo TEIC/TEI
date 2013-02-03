@@ -399,4 +399,42 @@ of this software, even if advised of the possibility of such damage.
     <xsl:value-of select="$letters"/>
   </xsl:function>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] process target urls, looking for magic patterns</desc></doc>
+  <xsl:function name="tei:resolveURI" as="xs:string">
+    <xsl:param name="context"/>
+    <xsl:param name="target"/>
+     <xsl:analyze-string select="$target" regex="^(\w+):(.+)$">
+       <xsl:matching-substring>
+	 <xsl:variable name="prefix" select="regex-group(1)"/>
+	 <xsl:variable name="value" select="regex-group(2)"/>
+	 <xsl:choose>
+	   <xsl:when
+	       test="$context/ancestor::*/tei:teiHeader/tei:encodingDesc/tei:listPrefixDef/tei:prefixDef[@ident=$prefix]">
+	     <xsl:variable name="result">
+	       <xsl:for-each
+		   select="($context/ancestor::*/tei:teiHeader/tei:encodingDesc/tei:listPrefixDef/tei:prefixDef[@ident=$prefix])[1]">
+		 <xsl:sequence select="replace($value,@matchPattern,@replacementPattern)"/>
+	       </xsl:for-each>
+	     </xsl:variable>
+	     <xsl:choose>
+	       <xsl:when test="$result=''">
+		   <xsl:message terminate="yes">prefix pattern/replacement applied to <xsl:value-of
+		   select="$value"/> returns an empty result</xsl:message>
+	       </xsl:when>
+	       <xsl:otherwise>
+		 <xsl:sequence select="$result"/>
+	       </xsl:otherwise>
+	     </xsl:choose>
+	   </xsl:when>
+	   <xsl:otherwise>
+	     <xsl:sequence select="regex-group(0)"/>
+	   </xsl:otherwise>
+	 </xsl:choose>
+       </xsl:matching-substring>
+       <xsl:non-matching-substring>
+	 <xsl:sequence select="."/>
+       </xsl:non-matching-substring>
+     </xsl:analyze-string>
+  </xsl:function>
 </xsl:stylesheet>

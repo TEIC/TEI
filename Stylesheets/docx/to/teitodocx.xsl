@@ -2157,7 +2157,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:apply-templates select="id(substring(@target,2))" mode="xref"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:value-of select="@target"/>
+	    <xsl:sequence select="tei:resolveURI(.,@target)"/>
 	  </xsl:otherwise>
 	</xsl:choose>
 	<xsl:choose>
@@ -2175,15 +2175,12 @@ of this software, even if advised of the possibility of such damage.
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="starts-with(@target,'http')">
+      <xsl:otherwise>
         <xsl:call-template name="linkMeUsingHyperlink">
           <xsl:with-param name="anchor">
             <xsl:apply-templates/>
           </xsl:with-param>
         </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2281,7 +2278,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:otherwise>
           <xsl:text>HYPERLINK "</xsl:text>
-          <xsl:value-of select="@target"/>
+          <xsl:sequence select="tei:resolveURI(.,@target)"/>
           <xsl:text>" \h</xsl:text>
         </xsl:otherwise>
       </xsl:choose>
@@ -2594,7 +2591,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeExternalLink">
     <xsl:param name="ptr" as="xs:boolean" select="false()"/>
     <xsl:param name="dest"/>
-    <xsl:value-of select="$dest"/>
+    <xsl:sequence select="$dest"/>
   </xsl:template>
 
 

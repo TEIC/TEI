@@ -195,7 +195,7 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:if test="not(starts-with(@target,'#'))">
                     <Relationship 
 			Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
-			Target="{@target}" 
+			Target="{tei:resolveURI(.,@target)}" 
 			TargetMode="External">
 		      <xsl:attribute name="Id">
 			<xsl:text>rId</xsl:text>

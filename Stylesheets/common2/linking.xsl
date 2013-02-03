@@ -360,7 +360,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="makeExternalLink">
 	      <xsl:with-param name="ptr" select="$ptr"/>
 	      <xsl:with-param name="dest">
-		<xsl:value-of select="$a"/>
+		<xsl:sequence select="tei:resolveURI($here,$a)"/>
 	      </xsl:with-param>
             </xsl:call-template>
 	  </xsl:otherwise>
@@ -426,7 +426,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:attribute>
          </xsl:if>
          <xsl:attribute name="{$linkAttribute}" namespace="{$linkAttributeNamespace}">
-            <xsl:value-of select="$dest"/>
+            <xsl:sequence select="$dest"/>
             <xsl:if test="contains(@from,'id (')">
                <xsl:text>#</xsl:text>
                <xsl:value-of select="substring(@from,5,string-length(normalize-space(@from))-1)"/>
