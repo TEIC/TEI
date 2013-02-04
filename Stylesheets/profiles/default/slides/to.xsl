@@ -48,6 +48,10 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
    <xsl:output method="text"/>
-    
+<xsl:param name="reencode">false</xsl:param>
+<xsl:param name="attsOnSameLine">6</xsl:param>
+<xsl:param name="latexLogo"></xsl:param>
+<xsl:param name="logoFile"></xsl:param>
+<xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>    
 
 </xsl:stylesheet>
