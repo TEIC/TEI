@@ -6,7 +6,13 @@ SAXON_ARGS=-ext:on
 
 DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 json latex2 nlm odds2 odt profiles/default rdf relaxng rnc slides tbx tcp tite tools txt xhtml2 xsd xlsx
 
-SCRIPTS=docbooktotei docxtotei odttotei teitodocx teitodtd teitoepub teitoepub3 teitohtml teitohtml5 teitojson teitolatex teitoodt teitordf teitorelaxng teitornc teitotxt teitoxsd transformtei tcptotei xlsxtotei
+SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
+	teitodocx 	teitodtd 	teitoepub \
+	teitoepub3 	teitofo 	teitohtml \
+	teitohtml5 	teitojson 	teitolatex \
+	teitoodt 	teitordf 	teitorelaxng \
+	teitornc 	teitoslides 	teitotxt \
+	teitoxsd
 PREFIX=/usr
 OXY=/usr/share/oxygen
 DOCTARGETS= \
