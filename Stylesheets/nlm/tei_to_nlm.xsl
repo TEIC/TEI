@@ -512,7 +512,7 @@ be given the recommended @ref-type. -->
   
   <xsl:template match="graphic">
     <xsl:element name="graphic">
-      <xsl:attribute name="xlink:href" select="@url" />
+      <xsl:attribute name="xlink:href" select="tei:resolveURI(.,@url)" />
     </xsl:element>
   </xsl:template>
   

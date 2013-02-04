@@ -4,6 +4,7 @@
 		xmlns:smil="http://www.w3.org/ns/SMIL"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
+  <xsl:import href="../common2/functions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet to get list of graphics files and make an
@@ -81,7 +82,7 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:choose>
 	       <xsl:when test="starts-with(@facs,'#')">
 		 <xsl:for-each select="id(substring(@facs,2))">
-		   <xsl:value-of select="tei:graphic[1]/@url"/>
+		   <xsl:value-of select="tei:graphic[1]/tei:resolveURI(.,@url)"/>
 		 </xsl:for-each>
 	       </xsl:when>
 	       <xsl:otherwise>
@@ -98,8 +99,8 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
 	   </xsl:variable>
 	   <xsl:choose>
-	     <xsl:when test="starts-with($F,'http')">
-	       <get src="{@url}" dest="{$target}"/>
+	     <xsl:when test="contains($F,':')">
+	       <get src="{tei:resolveURI(.,@url)}" dest="{$target}"/>
 	     </xsl:when>
 	     <xsl:when test="starts-with($F,'/')">
 	       <copy toFile="{$target}" file="{@url}"/>
@@ -123,8 +124,8 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
 	   </xsl:variable>
 	   <xsl:choose>
-	     <xsl:when test="starts-with($F,'http')">
-	       <get src="{@url}" dest="{$target}"/>
+	     <xsl:when test="contains($F,':')">
+	       <get src="{tei:resolveURI(.,@url)}" dest="{$target}"/>
 	     </xsl:when>
 	     <xsl:when test="starts-with($F,'/')">
 	       <copy toFile="{$target}" file="{@url}"/>

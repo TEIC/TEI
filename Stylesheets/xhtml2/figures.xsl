@@ -327,7 +327,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:choose>
 	   <xsl:when test="self::tei:binaryObject"/>
             <xsl:when test="@url">
-               <xsl:value-of select="@url"/>
+               <xsl:sequence select="tei:resolveURI(.,@url)"/>
                <xsl:if test="not(contains(@url,'.'))">
                   <xsl:value-of select="$graphicsSuffix"/>
                </xsl:if>

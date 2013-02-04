@@ -66,7 +66,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:for-each>
       <xsl:for-each select="key('G',1)">
          <xsl:variable name="F">
-            <xsl:value-of select="@url"/>
+	   <xsl:sequence select="tei:resolveURI(.,@url)"/>
          </xsl:variable>
 	 <xsl:variable name="target">
 	   <xsl:value-of select="$DIR"/>

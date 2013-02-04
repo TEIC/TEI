@@ -1,7 +1,7 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: test-html test-latex test-fo test-docx test-other test-epub p4top5 conversions-to  oddity
+default: test-html test-latex test-fo test-docx test-other test-epub p4top5 conversions-to  oddity pureant
 
 p4top5:
 	saxon -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -196,6 +196,16 @@ oddity:
 	rm test.odd2lite
 	rm test.odd2relax
 	rm test.odd2xslstripspace
+
+pureant:
+	java -Xmx256m \
+	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
+	-Dant.home=$(OXY)/tools/ant \
+	org.apache.tools.ant.launch.Launcher \
+	-f ../docx/build-to.xml \
+	-lib $(OXY)/lib/saxon9ee.jar \
+	-DoutputFile=`pwd`/test7.docx \
+	-DinputFile=`pwd`/test7.xml -Dprofile=default 
 
 clean:
 	rm -f  test6.tex test5.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html
