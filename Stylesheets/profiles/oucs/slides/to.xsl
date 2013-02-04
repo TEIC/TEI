@@ -52,6 +52,7 @@ of this software, even if advised of the possibility of such damage.
 <xsl:param name="reencode">false</xsl:param>
 <xsl:param name="attsOnSameLine">6</xsl:param>
 <xsl:param name="latexLogo"></xsl:param>
+<xsl:param name="logoFile"></xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
 <xsl:param name="beamerClass">Singapore</xsl:param>
 <xsl:param name="startAttribute">{\color{blue2}</xsl:param>
@@ -97,7 +98,7 @@ of this software, even if advised of the possibility of such damage.
 \let\endlastfoot\relax
 \parskip3pt
 \setbeamertemplate{footline}
-{\hspace{1em}\includegraphics[height=10ex]{logo.png} \hspace{2em}
+{\hspace{1em}\includegraphics[height=10ex]{<xsl:value-of select="$logoFile"/>} \hspace{2em}
 \textcolor{blue1}{} \hfill \textcolor{gray}{\insertframenumber/\inserttotalframenumber}}
 </xsl:template>
 

@@ -35,6 +35,7 @@
 	    value="${profiledir}/${profile}/slides/to.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
+  <basename property="basefile" file="${outputFile}" suffix=".slides"/>
   <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
@@ -57,16 +58,26 @@
       <param name="lang" expression="${lang}" if="lang"/>
       <!-- emit some diagnostics"-->
       <param name="debug" expression="${debug}" if="debug"/>
+      <param name="logoFile" expression="_slidelogo.png"/>
       <!-- be verbose-->
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
+    <copy file="${profiledir}/${profile}/slides/logo.png" tofile="${outputDir}/_slidelogo.png"/>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="${outputFile}" />
     </exec>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="${outputFile}" />
     </exec>
-    <echo level="info">wrote ${outputFile}.pdf</echo>
+    <delete file="${outputDir}/${basefile}.nav"/>
+    <delete file="${outputDir}/${basefile}.out"/>
+    <delete file="${outputDir}/${basefile}.log"/>
+    <delete file="${outputDir}/${basefile}.aux"/>
+    <delete file="${outputDir}/${basefile}.toc"/>
+    <delete file="${outputDir}/${basefile}.snm"/>
+    <delete file="${outputDir}/_slidelogo.png"/>
+    <delete file="${outputDir}/${outputFile}"/>
+    <echo>wrote ${outputFile}.pdf</echo>
   </target>
 
   <target name="cleanup" unless="debug">  
