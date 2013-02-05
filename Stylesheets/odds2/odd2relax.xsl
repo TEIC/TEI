@@ -93,9 +93,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
   <xsl:template match="tei:schemaSpec">
-      <xsl:variable name="documentationLanguage">
-         <xsl:call-template name="generateDocumentationLang"/>
-      </xsl:variable>
       <xsl:if test="$verbose='true'">
          <xsl:message> 
 	           <xsl:text>I18N setup: Pattern prefix: </xsl:text>
@@ -103,7 +100,7 @@ of this software, even if advised of the possibility of such damage.
 	           <xsl:text>. Target  language: </xsl:text>
 	           <xsl:value-of select="$targetLanguage"/>
 	           <xsl:text>. Documentation language: </xsl:text>
-	           <xsl:value-of select="$documentationLanguage"/>
+	           <xsl:value-of select="tei:generateDocumentationLang(.)"/>
          </xsl:message>
       </xsl:if>
       <xsl:variable name="filename" select="@ident"/>

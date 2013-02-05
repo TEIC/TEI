@@ -12,6 +12,7 @@
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="classatts.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
+  <xsl:import href="../common2/functions.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">

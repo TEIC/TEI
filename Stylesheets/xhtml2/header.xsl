@@ -155,17 +155,15 @@ of this software, even if advised of the possibility of such damage.
          <xsl:sequence select="tei:generateAuthor(.)"/>
       </xsl:variable>
       <xsl:variable name="revauthor">
-         <xsl:call-template name="generateRevAuthor"/>
+         <xsl:sequence select="tei:generateRevAuthor(.)"/>
       </xsl:variable>
       <xsl:variable name="editor">
-        <xsl:call-template name="generateEditor"/>
+        <xsl:sequence select="tei:generateEditor(.)"/>
       </xsl:variable>
       <xsl:if test="not($realauthor = '')">
         <p xmlns="http://www.w3.org/1999/xhtml" class="mainAuthor">
          <xsl:text> </xsl:text>
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">authorWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('authorWord')"/>
           <xsl:text>: </xsl:text>
          <xsl:copy-of select="$realauthor"/>
         </p>
@@ -173,9 +171,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="not($revauthor = '')">
       <p class="mainRevAuthor" xmlns="http://www.w3.org/1999/xhtml">
          <xsl:text> (</xsl:text>
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">revisedWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('revisedWord')"/>
          <xsl:text> </xsl:text>
          <xsl:copy-of select="$revauthor"/>
          <xsl:text>)</xsl:text>
@@ -183,19 +179,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:if>
     <xsl:if test="not($editor = '')">
       <p class="mainEditor" xmlns="http://www.w3.org/1999/xhtml">
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">editorWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('editorWord')"/>
         <xsl:text>: </xsl:text>
         <xsl:copy-of select="$editor"/>
       </p>
       </xsl:if>
   </xsl:template>
 
-  <xsl:template name="generateEdition">
-    <p xmlns="http://www.w3.org/1999/xhtml" class="editionStmt">
-      <xsl:apply-templates select="/(tei:teiCorpus|tei:TEI)/tei:teiHeader/tei:fileDesc/tei:editionStmt"/>
-    </p>
-  </xsl:template>
 
 </xsl:stylesheet>

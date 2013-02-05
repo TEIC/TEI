@@ -83,7 +83,7 @@ of this software, even if advised of the possibility of such damage.
 %\setsansfont{Myriad Pro}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \useinnertheme[shadow=true]{rounded}
-\usecolortheme{orchid}
+\usecolortheme{whale}
 \setbeamercolor*{frametitle}{parent=palette primary}
 \usepackage{fancyvrb,fancyhdr,longtable}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}

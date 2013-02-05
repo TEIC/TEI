@@ -442,9 +442,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:otherwise>
             <div class="altfigure">
-	      <xsl:call-template name="i18n">
-		<xsl:with-param name="word">figureWord</xsl:with-param>
-	      </xsl:call-template>
+	      <xsl:sequence select="tei:i18n('figureWord')"/>
 	      <xsl:text> </xsl:text>
 	      <xsl:for-each select="self::tei:figure|parent::tei:figure">
 		<xsl:number count="tei:figure[tei:head]" level="any"/>

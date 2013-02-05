@@ -40,7 +40,7 @@
 %\setsansfont{Myriad Pro}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \useinnertheme[shadow=true]{rounded}
-\usecolortheme{orchid}
+\usecolortheme{beaver}
 \setbeamercolor*{frametitle}{parent=palette primary}
 \usepackage{fancyvrb,fancyhdr,longtable}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}

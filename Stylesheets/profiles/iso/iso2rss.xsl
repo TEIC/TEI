@@ -48,7 +48,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
 
-  <xsl:variable name="today">
+   <xsl:variable name="today">
       <xsl:call-template name="whatsTheDate"/>
   </xsl:variable>
 
@@ -71,7 +71,7 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template match="tei:TEI">
       <xsl:variable name="isotitle">
-         <xsl:call-template name="generateTitle"/>
+         <xsl:sequence select="tei:generateTitle(.)"/>
       </xsl:variable>
       <xsl:variable name="isoauthority">
          <xsl:call-template name="getiso_authority"/>

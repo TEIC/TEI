@@ -234,15 +234,15 @@ of this software, even if advised of the possibility of such damage.
       <office:meta>
         <meta:generator>TEI to OpenOffice XSLT</meta:generator>
         <dc:title>
-          <xsl:call-template name="generateTitle"/>
+          <xsl:sequence select="tei:generateTitle(.)"/>
         </dc:title>
         <dc:description/>
         <dc:subject/>
         <meta:creation-date>
-          <xsl:call-template name="generateDate"/>
+          <xsl:sequence select="tei:generateDate(.)"/>
         </meta:creation-date>
         <dc:date>
-          <xsl:call-template name="generateRevDate"/>
+          <xsl:sequence select="tei:generateRevDate(.)"/>
         </dc:date>
         <dc:language>
           <xsl:choose>
@@ -652,9 +652,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="@n"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Note</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Note')"/>
           <xsl:text>: </xsl:text>
         </xsl:otherwise>
       </xsl:choose>
@@ -1573,78 +1571,6 @@ of this software, even if advised of the possibility of such damage.
         </xsl:otherwise>
       </xsl:choose>
     </text:a>
-  </xsl:template>
-  <xsl:template name="generateRevDate">
-    <xsl:variable name="when">
-      <xsl:choose>
-        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date">
-          <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date[1]"/>
-        </xsl:when>
-        <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/descendant::tei:date">
-          <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/descendant::tei:date"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="starts-with($when,'$Date')">
-        <!-- it's RCS -->
-        <xsl:value-of select="substring($when,16,2)"/>
-        <xsl:text>/</xsl:text>
-        <xsl:value-of select="substring($when,13,2)"/>
-        <xsl:text>/</xsl:text>
-        <xsl:value-of select="substring($when,8,4)"/>
-      </xsl:when>
-      <xsl:when test="starts-with($when,'$LastChangedDate')">
-        <!-- it's Subversion-->
-        <xsl:value-of select="substring-before(substring-after($when,'('),')')"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$when"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template name="generateDate">
-    <xsl:choose>
-      <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
-      <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[@when]">
-        <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[@when][1]/@when"/>
-      </xsl:when>
-      <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date">
-        <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[1]"/>
-      </xsl:when>
-      <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date">
-        <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date"/>
-      </xsl:when>
-      <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
-        <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
-      </xsl:when>
-      <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[@when      or tei:date]">
-        <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]">
-          <xsl:choose>
-            <xsl:when test="@when">
-              <xsl:value-of select="@when"/>
-            </xsl:when>
-            <xsl:when test="tei:date/@when">
-              <xsl:value-of select="tei:date/@when"/>
-            </xsl:when>
-            <xsl:when test="tei:date">
-              <xsl:value-of select="tei:date"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:for-each>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template name="generateTitle">
-    <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
-      <xsl:apply-templates select="tei:title"/>
-    </xsl:for-each>
   </xsl:template>
   <xsl:template name="makeSpan">
     <xsl:apply-templates/>

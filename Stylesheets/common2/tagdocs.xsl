@@ -80,7 +80,7 @@ of this software, even if advised of the possibility of such damage.
 						 then true() else false()"/>
                   <xsl:with-param name="dest">
 		    <xsl:value-of select="$teiWeb"/>
-		    <xsl:value-of select="$documentationLanguage"/>
+		    <xsl:value-of select="tei:generateDocumentationLang(.)"/>
                     <xsl:text>/html/</xsl:text>
                     <xsl:value-of select="$Ancestor"/>
                     <xsl:text>.html</xsl:text>
@@ -264,9 +264,7 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:attribute name="{$langAttributeName}">
 		    <xsl:value-of select="$documentationLanguage"/>
 		  </xsl:attribute>
-		  <xsl:call-template name="i18n">
-		    <xsl:with-param name="word">Derivedfrom</xsl:with-param>
-		  </xsl:call-template>
+		  <xsl:sequence select="tei:i18n('Derivedfrom')"/>
 		</xsl:element>
 	      </xsl:element>
 	      <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -294,9 +292,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Status</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Status')"/>
               </xsl:element>
               <xsl:text> </xsl:text>
             </xsl:element>
@@ -310,39 +306,27 @@ of this software, even if advised of the possibility of such damage.
                 </xsl:attribute>
                 <xsl:choose>
                   <xsl:when test="@usage='mwa'">
-                    <xsl:call-template name="i18n">
-                      <xsl:with-param name="word">Mandatory when applicable</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:sequence select="tei:i18n('Mandatory when applicable')"/>
                   </xsl:when>
                   <xsl:when test="@usage='opt'">
-                    <xsl:call-template name="i18n">
-                      <xsl:with-param name="word">Optional</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:sequence select="tei:i18n('Optional')"/>
                   </xsl:when>
                   <xsl:when test="@usage='rec'">
-                    <xsl:call-template name="i18n">
-                      <xsl:with-param name="word">Recommended</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:sequence select="tei:i18n('Recommended')"/>
                   </xsl:when>
                   <xsl:when test="@usage='req'">
                     <xsl:element namespace="{$outputNS}" name="{$hiName}">
                       <xsl:attribute name="{$rendName}">
                         <xsl:text>required</xsl:text>
                       </xsl:attribute>
-                      <xsl:call-template name="i18n">
-                        <xsl:with-param name="word">Required</xsl:with-param>
-                      </xsl:call-template>
+                      <xsl:sequence select="tei:i18n('Required')"/>
                     </xsl:element>
                   </xsl:when>
                   <xsl:when test="@usage='rwa'">
-                    <xsl:call-template name="i18n">
-                      <xsl:with-param name="word">Recommended when applicable</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:sequence select="tei:i18n('Recommended when applicable')"/>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:call-template name="i18n">
-                      <xsl:with-param name="word">Optional</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:sequence select="tei:i18n('Optional')"/>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:element>
@@ -369,9 +353,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$rendName}">
             <xsl:text>label</xsl:text>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Datatype</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Datatype')"/>
         </xsl:element>
         <xsl:text> </xsl:text>
       </xsl:element>
@@ -408,9 +390,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">occurrences of</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('occurrences of')"/>
           </xsl:element>
           <xsl:value-of select="$spaceCharacter"/>
         </xsl:if>
@@ -428,9 +408,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">separated by whitespace</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('separated by whitespace')"/>
           </xsl:element>
         </xsl:if>
       </xsl:element>
@@ -449,7 +427,18 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:classSpec">
     <xsl:if test="parent::tei:specGrp">
-      <xsl:element namespace="{$outputNS}" name="{$dtName}"><xsl:element namespace="{$outputNS}" name="{$hiName}"><xsl:attribute name="{$rendName}"><xsl:text>label</xsl:text></xsl:attribute><xsl:attribute name="{$langAttributeName}"><xsl:value-of select="$documentationLanguage"/></xsl:attribute><xsl:call-template name="i18n"><xsl:with-param name="word">Class</xsl:with-param></xsl:call-template></xsl:element>: <xsl:value-of select="@ident"/></xsl:element>
+      <xsl:element namespace="{$outputNS}"  name="{$dtName}">
+	<xsl:element
+	    namespace="{$outputNS}"
+	    name="{$hiName}">
+	  <xsl:attribute
+	      name="{$rendName}"><xsl:text>label</xsl:text></xsl:attribute>
+	  <xsl:attribute
+	      name="{$langAttributeName}">
+	    <xsl:value-of    select="$documentationLanguage"/>
+	  </xsl:attribute>
+      <xsl:sequence select="tei:i18n('Class')"/>
+      </xsl:element>: <xsl:value-of select="@ident"/></xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$ddName}">
         <xsl:apply-templates mode="tangle" select="."/>
         <xsl:text>(</xsl:text>
@@ -457,9 +446,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Members</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Members')"/>
         </xsl:element>
         <xsl:text>: </xsl:text>
         <xsl:call-template name="generateMembers"/>
@@ -525,11 +512,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">
-                    <xsl:text>Classes defined</xsl:text>
-                  </xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Classes defined')"/>
               </xsl:element>
             </xsl:element>
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -556,9 +539,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Used by</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Used by')"/>
               </xsl:element>
             </xsl:element>
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -583,9 +564,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Members</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Members')"/>
             </xsl:element>
           </xsl:element>
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -608,9 +587,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Attributes</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Attributes')"/>
               </xsl:element>
             </xsl:element>
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -650,9 +627,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Element</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Element')"/>
           <xsl:value-of select="$spaceCharacter"/>
           <xsl:value-of select="@ident"/>
         </xsl:element>
@@ -767,9 +742,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Attributes</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Attributes')"/>
               </xsl:element>
             </xsl:element>
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -808,9 +781,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Member of</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Member of')"/>
             </xsl:element>
           </xsl:element>
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -834,9 +805,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Contained by</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Contained by')"/>
             </xsl:element>
           </xsl:element>
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -858,11 +827,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">
-                  <xsl:text>May contain</xsl:text>
-                </xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('May contain')"/>
             </xsl:element>
           </xsl:element>
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -902,9 +867,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Declaration</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Declaration')"/>
         </xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -931,9 +894,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:with-param>
         </xsl:call-template>
         <xsl:for-each select="tei:valList[@type='closed']">
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Legal values are</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Legal values are')"/>
           <xsl:text>:</xsl:text>
           <xsl:call-template name="valListChildren"/>
         </xsl:for-each>
@@ -1192,7 +1153,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:exemplum" mode="doc">
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDocumentationLang"/>
+      <xsl:sequence select="tei:generateDocumentationLang(.)"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="parent::tei:exemplum">
@@ -1245,9 +1206,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Example</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Example')"/>
             </xsl:element>
           </xsl:element>
           <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -1355,9 +1314,7 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:attribute name="{$langAttributeName}">
                     <xsl:value-of select="$documentationLanguage"/>
                   </xsl:attribute>
-                  <xsl:call-template name="i18n">
-                    <xsl:with-param name="word">Used by</xsl:with-param>
-                  </xsl:call-template>
+                  <xsl:sequence select="tei:i18n('Used by')"/>
                 </xsl:element>
               </xsl:element>
               <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -1391,9 +1348,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Declaration</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Declaration')"/>
         </xsl:element>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -1447,9 +1402,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Module</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Module')"/>
         </xsl:element>
         <xsl:value-of select="$spaceCharacter"/>
         <xsl:value-of select="@ident"/>
@@ -1464,9 +1417,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Elements defined</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Elements defined')"/>
               </xsl:element>
               <xsl:text>: </xsl:text>
               <xsl:variable name="list">
@@ -1505,9 +1456,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Classes defined</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Classes defined')"/>
               </xsl:element>
               <xsl:text>: </xsl:text>
               <xsl:variable name="list">
@@ -1546,9 +1495,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:attribute name="{$langAttributeName}">
                   <xsl:value-of select="$documentationLanguage"/>
                 </xsl:attribute>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Macros defined</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Macros defined')"/>
               </xsl:element>
               <xsl:text>: </xsl:text>
               <xsl:variable name="list">
@@ -1602,9 +1549,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Note</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('Note')"/>
           </xsl:element>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -1647,7 +1592,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:valDesc" mode="weave">
     <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDocumentationLang"/>
+      <xsl:sequence select="tei:generateDocumentationLang(.)"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="@xml:lang and         not(@xml:lang=$documentationLanguage)">
@@ -1667,9 +1612,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:attribute name="{$langAttributeName}">
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Values</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Values')"/>
             </xsl:element>
             <xsl:text> </xsl:text>
           </xsl:element>
@@ -1736,21 +1679,15 @@ of this software, even if advised of the possibility of such damage.
           </xsl:attribute>
           <xsl:choose>
             <xsl:when test="@type='semi'">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Suggested values include</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Suggested values include')"/>
               <xsl:text>:</xsl:text>
             </xsl:when>
             <xsl:when test="@type='open'">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Sample values include</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Sample values include')"/>
               <xsl:text>:</xsl:text>
             </xsl:when>
             <xsl:when test="@type='closed'">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Legal values are</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Legal values are')"/>
               <xsl:text>:</xsl:text>
             </xsl:when>
             <xsl:otherwise>Sample values include</xsl:otherwise>
@@ -1804,9 +1741,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="$documentationLanguage"/>
               </xsl:attribute>
               <xsl:text> [</xsl:text>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Default</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Default')"/>
               <xsl:text>]</xsl:text>
             </xsl:element>
           </xsl:if>
@@ -1831,9 +1766,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Module</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('Module')"/>
           </xsl:element>
         </xsl:element>
         <xsl:element namespace="{$outputNS}" name="{$cellName}">
@@ -2129,11 +2062,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:attribute name="{$langAttributeName}">
           <xsl:value-of select="$documentationLanguage"/>
         </xsl:attribute>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">
-            <xsl:text> Class</xsl:text>
-          </xsl:with-param>
-        </xsl:call-template>
+        <xsl:sequence select="tei:i18n('Class')"/>
       </xsl:element>
       <xsl:text>: </xsl:text>
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
@@ -2183,11 +2112,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:attribute name="{$langAttributeName}">
 	  <xsl:value-of select="$documentationLanguage"/>
 	</xsl:attribute>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">
-	    <xsl:text>Element</xsl:text>
-	  </xsl:with-param>
-	</xsl:call-template>
+	<xsl:sequence select="tei:i18n('Element')"/>
 	<xsl:text>: </xsl:text>
       </xsl:element>
       <xsl:element namespace="{$outputNS}" name="{$ulName}">
@@ -2312,11 +2237,8 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:desc|tei:gloss" mode="weave"/>
   <xsl:template match="tei:remarks" mode="weave">
-    <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDocumentationLang"/>
-    </xsl:variable>
     <xsl:variable name="langs">
-      <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+      <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
     </xsl:variable>
     <xsl:variable name="firstLang">
       <xsl:value-of select="substring-before($langs,' ')"/>
@@ -2325,7 +2247,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@xml:lang=$firstLang">
         <xsl:apply-templates select="." mode="doc"/>
       </xsl:when>
-      <xsl:when test="not(@xml:lang) and $documentationLanguage='en'">
+      <xsl:when test="not(@xml:lang) and tei:generateDocumentationLang(.)='en'">
         <xsl:apply-templates select="." mode="doc"/>
       </xsl:when>
       <xsl:otherwise>
@@ -2365,9 +2287,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$rendName}">
             <xsl:text>label</xsl:text>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Default</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Default')"/>
         </xsl:element>
         <xsl:text> </xsl:text>
       </xsl:element>
@@ -2523,15 +2443,14 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">
+              <xsl:variable name="word">
                 <xsl:choose>
                   <xsl:when test="not($autoGlobal='true')">Attributes</xsl:when>
                   <xsl:when test=".//tei:attDef">In addition to global attributes and those inherited from</xsl:when>
                   <xsl:otherwise>Global attributes and those inherited from</xsl:otherwise>
                 </xsl:choose>
-              </xsl:with-param>
-            </xsl:call-template>
+	      </xsl:variable>
+	      <xsl:sequence select="tei:i18n($word)"/>
             <xsl:value-of select="$spaceCharacter"/>
           </xsl:element>
         </xsl:if>
@@ -2540,15 +2459,14 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="ancestor::tei:schemaSpec and not(key('CLASSES','att.global'))">
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">
+          <xsl:variable name="word">
             <xsl:choose>
               <xsl:when test="not($autoGlobal='true')">Attributes</xsl:when>
               <xsl:when test=".//tei:attDef">In addition to global attributes</xsl:when>
               <xsl:otherwise>Global attributes only</xsl:otherwise>
             </xsl:choose>
-          </xsl:with-param>
-        </xsl:call-template>
+	  </xsl:variable>
+	  <xsl:sequence select="tei:i18n($word)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2609,9 +2527,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="showElement">
     <xsl:param name="name"/>
-    <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDocumentationLang"/>
-    </xsl:variable>
     <xsl:choose>
       <xsl:when test="$oddmode='tei'">
         <tei:ref target="#{$name}">
@@ -2741,9 +2656,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Empty element</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Empty element')"/>
         </xsl:element>
       </xsl:when>
       <xsl:when test="tei:content/rng:text and    count(tei:content/rng:*)=1">
@@ -2751,9 +2664,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="{$langAttributeName}">
             <xsl:value-of select="$documentationLanguage"/>
           </xsl:attribute>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Character data only</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Character data only')"/>
         </xsl:element>
       </xsl:when>
       <xsl:otherwise>
@@ -2780,9 +2691,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Character data only</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('Character data only')"/>
           </xsl:element>
         </xsl:when>
         <xsl:when test="count(Element)=0">
@@ -2790,9 +2699,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:attribute name="{$langAttributeName}">
               <xsl:value-of select="$documentationLanguage"/>
             </xsl:attribute>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Empty element</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('Empty element')"/>
           </xsl:element>
         </xsl:when>
         <xsl:otherwise>

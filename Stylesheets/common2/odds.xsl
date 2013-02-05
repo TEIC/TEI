@@ -111,11 +111,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="includeValList">false</xsl:param>
     <xsl:param name="coded">true</xsl:param>
     <xsl:param name="showListRef">true</xsl:param>
-    <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDocumentationLang"/>
-    </xsl:variable>
     <xsl:variable name="langs">
-      <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+      <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
     </xsl:variable>
     <xsl:variable name="firstLang">
       <xsl:value-of select="substring-before($langs,' ')"/>
@@ -167,11 +164,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$includeValList='false'"/>
       <xsl:when test="tei:valList[@type='open']">
         <xsl:text>&#10;</xsl:text>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">
-            <xsl:text>Sample values include</xsl:text>
-          </xsl:with-param>
-        </xsl:call-template>
+        <xsl:sequence select="tei:i18n('Sample values include')"/>
         <xsl:text>: </xsl:text>
         <xsl:for-each select="tei:valList/tei:valItem">
           <xsl:number/>
@@ -187,11 +180,8 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="@ident"/>
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:variable name="documentationLanguage">
-            <xsl:call-template name="generateDocumentationLang"/>
-          </xsl:variable>
           <xsl:variable name="langs">
-            <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+            <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
           </xsl:variable>
           <xsl:variable name="firstLang">
             <xsl:value-of select="substring-before($langs,' ')"/>
@@ -206,11 +196,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="tei:valList[@type='semi']">
         <xsl:text>&#10;</xsl:text>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">
-            <xsl:text>Suggested values include</xsl:text>
-          </xsl:with-param>
-        </xsl:call-template>
+        <xsl:sequence select="tei:i18n('Suggested values include')"/>
         <xsl:text>: </xsl:text>
         <xsl:for-each select="tei:valList/tei:valItem">
           <xsl:number/>
@@ -226,11 +212,9 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="@ident"/>
             </xsl:otherwise>
           </xsl:choose>
-          <xsl:variable name="documentationLanguage">
-            <xsl:call-template name="generateDocumentationLang"/>
-          </xsl:variable>
+
           <xsl:variable name="langs">
-            <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+            <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
           </xsl:variable>
           <xsl:variable name="firstLang">
             <xsl:value-of select="substring-before($langs,' ')"/>
@@ -255,23 +239,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:text>]</xsl:text>
     </xsl:if>
   </xsl:template>
-
-
-  <xsl:template name="generateDocumentationLang">
-    <xsl:choose>
-      <xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang">
-        <xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang"/>
-      </xsl:when>
-      <xsl:when test="string-length($doclang)&gt;0">
-        <xsl:value-of select="$doclang"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:text>en</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-
-
 
   <xsl:template name="makeGloss">
     <xsl:param name="langs"/>
@@ -472,5 +439,22 @@ of this software, even if advised of the possibility of such damage.
      </xsl:element>
    </xsl:template>
 
+
+  <xsl:function name="tei:generateDocumentationLang" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang">
+	  <xsl:value-of select="key('LISTSCHEMASPECS',$whichSchemaSpec)/@docLang"/>
+      </xsl:when>
+      <xsl:when test="string-length($doclang)&gt;0">
+        <xsl:value-of select="$doclang"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>en</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
 
 </xsl:stylesheet>

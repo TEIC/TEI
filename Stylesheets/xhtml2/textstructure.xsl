@@ -230,9 +230,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:*" mode="generateNextLink">
       <span class="nextLink">
          <xsl:text> </xsl:text>
-         <xsl:call-template name="i18n">
-	           <xsl:with-param name="word">nextWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('nextWord')"/>
          <xsl:call-template name="navInterSep"/>
       </span>
       <a class="navigation">
@@ -251,9 +249,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:*" mode="generatePreviousLink">
       <span class="previousLink">
          <xsl:text> </xsl:text>
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">previousWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('previousWord')"/>
          <xsl:call-template name="navInterSep"/>
       </span>
       <a class="navigation">
@@ -337,7 +333,7 @@ of this software, even if advised of the possibility of such damage.
 			<div class="stdheader">
 			  <xsl:call-template name="stdheader">
 			    <xsl:with-param name="title">
-			      <xsl:call-template name="generateTitle"/>
+			      <xsl:sequence select="tei:generateTitle(.)"/>
                               </xsl:with-param>
 			  </xsl:call-template>
 			</div>
@@ -370,7 +366,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="addLangAtt"/>
          <head>
             <xsl:variable name="pagetitle">
-               <xsl:call-template name="generateTitle"/>
+               <xsl:sequence select="tei:generateTitle(.)"/>
             </xsl:variable>
             <title>
                <xsl:value-of select="$pagetitle"/>
@@ -392,7 +388,7 @@ of this software, even if advised of the possibility of such damage.
 	      <div class="stdheader">
 		<xsl:call-template name="stdheader">
 		  <xsl:with-param name="title">
-		    <xsl:call-template name="generateTitle"/>
+		    <xsl:sequence select="tei:generateTitle(.)"/>
 		  </xsl:with-param>
 		</xsl:call-template>
 	      </div>
@@ -422,7 +418,7 @@ of this software, even if advised of the possibility of such damage.
       <div class="stdheader">
 	<xsl:call-template name="stdheader">
 	  <xsl:with-param name="title">
-	    <xsl:call-template name="generateTitle"/>
+	    <xsl:sequence select="tei:generateTitle(.)"/>
 	  </xsl:with-param>
 	</xsl:call-template>
       </div>
@@ -572,9 +568,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:divGen[@type='toc']">
     <div class="tei_toc">
       <h2>
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">tocWords</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('tocWords')"/>
       </h2>
       <xsl:call-template name="mainTOC"/>
     </div>
@@ -1216,7 +1210,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="htmlFileTop">
       <xsl:comment>THIS FILE IS GENERATED FROM AN XML MASTER. DO NOT EDIT (6)</xsl:comment>
       <xsl:variable name="pagetitle">
-         <xsl:call-template name="generateTitle"/>
+         <xsl:sequence select="tei:generateTitle(.)"/>
       </xsl:variable>
       <head>
          <title>
@@ -1782,7 +1776,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:variable name="pagetitle">
 	     <xsl:choose>
 	       <xsl:when test="$currentID=''">
-		 <xsl:call-template name="generateTitle"/>
+		 <xsl:sequence select="tei:generateTitle(.)"/>
 	       </xsl:when>
 	       <xsl:otherwise>
 		 <xsl:choose>
@@ -1802,7 +1796,7 @@ of this software, even if advised of the possibility of such damage.
 		   </xsl:otherwise>
 		 </xsl:choose>
 		 <xsl:text> - </xsl:text>
-		 <xsl:call-template name="generateTitle"/>
+		 <xsl:sequence select="tei:generateTitle(.)"/>
 	       </xsl:otherwise>
 	     </xsl:choose>
 	   </xsl:variable>
@@ -1971,7 +1965,7 @@ of this software, even if advised of the possibility of such damage.
 	     <div class="stdheader">
 	       <xsl:call-template name="stdheader">
 		 <xsl:with-param name="title">
-		   <xsl:call-template name="generateTitle"/>
+		   <xsl:sequence select="tei:generateTitle(.)"/>
 		 </xsl:with-param>
 	       </xsl:call-template>
 	     </div>
@@ -1980,9 +1974,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:apply-templates select="tei:text/tei:front"/>
 	    <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
 	      <h2>
-		<xsl:call-template name="i18n">
-		  <xsl:with-param name="word">tocWords</xsl:with-param>
-		</xsl:call-template>
+		<xsl:sequence select="tei:i18n('tocWords')"/>
 	      </h2>
 	      <xsl:call-template name="mainTOC"/>
 	    </xsl:if>
@@ -2115,9 +2107,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select="tei:text/tei:front"/>
       <xsl:if test="$autoToc='true' and (descendant::tei:div or descendant::tei:div1) and not(descendant::tei:divGen[@type='toc'])">
          <h2>
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">tocWords</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('tocWords')"/>
          </h2>
          <xsl:call-template name="mainTOC"/>
       </xsl:if>
@@ -2148,7 +2138,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="addLangAtt"/>
 	<head>
 	  <xsl:variable name="pagetitle">
-	    <xsl:call-template name="generateTitle"/>
+	    <xsl:sequence select="tei:generateTitle(.)"/>
 	    <xsl:text> page </xsl:text>
 	    <xsl:value-of select="$page"/>
 	  </xsl:variable>
@@ -2183,7 +2173,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:call-template name="addLangAtt"/>
 	  <head>
 	    <xsl:variable name="pagetitle">
-	      <xsl:call-template name="generateTitle"/>
+	      <xsl:sequence select="tei:generateTitle(.)"/>
 	      <xsl:text> page </xsl:text>
 	      <xsl:value-of select="$page"/>
 	      <xsl:text> (facsimile) </xsl:text>
@@ -2220,7 +2210,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="style" select="'plain'"/>
       <xsl:param name="file"/>
       <xsl:variable name="date">
-         <xsl:call-template name="generateDate"/>
+         <xsl:sequence select="tei:generateDate(.)"/>
       </xsl:variable>
       <xsl:variable name="author">
          <xsl:sequence select="tei:generateAuthor(.)"/>
@@ -2238,15 +2228,11 @@ of this software, even if advised of the possibility of such damage.
                <xsl:if test="$searchURL">
 		 <xsl:text>| </xsl:text>
 		 <a class="{$style}" href="{$searchURL}">
-		   <xsl:call-template name="i18n">
-		     <xsl:with-param name="word">searchWords</xsl:with-param>
-		   </xsl:call-template>            
+		   <xsl:sequence select="tei:i18n('searchWords')"/>            
 		 </a>
                </xsl:if>
                <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}">
-	       <xsl:call-template name="i18n">
-		 <xsl:with-param name="word">feedbackWords</xsl:with-param>
-	       </xsl:call-template>
+	       <xsl:sequence select="tei:i18n('feedbackWords')"/>
 	     </a>
                </xsl:if>
             </div>
@@ -2257,9 +2243,7 @@ of this software, even if advised of the possibility of such damage.
                <xsl:text> </xsl:text>
                <xsl:value-of select="$author"/>.
       </xsl:if>
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">dateWord</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('dateWord')"/>
             <xsl:text>: </xsl:text>
             <xsl:value-of select="$date"/>
             <br/>
@@ -2309,7 +2293,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:call-template name="makeHTMLHeading">
 	     <xsl:with-param name="class">subtitle</xsl:with-param>
 	     <xsl:with-param name="text">
-	       <xsl:call-template name="generateSubTitle"/>
+	       <xsl:sequence select="tei:generateSubTitle(.)"/>
 	     </xsl:with-param>
 	     <xsl:with-param name="level">2</xsl:with-param>
 	   </xsl:call-template>
@@ -2320,8 +2304,8 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:message>displaying author and date</xsl:message>
 	     </xsl:if>
 	     <xsl:call-template name="generateAuthorList"/>
-	     <xsl:call-template name="generateDate"/>
-	     <xsl:call-template name="generateEdition"/>
+	     <xsl:sequence select="tei:generateDate(.)"/>
+	     <xsl:sequence select="tei:generateEdition(.)"/>
 	   </xsl:if>
 	 </xsl:when>
 	 <xsl:otherwise>
@@ -2336,7 +2320,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:call-template name="makeHTMLHeading">
 	     <xsl:with-param name="class">subtitle</xsl:with-param>
 	     <xsl:with-param name="text">
-	       <xsl:call-template name="generateTitle"/>
+	       <xsl:sequence select="tei:generateTitle(.)"/>
 	     </xsl:with-param>
 	     <xsl:with-param name="level">2</xsl:with-param>
 	   </xsl:call-template>
@@ -2346,8 +2330,8 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:message>displaying author and date</xsl:message>
 	     </xsl:if>
 	     <xsl:call-template name="generateAuthorList"/>
-	     <xsl:call-template name="generateDate"/>
-	     <xsl:call-template name="generateEdition"/>
+	     <xsl:sequence select="tei:generateDate(.)"/>
+	     <xsl:sequence select="tei:generateEdition(.)"/>
 	   </xsl:if>
 	 </xsl:otherwise>
       </xsl:choose>
@@ -2373,9 +2357,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:variable>
          <p>
             <span class="subtochead">
-               <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">tocWords</xsl:with-param>
-               </xsl:call-template>
+               <xsl:sequence select="tei:i18n('tocWords')"/>
             </span>
          </p>
          <div class="subtoc">
@@ -2583,9 +2565,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:if test="$up">
          <span class="upLink">
 	           <xsl:text> </xsl:text>
-	           <xsl:call-template name="i18n">
-               <xsl:with-param name="word">upWord</xsl:with-param>
-            </xsl:call-template>
+	           <xsl:sequence select="tei:i18n('upWord')"/>
 	           <xsl:call-template name="navInterSep"/>
          </span>
          <a class="navigation">

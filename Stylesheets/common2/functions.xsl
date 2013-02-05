@@ -41,6 +41,11 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2008, TEI Consortium</p>
     </desc>
   </doc>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
+    <desc>Whether to attempt to work out a current date (set to true
+    for test results which won't differ</desc>
+  </doc>
+  <xsl:param name="useFixedDate">false</xsl:param>
   <xsl:param name="wordDirectory"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
     <desc>Title, author and date is taken from the
@@ -444,12 +449,139 @@ of this software, even if advised of the possibility of such damage.
      </xsl:analyze-string>
   </xsl:function>
 
+
+  <xsl:key match="entry" name="KEYS" use="key"/>
+  <xsl:param name="documentationLanguage">en</xsl:param>
+
+  <xsl:variable name="i18n"
+		select="document('../i18n.xml',document(''))"/>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] give language-specific version of a word or phrase<param name="word">the word(s) to translate</param>
+      </desc>
+   </doc>
+  <xsl:function name="tei:i18n" as="xs:string">
+      <xsl:param name="word"/>
+      <xsl:variable name="Word">
+         <xsl:value-of select="normalize-space($word)"/>
+      </xsl:variable>
+      <xsl:variable name="local">
+         <xsl:call-template name="myi18n">
+	   <xsl:with-param name="word">
+	     <xsl:value-of select="$word"/>
+	   </xsl:with-param>
+         </xsl:call-template>
+      </xsl:variable>
+      <xsl:choose>
+	<xsl:when test="string-length($local)&gt;0">
+	  <xsl:value-of select="$local"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:for-each select="$i18n">
+	    <xsl:choose>
+	      <xsl:when test="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]">
+		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]"/>
+	      </xsl:when>
+	      <xsl:when test="key('KEYS',$Word)/text[@lang3=$documentationLanguage]">
+		<xsl:value-of select="key('KEYS',$Word)/text[lang3=$documentationLanguage]"/>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<!--
+		    <xsl:if test="$verbose='true'">
+		    <xsl:message>NO TRANSLATION for <xsl:value-of 
+		    select="$word"/> in <xsl:value-of select="$documentationLanguage"/></xsl:message>
+		      </xsl:if>
+		  -->
+		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang='en']"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+            </xsl:for-each>
+         </xsl:otherwise>
+      </xsl:choose>
+</xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[localisation] dummy template for overriding in a local system<param name="word">the word(s) to translate</param>
+      </desc>
+   </doc>
+  <xsl:template name="myi18n">
+	     <xsl:param name="word"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] Generate a title</desc>
+   </doc>
+  <xsl:function name="tei:generateTitle" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+            <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
+         </xsl:when>
+
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
+            <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
+         </xsl:when>
+
+         <xsl:when test="self::tei:teiCorpus">	
+            <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"/>
+         </xsl:when>
+
+         <xsl:otherwise>
+            <xsl:for-each
+		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
+	      <xsl:choose>
+		<xsl:when test="tei:title[@type='main']">
+		  <xsl:apply-templates select="tei:title[@type='main']"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates select="tei:title"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
+         </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] Find a plausible editor name</desc>
+   </doc>
+  <xsl:function name="tei:generateEditor" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+    <xsl:choose>
+      <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:editor">
+        <xsl:for-each
+          select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:editor">
+          <xsl:apply-templates/>
+          <xsl:choose>
+            <xsl:when test="count(following-sibling::tei:editor)=1">
+              <xsl:if test="count(preceding-sibling::tei:editor)>=1">
+                <xsl:text>, </xsl:text>
+              </xsl:if>
+	      <xsl:sequence select="tei:i18n('and')"/>
+            </xsl:when>
+            <xsl:when test="following-sibling::tei:editor">, </xsl:when>
+          </xsl:choose>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:when
+        test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='editor']">
+        <xsl:apply-templates
+          select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change/tei:respStmt[tei:resp='editor'][1]/tei:name"
+        />
+      </xsl:when>
+    </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] Find a plausible main author name</desc>
    </doc>
   <xsl:function name="tei:generateAuthor" as="node()*">
     <xsl:param name="context"/>
-      <xsl:for-each select="$context">
+    <xsl:for-each select="$context">
       <xsl:choose>
          <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor">
             <xsl:apply-templates mode="author"
@@ -463,9 +595,7 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:if test="count(preceding-sibling::tei:author)>1">
 		   <xsl:text>,</xsl:text>
 		 </xsl:if>
-		 <xsl:call-template name="i18n">
-		   <xsl:with-param name="word">and</xsl:with-param>
-		 </xsl:call-template>
+		 <xsl:sequence select="tei:i18n('and')"/>
 	       </xsl:when>
 	       <xsl:when test="following-sibling::tei:author">, </xsl:when>
 	     </xsl:choose>
@@ -479,65 +609,228 @@ of this software, even if advised of the possibility of such damage.
                                  select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docAuthor"/>
          </xsl:when>
       </xsl:choose>
-      </xsl:for-each>
+    </xsl:for-each>
   </xsl:function>
 
-  <xsl:key match="entry" name="KEYS" use="key"/>
-  <xsl:param name="documentationLanguage">en</xsl:param>
-
-  <xsl:variable name="i18n"
-		select="document('../i18n.xml',document(''))"/>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[common] give language-specific version of a word or phrase<param name="word">the word(s) to translate</param>
-      </desc>
+      <desc>[common] Find a plausible name of person responsible for current revision</desc>
    </doc>
-  <xsl:template name="i18n">
-      <xsl:param name="word"/>
-      <xsl:variable name="Word">
-         <xsl:value-of select="normalize-space($word)"/>
-      </xsl:variable>
-      <xsl:variable name="local">
-         <xsl:call-template name="myi18n">
-	           <xsl:with-param name="word">
-	              <xsl:value-of select="$word"/>
-	           </xsl:with-param>
-         </xsl:call-template>
+  <xsl:function name="tei:generateRevAuthor" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:variable name="who">
+         <xsl:choose>
+            <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcwho">
+               <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcwho"/>
+            </xsl:when>
+            <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]/tei:respStmt/tei:name">
+               <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]/tei:respStmt/tei:name/text()"/>
+            </xsl:when>
+         </xsl:choose>
       </xsl:variable>
       <xsl:choose>
-         <xsl:when test="string-length($local)&gt;0">
-            <xsl:value-of select="$local"/>
+         <xsl:when test="normalize-space($who)=concat('$Author', '$')"/>
+         <xsl:when test="starts-with($who,'$Author')">
+        <!-- it's RCS -->
+        <xsl:value-of select="normalize-space(substring-before(substring-after($who,'Author'),'$'))"/>
+         </xsl:when>
+         <xsl:when test="starts-with($who,'$LastChangedBy')">
+        <!-- it's Subversion -->
+        <xsl:value-of select="normalize-space(substring-before(substring-after($who,'LastChangedBy:'),'$'))"/>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:for-each select="$i18n">
+            <xsl:value-of select="$who"/>
+         </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] Work out the last revision date of the document </desc>
+   </doc>
+  <xsl:function name="tei:generateRevDate" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:variable name="when">
+         <xsl:choose>
+            <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcdate">
+               <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/@vcdate"/>
+            </xsl:when>
+            <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date">
+               <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/descendant::tei:date[1]"/>
+            </xsl:when>
+            <xsl:when
+		test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/descendant::tei:date">
+	      <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/descendant::tei:date"/>
+	    </xsl:when>	    
+         </xsl:choose>
+      </xsl:variable>
+      <xsl:choose>
+         <xsl:when test="starts-with($when,'$Date')">
+	   <!-- it's RCS -->
+	   <xsl:value-of select="substring($when,16,2)"/>
+	   <xsl:text>/</xsl:text>
+	   <xsl:value-of select="substring($when,13,2)"/>
+	   <xsl:text>/</xsl:text>
+	   <xsl:value-of select="substring($when,8,4)"/>
+         </xsl:when>
+         <xsl:when test="starts-with($when,'$LastChangedDate')">
+	   <!-- it's Subversion-->
+	   <xsl:value-of select="substring-before(substring-after($when,'('),')')"/>
+         </xsl:when>
+         <xsl:when test="not($when='')">
+	   <xsl:value-of select="$when"/>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]T[H02]:[m02]:[s02]Z')"/>
+         </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+  
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] Work out the publish date of the document </desc>
+   </doc>
+  <xsl:function name="tei:generateDate" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	 <xsl:when test="$useFixedDate='true'">1970-01-01</xsl:when>
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate">
+            <xsl:apply-templates mode="date" select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docDate"/>
+         </xsl:when>
+         <xsl:when
+	     test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[@when]">
+            <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[@when][1]/@when"/>
+         </xsl:when>
+         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date">
+            <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/descendant::tei:date[1]"/>
+         </xsl:when>
+         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date">
+            <xsl:value-of select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date"/>
+         </xsl:when>
+         <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition">
+            <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+         </xsl:when>
+	 <xsl:when
+	     test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[@when
+		   or tei:date]">
+            <xsl:for-each
+		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:revisionDesc/tei:change[1]">
 	      <xsl:choose>
-		<xsl:when test="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]">
-		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]"/>
+		<xsl:when test="@when">
+		  <xsl:value-of select="@when"/>
 		</xsl:when>
-		<xsl:when test="key('KEYS',$Word)/text[@lang3=$documentationLanguage]">
-		  <xsl:value-of select="key('KEYS',$Word)/text[lang3=$documentationLanguage]"/>
+		<xsl:when test="tei:date/@when">
+		  <xsl:value-of select="tei:date/@when"/>
+		</xsl:when>
+		<xsl:when test="tei:date">
+		  <xsl:value-of select="tei:date"/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <!--
-		      <xsl:if test="$verbose='true'">
-		      <xsl:message>NO TRANSLATION for <xsl:value-of 
-		      select="$word"/> in <xsl:value-of select="$documentationLanguage"/></xsl:message>
-		      </xsl:if>
-		  -->
-		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang='en']"/>
+		  <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
 		</xsl:otherwise>
 	      </xsl:choose>
+	    </xsl:for-each>
+	 </xsl:when>
+	 <xsl:otherwise>
+	   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
+	 </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>[common] </p>
+         <p>Generate simple title with no markup</p>
+      </desc>
+   </doc>
+  <xsl:function name="tei:generateSimpleTitle" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+            <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"
+                                 mode="simple"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:for-each
+		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
+	      <xsl:choose>
+		<xsl:when test="tei:title[@type='main']">
+		  <xsl:apply-templates
+		      select="tei:title[@type='main']" mode="simple"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:apply-templates select="tei:title[1]" mode="simple"/>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:for-each>
+         </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[common] Generate subtitle </desc>
+   </doc>
+  <xsl:function name="tei:generateSubTitle" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
+            <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"/>
+         </xsl:when>
+         <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
+            <xsl:apply-templates select="ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:for-each select="ancestor-or-self::tei:TEI|ancestor-or-self::tei:teiCorpus">
+               <xsl:apply-templates select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='subordinate']"/>
             </xsl:for-each>
          </xsl:otherwise>
       </xsl:choose>
-  </xsl:template>
+    </xsl:for-each>
+  </xsl:function>
+
+
+  <xsl:function name="tei:generateEdition" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+    <xsl:value-of
+	select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
+    </xsl:for-each>
+  </xsl:function>
+
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[localisation] dummy template for overriding in a local system<param name="word">the word(s) to translate</param>
-      </desc>
-   </doc>
-  <xsl:template name="myi18n">
-	     <xsl:param name="word"/>
-  </xsl:template>
+    <desc>[epub] Set name of publisher</desc>
+  </doc>
+  <xsl:function name="tei:generatePublisher" as="node()*">
+    <xsl:param name="context"/>
+    <xsl:param name="default"/>
+    <xsl:for-each select="$context">
+    <xsl:choose>
+      <xsl:when test="not($default='')">
+        <xsl:value-of select="$default"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each
+	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt">
+	  <xsl:for-each
+	      select="tei:authority|tei:publisher|tei:distributor|tei:p">
+	    <xsl:value-of select="normalize-space(.)"/>
+	    <xsl:if
+		test="following-sibling::tei:authority|tei:publisher|tei:distributor|tei:p">
+	      <xsl:text>, </xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+
+
 
 </xsl:stylesheet>

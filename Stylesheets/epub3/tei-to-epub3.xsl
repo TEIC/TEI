@@ -593,7 +593,7 @@ height: </xsl:text>
               <xsl:choose>
                 <xsl:when test="$coverImageInside=''">
                   <div class="EpubCoverPage">
-                    <xsl:call-template name="generateTitle"/>
+                    <xsl:sequence select="tei:generateTitle(.)"/>
                   </div>
                 </xsl:when>
                 <xsl:otherwise>
@@ -688,7 +688,7 @@ height: </xsl:text>
             </head>
             <docTitle>
               <text>
-                <xsl:call-template name="generateSimpleTitle"/>
+                <xsl:sequence select="tei:generateSimpleTitle(.)"/>
               </text>
             </docTitle>
             <navMap>
@@ -767,7 +767,7 @@ height: </xsl:text>
           <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
             <head>
               <title>
-                <xsl:call-template name="generateSimpleTitle"/>
+                <xsl:sequence select="tei:generateSimpleTitle(.)"/>
               </title>
                 <xsl:call-template name="linkCSS">
 		  <xsl:with-param
@@ -837,7 +837,7 @@ height: </xsl:text>
 	      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	      xmlns:opf="http://www.idpf.org/2007/opf">
       <dc:title id="title">
-	<xsl:call-template name="generateSimpleTitle"/>
+	<xsl:sequence select="tei:generateSimpleTitle(.)"/>
       </dc:title>
       <xsl:choose>
 	<xsl:when test="$filePerPage='true'">
@@ -861,7 +861,7 @@ height: </xsl:text>
       </meta>
       <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
       <dc:language>
-	<xsl:call-template name="generateLanguage"/>
+      <xsl:call-template name="generateLanguage"/>
       </dc:language>
       <xsl:call-template name="generateSubject"/>
       <dc:identifier id="pub-id">
@@ -869,12 +869,12 @@ height: </xsl:text>
       </dc:identifier>
       <meta refines="#pub-id" property="identifier-type" scheme="onix:codelist5">15</meta>
       <dc:description>
-	<xsl:call-template name="generateSimpleTitle"/>
+	<xsl:sequence select="tei:generateSimpleTitle(.)"/>
 	<xsl:text> / </xsl:text>
 	<xsl:value-of select="$author"/>
       </dc:description>
       <dc:publisher>
-	<xsl:call-template name="generatePublisher"/>
+	<xsl:sequence select="tei:generatePublisher(.,$publisher)"/>
       </dc:publisher>
       <xsl:for-each select="tei:teiHeader/tei:profileDesc/tei:creation/tei:date[@notAfter]">
 	<dc:date id="creation">
@@ -887,19 +887,17 @@ height: </xsl:text>
 	</dc:date>
       </xsl:for-each>
       <dc:date id="epub-publication">
-	<xsl:call-template name="generateDate"/>
+	<xsl:sequence select="tei:generateDate(.)"/>
       </dc:date>
       <dc:rights>
 	<xsl:call-template name="generateLicence"/>
       </dc:rights>
       <xsl:if test="not($coverImageOutside='')">
 	<meta name="cover" content="cover-image"/>
-      </xsl:if>
-        <xsl:variable name="now" select="tei:whatsTheDate()"/>
-	
-	<meta property="dcterms:modified">
-	  <xsl:value-of select="$now"/>
-	</meta>
+      </xsl:if>	
+      <meta property="dcterms:modified">
+	<xsl:sequence select="tei:whatsTheDate()"/>
+      </meta>
     </metadata>
   </xsl:template>
 

@@ -159,11 +159,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="teiP4Compat">false</xsl:param>
 
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
-    <desc>Whether to attempt to work out a current date (set to true
-    for test results which won't differ</desc>
-  </doc>
-  <xsl:param name="useFixedDate">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering">
     <desc>[common] How to number sections in back matter</desc>
   </doc>

@@ -204,10 +204,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="navInterSep"> </xsl:template>
 
-  <xsl:template name="generateSubTitle">
-    <xsl:value-of select="tei:head"/>
-  </xsl:template>
-
   <xsl:template name="printLink"/>
 
   <xsl:template match="tei:titlePage" mode="paging">

@@ -60,7 +60,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="whatsTheDate"/>
       </xsl:variable>
       <xsl:variable name="isotitle">
-         <xsl:call-template name="generateTitle"/>
+         <xsl:sequence select="tei:generateTitle(.)"/>
       </xsl:variable>
       <xsl:variable name="isonumber">
          <xsl:call-template name="getiso_documentNumber"/>

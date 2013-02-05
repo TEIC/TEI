@@ -581,7 +581,7 @@ of this software, even if advised of the possibility of such damage.
       </block>
     
       <block font-size="12pt" font-weight="bold">
-         <xsl:call-template name="generateTitle"/>
+         <xsl:sequence select="tei:generateTitle(.)"/>
       </block>
     
       <block>
@@ -589,7 +589,7 @@ of this software, even if advised of the possibility of such damage.
       </block>
     
       <block padding-after="6pt">
-         <xsl:call-template name="generateDate"/>
+         <xsl:sequence select="tei:generateDate(.)"/>
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -969,9 +969,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="mainTOC">
       <block>
          <xsl:call-template name="setupDiv1"/>
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">contentsWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('contentsWord')"/>
       </block>
       <xsl:choose>
          <xsl:when test="ancestor::tei:text/tei:group">
@@ -1400,9 +1398,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:when test="ancestor::tei:back">
             <xsl:if test="not($numberBackHeadings='')">
-               <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">appendixWords</xsl:with-param>
-               </xsl:call-template>
+               <xsl:sequence select="tei:i18n('appendixWords')"/>
                <xsl:text> </xsl:text>
                <xsl:number count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4"
                            format="{$numberBackHeadings}"

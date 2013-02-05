@@ -1015,9 +1015,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:value-of select="@n"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Note</xsl:with-param>
-	    </xsl:call-template>
+	    <xsl:sequence select="tei:i18n('Note')"/>
 	    <xsl:text>: </xsl:text>
 	  </xsl:otherwise>
 	</xsl:choose>
@@ -1098,9 +1096,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="@n"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Note</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Note')"/>
                 <xsl:text>: </xsl:text>
               </xsl:otherwise>
             </xsl:choose>
@@ -1312,9 +1308,7 @@ of this software, even if advised of the possibility of such damage.
         <div class="pagebreak">
           <xsl:call-template name="makeAnchor"/>
           <xsl:text> [</xsl:text>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">page</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('page')"/>
           <xsl:if test="@n">
             <xsl:text> </xsl:text>
             <xsl:value-of select="@n"/>
@@ -1326,9 +1320,7 @@ of this software, even if advised of the possibility of such damage.
         <span class="pagebreak">
           <xsl:call-template name="makeAnchor"/>
           <xsl:text> [</xsl:text>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">page</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('page')"/>
           <xsl:if test="@n">
             <xsl:text> </xsl:text>
             <xsl:value-of select="@n"/>
@@ -1762,9 +1754,7 @@ of this software, even if advised of the possibility of such damage.
                 <title>
                   <xsl:apply-templates select="descendant-or-self::tei:text/tei:front//tei:docTitle//text()"/>
                   <xsl:text>: </xsl:text>
-                  <xsl:call-template name="i18n">
-                    <xsl:with-param name="word">noteHeading</xsl:with-param>
-                  </xsl:call-template>
+                  <xsl:sequence select="tei:i18n('noteHeading')"/>
                 </title>
                 <xsl:call-template name="includeCSS"/>
                 <xsl:call-template name="cssHook"/>
@@ -1778,17 +1768,13 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:with-param name="title">
                       <xsl:apply-templates select="descendant-or-self::tei:text/tei:front//tei:docTitle//text()"/>
                       <xsl:text>: </xsl:text>
-                      <xsl:call-template name="i18n">
-                        <xsl:with-param name="word">noteHeading</xsl:with-param>
-                      </xsl:call-template>
+                      <xsl:sequence select="tei:i18n('noteHeading')"/>
                     </xsl:with-param>
                   </xsl:call-template>
                 </div>
                 <div class="notes">
                   <div class="noteHeading">
-                    <xsl:call-template name="i18n">
-                      <xsl:with-param name="word">noteHeading</xsl:with-param>
-                    </xsl:call-template>
+                    <xsl:sequence select="tei:i18n('noteHeading')"/>
                   </div>
                   <xsl:choose>
                     <xsl:when test="$autoEndNotes='true'">
@@ -1839,9 +1825,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:if test="html:div">
               <div class="notes">
                 <div class="noteHeading">
-                  <xsl:call-template name="i18n">
-                    <xsl:with-param name="word">noteHeading</xsl:with-param>
-                  </xsl:call-template>
+                  <xsl:sequence select="tei:i18n('noteHeading')"/>
                 </div>
                 <xsl:copy-of select="*"/>
               </div>
@@ -1853,9 +1837,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:if test="ancestor-or-self::tei:TEI/tei:text/descendant::tei:app">
       <div class="notes">
         <div class="noteHeading">
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">noteHeading</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('noteHeading')"/>
         </div>
         <xsl:apply-templates mode="printnotes" select="descendant::tei:app"/>
       </div>

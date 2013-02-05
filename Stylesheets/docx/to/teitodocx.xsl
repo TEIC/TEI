@@ -924,9 +924,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:value-of select="@n"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">Note</xsl:with-param>
-	    </xsl:call-template>
+	    <xsl:sequence select="tei:i18n('Note')"/>
 	    <xsl:text>: </xsl:text>
 	  </xsl:otherwise>
 	</xsl:choose>
@@ -2139,15 +2137,11 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:choose>
 	  <xsl:when test="@type='cit'">[</xsl:when>
 	  <xsl:when test="@type='figure'">
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">figureWord</xsl:with-param>
-	    </xsl:call-template>
+	    <xsl:sequence select="tei:i18n('figureWord')"/>
 	    <xsl:text> </xsl:text>
 	  </xsl:when>
 	  <xsl:when test="@type='table'">
-	    <xsl:call-template name="i18n">
-	      <xsl:with-param name="word">tableWord</xsl:with-param>
-	    </xsl:call-template>
+	    <xsl:sequence select="tei:i18n('tableWord')"/>
 	    <xsl:text> </xsl:text>
 	  </xsl:when>
 	</xsl:choose>

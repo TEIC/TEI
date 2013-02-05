@@ -106,9 +106,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="@sic">
             <xsl:text>\footnote{</xsl:text>
-                <xsl:call-template name="i18n">
-                <xsl:with-param name="word">appearsintheoriginalas</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('appearsintheoriginalas')"/>
                 <xsl:text> \emph{</xsl:text>
                 <xsl:value-of select="@sic"/>
             <xsl:text>}.}</xsl:text>
@@ -138,9 +136,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
          <xsl:when test="@corr">
             <xsl:text>\footnote{</xsl:text>
-                <xsl:call-template name="i18n">
-                <xsl:with-param name="word">shouldbereadas</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('shouldbereadas')"/>
                 <xsl:text> \emph{</xsl:text>
                 <xsl:value-of select="./@corr"/>
             <xsl:text>}.}</xsl:text>
@@ -598,9 +594,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Note</xsl:with-param>
-	</xsl:call-template>
+	<xsl:sequence select="tei:i18n('Note')"/>
 	<xsl:text>: </xsl:text>
       </xsl:otherwise>
     </xsl:choose>
@@ -691,9 +685,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>✁[</xsl:text>
             <xsl:value-of select="@unit"/>
             <xsl:text> </xsl:text>
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">page</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('page')"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="@n"/>
             <xsl:text>]✁</xsl:text>
@@ -702,9 +694,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text>[</xsl:text>
             <xsl:value-of select="@unit"/>
             <xsl:text> </xsl:text>
-            <xsl:call-template name="i18n">
-               <xsl:with-param name="word">page</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('page')"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="@n"/>
             <xsl:text>]</xsl:text>

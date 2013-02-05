@@ -207,7 +207,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="addLangAtt"/>
          <head>
             <title>
-               <xsl:call-template name="generateTitle"/>
+               <xsl:sequence select="tei:generateTitle(.)"/>
             </title>
             <xsl:call-template name="includeCSS"/>
             <xsl:call-template name="cssHook"/>
@@ -215,7 +215,7 @@ of this software, even if advised of the possibility of such damage.
          </head>
          <body>
             <div class="slidetitle" style="font-size: 36pt;">
-               <xsl:call-template name="generateTitle"/>
+               <xsl:sequence select="tei:generateTitle(.)"/>
             </div>
             <div class="slidemain">
                <xsl:apply-templates select="tei:text/tei:front//tei:docAuthor"/>
@@ -479,7 +479,7 @@ of this software, even if advised of the possibility of such damage.
                  alt="logo"/>
          </div>
          <div class="slidebottom-text">
-	           <xsl:call-template name="generateTitle"/>
+	           <xsl:sequence select="tei:generateTitle(.)"/>
          </div>
       </div>
   </xsl:template>

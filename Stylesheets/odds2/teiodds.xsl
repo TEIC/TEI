@@ -1672,9 +1672,6 @@ select="$makeDecls"/></xsl:message>
     <xsl:param name="reftext"/>
     <xsl:param name="class">link_odd</xsl:param>
 
-    <xsl:variable name="documentationLanguage">
-      <xsl:call-template name="generateDocumentationLang"/>
-    </xsl:variable>
     <xsl:variable name="partialname">
       <xsl:choose>
         <xsl:when test="contains($name,'_')">

@@ -779,7 +779,7 @@ of this software, even if advised of the possibility of such damage.
       <w:pPr>
         <w:pStyle w:val="zzSTDTitle"/>
       </w:pPr>
-      <xsl:call-template name="generateTitle"/>
+      <xsl:sequence select="tei:generateTitle(.)"/>
     </w:p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

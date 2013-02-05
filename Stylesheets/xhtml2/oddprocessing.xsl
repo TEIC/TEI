@@ -145,11 +145,8 @@ of this software, even if advised of the possibility of such damage.
           <xsl:message>Opening file <xsl:value-of select="$outName"/>
                </xsl:message>
         </xsl:if>
-        <xsl:variable name="documentationLanguage">
-          <xsl:call-template name="generateDocumentationLang"/>
-        </xsl:variable>
         <xsl:variable name="langs">
-          <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+          <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
         </xsl:variable>
         <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outName}" method="{$outputMethod}">
           <xsl:element name="html" namespace="{$outputNamespace}">
@@ -176,7 +173,7 @@ of this software, even if advised of the possibility of such damage.
                     <xsl:with-param name="langs" select="$langs"/>
                   </xsl:call-template>
                   <xsl:text> - </xsl:text>
-                  <xsl:call-template name="generateTitle"/>
+                  <xsl:sequence select="tei:generateTitle(.)"/>
                 </xsl:with-param>
               </xsl:call-template>
               <xsl:call-template name="includeCSS"/>
@@ -324,14 +321,10 @@ of this software, even if advised of the possibility of such damage.
         <div class="displayRelax">
           <button class="displayRelaxButton">
             <span class="RNG_Compact">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Compact to XML format</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Compact to XML format')"/>
             </span>
             <span class="RNG_XML">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">XML format to compact</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('XML format to compact')"/>
             </span>
           </button>
           <pre class="RNG_XML">
@@ -549,9 +542,7 @@ of this software, even if advised of the possibility of such damage.
     <div class="schemaFragment">
       <xsl:if test="tei:elementSpec">
         <h2>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Elements defined</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Elements defined')"/>
         </h2>
         <xsl:apply-templates mode="weave" select="tei:elementSpec">
           <xsl:sort select="tei:altIdent|@ident"/>
@@ -559,9 +550,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:if test="tei:classSpec">
         <h2>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Classes defined</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Classes defined')"/>
         </h2>
         <xsl:apply-templates mode="weave" select="tei:classSpec">
           <xsl:sort select="tei:altIdent|@ident"/>
@@ -569,9 +558,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:if test="tei:macroSpec">
         <h2>
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Macros defined</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Macros defined')"/>
         </h2>
         <xsl:apply-templates mode="weave" select="tei:macroSpec">
           <xsl:sort select="tei:altIdent|@ident"/>
@@ -1034,9 +1021,7 @@ function showByMod() {
     <xsl:param name="Key"/>
     <div id="azindex">
       <span>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">Sorted alphabetically</xsl:with-param>
-        </xsl:call-template>
+        <xsl:sequence select="tei:i18n('Sorted alphabetically')"/>
       </span>
       <ul class="index">
         <xsl:if test="count(key($Key,'a'))&gt;0">
@@ -1171,16 +1156,12 @@ function showByMod() {
         </xsl:if>
         <li class="showall">
           <a onclick="showall();" href="#">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Show all</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('Show all')"/>
           </a>
         </li>
         <li class="showall">
           <a onclick="showByMod();" href="#">
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Show by module</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('Show by module')"/>
           </a>
         </li>
       </ul>

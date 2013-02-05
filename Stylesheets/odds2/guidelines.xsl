@@ -282,20 +282,15 @@
   <xsl:template name="processTEIHook">
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
-      <xsl:variable name="documentationLanguage">
-        <xsl:call-template name="generateDocumentationLang"/>
-      </xsl:variable>
       <xsl:variable name="langs">
-        <xsl:value-of select="concat(normalize-space($documentationLanguage),' ')"/>
+        <xsl:value-of select="concat(normalize-space(tei:generateDocumentationLang(.)),' ')"/>
       </xsl:variable>
       <xsl:result-document doctype-public="{$doctypePublic}" doctype-system="{$doctypeSystem}" encoding="{$outputEncoding}" href="{$outputDir}/examples-{$me}.html" method="{$outputMethod}">
         <html>
           <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (10) </xsl:comment>
           <head>
             <title>
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">Example</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('Example')"/>
               <xsl:text>: &lt;</xsl:text>
               <xsl:value-of select="$me"/>
               <xsl:text>&gt; </xsl:text>
@@ -308,9 +303,7 @@
 			   stylesheets" name="generator"/>
 	    <xsl:call-template name="metaHTML">
 	      <xsl:with-param name="title">
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Example</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Example')"/>
                 <xsl:text>: </xsl:text>
                 <xsl:value-of select="$me"/>
                 <xsl:text> </xsl:text>
@@ -325,9 +318,7 @@
           <body id="TOP">
             <xsl:call-template name="guidelinesTop">
               <xsl:with-param name="name">
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Example</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Example')"/>
                 <xsl:text>: &lt;</xsl:text>
                 <xsl:value-of select="$me"/>
                 <xsl:text>&gt; </xsl:text>
@@ -339,9 +330,7 @@
             <div class="main-content">
               <xsl:call-template name="startDivHook"/>
               <h3>
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Example</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Example')"/>
                 <xsl:text>: &lt;</xsl:text>
                 <xsl:value-of select="$me"/>
                 <xsl:text>&gt; </xsl:text>
@@ -499,15 +488,11 @@
           </li>
           <li class="subtoc">
             <a class="navigation" href="index.html">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">homeWord</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('homeWord')"/>
             </a>
             <xsl:text> | </xsl:text>
             <a class="navigation" href="index-toc.html">
-              <xsl:call-template name="i18n">
-                <xsl:with-param name="word">tocWords</xsl:with-param>
-              </xsl:call-template>
+              <xsl:sequence select="tei:i18n('tocWords')"/>
             </a>
           </li>
           <li class="subtoc">
@@ -565,16 +550,12 @@
       <xsl:if test="$currentID=''">
         <div style="float:left; margin:4%;">
           <h3>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Versions of the Guidelines</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('Versions of the Guidelines')"/>
           </h3>
           <ul>
             <li>
               <a href="index-toc.html">
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">tocWords</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('tocWords')"/>
               </a>
             </li>
             <xsl:if test="$outputTarget='html'">
@@ -584,32 +565,24 @@
             </xsl:if>
             <li>
               <a href="http://www.tei-c.org/Council/tcw06.xml">
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Getting the most recent version</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Getting the most recent version')"/>
               </a>
             </li>
             <li>
               <a href="http://tei.svn.sourceforge.net/viewvc/tei/">
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">Sourceforge Subversion Repository</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('Sourceforge Subversion Repository')"/>
               </a>
             </li>
             <li>
               <a href="http://sourceforge.net/tracker/?group_id=106328&amp;func=browse">
-                <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">BugsFeatures</xsl:with-param>
-                </xsl:call-template>
+                <xsl:sequence select="tei:i18n('BugsFeatures')"/>
               </a>
             </li>
           </ul>
         </div>
         <div style="float:left; margin:4%;">
           <h3>
-            <xsl:call-template name="i18n">
-              <xsl:with-param name="word">Some Popular Sections</xsl:with-param>
-            </xsl:call-template>
+            <xsl:sequence select="tei:i18n('Some Popular Sections')"/>
           </h3>
           <ul>
             <li>
@@ -792,14 +765,14 @@
     <xsl:call-template name="makeHTMLHeading">
       <xsl:with-param name="class">title</xsl:with-param>
       <xsl:with-param name="text">
-        <xsl:call-template name="generateTitle"/>
+        <xsl:sequence select="tei:generateTitle(.)"/>
       </xsl:with-param>
       <xsl:with-param name="level">1</xsl:with-param>
     </xsl:call-template>
     <xsl:call-template name="makeHTMLHeading">
       <xsl:with-param name="class">subtitle</xsl:with-param>
       <xsl:with-param name="text">
-        <xsl:call-template name="generateSubTitle"/>
+        <xsl:sequence select="tei:generateSubTitle(.)"/>
       </xsl:with-param>
       <xsl:with-param name="level">2</xsl:with-param>
     </xsl:call-template>
@@ -875,69 +848,6 @@
       </li>
     </xsl:if>
   </xsl:template>
-  <!--
-  <xsl:template name="mainTOC">
-    <xsl:param name="force"/>
-
-    <div class="toc_back">
-      <h3>
-      	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Back Matter</xsl:with-param>
-	  </xsl:call-template>
-      </h3>
-      <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:text/tei:back">
-	<xsl:if test="tei:div">
-	  <ul class="toc{$force} toc_back">
-	    <xsl:apply-templates mode="maketoc"
-				 select="tei:div">
-	      <xsl:with-param name="forcedepth" select="$force"/>
-              </xsl:apply-templates>
-	  </ul>
-	</xsl:if>
-      </xsl:for-each>
-    </div>
-
-    <div class="toc_front">
-      <h3>
-      	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Front Matter</xsl:with-param>
-	  </xsl:call-template>
-      </h3>
-      <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:text/tei:front">
-	<xsl:if	    test="tei:div">
-	  <ul class="toc{$force} toc_front">
-	    <xsl:apply-templates mode="maketoc" select="tei:div">
-	      <xsl:with-param name="forcedepth" select="$force"/>
-	    </xsl:apply-templates>
-            </ul>
-	</xsl:if>
-      </xsl:for-each>
-    </div>
-
-    <div class="toc_body">
-      <h3>
-      	  <xsl:call-template name="i18n">
-	    <xsl:with-param name="word">Text body</xsl:with-param>
-	  </xsl:call-template>
-      </h3>
-      <xsl:for-each
-        select="ancestor-or-self::tei:TEI/tei:text/tei:body">
-        <xsl:if          test="tei:div">
-          <ul class="toc{$force}  toc_body">
-            <xsl:apply-templates mode="maketoc"
-              select="tei:div">
-              <xsl:with-param name="forcedepth" select="$force"/>
-            </xsl:apply-templates>
-          </ul>
-        </xsl:if>
-      </xsl:for-each>
-    </div>
-
-  </xsl:template>
-
--->
   <xsl:template match="tei:divGen[@type='toc']">
     <xsl:call-template name="mainPage"/>
   </xsl:template>
@@ -1071,9 +981,7 @@
     <xsl:for-each select="ancestor::tei:elementSpec">
       <div style="float: right;">
         <a href="examples-{@ident}.html">
-          <xsl:call-template name="i18n">
-            <xsl:with-param name="word">Show all</xsl:with-param>
-          </xsl:call-template>
+          <xsl:sequence select="tei:i18n('Show all')"/>
         </a>
 	<xsl:text>&#160;</xsl:text>
       </div>
@@ -1095,7 +1003,7 @@
     <xsl:param name="style" select="'plain'"/>
     <xsl:param name="file">index</xsl:param>
     <xsl:variable name="date">
-      <xsl:call-template name="generateDate"/>
+      <xsl:sequence select="tei:generateDate(.)"/>
     </xsl:variable>
     <xsl:variable name="author">
       <xsl:sequence select="tei:generateAuthor(.)"/>
@@ -1214,7 +1122,7 @@
     </xsl:if>
     <div class="mainhead">
       <h1>P5: 
-    <xsl:call-template name="i18n"><xsl:with-param name="word">GuidelinesTEI</xsl:with-param></xsl:call-template>
+    <xsl:sequence select="tei:i18n('GuidelinesTEI')"/>
     </h1>
     </div>
   </xsl:template>
@@ -1222,11 +1130,7 @@
     <xsl:variable name="this" select="@ident"/>
     <xsl:if test="count(key('ATTREFS-CLASS',$this))&gt;0">
       <div>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">
-            <xsl:text>Class</xsl:text>
-          </xsl:with-param>
-        </xsl:call-template>
+        <xsl:sequence select="tei:i18n('Class')"/>
         <xsl:text>: </xsl:text>
         <ul class="attrefs-class">
           <xsl:for-each select="key('ATTREFS-CLASS',$this)">
@@ -1253,11 +1157,7 @@
     </xsl:if>
     <xsl:if test="count(key('ATTREFS-ELEMENT',$this))&gt;0">
       <div>
-        <xsl:call-template name="i18n">
-          <xsl:with-param name="word">
-            <xsl:text>Element</xsl:text>
-          </xsl:with-param>
-        </xsl:call-template>
+        <xsl:sequence select="tei:i18n('Element')"/>
         <xsl:text>: </xsl:text>
         <ul class="attrefs-element">
           <xsl:for-each select="key('ATTREFS-ELEMENT',$this)">

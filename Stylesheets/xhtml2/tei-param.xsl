@@ -383,7 +383,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 	                    <xsl:call-template name="makeHTMLHeading">
 		                      <xsl:with-param name="class">subtitle</xsl:with-param>
 		                      <xsl:with-param name="text">
-		                         <xsl:call-template name="generateSubTitle"/>
+		                         <xsl:sequence select="tei:generateSubTitle(.)"/>
 		                      </xsl:with-param>
 		                      <xsl:with-param name="level">2</xsl:with-param>
 	                    </xsl:call-template>
@@ -391,7 +391,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 	                    <xsl:call-template name="makeHTMLHeading">
 		                      <xsl:with-param name="class">title</xsl:with-param>
 		                      <xsl:with-param name="text">
-		                         <xsl:call-template name="generateTitle"/>
+		                         <xsl:sequence select="tei:generateTitle(.)"/>
 		                      </xsl:with-param>
 		                      <xsl:with-param name="level">1</xsl:with-param>
 	                    </xsl:call-template>
@@ -405,7 +405,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 	           <xsl:call-template name="makeHTMLHeading">
 	              <xsl:with-param name="class">subtitle</xsl:with-param>
 	              <xsl:with-param name="text">
-	                 <xsl:call-template name="generateSubTitle"/>
+	                 <xsl:sequence select="tei:generateSubTitle(.)"/>
 	              </xsl:with-param>
 	              <xsl:with-param name="level">2</xsl:with-param>
 	           </xsl:call-template>
@@ -413,7 +413,7 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 	           <xsl:call-template name="makeHTMLHeading">
 	              <xsl:with-param name="class">title</xsl:with-param>
 	              <xsl:with-param name="text">
-	                 <xsl:call-template name="generateTitle"/>
+	                 <xsl:sequence select="tei:generateTitle(.)"/>
 	              </xsl:with-param>
 	              <xsl:with-param name="level">1</xsl:with-param>
 	           </xsl:call-template>

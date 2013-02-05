@@ -97,15 +97,12 @@ of this software, even if advised of the possibility of such damage.
             <cp:coreProperties>
                 <dc:title>
 		  <xsl:variable name="t">
-                    <xsl:call-template name="generateTitle"/>
+                    <xsl:sequence select="tei:generateTitle(.)"/>
 		  </xsl:variable>
 		  <xsl:value-of select="$t"/>
                 </dc:title>
                 <dc:creator>
-		  <xsl:variable name="a">
-                    <xsl:sequence select="tei:generateAuthor(.)"/>
-		  </xsl:variable>
-		  <xsl:value-of select="$a"/>
+		  <xsl:sequence select="tei:generateAuthor(.)"/>
                 </dc:creator>
                 <cp:lastModifiedBy>TEI stylesheets</cp:lastModifiedBy>
                 <cp:revision>

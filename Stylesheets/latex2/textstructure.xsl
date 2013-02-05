@@ -143,16 +143,14 @@ of this software, even if advised of the possibility of such damage.
     \def\DivVStar[#1]#2{\paragraph*{#2}}
 }
 \def\TheFullDate{</xsl:text>
-      <xsl:call-template name="generateDate"/>
+      <xsl:sequence select="tei:generateDate(.)"/>
       <xsl:if test="not($useFixedDate='true')">
       <xsl:variable name="revdate">
-         <xsl:call-template name="generateRevDate"/>
+         <xsl:sequence select="tei:generateRevDate(.)"/>
       </xsl:variable>
       <xsl:if test="not($revdate='')">
          <xsl:text> (</xsl:text>
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">revisedWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('revisedWord')"/>
 	 <xsl:text>: </xsl:text>
 	 <xsl:value-of select="$revdate"/>
          <xsl:text>)</xsl:text>
@@ -170,9 +168,9 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:text>\makeatother </xsl:text>
       <xsl:text>}&#10;\def\TheDate{</xsl:text>
-      <xsl:call-template name="generateDate"/>
+      <xsl:sequence select="tei:generateDate(.)"/>
       <xsl:text>}&#10;\title{</xsl:text>
-      <xsl:call-template name="generateTitle"/>
+      <xsl:sequence select="tei:generateTitle(.)"/>
       <xsl:text>}&#10;\author{</xsl:text>
       <xsl:sequence select="tei:generateAuthor(.)"/>
       <xsl:text>}</xsl:text>

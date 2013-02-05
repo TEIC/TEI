@@ -74,34 +74,26 @@ of this software, even if advised of the possibility of such damage.
       <desc>[common] Prefix text before an auto-generated table of contents </desc>
    </doc>
   <xsl:template name="contentsHeading">
-      <xsl:call-template name="i18n">
-         <xsl:with-param name="word">contentsHeading</xsl:with-param>
-      </xsl:call-template>
+      <xsl:sequence select="tei:i18n('contentsHeading')"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="localisation">
       <desc>[common] Title for "Contents"; by default uses language-specific
       lookup table.</desc>
    </doc>
   <xsl:template name="contentsWord">
-      <xsl:call-template name="i18n">
-         <xsl:with-param name="word">contentsWord</xsl:with-param>
-      </xsl:call-template>
+      <xsl:sequence select="tei:i18n('contentsWord')"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="localisation">
       <desc>[common] Title for "Feedback"</desc>
    </doc>
   <xsl:template name="feedbackWords">
-      <xsl:call-template name="i18n">
-         <xsl:with-param name="word">feedbackWords</xsl:with-param>
-      </xsl:call-template>
+      <xsl:sequence select="tei:i18n('feedbackWords')"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="localisation">
       <desc>[common] Title for "Search"; by default uses language-specific
       lookup table. </desc>
    </doc>
   <xsl:template name="searchWords">
-      <xsl:call-template name="i18n">
-         <xsl:with-param name="word">searchWords</xsl:with-param>
-      </xsl:call-template>
+      <xsl:sequence select="tei:i18n('searchWords')"/>
   </xsl:template>
 </xsl:stylesheet>

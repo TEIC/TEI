@@ -20,7 +20,7 @@
     <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:publisher/tei:graphic"/>
 
     <div class="transcriptSummary">
-    <p><i><xsl:call-template name="generateTitle"/></i></p>
+    <p><i><xsl:sequence select="tei:generateTitle(.)"/></i></p>
     <p>Presenter(s): <xsl:sequence select="tei:generateAuthor(.)"/></p>
     <p>A recording is available online here: <a>
 	<xsl:attribute name="href">

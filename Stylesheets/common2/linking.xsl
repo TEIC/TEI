@@ -157,9 +157,7 @@ of this software, even if advised of the possibility of such damage.
 	       </xsl:when>
                <xsl:when test="ancestor::tei:back">
                   <xsl:if test="$numberBackHeadings='true'">
-                     <xsl:call-template name="i18n">
-                        <xsl:with-param name="word">appendixWords</xsl:with-param>
-                     </xsl:call-template>
+		    <xsl:sequence select="tei:i18n('appendixWords')"/>
                      <xsl:text> </xsl:text>
                      <xsl:call-template name="numberBackDiv"/>
                      <xsl:if test="$minimal='false'">
@@ -391,9 +389,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:text>,</xsl:text>
 	</xsl:if>
 	<xsl:text> </xsl:text>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">and</xsl:with-param>
-	</xsl:call-template>
+	<xsl:sequence select="tei:i18n('and')"/>
 	<xsl:text> </xsl:text>
       </xsl:when>
       <xsl:otherwise>

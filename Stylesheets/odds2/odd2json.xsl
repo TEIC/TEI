@@ -17,6 +17,7 @@
   <xsl:import href="teiodds.xsl"/>
   <xsl:import href="../common2/tagdocs.xsl"/>
   <xsl:import href="../common2/tei-param.xsl"/>
+  <xsl:import href="../common2/functions.xsl"/>
   <xsl:import href="../common2/i18n.xsl"/>
   <xsl:param name="cellName">cell</xsl:param>
   <xsl:param name="codeName">code</xsl:param>
@@ -154,9 +155,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>(</xsl:text>
     </xsl:if>
     <xsl:text>{"title": "</xsl:text>
-    <xsl:call-template name="generateTitle"/>
+    <xsl:sequence select="tei:generateTitle(.)"/>
     <xsl:text>","edition": "</xsl:text>
-    <xsl:call-template name="generateEdition"/>
+    <xsl:sequence select="tei:generateEdition(.)"/>
     <xsl:text>","generator": "odd2json",
     "date":"</xsl:text>
     <xsl:call-template name="showDate"/>
@@ -426,25 +427,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
 
-
-  <xsl:template name="generateEdition">
-    <xsl:value-of
-	select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
-  </xsl:template>
-  
-  <xsl:template name="generateTitle">
-    <xsl:for-each
-	  select="tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
-	<xsl:choose>
-	  <xsl:when test="tei:title[@type='main']">
-	    <xsl:apply-templates select="tei:title"/>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:apply-templates select="tei:title"/>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:for-each>
-    </xsl:template>
 
   <xsl:template name="generateSummaryChildren">
     <xsl:variable name="name" select="@ident"/>

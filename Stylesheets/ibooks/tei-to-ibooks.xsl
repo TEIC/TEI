@@ -88,26 +88,26 @@ of this software, even if advised of the possibility of such damage.
 	      xmlns="http://www.idpf.org/2007/opf" 
 	      xmlns:opf="http://www.idpf.org/2007/opf">
       <dc:title>
-	<xsl:call-template name="generateSimpleTitle"/>
+	<xsl:sequence select="tei:generateSimpleTitle(.)"/>
       </dc:title>
       <dc:creator>
 	<xsl:value-of select="$printAuthor"/>
       </dc:creator>
       <dc:contributor opf:role="bkp">TEI stylesheets</dc:contributor>
       <dc:language>
-	<xsl:call-template name="generateLanguage"/>
+      <xsl:call-template name="generateLanguage"/>
       </dc:language>
       <xsl:call-template name="generateSubject"/>
       <dc:identifier id="pub-id">
 	<xsl:call-template name="generateID"/>
       </dc:identifier>
       <dc:description>
-	<xsl:call-template name="generateSimpleTitle"/>
+	<xsl:sequence select="tei:generateSimpleTitle(.)"/>
 	<xsl:text> / </xsl:text>
 	<xsl:value-of select="$author"/>
       </dc:description>
       <dc:publisher>
-	<xsl:call-template name="generatePublisher"/>
+	<xsl:sequence select="tei:generatePublisher(.,$publisher)"/>
       </dc:publisher>
       <xsl:for-each select="tei:teiHeader/tei:profileDesc/tei:creation/tei:date[@notAfter]">
 	<dc:date id="creation">
@@ -120,7 +120,7 @@ of this software, even if advised of the possibility of such damage.
 	</dc:date>
       </xsl:for-each>
       <dc:date id="epub-publication">
-	<xsl:call-template name="generateDate"/>
+	<xsl:sequence select="tei:generateDate(.)"/>
       </dc:date>
       <xsl:if test="not($coverImageOutside='')">
 	<meta name="cover" content="cover-image"/>

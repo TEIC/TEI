@@ -105,29 +105,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="generateSubjectHook"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[epub] Set name of publisher</desc>
-  </doc>
-  <xsl:template name="generatePublisher">
-    <xsl:choose>
-      <xsl:when test="not($publisher='')">
-        <xsl:value-of select="$publisher"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:for-each
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt">
-	  <xsl:for-each
-	      select="tei:authority|tei:publisher|tei:distributor|tei:p">
-	    <xsl:value-of select="normalize-space(.)"/>
-	    <xsl:if
-		test="following-sibling::tei:authority|tei:publisher|tei:distributor|tei:p">
-	      <xsl:text>, </xsl:text>
-	    </xsl:if>
-	  </xsl:for-each>
-	</xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[epub] Set unique identifier for output
       </desc>
   </doc>

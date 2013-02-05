@@ -120,7 +120,7 @@ of this software, even if advised of the possibility of such damage.
 
       <div id="onecol" class="main-content">
         <h1>
-          <xsl:call-template name="generateTitle"/>
+          <xsl:sequence select="tei:generateTitle(.)"/>
         </h1>
 
 	<xsl:choose>

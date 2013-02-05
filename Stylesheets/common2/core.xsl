@@ -985,9 +985,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:value-of select="@n"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="i18n">
-	  <xsl:with-param name="word">Note</xsl:with-param>
-	</xsl:call-template>
+	<xsl:sequence select="tei:i18n('Note')"/>
 	<xsl:text>: </xsl:text>
       </xsl:otherwise>
     </xsl:choose>

@@ -163,9 +163,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:figure" mode="xref">
       <xsl:if test="$showFloatLabel">
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">figureWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('figureWord')"/>
          <xsl:text> </xsl:text>
       </xsl:if>
       <xsl:call-template name="calculateFigureNumber"/>
@@ -244,9 +242,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:table" mode="xref">
       <xsl:if test="$showFloatLabel">
-         <xsl:call-template name="i18n">
-            <xsl:with-param name="word">tableWord</xsl:with-param>
-         </xsl:call-template>
+         <xsl:sequence select="tei:i18n('tableWord')"/>
          <xsl:text> </xsl:text>
       </xsl:if>
       <xsl:if test="$showFloatHead='true' and tei:head">
@@ -411,9 +407,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="addID"/>
          <table-caption>
             <block text-align="{$tableCaptionAlign}" space-after="{$spaceBelowCaption}">
-               <xsl:call-template name="i18n">
-                  <xsl:with-param name="word">tableWord</xsl:with-param>
-               </xsl:call-template>
+               <xsl:sequence select="tei:i18n('tableWord')"/>
                <xsl:call-template name="calculateTableNumber"/>
                <xsl:text>. </xsl:text>
                <xsl:apply-templates select="tei:head"/>

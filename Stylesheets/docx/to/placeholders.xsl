@@ -133,9 +133,7 @@ of this software, even if advised of the possibility of such damage.
 			 <xsl:text>,</xsl:text>
 		       </xsl:if>
 		       <xsl:text> </xsl:text>
-		       <xsl:call-template name="i18n">
-			 <xsl:with-param name="word">and</xsl:with-param>
-		       </xsl:call-template>
+		       <xsl:sequence select="tei:i18n('and')"/>
 		       <xsl:text> </xsl:text>
 		     </xsl:when>
 		     <xsl:when test="following-sibling::tei:author">, </xsl:when>
