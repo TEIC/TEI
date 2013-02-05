@@ -11,6 +11,7 @@
                 exclude-result-prefixes="tei rng teix sch xi
                                          #default">
   <xsl:import href="../common2/i18n.xsl"/>  
+  <xsl:import href="../common2/functions.xsl"/>  
   <xsl:import href="../common2/odds.xsl"/>  
   <oxdoc:doc scope="stylesheet" type="stylesheet">
     <oxdoc:desc>
