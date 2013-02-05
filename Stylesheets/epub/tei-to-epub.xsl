@@ -246,7 +246,7 @@ height: </xsl:text>
         </xsl:if>
         <xsl:result-document href="{concat($directory,'/OPS/content.opf')}" method="xml">
 	  <xsl:variable name="A">
-	    <xsl:call-template name="generateAuthor"/>
+	    <xsl:sequence select="tei:generateAuthor(.)"/>
 	  </xsl:variable>
 	<xsl:variable name="printA">
 	  <xsl:analyze-string select="$A" regex="([^,]+), ([^,]+), (.+)">

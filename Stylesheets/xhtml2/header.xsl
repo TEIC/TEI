@@ -152,7 +152,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="generateAuthorList">
       <xsl:variable name="realauthor">
-         <xsl:call-template name="generateAuthor"/>
+         <xsl:sequence select="tei:generateAuthor(.)"/>
       </xsl:variable>
       <xsl:variable name="revauthor">
          <xsl:call-template name="generateRevAuthor"/>

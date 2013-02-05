@@ -499,7 +499,7 @@ STANDARD &amp;\bfseries <xsl:call-template name="getiso_documentNumber"/>-<xsl:c
 
 \def\tableofcontents{\section*{\contentsname}\@starttoc{toc}}
 \usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
- pdfauthor={<xsl:call-template name="generateAuthor"/>}]{hyperref}
+ pdfauthor={<xsl:sequence select="replace(string-join(tei:generateAuthor(.),''),'\\newline','')"/>}]{hyperref}
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
 <xsl:call-template name="latexPreambleHook"/>
    </xsl:template>

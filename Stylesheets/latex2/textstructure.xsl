@@ -174,7 +174,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>}&#10;\title{</xsl:text>
       <xsl:call-template name="generateTitle"/>
       <xsl:text>}&#10;\author{</xsl:text>
-      <xsl:call-template name="generateAuthor"/>
+      <xsl:sequence select="tei:generateAuthor(.)"/>
       <xsl:text>}</xsl:text>
       <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
       \catcode`\&amp;=12\relax </xsl:text>

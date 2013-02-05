@@ -21,7 +21,7 @@
 
     <div class="transcriptSummary">
     <p><i><xsl:call-template name="generateTitle"/></i></p>
-    <p>Presenter(s): <xsl:call-template name="generateAuthor"/></p>
+    <p>Presenter(s): <xsl:sequence select="tei:generateAuthor(.)"/></p>
     <p>A recording is available online here: <a>
 	<xsl:attribute name="href">
 	  <xsl:value-of select="substring-before($link,'?')"/>
@@ -47,7 +47,7 @@
     <blockquote>
       <p>
 	© <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]')"/>
-	University of Oxford, <xsl:call-template name="generateAuthor"/>
+	University of Oxford, <xsl:sequence select="tei:generateAuthor(.)"/>
       </p>
       
       <p>This transcript is released under the Creative Commons

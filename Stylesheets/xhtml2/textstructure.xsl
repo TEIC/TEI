@@ -2223,7 +2223,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="generateDate"/>
       </xsl:variable>
       <xsl:variable name="author">
-         <xsl:call-template name="generateAuthor"/>
+         <xsl:sequence select="tei:generateAuthor(.)"/>
       </xsl:variable>
       <div class="stdfooter">
          <xsl:if test="$linkPanel='true'">

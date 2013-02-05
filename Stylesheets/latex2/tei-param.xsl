@@ -172,7 +172,7 @@ Use real name of graphics files rather than pointers
   \pagestyle{fancy} 
 </xsl:text>
 \usepackage[pdftitle={<xsl:call-template name="generateSimpleTitle"/>},
- pdfauthor={<xsl:call-template name="generateAuthor"/>}]{hyperref}
+ pdfauthor={<xsl:sequence select="replace(string-join(tei:generateAuthor(.),''),'\\newline','')"/>}]{hyperref}
 \hyperbaseurl{<xsl:value-of select="$baseURL"/>}
 <xsl:if test="count(key('APP',1))&gt;0">
 \usepackage{ledmac}

@@ -158,11 +158,6 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="teiP4Compat">false</xsl:param>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
-    <desc>Title, author and date is taken from the
-    &lt;teiHeader&gt; rather than looked for in the front matter</desc>
-  </doc>
-  <xsl:param name="useHeaderFrontMatter">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
     <desc>Whether to attempt to work out a current date (set to true

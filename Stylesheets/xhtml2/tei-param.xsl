@@ -307,7 +307,7 @@ will generate an &lt;h2&gt;</p>
       <xsl:param name="title"/>
       <meta name="author">
          <xsl:attribute name="content">
-            <xsl:call-template name="generateAuthor"/>
+            <xsl:sequence select="tei:generateAuthor(.)"/>
          </xsl:attribute>
       </meta>
       <xsl:if test="$filePerPage='true'">

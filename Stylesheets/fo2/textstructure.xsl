@@ -585,7 +585,7 @@ of this software, even if advised of the possibility of such damage.
       </block>
     
       <block>
-         <xsl:call-template name="generateAuthor"/>
+         <xsl:sequence select="tei:generateAuthor(.)"/>
       </block>
     
       <block padding-after="6pt">

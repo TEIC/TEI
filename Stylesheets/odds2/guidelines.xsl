@@ -1098,7 +1098,7 @@
       <xsl:call-template name="generateDate"/>
     </xsl:variable>
     <xsl:variable name="author">
-      <xsl:call-template name="generateAuthor"/>
+      <xsl:sequence select="tei:generateAuthor(.)"/>
     </xsl:variable>
     <div class="stdfooter">
       <xsl:if test="$outputTarget='html'">

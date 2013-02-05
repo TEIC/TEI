@@ -103,7 +103,7 @@ of this software, even if advised of the possibility of such damage.
                 </dc:title>
                 <dc:creator>
 		  <xsl:variable name="a">
-                    <xsl:call-template name="generateAuthor"/>
+                    <xsl:sequence select="tei:generateAuthor(.)"/>
 		  </xsl:variable>
 		  <xsl:value-of select="$a"/>
                 </dc:creator>

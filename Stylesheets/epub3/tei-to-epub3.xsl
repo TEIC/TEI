@@ -258,7 +258,7 @@ height: </xsl:text>
           <xsl:message>write file OPS/package.opf</xsl:message>
         </xsl:if>
 	<xsl:variable name="A">
-	  <xsl:call-template name="generateAuthor"/>
+	  <xsl:sequence select="tei:generateAuthor(.)"/>
 	</xsl:variable>
 	<xsl:variable name="printA">
 	  <xsl:analyze-string select="$A" regex="([^,]+), ([^,]+), (.+)">

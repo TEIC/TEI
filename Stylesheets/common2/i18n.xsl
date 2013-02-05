@@ -55,63 +55,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Copyright: 2011, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:key match="entry" name="KEYS" use="key"/>
-  <xsl:param name="documentationLanguage">en</xsl:param>
 
-  <xsl:variable name="i18n"
-		select="document('../i18n.xml',document(''))"/>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[common] give language-specific version of a word or phrase<param name="word">the word(s) to translate</param>
-      </desc>
-   </doc>
-  <xsl:template name="i18n">
-      <xsl:param name="word"/>
-      <xsl:variable name="Word">
-         <xsl:value-of select="normalize-space($word)"/>
-      </xsl:variable>
-      <xsl:variable name="local">
-         <xsl:call-template name="myi18n">
-	           <xsl:with-param name="word">
-	              <xsl:value-of select="$word"/>
-	           </xsl:with-param>
-         </xsl:call-template>
-      </xsl:variable>
-      <xsl:choose>
-         <xsl:when test="string-length($local)&gt;0">
-            <xsl:value-of select="$local"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:for-each select="$i18n">
-	      <xsl:choose>
-		<xsl:when test="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]">
-		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang=$documentationLanguage]"/>
-		</xsl:when>
-		<xsl:when test="key('KEYS',$Word)/text[@lang3=$documentationLanguage]">
-		  <xsl:value-of select="key('KEYS',$Word)/text[lang3=$documentationLanguage]"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <!--
-		      <xsl:if test="$verbose='true'">
-		      <xsl:message>NO TRANSLATION for <xsl:value-of 
-		      select="$word"/> in <xsl:value-of select="$documentationLanguage"/></xsl:message>
-		      </xsl:if>
-		  -->
-		  <xsl:value-of select="key('KEYS',$Word)/text[@xml:lang='en']"/>
-		</xsl:otherwise>
-	      </xsl:choose>
-            </xsl:for-each>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>[localisation] dummy template for overriding in a local system<param name="word">the word(s) to translate</param>
-      </desc>
-   </doc>
-  <xsl:template name="myi18n">
-	     <xsl:param name="word"/>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="localisation" type="string">
       <desc> The language to use when
