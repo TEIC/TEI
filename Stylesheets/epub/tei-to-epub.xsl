@@ -594,7 +594,7 @@ height: </xsl:text>
 			<xsl:call-template name="generateTitle"/>
 		      </p>
 		      <p class="coverauthor">
-			<xsl:call-template  name="generateAuthor"/>
+			<xsl:sequence select="tei:generateAuthor(.)"/>
 		      </p>
 		    </div>
                   </div>
