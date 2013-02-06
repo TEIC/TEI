@@ -10,7 +10,7 @@ SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
 	teitodocx 	teitodtd 	teitoepub \
 	teitoepub3 	teitofo 	teitohtml \
 	teitohtml5 	teitojson 	teitolatex \
-	teitoodt 	teitordf 	teitorelaxng t	x\
+	teitoodt 	teitordf 	teitorelaxng \
 	teitornc 	teitoslides 	teitotxt \
 	teitoxsd
 PREFIX=/usr
