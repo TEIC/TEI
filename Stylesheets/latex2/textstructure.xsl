@@ -168,11 +168,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:text>\makeatother </xsl:text>
       <xsl:text>}&#10;\def\TheDate{</xsl:text>
-      <xsl:sequence select="tei:generateDate(.)"/>
+      <xsl:sequence select="tei:generateDate(/*)"/>
       <xsl:text>}&#10;\title{</xsl:text>
-      <xsl:sequence select="tei:generateTitle(.)"/>
+      <xsl:sequence select="tei:generateTitle(/*)"/>
       <xsl:text>}&#10;\author{</xsl:text>
-      <xsl:sequence select="tei:generateAuthor(.)"/>
+      <xsl:sequence select="tei:generateAuthor(/*)"/>
       <xsl:text>}</xsl:text>
       <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
       \catcode`\&amp;=12\relax </xsl:text>

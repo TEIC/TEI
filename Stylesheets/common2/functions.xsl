@@ -511,12 +511,13 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] Generate a title</desc>
    </doc>
-  <xsl:function name="tei:generateTitle" as="node()*">
+  <xsl:function name="tei:generateTitle">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
          <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle">
-            <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
+            <xsl:apply-templates
+		select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle/tei:titlePart"/>
          </xsl:when>
 
          <xsl:when test="$useHeaderFrontMatter='true' and ancestor-or-self::tei:teiCorpus/tei:text/tei:front//tei:docTitle">
@@ -579,7 +580,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] Find a plausible main author name</desc>
    </doc>
-  <xsl:function name="tei:generateAuthor" as="node()*">
+  <xsl:function name="tei:generateAuthor">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
