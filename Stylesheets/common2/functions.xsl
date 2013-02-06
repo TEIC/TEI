@@ -691,7 +691,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] Work out the publish date of the document </desc>
    </doc>
-  <xsl:function name="tei:generateDate" as="node()*">
+  <xsl:function name="tei:generateDate">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
@@ -745,7 +745,7 @@ of this software, even if advised of the possibility of such damage.
          <p>Generate simple title with no markup</p>
       </desc>
    </doc>
-  <xsl:function name="tei:generateSimpleTitle" as="node()*">
+  <xsl:function name="tei:generateSimpleTitle" >
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
@@ -774,7 +774,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] Generate subtitle </desc>
    </doc>
-  <xsl:function name="tei:generateSubTitle" as="node()*">
+  <xsl:function name="tei:generateSubTitle">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
@@ -794,7 +794,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:function>
 
 
-  <xsl:function name="tei:generateEdition" as="node()*">
+  <xsl:function name="tei:generateEdition">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
     <xsl:value-of
