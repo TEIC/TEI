@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -8,11 +9,8 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:oxdoc="http://www.oxygenxml.com/ns/doc/xsl"
                 version="2.0"
-                exclude-result-prefixes="tei rng teix sch xi
+                exclude-result-prefixes="tei rng teix sch xi xs
                                          #default">
-  <xsl:import href="../common2/i18n.xsl"/>  
-  <xsl:import href="../common2/functions.xsl"/>  
-  <xsl:import href="../common2/odds.xsl"/>  
   <oxdoc:doc scope="stylesheet" type="stylesheet">
     <oxdoc:desc>
       <oxdoc:p> TEI stylesheet for simplifying TEI ODD markup </oxdoc:p>
@@ -224,5 +222,28 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="sch:key"/>
+
+  <xsl:function name="tei:generate-nsprefix-schematron" as="xs:string">
+    <xsl:param name="e"/>
+    <xsl:for-each select="$e">
+      <xsl:variable name="myns" select="ancestor::tei:elementSpec/@ns"/>
+      <xsl:choose>
+	<xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
+	  <xsl:text>tei:</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:choose>
+	    <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
+	      <xsl:value-of
+		  select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
 
 </xsl:stylesheet>
