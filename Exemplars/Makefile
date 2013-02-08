@@ -58,7 +58,7 @@ default: schemas
 
 
 %.doc.pdf: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd docepub docpdf dochtml cleanup
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng xsd dtd docepub docpdf dochtml cleanup
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 	-rm $*.doc.xml
