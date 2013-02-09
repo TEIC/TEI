@@ -171,7 +171,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="generateSubjectHook">
     <xsl:if
 	test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/idno[@type='TCP']">
-      <dc:subject>ECCO</dc:subject>
+      <dc:subject>Text Creation Partnership</dc:subject>
     </xsl:if>
     <dc:subject>University of Oxford Text Archive</dc:subject>
   </xsl:template>
