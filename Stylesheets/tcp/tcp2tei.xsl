@@ -194,7 +194,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:value-of select="@N"/>
         </note>
       </xsl:when>
-      <xsl:when test="parent::SP or parent::SPEAKER">
+      <xsl:when test="parent::SP">
 	<p>
           <label type="milestone">
             <xsl:value-of select="@UNIT"/>
@@ -203,7 +203,7 @@ of this software, even if advised of the possibility of such damage.
           </label>
 	</p>
       </xsl:when>
-      <xsl:when test="parent::LIST">
+      <xsl:when test="parent::LIST or parent::SPEAKER">
           <note place="margin" type="milestone">
             <xsl:value-of select="@UNIT"/>
             <xsl:text> </xsl:text>
