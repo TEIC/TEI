@@ -98,7 +98,7 @@ of this software, even if advised of the possibility of such damage.
 	  <div class="spProseFirstFolio">
 	    <xsl:for-each select="tei:speaker">
 	      <span>
-		<xsl:call-template name="rendToClass">
+		<xsl:call-template name="makeRendition">
 		  <xsl:with-param name="default">speaker</xsl:with-param>
 		</xsl:call-template>
 		<xsl:apply-templates/>
@@ -169,7 +169,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
     </xsl:variable>
     <xsl:element name="{$e}">
-      <xsl:call-template name="rendToClass">
+      <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default">
 	<xsl:choose>
 	  <xsl:when
