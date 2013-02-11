@@ -131,7 +131,7 @@ test-other:
 test-docx:
 	../teitodocx test.xml 
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
-	unzip -p test.xml.docx docProps/core.xml | xmllint --format - > test.xml.docx.core
+	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core
 	diff test.xml.docx.document expected-results/test.xml.docx.document
 	diff test.xml.docx.core expected-results/test.xml.docx.core
 	rm test.xml.docx.document
