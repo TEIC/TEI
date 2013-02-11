@@ -96,23 +96,20 @@ of this software, even if advised of the possibility of such damage.
         <xsl:result-document href="{concat($wordDirectory,'/docProps/newcore.xml')}" standalone="yes">
             <cp:coreProperties>
                 <dc:title>
-		  <xsl:variable name="t">
-                    <xsl:sequence select="tei:generateTitle(.)"/>
-		  </xsl:variable>
-		  <xsl:value-of select="$t"/>
+		  <xsl:sequence select="normalize-space(tei:generateTitle(.))"/>
                 </dc:title>
                 <dc:creator>
-		  <xsl:sequence select="tei:generateAuthor(.)"/>
+		  <xsl:sequence select="normalize-space(tei:generateAuthor(.))"/>
                 </dc:creator>
                 <cp:lastModifiedBy>TEI stylesheets</cp:lastModifiedBy>
                 <cp:revision>
                     <xsl:value-of select="$revision"/>
                 </cp:revision>
                 <dcterms:created xsi:type="dcterms:W3CDTF">
-                    <xsl:value-of select="$createdDate"/>
+		  <xsl:value-of select="$createdDate"/>
                 </dcterms:created>
                 <dcterms:modified xsi:type="dcterms:W3CDTF">
-                    <xsl:value-of select="$now"/>
+		  <xsl:value-of select="$now"/>
                 </dcterms:modified>
             </cp:coreProperties>
         </xsl:result-document>
