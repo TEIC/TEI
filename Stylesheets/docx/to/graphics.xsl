@@ -357,7 +357,9 @@ of this software, even if advised of the possibility of such damage.
             </w:r>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <xsl:message terminate="yes">ERROR. no image size info for  <xsl:value-of select="$filename"/>, cannot proceed</xsl:message>
+	    <xsl:message terminate="yes">ERROR. no image size info for
+	    <xsl:value-of select="$filename"/>, cannot
+	    proceed. <xsl:copy-of select="."/></xsl:message>
 
 	  </xsl:otherwise>
 	</xsl:choose>
