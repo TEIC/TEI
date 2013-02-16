@@ -621,7 +621,6 @@ valList
   <!-- ignore elementSpec @mode='delete' -->
   <xsl:template match="elementSpec[@mode='delete']"  mode="stage3"/>
   <xsl:template match="classSpec[@mode='delete']"  mode="stage3">
- <xsl:message>look at <xsl:value-of select="@ident"/></xsl:message>
     <xsl:copy>
       <xsl:copy-of select="@ident"/>
       <xsl:copy-of select="@module"/>
