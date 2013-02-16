@@ -406,6 +406,11 @@ Stylesheet constant setting the name of the main output file.
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default" select="$style"/>
       </xsl:call-template>
+      <xsl:if test="@xml:id">
+	<xsl:attribute name="id">
+	  <xsl:value-of select="@xml:id"/>
+	</xsl:attribute>
+      </xsl:if>
       <xsl:value-of select="$before"/>
       <xsl:apply-templates/>
       <xsl:value-of select="$after"/>
@@ -422,6 +427,11 @@ Stylesheet constant setting the name of the main output file.
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default" select="$style"/>
       </xsl:call-template>
+      <xsl:if test="@xml:id">
+	<xsl:attribute name="id">
+	  <xsl:value-of select="@xml:id"/>
+	</xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates/>
     </div>
   </xsl:template>

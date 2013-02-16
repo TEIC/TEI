@@ -159,14 +159,6 @@ of this software, even if advised of the possibility of such damage.
     </address>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element argument</desc>
-  </doc>
-  <xsl:template match="tei:argument">
-    <div class="argument">
-      <xsl:apply-templates/>
-    </div>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element author</desc>
   </doc>
   <xsl:template match="tei:author">
@@ -189,22 +181,6 @@ of this software, even if advised of the possibility of such damage.
     </tr>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element choice</desc>
-  </doc>
-  <xsl:template match="tei:choice">
-    <xsl:choose>
-      <xsl:when test="tei:abbr and tei:expan">
-        <xsl:apply-templates select="tei:expan"/>
-        <xsl:text> (</xsl:text>
-        <xsl:apply-templates select="tei:abbr"/>
-        <xsl:text>)</xsl:text>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element choice in plain mode - selects "critical" reading.</desc>
   </doc>
@@ -230,6 +206,11 @@ of this software, even if advised of the possibility of such damage.
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="auto">cit</xsl:with-param>
 	  </xsl:call-template>
+	  <xsl:if test="@xml:id">
+	    <xsl:attribute name="id">
+	      <xsl:value-of select="@xml:id"/>
+	    </xsl:attribute>
+	  </xsl:if>
           <xsl:if test="@n">
             <xsl:text>(</xsl:text>
             <xsl:value-of select="@n"/>
@@ -297,17 +278,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
       <xsl:apply-templates/>
     </code>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-    Correction 
-  </desc>
-  </doc>
-  <xsl:template match="tei:corr">
-    <span>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Decorate date</desc>
@@ -1515,13 +1485,18 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="parent::tei:cit[@rend='display'] or
 		      parent::tei:cit and (tei:p or tei:l)">
-        <div class="citquote">
-          <xsl:apply-templates/>
-        </div>
+        <xsl:call-template name="makeBlock">
+	  <xsl:with-param name="style">citquote</xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:when test="not(tei:is-inline(.))">
         <blockquote>
           <xsl:call-template name="makeRendition"/>
+	  <xsl:if test="@xml:id">
+	    <xsl:attribute name="id">
+	      <xsl:value-of select="@xml:id"/>
+	    </xsl:attribute>
+	  </xsl:if>
           <xsl:choose>
             <xsl:when test="$outputTarget='html5'">
               <xsl:apply-templates/>
@@ -1593,23 +1568,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
       <xsl:apply-templates/>
     </span>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-    put (sic) after text
-  </desc>
-  </doc>
-  <xsl:template match="tei:sic">
-    <xsl:apply-templates/>
-    <xsl:text> (sic)</xsl:text>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element signed</desc>
-  </doc>
-  <xsl:template match="tei:signed">
-    <div class="signed">
-      <xsl:apply-templates/>
-    </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element space</desc>

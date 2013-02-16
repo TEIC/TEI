@@ -928,6 +928,46 @@ frost.
 	<p><ref target="psn:fred">Fred</ref></p>
 	<p><ref target="bibl:Jones76">Jones 76</ref></p>
       </div>
+
+      <div>
+        <head>Testing preservation of ID</head>
+        <p>Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
+        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
+        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
+	With references to 
+	<list>
+	  <item><ref target="#thisQuotation">Quotation</ref></item>
+	  <item><ref target="#thisCitation">Citation</ref></item>
+	  <item><ref target="#thisParagraph">Paragraph</ref></item>
+	  <item><ref target="#thisReference">Reference</ref></item>
+	  <item><ref target="#movingAnchor">Anchor</ref></item>
+	  <item><ref target="#thisTitle">Title</ref></item>
+	</list>
+	</p>
+        <p>I wonder what are the xml-ids preserved in a transformation to XHTML, in particular
+        in the case of quotations. So, let’s try :</p>
+        <cit xml:id="thisCitation"><anchor xml:id="movingAnchor"/>
+          <quote xml:id="thisQuotation">
+            <p xml:id="thisParagraph">Something longer.
+            Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.
+            Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.</p>
+          </quote>
+          <bibl xml:id="thisReference">In <title xml:id="thisTitle">Somewhere</title>.</bibl>
+        </cit>
+      </div>
+
+      <div>
+	<head>Choice, sic, corr, reg, orig</head>
+	<p>v<ex>oro</ex> þav sam<ex>m</ex>ędd syskin in
+	hei<ex>lagr</ex>i <lb/> ol<ex>afr</ex> k<ex>onvng</ex>r
+	<ex>ok</ex> fyrnefnd
+	<choice><sic>gvn<ex>n</ex>hillde</sic><corr>gvn<ex>n</ex>hilldr</corr></choice>.</p>
+	<p>Lastly, That, upon his solemn oath to observe all the above
+	articles, the said man-mountain shall have a daily allowance of
+	meat and drink sufficient for the support of <choice><sic>1724</sic><corr>1728</corr></choice> of our subjects,
+	with free access to our royal person, and other marks of our
+	<choice><orig>favour</orig><reg>favor</reg></choice>.</p>
+      </div>
     </body>
   </text>
 </TEI>

@@ -100,20 +100,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>}</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process &lt;corr&gt;</desc></doc>
-  <xsl:template match="tei:corr">
-      <xsl:apply-templates/>
-      <xsl:choose>
-         <xsl:when test="@sic">
-            <xsl:text>\footnote{</xsl:text>
-                <xsl:sequence select="tei:i18n('appearsintheoriginalas')"/>
-                <xsl:text> \emph{</xsl:text>
-                <xsl:value-of select="@sic"/>
-            <xsl:text>}.}</xsl:text>
-         </xsl:when>
-      </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process &lt;supplied&gt;</desc></doc>
   <xsl:template match="tei:supplied">
       <xsl:text>[</xsl:text>
@@ -124,22 +110,6 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>\footnote{</xsl:text>
             <xsl:value-of select="./@reason"/>
             <xsl:text>}</xsl:text>
-         </xsl:when>
-      </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-            <desc>Process &lt;sic&gt;</desc></doc>
-
-  <xsl:template match="tei:sic">
-      <xsl:apply-templates/>
-      <xsl:text> (sic)</xsl:text>
-      <xsl:choose>
-         <xsl:when test="@corr">
-            <xsl:text>\footnote{</xsl:text>
-                <xsl:sequence select="tei:i18n('shouldbereadas')"/>
-                <xsl:text> \emph{</xsl:text>
-                <xsl:value-of select="./@corr"/>
-            <xsl:text>}.}</xsl:text>
          </xsl:when>
       </xsl:choose>
   </xsl:template>

@@ -1,27 +1,30 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: test-html test-latex test-fo test-docx test-other test-epub p4top5 conversions-to  oddity pureant
+default: test-html test-latex test-fo test-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant
 
 p4top5:
 	saxon -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
 	diff test17.tei expected-results/test17.tei
 
 test-html:
-	saxon -o:test.html  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT)
+	saxon  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
-	saxon -o:test-css.html  test.xml ../xhtml2/tei.xsl cssFile=../tei.css pageLayout=CSS  $(SAXONOPT)
+	saxon test.html checklinks.xsl
+	saxon test.xml ../xhtml2/tei.xsl cssFile=../tei.css pageLayout=CSS  $(SAXONOPT)  | xmllint --format - > test-css.html
 	diff test-css.html expected-results/test-css.html
+	../teitohtml5 test.xml test.html5
+	xmllint --encode utf-8 --format test.html5 > test.$$
+	mv test.$$ test.html5
+	perl -p -i -e 's/on 20.*Z--/--/' test.html5
+	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
+	diff test.html5 expected-results/test.html5
 	saxon -o:test20.html  test20.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test20.html expected-results/test20.html
 	saxon -o:test3.html -versionmsg:off  test3.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	saxon -o:test4.html -versionmsg:off  test4.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test4.html test3.html
-	../teitohtml5 test.xml test.html5
-	perl -p -i -e 's/on 20.*Z--/--/' test.html5
-	perl -p -i -e 's/Date: [^<]+<br/<br/' test.html5
-	diff test.html5 expected-results/test.html5
-	saxon -o:test5.xhtml test5.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
+	saxon test5.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)  | xmllint --format - > test5.xhtml
 	diff test5.xhtml expected-results/test5.xhtml
 	jing -c xhtml.rnc test5.xhtml
 	saxon -o:test6.html test6.xml ../xhtml2/tei.xsl  autoBlockQuote=true $(SAXONOPT)
@@ -54,7 +57,7 @@ test-html:
 	diff test24.html expected-results/test24.html
 	saxon -o:test25.html test25.xml ../xhtml2/tei.xsl $(SAXONOPT)
 	diff test25.html expected-results/test25.html
-	saxon -o:test27.html test27.xml ../xhtml2/tei.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../msdescription.css
+	saxon test27.xml ../xhtml2/tei.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../msdescription.css  | xmllint --format - > test27.html
 	diff test27.html expected-results/test27.html
 	rm -rf files
 
@@ -84,7 +87,7 @@ test-fo:
 	saxon -o:test.fo test.xml ../fo2/tei.xsl  $(SAXONOPT)
 	jing fo.xsd test.fo
 	diff test.fo expected-results/test.fo
-	saxon -o:test5.fo test5.xml ../fo2/tei.xsl  $(SAXONOPT)
+	saxon  test5.xml ../fo2/tei.xsl  $(SAXONOPT)  | xmllint --format - > test5.fo
 	jing fo.xsd test5.fo
 	diff test5.fo expected-results/test5.fo
 	saxon -o:testnotes1.fo testnotes1.xml ../fo2/tei.xsl  $(SAXONOPT)
@@ -115,10 +118,16 @@ test-other:
 	../teitornc  test15.odd test15.odd.rnc
 	perl -p -i -e 's/generated from ODD source.*//' test15.odd.rnc
 	diff test15.odd.rnc expected-results/test15.odd.rnc 
+
+test-rdf:
 	saxon -o:test12.rdf test12.xml ../profiles/default/rdf/to.xsl
 	diff test12.rdf expected-results/test12.rdf
+
+test-text:
 	../teitotxt test14.xml test.text
 	diff test.text expected-results/test.text
+
+test-odt:
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing

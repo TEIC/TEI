@@ -170,7 +170,14 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="makeBlock">
     <xsl:param name="style"/>
-      <block font-size="{tei:fontSize($style)}" font-style="{tei:fontStyle($style)}" font-weight="{tei:fontWeight($style)}">
+      <block font-size="{tei:fontSize($style)}"
+	     font-style="{tei:fontStyle($style)}"
+	     font-weight="{tei:fontWeight($style)}">
+	<xsl:if test="@xml:id">
+	  <xsl:attribute name="id">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:attribute>
+	</xsl:if>
 	<xsl:apply-templates/>
       </block>
   </xsl:template>
@@ -228,6 +235,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="style"/>
     <xsl:choose>
       <xsl:when test="$style='docAuthor'">italic</xsl:when>
+      <xsl:when test="$style='titlem'">italic</xsl:when>
       <xsl:otherwise>normal</xsl:otherwise>
     </xsl:choose>
   </xsl:function>

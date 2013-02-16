@@ -119,48 +119,7 @@ of this software, even if advised of the possibility of such damage.
       </inline>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:corr">
-      <xsl:text>[</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>]</xsl:text>
-      <xsl:choose>
-         <xsl:when test="@sic">
-            <footnote>
-               <footnote-citation>
-                  <inline font-size="8pt" vertical-align="super">
-                     <xsl:number format="a" level="any" count="tei:corr"/>
-                  </inline>
-               </footnote-citation>
-               <list-block>
-                  <xsl:attribute name="provisional-distance-between-starts">
-                     <xsl:value-of select="$betweenStarts"/>
-                  </xsl:attribute>
-                  <xsl:attribute name="provisional-label-separation">
-                     <xsl:value-of select="$labelSeparation"/>
-                  </xsl:attribute>
-                  <list-item>
-                     <list-item-label end-indent="label-end()">
-                        <block>
-                           <inline font-size="{$footnoteSize}" vertical-align="super">
-                              <xsl:number format="a" level="any" count="tei:corr"/>
-                           </inline>
-                        </block>
-                     </list-item-label>
-                     <list-item-body start-indent="body-start()">
-                        <block font-size="{$footnoteSize}">
-                           <xsl:value-of select="@sic"/>
-                        </block>
-                     </list-item-body>
-                  </list-item>
-               </list-block>
-            </footnote>
-         </xsl:when>
-      </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>deletions</desc>
    </doc>
   <xsl:template match="tei:del">
       <inline text-decoration="line-through">
@@ -524,7 +483,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>catalogue-style list</desc>
    </doc>
   <xsl:template match="tei:list[@type='catalogue']">
       <block space-before="{$spaceAroundTable}" space-after="{$spaceAroundTable}">
@@ -550,7 +509,7 @@ of this software, even if advised of the possibility of such damage.
       </block>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
+      <desc>line group</desc>
    </doc>
   <xsl:template match="tei:lg">
       <block start-indent="{$exampleMargin}" text-align="start" space-before.optimum="4pt"
@@ -761,6 +720,11 @@ of this software, even if advised of the possibility of such damage.
              font-size="{$quoteSize}"
              space-before.optimum="{$exampleBefore}"
              space-after.optimum="{$exampleAfter}">
+	<xsl:if test="@xml:id">
+	  <xsl:attribute name="id">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:attribute>
+	</xsl:if>
          <xsl:apply-templates/>
       </block>
       </xsl:when>
@@ -812,23 +776,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:reg">
-    <xsl:choose>
-      <xsl:when test="parent::tei:p">
-	<inline font-family="{$sansFont}">
-	  <xsl:apply-templates/>
-	</inline>
-      </xsl:when>
-      <xsl:otherwise>
-	<block font-family="{$sansFont}">
-	  <xsl:apply-templates/>
-	</block>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>salutation</desc>
    </doc>
   <xsl:template match="tei:salute">
@@ -854,16 +801,6 @@ of this software, even if advised of the possibility of such damage.
          <xsl:apply-templates/>
       </block>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
-  <xsl:template match="tei:sic">
-      <xsl:apply-templates/>
-      <xsl:text> (sic)</xsl:text>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc/>
-   </doc>
   <xsl:template match="tei:signed">
       <block text-align="left">
          <xsl:apply-templates/>

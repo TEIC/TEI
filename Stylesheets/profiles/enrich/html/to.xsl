@@ -70,7 +70,4 @@ of this software, even if advised of the possibility of such damage.
     <!-- <xsl:param name="cssFile">tei.css</xsl:param>-->
 
 
-    <xsl:template match="tei:choice">
-      <xsl:apply-templates/>
-    </xsl:template>
 </xsl:stylesheet>

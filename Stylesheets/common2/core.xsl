@@ -71,16 +71,96 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:figure" mode="plain"/>
   <xsl:template match="tei:figDesc" mode="plain"/>
   <xsl:template match="tei:ptr" mode="plain"/>
+
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element argument</desc>
+  </doc>
+  <xsl:template match="tei:argument">
+    <xsl:call-template name="makeBlock">
+      <xsl:with-param name="style">argument</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process tei:sic</desc>
    </doc>
   <xsl:template match="tei:sic">
-      <xsl:apply-templates/>
+     <xsl:choose>
+       <xsl:when test="parent::tei:choice">
+       </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="makeInline">
+	  <xsl:with-param name="after"> (sic)</xsl:with-param>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process tei:reg</desc>
+   </doc>
+   <xsl:template match="tei:reg">
+     <xsl:call-template name="makeInline"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process tei:orig</desc>
+   </doc>
+   <xsl:template match="tei:orig">
+     <xsl:choose>
+       <xsl:when test="parent::tei:choice">
+       </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="makeInline"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process tei:expan</desc>
+   </doc>
+  <xsl:template match="tei:expan">
+    <xsl:call-template name="makeInline"/>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process tei:corr</desc>
    </doc>
-  <xsl:template match="tei:corr"/>
+  <xsl:template match="tei:corr">
+    <xsl:call-template name="makeInline">
+      <xsl:with-param name="before">[</xsl:with-param>
+      <xsl:with-param name="after">]</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process tei:abbr (abbrevation)</desc>
+   </doc>
+  <xsl:template match="tei:abbr">
+    <xsl:choose>
+      <xsl:when test="parent::tei:choice/tei:expan">
+	<xsl:call-template name="makeInline">
+	  <xsl:with-param name="before"> (</xsl:with-param>
+	  <xsl:with-param name="after">)</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeInline"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element signed</desc>
+  </doc>
+  <xsl:template match="tei:signed">
+    <xsl:call-template name="makeBlock">
+      <xsl:with-param name="style">signed</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process tei:item in runin mode</desc>
    </doc>
@@ -89,8 +169,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
       <xsl:text>&#160;</xsl:text>
   </xsl:template>
-
-
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element edition</desc>
@@ -110,17 +188,16 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:imprint">
       <xsl:choose>
-         <xsl:when test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
-	           <xsl:apply-templates select="tei:date"/>
-	           <xsl:apply-templates select="tei:pubPlace"/>
-	           <xsl:apply-templates select="tei:publisher"/>
-	           <xsl:apply-templates select="tei:biblScope"/>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:apply-templates/>
-         </xsl:otherwise>
+	<xsl:when test="ancestor::tei:biblStruct or ancestor::tei:biblFull">
+	  <xsl:apply-templates select="tei:date"/>
+	  <xsl:apply-templates select="tei:pubPlace"/>
+	  <xsl:apply-templates select="tei:publisher"/>
+	  <xsl:apply-templates select="tei:biblScope"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
       </xsl:choose>
-
   </xsl:template>
 
 
@@ -537,6 +614,11 @@ of this software, even if advised of the possibility of such damage.
             </xsl:if>
             <xsl:apply-templates/>
          </xsl:when>
+         <xsl:when test="not(@level) and parent::tei:bibl">
+	   <xsl:call-template name="makeInline">
+	     <xsl:with-param name="style">titlem</xsl:with-param>
+	   </xsl:call-template>
+	 </xsl:when>
          <xsl:when test="@level='m' or not(@level)">
 	   <xsl:call-template name="emphasize">
 	     <xsl:with-param name="class">

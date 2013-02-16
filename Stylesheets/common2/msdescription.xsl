@@ -260,24 +260,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
   <!-- inline -->
-  <xsl:template match="tei:abbr">
-    <xsl:choose>
-      <xsl:when test="parent::tei:choice">
-	</xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="makeInline"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template match="tei:orig">
-    <xsl:choose>
-      <xsl:when test="parent::tei:choice">
-	</xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="makeInline"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
   <xsl:template match="tei:textLang">
     <xsl:choose>
       <xsl:when test="preceding-sibling::tei:summary"/>

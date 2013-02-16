@@ -318,6 +318,9 @@ capable of dealing with UTF-8 directly.
 \def\biblfree#1{#1\ifvmode\par\fi }
 \def\bibl#1{#1}
 \def\rubric#1{#1}
+\def\titlem#1{\emph{#1}}
+\def\corr#1{#1}
+\def\reg#1{#1}
 \def\gap{}
 \def\msItem#1{\vskip 6pt#1\par }
 \RequirePackage{array}

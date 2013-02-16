@@ -50,6 +50,9 @@
 \def\biblfree#1{#1\ifvmode\par\fi }
 \def\bibl#1{#1}
 \def\rubric#1{#1}
+\def\titlem#1{\emph{#1}}
+\def\corr#1{#1}
+\def\reg#1{#1}
 \def\gap{}
 \def\msItem#1{\vskip 6pt#1\par }
 \RequirePackage{array}
@@ -550,4 +553,24 @@ Foggier yet, and colder! Piercing, searching, biting cold. If the good Saint Dun
 foo\par
 \xref{http://www.example.com/personography.html#fred}{Fred}\par
 \xref{http://www.example.com/getBibl.xql?name=Jones&year=76}{Jones 76}
+\DivI[Testing preservation of ID]{Testing preservation of ID}\par
+Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. With references to \begin{itemize}
+
+\item \hyperlink{thisQuotation}{Quotation}
+\item \hyperlink{thisCitation}{Citation}
+\item \hyperlink{thisParagraph}{Paragraph}
+\item \hyperlink{thisReference}{Reference}
+\item \hyperlink{movingAnchor}{Anchor}
+\item \hyperlink{thisTitle}{Title}
+\end{itemize} \par
+I wonder what are the xml-ids preserved in a transformation to XHTML, in particular in the case of quotations. So, let’s try :
+\begin{quote}
+\par
+Something longer. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.\par
+\biblfree{In \titlem{Somewhere}.}
+\end{quote}
+
+\DivI[Choice, sic, corr, reg, orig]{Choice, sic, corr, reg, orig}\par
+voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrnefnd [\corr{gvnnhilldr}].\par
+Lastly, That, upon his solemn oath to observe all the above articles, the said man-mountain shall have a daily allowance of meat and drink sufficient for the support of [\corr{1728}] of our subjects, with free access to our royal person, and other marks of our \reg{favor}.
 \end{document}

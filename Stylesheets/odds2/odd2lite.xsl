@@ -548,6 +548,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="after"/>
     <xsl:param name="style"/>
     <hi>
+      <xsl:copy-of select="@xml:id"/>
       <xsl:if test="not($style='')">
 	<xsl:attribute name="rend">
 	  <xsl:value-of select="$style"/>
@@ -570,6 +571,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="$style"/>
 	</xsl:attribute>
       </xsl:if>
+      <xsl:copy-of select="@xml:id"/>
       <xsl:apply-templates/>
     </p>
   </xsl:template>

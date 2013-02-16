@@ -102,10 +102,6 @@ This page is made available under the Creative Commons General Public License "A
   <span class="contextaRef"><xsl:value-of select="@cRef"/></span>
 </xsl:template>
 
-<xsl:template match="tei:corr">
-  <span class="corr"><xsl:apply-templates/></span>
-</xsl:template>
-
 <!-- add a space in front of surname inside author -->
 
 <xsl:template

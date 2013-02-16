@@ -378,7 +378,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="tei:specGrpRef" mode="odd2odd-pass0">
-    <xsl:sequence select="if ($verbose)then tei:message(concat('Phase  0: expand specGrpRef ',@target)) else ()"/>
+    <xsl:sequence select="if ($verbose='true')then tei:message(concat('Phase  0: expand specGrpRef ',@target)) else ()"/>
     <xsl:choose>
       <xsl:when test="starts-with(@target,'#')">
 	<xsl:apply-templates  mode="odd2odd-pass0"
@@ -435,7 +435,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="oddsource">
       <xsl:copy>
         <xsl:copy-of select="@*"/>
-	<xsl:sequence select="if ($verbose)then
+	<xsl:sequence select="if ($verbose='true')then
 			      tei:message(concat('Schema ',@ident)) else ()"/>
 
         <!-- 
@@ -522,7 +522,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:for-each>
 	</xsl:when>
 	<xsl:when test="@include">
-	<xsl:sequence select="if ($verbose)then
+	<xsl:sequence select="if ($verbose='true') then
 			      tei:message(concat('Process module reference to [',@key,'] with inclusion of [',@include,']')) else ()"/>
 	  <!-- get model and attribute classes regardless -->
 	  <xsl:for-each select="document($sourceDoc,$top)">
