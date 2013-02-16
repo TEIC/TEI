@@ -219,17 +219,13 @@ pureant:
 	-DinputFile=`pwd`/test7.xml -Dprofile=default 
 
 clean:
-	rm -f  test6.tex test5.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html
-	rm -f  oddbyexample.* xml.xsd index*div*html
-	rm -f testdrama.compiled.xml
-	rm -f  test.tex test.xml.odt test.xml.docx test.epub
+	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc
+	rm -f  oddbyexample.* index*div*html
+	rm -f  testdrama.compiled.xml
 	rm -f  test5.odt
 	rm -f  test7.xml test11.xml test18.xml test19.xml
 	rm -f  test7.zip
-	rm -f  test12.rdf
 	rm -f  test9.docx test9.odt
 	rm -f  test*listing*
-	rm -f  test*epub test*text
-	rm -f  test.aux test.log test.out test.pdf 
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
 
