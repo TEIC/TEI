@@ -322,6 +322,7 @@ capable of dealing with UTF-8 directly.
 \def\corr#1{#1}
 \def\sic#1{#1}
 \def\reg#1{#1}
+\def\orig#1{#1}
 \def\gap{}
 \def\abbr#1{#1}
 \def\expan#1{#1}
