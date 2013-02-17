@@ -48,9 +48,9 @@
   <xsl:param name="feedbackURL"></xsl:param>
    <xsl:param name="homeWords">AGORA</xsl:param>
  
-<xsl:param name="copyrightStatement">
+<xsl:template name="copyrightStatement">
 This page is made available under the Creative Commons General Public License "Attribution, Non-Commercial, Share-Alike", version 3.0 (CCPL BY-NC-SA) 
-</xsl:param>
+</xsl:template>
 
 
 <!-- number paragraphs -->
