@@ -596,7 +596,9 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:if test="count(preceding-sibling::tei:author)>1">
 		   <xsl:text>,</xsl:text>
 		 </xsl:if>
+		 <xsl:text> </xsl:text>
 		 <xsl:sequence select="tei:i18n('and')"/>
+		 <xsl:text> </xsl:text>
 	       </xsl:when>
 	       <xsl:when test="following-sibling::tei:author">, </xsl:when>
 	     </xsl:choose>
