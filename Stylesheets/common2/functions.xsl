@@ -444,7 +444,7 @@ of this software, even if advised of the possibility of such damage.
 	 </xsl:choose>
        </xsl:matching-substring>
        <xsl:non-matching-substring>
-	 <xsl:sequence select="."/>
+	 <xsl:sequence select="$target"/>
        </xsl:non-matching-substring>
      </xsl:analyze-string>
   </xsl:function>
