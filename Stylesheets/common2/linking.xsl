@@ -321,7 +321,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="ptr" as="xs:boolean" select="false()"/>
       <xsl:variable name="xmllang" select="@xml:lang"/>
       <xsl:variable name="here" select="."/>
-      <xsl:for-each select="tokenize(@target|@url,' ')">
+      <xsl:for-each select="tokenize(normalize-space(@target|@url),' ')">
 	<xsl:variable name="a" select="."/>
 	<xsl:for-each select="$here">
 	<xsl:choose>

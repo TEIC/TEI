@@ -439,12 +439,12 @@ of this software, even if advised of the possibility of such damage.
 	     </xsl:choose>
 	   </xsl:when>
 	   <xsl:otherwise>
-	     <xsl:sequence select="regex-group(0)"/>
+	     <xsl:sequence select="."/>
 	   </xsl:otherwise>
 	 </xsl:choose>
        </xsl:matching-substring>
        <xsl:non-matching-substring>
-	 <xsl:sequence select="$target"/>
+	 <xsl:value-of select="$target"/>
        </xsl:non-matching-substring>
      </xsl:analyze-string>
   </xsl:function>
