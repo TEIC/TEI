@@ -415,7 +415,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:function name="tei:resolveURI" as="xs:string">
     <xsl:param name="context"/>
     <xsl:param name="target"/>
-     <xsl:analyze-string select="$target" regex="^(\w+):(.+)$">
+     <xsl:analyze-string select="normalize-space($target)" regex="^(\w+):(.+)$">
        <xsl:matching-substring>
 	 <xsl:variable name="prefix" select="regex-group(1)"/>
 	 <xsl:variable name="value" select="regex-group(2)"/>
