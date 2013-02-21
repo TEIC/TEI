@@ -68,7 +68,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="spaceCharacter"><xsl:text>  </xsl:text></xsl:param>
 
 <xsl:param name="numberHeadings">false</xsl:param>
-<xsl:param name="numberBodyHeadings"></xsl:param>
 <xsl:param name="omitNSDecls">http://www.w3.org/1999/xhtml</xsl:param>
 
 <xsl:output 

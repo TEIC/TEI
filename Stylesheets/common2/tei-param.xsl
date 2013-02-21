@@ -191,11 +191,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:number count="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6" level="multiple"/>
     </xsl:if>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="string">
-    <desc>How to construct heading numbering in
-    main matter</desc>
-  </doc>
-  <xsl:param name="numberBodyHeadings">1.1.1.1</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
     <desc>Automatically number figures</desc>
   </doc>
