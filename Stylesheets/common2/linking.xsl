@@ -228,17 +228,6 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:with-param>
 	      </xsl:call-template>
             </xsl:when>
-            <xsl:when test="$autoHead='true'">
-	      <xsl:choose>
-		<xsl:when test="($outputTarget='epub' or $outputTarget='epub3') and
-				not(tei:head)"/>
-		<xsl:otherwise>
-		  <xsl:call-template name="autoMakeHead">
-		    <xsl:with-param name="display" select="$display"/>
-		  </xsl:call-template>
-		</xsl:otherwise>
-	      </xsl:choose>
-            </xsl:when>
             <xsl:when test="$display='plain'">
                <xsl:for-each select="tei:head">
 		 <xsl:apply-templates mode="plain"/>
@@ -249,17 +238,18 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:apply-templates mode="plain"/>
 	       </xsl:for-each>
             </xsl:when>
+	    <xsl:when test="tei:head">
+	      <xsl:apply-templates mode="makeheading" select="tei:head"/>
+	    </xsl:when>
 	    <xsl:when test="self::tei:index">
 	      <xsl:value-of select="substring(tei:term,1,10)"/>
 	      <xsl:text>…</xsl:text>
 	    </xsl:when>
-	    <xsl:when test="not(tei:head)">
-	      <xsl:value-of select="substring(normalize-space(.),1,10)"/>
-	      <xsl:text>…</xsl:text>
+	    <xsl:when test="$autoHead='true'">
+	      <xsl:call-template name="autoMakeHead">
+		<xsl:with-param name="display" select="$display"/>
+	      </xsl:call-template>
 	    </xsl:when>
-            <xsl:otherwise>
-               <xsl:apply-templates select="tei:head" mode="makeheading"/>
-            </xsl:otherwise>
          </xsl:choose>
       </xsl:if>
   </xsl:template>

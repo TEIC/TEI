@@ -67,11 +67,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="standardScale">1</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="headings" type="boolean">
-    <desc>Construct a heading 
-    for &lt;div&gt; elements with no &lt;head&gt;</desc>
+    <desc>Whether to  construct a heading 
+    for &lt;div&gt; elements with no &lt;head&gt; - by default, not.</desc>
   </doc>
-  <xsl:param name="autoHead"/>
-
+  <xsl:param name="autoHead">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="headings">
     <desc>[common] How to make a heading for section if there is no
@@ -91,11 +90,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="@n">
 	<xsl:value-of select="@n"/>
-      </xsl:when>
-      <xsl:when test="@type">
-	<xsl:text>[</xsl:text>
-        <xsl:value-of select="@type"/>
-	<xsl:text>]</xsl:text>
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>➤</xsl:text>

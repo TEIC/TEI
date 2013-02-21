@@ -430,11 +430,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:when test="@type">
-	<xsl:text>[</xsl:text>
-        <xsl:value-of select="@type"/>
-	<xsl:text>]</xsl:text>
-      </xsl:when>
       <xsl:otherwise>&#160;</xsl:otherwise>
     </xsl:choose>
   </xsl:template>

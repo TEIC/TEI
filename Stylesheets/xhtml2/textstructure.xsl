@@ -956,89 +956,92 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="ident">
 	<xsl:apply-templates mode="ident" select="."/>
       </xsl:variable>
+      <xsl:variable name="headertext">
+	<xsl:call-template name="header">
+	  <xsl:with-param name="display">full</xsl:with-param>
+	</xsl:call-template>
+      </xsl:variable>
       
-	<xsl:choose>
-	  <xsl:when test="parent::tei:*/@rend='multicol'">
-	    <td style="vertical-align:top;">
-	      <xsl:if test="not($Depth = '')">
-		<xsl:element name="h{$Depth + $divOffset}">
-		  <xsl:for-each select="tei:head[1]">		
-		    <xsl:call-template name="makeRendition">
-		      <xsl:with-param name="default">false</xsl:with-param>
-		    </xsl:call-template>
-		 </xsl:for-each>
-		 <xsl:if test="@xml:id">
-		   <xsl:call-template name="makeAnchor">
-		     <xsl:with-param name="name">
-		       <xsl:value-of select="@xml:id"/>
-		     </xsl:with-param>
+      <xsl:choose>
+	<xsl:when test="parent::tei:*/@rend='multicol'">
+	  <td style="vertical-align:top;">
+	    <xsl:if test="not($Depth = '')">
+	      <xsl:element name="h{$Depth + $divOffset}">
+		<xsl:for-each select="tei:head[1]">		
+		  <xsl:call-template name="makeRendition">
+		    <xsl:with-param name="default">false</xsl:with-param>
+		  </xsl:call-template>
+		</xsl:for-each>
+		<xsl:if test="@xml:id">
+		  <xsl:call-template name="makeAnchor">
+		    <xsl:with-param name="name">
+		      <xsl:value-of select="@xml:id"/>
+		    </xsl:with-param>
 		   </xsl:call-template>
-		 </xsl:if>
-		 <xsl:call-template name="header">
-		   <xsl:with-param name="display">full</xsl:with-param>
-		 </xsl:call-template>
-		 <xsl:call-template name="sectionHeadHook"/>
-	       </xsl:element>
-	     </xsl:if>
-	     <xsl:apply-templates/>
-	   </td>
-         </xsl:when>
-         <xsl:when test="@rend='multicol'">
-            <xsl:apply-templates select="*[not(local-name(.)='div')]"/>
-            <table>
-               <tr>
-                  <xsl:apply-templates select="tei:div"/>
-               </tr>
-            </table>
-         </xsl:when>
-	 <xsl:when test="@rend='nohead'">
-	   <xsl:apply-templates/>
-	 </xsl:when>
-         <xsl:otherwise>
-	   <xsl:if test="not($Depth = '')">
-	     <xsl:variable name="Heading">
-	       <xsl:element name="{if (number($Depth)+$divOffset &gt;6) then 'div'
-				  else concat('h',number($Depth) +
-				  $divOffset)}">
-		 <xsl:choose>
-		   <xsl:when test="@rend">
-		     <xsl:call-template name="makeRendition"/>
-		   </xsl:when>
-		   <xsl:otherwise>
-		     <xsl:for-each select="tei:head[1]">
-		       <xsl:call-template name="makeRendition">
-			 <xsl:with-param name="default">
-			   <xsl:choose>
-			     <xsl:when test="number($Depth)&gt;5">
-			     <xsl:text>div</xsl:text>
-			     <xsl:value-of select="$Depth"/>
-			   </xsl:when>
-			   <xsl:otherwise>false</xsl:otherwise>
-			   </xsl:choose>
-			 </xsl:with-param>
-		       </xsl:call-template>
-		     </xsl:for-each>
-		   </xsl:otherwise>
-		 </xsl:choose>
-		 <xsl:call-template name="header">
-		   <xsl:with-param name="display">full</xsl:with-param>
-		 </xsl:call-template>
-		 <xsl:call-template name="sectionHeadHook"/>
-	       </xsl:element>
-	     </xsl:variable>
-	     <xsl:choose>
-	       <xsl:when test="$outputTarget='html5'">
-		 <header>
-		   <xsl:copy-of select="$Heading"/>
-		 </header>
-	       </xsl:when>
-	       <xsl:otherwise>
-		 <xsl:copy-of select="$Heading"/>
-	       </xsl:otherwise>
-	     </xsl:choose>
-
-	     <xsl:if test="$topNavigationPanel='true' and
-			   $nav='true'">
+		</xsl:if>
+		<xsl:call-template name="header">
+		  <xsl:with-param name="display">full</xsl:with-param>
+		</xsl:call-template>
+		<xsl:call-template name="sectionHeadHook"/>
+	      </xsl:element>
+	    </xsl:if>
+	    <xsl:apply-templates/>
+	  </td>
+	</xsl:when>
+	<xsl:when test="@rend='multicol'">
+	  <xsl:apply-templates select="*[not(local-name(.)='div')]"/>
+	  <table>
+	    <tr>
+	      <xsl:apply-templates select="tei:div"/>
+	    </tr>
+	  </table>
+	</xsl:when>
+	<xsl:when test="@rend='nohead' or $headertext=''">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:if test="not($Depth = '')">
+	    <xsl:variable name="Heading">
+	      <xsl:element name="{if (number($Depth)+$divOffset &gt;6) then 'div'
+						       else concat('h',number($Depth) +
+						       $divOffset)}">
+	      <xsl:choose>
+		<xsl:when test="@rend">
+		  <xsl:call-template name="makeRendition"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:for-each select="tei:head[1]">
+		    <xsl:call-template name="makeRendition">
+		      <xsl:with-param name="default">
+			<xsl:choose>
+			  <xsl:when test="number($Depth)&gt;5">
+			    <xsl:text>div</xsl:text>
+			    <xsl:value-of select="$Depth"/>
+			  </xsl:when>
+			  <xsl:otherwise>false</xsl:otherwise>
+			</xsl:choose>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:for-each>
+		</xsl:otherwise>
+	      </xsl:choose>
+	      <xsl:call-template name="sectionHeadHook"/>
+	      <xsl:copy-of select="$headertext"/>	 
+	      </xsl:element>     
+	    </xsl:variable>
+	    <xsl:choose>
+	      <xsl:when test="$outputTarget='html5'">
+		<header>
+		  <xsl:copy-of select="$Heading"/>
+		</header>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:copy-of select="$Heading"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    
+	    <xsl:if test="$topNavigationPanel='true' and
+			  $nav='true'">
 	       <xsl:element name="{if ($outputTarget='html5') then 'nav'
 				  else 'div'}">
 		 <xsl:call-template name="xrefpanel">
