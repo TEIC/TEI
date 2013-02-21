@@ -653,31 +653,13 @@ of this software, even if advised of the possibility of such damage.
       <!-- depending on depth and splitting level, 
 	 we may do one of two things: -->
     <xsl:choose>
-      <!-- -1. Override at top level -->
-      <xsl:when test="ancestor::tei:floatingText">
-	  <xsl:call-template name="doDivBody">
-	    <xsl:with-param name="Depth" select="$depth"/>
-	  </xsl:call-template>
+      <xsl:when test="tei:keepDivOnPage(.,$depth) or number($depth) &gt; number($splitLevel)">
+	<xsl:call-template name="doDivBody">
+	  <xsl:with-param name="Depth" select="$depth"/>
+	</xsl:call-template>
       </xsl:when>
-      <xsl:when test="ancestor::tei:TEI/@rend='all'">
-	  <xsl:call-template name="doDivBody">
-	    <xsl:with-param name="Depth" select="$depth"/>
-	  </xsl:call-template>
-      </xsl:when>
-      <xsl:when test="ancestor::tei:TEI/@rend='frontpage'">
-	  <xsl:call-template name="doDivBody">
-	    <xsl:with-param name="Depth" select="$depth"/>
-	  </xsl:call-template>
-      </xsl:when>
-      <!-- 0. We have gone far enough -->
-      <xsl:when test="$depth = $splitLevel and $STDOUT='true'">
-      </xsl:when>
-      <!-- 1. our section depth is below the splitting level -->
-      <xsl:when test="number($depth) &gt; number($splitLevel) or         @rend='nosplit' or ancestor::tei:TEI/@rend='all' or         ancestor::tei:TEI/@rend='frontpage' or         ancestor::tei:TEI/@rend='nosplit'">
-	  <xsl:call-template name="doDivBody">
-	    <xsl:with-param name="Depth" select="$depth"/>
-	  </xsl:call-template>
-      </xsl:when>
+      <!-- 1. We have gone far enough -->
+      <xsl:when test="$depth = $splitLevel and $STDOUT='true'"/>
       <!-- 2. we are at or above splitting level, 
 	   so start a new page  -->
       <xsl:when test="number($depth) &lt;= number($splitLevel) and ancestor::tei:front and $splitFrontmatter='true'">
@@ -696,9 +678,9 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-	  <xsl:call-template name="doDivBody">
-	    <xsl:with-param name="Depth" select="$depth"/>
-	  </xsl:call-template>
+	<xsl:call-template name="doDivBody">
+	  <xsl:with-param name="Depth" select="$depth"/>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1704,9 +1686,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>[html] </p>
-         <p>
-            <p xmlns="http://www.w3.org/1999/xhtml"> xref to previous and last sections </p>
-         </p>
+	 <p xmlns="http://www.w3.org/1999/xhtml"> xref to previous and last sections </p>
       </desc>
    </doc>
   <xsl:template name="nextLink">

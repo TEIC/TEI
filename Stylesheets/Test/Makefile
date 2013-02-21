@@ -60,6 +60,8 @@ test-html:
 	saxon test27.xml ../xhtml2/tei.xsl $(SAXONOPT) cssFile=../tei.css cssSecondaryFile=../msdescription.css  | xmllint --format - > test27.html
 	diff test27.html expected-results/test27.html
 	rm -rf files
+	saxon test28.xml ../xhtml2/tei.xsl splitLevel=0  STDOUT=false $(SAXONOPT) 
+	diff index.html expected-results/test28.html
 
 testsplit:
 	saxon test6.xml ../xhtml2/tei.xsl STDOUT=false verbose=true splitLevel=1 useFixedDate=true
