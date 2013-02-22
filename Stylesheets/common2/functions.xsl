@@ -505,7 +505,15 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template name="myi18n">
-	     <xsl:param name="word"/>
+    <xsl:param name="word"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[localisation] wrapper for legacy support</desc>
+   </doc>
+  <xsl:template name="i18n">
+    <xsl:param name="word"/>
+    <xsl:sequence select="tei:i18n($word)"/>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
