@@ -849,10 +849,11 @@ of this software, even if advised of the possibility of such damage.
 			or ancestor::tei:TEI/@rend='frontpage' 
 			or ancestor::tei:TEI/@rend='nosplit'">true</xsl:when>
 	<!-- 2. we are a singleton -->
-	<xsl:when test="parent::*[count(*)=1]">true</xsl:when>
+	<xsl:when test="parent::tei:body[count(*)=1]">true</xsl:when>
 	<!-- 1. we have no proceding sections at top level -->
-	<xsl:when test="parent::tei:body and not
-			(preceding-sibling::*)">true</xsl:when>
+	<xsl:when test="parent::tei:body and
+			not(parent::tei:body/preceding-sibling::tei:front)
+			and not	(preceding-sibling::*)">true</xsl:when>
 	<!-- 0. we are down the hierarchy -->
 	<xsl:when test="@rend='nosplit'">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>

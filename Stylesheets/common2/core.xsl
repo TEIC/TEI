@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process all elements to find out their nesting depth</desc>
    </doc>
-  <xsl:template match="tei:*" mode="depth">99</xsl:template>
+  <xsl:template match="*" mode="depth">99</xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process all elements in plain mode</desc>
    </doc>

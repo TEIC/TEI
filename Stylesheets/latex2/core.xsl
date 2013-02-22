@@ -451,11 +451,11 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template match="tei:listBibl">
      <xsl:choose>
        <xsl:when test="tei:biblStruct">
-	 <xsl:text>\begin{bibitemlist}{1}&#10;</xsl:text>
+	 <xsl:text>\begin{bibitemlist}{1}</xsl:text>
 	 <xsl:for-each select="tei:biblStruct">
 	   <xsl:sort select="lower-case(string(tei:*[1]/tei:author/tei:surname or  tei:*[1]/tei:author/tei:orgName or  tei:*[1]/tei:author/tei:name or  tei:*[1]/tei:editor/tei:surname or  tei:*[1]/tei:editor/tei:name or  tei:*[1]/tei:title))"/>
 	   <xsl:sort select="tei:monogr/tei:imprint/tei:date"/>
-	   <xsl:text>\bibitem[</xsl:text>
+	   <xsl:text>&#10;\bibitem[</xsl:text>
 	   <xsl:apply-templates select="." mode="xref"/>
 	   <xsl:text>]{</xsl:text>
 	   <xsl:value-of select="@xml:id"/>

@@ -88,11 +88,7 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:call-template name="addCorpusID"/>
 	 </xsl:when>
          <xsl:otherwise>
-	   <xsl:value-of select="$BaseFile"/>
-	   <xsl:text>-</xsl:text>
-	   <xsl:value-of select="local-name(.)"/>
-	   <xsl:text>-</xsl:text>
-	   <xsl:value-of select="generate-id()"/>
+	   <xsl:sequence select="concat($BaseFile,'-',local-name(),'-',generate-id())"/>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -108,6 +104,7 @@ of this software, even if advised of the possibility of such damage.
          <xsl:apply-templates mode="depth" select="."/>
       </xsl:variable>
       <xsl:variable name="keep" select="tei:keepDivOnPage(.,$depth)"/>
+      <xsl:variable name="LINK">
       <xsl:choose>
 	<xsl:when test="$filePerPage='true'">
 	  <xsl:choose>
@@ -121,23 +118,14 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:choose>
 	  <xsl:value-of select="$standardSuffix"/>
 	</xsl:when>
-	<xsl:when test="not($keep) and $STDOUT='true' and number($depth) &lt;= number($splitLevel)">
-	  <xsl:value-of select="$masterFile"/>
-	  <xsl:value-of select="$standardSuffix"/>
-	  <xsl:value-of select="$urlChunkPrefix"/>
-	  <xsl:value-of select="$ident"/>
-	</xsl:when>
 	<xsl:when test="ancestor::tei:elementSpec and not($STDOUT='true')">
-	  <xsl:text>ref-</xsl:text>
-	  <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
-	  <xsl:value-of select="$standardSuffix"/>
-	  <xsl:value-of select="concat('#',$ident)"/>
+	  <xsl:sequence select="concat('ref-',ancestor::tei:elementSpec/@ident,$standardSuffix,'#',$ident)"/>
 	</xsl:when>
 	<xsl:when test="ancestor::tei:classSpec and not($STDOUT='true')">
-	  <xsl:text>ref-</xsl:text>
-	  <xsl:value-of select="ancestor::tei:classSpec/@ident"/>
-	  <xsl:value-of select="$standardSuffix"/>
-	  <xsl:value-of select="concat('#',$ident)"/>
+	  <xsl:sequence select="concat('ref-',ancestor::tei:classSpec/@ident,$standardSuffix,'#',$ident)"/>
+	</xsl:when>
+	<xsl:when test="not($keep) and $STDOUT='true' and number($depth) &lt;= number($splitLevel)">
+	  <xsl:sequence select="concat($masterFile,$standardSuffix,$urlChunkPrefix,$ident)"/>
 	</xsl:when>
 	<xsl:when test="ancestor::tei:back and not($splitBackmatter)">
 	  <xsl:value-of select="concat('#',$ident)"/>
@@ -146,8 +134,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:value-of select="concat('#',$ident)"/>
 	</xsl:when>
 	<xsl:when test="self::tei:text and $splitLevel=0">
-	  <xsl:value-of select="$ident"/>
-	  <xsl:value-of select="$standardSuffix"/>
+	  <xsl:value-of select="concat($ident,$standardSuffix)"/>
 	</xsl:when>
 	<xsl:when test="number($splitLevel)= -1 and
 			ancestor::tei:teiCorpus">
@@ -179,11 +166,11 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:choose>
 	</xsl:otherwise>
       </xsl:choose>
-      <!--
-	  <xsl:message><xsl:value-of select="$ident"/>: <xsl:value-of
-	  select="$depth"/>: <xsl:value-of select="$splitLevel"/>: <xsl:value-of
-	  select="$result"/></xsl:message>
-      -->
+      </xsl:variable>
+
+      <!--      <xsl:message>GENERATELINK <xsl:sequence select="string-join((name(),$ident,$depth,string($keep),$LINK),'|')"/></xsl:message>-->
+      <xsl:value-of select="$LINK"/>
+
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
