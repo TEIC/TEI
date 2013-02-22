@@ -100,6 +100,8 @@ test-fo:
 	diff test24.fo expected-results/test24.fo
 	saxon -o:test25.fo test25.xml ../fo2/tei.xsl $(SAXONOPT)
 	diff test25.fo expected-results/test25.fo
+	saxon -o:test27.fo test27.xml ../fo2/tei.xsl $(SAXONOPT)
+	diff test27.fo expected-results/test27.fo
 
 test-epub:
 	../teitoepub3  test.xml test.epub
