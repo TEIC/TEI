@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
-		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -87,30 +87,30 @@ of this software, even if advised of the possibility of such damage.
       <title>ISO Schematron rules</title>
 
       <xsl:comment>namespaces:</xsl:comment>
+      <xsl:text>&#x0A;</xsl:text>
       <xsl:for-each select="key('NSs',1)">
         <xsl:choose>
           <xsl:when test="ancestor::teix:egXML"/>
-          <xsl:when
-            test="ancestor::tei:constraintSpec/@xml:lang
-                 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
+                  and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise>
             <xsl:apply-templates select="."/>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-      <xsl:if test="not(sch:ns[@prefix='tei'])">
-	<sch:ns prefix="tei"
-		uri="http://www.tei-c.org/ns/1.0"/>
+      <xsl:if test="not( key('NSs',1)[@prefix='tei'] )">
+        <sch:ns prefix="tei" uri="http://www.tei-c.org/ns/1.0"/>
       </xsl:if>
 
-
-      <xsl:comment>keys:</xsl:comment>
+      <xsl:if test="key('KEYs',1)">
+        <xsl:comment>keys:</xsl:comment>
+        <xsl:text>&#x0A;</xsl:text>
+      </xsl:if>
       <xsl:for-each select="key('KEYs',1)">
         <xsl:choose>
           <xsl:when test="ancestor::teix:egXML"/>
-          <xsl:when
-            test="ancestor::tei:constraintSpec/@xml:lang
-                 and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
+          <xsl:when test="ancestor::tei:constraintSpec/@xml:lang
+                  and not(ancestor::tei:constraintSpec/@xml:lang = $lang)"/>
           <xsl:otherwise>
             <xsl:apply-templates select="."/>
           </xsl:otherwise>
@@ -124,7 +124,10 @@ of this software, even if advised of the possibility of such damage.
           schema that does not perform the desired constraint tests properly.</xsl:message>
       </xsl:if>
 
-      <xsl:comment>patterns:</xsl:comment>
+      <xsl:if test="key('PATTERNs',1)">
+        <xsl:comment>patterns:</xsl:comment>
+        <xsl:text>&#x0A;</xsl:text>
+      </xsl:if>
       <xsl:for-each select="key('PATTERNs',1)">
         <xsl:choose>
           <xsl:when test="ancestor::teix:egXML"/>
@@ -137,7 +140,10 @@ of this software, even if advised of the possibility of such damage.
         </xsl:choose>
       </xsl:for-each>
 
-      <xsl:comment>constraints:</xsl:comment>
+      <xsl:if test="key('CONSTRAINTs',1)">
+        <xsl:comment>constraints:</xsl:comment>
+        <xsl:text>&#x0A;</xsl:text>
+      </xsl:if>
       <xsl:for-each select="key('CONSTRAINTs',1)">
         <xsl:choose>
           <xsl:when test="ancestor::teix:egXML"/>
@@ -204,7 +210,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="sch:rule[not(@context)]">
     <rule>
       <xsl:attribute name="context">
-	<xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>        
+        <xsl:sequence select="tei:generate-nsprefix-schematron(.)"/>        
         <xsl:value-of select="ancestor::tei:elementSpec/@ident"/>
       </xsl:attribute>
       <xsl:apply-templates/>
@@ -228,22 +234,21 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$e">
       <xsl:variable name="myns" select="ancestor::tei:elementSpec/@ns"/>
       <xsl:choose>
-	<xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
-	  <xsl:text>tei:</xsl:text>
-	</xsl:when>
-	<xsl:otherwise>
-	  <xsl:choose>
-	    <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
-	      <xsl:value-of
-		  select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:otherwise>
+        <xsl:when test="not($myns) or $myns='http://www.tei-c.org/ns/1.0'">
+          <xsl:text>tei:</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:choose>
+            <xsl:when test="ancestor::tei:schemaSpec//sch:ns[@uri=$myns]">
+              <xsl:value-of select="concat(ancestor::tei:schemaSpec//sch:ns[@uri=$myns]/@prefix,':')"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message terminate="yes">schematron rule cannot work out prefix for <xsl:value-of select="ancestor::tei:elementSpec/@ident"/></xsl:message>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
-
+  
 </xsl:stylesheet>
