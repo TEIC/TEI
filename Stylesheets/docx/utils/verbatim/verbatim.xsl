@@ -61,6 +61,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="attsOnSameLine">3</xsl:param>
   <xsl:key name="Namespaces" match="*[ancestor::teix:egXML]" use="namespace-uri()"/>
   <xsl:key name="Namespaces" match="*[not(ancestor::*)]" use="namespace-uri()"/>
+  <xsl:variable name="dq">"</xsl:variable>
   <xsl:template name="verbatim-newLine"/>
   <xsl:template name="verbatim-getNamespacePrefix">
     <xsl:variable name="ns" select="namespace-uri()"/>
@@ -578,11 +579,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="verbatim-lineBreak">
       <xsl:with-param name="id">22</xsl:with-param>
     </xsl:call-template>
-    <xsl:text>&#160;&#160;&#160;</xsl:text>
-    <xsl:text>xmlns:</xsl:text>
-    <xsl:value-of select="name(.)"/>
-    <xsl:text>="</xsl:text>
-    <xsl:value-of select="."/>
-    <xsl:text>"</xsl:text>
+    <xsl:sequence select="concat('&#160;&#160;&#160;xmlns:',name(.),'=',$dq,.,$dq)"/>
   </xsl:template>
 </xsl:stylesheet>

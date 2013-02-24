@@ -65,6 +65,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="omitNSDecls">http://www.tei-c.org/ns/1.0</xsl:param>
   <xsl:key name="NSUsed" match="*" use="namespace-uri()"/>
   <xsl:key name="NSUsed" match="@*" use="namespace-uri()"/>
+  <xsl:variable name="dq">"</xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Work out a namespace prefix for verbatim elements</p>
@@ -666,12 +667,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:call-template name="verbatim-lineBreak">
             <xsl:with-param name="id">22</xsl:with-param>
           </xsl:call-template>
-          <xsl:text>&#160;&#160;&#160;</xsl:text>
-          <xsl:text>xmlns:</xsl:text>
-          <xsl:value-of select="@name"/>
-          <xsl:text>="</xsl:text>
-          <xsl:value-of select="@value"/>
-          <xsl:text>"</xsl:text>
+          <xsl:sequence select="concat('&#160;&#160;&#160;xmlns:',@name,'=',$dq,@value,$dq)"/>
         </xsl:if>
       </xsl:for-each-group>
     </xsl:for-each>
