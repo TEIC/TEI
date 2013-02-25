@@ -179,10 +179,8 @@ sfupload:
 	rsync -e ssh tei-xsl-`cat VERSION`.zip ${SFUSER},tei@frs.sourceforge.net:/home/frs/project/t/te/tei/Stylesheets
 
 profile:
-	saxon -o:/dev/null 	-TP Test/test.xml html/tei.xsl >& profile.xml
-	saxon profile.xml timing-profile.xsl  > profile1.html
-	saxon -o:/dev/null 	-TP Test/test.xml latex/tei.xsl >& profile.xml
-	saxon profile.xml timing-profile.xsl  > profile2.html
+	saxon -o:/dev/null	-TP Test/test.xml xhtml2/tei.xsl >& profile1.html
+	saxon -o:/dev/null	-TP Test/test.xml latex2/tei.xsl >& profile2.html
 
 log:
 	(LastDate=`head -1 ChangeLog | awk '{print $$1}'`; \

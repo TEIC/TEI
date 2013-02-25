@@ -183,12 +183,8 @@ Stylesheet constant setting the name of the main output file.
 	<xsl:sequence select="tei:processRend(@rend,$auto)"/>
       </xsl:when>
       <xsl:when test="@rendition or @style">
-	<xsl:for-each select="@rendition">	  
-	  <xsl:sequence select="tei:processRendition(.,$auto)"/>
-	</xsl:for-each>
-	<xsl:for-each select="@style">
-	  <xsl:sequence select="tei:processStyle(.)"/>
-	</xsl:for-each>
+	<xsl:sequence select="tei:processRendition(@rendition,$auto)"/>
+	<xsl:sequence select="tei:processStyle(@style)"/>
       </xsl:when>
       <xsl:when test="key('TAGREND',local-name(.))">
 	<xsl:for-each select="key('TAGREND',local-name(.))">
@@ -239,14 +235,13 @@ Stylesheet constant setting the name of the main output file.
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <xsl:for-each select="document(.)">
-		<xsl:apply-templates select="@xml:id"/>
+		<xsl:value-of select="@xml:id"/>
 	      </xsl:for-each>
 	    </xsl:otherwise>
 	  </xsl:choose>
-	  <xsl:text> </xsl:text>
 	</xsl:for-each>
       </xsl:variable>
-      <xsl:value-of select="normalize-space($values)"/>
+      <xsl:value-of select="string-join($values,' ')"/>
     </xsl:attribute>
   </xsl:function>
 
