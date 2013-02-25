@@ -1016,6 +1016,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
 
       <xsl:when test="@place='foot' or 
+		      @place='parend' or
 		      @place='bottom' or
 		      @place='tablefoot'">
 	<xsl:call-template name="footNote"/>
@@ -1026,6 +1027,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
 
       <xsl:when test="@place='margin' or @place='margin/inline' or
+		      @place='marg1' or
+		      @place='marg2' or
 		      @place='marginOuter' or
 		      @place='marginLeft' or
 		      @place='marginRight'">

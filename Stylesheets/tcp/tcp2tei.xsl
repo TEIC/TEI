@@ -7,7 +7,7 @@ $Date$ $Author$
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns="http://www.tei-c.org/ns/1.0" 
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
-    exclude-namespace-prefixes="tei"
+    exclude-result-prefixes="tei"
     version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
