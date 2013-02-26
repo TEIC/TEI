@@ -62,7 +62,7 @@ of this software, even if advised of the possibility of such damage.
       <sessions>
         <xsl:for-each select="row">
           <xsl:variable name="r" select="."/>
-          <xsl:for-each select="tokenize(normalize-space(replace(cell[1],' ',' ')),' ')">
+          <xsl:for-each select="tokenize(normalize-space(replace(cell[1],'[, ]',' ')),' ')">
             <session>
               <weekday>
                 <xsl:choose>
