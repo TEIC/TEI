@@ -44,6 +44,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="shadowGraphics">true</xsl:param>
   <xsl:param name="useNSPrefixes">false</xsl:param>
+  <xsl:param name="pagebreakStyle">active</xsl:param>
   <xsl:param name="defaultHeaderFooterFile">../../profiles/oucscourses/docx/headersfooters.xml</xsl:param>
   <xsl:template match="teix:egXML|p[@rend='eg']">
     <xsl:param name="simple">false</xsl:param>
