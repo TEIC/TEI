@@ -22,18 +22,14 @@ so that we can check them -->
                 <xsl:when test="parent::tei:datatype[not(@maxOccurs)]">
                   <!--	This is a single data.pointer value, not a list of them.         -->
                   <XSL:template match="tei:{$e}/@{$a}">
-                    <XSL:call-template name="checkThisLink">
-                      <XSL:with-param name="What" select="normalize-space(.)"/>
-                    </XSL:call-template>
+                    <XSL:sequence select="tei:checkThisLink(normalize-space(.),.)"/>
                   </XSL:template>
                   <XSL:template match="teix:{$e}/@{$a}">
-                    <XSL:call-template name="checkThisExampleLink">
-                      <XSL:with-param name="What" select="normalize-space(.)"/>
-                    </XSL:call-template>
+                    <XSL:sequence select="tei:checkThisExampleLink(normalize-space(.),.)"/>
                   </XSL:template>
                 </xsl:when>
                 <xsl:otherwise>
-<!-- This is a list of data.pointer values. -->
+		  <!-- This is a list of data.pointer values. -->
                   <XSL:template match="tei:{$e}/@{$a}">
                     <XSL:call-template name="checklinks">
                       <XSL:with-param name="stuff" select="normalize-space(.)"/>

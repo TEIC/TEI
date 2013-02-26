@@ -118,49 +118,38 @@
   </xsl:template>
   <xsl:template name="checklinks">
     <xsl:param name="stuff"/>
-    <xsl:choose>
-      <xsl:when test="contains($stuff,' ')">
-        <xsl:variable name="This">
-          <xsl:value-of select="substring-before($stuff,' ')"/>
-        </xsl:variable>
-        <xsl:call-template name="checkThisLink">
-          <xsl:with-param name="What" select="$This"/>
-        </xsl:call-template>
-        <xsl:call-template name="checklinks">
-          <xsl:with-param name="stuff">
-            <xsl:value-of select="substring-after($stuff,' ')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="checkThisLink">
-          <xsl:with-param name="What" select="$stuff"/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="context" select="."/>
+    <xsl:for-each select="tokenize($stuff,' ')">
+      <xsl:sequence select="tei:checkThisLink(normalize-space(.),$context)"/>
+    </xsl:for-each>
   </xsl:template>
-  <xsl:template name="checkThisLink">
+  <xsl:function name="tei:checkThisLink" as="node()*">
     <xsl:param name="What"/>
-    <xsl:choose>
-      <xsl:when test="starts-with($What,'#')">
-        <xsl:choose>
-          <xsl:when test="id(substring($What,2))"/>
-          <xsl:otherwise>
-            <xsl:call-template name="Error">
-              <xsl:with-param name="value" select="$What"/>
-            </xsl:call-template>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:when test="starts-with($What,'mailto:')"/>
-      <xsl:when test="starts-with($What,'http:')"/>
-      <xsl:when test="not(contains($What,'/')) and         not(id($What))">
-        <xsl:call-template name="Error">
-          <xsl:with-param name="value" select="$What"/>
-        </xsl:call-template>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
+    <xsl:param name="Where"/>
+    <xsl:for-each select="$Where">
+      <xsl:choose>
+	<xsl:when test="starts-with($What,'#')">
+	  <xsl:choose>
+	    <xsl:when test="id(substring($What,2))"/>
+	    <xsl:otherwise>
+	      <xsl:call-template name="Error">
+		<xsl:with-param name="value" select="$What"/>
+	      </xsl:call-template>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
+	<xsl:when test="starts-with($What,'tei:')"/>
+	<xsl:when test="starts-with($What,'mailto:')"/>
+	<xsl:when test="starts-with($What,'http:')"/>
+	<xsl:when test="not(contains($What,'/')) and not(id($What))">
+	  <xsl:call-template name="Error">
+	    <xsl:with-param name="value" select="$What"/>
+	  </xsl:call-template>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
   <xsl:template name="loc">
     <xsl:for-each select="ancestor::tei:*|ancestor::teix:*">
       <xsl:value-of select="name(.)"/>
@@ -203,69 +192,59 @@
   </xsl:template>
   <xsl:template name="checkexamplelinks">
     <xsl:param name="stuff"/>
-    <xsl:choose>
-      <xsl:when test="contains($stuff,' ')">
-        <xsl:variable name="This">
-          <xsl:value-of select="substring-before($stuff,' ')"/>
-        </xsl:variable>
-        <xsl:call-template name="checkThisExampleLink">
-          <xsl:with-param name="What" select="$This"/>
-        </xsl:call-template>
-        <xsl:call-template name="checkexamplelinks">
-          <xsl:with-param name="stuff">
-            <xsl:value-of select="substring-after($stuff,' ')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="checkThisExampleLink">
-          <xsl:with-param name="What" select="$stuff"/>
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:variable name="context" select="."/>
+    <xsl:for-each select="tokenize($stuff,' ')">
+      <xsl:sequence select="tei:checkThisExampleLink(normalize-space(.),$context)"/>
+    </xsl:for-each>
   </xsl:template>
-  <xsl:template name="checkThisExampleLink">
+
+  <xsl:function name="tei:checkThisExampleLink" as="node()*">
     <xsl:param name="What"/>
-    <xsl:choose>
-      <xsl:when test="starts-with($What,'#')">
-        <xsl:variable name="N">
-          <xsl:value-of select="substring-after($What,'#')"/>
-        </xsl:variable>
-        <xsl:choose>
-          <xsl:when test="key('EXIDS',$N)"/>
-          <xsl:when test="id($N)">
-            <xsl:call-template name="Remark">
-              <xsl:with-param name="value" select="$What"/>
-            </xsl:call-template>
-          </xsl:when>
-          <!--
-	    <xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
-	    <xsl:call-template name="Warning">
-	    <xsl:with-param name="value" select="$What"/>
-	    </xsl:call-template>
-	    </xsl:when>
-	-->
-          <xsl:otherwise>
-            <!--
-	      <xsl:call-template name="Warning">
-	      <xsl:with-param name="value" select="$What"/>
+    <xsl:param name="Where"/>
+    <xsl:for-each select="$Where">
+      <xsl:choose>
+	<xsl:when test="starts-with($What,'#')">
+	  <xsl:variable name="N">
+	    <xsl:value-of select="substring-after($What,'#')"/>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="key('EXIDS',$N)"/>
+	    <xsl:when test="id($N)">
+	      <xsl:call-template name="Remark">
+		<xsl:with-param name="value" select="$What"/>
 	      </xsl:call-template>
+	    </xsl:when>
+	    <!--
+		<xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
+		<xsl:call-template name="Warning">
+		<xsl:with-param name="value" select="$What"/>
+		</xsl:call-template>
+		</xsl:when>
 	    -->
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:when test="starts-with($What,'mailto:')"/>
-      <xsl:when test="starts-with($What,'http:')"/>
-      <xsl:when test="name(.)='url' and         local-name(parent::*)='graphic'"/>
-      <xsl:when test="name(.)='url' and         local-name(parent::*)='fsdDecl'"/>
-      <xsl:when test="name(.)='target' and         local-name(parent::*)='ref'"/>
-      <xsl:when test="name(.)='target' and         local-name(parent::*)='ptr'"/>
-      <xsl:when test="name(.)='url' and local-name(parent::*)='graphic'"/>
-      <xsl:when test="not(contains($What,'/'))">
-        <xsl:call-template name="Warning">
-          <xsl:with-param name="value" select="$What"/>
-        </xsl:call-template>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
+	    <xsl:otherwise>
+	      <!--
+		  <xsl:call-template name="Warning">
+		  <xsl:with-param name="value" select="$What"/>
+		  </xsl:call-template>
+	      -->
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:when>
+	<xsl:when test="starts-with($What,'tei:')"/>
+	<xsl:when test="starts-with($What,'mailto:')"/>
+	<xsl:when test="starts-with($What,'http:')"/>
+	<xsl:when test="name(.)='url' and         local-name(parent::*)='graphic'"/>
+	<xsl:when test="name(.)='url' and         local-name(parent::*)='fsdDecl'"/>
+	<xsl:when test="name(.)='target' and         local-name(parent::*)='ref'"/>
+	<xsl:when test="name(.)='target' and         local-name(parent::*)='ptr'"/>
+	<xsl:when test="name(.)='url' and local-name(parent::*)='graphic'"/>
+	<xsl:when test="not(contains($What,'/'))">
+	  <xsl:call-template name="Warning">
+	    <xsl:with-param name="value" select="$What"/>
+	  </xsl:call-template>
+	</xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
 </xsl:stylesheet>
