@@ -74,15 +74,6 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:when test="starts-with($r/cell[2],'Fri')">5</xsl:when>
                 </xsl:choose>
               </weekday>
-              <roomsort>
-                <xsl:choose>
-                  <xsl:when test="starts-with(.,'Evenlode')">1</xsl:when>
-                  <xsl:when test="starts-with(.,'Isis')">2</xsl:when>
-                  <xsl:when test="starts-with(.,'Windrush')">3</xsl:when>
-                  <xsl:when test="starts-with(.,'Cherwell')">4</xsl:when>
-                  <xsl:otherwise>5</xsl:otherwise>
-                </xsl:choose>
-              </roomsort>
               <room>
                 <xsl:value-of select="."/>
               </room>
