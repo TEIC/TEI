@@ -72,6 +72,9 @@ Description
         <input type="hidden" id="changedDesc" name="changedDesc"  value="false"/>
         <input type="hidden" id="changedUsage" name="changedUsage" value="false"/>
         <input type="hidden" id="changedContent" name="changedContent" value="false"/>
+        <input type="hidden" id="changedvalList" name="changedvalList" value="false"/>
+        <input type="hidden" id="changedclosed" name="changedclosed" value="false"/>
+        <input type="hidden" id="changeddefault" name="changeddefault" value="false"/>
         <table>
           <tr>
             <td class="headline" colspan="4">
@@ -161,7 +164,7 @@ Description
               <xsl:value-of disable-output-escaping="yes" select="$res_form_defaultValue"/>
             </td>
             <td class="formfield">
-              <input type="text" name="defaultValue" size="53">
+              <input type="text" name="defaultValue" size="53"  onChange="setChanged(this,'changeddefault')">
                 <xsl:if test="//currentAttribute">
                   <xsl:attribute name="value">
                     <xsl:value-of select="//currentAttribute/attDef/default"/>
@@ -174,15 +177,30 @@ Description
             <td class="formlabel">
               <xsl:value-of disable-output-escaping="yes" select="$res_form_closed"/>
             </td>
-            <td class="formfield"><input class="radio" type="radio" name="closed" value="true"><xsl:if test="string-length(//currentAttribute/attDef/valList)&gt;0"><xsl:attribute name="checked">1</xsl:attribute></xsl:if></input> yes <br/>
-							<input class="radio" type="radio" name="closed" value="false"><xsl:if test="string-length(//currentAttribute/attDef/valList)=0"><xsl:attribute name="checked">1</xsl:attribute></xsl:if></input> no </td>
+            <td class="formfield">
+	      <input class="radio" type="radio" name="closed" value="true"  onChange="setChanged(this,'changedclosed')">
+		<xsl:if test="string-length(//currentAttribute/attDef/valList)&gt;0">
+		  <xsl:attribute name="checked">1</xsl:attribute>
+		</xsl:if>
+	      </input>
+	      <xsl:text> yes </xsl:text>
+	      <br/>
+	      <input class="radio" type="radio" name="closed"
+		     value="false"   onChange="setChanged(this,'changedclosed')">
+		<xsl:if
+		    test="string-length(//currentAttribute/attDef/valList)=0">
+		  <xsl:attribute name="checked">1</xsl:attribute>
+		</xsl:if>
+	      </input>
+	      <xsl:text> no </xsl:text>
+	    </td>
           </tr>
           <tr>
             <td class="formlabel">
               <xsl:value-of disable-output-escaping="yes" select="$res_form_valList"/>
             </td>
             <td class="formfield">
-              <input type="text" name="valList" size="53">
+              <input type="text" name="valList" size="53"  onChange="setChanged(this,'changedvalList')">
                 <xsl:attribute name="value">
                   <xsl:value-of select="//currentAttribute/attDef/valList"/>
                 </xsl:attribute>

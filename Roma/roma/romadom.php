@@ -1574,7 +1574,7 @@ class romaDom extends domDocument
 	    }
 	      	    
 	    //default
-	    if ($aszConfig[ 'defaultValue' ] != '') {
+	    if ($aszConfig[ 'changeddefault'] == 'true' ) {
 	     $oDefault = $oAttDef->getElementsByTagname( 'defaultVal' )->item(0);
   	     if ( is_object( $oDefault ) )
 	      {
@@ -1585,7 +1585,7 @@ class romaDom extends domDocument
 	     $oDefault->appendChild( new domText( $aszConfig[ 'defaultValue' ] ) );
 	    }
 	    //valList
-	    if ($aszConfig[ 'valList' ] != '') {
+	    if ($aszConfig[ 'changedvallist'] == 'true' ) {
 	     $oValList = $oAttDef->getElementsByTagname( 'valList' )->item(0);
 	     if ( is_object( $oValList ) )
 	      {
@@ -1594,7 +1594,8 @@ class romaDom extends domDocument
 	     $aszValList = explode( ',', $aszConfig[ 'valList' ] );
 	     $theValList = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'valList' );
 	     $oValList = $oAttDef->appendChild( $theValList );
-	     if ( $aszConfig[ 'closed' ] == 'true' )
+	    }
+	    if ($aszConfig[ 'changedclosed'] == 'true' ) 
 	      {
 		$oValList->setAttribute( 'type', 'closed' );
 	      }
@@ -1618,8 +1619,7 @@ class romaDom extends domDocument
 			$oValItem->setAttribute( 'ident', $szValue );
 		      }
 		  }
-	        }
-	     }
+	      }
 	  }
 
 
