@@ -1516,24 +1516,24 @@ class romaDom extends domDocument
 	       }
 	    }
 
-	    //	    echo "<p>name = " .  $aszConfig[ 'name' ];
-	    //	    echo "<p>altname = " .  $aszConfig[ 'altname' ];
-	    //	    echo "<p>class = " .  $aszConfig[ 'class' ];
-	    //	    echo "<p>module = " .  $aszConfig[ 'module' ];
-	    //	    echo "<p>changedDesc = " .  $aszConfig[ 'changedDesc'];
-	    //	    echo "<p>changedName = " .  $aszConfig[ 'changedName'];
-	    //	    echo "<p>changedUsage = " .  $aszConfig[ 'changedUsage'];
-	    //	    echo "<p>changedContent = " .  $aszConfig[ 'changedContent'];
-	    //	    echo "<p>element = " .  $aszConfig[ 'element' ];
-	    //	    echo "<p>valList = " .  $aszConfig[ 'valList' ];
-	    //	    echo "<p>added = " .  $aszConfig[ 'added' ];
-	    //	    echo "<p>optional = " .  $aszConfig[ 'optional' ];
-	    //	    echo "<p>maxOccurs = " .  $aszConfig[ 'maxOccurs' ];
-	    //	    echo "<p>minOccurs = " .  $aszConfig[ 'minOccurs' ];
-	    //	    echo "<p>closed = " .  $aszConfig[ 'closed' ];
-	    //	    echo "<p>content = " .  $aszConfig[ 'content' ];
-	    //	    echo "<p>defaultValue = " .  $aszConfig[ 'defaultValue' ];
-	    //	    echo "<p>description = " .  $aszConfig[ 'description' ] ;
+	    	    echo "<p>name = " .  $aszConfig[ 'name' ];
+	    	    echo "<p>altname = " .  $aszConfig[ 'altname' ];
+	    	    echo "<p>class = " .  $aszConfig[ 'class' ];
+	    	    echo "<p>module = " .  $aszConfig[ 'module' ];
+	    	    echo "<p>changedDesc = " .  $aszConfig[ 'changedDesc'];
+	    	    echo "<p>changedName = " .  $aszConfig[ 'changedName'];
+	    	    echo "<p>changedUsage = " .  $aszConfig[ 'changedUsage'];
+	    	    echo "<p>changedContent = " .  $aszConfig[ 'changedContent'];
+	    	    echo "<p>element = " .  $aszConfig[ 'element' ];
+	    	    echo "<p>valList = " .  $aszConfig[ 'valList' ];
+	    	    echo "<p>added = " .  $aszConfig[ 'added' ];
+	    	    echo "<p>optional = " .  $aszConfig[ 'optional' ];
+	    	    echo "<p>maxOccurs = " .  $aszConfig[ 'maxOccurs' ];
+	    	    echo "<p>minOccurs = " .  $aszConfig[ 'minOccurs' ];
+	    	    echo "<p>closed = " .  $aszConfig[ 'closed' ];
+	    	    echo "<p>content = " .  $aszConfig[ 'content' ];
+	    	    echo "<p>defaultValue = " .  $aszConfig[ 'defaultValue' ];
+	    	    echo "<p>description = " .  $aszConfig[ 'description' ] ;
 
 	    // what about the altIdent?
 	    if ($aszConfig[ 'changedName'] == 'true' ) {
@@ -1574,7 +1574,7 @@ class romaDom extends domDocument
 	    }
 	      	    
 	    //default
-	    if ($aszConfig[ 'changeddefault'] == 'true' ) {
+	    if ($aszConfig[ 'defaultValue' ] != '') {
 	     $oDefault = $oAttDef->getElementsByTagname( 'defaultVal' )->item(0);
   	     if ( is_object( $oDefault ) )
 	      {
@@ -1585,7 +1585,7 @@ class romaDom extends domDocument
 	     $oDefault->appendChild( new domText( $aszConfig[ 'defaultValue' ] ) );
 	    }
 	    //valList
-	    if ($aszConfig[ 'changedvallist'] == 'true' ) {
+	    if ($aszConfig[ 'valList' ] != '') {
 	     $oValList = $oAttDef->getElementsByTagname( 'valList' )->item(0);
 	     if ( is_object( $oValList ) )
 	      {
@@ -1594,7 +1594,7 @@ class romaDom extends domDocument
 	     $aszValList = explode( ',', $aszConfig[ 'valList' ] );
 	     $theValList = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'valList' );
 	     $oValList = $oAttDef->appendChild( $theValList );
-	    if ($aszConfig[ 'changedclosed'] == 'true' ) 
+	     if ( $aszConfig[ 'closed' ] == 'true' )
 	      {
 		$oValList->setAttribute( 'type', 'closed' );
 	      }
@@ -1602,11 +1602,11 @@ class romaDom extends domDocument
 	      {
 		$oValList->setAttribute( 'type', 'open' );
 	      }
-	    if ( $aszConfig[ 'added' ] != 'true' )
-	      {
-		$oValList->setAttribute( 'mode', 'replace' );	
-	      }
-	    if ( is_array( $aszValList ) )
+    	     if ( $aszConfig[ 'added' ] != 'true' )
+	     {
+		 $oValList->setAttribute( 'mode', 'replace' );	
+		 }
+	     if ( is_array( $aszValList ) )
 	      {
 		foreach( $aszValList as $szValue )
 		  {
@@ -1618,9 +1618,10 @@ class romaDom extends domDocument
 			$oValItem->setAttribute( 'ident', $szValue );
 		      }
 		  }
-	      }
-	    }
+	        }
+	     }
 	  }
+
 
         if ( (!$oAttDef ->hasChildNodes() ) && $aszConfig[ 'changedUsage'] == 'false')
 	  {
