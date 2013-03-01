@@ -1516,24 +1516,24 @@ class romaDom extends domDocument
 	       }
 	    }
 
-	    error_log( "<p>name = " .  $aszConfig[ 'name' ]);
-	    error_log( "<p>altname = " .  $aszConfig[ 'altname' ]);
-	    error_log( "<p>class = " .  $aszConfig[ 'class' ]);
-	    error_log( "<p>module = " .  $aszConfig[ 'module' ]);
-	    error_log( "<p>changedDesc = " .  $aszConfig[ 'changedDesc']);
-	    error_log( "<p>changedName = " .  $aszConfig[ 'changedName']);
-	    error_log( "<p>changedUsage = " .  $aszConfig[ 'changedUsage']);
-	    error_log( "<p>changedContent = " .  $aszConfig[ 'changedContent']);
-	    error_log( "<p>element = " .  $aszConfig[ 'element' ]);
-	    error_log( "<p>valList = " .  $aszConfig[ 'valList' ]);
-	    error_log( "<p>added = " .  $aszConfig[ 'added' ]);
-	    error_log( "<p>optional = " .  $aszConfig[ 'optional' ]);
-	    error_log( "<p>maxOccurs = " .  $aszConfig[ 'maxOccurs' ]);
-	    error_log( "<p>minOccurs = " .  $aszConfig[ 'minOccurs' ]);
-	    error_log( "<p>closed = " .  $aszConfig[ 'closed' ]);
-	    error_log( "<p>content = " .  $aszConfig[ 'content' ]);
-	    error_log( "<p>defaultValue = " .  $aszConfig[ 'defaultValue' ]);
-	    error_log( "<p>description = " .  $aszConfig[ 'description' ] );
+	    //error_log( "<p>name = " .  $aszConfig[ 'name' ]);
+	    //error_log( "<p>altname = " .  $aszConfig[ 'altname' ]);
+	    //error_log( "<p>class = " .  $aszConfig[ 'class' ]);
+	    //error_log( "<p>module = " .  $aszConfig[ 'module' ]);
+	    //error_log( "<p>changedDesc = " .  $aszConfig[ 'changedDesc']);
+	    //error_log( "<p>changedName = " .  $aszConfig[ 'changedName']);
+	    //error_log( "<p>changedUsage = " .  $aszConfig[ 'changedUsage']);
+	    //error_log( "<p>changedContent = " .  $aszConfig[ 'changedContent']);
+	    //error_log( "<p>element = " .  $aszConfig[ 'element' ]);
+	    //error_log( "<p>valList = " .  $aszConfig[ 'valList' ]);
+	    //error_log( "<p>added = " .  $aszConfig[ 'added' ]);
+	    //error_log( "<p>optional = " .  $aszConfig[ 'optional' ]);
+	    //error_log( "<p>maxOccurs = " .  $aszConfig[ 'maxOccurs' ]);
+	    //error_log( "<p>minOccurs = " .  $aszConfig[ 'minOccurs' ]);
+	    //error_log( "<p>closed = " .  $aszConfig[ 'closed' ]);
+	    //error_log( "<p>content = " .  $aszConfig[ 'content' ]);
+	    //error_log( "<p>defaultValue = " .  $aszConfig[ 'defaultValue' ]);
+	    //error_log( "<p>description = " .  $aszConfig[ 'description' ] );
 
 	    // what about the altIdent?
 	    if ($aszConfig[ 'changedName'] == 'true' ) {
