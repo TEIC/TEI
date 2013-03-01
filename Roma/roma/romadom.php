@@ -1594,7 +1594,6 @@ class romaDom extends domDocument
 	     $aszValList = explode( ',', $aszConfig[ 'valList' ] );
 	     $theValList = $this->createElementNS( 'http://www.tei-c.org/ns/1.0', 'valList' );
 	     $oValList = $oAttDef->appendChild( $theValList );
-	    }
 	    if ($aszConfig[ 'changedclosed'] == 'true' ) 
 	      {
 		$oValList->setAttribute( 'type', 'closed' );
@@ -1603,11 +1602,11 @@ class romaDom extends domDocument
 	      {
 		$oValList->setAttribute( 'type', 'open' );
 	      }
-    	     if ( $aszConfig[ 'added' ] != 'true' )
-	     {
-		 $oValList->setAttribute( 'mode', 'replace' );	
-		 }
-	     if ( is_array( $aszValList ) )
+	    if ( $aszConfig[ 'added' ] != 'true' )
+	      {
+		$oValList->setAttribute( 'mode', 'replace' );	
+	      }
+	    if ( is_array( $aszValList ) )
 	      {
 		foreach( $aszValList as $szValue )
 		  {
@@ -1620,8 +1619,8 @@ class romaDom extends domDocument
 		      }
 		  }
 	      }
+	    }
 	  }
-
 
         if ( (!$oAttDef ->hasChildNodes() ) && $aszConfig[ 'changedUsage'] == 'false')
 	  {
