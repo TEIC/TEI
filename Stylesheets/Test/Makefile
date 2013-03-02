@@ -222,6 +222,12 @@ pureant:
 	-DoutputFile=`pwd`/test7.docx \
 	-DinputFile=`pwd`/test7.xml -Dprofile=default 
 
+profile:
+	saxon -o:/dev/null	-TP test.xml ../xhtml2/tei.xsl >& profile1.html
+	saxon -o:/dev/null	-TP test.xml ../latex2/tei.xsl >& profile2.html
+	saxon test.odd ../odds2/odd2odd.xsl > test.odd2odd
+	saxon -o:/dev/null -TP test.odd2odd ../odds2/odd2relax.xsl >& profile3.html
+
 clean:
 	rm -f  test*.odd.rnc test*epub test*pdf test*rdf test*text test*.xml.docx test*.xml.odt test*.tex test*.fo *.html *.xhtml *~ dummy* test.html test3.html test4.html *aux *out *log *nav *ent *snm *toc
 	rm -f  oddbyexample.* index*div*html

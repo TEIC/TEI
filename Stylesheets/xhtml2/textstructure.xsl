@@ -913,7 +913,8 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:call-template>
 	</xsl:when>
 	<xsl:otherwise>
-	  <xsl:element name="{if ($outputTarget='html5') then 'section' else 'div'}">
+	  <xsl:element name="{if ($outputTarget='html5' and $Depth
+			     &lt; 1) then 'section' else 'div'}">
 	    <xsl:call-template name="microdata"/>
 	    <xsl:call-template name="divClassAttribute">
 	      <xsl:with-param name="depth" select="$Depth"/>
@@ -1012,7 +1013,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:element>     
 	    </xsl:variable>
 	    <xsl:choose>
-	      <xsl:when test="$outputTarget='html5'">
+	      <xsl:when test="$outputTarget='html5' and $Depth  &lt; 1">
 		<header>
 		  <xsl:copy-of select="$Heading"/>
 		</header>
