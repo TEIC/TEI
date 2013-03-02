@@ -2161,20 +2161,32 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
   <xsl:template match="tei:ref[@target]">
+    <xsl:variable name="rContent">
+      <xsl:choose>
+	<xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
+	  <xsl:call-template name="linkMe">
+	    <xsl:with-param name="anchor">
+	      <xsl:apply-templates/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:call-template name="linkMeUsingHyperlink">
+	    <xsl:with-param name="anchor">
+	      <xsl:apply-templates/>
+	    </xsl:with-param>
+	  </xsl:call-template>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:choose>
-      <xsl:when test="starts-with(@target,'#') and id(substring(@target,2))">
-        <xsl:call-template name="linkMe">
-          <xsl:with-param name="anchor">
-            <xsl:apply-templates/>
-          </xsl:with-param>
-        </xsl:call-template>
+      <xsl:when test="tei:is-inline(.)">
+	  <xsl:copy-of select="$rContent"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:call-template name="linkMeUsingHyperlink">
-          <xsl:with-param name="anchor">
-            <xsl:apply-templates/>
-          </xsl:with-param>
-        </xsl:call-template>
+	<w:p>
+	  <xsl:copy-of select="$rContent"/>
+	</w:p>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -2754,11 +2766,11 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-    <desc>a run as a direct child of body is not allowed, how did it
+    <desc>a run as a direct child of body or table cell is not allowed, how did it
     creep through? Wrap up in a p.</desc>
   </doc>
 
-    <xsl:template match="w:body/w:r" mode="pass2">
+    <xsl:template match="w:body/w:r|w:tc/w:r" mode="pass2">
       <w:p>
 	<xsl:copy>
 	<xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass2"/>
