@@ -75,12 +75,9 @@ of this software, even if advised of the possibility of such damage.
 \usepackage{fontspec}
 \usepackage{colortbl}
 \usepackage{xunicode}
-%\setmonofont{Junicode}
-%\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
-%\setmonofont[Scale=0.86]{Andale Mono}
-%\setmonofont[Scale=0.8]{DejaVu Sans Mono}
-%\setromanfont{Minion Pro}
-%\setsansfont{Myriad Pro}
+\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
+\setromanfont{Minion Pro}
+\setsansfont{Myriad Pro}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \useinnertheme[shadow=true]{rounded}
 \usecolortheme{whale}
@@ -98,8 +95,7 @@ of this software, even if advised of the possibility of such damage.
 \let\endlastfoot\relax
 \parskip3pt
 \setbeamertemplate{footline}
-{\hspace{1em}\includegraphics[height=10ex]{<xsl:value-of select="$logoFile"/>} \hspace{2em}
-\textcolor{blue1}{} \hfill \textcolor{gray}{\insertframenumber/\inserttotalframenumber}}
+{\hspace{1em}\textcolor{gray}{\insertframenumber/\inserttotalframenumber}\hfill\includegraphics[height=10ex]{<xsl:value-of select="$logoFile"/>}\hspace{1em}}
 </xsl:template>
 
 <xsl:template match="tei:gi">

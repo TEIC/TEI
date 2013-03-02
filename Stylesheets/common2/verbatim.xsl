@@ -592,7 +592,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="."/>
       </xsl:for-each>
     </xsl:variable>
-    <xsl:if test="count(../@*)&gt;$attsOnSameLine or      string-length($L)&gt;$attLength or     ancestor::tei:cell[not(@rend='wovenodd-col2')] or     namespace-uri()='http://www.w3.org/2005/11/its' or     string-length(.)+string-length(name(.)) &gt;     $attLength">
+    <xsl:if test="count(../@*)&gt;number($attsOnSameLine) or      string-length($L)&gt;$attLength or     ancestor::tei:cell[not(@rend='wovenodd-col2')] or     namespace-uri()='http://www.w3.org/2005/11/its' or     string-length(.)+string-length(name(.)) &gt;     $attLength">
       <xsl:call-template name="verbatim-lineBreak">
         <xsl:with-param name="id">5</xsl:with-param>
       </xsl:call-template>

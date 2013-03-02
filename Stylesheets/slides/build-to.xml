@@ -31,8 +31,7 @@
   <property name="oxygenlib" value=""/>
   <property name="profiledir" value="../profiles"/>
   <!-- Stylesheet for transformation -->
-  <property name="odd2slides"
-	    value="${profiledir}/${profile}/slides/to.xsl"/>
+  <property name="odd2slides" value="${profiledir}/${profile}/slides/to.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
   <basename property="basefile" file="${outputFile}" suffix=".slides"/>
@@ -44,7 +43,7 @@
     <delete dir="${outputTempDir}"/>
     <mkdir dir="${outputTempDir}"/>
   </target>
-  <target name="dist" depends="setup,convert,cleanup"/>
+  <target name="dist" depends="setup,convert,handout,cleanup"/>
 
   <target name="convert">
     <!-- Recreate temporary output directory -->
@@ -64,13 +63,52 @@
     </xslt>
     <copy file="${profiledir}/${profile}/slides/logo.png" tofile="${outputDir}/_slidelogo.png"/>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
-      <arg value="-interaction=batchmode"/>
+      <arg value="-interaction=nonstopmode"/>
       <arg value="${outputFile}" />
     </exec>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=batchmode"/>
       <arg value="${outputFile}" />
     </exec>
+    <echo>wrote ${outputFile}.pdf</echo>
+  </target>
+
+  <target name="handout">
+    <!-- The transformation for SLIDES handout output. -->
+    <echo level="info">XSLT generate slides handout file</echo>
+    <xslt force="yes" style="${odd2slides}" in="${inputFile}" out="${outputDir}/${basefile}-handout.tex">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="directory" expression="file:///${outputTempDir}"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+    <param name="latexLogo" expression=""/>
+    <param name="startAttribute" expression="{"/>
+    <param name="startAttributeValue" expression="{"/>
+    <param name="startElement" expression="{"/>
+    <param name="startElementName" expression="{"/>
+    <param name="attsOnSameLine" expression="6"/>
+    <param name="beamerClass" expression="boxes" />
+    <param name="reencode" expression="false"/>
+    <param name="pause" expression="false"/>
+      <param name="logoFile" expression=""/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
+      <arg value="-interaction=nonstopmode"/>
+      <arg value="${outputDir}/${basefile}-handout.tex" />
+    </exec>
+    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
+      <arg value="-interaction=batchmode"/>
+      <arg value="${outputDir}/${basefile}-handout.tex" />
+    </exec>
+    <echo>wrote ${outputDir}/${basefile}-handout.tex</echo>
+  </target>
+
+  <target name="cleanup" unless="debug">  
     <delete file="${outputDir}/${basefile}.nav"/>
     <delete file="${outputDir}/${basefile}.out"/>
     <delete file="${outputDir}/${basefile}.log"/>
@@ -79,10 +117,6 @@
     <delete file="${outputDir}/${basefile}.snm"/>
     <delete file="${outputDir}/_slidelogo.png"/>
     <delete file="${outputDir}/${outputFile}"/>
-    <echo>wrote ${outputFile}.pdf</echo>
-  </target>
-
-  <target name="cleanup" unless="debug">  
     <delete dir="${outputTempDir}"/>
   </target>
 

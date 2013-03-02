@@ -10,6 +10,7 @@
 <xsl:param name="reencode">false</xsl:param>
 <xsl:param name="attsOnSameLine">6</xsl:param>
 <xsl:param name="latexLogo"></xsl:param>
+<xsl:param name="logoFile"></xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
 <xsl:param name="beamerClass">Singapore</xsl:param>
 <xsl:param name="startAttribute">{\color{blue2}</xsl:param>
@@ -55,7 +56,7 @@
 \let\endlastfoot\relax
 \parskip3pt
 \setbeamertemplate{footline}
-{\hspace{1em}\includegraphics[height=10ex]{logo.png} \hspace{2em}
+{\hspace{1em}\includegraphics[height=10ex]{<xsl:value-of select="$logoFile"/>} \hspace{2em}
 \textcolor{blue1}{@dhoxss \#dhoxss} \hfill \textcolor{gray}{\insertframenumber/\inserttotalframenumber}}
 </xsl:template>
 
