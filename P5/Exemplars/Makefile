@@ -95,5 +95,6 @@ clean:
 	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html 
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
-	rm -f names.xml
+	rm -f names.xml *properties
+	rm -f [A-Z]*xml
 
