@@ -617,7 +617,11 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text> </xsl:text>
           </xsl:with-param>
           <xsl:with-param name="text">
-            <xsl:value-of select="normalize-space(.)"/>
+	    <xsl:call-template name="verbatim-Text">
+	      <xsl:with-param name="words">
+		<xsl:value-of select="."/>
+	      </xsl:with-param>
+	    </xsl:call-template>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
