@@ -567,7 +567,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="rng:choice">
       <xsl:call-template name="checkStart"/>
       <xsl:choose>
-         <xsl:when test="rng:value and ancestor::tei:elementSpec">
+         <xsl:when test="rng:value and (ancestor::tei:elementSpec or ancestor::tei:macroSpec)">
             <xsl:text>(#PCDATA)</xsl:text>
          </xsl:when>
          <xsl:when test="rng:value">
@@ -823,12 +823,14 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:choice">
       <xsl:choose>
+         <xsl:when test="rng:value and rng:data">
+            <xsl:text> CDATA</xsl:text>
+	 </xsl:when>
          <xsl:when test="rng:value">
             <xsl:text>(</xsl:text>
             <xsl:for-each select="rng:value">
                <xsl:value-of select="."/>
-               <xsl:if test="following-sibling::rng:value">|
-</xsl:if>
+               <xsl:if test="following-sibling::rng:value">|&#10;</xsl:if>
             </xsl:for-each>
             <xsl:if test="rng:data/@type='boolean'">
                <xsl:text> | true | false</xsl:text>
