@@ -34,7 +34,8 @@
   <property name="odd2tex" value="${profiledir}/${profile}/latex/to.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
-  <basename property="basefile" file="${inputFile}" suffix=".xml"/>
+  <basename property="basefile" file="${outputFile}" suffix=".pdf"/>
+  <property name="texfile" value="${outputDir}/${basefile}"/>
   <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
@@ -48,8 +49,8 @@
   <target name="convert">
     <!-- Recreate temporary output directory -->
     <!-- The transformation for TEX output. -->
-    <echo level="info">XSLT generate TEX file</echo>
-    <xslt force="yes" style="${odd2tex}" in="${inputFile}" out="${basefile}.tex">
+    <echo>XSLT generate ${outputFile} from ${inputFile}  via TeX ${texfile}</echo>
+    <xslt force="yes" style="${odd2tex}" in="${inputFile}" out="${texfile}.tex">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="directory" expression="file:///${outputTempDir}"/>
@@ -62,24 +63,24 @@
     </xslt>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=nonstopmode"/>
-      <arg value="${basefile}.tex" />
+      <arg value="${texfile}.tex" />
     </exec>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=batchmode"/>
-      <arg value="${basefile}.tex" />
+      <arg value="${texfile}.tex" />
     </exec>
     <echo>wrote ${outputFile}</echo>
   </target>
 
   <target name="cleanup" unless="debug">  
-    <delete file="${outputDir}/${basefile}.nav"/>
-    <delete file="${outputDir}/${basefile}.out"/>
-    <delete file="${outputDir}/${basefile}.log"/>
-    <delete file="${outputDir}/${basefile}.aux"/>
-    <delete file="${outputDir}/${basefile}.toc"/>
-    <delete file="${outputDir}/${basefile}.snm"/>
-    <delete file="${outputDir}/${basefile}.vrb"/>
-    <delete file="${outputDir}/${basefile}.tex"/>
+    <delete file="${texfile}.nav"/>
+    <delete file="${texfile}.out"/>
+    <delete file="${texfile}.log"/>
+    <delete file="${texfile}.aux"/>
+    <delete file="${texfile}.toc"/>
+    <delete file="${texfile}.snm"/>
+    <delete file="${texfile}.vrb"/>
+    <delete file="${texfile}.tex"/>
     <delete dir="${outputTempDir}"/>
   </target>
 
