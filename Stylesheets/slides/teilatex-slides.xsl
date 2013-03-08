@@ -205,11 +205,35 @@ XSL LaTeX stylesheet to make slides
          <xsl:apply-templates/>
       </xsl:for-each>
       <xsl:text>}</xsl:text>
-      <xsl:apply-templates/>
+      <xsl:choose>
+	<xsl:when test="tei:cb">
+	  <xsl:variable name="prop" select="1 div number(count(tei:cb) + 1)"/>
+	  <xsl:text>\begin{columns}[t]
+	  \begin{column}[T]{</xsl:text>
+	  <xsl:value-of select="$prop"/>
+	  <xsl:text>\textwidth}
+	  </xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>\end{column}
+	  \end{columns}</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:apply-templates/>
+	</xsl:otherwise>
+      </xsl:choose>
       <xsl:text>&#10;\end{frame}&#10;</xsl:text>
    </xsl:template>
+ 
+   <xsl:template match="tei:cb">
+     <xsl:variable name="prop" select="1 div number(count(../tei:cb) + 1)"/>
+     <xsl:text>\end{column}
+     \begin{column}[T]{</xsl:text>
+	  <xsl:value-of select="$prop"/>
+	  <xsl:text>\textwidth}
+     </xsl:text>
+   </xsl:template>
 
-   <xsl:template name="makePic">
+  <xsl:template name="makePic">
       <xsl:if test="@xml:id">
          <xsl:text>\hypertarget{</xsl:text>
          <xsl:value-of select="@xml:id"/>
