@@ -207,7 +207,7 @@ XSL LaTeX stylesheet to make slides
       <xsl:text>}</xsl:text>
       <xsl:choose>
 	<xsl:when test="tei:cb">
-	  <xsl:variable name="prop" select="1 div number(count(tei:cb) + 1)"/>
+	  <xsl:variable name="prop" select="1 div number(count(tei:cb[preceding-sibling::*[not(self::tei:head)]]) + 1)"/>
 	  <xsl:text>\begin{columns}[t]
 	  \begin{column}[T]{</xsl:text>
 	  <xsl:value-of select="$prop"/>
@@ -225,12 +225,14 @@ XSL LaTeX stylesheet to make slides
    </xsl:template>
  
    <xsl:template match="tei:cb">
-     <xsl:variable name="prop" select="1 div number(count(../tei:cb) + 1)"/>
+     <xsl:if test="preceding-sibling::*[not(self::tei:head)]">
+       <xsl:variable name="prop" select="1 div number(count(../tei:cb[preceding-sibling::*[not(self::tei:head)]]) + 1)"/>
      <xsl:text>\end{column}
      \begin{column}[T]{</xsl:text>
-	  <xsl:value-of select="$prop"/>
+     <xsl:value-of select="$prop"/>
 	  <xsl:text>\textwidth}
      </xsl:text>
+     </xsl:if>
    </xsl:template>
 
   <xsl:template name="makePic">
