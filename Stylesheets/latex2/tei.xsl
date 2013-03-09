@@ -202,15 +202,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="applyRendition"/>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>Process attributes in text mode, escaping the LaTeX command characters.</p>
-         <p>as with text()</p>
-      </desc>
-   </doc>
-  <xsl:template match="@*" mode="attributetext">
-      <xsl:value-of select="tei:escapeChars(.,parent::*)"/>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process text (in example mode)</desc>

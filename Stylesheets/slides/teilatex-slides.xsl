@@ -396,23 +396,4 @@ XSL LaTeX stylesheet to make slides
   </xsl:template>
 
 
-   <xsl:template match="@*" mode="attributetext">
-      <xsl:choose>
-         <xsl:when test="string-length(.)&gt;$attLength and contains(.,' ')">
-	   <xsl:call-template name="verbatim-reformatText">
-	     <xsl:with-param name="sofar">0</xsl:with-param>
-	     <xsl:with-param name="indent">
-	       <xsl:text> </xsl:text>
-	     </xsl:with-param>
-	     <xsl:with-param name="text">
-	       <xsl:value-of select="normalize-space(tei:escapeChars(.,parent::*))"/>
-	     </xsl:with-param>
-	   </xsl:call-template>
-         </xsl:when>
-         <xsl:otherwise>
-	   <xsl:value-of select="tei:escapeChars(.,parent::*)"/>
-         </xsl:otherwise>
-      </xsl:choose>
-   </xsl:template>
-   
 </xsl:stylesheet>
