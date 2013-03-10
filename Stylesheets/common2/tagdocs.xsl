@@ -1992,7 +1992,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:variable name="list">
           <ClassList>
             <xsl:for-each select="key('CLASSMEMBERS',$this)">
-              <Item type="local-name()" ident="@ident">
+              <Item type="{local-name()}" ident="{@ident}">
                 <xsl:call-template name="linkTogether">
                   <xsl:with-param name="name" select="@ident"/>
                   <xsl:with-param name="reftext">
