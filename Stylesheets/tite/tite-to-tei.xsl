@@ -27,7 +27,7 @@
     </teiHeader>
     <text>
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
     </text>
   </TEI>
 </xsl:template>
@@ -36,49 +36,49 @@
     match="tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6|tei:div7">
   <div>
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
   </div>
 </xsl:template>
 
 <xsl:template name="b">
   <hi rend="bold">
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
   </hi>
 </xsl:template>
 
 <xsl:template name="i">
   <hi rend="italic">
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
   </hi>
 </xsl:template>
 
 <xsl:template name="ul">
   <hi rend="underline">
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
   </hi>
 </xsl:template>
 
 <xsl:template name="sup">
   <hi rend="sup">
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
   </hi>
 </xsl:template>
 
 <xsl:template name="sub">
   <hi rend="sub">
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
   </hi>
 </xsl:template>
 
 <xsl:template name="smcap">
   <hi rend="smcap">
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
   </hi>
 </xsl:template>
 
@@ -89,17 +89,17 @@
     <xsl:choose>
       <xsl:when test="*">
 	<xsl:apply-templates 
-	    select="*|comment()|processing-instruction"/>  
+	    select="*|comment()|processing-instruction()"/>  
       </xsl:when>
       <xsl:when test="string-length(.)&gt;0">
 	<p>
 	<xsl:apply-templates 
-	    select="text()|comment()|processing-instruction"/>  
+	    select="text()|comment()|processing-instruction()"/>  
 	</p>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:apply-templates 
-	    select="comment()|processing-instruction"/>  
+	    select="comment()|processing-instruction()"/>  
       </xsl:otherwise>
     </xsl:choose>
   </figure>
@@ -108,7 +108,7 @@
 <xsl:template name="cols">
   <milestone unit="cols">
     <xsl:apply-templates 
-	select="@*|*|text()|comment()|processing-instruction"/>  
+	select="@*|*|text()|comment()|processing-instruction()"/>  
   </milestone>
 </xsl:template>
 
