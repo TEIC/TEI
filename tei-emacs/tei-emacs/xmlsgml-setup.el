@@ -2,6 +2,7 @@
 ;; C Wittern/S Rahtz April/May/June 2001
 ;; Revised September-November 2003 for nxml-mode
 ;; Revised September 2007 for emacs22
+;; drop P4, March 2013
 
 ;; set this to some value if you want XML files to
 ;; start off in anything other than utf-8
@@ -211,17 +212,6 @@ encoding attribute
 (setenv "SP_CHARSET_FIXED" "YES")
 (setenv "SP_ENCODING" "XML")
 
-(if (eq system-type 'windows-nt)
- (progn
-   (setenv "PATH" (concat teiemacsdir "\\bin;" (getenv "PATH")))
-   (setenv "SGML_CATALOG_FILES" 
-   (concat teixmldir "p4\\schema\\dtd\catalog;" teiemacsdir "xml\\catalog;"))
-  )
- (setenv "SGML_CATALOG_FILES" 
-   (concat teixmldir "p4/schema/dtd/catalog;" teiemacsdir "xml/catalog;"))
-)
-
-
 ;; XSL mode
 (autoload 'xsl-mode "xslide" "Major mode for XSL stylesheets." t)
 
@@ -398,19 +388,11 @@ encoding attribute
 (defvar tei-menu-definition
   (list "TEI"
 	(list "Insert skeleton TEI files"
-["TEI all modules" (tei-file-skeleton "/custom/templates/tei_all.xml" "/custom/schema/relaxng/tei_all.rnc") t ]
-["TEI Lite" (tei-file-skeleton "/custom/templates/teilite.xml" "/custom/schema/relaxng/teilite.rnc") t ]
-["TEI corpus" (tei-file-skeleton "/custom/templates/tei_corpus.xml" "/custom/schema/relaxng/tei_corpus.rnc") t ]
-["TEI dictionary" (tei-file-skeleton "/custom/templates/tei_dictionaries.xml" "/custom/schema/relaxng/tei_dictionaries.rnc") t ]
-["TEI drama" (tei-file-skeleton "/custom/templates/tei_drama.xml" "/custom/schema/relaxng/tei_drama.rnc") t ]
-;;["TEI + MathML" (tei-file-skeleton "/custom/templates/tei_mathml.xml" "/custom/schema/relaxng/tei_mathml.rnc") t ]
-["TEI minimal" (tei-file-skeleton "/custom/templates/tei_minimal.xml" "/custom/schema/relaxng/tei_minimal.rnc") t ]
-["TEI manuscript description" (tei-file-skeleton "/custom/templates/tei_ms.xml" "/custom/schema/relaxng/tei_ms.rnc") t ]
-["TEI ODD" (tei-file-skeleton "/custom/templates/tei_odds.xml" "/custom/schema/relaxng/p5odds.rnc") t ]
-;;["TEI + SVG" (tei-file-skeleton "/custom/templates/tei_svg.xml" "/custom/schema/relaxng/tei_svg.rnc") t ]
-
-["TEI Lite (P4)"  (tei-file-skeleton "p4/custom/templates/teixlite.xml" "p4/custom/schema/relaxng/teixlite.rnc" ) t]
-["TEI for OUCS" (tei-file-skeleton "/custom/templates/tei_oucs.xml" "/custom/schema/relaxng/tei_oucs.rnc") t ]	      
+["TEI all modules" (tei-file-skeleton "/custom/templates/All.xml" "/custom/schema/relaxng/tei_all.rnc") t ]
+["TEI Lite" (tei-file-skeleton "/custom/templates/Lite.xml" "/custom/schema/relaxng/teilite.rnc") t ]
+["TEI minimal" (tei-file-skeleton "/custom/templates/Simple.xml" "/custom/schema/relaxng/tei_minimal.rnc") t ]
+["TEI manuscript description" (tei-file-skeleton "/custom/templates/Manuscript description.xml" "/custom/schema/relaxng/tei_ms.rnc") t ]
+["TEI ODD" (tei-file-skeleton "/custom/templates/ODD customization.xml" "/custom/schema/relaxng/p5odds.rnc") t ]
 )
    ["Run XSLT or XML validator on file"	xmlrun t]
    ["Open this XML file in web browser"	(browse-url (concat "file:///" (buffer-file-name))) t]
@@ -487,43 +469,7 @@ sgml-shorttag                  nil
 (setq sgml-custom-dtd
 '(
 
-( "(XML) TEI P4 (suggestion)" 
- (concat 
-"<?xml version=\"1.0\"?>
-<!DOCTYPE TEI.2 PUBLIC \"-//TEI Consortium//DTD TEI P4//EN\"
-\"" teixmldir  "p4/schema/dtd/tei2.dtd\" [ 
-<!ENTITY % TEI.prose 'INCLUDE'>
-<!ENTITY % TEI.linking 'INCLUDE'>
-<!ENTITY % TEI.figures 'INCLUDE'>
-<!ENTITY % TEI.analysis 'INCLUDE'>
-<!ENTITY % TEI.XML 'INCLUDE'>
-<!ENTITY % ISOlat1 SYSTEM \"" teixmldir "p4/schema/dtd/iso-lat1.ent\"> 
-%ISOlat1; 
-<!ENTITY % ISOlat2 SYSTEM \"" teixmldir "p4/schema/dtd/iso-lat2.ent\"> 
-%ISOlat2; 
-<!ENTITY % ISOnum  SYSTEM \"" teixmldir "p4/schema/dtd/iso-num.ent\"> 
-%ISOnum;
-<!ENTITY % ISOpub  SYSTEM \"" teixmldir "p4/schema/dtd/iso-pub.ent\"> 
-%ISOpub; 
-]>"))
 
-( "(SGML) TEI P4 (suggestion)" 
- (concat 
-"<!DOCTYPE TEI.2 PUBLIC \"-//TEI Consortium//DTD TEI P4//EN\" [ 
-<!ENTITY % TEI.prose 'INCLUDE'>
-<!ENTITY % TEI.linking 'INCLUDE'>
-<!ENTITY % TEI.analysis 'INCLUDE'>
-<!ENTITY % TEI.figures 'INCLUDE'>
-<!ENTITY % ISOlat1 PUBLIC \"ISO 8879:1986//ENTITIES Added Latin 1//EN\">
-%ISOlat1; 
-<!ENTITY % ISOlat2 PUBLIC \"ISO 8879:1986//ENTITIES Added Latin 2//EN\">
-%ISOlat2; 
-<!ENTITY % ISOnum  
-  PUBLIC   \"ISO 8879:1986//ENTITIES Numeric and Special Graphic//EN\">
-%ISOnum;
-<!ENTITY % ISOpub  PUBLIC \"ISO 8879:1986//ENTITIES Publishing//EN\">
-%ISOpub; 
-]>"))
 
 ( "(XML) TEI Lite" 
  (concat 
@@ -532,33 +478,8 @@ sgml-shorttag                  nil
 <!DOCTYPE TEI.2 PUBLIC \"-//TEI//DTD TEI Lite XML ver. 1//EN\"
 \"" teixmldir "p4/schema/dtd/teixlite.dtd\" []>"))
 
-( "(SGML) TEI Lite"
-"<!DOCTYPE TEI.2 PUBLIC \"-//TEI//DTD TEI Lite 1.6//EN\">")
-
 ))
 
-
-;(setq sgml-catalog-files (list 
-;   (concat teisgmldir  "p4/catalog")
-;   (concat teixmldir  "p4/catalog")
-;))
-
-(setq sgml-xml-declaration (concat teixmldir "p4/schema/dtd/xml.dcl"))
-
-(setq sgml-tei-declaration (concat teixmldir "p4/schema/dtd/teisgml.dec"))
-
-(setq sgml-validate-command   
- (list
- (concat "nsgmls -s -c "  teixmldir "p4/schema/dtd/catalog " sgml-tei-declaration " %b")
- (concat "nsgmls -s -c "  teixmldir "p4/schema/dtd/catalog \"%s\" %b")
-)
-)
-
-(setq sgml-xml-validate-command  
-(list
- "xmllint --noout --valid %b"
- (concat "nsgmls -s -wxml -c " teixmldir "p4/schema/dtd/catalog %b")
- "rxp -V  -s  %b"))
 
 ;; XSLT process package
 
