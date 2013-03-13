@@ -354,7 +354,10 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="att">
-  <xsl:apply-templates/>
+  <varname>
+    <xsl:text>@</xsl:text>
+    <xsl:apply-templates/>
+  </varname>
 </xsl:template>
 
 <xsl:template match="body">
@@ -376,7 +379,9 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="ident">
-  <xsl:apply-templates/>
+  <varname>
+    <xsl:apply-templates/>
+  </varname>
 </xsl:template>
 
 <xsl:template match="publicationStmt"/>
@@ -404,9 +409,11 @@ of this software, even if advised of the possibility of such damage.
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
+
 <xsl:template match="titleStmt">
   <xsl:apply-templates/>
 </xsl:template>
+
  <xsl:template name="pornot">
    <xsl:choose>
      <xsl:when test="p">
