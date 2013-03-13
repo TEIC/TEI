@@ -307,12 +307,6 @@ svn export --force svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenk
 chown -R jenkins jobs
 echo ""
 
-#TODO: ADD GIT PLUGINS:
-# GitHub API Plugin	
-# Git Client Plugin	
-# Git Plugin	
-# GitHub Plugin
-
 echo "Installing Jenkins plugins."
 cd plugins
 wget --no-check-certificate http://updates.jenkins-ci.org/latest/copyartifact.hpi
@@ -333,6 +327,16 @@ wget --no-check-certificate http://updates.jenkins-ci.org/latest/WebSVN2.hpi
 chown jenkins WebSVN2.hpi
 wget --no-check-certificate http://updates.jenkins-ci.org/latest/PrioritySorter.hpi
 chown jenkins PrioritySorter.hpi
+
+#New Git-related plugins added March 2013 for OxGarage move to GitHub.
+wget --no-check-certificate http://updates.jenkins-ci.org/latest/git.hpi
+chown jenkins git.hpi
+wget --no-check-certificate http://updates.jenkins-ci.org/latest/git-client.hpi
+chown jenkins git-client.hpi
+wget --no-check-certificate http://updates.jenkins-ci.org/latest/github.hpi
+chown jenkins github.hpi
+wget --no-check-certificate http://updates.jenkins-ci.org/latest/github-api.hpi
+chown jenkins github-api.hpi
 echo ""
 
 #Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
