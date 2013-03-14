@@ -100,7 +100,6 @@
 \def\unusedattribute#1{\sout{\textcolor{label}{#1}}}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
-\def\Div[#1]#2{\section*{#2}}
 \begingroup
 \catcode`\_=\active
 \gdef_#1{\ensuremath{\sb{\mathrm{#1}}}}
@@ -266,36 +265,11 @@
   \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
   }{}
-      
-\@ifundefined{chapter}{%
-    \def\DivI{\section}
-    \def\DivII{\subsection}
-    \def\DivIII{\subsubsection}
-    \def\DivIV{\paragraph}
-    \def\DivV{\subparagraph}
-    \def\DivIStar[#1]#2{\section*{#2}}
-    \def\DivIIStar[#1]#2{\subsection*{#2}}
-    \def\DivIIIStar[#1]#2{\subsubsection*{#2}}
-    \def\DivIVStar[#1]#2{\paragraph*{#2}}
-    \def\DivVStar[#1]#2{\subparagraph*{#2}}
-}{%
-    \def\DivI{\chapter}
-    \def\DivII{\section}
-    \def\DivIII{\subsection}
-    \def\DivIV{\subsubsection}
-    \def\DivV{\paragraph}
-    \def\DivIStar[#1]#2{\chapter*{#2}}
-    \def\DivIIStar[#1]#2{\section*{#2}}
-    \def\DivIIIStar[#1]#2{\subsection*{#2}}
-    \def\DivIVStar[#1]#2{\subsubsection*{#2}}
-    \def\DivVStar[#1]#2{\paragraph*{#2}}
-}
-\def\TheFullDate{1970-01-01}
+      \def\TheFullDate{1970-01-01}
 \def\TheID{\makeatother }
 \def\TheDate{1970-01-01}
 \title{Test5}
-\author{Sebastian Rahtz}\let\tabcellsep&
-      \catcode`\&=12\relax \makeatletter 
+\author{Sebastian Rahtz}\makeatletter 
 \makeatletter
 \thispagestyle{empty}
 \markright{\@title}\markboth{\@title}{\@author}
@@ -323,7 +297,8 @@
 \hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
 \fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}\makeatother 
 \begin{document}
-
+\let\tabcellsep&
+      \catcode`\&=12\relax 
 \catcode`\$=12\relax
 \catcode`\^=12\relax
 \catcode`\#=12\relax
@@ -334,11 +309,11 @@
   \end{titlepage}
   \cleardoublepage
 
-\DivIStar[The front part]{The front part}\label{part0}\par
+\section*{The front part}\label{part0}\par
 Lorem ipsum dolor sit amet\par
 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\par
 Suscipit lobortis nisl ut \mainmatter 
-\DivI[cit and quote]{cit and quote}\par
+\section[cit and quote]{cit and quote}\par
 Quote 1, with \texttt{<p>}: \begin{quote}\par
 Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres, et ce n’est que dans les limites de ces relations et de ces rapports sociaux que s’établit leur action sur la nature, la production.\end{quote}\par
 Quote 2, with @rend=display \begin{quote}Ils ne produisent qu’en collaborant d’une manière déterminée et en échangeant entre eux leurs activités. Pour produire, ils entrent en relations et en rapports déterminés les uns avec les autres, et ce n’est que dans les limites de ces relations et de ces rapports sociaux que s’établit leur action sur la nature, la production. \end{quote}\par
@@ -351,10 +326,10 @@ Ils ne produisent qu’en collaborant d’une manière déterminée et en échan
 \citbibl{Karl Marx, \titlem{Travail salarié et capital, suivi de Salaire, prix et profit}, p. 31, Éditions sociales, Paris, 1952.}
 \end{quote}
 
-\DivI[Welcome: 1st section]{Welcome: 1st section}\label{part1}\par
+\section[Welcome: 1st section]{Welcome: 1st section}\label{part1}\par
 Lorem ipsum dolor sit amet\par
 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-\DivII[Welcome 1st subsection]{Welcome 1st subsection}\par
+\subsection[Welcome 1st subsection]{Welcome 1st subsection}\par
 Lorem ipsum dolor sit amet\par
 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\par
 Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. \par
@@ -362,22 +337,22 @@ Duis autem vel eum \par
 Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. \par
 Ut wisi enim ad minim veniam\par
 Quis nostrud exerci tation ullamcorper 
-\DivII[Welcome 2nd subsection]{Welcome 2nd subsection}\par
+\subsection[Welcome 2nd subsection]{Welcome 2nd subsection}\par
 Suscipit lobortis nisl ut \par
 Lorem ipsum dolor sit amet\par
 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\par
 Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
-\DivIII[Going into 3rd level]{Going into 3rd level}\par
+\subsubsection[Going into 3rd level]{Going into 3rd level}\par
 Duis autem vel eum \par
 Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. \par
 Ut wisi enim ad minim veniam\par
 Quis nostrud exerci tation ullamcorper \par
 Suscipit lobortis nisl ut \par
 Lorem ipsum dolor sit amet
-\DivIII[Going into 3rd level (bis)]{Going into 3rd level (bis)}\par
+\subsubsection[Going into 3rd level (bis)]{Going into 3rd level (bis)}\par
 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\par
 Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. 
-\DivI[Section level 2 again]{Section level 2 again}\par
+\section[Section level 2 again]{Section level 2 again}\par
 Duis autem vel eum \par
 Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. \par
 Ut wisi enim ad minim veniam\par
@@ -453,7 +428,7 @@ Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum 
 Ut wisi enim ad minim veniam\par
 Quis nostrud exerci tation ullamcorper \par
 Suscipit lobortis nisl ut 
-\DivI[Goodbye: 2nd section]{Goodbye: 2nd section}\label{part2}\par
+\section[Goodbye: 2nd section]{Goodbye: 2nd section}\label{part2}\par
 Lorem ipsum dolor sit amet\par
 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\par
 Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. \par
@@ -462,7 +437,7 @@ Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum 
 Ut wisi enim ad minim veniam\par
 Quis nostrud exerci tation ullamcorper \par
 Suscipit lobortis nisl ut 
-\DivII[The insider story]{The insider story}\label{part2.1}\par
+\subsection[The insider story]{The insider story}\label{part2.1}\par
 Lorem ipsum dolor sit amet\par
 Lorem ipsum dolor sit amet\par
 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\par
@@ -663,7 +638,7 @@ Iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum 
 Ut wisi enim ad minim veniam\par
 Quis nostrud exerci tation ullamcorper \par
 Suscipit lobortis nisl ut 
-\DivI[Farewell: 3rd section]{Farewell: 3rd section}\label{part3}\par
+\section[Farewell: 3rd section]{Farewell: 3rd section}\label{part3}\par
 Lorem ipsum dolor sit amet\par
 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\par
 Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. \par

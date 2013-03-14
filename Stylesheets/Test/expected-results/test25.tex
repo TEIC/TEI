@@ -100,7 +100,6 @@
 \def\unusedattribute#1{\sout{\textcolor{label}{#1}}}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
-\def\Div[#1]#2{\section*{#2}}
 \begingroup
 \catcode`\_=\active
 \gdef_#1{\ensuremath{\sb{\mathrm{#1}}}}
@@ -266,36 +265,11 @@
   \pdfbookmark[2]{#2}{#1}%
   \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
   }{}
-      
-\@ifundefined{chapter}{%
-    \def\DivI{\section}
-    \def\DivII{\subsection}
-    \def\DivIII{\subsubsection}
-    \def\DivIV{\paragraph}
-    \def\DivV{\subparagraph}
-    \def\DivIStar[#1]#2{\section*{#2}}
-    \def\DivIIStar[#1]#2{\subsection*{#2}}
-    \def\DivIIIStar[#1]#2{\subsubsection*{#2}}
-    \def\DivIVStar[#1]#2{\paragraph*{#2}}
-    \def\DivVStar[#1]#2{\subparagraph*{#2}}
-}{%
-    \def\DivI{\chapter}
-    \def\DivII{\section}
-    \def\DivIII{\subsection}
-    \def\DivIV{\subsubsection}
-    \def\DivV{\paragraph}
-    \def\DivIStar[#1]#2{\chapter*{#2}}
-    \def\DivIIStar[#1]#2{\section*{#2}}
-    \def\DivIIIStar[#1]#2{\subsection*{#2}}
-    \def\DivIVStar[#1]#2{\subsubsection*{#2}}
-    \def\DivVStar[#1]#2{\paragraph*{#2}}
-}
-\def\TheFullDate{1970-01-01}
+      \def\TheFullDate{1970-01-01}
 \def\TheID{\makeatother }
 \def\TheDate{1970-01-01}
 \title{Title}
-\author{}\let\tabcellsep&
-      \catcode`\&=12\relax \makeatletter 
+\author{}\makeatletter 
 \makeatletter
 \thispagestyle{empty}
 \markright{\@title}\markboth{\@title}{\@author}
@@ -330,12 +304,13 @@
 \par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
 \vspace{18pt}
 \makeatother
-
+\let\tabcellsep&
+      \catcode`\&=12\relax 
 \catcode`\$=12\relax
 \catcode`\^=12\relax
 \catcode`\#=12\relax
 \catcode`\%=12\relax
  
-\DivI[Math]{Math}\par
+\section[Math]{Math}\par
 An example formula: x=−b±b2−4⁢a⁢c2⁢a
 \end{document}

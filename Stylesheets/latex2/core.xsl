@@ -223,7 +223,7 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:when test="$depth=4">subsunsection</xsl:when>
 		  <xsl:when test="$depth=4">paragraph</xsl:when>
 		  <xsl:when test="$depth=5">subparagraph</xsl:when>
-		  <xsl:otherwise>I</xsl:otherwise>
+		  <xsl:otherwise>section</xsl:otherwise>
 		</xsl:choose>
 	      </xsl:when>
 	      <xsl:otherwise>
@@ -233,19 +233,18 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:when test="$depth=2">subsubsection</xsl:when>
 		  <xsl:when test="$depth=3">paragraph</xsl:when>
 		  <xsl:when test="$depth=4">subparagraph</xsl:when>
+		  <xsl:otherwise>section</xsl:otherwise>
 		</xsl:choose>
 	      </xsl:otherwise>
             </xsl:choose>
             <xsl:choose>
-               <xsl:when test="ancestor::tei:floatingText">*</xsl:when>
-               <xsl:when test="parent::tei:div/@rend='nonumber'">*</xsl:when>
-               <xsl:when test="ancestor::tei:back and not($numberBackHeadings='true')">*</xsl:when>
-	       <xsl:when test="not($numberHeadings='true') and ancestor::tei:body">*</xsl:when>
-               <xsl:when test="ancestor::tei:front and not($numberFrontHeadings='true')">*</xsl:when>
+               <xsl:when test="parent::tei:body or ancestor::tei:floatingText or
+	       parent::tei:div/@rend='nonumber' or 
+	       (ancestor::tei:back and not($numberBackHeadings='true'))
+	       or (not($numberHeadings='true') and ancestor::tei:body)
+	       or (ancestor::tei:front and  not($numberFrontHeadings='true'))">*</xsl:when>
+	       <xsl:otherwise>[<xsl:value-of select="normalize-space(.)"/>]</xsl:otherwise>
             </xsl:choose>
-	    <xsl:text>[</xsl:text>
-	    <xsl:value-of select="normalize-space(.)"/>
-	    <xsl:text>]</xsl:text>
 	    <xsl:text>{</xsl:text>
 	    <xsl:apply-templates/>
 	    <xsl:text>}</xsl:text>
