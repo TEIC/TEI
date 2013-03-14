@@ -368,7 +368,6 @@ capable of dealing with UTF-8 directly.
 \def\unusedattribute#1{\sout{\textcolor{label}{#1}}}
 \DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
 \def\xref@#1#2{\hyper@linkurl{#2}{#1}}
-\def\Div[#1]#2{\section*{#2}}
 \begingroup
 \catcode`\_=\active
 \gdef_#1{\ensuremath{\sb{\mathrm{#1}}}}
@@ -425,6 +424,7 @@ capable of dealing with UTF-8 directly.
 <xsl:param name="gothicFont">Lucida Blackletter</xsl:param>
 <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string"><desc>Font for calligraphic</desc>   </doc>
 <xsl:param name="calligraphicFont">Lucida Calligraphy</xsl:param>
+  <xsl:param name="longtables">true</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
@@ -465,7 +465,7 @@ capable of dealing with UTF-8 directly.
 \tolerance=2000
 \vbadness=4000
 \widowpenalty=10000
-<xsl:if test="not($docClass='letter')">
+<xsl:if test="not($documentclass='letter')">
 \renewcommand\section{\@startsection {section}{1}{\z@}%
      {-1.75ex \@plus -0.5ex \@minus -.2ex}%
      {0.5ex \@plus .2ex}%

@@ -170,7 +170,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:text> \par </xsl:text>
       <xsl:choose>
-         <xsl:when test="ancestor::tei:table"> 
+         <xsl:when test="ancestor::tei:table or $longtables='false'"> 
 	           <xsl:text>\begin{tabular}</xsl:text>
 	           <xsl:call-template name="makeTable"/> 
 	           <xsl:text>\end{tabular}</xsl:text>
@@ -317,7 +317,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:choose>
          <xsl:when test="tei:head and not(@rend='display')">
-            <xsl:if test="not(ancestor::tei:table)">
+            <xsl:if test="not(ancestor::tei:table or $longtables='false')">
                <xsl:text>\endfirsthead </xsl:text>
                <xsl:text>\multicolumn{</xsl:text>
                <xsl:value-of select="count(tei:row[1]/tei:cell)"/>
@@ -340,7 +340,7 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template name="tableHline">
       <xsl:choose>
-         <xsl:when test="ancestor::tei:table or @rend='display'"> \hline </xsl:when>
+         <xsl:when test="ancestor::tei:table or $longtables='false' or @rend='display'"> \hline </xsl:when>
          <xsl:otherwise> \hline\endfoot\hline\endlastfoot </xsl:otherwise>
       </xsl:choose>
    </xsl:template>

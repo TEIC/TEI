@@ -106,23 +106,43 @@ of this software, even if advised of the possibility of such damage.
   </info>
 </xsl:template>
 
+<xsl:template match="persName">
+  <personname>
+    <xsl:apply-templates/>
+  </personname>
+</xsl:template>
+
+<xsl:template match="email">
+    <email>
+      <xsl:apply-templates/>
+    </email>
+</xsl:template>
+
+<xsl:template match="affiliation">
+  <affiliation>
+    <orgname>
+      <xsl:apply-templates/>
+    </orgname>
+  </affiliation>
+</xsl:template>
+
 <xsl:template match="author">
   <author>
-    <personname>
       <xsl:choose>
-	<xsl:when test="surname">
+	<xsl:when test="*">
 	  <xsl:apply-templates/>
 	</xsl:when>
 	<xsl:otherwise>
-	  <firstname>
-	    <xsl:value-of select="substring-before(.,' ')"/>
-	  </firstname>
-	  <surname>
-	    <xsl:value-of select="substring-after(.,' ')"/>
-	  </surname>
+	  <personname>
+	    <firstname>
+	      <xsl:value-of select="substring-before(.,' ')"/>
+	    </firstname>
+	    <surname>
+	      <xsl:value-of select="substring-after(.,' ')"/>
+	    </surname>
+	  </personname>
 	</xsl:otherwise>
       </xsl:choose>
-    </personname>
   </author>
 </xsl:template>
 
@@ -268,6 +288,12 @@ of this software, even if advised of the possibility of such damage.
   <surname>
     <xsl:apply-templates select="@*|*|text()|comment()"/>
   </surname>
+</xsl:template>
+
+<xsl:template match="forename">
+  <firstname>
+    <xsl:apply-templates select="@*|*|text()|comment()"/>
+  </firstname>
 </xsl:template>
 
 <xsl:template match="table">

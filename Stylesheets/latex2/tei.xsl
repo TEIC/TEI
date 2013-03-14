@@ -80,20 +80,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="endAttribute">}</xsl:param>
   <xsl:param name="endAttributeValue">}</xsl:param>
   <xsl:param name="endNamespace"/>
+  <xsl:param name="documentclass">article</xsl:param>
   <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
-  <xsl:variable name="docClass">
-      <xsl:choose>
-         <xsl:when test="/tei:TEI[@rend='letter']">
-            <xsl:text>letter</xsl:text>
-         </xsl:when>
-         <xsl:when test="/tei:TEI[@rend='book']">
-            <xsl:text>book</xsl:text>
-         </xsl:when>
-         <xsl:otherwise>
-            <xsl:text>article</xsl:text>
-         </xsl:otherwise>
-      </xsl:choose>
-  </xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process elements  processing-instruction()[name(.)='tex']</desc>
    </doc>

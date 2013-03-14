@@ -213,21 +213,35 @@ of this software, even if advised of the possibility of such damage.
             <xsl:variable name="depth">
                <xsl:apply-templates mode="depth" select=".."/>
             </xsl:variable>
-            <xsl:text>&#10;\Div</xsl:text>
+            <xsl:text>&#10;\</xsl:text>
             <xsl:choose>
-               <xsl:when test="$depth=0">I</xsl:when>
-               <xsl:when test="$depth=1">II</xsl:when>
-               <xsl:when test="$depth=2">III</xsl:when>
-               <xsl:when test="$depth=3">IV</xsl:when>
-               <xsl:when test="$depth=4">V</xsl:when>
-	       <xsl:otherwise>I</xsl:otherwise>
+	      <xsl:when test="$documentclass='book'">
+		<xsl:choose>
+		  <xsl:when test="$depth=0">chapter</xsl:when>
+		  <xsl:when test="$depth=1">section</xsl:when>
+		  <xsl:when test="$depth=2">subsection</xsl:when>
+		  <xsl:when test="$depth=4">subsunsection</xsl:when>
+		  <xsl:when test="$depth=4">paragraph</xsl:when>
+		  <xsl:when test="$depth=5">subparagraph</xsl:when>
+		  <xsl:otherwise>I</xsl:otherwise>
+		</xsl:choose>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:choose>
+		  <xsl:when test="$depth=0">section</xsl:when>
+		  <xsl:when test="$depth=1">subsection</xsl:when>
+		  <xsl:when test="$depth=2">subsubsection</xsl:when>
+		  <xsl:when test="$depth=3">paragraph</xsl:when>
+		  <xsl:when test="$depth=4">subparagraph</xsl:when>
+		</xsl:choose>
+	      </xsl:otherwise>
             </xsl:choose>
             <xsl:choose>
-               <xsl:when test="ancestor::tei:floatingText">Star</xsl:when>
-               <xsl:when test="parent::tei:div/@rend='nonumber'">Star</xsl:when>
-               <xsl:when test="ancestor::tei:back and not($numberBackHeadings='true')">Star</xsl:when>
-	       <xsl:when test="not($numberHeadings='true') and ancestor::tei:body">Star</xsl:when>
-               <xsl:when test="ancestor::tei:front and not($numberFrontHeadings='true')">Star</xsl:when>
+               <xsl:when test="ancestor::tei:floatingText">*</xsl:when>
+               <xsl:when test="parent::tei:div/@rend='nonumber'">*</xsl:when>
+               <xsl:when test="ancestor::tei:back and not($numberBackHeadings='true')">*</xsl:when>
+	       <xsl:when test="not($numberHeadings='true') and ancestor::tei:body">*</xsl:when>
+               <xsl:when test="ancestor::tei:front and not($numberFrontHeadings='true')">*</xsl:when>
             </xsl:choose>
 	    <xsl:text>[</xsl:text>
 	    <xsl:value-of select="normalize-space(.)"/>

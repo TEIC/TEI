@@ -77,7 +77,7 @@ of this software, even if advised of the possibility of such damage.
 \affaddr{<xsl:apply-templates select="affiliation"/>}\\
 \affaddr{<xsl:apply-templates select="email"/>}
 </xsl:for-each>}
-\date{<xsl:apply-templates select="ancestor-or-self::TEI/teiHeader/fileDesc/titleStmt/date"/>}
+\date{<xsl:apply-templates select="ancestor-or-self::TEI/teiHeader/fileDesc/editionStmt/edition/date"/>}
 \maketitle
 \begin{abstract}
 <xsl:for-each
