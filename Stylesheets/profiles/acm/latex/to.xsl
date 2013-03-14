@@ -57,7 +57,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="documentclass">acm_proc_article-sp</xsl:param>  
   <xsl:template name="latexSetup"/>
   <xsl:template name="latexPackages">   
-\usepackage{color,framed}
+\usepackage{color,framed,times}
 \definecolor{shadecolor}{gray}{0.95}
   </xsl:template>
   <xsl:template name="latexLayout"/>
@@ -170,4 +170,7 @@ of this software, even if advised of the possibility of such damage.
     \balancecolumns
   </xsl:template>
       
+   <xsl:template name="exampleFontSet">
+     <xsl:text>\ttfamily\fontsize{7pt}{8.5pt}\selectfont </xsl:text>
+   </xsl:template>
 </xsl:stylesheet>
