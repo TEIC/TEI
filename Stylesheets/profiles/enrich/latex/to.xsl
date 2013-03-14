@@ -68,7 +68,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:param name="numberSpacer">\ </xsl:param>
    <xsl:param name="parSkip">3pt</xsl:param>
    <xsl:param name="parIndent">3pt</xsl:param>
-   <xsl:variable name="docClass">article</xsl:variable>
+   <xsl:variable name="documentclass">article</xsl:variable>
    <xsl:template name="latexPreambleHook">
 \usepackage{makeidx}
 \makeindex

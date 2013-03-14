@@ -68,7 +68,6 @@ of this software, even if advised of the possibility of such damage.
    <xsl:param name="startNamespace"/>
    <xsl:param name="tocNumberSuffix">.\ </xsl:param>
    <xsl:param name="numberSpacer">\ </xsl:param>
-   <xsl:variable name="docClass">article</xsl:variable>
    <xsl:template name="latexPreambleHook">
 \usepackage{makeidx}
 \makeindex
@@ -422,7 +421,7 @@ STANDARD &amp;\bfseries <xsl:call-template name="getiso_documentNumber"/>-<xsl:c
 \tolerance=2000
 \vbadness=4000
 \widowpenalty=10000
-<xsl:if test="not($docClass='letter')">
+<xsl:if test="not($documentclass='letter')">
 \renewcommand\section{\@startsection {section}{1}{\z@}%
      {-1.75ex \@plus -0.5ex \@minus -.2ex}%
      {0.5ex \@plus .2ex}%
