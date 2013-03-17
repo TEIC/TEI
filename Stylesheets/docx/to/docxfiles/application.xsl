@@ -100,7 +100,7 @@ of this software, even if advised of the possibility of such damage.
                 </dc:title>
                 <dc:creator>
 		  <xsl:sequence
-		      select="normalize-space(string-join(tei:generateAuthor(.),'  '))"/>
+		      select="normalize-space(string-join(tei:generateAuthor(.),''))"/>
                 </dc:creator>
                 <cp:lastModifiedBy>TEI stylesheets</cp:lastModifiedBy>
                 <cp:revision>

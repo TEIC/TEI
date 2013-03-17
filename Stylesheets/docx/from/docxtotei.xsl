@@ -307,13 +307,14 @@ of this software, even if advised of the possibility of such damage.
 	  </doc>
 	  <xsl:template match="w:bookmarkStart|w:bookmarkEnd" >
 	    <xsl:choose>
-	    <xsl:when test="starts-with(@w:name,'_Ref')">
+	    <xsl:when test="@w:name='_GoBack'"/>
+	    <xsl:when test="starts-with(@w:name,'_')">
 	      <xsl:copy-of select="."/>
 	    </xsl:when>
 	    <xsl:when test="self::w:bookmarkEnd"/>
 	    <xsl:otherwise>
 	      <ANCHOR>
-		<xsl:attribute name="xml:id" select="substring(@w:name,2)"/>
+		<xsl:attribute name="xml:id" select="@w:name"/>
 	      </ANCHOR>
 	    </xsl:otherwise>
 	    </xsl:choose>
@@ -487,16 +488,23 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:template match="w:hyperlink">
       <ref>
-	<xsl:variable name="rid" select="@r:id"/>
 	<xsl:attribute name="target">
 	  <xsl:choose>
-	    <xsl:when test="ancestor::w:endnote">
-	      <xsl:value-of
-		  select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+	    <xsl:when test="@w:anchor">
+	      <xsl:value-of select="concat('#',@w:anchor)"/>
 	    </xsl:when>
 	    <xsl:otherwise>
-	      <xsl:value-of
-		  select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
+	      <xsl:variable name="rid" select="@r:id"/>
+	      <xsl:choose>
+		<xsl:when test="ancestor::w:endnote">
+		  <xsl:value-of
+		      select="document(concat($wordDirectory,'/word/_rels/endnotes.xml.rels'))//rel:Relationship[@Id=$rid]/@Target"/>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:value-of
+		      select="document($relsDoc)//rel:Relationship[@Id=$rid]/@Target"/>
+		</xsl:otherwise>
+	      </xsl:choose>
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:attribute>
