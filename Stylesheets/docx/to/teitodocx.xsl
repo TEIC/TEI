@@ -144,7 +144,7 @@ of this software, even if advised of the possibility of such damage.
 			    tei:facsimile tei:figure tei:fileDesc
 			    tei:floatingText tei:forest tei:front
 			    tei:fs tei:fsConstraints tei:fsDecl
-			    tei:fsdDecl tei:fvLib tei:gap tei:glyph
+			    tei:fsdDecl tei:fvLib tei:fw tei:gap tei:glyph
 			    tei:graph tei:graphic tei:group
 			    tei:handDesc tei:handNotes tei:history
 			    tei:hom tei:hyphenation tei:iNode tei:if
@@ -527,6 +527,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="ancestor::tei:head"/>
       <xsl:when test="ancestor::tei:bibl"/>
+      <xsl:when test="ancestor::tei:fw"/>
       <xsl:when test="preceding-sibling::text()"/>
       <xsl:when test="parent::tei:head/parent::tei:*/@xml:id">
         <xsl:for-each select="parent::tei:head/parent::tei:*">
@@ -648,6 +649,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="ancestor::tei:head"/>
       <xsl:when test="ancestor::tei:bibl"/>
+      <xsl:when test="ancestor::tei:fw"/>
       <xsl:when test="following-sibling::text()"/>
       <xsl:when test="../@xml:id">
         <xsl:for-each select="..">

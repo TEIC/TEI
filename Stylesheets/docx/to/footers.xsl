@@ -99,7 +99,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:result-document href="{concat($wordDirectory,'/word/footer',position(),'.xml')}">
 	  <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
 		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main">
-	    <xsl:apply-templates select="."/>
+	    <xsl:apply-templates/>
 	  </w:ftr>
 	</xsl:result-document>
       </xsl:for-each>
