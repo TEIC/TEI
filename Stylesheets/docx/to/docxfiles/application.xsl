@@ -99,7 +99,8 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:sequence select="normalize-space(tei:generateTitle(.))"/>
                 </dc:title>
                 <dc:creator>
-		  <xsl:sequence select="normalize-space(tei:generateAuthor(.))"/>
+		  <xsl:sequence
+		      select="normalize-space(string-join(tei:generateAuthor(.),'  '))"/>
                 </dc:creator>
                 <cp:lastModifiedBy>TEI stylesheets</cp:lastModifiedBy>
                 <cp:revision>
