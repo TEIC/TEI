@@ -25,7 +25,8 @@
 
     <xsl:import href="../../../docx/to/teitodocx.xsl"/>
     
-    
+    <xsl:param name="defaultHeaderFooterFile">../../profiles/default/docx/headersfooters.xml</xsl:param>
+
     <xsl:param name="renderAddDel">true</xsl:param>
     <xsl:param name="addColour">red</xsl:param>
 

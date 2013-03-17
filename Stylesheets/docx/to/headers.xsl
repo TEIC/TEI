@@ -80,14 +80,14 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template name="write-docxfile-header-files">
         <xsl:choose>
-            <xsl:when test="count(key('ALLHEADERS',1))=0">
-                <xsl:for-each select="document($defaultHeaderFooterFile)">
-                    <xsl:call-template name="write-docxfile-specific-header-file"/>
-                </xsl:for-each>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:call-template name="write-docxfile-specific-header-file"/>
-            </xsl:otherwise>
+	  <xsl:when test="count(key('ALLHEADERS',1))=0  and doc-available($defaultHeaderFooterFile)">
+	    <xsl:for-each select="doc($defaultHeaderFooterFile)">
+	      <xsl:call-template name="write-docxfile-specific-header-file"/>
+	    </xsl:for-each>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="write-docxfile-specific-header-file"/>
+	  </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     
@@ -97,21 +97,19 @@ of this software, even if advised of the possibility of such damage.
     </desc>
    </doc>
     <xsl:template name="write-docxfile-specific-header-file">
-        <xsl:for-each select="key('ALLHEADERS',1)">
-	        <xsl:if test="$debug='true'">
-	           <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/header',position(),'.xml')"/>
-            </xsl:message>
-	        </xsl:if>
-		
-            <xsl:result-document href="{concat($wordDirectory,'/word/header',position(),'.xml')}">
-                <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
-                   xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main">
-                    <xsl:apply-templates select="."/>
-                </w:hdr>
-            </xsl:result-document>
-        </xsl:for-each>
+      <xsl:for-each select="key('ALLHEADERS',1)">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/header',position(),'.xml')"/>
+	  </xsl:message>
+	</xsl:if>
+	
+	<xsl:result-document href="{concat($wordDirectory,'/word/header',position(),'.xml')}">
+	  <w:hdr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
+		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main">
+	    <xsl:apply-templates select="."/>
+	  </w:hdr>
+	</xsl:result-document>
+      </xsl:for-each>
     </xsl:template>
-    
-    
     
 </xsl:stylesheet>

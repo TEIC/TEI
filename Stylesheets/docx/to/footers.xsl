@@ -80,8 +80,8 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template name="write-docxfile-footer-files">
         <xsl:choose>
-            <xsl:when test="count(key('ALLFOOTERS',1))=0">
-                <xsl:for-each select="document($defaultHeaderFooterFile)">
+            <xsl:when test="count(key('ALLFOOTERS',1))=0  and doc-available($defaultHeaderFooterFile)">
+                <xsl:for-each select="doc($defaultHeaderFooterFile)">
                     <xsl:call-template name="write-docxfile-specific-footer-file"/>
                 </xsl:for-each>
             </xsl:when>
@@ -92,19 +92,17 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <xsl:template name="write-docxfile-specific-footer-file">
-        <xsl:for-each select="key('ALLFOOTERS',1)">
-	        <xsl:if test="$debug='true'">
-	           <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/footer',position(),'.xml')"/>
-            </xsl:message>
-	        </xsl:if>
-
-            <xsl:result-document href="{concat($wordDirectory,'/word/footer',position(),'.xml')}">
-                <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
-                   xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main">
-                    <xsl:apply-templates select="."/>
-                </w:ftr>
-            </xsl:result-document>
-        </xsl:for-each>
+      <xsl:for-each select="key('ALLFOOTERS',1)">
+	<xsl:if test="$debug='true'">
+	  <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/footer',position(),'.xml')"/></xsl:message>
+	</xsl:if>
+	<xsl:result-document href="{concat($wordDirectory,'/word/footer',position(),'.xml')}">
+	  <w:ftr xmlns:mv="urn:schemas-microsoft-com:mac:vml"
+		 xmlns:mo="http://schemas.microsoft.com/office/mac/office/2008/main">
+	    <xsl:apply-templates select="."/>
+	  </w:ftr>
+	</xsl:result-document>
+      </xsl:for-each>
     </xsl:template>
     
 </xsl:stylesheet>

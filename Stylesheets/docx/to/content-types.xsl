@@ -29,7 +29,7 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0"
-                exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso      tei a xs pic fn xsi dc dcterms dcmitype     contypes teidocx teix html cals">
+                exclude-result-prefixes="#all">
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -131,26 +131,26 @@ of this software, even if advised of the possibility of such damage.
                 
                 <!-- headers -->
                 <xsl:choose>
-                    <xsl:when test="count(key('ALLHEADERS',1))=0">
-                        <xsl:for-each select="document($defaultHeaderFooterFile)">
-                            <xsl:call-template name="write-docxfile-content-types-header-references"/>
-                        </xsl:for-each>
+                    <xsl:when test="count(key('ALLHEADERS',1))=0 and doc-available($defaultHeaderFooterFile)">
+		      <xsl:for-each select="doc($defaultHeaderFooterFile)">
+			<xsl:call-template name="write-docxfile-content-types-header-references"/>
+		      </xsl:for-each>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:call-template name="write-docxfile-content-types-header-references"/>
+		      <xsl:call-template name="write-docxfile-content-types-header-references"/>
                     </xsl:otherwise>
                 </xsl:choose>
                 
                 
                 <!-- footers -->
                 <xsl:choose>
-                    <xsl:when test="count(key('ALLFOOTERS',1))=0">
-                        <xsl:for-each select="document($defaultHeaderFooterFile)">
-                            <xsl:call-template name="write-docxfile-content-types-footer-references"/>
-                        </xsl:for-each>
+                    <xsl:when test="count(key('ALLFOOTERS',1))=0  and doc-available($defaultHeaderFooterFile)">
+		      <xsl:for-each select="doc($defaultHeaderFooterFile)">
+			<xsl:call-template name="write-docxfile-content-types-footer-references"/>
+		      </xsl:for-each>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:call-template name="write-docxfile-content-types-footer-references"/>
+		      <xsl:call-template name="write-docxfile-content-types-footer-references"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </Types>
@@ -160,7 +160,8 @@ of this software, even if advised of the possibility of such damage.
     
     
     
-    <xsl:template name="write-docxfile-content-types-footer-references">
+    <xsl:template
+	name="write-docxfile-content-types-footer-references">
         <xsl:for-each select="key('ALLFOOTERS',1)">
             <Override xmlns="http://schemas.openxmlformats.org/package/2006/content-types"
                    ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml">

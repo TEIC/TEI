@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:cals="http://www.oasis-open.org/specs/tm9901" xmlns:contypes="http://schemas.openxmlformats.org/package/2006/content-types" xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:iso="http://www.iso.org/ns/1.0" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:its="http://www.w3.org/2005/11/its" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="cp ve o r m v wp w10 w wne mml tbx iso its tei a xs pic fn xsi dc dcterms dcmitype contypes teidocx teix html cals">
+<xsl:stylesheet xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:cals="http://www.oasis-open.org/specs/tm9901" xmlns:contypes="http://schemas.openxmlformats.org/package/2006/content-types" xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:iso="http://www.iso.org/ns/1.0" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:fn="http://www.w3.org/2005/02/xpath-functions" xmlns:ve="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:its="http://www.w3.org/2005/11/its" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="#all">
   <xsl:import href="placeholders.xsl"/>
   <xsl:import href="../../common2/header.xsl"/>
   <xsl:import href="../../common2/i18n.xsl"/>
@@ -30,16 +30,16 @@
   <!-- Templates transforming tei milestones into sectPr -->
   <xsl:include href="wordsections.xsl"/>
   <!-- Load stylesheets helping with the creation of special files -->
-  <xsl:include href="docxfiles/application.xsl"/>
-  <xsl:include href="docxfiles/content-types.xsl"/>
-  <xsl:include href="docxfiles/endnotes.xsl"/>
-  <xsl:include href="docxfiles/footers.xsl"/>
-  <xsl:include href="docxfiles/comments.xsl"/>
-  <xsl:include href="docxfiles/footnotes.xsl"/>
-  <xsl:include href="docxfiles/headers.xsl"/>
-  <xsl:include href="docxfiles/numbering-definition.xsl"/>
-  <xsl:include href="docxfiles/relationships.xsl"/>
-  <xsl:include href="docxfiles/settings.xsl"/>
+  <xsl:include href="application.xsl"/>
+  <xsl:include href="content-types.xsl"/>
+  <xsl:include href="endnotes.xsl"/>
+  <xsl:include href="footers.xsl"/>
+  <xsl:include href="comments.xsl"/>
+  <xsl:include href="footnotes.xsl"/>
+  <xsl:include href="headers.xsl"/>
+  <xsl:include href="numbering-definition.xsl"/>
+  <xsl:include href="relationships.xsl"/>
+  <xsl:include href="settings.xsl"/>
   <xsl:param name="createanttask">false</xsl:param>
   <xsl:param name="useHeaderFrontMatter">false</xsl:param>
   <xsl:param name="useFixedDate">false</xsl:param>
@@ -369,7 +369,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:apply-templates>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates select="document($defaultHeaderFooterFile)/tei:TEI/tei:text/tei:milestone">
+        <xsl:apply-templates select="doc($defaultHeaderFooterFile)/tei:TEI/tei:text/tei:milestone">
           <xsl:with-param name="final-section">true</xsl:with-param>
         </xsl:apply-templates>
       </xsl:otherwise>
@@ -2882,6 +2882,18 @@ of this software, even if advised of the possibility of such damage.
     <!-- who created this document -->
     <xsl:template name="created-by">
         <xsl:text>TEI XSL</xsl:text>
+    </xsl:template>
+
+
+    <xsl:template match="tei:fw/tei:p">
+      <w:p>
+	<w:pPr>
+	  <w:pStyle>
+	    <xsl:attribute name="w:val" select="@rend"/>
+	  </w:pStyle>
+	</w:pPr>
+	<xsl:apply-templates/>
+      </w:p>
     </xsl:template>
 
 
