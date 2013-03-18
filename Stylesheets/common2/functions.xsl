@@ -598,7 +598,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:when test="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
 	   <xsl:for-each select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:author">
-	     <xsl:apply-templates/>
+	     <xsl:apply-templates select="*[not(self::tei:email or self::tei:affiliation)]|text()"/>
 	     <xsl:choose>
 	       <xsl:when test="count(following-sibling::tei:author)=1">
 		 <xsl:if test="count(preceding-sibling::tei:author)>1">
