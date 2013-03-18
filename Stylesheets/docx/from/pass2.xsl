@@ -406,6 +406,8 @@ of this software, even if advised of the possibility of such damage.
      </xsl:copy>
    </xsl:template>
 
+   <xsl:template match="tei:ANCHOR[parent::tei:head]" mode="pass2"/>
+
    <xsl:template match="tei:ANCHOR[not(parent::tei:head)]" mode="pass2">
        <anchor xml:id="{@xml:id}"/>
    </xsl:template>
