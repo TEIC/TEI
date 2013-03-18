@@ -302,7 +302,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:when>
 	    </xsl:choose>
 	    <xsl:if test="$styles/* and $preserveEffects='true'">
-	      <xsl:attribute name="html:style">
+	      <xsl:attribute name="style">
 		<xsl:for-each select="$styles/*">
 		  <xsl:value-of select="@n"/>
 		  <xsl:text>:</xsl:text>
@@ -341,7 +341,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="parent::w:r/w:rPr/w:rFonts[starts-with(@w:ascii,'ISO')]">
-                <seg html:style="font-family:{parent::w:r/w:rPr/w:rFonts/@w:ascii};">
+                <seg style="font-family:{parent::w:r/w:rPr/w:rFonts/@w:ascii};">
                     <xsl:value-of select="$t"/>
                 </seg>
             </xsl:when>
@@ -553,13 +553,13 @@ of this software, even if advised of the possibility of such damage.
 <xsl:when test="@w:char='F0FD'">&#xF8FD;</xsl:when><!--	# RIGHT CURLY BRACKET MID	# bracerightmid (CUS) -->
 <xsl:when test="@w:char='F0FE'">&#xF8FE;</xsl:when><!--	# RIGHT CURLY BRACKET BOTTOM	# bracerightbt (CUS) -->
 	<xsl:otherwise> 	  
-	  <g html:style="font-family:{@w:font};" n="{@w:char}"/>
+	  <g style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose> 	
     </xsl:when>
     <xsl:when test="@w:font='Wingdings 2' and @w:char='F050'">&#x2713;</xsl:when><!-- tick mark-->
 	<xsl:otherwise> 	  
-	  <g html:style="font-family:{@w:font};" n="{@w:char}"/>
+	  <g style="font-family:{@w:font};" n="{@w:char}"/>
 	</xsl:otherwise>       
       </xsl:choose>
     </xsl:template>     
