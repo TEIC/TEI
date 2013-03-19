@@ -278,54 +278,27 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="@ana|@active|@adj|@adjFrom|@adjTo|@children|@class|@code|@copyOf|@corresp|@decls|@domains|@end|@exclude|@fVal|@feats|@follow|@hand|@inst|@langKey|@location|@mergedin|@new|@next|@old|@origin|@otherLangs|@parent|@passive|@perf|@prev|@render|@resp|@sameAs|@scheme|@script|@select|@since|@start|@synch|@target|@targetEnd|@value|@value|@who|@wit">
-    <xsl:attribute name="{name(.)}">
-      <xsl:call-template name="splitter">
-	<xsl:with-param name="val">
-	  <xsl:value-of select="."/>
-	</xsl:with-param>
-      </xsl:call-template>
-    </xsl:attribute>
-  </xsl:template>
-  
-  
-  <xsl:template name="splitter">
-    <xsl:param name="val"/>
-    <xsl:choose>
-      <xsl:when test="contains($val,' ')">
-        <xsl:choose>
-          <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
-            <xsl:value-of select="$val"/>
+    <xsl:variable name="vals">
+      <xsl:for-each select="tokenize(.,' ')">
+        <a>
+	  <xsl:choose>
+          <xsl:when test="starts-with(.,'http') or starts-with(.,'ftp') or starts-with(.,'mailto')">
+            <xsl:sequence select="."/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>#</xsl:text>
-	    <xsl:value-of select="substring-before($val,' ')"/>
+	    <xsl:sequence select="."/>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:text> </xsl:text>
-        <xsl:call-template name="splitter">
-          <xsl:with-param name="val">
-            <xsl:value-of select="substring-after($val,' ')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
-            <xsl:value-of select="$val"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>#</xsl:text>
-            <xsl:value-of select="$val"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
+	</a>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:attribute name="{name(.)}" select="string-join($vals/tei:a,' ')"/>
   </xsl:template>
  
   
-  <!-- fool around with selected elements -->
+ <!-- fool around with selected elements -->
   
-
  <!-- imprint is no longer allowed inside bibl -->
  <xsl:template match="bibl/imprint">
     <xsl:apply-templates/>

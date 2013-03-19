@@ -865,7 +865,6 @@ of this software, even if advised of the possibility of such damage.
 			and not	(preceding-sibling::*)">true</xsl:when>
 	<!-- 0. we are down the hierarchy -->
 	<xsl:when test="@rend='nosplit'">true</xsl:when>
-	<xsl:when test="$depth &gt; $splitLevel">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
