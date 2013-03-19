@@ -238,4 +238,7 @@ clean:
 	rm -f  test9.docx test9.odt
 	rm -f  test*listing*
 	rm -rf temp-dir-for-ant Pictures OEBPS META-INF mimetype
-
+	rm -f test17.tei
+	rm -f test.xml.docx.core
+	rm -f test7.docx
+	rm -f test.html5

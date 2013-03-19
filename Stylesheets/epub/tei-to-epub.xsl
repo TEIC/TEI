@@ -522,11 +522,10 @@ height: </xsl:text>
               <reference type="text" href="titlepage.html" title="Cover"/>
               <reference type="text" title="Start" href="index.html"/>
               <xsl:choose>
-                <xsl:when test="$filePerPage='true'">
-		</xsl:when>
+                <xsl:when test="$filePerPage='true'"></xsl:when>
                 <xsl:otherwise>
                   <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                    <xsl:if test="html:a">
+                    <xsl:if test="html:a and not (starts-with(html:a[1]/@href,'#'))">
                       <reference type="text" href="{html:a[1]/@href}">
                         <xsl:attribute name="title">
                           <xsl:value-of select="normalize-space(html:a[1])"/>

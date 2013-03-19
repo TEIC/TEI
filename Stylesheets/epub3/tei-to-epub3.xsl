@@ -8,7 +8,7 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:ncx="http://www.daisy.org/z3986/2005/ncx/"
                 xmlns:m="http://www.w3.org/1998/Math/MathML"
-		version="2.0" exclude-result-prefixes="iso tei teix dc html ncx m"
+		version="2.0" exclude-result-prefixes="#all"
 		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 >
   <xsl:import href="../html5/tei.xsl"/>
@@ -545,7 +545,7 @@ height: </xsl:text>
 		</xsl:when>
                 <xsl:otherwise>
                   <xsl:for-each select="$TOC/html:TOC/html:ul/html:li">
-                    <xsl:if test="html:a">
+		    <xsl:if test="html:a and not (starts-with(html:a[1]/@href,'#'))">
                       <reference type="text" href="{html:a[1]/@href}">
                         <xsl:attribute name="title">
                           <xsl:value-of select="normalize-space(html:a[1])"/>
