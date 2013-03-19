@@ -157,6 +157,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:when test="$STDOUT='true'">
 	      <xsl:sequence select="concat($masterFile,$urlChunkPrefix,$parent,'#',$ident)"/>
 	    </xsl:when>
+	    <xsl:when test="$keep and number($depth=0)">
+	      <xsl:sequence select="concat('#',$ident)"/>
+	    </xsl:when>
 	    <xsl:when test="$keep">
 	      <xsl:sequence select="concat($masterFile,$standardSuffix,'#',$ident)"/>
 	    </xsl:when>

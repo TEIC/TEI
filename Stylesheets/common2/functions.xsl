@@ -47,6 +47,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="useFixedDate">false</xsl:param>
   <xsl:param name="wordDirectory"/>
+  <xsl:param name="splitLevel">-1</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
     <desc>Title, author and date is taken from the
     &lt;teiHeader&gt; rather than looked for in the front matter</desc>
@@ -864,6 +865,7 @@ of this software, even if advised of the possibility of such damage.
 			and not	(preceding-sibling::*)">true</xsl:when>
 	<!-- 0. we are down the hierarchy -->
 	<xsl:when test="@rend='nosplit'">true</xsl:when>
+	<xsl:when test="$depth &gt; $splitLevel">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>

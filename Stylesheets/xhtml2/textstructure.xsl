@@ -653,7 +653,8 @@ of this software, even if advised of the possibility of such damage.
       <!-- depending on depth and splitting level, 
 	 we may do one of two things: -->
     <xsl:choose>
-      <xsl:when test="tei:keepDivOnPage(.,$depth) or number($depth) &gt; number($splitLevel)">
+      <xsl:when test="tei:keepDivOnPage(.,$depth) or number($depth)
+		      &gt; number($splitLevel)">
 	<xsl:call-template name="doDivBody">
 	  <xsl:with-param name="Depth" select="$depth"/>
 	</xsl:call-template>
