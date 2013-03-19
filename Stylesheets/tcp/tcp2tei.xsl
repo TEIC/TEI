@@ -1950,47 +1950,24 @@ of this software, even if advised of the possibility of such damage.
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="@ANA|@ACTIVE|@ADJ|@ADJFROM|@ADJTO|@CHILDREN|@CLASS|@CODE|@COPYOF|@CORRESP|@DECLS|@DOMAINS|@END|@EXCLUDE|@FVAL|@FEATS|@FOLLOW|@HAND|@INST|@LANGKEY|@LOCATION|@MERGEDIN|@NEW|@NEXT|@OLD|@ORIGIN|@OTHERLANGS|@PARENT|@PASSIVE|@PERF|@PREV|@RENDER|@RESP|@SAMEAS|@SCHEME|@SCRIPT|@SELECT|@SINCE|@START|@SYNCH|@TARGET|@TARGETEND|@VALUE|@VALUE|@WHO|@WIT">
-    <xsl:attribute name="{lower-case(name(.))}">
-      <xsl:call-template name="splitter">
-        <xsl:with-param name="val">
-          <xsl:value-of select="."/>
-        </xsl:with-param>
-      </xsl:call-template>
-    </xsl:attribute>
-  </xsl:template>
-  <xsl:template name="splitter">
-    <xsl:param name="val"/>
-    <xsl:choose>
-      <xsl:when test="contains($val,' ')">
-        <xsl:choose>
-          <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
-            <xsl:value-of select="$val"/>
+  <xsl:template
+      match="@ANA|@ACTIVE|@ADJ|@ADJFROM|@ADJTO|@CHILDREN|@CLASS|@CODE|@COPYOF|@CORRESP|@DECLS|@DOMAINS|@END|@EXCLUDE|@FVAL|@FEATS|@FOLLOW|@HAND|@INST|@LANGKEY|@LOCATION|@MERGEDIN|@NEW|@NEXT|@OLD|@ORIGIN|@OTHERLANGS|@PARENT|@PASSIVE|@PERF|@PREV|@RENDER|@RESP|@SAMEAS|@SCHEME|@SCRIPT|@SELECT|@SINCE|@START|@SYNCH|@TARGET|@TARGETEND|@VALUE|@VALUE|@WHO|@WIT">
+    <xsl:variable name="vals">
+      <xsl:for-each select="tokenize(.,' ')">
+        <a>
+	  <xsl:choose>
+          <xsl:when test="starts-with(.,'http') or starts-with(.,'ftp') or starts-with(.,'mailto')">
+            <xsl:sequence select="."/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:text>#</xsl:text>
-	    <xsl:value-of select="substring-before($val,' ')"/>
+	    <xsl:sequence select="."/>
           </xsl:otherwise>
         </xsl:choose>
-        <xsl:text> </xsl:text>
-        <xsl:call-template name="splitter">
-          <xsl:with-param name="val">
-            <xsl:value-of select="substring-after($val,' ')"/>
-          </xsl:with-param>
-        </xsl:call-template>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:choose>
-          <xsl:when test="starts-with($val,'http') or starts-with($val,'ftp') or starts-with($val,'mailto')">
-            <xsl:value-of select="$val"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>#</xsl:text>
-            <xsl:value-of select="$val"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
+	</a>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:attribute name="{lower-case(name(.))}" select="string-join($vals/tei:a,' ')"/>
   </xsl:template>
   <!-- fool around with selected elements -->
   <!-- imprint is no longer allowed inside bibl -->
@@ -2352,6 +2329,10 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates
 	  select="*|@*|comment()|processing-instruction()|text()" mode="pass2"/>
     </xsl:copy>
+  </xsl:template>
+  
+  <xsl:template match="tei:body[count(*)=1]/tei:div" mode="pass2">
+    <xsl:apply-templates mode="pass2"/>
   </xsl:template>
 
   <xsl:template match="tei:label[following-sibling::*[1][self::tei:head]]" mode="pass2"/>
