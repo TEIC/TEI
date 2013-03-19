@@ -1,6 +1,7 @@
 PREFIX=
 LOCATION=/usr
 ETC=/etc
+TEIXSLDIR=http://www.tei-c.org/release/xml/tei/stylesheet
 
 FILES=ChangeLog \
 	g \
@@ -34,8 +35,8 @@ install: release-stamp
 	mkdir -p ${PREFIX}${LOCATION}/share/tei-roma
 	(cd release; tar cf - . ) | (cd ${PREFIX}${LOCATION}/share; tar xf - )
 	mkdir -p ${PREFIX}${LOCATION}/bin
-	sed "s/VVVERSION/`cat VERSION`/" roma2.sh > ${PREFIX}${LOCATION}/bin/roma
-	sed "s/VVVERSION/`cat VERSION`/" roma2.sh > ${PREFIX}${LOCATION}/bin/roma2
+	sed "s/VVVERSION/`cat VERSION`/" roma2.sh | perl -p -e "s+^TEIXSLDIR=.*+TEIXSL=${TEIXSLDIR}+" > ${PREFIX}${LOCATION}/bin/roma
+	sed "s/VVVERSION/`cat VERSION`/" roma2.sh | perl -p -e "s+^TEIXSLDIR=.*+TEIXSL=${TEIXSLDIR}+" > ${PREFIX}${LOCATION}/bin/roma2
 	chmod 755 ${PREFIX}${LOCATION}/bin/roma ${PREFIX}${LOCATION}/bin/roma2
 	mkdir -p ${PREFIX}${ETC}/tei-roma
 	cp ${PREFIX}/${LOCATION}/share/tei-roma/roma/config-dist.php ${PREFIX}${ETC}/tei-roma/config.php
