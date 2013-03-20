@@ -569,12 +569,12 @@
               </a>
             </li>
             <li>
-              <a href="http://tei.svn.sourceforge.net/viewvc/tei/">
+              <a href="http://sourceforge.net/p/tei/code/">
                 <xsl:sequence select="tei:i18n('Sourceforge Subversion Repository')"/>
               </a>
             </li>
             <li>
-              <a href="http://sourceforge.net/tracker/?group_id=106328&amp;func=browse">
+              <a href="http://sourceforge.net/p/tei/_list/tickets">
                 <xsl:sequence select="tei:i18n('BugsFeatures')"/>
               </a>
             </li>
