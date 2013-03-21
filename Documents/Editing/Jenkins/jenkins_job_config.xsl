@@ -32,6 +32,12 @@
     <xsl:apply-templates/>
   </xsl:template>
   
+<!-- If any jobs use the svn: protocol, they'll fail on a default install of Ubuntu 12.04 server. 
+  We change it to http.-->
+  <xsl:template match="remote[starts-with(., 'svn://')]">
+    <remote><xsl:value-of select="replace(., 'svn://', 'http://')"/></remote>
+  </xsl:template>
+  
 <!-- Insert the appropriate priority setting for this job, as specified in the parameter. -->
   
   <xsl:template match="properties[not(hudson.queueSorter.PrioritySorterJobProperty)]">
