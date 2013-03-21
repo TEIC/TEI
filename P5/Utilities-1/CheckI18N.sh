@@ -15,7 +15,7 @@ for i in 2006-06-05 2006-10-28 2007-01-21 2007-05-02 2007-05-19 2007-06-12 2007-
 do
  mkdir -p $i-Source
  cd $i-Source
- svn export -r "{$i}"  https://tei.svn.sourceforge.net/svnroot/tei/trunk/P5/Source
+ svn export -r "{$i}"  https://sourceforge.net/p/tei/code/HEAD/tree/trunk/P5/Source
  cd ..
  rm -rf $i
  xsltproc --stringparam dir $i Utilities/list_gloss_by_date.xsl \
