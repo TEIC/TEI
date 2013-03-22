@@ -52,6 +52,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:param name="mediaoverlay">false</xsl:param>
    <xsl:param name="filePerPage">false</xsl:param>
    <xsl:param name="inputDir">.</xsl:param>
+   <xsl:param name="outputDir">${outputTempDir}</xsl:param>
    <xsl:param name="mediaDir">word/media</xsl:param>
    <xsl:template match="/">
      <project xmlns="" basedir="." default="dist" name="imagecopy">
@@ -59,7 +60,8 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:if test="key('PB',1) or key('G',1)">
 	   <mkdir>
 	     <xsl:attribute name="dir">
-	       <xsl:text>${outputTempDir}/</xsl:text>
+	       <xsl:value-of select="$outputDir"/>
+	       <xsl:text>/</xsl:text>
 	       <xsl:value-of select="$mediaDir"/>
 	     </xsl:attribute>
 	   </mkdir>
@@ -67,7 +69,8 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:if test="$mediaoverlay='true' and key('Timeline',1)">
 	   <xsl:for-each select="key('Timeline',1)">
 	     <xsl:variable name="target">
-	       <xsl:text>${outputTempDir}/</xsl:text>
+	       <xsl:value-of select="$outputDir"/>
+	       <xsl:text>/</xsl:text>
 	       <xsl:value-of select="$mediaDir"/>
 	       <xsl:text>/audio</xsl:text>
 	       <xsl:number level="any"/>
@@ -91,7 +94,8 @@ of this software, even if advised of the possibility of such damage.
 	     </xsl:choose>
 	   </xsl:variable>
 	   <xsl:variable name="target">
-	     <xsl:text>${outputTempDir}/</xsl:text>
+	     <xsl:value-of select="$outputDir"/>
+	     <xsl:text>/</xsl:text>
 	     <xsl:value-of select="$mediaDir"/>
 	     <xsl:text>/pageimage</xsl:text>
 	     <xsl:number level="any"/>
@@ -116,7 +120,8 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:value-of select="@url"/>
 	   </xsl:variable>
 	   <xsl:variable name="target">
-	     <xsl:text>${outputTempDir}/</xsl:text>
+	     <xsl:value-of select="$outputDir"/>
+	     <xsl:text>/</xsl:text>
 	     <xsl:value-of select="$mediaDir"/>
 	     <xsl:text>/resource</xsl:text>
 	     <xsl:number level="any"/>

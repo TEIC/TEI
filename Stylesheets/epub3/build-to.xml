@@ -22,6 +22,7 @@
  Convert TEI documents into ePUB files.
  -->
   <!-- Path to TEI XML file. -->
+  <property name="verbose" value="false"/>
   <property name="inputFile" value=""/>
   <!-- Path where the output ePUB file will be saved. -->
   <property name="outputFile" value=""/>
@@ -45,11 +46,11 @@
   <macrodef name="buildepub">
     <attribute name="in"/>
     <attribute name="out"/>
+    <attribute name="inDir"/>
     <attribute name="tempDir"/>
     <sequential>
-    <dirname property="inputFileDir" file="@{in}"/>
     <!-- The transformation for EPUB output. -->
-    <echo level="info">XSLT generate ePub files</echo>
+    <echo level="info">XSLT generate ePub files, use temp dir @{tempDir}</echo>
     <xslt force="yes" style="${teitoepub3}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/OPS/index.html">
       <xmlcatalog>
         <catalogpath>
@@ -60,7 +61,7 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="directory" expression="file:///@{tempDir}"/>
-      <param name="inputDir" expression="${inputFileDir}/"/>
+      <param name="inputDir" expression="@{inDir}/"/>
       <param name="fixgraphicsurl" expression="true"/>
       <!-- supply unique URN for ebook-->
       <param name="uid" expression="${uid}" if="uid"/>
@@ -100,7 +101,8 @@
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="inputDir" expression="${inputFileDir}"/>
+      <param name="outputDir" expression="@{tempDir}"/>
+      <param name="inputDir" expression="@{inDir}"/>
       <param name="mediaDir" expression="OPS/media"/>
       <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
       <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
@@ -127,7 +129,7 @@
   </target>
 
   <target name="go">
-    <buildepub in="${outputTempdir}/tmp2.xml" out="${outputFile}" tempDir="${outputTempDir}"/>
+    <buildepub in="${outputTempdir}/tmp2.xml" inDir="${inputDir}" out="${outputFile}" tempDir="${outputTempDir}"/>
   </target>
      
 </project>
