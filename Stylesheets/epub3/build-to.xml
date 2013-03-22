@@ -25,33 +25,32 @@
   <property name="inputFile" value=""/>
   <!-- Path where the output ePUB file will be saved. -->
   <property name="outputFile" value=""/>
+  <!-- which profile -->
+  <property name="profile" value="default"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
-  <!-- which profile directory-->
   <property name="profiledir" value="../profiles"/>
   <!-- which profile -->
   <property name="profile" value="default"/>
   <!-- Stylesheet for transformation -->
   <property name="teitoepub3" value="${profiledir}/${profile}/epub3/to.xsl"/>
   <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
-  <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
+  <dirname property="inputDir" file="${inputFile}"/>
   <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
   <import file="../odds2/build-to.xml"/>
-  <target name="setup">
-    <delete dir="${outputTempDir}"/>
-    <mkdir dir="${outputTempDir}"/>
-  </target>
-  <target name="dist" depends="setup,odd,notodd,convert,cleanup"/>
-
-  <target name="convert">
-    <!-- Recreate temporary output directory -->
+  <macrodef name="buildepub">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <attribute name="tempDir"/>
+    <sequential>
+    <dirname property="inputFileDir" file="@{in}"/>
     <!-- The transformation for EPUB output. -->
-    <echo level="info">XSLT generate epub3 files</echo>
-    <xslt force="yes" style="${teitoepub3}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.html">
+    <echo level="info">XSLT generate ePub files</echo>
+    <xslt force="yes" style="${teitoepub3}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/OPS/index.html">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -60,7 +59,7 @@
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="directory" expression="file:///${outputTempDir}"/>
+      <param name="directory" expression="file:///@{tempDir}"/>
       <param name="inputDir" expression="${inputFileDir}/"/>
       <param name="fixgraphicsurl" expression="true"/>
       <!-- supply unique URN for ebook-->
@@ -92,7 +91,7 @@
       <param name="nocompress" expression="${nocompress}" if="nocompress"/>
     </xslt>
     <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
+    <xslt force="yes" style="${listgraphics}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -107,16 +106,28 @@
       <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
     </xslt>
     <echo level="info">Copy image files</echo>
-    <ant antfile="${outputTempDir}/copy.xml"/>
-    <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
-    <delete file="${outputFile}"/>
-    <zip destfile="${outputFile}" basedir="${outputTempDir}"
+    <ant antfile="@{tempDir}/copy.xml"/>
+    <echo level="info">ZIP: put files from @{tempDir} together into @{out}</echo>
+    <delete file="${out}"/>
+    <zip destfile="@{out}" basedir="@{tempDir}"
 	 compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
-    <zip destfile="${outputFile}" includes="mimetype" update="true"
-	 keepcompression="true" compress="false" basedir="${outputTempDir}"/>
+    <zip destfile="@{out}" basedir="@{tempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+    </sequential>
+  </macrodef>
+
+  <target name="dist" depends="setup,odd,notodd,go,cleanup"/>
+
+  <target name="setup">
+    <delete dir="${outputTempDir}"/>
+    <mkdir dir="${outputTempDir}"/>
   </target>
 
-  <target name="cleanup" unless="debug">  
+  <target name="cleanup" unless="${debug}">
     <delete dir="${outputTempDir}"/>
   </target>
+
+  <target name="go">
+    <buildepub in="${outputTempdir}/tmp2.xml" out="${outputFile}" tempDir="${outputTempDir}"/>
+  </target>
+     
 </project>
