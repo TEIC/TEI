@@ -170,10 +170,13 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:otherwise>
       </xsl:choose>
       </xsl:variable>
-
-      <!--      <xsl:message>GENERATELINK <xsl:sequence select="string-join((name(),$ident,$depth,string($keep),$LINK),'|')"/></xsl:message>-->
+      <!--
+      	  <xsl:message>GENERATELINK <xsl:value-of
+	  select="(name(),$ident,$depth,string($keep),$LINK)"
+	  separator="|"/></xsl:message>
+      -->
       <xsl:value-of select="$LINK"/>
-
+      
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

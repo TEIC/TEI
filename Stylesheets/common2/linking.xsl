@@ -207,6 +207,11 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:with-param>
 		<xsl:with-param name="body">
 		  <xsl:choose>
+		    <xsl:when test="self::tei:text">
+		      <xsl:value-of select="if (@n) then @n else concat('[',position(),']')"/>
+		    </xsl:when>
+		    <xsl:when test="@type='title_page'">Title page</xsl:when>
+		    <xsl:when test="@type='index'">Index</xsl:when>
 		    <xsl:when test="not(tei:head) and tei:body/tei:head">
 			<xsl:apply-templates mode="plain" select="tei:body/tei:head"/>
 		    </xsl:when>	

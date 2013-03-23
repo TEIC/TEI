@@ -1118,12 +1118,6 @@ of this software, even if advised of the possibility of such damage.
      </xsl:choose>
    </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>plain text version of title for div [html] </desc>
-   </doc>
-  <xsl:template name="generateDivtitle">
-      <xsl:apply-templates select="tei:head" mode="plain"/>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>link to level above[html] </desc>
@@ -1607,16 +1601,16 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template name="groupTOC">
       <xsl:variable name="gDepth"
 		    select="count(ancestor::tei:group)"/>
+      <xsl:comment>a TOC for a group of texts (<xsl:value-of select="name()"/>)</xsl:comment>
       <ul class="toc toc_group{$gDepth}">	    	   
 	<li>
-	  <xsl:if test="not($autoHead='true') and not(tei:head or tei:body/tei:head or @n)">
+	  <xsl:if test="not($autoHead='true') and not(tei:head or tei:text/tei:body/tei:head or @n)">
 	    <xsl:attribute
 		name="class">headless</xsl:attribute>
 	  </xsl:if>
 	  <ul>
 	    <xsl:for-each select="tei:text">
-	      <li>
-		
+	      <li>		
 		<xsl:call-template name="header">
 		  <xsl:with-param name="toc">
 		    <xsl:apply-templates mode="generateLink" select="."/>
@@ -2657,10 +2651,19 @@ of this software, even if advised of the possibility of such damage.
          <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (2)</xsl:comment>
          <head>
             <xsl:variable name="pagetitle">
-               <xsl:call-template name="generateDivtitle"/>
-            </xsl:variable>
+	      <xsl:choose>
+		<xsl:when test="tei:head">
+		  <xsl:apply-templates select="tei:head" mode="plain"/>
+		</xsl:when>
+		<xsl:when test="self::tei:text">
+		  <xsl:value-of
+		      select="concat(tei:generateTitle(ancestor::tei:TEI), ': [',position(),']')"/>
+		</xsl:when>
+		<xsl:otherwise>&#160;</xsl:otherwise>
+	      </xsl:choose>
+	    </xsl:variable>
             <title>
-               <xsl:value-of select="$pagetitle"/>
+               <xsl:sequence select="$pagetitle"/>
             </title>
             <xsl:call-template name="headHook"/>
             <xsl:call-template name="metaHTML">

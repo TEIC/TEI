@@ -201,9 +201,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:for-each select="$element">
 	  <xsl:choose>
         <xsl:when test="not(self::*)">true</xsl:when>
-        <xsl:when test="@rend='inline'">true</xsl:when>
+        <xsl:when test="contains(@rend,'inline') and not(tei:p)">true</xsl:when>
         <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
-        <xsl:when test="self::tei:note[@place='foot' or @place='end']">true</xsl:when>
+        <xsl:when test="self::tei:note[@place='bottom' or @place='foot' or @place='end']">true</xsl:when>
         <xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
         <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
         <xsl:when test="parent::tei:div">false</xsl:when>
@@ -860,7 +860,7 @@ of this software, even if advised of the possibility of such damage.
 	<!-- 2. we are a singleton -->
 	<xsl:when test="parent::tei:body[count(*)=1]">true</xsl:when>
 	<!-- 1. we have no proceding sections at top level -->
-	<xsl:when test="parent::tei:body and
+	<xsl:when test="not(ancestor::tei:group) and parent::tei:body and
 			not(parent::tei:body/preceding-sibling::tei:front)
 			and not	(preceding-sibling::*)">true</xsl:when>
 	<!-- 0. we are down the hierarchy -->

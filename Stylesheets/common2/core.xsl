@@ -900,16 +900,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:bibl/tei:note|tei:biblStruct/tei:note">
-    <xsl:call-template name="makeText">
-      <xsl:with-param name="letters"> (</xsl:with-param>
-    </xsl:call-template>
-      <xsl:apply-templates/>
-    <xsl:call-template name="makeText">
-      <xsl:with-param name="letters">)</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] How to identify a note</desc>
   </doc>
@@ -992,9 +982,18 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>  
 
   <xsl:template match="tei:note">
-
     <xsl:choose>
       <xsl:when test="@place='none'"/>
+      <xsl:when test="not(@place) and ancestor::tei:bibl">
+	<xsl:call-template name="makeText">
+	  <xsl:with-param name="letters"> (</xsl:with-param>
+	</xsl:call-template>
+	<xsl:apply-templates/>
+	<xsl:call-template name="makeText">
+	  <xsl:with-param name="letters">)</xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
+
       <xsl:when test="ancestor::tei:listBibl or
 		      ancestor::tei:biblFull or
 		      ancestor::tei:biblStruct">
@@ -1080,14 +1079,14 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:bibl">
     <xsl:choose>
-      <xsl:when test="parent::tei:q/parent::tei:head or parent::tei:q[@rend='inline']">
-        <xsl:call-template name="makeBlock">
+      <xsl:when test="parent::tei:cit[@rend='display'] or
+		      (parent::tei:cit and tei:p) or  parent::tei:q[tei:is-inline(.)]">
+        <xsl:call-template name="makeInline">
 	  <xsl:with-param name="style">citbibl</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>
-      <xsl:when test="parent::tei:cit[@rend='display'] or
-		      (parent::tei:cit and tei:p) or  parent::tei:q">
-        <xsl:call-template name="makeInline">
+      <xsl:when test="parent::tei:q/parent::tei:head or parent::tei:q[@rend='inline']">
+        <xsl:call-template name="makeBlock">
 	  <xsl:with-param name="style">citbibl</xsl:with-param>
 	</xsl:call-template>
       </xsl:when>

@@ -1440,25 +1440,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:number/>
     </span>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element q and tei:said</desc>
-  </doc>
-  <xsl:template match="tei:q[@rend='inline margQuotes' or
-		       @rend='inline margSglQuotes']" priority="99">
-    <xsl:apply-templates/>
-  </xsl:template>
-  <xsl:template match="tei:q[not(@place) and tei:l]">
-    <xsl:choose>
-      <xsl:when test="not(tei:is-inline(.))">
-        <div class="blockquote">
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
       <xsl:when test="not(tei:is-inline(.)) or *[not(tei:is-inline(.))]">
@@ -1710,7 +1691,7 @@ of this software, even if advised of the possibility of such damage.
               <xsl:call-template name="addLangAtt"/>
               <head>
                 <title>
-                  <xsl:apply-templates select="descendant-or-self::tei:text/tei:front//tei:docTitle//text()"/>
+                  <xsl:sequence select="tei:generateTitle(.)"/>
                   <xsl:text>: </xsl:text>
                   <xsl:sequence select="tei:i18n('noteHeading')"/>
                 </title>
@@ -1724,7 +1705,7 @@ of this software, even if advised of the possibility of such damage.
                 <div class="stdheader">
                   <xsl:call-template name="stdheader">
                     <xsl:with-param name="title">
-                      <xsl:apply-templates select="descendant-or-self::tei:text/tei:front//tei:docTitle//text()"/>
+		      <xsl:sequence select="tei:generateTitle(.)"/>
                       <xsl:text>: </xsl:text>
                       <xsl:sequence select="tei:i18n('noteHeading')"/>
                     </xsl:with-param>
