@@ -204,7 +204,7 @@ of this software, even if advised of the possibility of such damage.
 	      <listitem>
 		<xsl:for-each
 		    select="following-sibling::item[1]">
-		  <xsl:call-template name="pornot"/>
+		  <xsl:call-template name="pOrNot"/>
 		</xsl:for-each>
 	      </listitem>
 	  </varlistentry>
@@ -244,7 +244,7 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="item">
   <listitem>
-    <xsl:call-template name="pornot"/>
+    <xsl:call-template name="pOrNot"/>
   </listitem>
 </xsl:template>
 
@@ -358,7 +358,7 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="note[@place='foot']">
   <footnote>
-    <xsl:call-template name="pornot"/>
+    <xsl:call-template name="pOrNot"/>
   </footnote>
 </xsl:template>
 
@@ -461,7 +461,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:apply-templates/>
 </xsl:template>
 
- <xsl:template name="pornot">
+ <xsl:template name="pOrNot">
    <xsl:choose>
      <xsl:when test="p">
        <xsl:apply-templates select="@*|*|text()|comment()"/>
