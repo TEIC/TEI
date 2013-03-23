@@ -12,8 +12,7 @@
                 xmlns:t="http://www.thaiopensource.com/ns/annotations"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                exclude-result-prefixes="tei html t a rng s iso tbx
-					 cals teix dc"
+                exclude-result-prefixes="#all"
                 version="2.0">
     <xsl:import href="../../../epub3/tei-to-epub3.xsl"/>
 
@@ -66,7 +65,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="numberTables">false</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="footnoteBackLink">true</xsl:param>
-    <xsl:param name="cssFile">../profiles/ota/epub3/ota.css</xsl:param>
+    <xsl:param name="cssFile">../profiles/ota/epub/ota.css</xsl:param>
     <xsl:param name="subject">Oxford Text Archive</xsl:param>
     <xsl:param name="pagebreakStyle">visible</xsl:param>
 
