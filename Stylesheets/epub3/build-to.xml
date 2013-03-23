@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitoepub3">
+<project basedir="." default="dist" name="teitoepub">
 <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -34,7 +34,7 @@
   <!-- which profile -->
   <property name="profile" value="default"/>
   <!-- Stylesheet for transformation -->
-  <property name="teitoepub3" value="${profiledir}/${profile}/epub3/to.xsl"/>
+  <property name="teitoepub" value="${profiledir}/${profile}/epub3/to.xsl"/>
   <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
   <dirname property="outputDir" file="${outputFile}"/>
   <dirname property="inputDir" file="${inputFile}"/>
@@ -45,13 +45,13 @@
   <import file="../odds2/build-to.xml"/>
   <macrodef name="buildepub">
     <attribute name="in"/>
-    <attribute name="out"/>
     <attribute name="inDir"/>
+    <attribute name="out"/>
     <attribute name="tempDir"/>
     <sequential>
     <!-- The transformation for EPUB output. -->
-    <echo level="info">XSLT generate ePub files, use temp dir @{tempDir}</echo>
-    <xslt force="yes" style="${teitoepub3}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/OPS/index.html">
+    <echo level="info">XSLT generate ePub files</echo>
+    <xslt force="yes" style="${teitoepub}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/OPS/index.html">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -91,7 +91,7 @@
       <!-- disable compression on the output ZIP -->
       <param name="nocompress" expression="${nocompress}" if="nocompress"/>
     </xslt>
-    <echo level="info">Get names of graphics files and write an ant task</echo>
+    <echo level="info">Get names of graphics files and write an ant  task</echo>
     <xslt force="yes" style="${listgraphics}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
