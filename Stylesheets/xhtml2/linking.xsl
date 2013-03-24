@@ -103,7 +103,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:variable name="depth">
          <xsl:apply-templates mode="depth" select="."/>
       </xsl:variable>
-      <xsl:variable name="keep" select="tei:keepDivOnPage(.,$depth)"/>
+      <xsl:variable name="keep" select="tei:keepDivOnPage(.)"/>
       <xsl:variable name="LINK">
       <xsl:choose>
 	<xsl:when test="$filePerPage='true'">

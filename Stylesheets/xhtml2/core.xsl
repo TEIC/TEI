@@ -1153,6 +1153,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:call-template name="makeaNote"/>
       </xsl:when>      
       <xsl:when test="ancestor::tei:group"/>
+      <xsl:when test="ancestor::tei:div[tei:keepDivOnPage(.)]">
+        <xsl:call-template name="makeaNote"/>
+      </xsl:when>
       <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
@@ -1352,8 +1355,8 @@ of this software, even if advised of the possibility of such damage.
           </xsl:choose>
         </xsl:for-each-group>
       </xsl:when>
-      <xsl:when test="$generateDivFromP='true' or teix:egXML">
-	<div>
+      <xsl:when test="$generateDivFromP='true' or teix:egXML or ancestor::tei:head">
+	<xsl:element name="{$wrapperElement}">
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">p</xsl:with-param>
 	  </xsl:call-template>
@@ -1377,7 +1380,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:call-template name="numberParagraph"/>
 	  </xsl:if>
 	  <xsl:apply-templates/>
-	</div>
+	</xsl:element>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="CLASS">
@@ -1427,13 +1430,13 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:copy-of select="current-group()"/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <xsl:element name="{$wrapperElement}">
+		  <p>
 		    <xsl:copy-of select="$CLASS/html:freddy/@*"/>
 		    <xsl:if test="position()=1">
 		      <xsl:copy-of select="$ID/html:freddy/@*"/>
 		    </xsl:if>
 		    <xsl:copy-of select="current-group()"/>
-		  </xsl:element>
+		  </p>
 		</xsl:otherwise>
 	      </xsl:choose>
 	  </xsl:for-each-group>
@@ -1746,11 +1749,10 @@ of this software, even if advised of the possibility of such damage.
           </xsl:if>
         </xsl:when>
         <xsl:otherwise>
-	  
           <xsl:variable name="me">
             <xsl:apply-templates select="." mode="ident"/>
           </xsl:variable>
-          <xsl:variable name="NOTES">
+           <xsl:variable name="NOTES">
             <xsl:choose>
               <xsl:when test="self::tei:TEI">
                 <xsl:choose>

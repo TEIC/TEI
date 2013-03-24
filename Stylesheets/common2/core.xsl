@@ -1018,7 +1018,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="footNote"/>
       </xsl:when>
 
-      <xsl:when test="(@place='display' or tei:q)">
+      <xsl:when test="(@place='display' or not(tei:is-inline(.)) or tei:q)">
 	<xsl:call-template name="displayNote"/>
       </xsl:when>
 

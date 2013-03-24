@@ -422,7 +422,7 @@ Stylesheet constant setting the name of the main output file.
   </doc>
   <xsl:template name="makeBlock">
     <xsl:param name="style"/>
-    <div>
+    <xsl:element name="{if (tei:is-inline(.)) then 'span' else 'div'}">
       <xsl:call-template name="microdata"/>
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default" select="$style"/>
@@ -433,7 +433,7 @@ Stylesheet constant setting the name of the main output file.
 	</xsl:attribute>
       </xsl:if>
       <xsl:apply-templates/>
-    </div>
+    </xsl:element>
   </xsl:template>
 
     <xsl:template name="makeSection">

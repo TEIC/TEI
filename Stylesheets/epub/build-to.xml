@@ -110,7 +110,7 @@
     <echo level="info">Copy image files</echo>
     <ant antfile="@{tempDir}/copy.xml"/>
     <echo level="info">ZIP: put files from @{tempDir} together into @{out}</echo>
-    <delete file="${out}"/>
+    <delete file="@{out}"/>
     <zip destfile="@{out}" basedir="@{tempDir}"
 	 compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
     <zip destfile="@{out}" basedir="@{tempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
