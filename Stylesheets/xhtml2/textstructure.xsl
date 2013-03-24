@@ -2657,7 +2657,8 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:when>
 		<xsl:when test="self::tei:text">
 		  <xsl:value-of
-		      select="concat(tei:generateTitle(ancestor::tei:TEI), ': [',position(),']')"/>
+		      select="tei:generateTitle(ancestor::tei:TEI)"/>
+		  <xsl:value-of select="concat('[',position(),']')"/>
 		</xsl:when>
 		<xsl:otherwise>&#160;</xsl:otherwise>
 	      </xsl:choose>
