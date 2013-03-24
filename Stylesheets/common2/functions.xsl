@@ -204,6 +204,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="contains(@rend,'inline') and not(tei:p)">true</xsl:when>
         <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
         <xsl:when test="self::tei:note[tei:isEndNote(.)]">true</xsl:when>
+        <xsl:when test="self::tei:note[tei:isFootNote(.)]">true</xsl:when>
         <xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
         <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
         <xsl:when test="parent::tei:div">false</xsl:when>
@@ -871,16 +872,26 @@ of this software, even if advised of the possibility of such damage.
   </xsl:function>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>whether a note is to be shown at the end of the page</desc>
+    <desc>whether a note is a footnote</desc>
+  </doc>
+  <xsl:function name="tei:isFootNote" as="xs:boolean">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="@place='foot' or @place='bottom' or @place='parend' or @place='tablefoot'
+		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>whether a note is an endnote</desc>
   </doc>
   <xsl:function name="tei:isEndNote" as="xs:boolean">
     <xsl:param name="context"/>
     <xsl:for-each select="$context">
       <xsl:choose>
-	<xsl:when test="@place='foot' or @place='bottom' or
-			@place='end' or @place='tablefoot'
-		  and not(parent::tei:bibl or
-		  ancestor::tei:teiHeader)">true</xsl:when>
+	<xsl:when test="@place='end'">true</xsl:when>
 	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>

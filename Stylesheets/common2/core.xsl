@@ -938,27 +938,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
-      <xsl:when test="@place='end'">
-        <xsl:choose>
-          <xsl:when test="$consecutiveFNs = 'true'">
-            <xsl:number count="tei:note[./@place='end']" level="any"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:choose>
-              <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[./@place='end' ]" from="tei:front" level="any"/>
-              </xsl:when>
-              <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[./@place='end' ]" from="tei:back" level="any"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:number count="tei:note[./@place='end' ]" from="tei:body" level="any"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
+      <xsl:when test="tei:isEndNote(.)">
         <xsl:choose>
           <xsl:when test="$consecutiveFNs = 'true'">
             <xsl:number count="tei:note[tei:isEndNote(.)]" level="any"/>
@@ -973,6 +953,26 @@ of this software, even if advised of the possibility of such damage.
               </xsl:when>
               <xsl:otherwise>
                 <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:body" level="any"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="$consecutiveFNs = 'true'">
+            <xsl:number count="tei:note[tei:isFootNote(.)]" level="any"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:choose>
+              <xsl:when test="ancestor::tei:front">
+                <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:front" level="any"/>
+              </xsl:when>
+              <xsl:when test="ancestor::tei:back">
+                <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:back" level="any"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:number count="tei:note[tei:isFootNote(.)]" from="tei:body" level="any"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>
@@ -1010,14 +1010,11 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="plainNote"/>
       </xsl:when>
 
-      <xsl:when test="@place='end' or $autoEndNotes='true'">
+      <xsl:when test="tei:isEndNote(.) or $autoEndNotes='true'">
 	<xsl:call-template name="endNote"/>
       </xsl:when>
 
-      <xsl:when test="@place='foot' or 
-		      @place='parend' or
-		      @place='bottom' or
-		      @place='tablefoot'">
+      <xsl:when test="tei:isFootNote(.)">
 	<xsl:call-template name="footNote"/>
       </xsl:when>
 
