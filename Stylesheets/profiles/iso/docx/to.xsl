@@ -375,11 +375,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@place='comment'">
         <xsl:call-template name="commentNote"/>
       </xsl:when>
-      <xsl:when test="@place='foot'  or @place='bottom' or @place='tablefoot'">
-        <xsl:call-template name="footNote"/>
-      </xsl:when>
       <xsl:when test="@place='end'">
         <xsl:call-template name="endNote"/>
+      </xsl:when>
+      <xsl:when test="tei:isEndNote(.)">
+        <xsl:call-template name="footNote"/>
       </xsl:when>
       <xsl:when test="ancestor::tei:cell or ancestor::cals:entry">
         <xsl:call-template name="create-inlinenote"/>

@@ -961,18 +961,18 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
         <xsl:choose>
           <xsl:when test="$consecutiveFNs = 'true'">
-            <xsl:number count="tei:note[@place='foot' or @place='bottom']" level="any"/>
+            <xsl:number count="tei:note[tei:isEndNote(.)]" level="any"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
               <xsl:when test="ancestor::tei:front">
-                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:front" level="any"/>
+                <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:front" level="any"/>
               </xsl:when>
               <xsl:when test="ancestor::tei:back">
-                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:back" level="any"/>
+                <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:back" level="any"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:number count="tei:note[@place='foot' or @place='bottom']" from="tei:body" level="any"/>
+                <xsl:number count="tei:note[tei:isEndNote(.)]" from="tei:body" level="any"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>

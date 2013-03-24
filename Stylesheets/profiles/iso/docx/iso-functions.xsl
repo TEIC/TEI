@@ -319,9 +319,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when
 	      test="self::tei:note[@type='remark']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@type='emphasize']">true</xsl:when>
-	  <xsl:when test="self::tei:note[@place='foot']">true</xsl:when>
-	  <xsl:when test="self::tei:note[@place='bottom']">true</xsl:when>
-	  <xsl:when test="self::tei:note[@place='end']">true</xsl:when>
+	  <xsl:when test="self::tei:note[tei:isEndNote(.)]">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='comment']">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='inline' and parent::tei:q]">true</xsl:when>
 	  <xsl:when test="self::tei:note[@place='inline' and not(parent::tei:div or

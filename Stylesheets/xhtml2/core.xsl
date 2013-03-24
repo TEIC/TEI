@@ -1143,7 +1143,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="number($splitLevel)=-1">
         <xsl:call-template name="makeaNote"/>
-      </xsl:when>
+      </xsl:when>      
       <xsl:when test="ancestor::tei:group"/>
       <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
         <xsl:call-template name="makeaNote"/>
@@ -1159,7 +1159,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="ancestor::tei:listBibl"/>
       <xsl:when test="number($splitLevel)=-1"/>
-      <xsl:when test="@place='foot' or @place='bottom' or @place='end'         or $autoEndNotes='true'">
+      <xsl:when test="tei:isEndNote(.) or $autoEndNotes='true'">
         <xsl:variable name="parent">
 	  <xsl:for-each select="ancestor::tei:*[local-name()='div'
 	    or local-name()='div1'
@@ -1751,6 +1751,11 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:when>
+	      <xsl:when test="self::tei:text and $splitLevel=0">
+		<xsl:for-each select=".//tei:note[tei:isEndNote(.)]">
+		  <xsl:call-template name="makeaNote"/>
+		</xsl:for-each>
+	      </xsl:when>
               <xsl:when test="parent::tei:group and tei:group">
 	      </xsl:when>
               <xsl:otherwise>
