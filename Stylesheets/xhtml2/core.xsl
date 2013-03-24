@@ -453,6 +453,14 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates/>
         </h1>
       </xsl:when>
+      <xsl:when test="parent::tei:figure/parent::tei:head">
+	<span>
+          <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default">false</xsl:with-param>
+	  </xsl:call-template>
+          <xsl:apply-templates/>
+      </span>
+      </xsl:when>
       <xsl:when test="parent::tei:argument">
         <div>
           <xsl:call-template name="makeRendition">
@@ -1419,13 +1427,13 @@ of this software, even if advised of the possibility of such damage.
 		  <xsl:copy-of select="current-group()"/>
 		</xsl:when>
 		<xsl:otherwise>
-		  <p>
+		  <xsl:element name="{$wrapperElement}">
 		    <xsl:copy-of select="$CLASS/html:freddy/@*"/>
 		    <xsl:if test="position()=1">
 		      <xsl:copy-of select="$ID/html:freddy/@*"/>
 		    </xsl:if>
 		    <xsl:copy-of select="current-group()"/>
-		  </p>
+		  </xsl:element>
 		</xsl:otherwise>
 	      </xsl:choose>
 	  </xsl:for-each-group>
@@ -1442,6 +1450,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template match="tei:q|tei:said">
     <xsl:choose>
+      <xsl:when test="count(*)=1 and tei:floatingText">
+          <xsl:apply-templates/>
+      </xsl:when>
       <xsl:when test="not(tei:is-inline(.)) or *[not(tei:is-inline(.))]">
         <div>
 	  <xsl:call-template name="makeRendition">

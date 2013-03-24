@@ -201,11 +201,12 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:for-each select="$element">
 	  <xsl:choose>
         <xsl:when test="not(self::*)">true</xsl:when>
-        <xsl:when test="contains(@rend,'inline') and not(tei:p)">true</xsl:when>
+        <xsl:when test="contains(@rend,'inline') and not(tei:p or tei:l)">true</xsl:when>
         <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
         <xsl:when test="self::tei:note[tei:isEndNote(.)]">true</xsl:when>
         <xsl:when test="self::tei:note[tei:isFootNote(.)]">true</xsl:when>
         <xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
+        <xsl:when test="self::tei:q[tei:l and parent::tei:head]">true</xsl:when>
         <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
         <xsl:when test="parent::tei:div">false</xsl:when>
         <xsl:when test="parent::tei:titlePage">false</xsl:when>
@@ -284,7 +285,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:ptr">true</xsl:when>
         <xsl:when test="self::tei:publisher">true</xsl:when>
         <xsl:when test="self::tei:pubPlace">true</xsl:when>
-        <xsl:when test="self::tei:q[tei:l]">false</xsl:when>
         <xsl:when test="self::tei:lb or self::pb">true</xsl:when>
         <xsl:when test="self::tei:quote and tei:lb">false</xsl:when>
         <xsl:when test="self::tei:quote and $autoBlockQuote='true' and string-length(.)&gt;$autoBlockQuoteLength">false</xsl:when>

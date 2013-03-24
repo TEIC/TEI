@@ -164,6 +164,11 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:figure">
     <xsl:choose>
+      <xsl:when test="parent::tei:head">
+	<br/>
+	<xsl:apply-templates/>
+	<br/>
+      </xsl:when>
       <xsl:when test="ancestor::tei:head or @rend='inline' or @place='inline'">
 	<xsl:apply-templates/>
       </xsl:when>
@@ -171,7 +176,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:element name="{if ($outputTarget='html5') then 'figure'  else 'div'}">
+	<xsl:element name="{if ($outputTarget='html5') then 'figure'
+			   else if (tei:is-inline(..)) then 'span'
+			   else 'div'}">
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="auto">figure</xsl:with-param>
 	  </xsl:call-template>
@@ -209,14 +216,16 @@ of this software, even if advised of the possibility of such damage.
 	</figcaption>
       </xsl:when>
       <xsl:otherwise>
-	<div class="caption">
-          <xsl:call-template name="makeRendition"/>
+	<xsl:element name="{if (ancestor::tei:head or ancestor::tei:q) then 'span' else 'div'}">
+          <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default">caption</xsl:with-param>
+	  </xsl:call-template>
 	  <xsl:copy-of select="$captionlabel"/>
 	  <xsl:if test="not($captionlabel='')">
 	    <xsl:text>. </xsl:text>
 	  </xsl:if>
 	  <xsl:apply-templates/>
-	</div>
+	</xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
