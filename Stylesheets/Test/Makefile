@@ -92,9 +92,9 @@ test-fo:
 	saxon  test5.xml ../fo2/tei.xsl  $(SAXONOPT)  | xmllint --format - > test5.fo
 	jing fo.xsd test5.fo
 	diff test5.fo expected-results/test5.fo
-	saxon -o:testnotes1.fo testnotes1.xml ../fo2/tei.xsl  $(SAXONOPT)
+	saxon testnotes1.xml ../fo2/tei.xsl  $(SAXONOPT)   | xmllint --format - > testnotes1.fo
 	jing fo.xsd testnotes1.fo
-	diff testnotes1.fo expected-results/testnotes1.fo
+	diff testnotes1.fo expected-results/testnotes1.fo 
 	saxon -o:test24.fo test24.xml ../fo2/tei.xsl $(SAXONOPT)
 	jing fo.xsd test24.fo 
 	diff test24.fo expected-results/test24.fo

@@ -1018,10 +1018,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="footNote"/>
       </xsl:when>
 
-      <xsl:when test="(@place='display' or not(tei:is-inline(.)) or tei:q)">
-	<xsl:call-template name="displayNote"/>
-      </xsl:when>
-
       <xsl:when test="@place='margin' or @place='margin/inline' or
 		      @place='marg1' or
 		      @place='marg2' or
@@ -1030,6 +1026,11 @@ of this software, even if advised of the possibility of such damage.
 		      @place='marginRight'">
 	<xsl:call-template name="marginalNote"/>
       </xsl:when>
+
+      <xsl:when test="(@place='display' or not(tei:is-inline(.)) or tei:q)">
+	<xsl:call-template name="displayNote"/>
+      </xsl:when>
+
       <xsl:when test="@place">
 	<xsl:message terminate="yes">unknown @place for note, <xsl:value-of select="@place"/></xsl:message>
       </xsl:when>
