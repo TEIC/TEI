@@ -436,6 +436,9 @@ Stylesheet constant setting the name of the main output file.
     </xsl:element>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Section-like object</desc>
+  </doc>
     <xsl:template name="makeSection">
       <xsl:param name="level"/>
       <xsl:param name="heading"/>
@@ -444,19 +447,19 @@ Stylesheet constant setting the name of the main output file.
 	        <xsl:value-of select="$heading"/>
       </xsl:element>
       <xsl:choose>
-	        <xsl:when test="$implicitBlock='true'">
-	           <p>
-	              <xsl:apply-templates/>
-	           </p>
-	        </xsl:when>
-	        <xsl:when test="*">
-	           <xsl:apply-templates/>
-	        </xsl:when>
-	        <xsl:otherwise>
-	           <p>
-	              <xsl:apply-templates/>
-	           </p>
-	        </xsl:otherwise>
+	<xsl:when test="$implicitBlock='true'">
+	  <p>
+	    <xsl:apply-templates/>
+	  </p>
+	</xsl:when>
+	<xsl:when test="*">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <p>
+	    <xsl:apply-templates/>
+	  </p>
+	</xsl:otherwise>
       </xsl:choose>
     </xsl:template>
     

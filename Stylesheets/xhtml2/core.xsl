@@ -487,15 +487,13 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element head in heading mode</desc>
   </doc>
   <xsl:template match="tei:head" mode="makeheading">
-    <xsl:if test="preceding-sibling::tei:head">
-      <br/>
-    </xsl:if>
-    <span>
-      <xsl:call-template name="makeRendition">
-	<xsl:with-param name="default">head</xsl:with-param>
-      </xsl:call-template>
-      <xsl:apply-templates/>
-    </span>
+    <xsl:call-template name="splitHTMLBlocks">
+      <xsl:with-param name="element">span</xsl:with-param>
+      <xsl:with-param name="class">head</xsl:with-param>
+      <xsl:with-param name="content">
+	<xsl:apply-templates/>
+      </xsl:with-param>
+    </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element hi</desc>

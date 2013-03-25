@@ -158,18 +158,21 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element figDesc</desc>
    </doc>
-  <xsl:template match="tei:figDesc"/>
+  <xsl:template match="tei:figDesc">
+    <xsl:if test="count(parent::tei:figure/*)=1">
+      <i>
+	<xsl:text>[</xsl:text>
+	<xsl:value-of select="."/>
+	<xsl:text>]</xsl:text>
+      </i>
+    </xsl:if>
+  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element figure</desc>
    </doc>
   <xsl:template match="tei:figure">
     <xsl:choose>
-      <xsl:when test="parent::tei:head">
-	<br/>
-	<xsl:apply-templates/>
-	<br/>
-      </xsl:when>
-      <xsl:when test="ancestor::tei:head or @rend='inline' or @place='inline'">
+      <xsl:when test="@rend='inline' or @place='inline'">
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:when test="parent::tei:ref">
@@ -216,7 +219,7 @@ of this software, even if advised of the possibility of such damage.
 	</figcaption>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:element name="{if (ancestor::tei:head or ancestor::tei:q) then 'span' else 'div'}">
+	<xsl:element name="{if (ancestor::tei:q) then 'span' else 'div'}">
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">caption</xsl:with-param>
 	  </xsl:call-template>

@@ -7,10 +7,13 @@
   <xsl:template name="microdata">
     <xsl:choose>
       <xsl:when test="self::p"/>
-      <xsl:when test="starts-with(local-name(),'div')">
-	<xsl:attribute name="itemscope">itemscope</xsl:attribute>
-	<xsl:attribute name="itemtype">http://www.tei-c.org/ns/1.0/</xsl:attribute>
-      </xsl:when>
+      <xsl:when test="starts-with(local-name(),'div')"/>
+      <!--
+	  <xsl:when test="starts-with(local-name(),'div')">
+	  <xsl:attribute name="itemscope">itemscope</xsl:attribute>
+	  <xsl:attribute name="itemtype">http://www.tei-c.org/ns/1.0/</xsl:attribute>
+	  </xsl:when>
+      -->
       <xsl:when test="self::docDate|self::date">
 	<xsl:attribute name="itemprop">date</xsl:attribute>
       </xsl:when>

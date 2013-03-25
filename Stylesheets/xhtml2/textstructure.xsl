@@ -986,34 +986,21 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:otherwise>
 	  <xsl:if test="not($Depth = '')">
 	    <xsl:variable name="Heading">
-	      <xsl:element name="{if (number($Depth)+$divOffset &gt;6) then 'div'
-						       else concat('h',number($Depth) +
-						       $divOffset)}">
+	      <xsl:variable name="ename" select="if (number($Depth)+$divOffset &gt;6) then 'div'
+						       else
+						       concat('h',number($Depth)+$divOffset)">
+	      </xsl:variable>
+	      <xsl:call-template name="splitHTMLBlocks">
+		<xsl:with-param name="element" select="$ename"/>
+		<xsl:with-param name="content">
+		  <xsl:apply-templates select="tei:head"/>
+		  <xsl:call-template name="sectionHeadHook"/>
+		  <xsl:copy-of select="$headertext"/>	 
+		</xsl:with-param>
+		<xsl:with-param name="copyid">false</xsl:with-param>
+	      </xsl:call-template>
+	      </xsl:variable>
 	      <xsl:choose>
-		<xsl:when test="@rend">
-		  <xsl:call-template name="makeRendition"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <xsl:for-each select="tei:head[1]">
-		    <xsl:call-template name="makeRendition">
-		      <xsl:with-param name="default">
-			<xsl:choose>
-			  <xsl:when test="number($Depth)&gt;5">
-			    <xsl:text>div</xsl:text>
-			    <xsl:value-of select="$Depth"/>
-			  </xsl:when>
-			  <xsl:otherwise>false</xsl:otherwise>
-			</xsl:choose>
-		      </xsl:with-param>
-		    </xsl:call-template>
-		  </xsl:for-each>
-		</xsl:otherwise>
-	      </xsl:choose>
-	      <xsl:call-template name="sectionHeadHook"/>
-	      <xsl:copy-of select="$headertext"/>	 
-	      </xsl:element>     
-	    </xsl:variable>
-	    <xsl:choose>
 	      <xsl:when test="$outputTarget='html5' and number($Depth)  &lt; 1">
 		<header>
 		  <xsl:copy-of select="$Heading"/>
