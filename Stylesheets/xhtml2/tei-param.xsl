@@ -764,4 +764,69 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 
   <xsl:param name="mediaoverlay">false</xsl:param>
 
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] break up a block content (h1, p etc) so that it
+    breaks around nested  HTML blocks</desc>
+  </doc>
+  <xsl:template  name="splitHTMLBlocks">
+    <xsl:param name="copyid">true</xsl:param>
+    <xsl:param name="element"/>
+    <xsl:param name="content"/>
+    <xsl:param name="class">false</xsl:param>
+    <xsl:variable name="CLASS">
+	<freddy>
+	  <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default" select="$class"/>
+	  </xsl:call-template>
+	</freddy>
+    </xsl:variable>
+    <xsl:variable name="ID">
+      <freddy>
+	<xsl:choose>
+	  <xsl:when test="not($copyid='true')"/>
+	  <xsl:when test="@xml:id">
+	    <xsl:call-template name="makeAnchor">
+	      <xsl:with-param name="name">
+		<xsl:value-of select="@xml:id"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:when test="$generateParagraphIDs='true' and $element='p'">
+	    <xsl:call-template name="makeAnchor">
+	      <xsl:with-param name="name">
+		<xsl:value-of select="generate-id()"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	</xsl:choose>
+      </freddy>
+    </xsl:variable>
+    <xsl:for-each-group select="$content/node()" 		
+			group-adjacent="if (self::html:ol or
+					self::html:ul or
+					self::html:dl or
+					self::html:pre or
+					self::html:figure or
+					self::html:blockquote or
+					self::html:div) then 1
+					else 2">
+      <xsl:choose>
+	<xsl:when test="current-grouping-key()=1">
+	  <xsl:copy-of select="current-group()"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:element name="{$element}">
+	    <xsl:copy-of select="$CLASS/html:freddy/@*"/>
+	    <xsl:if test="position()=1">
+	      <xsl:copy-of select="$ID/html:freddy/@*"/>
+	    </xsl:if>
+	    <xsl:copy-of select="current-group()"/>
+	  </xsl:element>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each-group>
+  </xsl:template>
+   
 </xsl:stylesheet>
