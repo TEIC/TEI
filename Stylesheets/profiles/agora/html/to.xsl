@@ -111,12 +111,13 @@ This page is made available under the Creative Commons General Public License "A
 </xsl:template>
 
   <xsl:template match="tei:div[@type='bibliography']">
-<div class="refs">
-<xsl:if test='not(tei:head)'>
-<h2><span class="head">References</span></h2>
-</xsl:if>
+    <div class="refs">
+      <xsl:if test='not(tei:head)'>
+	<h2><span class="head">References</span></h2>
+      </xsl:if>
       <xsl:apply-templates/>
-</div>  </xsl:template>
+    </div>  
+  </xsl:template>
 
 <!-- replace template for listbibl -->
 <xsl:template match="tei:listBibl">
@@ -142,12 +143,13 @@ This page is made available under the Creative Commons General Public License "A
 </xsl:template>
 
   <xsl:template match="tei:div[@type='abstract']">
-<div class="abstract">
-<xsl:if test='not(tei:head)'>
-<h2><span class="head">Abstract</span></h2>
-</xsl:if>
+    <div class="abstract">
+      <xsl:if test='not(tei:head)'>
+	<h2><span class="head">Abstract</span></h2>
+      </xsl:if>
       <xsl:apply-templates/>
-</div>  </xsl:template>
+    </div>  
+  </xsl:template>
 
 
 <!-- these seem to be inherited -->

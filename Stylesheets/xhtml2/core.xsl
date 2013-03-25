@@ -501,9 +501,12 @@ of this software, even if advised of the possibility of such damage.
 					   else if (@rend='superscript') then 'sup' 
 					   else if (@rend='code') then 'code' else 'span'"/>
     <xsl:choose>
-      <xsl:when test="tei:note[@place='margin']">
+      <xsl:when test="tei:note[@place='margin'] or tei:q/tei:l">
 	<xsl:for-each-group select="*|text()"
-			    group-adjacent="if (self::tei:note)  then 1  else 2">
+			    group-adjacent="if (self::tei:note)  then
+					    1  else if
+					    (self::tei:q/tei:l) then 1
+					    else 2">
 	  <xsl:choose>
 	    <xsl:when test="current-grouping-key()=1">
 	      <xsl:apply-templates select="current-group()"/>
@@ -1086,7 +1089,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:when test="$outputTarget='html5'">
               <xsl:apply-templates/>
             </xsl:when>
-            <xsl:when test="tei:q">
+            <xsl:when test="tei:q|tei:p">
               <xsl:apply-templates/>
             </xsl:when>
             <xsl:otherwise>
@@ -1404,7 +1407,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="count(*)=1 and tei:floatingText">
           <xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="not(tei:is-inline(.)) or *[not(tei:is-inline(.))]">
+      <xsl:when test="tei:floatingText or not(tei:is-inline(.)) or *[not(tei:is-inline(.))]">
         <div>
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="auto">blockquote</xsl:with-param>

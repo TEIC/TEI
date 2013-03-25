@@ -206,7 +206,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:note[tei:isEndNote(.)]">true</xsl:when>
         <xsl:when test="self::tei:note[tei:isFootNote(.)]">true</xsl:when>
         <xsl:when test="@rend='display' or @rend='block'">false</xsl:when>
-        <xsl:when test="tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
+        <xsl:when test="tei:table or tei:figure or tei:list or tei:lg or tei:l or tei:p or tei:biblStruct or tei:sp or tei:floatingText">false</xsl:when>
         <xsl:when test="parent::tei:div">false</xsl:when>
         <xsl:when test="parent::tei:titlePage">false</xsl:when>
         <xsl:when test="self::tei:cit[not(@rend)]">true</xsl:when>

@@ -191,7 +191,16 @@ of this software, even if advised of the possibility of such damage.
 	    </xsl:attribute>
 	  </xsl:if>
 	  <xsl:call-template name="figureHook"/>
-	  <xsl:apply-templates/>
+	  <xsl:choose>
+	    <xsl:when test="not(*)">
+	      <i>
+		<xsl:text>[figure]</xsl:text>
+	      </i>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:apply-templates/>
+	    </xsl:otherwise>
+	  </xsl:choose>
 	</xsl:element>
       </xsl:otherwise>
     </xsl:choose>

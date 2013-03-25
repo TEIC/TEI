@@ -218,7 +218,11 @@ of this software, even if advised of the possibility of such damage.
 		    <xsl:when test="not(tei:head) and tei:front//tei:titlePart/tei:title">
 			<xsl:apply-templates mode="plain" select="tei:front//tei:titlePart/tei:title"/>
 		    </xsl:when>	
-		    <xsl:when test="tei:head">
+		    <xsl:when test="tei:head and count(tei:head/*)=1 and tei:head/tei:figure">
+		      <xsl:text>[figure]</xsl:text>
+		    </xsl:when>
+		    <xsl:when test="tei:head and
+				    not(tei:head[count(*)=1 and tei:figure])">
 			<xsl:apply-templates mode="plain" select="tei:head"/>
 		    </xsl:when>
 		    <xsl:when test="$autoHead='true'">
