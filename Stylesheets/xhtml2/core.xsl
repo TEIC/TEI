@@ -1383,72 +1383,26 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:element>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:variable name="CLASS">
-	  <freddy>
-	    <xsl:call-template name="makeRendition">
-	      <xsl:with-param name="default">false</xsl:with-param>
-	    </xsl:call-template>
-	  </freddy>
-	</xsl:variable>
-	<xsl:variable name="ID">
-	  <freddy>
-	    <xsl:choose>
-	      <xsl:when test="@xml:id">
-		<xsl:call-template name="makeAnchor">
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="@xml:id"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:when>
-	      <xsl:when test="$generateParagraphIDs='true'">
-		<xsl:call-template name="makeAnchor">
-		  <xsl:with-param name="name">
-		    <xsl:value-of select="generate-id()"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:when>
-	    </xsl:choose>
-	  </freddy>
-	</xsl:variable>
-	<xsl:variable name="pContent">
-	  <xsl:if test="$numberParagraphs='true'">
-	    <xsl:call-template name="numberParagraph"/>
-	  </xsl:if>
-	  <xsl:apply-templates/>
-	</xsl:variable>
-	<xsl:for-each-group select="$pContent/node()" 		
-			      group-adjacent="if (self::html:ol or
-					    self::html:ul or
-					    self::html:dl or
-					    self::html:pre or
-					    self::html:figure or
-					    self::html:blockquote or
-					    self::html:div) then 1
-					    else 2">
-	      <xsl:choose>
-		<xsl:when test="current-grouping-key()=1">
-		  <xsl:copy-of select="current-group()"/>
-		</xsl:when>
-		<xsl:otherwise>
-		  <p>
-		    <xsl:copy-of select="$CLASS/html:freddy/@*"/>
-		    <xsl:if test="position()=1">
-		      <xsl:copy-of select="$ID/html:freddy/@*"/>
-		    </xsl:if>
-		    <xsl:copy-of select="current-group()"/>
-		  </p>
-		</xsl:otherwise>
-	      </xsl:choose>
-	  </xsl:for-each-group>
+	<xsl:call-template name="splitHTMLBlocks">
+	  <xsl:with-param name="element">p</xsl:with-param>
+	  <xsl:with-param name="content">
+	    <xsl:if test="$numberParagraphs='true'">
+	      <xsl:call-template name="numberParagraph"/>
+	    </xsl:if>
+	    <xsl:apply-templates/>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+  
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>How to number paragraphs</desc>
-  </doc>
-  <xsl:template name="numberParagraph">
-    <span class="numberParagraph">
-      <xsl:number/>
+    </doc>
+    <xsl:template name="numberParagraph">
+      <span class="numberParagraph">
+	<xsl:number/>
     </span>
   </xsl:template>
   <xsl:template match="tei:q|tei:said">
@@ -2025,6 +1979,70 @@ of this software, even if advised of the possibility of such damage.
     <xsl:if test="tei:biblStruct/tei:monogr"><xsl:apply-templates select="tei:biblStruct/tei:monogr" mode="mla"/></xsl:if>
   </xsl:template>
 
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] break up a block content (h1, p etc) so that it
+    breaks around nested  HTML blocks</desc>
+  </doc>
+  <xsl:template  name="splitHTMLBlocks">
+    <xsl:param name="copyid">true</xsl:param>
+    <xsl:param name="element"/>
+    <xsl:param name="content"/>
+    <xsl:param name="class">false</xsl:param>
+    <xsl:variable name="CLASS">
+	<freddy>
+	  <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default" select="$class"/>
+	  </xsl:call-template>
+	</freddy>
+    </xsl:variable>
+    <xsl:variable name="ID">
+      <freddy>
+	<xsl:choose>
+	  <xsl:when test="not($copyid='true')"/>
+	  <xsl:when test="@xml:id">
+	    <xsl:call-template name="makeAnchor">
+	      <xsl:with-param name="name">
+		<xsl:value-of select="@xml:id"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	  <xsl:when test="$generateParagraphIDs='true' and $element='p'">
+	    <xsl:call-template name="makeAnchor">
+	      <xsl:with-param name="name">
+		<xsl:value-of select="generate-id()"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:when>
+	</xsl:choose>
+      </freddy>
+    </xsl:variable>
+    <xsl:for-each-group select="$content/node()" 		
+			group-adjacent="if (self::html:ol or
+					self::html:ul or
+					self::html:dl or
+					self::html:pre or
+					self::html:figure or
+					self::html:blockquote or
+					self::html:div) then 1
+					else 2">
+      <xsl:choose>
+	<xsl:when test="current-grouping-key()=1">
+	  <xsl:copy-of select="current-group()"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:element name="{$element}">
+	    <xsl:copy-of select="$CLASS/html:freddy/@*"/>
+	    <xsl:if test="position()=1">
+	      <xsl:copy-of select="$ID/html:freddy/@*"/>
+	    </xsl:if>
+	    <xsl:copy-of select="current-group()"/>
+	  </xsl:element>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each-group>
+  </xsl:template>
+    
 </xsl:stylesheet>
 <!--
       <xsl:when test="$value='quoted'">

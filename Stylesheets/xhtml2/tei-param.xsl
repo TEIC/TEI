@@ -437,12 +437,12 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 	  </div>
 	</xsl:when>
 	<xsl:otherwise>
-         <xsl:element name="h{$level}">
-	   <xsl:attribute name="class">
-	     <xsl:value-of select="$class"/>
-	   </xsl:attribute>
-	   <xsl:copy-of select="$text"/>
-         </xsl:element>
+	  <xsl:call-template name="splitHTMLBlocks">
+	    <xsl:with-param name="element" select="concat('h',$level)"/>
+	    <xsl:with-param name="content" select="$text"/>
+	    <xsl:with-param name="class">maintitle</xsl:with-param>
+	    <xsl:with-param name="copyid">false</xsl:with-param>
+	  </xsl:call-template>
 	</xsl:otherwise>
 	</xsl:choose>
       </xsl:if>

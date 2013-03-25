@@ -201,7 +201,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:for-each select="$element">
 	  <xsl:choose>
         <xsl:when test="not(self::*)">true</xsl:when>
-        <xsl:when test="ancestor::tei:head/parent::tei:div">true</xsl:when>
         <xsl:when test="contains(@rend,'inline') and not(tei:p or tei:l)">true</xsl:when>
         <xsl:when test="self::tei:note[@place='display']">false</xsl:when>
         <xsl:when test="self::tei:note[tei:isEndNote(.)]">true</xsl:when>
@@ -253,7 +252,6 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:ex">true</xsl:when>
         <xsl:when test="self::tei:expan">true</xsl:when>
         <xsl:when test="self::tei:figure[@place='inline']">true</xsl:when>
-        <xsl:when test="self::tei:figure[parent::tei:head]">true</xsl:when>
         <xsl:when test="self::tei:foreign">true</xsl:when>
         <xsl:when test="self::tei:forename">true</xsl:when>
         <xsl:when test="self::tei:gap">true</xsl:when>
