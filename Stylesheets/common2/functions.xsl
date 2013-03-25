@@ -252,7 +252,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:ex">true</xsl:when>
         <xsl:when test="self::tei:expan">true</xsl:when>
         <xsl:when test="self::tei:figure[@place='inline']">true</xsl:when>
-        <xsl:when test="self::tei:foreign">true</xsl:when>
+        <xsl:when test="self::tei:figure">false</xsl:when> 
+        <xsl:when test="self::tei:floatingText">false</xsl:when>
+	<xsl:when test="self::tei:foreign">true</xsl:when>
         <xsl:when test="self::tei:forename">true</xsl:when>
         <xsl:when test="self::tei:gap">true</xsl:when>
         <xsl:when test="self::tei:genName">true</xsl:when>
@@ -266,6 +268,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:idno">true</xsl:when>
         <xsl:when test="self::tei:imprint">true</xsl:when>
         <xsl:when test="self::tei:institution">true</xsl:when>
+        <xsl:when test="self::tei:list">false</xsl:when>
         <xsl:when test="self::tei:locus">true</xsl:when>
         <xsl:when test="self::tei:mentioned">true</xsl:when>
         <xsl:when test="self::tei:monogr">true</xsl:when>
@@ -310,7 +313,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:dynamicContent">true</xsl:when>
         <xsl:when test="self::w:drawing">true</xsl:when>
         <xsl:when test="self::m:oMath">true</xsl:when>
-        <xsl:when test="parent::tei:note[@place='foot' or @place='bottom']">false</xsl:when>
+        <xsl:when test="parent::tei:note[tei:isEndNote(.)]">false</xsl:when>
         <xsl:otherwise>
           <xsl:choose>
             <xsl:when test="empty($element/..)">false</xsl:when>

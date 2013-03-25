@@ -180,7 +180,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
 	<xsl:element name="{if ($outputTarget='html5') then 'figure'
-			   else if (tei:is-inline(..)) then 'span'
+			   else if (tei:is-inline(.)) then 'span'
 			   else 'div'}">
           <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="auto">figure</xsl:with-param>

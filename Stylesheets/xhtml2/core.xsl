@@ -449,17 +449,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="parent" select="local-name(..)"/>
     <xsl:choose>
       <xsl:when test="parent::tei:group or parent::tei:body or parent::tei:front or parent::tei:back">
-        <h1>
-          <xsl:apply-templates/>
-        </h1>
-      </xsl:when>
-      <xsl:when test="parent::tei:figure/parent::tei:head">
-	<span>
-          <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="default">false</xsl:with-param>
-	  </xsl:call-template>
-          <xsl:apply-templates/>
-      </span>
+	<xsl:call-template name="splitHTMLBlocks">
+	  <xsl:with-param name="element">h1</xsl:with-param>
+	  <xsl:with-param name="content">
+	    <xsl:apply-templates/>
+	  </xsl:with-param>
+	  <xsl:with-param name="copyid">false</xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:when test="parent::tei:argument">
         <div>
