@@ -2629,15 +2629,18 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="makeTagsetInfo">
     <xsl:value-of select="@module"/>
-    <xsl:for-each select="key('MODULES',@module)/ancestor::tei:div[last()]">
-      <xsl:text> — </xsl:text>
-      <xsl:call-template name="makeInternalLink">
-        <xsl:with-param name="target" select="@xml:id"/>
-        <xsl:with-param name="ptr" select="true()"/>
-        <xsl:with-param name="dest">
-          <xsl:value-of select="tei:head"/>
-        </xsl:with-param>
-      </xsl:call-template>
+    <xsl:for-each
+	select="key('MODULES',@module)/ancestor::tei:div[last()]">
+      <xsl:if test="@xml:id">
+	<xsl:text> — </xsl:text>
+	<xsl:call-template name="makeInternalLink">
+	  <xsl:with-param name="dest" select="@xml:id"/>
+	  <xsl:with-param name="ptr" select="true()"/>
+	  <xsl:with-param name="body">
+	    <xsl:value-of select="tei:head"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:if>
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="generateChildren">
