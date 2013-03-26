@@ -501,11 +501,9 @@ of this software, even if advised of the possibility of such damage.
 					   else if (@rend='superscript') then 'sup' 
 					   else if (@rend='code') then 'code' else 'span'"/>
     <xsl:choose>
-      <xsl:when test="tei:note[@place='margin'] or tei:q/tei:l">
+      <xsl:when test="tei:note[@place='margin'] or tei:q/tei:l or tei:figure">
 	<xsl:for-each-group select="*|text()"
-			    group-adjacent="if (self::tei:note)  then
-					    1  else if
-					    (self::tei:q/tei:l) then 1
+			    group-adjacent="if (self::tei:note or self::tei:q/tei:l or self::tei:figure)  then 1  
 					    else 2">
 	  <xsl:choose>
 	    <xsl:when test="current-grouping-key()=1">
@@ -1705,6 +1703,12 @@ of this software, even if advised of the possibility of such damage.
           </xsl:variable>
            <xsl:variable name="NOTES">
             <xsl:choose>
+	      <xsl:when test="self::tei:floatingText">
+		<xsl:comment>Notes</xsl:comment>
+		<xsl:for-each select=".//tei:note[tei:isEndNote(.) or tei:isFootNote(.)]">
+		  <xsl:call-template name="makeaNote"/>
+		</xsl:for-each>
+	      </xsl:when>
               <xsl:when test="self::tei:TEI">
                 <xsl:choose>
                   <xsl:when test="$autoEndNotes='true'">
