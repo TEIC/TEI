@@ -1110,7 +1110,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="@place='margin' and parent::tei:hi and not(*)">
-        <span class="margnote">
+        <span class="note{@place}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
@@ -1118,8 +1118,8 @@ of this software, even if advised of the possibility of such damage.
         </span>
       </xsl:when>
       <xsl:when test="@place='margin' and (tei:p or tei:list or
-		      tei:table or tei:lg or *[not(tei:is-inline(.))])">
-        <div class="margnote">
+		      tei:table or tei:lg or ..//tei:q/tei:l or *[not(tei:is-inline(.))])">
+        <div class="note{@place}">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
           </xsl:call-template>
