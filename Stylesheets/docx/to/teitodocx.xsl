@@ -777,7 +777,7 @@ of this software, even if advised of the possibility of such damage.
         <w:rFonts w:ascii="{@iso:font}" w:hAnsi="{@iso:font}"/>
       </xsl:when>
       <!-- typewriter font -->
-      <xsl:when test="contains(@rend,'typewriter') or tei:render-typewriter(.)">
+      <xsl:when test="tei:render-typewriter(.)">
         <w:rFonts w:ascii="Courier" w:hAnsi="Courier"/>
       </xsl:when>
       <xsl:when test="contains(@rend, 'Special') or matches(@iso:style,'font-family')">
@@ -798,9 +798,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:when test="self::tbx:hi[@style='bold']">
         <w:i/>
-      </xsl:when>
-      <xsl:when test="contains(@rend,'bold')">
-        <w:b/>
       </xsl:when>
       <xsl:when test="contains(@rend,'normalweight')">
         <w:b w:val="0"/>
@@ -842,26 +839,20 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
     </xsl:choose>
     <!-- colour -->
+    <xsl:variable name="color" select="tei:render-color(.)"/>
     <xsl:choose>
       <xsl:when test="$renderAddDel='true' and ancestor-or-self::tei:add">
         <w:color w:val="{$addColour}"/>
       </xsl:when>
-      <xsl:when test="contains(@rend,'color(')">
-        <w:color w:val="{substring-before(substring-after(@rend,'color('),')')}"/>
-      </xsl:when>
-      <xsl:when test="starts-with(@rend,'color=')">
-        <w:color w:val="{substring(@rend,7)}"/>
+      <xsl:when test="$color">	
+        <w:color w:val="{$color}"/>
       </xsl:when>
     </xsl:choose>
     <!-- background color -->
-    <xsl:choose>
-      <xsl:when test="contains(@rend,'background(')">
-	<w:highlight w:val="{substring-before(substring-after(@rend,'background('),')')}"/>
-      </xsl:when>
-      <xsl:when test="starts-with(@rend,'background=')">
-	<w:highlight w:val="{substring(@rend,12)}"/>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:variable name="backgroundcolor" select="tei:render-backgroundcolor(.)"/>
+    <xsl:if test="$backgroundcolor">	
+      <w:highlight w:val="{$backgroundcolor}"/>
+    </xsl:if>
     <!-- underline -->
     <xsl:choose>
       <xsl:when test="contains(@rend,'underline') ">
