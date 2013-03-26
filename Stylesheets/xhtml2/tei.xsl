@@ -8,9 +8,9 @@
                 xmlns:tei="http://www.tei-c.org/ns/1.0"
                 xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:html="http://www.w3.org/1999/xhtml"
+		xmlns:m="http://www.w3.org/1998/Math/MathML"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="html a fo rng tei teix
-					 teidocx xs"
+                exclude-result-prefixes="#all"
                 version="2.0">
   <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="tei-param.xsl"/>
@@ -468,6 +468,381 @@ Stylesheet constant setting the name of the main output file.
       <xsl:text>: </xsl:text>
       <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process any element and work out a unique identififying string</desc>
+   </doc>
+  <xsl:template match="*" mode="ident">
+      <xsl:variable name="BaseFile">
+         <xsl:value-of select="$masterFile"/>
+         <xsl:call-template name="addCorpusID"/>
+      </xsl:variable>
+
+      <xsl:choose>
+         <xsl:when test="@xml:id and $useIDs='true'">
+            <xsl:value-of select="@xml:id"/>
+         </xsl:when>
+         <xsl:when test="starts-with(local-name(.),'div') or
+			 self::tei:text">
+            <xsl:variable name="xpath">
+               <xsl:for-each select="ancestor-or-self::tei:*">
+	                 <xsl:value-of select="local-name()"/>
+	                 <xsl:text>.</xsl:text>
+	                 <xsl:number/>
+	                 <xsl:if test="not(position() = last())">
+	                    <xsl:text>_</xsl:text>
+	                 </xsl:if>
+	              </xsl:for-each>
+	           </xsl:variable>
+	           <xsl:value-of select="$BaseFile"/>
+	           <xsl:text>-</xsl:text>
+            <xsl:value-of select="substring-after(substring-after($xpath,'_text.'),'_')"/>
+         </xsl:when>
+         <xsl:when test="self::tei:TEI and parent::tei:teiCorpus">
+	   <xsl:value-of select="$masterFile"/>
+	   <xsl:call-template name="addCorpusID"/>
+	 </xsl:when>
+         <xsl:otherwise>
+	   <xsl:sequence select="concat($BaseFile,'-',local-name(),'-',generate-id())"/>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process any element, trying to make the right hyperlink
+      for it</desc>
+   </doc>
+  <xsl:template match="*" mode="generateLink">
+      <xsl:variable name="ident">
+         <xsl:apply-templates mode="ident" select="."/>
+      </xsl:variable>
+      <xsl:variable name="depth">
+         <xsl:apply-templates mode="depth" select="."/>
+      </xsl:variable>
+      <xsl:variable name="keep" select="tei:keepDivOnPage(.)"/>
+      <xsl:variable name="LINK">
+      <xsl:choose>
+	<xsl:when test="$filePerPage='true'">
+	  <xsl:choose>
+	    <xsl:when test="preceding::tei:pb">
+	      <xsl:apply-templates select="preceding::tei:pb[1]"
+				   mode="ident"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:text>index</xsl:text>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	  <xsl:value-of select="$standardSuffix"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:elementSpec and not($STDOUT='true')">
+	  <xsl:sequence select="concat('ref-',ancestor::tei:elementSpec/@ident,$standardSuffix,'#',$ident)"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:classSpec and not($STDOUT='true')">
+	  <xsl:sequence select="concat('ref-',ancestor::tei:classSpec/@ident,$standardSuffix,'#',$ident)"/>
+	</xsl:when>
+	<xsl:when test="not($keep) and $STDOUT='true' and number($depth) &lt;= number($splitLevel)">
+	  <xsl:sequence select="concat($masterFile,$standardSuffix,$urlChunkPrefix,$ident)"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:back and not($splitBackmatter)">
+	  <xsl:value-of select="concat('#',$ident)"/>
+	</xsl:when>
+	<xsl:when test="ancestor::tei:front and not($splitFrontmatter)">
+	  <xsl:value-of select="concat('#',$ident)"/>
+	</xsl:when>
+	<xsl:when test="self::tei:text and $splitLevel=0">
+	  <xsl:value-of select="concat($ident,$standardSuffix)"/>
+	</xsl:when>
+	<xsl:when test="number($splitLevel)= -1 and
+			ancestor::tei:teiCorpus">
+	  <xsl:value-of select="$masterFile"/>
+	  <xsl:call-template name="addCorpusID"/>
+	  <xsl:value-of select="$standardSuffix"/>
+	  <xsl:value-of select="concat('#',$ident)"/>
+	</xsl:when>
+	<xsl:when test="number($splitLevel)= -1">
+	  <xsl:value-of select="concat('#',$ident)"/>
+	</xsl:when>
+	<xsl:when test="number($depth) &lt;= number($splitLevel) and not($keep)">
+	  <xsl:value-of select="concat($ident,$standardSuffix)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:variable name="parent">
+	    <xsl:call-template name="locateParentDiv"/>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="$STDOUT='true'">
+	      <xsl:sequence select="concat($masterFile,$urlChunkPrefix,$parent,'#',$ident)"/>
+	    </xsl:when>
+	    <xsl:when test="$keep and number($depth=0)">
+	      <xsl:sequence select="concat('#',$ident)"/>
+	    </xsl:when>
+	    <xsl:when test="$keep and number($depth=0)">
+	      <xsl:sequence select="concat('#',$ident)"/>
+	    </xsl:when>
+	    <xsl:when test="$keep">
+	      <xsl:sequence select="concat($masterFile,$standardSuffix,'#',$ident)"/>
+	    </xsl:when>
+	    <xsl:when test="parent::tei:div and tei:keepDivOnPage(parent::tei:div)">
+	      <xsl:sequence select="concat('#',$ident)"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:otherwise>
+      </xsl:choose>
+      </xsl:variable>
+      <!--
+      	  <xsl:message>GENERATELINK <xsl:value-of
+	  select="(name(),$ident,$depth,string($keep),$LINK)"
+	  separator="|"/></xsl:message>
+      -->
+      <xsl:value-of select="$LINK"/>
+      
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+         <p>Process element TEI in generateLink mode</p>
+         <p>
+            <p xmlns="http://www.w3.org/1999/xhtml"> when a &lt;div&gt; is referenced, see whether its plain
+        anchor, or needs a parent HTML name prepended </p>
+         </p>
+      </desc>
+   </doc>
+  <xsl:template match="tei:TEI" mode="generateLink">
+      <xsl:variable name="BaseFile">
+	<xsl:apply-templates select="." mode="ident"/>
+      </xsl:variable>
+      <xsl:value-of select="concat($BaseFile,$standardSuffix)"/>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>Process elements tei:* in toc mode</p>
+      <p>
+        <p xmlns="http://www.w3.org/1999/xhtml"> anything with a head can go in the TOC </p>
+      </p>
+      <param name="forcedepth">forcedepth</param>
+    </desc>
+  </doc>
+  <xsl:template match="tei:*" mode="maketoc">
+    <xsl:param name="forcedepth"/>
+    <xsl:variable name="myName">
+      <xsl:value-of select="local-name(.)"/>
+    </xsl:variable>
+    <xsl:if test="tei:head or $autoHead='true'">
+      <xsl:variable name="Depth">
+        <xsl:choose>
+          <xsl:when test="not($forcedepth='')">
+            <xsl:value-of select="$forcedepth"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$tocDepth"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="thislevel">
+        <xsl:choose>
+          <xsl:when test="$myName = 'div'">
+            <xsl:value-of select="count(ancestor::tei:div)"/>
+          </xsl:when>
+          <xsl:when test="starts-with($myName,'div')">
+            <xsl:value-of select="number(substring-after($myName,'div')) - 1"/>
+          </xsl:when>
+          <xsl:otherwise>99</xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="pointer">
+        <xsl:apply-templates mode="generateLink" select="."/>
+      </xsl:variable>
+      <li>
+        <xsl:attribute name="class">
+          <xsl:text>toc</xsl:text>
+          <xsl:if test="not($autoHead='true') and not(tei:head or @n)"> headless</xsl:if>
+	  <xsl:if test=".//m:math and  $outputTarget='epub3'">
+	      <xsl:attribute
+		  name="class"> contains-mathml</xsl:attribute>
+	  </xsl:if>
+        </xsl:attribute>
+        <xsl:call-template name="header">
+          <xsl:with-param name="toc" select="$pointer"/>
+          <xsl:with-param name="minimal">false</xsl:with-param>
+          <xsl:with-param name="display">plain</xsl:with-param>
+        </xsl:call-template>
+        <xsl:if test="$thislevel &lt; $Depth">
+          <xsl:call-template name="continuedToc"/>
+        </xsl:if>
+      </li>
+    </xsl:if>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process extra elements in generateLink mode</desc>
+   </doc>
+  <xsl:template match="tei:label|tei:figure|tei:table|tei:item|tei:p|tei:title|tei:bibl|tei:anchor|tei:cell|tei:lg|tei:list|tei:sp"
+                 mode="generateLink">
+      <xsl:variable name="ident">
+         <xsl:apply-templates mode="ident" select="."/>
+      </xsl:variable>
+      <xsl:variable name="file">
+         <xsl:apply-templates mode="generateLink"
+                              select="ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
+      </xsl:variable>
+      <xsl:choose>
+         <xsl:when test="starts-with($file,'#')">
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="$ident"/>
+         </xsl:when>
+         <xsl:when test="contains($file,'#')">
+            <xsl:value-of select="substring-before($file,'#')"/>
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="$ident"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:value-of select="$file"/>
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="$ident"/>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process element note</desc>
+   </doc>
+  <xsl:template match="tei:note" mode="generateLink">
+    <xsl:variable name="file">
+      <xsl:apply-templates mode="generateLink"
+			   select="ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="starts-with($file,'#')"/>
+      <xsl:when test="contains($file,'#')">
+            <xsl:value-of select="substring-before($file,'#')"/>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:value-of select="$file"/>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:text>#</xsl:text>
+      <xsl:call-template name="noteID"/>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[html] <param name="where">where</param>
+      </desc>
+   </doc>
+  <xsl:template name="generateEndLink">
+      <xsl:param name="where"/>
+      <xsl:choose>
+	<xsl:when test="id($where)">
+	  <xsl:apply-templates mode="generateLink" select="id($where)"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>[[undefined </xsl:text>
+	  <xsl:value-of select="$where"/>
+	  <xsl:text>]]</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>[html] Find the name of the outermost container for the
+      current object which would create an output file</desc>
+   </doc>
+  <xsl:template name="locateParentDiv">
+
+      <xsl:choose>
+
+	<xsl:when
+	     test="ancestor-or-self::tei:body/parent::tei:text/ancestor::tei:group">
+            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
+         </xsl:when>
+
+	 <xsl:when test="ancestor-or-self::tei:front/parent::tei:text/ancestor::tei:group">
+            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
+         </xsl:when>
+
+	 <xsl:when test="ancestor-or-self::tei:back/parent::tei:text/ancestor::tei:group">
+            <xsl:apply-templates mode="ident" select="ancestor::tei:text[1]"/>
+         </xsl:when>
+
+         <xsl:when test="ancestor-or-self::tei:div and number($splitLevel) &lt; 0">
+            <xsl:apply-templates mode="ident" select="ancestor::tei:div[last()]"/>
+         </xsl:when>
+
+         <xsl:when test="ancestor-or-self::tei:div">
+	   <xsl:variable name="ancestors" select="count(ancestor-or-self::tei:div)"/>
+	   <xsl:variable name="diff" select="$ancestors - number($splitLevel)"/>
+	   <xsl:variable name="what" select="if ($diff &lt;= 1) then 1
+					     else $diff "/>
+	   <xsl:apply-templates mode="ident" select="ancestor-or-self::tei:div[$what]"/>
+         </xsl:when>
+
+         <xsl:otherwise>
+	   <xsl:variable name="ancestors" select="count(ancestor::tei:*[local-name()='div1'
+				 or local-name()='div2'
+				 or local-name()='div3'
+				 or local-name()='div4'
+				 or local-name()='div5'
+				 or local-name()='div6'])"/>
+	   <xsl:variable name="what"
+			 select="if
+				 ($ancestors &lt; number($splitLevel)) then 1 else
+				 $ancestors - number($splitLevel) +1"/>
+            <xsl:apply-templates mode="ident"
+				 select="ancestor-or-self::tei:*[local-name()='div1'
+				 or local-name()='div2'
+				 or local-name()='div3'
+				 or local-name()='div4'
+				 or local-name()='div5'
+				 or local-name()='div6'][$what]"/>
+         </xsl:otherwise>
+      </xsl:choose>
+
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process cross-ref to note</desc>
+   </doc>
+  <xsl:template match="tei:note" mode="xref">
+      <xsl:number level="any"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>formatting of the number part of a header</desc>
+   </doc>
+  <xsl:template name="formatHeadingNumber">
+      <xsl:param name="text"/>
+      <xsl:param name="toc"/>
+      <xsl:if test="not($text='')">
+	<span class="headingNumber">
+	  <xsl:copy-of select="$text"/>
+	</span>
+      </xsl:if>
+  </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>whether a div starts a new page</desc>
+  </doc>
+  <xsl:function name="tei:keepDivOnPage" as="xs:boolean">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<!-- 4. we are part of an inner text -->
+	<xsl:when test="ancestor::tei:floatingText">true</xsl:when>
+	<!-- 3. we have special rendering on the document -->
+	<xsl:when test="ancestor::tei:TEI/@rend='all' 
+			or ancestor::tei:TEI/@rend='frontpage' 
+			or ancestor::tei:TEI/@rend='nosplit'">true</xsl:when>
+	<!-- 2. we are a singleton -->
+	<xsl:when test="parent::tei:body[count(*)=1]">true</xsl:when>
+	<!-- 1. we have no proceding sections at top level -->
+	<xsl:when test="not(ancestor::tei:group) and parent::tei:body and
+			not(parent::tei:body/preceding-sibling::tei:front)
+			and not	(preceding-sibling::*)">true</xsl:when>
+	<!-- 0. we are down the hierarchy -->
+	<xsl:when test="@rend='nosplit'">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
 
 
 </xsl:stylesheet>

@@ -210,8 +210,6 @@ of this software, even if advised of the possibility of such damage.
 		    <xsl:when test="self::tei:text">
 		      <xsl:value-of select="if (@n) then @n else concat('[',position(),']')"/>
 		    </xsl:when>
-		    <xsl:when test="@type='title_page'">Title page</xsl:when>
-		    <xsl:when test="@type='index'">Index</xsl:when>
 		    <xsl:when test="not(tei:head) and tei:body/tei:head">
 			<xsl:apply-templates mode="plain" select="tei:body/tei:head"/>
 		    </xsl:when>	
@@ -225,6 +223,9 @@ of this software, even if advised of the possibility of such damage.
 				    not(tei:head[count(*)=1 and tei:figure])">
 			<xsl:apply-templates mode="plain" select="tei:head"/>
 		    </xsl:when>
+		    <xsl:when test="@type='title_page'">Title page</xsl:when>
+		    <xsl:when test="@type='index'">Index</xsl:when>
+		    <xsl:when test="@type='section'">§</xsl:when>
 		    <xsl:when test="$autoHead='true'">
 		      <xsl:call-template name="autoMakeHead">
 			<xsl:with-param name="display" select="$display"/>

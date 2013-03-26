@@ -846,32 +846,6 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>whether a div starts a new page</desc>
-  </doc>
-  <xsl:function name="tei:keepDivOnPage" as="xs:boolean">
-    <xsl:param name="context"/>
-    <xsl:for-each select="$context">
-      <xsl:choose>
-	<!-- 4. we are part of an inner text -->
-	<xsl:when test="ancestor::tei:floatingText">true</xsl:when>
-	<!-- 3. we have special rendering on the document -->
-	<xsl:when test="ancestor::tei:TEI/@rend='all' 
-			or ancestor::tei:TEI/@rend='frontpage' 
-			or ancestor::tei:TEI/@rend='nosplit'">true</xsl:when>
-	<!-- 2. we are a singleton -->
-	<xsl:when test="parent::tei:body[count(*)=1]">true</xsl:when>
-	<!-- 1. we have no proceding sections at top level -->
-	<xsl:when test="not(ancestor::tei:group) and parent::tei:body and
-			not(parent::tei:body/preceding-sibling::tei:front)
-			and not	(preceding-sibling::*)">true</xsl:when>
-	<!-- 0. we are down the hierarchy -->
-	<xsl:when test="@rend='nosplit'">true</xsl:when>
-	<xsl:otherwise>false</xsl:otherwise>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:function>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>whether a note is a footnote</desc>
   </doc>
   <xsl:function name="tei:isFootNote" as="xs:boolean">

@@ -10,9 +10,7 @@
 				xmlns:teix="http://www.tei-c.org/ns/Examples"
 				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 				xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0"
-				exclude-result-prefixes="m a fo html
-							 rng tei teix
-							 teidocx xs" version="2.0">
+				exclude-result-prefixes="#all" version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
     <desc>
       <p> TEI stylesheet dealing with elements from the core module, making
@@ -54,65 +52,6 @@ of this software, even if advised of the possibility of such damage.
       <p>Copyright: 2011, TEI Consortium</p>
     </desc>
   </doc>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>Process elements tei:*</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> anything with a head can go in the TOC </p>
-      </p>
-      <param name="forcedepth">forcedepth</param>
-    </desc>
-  </doc>
-  <xsl:template match="tei:*" mode="maketoc">
-    <xsl:param name="forcedepth"/>
-    <xsl:variable name="myName">
-      <xsl:value-of select="local-name(.)"/>
-    </xsl:variable>
-    <xsl:if test="tei:head or $autoHead='true'">
-      <xsl:variable name="Depth">
-        <xsl:choose>
-          <xsl:when test="not($forcedepth='')">
-            <xsl:value-of select="$forcedepth"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$tocDepth"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
-      <xsl:variable name="thislevel">
-        <xsl:choose>
-          <xsl:when test="$myName = 'div'">
-            <xsl:value-of select="count(ancestor::tei:div)"/>
-          </xsl:when>
-          <xsl:when test="starts-with($myName,'div')">
-            <xsl:value-of select="number(substring-after($myName,'div')) - 1"/>
-          </xsl:when>
-          <xsl:otherwise>99</xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
-      <xsl:variable name="pointer">
-        <xsl:apply-templates mode="generateLink" select="."/>
-      </xsl:variable>
-      <li>
-        <xsl:attribute name="class">
-          <xsl:text>toc</xsl:text>
-          <xsl:if test="not($autoHead='true') and not(tei:head or @n)"> headless</xsl:if>
-	  <xsl:if test=".//m:math and  $outputTarget='epub3'">
-	      <xsl:attribute
-		  name="class"> contains-mathml</xsl:attribute>
-	  </xsl:if>
-        </xsl:attribute>
-        <xsl:call-template name="header">
-          <xsl:with-param name="toc" select="$pointer"/>
-          <xsl:with-param name="minimal">false</xsl:with-param>
-          <xsl:with-param name="display">plain</xsl:with-param>
-        </xsl:call-template>
-        <xsl:if test="$thislevel &lt; $Depth">
-          <xsl:call-template name="continuedToc"/>
-        </xsl:if>
-      </li>
-    </xsl:if>
-  </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element ab</desc>
   </doc>
