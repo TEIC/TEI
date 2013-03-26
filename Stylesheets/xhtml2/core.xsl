@@ -1087,7 +1087,8 @@ of this software, even if advised of the possibility of such damage.
         <xsl:call-template name="makeaNote"/>
       </xsl:when>      
       <xsl:when test="ancestor::tei:group"/>
-      <xsl:when test="ancestor::tei:div[tei:keepDivOnPage(.)]">
+      <xsl:when
+	  test="ancestor::tei:div[not(ancestor::tei:floatingText) and tei:keepDivOnPage(.)]">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
       <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
@@ -1643,12 +1644,15 @@ of this software, even if advised of the possibility of such damage.
            <xsl:variable name="NOTES">
             <xsl:choose>
 	      <xsl:when test="self::tei:floatingText">
-		<xsl:comment>Notes</xsl:comment>
-		<xsl:for-each select=".//tei:note[tei:isEndNote(.) or tei:isFootNote(.)]">
-		  <xsl:call-template name="makeaNote"/>
+		<xsl:variable name="f" select="generate-id()"/>
+		<xsl:comment>Notes in floatingText</xsl:comment>
+		<xsl:for-each select=".//tei:note[tei:isEndNote(.) or
+				      tei:isFootNote(.)]">
+		    <xsl:call-template name="makeaNote"/>
 		</xsl:for-each>
 	      </xsl:when>
               <xsl:when test="self::tei:TEI">
+		<xsl:comment>Notes in TEI</xsl:comment>
                 <xsl:choose>
                   <xsl:when test="$autoEndNotes='true'">
                     <xsl:apply-templates mode="printallnotes" select="key('ALLNOTES',1)"/>

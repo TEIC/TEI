@@ -49,7 +49,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="INDEX" use="1" match="tei:index"/>
   <xsl:key name="PB" match="tei:pb" use="1"/>
   <xsl:key name="NOTES" use="1"
-	   match="tei:note[not(ancestor::tei:note) and (tei:isFootNote(.) or tei:isEndNote(.))]"/>
+	   match="tei:note[tei:isFootNote(.) or tei:isEndNote(.)]"/>
   <xsl:key name="ALLNOTES" use="1"
 	   match="tei:note[not(@place='margin' or @place='inline' or @place='display')
 		  and not(parent::tei:bibl or  ancestor::tei:teiHeader)]"/>
