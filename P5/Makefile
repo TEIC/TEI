@@ -63,6 +63,7 @@ schemas.stamp: check.stamp p5.xml
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 	${TRANG} p5odds.rng p5odds.rnc
+	${TRANG} p5odds-examples.rng p5odds-examples.rnc
 	touch schemas.stamp
 
 html-web: check.stamp p5.xml  html-web.stamp
@@ -232,11 +233,14 @@ dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	Utilities   \
 	VERSION  \
 	Exemplars/Makefile  \
-	Exemplars/relax*  \
-	Exemplars/math*  \
-	Exemplars/svg*  \
-	fasc-head.xml \
-	fasc-tail.xml \
+	Exemplars/mathml2-main.rng \
+	Exemplars/mathml2-qname-1.mod \
+	Exemplars/mathml2-qname-1.mod.rng \
+	Exemplars/mathml2.rng \
+	Exemplars/relaxng.rng \
+	Exemplars/svg-main.rng \
+	Exemplars/svg.rng \
+	Exemplars/svg11.rng \
 	p5.nvdl \
 	p5odds.odd \
 	p5odds.rng \
