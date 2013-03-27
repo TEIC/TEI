@@ -613,7 +613,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element l</desc>
   </doc>
   <xsl:template match="tei:l">
-    <xsl:element name="{if (ancestor::tei:head or ancestor::tei:hi) then 'span' else 'div'}">
+    <xsl:element name="{if (ancestor::tei:hi) then 'span' else 'div'}">
       <xsl:call-template name="makeRendition"/>
       <xsl:choose>
         <xsl:when test="ancestor::tei:div[contains(@rend,'linenumber')]">

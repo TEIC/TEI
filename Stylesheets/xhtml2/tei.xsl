@@ -581,7 +581,7 @@ Stylesheet constant setting the name of the main output file.
 	    <xsl:when test="$keep">
 	      <xsl:sequence select="concat($masterFile,$standardSuffix,'#',$ident)"/>
 	    </xsl:when>
-	    <xsl:when test="parent::tei:div and tei:keepDivOnPage(parent::tei:div)">
+	    <xsl:when test="ancestor::tei:div and tei:keepDivOnPage(ancestor::tei:div[last()])">
 	      <xsl:sequence select="concat('#',$ident)"/>
 	    </xsl:when>
 	    <xsl:otherwise>
