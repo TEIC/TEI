@@ -248,7 +248,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:message>
   </xsl:template>
 
-   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="justcopy">
+   <xsl:template match="comment()" mode="justcopy">
+     <xsl:if test="ancestor::tei:exemplum">
+      <xsl:copy-of select="."/>
+     </xsl:if>
+   </xsl:template>
+   <xsl:template match="@*|text()|processing-instruction()" mode="justcopy">
       <xsl:copy-of select="."/>
    </xsl:template>
 
