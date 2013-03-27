@@ -248,18 +248,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:message>
   </xsl:template>
 
-   <xsl:template match="@*|text()" mode="justcopy">
-      <xsl:copy-of select="."/>
-   </xsl:template>
-
-   <xsl:template match="processing-instruction()" mode="justcopy">
+   <xsl:template match="@*|text()|comment()|processing-instruction()" mode="justcopy">
       <xsl:copy-of select="."/>
    </xsl:template>
 
    <xsl:template match="*" mode="justcopy">
      <xsl:copy>
          <xsl:apply-templates
-	     select="*|@*|processing-instruction()|text()" mode="justcopy"/>
+	     select="*|@*|processing-instruction()|comment()|text()" mode="justcopy"/>
      </xsl:copy>
    </xsl:template>
 
