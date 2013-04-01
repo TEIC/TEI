@@ -8,6 +8,7 @@ p4top5:
 	diff test17.tei expected-results/test17.tei
 
 test-html:
+	../teitorelaxng --odd test.odd test.rng
 	saxon  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
 	saxon test.html checklinks.xsl
@@ -156,12 +157,6 @@ test-docx:
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
 	rm testnotes1.xml.docx.document
-
-conversions-to:
-	roma2 --xsl=`pwd`/.. --nodtd --noxsd test.odd .
-	../odttotei test7.odt test7.xml
-	jing test.rng test7.xml
-	diff test7.xml expected-results/test7.xml
 	../docxtotei test11.docx test11.xml
 	perl -p -i -e 's/Date:[^<]+</</' test11.xml
 	jing test.rng test11.xml
@@ -174,6 +169,11 @@ conversions-to:
 	perl -p -i -e 's/Date:[^<]+</</' test18.xml
 	jing test.rng test18.xml
 	diff test18.xml expected-results/test18.xml
+
+conversions-to: 
+	../odttotei test7.odt test7.xml
+	jing test.rng test7.xml
+	diff test7.xml expected-results/test7.xml
 	rm test.rng test.rnc
 
 oddity:
