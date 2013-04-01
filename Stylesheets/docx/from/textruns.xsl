@@ -287,12 +287,7 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:choose>
 	      <xsl:when test="$effects/*">
 		<xsl:attribute name="rend">
-		  <xsl:for-each select="$effects/*">
-		    <xsl:value-of select="."/>
-		    <xsl:if test="following-sibling::*">
-		      <xsl:text> </xsl:text>
-		    </xsl:if>
-		  </xsl:for-each>
+		  <xsl:value-of select="$effects/*" separator=" "/>
 		</xsl:attribute>
 	      </xsl:when>
 	      <xsl:when test="$preserveEffects='true'">

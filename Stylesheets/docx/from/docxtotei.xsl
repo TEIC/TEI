@@ -29,12 +29,11 @@
                 
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
-                exclude-result-prefixes="a cp dc dcterms dcmitype prop
-					  iso m mml mo mv o pic r rel   html    tbx tei teidocx v xs ve w10 w wne wp">
+                exclude-result-prefixes="#all">
 
 	  <xsl:import href="../../common2/functions.xsl"/>
+	  <xsl:import href="functions.xsl"/>
 	  <xsl:import href="../utils/maths/omml2mml.xsl"/>
-	  <xsl:import href="../utils/functions.xsl"/>
 	  <xsl:import href="../utils/variables.xsl"/>
 	  <xsl:import href="../utils/identity/identity.xsl"/>
 

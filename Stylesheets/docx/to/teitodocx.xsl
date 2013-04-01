@@ -4,7 +4,7 @@
   <xsl:import href="../../common2/header.xsl"/>
   <xsl:import href="../../common2/i18n.xsl"/>
   <xsl:import href="../../common2/functions.xsl"/>
-  <xsl:import href="../utils/functions.xsl"/>
+  <xsl:import href="functions.xsl"/>
   <xsl:import href="../utils/variables.xsl"/>
   <xsl:import href="../utils/identity/identity.xsl"/>
   <xsl:import href="../utils/verbatim/tei-docx-verbatim.xsl"/>
