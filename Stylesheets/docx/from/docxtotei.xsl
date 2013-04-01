@@ -32,10 +32,10 @@
                 exclude-result-prefixes="#all">
 
 	  <xsl:import href="../../common2/functions.xsl"/>
+	  <xsl:import href="../../common2/identity.xsl"/>
 	  <xsl:import href="functions.xsl"/>
-	  <xsl:import href="../utils/maths/omml2mml.xsl"/>
-	  <xsl:import href="../utils/variables.xsl"/>
-	  <xsl:import href="../utils/identity/identity.xsl"/>
+	  <xsl:import href="variables.xsl"/>
+	  <xsl:import href="omml2mml.xsl"/>
 
 	  <xsl:param name="convert-graphics">true</xsl:param>	  
 	  <xsl:param name="convert-headers">true</xsl:param>	  

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                
                 version="2.0">
-
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+	
+	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
-         <p> TEI utility stylesheet for identity transformation </p>
+         <p> TEI Utility stylesheet for making Word docx files from TEI XML (see tei-docx.xsl)</p>
          <p>This software is dual-licensed:
 
 1. Distributed under a Creative Commons Attribution-ShareAlike 3.0
@@ -39,21 +39,32 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </p>
          <p>Author: See AUTHORS</p>
-         <p>Id: $Id$</p>
+         <p>Id: $Id: variables.xsl 9646 2011-11-05 23:39:08Z rahtz $</p>
          <p>Copyright: 2008, TEI Consortium</p>
       </desc>
    </doc>
+	
+	
+   <xsl:variable name="Tabletitle">Table title</xsl:variable>
+	  <xsl:variable name="List2">List 2</xsl:variable>
+	  <xsl:variable name="List3">List 3</xsl:variable>
+	  <xsl:variable name="List4">List 4</xsl:variable>
+	  <xsl:variable name="List5">List 5</xsl:variable>
+	  <xsl:variable name="List">List</xsl:variable>
+	  <xsl:variable name="ListBullet">List Bullet</xsl:variable>
+	  <xsl:variable name="ListBullet2">List Bullet 2</xsl:variable>
+	  <xsl:variable name="ListBullet3">List Bullet 3</xsl:variable>
+	  <xsl:variable name="ListBullet4">List Bullet 4</xsl:variable>
+	  <xsl:variable name="ListBullet5">List Bullet 5</xsl:variable>
+	  <xsl:variable name="ListContinue">List Continue</xsl:variable>
+	  <xsl:variable name="ListContinue2">List Continue 2</xsl:variable>
+	  <xsl:variable name="ListContinue3">List Continue 3</xsl:variable>
+	  <xsl:variable name="ListContinue4">List Continue 4</xsl:variable>
+	  <xsl:variable name="ListContinue5">List Continue 5</xsl:variable>
+	  <xsl:variable name="ListNumber">List Number</xsl:variable>
+	  <xsl:variable name="ListNumber2">List Number 2</xsl:variable>
+	  <xsl:variable name="ListNumber3">List Number 3</xsl:variable>
+	  <xsl:variable name="ListNumber4">List Number 4</xsl:variable>
+	  <xsl:variable name="ListNumber5">List Number 5</xsl:variable>
 
-    <!-- identity transform -->
-    
-    <xsl:template match="@*|text()|comment()|processing-instruction()" mode="iden">
-        <xsl:copy-of select="."/>
-    </xsl:template>
-    
-    <xsl:template match="*" mode="iden">
-        <xsl:copy>
-            <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="iden"/>
-	     </xsl:copy>
-    </xsl:template>
-        
 </xsl:stylesheet>

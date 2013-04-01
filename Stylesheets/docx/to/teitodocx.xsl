@@ -4,11 +4,11 @@
   <xsl:import href="../../common2/header.xsl"/>
   <xsl:import href="../../common2/i18n.xsl"/>
   <xsl:import href="../../common2/functions.xsl"/>
+  <xsl:import href="../../common2/identity.xsl"/>
   <xsl:import href="functions.xsl"/>
-  <xsl:import href="../utils/variables.xsl"/>
-  <xsl:import href="../utils/identity/identity.xsl"/>
-  <xsl:import href="../utils/verbatim/tei-docx-verbatim.xsl"/>
-  <xsl:import href="../utils/maths/mml2omml.xsl"/>
+  <xsl:import href="variables.xsl"/>
+  <xsl:import href="mml2omml.xsl"/>
+  <xsl:import href="tei-docx-verbatim.xsl"/>
   <xsl:import href="../../common2/tei-param.xsl"/>
   <xsl:import href="../../common2/core.xsl"/>
   <xsl:import href="../../common2/figures.xsl"/>
