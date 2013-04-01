@@ -524,9 +524,12 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <blockquote class="closer">
-	      <p>
-		<xsl:apply-templates/>
-	      </p>
+	      <xsl:call-template name="splitHTMLBlocks">
+		<xsl:with-param name="element">p</xsl:with-param>
+		<xsl:with-param name="content">
+		  <xsl:apply-templates/>
+		</xsl:with-param>
+	      </xsl:call-template>
 	    </blockquote>
 	  </xsl:otherwise>
 	</xsl:choose>
