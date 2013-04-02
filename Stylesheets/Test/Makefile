@@ -1,14 +1,16 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: test-html test-latex test-fo test-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant
+default: schema test-html test-latex test-fo test-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant
 
 p4top5:
 	saxon -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
 	diff test17.tei expected-results/test17.tei
 
-test-html:
+schema:
 	../teitorelaxng --odd test.odd test.rng
+
+test-html:
 	saxon  test.xml ../xhtml2/tei.xsl cssFile=../tei.css $(SAXONOPT) | xmllint --format - > test.html
 	diff test.html expected-results/test.html
 	saxon test.html checklinks.xsl
@@ -157,15 +159,18 @@ test-docx:
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
 	rm testnotes1.xml.docx.document
-	../docxtotei test11.docx test11.xml
+	../docxtotei test11.docx temp.xml
+	xmllint --format temp.xml > test11.xml  && rm temp.xml
 	perl -p -i -e 's/Date:[^<]+</</' test11.xml
 	jing test.rng test11.xml
 	diff test11.xml expected-results/test11.xml
-	../docxtotei test19.docx test19.xml
+	../docxtotei test19.docx temp.xml
+	xmllint --format temp.xml > test19.xml  && rm temp.xml
 	perl -p -i -e 's/Date:[^<]+</</' test19.xml
 	jing test.rng test19.xml
 	diff test19.xml expected-results/test19.xml
-	../docxtotei test18.docx test18.xml
+	../docxtotei test18.docx temp.xml
+	xmllint --format temp.xml > test18.xml  && rm temp.xml
 	perl -p -i -e 's/Date:[^<]+</</' test18.xml
 	jing test.rng test18.xml
 	diff test18.xml expected-results/test18.xml

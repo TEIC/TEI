@@ -20,7 +20,7 @@
 		xmlns:its="http://www.w3.org/2005/11/its"
                 xmlns:tbx="http://www.lisa.org/TBX-Specification.33.0.html"
                 version="2.0"
-                exclude-result-prefixes="ve o r m v wp html its w10 w wne mml tbx iso">
+                exclude-result-prefixes="#all">
     <!-- import base conversion style -->
 
     <xsl:import href="../../../docx/from/docxtotei.xsl"/>
@@ -66,7 +66,6 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
     
-    <xsl:output indent="yes"/>
 
     <xsl:template match="@rend[.='Body Text']" mode="pass2"/>
     <xsl:template match="@rend[.='Body Text 2']" mode="pass2"/>

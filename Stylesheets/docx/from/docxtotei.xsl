@@ -129,7 +129,7 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:variable name="styleDoc" select="concat($wordDirectory,'/word/styles.xml')"/>
 	<xsl:strip-space elements="*"/>
 	  <xsl:preserve-space elements="w:t"/>
-	  <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
+	  <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>

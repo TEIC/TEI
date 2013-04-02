@@ -101,12 +101,6 @@ of this software, even if advised of the possibility of such damage.
 	   <xsl:apply-templates/>
        </xsl:when>
 
-       <xsl:when test="$style='mentioned'">
-	 <mentioned>
-	   <xsl:apply-templates/>
-	 </mentioned>
-       </xsl:when>
-
        <xsl:when test="$style='Hyperlink' and ancestor::w:hyperlink">
 	 <xsl:call-template name="basicStyles"/>
        </xsl:when>
@@ -123,31 +117,35 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:value-of select="substring-before(substring-after(.,'&#x0022;'),'&#x0022;')"/>
 	     </xsl:for-each>
 	   </xsl:attribute>
-	   <xsl:call-template name="basicStyles"/>
+	   <xsl:call-template name="basicStyles">
+	     <xsl:with-param name="parented">true</xsl:with-param>
+	   </xsl:call-template>
 	 </ref>
        </xsl:when>
        
-       <xsl:when test="$style='ref'">
-	 <ref>
-	   <xsl:apply-templates/>
-	 </ref>
+       <xsl:when test="starts-with($style,'TEI ')">
+	 <xsl:element name="{substring($style,5)}">
+	   <xsl:call-template name="basicStyles">
+	     <xsl:with-param name="parented">true</xsl:with-param>
+	   </xsl:call-template>
+	 </xsl:element>
        </xsl:when>
-       
-       <xsl:when test="$style='date'">
-	 <date>
-	   <xsl:apply-templates/>
-	 </date>
+
+       <xsl:when test="$style='ref' or $style='date' or
+		       $style='mentioned' or $style='orgName'">
+	 <xsl:element name="{$style}">
+	   <xsl:call-template name="basicStyles">
+	     <xsl:with-param name="parented">true</xsl:with-param>
+	   </xsl:call-template>
+	 </xsl:element>
        </xsl:when>
-       
-       <xsl:when test="$style='orgName'">
-	 <orgName>
-	   <xsl:apply-templates/>
-	 </orgName>
-       </xsl:when>
+
        
        <xsl:when test="not($style='')">
 	 <hi rend="{replace($style,' ','_')}">
-	   <xsl:apply-templates/>
+	   <xsl:call-template name="basicStyles">
+	     <xsl:with-param name="parented">true</xsl:with-param>
+	   </xsl:call-template>
 	 </hi>
        </xsl:when>
        
@@ -160,14 +158,14 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>If there is no special style defined, look at the Word
+      <desc>Look at the Word
       underlying basic formatting. We can ignore the run's font change if 
       a) it's not a special para AND the font is the ISO default, OR 
       b) the font for the run is the same as its parent paragraph.
       </desc>
    </doc>
     <xsl:template name="basicStyles">
-
+      <xsl:param name="parented">false</xsl:param>
       <xsl:variable name="styles">
 	<xsl:if test="w:rPr/w:rFonts//@w:ascii">
 	  <xsl:if test="(not(matches(parent::w:p/w:pPr/w:pStyle/@w:val,'Special')) and not(matches(w:rPr/w:rFonts/@w:ascii,'Calibri'))) or
@@ -275,10 +273,9 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:if>
 		
       </xsl:variable>
-
-	<xsl:choose>
+      <xsl:choose>
 	<xsl:when test="$effects/* or ($styles/* and $preserveEffects='true')">
-	  <hi>
+	  <xsl:element name="{if ($parented='true') then 'seg' else 'hi'}">
 	    <xsl:if test="$dir!='' and $preserveEffects='true'">
 	      <xsl:attribute name="dir"
 			     xmlns="http://www.w3.org/2005/11/its"
@@ -307,7 +304,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:attribute>
 	    </xsl:if>
 	    <xsl:apply-templates/>
-	  </hi>
+	  </xsl:element>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:apply-templates/>
