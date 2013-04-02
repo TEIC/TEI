@@ -167,8 +167,8 @@
    <!-- retain-prefixes:
      If true, namespace declarations will use prefixes from the source
      document if possible. (Doesn't work with MSXML 4.0 or Xalan-J 2.4.0) -->
-  <xsl:param name="retain-prefixes"
-              select="system-property ('xsl:vendor') != 'Microsoft' and     not (starts-with (system-property ('xsl:vendor'), 'Apache'))"/>
+  <xsl:param name="retain-prefixes">true</xsl:param>
+
    <!-- default-ns:
      The uri of the default namespace. There must be at least one
      ns attribute in the schema containing this uri. -->
@@ -185,7 +185,7 @@
     parameter has higher precedence than the prefixes declared
     in the prefix-map parameter and those found in the schema.
   -->
-  <xsl:param name="prefixes"/>
+  <xsl:param name="prefixes">tei=http://www.tei-c.org/ns/1.0 teix=http://www.tei-c.org/ns/Examples rng=http://relaxng.org/ns/structure/1.0</xsl:param>
    <!-- prefix-map:
      A node set containing element nodes like:
 
