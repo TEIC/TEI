@@ -1443,10 +1443,10 @@ of this software, even if advised of the possibility of such damage.
                 </List>
               </xsl:variable>
               <xsl:for-each select="$list/List/Item">
-                <xsl:copy-of select="*|text()"/>
-                <xsl:if test="following-sibling::Item">
+                <xsl:if test="position() &gt; 1">
                   <xsl:call-template name="showSpaceBetweenItems"/>
                 </xsl:if>
+                <xsl:copy-of select="*|text()"/>
               </xsl:for-each>
             </xsl:element>
           </xsl:if>
@@ -1482,10 +1482,10 @@ of this software, even if advised of the possibility of such damage.
                 </List>
               </xsl:variable>
               <xsl:for-each select="$list/List/Item">
-                <xsl:copy-of select="*|text()"/>
-                <xsl:if test="following-sibling::Item">
+                <xsl:if test="position() &gt; 1">
                   <xsl:call-template name="showSpaceBetweenItems"/>
                 </xsl:if>
+                <xsl:copy-of select="*|text()"/>
               </xsl:for-each>
             </xsl:element>
           </xsl:if>
@@ -1521,10 +1521,10 @@ of this software, even if advised of the possibility of such damage.
                 </List>
               </xsl:variable>
               <xsl:for-each select="$list/List/Item">
-                <xsl:copy-of select="*|text()"/>
-                <xsl:if test="following-sibling::Item">
+                <xsl:if test="position() &gt; 1">
                   <xsl:call-template name="showSpaceBetweenItems"/>
                 </xsl:if>
+                <xsl:copy-of select="*|text()"/>
               </xsl:for-each>
             </xsl:element>
           </xsl:if>
@@ -2022,10 +2022,10 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="$list/ClassList/Item">
           <xsl:sort select="@type"/>
           <xsl:sort select="@ident"/>
-          <xsl:copy-of select="*|text()"/>
-          <xsl:if test="following-sibling::Item">
+          <xsl:if test="position() &gt; 1">
             <xsl:call-template name="showSpaceBetweenItems"/>
           </xsl:if>
+          <xsl:copy-of select="*|text()"/>
         </xsl:for-each>
         <xsl:if test="$depth &gt; 1">] </xsl:if>
       </xsl:element>
