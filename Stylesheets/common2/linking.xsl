@@ -112,9 +112,16 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element ptr in xref mode</desc>
    </doc>
   <xsl:template match="tei:ptr">
-      <xsl:call-template name="makeTEILink">
-         <xsl:with-param name="ptr" select="true()"/>
-      </xsl:call-template>
+    <xsl:choose>
+      <xsl:when test="@type='transclude'">
+	<xsl:apply-templates select="doc(@target)"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeTEILink">
+	  <xsl:with-param name="ptr" select="true()"/>
+	</xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element ref</desc>
