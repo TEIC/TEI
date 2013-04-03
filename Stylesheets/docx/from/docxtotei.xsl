@@ -44,6 +44,7 @@
 	  <xsl:param name="tableMethod">tei</xsl:param>	  
 	  <xsl:param name="preserveWordSections">false</xsl:param>	  
 	  <xsl:param name="preserveWordHeadersFooters">false</xsl:param>    	  
+	  <xsl:param name="preserveSoftPageBreaks">false</xsl:param>    	  
 	  <xsl:param name="preserveEffects">false</xsl:param>	  
 	  <xsl:param name="verbose">false</xsl:param>	  
 	  <xsl:param name="processChangeInformation">false</xsl:param>

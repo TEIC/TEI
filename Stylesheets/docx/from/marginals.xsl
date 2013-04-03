@@ -81,7 +81,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
    </doc>
     <xsl:template match="w:footnoteReference">
-        <note place="foot">
+        <note place="foot" xml:id="ftn{@w:id}" n="{@w:id}">
             <xsl:variable name="referenced-id" select="@w:id"/>
             <xsl:for-each select="document(concat($wordDirectory,'/word/footnotes.xml'))//w:footnote[@w:id=$referenced-id]">
                 <xsl:apply-templates mode="paragraph"/>

@@ -314,6 +314,17 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
+        Handle current page breaks inserted by Word
+    </desc>
+   </doc>
+    <xsl:template match="w:lastRenderedPageBreak">
+      <xsl:if test="$preserveSoftPageBreaks='true'">
+	<pb type="soft"/>
+      </xsl:if>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
         Handle Text, Comments, Tabs, Symbols etc. 
     </desc>
    </doc>
@@ -339,8 +350,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:when>
             <xsl:otherwise>
                 <xsl:copy-of select="$t"/>
-            </xsl:otherwise>
-            
+            </xsl:otherwise>            
         </xsl:choose>
     </xsl:template>
     
@@ -583,14 +593,17 @@ of this software, even if advised of the possibility of such damage.
     </desc>
    </doc>
     <xsl:template match="w:br">
-        <xsl:choose>
-            <xsl:when test="@w:type='page'">
-                <pb/>
-            </xsl:when>
-            <xsl:otherwise>
-                <lb/>
-            </xsl:otherwise>
-        </xsl:choose>
+      <xsl:choose>
+	<xsl:when test="@w:type='page'">
+	  <pb/>
+	</xsl:when>
+	<xsl:when test="@w:type='column'">
+	  <cb/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <lb/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
