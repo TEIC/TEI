@@ -572,8 +572,8 @@ Stylesheet constant setting the name of the main output file.
 	    <xsl:when test="$STDOUT='true'">
 	      <xsl:sequence select="concat($masterFile,$urlChunkPrefix,$parent,'#',$ident)"/>
 	    </xsl:when>
-	    <xsl:when test="$keep and number($depth=0)">
-	      <xsl:sequence select="concat('#',$ident)"/>
+	    <xsl:when test="ancestor::tei:group">
+	      <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
 	    </xsl:when>
 	    <xsl:when test="$keep and number($depth=0)">
 	      <xsl:sequence select="concat('#',$ident)"/>
