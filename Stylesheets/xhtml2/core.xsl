@@ -434,36 +434,33 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element hi</desc>
   </doc>
   <xsl:template match="tei:hi">
+    <xsl:variable name="rend">
+      <x>
+	<xsl:call-template name="makeRendition"/>
+      </x>
+    </xsl:variable>
     <xsl:variable name="container" select="if (@rend='sup') then 'sup' 
 					   else if (@rend='sub') then 'sub' 
 					   else if (@rend='subscript') then 'sub' 
 					   else if (@rend='superscript') then 'sup' 
 					   else if (@rend='code') then 'code' else 'span'"/>
-    <xsl:choose>
-      <xsl:when test="tei:note[@place='margin'] or tei:q/tei:l or tei:figure">
-	<xsl:for-each-group select="*|text()"
-			    group-adjacent="if (self::tei:note or self::tei:q/tei:l or self::tei:figure)  then 1  
-					    else 2">
-	  <xsl:choose>
-	    <xsl:when test="current-grouping-key()=1">
-	      <xsl:apply-templates select="current-group()"/>
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:element name="{$container}">
-		<xsl:call-template name="makeRendition"/>
-		<xsl:apply-templates select="current-group()"/>
-	      </xsl:element>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each-group>
-      </xsl:when>
-      <xsl:otherwise>
-	<xsl:element name="{$container}">
-	  <xsl:call-template name="makeRendition"/>
-          <xsl:apply-templates/>
-	</xsl:element>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:for-each-group select="*|text()"
+			group-adjacent="if (self::tei:note or
+					self::tei:q/tei:l or
+					self::tei:list or self::tei:figure)  then 1  
+					else 2">
+      <xsl:choose>
+	<xsl:when test="current-grouping-key()=1">
+	  <xsl:apply-templates select="current-group()"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:element name="{$container}">
+	    <xsl:copy-of select="$rend/*/@*"/>
+	    <xsl:apply-templates select="current-group()"/>
+	  </xsl:element>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each-group>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element item</desc>
@@ -997,7 +994,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="noteID"/>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="parent::tei:div or parent::tei:p or parent::tei:body">
+      <xsl:when test="parent::tei:l or parent::tei:div or parent::tei:p or parent::tei:body">
 	<div class="note">
           <xsl:call-template name="makeAnchor">
             <xsl:with-param name="name" select="$identifier"/>
