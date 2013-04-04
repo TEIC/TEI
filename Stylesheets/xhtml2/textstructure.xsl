@@ -878,26 +878,30 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <xsl:template name="crumbPath">
-      <xsl:param name="crumbRoot">/</xsl:param>
-      <div class="breadcrumb">
-         <xsl:call-template name="preBreadCrumbPath"/>
-         <ul class="breadcrumb">
-            <li class="breadcrumb-first">
-               <a class="breadcrumb" href="{$homeURL}">
-                  <xsl:value-of select="$homeLabel"/>
-               </a>
-            </li>
-            <xsl:call-template name="walkTree">
-               <xsl:with-param name="path">
-                  <xsl:value-of select="substring-after($REQUEST,$crumbRoot)"/>
-               </xsl:with-param>
-               <xsl:with-param name="whole">
-                  <xsl:value-of select="$crumbRoot"/>
-               </xsl:with-param>
-               <xsl:with-param name="class">breadcrumb</xsl:with-param>
-            </xsl:call-template>
-         </ul>
-      </div>
+    <xsl:param name="crumbRoot">/</xsl:param>
+    <xsl:param name="currentID"/>
+    <div class="breadcrumb">
+      <xsl:call-template name="preBreadCrumbPath"/>
+      <ul class="breadcrumb">
+	<li class="breadcrumb-first">
+	  <a class="breadcrumb" href="{$homeURL}">
+	    <xsl:value-of select="$homeLabel"/>
+	  </a>
+	</li>
+	<xsl:call-template name="walkTree">
+	  <xsl:with-param name="path">
+	    <xsl:value-of select="substring-after($REQUEST,$crumbRoot)"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="currentID">
+	    <xsl:value-of select="$currentID"/>
+	  </xsl:with-param>	 
+	  <xsl:with-param name="whole">
+	    <xsl:value-of select="$crumbRoot"/>
+	  </xsl:with-param>
+	  <xsl:with-param name="class">breadcrumb</xsl:with-param>
+	</xsl:call-template>
+      </ul>
+    </div>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
@@ -2569,6 +2573,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="path"/>
       <xsl:param name="class"/>
       <xsl:param name="whole"/>
+      <xsl:param name="currentID"/>
       <xsl:choose>
          <xsl:when test="contains($path,'/')">
             <xsl:variable name="current">
@@ -2580,22 +2585,19 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="aCrumb">
                <xsl:with-param name="crumbBody">
                   <xsl:choose>
-                     <xsl:when test="$rest='index.xsp' and $requestedID=''">
-                        <xsl:value-of select="$current"/>
-                     </xsl:when>
-                     <xsl:when test="$rest='index.xml' and $requestedID=''">
-                        <xsl:value-of select="$current"/>
-                     </xsl:when>
-                     <xsl:otherwise>
-                        <a class="{$class}">
-			  <xsl:attribute name="href">
-			    <xsl:value-of select="$whole"/>
-			    <xsl:value-of select="$current"/>
-			    <xsl:text>/</xsl:text>
-			  </xsl:attribute>
+		    <xsl:when test="$rest='index.xml' and   $requestedID='' and $currentID=''">
+		      <xsl:value-of select="$current"/>
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <a class="{$class}">
+			<xsl:attribute name="href">
+			  <xsl:value-of select="$whole"/>
 			  <xsl:value-of select="$current"/>
-                        </a>
-                     </xsl:otherwise>
+			  <xsl:text>/</xsl:text>
+			</xsl:attribute>
+			<xsl:value-of select="$current"/>
+		      </a>
+		    </xsl:otherwise>
                   </xsl:choose>
                </xsl:with-param>
             </xsl:call-template>
@@ -2603,28 +2605,40 @@ of this software, even if advised of the possibility of such damage.
                <xsl:with-param name="class">
                   <xsl:value-of select="$class"/>
                </xsl:with-param>
+	       <xsl:with-param name="currentID">
+		 <xsl:value-of select="$currentID"/>
+	       </xsl:with-param>
                <xsl:with-param name="path" select="$rest"/>
                <xsl:with-param name="whole">
-	                 <xsl:value-of select="$whole"/>
-	                 <xsl:value-of select="$current"/>
-	                 <xsl:text>/</xsl:text>
-	              </xsl:with-param>
+		 <xsl:value-of select="$whole"/>
+		 <xsl:value-of select="$current"/>
+		 <xsl:text>/</xsl:text>
+	       </xsl:with-param>
             </xsl:call-template>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:if test="not($path='index.xsp' or $path='index.xml')">
-               <xsl:call-template name="aCrumb">
-                  <xsl:with-param name="crumbBody">
-                     <a class="{$class}">
-		       <xsl:attribute name="href">
-			 <xsl:value-of select="$whole"/>
-			 <xsl:value-of select="$path"/>
-		       </xsl:attribute>
+	   <xsl:choose>
+	     <xsl:when test="not($currentID='')">
+	       <xsl:call-template name="aCrumb">
+		 <xsl:with-param name="crumbBody">
+		   <xsl:value-of select="$currentID"/>
+		 </xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:when>      
+	     <xsl:when test="not($path='index.xml')">
+	       <xsl:call-template name="aCrumb">
+		 <xsl:with-param name="crumbBody">
+		   <a class="{$class}">
+		     <xsl:attribute name="href">
+		       <xsl:value-of select="$whole"/>
 		       <xsl:value-of select="$path"/>
-                     </a>
-                  </xsl:with-param>
-               </xsl:call-template>
-            </xsl:if>
+		     </xsl:attribute>
+		     <xsl:value-of select="$path"/>
+		   </a>
+		 </xsl:with-param>
+	       </xsl:call-template>
+	     </xsl:when>
+	   </xsl:choose>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
