@@ -1018,10 +1018,12 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:call-template name="footNote"/>
       </xsl:when>
 
-      <xsl:when test="@place='margin' or @place='margin/inline' or
+      <xsl:when test="@place='margin' or 
+		      @place='margin/inline' or
 		      @place='marg1' or
 		      @place='marg2' or
 		      @place='marg3' or
+		      @place='divend' or
 		      @place='marginOuter' or
 		      @place='marginLeft' or
 		      @place='marginRight'">

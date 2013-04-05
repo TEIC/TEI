@@ -750,25 +750,9 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
   <xsl:template match="tei:opener">
-    <xsl:choose>
-      <xsl:when test="tei:signed|tei:salute">
-	<div class="opener">
-	  <xsl:apply-templates/>
-	</div>
-      </xsl:when>
-      <xsl:when test="tei:p">
-	<blockquote class="opener">
-	  <xsl:apply-templates/>
-	</blockquote>
-      </xsl:when>
-      <xsl:otherwise>
-	<blockquote class="opener">
-	  <p>
-	    <xsl:apply-templates/>
-	  </p>
-	</blockquote>
-      </xsl:otherwise>
-    </xsl:choose>
+    <div class="opener">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

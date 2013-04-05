@@ -175,7 +175,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@rend='inline' or @place='inline'">
 	<xsl:apply-templates/>
       </xsl:when>
-      <xsl:when test="parent::tei:ref">
+      <xsl:when test="parent::tei:ref or parent::tei:label">
 	<xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>

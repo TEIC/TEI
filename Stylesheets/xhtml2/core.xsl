@@ -549,10 +549,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element label</desc>
   </doc>
   <xsl:template match="tei:label">
-    <span>
-      <xsl:call-template name="makeAnchor"/>
       <xsl:apply-templates/>
-    </span>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element label</desc>
@@ -993,48 +990,26 @@ of this software, even if advised of the possibility of such damage.
     <xsl:variable name="identifier">
       <xsl:call-template name="noteID"/>
     </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="parent::tei:l or parent::tei:div or parent::tei:p or parent::tei:body">
-	<div class="note">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
-          </xsl:call-template>
-          <span class="noteLabel">
-            <xsl:choose>
-              <xsl:when test="@n">
-                <xsl:value-of select="@n"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:sequence select="tei:i18n('Note')"/>
-                <xsl:text>: </xsl:text>
-              </xsl:otherwise>
-            </xsl:choose>
-          </span>
-          <xsl:apply-templates/>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
-        <blockquote>
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name" select="$identifier"/>
-          </xsl:call-template>
-          <xsl:call-template name="makeRendition"/>
-          <xsl:choose>
-            <xsl:when test="$outputTarget='html5'">
-              <xsl:apply-templates/>
-            </xsl:when>
-            <xsl:when test="tei:q|tei:p">
-              <xsl:apply-templates/>
-            </xsl:when>
-            <xsl:otherwise>
-              <p>
-                <xsl:apply-templates/>
-              </p>
-            </xsl:otherwise>
-          </xsl:choose>
-        </blockquote>
-      </xsl:otherwise>
-    </xsl:choose>
+    <div class="note">
+      <xsl:call-template name="makeRendition">
+	<xsl:with-param name="auto">note</xsl:with-param>
+      </xsl:call-template>
+      <xsl:call-template name="makeAnchor">
+	<xsl:with-param name="name" select="$identifier"/>
+      </xsl:call-template>
+      <span class="noteLabel">
+	<xsl:choose>
+	  <xsl:when test="@n">
+	    <xsl:value-of select="@n"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:sequence select="tei:i18n('Note')"/>
+	    <xsl:text>: </xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </span>
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
