@@ -162,10 +162,11 @@
   <xsl:apply-templates mode="pass3"/>
  </xsl:template>
 
+<!--
  <xsl:template match="tei:seg" mode="pass3">
   <xsl:value-of select="."/>
  </xsl:template>
-
+-->
  
 
  <xsl:template match="tei:p" mode="pass3">
@@ -206,9 +207,25 @@
    <xsl:attribute name="corresp">
 <xsl:value-of select="$parentN"/>
  	        </xsl:attribute>
-   <xsl:value-of select="substring-before(.,'&lt;')"/>
+<xsl:apply-templates mode="pass3"/>
   </xsl:element>
  </xsl:template>
+
+ <xsl:template match="tei:hi[@rend='reference']/tei:seg" mode="pass3">
+<hi rend="{@rend}">
+<xsl:value-of select="."/>
+</hi>
+</xsl:template>
+
+
+ <xsl:template match="tei:hi[@rend='reference']/text()" mode="pass3">
+<xsl:value-of select='substring-before(.,"&lt;")'/>
+<xsl:if test="not(contains(.,'&lt;'))">
+<xsl:value-of select="."/>
+</xsl:if>
+<xsl:value-of select='substring-after(.,"&gt;")'/>
+</xsl:template>
+
 
  <!-- now some attribute values we want to kill -->
  <xsl:template match="@rend[.='Body Text First Indent']" mode="pass3"/>
