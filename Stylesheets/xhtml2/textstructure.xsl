@@ -538,9 +538,9 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process element dateline</desc>
    </doc>
   <xsl:template match="tei:dateline">
-      <span class="dateline">
+      <div class="dateline">
          <xsl:apply-templates/>
-      </span>
+      </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element divGen[@type='actions']</desc>
