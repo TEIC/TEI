@@ -609,6 +609,13 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:l">
     <xsl:element name="{if (ancestor::tei:hi) then 'span' else 'div'}">
+      <xsl:if test="@xml:id">
+	<xsl:call-template name="makeAnchor">
+	  <xsl:with-param name="name">
+	    <xsl:value-of select="@xml:id"/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:if>
       <xsl:call-template name="makeRendition"/>
       <xsl:choose>
         <xsl:when test="ancestor::tei:div[contains(@rend,'linenumber')]">
@@ -672,20 +679,18 @@ of this software, even if advised of the possibility of such damage.
       </xsl:when>
       <xsl:otherwise>
         <div>
+	  <xsl:if test="@xml:id">
+	    <xsl:call-template name="makeAnchor">
+	      <xsl:with-param name="name">
+		<xsl:value-of select="@xml:id"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:if>
           <xsl:call-template name="makeRendition"/>
           <xsl:apply-templates/>
         </div>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process line inside line group</desc>
-  </doc>
-  <xsl:template match="tei:lg/tei:l">
-    <div>
-      <xsl:call-template name="makeRendition"/>
-      <xsl:apply-templates/>
-    </div>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
@@ -1064,6 +1069,7 @@ of this software, even if advised of the possibility of such damage.
 	  test="ancestor::tei:div[not(ancestor::tei:floatingText) and tei:keepDivOnPage(.)]">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
+      <xsl:when test="ancestor::tei:floatingText"/>
       <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
