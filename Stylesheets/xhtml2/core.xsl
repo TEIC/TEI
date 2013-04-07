@@ -1076,6 +1076,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="whence" select="."/>
     <xsl:choose>
       <xsl:when test="ancestor::tei:listBibl"/>
+      <xsl:when test="ancestor::tei:floatingText"/>
       <xsl:when test="number($splitLevel)=-1"/>
       <xsl:when test="tei:isEndNote(.) or tei:isFootNote(.) or $autoEndNotes='true'">
         <xsl:variable name="parent">

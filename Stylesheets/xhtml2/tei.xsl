@@ -591,9 +591,10 @@ Stylesheet constant setting the name of the main output file.
 	</xsl:otherwise>
       </xsl:choose>
       </xsl:variable>
+
       <!--
-      	  <xsl:message>GENERATELINK <xsl:value-of
-	  select="(name(),$ident,$depth,string($keep),$LINK)"
+      <xsl:message>GENERATELINK <xsl:value-of
+      select="(name(),$ident,$depth,string($keep),$LINK)"
 	  separator="|"/></xsl:message>
       -->
       <xsl:value-of select="$LINK"/>
@@ -686,10 +687,11 @@ Stylesheet constant setting the name of the main output file.
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:apply-templates mode="generateLink"
-				 select="ancestor::tei:floatingText/ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
+				 select="ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
 	  </xsl:otherwise>
 	</xsl:choose>
 	</xsl:variable>
+
       <xsl:choose>
          <xsl:when test="starts-with($file,'#')">
             <xsl:text>#</xsl:text>
