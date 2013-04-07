@@ -447,6 +447,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each-group select="*|text()"
 			group-adjacent="if (self::tei:note or
 					self::tei:q/tei:l or
+					self::tei:q/tei:p or
 					self::tei:list or self::tei:figure)  then 1  
 					else 2">
       <xsl:choose>
@@ -1494,16 +1495,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="tei:biblStruct"/>
       <xsl:if test="child::tei:note"><br/>See: <xsl:apply-templates select="child::tei:note"/></xsl:if>
     </p>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[html] sections in mode for table of contents</desc>
-  </doc>
-  <xsl:template name="continuedToc">
-    <xsl:if test="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
-      <ul class="toc">
-        <xsl:apply-templates mode="maketoc" select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"/>
-      </ul>
-    </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[html] Show relevant footnotes <param name="currentID">currentID</param>

@@ -1005,6 +1005,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@place='comment'">
 	<xsl:call-template name="commentNote"/>
       </xsl:when>
+      <xsl:when test="@place='inline' and tei:p">
+	<xsl:call-template name="displayNote"/>
+      </xsl:when>
       
       <xsl:when test="@place='inline'">
 	<xsl:call-template name="plainNote"/>

@@ -602,10 +602,8 @@ Stylesheet constant setting the name of the main output file.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Process element TEI in generateLink mode</p>
-         <p>
-            <p xmlns="http://www.w3.org/1999/xhtml"> when a &lt;div&gt; is referenced, see whether its plain
+	 <p xmlns="http://www.w3.org/1999/xhtml"> when a &lt;div&gt; is referenced, see whether its plain
         anchor, or needs a parent HTML name prepended </p>
-         </p>
       </desc>
    </doc>
   <xsl:template match="tei:TEI" mode="generateLink">
@@ -617,9 +615,7 @@ Stylesheet constant setting the name of the main output file.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Process elements tei:* in toc mode</p>
-      <p>
-        <p xmlns="http://www.w3.org/1999/xhtml"> anything with a head can go in the TOC </p>
-      </p>
+      <p xmlns="http://www.w3.org/1999/xhtml"> anything with a head can go in the TOC </p>
       <param name="forcedepth">forcedepth</param>
     </desc>
   </doc>

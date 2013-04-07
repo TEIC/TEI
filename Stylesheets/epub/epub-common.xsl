@@ -430,7 +430,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@n">
         <xsl:value-of select="@n"/>
       </xsl:when>
-      <xsl:otherwise>&#160;</xsl:otherwise>
+      <xsl:otherwise>§</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 

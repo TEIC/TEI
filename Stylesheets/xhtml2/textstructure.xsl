@@ -1657,6 +1657,18 @@ of this software, even if advised of the possibility of such damage.
          </ul>
       </xsl:if>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] sections in mode for table of contents</desc>
+  </doc>
+  <xsl:template name="continuedToc">
+    <xsl:if test="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6">
+      <ul class="toc">
+        <xsl:apply-templates mode="maketoc" select="tei:div|tei:div1|tei:div2|tei:div3|tei:div4|tei:div5|tei:div6"/>
+      </ul>
+    </xsl:if>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>[html] </p>
@@ -2696,7 +2708,7 @@ of this software, even if advised of the possibility of such damage.
 		 </xsl:element>
                </xsl:if>
                <xsl:call-template name="stdfooter"/>
-	              <xsl:call-template name="bodyEndHook"/>
+	       <xsl:call-template name="bodyEndHook"/>
             </div>
          </body>
       </html>
@@ -2751,21 +2763,22 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:floatingText">
       <div class="floatingText">
-	        <xsl:for-each select="tei:front">
-	           <div class="floatingText_front">
-	              <xsl:apply-templates/>
-	           </div>
-	        </xsl:for-each>
-	        <xsl:for-each select="tei:body">
-	           <div class="floatingText_body">
-	              <xsl:apply-templates/>
-	           </div>
-	        </xsl:for-each>
-	        <xsl:for-each select="tei:back">
-	           <div class="floatingText_back">
-	              <xsl:apply-templates/>
-	           </div>
-	        </xsl:for-each>
+	<xsl:for-each select="tei:front">
+	  <div class="floatingText_front">
+	    <xsl:apply-templates/>
+	  </div>
+	</xsl:for-each>
+	<xsl:for-each select="tei:body">
+	  <div class="floatingText_body">
+	    <xsl:apply-templates/>
+	  </div>
+	</xsl:for-each>
+	<xsl:for-each select="tei:back">
+	  <div class="floatingText_back">
+	    <xsl:apply-templates/>
+	  </div>
+	</xsl:for-each>
+	<xsl:call-template name="printNotes"/>
       </div>
   </xsl:template>
 
