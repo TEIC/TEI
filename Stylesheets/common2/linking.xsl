@@ -572,4 +572,14 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="default"/>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element head in plain mode</desc>
+  </doc>
+  <xsl:template match="tei:head" mode="plain">
+    <xsl:if test="preceding-sibling::tei:head">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+    <xsl:apply-templates mode="plain"/>
+  </xsl:template>
+
 </xsl:stylesheet>

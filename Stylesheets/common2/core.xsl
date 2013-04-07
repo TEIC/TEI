@@ -58,21 +58,6 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process all elements to find out their nesting depth</desc>
    </doc>
   <xsl:template match="*" mode="depth">99</xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process all elements in plain mode</desc>
-   </doc>
-  <xsl:template match="tei:*" mode="plain">
-      <xsl:apply-templates mode="plain"/>
-  </xsl:template>
-  <xsl:template match="tei:note" mode="plain"/>
-  <xsl:template match="tei:app" mode="plain"/>
-  <xsl:template match="tei:pb" mode="plain"/>
-  <xsl:template match="tei:lb" mode="plain"/>
-  <xsl:template match="tei:figure" mode="plain"/>
-  <xsl:template match="tei:figDesc" mode="plain"/>
-  <xsl:template match="tei:ptr" mode="plain"/>
-
-
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element argument</desc>
@@ -1171,6 +1156,35 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="comment()|@*|processing-instruction()|text()" mode="tite">
     <xsl:copy-of select="."/>
   </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Process element head in plain mode</desc>
+  </doc>
+  <xsl:template match="tei:head" mode="plain">
+    <xsl:if test="preceding-sibling::tei:head">
+      <xsl:text> </xsl:text>
+    </xsl:if>
+    <xsl:apply-templates mode="plain"/>
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Process all elements in plain mode</desc>
+   </doc>
+  <xsl:template match="tei:*" mode="plain">
+      <xsl:apply-templates mode="plain"/>
+  </xsl:template>
+  <xsl:template match="tei:note" mode="plain"/>
+  <xsl:template match="tei:app" mode="plain"/>
+  <xsl:template match="tei:pb" mode="plain"/>
+  <xsl:template match="tei:lb" mode="plain"/>
+  <xsl:template match="tei:figure" mode="plain">
+    <xsl:text>[</xsl:text>
+    <xsl:sequence select="tei:i18n('figureWord')"/>
+    <xsl:text>]</xsl:text>
+  </xsl:template>
+  <xsl:template match="tei:figDesc" mode="plain"/>
+  <xsl:template match="tei:ptr" mode="plain"/>
+
 
 
 </xsl:stylesheet>

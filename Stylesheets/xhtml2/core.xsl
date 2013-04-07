@@ -410,15 +410,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Process element head in plain mode</desc>
-  </doc>
-  <xsl:template match="tei:head" mode="plain">
-    <xsl:if test="preceding-sibling::tei:head">
-      <xsl:text> </xsl:text>
-    </xsl:if>
-    <xsl:apply-templates mode="plain"/>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Process element head in heading mode</desc>
   </doc>
   <xsl:template match="tei:head" mode="makeheading">
@@ -1613,14 +1604,12 @@ of this software, even if advised of the possibility of such damage.
            <xsl:variable name="NOTES">
             <xsl:choose>
 	      <xsl:when test="self::tei:floatingText">
-		<xsl:comment>Notes in floatingText</xsl:comment>
 		<xsl:for-each select=".//tei:note[tei:isEndNote(.) or
 				      tei:isFootNote(.)]">
 		    <xsl:call-template name="makeaNote"/>
 		</xsl:for-each>
 	      </xsl:when>
               <xsl:when test="self::tei:TEI">
-		<xsl:comment>Notes in TEI</xsl:comment>
                 <xsl:choose>
                   <xsl:when test="$autoEndNotes='true'">
                     <xsl:apply-templates mode="printallnotes" select="key('ALLNOTES',1)"/>
@@ -1631,25 +1620,36 @@ of this software, even if advised of the possibility of such damage.
                 </xsl:choose>
               </xsl:when>
 	      <xsl:when test="self::tei:text and $splitLevel=0">
-		<xsl:comment>Notes in text element</xsl:comment>
 		<xsl:for-each select="tei:front|tei:body|tei:back">
-		  <xsl:for-each select=".//tei:note[tei:isEndNote(.) or    tei:isFootNote(.)]">
-		    <xsl:call-template name="makeaNote"/>
+		  <xsl:for-each
+		      select=".//tei:note[tei:isEndNote(.) or
+			      tei:isFootNote(.)]">
+		    <xsl:choose>
+		      <xsl:when
+			  test="ancestor::tei:div[not(ancestor::tei:floatingText) and tei:keepDivOnPage(.)]">
+			<xsl:call-template name="makeaNote"/>
+		      </xsl:when>
+		      <xsl:when test="ancestor::tei:floatingText"/>
+		      <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
+			<xsl:call-template name="makeaNote"/>
+		      </xsl:when>
+		    </xsl:choose>		      
 		  </xsl:for-each>
 		</xsl:for-each>
 	      </xsl:when>
               <xsl:when test="parent::tei:group and tei:group">
 	      </xsl:when>
               <xsl:otherwise>
-		<xsl:comment>Notes in [<xsl:value-of select="name()"/>]</xsl:comment>
                 <xsl:apply-templates mode="printnotes" select=".//tei:note">
                   <xsl:with-param name="whence" select="$me"/>
                 </xsl:apply-templates>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
+	  <xsl:variable name="where" select="name()"/>
           <xsl:for-each select="$NOTES">
             <xsl:if test="html:div">
+	      <xsl:comment>Notes in [<xsl:value-of select="$where"/>]</xsl:comment>
               <div class="notes">
                 <div class="noteHeading">
                   <xsl:sequence select="tei:i18n('noteHeading')"/>
