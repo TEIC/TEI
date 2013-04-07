@@ -109,27 +109,67 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element ptr in xref mode</desc>
+      <desc>Process ptr and ref elements, hypertext pointers</desc>
    </doc>
-  <xsl:template match="tei:ptr">
+  <xsl:template match="tei:ptr|tei:ref">
     <xsl:choose>
-      <xsl:when test="@type='transclude'">
+      <xsl:when test="@type='transclude' and self::tei:ptr">
 	<xsl:apply-templates select="doc(@target)"/>
       </xsl:when>
       <xsl:otherwise>
-	<xsl:call-template name="makeTEILink">
-	  <xsl:with-param name="ptr" select="true()"/>
-	</xsl:call-template>
+	<xsl:variable name="ptr" select="if (self::tei:ptr) then
+					     true() else false()"/>
+	<xsl:variable name="xmllang" select="@xml:lang"/>
+	<xsl:variable name="here" select="."/>
+	<xsl:for-each select="tokenize(normalize-space(@target|@url),' ')">
+	  <xsl:variable name="a" select="."/>
+	  <xsl:for-each select="$here">
+	    <xsl:choose>
+	      <!-- If there is a target attribute starting with #, it is always a local reference -->
+	      <xsl:when test="starts-with($a,'#')">
+		<xsl:call-template name="makeInternalLink">
+		  <xsl:with-param name="target" select="substring($a,2)"/>
+		  <xsl:with-param name="ptr" select="$ptr"/>
+		  <xsl:with-param name="dest">
+		    <xsl:call-template name="generateEndLink">
+		      <xsl:with-param name="where">
+			<xsl:value-of select="substring($a,2)"/>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:when>
+	      <!-- if we are doing TEI P4, all targets are local -->
+	      <xsl:when test="$teiP4Compat='true'">
+		<xsl:call-template name="makeInternalLink">
+		  <xsl:with-param name="target" select="$a"/>
+		  <xsl:with-param name="ptr" select="$ptr"/>
+		  <xsl:with-param name="dest">
+		    <xsl:call-template name="generateEndLink">
+		      <xsl:with-param name="where">
+			<xsl:value-of select="$a"/>
+		      </xsl:with-param>
+		    </xsl:call-template>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:when>
+	      <!-- other uses of target means it is external -->
+	      <xsl:otherwise>
+		<xsl:call-template name="makeExternalLink">
+		  <xsl:with-param name="ptr" select="$ptr"/>
+		  <xsl:with-param name="dest">
+		    <xsl:sequence select="tei:resolveURI($here,$a)"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each> 
+	  <xsl:call-template name="multiTargetSeparator">
+	    <xsl:with-param name="xmllang" select="$xmllang"/>
+	  </xsl:call-template>
+	</xsl:for-each>      
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process element ref</desc>
-   </doc>
-  <xsl:template match="tei:ref">
-      <xsl:call-template name="makeTEILink">
-         <xsl:with-param name="ptr" select="false()"/>
-      </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] Making a heading for something
@@ -315,66 +355,6 @@ of this software, even if advised of the possibility of such damage.
             <xsl:copy-of select="$Text"/>
          </xsl:otherwise>
       </xsl:choose>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-         <p>[common] Make a hypertext link</p>
-         <p>cross-referencing </p>
-         <param name="ptr">ptr</param>
-      </desc>
-   </doc>
-  <xsl:template name="makeTEILink">
-      <!-- is this a ptr or a ref? -->
-      <xsl:param name="ptr" as="xs:boolean" select="false()"/>
-      <xsl:variable name="xmllang" select="@xml:lang"/>
-      <xsl:variable name="here" select="."/>
-      <xsl:for-each select="tokenize(normalize-space(@target|@url),' ')">
-	<xsl:variable name="a" select="."/>
-	<xsl:for-each select="$here">
-	<xsl:choose>
-	  <!-- If there is a target attribute starting with #, it is always a local reference -->
-	  <xsl:when test="starts-with($a,'#')">
-            <xsl:call-template name="makeInternalLink">
-	      <xsl:with-param name="target" select="substring($a,2)"/>
-	      <xsl:with-param name="ptr" select="$ptr"/>
-	      <xsl:with-param name="dest">
-		<xsl:call-template name="generateEndLink">
-		  <xsl:with-param name="where">
-		    <xsl:value-of select="substring($a,2)"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:with-param>
-            </xsl:call-template>
-	  </xsl:when>
-	  <!-- if we are doing TEI P4, all targets are local -->
-	  <xsl:when test="$teiP4Compat='true'">
-            <xsl:call-template name="makeInternalLink">
-	      <xsl:with-param name="target" select="$a"/>
-	      <xsl:with-param name="ptr" select="$ptr"/>
-	      <xsl:with-param name="dest">
-		<xsl:call-template name="generateEndLink">
-		  <xsl:with-param name="where">
-		    <xsl:value-of select="$a"/>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </xsl:with-param>
-            </xsl:call-template>
-	  </xsl:when>
-	  <!-- other uses of target means it is external -->
-	  <xsl:otherwise>
-            <xsl:call-template name="makeExternalLink">
-	      <xsl:with-param name="ptr" select="$ptr"/>
-	      <xsl:with-param name="dest">
-		<xsl:sequence select="tei:resolveURI($here,$a)"/>
-	      </xsl:with-param>
-            </xsl:call-template>
-	  </xsl:otherwise>
-	</xsl:choose>
-	</xsl:for-each> 
-	<xsl:call-template name="multiTargetSeparator">
-	  <xsl:with-param name="xmllang" select="$xmllang"/>
-	</xsl:call-template>
-      </xsl:for-each>      
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
