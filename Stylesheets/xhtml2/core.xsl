@@ -1625,14 +1625,10 @@ of this software, even if advised of the possibility of such damage.
 		      select=".//tei:note[tei:isEndNote(.) or
 			      tei:isFootNote(.)]">
 		    <xsl:choose>
-		      <xsl:when
-			  test="ancestor::tei:div[not(ancestor::tei:floatingText) and tei:keepDivOnPage(.)]">
-			<xsl:call-template name="makeaNote"/>
-		      </xsl:when>
 		      <xsl:when test="ancestor::tei:floatingText"/>
-		      <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
+		      <xsl:otherwise>
 			<xsl:call-template name="makeaNote"/>
-		      </xsl:when>
+		      </xsl:otherwise>
 		    </xsl:choose>		      
 		  </xsl:for-each>
 		</xsl:for-each>
