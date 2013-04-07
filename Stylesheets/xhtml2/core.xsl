@@ -439,7 +439,9 @@ of this software, even if advised of the possibility of such damage.
 			group-adjacent="if (self::tei:note or
 					self::tei:q/tei:l or
 					self::tei:q/tei:p or
-					self::tei:list or self::tei:figure)  then 1  
+					self::tei:table or
+					self::tei:list or 
+					self::tei:figure)  then 1  
 					else 2">
       <xsl:choose>
 	<xsl:when test="current-grouping-key()=1">
