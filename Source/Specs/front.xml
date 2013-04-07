@@ -36,76 +36,58 @@ found  at the start of a document, before the main body.</desc>
     <memberOf key="att.declaring"/>
   </classes>
   <content>
-	    <group  xmlns="http://relaxng.org/ns/structure/1.0">
-	      <zeroOrMore>
-		<ref name="model.global"/>
-	      </zeroOrMore>
-	    <!-- there are two possibilities; either we have div-like elements (div or div1) or we just work
-	    with p-like elements. if the former, there are things that can occur before or after them.-->
-	    <choice>
-	      <group>
-		<zeroOrMore>
-		  <choice>
-		    <ref name="model.frontPart"/>
-		    <ref name="model.pLike"/>
-		    <ref name="model.pLike.front"/>
-		  </choice>
-		</zeroOrMore>
-		<choice>
-		<!-- 1a. has a div1Like, after optional front part -->
-		  <group>
-		    <ref name="model.div1Like"/>
-		    <zeroOrMore>
-		      <choice>
-			<ref name="model.div1Like"/>
-			<ref name="model.frontPart"/>
-			<ref name="model.global"/>
-		      </choice>
-		    </zeroOrMore>
-		  </group>
-		<!-- 1b. has a divLike, after optional front part -->
-		  <group>
-		    <ref name="model.divLike"/>
-		    <zeroOrMore>
-		      <choice>
-			<ref name="model.divLike"/>
-			<ref name="model.frontPart"/>
-			<ref name="model.global"/>
-		      </choice>
-		    </zeroOrMore>
-		  </group>
-		</choice>
-		<!-- and some bottoms, mebbe -->
-		<group>
-		  <optional>
-		    <group>
-		      <ref name="model.divBottom"/>
-		    </group>
-		    <zeroOrMore>
-		      <choice>
-			<ref name="model.divBottom"/>
-			<ref name="model.global"/>
-		      </choice>
-		    </zeroOrMore>
-		  </optional>
-		</group>
-	      </group>
-	      <!-- 2. at least one global or pLike.front -->
-	      <group>
-		<group>
-		  <ref name="model.pLike.front"/>
-		</group>
-		<group>
-		  <zeroOrMore>
-		    <choice>
-		      <ref name="model.pLike.front"/>
-		      <ref name="model.global"/>
-		    </choice>
-		  </zeroOrMore>
-		</group>
-	      </group>
-	    </choice>
-	    </group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <choice>
+          <ref name="model.frontPart"/>
+          <ref name="model.pLike.front"/>
+          <ref name="model.global"/>
+        </choice>
+      </zeroOrMore>
+      <group>
+        <optional>
+          <choice>
+            <group>
+              <group>
+                <ref name="model.div1Like"/>
+              </group>
+              <zeroOrMore>
+                <choice>
+                  <ref name="model.frontPart"/>
+                  <ref name="model.div1Like"/>
+                  <ref name="model.global"/>
+                </choice>
+              </zeroOrMore>
+            </group>
+            <group>
+              <group>
+                <ref name="model.divLike"/>
+              </group>
+              <zeroOrMore>
+                <choice>
+                  <ref name="model.frontPart"/>
+                  <ref name="model.divLike"/>
+                  <ref name="model.global"/>
+                </choice>
+              </zeroOrMore>
+            </group>
+          </choice>
+        </optional>
+      </group>
+      <group>
+        <optional>
+          <group>
+            <ref name="model.divBottomPart"/>
+          </group>
+          <zeroOrMore>
+            <choice>
+              <ref name="model.divBottomPart"/>
+              <ref name="model.global"/>
+            </choice>
+          </zeroOrMore>
+        </optional>
+      </group>
+    </group>
   </content>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
