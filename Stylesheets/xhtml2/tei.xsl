@@ -679,9 +679,17 @@ Stylesheet constant setting the name of the main output file.
          <xsl:apply-templates mode="ident" select="."/>
       </xsl:variable>
       <xsl:variable name="file">
-         <xsl:apply-templates mode="generateLink"
-                              select="ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
-      </xsl:variable>
+	<xsl:choose>
+	  <xsl:when test="ancestor::tei:floatingText">
+	    <xsl:apply-templates mode="generateLink"
+				 select="ancestor::tei:floatingText/ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:apply-templates mode="generateLink"
+				 select="ancestor::tei:floatingText/ancestor::tei:*[starts-with(local-name(),'div')][1]"/>
+	  </xsl:otherwise>
+	</xsl:choose>
+	</xsl:variable>
       <xsl:choose>
          <xsl:when test="starts-with($file,'#')">
             <xsl:text>#</xsl:text>

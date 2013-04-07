@@ -1613,7 +1613,6 @@ of this software, even if advised of the possibility of such damage.
            <xsl:variable name="NOTES">
             <xsl:choose>
 	      <xsl:when test="self::tei:floatingText">
-		<xsl:variable name="f" select="generate-id()"/>
 		<xsl:comment>Notes in floatingText</xsl:comment>
 		<xsl:for-each select=".//tei:note[tei:isEndNote(.) or
 				      tei:isFootNote(.)]">
@@ -1632,13 +1631,17 @@ of this software, even if advised of the possibility of such damage.
                 </xsl:choose>
               </xsl:when>
 	      <xsl:when test="self::tei:text and $splitLevel=0">
-		<xsl:for-each select=".//tei:note[tei:isEndNote(.) or tei:isFootNote(.)]">
-		  <xsl:call-template name="makeaNote"/>
+		<xsl:comment>Notes in text element</xsl:comment>
+		<xsl:for-each select="tei:front|tei:body|tei:back">
+		  <xsl:for-each select=".//tei:note[tei:isEndNote(.) or    tei:isFootNote(.)]">
+		    <xsl:call-template name="makeaNote"/>
+		  </xsl:for-each>
 		</xsl:for-each>
 	      </xsl:when>
               <xsl:when test="parent::tei:group and tei:group">
 	      </xsl:when>
               <xsl:otherwise>
+		<xsl:comment>Notes in [<xsl:value-of select="name()"/>]</xsl:comment>
                 <xsl:apply-templates mode="printnotes" select=".//tei:note">
                   <xsl:with-param name="whence" select="$me"/>
                 </xsl:apply-templates>
@@ -1651,7 +1654,7 @@ of this software, even if advised of the possibility of such damage.
                 <div class="noteHeading">
                   <xsl:sequence select="tei:i18n('noteHeading')"/>
                 </div>
-                <xsl:copy-of select="*"/>
+                <xsl:copy-of select="*|comment()"/>
               </div>
             </xsl:if>
           </xsl:for-each>
