@@ -4424,7 +4424,55 @@ this information, as in the following example:
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/meeting.xml"/>
 </specGrp>
 </div>
-<div type="div4" xml:id="COBICOI"><head>Imprint, Size of a Document, and Identifiers</head>
+<div type="div4" xml:id="COBICON"><head>Document Identifiers</head>
+<p>Many bibliographic references include identifiers for a work to help with precise identification of an appropriate document. For example, a book in the <title>Short Title Catalogue</title> could be referenced with its STC number:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<biblStruct>
+  <monogr>
+    <author>
+      <forename>John</forename>
+      <surname>Downame</surname>
+    </author>
+    <title type="short">Foure treatises tending to disswade all Christians from foure no lesse hainous then common sinnes</title>
+    <idno type="stc2ndEd">7141</idno>
+  </monogr>
+</biblStruct>
+</egXML>
+</p>
+<p>However, some bibliographic references actually <emph>require</emph> identifiers of various types because they do not include a statement of the title and the names of those intellectually responsible for it. The following elements may be used for such purposes:
+<specList>
+  <specDesc key="orgName"/>
+  <specDesc key="idno"/>
+  <specDesc key="classCode"/>
+  <specDesc key="date"/>
+</specList>
+</p>
+<p>For example, a citation to a patent typically includes a country or organization code (a two-character code identifying a patent authority) and a serial number for the patent (whose structure varies by patent authority). The citation might also contain a <term>kind code</term> (which characterizes a particular publication for the patent and which correspnods to a specific stage in the patent procedure) and the date when the patent was filed with or published by the issuing authority. For bibliographic references to patents, the above elements may be used as follows:
+<list type="bulleted">
+<item><gi>orgName</gi>, within <gi>authority</gi>, may be used to contain the code of the patent authority. The <att>type</att> attribute may be used to specify the type of patent authority (such as a national patent office or a supra-national patent organization).</item>
+<item><gi>idno</gi> may be used to contain the serial number assigned by the corresponding patent authority.</item>
+<item><gi>classCode</gi> may be used to contain the kind code of the patent document.</item>
+<item><gi>date</gi> may be used to contain the date of the patent document. The <att>type</att> attribute may be used to specify whether this corresponds to the filing date of a patent application or the publication date of a patent publication.</item>
+</list>
+</p>
+<p>The following reference illustrates an encoding for a patent publication which might be cited in print as "United States patent US 6,885,550 B1, issued April 26, 2005":
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<biblStruct type="patent" status="publication">
+  <monogr>
+    <authority>
+      <orgName type="national">US</orgName>
+    </authority>
+    <idno type="docNumber">6885550</idno>
+    <imprint>
+      <classCode scheme="http://www.uspto.gov/">B1</classCode>
+      <date type="publicationDate" when="2005-04-26">April 26, 2005</date>
+    </imprint>
+  </monogr>
+</biblStruct>
+</egXML>
+</p>
+</div>
+<div type="div4" xml:id="COBICOI"><head>Imprint, Size of a Document, and Reprint Information</head>
 <p>By <mentioned>imprint</mentioned> is meant all the information
 relating to the publication of a work: the person or organization by
 whose authority and in whose name a bibliographic entity such as a
@@ -4551,7 +4599,30 @@ statement here applies only to the second <gi>monogr</gi> element.
 </biblStruct></egXML>
 <!-- example from ANSI Z39.29, sec. A.3.12.1, p.41 -->
  </p>
-<p>An alternative way of handling the above situation would be to use the
+<p>This encoding can be extended to the case of patent documents, where the same patent application is published, with or without changes, at different stages of the patenting procedure. In this case, the kind code and, optionally, the publication date characterize different publications of the same patent application during the procedure. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<biblStruct type="patent" status="publication">
+  <monogr>
+    <authority>
+      <orgName type="national">EP</orgName>
+    </authority>
+    <idno type="docNumber">1558513</idno>
+    <imprint>
+      <classCode scheme="http://www.epo.org/">A1</classCode>
+      <date type="publicationDate" when="2005-08-03"/>
+    </imprint>
+  </monogr>
+  <monogr>
+    <imprint>
+      <classCode scheme="http://www.epo.org/">B1</classCode>
+      <date type="publicationDate" when="2009-09-09"/>
+    </imprint>
+  </monogr>
+</biblStruct>
+</egXML>
+</p>
+<p>The above bibliographic reference discloses different publications of the patent EP1558513 during the patenting procedure. The first publication from 3 August 2005 has the kind code "A1" indicating that it is a published patent application comprising the European search report issued after carrying out the search at the European Patent Office, whereas the second publication from 9 September 2009 has the kind code "B1" indicating that it was published after the patent application has been granted.</p>
+<p>An alternative way of handling the above situations would be to use the
 <gi>relatedItem</gi> element described in section <ptr target="#COBIRI"/> below.</p>
 </div>
 <div type="div4" xml:id="COBICOB">
