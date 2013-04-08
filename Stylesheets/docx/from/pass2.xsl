@@ -476,7 +476,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="substring(.,9)"/>
     </xsl:template>
 
-    <xsl:template match="tei:p[not(tei:pb) and normalize-space(.)='']" mode="pass2"/>
+    <xsl:template match="tei:p[not(.//tei:pb) and normalize-space(.)='']" mode="pass2"/>
 
 
 </xsl:stylesheet>
