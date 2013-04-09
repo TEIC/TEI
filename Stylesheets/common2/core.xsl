@@ -1013,6 +1013,7 @@ of this software, even if advised of the possibility of such damage.
 		      @place='marg2' or
 		      @place='marg3' or
 		      @place='marge' or
+		      @place='h' or
 		      @place='inter' or
 		      @place='divend' or
 		      @place='marginOuter' or
