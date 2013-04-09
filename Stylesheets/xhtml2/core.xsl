@@ -1058,11 +1058,11 @@ of this software, even if advised of the possibility of such damage.
         <xsl:call-template name="makeaNote"/>
       </xsl:when>      
       <xsl:when test="ancestor::tei:group"/>
+      <xsl:when test="ancestor::tei:floatingText"/>
       <xsl:when
-	  test="ancestor::tei:div[not(ancestor::tei:floatingText) and tei:keepDivOnPage(.)]">
+	  test="ancestor::tei:div[tei:keepDivOnPage(.)]">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
-      <xsl:when test="ancestor::tei:floatingText"/>
       <xsl:when test="not(ancestor::tei:div or ancestor::tei:div1)">
         <xsl:call-template name="makeaNote"/>
       </xsl:when>
