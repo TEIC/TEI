@@ -73,7 +73,7 @@ check:
 	@which ${SAXON} || exit 1
 
 v:
-	perl -p -i -e "s+AppVersion.*/AppVersion+AppVersion>`cat VERSION`</AppVersion+" docx/to/docxfiles/application.xsl
+	perl -p -i -e "s+AppVersion.*/AppVersion+AppVersion>`cat VERSION`</AppVersion+" docx/to/application.xsl
 
 p5:
 	@echo BUILD Build for P5, XSLT 2.0
