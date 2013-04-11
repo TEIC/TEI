@@ -773,11 +773,12 @@ of this software, even if advised of the possibility of such damage.
 
    <!-- details and notes -->
    <xsl:template match="tei:biblScope">
+     <xsl:variable name="Unit" select="(@unit|@type)[1]"/>
       <xsl:choose>
          <xsl:when test="ancestor::tei:bibl">
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="@type='vol' or @type='volume'">
+         <xsl:when test="$Unit='vol' or $Unit='volume'">
             <xsl:call-template name="emphasize">
                <xsl:with-param name="class">
 	                 <xsl:text>vol</xsl:text>
@@ -787,13 +788,13 @@ of this software, even if advised of the possibility of such damage.
                </xsl:with-param>
             </xsl:call-template>
          </xsl:when>
-         <xsl:when test="@type='chap'">
+         <xsl:when test="$Unit='chap' or $Unit='chapter'">
             <xsl:call-template name="makeText">
 	      <xsl:with-param name="letters">chapter </xsl:with-param>
 	    </xsl:call-template>
             <xsl:apply-templates/>
          </xsl:when>
-         <xsl:when test="@type='issue' or @type='nr'">
+         <xsl:when test="$Unit='issue' or $Unit='nr'">
             <xsl:call-template name="makeText">
 	      <xsl:with-param name="letters"> (</xsl:with-param>
 	    </xsl:call-template>
@@ -802,15 +803,15 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:with-param name="letters">) </xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
-         <xsl:when test="@type='page_from'">
+         <xsl:when test="$Unit='page_from'">
 	   <xsl:text>pp. </xsl:text>
 	   <xsl:apply-templates/>
 	 </xsl:when>
-         <xsl:when test="@type='page_to'">
+         <xsl:when test="$Unit='page_to'">
 	   <xsl:text>-</xsl:text>
 	   <xsl:apply-templates/>
 	 </xsl:when>
-         <xsl:when test="@type='pp' or @type='pages'">
+         <xsl:when test="$Unit='pp' or $Unit='pages' or $Unit='page'">
             <xsl:choose>
                <xsl:when test="contains(.,'-')">
 	                 <xsl:call-template name="makeText">
@@ -845,12 +846,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
  
       <xsl:choose>
-         <xsl:when test="@type='vol' and      following-sibling::tei:biblScope[@type='issue']">
+         <xsl:when test="$Unit='vol' and      following-sibling::tei:biblScope[$Unit='issue']">
             <xsl:call-template name="makeText">
 	      <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	    </xsl:call-template>
          </xsl:when>
-         <xsl:when test="@type='vol' and following-sibling::tei:biblScope">
+         <xsl:when test="$Unit='vol' and following-sibling::tei:biblScope">
             <xsl:call-template name="makeText">
 	      <xsl:with-param name="letters"><xsl:text> </xsl:text></xsl:with-param>
 	    </xsl:call-template>

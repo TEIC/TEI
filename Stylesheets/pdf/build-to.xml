@@ -61,13 +61,13 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="mediaDir" expression="${outputTempDir}/media"/>
+      <param name="mediaDir" expression="${outputTempDir}"/>
     </xslt>
     <echo level="info">Copy image files by running ant task</echo>
     <ant antfile="${outputTempDir}/copy.xml"/>
   </target>
 
-  <target name="dist" depends="setup,odd,notodd,convert,graphics,cleanup"/>
+  <target name="dist" depends="setup,odd,notodd,convert,graphics,run,cleanup"/>
 
   <target name="convert">
     <!-- Recreate temporary output directory -->
@@ -77,6 +77,7 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="directory" expression="file:///${outputTempDir}"/>
+      <param name="realFigures" expression="true"/>
       <!-- supply name of language-->
       <param name="lang" expression="${lang}" if="lang"/>
       <!-- emit some diagnostics"-->
