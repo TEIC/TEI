@@ -7,6 +7,7 @@
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 exclude-result-prefixes="a rng tei teix"
                 version="2.0">
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet dealing with elements from the figures module,
@@ -281,13 +282,15 @@ of this software, even if advised of the possibility of such damage.
             </xsl:choose>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:variable name="c">
-               <xsl:for-each select="ancestor-or-self::tei:figure[1]">
-                  <xsl:number level="any"/>
-               </xsl:for-each>
-            </xsl:variable>
-            <xsl:text>FIG</xsl:text>
-            <xsl:value-of select="$c+1000"/>
+	   <xsl:variable name="F">
+	     <xsl:sequence select="tei:resolveURI(.,@url)"/>
+	   </xsl:variable>
+	   <xsl:variable name="target">
+	     <xsl:text>image</xsl:text>
+	     <xsl:number level="any"/>
+	     <xsl:text>.</xsl:text>
+	   </xsl:variable>
+	   <xsl:value-of select="tokenize($F,'\.')[last()]"/>
          </xsl:otherwise>
       </xsl:choose>
       <xsl:text>}</xsl:text>
