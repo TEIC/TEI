@@ -11,8 +11,7 @@
 if which onvdl
 then
     onvdl $1 $2 | grep -v ": error: unfinished element .exemplum" \
-      | grep -v "unknown element .egXML" \
-      | sed 's/error: unfinished element/warning: unfinished element/' > $$.nvdl.log
+      | grep -v "unknown element .egXML"  > $$.nvdl.log
 else
     if  test ! -f oNVDL/bin/onvdl.jar
 	then
@@ -22,8 +21,7 @@ else
 	rm onvdl-20070517.zip
     fi
     java -Xmx1200m -jar oNVDL/bin/onvdl.jar $1 $2 | grep -v ": error: unfinished element .exemplum" \
-	| grep -v "unknown element .egXML" \
-	| sed 's/error: unfinished element/warning: unfinished element/' > $$.nvdl.log
+	| grep -v "unknown element .egXML" > $$.nvdl.log
 fi
 
 grep error $$.nvdl.log
