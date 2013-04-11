@@ -10,6 +10,7 @@
     <!-- import base conversion style -->
 
     <xsl:import href="../../../latex2/tei.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 
@@ -172,5 +173,22 @@ of this software, even if advised of the possibility of such damage.
       
    <xsl:template name="exampleFontSet">
      <xsl:text>\ttfamily\fontsize{7pt}{8.5pt}\selectfont </xsl:text>
+   </xsl:template>
+
+   <xsl:template match="tei:ptr[@type='bibl']">
+     <xsl:sequence select="concat('\cite{',substring-after(@target,'#'),'}')"/>
+       <!--
+	<xsl:variable name="place" select="replace(@target,'#.*','')"/>
+	 <xsl:variable name="doc">
+	   <xsl:choose>
+	     <xsl:when test="not($ORIGDIR='')">
+	       <xsl:sequence select="doc(resolve-uri($place,$ORIGDIR))"/>
+	     </xsl:when>
+	     <xsl:otherwise>
+	       <xsl:sequence select="doc(resolve-uri(place,base-uri(/tei:TEI)))"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </xsl:variable>
+	 -->
    </xsl:template>
 </xsl:stylesheet>

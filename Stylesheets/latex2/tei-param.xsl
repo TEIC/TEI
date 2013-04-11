@@ -79,6 +79,13 @@ Optional parameters for documentclass
    </doc>
    <xsl:param name="classParameters">11pt,twoside</xsl:param>
 
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
+      <desc>
+	location of original XML file, for looking up relative pointers
+      </desc>
+   </doc>
+   <xsl:param name="ORIGDIR"/>
+    
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
       <desc>
 Logo graphics file

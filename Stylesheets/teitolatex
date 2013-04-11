@@ -95,7 +95,7 @@ esac
 cd $TEMPDIR
 
 # images
-saxon "$F" $XSL/docx/utils/graphics/listgraphics.xsl ORIG="$DOCHOME" DIR=$TEMPDIR/media > fetch
+saxon "$F" $XSL/docx/tools/listgraphics.xsl ORIG="$DOCHOME" DIR=$TEMPDIR/media > fetch
 sh $TEMPDIR/fetch
 if $debug 
 then
@@ -114,7 +114,7 @@ if $debug
 then
  echo $TOXSL  odd=$odd debug=$debug verbose=$verbose 
 fi
-saxon  -o:"$outdir/$outfile" tmp2.xml $TOXSL odd=$odd debug=$debug verbose=$verbose fixgraphicsurl=true
+saxon  -o:"$outdir/$outfile" tmp2.xml $TOXSL odd=$odd debug=$debug verbose=$verbose fixgraphicsurl=true ORIGDIR=file://$DOCHOME/
 if $debug 
 then
     echo leaving tmp[123].xml alone

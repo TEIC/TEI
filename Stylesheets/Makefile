@@ -12,7 +12,7 @@ SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
 	teitohtml5 	teitojson 	teitolatex \
 	teitoodt 	teitordf 	teitorelaxng \
 	teitornc 	teitoslides 	teitotxt \
-	teitoxsd	teitopdf
+	teitoxsd	teitopdf	teitobibtex
 PREFIX=/usr
 OXY=/usr/share/oxygen
 DOCTARGETS= \

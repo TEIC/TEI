@@ -7,7 +7,7 @@
 		xmlns:teix="http://www.tei-c.org/ns/Examples"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="2.0">
-  <xsl:import href="../../../common2/functions.xsl"/>
+  <xsl:import href="../../common2/functions.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p> TEI stylesheet to make a script to copy graphics files</p>
@@ -49,58 +49,41 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:output method="text"/>
-  <xsl:param name="DIR"/>
-  <xsl:param name="ORIG">.</xsl:param>
+  <xsl:output method="xml"/>
+  <xsl:param name="mediaDir"/>
+  <xsl:param name="inputDir">.</xsl:param>
 
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
-  <xsl:key match="o:OLEObject" use="1" name="BINARY"/>
-  <xsl:key match="v:imagedata" use="1" name="BINARY"/>
 
   <xsl:template match="/">
-      <xsl:for-each select="key('BINARY',1)">
-	     <xsl:text>cp </xsl:text>
-	     <xsl:value-of select="@r:id"/>
-	     <xsl:text> </xsl:text>
-	     <xsl:value-of select="$DIR"/>
-	     <xsl:text>&#10;</xsl:text>
-      </xsl:for-each>
-      <xsl:for-each select="key('G',1)">
-         <xsl:variable name="F">
-	   <xsl:sequence select="tei:resolveURI(.,@url)"/>
-         </xsl:variable>
-	 <xsl:variable name="target">
-	   <xsl:value-of select="$DIR"/>
-	   <xsl:text>/image</xsl:text>
-	   <xsl:number level="any"/>
-	   <xsl:text>.</xsl:text>
-	   <xsl:value-of select="tokenize($F,'\.')[last()]"/>
-	 </xsl:variable>
-         <xsl:choose>
-	   <xsl:when test="starts-with($F,'http')">
-	     <xsl:text>curl -s -o </xsl:text>
-	     <xsl:value-of select="$target"/>
-	     <xsl:text> </xsl:text>
-	     <xsl:value-of select="$F"/> 
-	   </xsl:when>
-	   <xsl:when test="starts-with($F,'/')">
-	     <xsl:text>cp "</xsl:text>
-	     <xsl:value-of select="$F"/> 
-	     <xsl:text>" </xsl:text>
-	     <xsl:value-of select="$target"/>
-	   </xsl:when>
-	   <xsl:otherwise> 
-	     <xsl:text>cp "</xsl:text>
-	     <xsl:value-of select="$ORIG"/>
-	     <xsl:text>/</xsl:text>
-	     <xsl:value-of select="$F"/> 
-	     <xsl:text>" </xsl:text>
-	     <xsl:value-of select="$target"/>
-	   </xsl:otherwise>
-         </xsl:choose>
-         <xsl:text>&#10;</xsl:text>
-      </xsl:for-each>
-
+     <project xmlns="" basedir="." default="dist" name="imagecopy">
+       <target name="dist">
+	 <mkdir dir="{$mediaDir}"/>
+	 <xsl:for-each select="key('G',1)">
+	   <xsl:variable name="F">
+	     <xsl:sequence select="tei:resolveURI(.,@url)"/>
+	   </xsl:variable>
+	   <xsl:variable name="target">
+	     <xsl:value-of select="$mediaDir"/>
+	     <xsl:text>/image</xsl:text>
+	     <xsl:number level="any"/>
+	     <xsl:text>.</xsl:text>
+	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
+	   </xsl:variable>
+	   <xsl:choose>
+	     <xsl:when test="starts-with($F,'http')">
+	       <get src="{$F}"  dest="{$target}"/>
+	     </xsl:when>
+	     <xsl:when test="starts-with($F,'/')">
+	       <copy file="{$F}" toFile="$target"/>
+	     </xsl:when>
+	     <xsl:otherwise> 
+	       <copy file="{concat($inputDir,'/',$F)}" toFile="{$target}"/>
+	     </xsl:otherwise>
+	   </xsl:choose>
+	 </xsl:for-each>
+       </target>
+     </project>
   </xsl:template>
 
 </xsl:stylesheet>

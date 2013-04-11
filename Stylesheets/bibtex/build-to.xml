@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitopdf">
+<project basedir="." default="dist" name="teitobibtex">
 <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -18,10 +18,8 @@
         Id: $Id: build-to.xml 9319 2011-09-14 15:25:52Z rahtz $
         Copyright: 2011, TEI Consortium<
 -->
-
-  <import file="../odds2/build-to.xml"/>
   <!--
- Convert TEI documents into TEX files and thence to PDF
+ Convert TEI documents into BIBTEX files.
  -->
   <!-- Path to TEI XML file. -->
   <property name="inputFile" value=""/>
@@ -33,47 +31,31 @@
   <property name="oxygenlib" value=""/>
   <property name="profiledir" value="../profiles"/>
   <!-- Stylesheet for transformation -->
-  <property name="odd2tex" value="${profiledir}/${profile}/pdf/to.xsl"/>
-  <property name="listgraphics"    value="../docx/tools/listgraphics.xsl"/>
+  <property name="odd2bibtex"
+	    value="${profiledir}/${profile}/bibtex/to.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
-  <basename property="basefile" file="${outputFile}" suffix=".pdf"/>
-  <property name="texfile" value="${outputDir}/${basefile}"/>
   <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
-
   <target name="setup">
     <delete dir="${outputTempDir}"/>
     <mkdir dir="${outputTempDir}"/>
   </target>
-
-  <target name="graphics">
-    <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" in="${inputFile}" out="${outputTempDir}/copy.xml">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="mediaDir" expression="${outputTempDir}/media"/>
-    </xslt>
-    <echo level="info">Copy image files by running ant task</echo>
-    <ant antfile="${outputTempDir}/copy.xml"/>
-  </target>
-
-  <target name="dist" depends="setup,odd,notodd,convert,graphics,cleanup"/>
+  <target name="dist" depends="setup,convert,cleanup"/>
 
   <target name="convert">
     <!-- Recreate temporary output directory -->
-    <!-- The transformation for TEX output. -->
-    <echo>XSLT generate ${outputFile} from ${inputFile}  via TeX ${texfile}</echo>
-    <xslt force="yes" style="${odd2tex}" in="${outputTempDir}/tmp2.xml" out="${texfile}.tex">
+    <!-- The transformation for BIBTEX output. -->
+    <echo level="info">XSLT generate BIBTEX file</echo>
+    <xslt force="yes" style="${odd2bibtex}" in="${inputFile}" out="${outputFile}">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xjson11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="directory" expression="file:///${outputTempDir}"/>
@@ -86,32 +68,7 @@
     </xslt>
   </target>
 
-  <target name="run">
-    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
-      <arg value="-interaction=nonstopmode"/>
-      <arg value="${texfile}.tex" />
-    </exec>
-    <exec executable="bibtex" dir="${outputDir}" failonerror="true">
-      <arg value="${texfile}" />
-    </exec>
-    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
-      <arg value="-interaction=nonstopmode"/>
-      <arg value="${texfile}.tex" />
-    </exec>
-    <echo>wrote ${outputFile}</echo>
-  </target>
-
   <target name="cleanup" unless="debug">  
-    <delete file="${texfile}.nav"/>
-    <delete file="${texfile}.blg"/>
-    <delete file="${texfile}.bbl"/>
-    <delete file="${texfile}.out"/>
-    <delete file="${texfile}.log"/>
-    <delete file="${texfile}.aux"/>
-    <delete file="${texfile}.toc"/>
-    <delete file="${texfile}.snm"/>
-    <delete file="${texfile}.vrb"/>
-    <delete file="${texfile}.tex"/>
     <delete dir="${outputTempDir}"/>
   </target>
 
