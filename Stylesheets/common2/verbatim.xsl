@@ -156,6 +156,14 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="text()" mode="verbatim">
     <xsl:choose>
+      <xsl:when
+	  test="ancestor::*[@xml:space][1]/@xml:space='preserve'">
+        <xsl:call-template name="verbatim-Text">
+          <xsl:with-param name="words">
+	    <xsl:value-of select="."/>
+	  </xsl:with-param>
+	</xsl:call-template>
+      </xsl:when>
       <xsl:when test="$forceWrap='true'">
         <xsl:variable name="indent">
           <xsl:for-each select="parent::*">
@@ -386,9 +394,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:choose>
       <xsl:when test="parent::xhtml:Wrapper"/>
       <!--      <xsl:when test="child::node()[last()]/self::text()[not(.='')] and child::node()[1]/self::text()[not(.='')]"/>-->
+      <xsl:when
+	  test="ancestor::*[@xml:space][1]/@xml:space='preserve'"/>
       <xsl:when test="not(parent::*)  or parent::teix:egXML">
         <xsl:choose>
-          <xsl:when test="preceding-sibling::node()[1][self::text()]      and following-sibling::node()[1][self::text()]"/>
+          <xsl:when test="preceding-sibling::node()[1][self::text()]
+			  and
+			  following-sibling::node()[1][self::text()]"/>
           <xsl:when test="preceding-sibling::*">
             <xsl:call-template name="verbatim-lineBreak">
               <xsl:with-param name="id">-1</xsl:with-param>
@@ -452,6 +464,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:with-param>
         </xsl:apply-templates>
         <xsl:choose>
+	  <xsl:when test="ancestor::*[@xml:space][1]/@xml:space='preserve'"/>
           <xsl:when test="child::node()[last()]/self::text() and child::node()[1]/self::text()"/>
           <xsl:when test="not(parent::*)  or parent::teix:egXML">
             <xsl:call-template name="verbatim-lineBreak">
@@ -583,8 +596,11 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="verbatim-makeIndent">
-    <xsl:variable name="depth" select="count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])-1"/>
-    <xsl:sequence select="for $i in 1 to $depth return $spaceCharacter"/>
+    <xsl:if
+	test="not(ancestor::*[@xml:space][1]/@xml:space='preserve')">
+      <xsl:variable name="depth" select="count(ancestor::*[not(namespace-uri()='http://www.tei-c.org/ns/1.0')])-1"/>
+      <xsl:sequence select="for $i in 1 to $depth return $spaceCharacter"/>
+    </xsl:if>
   </xsl:template>
   <xsl:template match="@*" mode="verbatim">
     <xsl:variable name="L">
