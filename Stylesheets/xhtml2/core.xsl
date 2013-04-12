@@ -741,7 +741,7 @@ of this software, even if advised of the possibility of such damage.
           </table>
         </p>
       </xsl:when>
-      <xsl:when test="@type='gloss' or  tei:label">
+      <xsl:when test="tei:isGlossList(.)">
         <dl>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
@@ -749,7 +749,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates mode="gloss" select="tei:item"/>
         </dl>
       </xsl:when>
-      <xsl:when test="@type='glosstable' or @type='valList'">
+      <xsl:when test="tei:isGlossTable(.)">
         <table>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
@@ -757,7 +757,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates mode="glosstable" select="tei:item"/>
         </table>
       </xsl:when>
-      <xsl:when test="@type='inline' or ancestor::tei:head or parent::tei:label">
+      <xsl:when test="tei:isInlineList(.)">
         <!--<xsl:if test="not(tei:item)">None</xsl:if>-->
         <xsl:apply-templates mode="inline" select="tei:item"/>
       </xsl:when>
@@ -766,7 +766,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:apply-templates mode="runin" select="tei:item"/>
         </p>
       </xsl:when>
-      <xsl:when test="@type='unordered' or @type='simple'">
+      <xsl:when test="tei:isUnorderedList(.)">
         <ul>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
@@ -777,7 +777,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@type='bibl'">
         <xsl:apply-templates mode="bibl" select="tei:item"/>
       </xsl:when>
-      <xsl:when test="starts-with(@type,'ordered')">
+      <xsl:when test="tei:isOrderedList(.)">
         <ol>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>

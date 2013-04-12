@@ -136,7 +136,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:param name="nop"/>
         <xsl:variable name="listStyle">
             <xsl:choose>
-                <xsl:when test="../@type='unordered' or ../@type='simple' or not(../@type)">
+                <xsl:when test="tei:isUnorderedList(..)">
                     <xsl:call-template name="getStyleName">
                         <xsl:with-param name="in">
                             <xsl:text>List Continue</xsl:text>
@@ -144,7 +144,7 @@ of this software, even if advised of the possibility of such damage.
                         </xsl:with-param>
                     </xsl:call-template>
                 </xsl:when>
-                <xsl:when test="../@type='ordered'">
+                <xsl:when test="tei:isOrderedList(..)">
                     <xsl:call-template name="getStyleName">
                         <xsl:with-param name="in">
                             <xsl:text>List Number</xsl:text>
@@ -164,7 +164,7 @@ of this software, even if advised of the possibility of such damage.
                     <w:pStyle w:val="{$listStyle}"/>
                 </xsl:if>
                 <xsl:choose>
-                    <xsl:when test="../@type='unordered' or not(../@type)">
+                    <xsl:when test="tei:isUnorderedList(..)">
                         <w:numPr>
                             <w:ilvl>
                                 <xsl:attribute name="w:val">
@@ -190,7 +190,7 @@ of this software, even if advised of the possibility of such damage.
 			    </w:numId>
 			</w:numPr>
                     </xsl:when>
-                    <xsl:when test="../@type='ordered'">
+                    <xsl:when test="tei:isOrderedList(..)">
                         <w:numPr>
                             <w:ilvl>
                                 <xsl:attribute name="w:val">

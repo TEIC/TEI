@@ -893,6 +893,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>whether a note is an endnote</desc>
   </doc>
@@ -905,4 +906,82 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>whether a list is to be rendered as ordered</desc>
+  </doc>
+  <xsl:function name="tei:isOrderedList" as="xs:boolean">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="@rend='numbered'">true</xsl:when>
+	<xsl:when test="@rend='ordered'">true</xsl:when>
+	<xsl:when test="@type='ordered'">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>whether a list is to be rendered as unordered</desc>
+  </doc>
+  <xsl:function name="tei:isUnorderedList" as="xs:boolean">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="not(@rend or @type)">true</xsl:when>
+	<xsl:when test="@rend='unordered'">true</xsl:when>
+	<xsl:when test="@type='unordered'">true</xsl:when>
+	<xsl:when test="@type='simple'">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>whether a list is to be rendered as a gloss list</desc>
+  </doc>
+  <xsl:function name="tei:isGlossList" as="xs:boolean">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="@rend='valList'">true</xsl:when>
+	<xsl:when test="@rend='gloss'">true</xsl:when>
+	<xsl:when test="@type='gloss'">true</xsl:when>
+	<xsl:when test="tei:label">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>whether a list is to be rendered as a gloss table</desc>
+  </doc>
+  <xsl:function name="tei:isGlossTable" as="xs:boolean">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="@type='valList'">true</xsl:when>
+	<xsl:when test="@rend='glosstable'">true</xsl:when>
+	<xsl:when test="@type='glosstable'">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>whether a list is to be rendered inline</desc>
+  </doc>
+  <xsl:function name="tei:isInlineList" as="xs:boolean">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="@rend='inline'">true</xsl:when>
+	<xsl:when test="@type='inline'">true</xsl:when>
+	<xsl:when test="ancestor::tei:head or parent::tei:label">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
 </xsl:stylesheet>

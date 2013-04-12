@@ -563,7 +563,7 @@ of this software, even if advised of the possibility of such damage.
       <text:p>
         <xsl:attribute name="text:style-name">
           <xsl:choose>
-            <xsl:when test="@type='ordered'">P2</xsl:when>
+            <xsl:when test="tei:isOrderedList(.)">P2</xsl:when>
             <xsl:otherwise>P1</xsl:otherwise>
           </xsl:choose>
         </xsl:attribute>
@@ -574,23 +574,22 @@ of this software, even if advised of the possibility of such damage.
       <xsl:attribute name="text:style-name">
         <xsl:choose>
           <xsl:when test="self::tei:listBibl">L2</xsl:when>
-          <xsl:when test="not(@type)">L1</xsl:when>
-          <xsl:when test="@type='ordered'">L2</xsl:when>
-          <xsl:when test="@type='unordered'">L1</xsl:when>
+          <xsl:when test="tei:isOrderedList(.)">L2</xsl:when>
+          <xsl:otherwise>L1</xsl:otherwise>
         </xsl:choose>
       </xsl:attribute>
       <xsl:apply-templates/>
     </text:list>
   </xsl:template>
-  <xsl:template match="tei:list[@type='gloss' or @rend='valList']" priority="10">
+  <xsl:template match="tei:list[tei:isGlossList(.)]" priority="10">
     <xsl:apply-templates/>
   </xsl:template>
-  <xsl:template match="tei:list[@type='gloss' or @rend='valList']/tei:item">
+  <xsl:template match="tei:list[tei:isGlossList(.)]/tei:item">
     <text:p text:style-name="List_20_Contents">
       <xsl:apply-templates/>
     </text:p>
   </xsl:template>
-  <xsl:template match="tei:list[@type='gloss' or @rend='valList']/tei:label">
+  <xsl:template match="tei:list[tei:isGlossList(.)]/tei:label">
     <text:p text:style-name="List_20_Heading">
       <xsl:apply-templates/>
     </text:p>
@@ -608,7 +607,7 @@ of this software, even if advised of the possibility of such damage.
           <text:p>
             <xsl:attribute name="text:style-name">
               <xsl:choose>
-                <xsl:when test="parent::tei:list/@type='ordered'">P2</xsl:when>
+                <xsl:when test="tei:isOrderedList(..)">P2</xsl:when>
                 <xsl:otherwise>P1</xsl:otherwise>
               </xsl:choose>
             </xsl:attribute>

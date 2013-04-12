@@ -90,7 +90,7 @@ of this software, even if advised of the possibility of such damage.
  * </xsl:text><xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="tei:list[@type='ordered']/tei:item">
+<xsl:template match="tei:list[tei:isGlossList(.)]/tei:item">
 <xsl:text>
   </xsl:text><xsl:number/><xsl:text>  </xsl:text><xsl:apply-templates/>
 </xsl:template>

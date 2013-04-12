@@ -202,7 +202,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="ALLHEADERS" match="tei:fw[@type='header']" use="1"/>
   <xsl:key name="ENDNOTES" match="tei:note[@place='end']" use="1"/>
   <xsl:key name="FOOTNOTES" match="tei:note[@place='foot' or @place='bottom' ]" use="1"/>
-  <xsl:key name="OL" match="tei:list[@type='ordered']" use="1"/>
+  <xsl:key name="OL" match="tei:list[tei:isOrderedList(.)]" use="1"/>
   <xsl:key name="BLIP" match="a:blip" use="1"/>
   <xsl:key name="Styles" match="w:style/w:name" use="@w:val"/>
   <xsl:variable name="align">right</xsl:variable>

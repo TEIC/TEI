@@ -432,17 +432,12 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
       <xsl:choose>
          <xsl:when test="not(tei:item)"/>
-         <xsl:when test="@type='gloss' or tei:label"> 
+         <xsl:when test="tei:isGlossList(.)"> 
 	   <xsl:text>\begin{description}&#10;</xsl:text>
 	   <xsl:apply-templates mode="gloss" select="tei:item"/>
 	   <xsl:text>&#10;\end{description} </xsl:text>
 	 </xsl:when>
-         <xsl:when test="@type='unordered'">
-	   <xsl:text>\begin{itemize}&#10;</xsl:text>
-	   <xsl:apply-templates/>
-	   <xsl:text>&#10;\end{itemize} </xsl:text>
-	 </xsl:when>
-         <xsl:when test="@type='ordered'">
+         <xsl:when test="tei:isOrderedList(.)">
 	   <xsl:text>\begin{enumerate}&#10;</xsl:text>
 	   <xsl:apply-templates/>
 	   <xsl:text>&#10;\end{enumerate}</xsl:text>

@@ -928,12 +928,12 @@ simple, bullets, ordered, gloss, unordered, or bibliography
                      <xsl:attribute name="text-align">end</xsl:attribute>
                      <xsl:apply-templates mode="xref" select="."/>
                   </xsl:when>
-                  <xsl:when test="../@type='ordered' or self::tei:bibl">
+                  <xsl:when test="tei:isOrderedList(..) or self::tei:bibl">
                      <xsl:attribute name="text-align">end</xsl:attribute>
                      <xsl:apply-templates mode="xref" select="."/>
                      <xsl:text>.</xsl:text>
                   </xsl:when>
-                  <xsl:when test="../@type='gloss'">
+                  <xsl:when test="tei:isGlossList(..)">
                      <xsl:attribute name="text-align">start</xsl:attribute>
                      <xsl:attribute name="font-weight">bold</xsl:attribute>
                      <xsl:choose>
@@ -945,18 +945,11 @@ simple, bullets, ordered, gloss, unordered, or bibliography
 		       </xsl:otherwise>
                      </xsl:choose>
                   </xsl:when>
-                  <xsl:when test="../@type='numbered' or
+                  <xsl:when test="tei:isOrderedList(..) or
 				  self::tei:biblStruct or self::tei:bibl">
-		    <!-- numbered support added rbl 26.3.2005 -->
 		    <xsl:attribute name="text-align">end</xsl:attribute>
                      <xsl:number/>
                      <xsl:text>.</xsl:text>
-                  </xsl:when>
-                  <xsl:when test="../@type='ordered'">
-		    <!-- numbered support added rbl 26.3.2005 -->
-		    <xsl:attribute name="text-align">end</xsl:attribute>
-		    <xsl:number/>
-		    <xsl:text>.</xsl:text>
                   </xsl:when>
                   <xsl:otherwise>
 		    <xsl:attribute name="text-align">end</xsl:attribute>

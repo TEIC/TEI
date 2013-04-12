@@ -7,6 +7,7 @@
     exclude-result-prefixes="#all"
     version="2.0">
 <xsl:import href="../common2/verbatim.xsl"/>
+<xsl:import href="../common2/functions.xsl"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -194,7 +195,7 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="list">
   <xsl:choose>
-    <xsl:when test="@type='gloss'">
+    <xsl:when test="tei:isGlossList(.)">
       <variablelist>
 	<xsl:for-each select="label">
 	  <varlistentry>
@@ -211,7 +212,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>
       </variablelist>
     </xsl:when>
-    <xsl:when test="@type='ordered'">
+    <xsl:when test="tei:isOrderedList(.)">
       <itemizedlist>
 	<xsl:apply-templates select="@*|*|text()|comment()"/>
       </itemizedlist>
