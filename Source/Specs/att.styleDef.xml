@@ -91,7 +91,9 @@ If no value for the @scheme attribute is provided, then the default assumption s
       <constraintSpec ident="schemeVersionRequiresScheme" scheme="isoschematron">
         <constraint>
           <sch:rule context="tei:*[@schemeVersion]">
-            <sch:assert test="@scheme">@schemeVersion can only be used if @scheme is specified.</sch:assert>
+            <sch:assert test="@scheme and not(@scheme = 'free')">
+              @schemeVersion can only be used if @scheme is specified.
+            </sch:assert>
           </sch:rule>
         </constraint>
       </constraintSpec>
