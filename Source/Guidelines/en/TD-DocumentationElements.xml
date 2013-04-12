@@ -426,27 +426,128 @@ included in a <gi>specGrp</gi>. </p>
 </div>
 <div type="div3" xml:id="TDcrystalsCE"><head>Common Elements</head>
 <p>This section discusses the child elements common to all of the specification
-elements. These child elements  are used to specify the naming, description,
+elements; some of these are defined in the core module (<ptr target="#COHQU"/>). 
+These child elements  are used to specify the naming, description,
 exemplification, and classification of the specification elements.</p>
+
 <div type="div4" xml:id="TDcrystalsCEdc"><head>Description of Components</head>
 <p><specList>
-<specDesc key="remarks"/>
+<specDesc key="gloss"/>
+<specDesc key="desc"/>
+<specDesc key="equiv" atts="uri filter name"/>
+<specDesc key="altIdent"/>
 <specDesc key="listRef"/>
+<specDesc key="remarks"/>
 </specList>
 </p>
+<p>The <gi>gloss</gi> element may be used to
+provide  a brief explanation for the name of the object if this is not
+self-explanatory. For example, the specification for the element 
+<gi>ab</gi> used to mark arbitrary blocks of text begins as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec module="linking" ident="ab">
+  <gloss>anonymous block</gloss>
+<!--... -->
+</elementSpec></egXML>
+A <gi>gloss</gi> 
+may also be supplied for an attribute name or an
+attribute value in similar circumstances:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><valList type="open">
+<valItem ident="susp">
+<gloss>suspension</gloss>
+<desc>the abbreviation provides the first letter(s) 
+of the word or phrase, omitting the remainder.</desc>
+</valItem>
+<valItem ident="contr">
+<gloss>contraction</gloss>
+<desc>the abbreviation omits some letter(s) in the middle.</desc>
+</valItem>
+<!--...-->
+</valList></egXML>
+Note that this is quite distinct from the use of the <gi>desc</gi>
+element, which contains a full description of the intended semantics
+for the object.
+</p>
+<p>The contents of the <gi>desc</gi> element provide a brief
+characterization of the intended function of the object
+being documented in a form that permits its quotation out of
+context, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec module="core" ident="foreign">
+<!--... -->
+<desc>identifies a word or phrase as belonging to some language other
+than that of the surrounding text. </desc>
+<!--... -->
+</elementSpec></egXML>
+By convention, a <gi>desc</gi> element begins with a verb such as
+<mentioned>contains</mentioned>, 
+<mentioned>indicates</mentioned>, 
+<mentioned>specifies</mentioned>, etc. and contains a single
+clause. </p>
 
-<p>One or more <gi>desc</gi> elements defined by the core module may
-be used to provide a brief characterization of the intended function
-of the element, class, value etc. being documented, as in the
-following example:
-
-<egXML xml:lang="mul" xmlns="http://www.tei-c.org/ns/Examples"><elementSpec module="drama" ident="actor">
-  <desc>Name of an actor appearing within a cast list.</desc>
-  <desc xml:lang="ja"> 登場人物リスト中にある役者名を示す．</desc>
-  <desc xml:lang="it">nome di un attore che appare nella lista dei personaggi.</desc>
-<!-- ... --></elementSpec>
+<p>The <gi>equiv</gi> element is used to document equivalencies
+between the concept represented by this object and the same concept as
+described in other schemes or ontologies. The <att>uri</att> attribute
+is used to supply a pointer to some location where such external
+concepts are defined. For example, to indicate that the TEI
+<gi>death</gi> element corresponds to the concept defined by the CIDOC
+CRM category E69, the declaration for the former might begin as
+follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec module="namesdates" ident="death">
+<equiv name="E69" uri="http://cidoc.ics.forth.gr/"/>
+<desc><!--... --></desc>
+</elementSpec>
 </egXML>
 </p>
+<p>The <gi>equiv</gi> element may also be used to map newly-defined
+elements onto existing constructs in the TEI, using the
+<att>filter</att> and <att>name</att> attributes to point to an
+implementation of the mapping. This is useful when a TEI customization
+(see <ptr target="#MD"/>) defines <soCalled>shortcuts</soCalled> for
+convenience of data entry or markup readability.  For example, suppose
+that in some TEI customization an element <gi scheme="imaginary">bo</gi> has been
+defined which is 
+conceptually equivalent to the standard markup construct <tag>hi
+rend='bold'</tag>. The following declarations would additionally
+indicate that instances of the
+<gi scheme="imaginary">bo</gi> element can be converted to canonical TEI by obtaining a
+filter from the URI specified, and running the procedure
+with the name  <ident>bold</ident>. The <att>mimeType</att> attribute
+specifies the language (in this case XSL) in which the filter is
+written:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<elementSpec ident="bo" ns="http://www.example.com/ns/notTEI">
+   <equiv filter="http://www.example.com/equiv-filter.xsl" mimeType="text/xsl" name="bold"/>
+   <gloss>bold</gloss>
+   <desc>contains a sequence of characters rendered in a bold face.</desc>
+   <!-- ... -->
+</elementSpec>
+</egXML></p>
+
+<p>The <gi>altIdent</gi> element is used to provide an alternative name
+for an object, for example using a different
+natural language. Thus, the following might be used to indicate
+that the <gi>abbr</gi> element should be identified using the German
+word <foreign>Abkürzung</foreign>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de"><elementSpec ident="abbr" mode="change">
+    <altIdent xml:lang="de">Abkürzung</altIdent>
+<!--...--></elementSpec></egXML>
+In the same way, the following specification for the
+<gi>graphic</gi> element indicates that the attribute
+<att>url</att> may also be referred to using the alternate
+identifier <ident>href</ident>:
+<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><elementSpec ident="graphic" mode="change">
+    <attList>
+      <attDef mode="change" ident="url">
+	<altIdent>href</altIdent>
+      </attDef>
+<!-- .... -->
+    </attList>
+</elementSpec>
+</egXML>
+</p>
+
+<p>By default, the <gi>altIdent</gi> of a component is
+identical to the value of its <att>ident</att> attribute. </p>
 <p>The <gi>remarks</gi> element contains any additional
 commentary about how the item concerned may be used, details of
 implementation-related issues, suggestions for other ways of treating
@@ -466,6 +567,7 @@ languages.</p>
 <!--... -->
 </elementSpec></egXML>
 </p>
+
 <p> A specification element will usually conclude with a list of
 references, each tagged using the standard <gi>ptr</gi> element, and
 grouped together into a <gi>listRef</gi> element: in the case of the
@@ -475,6 +577,7 @@ grouped together into a <gi>listRef</gi> element: in the case of the
   </listRef>
 </egXML> where the value <val>COHQF</val> is the identifier of the
 section in the Guidelines where this element is fully documented. </p>
+
 </div>
 <div type="div4" xml:id="TDeg"><head>Exemplification of Components</head>
 <p><specList>

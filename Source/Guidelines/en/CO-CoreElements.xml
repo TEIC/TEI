@@ -1102,8 +1102,6 @@ standard. The attributes <att>key</att> and <att>ref</att> discussed
 in section <ptr target="#CONARS"/> below are available on the
 <gi>term</gi> element for this purpose.
 </p>
-<!-- example needed here -->
-
 <p>Another group of elements is used to supply different kinds of names
 for objects described by the TEI. Examples of this are documentation
 of elements, attributes, classes (and also attribute values where
@@ -1114,115 +1112,9 @@ appropriate), and description of glyphs.
 <specDesc key="equiv" atts="uri filter name"/>
 </specList>
 Along with the <gi>gloss</gi> element mentioned above, these elements
-constitute the <ident type="class">model.glossLike</ident> class.</p>
+constitute the <ident type="class">model.glossLike</ident> class. They
+are described in more detail in <ptr target="#TDcrystalsCEdc"/>.</p>
 
-<p>The <gi>gloss</gi> element may be used to
-provide  a brief explanation for the name of the object if this is not
-self-explanatory. For example, the specification for the element 
-<gi>ab</gi> used to mark arbitrary blocks of text begins as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec module="linking" ident="ab">
-  <gloss>anonymous block</gloss>
-<!--... -->
-</elementSpec></egXML>
-A <gi>gloss</gi> 
-may also be supplied for an attribute name or an
-attribute value in similar circumstances:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><valList type="open">
-<valItem ident="susp">
-<gloss>suspension</gloss>
-<desc>the abbreviation provides the first letter(s) 
-of the word or phrase, omitting the remainder.</desc>
-</valItem>
-<valItem ident="contr">
-<gloss>contraction</gloss>
-<desc>the abbreviation omits some letter(s) in the middle.</desc>
-</valItem>
-<!--...-->
-</valList></egXML>
-Note that this is quite distinct from the use of the <gi>desc</gi>
-element, which contains a full description of the intended semantics
-for the object.
-</p>
-
-<p>The <gi>equiv</gi> element is used to document equivalencies
-between the concept represented by this object and the same concept as
-described in other schemes or ontologies. The <att>uri</att> attribute
-is used to supply a pointer to some location where such external
-concepts are defined. For example, to indicate that the TEI
-<gi>death</gi> element corresponds to the concept defined by the CIDOC
-CRM category E69, the declaration for the former might begin as
-follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<elementSpec module="namesdates" ident="death">
-<equiv name="E69" uri="http://cidoc.ics.forth.gr/"/>
-<desc><!--... --></desc>
-</elementSpec>
-</egXML>
-</p>
-<p>The <gi>equiv</gi> element may also be used to map newly-defined
-elements onto existing constructs in the TEI, using the
-<att>filter</att> and <att>name</att> attributes to point to an
-implementation of the mapping. This is useful when a TEI customization
-(see <ptr target="#MD"/>) defines <soCalled>shortcuts</soCalled> for
-convenience of data entry or markup readability.  For example, suppose
-that in some TEI customization an element <gi scheme="imaginary">bo</gi> has been
-defined which is 
-conceptually equivalent to the standard markup construct <tag>hi
-rend='bold'</tag>. The following declarations would additionally
-indicate that instances of the
-<gi scheme="imaginary">bo</gi> element can be converted to canonical TEI by obtaining a
-filter from the URI specified, and running the procedure
-with the name  <ident>bold</ident>. The <att>mimeType</att> attribute
-specifies the language (in this case XSL) in which the filter is
-written:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<elementSpec ident="bo" ns="http://www.example.com/ns/notTEI">
-   <equiv filter="http://www.example.com/equiv-filter.xsl" mimeType="text/xsl" name="bold"/>
-   <gloss>bold</gloss>
-   <desc>contains a sequence of characters rendered in a bold face.</desc>
-   <!-- ... -->
-</elementSpec>
-</egXML></p>
-
-<p>The <gi>altIdent</gi> element is used to provide an alternative name
-for an object, for example using a different
-natural language. Thus, the following might be used to indicate
-that the <gi>abbr</gi> element should be identified using the German
-word <foreign>Abkürzung</foreign>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de"><elementSpec ident="abbr" mode="change">
-    <altIdent xml:lang="de">Abkürzung</altIdent>
-<!--...--></elementSpec></egXML>
-In the same way, the following specification for the
-<gi>graphic</gi> element indicates that the attribute
-<att>url</att> may also be referred to using the alternate
-identifier <ident>href</ident>:
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="und"><elementSpec ident="graphic" mode="change">
-    <attList>
-      <attDef mode="change" ident="url">
-	<altIdent>href</altIdent>
-      </attDef>
-<!-- .... -->
-    </attList>
-</elementSpec>
-</egXML>
-</p><p>By default, the <gi>altIdent</gi> of a component is
-identical to the value of its <att>ident</att> attribute. </p>
-
-<p>The contents of the <gi>desc</gi> element provide a brief
-characterization of the intended function of the object
-being documented in a form that permits its quotation out of
-context, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec module="core" ident="foreign">
-<!--... -->
-<desc>identifies a word or phrase as belonging to some language other
-than that of the surrounding text. </desc>
-<!--... -->
-</elementSpec></egXML>
-By convention, a <gi>desc</gi> element begins with a verb such as
-<mentioned>contains</mentioned>, 
-<mentioned>indicates</mentioned>, 
-<mentioned>specifies</mentioned>, etc. and contains a single
-clause. </p>
 <specGrp xml:id="DCOHQU">
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/desc.xml"/>
 <include xmlns="http://www.w3.org/2003/XInclude" href="../../Specs/gloss.xml"/>
