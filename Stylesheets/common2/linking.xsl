@@ -203,7 +203,7 @@ of this software, even if advised of the possibility of such damage.
 		 <xsl:call-template name="headingNumberSuffix"/>
 	       </xsl:when>
                <xsl:when test="ancestor::tei:back">
-                  <xsl:if test="$numberBackHeadings='true'">
+                  <xsl:if test="not($numberBackHeadings='')">
 		    <xsl:sequence select="tei:i18n('appendixWords')"/>
                      <xsl:text> </xsl:text>
                      <xsl:call-template name="numberBackDiv"/>
@@ -213,7 +213,7 @@ of this software, even if advised of the possibility of such damage.
                   </xsl:if>
                </xsl:when>
                <xsl:when test="ancestor::tei:front">
-                  <xsl:if test="$numberFrontHeadings='true'">
+                  <xsl:if test="not($numberFrontHeadings='')">
                      <xsl:call-template name="numberFrontDiv">
 		       <xsl:with-param name="minimal">
 			 <xsl:value-of select="$minimal"/>

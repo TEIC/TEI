@@ -64,10 +64,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="headingNumberSuffix">
       <xsl:text> </xsl:text>
   </xsl:template>
-  <xsl:param name="numberBackHeadings"> </xsl:param>
-  <xsl:param name="numberFrontHeadings"> </xsl:param>
-  <xsl:param name="numberHeadings"> </xsl:param>
-  <xsl:param name="numberHeadingsDepth"> </xsl:param>
+  <xsl:param name="numberBackHeadings"/>
+  <xsl:param name="numberFrontHeadings"/>
+  <xsl:param name="numberHeadings"/>
+  <xsl:param name="numberHeadingsDepth"/>
   <xsl:param name="oddmode">dtd</xsl:param>
   <xsl:param name="prenumberedHeadings">false</xsl:param>
   <xsl:param name="splitLevel">-1</xsl:param>

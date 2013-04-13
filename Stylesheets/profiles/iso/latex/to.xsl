@@ -61,8 +61,8 @@ of this software, even if advised of the possibility of such damage.
   
 
    <xsl:param name="reencode">false</xsl:param>
-   <xsl:param name="numberBackHeadings">true</xsl:param>
-   <xsl:param name="numberFrontHeadings">true</xsl:param>
+   <xsl:param name="numberBackHeadings">A.1</xsl:param>
+   <xsl:param name="numberFrontHeadings">i</xsl:param>
    <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
    <xsl:param name="classParameters">11pt,twoside</xsl:param>
    <xsl:param name="startNamespace"/>

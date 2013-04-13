@@ -86,7 +86,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:param name="wrapLength">65</xsl:param>
    <xsl:param name="attLength">60</xsl:param>
    <xsl:param name="forceWrap">true</xsl:param>
-   <xsl:param name="numberBackHeadings">true</xsl:param>
+   <xsl:param name="numberBackHeadings">A.1</xsl:param>
    <xsl:template match="/">
      <xsl:variable name="All">
        <xsl:apply-templates mode="checkSchematron"/>

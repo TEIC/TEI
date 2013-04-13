@@ -239,10 +239,10 @@ of this software, even if advised of the possibility of such damage.
             </xsl:choose>
             <xsl:choose>
                <xsl:when test="parent::tei:body or ancestor::tei:floatingText or
-	       parent::tei:div/@rend='nonumber' or 
-	       (ancestor::tei:back and not($numberBackHeadings='true'))
+	       parent::tei:div/@rend='nonumber' 
+	       or (ancestor::tei:back and $numberBackHeadings='')
 	       or (not($numberHeadings='true') and ancestor::tei:body)
-	       or (ancestor::tei:front and  not($numberFrontHeadings='true'))">*</xsl:when>
+	       or (ancestor::tei:front and  $numberFrontHeadings='')">*</xsl:when>
 	       <xsl:otherwise>[<xsl:value-of select="normalize-space(.)"/>]</xsl:otherwise>
             </xsl:choose>
 	    <xsl:text>{</xsl:text>
