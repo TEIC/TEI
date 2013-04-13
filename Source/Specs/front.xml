@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -37,56 +37,62 @@ found  at the start of a document, before the main body.</desc>
   </classes>
   <content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <choice>
-          <ref name="model.frontPart"/>
-          <ref name="model.pLike.front"/>
-          <ref name="model.global"/>
-        </choice>
-      </zeroOrMore>
+      <!-- 
+	   we start with allowing a group of mixed-up p-like elements.
+	   when we are done with them, we can start considering
+	   div-like elements, and the things that
+	   can occur after them.
+      -->
       <group>
-        <optional>
-          <choice>
-            <group>
-              <group>
-                <ref name="model.div1Like"/>
-              </group>
-              <zeroOrMore>
-                <choice>
-                  <ref name="model.frontPart"/>
-                  <ref name="model.div1Like"/>
-                  <ref name="model.global"/>
-                </choice>
-              </zeroOrMore>
-            </group>
-            <group>
-              <group>
-                <ref name="model.divLike"/>
-              </group>
-              <zeroOrMore>
-                <choice>
-                  <ref name="model.frontPart"/>
-                  <ref name="model.divLike"/>
-                  <ref name="model.global"/>
-                </choice>
-              </zeroOrMore>
-            </group>
-          </choice>
-        </optional>
+	<zeroOrMore>
+	  <choice>
+	    <ref name="model.frontPart"/>
+	    <ref name="model.pLike"/>
+	    <ref name="model.pLike.front"/>
+	    <ref name="model.global"/>
+	  </choice>
+	</zeroOrMore>
       </group>
-      <group>
-        <optional>
+      <optional>
+	<choice>
+	  <!-- 1. has a div1Like, after optional front parts -->
+	  <group>
+	    <ref name="model.div1Like"/>
+	    <zeroOrMore>
+	      <choice>
+		<ref name="model.div1Like"/>
+		<ref name="model.frontPart"/>
+		<ref name="model.global"/>
+	      </choice>
+	    </zeroOrMore>
+	  </group>
+	  <!-- 1. has a divLike, after optional front parts -->
+	  <group>
+	    <ref name="model.divLike"/>
+	    <zeroOrMore>
+	      <choice>
+		<ref name="model.divLike"/>
+		<ref name="model.frontPart"/>
+		<ref name="model.global"/>
+	      </choice>
+	    </zeroOrMore>
+	  </group>
+	</choice>
+	<!-- and some bottoms, mebbe -->
           <group>
-            <ref name="model.divBottomPart"/>
+            <optional>
+              <group>
+                <ref name="model.divBottom"/>
+              </group>
+              <zeroOrMore>
+                <choice>
+                  <ref name="model.divBottom"/>
+                  <ref name="model.global"/>
+                </choice>
+              </zeroOrMore>
+            </optional>
           </group>
-          <zeroOrMore>
-            <choice>
-              <ref name="model.divBottomPart"/>
-              <ref name="model.global"/>
-            </choice>
-          </zeroOrMore>
-        </optional>
-      </group>
+      </optional>
     </group>
   </content>
   <exemplum xml:lang="mul">
