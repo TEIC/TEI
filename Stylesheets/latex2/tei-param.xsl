@@ -513,7 +513,7 @@ capable of dealing with UTF-8 directly.
 \def\frontmatter{%
   \pagenumbering{roman}
   \def\thechapter{\@roman\c@chapter}
-  \def\theHchapter{\alph{chapter}}
+  \def\theHchapter{\roman{chapter}}
   \def\@chapapp{}%
 }
 \def\mainmatter{%
@@ -530,7 +530,7 @@ capable of dealing with UTF-8 directly.
   \cleardoublepage
   \setcounter{chapter}{0}
   \setcounter{section}{0}
-  \setcounter{secnumdepth}{0}
+  \setcounter{secnumdepth}{2}
   \def\@chapapp{\appendixname}%
   \def\thechapter{\@Alph\c@chapter}
   \def\theHchapter{\Alph{chapter}}
