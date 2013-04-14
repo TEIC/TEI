@@ -5,7 +5,6 @@ LANGUAGE=en
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
-XELATEXFLAGS=--output-driver="xdvipdfmx -V 5" --interaction=batchmode
 XELATEX=xelatex 
 VERBOSE=
 PREFIX=/usr
@@ -22,9 +21,6 @@ TRANG=trang
 SAXON=java -Xmx752m -jar Utilities/lib/saxon9he.jar -ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
-ODD2DTD=odds2/odd2dtd.xsl
-ODD2RELAX=odds2/odd2relax.xsl
-ODD2LITE=odds2/odd2lite.xsl
 
 .PHONY: convert schemas html-web validate valid test clean dist exemplars
 
@@ -56,14 +52,10 @@ p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
 schemas: schemas.stamp
 
 schemas.stamp: check.stamp p5.xml 
-	rm -rf DTD Schema
-	mkdir DTD Schema
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f antbuildschemas.xml -DXSL=${XSL} subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
-	${TRANG} p5odds.rng p5odds.rnc
-	${TRANG} p5odds-examples.rng p5odds-examples.rnc
 	touch schemas.stamp
 
 html-web: check.stamp p5.xml  html-web.stamp
@@ -89,13 +81,6 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 	rm -f buildweb.xml Utilities/teic-index.xml
 	touch html-web.stamp
 
-validate-html:
-	@echo BUILD: Validate HTML version of Guidelines
-	@ echo SUSPENDED FOR NOW
-
-old-validate-html:
-	cd Guidelines-web/${LANGUAGE}/html;for i in *.html; do xmllint --noent --dropdtd $$i > z_$$i; done;ant  -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f ../../../validatehtml.xml;rm z_*
-
 teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
 	rm -rf teiwebsiteguidelines.zip 
@@ -119,18 +104,20 @@ fonttest:
 Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 	@echo check if XeLaTeX exist
 	@command -v  xelatex || exit 1
-	@echo BUILD: build Lite version of Guidelines
-	${SAXON} ${SAXON_ARGS}  -o:Guidelines.xml -s:p5.xml -xsl:${XSL}/${ODD2LITE} displayMode=rnc lang=${LANGUAGE} \
-	        doclang=${DOCUMENTATIONLANGUAGE} \
-	        documentationLanguage=${DOCUMENTATIONLANGUAGE}	${VERBOSE}
-	@echo BUILD: build LaTeX version of Guidelines from Lite
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
-	@echo BUILD: check XeLaTeX system works locally
-	${SAXON} ${SAXON_ARGS}  Guidelines.xml Utilities/guidelines.xsl > Guidelines.tex
-	rm -f Utilities/guidelines.xsl
+	@echo BUILD: build Lite version of Guidelines, then LaTeX version of Guidelines from Lite, then run to PDF using XeLaTeX
+	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
+	ant -lib /usr/share/saxon/saxon9he.jar -f antbuildschemas.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
+
+pdf-complete:
+	ant -lib /usr/share/saxon/saxon9he.jar -f antbuildschemas.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
+	grep -v "Failed to convert input string to UTF16" pdfbuild.log
+	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
+
+rewraprnc:
 	for i in Guidelines-REF*tex; \
 	  do \
 	     perl Utilities/rewrapRNC-in-TeX.pl <$$i>$$i.new; \
@@ -138,21 +125,6 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 		diff $$i.new $$i; \
 		mv $$i.new $$i; \
 	done
-	@echo BUILD: build PDF version of Guidelines from LaTeX using XeLaTeX
-	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
-	echo '*' | ${XELATEX}  Guidelines
-
-pdf-complete:
-	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> pdfbuild.log 1> pdfbuild.log
-	grep -v "Failed to convert input string to UTF16" pdfbuild.log
-	makeindex -s p5.ist Guidelines 
-	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> pdfbuild.log 1> pdfbuild.log
-	grep -v "Failed to convert input string to UTF16" pdfbuild.log
-	(echo '*' | ${XELATEX} ${XELATEXFLAGS} Guidelines) 2> pdfbuild.log 1> pdfbuild.log
-	grep -v "Failed to convert input string to UTF16" pdfbuild.log
-	rm pdfbuild.log
-	rm Guidelines.xml
-	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 
 chapterpdfs: check
 	for i in `grep "\\include{" Guidelines.tex | sed 's/.*{\(.*\)}.*/\\1/'`; \
@@ -453,9 +425,12 @@ clean:
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split 
 	rm -rf Guidelines.??? Guidelines-* 
 	rm -f Guidelines.epub
+	rm -f Guidelines.xml
 	rm -f Guidelines.mobi
+	rm -d pdfbuild.log
 	rm -f p5odds-examples.rng  p5odds-examples.rnc 
 	rm -f p5odds.rng p5odds.rnc 
+	rm -f Utilities/guidelines.xsl
 	rm -f *.xsd 
 	rm -f anything buildweb.xml
 	rm -f p5.sch p5.isosch 
