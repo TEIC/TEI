@@ -57,6 +57,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="reencode">false</xsl:param>
   <xsl:param name="classParameters"></xsl:param>
   <xsl:param name="longtables">false</xsl:param>
+  <xsl:param name="attsOnSameLine">2</xsl:param>
   <xsl:param name="documentclass">acm_proc_article-sp</xsl:param>  
   <xsl:template name="latexSetup"/>
   <xsl:template name="latexPackages">   
@@ -112,7 +113,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:param name="dest"/>
       <xsl:choose>
          <xsl:when test="$ptr">
-            <xsl:text>\texttt{</xsl:text>
+            <xsl:text>{\small\ttfamily </xsl:text>
 	    <xsl:sequence select="$dest"/>
             <xsl:text>}</xsl:text>
          </xsl:when>
