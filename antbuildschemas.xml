@@ -23,13 +23,16 @@
  -->
   <property name="trang" value="/usr/share/trang/trang.jar"/>
   <property name="XSL" value="/usr/share/xml/tei/stylesheet"/>
+  <property name="XELATEXFLAGS" value=""/>
+  <property name="XELATEX" value="xelatex"/>
   <property name="lang" value="en"/>
+  <property name="doclang" value="en"/>
   <property name="verbose" value=""/>
-  <property name="documentationLanguage" value="en"/>
   <property name="inputDir" location="."/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
+
   <target name="all" depends="subset,outputs"/>
 
   <target name="subset">
@@ -40,6 +43,11 @@
 
   <target name="outputs">
     <echo>make modular DTDs, RELAXNG schemas, json, odd schemas</echo>
+
+    <delete dir="DTD"/>
+    <mkdir dir="DTD"/>
+    <delete dir="Schema"/>
+    <mkdir dir="Schema"/>
 
       <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2json.xsl" in="p5subset.xml" out="p5subset.js">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -58,13 +66,13 @@
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="outputDir" expression="DTD"/>
         <param name="lang" expression="${lang}"/>
-        <param name="documentationLanguage" expression="${documentationLanguage}"/>
+        <param name="documentationLanguage" expression="${docLang}"/>
       </xslt>
       <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5subset.xml" out="stdout">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="outputDir" expression="Schema"/>
         <param name="lang" expression="${lang}"/>
-        <param name="documentationLanguage" expression="${documentationLanguage}"/>
+        <param name="documentationLanguage" expression="${docLang}"/>
       </xslt>
       <xslt processor="trax" force="yes" style="${XSL}/odds2/extract-isosch.xsl" in="${inputDir}/p5.xml" out="p5.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -101,7 +109,50 @@
           <param name="verbose" expression="${verbose}" if="verbose"/>
         </xslt>
         <delete file="p5odds-examples.compiled.xml"/>
-      </sequential>
 
+      <exec executable="trang" failonerror="true">
+	<arg value="p5odds.rng"/>
+	<arg value="p5odds.rnc"/>
+      </exec>
+      <exec executable="trang" failonerror="true">
+	<arg value="p5odds-examples.rng"/>
+	<arg value="p5odds-examples.rnc"/>
+      </exec>
+      </sequential>
+  </target>
+
+  <target name="pdfonce">
+    <xslt force="yes" style="${XSL}/odds2/odd2lite.xsl" in="p5.xml" out="Guidelines.xml">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="displayMode" expression="'rnc'"/>
+      <param name="doclang" expression="${doclang}" if="doclang"/>
+      <param name="documentationLanguage" expression="${doclang}" if="doclang"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <xslt force="yes" style="Utilities/guidelines.xsl" in="Guidelines.xml" out="Guidelines.tex">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <exec executable="${XELATEX}" failonerror="true">
+      <arg value="-interaction=nonstopmode"/>
+      <arg value="Guidelines.tex"/>
+    </exec>
+  </target>
+
+  <target name="pdfrest">
+    <exec executable="makeindex" failonerror="true">
+      <arg value="-s"/>
+      <arg value="p5.ist"/>
+      <arg value="Guidelines"/>
+    </exec>
+    <exec executable="${XELATEX}" failonerror="true">
+      <arg value="-interaction=batchmode"/>
+      <arg value="Guidelines.tex"/>
+    </exec>
+    <exec executable="${XELATEX}" failonerror="true">
+      <arg value="-interaction=batchmode"/>
+      <arg value="Guidelines.tex"/>
+    </exec>
   </target>
 </project>
