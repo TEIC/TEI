@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
-		xmlns:xs="http://www.w3.org/2001/XMLSchema"                
-                xmlns:m="http://www.w3.org/1998/Math/MathML"
-                xpath-default-namespace="http://www.tei-c.org/ns/1.0"
-                xmlns:tei="http://www.tei-c.org/ns/1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                exclude-result-prefixes="#all"
-                version="2.0">
-    <!-- import base conversion style -->
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"                
+    xmlns:xi="http://www.w3.org/2003/XInclude"
+    xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+    xmlns:m="http://www.w3.org/1998/Math/MathML"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="#all"
+    version="2.0">
+  <!-- import base conversion style -->
 
-    <xsl:import href="../../../latex2/tei.xsl"/>
-
+  <xsl:import href="../../../latex2/tei.xsl"/>
+  <xsl:import href="../../../bibtex/convertbib.xsl"/>
+  
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 
@@ -48,7 +50,7 @@ of this software, even if advised of the possibility of such damage.
 </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id: to.xsl 10345 2012-05-15 08:37:59Z rahtz $</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2008, tei Consortium</p>
       </desc>
    </doc>
 
@@ -82,7 +84,7 @@ of this software, even if advised of the possibility of such damage.
 \maketitle
 \begin{abstract}
 <xsl:for-each
-    select="ancestor-or-self::TEI/text/front/div[@type='abstract']">
+    select="ancestor-or-self::TEI/front/div[@type='abstract']">
   <xsl:apply-templates/>
 </xsl:for-each>
 \end{abstract}
@@ -126,10 +128,10 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="makeFigureStart">
       <xsl:choose>
-	<xsl:when test="@place='inline' and tei:head">
+	<xsl:when test="@place='inline' and head">
             <xsl:text>\begin{figure}[H]&#10;</xsl:text>
 	</xsl:when>
-	<xsl:when test="@rend='display' or not(@place='inline') or tei:head or tei:p">
+	<xsl:when test="@rend='display' or not(@place='inline') or head or p">
 	  <xsl:text>\begin{figure*}[htbp]&#10;</xsl:text>
 	</xsl:when>
       </xsl:choose>
@@ -145,10 +147,10 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template name="makeFigureEnd">
       <xsl:choose>
-         <xsl:when test="tei:head or tei:p">
+         <xsl:when test="head or p">
             <xsl:text>&#10;\caption{</xsl:text>
             <xsl:if test="@xml:id">\label{<xsl:value-of select="@xml:id"/>}</xsl:if>
-            <xsl:for-each select="tei:head">
+            <xsl:for-each select="head">
 	      <xsl:apply-templates/>
 	    </xsl:for-each>
             <xsl:text>}</xsl:text>
@@ -158,7 +160,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>\end{center}</xsl:text>
       </xsl:if>
       <xsl:choose>
-	<xsl:when test="@place='inline' and tei:head">
+	<xsl:when test="@place='inline' and head">
             <xsl:text>\end{figure}&#10;</xsl:text>
 	</xsl:when>
          <xsl:when test="@rend='display' or not(@place='inline')">
@@ -175,7 +177,7 @@ of this software, even if advised of the possibility of such damage.
      <xsl:text>\ttfamily\fontsize{7pt}{8.5pt}\selectfont </xsl:text>
    </xsl:template>
 
-   <xsl:template match="tei:ptr[@type='bibl']">
+   <xsl:template match="ptr[@type='bibl']">
      <xsl:sequence select="concat('\cite{',substring-after(@target,'#'),'}')"/>
        <!--
 	<xsl:variable name="place" select="replace(@target,'#.*','')"/>
@@ -185,10 +187,29 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:sequence select="doc(resolve-uri($place,$ORIGDIR))"/>
 	     </xsl:when>
 	     <xsl:otherwise>
-	       <xsl:sequence select="doc(resolve-uri(place,base-uri(/tei:TEI)))"/>
+	       <xsl:sequence select="doc(resolve-uri($place,base-uri(/)))"/>
 	     </xsl:otherwise>
 	   </xsl:choose>
 	 </xsl:variable>
 	 -->
+   </xsl:template>
+
+   <xsl:template match="listBibl">
+     <xsl:message>Generate foracmbib.bib</xsl:message>
+     <xsl:result-document href="foracmbib.bib" method="text">
+       <xsl:for-each select="biblStruct">
+	 <xsl:call-template name="biblStruct2bibtex"/>
+       </xsl:for-each>
+     </xsl:result-document>
+     \bibliographystyle{abbrv}
+     \bibliography{foracmbib}
+
+   </xsl:template>
+
+   <xsl:template match="xi:include">
+     <xsl:for-each
+	 select="doc(resolve-uri(@href,base-uri(/)))//text/*">
+       <xsl:apply-templates/>
+     </xsl:for-each>
    </xsl:template>
 </xsl:stylesheet>
