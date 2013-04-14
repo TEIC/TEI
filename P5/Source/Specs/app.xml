@@ -6,32 +6,16 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="app">
-  <equiv/>
-  <gloss>apparatus entry</gloss>
-  <gloss versionDate="2007-12-20" xml:lang="ko">참조 도구 표제 항목</gloss>
-  <gloss versionDate="2007-05-02" xml:lang="zh-TW">學術編輯註解項目</gloss>
-  <gloss versionDate="2008-04-05" xml:lang="ja"/>
-  <gloss versionDate="2007-06-12" xml:lang="fr">entrée d'apparat critique</gloss>
-  <gloss versionDate="2007-05-04" xml:lang="es">entrada de aparato crítico</gloss>
-  <gloss versionDate="2007-01-21" xml:lang="it">voce dell'apparato</gloss>
-  <desc>contains one entry in a critical apparatus, with an optional
-lemma and usually one or more reading or a note on the relevant passage.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">수의적 레마와 적어도 하나의 독법을 포함하여 비평적 참조 도구에서 하나의 표제 항목을 포함한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">一項學術編輯註解，內含一個不必備主題以及至少一個對應本。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="app"><equiv/><gloss>apparatus entry</gloss><gloss versionDate="2007-12-20" xml:lang="ko">참조 도구 표제 항목</gloss><gloss versionDate="2007-05-02" xml:lang="zh-TW">學術編輯註解項目</gloss><gloss versionDate="2008-04-05" xml:lang="ja"/><gloss versionDate="2007-06-12" xml:lang="fr">entrée d'apparat critique</gloss><gloss versionDate="2007-05-04" xml:lang="es">entrada de aparato crítico</gloss><gloss versionDate="2007-01-21" xml:lang="it">voce dell'apparato</gloss><desc>contains one entry in a critical apparatus, with an optional
+lemma and usually one or more reading or a note on the relevant passage.</desc><desc versionDate="2007-12-20" xml:lang="ko">수의적 레마와 적어도 하나의 독법을 포함하여 비평적 참조 도구에서 하나의 표제 항목을 포함한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">一項學術編輯註解，內含一個不必備主題以及至少一個對應本。</desc><desc versionDate="2008-04-05" xml:lang="ja">
   校勘資料中のいち対象で，内容として少なくとも1つの読みと，選択的に見
   出し(lemma)をとる．
-  </desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient une entrée dans un apparat critique,
-			constituée d'un lemme facultatif et d'au moins une leçon.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene una entrada en el aparato crítico, con un lema opcional y, al menos, una lectura.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene una singola voce in un apparato critico, con un lemma facoltativo e almeno una lettura</desc>
-  <classes>
+  </desc><desc versionDate="2007-06-12" xml:lang="fr">contient une entrée dans un apparat critique,
+			constituée d'un lemme facultatif et d'au moins une leçon.</desc><desc versionDate="2007-05-04" xml:lang="es">contiene una entrada en el aparato crítico, con un lema opcional y, al menos, una lectura.</desc><desc versionDate="2007-01-21" xml:lang="it">contiene una singola voce in un apparato critico, con un lemma facoltativo e almeno una lettura</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="model.pPart.transcriptional"/>
-  </classes>
-  <content>
+  </classes><content>
     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:zeroOrMore>
         <rng:ref name="model.global"/>
@@ -77,18 +61,14 @@ lemma and usually one or more reading or a note on the relevant passage.</desc>
         </rng:choice>
       </rng:zeroOrMore>
     </rng:group>
-  </content>
-  <constraintSpec scheme="isoschematron" ident="only1lem">
+  </content><constraintSpec scheme="isoschematron" ident="only1lem">
     <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
-      <sch:assert test="count( descendant::tei:lem[ generate-id(
-			current() ) = generate-id(
-			ancestor::tei:app[1] ) ]) &lt;       2">
+      <sch:assert test="count( descendant::tei:lem[ generate-id(    current() ) = generate-id(    ancestor::tei:app[1] ) ]) &lt;       2">
 Only one &lt;lem&gt; element may appear within a single  apparatus
 entry, whether it appears outside a &lt;rdgGrp&gt;
 element or within it.</sch:assert>
     </constraint>
-  </constraintSpec>
-  <attList>
+  </constraintSpec><attList>
     <attDef ident="type" usage="opt">
       <equiv/>
       <desc>classifies the variation contained in this element according to
@@ -214,8 +194,7 @@ encoding method is used.<!-- [Suppress it and use <att>from</att> instead?  -MSM
     </p>
       </remarks>
     </attDef>
-  </attList>
-  <exemplum xml:lang="en">
+  </attList><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <app>
         <lem wit="#El #Hg">Experience</lem>
@@ -223,8 +202,7 @@ encoding method is used.<!-- [Suppress it and use <att>from</att> instead?  -MSM
         <rdg wit="#Ra2" type="substantive">Eryment</rdg>
       </app>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
+  </exemplum><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <app type="substantive">
         <rdgGrp type="subvariants">
@@ -242,8 +220,7 @@ encoding method is used.<!-- [Suppress it and use <att>from</att> instead?  -MSM
         </rdgGrp>
       </app>
     </egXML>
-  </exemplum>
-  <!--  <remarks>
+  </exemplum><!--  <remarks>
     <p rend="dataDesc">May contain an optional lemma and one or more readings or
 reading groups, each associated with witness specifications.</p>
   </remarks>
@@ -255,8 +232,6 @@ reading groups, each associated with witness specifications.</p>
     <p rend="dataDesc">
     複数の読み，読みのまとまり，ひとつの選択的な対象語(lemma)をとる．
     </p>
-  </remarks>-->
-  <listRef>
+  </remarks>--><listRef>
     <ptr target="#TCAPEN"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,26 +6,18 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<classSpec  xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="TYPED" type="atts" ident="att.typed">
-  <desc>provides attributes which can be used to classify or subclassify elements in any way. </desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">요소의 분류 또는 하위분류에서 사용될 수 있는 속성을 제공한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">提供可依任何方法將元素分類或次要分類的一般屬性。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<classSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="TYPED" type="atts" ident="att.typed"><desc>provides attributes which can be used to classify or subclassify elements in any way. </desc><desc versionDate="2007-12-20" xml:lang="ko">요소의 분류 또는 하위분류에서 사용될 수 있는 속성을 제공한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">提供可依任何方法將元素分類或次要分類的一般屬性。</desc><desc versionDate="2008-04-05" xml:lang="ja">
   要素を分類するための属性を示す．
-</desc>
-  <desc versionDate="2009-05-29" xml:lang="fr">fournit des attributs qui peuvent être
-      utilisés pour classer ou interclasser des éléments de n'importe quelle façon.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos genéricos utilizables para cualquier clasificación o subclasificación de elementos.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi generici utilizzabili per qualsiasi classificazione e sottoclassificazione di elementi</desc>
-  <constraintSpec scheme="isoschematron" ident="subtypeTyped">
+</desc><desc versionDate="2009-05-29" xml:lang="fr">fournit des attributs qui peuvent être
+      utilisés pour classer ou interclasser des éléments de n'importe quelle façon.</desc><desc versionDate="2007-05-04" xml:lang="es">proporciona atributos genéricos utilizables para cualquier clasificación o subclasificación de elementos.</desc><desc versionDate="2007-01-21" xml:lang="it">assegna degli attributi generici utilizzabili per qualsiasi classificazione e sottoclassificazione di elementi</desc><constraintSpec scheme="isoschematron" ident="subtypeTyped">
     <constraint>
       <sch:rule context="*[@subtype]">
 	<sch:assert test="@type">The <sch:name/> element should not be categorized in detail with @subtype
  unless also categorized in general with @type</sch:assert>
       </sch:rule>
     </constraint>
-  </constraintSpec>
-  <attList>
+  </constraintSpec><attList>
     <attDef ident="type" usage="opt">
       <equiv/>
       <desc>characterizes the element in some sense, using any convenient
@@ -42,7 +34,7 @@ $Id$
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <exemplum xml:lang="en" corresp="#NZETC01">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en" >
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
 	  <div type="verse">
 	    <head>Night in Tarras</head>
 	    <lg type="stanza">
@@ -58,8 +50,7 @@ $Id$
       </exemplum>
       <remarks>
         <p>The <att>type</att> attribute is present on a number of
-	elements, not all of which are members of <ident
-	type="class">att.typed</ident>, usually because these elements
+	elements, not all of which are members of <ident type="class">att.typed</ident>, usually because these elements
 	restrict the possible values for the attribute in a specific way.</p>
       </remarks>
     </attDef>
@@ -101,16 +92,12 @@ sub-classification for the element additional to that provided by its
     </p>
       </remarks>
     </attDef>
-  </attList>
-  <remarks versionDate="2011-11-26">
+  </attList><remarks versionDate="2011-11-26">
     <p>When appropriate, values from an established typology should be
     used. Alternatively a typology may be defined in the associated
     TEI header. If values are to be taken from a project-specific
     list, this should be defined using the <gi>valList</gi> element in
-    the project-specific schema description, as described in <ptr
-    target="#MDMDAL"/> .</p>
-  </remarks>
-  <listRef>
+    the project-specific schema description, as described in <ptr target="#MDMDAL"/> .</p>
+  </remarks><listRef>
     <ptr target="#STECAT"/>
-  </listRef>
-</classSpec>
+  </listRef></classSpec>
