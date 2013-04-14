@@ -46,7 +46,7 @@
 
 <xsl:template mode="tobib" match="publisher">
   <xsl:choose>
-    <xsl:when test="ancestor::biblStruct/series">
+    <xsl:when test="ancestor::biblStruct/series or  ancestor::biblStruct/idno[@type='url']">
       <xsl:text>@institution={</xsl:text>
       <xsl:value-of select="."/>
       <xsl:text>}</xsl:text>
@@ -179,7 +179,9 @@
 	  <xsl:value-of select="surname"/>
 	</xsl:when>
 	<xsl:otherwise>
+	  <xsl:text>{</xsl:text>
 	  <xsl:apply-templates mode="tobib"/>
+	  <xsl:text>}</xsl:text>
 	</xsl:otherwise>
       </xsl:choose>
       <xsl:if test="following-sibling::author"> and </xsl:if>
