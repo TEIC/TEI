@@ -243,6 +243,7 @@ dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	Exemplars/svg11.rng \
 	p5.nvdl \
 	p5odds.odd \
+	p5odds.isosch \
 	p5odds.rng \
 	p5odds.rnc \
 	p5odds-examples.odd \

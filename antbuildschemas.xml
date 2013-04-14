@@ -82,6 +82,9 @@
           <param name="lang" expression="${lang}" if="lang"/>
           <param name="verbose" expression="${verbose}" if="verbose"/>
         </xslt>
+	<xslt processor="trax" force="yes" style="${XSL}/odds2/extract-isosch.xsl" in="p5odds.compiled.xml" out="p5odds.isosch">
+	  <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+	</xslt>
         <delete file="p5odds.compiled.xml"/>
       </sequential>
       <sequential>
