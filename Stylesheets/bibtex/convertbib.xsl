@@ -45,9 +45,18 @@
   </xsl:template>
 
 <xsl:template mode="tobib" match="publisher">
-  <xsl:text>@publisher={</xsl:text>
-  <xsl:value-of select="."/>
-  <xsl:text>}</xsl:text>
+  <xsl:choose>
+    <xsl:when test="ancestor::biblStruct/series">
+      <xsl:text>@institution={</xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>}</xsl:text>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:text>@publisher={</xsl:text>
+      <xsl:value-of select="."/>
+      <xsl:text>}</xsl:text>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template mode="tobib" match="note">
@@ -84,7 +93,7 @@
   <xsl:variable name="name">
     <xsl:choose>
       <xsl:when test="@level='a'">title</xsl:when>
-      <xsl:when test="parent::monogr and ancestor::biblStruct/series">title</xsl:when>
+      <xsl:when test="parent::monogr and not(ancestor::biblStruct/analytic)">title</xsl:when>
       <xsl:when test="@level='j' or parent::monogr/imprint/biblScope[@type='volume']">journal</xsl:when>
       <xsl:when test="@level='m' or parent::monogr">booktitle</xsl:when>
       <xsl:when test="@level='s'">series</xsl:when>
@@ -117,6 +126,12 @@
 
 <xsl:template mode="tobib" match="biblScope[@type='number']">
   <xsl:text>@number={</xsl:text>
+  <xsl:apply-templates mode="tobib"/>
+  <xsl:text>}</xsl:text>
+</xsl:template>
+
+<xsl:template mode="tobib" match="biblScope[@type='volume']">
+  <xsl:text>@volume={</xsl:text>
   <xsl:apply-templates mode="tobib"/>
   <xsl:text>}</xsl:text>
 </xsl:template>
