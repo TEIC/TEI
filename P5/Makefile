@@ -53,7 +53,7 @@ schemas: schemas.stamp
 
 schemas.stamp: check.stamp p5.xml 
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
-	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f antbuildschemas.xml -DXSL=${XSL} subset outputs
+	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 	touch schemas.stamp
@@ -110,10 +110,10 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	@echo BUILD: build Lite version of Guidelines, then LaTeX version of Guidelines from Lite, then run to PDF using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
-	ant -lib /usr/share/saxon/saxon9he.jar -f antbuildschemas.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
+	ant -lib /usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
 
 pdf-complete:
-	ant -lib /usr/share/saxon/saxon9he.jar -f antbuildschemas.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
+	ant -lib /usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 
@@ -427,7 +427,7 @@ clean:
 	rm -f Guidelines.epub
 	rm -f Guidelines.xml
 	rm -f Guidelines.mobi
-	rm -d pdfbuild.log
+	rm -f pdfbuild.log
 	rm -f p5odds-examples.rng  p5odds-examples.rnc 
 	rm -f p5odds.rng p5odds.rnc 
 	rm -f Utilities/guidelines.xsl
