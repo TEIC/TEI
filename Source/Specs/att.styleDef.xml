@@ -68,25 +68,8 @@ If no value for the @scheme attribute is provided, then the default assumption s
     <attDef ident="schemeVersion" usage="opt">
       <desc>supplies a version number for the style language provided in <att>scheme</att>.</desc>
       
-<!-- TODO: This datatype is identical to that in application/@version, and both should be 
-      changed to data.versionNum when LB has created that datatype. -->
       <datatype>
-        <data xmlns="http://relaxng.org/ns/structure/1.0" type="token">
-          <param name="pattern">[\d]+[a-z]*[\d]*(\.[\d]+[a-z]*[\d]*){0,3}</param>
-        </data>
-        <!--
-	    This matches the following types of version numbers:
-	    
-	    1
-	    12
-	    1.1
-	    1b
-	    1.2b6
-	    1.3.4.5
-	    1.2.3b.5
-	    1.2.3b.5b
-	    1.3alpha.5 
-	-->
+<rng:ref name="data.versionNumber"/>
       </datatype>
       <constraintSpec ident="schemeVersionRequiresScheme" scheme="isoschematron">
         <constraint>
