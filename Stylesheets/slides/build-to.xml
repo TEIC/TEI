@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="teitoslides">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -27,6 +27,7 @@
   <property name="outputFile" value=""/>
   <!-- which profile -->
   <property name="profile" value="default"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <property name="profiledir" value="../profiles"/>
@@ -44,7 +45,6 @@
     <mkdir dir="${outputTempDir}"/>
   </target>
   <target name="dist" depends="setup,convert,cleanup"/>
-
   <target name="convert">
     <!-- Recreate temporary output directory -->
     <!-- The transformation for SLIDES output. -->
@@ -64,15 +64,14 @@
     <copy file="${profiledir}/${profile}/slides/logo.png" tofile="${outputDir}/_slidelogo.png"/>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=nonstopmode"/>
-      <arg value="${outputFile}" />
+      <arg value="${outputFile}"/>
     </exec>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=batchmode"/>
-      <arg value="${outputFile}" />
+      <arg value="${outputFile}"/>
     </exec>
     <echo>wrote ${outputFile}.pdf</echo>
   </target>
-
   <target name="handout">
     <!-- The transformation for SLIDES handout output. -->
     <echo level="info">XSLT generate slides handout file</echo>
@@ -90,7 +89,7 @@
       <param name="startElement" expression="{"/>
       <param name="startElementName" expression="{"/>
       <param name="attsOnSameLine" expression="6"/>
-      <param name="beamerClass" expression="boxes" />
+      <param name="beamerClass" expression="boxes"/>
       <param name="reencode" expression="false"/>
       <param name="pause" expression="false"/>
       <!-- be verbose-->
@@ -98,16 +97,15 @@
     </xslt>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=nonstopmode"/>
-      <arg value="${outputDir}/${basefile}-handout.tex" />
+      <arg value="${outputDir}/${basefile}-handout.tex"/>
     </exec>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=batchmode"/>
-      <arg value="${outputDir}/${basefile}-handout.tex" />
+      <arg value="${outputDir}/${basefile}-handout.tex"/>
     </exec>
     <echo>wrote ${outputDir}/${basefile}-handout.tex</echo>
   </target>
-
-  <target name="cleanup" unless="debug">  
+  <target name="cleanup" unless="debug">
     <delete file="${outputDir}/${basefile}.nav"/>
     <delete file="${outputDir}/${basefile}.out"/>
     <delete file="${outputDir}/${basefile}.log"/>
@@ -127,5 +125,4 @@
     <delete file="${outputDir}/${outputFile}"/>
     <delete dir="${outputTempDir}"/>
   </target>
-
 </project>

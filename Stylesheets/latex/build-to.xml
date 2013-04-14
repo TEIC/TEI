@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="teitotex">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -27,6 +27,7 @@
   <property name="outputFile" value=""/>
   <!-- which profile -->
   <property name="profile" value="default"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <property name="profiledir" value="../profiles"/>
@@ -43,7 +44,6 @@
     <mkdir dir="${outputTempDir}"/>
   </target>
   <target name="dist" depends="setup,convert,cleanup"/>
-
   <target name="convert">
     <!-- Recreate temporary output directory -->
     <!-- The transformation for TEX output. -->
@@ -61,8 +61,7 @@
     </xslt>
     <echo>wrote ${outputFile}</echo>
   </target>
-
-  <target name="cleanup" unless="debug">  
+  <target name="cleanup" unless="debug">
     <delete file="${texfile}.nav"/>
     <delete file="${texfile}.out"/>
     <delete file="${texfile}.log"/>
@@ -73,5 +72,4 @@
     <delete file="${texfile}.tex"/>
     <delete dir="${outputTempDir}"/>
   </target>
-
 </project>

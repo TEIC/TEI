@@ -1,7 +1,7 @@
 VERSION=`cat ../VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
-default: schema test-html test-latex test-fo test-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant
+default: schema test-html test-latex test-fo test-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant scripts
 
 p4top5:
 	saxon -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -215,6 +215,9 @@ oddity:
 	rm test.odd2lite
 	rm test.odd2relax
 	rm test.odd2xslstripspace
+
+scripts:
+	for i in teitobibtex teitodocbook teitodocx teitodtd teitoepub teitoepub3 teitofo teitohtml teitohtml5 teitojson teitolatex teitoodt teitopdf teitordf teitorelaxng teitornc teitoslides teitotxt teitoxsd; do ../$$i maria.xml $$i.result; rm $$i.result; done
 
 pureant:
 	java -Xmx256m \

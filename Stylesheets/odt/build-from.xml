@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="docxtei">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -29,33 +29,29 @@
   <property name="profile" value="default"/>
   <!-- which language -->
   <property name="lang" value="en"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="odttotei"  value="../profiles/${profile}/odt/from.xsl"/>
+  <property name="odttotei" value="../profiles/${profile}/odt/from.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir"    file="${outputFile}"/>
-  <property name="outputTempDir"   value="${outputDir}/temp-dir-for-ant"/>
-
+  <dirname property="outputDir" file="${outputFile}"/>
+  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
-
   <target name="setup">
     <!-- Recreate temporary output directory -->
     <delete dir="${outputTempDir}"/>
-    <mkdir  dir="${outputTempDir}"/>
+    <mkdir dir="${outputTempDir}"/>
   </target>
-
   <target name="dist" depends="convert,mediadir.check,picturecopy,cleanup"/>
-
   <target name="convert" depends="setup">
     <unzip src="${inputFile}" dest="${outputTempDir}"/>
     <xslt force="yes" style="${odttotei}" in="${outputTempDir}/content.xml" out="${outputFile}">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -65,21 +61,17 @@
       <param name="mediaDir" expression="Pictures"/>
     </xslt>
   </target>
-
   <target name="mediadir.check">
     <condition property="mediadir.exists">
       <available file="${outputTempDir}/Pictures" type="dir"/>
     </condition>
   </target>
-
   <target name="picturecopy" if="${mediadir.exists}">
-    <move todir="${outputDir}/Pictures"  overwrite="true">
+    <move todir="${outputDir}/Pictures" overwrite="true">
       <fileset dir="${outputTempDir}/Pictures"/>
     </move>
   </target>
-
   <target name="cleanup" unless="debug">
     <delete dir="${outputTempDir}"/>
   </target>
-
 </project>

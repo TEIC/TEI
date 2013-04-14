@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="teitoepub">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -28,6 +28,7 @@
   <property name="outputFile" value=""/>
   <!-- which profile -->
   <property name="profile" value="default"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <property name="profiledir" value="../profiles"/>
@@ -49,87 +50,79 @@
     <attribute name="out"/>
     <attribute name="tempDir"/>
     <sequential>
-    <!-- The transformation for EPUB output. -->
-    <echo level="info">XSLT generate ePub files</echo>
-    <xslt force="yes" style="${teitoepub}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/OPS/index.html">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="directory" expression="file:///@{tempDir}"/>
-      <param name="inputDir" expression="@{inDir}/"/>
-      <param name="fixgraphicsurl" expression="true"/>
-      <!-- supply unique URN for ebook-->
-      <param name="uid" expression="${uid}" if="uid"/>
-      <!-- set splitting level-->
-      <param name="splitLevel" expression="${splitLevel}" if="splitLevel"/>
-      <!-- supply name of publisher for ebook-->
-      <param name="publisher" expression="${publisher}" if="publisher"/>
-      <!-- supply subject/category for ebook-->
-      <param name="subject" expression="${subject}" if="subject"/>
-      <!-- supply name of JPEG file for ebook cover-->
-      <param name="coverimage" expression="${coverimage}" if="coverimage"/>
-      <!-- supply name of CSS file-->
-      <param name="cssFile" expression="${cssFile}" if="cssFile"/>
-      <!-- name of media overlay file -->
-      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
-      <!-- file per page -->
-      <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
-      <!-- epub viewport -->
-      <param name="viewPortHeight" expression="${viewPortHeight}" if="viewPortHeight"/>
-      <param name="viewPortWidth" expression="${viewPortWidth}" if="viewPortWidth"/>
-      <!-- supply name of language-->
-      <param name="lang" expression="${lang}" if="lang"/>
-      <!-- emit some diagnostics"-->
-      <param name="debug" expression="${debug}" if="debug"/>
-      <!-- be verbose-->
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-      <!-- disable compression on the output ZIP -->
-      <param name="nocompress" expression="${nocompress}" if="nocompress"/>
-    </xslt>
-    <echo level="info">Get names of graphics files and write an ant  task</echo>
-    <xslt force="yes" style="${listgraphics}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/copy.xml">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="outputDir" expression="@{tempDir}"/>
-      <param name="inputDir" expression="@{inDir}"/>
-      <param name="mediaDir" expression="OPS/media"/>
-      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
-      <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
-    </xslt>
-    <echo level="info">Copy image files</echo>
-    <ant antfile="@{tempDir}/copy.xml"/>
-    <echo level="info">ZIP: put files from @{tempDir} together into @{out}</echo>
-    <delete file="@{out}"/>
-    <zip destfile="@{out}" basedir="@{tempDir}"
-	 compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
-    <zip destfile="@{out}" basedir="@{tempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+      <!-- The transformation for EPUB output. -->
+      <echo level="info">XSLT generate ePub files</echo>
+      <xslt force="yes" style="${teitoepub}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/OPS/index.html">
+        <xmlcatalog>
+          <catalogpath>
+            <pathelement location="$catalogfile"/>
+          </catalogpath>
+        </xmlcatalog>
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <classpath location="${oxygenlib}/saxon9ee.jar"/>
+        <param name="directory" expression="file:///@{tempDir}"/>
+        <param name="inputDir" expression="@{inDir}/"/>
+        <param name="fixgraphicsurl" expression="true"/>
+        <!-- supply unique URN for ebook-->
+        <param name="uid" expression="${uid}" if="uid"/>
+        <!-- set splitting level-->
+        <param name="splitLevel" expression="${splitLevel}" if="splitLevel"/>
+        <!-- supply name of publisher for ebook-->
+        <param name="publisher" expression="${publisher}" if="publisher"/>
+        <!-- supply subject/category for ebook-->
+        <param name="subject" expression="${subject}" if="subject"/>
+        <!-- supply name of JPEG file for ebook cover-->
+        <param name="coverimage" expression="${coverimage}" if="coverimage"/>
+        <!-- supply name of CSS file-->
+        <param name="cssFile" expression="${cssFile}" if="cssFile"/>
+        <!-- name of media overlay file -->
+        <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+        <!-- file per page -->
+        <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+        <!-- epub viewport -->
+        <param name="viewPortHeight" expression="${viewPortHeight}" if="viewPortHeight"/>
+        <param name="viewPortWidth" expression="${viewPortWidth}" if="viewPortWidth"/>
+        <!-- supply name of language-->
+        <param name="lang" expression="${lang}" if="lang"/>
+        <!-- emit some diagnostics"-->
+        <param name="debug" expression="${debug}" if="debug"/>
+        <!-- be verbose-->
+        <param name="verbose" expression="${verbose}" if="verbose"/>
+        <!-- disable compression on the output ZIP -->
+        <param name="nocompress" expression="${nocompress}" if="nocompress"/>
+      </xslt>
+      <echo level="info">Get names of graphics files and write an ant  task</echo>
+      <xslt force="yes" style="${listgraphics}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/copy.xml">
+        <xmlcatalog>
+          <catalogpath>
+            <pathelement location="$catalogfile"/>
+          </catalogpath>
+        </xmlcatalog>
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <classpath location="${oxygenlib}/saxon9ee.jar"/>
+        <param name="outputDir" expression="@{tempDir}"/>
+        <param name="inputDir" expression="@{inDir}"/>
+        <param name="mediaDir" expression="OPS/media"/>
+        <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+        <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+      </xslt>
+      <echo level="info">Copy image files</echo>
+      <ant antfile="@{tempDir}/copy.xml"/>
+      <echo level="info">ZIP: put files from @{tempDir} together into @{out}</echo>
+      <delete file="@{out}"/>
+      <zip destfile="@{out}" basedir="@{tempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+      <zip destfile="@{out}" basedir="@{tempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
     </sequential>
   </macrodef>
-
   <target name="dist" depends="setup,odd,notodd,go,cleanup"/>
-
   <target name="setup">
     <delete dir="${outputTempDir}"/>
     <mkdir dir="${outputTempDir}"/>
   </target>
-
   <target name="cleanup" unless="${debug}">
     <delete dir="${outputTempDir}"/>
   </target>
-
   <target name="go">
     <buildepub in="${outputTempdir}/tmp2.xml" inDir="${inputDir}" out="${outputFile}" tempDir="${outputTempDir}"/>
   </target>
-     
 </project>

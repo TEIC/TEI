@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="teitornc">
-    <!--
+  <!--
         This library is free software; you can redistribute it and/or
         modify it under the terms of the GNU Lesser General Public
         License as published by the Free Software Foundation; either
@@ -18,55 +18,50 @@
         Id: $Id$
         Copyright: 2011, TEI Consortium<
     -->
-    <!--
+  <!--
         Convert TEI documents into RNC schemas.
     -->
-    <!-- Path to TEI XML file. -->
-    <property name="inputFile" value=""/>
-    <!-- Path where the output schema file will be saved. -->
-    <property name="outputFile" value=""/>
-    <!-- which profile -->
-    <property name="profile" value="default"/>
-    <!-- where does oxygen keep stuff -->
-    <property name="oxygenlib" value=""/>
-    <dirname property="inputFileDir" file="${inputFile}"/>
-    <dirname property="outputDir" file="${outputFile}"/>
-    <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
-    <!-- The input file for the TRANG transformation. -->
-    <property name="trangInputFile" value="${outputFile}.rng"/>
-    
-    <path id="classpath">
-        <pathelement path="${java.class.path}"/>
-    </path>
-    
-    <!-- Use the Relax NG target to obtain a Relax NG schema and afterward transform it
+  <!-- Path to TEI XML file. -->
+  <property name="inputFile" value=""/>
+  <!-- Path where the output schema file will be saved. -->
+  <property name="outputFile" value=""/>
+  <!-- which profile -->
+  <property name="profile" value="default"/>
+  <property name="catalogfile" value="../catalog.xml"/>
+  <!-- where does oxygen keep stuff -->
+  <property name="oxygenlib" value=""/>
+  <dirname property="inputFileDir" file="${inputFile}"/>
+  <dirname property="outputDir" file="${outputFile}"/>
+  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
+  <!-- The input file for the TRANG transformation. -->
+  <property name="trangInputFile" value="${outputFile}.rng"/>
+  <path id="classpath">
+    <pathelement path="${java.class.path}"/>
+  </path>
+  <!-- Use the Relax NG target to obtain a Relax NG schema and afterward transform it
         to RNC using TRANG. -->
-    <target name="trangConvert">
-        <!-- Obtain a Relax NG schema.  -->
-        <ant antfile="../relaxng/build-to.xml" dir="../relaxng"/>
-        <!-- The Relax NG was generated inside the output file. -->
-        <copy file="${outputFile}" tofile="${trangInputFile}"/>
-        
-        <echo>TRANG generate RNC ${outputFile} from RELAXNG file</echo>
-        <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
-            <classpath>
-                <path refid="classpath"/>
-                <pathelement location="${oxygenlib}/trang.jar"/>
-            </classpath>
-            <!-- Even though the output type is inferred from the output file extension,
+  <target name="trangConvert">
+    <!-- Obtain a Relax NG schema.  -->
+    <ant antfile="../relaxng/build-to.xml" dir="../relaxng"/>
+    <!-- The Relax NG was generated inside the output file. -->
+    <copy file="${outputFile}" tofile="${trangInputFile}"/>
+    <echo>TRANG generate RNC ${outputFile} from RELAXNG file</echo>
+    <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+      <classpath>
+        <path refid="classpath"/>
+        <pathelement location="${oxygenlib}/trang.jar"/>
+      </classpath>
+      <!-- Even though the output type is inferred from the output file extension,
                 make sure it's the right one. -->
-            <arg value="-O"/>
-            <arg value="rnc"/>
-            <arg value="${trangInputFile}" />
-            <arg value="${outputFile}" />
-        </java>
-    </target>
-    
-    <target name="cleanup" unless="debug">
-        <!-- Delete the intermediate Relax NG schema. -->
-        <delete file="${trangInputFile}"/>
-    </target>
-    
-    <target name="dist" depends="trangConvert, cleanup"/>
-    
+      <arg value="-O"/>
+      <arg value="rnc"/>
+      <arg value="${trangInputFile}"/>
+      <arg value="${outputFile}"/>
+    </java>
+  </target>
+  <target name="cleanup" unless="debug">
+    <!-- Delete the intermediate Relax NG schema. -->
+    <delete file="${trangInputFile}"/>
+  </target>
+  <target name="dist" depends="trangConvert, cleanup"/>
 </project>

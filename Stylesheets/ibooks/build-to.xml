@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="teitobooks">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -27,12 +27,12 @@
   <property name="outputFile" value=""/>
   <!-- which profile -->
   <property name="profile" value="default"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <property name="profiledir" value="../profiles"/>
   <!-- Stylesheet for transformation -->
-  <property name="stylesheetFile"
-	    value="${profiledir}/${profile}/ibooks/to.xsl"/>
+  <property name="stylesheetFile" value="${profiledir}/${profile}/ibooks/to.xsl"/>
   <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
@@ -46,7 +46,6 @@
     <mkdir dir="${outputTempDir}"/>
   </target>
   <target name="dist" depends="setup,odd,notodd,convert,cleanup"/>
-
   <target name="convert">
     <!-- Recreate temporary output directory -->
     <!-- The transformation for IBOOKS output. -->
@@ -54,8 +53,7 @@
     <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.xhtml">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -95,8 +93,7 @@
     <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -110,12 +107,10 @@
     <ant antfile="${outputTempDir}/copy.xml"/>
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
     <delete file="${outputFile}"/>
-    <zip destfile="${outputFile}" basedir="${outputTempDir}"
-	 compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+    <zip destfile="${outputFile}" basedir="${outputTempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
     <zip destfile="${outputFile}" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
   </target>
-
-  <target name="cleanup" unless="debug">  
+  <target name="cleanup" unless="debug">
     <delete dir="${outputTempDir}"/>
   </target>
 </project>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="teitordf">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -27,12 +27,12 @@
   <property name="outputFile" value=""/>
   <!-- which profile -->
   <property name="profile" value="default"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <property name="profiledir" value="../profiles"/>
   <!-- Stylesheet for transformation -->
-  <property name="odd2rdf"
-	    value="${profiledir}/${profile}/rdf/to.xsl"/>
+  <property name="odd2rdf" value="${profiledir}/${profile}/rdf/to.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
   <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
@@ -44,7 +44,6 @@
     <mkdir dir="${outputTempDir}"/>
   </target>
   <target name="dist" depends="setup,convert,cleanup"/>
-
   <target name="convert">
     <!-- Recreate temporary output directory -->
     <!-- The transformation for RDF output. -->
@@ -52,8 +51,7 @@
     <xslt force="yes" style="${odd2rdf}" in="${inputFile}" out="${outputFile}">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xjson11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -67,9 +65,7 @@
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
   </target>
-
-  <target name="cleanup" unless="debug">  
+  <target name="cleanup" unless="debug">
     <delete dir="${outputTempDir}"/>
   </target>
-
 </project>

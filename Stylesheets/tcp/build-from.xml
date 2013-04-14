@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="tcptei">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -29,33 +29,29 @@
   <property name="profile" value="default"/>
   <!-- which language -->
   <property name="lang" value="en"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="tcptotei"  value="../profiles/${profile}/tcp/from.xsl"/>
+  <property name="tcptotei" value="../profiles/${profile}/tcp/from.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir"    file="${outputFile}"/>
-  <property name="outputTempDir"   value="${outputDir}/temp-dir-for-ant"/>
-
+  <dirname property="outputDir" file="${outputFile}"/>
+  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
-
   <target name="setup">
     <!-- Recreate temporary output directory -->
     <delete dir="${outputTempDir}"/>
-    <mkdir  dir="${outputTempDir}"/>
+    <mkdir dir="${outputTempDir}"/>
   </target>
-
   <target name="dist" depends="convert,cleanup"/>
-
   <target name="convert" depends="setup">
     <basename property="ID" file="${inputFile}" suffix=".xml"/>
     <xslt force="yes" style="${tcptotei}" in="${inputFile}" out="${outputFile}">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -63,9 +59,7 @@
       <param name="ID" expression="${ID}"/>
     </xslt>
   </target>
-
   <target name="cleanup" unless="debug">
     <delete dir="${outputTempDir}"/>
   </target>
-
 </project>

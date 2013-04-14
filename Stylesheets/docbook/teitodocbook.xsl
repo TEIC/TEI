@@ -2,6 +2,7 @@
     xmlns:teix="http://www.tei-c.org/ns/Examples" 
     xmlns="http://docbook.org/ns/docbook"
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     exclude-result-prefixes="#all"
@@ -237,12 +238,6 @@ of this software, even if advised of the possibility of such damage.
   </keywordset>
 </xsl:template>
 
-<xsl:template match="ref">
-  <link linkend="#{@target}">
-    <xsl:apply-templates select="@*|*|text()|comment()"/>
-  </link>
-</xsl:template>
-
 <xsl:template match="item">
   <listitem>
     <xsl:call-template name="pOrNot"/>
@@ -326,9 +321,9 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 <xsl:template match="ref">
- <ulink url="{@target}" >
-   <xsl:apply-templates select="@*|*|text()|comment()"/>
- </ulink>
+  <link linkend="#{@target}">
+    <xsl:apply-templates select="@*|*|text()|comment()"/>
+  </link>
 </xsl:template>
 
 <xsl:template match="ptr">
@@ -342,14 +337,8 @@ of this software, even if advised of the possibility of such damage.
       </link>
     </xsl:otherwise>
   </xsl:choose>
-
 </xsl:template>
 
-<xsl:template match="term">
-  <term>
-    <xsl:apply-templates select="@*|*|text()|comment()"/>
-  </term>
-</xsl:template>
 
 <xsl:template match="table/head">
   <caption>
@@ -373,7 +362,7 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="*">
   <xsl:message>Unknown element <xsl:value-of  select="name()"/></xsl:message>
-  <xsl:apply-templates select="@*|*|text()|comment()"/>
+  <xsl:apply-templates select="*|text()|comment()"/>
 </xsl:template>
 
 <!-- use general-purpose templates to add standard attributes -->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="docxtei">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -29,34 +29,30 @@
   <property name="profile" value="default"/>
   <!-- which language -->
   <property name="lang" value="en"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="docxtoTEI"  value="../profiles/${profile}/docx/from.xsl"/>
+  <property name="docxtoTEI" value="../profiles/${profile}/docx/from.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir"    file="${outputFile}"/>
-  <property name="outputTempDir"   value="${outputDir}/temp-dir-for-ant"/>
-
+  <dirname property="outputDir" file="${outputFile}"/>
+  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
-
   <target name="setup">
     <!-- Recreate temporary output directory -->
     <delete dir="${outputTempDir}"/>
-    <mkdir  dir="${outputTempDir}"/>
+    <mkdir dir="${outputTempDir}"/>
   </target>
-
   <target name="dist" depends="convert,mediadir.check,picturecopy,cleanup"/>
-
   <target name="convert" depends="setup">
     <echo>Convert using ${docxtoTEI}</echo>
     <unzip src="${inputFile}" dest="${outputTempDir}"/>
     <xslt force="yes" style="${docxtoTEI}" in="${outputTempDir}/word/document.xml" out="${outputFile}">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -66,22 +62,18 @@
       <param name="mediaDir" expression="word/media"/>
     </xslt>
   </target>
-
   <target name="mediadir.check">
     <condition property="mediadir.exists">
       <available file="${outputTempDir}/word/media" type="dir"/>
     </condition>
   </target>
-
   <target name="picturecopy" if="${mediadir.exists}">
     <mkdir dir="${outputDir}/media"/>
-    <move todir="${outputDir}/media"  overwrite="true">
+    <move todir="${outputDir}/media" overwrite="true">
       <fileset dir="${outputTempDir}/word/media"/>
     </move>
   </target>
-
   <target name="cleanup" unless="debug">
     <delete dir="${outputTempDir}"/>
   </target>
-
 </project>

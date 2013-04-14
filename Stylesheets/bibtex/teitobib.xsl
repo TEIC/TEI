@@ -2,8 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xpath-default-namespace="http://www.tei-c.org/ns/1.0"
                 version="2.0">
-  <xsl:output method="text"/>
   <xsl:import href="convertbib.xsl"/>
+  <xsl:output method="text"/>
   <xsl:strip-space elements="*"/>
   <xsl:key name="B" match="biblStruct" use="1"/>
     <xsl:strip-space elements="*"/>

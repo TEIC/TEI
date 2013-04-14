@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="teitohtml">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -27,11 +27,11 @@
   <property name="outputFile" value=""/>
   <!-- which profile -->
   <property name="profile" value="default"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="teitodocbook"
-	    value="../profiles/${profile}/docbook/to.xsl"/>
+  <property name="teitodocbook" value="../profiles/${profile}/docbook/to.xsl"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <dirname property="outputDir" file="${outputFile}"/>
   <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
@@ -39,14 +39,12 @@
     <pathelement path="${java.class.path}"/>
   </path>
   <target name="dist" depends="convert"/>
-
   <target name="convert">
     <echo level="info">XSLT generate Docbook files</echo>
     <xslt force="yes" style="${teitodocbook}" in="${inputFile}" out="${outputFile}">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -58,5 +56,4 @@
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
   </target>
-
 </project>

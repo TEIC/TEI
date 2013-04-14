@@ -68,8 +68,8 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:text>/image</xsl:text>
 	     <xsl:number level="any"/>
 	     <xsl:text>.</xsl:text>
+	     <xsl:value-of select="tokenize($F,'\.')[last()]"/>
 	   </xsl:variable>
-	   <xsl:value-of select="tokenize($F,'\.')[last()]"/>
 	   <xsl:choose>
 	     <xsl:when test="starts-with($F,'http')">
 	       <get src="{$F}"  dest="{$target}"/>

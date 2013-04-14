@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project basedir="." default="dist" name="teidocx">
-<!--
+  <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
 	License as published by the Free Software Foundation; either
@@ -32,62 +32,49 @@
   <property name="profile" value="default"/>
   <!-- which language -->
   <property name="lang" value="en"/>
+  <property name="catalogfile" value="../catalog.xml"/>
   <!-- where does oxygen keep stuff -->
   <property name="oxygenlib" value=""/>
   <!-- Stylesheet for transformation -->
-  <property name="teitoDocx"       value="${profiledir}/${profile}/docx/to.xsl"/>
-  <property name="listgraphics"    value="../tools/makegraphicsanttask.xsl"/>
-  <dirname property="xslDir"       file="${teitoDocx}"/>
+  <property name="teitoDocx" value="${profiledir}/${profile}/docx/to.xsl"/>
+  <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
+  <dirname property="xslDir" file="${teitoDocx}"/>
   <dirname property="inputFileDir" file="${inputFile}"/>
   <property name="inputFilePath" location="${inputFile}"/>
-  <dirname property="outputDir"    file="${outputFile}"/>
-  <property name="outputTempDir"   value="${outputDir}/temp-dir-for-ant"/>
-
+  <dirname property="outputDir" file="${outputFile}"/>
+  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
-
   <condition property="makecoverpages">
     <available file="${profiledir}/${profile}/docx/makecoverpages.xsl"/>
   </condition>
-
   <import file="../odds2/build-to.xml"/>
-
   <target name="setup">
     <!-- Recreate temporary output directory -->
     <taskdef name="images" classname="ImageTask" classpath="../tools/ImageInfo/ImageInfo.jar"/>
     <delete dir="${outputTempDir}"/>
-    <mkdir  dir="${outputTempDir}"/>
+    <mkdir dir="${outputTempDir}"/>
   </target>
-
   <target name="nocoverpages" unless="makecoverpages">
     <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
   </target>
-
   <target name="coverpages" if="makecoverpages">
     <echo>Make cover pages</echo>
-    <xslt
-	  style="${profiledir}/${profile}/docx/makecoverpages.xsl" 
-	  in="${outputTempDir}/word/document.xml" 
-	  out="${outputTempDir}/tmp3.xml" 
-	 >
+    <xslt style="${profiledir}/${profile}/docx/makecoverpages.xsl" in="${outputTempDir}/word/document.xml" out="${outputTempDir}/tmp3.xml">
       <xmlcatalog>
-	<catalogpath>
-	  <pathelement location="../../../../catalog.xml"/>
-	  <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
-	</catalogpath>
+        <catalogpath>
+          <pathelement location="$catalogfile"/>
+        </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9he.jar"/>
-      <param name="headerFile"   expression="file:///${outputTempDir}/tmp2.xml"/>
+      <param name="headerFile" expression="file:///${outputTempDir}/tmp2.xml"/>
       <param name="documentFile" expression="file:///${outputTempDir}/newdocument.xml"/>
     </xslt>
     <move file="${outputTempDir}/tmp3.xml" tofile="${outputTempDir}/word/document.xml" overwrite="true"/>
     <delete file="${outputTempDir}/newdocument.xml"/>
   </target>
-
-
-
   <target name="transform">
     <!-- The transformation for DOCX output. -->
     <echo level="info">unzip Word template</echo>
@@ -96,37 +83,33 @@
     footers, headers etc from Word template</echo>
     <delete includeEmptyDirs="true" verbose="true">
       <fileset dir="${outputTempDir}">
-	<include name="docProps/custom.xml" />
-	<include name="word/webSettings.xml" />
-	<include name="word/endnotes.xml" />
-	<include name="word/footnotes.xml" />
-	<include name="word/footer*" />
-	<include name="word/header*" />
+        <include name="docProps/custom.xml"/>
+        <include name="word/webSettings.xml"/>
+        <include name="word/endnotes.xml"/>
+        <include name="word/footnotes.xml"/>
+        <include name="word/footer*"/>
+        <include name="word/header*"/>
       </fileset>
     </delete>
-    <delete dir="${outputTempDir}/customXml" />
-    <delete dir="${outputTempDir}/word/printerSettings" />
-    
+    <delete dir="${outputTempDir}/customXml"/>
+    <delete dir="${outputTempDir}/word/printerSettings"/>
     <echo level="info">fix Word .rels file</echo>
-    <xslt style="tools/fixdotrels.xsl"  in="${outputTempDir}/_rels/.rels"  out="${outputTempDir}/_rels/.rels_" >
+    <xslt style="tools/fixdotrels.xsl" in="${outputTempDir}/_rels/.rels" out="${outputTempDir}/_rels/.rels_">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${saxon.jar}"/>
     </xslt>
-    <move file="${outputTempDir}/_rels/.rels_" tofile="${outputTempDir}/_rels/.rels" verbose="true" />
-    
+    <move file="${outputTempDir}/_rels/.rels_" tofile="${outputTempDir}/_rels/.rels" verbose="true"/>
     <echo level="info">Fix Word styles file</echo>
-    <xslt style="tools/fixstyle.xsl"  in="${outputTempDir}/word/styles.xml"  out="${outputTempDir}/word/_styles.xml" >
+    <xslt style="tools/fixstyle.xsl" in="${outputTempDir}/word/styles.xml" out="${outputTempDir}/word/_styles.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${saxon.jar}"/>
     </xslt>
-    <move file="${outputTempDir}/word/_styles.xml" tofile="${outputTempDir}/word/styles.xml" verbose="true" />
-    
+    <move file="${outputTempDir}/word/_styles.xml" tofile="${outputTempDir}/word/styles.xml" verbose="true"/>
     <echo level="info">Get names of graphics files and write an ant task</echo>
     <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
@@ -145,14 +128,12 @@
     <xslt force="yes" style="${teitoDocx}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml">
       <xmlcatalog>
         <catalogpath>
-          <pathelement location="../../../../catalog.xml"/>
-          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+          <pathelement location="$catalogfile"/>
         </catalogpath>
       </xmlcatalog>
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="word-directory"
-	     expression="file:///${outputTempDir}"/>
+      <param name="word-directory" expression="file:///${outputTempDir}"/>
       <!-- name of original input file -->
       <param name="inputFile" expression="${inputFilePath}"/>
       <!-- directory of original input file -->
@@ -168,19 +149,13 @@
     <move file="${outputTempDir}/docProps/newapp.xml" tofile="${outputTempDir}/docProps/app.xml" overwrite="true"/>
     <move file="${outputTempDir}/docProps/newcustom.xml" tofile="${outputTempDir}/docProps/custom.xml" overwrite="true"/>
   </target>
-
   <target name="zip">
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
     <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,image-size-info.xml,copy.xml"/>
     <move file="${outputDir}/temp-for-ant.zip" tofile="${outputFile}" overwrite="true"/>
   </target>
-
   <target name="cleanup" unless="debug">
     <delete dir="${outputTempDir}"/>
   </target>
-
-  <target name="dist"
-	  depends="setup,odd,notodd,transform,nocoverpages,coverpages,zip,cleanup"/>
-
-
+  <target name="dist" depends="setup,odd,notodd,transform,nocoverpages,coverpages,zip,cleanup"/>
 </project>

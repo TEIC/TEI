@@ -80,6 +80,7 @@ XSL LaTeX stylesheet to make slides
 \definecolor{shadecolor}{gray}{0.95}
 \usepackage{colortbl}
 \usepackage{longtable}
+\usepackage[normalem]{ulem}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \usepackage{times}
 \usepackage{fancyvrb}
