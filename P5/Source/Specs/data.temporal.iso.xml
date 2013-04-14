@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,28 +6,21 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<macroSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  module="tei" type="dt" ident="data.temporal.iso">
-  <desc>defines the range of attribute values expressing a temporal expression such as a date, a
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="dt" ident="data.temporal.iso"><desc>defines the range of attribute values expressing a temporal expression such as a date, a
     time, or a combination of them, that conform to the international standard <title>Data elements
-      and interchange formats – Information interchange – Representation of dates and times</title>.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">날짜, 시간, 또는 이들의 조합과 같은 시간 표현의 속성 값 범위를 정의하며, 이는 국제 표준
+      and interchange formats – Information interchange – Representation of dates and times</title>.</desc><desc versionDate="2007-12-20" xml:lang="ko">날짜, 시간, 또는 이들의 조합과 같은 시간 표현의 속성 값 범위를 정의하며, 이는 국제 표준
       <title>Data elements and interchange formats – Information interchange – Representation of
-      dates and times</title>을 따른다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">定義該系列表示時間的屬性值，例如日期、時間或兩者的組合，需符合國際標準 Data elements and
-    interchange formats – Information interchange – Representation of dates and times</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja"> 日付や時間などの時間表現をとる属性値の範囲を定義する．これは，国際標 準である<title>Data
+      dates and times</title>을 따른다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">定義該系列表示時間的屬性值，例如日期、時間或兩者的組合，需符合國際標準 Data elements and
+    interchange formats – Information interchange – Representation of dates and times</desc><desc versionDate="2008-04-05" xml:lang="ja"> 日付や時間などの時間表現をとる属性値の範囲を定義する．これは，国際標 準である<title>Data
       elements and interchange formats - Information interchange - Representation of dates and
-    times</title>に準拠したも のになる． </desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attribut qui sont capables
+    times</title>に準拠したも のになる． </desc><desc versionDate="2007-06-12" xml:lang="fr">définit la gamme des valeurs d'attribut qui sont capables
     d''exprimer une valeur temporelle comme une date, une période, ou une combinaison des deux qui
     se conforment au standard international <title>Data elements and interchange formats –
-      Information interchange – Representation of dates and times</title></desc>
-  <desc versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que expresan una
+      Information interchange – Representation of dates and times</title></desc><desc versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos que expresan una
     expresión temporal como una fecha, una hora, o una combinación de estas, de acuerdo a un
     estándard internacional <title>Elementos de datos y formatos de intercambio - Intercambio de
-      información – Representación de fechas y horas</title>. </desc>
-  <content>
+      información – Representación de fechas y horas</title>. </desc><content>
     <rng:choice>
       <!-- W3C -->
       <rng:data type="date"/>
@@ -48,17 +41,18 @@ $Id$
       </rng:data> -->
       <!-- any ISO 8601 format (and a lot more) -->
       <rng:data type="token">
-        <?tei winita
+        
+<?tei winita
 	My expectation is to replace this catch-all pattern with a series
 	of patterns to match the various extended formats of 8601. The two
 	commented-out patterns above are a helpful start. Either that,
 	or if someone comes up with a real RELAX NG datatype, use it.
 	:-) -- sb ?>
+
         <rng:param name="pattern">[0-9.,DHMPRSTWYZ/:+\-]+</rng:param>
       </rng:data>
     </rng:choice>
-  </content>
-  <remarks>
+  </content><remarks>
     <p>If it is likely that the value used is to be compared with another, then a time zone
       indicator should always be included, and only the dateTime representation should be used.</p>
     <p>For all representations for which ISO 8601 describes both a <term>basic</term> and an
@@ -70,8 +64,7 @@ $Id$
     of "24:00" implies a 25th hour, and some software may be confused.
     Note that when there is a leap second, it should be indicated with
     23:59:60. --></p>
-  </remarks>
-  <remarks xml:lang="ja">
+  </remarks><remarks xml:lang="ja">
     <p> 当該属性値が他の値と比較される場合，時間帯は必ず示されるべきである． またはdateTimeを使うべきである(訳注：この文は修正されるかもしれな い)． </p>
     <p> ISO 8601には<term>基本形式</term>と<term>拡張形式</term>がある． 本ガイドラインでは拡張形式を使うことを推奨する． </p>
     <p> ISO 8601では，深夜の12時を示す方法として， <code>00:00</code>と<code>24:00</code>の両方を認めているが，
@@ -81,8 +74,7 @@ $Id$
     confused. Note that when there is a leap second, it should be
     indicated with 23:59:60. -->
     </p>
-  </remarks>
-  <remarks xml:lang="fr">
+  </remarks><remarks xml:lang="fr">
     <p> S'il est vraisemblable que la valeur utilisée soit destinée à être comparer à d’autres
       valeurs, alors une indication du fuseau horaire devrait toujours être incluse, et seule la
       représentation <term>dateTime</term> devrait être employée.</p>
@@ -98,5 +90,4 @@ $Id$
         of "24:00" implies a 25th hour, and some software may be confused.
         Note that when there is a leap second, it should be indicated with
         23:59:60. --></p>
-  </remarks>
-</macroSpec>
+  </remarks></macroSpec>

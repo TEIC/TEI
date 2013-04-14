@@ -1,50 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="join">
-  <equiv/>
-  <gloss versionDate="2009-10-06" xml:lang="fr">jointure</gloss>
-  <desc>identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">텍스트를 구성하고 있는 비연소적 요소를 가리킴으로 텍스트의 파편화된 분절을 식별한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明文本中可能的不完整分割，指向構成此不完整分割的可能不連接元素。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja"> バラバラにあるテキスト部分を参照し，ひとつのテキスト部分を指定する． </desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">identifie un segment de texte, qui peut être fragmenté, en pointant vers les éléments éventuellement dispersés qui le composent.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">identifica un segmento o fragmento de texto señalando eventuales elementos no contiguos que lo componen.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">identifica un segmento o frammento di testo puntando ad eventuali elementi non contigui che lo compongono</desc>
-  <classes>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="join"><equiv/><gloss versionDate="2009-10-06" xml:lang="fr">jointure</gloss><desc>identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it.</desc><desc versionDate="2007-12-20" xml:lang="ko">텍스트를 구성하고 있는 비연소적 요소를 가리킴으로 텍스트의 파편화된 분절을 식별한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">標明文本中可能的不完整分割，指向構成此不完整分割的可能不連接元素。</desc><desc versionDate="2008-04-05" xml:lang="ja"> バラバラにあるテキスト部分を参照し，ひとつのテキスト部分を指定する． </desc><desc versionDate="2007-06-12" xml:lang="fr">identifie un segment de texte, qui peut être fragmenté, en pointant vers les éléments éventuellement dispersés qui le composent.</desc><desc versionDate="2007-05-04" xml:lang="es">identifica un segmento o fragmento de texto señalando eventuales elementos no contiguos que lo componen.</desc><desc versionDate="2007-01-21" xml:lang="it">identifica un segmento o frammento di testo puntando ad eventuali elementi non contigui che lo compongono</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.global.meta"/>
-  </classes>
-  <content>
+  </classes><content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
 <choice>
       <ref name="model.descLike"/>
       <ref name="model.certLike"/>
 </choice>    </zeroOrMore>
-  </content>
-  <constraintSpec ident="joinTargets1" scheme="isoschematron">
+  </content><constraintSpec ident="joinTargets1" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron"
-	      test="@target and @targets">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@target and @targets">
 You may not supply both @target and @targets on <name/></report>
     </constraint>
-  </constraintSpec>
-  <constraintSpec ident="joinTargets2" scheme="isoschematron">
+  </constraintSpec><constraintSpec ident="joinTargets2" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron"
-	      test="not(@target) and not(@targets)">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="not(@target) and not(@targets)">
 You must supply either @target or @targets on <name/></report>
     </constraint>
-  </constraintSpec>
-  <constraintSpec ident="joinTargets3" scheme="isoschematron">
+  </constraintSpec><constraintSpec ident="joinTargets3" scheme="isoschematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron"
-	      test="contains(@target,' ')">
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@target,' ')">
 You must supply at least two values for @target on <name/></assert>
     </constraint>
-  </constraintSpec>
-  <attList>
+  </constraintSpec><attList>
     <attDef ident="targets" usage="opt" status="deprecated">
       <equiv/>
       <desc>specifies the identifiers of the elements or passages to be joined into a virtual element.</desc>
@@ -117,8 +100,7 @@ other must be present.</p>
         </valItem>
       </valList>
     </attDef>
-  </attList>
-  <exemplum xml:lang="en">
+  </attList><exemplum xml:lang="en">
     <p>The following example is discussed in section <ptr target="#SAAG"/>:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <sp>
@@ -146,8 +128,7 @@ other must be present.</p>
     </egXML>
     <!-- a famous haiku by Bashoo, in an eccentric translation -->
     <p>The <gi>join</gi> element here identifies a linegroup (<gi>lg</gi>) comprising the three lines indicated by the <att>target</att> attribute. The value <code>root</code> for the <att>scope</att> attribute indicates that the resulting virtual element contains the three <gi>l</gi> elements linked to at #frog_l1 #frog_l2 #frog_l3, rather than their character data content.</p>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
     <p xmlns:teix="http://www.tei-c.org/ns/Examples">The following example is discussed in section <ptr target="#SAAG"/>:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <sp>
@@ -178,8 +159,7 @@ other must be present.</p>
           the<att>scope</att> attribute indicates that the resulting virtual element contains the
         three <gi>l</gi> elements linked to at #frog_l1 #frog_l2 #frog_l3, rather than their
         character data content.</p>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
     <p xmlns:teix="http://www.tei-c.org/ns/Examples">In this example, the attribute <att>scope</att> is specified with the value of
           <code>branches</code> to indicate that the virtual list being constructed is to be made by
         taking the lists indicated by the <att>target</att> attribute of the <gi>join</gi> element,
@@ -193,8 +173,7 @@ other must be present.</p>
         <desc>Sample sentences in Southern speech</desc>
       </join>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="zh-TW">
+  </exemplum><exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <sp>
         <speaker>休</speaker>
@@ -219,8 +198,7 @@ other must be present.</p>
         <join target="#zh-tw_frog_l1 #zh-tw_frog_l2 #zh-tw_frog_l3" result="lg" scope="root"/>
       </sp>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="zh-TW">
+  </exemplum><exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p>台灣譯為<list xml:id="zh-tw_LP1"><item><s>艾蜜莉的異想世界</s></item></list> ；香港譯作<list xml:id="zh-tw_LP2"><item><s>天使愛美麗</s></item></list>。</p>
       <p>中國大陸則名為<list xml:id="zh-tw_LP3"><item><s>阿梅麗的奇妙命運</s></item></list>。</p>
@@ -228,8 +206,7 @@ other must be present.</p>
         <desc>電影Le Fabuleux Destin d'Amélie Poulain的中港台譯名</desc>
       </join>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
+  </exemplum><exemplum xml:lang="en">
     <p>In this example, the attribute <att>scope</att> is specified with the value of <code>branches</code> to indicate that the virtual list being constructed is to be made by taking the lists indicated by the <att>target</att> attribute of the <gi>join</gi> element, discarding the <gi>list</gi> tags which enclose them, and combining the items contained within the lists into a single virtual list:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p>Southern dialect (my own variety, at least) has only <list xml:id="LP1"><item><s>I done gone</s></item><item><s>I done went</s></item></list> whereas Negro Non-Standard basilect has both these and <list xml:id="LP2"><item><s>I done go</s></item></list>.</p>
@@ -238,8 +215,6 @@ other must be present.</p>
         <desc>Sample sentences in Southern speech</desc>
       </join>
     </egXML>
-  </exemplum>
-  <listRef>
+  </exemplum><listRef>
     <ptr target="#SAAG" type="div2"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>

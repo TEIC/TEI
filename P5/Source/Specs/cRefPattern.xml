@@ -6,70 +6,45 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="cRefPattern">
-  <equiv/>
-  <gloss>canonical reference pattern</gloss>
-  <gloss versionDate="2009-01-05" xml:lang="fr">Modèle de référence canonique</gloss>
-  <gloss versionDate="2007-12-20" xml:lang="ko">표준 참조 유형</gloss>
-  <gloss versionDate="2007-05-02" xml:lang="zh-TW">定義如何將標準參照轉換成統一資源識別符 (URI) 。</gloss>
-  <gloss versionDate="2008-04-05" xml:lang="ja"/>
-  <gloss versionDate="2006-10-18" xml:lang="de">legt fest, wie eine Standardreferenz in eine URI
-    umgewandelt werden kann.</gloss>
-  <gloss versionDate="2007-05-04" xml:lang="es">define cómo convertir una referncia canónica en un URI</gloss>
-  <gloss versionDate="2007-01-21" xml:lang="it">definisce in che modo convertire un riferimento canonico
-    in un URI</gloss>
-  <desc>specifies an expression and replacement pattern for transforming a canonical reference into
-    a URI. </desc>
-  <desc versionDate="2009-01-05" xml:lang="fr">spécifie un modèle d’expression et des règles de
-    remplacement pour transformer une référence canonique en URI.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">표준 참조를 URI로 변환하기 위한 표현 및 대체 유형을 명시한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">標明將標準參照轉換成統一資源識別符的表示方法與取代模式。 </desc>
-  <desc versionDate="2008-04-05" xml:lang="ja"> URIへの標準的参照を変形する，表現・変形パタンを示す． </desc>
-  <desc versionDate="2006-10-18" xml:lang="de">legt einen Ausdruck und ein Ersetzungsmuster für die
-    Umwandlung einer Standardreferenz in eine URI fest. </desc>
-  <desc versionDate="2007-05-04" xml:lang="es">indica una expresión y un patrón de remplazamiento para
-    transformar una referencia canónica en un URI.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">specifica un espressione o un pattern di sostituzione per
-    convertire convertire un riferimento canonico in un URI</desc>
-  <classes>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="cRefPattern"><equiv/><gloss>canonical reference pattern</gloss><gloss versionDate="2009-01-05" xml:lang="fr">Modèle de référence canonique</gloss><gloss versionDate="2007-12-20" xml:lang="ko">표준 참조 유형</gloss><gloss versionDate="2007-05-02" xml:lang="zh-TW">定義如何將標準參照轉換成統一資源識別符 (URI) 。</gloss><gloss versionDate="2008-04-05" xml:lang="ja"/><gloss versionDate="2006-10-18" xml:lang="de">legt fest, wie eine Standardreferenz in eine URI
+    umgewandelt werden kann.</gloss><gloss versionDate="2007-05-04" xml:lang="es">define cómo convertir una referncia canónica en un URI</gloss><gloss versionDate="2007-01-21" xml:lang="it">definisce in che modo convertire un riferimento canonico
+    in un URI</gloss><desc>specifies an expression and replacement pattern for transforming a canonical reference into
+    a URI. </desc><desc versionDate="2009-01-05" xml:lang="fr">spécifie un modèle d’expression et des règles de
+    remplacement pour transformer une référence canonique en URI.</desc><desc versionDate="2007-12-20" xml:lang="ko">표준 참조를 URI로 변환하기 위한 표현 및 대체 유형을 명시한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">標明將標準參照轉換成統一資源識別符的表示方法與取代模式。 </desc><desc versionDate="2008-04-05" xml:lang="ja"> URIへの標準的参照を変形する，表現・変形パタンを示す． </desc><desc versionDate="2006-10-18" xml:lang="de">legt einen Ausdruck und ein Ersetzungsmuster für die
+    Umwandlung einer Standardreferenz in eine URI fest. </desc><desc versionDate="2007-05-04" xml:lang="es">indica una expresión y un patrón de remplazamiento para
+    transformar una referencia canónica en un URI.</desc><desc versionDate="2007-01-21" xml:lang="it">specifica un espressione o un pattern di sostituzione per
+    convertire convertire un riferimento canonico in un URI</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="att.patternReplacement"/>
-  </classes>
-  <content>
+  </classes><content>
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:ref name="model.pLike"/>
     </rng:zeroOrMore>
-  </content>
-    <exemplum xml:lang="en">
+  </content><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <cRefPattern matchPattern="([1-9A-Za-z]+)\s+([0-9]+):([0-9]+)" replacementPattern="#xpath(//div[@type='book'][@n='$1']/div[@type='chap'][@n='$2']/div[@type='verse'][@n='$3'])"/>
     </egXML>
-  </exemplum>
-  <remarks>
+  </exemplum><remarks>
     <p>The result of the substitution may be either an absolute or a relative URI reference. In the
       latter case it is combined with the value of <att>xml:base</att> in force at the place where
       the <att>cRef</att> attribute occurs to form an absolute URI in the usual manner as prescribed
       by <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
-  </remarks>
-  <remarks xml:lang="fr">
+  </remarks><remarks xml:lang="fr">
     <p>Le résultat de la substitution peut être la référence à une URI relative ou absolue.
       Dans ce dernier cas, il est combiné avec la valeur de l'attribut <att>xml:base</att> en
       vigueur à la place où apparaît l'attribut <att>cRef</att> pour former une URI absolue selon
       l'usage habituel indiqué par <ref target="http://www.w3.org/TR/xmlbase/">XML Base</ref>.</p>
-  </remarks>
-  <remarks xml:lang="es">
+  </remarks><remarks xml:lang="es">
     <p>El resultado de la substitución puede ser una referencia URI absoluta o relativa. En el
       último caso se combina con el valor de <att>xml:base</att> en vigor en el lugar donde el
       atributo <att>cRef</att> aparece para formar un URI absoluto de manera común según lo
       prescrito por <ref target="http://www.w3.org/TR/xmlbase/">Base de XML</ref>.</p>
-  </remarks>
-  <remarks xml:lang="ja">
+  </remarks><remarks xml:lang="ja">
     <p> 置換による結果は，絶対・相対URIであるかもしれない．相対URIの場合， <ref target="http://www.w3.org/TR/xmlbase/">XML
       Base</ref>に示され ているように，属性<att>xml:base</att>の値と共に，属性 <att>cRef</att>が絶対URIを示す場所で使用される． </p>
-  </remarks>
-  <listRef>
+  </remarks><listRef>
     <ptr target="#HD54M"/>
     <ptr target="#HD54"/>
     <ptr target="#HD54S"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>

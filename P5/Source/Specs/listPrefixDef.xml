@@ -6,16 +6,11 @@
     $Date$
     $Id$
 -->
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="listPrefixDef">
-  <equiv/>
-  <gloss>list of prefix definitions</gloss>
-  <desc>contains a list of definitions of prefixing schemes used in <ident type="datatype">data.pointer</ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.</desc>
-  <classes>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="listPrefixDef"><equiv/><gloss>list of prefix definitions</gloss><desc>contains a list of definitions of prefixing schemes used in <ident type="datatype">data.pointer</ident> values, showing how abbreviated URIs using each scheme may be expanded into full URIs.</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="model.encodingDescPart"/>
-  </classes>
-  <content>
+  </classes><content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
       <oneOrMore>
         <choice>
@@ -24,16 +19,13 @@
         </choice>
       </oneOrMore>
     </group>
-  </content>
-  
-  <exemplum xml:lang="en" versionDate="2012-11-22">
+  </content><exemplum xml:lang="en" versionDate="2012-11-22">
     <p>In this example, two private URI scheme prefixes are defined and patterns are provided 
     for dereferencing them. Each prefix is also supplied with a human-readable explanation in a
     <gi>p</gi> element.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <listPrefixDef>
-        <prefixDef ident="psn" matchPattern="([A-Z]+)" 
-          replacementPattern="personography.xml#$1">
+        <prefixDef ident="psn" matchPattern="([A-Z]+)" replacementPattern="personography.xml#$1">
           <p>
             Private URIs using the <code>psn</code> 
             prefix are pointers to <gi>person</gi> 
@@ -42,8 +34,7 @@
             dereferences to <code>personography.xml#MDH</code>.
           </p>
         </prefixDef>
-        <prefixDef ident="bibl" matchPattern="([a-z]+[a-z0-9]*)"
-          replacementPattern="http://www.example.com/getBibl.xql?id=$1">
+        <prefixDef ident="bibl" matchPattern="([a-z]+[a-z0-9]*)" replacementPattern="http://www.example.com/getBibl.xql?id=$1">
           <p>
             Private URIs using the <code>bibl</code> prefix can be 
             expanded to form URIs which retrieve the relevant 
@@ -52,9 +43,6 @@
         </prefixDef>
       </listPrefixDef>
     </egXML>
-  </exemplum>
-  <listRef>
+  </exemplum><listRef>
     <ptr target="#SAPU"/>
-  </listRef>
-
-</elementSpec>
+  </listRef></elementSpec>

@@ -6,31 +6,22 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="certainty" ident="certainty">
-  <desc>indicates the degree of certainty associated
-  with some aspect of the text markup. </desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">텍스트 마크업의 어떤 특성과 관련된 확실성 또는 불확실성의 정도를 가리킨다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">指出標記文本某些部分的確定或不確定的程度。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="certainty" ident="certainty"><desc>indicates the degree of certainty associated
+  with some aspect of the text markup. </desc><desc versionDate="2007-12-20" xml:lang="ko">텍스트 마크업의 어떤 특성과 관련된 확실성 또는 불확실성의 정도를 가리킨다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">指出標記文本某些部分的確定或不確定的程度。</desc><desc versionDate="2008-04-05" xml:lang="ja">
   当該マークアップの確信度を示す．
-  </desc>
-  <desc versionDate="2009-01-06" xml:lang="fr">Indique le degré de certitude ou d'incertitude
-      associé à certains aspects du balisage du texte.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">Indica el grado de certeza o incertidumbre asociado a algun aspecto del marcaje de texto.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">indica il grado di certezza o incertezza associato a un determinato aspetto del la codifica del testo</desc>
-  <classes>
+  </desc><desc versionDate="2009-01-06" xml:lang="fr">Indique le degré de certitude ou d'incertitude
+      associé à certains aspects du balisage du texte.</desc><desc versionDate="2007-05-04" xml:lang="es">Indica el grado de certeza o incertidumbre asociado a algun aspecto del marcaje de texto.</desc><desc versionDate="2007-01-21" xml:lang="it">indica il grado di certezza o incertezza associato a un determinato aspetto del la codifica del testo</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="model.certLike"/>
     <memberOf key="model.global.meta"/>
     <memberOf key="att.scoping"/>
-  </classes>
-  <content>
+  </classes><content>
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
  <rng:choice>     <rng:ref name="model.descLike"/>
       <rng:ref name="model.certLike"/>
 </rng:choice>    </rng:zeroOrMore>
-  </content>
-  <attList>
+  </content><attList>
     <attDef ident="cert" usage="opt">
       <gloss>certainty</gloss>
       <gloss versionDate="2007-12-20" xml:lang="ko">확실성</gloss>
@@ -313,8 +304,7 @@ of the markup named by the <att>locus</att> attribute.</desc>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.probability"/>
       </datatype>
     </attDef>
-  </attList>
-  <exemplum xml:lang="en">
+  </attList><exemplum xml:lang="en">
     <p>(For discussion of this example, see section <ptr target="#CEconcon"/>)</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest went to <anchor xml:id="A1"/> old
 <persName xml:id="SYB">Saybrook</persName>.
@@ -324,8 +314,7 @@ of the markup named by the <att>locus</att> attribute.</desc>
 			      <certainty target="#SYB" locus="start" given="#C-c2" degree="0.5"/>
 			      <certainty target="#SYB" locus="start" assertedValue="#a1" given="#c1" degree="0.5"/>
 		    </egXML>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
     <p xmlns:teix="http://www.tei-c.org/ns/Examples">( Pour la discussion sur cet exemple, voir <ptr target="#CECECE"/>)</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Ernest est allé au <anchor xml:id="fr_A1"/> vieux
           <persName xml:id="fr_SYB">Saybrook</persName>.<certainty xml:id="fr_c1" target="#fr_SYB" locus="name" degree="0.6"/>
@@ -334,15 +323,13 @@ of the markup named by the <att>locus</att> attribute.</desc>
         <certainty target="#fr_SYB" locus="start" given="#C-c2" degree="0.5"/>
         <certainty target="#fr_SYB" locus="start" assertedValue="#a1" given="#c1" degree="0.5"/>
       </egXML>
-  </exemplum>
-  <exemplum xml:lang="zh-TW">
+  </exemplum><exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       張先生去看<persName xml:id="zh-tw_JZZ">江子翠</persName>那邊有什麼活動。
       <certainty target="#zh-tw_JZZ" locus="name" degree="0.6"/>
          <certainty target="#zh-tw_JZZ" locus="name" assertedValue="placeName" degree="0.4"/>
       </egXML>
-  </exemplum>
-  <exemplum xml:lang="zh-TW">
+  </exemplum><exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
     王先生找到<anchor xml:id="zh-tw_A1"/>小<persName xml:id="zh-tw_lin">林</persName>，感動極了。
       <certainty xml:id="zh-tw_c1" target="#zh-tw_lin" locus="name" degree="0.8"/>
@@ -351,8 +338,6 @@ of the markup named by the <att>locus</att> attribute.</desc>
          <certainty target="#zh-tw_lin" given="#c2" locus="start" degree="0.1"/>
          <certainty target="#zh-tw_lin" given="#c2" locus="start" assertedValue="#a1" degree="0.9"/>
       </egXML>
-  </exemplum>
-  <listRef>
+  </exemplum><listRef>
     <ptr target="#CECECE"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>

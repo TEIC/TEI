@@ -6,16 +6,13 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintSpec">
-  <gloss>constraint on schema</gloss>
-  <desc>contains  a constraint, expressed in some formal syntax,
-  which cannot be expressed in the structural content model</desc>
-  <classes>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintSpec"><gloss>constraint on schema</gloss><desc>contains  a constraint, expressed in some formal syntax,
+  which cannot be expressed in the structural content model</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="att.identified"/>
     <memberOf key="att.typed"/>
-  </classes>
-  <content>
+  </classes><content>
     <rng:zeroOrMore>
       <rng:ref name="model.descLike"/>
 </rng:zeroOrMore>
@@ -25,8 +22,7 @@ $Id$
     <rng:optional>
       <rng:ref name="constraint"/>
     </rng:optional>
-  </content>
-  <constraintSpec ident="sch" scheme="isoschematron">
+  </content><constraintSpec ident="sch" scheme="isoschematron">
     <desc>Relationship between scheme attribute and contents</desc>
     <constraint>
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
@@ -35,8 +31,7 @@ $Id$
 	a constraint with a value of 'schematron' on the scheme attribute
       </sch:report>
     </constraint>
-  </constraintSpec>
-  <constraintSpec ident="isosch" scheme="isoschematron">
+  </constraintSpec><constraintSpec ident="isosch" scheme="isoschematron">
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
       <sch:report test="tei:constraint/sch:* and    not(@scheme='isoschematron')">
@@ -44,14 +39,13 @@ $Id$
 	a constraint with a value of 'isoschematron' on the scheme attribute
       </sch:report>
     </constraint>
-  </constraintSpec>
-  <attList>
+  </constraintSpec><attList>
     <attDef ident="scheme" usage="req">
       <equiv/>
       <desc>supplies the name of the language in which the constraints
       are defined</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+        <rng:ref name="data.enumerated"/>
       </datatype>
       <valList type="closed">
         <valItem ident="schematron">
@@ -68,8 +62,7 @@ $Id$
         </valItem>
       </valList>
     </attDef>
-  </attList>
-  <exemplum xml:lang="en">
+  </attList><exemplum xml:lang="en">
     <p>This constraint uses Schematron to enforce the presence of the
     <att>spanTo</att> attribute (which comes from an attribute class)
     on the <gi>addSpan</gi> element: </p>
@@ -82,8 +75,7 @@ $Id$
         </constraint>
       </constraintSpec>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
+  </exemplum><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <constraintSpec ident="demo-c2" scheme="isoschematron">
         <desc>Implement an accessibility rule which says that pictures should
@@ -95,8 +87,7 @@ $Id$
         </constraint>
       </constraintSpec>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
+  </exemplum><exemplum xml:lang="en">
     <p>This constraint uses a language which is not
     expressed in XML to check whether the title and author are identical: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -106,8 +97,6 @@ $Id$
 	</constraint>
       </constraintSpec>
     </egXML>
-  </exemplum>
-  <listRef>
+  </exemplum><listRef>
     <ptr target="#TDTAG"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>
