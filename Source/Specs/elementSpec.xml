@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,30 +6,16 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec">
-  <gloss>element specification</gloss>
-  <gloss versionDate="2007-12-20" xml:lang="ko">요소 명시</gloss>
-  <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
-  <gloss versionDate="2008-04-06" xml:lang="es">especificación del elemento</gloss>
-  <gloss versionDate="2007-06-12" xml:lang="fr">spécification d'élément</gloss>
-  <gloss versionDate="2007-11-06" xml:lang="it">specifica dell'elemento</gloss>
-  <desc>documents the structure, content, and purpose of a single element type.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">단일 요소 유형의 구조, 내용 및 목적을 기록한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">紀錄單一元素類型的結構、內容、以及用途。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja"> 構造，内容，その要素の目的などを示す． </desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">documente la structure, le contenu et l'emploi d'un
-    élément.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">documenta la estructura, contenido y finalidad de un
-    único tipo de elemento.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">documenta struttura, contenuto e scopo di un unico tipo
-    di elemento</desc>
-  <classes>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec"><gloss>element specification</gloss><gloss versionDate="2007-12-20" xml:lang="ko">요소 명시</gloss><gloss versionDate="2007-05-02" xml:lang="zh-TW"/><gloss versionDate="2008-04-06" xml:lang="es">especificación del elemento</gloss><gloss versionDate="2007-06-12" xml:lang="fr">spécification d'élément</gloss><gloss versionDate="2007-11-06" xml:lang="it">specifica dell'elemento</gloss><desc>documents the structure, content, and purpose of a single element type.</desc><desc versionDate="2007-12-20" xml:lang="ko">단일 요소 유형의 구조, 내용 및 목적을 기록한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">紀錄單一元素類型的結構、內容、以及用途。</desc><desc versionDate="2008-04-05" xml:lang="ja"> 構造，内容，その要素の目的などを示す． </desc><desc versionDate="2007-06-12" xml:lang="fr">documente la structure, le contenu et l'emploi d'un
+    élément.</desc><desc versionDate="2007-05-04" xml:lang="es">documenta la estructura, contenido y finalidad de un
+    único tipo de elemento.</desc><desc versionDate="2007-01-21" xml:lang="it">documenta struttura, contenuto e scopo di un unico tipo
+    di elemento</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="model.oddDecl"/>
     <memberOf key="att.identified"/>
     <memberOf key="att.namespaceable"/>
-  </classes>
-  <content>
+  </classes><content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
       <zeroOrMore>
         <choice>
@@ -62,19 +48,13 @@ $Id$
         <ref name="listRef"/>
       </zeroOrMore>
     </group>
-  </content>
-  <constraintSpec ident="elementspec-in-module" scheme="isoschematron">
+  </content><constraintSpec ident="elementspec-in-module" scheme="isoschematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="not( @module )
-               or
-               //tei:moduleSpec[ @ident = current()/@module ]
-               or
-               //tei:moduleRef[ @key = current()/@module ]">
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="not( @module )                or                //tei:moduleSpec[ @ident = current()/@module ]                or                //tei:moduleRef[ @key = current()/@module ]">
 On element <name/> the value of the module attribute ("<value-of select="@module"/>")
 should correspond to an existing module, via a moduleSpec or moduleRef</assert>
     </constraint>
-  </constraintSpec>
-  <attList>
+  </constraintSpec><attList>
     <attDef ident="prefix" usage="opt">
       <equiv/>
       <desc>specifies a default prefix which will be prepended to all patterns
@@ -101,8 +81,7 @@ should correspond to an existing module, via a moduleSpec or moduleRef</assert>
       </remarks>
     </attDef>
     <!-- removed @usage -->
-  </attList>
-  <exemplum xml:lang="en">
+  </attList><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <elementSpec module="tagdocs" ident="code">
         <equiv/>
@@ -125,8 +104,7 @@ should correspond to an existing module, via a moduleSpec or moduleRef</assert>
         </attList>
       </elementSpec>
     </egXML>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <elementSpec module="tagdocs" xml:id="fr_Code" ident="code">
         <equiv/>
@@ -149,8 +127,7 @@ should correspond to an existing module, via a moduleSpec or moduleRef</assert>
         </attList>
       </elementSpec>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="zh-TW">
+  </exemplum><exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <elementSpec module="tagdocs" ident="code">
         <equiv/>
@@ -173,9 +150,7 @@ should correspond to an existing module, via a moduleSpec or moduleRef</assert>
         </attList>
       </elementSpec>
     </egXML>
-  </exemplum>
-  <listRef>
+  </exemplum><listRef>
     <ptr target="#TDTAG"/>
     <ptr target="#TD"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>

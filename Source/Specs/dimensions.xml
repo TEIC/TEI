@@ -6,23 +6,14 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="DIMENSIONS" ident="dimensions">
-  <gloss xml:lang="fr" versionDate="2009-04-17">dimensions</gloss>
-  <desc xml:id="dimensions.desc">contains a dimensional specification.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">어떤 차원의 명세를 포함한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">尺寸的詳細說明。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="DIMENSIONS" ident="dimensions"><gloss xml:lang="fr" versionDate="2009-04-17">dimensions</gloss><desc xml:id="dimensions.desc">contains a dimensional specification.</desc><desc versionDate="2007-12-20" xml:lang="ko">어떤 차원의 명세를 포함한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">尺寸的詳細說明。</desc><desc versionDate="2008-04-05" xml:lang="ja">
   大きさ・程度を示す．
-  </desc>
-  <desc versionDate="2008-03-30" xml:lang="fr">contient une spécification des dimensions.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier tipo de especificación referente a las dimensiones.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">contiene una qualsiasi indicazione relativa alle dimensioni</desc>
-  <classes>
+  </desc><desc versionDate="2008-03-30" xml:lang="fr">contient une spécification des dimensions.</desc><desc versionDate="2007-05-04" xml:lang="es">contiene cualquier tipo de especificación referente a las dimensiones.</desc><desc versionDate="2007-01-21" xml:lang="it">contiene una qualsiasi indicazione relativa alle dimensioni</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="att.dimensions"/>
     <memberOf key="model.pPart.msdesc"/>
-  </classes>
-  <content>
+  </classes><content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
       <!--this group is only needed for DTDs-->
       <zeroOrMore>
@@ -32,8 +23,7 @@ $Id$
         </choice>
       </zeroOrMore>
     </group>
-  </content>
-  <constraintSpec scheme="isoschematron" ident="duplicateDim">
+  </content><constraintSpec scheme="isoschematron" ident="duplicateDim">
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="count(tei:width)&gt; 1">
 The element <name/> may appear once only
@@ -45,8 +35,7 @@ The element <name/> may appear once only
 The element <name/> may appear once only
       </report>
     </constraint>
-  </constraintSpec>
-  <attList>
+  </constraintSpec><attList>
     <attDef ident="type">
       <equiv/>
       <desc>indicates which aspect of the object is being measured. </desc>
@@ -169,8 +158,7 @@ autre conteneur dans lequel le manuscrit est conservé.</desc>
         </valItem>
       </valList>
     </attDef>
-  </attList>
-  <exemplum xml:lang="und">
+  </attList><exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <dimensions type="leaves">
         <height scope="range">157-160</height>
@@ -185,8 +173,7 @@ autre conteneur dans lequel le manuscrit est conservé.</desc>
         <width>10</width>
       </dimensions>
     </egXML>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-BnF-Reliures">
       <dimensions type="binding">
         <height unit="mm">328 (336)</height>
@@ -194,8 +181,7 @@ autre conteneur dans lequel le manuscrit est conservé.</desc>
         <depth unit="mm">74</depth>
       </dimensions>
     </egXML>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
     <p xmlns:teix="http://www.tei-c.org/ns/Examples">Quand de simples quantités numériques sont impliquées, elles peuvent être exprimées par
         l'attribut <att>quantity</att> sur chaque ou sur tous les éléments enfants, comme dans
         l'exemple suivant : </p>
@@ -211,8 +197,7 @@ autre conteneur dans lequel le manuscrit est conservé.</desc>
         <depth unit="mm">22</depth>
       </dimensions>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
+  </exemplum><exemplum xml:lang="en">
     <p>This element may be used to record the dimensions of any
 text-bearing object, not necessarily a codex. For example:</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -226,8 +211,7 @@ text-bearing object, not necessarily a codex. For example:</p>
 monument are all the same size (7004 by 1803 cm) and stand out from
 the rest of the monument by 345 mm.
 </p>
-  </exemplum>
-  <exemplum xml:lang="en">
+  </exemplum><exemplum xml:lang="en">
     <p>When simple numeric quantities are involved, they may be
     expressed on the <att>quantity</att> attribute of any or all of
     the child elements, as in the following example:</p>
@@ -245,23 +229,18 @@ the rest of the monument by 345 mm.
         <width quantity="10"/>
       </dimensions>
     </egXML>
-  </exemplum>
-  <remarks>
+  </exemplum><remarks>
     <p>Contains no more than one of each of the specialized elements
     used to express a three-dimensional object's height, width, and
     depth, combined with any number of other kinds of dimensional
     specification.</p>
-  </remarks>
-  <remarks xml:lang="fr">
+  </remarks><remarks xml:lang="fr">
     <p>Contient la mesure de la hauteur, de la largeur et de la profondeur d'un objet à 1,
                 2 ou 3 dimensions.</p>
-  </remarks>
-  <remarks xml:lang="ja">
+  </remarks><remarks xml:lang="ja">
     <p>
     対象物の高さ，幅，奥行きの大きさを示す．
     </p>
-  </remarks>
-  <listRef>
+  </remarks><listRef>
     <ptr target="#msdim"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>

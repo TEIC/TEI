@@ -1,44 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="linking" ident="link">
-  <equiv/>
-  <gloss versionDate="2007-06-12" xml:lang="fr"> lien</gloss>
-  <desc>defines an association or hypertextual link among elements or passages, of some type not more precisely specifiable by other elements.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">다른 요소들에 의해 좀 더 명확하게 명시되지 않는 유형의 요소 또는 단락들의 연관 또는 하이퍼텍스트 연결을 정의한다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">定義元素或段落之間的關連或超文字連結，其他元素無法將此連結類型作更詳細說明。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja"> 他の要素では上手く示せない，要素や一節間にある関連性やハイパーテキス トリンクを定義する． </desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">définit une association ou un lien hypertextuel entre des éléments ou des passages, lien dont le type ne peut être spécifié précisément par d'autres éléments.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">define una asociación o vínculo hipertextual entre elementos o fragmentos de texto que no es especificable por otros elementos.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">definisce tra elementi o porzioni di testo un'associazione o legame ipertestuale non meglio specificabile da altri elementi</desc>
-  <classes>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="linking" ident="link"><equiv/><gloss versionDate="2007-06-12" xml:lang="fr"> lien</gloss><desc>defines an association or hypertextual link among elements or passages, of some type not more precisely specifiable by other elements.</desc><desc versionDate="2007-12-20" xml:lang="ko">다른 요소들에 의해 좀 더 명확하게 명시되지 않는 유형의 요소 또는 단락들의 연관 또는 하이퍼텍스트 연결을 정의한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">定義元素或段落之間的關連或超文字連結，其他元素無法將此連結類型作更詳細說明。</desc><desc versionDate="2008-04-05" xml:lang="ja"> 他の要素では上手く示せない，要素や一節間にある関連性やハイパーテキス トリンクを定義する． </desc><desc versionDate="2007-06-12" xml:lang="fr">définit une association ou un lien hypertextuel entre des éléments ou des passages, lien dont le type ne peut être spécifié précisément par d'autres éléments.</desc><desc versionDate="2007-05-04" xml:lang="es">define una asociación o vínculo hipertextual entre elementos o fragmentos de texto que no es especificable por otros elementos.</desc><desc versionDate="2007-01-21" xml:lang="it">definisce tra elementi o porzioni di testo un'associazione o legame ipertestuale non meglio specificabile da altri elementi</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
     <memberOf key="att.typed"/>
     <memberOf key="model.global.meta"/>
-  </classes>
-  <content>
+  </classes><content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
-  </content>
-  <constraintSpec ident="linkTargets1" scheme="isoschematron">
+  </content><constraintSpec ident="linkTargets1" scheme="isoschematron">
     <constraint>
       <sch:report test="@target and @targets">You may not supply both 
 	@target and @targets on <sch:name/></sch:report>
     </constraint>
-  </constraintSpec>
-  <constraintSpec ident="linkTargets2" scheme="isoschematron">
+  </constraintSpec><constraintSpec ident="linkTargets2" scheme="isoschematron">
     <constraint>
       <sch:report test="not(@target) and not(@targets)">You must
 	supply either @target or @targets on <sch:name/></sch:report>
     </constraint>
-  </constraintSpec>
-  <constraintSpec ident="linkTargets3" scheme="isoschematron">
+  </constraintSpec><constraintSpec ident="linkTargets3" scheme="isoschematron">
     <constraint>
       <sch:assert test="contains(@target,' ')">You must supply at least two
 values for @target on <sch:name/></sch:assert>
     </constraint>
-  </constraintSpec>
-  <attList>
-    <attDef ident="targets" usage="opt"  status="deprecated">
+  </constraintSpec><attList>
+    <attDef ident="targets" usage="opt" status="deprecated">
       <equiv/>
       <desc>specifies the identifiers of the elements or passages to be linked or associated. </desc>
       <desc versionDate="2007-12-20" xml:lang="ko">연결 또는 연관된 요소 또는 단락의 확인소를 명시한다.</desc>
@@ -59,8 +45,7 @@ preference. It is an error to supply both attributes, but one or the
 other must be present.</p>
       </remarks>
     </attDef>
-  </attList>
-  <exemplum xml:lang="en">
+  </attList><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <s n="1">The state Supreme Court has refused to release <rs xml:id="R1"><rs xml:id="R2">Rahway State Prison</rs> inmate</rs> <rs xml:id="R3">James Scott</rs> on bail.</s>
       <s n="2"><rs xml:id="R4">The fighter</rs> is serving 30-40 years
@@ -71,20 +56,15 @@ other must be present.</p>
         <link target="#R2 #R5"/>
       </linkGrp>
     </egXML>
-  </exemplum>
-  <remarks>
+  </exemplum><remarks>
     <p>This element should only be used to encode associations not otherwise provided for by more specific elements.</p>
     <p>The location of this element within a document has no significance, unless it is included within a <gi>linkGrp</gi>, in which case it may inherit the value of the <att>type</att> attribute from the value given on the <gi>linkGrp</gi>.</p>
-  </remarks>
-  <remarks xml:lang="fr" versionDate="2009-10-06">
+  </remarks><remarks xml:lang="fr" versionDate="2009-10-06">
     <p>Cet élément n’est utilisé que pour encoder des associations ; il n’est pas préconisé pour d’autres éléments plus spécifiques. </p>
     <p> L’emplacement de cet élément dans un document n'a aucune signification, à moins qu'il ne soit inclus dans un élément <gi>linkGrp</gi> ; dans ce cas il peut hériter de la valeur donnée à l’attribut <att>type</att> de l’élément <gi>linkGrp</gi> .</p>
-  </remarks>
-  <remarks xml:lang="ja">
+  </remarks><remarks xml:lang="ja">
     <p> 当該要素は，他の要素では示すことができない関連性を符号化する際にの み使われるべきである． </p>
     <p> 当該要素が，要素<gi>linkGrp</gi>でまとめられているのでなければ，当 該要素のある場所は重要ではない．要素<gi>linkGrp</gi>の下にある場合， 属性<att>type</att>の値は要素<gi>linkGrp</gi>がもつ値を継承する． </p>
-  </remarks>
-  <listRef>
+  </remarks><listRef>
     <ptr target="#SAPT"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>

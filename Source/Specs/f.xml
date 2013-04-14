@@ -6,32 +6,16 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="f">
-  <equiv/>
-  <gloss>feature</gloss>
-  <gloss versionDate="2007-12-20" xml:lang="ko">자질</gloss>
-  <gloss versionDate="2007-05-02" xml:lang="zh-TW">功能</gloss>
-  <gloss versionDate="2008-04-05" xml:lang="ja"/>
-  <gloss versionDate="2007-06-12" xml:lang="fr">trait</gloss>
-  <gloss versionDate="2007-05-04" xml:lang="es">Rasgo</gloss>
-  <gloss versionDate="2007-01-21" xml:lang="it">un tratto</gloss>
-  <desc>represents a <term>feature value specification</term>, that
-  is, the association of a name with a value of any of several different types.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko"><term>feature value specification</term>, 즉, 이름과 몇 가지 다른 유형의 값을 연결시킨다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">表示一個<term>功能值細節</term>，即一項名稱與任一種不同類型值之間的關連。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="f"><equiv/><gloss>feature</gloss><gloss versionDate="2007-12-20" xml:lang="ko">자질</gloss><gloss versionDate="2007-05-02" xml:lang="zh-TW">功能</gloss><gloss versionDate="2008-04-05" xml:lang="ja"/><gloss versionDate="2007-06-12" xml:lang="fr">trait</gloss><gloss versionDate="2007-05-04" xml:lang="es">Rasgo</gloss><gloss versionDate="2007-01-21" xml:lang="it">un tratto</gloss><desc>represents a <term>feature value specification</term>, that
+  is, the association of a name with a value of any of several different types.</desc><desc versionDate="2007-12-20" xml:lang="ko"><term>feature value specification</term>, 즉, 이름과 몇 가지 다른 유형의 값을 연결시킨다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">表示一個<term>功能值細節</term>，即一項名稱與任一種不同類型值之間的關連。</desc><desc versionDate="2008-04-05" xml:lang="ja">
   素性値定義を示す．すなわち，素性名とその様々な値を示す．
-  </desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">représente une <term>spécification
+  </desc><desc versionDate="2007-06-12" xml:lang="fr">représente une <term>spécification
       trait-valeur</term>, c'est-à-dire l'association d'un nom avec une valeur d’un type quelconque
-      parmi plusieurs.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">representa una <term>feature value specification (especificación de valor de rasgo)</term>, es decir, la asociación de un nombre con un valor de cualquier de los diferentes tipos.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">rappresenta una <term>feature value specification</term>, cioè l'associazione di un nome con il valore di uno qualsiasi di diversi tratti.</desc>
-  <classes>
+      parmi plusieurs.</desc><desc versionDate="2007-05-04" xml:lang="es">representa una <term>feature value specification (especificación de valor de rasgo)</term>, es decir, la asociación de un nombre con un valor de cualquier de los diferentes tipos.</desc><desc versionDate="2007-01-21" xml:lang="it">rappresenta una <term>feature value specification</term>, cioè l'associazione di un nome con il valore di uno qualsiasi di diversi tratti.</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="att.datcat"/>
-  </classes>
-  <content>
+  </classes><content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
       <choice>
         <text/>
@@ -39,8 +23,7 @@ $Id$
         <ref name="model.featureVal"/>
       </choice>
     </zeroOrMore>
-  </content>
-  <constraintSpec ident="fValConstraints" scheme="isoschematron">
+  </content><constraintSpec ident="fValConstraints" scheme="isoschematron">
     <constraint>
       <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:fVal">
         <assert test="not(tei:* and text)"> A feature value cannot
@@ -51,8 +34,7 @@ $Id$
     only one child element</report>
       </rule>
     </constraint>
-  </constraintSpec>
-  <attList>
+  </constraintSpec><attList>
     <attDef ident="name" usage="req">
       <equiv/>
       <desc>a single word which follows the rules defining a
@@ -107,46 +89,38 @@ $Id$
 	</p>
       </remarks>
     </attDef>
-  </attList>
-  <exemplum xml:lang="en">
+  </attList><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <f name="gender">
         <symbol value="feminine"/>
       </f>
     </egXML>
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <f name="gender">
         <symbol value="feminine"/>
       </f>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="en">
+  </exemplum><exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <fs>
         <f name="voice">active</f>
         <f name="tense">SimPre</f>
       </fs>
     </egXML>
-  </exemplum>
-  <remarks>
+  </exemplum><remarks>
     <p>If the element is empty then a value must be supplied for the 
 <att>fVal</att> attribute. The content of <gi>f</gi> may also be textual, 
       with the assumption that the data type of the feature value is determined 
       by the schema—this is the approach used in many language-technology-oriented projects and recommendations.</p>
-  </remarks>
-  <remarks xml:lang="fr">
+  </remarks><remarks xml:lang="fr">
     <p>Si l'élément est vide, une valeur doit être fournie pour l'attribut
             <att>fVal</att>.</p>
-  </remarks>
-  <remarks xml:lang="ja">
+  </remarks><remarks xml:lang="ja">
     <p>
     参照先の要素が空要素の場合，属性<att>fVal</att>が示す対象となる値
     が用意されていなければならない．
     </p>
-  </remarks>
-  <listRef>
+  </remarks><listRef>
     <ptr target="#FSBI" type="div3"/>
-  </listRef>
-</elementSpec>
+  </listRef></elementSpec>

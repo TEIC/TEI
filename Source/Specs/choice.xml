@@ -6,34 +6,24 @@
     $Date$
     $Id$
 -->
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="choice">
-  <gloss versionDate="2009-01-06" xml:lang="fr">choix</gloss>
-  <desc>groups a number of alternative encodings for the same point in
-        a text.</desc>
-  <desc versionDate="2007-12-20" xml:lang="ko">텍스트 동일 지점에서 대체 가능한 부호화를 모아 놓는다.</desc>
-  <desc versionDate="2007-05-02" xml:lang="zh-TW">匯集文件中對於同一部分文字所有可供替換的不同標記。</desc>
-  <desc versionDate="2008-04-05" xml:lang="ja">
+<?xml-model href="http://www.tei-c.org/release/xml/tei/odd/p5odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="choice"><gloss versionDate="2009-01-06" xml:lang="fr">choix</gloss><desc>groups a number of alternative encodings for the same point in
+        a text.</desc><desc versionDate="2007-12-20" xml:lang="ko">텍스트 동일 지점에서 대체 가능한 부호화를 모아 놓는다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">匯集文件中對於同一部分文字所有可供替換的不同標記。</desc><desc versionDate="2008-04-05" xml:lang="ja">
         
         テキスト中の同じ場所で，異なる符号化記述をまとめる．
-    </desc>
-  <desc versionDate="2009-01-06" xml:lang="fr">regroupe un certain nombre de balisages alternatifs possibles
-        pour un même endroit  dans un texte.</desc>
-  <desc versionDate="2007-05-04" xml:lang="es">agrupa un número de codificaciones alternativas para el mismo punto en un texto.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">raggruppa un numero di codifiche alternative per la stessa porzione di testo.</desc>
-  <classes>
+    </desc><desc versionDate="2009-01-06" xml:lang="fr">regroupe un certain nombre de balisages alternatifs possibles
+        pour un même endroit  dans un texte.</desc><desc versionDate="2007-05-04" xml:lang="es">agrupa un número de codificaciones alternativas para el mismo punto en un texto.</desc><desc versionDate="2007-01-21" xml:lang="it">raggruppa un numero di codifiche alternative per la stessa porzione di testo.</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="model.pPart.editorial"/>
     <memberOf key="model.linePart"/>
-  </classes>
-  <content>
+  </classes><content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
       <choice>
         <ref name="model.choicePart"/>
         <ref name="choice"/>
       </choice>
     </zeroOrMore>
-  </content>
-  <exemplum xml:lang="en">
+  </content><exemplum xml:lang="en">
     <p>An American encoding of <title>Gulliver's Travels</title> which
             retains the British spelling but also provides a version
             regularized to American spelling might be encoded as follows.</p>
@@ -45,20 +35,17 @@
                 <choice><orig>favour</orig><reg>favor</reg></choice>.</p>
     </egXML>
     <!-- Gulliver's Travels -->
-  </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
+  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
     <p xmlns:teix="http://www.tei-c.org/ns/Examples">L'encodage d'une édition des <title>Essais</title> pourra faire état à la fois des formes
         originales et des formes modernisées correspondantes:.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Montaigne_Essais">
       <p>Ainsi lecteur, je suis<choice><orig>moy-mesmes</orig><reg>moi-même</reg></choice> la matière de mon livre : ce n'est pas raison que tu emploies ton loisir en un <choice><orig>subject</orig><reg>sujet</reg></choice>si frivole et si vain.</p>
     </egXML>
-  </exemplum>
-  <exemplum xml:lang="zh-TW">
+  </exemplum><exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <p>清朝與日本為爭奪北韓半島控制權，爆發歷史上著名的甲午戰爭。 發生於清光緒二十年，西元 <choice><sic>1892</sic><corr>1894</corr></choice>年，雙方水陸大戰，傷亡者<choice><orig>衆</orig><reg>眾</reg></choice>。</p>
     </egXML>
-  </exemplum>
-  <remarks>
+  </exemplum><remarks>
     <p>Because the children of a  <gi>choice</gi> element all
             represent alternative ways of encoding the same sequence, it is
             natural to think of them as mutually exclusive. However, there may
@@ -70,8 +57,7 @@
     multiple possible encoding decisions at a given point, the
     <gi>app</gi> element and associated elements discussed in  section
     <ptr target="#TCAPLL"/> should be preferred.</p>
-  </remarks>
-  <remarks xml:lang="fr">
+  </remarks><remarks xml:lang="fr">
     <p>Parce que les éléments contenus par un élément <gi>choice</gi> correspondent  tous à des solutions
             possibles  pour encoder la même séquence, il est naturel de les envisager comme
             exclusifs les uns des autres. Toutefois il peut y avoir des cas où la pleine
@@ -80,14 +66,12 @@
     <p>A Noter aussi que les <gi>choice</gi> peuvent s'imbriquer. </p>
     <p>Pour une version de <gi>choice</gi> spécialisée pour l'encodage de témoins multiples
             d'une même oeuvre, l'élément <gi>app</gi> peut etre préférable : voir la section <ptr target="#TCAPLL"/>.</p>
-  </remarks>
-  <remarks xml:lang="es">
+  </remarks><remarks xml:lang="es">
     <p>Porque los niños de un elemento <gi>opción</gi> representan las maneras alternativas de codificar la misma secuencia, es natural pensar en ellas como mutuamente exclusivas.
             Sin embargo, puede haber casos donde una representación completa de un texto requiera que las codificaciones alternativas sean consideradas como paralelas. </p>
     <p>Se Observa también que los elementos <gi>opción</gi> pueden ser uno mismo-jerarquía.</p>
     <p>Para una versión especializada de la <gi>opción</gi> para codificar los testimonios múltiples de un único trabajo, ver la sección <ptr target="#TCAPLL"/>.</p>
-  </remarks>
-  <remarks xml:lang="ja">
+  </remarks><remarks xml:lang="ja">
     <p>
             要素<gi>choice</gi>の子要素は全て，選択的な符号化方法を示している．
             従って，それらは互いに排他的であるとするのが自然である．けれども，
@@ -99,10 +83,6 @@
             1つの作品にある複数の現存資料を要素<gi>choice</gi>符号化することに
             ついては，<ptr target="#TCAPLL"/>を参照のこと．
         </p>
-  </remarks>
-
-  <listRef>
+  </remarks><listRef>
     <ptr target="#COED" type="div3"/>
-  </listRef>
-
-</elementSpec>
+  </listRef></elementSpec>
