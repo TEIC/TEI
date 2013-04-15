@@ -268,7 +268,7 @@ of this software, even if advised of the possibility of such damage.
 		      <xsl:sequence select="tei:i18n('figureWord')"/>
 		      <xsl:text>]</xsl:text>
 		    </xsl:when>
-		    <xsl:when test="tei:head and
+		    <xsl:when test="tei:head[not(.='')] and
 				    not(tei:head[count(*)=1 and tei:figure])">
 			<xsl:apply-templates mode="plain" select="tei:head"/>
 		    </xsl:when>
