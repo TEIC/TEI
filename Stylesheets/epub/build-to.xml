@@ -39,7 +39,8 @@
   <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
   <dirname property="outputDir" file="${outputFile}"/>
   <dirname property="inputDir" file="${inputFile}"/>
-  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
+  <tempfile property="temp.file" destDir="${java.io.tmpdir}" prefix="build"/>
+  <dirname property="outputTempDir" file="${temp.file}/ant"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
@@ -51,7 +52,7 @@
     <attribute name="tempDir"/>
     <sequential>
       <!-- The transformation for EPUB output. -->
-      <echo level="info">XSLT generate ePub files</echo>
+      <echo level="info">XSLT generate ePub files in @{tempdir}</echo>
       <xslt force="yes" style="${teitoepub}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/OPS/index.html">
         <xmlcatalog>
           <catalogpath>
@@ -116,7 +117,6 @@
   </macrodef>
   <target name="dist" depends="setup,odd,notodd,go,cleanup"/>
   <target name="setup">
-    <delete dir="${outputTempDir}"/>
     <mkdir dir="${outputTempDir}"/>
   </target>
   <target name="cleanup" unless="${debug}">
