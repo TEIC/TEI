@@ -49,19 +49,13 @@
     <attribute name="in"/>
     <attribute name="inDir"/>
     <attribute name="out"/>
-    <attribute name="tempDir"/>
     <sequential>
       <!-- The transformation for EPUB output. -->
       <echo level="info">XSLT generate ePub files in @{tempdir}</echo>
-      <xslt force="yes" style="${teitoepub}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/OPS/index.html">
-        <xmlcatalog>
-          <catalogpath>
-            <pathelement location="$catalogfile"/>
-          </catalogpath>
-        </xmlcatalog>
+      <xslt force="yes" style="${teitoepub}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/OPS/index.html">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${oxygenlib}/saxon9ee.jar"/>
-        <param name="directory" expression="file:///@{tempDir}"/>
+        <param name="directory" expression="file:///${outputTempDir}"/>
         <param name="inputDir" expression="@{inDir}/"/>
         <param name="fixgraphicsurl" expression="true"/>
         <!-- supply unique URN for ebook-->
@@ -93,26 +87,21 @@
         <param name="nocompress" expression="${nocompress}" if="nocompress"/>
       </xslt>
       <echo level="info">Get names of graphics files and write an ant  task</echo>
-      <xslt force="yes" style="${listgraphics}" in="@{tempDir}/tmp2.xml" out="@{tempDir}/copy.xml">
-        <xmlcatalog>
-          <catalogpath>
-            <pathelement location="$catalogfile"/>
-          </catalogpath>
-        </xmlcatalog>
+      <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${oxygenlib}/saxon9ee.jar"/>
-        <param name="outputDir" expression="@{tempDir}"/>
+        <param name="outputDir" expression="${outputTempDir}"/>
         <param name="inputDir" expression="@{inDir}"/>
         <param name="mediaDir" expression="OPS/media"/>
         <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
         <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
       </xslt>
       <echo level="info">Copy image files</echo>
-      <ant antfile="@{tempDir}/copy.xml"/>
-      <echo level="info">ZIP: put files from @{tempDir} together into @{out}</echo>
+      <ant antfile="${outputTempDir}/copy.xml"/>
+      <echo level="info">ZIP: put files from ${outputTempDir} together into @{out}</echo>
       <delete file="@{out}"/>
-      <zip destfile="@{out}" basedir="@{tempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
-      <zip destfile="@{out}" basedir="@{tempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+      <zip destfile="@{out}" basedir="${outputTempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+      <zip destfile="@{out}" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
     </sequential>
   </macrodef>
   <target name="dist" depends="setup,odd,notodd,go,cleanup"/>
@@ -123,6 +112,6 @@
     <delete dir="${outputTempDir}"/>
   </target>
   <target name="go">
-    <buildepub in="${outputTempdir}/tmp2.xml" inDir="${inputDir}" out="${outputFile}" tempDir="${outputTempDir}"/>
+    <buildepub in="${outputTempdir}/tmp2.xml" inDir="${inputDir}" out="${outputFile}"/>
   </target>
 </project>
