@@ -422,37 +422,35 @@ dependencies:
 	@echo	zip 
 
 clean:
+	(cd Exemplars; make clean)
+	(cd Test; make clean)
 	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split 
 	rm -rf Guidelines.??? Guidelines-* 
-	rm -f Guidelines.epub
-	rm -f Guidelines.xml
-	rm -f Guidelines.mobi
-	rm -f pdfbuild.log
-	rm -f p5odds-examples.rng  p5odds-examples.rnc 
-	rm -f p5odds.rng p5odds.rnc 
-	rm -f Utilities/guidelines.xsl
-	rm -f *.xsd 
-	rm -f anything buildweb.xml
-	rm -f p5.sch p5.isosch 
 	rm -f *.isosch.xsl 
-	rm -f tei-*.zip 
+	rm -f *.stamp
+	rm -f *.xsd 
+	rm -f Exemplars/stdout
 	rm -f Test/*.isosch 
-	rm -f p5subset.xml p5subset.json p5subset.js p5.xml 
-	rm -f Utilities/guidelines.xsl Utilities-1/guidelines.xsl
-	find . -name "semantic.cache" | xargs rm -f
-	(cd Test; make clean)
-	(cd Exemplars; make clean)
+	rm -f Test/detest.dtd
+	rm -f Test/detest.rnc
+	rm -f Test/detest.rng
+	rm -f Test/detest.xsl
+	rm -f Test/stdout
+	rm -f Utilities/guidelines.xsl
+	rm -f Utilities/guidelines.xsl
+	rm -f anything buildweb.xml
+	rm -f p5.sch p5.isosch p5.xml p5subset.xml p5subset.json p5subset.js
+	rm -f p5attlist.txt
+	rm -f p5odds-examples.rng p5odds-examples.rnc p5odds.rng p5odds.rnc 
+	rm -f pdfbuild.log
+	rm -f stdout
+	rm -f stripspace.xsl.model
+	rm -f tei-*.zip 
+	rm -f tei-p5-*_*build
+	rm -f tei-p5-*_*changes
+	rm -f tei-p5-*_*deb
+	rm -f teiwebsiteguidelines.zip
+	rm -f v.body v.header missfont.log 
 	rm -rf FASC-*
 	rm -rf catalogue.* modList
-	rm -f       p5.xml
-	rm -f       Test/detest.rnc
-	rm -f       Test/detest.rng
-	rm -f       Test/detest.dtd
 	rm -rf valid v.xml
-	rm -f v.body v.header missfont.log 
-	rm -f *.stamp
-	rm -f tei-p5-*_*deb
-	rm -f tei-p5-*_*changes
-	rm -f tei-p5-*_*build
-	rm -f teiwebsiteguidelines.zip
-	rm -rf bin
