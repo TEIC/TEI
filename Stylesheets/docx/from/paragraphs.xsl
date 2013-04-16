@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:fn="http://www.w3.org/2005/xpath-functions"
                 xmlns:prop="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties"
                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
                 xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"
@@ -27,7 +28,7 @@
                 xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 version="2.0"
-                exclude-result-prefixes="a cp dc dcterms dcmitype prop     iso m mml mo mv o pic r rel     tbx tei teidocx v xs ve w10 w wne wp">
+                exclude-result-prefixes="a cp dc dcterms dcmitype fn prop iso m mml mo mv o pic r rel tbx tei teidocx v xs ve w10 w wne wp">
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -72,7 +73,8 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     
    <xsl:variable name="dblq">"</xsl:variable>
-   <xsl:variable name="dblqplusr">" \r "</xsl:variable>
+   <xsl:variable name="usr">\r</xsl:variable>
+   <xsl:variable name="ust">\t</xsl:variable>
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
          <p>Calls the named template paragraph-wp that can be overriden.</p>
@@ -200,21 +202,13 @@ of this software, even if advised of the possibility of such damage.
 		</xsl:variable>
 		<xsl:choose>
 		  <xsl:when test="$rends/tei:r='index'">
-		    <index>
-		      <term>
-		      <xsl:for-each
-			  select="current-group()//w:instrText">
-			<xsl:choose>
-			  <xsl:when test=".='XE'"/>
-			  <xsl:when test="normalize-space(.)=$dblq"/>
-			  <xsl:when test="starts-with(normalize-space(.),$dblqplusr)"/>
-			  <xsl:otherwise>
-			    <xsl:apply-templates/>
-			  </xsl:otherwise>
-			</xsl:choose>
-		      </xsl:for-each>
-		      </term>
-		    </index>
+		    <xsl:call-template name="process-index-term">
+		      <xsl:with-param name="term">
+			<xsl:for-each select="current-group()//w:instrText">
+			  <xsl:apply-templates/>
+			</xsl:for-each>
+		      </xsl:with-param>
+		    </xsl:call-template>
 		  </xsl:when>
 		  <xsl:when test="$rends/tei:r='SEQ'">
 		    <xsl:variable name="What"
@@ -288,4 +282,52 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:template>
 
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>
+	Named template for handling processing of index terms.
+    </desc>
+    </doc>
+    <xsl:template name="process-index-term">
+      <xsl:param name="term"/>
+      <xsl:variable name="in-quotes" select="concat('[^',$dblq,']+',$dblq,'([^',$dblq,']+)',$dblq,'.*')"/>
+      <xsl:variable name="text" select="fn:replace($term,$in-quotes,'$1')"/>
+      <xsl:variable name="span" select="fn:replace(substring-after($term,$usr),$in-quotes,'$1')"/>
+      <xsl:variable name="see"  select="fn:replace(substring-after($term,$ust),$in-quotes,'$1')"/>
+      <index indexName="XE">
+	<xsl:if test="normalize-space($span)">
+	  <xsl:attribute name="spanTo">
+	    <xsl:text>#</xsl:text>
+	    <xsl:value-of select="normalize-space($span)"/>
+	  </xsl:attribute>
+	</xsl:if>
+	<xsl:choose>
+	  <xsl:when test="contains($text,':')">
+	    <term>
+	      <xsl:value-of select="substring-before($text,':')"/>
+	    </term>
+	    <index>
+	      <term>
+		<xsl:value-of select="substring-after($text,':')"/>
+		<xsl:if test="normalize-space($see)">
+		  <xr>
+		    <xsl:value-of select="normalize-space($see)"/>
+		  </xr>
+		</xsl:if>
+	      </term>
+	    </index>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <term>
+	      <xsl:value-of select="$text"/>
+	      <xsl:if test="normalize-space($see)">
+		<xr>
+		  <xsl:value-of select="normalize-space($see)"/>
+		</xr>
+	      </xsl:if>
+	    </term>
+	  </xsl:otherwise>
+	</xsl:choose> 
+      </index>
+    </xsl:template>
+      
 </xsl:stylesheet>

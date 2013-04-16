@@ -174,6 +174,11 @@ test-docx:
 	perl -p -i -e 's/Date:[^<]+</</' test18.xml
 	jing test.rng test18.xml
 	diff test18.xml expected-results/test18.xml
+	../docxtotei test11.docx temp.xml
+	xmllint --format temp.xml > test-indexes.xml  && rm temp.xml
+	perl -p -i -e 's/Date:[^<]+</</' test-indexes.xml
+	jing test.rng test-indexes.xml
+	diff test-indexes.xml expected-results/test-indexes.xml
 
 conversions-to: 
 	../odttotei test7.odt test7.xml
@@ -241,7 +246,7 @@ clean:
 	rm -f  oddbyexample.* index*div*html
 	rm -f  testdrama.compiled.xml
 	rm -f  test5.odt
-	rm -f  test7.xml test11.xml test18.xml test19.xml
+	rm -f  test7.xml test11.xml test18.xml test19.xml test-index.xml
 	rm -f  test7.zip
 	rm -f  test9.docx test9.odt
 	rm -f  test*listing*
