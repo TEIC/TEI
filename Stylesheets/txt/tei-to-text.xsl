@@ -127,6 +127,7 @@ of this software, even if advised of the possibility of such damage.
 
    <xsl:output method="text"/>
    <xsl:param name="makeCSV">false</xsl:param>
+   <xsl:param name="oneword">false</xsl:param>
    <xsl:variable name="q">"</xsl:variable>
 
    <xsl:template match="/">
@@ -155,6 +156,19 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="letters"/>
     <xsl:param name="context"/>
      <xsl:choose>
+       <xsl:when test="$oneword='true'">
+	 <xsl:variable name="foo">
+	    <xsl:analyze-string
+		select="normalize-space($letters)"
+		regex="(\w+)">
+	      <xsl:matching-substring>
+		<xsl:value-of select="regex-group(1)"/>
+		<xsl:text>&#10;</xsl:text>
+	      </xsl:matching-substring>
+	    </xsl:analyze-string>
+	 </xsl:variable>
+	 <xsl:value-of select="$foo"/>
+       </xsl:when>
        <xsl:when test="normalize-space($letters)=''">
 	 <xsl:text/>
        </xsl:when>
@@ -190,4 +204,6 @@ of this software, even if advised of the possibility of such damage.
        <xsl:apply-templates select="@*|*|text()" mode="preflight"/>
      </xsl:copy>
    </xsl:template>   
+
+    <xsl:template name="space"/>
 </xsl:stylesheet>

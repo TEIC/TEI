@@ -418,25 +418,30 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:if test="position()!=1 and 
 		      matches(.,'^\s') and 
 		      normalize-space()!=''">
-	  <xsl:text> </xsl:text>
+	  <xsl:call-template name="space"/>
 	</xsl:if>
 	<xsl:value-of select="tei:escapeChars(normalize-space(.),parent::*)"/>
 	<xsl:choose>
 	  <!-- node is an only child, and has content but it's all space -->
-	  <xsl:when test="last()=1 and string-length()!=0 and normalize-space()=''">
-	    <xsl:text> </xsl:text>
+	  <xsl:when test="last()=1 and string-length()!=0 and
+			  normalize-space()=''">
+	  <xsl:call-template name="space"/>
 	  </xsl:when>
 	  <!-- node isn't last, isn't first, and has trailing space -->
 	  <xsl:when test="position()!=1 and position()!=last() and matches(.,'\s$')">
-	    <xsl:text> </xsl:text>
+	  <xsl:call-template name="space"/>
 	  </xsl:when>
 	  <!-- node isn't last, is first, has trailing space, and has non-space content   -->
 	  <xsl:when test="position()=1 and matches(.,'\s$') and normalize-space()!=''">
-            <xsl:text> </xsl:text>
+	  <xsl:call-template name="space"/>
 	  </xsl:when>
 	</xsl:choose>
 	</xsl:otherwise>
       </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="space">
+      <xsl:text> </xsl:text>
     </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

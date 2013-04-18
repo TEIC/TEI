@@ -205,6 +205,7 @@ of this software, even if advised of the possibility of such damage.
 		    <xsl:call-template name="process-index-term">
 		      <xsl:with-param name="term">
 			<xsl:for-each select="current-group()//w:instrText">
+			  <!--xsl:message>[<xsl:value-of select="."/>]</xsl:message-->
 			  <xsl:apply-templates/>
 			</xsl:for-each>
 		      </xsl:with-param>
@@ -240,7 +241,10 @@ of this software, even if advised of the possibility of such damage.
 			      </xsl:when>
 			    </xsl:choose>
 			  </xsl:variable>
-			  <xsl:attribute name="target" select="$ref"/>
+			  <xsl:if test="not($ref='')">
+			    <xsl:attribute name="target"
+					   select="$ref"/>
+			  </xsl:if>
 			</xsl:if>
 		      </xsl:for-each>
 		      <xsl:for-each select="current-group()">
@@ -285,49 +289,56 @@ of this software, even if advised of the possibility of such damage.
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
 	Named template for handling processing of index terms.
+	First insert main index enty, then recurse by index level
     </desc>
     </doc>
     <xsl:template name="process-index-term">
       <xsl:param name="term"/>
-      <xsl:variable name="in-quotes" select="concat('[^',$dblq,']+',$dblq,'([^',$dblq,']+)',$dblq,'.*')"/>
-      <xsl:variable name="text" select="fn:replace($term,$in-quotes,'$1')"/>
-      <xsl:variable name="span" select="fn:replace(substring-after($term,$usr),$in-quotes,'$1')"/>
-      <xsl:variable name="see"  select="fn:replace(substring-after($term,$ust),$in-quotes,'$1')"/>
-      <index indexName="XE">
-	<xsl:if test="normalize-space($span)">
-	  <xsl:attribute name="spanTo">
-	    <xsl:text>#</xsl:text>
-	    <xsl:value-of select="normalize-space($span)"/>
-	  </xsl:attribute>
-	</xsl:if>
-	<xsl:choose>
-	  <xsl:when test="contains($text,':')">
-	    <term>
-	      <xsl:value-of select="substring-before($text,':')"/>
-	    </term>
-	    <index>
-	      <term>
-		<xsl:value-of select="substring-after($text,':')"/>
-		<xsl:if test="normalize-space($see)">
-		  <xr>
-		    <xsl:value-of select="normalize-space($see)"/>
-		  </xr>
-		</xsl:if>
-	      </term>
-	    </index>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <term>
-	      <xsl:value-of select="$text"/>
-	      <xsl:if test="normalize-space($see)">
-		<xr>
-		  <xsl:value-of select="normalize-space($see)"/>
-		</xr>
-	      </xsl:if>
-	    </term>
-	  </xsl:otherwise>
-	</xsl:choose> 
-      </index>
+      <xsl:param name="xr"/>
+      <!--xsl:message>[<xsl:value-of select="$term"/>]</xsl:message-->
+      <xsl:choose>
+	<xsl:when test="starts-with($term,'XE') or starts-with($term,' XE')">
+	  <xsl:variable name="quoted-text" select="concat('[^',$dblq,']+',$dblq,'([^',$dblq,']+)',$dblq,'.*')"/>
+	  <xsl:variable name="clean-term" select="fn:replace($term,$quoted-text,'$1')"/>
+	  <xsl:variable name="span" select="fn:replace(substring-after($term,$usr),$quoted-text,'$1')"/>
+	  <xsl:variable name="see">
+	    <xsl:value-of select="fn:replace(substring-after($term,$ust),$quoted-text,'$1')"/>
+	  </xsl:variable>
+	  <index indexName="XE">
+	    <xsl:if test="normalize-space($span)">
+	      <xsl:attribute name="spanTo">
+		<xsl:text>#</xsl:text>
+		<xsl:value-of select="normalize-space($span)"/>
+	      </xsl:attribute>
+	    </xsl:if>
+	    <xsl:call-template name="process-index-term">
+	      <xsl:with-param name="term" select="normalize-space($clean-term)"/>
+	      <xsl:with-param name="xr"  select="normalize-space($see)"/>
+	    </xsl:call-template>
+	  </index>
+	</xsl:when>
+	<xsl:when test="contains($term,':')">
+	  <xsl:call-template name="process-index-term">
+	    <xsl:with-param name="term" select="substring-before($term,':')"/>
+	  </xsl:call-template>
+	  <index>
+	    <xsl:call-template name="process-index-term">
+	      <xsl:with-param name="term" select="substring-after($term,':')"/>
+	      <xsl:with-param name="xr"  select="normalize-space($xr)"/>
+	    </xsl:call-template>
+	  </index>
+	</xsl:when>
+	<xsl:when test="normalize-space($term)">
+	  <term>
+	    <xsl:value-of select="normalize-space($term)"/>
+	    <xsl:if test="normalize-space($xr)">
+	      <ref>
+		<xsl:value-of select="normalize-space($xr)"/>
+	      </ref>
+	    </xsl:if>
+	  </term>
+	</xsl:when>
+      </xsl:choose> 
     </xsl:template>
       
 </xsl:stylesheet>

@@ -247,7 +247,9 @@ height: </xsl:text>
         <xsl:if test="$verbose='true'">
           <xsl:message>write file META-INF/container.xml</xsl:message>
         </xsl:if>
-        <xsl:result-document method="xml" href="{concat($directory,'/META-INF/container.xml')}">
+        <xsl:result-document doctype-public=""
+			     doctype-system="" 
+			     method="xml" href="{concat($directory,'/META-INF/container.xml')}">
           <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
             <rootfiles>
               <rootfile full-path="OPS/package.opf" media-type="application/oebps-package+xml"/>

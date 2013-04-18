@@ -145,20 +145,11 @@ test-odt:
 	rm test.xml.odt.listing
 
 test-docx:
-	../teitodocx test.xml 
-	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
-	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core
-	diff test.xml.docx.document expected-results/test.xml.docx.document
-	diff test.xml.docx.core expected-results/test.xml.docx.core
-	rm test.xml.docx.document
-	../teitodocx test6.xml 
-	unzip -p test6.xml.docx word/document.xml | xmllint --format - > test6.xml.docx.document
-	diff test6.xml.docx.document expected-results/test6.xml.docx.document
-	rm test6.xml.docx.document
-	../teitodocx testnotes1.xml 
-	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
-	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
-	rm testnotes1.xml.docx.document
+	../docxtotei test-indexes.docx temp.xml
+	xmllint --format temp.xml > test-indexes.xml  && rm temp.xml
+	perl -p -i -e 's/Date:[^<]+</</' test-indexes.xml
+	jing test.rng test-indexes.xml
+	diff test-indexes.xml expected-results/test-indexes.xml
 	../docxtotei test11.docx temp.xml
 	xmllint --format temp.xml > test11.xml  && rm temp.xml
 	perl -p -i -e 's/Date:[^<]+</</' test11.xml
@@ -174,11 +165,20 @@ test-docx:
 	perl -p -i -e 's/Date:[^<]+</</' test18.xml
 	jing test.rng test18.xml
 	diff test18.xml expected-results/test18.xml
-	../docxtotei test11.docx temp.xml
-	xmllint --format temp.xml > test-indexes.xml  && rm temp.xml
-	perl -p -i -e 's/Date:[^<]+</</' test-indexes.xml
-	jing test.rng test-indexes.xml
-	diff test-indexes.xml expected-results/test-indexes.xml
+	../teitodocx test.xml 
+	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
+	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core
+	diff test.xml.docx.document expected-results/test.xml.docx.document
+	diff test.xml.docx.core expected-results/test.xml.docx.core
+	rm test.xml.docx.document
+	../teitodocx test6.xml 
+	unzip -p test6.xml.docx word/document.xml | xmllint --format - > test6.xml.docx.document
+	diff test6.xml.docx.document expected-results/test6.xml.docx.document
+	rm test6.xml.docx.document
+	../teitodocx testnotes1.xml 
+	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
+	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
+	rm testnotes1.xml.docx.document
 
 conversions-to: 
 	../odttotei test7.odt test7.xml
