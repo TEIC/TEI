@@ -67,9 +67,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:variable>
 
   <xsl:template match="/">
-    <xsl:if test="$debug='true'">
+
 	<xsl:message>processing <xsl:value-of select="base-uri()"/></xsl:message>
-    </xsl:if>
+
     <xsl:variable name="pass1">
       <xsl:apply-templates/>
     </xsl:variable>

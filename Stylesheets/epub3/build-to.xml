@@ -51,7 +51,7 @@
     <attribute name="out"/>
     <sequential>
       <!-- The transformation for EPUB output. -->
-      <echo level="info">XSLT generate ePub files in {outputTempDir}</echo>
+      <echo level="info">XSLT generate ePub files in ${outputTempDir}</echo>
       <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <classpath location="${oxygenlib}/saxon9ee.jar"/>
@@ -104,6 +104,26 @@
       <zip destfile="@{out}" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
     </sequential>
   </macrodef>
+
+  <macrodef name="buildepubsimple">
+    <attribute name="in"/>
+    <attribute name="inDir"/>
+    <attribute name="out"/>
+    <sequential>
+      <echo level="info">XSLT generate ePub files in ${outputTempDir}</echo>
+      <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <classpath location="${oxygenlib}/saxon9ee.jar"/>
+        <param name="directory" expression="file:///${outputTempDir}"/>
+        <param name="inputDir" expression="@{inDir}/"/>
+      </xslt>
+      <echo level="info">ZIP: put files from ${outputTempDir} together into @{out}</echo>
+      <delete file="@{out}"/>
+      <zip destfile="@{out}" basedir="${outputTempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+      <zip destfile="@{out}" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+    </sequential>
+  </macrodef>
+
   <target name="dist" depends="setup,odd,notodd,go,cleanup"/>
   <target name="setup">
     <mkdir dir="${outputTempDir}"/>
