@@ -183,22 +183,23 @@ of this software, even if advised of the possibility of such damage.
 	    test="w:r/w:fldChar[@w:fldCharType='begin']">
 	  <xsl:for-each-group select="w:*|m:*"
 			      group-starting-with="w:r[w:fldChar/@w:fldCharType[matches(.,'begin|end')]]">
+
 	    <xsl:choose>
 	      <xsl:when test="self::w:r/w:fldChar[@w:fldCharType='begin']">
 		<xsl:variable name="rends">
-		  <!-- collect all the rends for concatenation later -->
+		  <!-- collect all the rends for concatenation later
+		  -->
+		  <xsl:variable name="instruction" select="following-sibling::w:r[w:instrText[not(normalize-space(.)='')]][1]"/>
 		  <xsl:choose>
-		    <xsl:when
-			test="contains(following-sibling::w:r[w:instrText][1],'NOTEREF')"><r>noteref</r></xsl:when>
-		    <xsl:when
-			test="contains(following-sibling::w:r[w:instrText][1],'SEQ')"><r>SEQ</r></xsl:when>
-		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'XE')"><r>index</r></xsl:when>
-		    <xsl:when test="contains(following-sibling::w:r[w:instrText][1],'REF')"><r>ref</r></xsl:when>
+		    <xsl:when test="contains($instruction,'NOTEREF')"><r>noteref</r></xsl:when>
+		    <xsl:when test="contains($instruction,'SEQ')"><r>SEQ</r></xsl:when>
+		    <xsl:when test="contains($instruction,'XE')"><r>index</r></xsl:when>
+		    <xsl:when test="contains($instruction,'REF')"><r>ref</r></xsl:when>
 		  </xsl:choose>
-		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\r')"><r>instr_r</r></xsl:if>
-		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\f')"><r>instr_f</r></xsl:if>
-		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'\n')"><r>instr_n</r></xsl:if>
-		  <xsl:if test="contains(following-sibling::w:r[w:instrText][1],'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
+		  <xsl:if test="contains($instruction,'\r')"><r>instr_r</r></xsl:if>
+		  <xsl:if test="contains($instruction,'\f')"><r>instr_f</r></xsl:if>
+		  <xsl:if test="contains($instruction,'\n')"><r>instr_n</r></xsl:if>
+		  <xsl:if test="contains($instruction,'MERGEFORMAT')"><r>mergeformat</r></xsl:if>
 		</xsl:variable>
 		<xsl:choose>
 		  <xsl:when test="$rends/tei:r='index'">
