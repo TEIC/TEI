@@ -51,7 +51,7 @@ p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
 
 schemas: schemas.stamp
 
-schemas.stamp: check.stamp p5.xml 
+schemas.stamp: check.stamp p5.xml p5odds.odd
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
