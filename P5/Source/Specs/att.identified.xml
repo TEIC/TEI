@@ -16,7 +16,23 @@ $Id$
   </desc><desc versionDate="2007-06-12" xml:lang="fr">fournit les attributs pour des éléments référençables au moyen d'un
 				attribut <att>key</att>.</desc><desc versionDate="2007-05-04" xml:lang="es">elementos a los que se puede hacer referencia a través del atributo <att>key</att>.</desc><desc versionDate="2007-01-21" xml:lang="it">elementi ai quali si può fare riferimento tramite l'attributo <att>key</att></desc><classes>
 <memberOf key="att.combinable"/>
-</classes><attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
+</classes>
+<constraintSpec ident="spec-in-module" scheme="isoschematron">
+    <constraint>
+      <rule context="tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]" xmlns="http://purl.oclc.org/dsdl/schematron">
+      <assert  test="
+        (not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or
+        (not(@module) or 
+        (not(//tei:moduleSpec) and not(//tei:moduleRef))  or
+        (//tei:moduleSpec[@ident = current()/@module]) or 
+        (tei:moduleRef[@key = current()/@module]))
+        ">
+        Specification <value-of select="@ident"/>: the value of the module attribute ("<value-of select="@module"/>") 
+should correspond to an existing module, via a moduleSpec or
+      moduleRef</assert>
+      </rule>
+    </constraint></constraintSpec>
+<attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <attDef ident="ident" usage="req">
       <equiv/>
       <desc>supplies the identifier by which this element may be referenced.</desc>
@@ -89,4 +105,6 @@ preceding version.</desc></valItem>
 not expected to do so except for correction of any errors.</desc></valItem>
 </valList>
 </attDef>
-  </attList></classSpec>
+  </attList>
+  
+</classSpec>
