@@ -10,45 +10,60 @@ $Id$
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="content"><gloss>content model</gloss><gloss versionDate="2007-12-20" xml:lang="ko">내용 모델</gloss><gloss versionDate="2007-05-02" xml:lang="zh-TW">模型宣告</gloss><gloss versionDate="2008-04-05" xml:lang="ja"/><gloss versionDate="2007-06-12" xml:lang="fr">modèle de contenu</gloss><gloss versionDate="2007-05-04" xml:lang="es">declaración del esquema</gloss><gloss versionDate="2007-01-21" xml:lang="it">dichiarazione dello schema</gloss><desc>contains the text of a declaration for the schema
-documented.</desc><desc versionDate="2007-12-20" xml:lang="ko">기록된 스키마에 대한 선언 텍스트를 포함한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">包含所記錄之模型的宣告文字。</desc><desc versionDate="2008-04-05" xml:lang="ja">
-  当該スキーマの宣言を示す．
-  </desc><desc versionDate="2007-06-12" xml:lang="fr">contient la déclaration d'un modèle de contenu
-			pour le schéma documenté.</desc><desc versionDate="2007-05-04" xml:lang="es">contiene el texto de la declaración del esquema utilizado.</desc><desc versionDate="2007-01-21" xml:lang="it">contiene il testo di una dichiarazione dello schema utilizzato</desc><classes>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="content">
+  <gloss>content model</gloss>
+  <gloss versionDate="2007-12-20" xml:lang="ko">내용 모델</gloss>
+  <gloss versionDate="2007-05-02" xml:lang="zh-TW">模型宣告</gloss>
+  <gloss versionDate="2008-04-05" xml:lang="ja"/>
+  <gloss versionDate="2007-06-12" xml:lang="fr">modèle de contenu</gloss>
+  <gloss versionDate="2007-05-04" xml:lang="es">declaración del esquema</gloss>
+  <gloss versionDate="2007-01-21" xml:lang="it">dichiarazione dello schema</gloss>
+  <desc>contains the text of a declaration for the schema documented.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">기록된 스키마에 대한 선언 텍스트를 포함한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">包含所記錄之模型的宣告文字。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja"> 当該スキーマの宣言を示す． </desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient la déclaration d'un modèle de contenu pour
+    le schéma documenté.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene el texto de la declaración del esquema
+    utilizado.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene il testo di una dichiarazione dello schema
+    utilizzato</desc>
+  <classes>
     <memberOf key="att.global"/>
-  </classes><content>
+  </classes>
+  <content>
     <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
       <group>
         <ref name="macro.schemaPattern"/>
       </group>
     </zeroOrMore>
-  </content><attList>
+  </content>
+  <attList>
     <attDef ident="autoPrefix">
-      <desc>controls whether or not pattern names generated in the
-corresponding RELAXNG schema source are automatically prefixed to
-avoid potential nameclashes. </desc>
+      <desc>controls whether or not pattern names generated in the corresponding RELAXNG schema
+        source are automatically prefixed to avoid potential nameclashes. </desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
       </datatype>
       <defaultVal>true</defaultVal>
       <valList type="closed">
         <valItem ident="true">
-          <desc>Each name referenced in e.g. a <gi>rng:ref</gi>
-	  element within a content model is automatically prefixed by
-	  the value of the <att>prefix</att> attribute on the current
-	  <gi>schemaSpec</gi>
-               </desc>
+          <desc>Each name referenced in e.g. a <gi>rng:ref</gi> element within a content model is
+            automatically prefixed by the value of the <att>prefix</att> attribute on the current
+              <gi>schemaSpec</gi>
+          </desc>
         </valItem>
         <valItem ident="false">
-          <desc>No prefixes are added: 
- any prefix required by the value of the <att>prefix</att> attribute on the current
-	  <gi>schemaSpec</gi> must therefore be supplied explicitly, as appropriate. </desc>
+          <desc>No prefixes are added: any prefix required by the value of the <att>prefix</att>
+            attribute on the current <gi>schemaSpec</gi> must therefore be supplied explicitly, as
+            appropriate. </desc>
         </valItem>
       </valList>
     </attDef>
-  </attList><exemplum xml:lang="en">
-    <p>This content model allows either a sequence of paragraphs or a
-    series of msItem elements optionally preceded by a summary: </p>
+  </attList>
+  <exemplum xml:lang="en">
+    <p>This content model allows either a sequence of paragraphs or a series of msItem elements
+      optionally preceded by a summary: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <content>
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
@@ -66,9 +81,11 @@ avoid potential nameclashes. </desc>
         </choice>
       </content>
     </egXML>
-  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
-    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Ce modèle de contenu permet d'introduire une suite de paragraphes ou une suite d'éléments
-          <gi>msItem</gi> précédés éventuellement d'un résumé : </p>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Ce modèle de contenu permet d'introduire une
+      suite de paragraphes ou une suite d'éléments <gi>msItem</gi> précédés éventuellement d'un
+      résumé : </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <content>
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
@@ -86,7 +103,8 @@ avoid potential nameclashes. </desc>
         </choice>
       </content>
     </egXML>
-  </exemplum><exemplum xml:lang="zh-TW">
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <content>
         <choice xmlns="http://relaxng.org/ns/structure/1.0">
@@ -104,28 +122,28 @@ avoid potential nameclashes. </desc>
         </choice>
       </content>
     </egXML>
-  </exemplum><remarks>
-    <p>As the example shows, content models may be expressed using
-the RELAX NG syntax directly. To avoid ambiguity  when schemas using elements from different namespaces are created, the name supplied for an
-element in a content model will be automatically prefixed by a short
-string, as specified by the <att>prefix</att> attribute on
-<gi>schemaSpec</gi>. The <att>autoPrefix</att> attribute may be used
-to reverse this behaviour. </p>
-    <p>The macro
-<code>macro.schemaPattern</code> defines which elements may be used to
-define content models. Alternatively, a content model may be
-expressed using the TEI <gi>valList</gi> element. </p>
-  </remarks><remarks xml:lang="fr">
+  </exemplum>
+  <remarks>
+    <p>As the example shows, content models may be expressed using the RELAX NG syntax directly. To
+      avoid ambiguity when schemas using elements from different namespaces are created, the name
+      supplied for an element in a content model will be automatically prefixed by a short string,
+      as specified by the <att>prefix</att> attribute on <gi>schemaSpec</gi>. The
+        <att>autoPrefix</att> attribute may be used to reverse this behaviour. </p>
+    <p>The macro <code>macro.schemaPattern</code> defines which elements may be used to define
+      content models. Alternatively, a content model may be expressed using the TEI <gi>valList</gi>
+      element. </p>
+  </remarks>
+  <remarks xml:lang="fr">
     <p>Comme l'exemple le montre, les modèles de contenu dans la P5 peuvent être exprimés en
-                utilisant directement la syntaxe RELAX NG. Plus exactement, ils sont définis avec le
-                modèle <code>macro.schemaPattern</code>. Une autre manière d'exprimer un modèle de
-                contenu est d'utiliser l'élément TEI <gi>valList</gi>. </p>
-  </remarks><remarks xml:lang="ja">
-    <p>
-    上例のように，P5の内容モデルはRELAX NGで表現されている．より厳密に
-    言えば，P5の内容モデルは<code>macro.schemaPattern</code>で定義され
-    ている．内容モデルは，要素<gi>valList</gi>を使い表現してもよい．
-    </p>
-  </remarks><listRef>
+      utilisant directement la syntaxe RELAX NG. Plus exactement, ils sont définis avec le modèle
+        <code>macro.schemaPattern</code>. Une autre manière d'exprimer un modèle de contenu est
+      d'utiliser l'élément TEI <gi>valList</gi>. </p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 上例のように，P5の内容モデルはRELAX NGで表現されている．より厳密に 言えば，P5の内容モデルは<code>macro.schemaPattern</code>で定義され
+        ている．内容モデルは，要素<gi>valList</gi>を使い表現してもよい． </p>
+  </remarks>
+  <listRef>
     <ptr target="#TDTAG"/>
-  </listRef></elementSpec>
+  </listRef>
+</elementSpec>
