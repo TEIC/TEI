@@ -5,6 +5,7 @@
 				xmlns:fo="http://www.w3.org/1999/XSL/Format"
 				xmlns:xs="http://www.w3.org/2001/XMLSchema"
 				xmlns:html="http://www.w3.org/1999/xhtml"
+				xmlns:fn="http://www.w3.org/2005/xpath-functions"
 				xmlns:rng="http://relaxng.org/ns/structure/1.0"
 				xmlns:tei="http://www.tei-c.org/ns/1.0"
 				xmlns:teix="http://www.tei-c.org/ns/Examples"
@@ -1607,9 +1608,17 @@ of this software, even if advised of the possibility of such damage.
            <xsl:variable name="NOTES">
             <xsl:choose>
 	      <xsl:when test="self::tei:floatingText">
+		<xsl:variable name="me" select="generate-id(.)"/>
 		<xsl:for-each select=".//tei:note[tei:isEndNote(.) or
 				      tei:isFootNote(.)]">
-		    <xsl:call-template name="makeaNote"/>
+		  <xsl:choose>
+		    <xsl:when test="count(ancestor::tei:floatingText)=1">
+		      <xsl:call-template name="makeaNote"/>
+		    </xsl:when>
+		    <xsl:when test="generate-id(ancestor::tei:floatingText[1])=$me">
+		      <xsl:call-template name="makeaNote"/>
+		    </xsl:when>
+		  </xsl:choose>
 		</xsl:for-each>
 	      </xsl:when>
               <xsl:when test="self::tei:TEI">
