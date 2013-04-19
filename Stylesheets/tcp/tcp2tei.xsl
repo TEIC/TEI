@@ -681,12 +681,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates />
     </dataDesc>
   </xsl:template>
-  <xsl:template match="DATERANGE">
-    <dateRange>
-      <xsl:apply-templates  select="@*"/>
-      <xsl:apply-templates />
-    </dateRange>
-  </xsl:template>
   <xsl:template match="DATESTRUCT">
     <dateStruct>
       <xsl:apply-templates  select="@*"/>
@@ -1233,18 +1227,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates />
     </tagUsage>
   </xsl:template>
-  <xsl:template match="TAGSDECL">
-    <tagsDecl>
-      <xsl:apply-templates  select="@*"/>
-      <xsl:apply-templates />
-    </tagsDecl>
-  </xsl:template>
-  <xsl:template match="TEICORPUS.2">
-    <teiCorpus.2>
-      <xsl:apply-templates  select="@*"/>
-      <xsl:apply-templates />
-    </teiCorpus.2>
-  </xsl:template>
   <xsl:template match="TEIFSD2">
     <teiFsd2>
       <xsl:apply-templates  select="@*"/>
@@ -1352,12 +1334,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates  select="@*"/>
       <xsl:apply-templates />
     </witEnd>
-  </xsl:template>
-  <xsl:template match="WITLIST">
-    <witList>
-      <xsl:apply-templates  select="@*"/>
-      <xsl:apply-templates />
-    </witList>
   </xsl:template>
   <xsl:template match="WITSTART">
     <witStart>
@@ -1799,11 +1775,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
     </listWit>
   </xsl:template>
-  <xsl:template match="TEI.2">
-    <TEI>
-      <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
-    </TEI>
-  </xsl:template>
   <xsl:template match="XREF">
     <ref>
       <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()"/>
@@ -2020,12 +1991,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>#role_</xsl:text>
       <xsl:value-of select="."/>
     </xsl:attribute>
-  </xsl:template>
-  <xsl:template match="REVISIONDESC">
-    <xsl:call-template name="Decls"/>
-    <revisionDesc>
-      <xsl:apply-templates select="@*|*|comment()|processing-instruction()"/>
-    </revisionDesc>
   </xsl:template>
   <!-- space does not have @EXTENT any more -->
   <xsl:template match="SPACE/@EXTENT">
