@@ -1,20 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0"   xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="zone" module="transcr">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             ident="zone"
+             module="transcr">
   <equiv/>
   <desc>defines any two-dimensional area within a <gi>surface</gi>
 element. </desc>
-  <desc versionDate="2007-12-20" xml:lang="ko"><gi>surface</gi> 요소 내에 포함된 직사각형 영역을 정의한다.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">
+      <gi>surface</gi> 요소 내에 포함된 직사각형 영역을 정의한다.</desc>
   <desc versionDate="2008-04-06" xml:lang="es">define el área rectangular de la <gi>superficie</gi>.</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">
 要素<gi>surface</gi>にある表面上の矩形範囲を定義する．
@@ -22,33 +21,34 @@ element. </desc>
   <desc versionDate="2008-03-30" xml:lang="fr">définit une zone rectangulaire contenue dans un élément <gi>surface</gi>.</desc>
   <desc versionDate="2007-11-06" xml:lang="it">definisce un'area rettangolare contenuta all'interno di un lemento surface</desc>
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="att.coordinated"/>
-    <memberOf key="att.typed"/> 
-    <memberOf key="model.linePart"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.coordinated"/>
+      <memberOf key="att.typed"/> 
+      <memberOf key="model.linePart"/>
   </classes>
-  <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <content>
       <rng:zeroOrMore>
         <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.graphicLike"/>
-	<rng:ref name="model.global"/>
-	<rng:ref name="surface"/>
-	<rng:ref name="model.linePart"/>
-</rng:choice></rng:zeroOrMore>
+            <rng:text/>
+            <rng:ref name="model.graphicLike"/>
+	           <rng:ref name="model.global"/>
+	           <rng:ref name="surface"/>
+	           <rng:ref name="model.linePart"/>
+         </rng:choice>
+      </rng:zeroOrMore>
   </content>
 
    <attList>
 
-<attDef ident="points">
-<desc>identifies a two dimensional area within the bounding box
+      <attDef ident="points">
+         <desc>identifies a two dimensional area within the bounding box
 specified by the other attributes by means of
 a series of pairs of numbers, each of which gives the x,y coordinates
 of a point on a line enclosing the area.</desc>
-<datatype minOccurs="3" maxOccurs="unbounded">
-<rng:ref name="data.point"/>
-</datatype>
-</attDef>
+         <datatype minOccurs="3" maxOccurs="unbounded">
+            <rng:ref name="data.point"/>
+         </datatype>
+      </attDef>
 
 
       <attDef ident="rotate">
@@ -72,55 +72,56 @@ of a point on a line enclosing the area.</desc>
 
   <exemplum xml:lang="und">
 
-<egXML
-      xmlns="http://www.tei-c.org/ns/Examples">
-  <surface ulx="14.54" uly="16.14" lrx="0" lry="0">
-  <graphic url="stone.jpg"/>
-  <zone  points="4.6,6.3 5.25,5.85 6.2,6.6
-  8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125
-  8.21722,8.3125 6.2,7.65"/>
-  </surface>
-</egXML>
-<p>This example defines a non-rectangular zone: see the illustration
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <surface ulx="14.54" uly="16.14" lrx="0" lry="0">
+            <graphic url="stone.jpg"/>
+            <zone points="4.6,6.3 5.25,5.85 6.2,6.6   8.19222,7.4125 9.89222,6.5875 10.9422,6.1375 11.4422,6.7125   8.21722,8.3125 6.2,7.65"/>
+         </surface>
+      </egXML>
+      <p>This example defines a non-rectangular zone: see the illustration
 in section <ptr target="#PH-surfzone"/>.    </p>
   </exemplum>
 
 
 
   <exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <facsimile>
-        <surface ulx="50" uly="20" lrx="400" lry="280">
-          <zone ulx="0" uly="0" lrx="500" lry="321">
-            <graphic url="graphic.png "/>
-          </zone>
-        </surface>
-      </facsimile>
-    </egXML>
-<p>This example defines a zone which has been defined as larger than its parent
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <facsimile>
+            <surface ulx="50" uly="20" lrx="400" lry="280">
+               <zone ulx="0" uly="0" lrx="500" lry="321">
+                  <graphic url="graphic.png "/>
+               </zone>
+            </surface>
+         </facsimile>
+      </egXML>
+      <p>This example defines a zone which has been defined as larger than its parent
 surface in order to match the dimensions of the  graphic it contains.   </p>
   </exemplum>
 
 
 
   <remarks>
-    <p>The position of every zone for a given surface is always
+      <p>The position of every zone for a given surface is always
 defined by reference to the coordinate system defined for that
-surface. </p><p>A graphic element contained by a zone represents the whole
+surface. </p>
+      <p>A graphic element contained by a zone represents the whole
 of the zone.</p>
-<p>A zone may be of any shape. The attribute <att>points</att> may be
+      <p>A zone may be of any shape. The attribute <att>points</att> may be
 used to define a polygonal zone, using the coordinate system defined
-by its parent surface.</p>  </remarks>
+by its parent surface.</p>  
+   </remarks>
   <remarks xml:lang="fr">
-    <p>La position de chaque zone pour une surface donnée est toujours définie par rapport au système de coordonnées défini pour cette surface. Tout élément graphique contenu par une zone se représente par toute la zone.</p>
+      <p>La position de chaque zone pour une surface donnée est toujours définie par rapport au système de coordonnées défini pour cette surface. Tout élément graphique contenu par une zone se représente par toute la zone.</p>
   </remarks>
   <remarks xml:lang="ja">
-    <p>
+      <p>
 要素<gi>zone</gi>が表す場所は全て，左表システムを参照して定義される．
 当該要素<gi>zone</gi>に含まれる要素<gi>graphic</gi>は，当該要素
 <gi>zone</gi>が表す面全体を示す．
 </p>
   </remarks>
+   <listRef>
+      <ptr target="#PHFAX"/>
+      <ptr target="#PHZLAB"/>
+   </listRef>
 </elementSpec>
-
-

@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="SPECGRP" ident="specGrp">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             module="tagdocs"
+             xml:id="SPECGRP"
+             ident="specGrp">
   <equiv/>
   <gloss>specification group</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">명시 그룹</gloss>
@@ -31,87 +29,90 @@ $Id$
   <desc versionDate="2007-05-04" xml:lang="es">contiene cualquier agrupación funcional de instrucciones para el uso al interno del módulo corriente</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene un qualsiasi raggruppamento funzionale di istruzioni per l'uso all'interno del modulo corrente</desc>
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="model.oddDecl"/>
+      <memberOf key="att.global"/>
+      <memberOf key="model.oddDecl"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <ref name="model.oddDecl"/>
-        <ref name="model.oddRef"/>
-        <ref name="model.divPart"/>
-      </choice>
-    </zeroOrMore>
+      <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+         <choice>
+            <ref name="model.oddDecl"/>
+            <ref name="model.oddRef"/>
+            <ref name="model.divPart"/>
+         </choice>
+      </zeroOrMore>
   </content>
   <exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <specGrp xml:id="xDAILC">
-        <elementSpec ident="s">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <specGrp xml:id="xDAILC">
+            <elementSpec ident="s">
           <!-- ... -->
         </elementSpec>
-        <elementSpec ident="cl">
+            <elementSpec ident="cl">
           <!-- ... -->
         </elementSpec>
-        <elementSpec ident="w">
+            <elementSpec ident="w">
           <!-- ... -->
         </elementSpec>
-        <elementSpec ident="m">
+            <elementSpec ident="m">
           <!-- ... -->
         </elementSpec>
-        <elementSpec ident="c">
+            <elementSpec ident="c">
           <!-- ... -->
         </elementSpec>
-      </specGrp>
-    </egXML>
-    <p>This specification group with identifier <ident>xDAILC</ident>
+         </specGrp>
+      </egXML>
+      <p>This specification group with identifier <ident>xDAILC</ident>
 contains specifications for the elements
 <gi>s</gi>,<gi>cl</gi>,<gi>w</gi>, etc.</p>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <specGrp xml:id="fr_xDAILC">
-        <elementSpec ident="s"> </elementSpec>
-        <elementSpec ident="cl"> </elementSpec>
-        <elementSpec ident="w"> </elementSpec>
-        <elementSpec ident="m"> </elementSpec>
-        <elementSpec ident="c"> </elementSpec>
-      </specGrp>
-    </egXML>
-    <p xmlns:teix="http://www.tei-c.org/ns/Examples">Le groupe de spécification avec l'identifiant <ident>xDAILC</ident> contient des
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <specGrp xml:id="fr_xDAILC">
+            <elementSpec ident="s"> </elementSpec>
+            <elementSpec ident="cl"> </elementSpec>
+            <elementSpec ident="w"> </elementSpec>
+            <elementSpec ident="m"> </elementSpec>
+            <elementSpec ident="c"> </elementSpec>
+         </specGrp>
+      </egXML>
+      <p xmlns:teix="http://www.tei-c.org/ns/Examples">Le groupe de spécification avec l'identifiant <ident>xDAILC</ident> contient des
         spécifications pour les éléments <gi>s</gi>,<gi>cl</gi>,<gi>w</gi>, etc.</p>
   </exemplum>
   <remarks>
-    <p>A specification group is referenced by means of its
+      <p>A specification group is referenced by means of its
     <att>xml:id</att> attribute. The declarations it contains may be
     included in a <gi>schemaSpec</gi> or <gi>moduleSpec</gi> element
     only by reference (using a <gi>specGrpRef</gi> element): it may
     not be nested within a <gi>moduleSpec</gi> element. </p>
-    <p>Different ODD processors may generate 
+      <p>Different ODD processors may generate 
   representations of the specifications contained by a
   <gi>specGrp</gi> in different concrete syntaxes. For P5 the intention
   is to generate modules using both XML and RELAX NG, and to use only
   the compressed RELAX NG syntax to represent them.</p>
   </remarks>
   <remarks xml:lang="fr">
-    <p>Un groupe de spécifications est référencé au moyen de son attribut <att>xml:id</att>.
+      <p>Un groupe de spécifications est référencé au moyen de son attribut <att>xml:id</att>.
                 Les déclarations qu'il contient ne peuvent être incluses dans un élément
                 <gi>module</gi> que par référence (en utilisant un élément <gi>specGrpRef</gi>) : il
                 ne peut être imbriqué dans un élément <gi>module</gi>.</p>
-    <p>Différents processeurs ODD peuvent générer des représentations des spécifications
+      <p>Différents processeurs ODD peuvent générer des représentations des spécifications
                 contenues par un élément<gi>specGrp</gi> dans différentes syntaxes concrètes. Pour
                 la P5 on a l'intention de générer des modules en utilisant à la fois XML et RELAX NG
                 et d'utiliser uniquement la syntaxe RELAX NG compacte pour les représenter.</p>
   </remarks>
   <remarks xml:lang="ja">
-    <p>
+      <p>
     規定のグループは，属性<att>xml:id</att>で参照される．その宣言は，
     (要素<gi>specGrpRef</gi>による)参照にのみ示される要素
     <gi>module</gi>の中にある．
     </p>
-    <p>
+      <p>
     ODDソフトが異なれば，要素<gi>specGrp</gi>中に，異なる文法による規
     定が生成される．TEI P5では，XMLとRELAX NGの両方によるモジュールを
     生成する．簡易RELAX NG文法は，表示にのみ使用する．
     </p>
   </remarks>
+   <listRef>
+      <ptr target="#TDmodules"/>
+   </listRef>
 </elementSpec>

@@ -1,21 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="listChange" module="header">
-<desc>groups a number of change descriptions associated 
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="listChange" module="header">
+   <desc>groups a number of change descriptions associated 
 with either the creation of a source text or the revision of an encoded text. </desc> 
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="att.sortable"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.sortable"/>
   </classes>
    <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:oneOrMore>
@@ -26,28 +21,28 @@ with either the creation of a source text or the revision of an encoded text. </
       </rng:oneOrMore>
       
    </content>
-<attList>
-<attDef ident="ordered">
-<desc>indicates whether the ordering of its child <gi>change</gi>
+   <attList>
+      <attDef ident="ordered">
+         <desc>indicates whether the ordering of its child <gi>change</gi>
 elements is to be considered significant or not</desc>
-<datatype>
-<ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
-</datatype>
-<defaultVal>true</defaultVal>
-</attDef>
-</attList>
+         <datatype>
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
+         </datatype>
+         <defaultVal>true</defaultVal>
+      </attDef>
+   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <revisionDesc>
-	<listChange>
-        <change when="1991-11-11" who="#LB"> deleted chapter 10 </change>
-	<change when="1991-11-02" who="#MSM"> completed first draft </change>
-	</listChange>
-      </revisionDesc>
-    </egXML>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <revisionDesc>
+	           <listChange>
+               <change when="1991-11-11" who="#LB"> deleted chapter 10 </change>
+	              <change when="1991-11-02" who="#MSM"> completed first draft </change>
+	           </listChange>
+         </revisionDesc>
+      </egXML>
   </exemplum>
-<exemplum xml:lang="en">
-  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <exemplum xml:lang="en">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <profileDesc>
             <creation>
                <listChange ordered="true">
@@ -60,10 +55,17 @@ probably at a later stage</change>
                </listChange>
             </creation>
          </profileDesc>
-</egXML></exemplum>
-<remarks><p>When this element appears within the <gi>creation</gi>
+      </egXML>
+   </exemplum>
+   <remarks>
+      <p>When this element appears within the <gi>creation</gi>
 element it documents the set of revision campaigns or stages
 identified during the evolution of the original text. When it appears within
 the <gi>revisionDesc</gi> element, it documents only changes made
-during the evolution of the encoded representation of that text.</p></remarks>
+during the evolution of the encoded representation of that text.</p>
+   </remarks>
+   <listRef>
+      <ptr target="#HD6"/>
+      <ptr target="#PH-changes"/>
+   </listRef>
 </elementSpec>

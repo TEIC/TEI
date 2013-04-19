@@ -5,13 +5,10 @@
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec ident="undo" xmlns="http://www.tei-c.org/ns/1.0" module="transcr"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             ident="undo"
+             module="transcr">
    <desc>indicates one or more marked-up interventions in a document
    which have subsequently been marked for cancellation.</desc>
    <classes>
@@ -32,23 +29,29 @@
          </datatype>
       </attDef>
    </attList>
-<exemplum xml:lang="en">
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<line>This is <del change="#s2"  rend="overstrike"> 
-<seg xml:id="undo-a">just some</seg>
+   <exemplum xml:lang="en">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <line>This is <del change="#s2" rend="overstrike"> 
+               <seg xml:id="undo-a">just some</seg>
 sample <seg xml:id="undo-b">text</seg>,
 we need</del>
-<add change="#s2">not</add>
+            <add change="#s2">not</add>
 a real example.</line> 
-<undo target="#undo-a #undo-b" rend="dotted" change="#s3"/>
-</egXML> 
+         <undo target="#undo-a #undo-b" rend="dotted" change="#s3"/>
+      </egXML> 
 
-<p>This encoding represents the following sequence of events:
-<list><item>"This is just some sample text, we need a real example" is written</item>
-<item>At stage s2, "just some sample text, we need" is deleted by
+      <p>This encoding represents the following sequence of events:
+<list>
+            <item>"This is just some sample text, we need a real example" is written</item>
+            <item>At stage s2, "just some sample text, we need" is deleted by
 overstriking, and "not" is added </item>
-<item>At stage s3, parts of the deletion are cancelled by
+            <item>At stage s3, parts of the deletion are cancelled by
 underdotting, thus reinstating the words "just some" and
 "text".</item>
-</list></p>
-</exemplum></elementSpec>
+         </list>
+      </p>
+   </exemplum>
+   <listRef>
+      <ptr target="#undo"/>
+   </listRef>
+</elementSpec>
