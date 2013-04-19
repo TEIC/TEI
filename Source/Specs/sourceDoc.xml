@@ -5,60 +5,63 @@
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec ident="sourceDoc"  module="transcr"
-  xmlns:rng="http://relaxng.org/ns/structure/1.0"
-  xmlns="http://www.tei-c.org/ns/1.0">
- <desc> contains a transcription or other representation of a single
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             xmlns="http://www.tei-c.org/ns/1.0"
+             ident="sourceDoc"
+             module="transcr">
+   <desc> contains a transcription or other representation of a single
  source document potentially forming part of a <foreign>dossier
  génétique</foreign> or collection of sources.</desc>
-<classes>    
-  <memberOf key="att.global"/>
-  <memberOf key="model.resourceLike"/>
-  <memberOf key="att.declaring"/>
-</classes>
-<content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:group>
+   <classes>    
+      <memberOf key="att.global"/>
+      <memberOf key="model.resourceLike"/>
+      <memberOf key="att.declaring"/>
+   </classes>
+   <content>
+      <rng:group>
 <!--      <rng:optional>
         <rng:ref name="facsimile"/>
       </rng:optional>-->
       <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="model.global"/>
-          <rng:ref name="model.graphicLike"/>
-          <rng:ref name="surface"/>
-          <rng:ref name="surfaceGrp"/>
-        </rng:choice>
-      </rng:oneOrMore>
-    </rng:group>
+            <rng:choice>
+               <rng:ref name="model.global"/>
+               <rng:ref name="model.graphicLike"/>
+               <rng:ref name="surface"/>
+               <rng:ref name="surfaceGrp"/>
+            </rng:choice>
+         </rng:oneOrMore>
+      </rng:group>
   </content>
   <exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <sourceDoc>
-<surfaceGrp n="leaf1">
-	<surface facs="page1.png">
-	  <zone>All the writing on  page 1</zone>
-	  </surface>
-        <surface>
-          <graphic url="page2-highRes.png"/>
-          <graphic url="page2-lowRes.png"/>
-	  <zone><line>A line of writing on page 2</line>
-	  <line>Another line of writing on page 2</line>
-	  </zone>
-        </surface>
-</surfaceGrp>      </sourceDoc>
-    </egXML>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <sourceDoc>
+            <surfaceGrp n="leaf1">
+	              <surface facs="page1.png">
+	                 <zone>All the writing on  page 1</zone>
+	              </surface>
+               <surface>
+                  <graphic url="page2-highRes.png"/>
+                  <graphic url="page2-lowRes.png"/>
+	                 <zone>
+                     <line>A line of writing on page 2</line>
+	                    <line>Another line of writing on page 2</line>
+	                 </zone>
+               </surface>
+            </surfaceGrp>      
+         </sourceDoc>
+      </egXML>
   </exemplum>
-<remarks><p>This element may be used as an alternative to
+   <remarks>
+      <p>This element may be used as an alternative to
 <gi>facsimile</gi> for TEI documents containing only page images, or
 for documents containing both images and
 transcriptions. Transcriptions may be provided within the
 <gi>surface</gi> elements making up a source document, in parallel
 with them as part of a <gi>text</gi> element, or in both places if
 the encoder wishes to distinguish these two modes of transcription.</p>
-</remarks>
+   </remarks>
+   <listRef>
+      <ptr target="#PHFAX"/>
+      <ptr target="#PHZLAB"/>
+   </listRef>
 </elementSpec>

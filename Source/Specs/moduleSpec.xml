@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MODULESPEC" ident="moduleSpec">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             module="tagdocs"
+             xml:id="MODULESPEC"
+             ident="moduleSpec">
   <gloss>module specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">모듈 명시</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación de módulo</gloss>
@@ -30,30 +28,30 @@ module, i.e. a named and externally visible group of declarations.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">documenta la estructura, el contenido y la finalidad de un único módulo, es decir, un grupo de declaraciones específicamente indicado y visible externamente.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">documenta struttura, contenuto e scopo di un unico modulo, cioè un gruppo di dichiarazioni specificamente indicato ed esternamente visibile</desc>
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="model.oddDecl"/>
-    <memberOf key="att.identified"/>
-    <memberOf key="att.typed"/>
+      <memberOf key="att.global"/>
+      <memberOf key="model.oddDecl"/>
+      <memberOf key="att.identified"/>
+      <memberOf key="att.typed"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.glossLike"/>
-      </rng:zeroOrMore>
-<rng:oneOrMore>
-  <rng:ref name="model.descLike"/>
-</rng:oneOrMore>
+      <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+         <rng:zeroOrMore>
+            <rng:ref name="model.glossLike"/>
+         </rng:zeroOrMore>
+         <rng:oneOrMore>
+            <rng:ref name="model.descLike"/>
+         </rng:oneOrMore>
 
-      <rng:zeroOrMore>
-        <rng:ref name="exemplum"/>
-      </rng:zeroOrMore>
-      <rng:optional>
-        <rng:ref name="remarks"/>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="listRef"/>
-      </rng:zeroOrMore>
-      <!--
+         <rng:zeroOrMore>
+            <rng:ref name="exemplum"/>
+         </rng:zeroOrMore>
+         <rng:optional>
+            <rng:ref name="remarks"/>
+         </rng:optional>
+         <rng:zeroOrMore>
+            <rng:ref name="listRef"/>
+         </rng:zeroOrMore>
+         <!--
     <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
 	<rng:ref name="model.oddDecl"/>
@@ -62,7 +60,7 @@ module, i.e. a named and externally visible group of declarations.</desc>
     </rng:zeroOrMore>-->
     </rng:group>
   </content>
-<!-- MDH: this element added to att.typed 2012-02-16. 
+   <!-- MDH: this element added to att.typed 2012-02-16. 
      See http://purl.org/TEI/BUGS/3486352  -->
   <!--<attList>
     <attDef ident="type" usage="opt">
@@ -80,11 +78,14 @@ module, i.e. a named and externally visible group of declarations.</desc>
     </attDef>
   </attList>-->
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <moduleSpec ident="namesdates">
-        <altIdent type="FPI">Names and Dates</altIdent>
-        <desc>Additional elements for names and dates</desc>
-      </moduleSpec>
-    </egXML>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <moduleSpec ident="namesdates">
+            <altIdent type="FPI">Names and Dates</altIdent>
+            <desc>Additional elements for names and dates</desc>
+         </moduleSpec>
+      </egXML>
   </exemplum>
+   <listRef>
+      <ptr target="#TDmodules"/>
+   </listRef>
 </elementSpec>

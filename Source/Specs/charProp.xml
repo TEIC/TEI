@@ -1,65 +1,89 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="CHARPROP" ident="charProp"><equiv/><gloss>character property</gloss><gloss versionDate="2007-12-20" xml:lang="ko">문자 특성</gloss><gloss versionDate="2007-05-02" xml:lang="zh-TW">文字性質</gloss><gloss versionDate="2008-04-05" xml:lang="ja"/><gloss versionDate="2007-06-12" xml:lang="fr">propriété d'un caractère</gloss><gloss versionDate="2007-05-04" xml:lang="es">propiedad de carácter</gloss><gloss versionDate="2007-01-21" xml:lang="it">proprietà del carattere.</gloss><desc>provides a name and value for some property of the parent character or glyph. </desc><desc versionDate="2007-12-20" xml:lang="ko">상위 문자 또는 그림문자의 특성에 대한 이름과 값을 제시한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">提供父文字或字體的性質名稱與性質值。</desc><desc versionDate="2008-04-05" xml:lang="ja"> 当該字またはグリフの特性に関する名前や値を示す． </desc><desc versionDate="2009-05-27" xml:lang="fr">fournit un nom et une valeur pour une propriété
-    quelconque d'un caractère ou d'un glyphe défini dans l'élément parent</desc><desc versionDate="2007-05-04" xml:lang="es">proporciona un nombre y un valor para alguna propiedad
-    del carácter o pictograma del padre.</desc><desc versionDate="2007-01-21" xml:lang="it">fornisce un nome e un valore per alcune proprietà di un
-    carattere o glifo parente.</desc><classes>
-    <memberOf key="att.global"/>
-    <memberOf key="att.typed"/>
-  </classes><content>
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             module="gaiji"
+             xml:id="CHARPROP"
+             ident="charProp">
+   <equiv/>
+   <gloss>character property</gloss>
+   <gloss versionDate="2007-12-20" xml:lang="ko">문자 특성</gloss>
+   <gloss versionDate="2007-05-02" xml:lang="zh-TW">文字性質</gloss>
+   <gloss versionDate="2008-04-05" xml:lang="ja"/>
+   <gloss versionDate="2007-06-12" xml:lang="fr">propriété d'un caractère</gloss>
+   <gloss versionDate="2007-05-04" xml:lang="es">propiedad de carácter</gloss>
+   <gloss versionDate="2007-01-21" xml:lang="it">proprietà del carattere.</gloss>
+   <desc>provides a name and value for some property of the parent character or glyph. </desc>
+   <desc versionDate="2007-12-20" xml:lang="ko">상위 문자 또는 그림문자의 특성에 대한 이름과 값을 제시한다.</desc>
+   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供父文字或字體的性質名稱與性質值。</desc>
+   <desc versionDate="2008-04-05" xml:lang="ja"> 当該字またはグリフの特性に関する名前や値を示す． </desc>
+   <desc versionDate="2009-05-27" xml:lang="fr">fournit un nom et une valeur pour une propriété
+    quelconque d'un caractère ou d'un glyphe défini dans l'élément parent</desc>
+   <desc versionDate="2007-05-04" xml:lang="es">proporciona un nombre y un valor para alguna propiedad
+    del carácter o pictograma del padre.</desc>
+   <desc versionDate="2007-01-21" xml:lang="it">fornisce un nome e un valore per alcune proprietà di un
+    carattere o glifo parente.</desc>
+   <classes>
+      <memberOf key="att.global"/>
+      <memberOf key="att.typed"/>
+  </classes>
+   <content>
     <!-- ((unicodeName|localName), value) -->
     <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <ref name="unicodeName"/>
-        <ref name="localName"/>
-      </choice>
-      <ref name="value"/>
-    </group>
-    <!--s:assert> some schematron rules here</s:assert-->
-  </content><exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <charProp>
-        <unicodeName>character-decomposition-mapping</unicodeName>
-        <value>circle</value>
-      </charProp>
-      <charProp>
-        <localName>daikanwa</localName>
-        <value>36</value>
-      </charProp>
-    </egXML>
-  </exemplum><exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <charProp>
-        <unicodeName>table de correspondance qui donne la composition des caractères</unicodeName>
-        <value>encadrement</value>
-      </charProp>
-      <charProp>
-        <localName>daikanwa</localName>
-        <value>36</value>
-      </charProp>
-    </egXML>
-  </exemplum><remarks>
-    <p>If the property is a Unicode Normative Property, then its <gi>unicodeName</gi> must be
+         <choice>
+            <ref name="unicodeName"/>
+            <ref name="localName"/>
+         </choice>
+         <ref name="value"/>
+      </group>
+      <!--s:assert> some schematron rules here</s:assert-->
+  </content>
+   <exemplum xml:lang="und">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <charProp>
+            <unicodeName>character-decomposition-mapping</unicodeName>
+            <value>circle</value>
+         </charProp>
+         <charProp>
+            <localName>daikanwa</localName>
+            <value>36</value>
+         </charProp>
+      </egXML>
+  </exemplum>
+   <exemplum versionDate="2008-04-06" xml:lang="fr">
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <charProp>
+            <unicodeName>table de correspondance qui donne la composition des caractères</unicodeName>
+            <value>encadrement</value>
+         </charProp>
+         <charProp>
+            <localName>daikanwa</localName>
+            <value>36</value>
+         </charProp>
+      </egXML>
+  </exemplum>
+   <remarks>
+      <p>If the property is a Unicode Normative Property, then its <gi>unicodeName</gi> must be
       supplied. Otherwise, its name must be specied by means of a <gi>localName</gi>.</p>
-    <p>At a later release, additional constraints will be defined on possible value/name
+      <p>At a later release, additional constraints will be defined on possible value/name
       combinations using Schematron rules</p>
-  </remarks><remarks xml:lang="fr">
-    <p>Si la propriété est une propriété normative Unicode (Unicode Normative Property), alors son
+  </remarks>
+   <remarks xml:lang="fr">
+      <p>Si la propriété est une propriété normative Unicode (Unicode Normative Property), alors son
         <gi>unicodeName</gi> doit être donné. Sinon son nom devra être précisé par un élément
         <gi>localName</gi>.</p>
-    <p>Dans une mise à jour ultérieure, des contraintes additionnelles seront définies sur les
+      <p>Dans une mise à jour ultérieure, des contraintes additionnelles seront définies sur les
       combinaisons possibles valeur/nom, en utilisant des règles Schematron.</p>
-  </remarks><remarks xml:lang="ja">
-    <p> 当該要素の内容がユニコード基準特性の場合，要素<gi>unicodeName</gi> が使用される．それ以外では，要素<gi>localname</gi>で名前を示す必要 がある． </p>
-    <p> 後日，Schematronに従った追加制約が定義されるかもしれない． </p>
-  </remarks></elementSpec>
+  </remarks>
+   <remarks xml:lang="ja">
+      <p> 当該要素の内容がユニコード基準特性の場合，要素<gi>unicodeName</gi> が使用される．それ以外では，要素<gi>localname</gi>で名前を示す必要 がある． </p>
+      <p> 後日，Schematronに従った追加制約が定義されるかもしれない． </p>
+  </remarks>
+   <listRef>
+      <ptr target="#D25-20"/>
+   </listRef>
+</elementSpec>

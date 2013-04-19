@@ -1,71 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" ident="precision">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             module="certainty"
+             ident="precision">
   <desc>indicates the numerical accuracy or precision  associated
   with some aspect of the text markup. </desc>
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="model.global.meta"/>
-    <memberOf key="att.scoping"/>
-    <memberOf key="model.certLike"/>
+      <memberOf key="att.global"/>
+      <memberOf key="model.global.meta"/>
+      <memberOf key="att.scoping"/>
+      <memberOf key="model.certLike"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-<rng:choice>
-      <rng:ref name="model.descLike"/>
-      <rng:ref name="model.certLike"/>
-</rng:choice>
-    </rng:zeroOrMore>
+      <rng:zeroOrMore>
+         <rng:choice>
+            <rng:ref name="model.descLike"/>
+            <rng:ref name="model.certLike"/>
+         </rng:choice>
+      </rng:zeroOrMore>
   </content>
   <attList>
-    <attDef ident="degree" usage="opt">
-      <equiv/>
-      <desc>indicates the degree of precision to be assigned as a
+      <attDef ident="degree" usage="opt">
+         <equiv/>
+         <desc>indicates the degree of precision to be assigned as a
       value between 0 (none) and 1 (optimally precise)</desc>
-      <datatype>
-        <rng:ref name="data.probability"/>
-      </datatype>
-    </attDef>
-    <attDef ident="precision">
-      <desc>characterizes the precision of the element or attribute pointed 
+         <datatype>
+            <rng:ref name="data.probability"/>
+         </datatype>
+      </attDef>
+      <attDef ident="precision">
+         <desc>characterizes the precision of the element or attribute pointed 
         to by the <gi>precision</gi> element.</desc>
-      <datatype>
-        <rng:ref name="data.certainty"/>
-      </datatype>
-    </attDef>
-    <attDef ident="stdDeviation" usage="opt">
-      <equiv/>
-      <desc>supplies a standard deviation associated with the value in
+         <datatype>
+            <rng:ref name="data.certainty"/>
+         </datatype>
+      </attDef>
+      <attDef ident="stdDeviation" usage="opt">
+         <equiv/>
+         <desc>supplies a standard deviation associated with the value in
       question</desc>
-      <datatype>
-        <rng:ref name="data.numeric"/>
-      </datatype>
-    </attDef>
+         <datatype>
+            <rng:ref name="data.numeric"/>
+         </datatype>
+      </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <date xml:id="date001" notBefore="0014" notAfter="0064">Within about 50
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <date xml:id="date001" notBefore="0014" notAfter="0064">Within about 50
         years of the death of Augustus</date>
-      <precision target="#date001" match="@notBefore" degree="0.9"/>
-      <precision target="#date001" match="@notAfter" degree="0.3"/>
-    </egXML>
+         <precision target="#date001" match="@notBefore" degree="0.9"/>
+         <precision target="#date001" match="@notAfter" degree="0.3"/>
+      </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <date notBefore="1632" notAfter="1642">Not more than ten years before the start of the Civil War
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <date notBefore="1632" notAfter="1642">Not more than ten years before the start of the Civil War
       <precision match="@notBefore" precision="low"/>
-      <precision match="@notAfter" precision="high"/>
-      </date>
-    </egXML>
+            <precision match="@notAfter" precision="high"/>
+         </date>
+      </egXML>
   </exemplum>
+   <listRef>
+      <ptr target="#CEPREC"/>
+   </listRef>
 </elementSpec>

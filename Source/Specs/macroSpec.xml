@@ -1,16 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="macroSpec">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="macroSpec">
   <gloss>macro specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">매크로 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -28,90 +23,98 @@ $Id$
   <desc versionDate="2007-05-04" xml:lang="es">documenta la función y la aplicación de un pattern (patrón).</desc>
   <desc versionDate="2007-01-21" xml:lang="it">documenta la funzione e l'applicazione di un pattern</desc>
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="model.oddDecl"/>
-    <memberOf key="att.identified"/>
+      <memberOf key="att.global"/>
+      <memberOf key="model.oddDecl"/>
+      <memberOf key="att.identified"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-<rng:choice>
-        <rng:ref name="model.glossLike"/>
-  <rng:ref name="model.descLike"/>
-</rng:choice>      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="content"/>
-	  <rng:ref name="valList"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="constraintSpec"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="exemplum"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="remarks"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="listRef"/>
-      </rng:zeroOrMore>
-    </rng:group>
+      <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+         <rng:zeroOrMore>
+            <rng:choice>
+               <rng:ref name="model.glossLike"/>
+               <rng:ref name="model.descLike"/>
+            </rng:choice>      
+         </rng:zeroOrMore>
+         <rng:zeroOrMore>
+            <rng:choice>
+               <rng:ref name="content"/>
+	              <rng:ref name="valList"/>
+            </rng:choice>
+         </rng:zeroOrMore>
+         <rng:zeroOrMore>
+            <rng:ref name="constraintSpec"/>
+         </rng:zeroOrMore>
+         <rng:zeroOrMore>
+            <rng:ref name="exemplum"/>
+         </rng:zeroOrMore>
+         <rng:zeroOrMore>
+            <rng:ref name="remarks"/>
+         </rng:zeroOrMore>
+         <rng:zeroOrMore>
+            <rng:ref name="listRef"/>
+         </rng:zeroOrMore>
+      </rng:group>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
-      <equiv/>
-      <desc>indicates which type of entity should be generated, when an ODD
+      <attDef ident="type" usage="opt">
+         <equiv/>
+         <desc>indicates which type of entity should be generated, when an ODD
 	processor is generating a module using XML DTD syntax.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">ODD 프로세서는 XML DTD 통사규칙을 사용하는 모듈을 생성할 때, 개체의 유형이 생성됨을 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出當一個ODD處理器使用SGML語法建立模組時，應建立哪種類型的實體。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
+         <desc versionDate="2007-12-20" xml:lang="ko">ODD 프로세서는 XML DTD 통사규칙을 사용하는 모듈을 생성할 때, 개체의 유형이 생성됨을 나타낸다.</desc>
+         <desc versionDate="2007-05-02" xml:lang="zh-TW">指出當一個ODD處理器使用SGML語法建立模組時，應建立哪種類型的實體。</desc>
+         <desc versionDate="2008-04-05" xml:lang="ja">
       ODDソフトウェアがXML DTDによるモジュールを生成する際，どの種類の
       エンティティが生成されるかを示す．
       </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique quel type d'entité doit être
+         <desc versionDate="2007-06-12" xml:lang="fr">indique quel type d'entité doit être
 					généré lorsqu'un processeur "ODD" génère un module TEI qui 
 					utilise la syntaxe XML DTD.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de entidad debe generarse cuando un procesador ODD genera un módulo utilizando la sintaxis SGML</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica quale tipo di entità deve essere generata quando un processore ODD genera un modulo utilizzando la sintassi SGML</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <valList type="closed">
-        <valItem ident="pe">
-          <equiv/>
-          <gloss>parameter entity</gloss>
-          <gloss versionDate="2008-04-05" xml:lang="ja"/>
-          <gloss versionDate="2007-06-12" xml:lang="fr">entité paramètre</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">entità parametro</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">entidad parámetro</gloss>
-        </valItem>
-        <valItem ident="dt">
-          <equiv/>
-          <gloss>datatype entity</gloss>
-          <gloss versionDate="2008-04-05" xml:lang="ja"/>
-          <gloss versionDate="2007-06-12" xml:lang="fr">entité type de données</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">entità tipo di dati</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">entidad tipo de datos</gloss>
-        </valItem>
-      </valList>
-    </attDef>
+         <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de entidad debe generarse cuando un procesador ODD genera un módulo utilizando la sintaxis SGML</desc>
+         <desc versionDate="2007-01-21" xml:lang="it">indica quale tipo di entità deve essere generata quando un processore ODD genera un modulo utilizzando la sintassi SGML</desc>
+         <datatype>
+            <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+         </datatype>
+         <valList type="closed">
+            <valItem ident="pe">
+               <equiv/>
+               <gloss>parameter entity</gloss>
+               <gloss versionDate="2008-04-05" xml:lang="ja"/>
+               <gloss versionDate="2007-06-12" xml:lang="fr">entité paramètre</gloss>
+               <gloss versionDate="2007-11-06" xml:lang="it">entità parametro</gloss>
+               <gloss versionDate="2007-05-04" xml:lang="es">entidad parámetro</gloss>
+            </valItem>
+            <valItem ident="dt">
+               <equiv/>
+               <gloss>datatype entity</gloss>
+               <gloss versionDate="2008-04-05" xml:lang="ja"/>
+               <gloss versionDate="2007-06-12" xml:lang="fr">entité type de données</gloss>
+               <gloss versionDate="2007-11-06" xml:lang="it">entità tipo di dati</gloss>
+               <gloss versionDate="2007-05-04" xml:lang="es">entidad tipo de datos</gloss>
+            </valItem>
+         </valList>
+      </attDef>
   </attList>
   <exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <macroSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="pe" ident="macro.phraseSeq">
-        <content>
-          <rng:zeroOrMore>
-            <rng:choice>
-              <rng:text/>
-              <rng:ref name="model.gLike"/>
-              <rng:ref name="model.phrase"/>
-              <rng:ref name="model.global"/>
-            </rng:choice>
-          </rng:zeroOrMore>
-        </content>
-      </macroSpec>
-    </egXML>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <macroSpec xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                    module="tei"
+                    type="pe"
+                    ident="macro.phraseSeq">
+            <content>
+               <rng:zeroOrMore>
+                  <rng:choice>
+                     <rng:text/>
+                     <rng:ref name="model.gLike"/>
+                     <rng:ref name="model.phrase"/>
+                     <rng:ref name="model.global"/>
+                  </rng:choice>
+               </rng:zeroOrMore>
+            </content>
+         </macroSpec>
+      </egXML>
   </exemplum>
+   <listRef>
+      <ptr target="#TDcrystals"/>
+      <ptr target="#TDENT"/>
+   </listRef>
 </elementSpec>

@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="place" module="namesdates">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             ident="place"
+             module="namesdates">
   <gloss versionDate="2008-12-09" xml:lang="fr">lieu</gloss>
   <desc>contains data about a geographic location</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">지리적 위치에 관한 데이터를 포함한다.</desc>
@@ -19,60 +17,63 @@ $Id$
   <desc versionDate="2008-12-09" xml:lang="fr">contient des informations sur un lieu géographique.</desc>
   <desc versionDate="2007-11-06" xml:lang="it">contiene informazioni relative a un luogo geografico</desc>
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="att.typed"/>
-    <memberOf key="att.editLike"/>
-    <memberOf key="att.sortable"/>
-    <memberOf key="model.placeLike"/>
+      <memberOf key="att.global"/>
+      <memberOf key="att.typed"/>
+      <memberOf key="att.editLike"/>
+      <memberOf key="att.sortable"/>
+      <memberOf key="model.placeLike"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-        <rng:ref name="model.headLike"/>
-      </rng:zeroOrMore>
-      <rng:choice>
-        <rng:group>
-          <rng:zeroOrMore>
-            <rng:ref name="model.pLike"/>
-          </rng:zeroOrMore>
-        </rng:group>
-        <rng:zeroOrMore>
-          <rng:choice>
-            <rng:ref name="model.labelLike"/>
-            <rng:ref name="model.placeStateLike"/>
-            <rng:ref name="model.placeEventLike"/>
-          </rng:choice>
-        </rng:zeroOrMore>
-      </rng:choice>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.noteLike"/>
-          <rng:ref name="model.biblLike"/>
-          <rng:ref name="idno"/>
-          <rng:ref name="linkGrp"/>
-          <rng:ref name="link"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.placeLike"/>
-          <rng:ref name="listPlace"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+      <rng:group>
+         <rng:zeroOrMore>
+            <rng:ref name="model.headLike"/>
+         </rng:zeroOrMore>
+         <rng:choice>
+            <rng:group>
+               <rng:zeroOrMore>
+                  <rng:ref name="model.pLike"/>
+               </rng:zeroOrMore>
+            </rng:group>
+            <rng:zeroOrMore>
+               <rng:choice>
+                  <rng:ref name="model.labelLike"/>
+                  <rng:ref name="model.placeStateLike"/>
+                  <rng:ref name="model.placeEventLike"/>
+               </rng:choice>
+            </rng:zeroOrMore>
+         </rng:choice>
+         <rng:zeroOrMore>
+            <rng:choice>
+               <rng:ref name="model.noteLike"/>
+               <rng:ref name="model.biblLike"/>
+               <rng:ref name="idno"/>
+               <rng:ref name="linkGrp"/>
+               <rng:ref name="link"/>
+            </rng:choice>
+         </rng:zeroOrMore>
+         <rng:zeroOrMore>
+            <rng:choice>
+               <rng:ref name="model.placeLike"/>
+               <rng:ref name="listPlace"/>
+            </rng:choice>
+         </rng:zeroOrMore>
+      </rng:group>
   </content>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place>
-        <country>Lithuania</country>
-        <country xml:lang="lt">Lietuva</country>
-        <place>
-          <settlement>Vilnius</settlement>
-        </place>
-        <place>
-          <settlement>Kaunas</settlement>
-        </place>
-      </place>
-    </egXML>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <place>
+            <country>Lithuania</country>
+            <country xml:lang="lt">Lietuva</country>
+            <place>
+               <settlement>Vilnius</settlement>
+            </place>
+            <place>
+               <settlement>Kaunas</settlement>
+            </place>
+         </place>
+      </egXML>
   </exemplum>
+   <listRef>
+      <ptr target="#NDGEOG"/>
+   </listRef>
 </elementSpec>

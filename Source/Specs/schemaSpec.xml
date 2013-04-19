@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             module="tagdocs"
+             xml:id="SCHEMASPEC"
+             ident="schemaSpec">
   <gloss>schema specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">스키마 명시</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación de esquema</gloss>
@@ -27,156 +26,156 @@ $Id$
   <desc versionDate="2007-05-04" xml:lang="es">genera un esquema TEI-conforme y la documentación relativa.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">genera uno schema TEI-conforme e la relativa documentazione</desc>
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="model.divPart"/>
-    <memberOf key="model.encodingDescPart"/>
-    <memberOf key="att.identified"/>
-    <memberOf key="att.namespaceable"/>
-    <memberOf key="att.readFrom"/>
+      <memberOf key="att.global"/>
+      <memberOf key="model.divPart"/>
+      <memberOf key="model.encodingDescPart"/>
+      <memberOf key="att.identified"/>
+      <memberOf key="att.namespaceable"/>
+      <memberOf key="att.readFrom"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-	<rng:choice>
-	  <rng:ref name="model.glossLike"/>
-	  <rng:ref name="model.descLike"/>
-	</rng:choice>
-      </rng:zeroOrMore>      
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.oddRef"/>
-          <rng:ref name="model.oddDecl"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="constraintSpec"/>
-      </rng:zeroOrMore>
-    </rng:group>
+      <rng:group>
+         <rng:zeroOrMore>
+	           <rng:choice>
+	              <rng:ref name="model.glossLike"/>
+	              <rng:ref name="model.descLike"/>
+	           </rng:choice>
+         </rng:zeroOrMore>      
+         <rng:zeroOrMore>
+            <rng:choice>
+               <rng:ref name="model.oddRef"/>
+               <rng:ref name="model.oddDecl"/>
+            </rng:choice>
+         </rng:zeroOrMore>
+         <rng:zeroOrMore>
+            <rng:ref name="constraintSpec"/>
+         </rng:zeroOrMore>
+      </rng:group>
   </content>
   <attList>
-    <attDef ident="start" usage="opt">
-      <equiv/>
-      <desc>specifies entry points to the schema, i.e. which elements
+      <attDef ident="start" usage="opt">
+         <equiv/>
+         <desc>specifies entry points to the schema, i.e. which elements
       may be used as the root of documents conforming to
       it. </desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">스키마에서 표제 항목 지점을 명시한다. 즉, 어떤 요소가 해당 문서의 뿌리로 사용되는 것이 허용되었는지를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該模型的初步條件，例如在符合該模型標準的文件中，那些元素可做為文件的根元素。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
+         <desc versionDate="2007-12-20" xml:lang="ko">스키마에서 표제 항목 지점을 명시한다. 즉, 어떤 요소가 해당 문서의 뿌리로 사용되는 것이 허용되었는지를 명시한다.</desc>
+         <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該模型的初步條件，例如在符合該模型標準的文件中，那些元素可做為文件的根元素。</desc>
+         <desc versionDate="2008-04-05" xml:lang="ja">
       当該スキーマの開始点を示す．すなわち，TEI準拠文書の根要素となる
       要素を示す．
       </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise les points d'accès au schéma,
+         <desc versionDate="2007-06-12" xml:lang="fr">précise les points d'accès au schéma,
 					i.e. quels sont les éléments permis comme racine des documents XML qui se
 					conforment à ce schéma.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica los puntos de acceso al esquema, es decir, qué elementos son los permitidos para ser usados como raíz de los documentos conforme al esquema mismo.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica i punti di accesso allo schema, cioè quali elementi sono consentiti come radice dei documenti conformi allo schema stesso</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref name="data.name"/>
-      </datatype>
-      <defaultVal>TEI</defaultVal>
-    </attDef>
-    <attDef ident="prefix" usage="opt">
-      <equiv/>
-      <desc>specifies a default prefix which will be prepended to all
+         <desc versionDate="2007-05-04" xml:lang="es">especifica los puntos de acceso al esquema, es decir, qué elementos son los permitidos para ser usados como raíz de los documentos conforme al esquema mismo.</desc>
+         <desc versionDate="2007-01-21" xml:lang="it">specifica i punti di accesso allo schema, cioè quali elementi sono consentiti come radice dei documenti conformi allo schema stesso</desc>
+         <datatype maxOccurs="unbounded">
+            <rng:ref name="data.name"/>
+         </datatype>
+         <defaultVal>TEI</defaultVal>
+      </attDef>
+      <attDef ident="prefix" usage="opt">
+         <equiv/>
+         <desc>specifies a default prefix which will be prepended to all
       patterns relating to TEI elements, unless otherwise stated.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">TEI 요소와 관련된 모든 유형에 첨가될 접두사를 명시한다. 이는 TEI로서 동일 이름의 요소를 갖는 외부 스키마가 혼용되는 것을 허용한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指明一個附加在所有和TEI元素相關的模式中的前綴。這使得外部模型可以和TEI結合，這些外部模型具有和TEI元素名稱相同的元素。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
+         <desc versionDate="2007-12-20" xml:lang="ko">TEI 요소와 관련된 모든 유형에 첨가될 접두사를 명시한다. 이는 TEI로서 동일 이름의 요소를 갖는 외부 스키마가 혼용되는 것을 허용한다.</desc>
+         <desc versionDate="2007-05-02" xml:lang="zh-TW">指明一個附加在所有和TEI元素相關的模式中的前綴。這使得外部模型可以和TEI結合，這些外部模型具有和TEI元素名稱相同的元素。</desc>
+         <desc versionDate="2008-04-05" xml:lang="ja">
       TEI要素の全パタンに対応する接頭辞を示す．これにより，TEIと同じ名
       前を持つ外部スキーマを混在させることができる．
       </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">précise un préfixe qui sera ajouté à tous
+         <desc versionDate="2007-06-12" xml:lang="fr">précise un préfixe qui sera ajouté à tous
 					les modèles de définition des éléments de la TEI. Cela autorise l'introduction
 					des schémas externes ayant des éléments de même nom que ceux de la TEI</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica un prefijo que será antepuesto a todos los patrones relativos a los elementos TEI.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica un prefisso che sarà anteposto a tutti i pattern relativi a elementi TEI; questo consente </desc>
-      <datatype>
-        <rng:choice>
-          <rng:value/>
-          <rng:ref name="data.name"/>
-        </rng:choice>
-      </datatype>
-      <remarks>
-        <p>Colons, although permitted inside the value, will cause an
+         <desc versionDate="2007-05-04" xml:lang="es">especifica un prefijo que será antepuesto a todos los patrones relativos a los elementos TEI.</desc>
+         <desc versionDate="2007-01-21" xml:lang="it">indica un prefisso che sarà anteposto a tutti i pattern relativi a elementi TEI; questo consente </desc>
+         <datatype>
+            <rng:choice>
+               <rng:value/>
+               <rng:ref name="data.name"/>
+            </rng:choice>
+         </datatype>
+         <remarks>
+            <p>Colons, although permitted inside the value, will cause an
 	invalid schema to be generated.</p>
-	<p>Use of this attribute allows an external schema which has
+	           <p>Use of this attribute allows an external schema which has
 	an element with the same local name as a TEI element to be
 	mixed in.</p>
-      </remarks>
-      <remarks xml:lang="fr">
-        <p>Les deux-points, bien qu'ils soient permis à l'intérieur de la valeur, provoqueront la
+         </remarks>
+         <remarks xml:lang="fr">
+            <p>Les deux-points, bien qu'ils soient permis à l'intérieur de la valeur, provoqueront la
                         génération d'un schéma invalide. </p>
-      </remarks>
-      <remarks xml:lang="ja">
-        <p>
+         </remarks>
+         <remarks xml:lang="ja">
+            <p>
         コロンは，値としては認められるが，スキーマ中では使用できない．
         </p>
-      </remarks>
-    </attDef>
-    <attDef ident="targetLang" usage="opt">
-      <gloss>target language</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">목적 언어</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">lengua meta</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">langue cible</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">lingua di arrivo</gloss>
-      <desc>specifies which language to use when creating
+         </remarks>
+      </attDef>
+      <attDef ident="targetLang" usage="opt">
+         <gloss>target language</gloss>
+         <gloss versionDate="2007-12-20" xml:lang="ko">목적 언어</gloss>
+         <gloss versionDate="2008-04-06" xml:lang="es">lengua meta</gloss>
+         <gloss versionDate="2008-03-30" xml:lang="fr">langue cible</gloss>
+         <gloss versionDate="2007-11-06" xml:lang="it">lingua di arrivo</gloss>
+         <desc>specifies which language to use when creating
       the objects in a schema if names for elements or attributes are available in more
       than one language</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">요소 또는 속성의 이름을 만들기 위해 여러 언어에서 사용가능한 경우, 스키마에서 대상을 만들 때 사용하는 언어를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">若元素或屬性名稱所使用的語言有一種以上，說明建立文件模型時要使用那一種語言。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
+         <desc versionDate="2007-12-20" xml:lang="ko">요소 또는 속성의 이름을 만들기 위해 여러 언어에서 사용가능한 경우, 스키마에서 대상을 만들 때 사용하는 언어를 명시한다.</desc>
+         <desc versionDate="2007-05-02" xml:lang="zh-TW">若元素或屬性名稱所使用的語言有一種以上，說明建立文件模型時要使用那一種語言。</desc>
+         <desc versionDate="2008-04-05" xml:lang="ja">
       要素や属性の名前が複数言語である場合には，スキーマ中の対象を作成
       する際に使用される言語を特定する．
       </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">lorsque des noms pour un élément ou pour
+         <desc versionDate="2007-06-12" xml:lang="fr">lorsque des noms pour un élément ou pour
 					un attribut sont disponibles en plusieurs langues, précise quelle langue
 					utiliser lors de la création d'objets dans un schéma .</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se utiliza para la creación de objetos en el esquema en el caso en que los nombres de elementos o atributos esten disponibles en otras lenguas.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione di oggetti nello schema nel caso in cui i nomi di elementi o attributi siano disponibili in più lingue</desc>
-      <datatype>
-        <rng:ref name="data.language"/>
-      </datatype>
-    </attDef>
-    <attDef ident="docLang" usage="opt">
-      <gloss>documentation language</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">문서화 언어</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">lengua de la documentación</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">langue de documentation</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">lingua della documentazione</gloss>
-      <desc>specifies which languages to
+         <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se utiliza para la creación de objetos en el esquema en el caso en que los nombres de elementos o atributos esten disponibles en otras lenguas.</desc>
+         <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione di oggetti nello schema nel caso in cui i nomi di elementi o attributi siano disponibili in più lingue</desc>
+         <datatype>
+            <rng:ref name="data.language"/>
+         </datatype>
+      </attDef>
+      <attDef ident="docLang" usage="opt">
+         <gloss>documentation language</gloss>
+         <gloss versionDate="2007-12-20" xml:lang="ko">문서화 언어</gloss>
+         <gloss versionDate="2008-04-06" xml:lang="es">lengua de la documentación</gloss>
+         <gloss versionDate="2008-03-30" xml:lang="fr">langue de documentation</gloss>
+         <gloss versionDate="2007-11-06" xml:lang="it">lingua della documentazione</gloss>
+         <desc>specifies which languages to
       use when creating documentation if  the description for an element, attribute, class or macro
       is available in more than one language</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">요소, 속성, 부류 또는 매크로에 대한 기술이 여러 언어에서 사용 가능한 경우, 문서를 만들 때 사용하는 언어를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">若元素、屬性、元素集或巨集指令描述所使用的語言有一種以上，說明建立文件時要使用那一種語言。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">
+         <desc versionDate="2007-12-20" xml:lang="ko">요소, 속성, 부류 또는 매크로에 대한 기술이 여러 언어에서 사용 가능한 경우, 문서를 만들 때 사용하는 언어를 명시한다.</desc>
+         <desc versionDate="2007-05-02" xml:lang="zh-TW">若元素、屬性、元素集或巨集指令描述所使用的語言有一種以上，說明建立文件時要使用那一種語言。</desc>
+         <desc versionDate="2008-04-05" xml:lang="ja">
       要素，属性，クラス，マクロの解説が複数言語で可能な場合，解説の言
       語を特定する．
       </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">lorsque la description pour un élément,
+         <desc versionDate="2007-06-12" xml:lang="fr">lorsque la description pour un élément,
 					un attribut, une classe ou une macro est disponible en plusieurs langues,
 					précise quelle langue utiliser lors de la création de la documentation.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se ha de utilizar para la creación de la documentación en el caso en que las descripciones de elementos, atributos, clases o macros esten disponibles en más lenguas.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione della documentazione nel caso in cui le descrizioni di elementi, attributi, classi o macro siano disponibili in più lingue</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <rng:ref name="data.language"/>
-      </datatype>
-    </attDef>
+         <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se ha de utilizar para la creación de la documentación en el caso en que las descripciones de elementos, atributos, clases o macros esten disponibles en más lenguas.</desc>
+         <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione della documentazione nel caso in cui le descrizioni di elementi, attributi, classi o macro siano disponibili in più lingue</desc>
+         <datatype minOccurs="1" maxOccurs="unbounded">
+            <rng:ref name="data.language"/>
+         </datatype>
+      </attDef>
   </attList>
   <exemplum xml:lang="und">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <schemaSpec prefix="TEI_" ident="testsvg" start="TEI svg">
-        <moduleRef source="tei:current" key="header"/>
-        <moduleRef key="core"/>
-        <moduleRef key="drama"/>
-        <moduleRef url="svg11.rng"/>
-      </schemaSpec>
-    </egXML>
-    <p>This schema combines elements from the current versions of the drama and core
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <schemaSpec prefix="TEI_" ident="testsvg" start="TEI svg">
+            <moduleRef source="tei:current" key="header"/>
+            <moduleRef key="core"/>
+            <moduleRef key="drama"/>
+            <moduleRef url="svg11.rng"/>
+         </schemaSpec>
+      </egXML>
+      <p>This schema combines elements from the current versions of the drama and core
 modules,  the current release version of the header module, and elements
 from an existing RELAXNG schema available from the URL indicated.</p>
   </exemplum>
   <remarks>
-    <p>A <gi>schemaSpec</gi> combines references to modules,
+      <p>A <gi>schemaSpec</gi> combines references to modules,
     individual element or macro declarations, and specification groups
     together to form a unified schema. The processing of the
     <gi>schemaSpec</gi> element must resolve any conflicts amongst the
@@ -185,18 +184,23 @@ from an existing RELAXNG schema available from the URL indicated.</p>
     syntaxes. </p>
   </remarks>
   <remarks xml:lang="fr">
-    <p>Un schéma combine des références aux modules ou aux groupes de spécifications avec
+      <p>Un schéma combine des références aux modules ou aux groupes de spécifications avec
                 d'autres déclarations atomiques. Le traitement d'un élément de schéma doit résoudre
                 tous les conflits entre les déclarations qu'il contient ou les références. Des
                 processeurs ODD différents peuvent générer des schémas et une documentation en
                 utilisant différentes syntaxes concrètes.</p>
   </remarks>
   <remarks xml:lang="ja">
-    <p>
+      <p>
     スキーマは，モジュールまたは規定集への参照と，他の原子的宣言とを関
     連づける．スキーマ要素は，関連する宣言間の齟齬を調整しなければなら
     ない．ODDソフトウェアは，その種類によって，異なるスキーマや文書を
     生成するかもしれない．
  </p>
   </remarks>
+   <listRef>
+      <ptr target="#HD5"/>
+      <ptr target="#TDmodules"/>
+      <ptr target="#IM-unified"/>
+   </listRef>
 </elementSpec>

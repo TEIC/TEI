@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MODULEREF" ident="moduleRef">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0"
+             module="tagdocs"
+             xml:id="MODULEREF"
+             ident="moduleRef">
   <gloss>module reference</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">모듈 참조</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">referencia de módulo</gloss>
@@ -27,134 +25,135 @@ $Id$
   <desc versionDate="2007-05-04" xml:lang="es">indica un módulo que se ha de incluir al interno de un esquema.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">indica un modulo da includere all'interno di uno schema</desc>
   <classes>
-    <memberOf key="att.global"/>
-    <memberOf key="model.oddRef"/>
-    <memberOf key="att.readFrom"/>
+      <memberOf key="att.global"/>
+      <memberOf key="model.oddRef"/>
+      <memberOf key="att.readFrom"/>
   </classes>
   <content>
-    <optional xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="content"/>
-    </optional>
+      <optional xmlns="http://relaxng.org/ns/structure/1.0">
+         <ref name="content"/>
+      </optional>
   </content>
   <constraintSpec ident="modref" scheme="isoschematron">
-    <constraint>
-      <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
-        <report test="* and @key">
+      <constraint>
+         <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
+            <report test="* and @key">
 Child elements of <name/> are only allowed when an external module is being loaded
         </report>
-      </rule>
-    </constraint>
+         </rule>
+      </constraint>
   </constraintSpec>
   <attList>
-    <attDef ident="prefix" usage="opt">
-      <desc>specifies a default prefix which will be
+      <attDef ident="prefix" usage="opt">
+         <desc>specifies a default prefix which will be
       prepended to all patterns from the imported module</desc>
-      <datatype minOccurs="0" maxOccurs="1">
-        <ref name="data.xmlName" xmlns="http://relaxng.org/ns/structure/1.0"/>
-      </datatype>
-      <constraintSpec scheme="isoschematron" ident="not-same-prefix">
-        <constraint>
-          <rule context="tei:moduleRef" xmlns="http://purl.oclc.org/dsdl/schematron">
-	    <report test="//*[ not( generate-id(.) eq generate-id(
-	    current() ) ) ]/@prefix = @prefix">The prefix attribute
+         <datatype minOccurs="0" maxOccurs="1">
+            <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xmlName"/>
+         </datatype>
+         <constraintSpec scheme="isoschematron" ident="not-same-prefix">
+            <constraint>
+               <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:moduleRef">
+	                 <report test="//*[ not( generate-id(.) eq generate-id(      current() ) ) ]/@prefix = @prefix">The prefix attribute
 	    of <name/> should not match that of any other
 	    element (it would defeat the purpose)</report>
-          </rule>
-        </constraint>
-      </constraintSpec>
-      <remarks>
-        <p>Use of this attribute avoids name collisions (and
+               </rule>
+            </constraint>
+         </constraintSpec>
+         <remarks>
+            <p>Use of this attribute avoids name collisions (and
         thus invalid schemas) when the external schema being
         mixed in with TEI uses a name the TEI or some other
         included external schema already uses for a
         pattern.</p>
-      </remarks>
-    </attDef>
-    <attList org="choice">
-      <attDef ident="include">
-        <desc>supplies a list of the elements which are to be copied from the
+         </remarks>
+      </attDef>
+      <attList org="choice">
+         <attDef ident="include">
+            <desc>supplies a list of the elements which are to be copied from the
 specified module into the schema being defined.</desc>
-        <datatype minOccurs="0" maxOccurs="unbounded">
-          <ref name="data.xmlName" xmlns="http://relaxng.org/ns/structure/1.0"/>        </datatype>
-      </attDef>
-      <attDef ident="except">
-        <desc>supplies a list of the elements which are not to be copied from the
+            <datatype minOccurs="0" maxOccurs="unbounded">
+               <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xmlName"/>        
+            </datatype>
+         </attDef>
+         <attDef ident="except">
+            <desc>supplies a list of the elements which are not to be copied from the
 specified module into the schema being defined.</desc>
-        <datatype minOccurs="0" maxOccurs="unbounded">
-          <ref name="data.xmlName" xmlns="http://relaxng.org/ns/structure/1.0"/>        </datatype>
-      </attDef>
-    </attList>
-    <attList org="choice">
-      <attDef ident="key" usage="opt">
-        <desc>the name of a TEI module</desc>
-        <desc versionDate="2008-04-06" xml:lang="es">el nombre de un módulo de TEI</desc>
-        <desc versionDate="2008-03-30" xml:lang="fr">le nom d'un module TEI.</desc>
-        <desc versionDate="2007-11-06" xml:lang="it">nome di un modulo TEI</desc>
-        <datatype>
-          <ref name="data.xmlName" xmlns="http://relaxng.org/ns/structure/1.0"/>
-        </datatype>
-      </attDef>
-      <attDef ident="url" usage="opt">
-        <gloss>uniform resource locator</gloss>
-        <gloss versionDate="2008-04-06" xml:lang="es">localizador de recurso uniforme</gloss>
-        <gloss versionDate="2008-03-30" xml:lang="fr">URL</gloss>
-        <gloss versionDate="2007-11-06" xml:lang="it">URL</gloss>
-        <desc>refers to a non-TEI module of RELAX NG code by external location </desc>
-        <desc versionDate="2008-04-06" xml:lang="es">se refiere a un módulo no-de-TEI del código de RELAX NG mediante una localización externa </desc>
-        <desc versionDate="2008-03-30" xml:lang="fr">fait référence à un module non TEI de code
+            <datatype minOccurs="0" maxOccurs="unbounded">
+               <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xmlName"/>        
+            </datatype>
+         </attDef>
+      </attList>
+      <attList org="choice">
+         <attDef ident="key" usage="opt">
+            <desc>the name of a TEI module</desc>
+            <desc versionDate="2008-04-06" xml:lang="es">el nombre de un módulo de TEI</desc>
+            <desc versionDate="2008-03-30" xml:lang="fr">le nom d'un module TEI.</desc>
+            <desc versionDate="2007-11-06" xml:lang="it">nome di un modulo TEI</desc>
+            <datatype>
+               <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xmlName"/>
+            </datatype>
+         </attDef>
+         <attDef ident="url" usage="opt">
+            <gloss>uniform resource locator</gloss>
+            <gloss versionDate="2008-04-06" xml:lang="es">localizador de recurso uniforme</gloss>
+            <gloss versionDate="2008-03-30" xml:lang="fr">URL</gloss>
+            <gloss versionDate="2007-11-06" xml:lang="it">URL</gloss>
+            <desc>refers to a non-TEI module of RELAX NG code by external location </desc>
+            <desc versionDate="2008-04-06" xml:lang="es">se refiere a un módulo no-de-TEI del código de RELAX NG mediante una localización externa </desc>
+            <desc versionDate="2008-03-30" xml:lang="fr">fait référence à un module non TEI de code
 RELAX NG par une localisation externe.</desc>
-        <desc versionDate="2007-11-06" xml:lang="it">indica la collocazione esterna di un modulo non TEI che utilizza il codice RELAX NG</desc>
-        <datatype>
-          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-        </datatype>
-      </attDef>
-    </attList>
+            <desc versionDate="2007-11-06" xml:lang="it">indica la collocazione esterna di un modulo non TEI che utilizza il codice RELAX NG</desc>
+            <datatype>
+               <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+            </datatype>
+         </attDef>
+      </attList>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <moduleRef key="linking"/>
-    </egXML>
-    <p>This includes all objects available  from  the linking module.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <moduleRef key="linking"/>
+      </egXML>
+      <p>This includes all objects available  from  the linking module.</p>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <moduleRef key="linking"/>
-    </egXML>
-    <p xmlns:teix="http://www.tei-c.org/ns/Examples"> Cela implante le module<gi> linking </gi>.</p>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <moduleRef key="linking"/>
+      </egXML>
+      <p xmlns:teix="http://www.tei-c.org/ns/Examples"> Cela implante le module<gi> linking </gi>.</p>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <moduleRef key="linking" exclude="linkGrp link"/>
-    </egXML>
-    <p>This includes all objects available  from  the linking module
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <moduleRef key="linking" exclude="linkGrp link"/>
+      </egXML>
+      <p>This includes all objects available  from  the linking module
     except for the <gi>link</gi> and <gi>linkGrp</gi> elements.</p>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <moduleRef key="linking" exclude="linkGrp link"/>
-    </egXML>
-    <p>This includes all objects available  from  the linking module
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <moduleRef key="linking" exclude="linkGrp link"/>
+      </egXML>
+      <p>This includes all objects available  from  the linking module
     except for the <gi>link</gi> and <gi>linkGrp</gi> elements.</p>
   </exemplum>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <moduleRef key="linking" include="linkGrp link"/>
-    </egXML>
-    <p>This includes only the <gi>link</gi> and <gi>linkGrp</gi>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <moduleRef key="linking" include="linkGrp link"/>
+      </egXML>
+      <p>This includes only the <gi>link</gi> and <gi>linkGrp</gi>
     elements from the linking module.</p>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <moduleRef key="linking"/>
-    </egXML>
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+         <moduleRef key="linking"/>
+      </egXML>
   </exemplum>
   <remarks>
-    <p>If neither <att>include</att> nor <att>exclude</att> is
+      <p>If neither <att>include</att> nor <att>exclude</att> is
     supplied, the effect of this element is to make all the declarations
     contained by the referenced module available to the schema being
     compiled. If both attributes are supplied, an ODD
 processor should signal an error. </p>
-    <p>A TEI module is identified by the name supplied as value for
+      <p>A TEI module is identified by the name supplied as value for
     the <att>ident</att> attribute on a <gi>moduleSpec</gi>
     element. The <att>source</att> attribute may be used to specify an
     online source from which the specification of that module may be
@@ -163,22 +162,25 @@ processor should signal an error. </p>
     </p>
   </remarks>
   <remarks xml:lang="fr">
-    <p>Les modules sont identifiés par le nom fourni comme valeur de l'attribut
+      <p>Les modules sont identifiés par le nom fourni comme valeur de l'attribut
                 <att>ident</att> dans l'élément <gi>moduleSpec</gi> où ils sont déclarés. Un URI
                 peut aussi être indiqué dans le cas d'un module non TEI et l'on s'attend à ce qu'il
                 soit écrit comme un schéma RELAX NG. </p>
-    <p>La fonction de cet élément est de rendre toutes les déclarations contenues par le module
+      <p>La fonction de cet élément est de rendre toutes les déclarations contenues par le module
                 référencé disponibles pour le schéma que l'on compile.</p>
   </remarks>
   <remarks xml:lang="ja">
-    <p>
+      <p>
     モジュールは，要素<gi>module</gi>の属性<att>ident</att>の値として
   ある名前で指定される．TEIでないモジュールの場合は，URIはで示される．
   このモジュールは，Relax NGスキーマで定義されていることが望まれる．
     </p>
-    <p>
+      <p>
     当該要素により，参照されたモジュールの全宣言が，当該スキーマにおい
   て使用可能になることでが期待される．
   </p>
   </remarks>
+   <listRef>
+      <ptr target="#TDmodules"/>
+   </listRef>
 </elementSpec>
