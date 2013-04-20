@@ -11,14 +11,12 @@ PREFIX=/usr
 SOURCETREE=Source
 DRIVER=${SOURCETREE}/guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet
-XSLP4=/usr/share/xml/teip4/stylesheet
 # If you have not installed the Debian packages, uncomment one
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 JING=jing
 TRANG=trang
-SAXON=java -Xmx752m -jar Utilities/lib/saxon9he.jar -ext:on
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 
@@ -171,15 +169,11 @@ valid: check.stamp p5.xml
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
 	ant -lib /usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} validators	
-	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo "Oh dear me. ERROR found"; grep "<ERROR>" ValidatorLog.xml;false; fi)
-	diff ValidatorLog.xml expected-results/ValidatorLog.xml
 	cat ValidatorLog.xml
+	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";false; fi)
+	diff ValidatorLog.xml expected-results/ValidatorLog.xml
 	sh graphics.sh
-	echo "<!DOCTYPE p [" > v.header
-	(cd valid; ls | perl -p -e  "s+(.*)+<\!ENTITY \1 SYSTEM \"valid/\1\">+") >> v.header
-	echo "]>" >> v.header
-	cat v.header v.body > v.xml
-	@echo BUILD: Check validity with nvdl/jing, first examples with feasible validity, and then the valid ones
+	@echo BUILD: Check validity with nvdl, first examples with feasible validity, and then the valid ones
 	./run-onvdl p5.nvdl p5.xml 
 	./run-onvdl p5valid.nvdl v.xml
 
@@ -431,4 +425,4 @@ clean:
 	rm -f teiwebsiteguidelines.zip
 	rm -rf FASC-*
 	rm -rf catalogue.* modList
-	rm -rf valid v.xml v.body v.header ValidatorLog.xml Utilities/pointerattributes.xsl graphics.xsl missfont.log 
+	rm -rf valid v.xml ValidatorLog.xml Utilities/pointerattributes.xsl graphics.xsl missfont.log v.body v.header

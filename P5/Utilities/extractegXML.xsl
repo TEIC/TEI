@@ -7,9 +7,21 @@
   <xsl:key name="F" match="teix:egXML[@valid='feasible']" use="1"/>
   <xsl:output omit-xml-declaration="yes"/>
   <xsl:template match="/">
-<TEI 
- xmlns="http://www.tei-c.org/ns/1.0">
-  <teiHeader>
+    <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE p [</xsl:text>
+    <xsl:for-each select="key('V',1)">
+      <xsl:variable name="N">
+	<xsl:call-template name="loc"/>
+      </xsl:variable>
+      <xsl:text disable-output-escaping="yes">&lt;!ENTITY </xsl:text>
+      <xsl:value-of select="$N"/>
+      <xsl:text> SYSTEM "valid/</xsl:text>
+      <xsl:value-of select="$N"/>
+      <xsl:text disable-output-escaping="yes">"&gt;&#10;</xsl:text>
+    </xsl:for-each>
+    <xsl:text disable-output-escaping="yes">]&gt;</xsl:text>
+    <TEI 
+	xmlns="http://www.tei-c.org/ns/1.0">
+      <teiHeader>
     <fileDesc>
       <titleStmt>
         <title>The title</title>

@@ -4,7 +4,7 @@
   <xsl:key name="IDENTS" match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
   <xsl:key name="EXIDS" match="teix:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
-  <xsl:output indent="yes"/>
+  <xsl:output indent="yes" omit-xml-declaration="yes"/>
     <xsl:template match="/">
       <Messages>
 	<xsl:apply-templates/>
@@ -209,6 +209,7 @@
 	  </xsl:variable>
 	  <xsl:choose>
 	    <xsl:when test="key('EXIDS',$N)"/>
+	    <xsl:when test="$N='COHQHF'"/> <!-- special exception -->
 	    <xsl:when test="id($N)">
 	      <xsl:call-template name="Remark">
 		<xsl:with-param name="value" select="$What"/>
@@ -230,6 +231,11 @@
 	    </xsl:otherwise>
 	  </xsl:choose>
 	</xsl:when>
+	<xsl:when test="starts-with($What,'example.xml')"/>
+	<xsl:when test="ends-with($What,'.png')"/>
+	<xsl:when test="ends-with($What,'.mp4')"/>
+	<xsl:when test="ends-with($What,'.wav')"/>
+	<xsl:when test="ends-with($What,'.rng')"/>
 	<xsl:when test="starts-with($What,'tei:')"/>
 	<xsl:when test="starts-with($What,'mailto:')"/>
 	<xsl:when test="starts-with($What,'http:')"/>
