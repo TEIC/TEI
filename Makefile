@@ -415,7 +415,7 @@ clean:
 	rm -f anything buildweb.xml
 	rm -f p5.sch p5.isosch p5.xml p5subset.xml p5subset.json p5subset.js
 	rm -f p5attlist.txt
-	rm -f p5odds-examples.rng p5odds-examples.rnc p5odds.rng p5odds.rnc 
+	rm -f p5odds-examples.rng p5odds-examples.rnc p5odds.rng p5odds.rnc p5odds.isosch
 	rm -f pdfbuild.log
 	rm -f stripspace.xsl.model
 	rm -f tei-*.zip 
@@ -425,4 +425,4 @@ clean:
 	rm -f teiwebsiteguidelines.zip
 	rm -rf FASC-*
 	rm -rf catalogue.* modList
-	rm -rf valid v.xml ValidatorLog.xml Utilities/pointerattributes.xsl graphics.xsl missfont.log v.body v.header
+	rm -rf valid v.xml ValidatorLog.xml Utilities/pointerattributes.xsl graphics.sh missfont.log v.body v.header
