@@ -996,12 +996,15 @@ select="$makeDecls"/></xsl:message>
           <xsl:when test="tei:valList[@type='closed']">
             <xsl:call-template name="valListChildren"/>
           </xsl:when>
+	  <xsl:when test="tei:model/*">
+            <xsl:apply-templates select="tei:model/*"/>
+	  </xsl:when>
+	  <xsl:when test="tei:model/@mixed='true'">
+            <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+	  </xsl:when>
           <xsl:when test="tei:content">
             <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
           </xsl:when>
-          <xsl:otherwise>
-            <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
-          </xsl:otherwise>
         </xsl:choose>
       </TEMPTREE>
     </xsl:variable>
@@ -1099,6 +1102,12 @@ select="$makeDecls"/></xsl:message>
               <xsl:apply-templates select="tei:content/rng:group/*"/>
             </choice>
           </xsl:when>
+	  <xsl:when test="tei:model/*">
+            <xsl:apply-templates select="tei:model/*"/>
+	  </xsl:when>
+	  <xsl:when test="tei:model/@mixed='true'">
+            <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+	  </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
           </xsl:otherwise>
@@ -1431,6 +1440,9 @@ select="$makeDecls"/></xsl:message>
             <xsl:when test="tei:datatype/rng:ref[@name='data.enumerated']">
               <data type="Name"/>
             </xsl:when>
+	    <xsl:when test="tei:model">
+              <xsl:apply-templates select="tei:model/*"/>
+	    </xsl:when>
 	    <xsl:when test="not(tei:datatype)">
               <data type="Name"/>
 	    </xsl:when>
