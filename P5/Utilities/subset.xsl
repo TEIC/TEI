@@ -5,21 +5,23 @@
   <xsl:template match="/">
     <TEI xmlns="http://www.tei-c.org/ns/1.0">
       <xsl:copy-of select="TEI/teiHeader"/>
-      <xsl:for-each select="TEI/text/front">
-	<xsl:copy>
-	  <xsl:call-template name="subdivs"/>
-	</xsl:copy>
-      </xsl:for-each>
-      <xsl:for-each select="TEI/text/body">
-	<xsl:copy>
-	  <xsl:call-template name="subdivs"/>
-	</xsl:copy>
-      </xsl:for-each>
-      <xsl:for-each select="TEI/text/back">
-	<xsl:copy>
-	  <xsl:call-template name="subdivs"/>
-	</xsl:copy>
-      </xsl:for-each>
+      <text>
+	<xsl:for-each select="TEI/text/front">
+	  <xsl:copy>
+	    <xsl:call-template name="subdivs"/>
+	  </xsl:copy>
+	</xsl:for-each>
+	<xsl:for-each select="TEI/text/body">
+	  <xsl:copy>
+	    <xsl:call-template name="subdivs"/>
+	  </xsl:copy>
+	</xsl:for-each>
+	<xsl:for-each select="TEI/text/back">
+	  <xsl:copy>
+	    <xsl:call-template name="subdivs"/>
+	  </xsl:copy>
+	</xsl:for-each>
+      </text>
     </TEI>
   </xsl:template>
 

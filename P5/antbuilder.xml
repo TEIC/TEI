@@ -42,7 +42,7 @@
   </target>
 
   <target name="outputs">
-    <echo>make modular DTDs, RELAXNG schemas, json, odd schemas</echo>
+    <echo>make modular DTDs, RELAXNG schemas, json, odd schemas,  schematron files</echo>
 
     <delete dir="DTD"/>
     <mkdir dir="DTD"/>
@@ -62,21 +62,25 @@
       <xslt processor="trax" force="yes" style="Utilities/listofattributes.xsl" in="${inputDir}/p5.xml" out="p5attlist.txt">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2dtd.xsl" in="p5subset.xml" out="stdout">
+      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2dtd.xsl" in="p5subset.xml" out="/dev/stdout">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="outputDir" expression="DTD"/>
+        <param name="outputDir" expression="${inputDir}/DTD"/>
         <param name="lang" expression="${lang}"/>
         <param name="documentationLanguage" expression="${docLang}"/>
       </xslt>
-      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5subset.xml" out="stdout">
+      <xslt processor="trax" force="yes" style="${XSL}/odds2/odd2relax.xsl" in="p5subset.xml" out="/dev/stdout">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-        <param name="outputDir" expression="Schema"/>
+        <param name="outputDir" expression="${inputDir}/Schema"/>
         <param name="lang" expression="${lang}"/>
         <param name="documentationLanguage" expression="${docLang}"/>
       </xslt>
       <xslt processor="trax" force="yes" style="${XSL}/odds2/extract-isosch.xsl" in="${inputDir}/p5.xml" out="p5.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
+      <xslt processor="trax" force="yes" style="Utilities/iso_schematron_message_xslt2.xsl" in="p5.isosch" out="p5.isosch.xsl">
+	<factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+
       <sequential>
         <echo>Do ODD processing for p5odds.odd</echo>
         <xslt force="yes" style="${XSL}/odds2/odd2odd.xsl" in="p5odds.odd" out="p5odds.compiled.xml">
@@ -122,6 +126,7 @@
   </target>
 
   <target name="pdfonce">
+    <echo>make LaTeX and PDF</echo>
     <xslt force="yes" style="${XSL}/odds2/odd2lite.xsl" in="p5.xml" out="Guidelines.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
@@ -141,6 +146,7 @@
   </target>
 
   <target name="pdfrest">
+    <echo>Run PDF a few more times</echo>
     <exec executable="makeindex" failonerror="true">
       <arg value="-s"/>
       <arg value="p5.ist"/>
@@ -155,4 +161,28 @@
       <arg value="Guidelines.tex"/>
     </exec>
   </target>
+
+  <target name="validators">
+    <echo>Run Schematron script</echo>
+    <xslt processor="trax" force="yes" style="p5.isosch.xsl" in="p5.xml" out="/dev/stdout">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <echo>Run ad hoc XSLT validators</echo>
+    <xslt processor="trax" force="yes" style="Utilities/prevalidator.xsl" in="p5.xml" out="Utilities/pointerattributes.xsl">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <xslt processor="trax" force="yes" style="Utilities/validator.xsl" in="p5.xml" out="ValidatorLog.xml">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <xslt processor="trax" force="yes" style="Utilities/listspecwithnoexample.xsl" in="p5.xml" out="/dev/stdout">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <xslt processor="trax" force="yes" style="Utilities/listgraphics.xsl" in="p5.xml" out="graphics.sh">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <xslt processor="trax" force="yes" style="Utilities/extractegXML.xsl" in="p5.xml" out="v.body">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+  </target>
+
 </project>

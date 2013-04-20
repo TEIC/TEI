@@ -90,6 +90,24 @@ teiwebsiteguidelines:
 
 pdf: Guidelines.pdf pdf-complete
 
+epub: Guidelines.epub
+
+Guidelines.epub: check.stamp p5.xml 
+	@echo BUILD: Make epub version of Guidelines
+	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
+	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
+	touch Guidelines.epub
+
+epub3: check.stamp p5.xml 
+	teitoepub3 --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
+	java -jar Utilities/epubcheck3.jar Guidelines.epub
+
+mobi:  Guidelines.mobi
+
+Guidelines.mobi: check.stamp p5.xml 
+	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=teikindle p5.xml Guidelines-kindle.epub
+	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
+	rm Guidelines-kindle.epub
 
 fonttest:
 	-xelatex --interaction=batchmode Utilities/fonttest 
@@ -137,7 +155,6 @@ chapterpdfs: check
 
 validate: schemas.stamp valid 
 
-#The following line commented out in 10605 by MDH. Restored 2012-10-26 to see if it was the source of 2.2.0 release problems.
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check.stamp p5.xml 
 #	@echo BUILD: Check validity with jing
@@ -151,36 +168,21 @@ valid: check.stamp p5.xml
 #	(i.e. < 3%) are valid codes.
 #	$(JING) -t p5odds.rng p5.xml 
 #
-	@echo BUILD: Check validity with nvdl/jing, including all examples with feasible validity
-	./run-onvdl p5.nvdl p5.xml 
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
-	@echo BUILD: Check full validity of relevant examples with nvdl
-	${SAXON} -s:p5.xml -xsl:Utilities/extractegXML.xsl > v.body
+	ant -lib /usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} validators	
+	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo "Oh dear me. ERROR found"; grep "<ERROR>" ValidatorLog.xml;false; fi)
+	diff ValidatorLog.xml expected-results/ValidatorLog.xml
+	cat ValidatorLog.xml
+	sh graphics.sh
 	echo "<!DOCTYPE p [" > v.header
 	(cd valid; ls | perl -p -e  "s+(.*)+<\!ENTITY \1 SYSTEM \"valid/\1\">+") >> v.header
 	echo "]>" >> v.header
 	cat v.header v.body > v.xml
-	./run-onvdl  p5valid.nvdl  v.xml
-	rm v.body v.header
-	@echo BUILD: Check validity with Schematron
-	${SAXON} ${SAXON_ARGS}  -s:p5.isosch -xsl:Utilities/iso_schematron_message_xslt2.xsl > p5.isosch.xsl
-	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:p5.isosch.xsl
-	@echo BUILD: Check validity with local XSLT script
-	${SAXON} ${SAXON_ARGS}  -s:p5.xml -xsl:Utilities/prevalidator.xsl > Utilities/pointerattributes.xsl
-	${SAXON} ${SAXON_ARGS}  -o:ValidatorLog.xml -s:p5.xml -xsl:Utilities/validator.xsl 
-	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -eq 1 ] ; then echo No problems ; else echo "Oh dear me. ERROR found"; grep "<ERROR>" ValidatorLog.xml;false; fi)
-	diff ValidatorLog.xml expected-results/ValidatorLog.xml
-	cat ValidatorLog.xml
-	rm ValidatorLog.xml Utilities/pointerattributes.xsl 
-	#@echo BUILD: Check validity with xmllint
-	#xmllint  --relaxng p5odds.rng --noent --xinclude --noout p5.xml
-	@echo BUILD: Check for places with no examples
-	${SAXON} -s:p5.xml -xsl:Utilities/listspecwithnoexample.xsl 
-	@echo BUILD: do graphics files exist
-	${SAXON} -s:p5.xml -xsl:Utilities/listgraphics.xsl | sh
+	@echo BUILD: Check validity with nvdl/jing, first examples with feasible validity, and then the valid ones
+	./run-onvdl p5.nvdl p5.xml 
+	./run-onvdl p5valid.nvdl v.xml
 
-#test: debversion
 test: schemas.stamp
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL})
@@ -374,24 +376,6 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-epub: Guidelines.epub
-
-Guidelines.epub: check.stamp p5.xml 
-	@echo BUILD: Make epub version of Guidelines
-	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
-	java -jar Utilities/epubcheck-1.2.jar Guidelines.epub
-	touch Guidelines.epub
-
-epub3: check.stamp p5.xml 
-	teitoepub3 --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
-	java -jar Utilities/epubcheck3.jar Guidelines.epub
-
-mobi:  Guidelines.mobi
-
-Guidelines.mobi: check.stamp p5.xml 
-	teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=teikindle p5.xml Guidelines-kindle.epub
-	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
-	rm Guidelines-kindle.epub
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
@@ -431,26 +415,20 @@ clean:
 	rm -f *.xsd 
 	rm -f Exemplars/stdout
 	rm -f Test/*.isosch 
-	rm -f Test/detest.dtd
-	rm -f Test/detest.rnc
-	rm -f Test/detest.rng
-	rm -f Test/detest.xsl
+	rm -f Test/detest.dtd Test/detest.rnc Test/detest.rng Test/detest.xsl
 	rm -f Test/stdout
-	rm -f Utilities/guidelines.xsl
 	rm -f Utilities/guidelines.xsl
 	rm -f anything buildweb.xml
 	rm -f p5.sch p5.isosch p5.xml p5subset.xml p5subset.json p5subset.js
 	rm -f p5attlist.txt
 	rm -f p5odds-examples.rng p5odds-examples.rnc p5odds.rng p5odds.rnc 
 	rm -f pdfbuild.log
-	rm -f stdout
 	rm -f stripspace.xsl.model
 	rm -f tei-*.zip 
 	rm -f tei-p5-*_*build
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*deb
 	rm -f teiwebsiteguidelines.zip
-	rm -f v.body v.header missfont.log 
 	rm -rf FASC-*
 	rm -rf catalogue.* modList
-	rm -rf valid v.xml
+	rm -rf valid v.xml v.body v.header ValidatorLog.xml Utilities/pointerattributes.xsl graphics.xsl missfont.log 
