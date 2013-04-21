@@ -996,15 +996,15 @@ select="$makeDecls"/></xsl:message>
           <xsl:when test="tei:valList[@type='closed']">
             <xsl:call-template name="valListChildren"/>
           </xsl:when>
-	  <xsl:when test="tei:model/*">
-            <xsl:apply-templates select="tei:model/*"/>
-	  </xsl:when>
-	  <xsl:when test="tei:model/@mixed='true'">
-            <text xmlns="http://relaxng.org/ns/structure/1.0"/>
-	  </xsl:when>
-          <xsl:when test="tei:content">
+          <xsl:when test="tei:content/*">
             <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
           </xsl:when>
+	  <xsl:when test="tei:content/processing-instruction()">
+            <xsl:apply-templates select="tei:content/processing-instruction()"/>
+	  </xsl:when>
+	  <xsl:when test="tei:content/@mixed='true'">
+            <text xmlns="http://relaxng.org/ns/structure/1.0"/>
+	  </xsl:when>
         </xsl:choose>
       </TEMPTREE>
     </xsl:variable>
@@ -1102,15 +1102,15 @@ select="$makeDecls"/></xsl:message>
               <xsl:apply-templates select="tei:content/rng:group/*"/>
             </choice>
           </xsl:when>
-	  <xsl:when test="tei:model/*">
-            <xsl:apply-templates select="tei:model/*"/>
+	  <xsl:when test="tei:content/*">
+            <xsl:apply-templates select="tei:content/*"/>
 	  </xsl:when>
-	  <xsl:when test="tei:model/@mixed='true'">
+	  <xsl:when test="tei:content/processing-instruction()">
+            <xsl:apply-templates select="tei:content/processing-instruction()"/>
+	  </xsl:when>
+	  <xsl:when test="tei:content/@mixed='true'">
             <text xmlns="http://relaxng.org/ns/structure/1.0"/>
 	  </xsl:when>
-          <xsl:otherwise>
-            <xsl:apply-templates select="tei:content/*|tei:content/processing-instruction()"/>
-          </xsl:otherwise>
         </xsl:choose>
       </TEMPTREE>
     </xsl:variable>
@@ -1120,7 +1120,6 @@ select="$makeDecls"/></xsl:message>
       </xsl:for-each>
     </xsl:variable>
     <xsl:choose>
-      <xsl:when test="@ident=&#34;TEI.singleBase&#34;"/>
       <xsl:when test="starts-with($entityContent,&#34;'&#34;)">
         <xsl:if test="$verbose='true'">
           <xsl:message>Omit <xsl:value-of select="$entityContent"/> for <xsl:value-of select="@ident"/>
@@ -1440,9 +1439,6 @@ select="$makeDecls"/></xsl:message>
             <xsl:when test="tei:datatype/rng:ref[@name='data.enumerated']">
               <data type="Name"/>
             </xsl:when>
-	    <xsl:when test="tei:model">
-              <xsl:apply-templates select="tei:model/*"/>
-	    </xsl:when>
 	    <xsl:when test="not(tei:datatype)">
               <data type="Name"/>
 	    </xsl:when>

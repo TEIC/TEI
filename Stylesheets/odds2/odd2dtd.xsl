@@ -575,12 +575,12 @@ of this software, even if advised of the possibility of such damage.
             <xsl:for-each select="rng:value">
                <xsl:value-of select="."/>
                <xsl:if test="following-sibling::rng:value">
-                  <xsl:text>|&#10;</xsl:text>
+                  <xsl:text>|</xsl:text>
                </xsl:if>
             </xsl:for-each>) </xsl:when>
          <xsl:otherwise>
             <xsl:call-template name="content">
-               <xsl:with-param name="sep" select="' |&#xA; '"/>
+               <xsl:with-param name="sep" select="'|'"/>
             </xsl:call-template>
          </xsl:otherwise>
       </xsl:choose>
@@ -683,14 +683,14 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:otherwise>
                      <xsl:value-of select="."/>
                      <xsl:choose>
-                        <xsl:when test="self::N[1]='|&#xA;'"/>
+                        <xsl:when test="self::N[1]='|'"/>
                         <xsl:when test="self::N[1]='('"/>
                         <xsl:when test="self::N[1]=')' and position() &lt; last()">
                            <xsl:value-of select="$sep"/>
                         </xsl:when>
                         <xsl:when test="following-sibling::N[1]='('"/>
                         <xsl:when test="following-sibling::N[1]=')'"/>
-                        <xsl:when test="following-sibling::N[1]='|&#xA;'"/>
+                        <xsl:when test="following-sibling::N[1]='|'"/>
                         <xsl:when test="position() &lt; last()">
                            <xsl:value-of select="$sep"/>
                         </xsl:when>
@@ -717,7 +717,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:when test="$contentbody=''"/>
           <xsl:when test="$contentbody='()'"/>
 	        <!-- some special cases of known evil -->
-          <xsl:when test="$contentbody='(#PCDATA |  #PCDATA)'">
+          <xsl:when test="$contentbody='(#PCDATA|#PCDATA)'">
             <xsl:text>(#PCDATA)</xsl:text>
           </xsl:when>
           <xsl:when test="contains($contentbody,'#PCDATA') and contains($contentbody,'%macro.anyXML;')">
@@ -805,7 +805,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text> (#PCDATA)</xsl:text>
          </xsl:when>
          <xsl:otherwise>
-            <xsl:text> #PCDATA</xsl:text>
+            <xsl:text>#PCDATA</xsl:text>
          </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
@@ -830,7 +830,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:text>(</xsl:text>
             <xsl:for-each select="rng:value">
                <xsl:value-of select="."/>
-               <xsl:if test="following-sibling::rng:value">|&#10;</xsl:if>
+               <xsl:if test="following-sibling::rng:value">|</xsl:if>
             </xsl:for-each>
             <xsl:if test="rng:data/@type='boolean'">
                <xsl:text> | true | false</xsl:text>
@@ -988,7 +988,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:choose>
                <xsl:when test="preceding-sibling::processing-instruction()"/>
                <xsl:otherwise>
-                  <xsl:text>|&#10;</xsl:text>
+                  <xsl:text>|</xsl:text>
                </xsl:otherwise>
             </xsl:choose>
          </xsl:if>
@@ -1459,8 +1459,7 @@ of this software, even if advised of the possibility of such damage.
                <xsl:if test="position() &lt; last()">, </xsl:if>
             </xsl:when>
             <xsl:otherwise>
-               <xsl:if test="position() &lt; last()"> |
- </xsl:if>
+               <xsl:if test="position() &lt; last()"> |</xsl:if>
             </xsl:otherwise>
          </xsl:choose>
       </xsl:for-each>
