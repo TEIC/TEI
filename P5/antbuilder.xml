@@ -33,7 +33,13 @@
     <pathelement path="${java.class.path}"/>
   </path>
 
-  <target name="all" depends="subset,outputs"/>
+  <target name="all" depends="base,subset,outputs"/>
+
+  <target name="base">
+    <xslt processor="trax" force="yes" style="Utilities/expand.xsl" in="${inputDir}/Source/Guidelines-en.xml" out="p5.xml">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+  </target>
 
   <target name="subset">
     <xslt processor="trax" force="yes" style="Utilities/subset.xsl" in="${inputDir}/p5.xml" out="p5subset.xml">
