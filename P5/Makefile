@@ -51,6 +51,8 @@ p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 	touch schemas.stamp
 
+schemas.stamp: p5.xml
+
 html-web: check.stamp p5.xml  html-web.stamp
 
 html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
