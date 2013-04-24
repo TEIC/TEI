@@ -44,14 +44,9 @@ check.stamp:
 	@command -v  ${JING} || exit 1
 	touch check.stamp
 
-p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml
-	xmllint --xinclude --noxincludenode --dropdtd --noent ${DRIVER} > p5.xml
-
-schemas: schemas.stamp
-
-schemas.stamp: check.stamp p5.xml p5odds.odd
+p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
-	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} subset outputs
+	ant -lib /usr/share/java/jing.jar:/usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 	touch schemas.stamp
