@@ -36,7 +36,7 @@ theory of liability, whether in contract, strict liability, or tort
 (including negligence or otherwise) arising in any way out of the use
 of this software, even if advised of the possibility of such damage.
 
-     $Id: processpb.xsl 10804 2012-09-10 22:16:04Z rahtz $
+     $Id$
 
 identity transform
 -->
