@@ -61,10 +61,14 @@ identity transform
 
   <xsl:template match="xi:include" mode="xinclude">
     <xsl:apply-templates
-	select="doc(resolve-uri(@href,base-uri(/)))/*"/>
+	select="doc(resolve-uri(@href,base-uri(/)))/*" mode="xinclude"/>
   </xsl:template>
 
   <!-- main pass -->
+  <xsl:template match="comment()|@*|processing-instruction()|text()">
+    <xsl:copy-of select="."/>
+  </xsl:template>
+
   <xsl:template match="*">
     <xsl:copy>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
