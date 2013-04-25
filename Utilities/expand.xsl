@@ -78,17 +78,12 @@ identity transform
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="processing-instruction()[name()='tei']">
+  <xsl:template match="processing-instruction('insert')">
     <xsl:choose>
       <xsl:when test=".='version'">
 	<xsl:value-of
 	    select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
       </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-  
-  <xsl:template match="processing-instruction('insert')">
-    <xsl:choose>
       <xsl:when test=".='totalElements'"><xsl:value-of select="count(distinct-values(//elementSpec/@ident))"/></xsl:when>
       <xsl:when test=".='tab-content-models'"><xsl:call-template name="tab-content-models"/></xsl:when>
     </xsl:choose>
