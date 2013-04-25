@@ -2,6 +2,8 @@
 <xsl:stylesheet xmlns="http://www.tei-c.org/ns/1.0"
 		xmlns:xi="http://www.w3.org/2001/XInclude"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+		xmlns:rng="http://relaxng.org/ns/structure/1.0"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
 		version="2.0">
 <!--
@@ -88,7 +90,38 @@ identity transform
   <xsl:template match="processing-instruction('insert')">
     <xsl:choose>
       <xsl:when test=".='totalElements'"><xsl:value-of select="count(distinct-values(//elementSpec/@ident))"/></xsl:when>
+      <xsl:when test=".='tab-content-models'"><xsl:call-template name="tab-content-models"/></xsl:when>
     </xsl:choose>
   </xsl:template>
-
+  
+<!-- Table of classes/content models for ST chapter -->
+  <xsl:template name="tab-content-models">
+    <table xml:id="tab-content-models" rend="display">
+      
+      <row role="label">
+        <cell>Content model</cell>
+        <cell>Number of elements using this</cell>
+        <cell>Description</cell>
+      </row>
+      
+      <xsl:variable name="rows">
+        <xsl:for-each select="//macroSpec[@type='pe']">
+          <xsl:variable name="ident" select="@ident"/>
+          
+          <row>
+            <cell><xsl:value-of select="@ident"/></cell>
+            <cell><xsl:value-of select="count(distinct-values(//elementSpec[descendant::rng:ref[@name=$ident]]/@ident))"/></cell>
+            <cell><xsl:apply-templates select="desc[1]"/></cell>
+          </row>
+          
+        </xsl:for-each>
+      </xsl:variable>
+      
+      <xsl:for-each select="$rows/row">
+        <xsl:sort select="cell[2] cast as xs:integer" order="descending"/>
+        <xsl:if test="position() lt 8"><xsl:copy-of select="."/> 
+        </xsl:if>
+      </xsl:for-each>
+    </table>
+  </xsl:template>
 </xsl:stylesheet>
