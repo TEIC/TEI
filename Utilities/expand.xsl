@@ -83,5 +83,11 @@ identity transform
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:template match="processing-instruction('insert')">
+    <xsl:choose>
+      <xsl:when test=".='totalElements'"><xsl:value-of select="count(distinct-values(//elementSpec/@ident))"/></xsl:when>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>
