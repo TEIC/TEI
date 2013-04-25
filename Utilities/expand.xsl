@@ -42,17 +42,42 @@ identity transform
 -->
   <xsl:output indent="no"/>
 
-  <xsl:template match="*">
+  <xsl:template match="/">
+    <xsl:variable name="pass0">
+      <xsl:apply-templates mode="xinclude"/>
+    </xsl:variable>
+    <xsl:apply-templates select="$pass0/*"/>
+  </xsl:template>
+
+  <xsl:template match="*" mode="xinclude">
     <xsl:copy>
-      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" mode="xinclude"/>
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="comment()|@*|processing-instruction()|text()">
+  <xsl:template match="comment()|@*|processing-instruction()|text()" mode="xinclude">
     <xsl:copy-of select="."/>
   </xsl:template>
 
-  <xsl:template match="xi:include">
-    <xsl:apply-templates select="doc(resolve-uri(@href,base-uri(/)))/*"/>
+  <xsl:template match="xi:include" mode="xinclude">
+    <xsl:apply-templates
+	select="doc(resolve-uri(@href,base-uri(/)))/*"/>
   </xsl:template>
+
+  <!-- main pass -->
+  <xsl:template match="*">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <xsl:template match="processing-instruction()[name()='tei']">
+    <xsl:choose>
+      <xsl:when test=".='version'">
+	<xsl:value-of
+	    select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
