@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rules xmlns="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"
- startMode="validate">
+ startMode="tei">
 
-  <mode name="validate">
-    
+
+  <mode name="nested">    
     <namespace ns="http://www.ascc.net/xml/schematron">
       <validate schema="../schematron.rng"/>
+      <attach useMode="allow"/>
     </namespace>
     
     <namespace ns="http://purl.oclc.org/dsdl/schematron">
       <validate schema="../iso-schematron.rng"/>
+      <attach useMode="allow"/>    
     </namespace>
     
+    <namespace ns="http://relaxng.org/ns/structure/1.0">
+      <validate schema="../relax.rng"/>
+      <attach useMode="allow"/>
+    </namespace>
     
-    <namespace ns="http://www.tei-c.org/ns/1.0">
-      <validate schema="../p5odds.rng">
-	<mode>
-
-	  <namespace ns="http://www.ascc.net/xml/schematron">
-	    <validate schema="../schematron.rng"/>
-	  </namespace>
-	  
-	  <namespace ns="http://purl.oclc.org/dsdl/schematron">
-	    <validate schema="../iso-schematron.rng"/>
-	  </namespace>
-
-	  <namespace ns="http://relaxng.org/ns/structure/1.0">
-	    <validate schema="../relax.rng"/>
-	  </namespace>
-	  
-	  <namespace ns="http://www.tei-c.org/ns/Examples">
-	    <validate schema="testlite-examples.rng">
-	      <mode>
-		<anyNamespace>
-		  <allow/>
-		</anyNamespace>
-	      </mode>
-	    </validate>
-	  </namespace>
-	</mode>
+    <namespace ns="http://www.tei-c.org/ns/Examples">
+      <validate schema="../testlite-examples.rng">
+	<option 
+	    name="http://www.thaiopensource.com/validate/feasible"/>	      
       </validate>
+      <attach useMode="allow"/>
     </namespace>
   </mode>
-  <mode name="attach">
-    <anyNamespace><attach/></anyNamespace>
+  
+  <mode name="tei">   
+    <namespace ns="http://www.tei-c.org/ns/1.0">
+      <validate schema="../p5.isosch"   useMode="nested"/>
+      <validate schema="../p5odds.rng"  useMode="nested"/>
+    </namespace>
+  </mode>
+  
+ 
+  <mode name="allow">
+    <anyNamespace>
+      <attach/>
+    </anyNamespace>
   </mode> 
+
 </rules>
