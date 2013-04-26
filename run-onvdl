@@ -20,19 +20,5 @@ else
 	unzip -q onvdl-20070517.zip oNVDL/bin/*
 	rm onvdl-20070517.zip
     fi
-    java -Xmx1200m -jar oNVDL/bin/onvdl.jar $1 $2 | grep -v ": error: unfinished element .exemplum" \
-	| grep -v "unknown element .egXML" > $$.nvdl.log
-fi
-
-grep error $$.nvdl.log
-if [ $? -eq 0 ] 
-then
-  cat $$.nvdl.log
-  rm  $$.nvdl.log
-  echo Error: nvdl run found problems
-  exit 1
-else
- cat $$.nvdl.log
- rm  $$.nvdl.log
- exit 0
+    java -Xmx1200m -jar oNVDL/bin/onvdl.jar $1 $2 
 fi
