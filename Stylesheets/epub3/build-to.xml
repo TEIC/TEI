@@ -21,6 +21,7 @@
   <!--
  Convert TEI documents into ePUB files.
  -->
+  <property name="tempPrefix">build</property>
   <!-- Path to TEI XML file. -->
   <property name="verbose" value="false"/>
   <property name="inputFile" value=""/>
@@ -39,8 +40,8 @@
   <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
   <dirname property="outputDir" file="${outputFile}"/>
   <dirname property="inputDir" file="${inputFile}"/>
-  <tempfile property="temp.file" destDir="${java.io.tmpdir}" prefix="build"/>
-  <dirname property="outputTempDir" file="${temp.file}/ant"/>
+  <tempfile property="temp.file" destDir="${java.io.tmpdir}" prefix="${tempPrefix}"/>
+  <dirname property="outputTempDir" file="${temp.file}/ant${tempPrefix}"/>
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
