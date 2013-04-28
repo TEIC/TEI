@@ -62,8 +62,6 @@
 	select="*|processing-instruction()|comment()|text()"/>  
     <xsl:choose>
       <xsl:when
-	  test="//tei:moduleRef[@key='tagdocs']"/>
-      <xsl:when
 	  test="//tei:elementRef[@key='egXML']"/>
       <xsl:when
 	  test="//tei:elementSpec[@ident='egXML']"/>
