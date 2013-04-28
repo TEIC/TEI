@@ -62,6 +62,10 @@
 	select="*|processing-instruction()|comment()|text()"/>  
     <xsl:choose>
       <xsl:when
+	  test="//tei:elementRef[@key='egXML']"/>
+      <xsl:when
+	  test="//tei:elementSpec[@ident='egXML']"/>
+      <xsl:when
 	  test="//tei:moduleRef[@key='tagdocs' and
 		contains(@exclude,'egXML')]">
 	<elementRef key="egXML"/>
@@ -75,31 +79,27 @@
 	  test="//tei:moduleRef[@key='tagdocs' and
 		not(@exclude or @include)]">
       </xsl:when>
-      <xsl:when
-	  test="//tei:elementRef[@key='egXML']"/>
-      <xsl:when
-	  test="//tei:elementSpec[@ident='egXML']"/>
       <xsl:otherwise>
 	<elementRef key="egXML"/>
       </xsl:otherwise>
     </xsl:choose>
-    <elementSpec ident="egXML" mode="change" ns="http://www.tei-c.org/ns/Examples">
-      <content>
-	<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	  <choice>
-	    <text/>
-	    <ref name="macro.anyElementDefined"/>
+    <xsl:if test="not(//tei:elementSpec[@ident='egXML'])">
+      <elementSpec ident="egXML" mode="change" ns="http://www.tei-c.org/ns/Examples">
+	<content>
+	  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <choice>
+	      <text/>
+	      <ref name="macro.anyElementDefined"/>
 	  </choice>
-	</oneOrMore>
+	  </oneOrMore>
       </content>
-    </elementSpec>
-    
+      </elementSpec>
     <macroSpec ident="macro.anyElementDefined" mode="add">
       <content>
 	<xsl:processing-instruction name="NameList"/>
       </content>
     </macroSpec>
-    
+    </xsl:if>    
   </xsl:copy>
 
   <xsl:result-document href="{@ident}.nvdl">
