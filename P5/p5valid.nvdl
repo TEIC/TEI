@@ -3,6 +3,8 @@
  startMode="tei">
 
   <mode name="nested">    
+
+    <!-- foreign namespaces used in TEI -->
     <namespace ns="http://www.ascc.net/xml/schematron">
       <validate schema="schematron.rng"/>
       <attach useMode="allow"/>
@@ -12,18 +14,16 @@
       <validate schema="iso-schematron.rng"/>
       <attach useMode="allow"/>    
     </namespace>
+
+    <namespace ns="http://www.w3.org/1998/Math/MathML">
+      <validate schema="Exemplars/mathml2.rng"/>
+      <attach useMode="allow"/>    
+    </namespace>
     
     <namespace ns="http://relaxng.org/ns/structure/1.0">
       <validate schema="relax.rng"/>
       <attach useMode="allow"/>
     </namespace>
-    
-    <namespace ns="http://www.tei-c.org/ns/Examples">
-      <validate schema="p5odds-examples.rng"/>
-      <attach useMode="allow"/>
-    </namespace>
-
-    <!-- just used in examples, allow anything -->
 
     <namespace ns="http://www.w3.org/2000/svg">
       <validate schema="Exemplars/svg.rng"/>
@@ -35,6 +35,19 @@
 	ns="http://relaxng.org/ns/compatibility/annotations/1.0">
       <allow/>
     </namespace>
+    
+    <!-- TEI examples -->
+    <namespace ns="http://www.tei-c.org/ns/Examples">
+      <validate schema="p5odds-examples.rng" useMode="nested"/>
+      <attach useMode="allow"/>
+    </namespace>
+
+    <!-- allow XInclude without checking -->
+    <namespace ns="http://www.w3.org/2001/XInclude">
+      <allow/>
+    </namespace>
+
+    <!-- just used in examples, allow anything -->
 
     <namespace ns="http://www.w3.org/1999/xhtml">
       <allow/>
@@ -59,11 +72,12 @@
     <namespace ns="http://www.gram.org">
       <allow/>
     </namespace>
+
   </mode>
   
   <mode name="tei">   
     <namespace ns="http://www.tei-c.org/ns/1.0">
-      <validate schema="p5.isosch"   useMode="nested"/>
+      <validate schema="p5odds.isosch"   useMode="nested"/>
       <validate schema="p5odds.rng"  useMode="nested"/>
     </namespace>
   </mode>
