@@ -34,19 +34,19 @@ default: schemas
 
 %.special: %.odd
 	xmllint --xinclude $*.odd > $*.odd.xinclude
-	../run-onvdl ../p5.nvdl $*.odd.xinclude
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron exampleschema  
+	../run-onvdl $*.nvdl $*.odd.xinclude
 	rm $*.odd.xinclude
 	trang $*.rng $*.rnc
 
 %.rng: %.odd 
-	../run-onvdl ../p5.nvdl $*.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron 
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron exampleschema
+	../run-onvdl $*.nvdl $*.odd
 	trang  $*.rng $*.rnc
 
 %.dtd: %.odd
-	../run-onvdl ../p5.nvdl $*.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd isoschematron validateschematron cleanup
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd exampleschema isoschematron validateschematron cleanup
+	../run-onvdl $*.nvdl $*.odd
 	trang   -o disable-abstract-elements $*.rng $*.xsd
 	trang  $*.rng $*.rnc
 	@echo Validate XSD using Jing ...
@@ -60,8 +60,8 @@ default: schemas
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
 %.doc.pdf: %.odd
-	../run-onvdl ../p5.nvdl $*.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng xsd dtd docepub docpdf dochtml cleanup
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng xsd dtd exampleschema docepub docpdf dochtml cleanup
+	../run-onvdl $*.nvdl $*.odd
 	trang  $*.rng $*.rnc
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
@@ -97,7 +97,7 @@ dist: schemas
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:
-	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html 
+	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html *.nvdl *-examples *.oddexamples
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
 	rm -f names.xml *properties
