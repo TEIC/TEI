@@ -34,15 +34,18 @@ default: schemas
 
 %.special: %.odd
 	xmllint --xinclude $*.odd > $*.odd.xinclude
+	../run-onvdl ../p5.nvdl $*.odd.xinclude
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron 
 	rm $*.odd.xinclude
 	trang $*.rng $*.rnc
 
 %.rng: %.odd 
+	../run-onvdl ../p5.nvdl $*.odd
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron 
 	trang  $*.rng $*.rnc
 
 %.dtd: %.odd
+	../run-onvdl ../p5.nvdl $*.odd
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd isoschematron validateschematron cleanup
 	trang   -o disable-abstract-elements $*.rng $*.xsd
 	trang  $*.rng $*.rnc
@@ -56,8 +59,8 @@ default: schemas
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
-
 %.doc.pdf: %.odd
+	../run-onvdl ../p5.nvdl $*.odd
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng xsd dtd docepub docpdf dochtml cleanup
 	trang  $*.rng $*.rnc
 	@echo Validate using xmllint for DTD  

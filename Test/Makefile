@@ -11,10 +11,10 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib /usr/share/java/jing.jar:/usr/share/saxo
 NORMALFILES= \
 	testbare.dtd \
 	testbasic.xsd \
+	testall.xsd \
 	testplus.special 
 
 EXTENDEDFILES = \
-	testall.examples \
 	testjustfs.xsd \
 	testp4compat.xsd \
 	testplace-kml.special 
