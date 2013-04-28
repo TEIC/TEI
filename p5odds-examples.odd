@@ -1,60 +1,54 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-   <teiHeader>
-      <fileDesc>
-         <titleStmt>
-            <title>TEI with ODD elements</title>
-            <author>Sebastian Rahtz</author>
-         </titleStmt>
-         <publicationStmt>
-            <p> </p>
-         </publicationStmt>
-         <sourceDesc>
-            <p>authored from scratch</p>
-         </sourceDesc>
-      </fileDesc>
-   </teiHeader>
-   <text xmlns:xi="http://www.w3.org/2001/XInclude">
-      <body>
-      <schemaSpec ns="http://www.tei-c.org/ns/Examples" 
-		  ident="p5odds-examples" 
-		  prefix="TEI_" 
-		  start="p egXML"  
-		  xmlns:rng="http://relaxng.org/ns/structure/1.0">
-	<moduleRef key="tei"/>
-	<moduleRef key="core"/>
-	<moduleRef key="analysis"/>
-	<moduleRef key="certainty"/>
-	<moduleRef key="corpus"/>
-	<moduleRef key="declarefs"/> 
-	<moduleRef key="dictionaries"/>
-	<moduleRef key="drama"/>
-	<moduleRef key="figures"/>
-	<moduleRef key="gaiji"/>
-	<moduleRef key="header"/>
-	<moduleRef key="iso-fs"/>
-	<moduleRef key="linking"/>
-	<moduleRef key="msdescription"/>
-	<moduleRef key="namesdates"/>
-	<moduleRef key="nets"/>
-	<moduleRef key="spoken"/>
-	<moduleRef key="tagdocs"/>
-	<moduleRef key="textcrit"/>
-	<moduleRef key="textstructure"/>
-	<moduleRef key="transcr"/>
-	<moduleRef key="verse"/>
-	<moduleRef url="Exemplars/svg11.rng">
-	  <content>
-	    <define xmlns="http://relaxng.org/ns/structure/1.0" combine="choice"
-		    name="tei_model.graphicLike">
-	      <ref name="svg"/>
-	    </define>
-	  </content>
-	</moduleRef>
-	<moduleRef url="Exemplars/mathml2-main.rng"/>
-	<moduleRef url="Exemplars/relaxng.rng"/>
-      
-            <!--
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with ODD elements</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+        <p> </p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>authored from scratch</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text xmlns:xi="http://www.w3.org/2001/XInclude">
+    <body>
+      <schemaSpec xmlns:rng="http://relaxng.org/ns/structure/1.0" ns="http://www.tei-c.org/ns/Examples" ident="p5odds-examples" prefix="TEI_" start="p egXML">
+        <moduleRef key="tei"/>
+        <moduleRef key="core"/>
+        <moduleRef key="analysis"/>
+        <moduleRef key="certainty"/>
+        <moduleRef key="corpus"/>
+        <moduleRef key="declarefs"/>
+        <moduleRef key="dictionaries"/>
+        <moduleRef key="drama"/>
+        <moduleRef key="figures"/>
+        <moduleRef key="gaiji"/>
+        <moduleRef key="header"/>
+        <moduleRef key="iso-fs"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="msdescription"/>
+        <moduleRef key="namesdates"/>
+        <moduleRef key="nets"/>
+        <moduleRef key="spoken"/>
+        <moduleRef key="tagdocs"/>
+        <moduleRef key="textcrit"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="transcr"/>
+        <moduleRef key="verse"/>
+        <moduleRef url="Exemplars/svg11.rng">
+          <content>
+            <define xmlns="http://relaxng.org/ns/structure/1.0" combine="choice" name="tei_model.graphicLike">
+              <ref name="svg"/>
+            </define>
+          </content>
+        </moduleRef>
+        <moduleRef url="Exemplars/mathml2-main.rng"/>
+        <moduleRef url="Exemplars/relaxng.rng"/>
+        <!--
       <elementSpec ident="egXML" mode="change" module="tagdocs"
 		   ns="http://www.tei-c.org/ns/Examples">
 	<content>
@@ -67,167 +61,194 @@
 	</content>
       </elementSpec>
 -->
-      
-	<classSpec module="tei" mode="change" ident="att.global" type="atts">
-	  <attList>
-	    <attDef ident="topic" mode="add"
-		    ns="http://www.example.org/ns/nonTEI">
-	      <datatype>
-		<rng:data type="string"/>
-	      </datatype>
-	    </attDef>
-	  </attList>
-	</classSpec>
+        <classSpec module="tei" mode="change" ident="att.global" type="atts">
+          <attList>
+            <attDef ident="topic" mode="add" ns="http://www.example.org/ns/nonTEI">
+              <datatype>
+                <rng:data type="string"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </classSpec>
+        <macroSpec ident="macro.anyThing" mode="add">
+          <content>
+            <?NameList?>
+          </content>
+        </macroSpec>
+        <macroSpec ident="macro.schemaPattern" mode="change" module="tagdocs">
+          <content>
+            <group xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <oneOrMore>
+                  <choice>
+                    <ref name="pattern"/>
+                    <ref name="define"/>
+                  </choice>
+                </oneOrMore>
+              </choice>
+            </group>
+          </content>
+        </macroSpec>
+        <macroSpec ident="anySchematron" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://www.ascc.net/xml/schematron"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anySchematron"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
 
-      <macroSpec ident="macro.anyThing" mode="add">
-	              <content>
-	  <?NameList?>
-	</content>
-            </macroSpec>
-      
-            <macroSpec ident="macro.schemaPattern" mode="change" module="tagdocs">
-	              <content>
-	                 <group xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <choice>
-	                       <text/>
-	                       <oneOrMore>
-		                         <choice>
-		                            <ref name="pattern"/>
-		                            <ref name="define"/>
-		                         </choice>
-	                       </oneOrMore>
-	                    </choice>
-	                 </group>
-	              </content>
-            </macroSpec>
+        <macroSpec ident="anyRelax" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://relaxng.org/ns/structure/1.0"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anyRelax"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
 
-            <macroSpec ident="anySchematron" mode="add">
-	              <content>
-	                 <element xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <nsName ns="http://www.ascc.net/xml/schematron"/>
-	                    <zeroOrMore>
-	                       <choice>
-		                         <attribute>
-		                            <anyName/>
-		                         </attribute>
-		                         <ref name="anySchematron"/>
-		                         <text/>
-	                       </choice>
-	                    </zeroOrMore>
-	                 </element>
-	              </content>
-            </macroSpec>
+        <macroSpec ident="anyMathML" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://www.w3.org/1998/Math/MathML"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anyMathML"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
 
-            <macroSpec ident="anyISOSchematron" mode="add">
-	              <content>
-	                 <element xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <nsName ns="http://purl.oclc.org/dsdl/schematron"/>
-	                    <zeroOrMore>
-	                       <choice>
-		                         <attribute>
-		                            <anyName/>
-		                         </attribute>
-		                         <ref name="anyISOSchematron"/>
-		                         <text/>
-	                       </choice>
-	                    </zeroOrMore>
-	                 </element>
-	              </content>
-            </macroSpec>
-
-            <elementSpec ident="constraint" mode="change" module="tagdocs">
-	              <content>
-	                 <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <choice>
-	                       <text/>
-	                       <ref name="anySchematron"/>
-	                       <ref name="anyISOSchematron"/>
-	                    </choice>
-	                 </zeroOrMore>
-	              </content>
-            </elementSpec>
-
-      
-      
-            <!-- in examples we'd like to be able to show use of <xi:include>; of course, -->
-      <!-- we can't put in an <xi:include> element, or it will be processed! Thus, -->
-      <!-- here we use a bogus namespace -->
-      <elementSpec ident="include" ns="http://www.example.org/cannot/really/use/XInclude"
-                         mode="add">
-	<!-- the content and attributes were devised based on my reading of the spec at
+        <macroSpec ident="anyISOSchematron" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://purl.oclc.org/dsdl/schematron"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anyISOSchematron"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
+        <elementSpec ident="constraint" mode="change" module="tagdocs">
+          <content>
+            <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <ref name="anySchematron"/>
+                <ref name="anyISOSchematron"/>
+              </choice>
+            </zeroOrMore>
+          </content>
+        </elementSpec>
+        <!-- in examples we'd like to be able to show use of <xi:include>; of course, -->
+        <!-- we can't put in an <xi:include> element, or it will be processed! Thus, -->
+        <!-- here we use a bogus namespace -->
+        <elementSpec ident="include" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
+          <!-- the content and attributes were devised based on my reading of the spec at
 	     http://www.w3.org/TR/2006/REC-xinclude-20061115/, also having looked at
 	     Norm Walsh's implimentation for DocBook. -sb -->
-	<content>
-	                 <optional xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <ref name="fallback"/>
-	                 </optional>
-	              </content>
-	              <attList>
-	                 <attDef ident="href">
-	                    <datatype>
-	                       <data xmlns="http://relaxng.org/ns/structure/1.0" type="anyURI">
-		                         <param name="pattern">[^#]+</param>
-	                       </data>
-	                    </datatype>
-	                 </attDef>
-	                 <attDef ident="parse">
-	                    <defaultVal>xml</defaultVal>
-	                    <valList>
-	                       <valItem ident="xml"/>
-	                       <valItem ident="text"/>
-	                    </valList>
-	                 </attDef>
-	                 <attDef ident="xpointer">
-	                    <datatype>
-	                       <data xmlns="http://relaxng.org/ns/structure/1.0" type="string"/>
-	                    </datatype>
-	                 </attDef>
-	                 <attDef ident="encoding">
-	                    <datatype>
-	                       <data xmlns="http://relaxng.org/ns/structure/1.0" type="string"/>
-	                    </datatype>
-	                 </attDef>
-	                 <attDef ident="accept">
-	                    <datatype>
-	                       <data xmlns="http://relaxng.org/ns/structure/1.0" type="string"/>
-	                    </datatype>
-	                 </attDef>
-	                 <attDef ident="accept-language">
-	                    <datatype>
-	                       <data xmlns="http://relaxng.org/ns/structure/1.0" type="string"/>
-	                    </datatype>
-	                 </attDef>
-	              </attList>
-            </elementSpec>
-            <!-- of course <xi:include> refers to <xi:fallback>, so we need to declare-->
-      <!-- that, too, just in case. -->
-      <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude"
-                         mode="add">
-	              <content>
-	                 <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-	                    <choice>
-	                       <text/>
-	                       <?NameList?>
-	    </choice>
-	                 </oneOrMore>
-               </content>
-            </elementSpec>
-    
+          <content>
+            <optional xmlns="http://relaxng.org/ns/structure/1.0">
+              <ref name="fallback"/>
+            </optional>
+          </content>
+          <attList>
+            <attDef ident="href">
+              <datatype>
+                <data xmlns="http://relaxng.org/ns/structure/1.0" type="anyURI">
+                  <param name="pattern">[^#]+</param>
+                </data>
+              </datatype>
+            </attDef>
+            <attDef ident="parse">
+              <defaultVal>xml</defaultVal>
+              <valList>
+                <valItem ident="xml"/>
+                <valItem ident="text"/>
+              </valList>
+            </attDef>
+            <attDef ident="xpointer">
+              <datatype>
+                <data xmlns="http://relaxng.org/ns/structure/1.0" type="string"/>
+              </datatype>
+            </attDef>
+            <attDef ident="encoding">
+              <datatype>
+                <data xmlns="http://relaxng.org/ns/structure/1.0" type="string"/>
+              </datatype>
+            </attDef>
+            <attDef ident="accept">
+              <datatype>
+                <data xmlns="http://relaxng.org/ns/structure/1.0" type="string"/>
+              </datatype>
+            </attDef>
+            <attDef ident="accept-language">
+              <datatype>
+                <data xmlns="http://relaxng.org/ns/structure/1.0" type="string"/>
+              </datatype>
+            </attDef>
+          </attList>
+        </elementSpec>
+        <!-- of course <xi:include> refers to <xi:fallback>, so we need to declare-->
+        <!-- that, too, just in case. -->
+        <elementSpec ident="fallback" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
+          <content>
+            <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <?NameList?>
+              </choice>
+            </oneOrMore>
+          </content>
+        </elementSpec>
 
-            <elementSpec ident="egXML" mode="change" ns="http://www.tei-c.org/ns/Examples">
-               <content>
-                  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-                     <choice>
-                        <text/>
-                        <ref name="macro.anyThingDefined"/>
-                     </choice>
-                  </oneOrMore>
-               </content>
-            </elementSpec>
-            <macroSpec ident="macro.anyThingDefined" mode="add">
-               <content><?NameList?></content>
-            </macroSpec>
-         </schemaSpec>
-      </body>
-   </text>
+        <elementSpec ident="egXML" mode="change" ns="http://www.tei-c.org/ns/Examples">
+          <content>
+            <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <ref name="macro.anyThingDefined"/>
+		<ref name="anyRelax"/>
+		<ref name="anyMathML"/>
+              </choice>
+            </oneOrMore>
+          </content>
+        </elementSpec>
+
+        <macroSpec ident="macro.anyThingDefined" mode="add">
+          <content>
+            <?NameList?>
+          </content>
+        </macroSpec>
+      </schemaSpec>
+    </body>
+  </text>
 </TEI>
