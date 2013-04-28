@@ -171,10 +171,14 @@
 
         <elementSpec module="figures" ident="formula" mode="change">
           <content>
-	    <rng:choice>
-	      <rng:text/>
-	      <rng:ref name="mathml.math"/>
-	    </rng:choice>
+	    <rng:oneOrMore>
+	      <rng:choice>
+		<rng:text/>
+		<rng:ref name="mathml.math"/>
+		<rng:ref name="model.graphicLike"/>
+		<rng:ref name="model.hiLike"/>
+	      </rng:choice>
+	    </rng:oneOrMore>
           </content>
         </elementSpec>
 
@@ -246,6 +250,7 @@
               <choice>
                 <text/>
                 <ref name="macro.anyThingDefined"/>
+		<ref name="pattern"/><!-- relax -->
               </choice>
             </oneOrMore>
           </content>

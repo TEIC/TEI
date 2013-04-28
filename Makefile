@@ -153,17 +153,6 @@ validate: schemas.stamp valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check.stamp p5.xml 
-#	@echo BUILD: Check validity with jing
-#	@echo ${jing_version}
-#	We have discovered that jing reports 3-letter language codes
-#	from ISO 639-2 as illegal values of xml:lang= even though
-#	they are perfectly valid per RFC 3066. We have submitted a
-#	bug report, and for now just throw away those error messages
-#	with grep -v. Note that we discard *all* such messages, even
-#	though fewer than 500 of the 17,576 possible combinations
-#	(i.e. < 3%) are valid codes.
-#	$(JING) -t p5odds.rng p5.xml 
-#
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
 	ant -lib /usr/share/saxon/saxon9he.jar -f antbuilder.xml -DXSL=${XSL} validators	
@@ -172,8 +161,8 @@ valid: check.stamp p5.xml
 	diff ValidatorLog.xml expected-results/ValidatorLog.xml
 	sh graphics.sh
 	@echo BUILD: Check validity with nvdl, first examples with feasible validity, and then the valid ones
-	echo ./run-onvdl p5.nvdl p5.xml 
-	echo ./run-onvdl p5valid.nvdl v.xml
+	./run-onvdl p5.nvdl p5.xml 
+	./run-onvdl p5valid.nvdl v.xml
 
 test: schemas.stamp
 	@echo BUILD Run test cases for P5
