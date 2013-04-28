@@ -62,6 +62,20 @@
 	select="*|processing-instruction()|comment()|text()"/>  
     <xsl:choose>
       <xsl:when
+	  test="//tei:moduleRef[@key='tagdocs' and
+		contains(@exclude,'egXML')]">
+	<elementRef key="egXML"/>
+      </xsl:when>
+      <xsl:when
+	  test="//tei:moduleRef[@key='tagdocs' and @include
+		and not(contains(@include,'egXML'))]">
+	<elementRef key="egXML"/>
+      </xsl:when>
+      <xsl:when
+	  test="//tei:moduleRef[@key='tagdocs' and
+		not(@exclude or @include)]">
+      </xsl:when>
+      <xsl:when
 	  test="//tei:elementRef[@key='egXML']"/>
       <xsl:when
 	  test="//tei:elementSpec[@ident='egXML']"/>
