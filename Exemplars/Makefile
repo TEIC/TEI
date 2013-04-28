@@ -60,7 +60,7 @@ default: schemas
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
 %.doc.pdf: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng xsd dtd exampleschema docepub docpdf dochtml cleanup
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng xsd dtd docepub docpdf dochtml exampleschema 
 	../run-onvdl $*.nvdl $*.odd
 	trang  $*.rng $*.rnc
 	@echo Validate using xmllint for DTD  
