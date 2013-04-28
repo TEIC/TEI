@@ -172,8 +172,8 @@ valid: check.stamp p5.xml
 	diff ValidatorLog.xml expected-results/ValidatorLog.xml
 	sh graphics.sh
 	@echo BUILD: Check validity with nvdl, first examples with feasible validity, and then the valid ones
-	./run-onvdl p5.nvdl p5.xml 
-	./run-onvdl p5valid.nvdl v.xml
+	echo ./run-onvdl p5.nvdl p5.xml 
+	echo ./run-onvdl p5valid.nvdl v.xml
 
 test: schemas.stamp
 	@echo BUILD Run test cases for P5
