@@ -81,6 +81,7 @@ schemas: $(ODDS) $(MOREODDS) $(DOCODDS) $(XODDS) $(DOCONLYODDS)
 dist: schemas
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars
 	rm -f *-examples*
+	rm -f *compiled* *.doc.tex
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
@@ -90,7 +91,6 @@ dist: schemas
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/xml
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	mkdir -p ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
-	rm -f *compiled* *.doc.tex
 	for i in *.template; do $(SAXON) -it:main make_template.xsl file=`basename $$i .template`;done
 	cp *.tei *.odd *.xsl ../release/tei-p5-exemplars/share/xml/tei/custom/odd
 	cp *.xml  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
@@ -98,7 +98,7 @@ dist: schemas
 	mv *.properties  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	mv *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
 	mv *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
-	mv tei*.rnc tei*.rng ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
+	mv isofs.rng tei*.rnc tei*.rng ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	cp mathml*rng svg*rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	mv *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
 	mv *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf 
