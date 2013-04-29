@@ -18,6 +18,8 @@ MOREODDS=	isofs.rng \
 	tei_math.rng \
 	tei_odds.rng
 
+DOCONLYODDS=tei_lite_fr.doc.epub
+
 XODDS = tei_allPlus.special	
 
 DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf
@@ -67,11 +69,18 @@ default: schemas
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 	-rm $*.doc.xml
 
-schemas: $(ODDS) $(MOREODDS) $(DOCODDS) $(XODDS)
+%.doc.epub: %.odd
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema 
+	../run-onvdl $*.nvdl $*.odd
+	-rm $*.doc.xml
+	-rm $*.rng
+
+schemas: $(ODDS) $(MOREODDS) $(DOCODDS) $(XODDS) $(DOCONLYODDS)
 	echo Done
 
 dist: schemas
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars
+	rm -f *-examples*
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
