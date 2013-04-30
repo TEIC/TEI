@@ -2283,18 +2283,21 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
-	A singleton q inside a note is bypassed
+	A singleton p or q inside a note is bypassed
       </p>
     </desc>
   </doc>
   <xsl:template match="tei:note[count(*)=1 and not(text())]/tei:q">
     <xsl:apply-templates select="*|processing-instruction()|comment()|text()"  mode="pass2"/>
   </xsl:template>
+  <xsl:template match="tei:note[count(*)=1 and not(text())]/tei:p">
+    <xsl:apply-templates select="*|processing-instruction()|comment()|text()"  mode="pass2"/>
+  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
-	A singleton p inside a note is dropped
+	A singleton p inside a cell is dropped
       </p>
     </desc>
   </doc>
