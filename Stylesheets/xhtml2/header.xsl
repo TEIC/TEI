@@ -89,7 +89,7 @@ of this software, even if advised of the possibility of such damage.
 	     <xsl:variable name="pointer">
 	       <xsl:value-of select="."/>
 	     </xsl:variable>
-	     <xsl:for-each select="key('RENDITION',$pointer)[1]">
+	     <xsl:for-each select="key('EXTRENDITION',$pointer)[1]">
 	       <xsl:for-each select="document($pointer)">
 		 <xsl:text>&#10;.</xsl:text>
 		 <xsl:value-of select="@xml:id"/>
