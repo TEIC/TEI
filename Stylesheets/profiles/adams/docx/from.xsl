@@ -89,8 +89,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Returns a listtype for a given stylename (return empty string to
+      <desc>Returns a listtype for a given stylename (return empty string to
 	figure it out dynamically)
       </desc>
     </doc>
@@ -108,8 +107,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:function>
 
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Defines whether or not a word paragraph is a first level heading 
+      <desc>Defines whether or not a word paragraph is a first level heading 
       </desc>
     </doc>
     
@@ -127,8 +125,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:function>
     
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Defines whether or not a word paragraph is a  heading 
+      <desc>Defines whether or not a word paragraph is a  heading 
       </desc>
     </doc>
     
@@ -179,8 +176,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:function>
     
     <doc type="function" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Is given a header style and returns the style for the next level
+      <desc>Is given a header style and returns the style for the next level
 	header 
       </desc>
     </doc>

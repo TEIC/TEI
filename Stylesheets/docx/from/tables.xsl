@@ -541,8 +541,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:template>
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	    getting the basic table structure</desc>
+      <desc>getting the basic table structure</desc>
    </doc>
 	  <xsl:template match="w:gridCol|w:tblBorders|w:tblCellMar|w:tblGrid|w:tblLayout|w:tblLook|w:tblPr|w:tblW|w:tc|w:tcBorders|w:tcPr|w:tcW|w:tr|w:trPr|w:vAlign|w:top|w:left|w:bottom|w:right|w:insideH|w:insideV">
 

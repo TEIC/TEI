@@ -82,8 +82,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Title of document        
+      <desc>Title of document        
     </desc>
    </doc>
     <xsl:template name="document-title">

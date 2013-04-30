@@ -211,8 +211,7 @@ of this software, even if advised of the possibility of such damage.
    <xsl:template name="fromDocxFinalHook"/>
    
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-     <desc>
-		Main document template</desc>
+     <desc>Main document template</desc>
    </doc>
 	  <xsl:template match="w:document">
 	    <TEI>
@@ -226,8 +225,7 @@ of this software, even if advised of the possibility of such damage.
 
 
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-	    <desc>
-	      Create the basic text; worry later about dividing it up
+	    <desc>Create the basic text; worry later about dividing it up
 	    </desc>
 	  </doc>
 	  <xsl:template match="w:body">
@@ -244,8 +242,7 @@ of this software, even if advised of the possibility of such damage.
 
 	  
 	  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-	    <desc>
-	      Process the text by high-level divisions
+	    <desc>Process the text by high-level divisions
 	    </desc>
 	  </doc>
 	  <xsl:template name="mainProcess">
@@ -373,8 +370,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Creating a group of a figure</desc>
+      <desc>Creating a group of a figure</desc>
    </doc>
     <xsl:template name="figureSection">
       <figure>
@@ -385,8 +381,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Creating a gloss list</desc>
+      <desc>Creating a gloss list</desc>
    </doc>
 
     <xsl:template name="glossListSection">
@@ -398,8 +393,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Creating a group of a figure</desc>
+      <desc>Creating a group of a figure</desc>
    </doc>
     <xsl:template name="lineSection">
       <lg>
@@ -410,8 +404,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Groups the document by headings and thereby creating the document structure. 
+      <desc>Groups the document by headings and thereby creating the document structure. 
       </desc>
    </doc>
    <xsl:template name="group-by-section">

@@ -73,8 +73,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-    	simple teiHeader. For a more sophisticated header, think about overriding
+      <desc>simple teiHeader. For a more sophisticated header, think about overriding
         this template</desc>
    </doc>
     <xsl:template name="create-tei-header">

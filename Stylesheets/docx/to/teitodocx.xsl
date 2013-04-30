@@ -218,8 +218,7 @@ of this software, even if advised of the possibility of such damage.
     <desc>The starting points in the conversion to docx.</desc>
   </doc>
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Before main processing starts, pre-process the document
+      <desc>Before main processing starts, pre-process the document
 	elements in a separate mode ('pass0'), in order to add extra 
 	material which implements the footnoting etc. Also check that 
 	old files are there to be read.</desc>
@@ -712,8 +711,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="*" mode="get-style"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc> 
-        to a given style name, this template returns the correct style id
+    <desc>to a given style name, this template returns the correct style id
         looking it up in styles.xml 
     </desc>
   </doc>
@@ -2485,8 +2483,7 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-	Paragraph in list</desc>
+    <desc>Paragraph in list</desc>
   </doc>
   <xsl:template match="tei:item/tei:p[not(@rend)]" mode="pass0">
     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
@@ -2496,8 +2493,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-	remove confusing line breaks</desc>
+    <desc>remove confusing line breaks</desc>
   </doc>
   <xsl:template match="tei:lb" mode="pass0">
     <xsl:choose>
@@ -2513,8 +2509,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-	Page break</desc>
+    <desc>Page break</desc>
   </doc>
   <xsl:template match="tei:pb" mode="pass0">
     <xsl:choose>
@@ -2554,8 +2549,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-	If you meet an inline element with a link inside it, pass by
+    <desc>If you meet an inline element with a link inside it, pass by
 	on the other side</desc>
   </doc>
   <xsl:template match="tei:title[tei:ref]|tei:hi[tei:ref]" priority="-1">
@@ -2572,8 +2566,7 @@ of this software, even if advised of the possibility of such damage.
 
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>
-	Marginal notes map to corresponding Word style, albeit named
+      <desc>Marginal notes map to corresponding Word style, albeit named
 	slightly differently</desc>
     </doc>
   <xsl:template name="marginalNote">

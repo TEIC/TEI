@@ -77,8 +77,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text>source</xsl:text>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-	Inline Templates:
+    <desc>Inline Templates:
 	Here we can overwrite how inline elements are rendered</desc>
   </doc>
   <xsl:template match="tei:c[@iso:style and @n]">
@@ -108,8 +107,7 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc> 
-        Handle Numbers 
+    <desc>Handle Numbers 
       </desc>
   </doc>
   <xsl:template match="tei:num">
@@ -569,8 +567,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-	Paragraphs in the front matter 
+    <desc>Paragraphs in the front matter 
       </desc>
   </doc>
   <xsl:template match="tei:front/tei:div/tei:p[@type='foreword']">
@@ -587,8 +584,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-	Table of contents section</desc>
+    <desc>Table of contents section</desc>
   </doc>
   <xsl:template match="tei:front/tei:div[@type='toc']">
     <xsl:call-template name="block-element">

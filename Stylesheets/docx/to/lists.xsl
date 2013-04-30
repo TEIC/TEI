@@ -126,8 +126,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template match="comment()"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc> 
-        Handle list items</desc>
+      <desc>Handle list items</desc>
    </doc>
     <xsl:template match="tei:item">
         <xsl:param name="nop"/>

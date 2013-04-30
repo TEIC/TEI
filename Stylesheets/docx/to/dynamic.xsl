@@ -74,8 +74,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc> 
-        dynamic content</desc>
+      <desc>dynamic content</desc>
    </doc>    
     <xsl:template match="tei:dynamicContent">
         <xsl:choose>

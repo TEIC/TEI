@@ -171,8 +171,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Named template for handling processing any cross-references found.</desc>
+      <desc>Named template for handling processing any cross-references found.</desc>
     </doc>
     <xsl:template name="process-checking-for-crossrefs">
       <xsl:choose>
@@ -285,8 +284,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Named template for handling processing of index terms.
+      <desc>Named template for handling processing of index terms.
 	First insert main index enty, then recurse by index level</desc>
     </doc>
     <xsl:template name="process-index-term">

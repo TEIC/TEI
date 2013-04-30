@@ -131,8 +131,7 @@ of this software, even if advised of the possibility of such damage.
 
 
          <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Overwriting the creation of the teiHeader.
+      <desc>Overwriting the creation of the teiHeader.
 	Construct the TEI Header either by copying the passed metadata or extracting
       the metadata from the document </desc>
 	 </doc>
@@ -389,8 +388,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Construct the TEI Header either by copying the passed metadata or extracting
+      <desc>Construct the TEI Header either by copying the passed metadata or extracting
 	the metadata from the document simple templates for the info
 	that goes into the teiHeader</desc>
     </doc>
@@ -425,8 +423,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Override mechanism for deciding on what subsections are</desc>
+      <desc>Override mechanism for deciding on what subsections are</desc>
     </doc>
     <xsl:template name="group-by-section">
       <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
@@ -452,8 +449,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	Some specific section headers 
+      <desc>Some specific section headers 
       </desc>
     </doc>
     <xsl:template name="generate-section-heading">
@@ -726,8 +722,7 @@ of this software, even if advised of the possibility of such damage.
     
          
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-	override handling of runs 
+      <desc>override handling of runs 
       </desc>
     </doc>
 
@@ -1424,8 +1419,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>  
-	inline style 'number' turns into a <gi>termNote</gi>
+      <desc>inline style 'number' turns into a <gi>termNote</gi>
       </desc>
     </doc>
 
@@ -1436,8 +1430,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>  
-	Special check to see if a cell starts with a terminology entry</desc>
+      <desc>Special check to see if a cell starts with a terminology entry</desc>
     </doc>
     <xsl:template name="cellContents">
       <xsl:choose>
@@ -1459,8 +1452,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>  
-	Definition Lists</desc>
+      <desc>Definition Lists</desc>
     </doc>
     <xsl:template name="definitionListSection">
         <list type="gloss">
@@ -1490,8 +1482,7 @@ of this software, even if advised of the possibility of such damage.
 
 
           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>  
-        Dealing with references</desc>
+      <desc>Dealing with references</desc>
 	  </doc>
     <xsl:template name="bibliographySection">
         <listBibl>
@@ -1518,8 +1509,7 @@ of this software, even if advised of the possibility of such damage.
 
 
           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>  
-        Table of contents</desc>
+      <desc>Table of contents</desc>
 	  </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzContents']"
 		  mode="paragraph" priority="100">
@@ -1547,8 +1537,7 @@ of this software, even if advised of the possibility of such damage.
 
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>  
-        Dealing with examples</desc>
+      <desc>Dealing with examples</desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Example']" mode="paragraph">
         <note rend="Example">
@@ -1567,8 +1556,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
-      <desc>  
-	Dealing with notes</desc>
+      <desc>Dealing with notes</desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note']" mode="paragraph">
         <note rend="Note">
