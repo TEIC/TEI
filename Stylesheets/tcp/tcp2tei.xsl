@@ -56,7 +56,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="ROLES" match="ITEM/@ROLE" use="1"/>
   <xsl:param name="intype"> ',)</xsl:param>
   <xsl:param name="debug">false</xsl:param>
-  <xsl:param name="headerDirectory">headers/</xsl:param>
+  <xsl:param name="headerDirectory">./</xsl:param>
   <xsl:variable name="HERE" select="/"/>
   <xsl:variable name="Rendition">
     <tagsDecl>

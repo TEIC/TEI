@@ -6,6 +6,8 @@ default: schema test-html test-latex test-fo test-docx test-other test-epub test
 p4top5:
 	saxon -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
 	diff test17.tei expected-results/test17.tei
+	saxon A54031.tcp ../tcp/tcp2tei.xsl | xmllint --format - > A54031.xml
+	diff A54031.xml expected-results/A54031.xml
 
 schema:
 	../teitorelaxng --odd test.odd test.rng
