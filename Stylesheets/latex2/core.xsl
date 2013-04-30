@@ -795,8 +795,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-    If verseNumbering is requested,
+      <desc>If verseNumbering is requested,
  counts all the verse lines since the last container (<gi xmlns="">div1</gi> by
  default) and labels every fifth verse using a LaTeX box 3 ems wide.
 

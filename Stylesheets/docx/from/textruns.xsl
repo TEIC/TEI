@@ -161,8 +161,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Look at the Word
       underlying basic formatting. We can ignore the run's font change if 
       a) it's not a special para AND the font is the ISO default, OR 
-      b) the font for the run is the same as its parent paragraph.
-      </desc>
+      b) the font for the run is the same as its parent paragraph.</desc>
    </doc>
     <xsl:template name="basicStyles">
       <xsl:param name="parented">false</xsl:param>
@@ -313,9 +312,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Handle current page breaks inserted by Word
-    </desc>
+      <desc>Handle current page breaks inserted by Word</desc>
    </doc>
     <xsl:template match="w:lastRenderedPageBreak">
       <xsl:if test="$preserveSoftPageBreaks='true'">
@@ -324,8 +321,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Handle Text, Comments, Tabs, Symbols etc. 
+      <desc>Handle Text, Comments, Tabs, Symbols etc. 
     </desc>
    </doc>
     <xsl:template match="w:t">
@@ -355,10 +351,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Convert special characters (w:syms) into Unicode characters or
-	<gi>g</gi> elements. Symbol to Unicode mapping from http://unicode.org/Public/MAPPINGS/VENDORS/ADOBE/symbol.txt
-    </desc>
+      <desc>Convert special characters (w:syms) into Unicode characters or
+	<gi>g</gi> elements. Symbol to Unicode mapping from http://unicode.org/Public/MAPPINGS/VENDORS/ADOBE/symbol.txt</desc>
    </doc>
     <xsl:template match="w:sym">
       <xsl:choose>
@@ -567,17 +561,14 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        handle tabs
-    </desc>
+      <desc>handle tabs</desc>
    </doc>
     <xsl:template match="w:r/w:tab">
       <xsl:text>	</xsl:text>
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        handle ptabs (absolute position tab character)
+      <desc>handle ptabs (absolute position tab character)
     </desc>
    </doc>
     <xsl:template match="w:r/w:ptab">
@@ -588,9 +579,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        capture line breaks
-    </desc>
+      <desc>capture line breaks</desc>
    </doc>
     <xsl:template match="w:br">
       <xsl:choose>
@@ -607,8 +596,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Contains text that has been tracked as a revision. 
+      <desc>Contains text that has been tracked as a revision. 
     </desc>
    </doc>
 

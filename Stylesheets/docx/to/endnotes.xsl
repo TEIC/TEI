@@ -74,9 +74,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Create the endnotes file
-    </desc>
+      <desc>Create the endnotes file</desc>
    </doc>
     <xsl:template name="write-docxfile-endnotes-file">
 	     <xsl:if test="$debug='true'">

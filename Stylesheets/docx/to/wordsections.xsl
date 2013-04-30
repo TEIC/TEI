@@ -75,9 +75,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Dealing with sections
-    </desc>
+      <desc>Dealing with sections</desc>
    </doc>
     <xsl:template match="tei:milestone">
         <xsl:param name="final-section">false</xsl:param>

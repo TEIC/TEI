@@ -134,11 +134,9 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Named template for handling w:p; we 
+      <desc>Named template for handling w:p; we 
        use the Word style (if provided) to make a TEI rend attribute,
-       and check for change records.
-    </desc>
+       and check for change records.</desc>
    </doc>
    <xsl:template name="paragraph-wp">
      <xsl:param name="style"/>
@@ -174,8 +172,7 @@ of this software, even if advised of the possibility of such damage.
    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-	Named template for handling processing any cross-references found.
-    </desc>
+	Named template for handling processing any cross-references found.</desc>
     </doc>
     <xsl:template name="process-checking-for-crossrefs">
       <xsl:choose>
@@ -290,8 +287,7 @@ of this software, even if advised of the possibility of such damage.
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
 	Named template for handling processing of index terms.
-	First insert main index enty, then recurse by index level
-    </desc>
+	First insert main index enty, then recurse by index level</desc>
     </doc>
     <xsl:template name="process-index-term">
       <xsl:param name="term"/>

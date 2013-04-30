@@ -80,9 +80,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Handle value lists
-    </desc>
+      <desc>Handle value lists</desc>
    </doc>
     <xsl:template match="tei:label[following-sibling::tei:*[1]/self::tei:item]">
         <xsl:param name="nop"/>
@@ -129,8 +127,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc> 
-        Handle list items
-    </desc>
+        Handle list items</desc>
    </doc>
     <xsl:template match="tei:item">
         <xsl:param name="nop"/>

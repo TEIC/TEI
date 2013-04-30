@@ -53,15 +53,11 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
-      <desc>
-    Stylesheet constant for the input document.
-  </desc>
+      <desc>Stylesheet constant for the input document.</desc>
    </doc>
   <xsl:variable name="top" select="/"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
-      <desc>
-    Stylesheet constant for table specifications
-  </desc>
+      <desc>Stylesheet constant for table specifications</desc>
    </doc>
   <xsl:variable name="tableSpecs">
       <xsl:choose>

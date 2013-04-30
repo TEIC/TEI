@@ -76,9 +76,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Handle footnotes
-    </desc>
+      <desc>Handle footnotes</desc>
    </doc>
     <xsl:template match="w:footnoteReference">
         <note place="foot" xml:id="ftn{@w:id}" n="{@w:id}">
@@ -91,9 +89,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Handle endnotes
-    </desc>
+      <desc>Handle endnotes</desc>
    </doc>
     <xsl:template match="w:endnoteReference">
         <note place="end">

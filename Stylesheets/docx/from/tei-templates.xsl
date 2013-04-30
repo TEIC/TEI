@@ -75,8 +75,7 @@ of this software, even if advised of the possibility of such damage.
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
     	simple teiHeader. For a more sophisticated header, think about overriding
-        this template
-    </desc>
+        this template</desc>
    </doc>
     <xsl:template name="create-tei-header">
         <teiHeader>
@@ -122,10 +121,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-     generates a section heading. If you need something specific, feel free
-        to overwrite this template
-    </desc>
+      <desc>generates a section heading. If you need something specific, feel free
+        to overwrite this template</desc>
    </doc>
     <xsl:template name="generate-section-heading">
         <xsl:param name="Style"/>

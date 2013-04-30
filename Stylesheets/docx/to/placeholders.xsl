@@ -75,9 +75,7 @@ of this software, even if advised of the possibility of such damage.
 
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        A callback for any titlepages that belong to the front matter.
-    </desc>
+      <desc>A callback for any titlepages that belong to the front matter.</desc>
    </doc>
     <xsl:template name="titlepages">
     </xsl:template>

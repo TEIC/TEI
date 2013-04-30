@@ -212,8 +212,7 @@ of this software, even if advised of the possibility of such damage.
    
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
      <desc>
-		Main document template
-     </desc>
+		Main document template</desc>
    </doc>
 	  <xsl:template match="w:document">
 	    <TEI>
@@ -375,8 +374,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-	Creating a group of a figure
-      </desc>
+	Creating a group of a figure</desc>
    </doc>
     <xsl:template name="figureSection">
       <figure>
@@ -388,8 +386,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-	Creating a gloss list
-      </desc>
+	Creating a gloss list</desc>
    </doc>
 
     <xsl:template name="glossListSection">
@@ -402,8 +399,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-	Creating a group of a figure
-      </desc>
+	Creating a group of a figure</desc>
    </doc>
     <xsl:template name="lineSection">
       <lg>

@@ -98,14 +98,12 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:param name="cssFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
-      <desc>CSS style file for print; this will be given a media=print attribute.
-    </desc>
+      <desc>CSS style file for print; this will be given a media=print attribute.</desc>
    </doc>
   <xsl:param name="cssPrintFile" as="xs:string">http://www.tei-c.org/release/xml/tei/stylesheet/tei-print.css</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
       <desc>Secondary CSS style file; this will be given a media=screen attribute,
-so that it does not affect printing. It should be used for screen layout.
-  </desc>
+so that it does not affect printing. It should be used for screen layout.</desc>
    </doc>
     <xsl:param name="cssSecondaryFile"  as="xs:string" select="''"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="CSS" type="anyURI">
@@ -714,14 +712,12 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="string">
-      <desc>Text to link back to from foot of ODD reference pages
-  </desc>
+      <desc>Text to link back to from foot of ODD reference pages</desc>
    </doc>
    <xsl:param name="refDocFooterText">TEI Guidelines</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="anyURI">
-      <desc>URL to link back to from foot of ODD reference pages
-  </desc>
+      <desc>URL to link back to from foot of ODD reference pages</desc>
    </doc>
    <xsl:param name="refDocFooterURL">index.html</xsl:param>
 
@@ -733,8 +729,7 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
    <xsl:param name="generateDivFromP">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="toc" type="anyURI">
-      <desc>Gap between elements in navigation list
-  </desc></doc>
+      <desc>Gap between elements in navigation list</desc></doc>
    <xsl:template name="navInterSep">
       <xsl:text>: </xsl:text>
    </xsl:template>

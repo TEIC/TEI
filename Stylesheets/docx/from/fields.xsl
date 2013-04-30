@@ -72,9 +72,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Handle simple fields
-    </desc>
+      <desc>Handle simple fields</desc>
    </doc>
     <xsl:template match="w:fldSimple">
       <xsl:variable name="rstyle">

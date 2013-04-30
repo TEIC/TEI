@@ -75,8 +75,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	 line breaks are discarded in first pass
-      </desc>
+	 line breaks are discarded in first pass</desc>
     </doc>
     <xsl:template match="lb" mode="pass0"/>
 
@@ -95,8 +94,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	lists without a type attribute are assumed to be ordered
-      </desc>
+	lists without a type attribute are assumed to be ordered</desc>
     </doc>
     <xsl:template match="list[not(@type)]" mode="pass0">
       <list xmlns="http://www.tei-c.org/ns/1.0">
@@ -107,8 +105,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	items are numbered sequentially passim
-      </desc>
+	items are numbered sequentially passim</desc>
     </doc>
     <xsl:template match="item" mode="pass0">
       <item  xmlns="http://www.tei-c.org/ns/1.0">
@@ -119,8 +116,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	add footnote for interlinear addition
-      </desc>
+	add footnote for interlinear addition</desc>
     </doc>
     <xsl:template match="add[@place='interlinear']" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
@@ -132,8 +128,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	add footnote for unclear reading
-      </desc>
+	add footnote for unclear reading</desc>
     </doc>
     <xsl:template match="unclear" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
@@ -145,8 +140,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	add footnote for supplied text
-      </desc>
+	add footnote for supplied text</desc>
     </doc>
 <xsl:template match="supplied[@reason]" mode="pass0">
       <xsl:apply-templates mode="pass0"/>
@@ -159,8 +153,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
-	add footnote for damage
-      </desc>
+	add footnote for damage</desc>
     </doc>
     <xsl:template match="damage" mode="pass0">
       <xsl:apply-templates mode="pass0"/>

@@ -239,9 +239,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:param name="prenumberedHeadings">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
-    <desc>
-    Automatically number paragraphs.
-  </desc>
+    <desc>Automatically number paragraphs.</desc>
   </doc>
   <xsl:param name="numberParagraphs">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
@@ -288,35 +286,26 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:param name="consecutiveFNs">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
-      <desc>Make all notes into endnotes
-  </desc>
+      <desc>Make all notes into endnotes</desc>
    </doc>
   <xsl:param name="autoEndNotes">false</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
-    <desc>
-Whether to make simplified display of ODD
-</desc>
+    <desc>Whether to make simplified display of ODD</desc>
   </doc>
   <xsl:param name="oddWeaveLite">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-    <desc>
-Paragraph indentation
-</desc>
+    <desc>Paragraph indentation</desc>
   </doc>
   <xsl:param name="parIndent">1em</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-    <desc>
-      Style for formatted bibliography
-    </desc>
+    <desc>Style for formatted bibliography</desc>
   </doc>
   <xsl:param name="biblioStyle"></xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-    <desc>
-Default spacing between paragraphs
-</desc>
+    <desc>Default spacing between paragraphs</desc>
   </doc>
   <xsl:param name="parSkip">0pt</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="hook">

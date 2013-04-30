@@ -83,9 +83,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:key name="H" match="image" use="@url"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Guides the identity transformation for graphics
-    </desc>
+      <desc>Guides the identity transformation for graphics</desc>
    </doc>
     <xsl:template match="a:blip" mode="iden">
         <xsl:variable name="me" select="generate-id()"/>

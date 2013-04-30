@@ -78,8 +78,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        write: word/settings.xml 
+      <desc>write: word/settings.xml 
     </desc>
    </doc>
     <xsl:template name="write-docxfile-settings"/>

@@ -75,8 +75,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc> 
-        dynamic content
-    </desc>
+        dynamic content</desc>
    </doc>    
     <xsl:template match="tei:dynamicContent">
         <xsl:choose>
@@ -95,9 +94,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Dealing with divGens
-    </desc>
+      <desc>Dealing with divGens</desc>
    </doc>
     <xsl:template match="tei:divGen">
         <xsl:choose>
@@ -109,10 +106,8 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Table of Contents:
-        Feel free to overwrite this one.
-    </desc>
+      <desc>Table of Contents:
+        Feel free to overwrite this one.</desc>
    </doc>
     <xsl:template name="generate-toc">
         <w:p>

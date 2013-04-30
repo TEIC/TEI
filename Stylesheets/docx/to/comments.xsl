@@ -75,9 +75,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:key name="COMMENTS" match="tei:note[@place='comment']"    use="1"/>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Create the comments file
-    </desc>
+      <desc>Create the comments file</desc>
    </doc>
     <!-- write out comments -->
     <xsl:template name="write-docxfile-comments-file">

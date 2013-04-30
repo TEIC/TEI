@@ -73,9 +73,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
-      <desc>
-Stylesheet constant setting the name of the main output file.
-</desc>
+      <desc>Stylesheet constant setting the name of the main output file.</desc>
    </doc>
   <xsl:variable name="top" select="/"/>
   <xsl:variable name="masterFile">
@@ -220,8 +218,7 @@ Stylesheet constant setting the name of the main output file.
     <desc>[html] Look up rendition value <param
     name="value">value</param>. They are either turned directly into
     @class values, or by following the link to an external document
-    and using the @xml:id from there to make a class.
-      </desc>
+    and using the @xml:id from there to make a class.</desc>
   </doc>
   <xsl:function name="tei:processRendition" as="node()*">
     <xsl:param name="value"/>
@@ -254,8 +251,7 @@ Stylesheet constant setting the name of the main output file.
     turn them into an "s" element, otherwise we use the @rend to make
     a "c" element. The "s" and "c" are processed into appropriate
     @class and @style attributes at the end.  The special cases for super and
-    subscript have been dealt with separately, so ignore them.
-      </desc>
+    subscript have been dealt with separately, so ignore them.</desc>
   </doc>
   <xsl:function name="tei:processRend" as="node()*">
     <xsl:param name="value"/>

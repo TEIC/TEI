@@ -87,9 +87,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Process Word objects
-    </desc>
+      <desc>Process Word objects</desc>
    </doc>
    <xsl:template match="w:object">
      <xsl:variable name="renderingProperties">
@@ -110,8 +108,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Image data 
+      <desc>Image data 
     </desc>
    </doc>
     <xsl:template match="v:imagedata" mode="iden">
@@ -137,9 +134,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        OLE objects
-    </desc>
+      <desc>OLE objects</desc>
    </doc>
     <xsl:template match="o:OLEObject" mode="iden">
         <xsl:variable name="current" select="@r:id"/>

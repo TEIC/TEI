@@ -392,8 +392,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>
 	Construct the TEI Header either by copying the passed metadata or extracting
 	the metadata from the document simple templates for the info
-	that goes into the teiHeader
-      </desc>
+	that goes into the teiHeader</desc>
     </doc>
     <xsl:template match="w:p" mode="teiHeader">
         <xsl:choose>
@@ -427,8 +426,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-	Override mechanism for deciding on what subsections are
-      </desc>
+	Override mechanism for deciding on what subsections are</desc>
     </doc>
     <xsl:template name="group-by-section">
       <xsl:variable name="Style" select="w:pPr/w:pStyle/@w:val"/>
@@ -927,19 +925,15 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-    Table titles. we deal with them inside the table
-      </desc>
+      <desc>Table titles. we deal with them inside the table</desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]" mode="paragraph"/>
 
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='TableTitle']" mode="paragraph"/>
 
      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        When creating a CALS table, put in an attribute linking it to
-	the original Word markup in an external file
-    </desc>
+      <desc>When creating a CALS table, put in an attribute linking it to
+	the original Word markup in an external file</desc>
    </doc>
 
 	  <xsl:template match="cals:table" mode="innerTable">
@@ -956,9 +950,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:template>
 
      <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        For every table in Word, copy the contents to an external file.
-      </desc>
+      <desc>For every table in Word, copy the contents to an external file.</desc>
      </doc>
 	  <xsl:template name="fromDocxFinalHook">
 	    <xsl:for-each select="key('WordTables',1)">
@@ -1029,9 +1021,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Working with figure headings
-      </desc>
+      <desc>Working with figure headings</desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val=$Figuretitle]" mode="paragraph">
         <head>
@@ -1045,9 +1035,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Text in figure heading
-      </desc>
+      <desc>Text in figure heading</desc>
     </doc>
     <xsl:template
 	match="w:p[w:pPr/w:pStyle/@w:val=$Figuretitle]/w:r/w:t">
@@ -1068,9 +1056,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Text in table heading
-      </desc>
+      <desc>Text in table heading</desc>
     </doc>
     <xsl:template
 	match="w:p[w:pPr/w:pStyle/@w:val=$Tabletitle]/w:r/w:t">
@@ -1111,9 +1097,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Dealing with Normative References
-      </desc>
+      <desc>Dealing with Normative References</desc>
 	</doc>
     <xsl:template name="normativeReferencesSection">
         <listBibl type="normativeReferences">
@@ -1143,8 +1127,7 @@ of this software, even if advised of the possibility of such damage.
 	  <li>abbreviatedForm</li>
 	</ul>
 	Though it should be noted that <gi>Example</gi> can also occur
-	on its own.
-      </desc>
+	on its own.</desc>
     </doc>
     <xsl:template name="termsAndDefinitionsSection">
       <xsl:for-each-group select="current-group()"
@@ -1454,8 +1437,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
-	Special check to see if a cell starts with a terminology entry
-      </desc>
+	Special check to see if a cell starts with a terminology entry</desc>
     </doc>
     <xsl:template name="cellContents">
       <xsl:choose>
@@ -1478,8 +1460,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
-	Definition Lists
-      </desc>
+	Definition Lists</desc>
     </doc>
     <xsl:template name="definitionListSection">
         <list type="gloss">
@@ -1510,8 +1491,7 @@ of this software, even if advised of the possibility of such damage.
 
           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
-        Dealing with references
-      </desc>
+        Dealing with references</desc>
 	  </doc>
     <xsl:template name="bibliographySection">
         <listBibl>
@@ -1539,8 +1519,7 @@ of this software, even if advised of the possibility of such damage.
 
           <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
-        Table of contents
-      </desc>
+        Table of contents</desc>
 	  </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='zzContents']"
 		  mode="paragraph" priority="100">
@@ -1569,8 +1548,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
-        Dealing with examples
-      </desc>
+        Dealing with examples</desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Example']" mode="paragraph">
         <note rend="Example">
@@ -1590,8 +1568,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>  
-	Dealing with notes
-      </desc>
+	Dealing with notes</desc>
     </doc>
     <xsl:template match="w:p[w:pPr/w:pStyle/@w:val='Note']" mode="paragraph">
         <note rend="Note">

@@ -79,9 +79,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        A speaker's name
-    </desc>
+      <desc>A speaker's name</desc>
    </doc>
     <xsl:template match="tei:sp/tei:speaker" >
       <xsl:call-template name="block-element">
@@ -89,9 +87,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:call-template>
     </xsl:template>
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        A bit of speech name
-    </desc>
+      <desc>A bit of speech name</desc>
    </doc>
     <xsl:template match="tei:sp/tei:p" >
       <xsl:call-template name="block-element">
@@ -100,9 +96,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        A stage direction
-    </desc>
+      <desc>A stage direction</desc>
    </doc>
     <xsl:template match="tei:sp/tei:stage" >
       <xsl:call-template name="block-element">
@@ -111,8 +105,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        A line of verse in a block gets an extra line at the end of
+      <desc>A line of verse in a block gets an extra line at the end of
 	the stanza. add a line break in pass0
     </desc>
     </doc>
@@ -126,9 +119,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        A line of verse
-    </desc>
+      <desc>A line of verse</desc>
    </doc>
     <xsl:template match="tei:l">
       <xsl:call-template name="block-element">

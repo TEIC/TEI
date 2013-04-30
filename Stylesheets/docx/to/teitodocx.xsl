@@ -215,17 +215,14 @@ of this software, even if advised of the possibility of such damage.
   <xsl:variable name="coreFile"><xsl:value-of select="concat($wordDirectory, '/docProps/core.xml')"/></xsl:variable>
   <xsl:variable name="appFile"><xsl:value-of select="concat($wordDirectory, '/docProps/app.xml')"/></xsl:variable>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        The starting points in the conversion to docx.
-    </desc>
+    <desc>The starting points in the conversion to docx.</desc>
   </doc>
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	Before main processing starts, pre-process the document
 	elements in a separate mode ('pass0'), in order to add extra 
 	material which implements the footnoting etc. Also check that 
-	old files are there to be read.
-      </desc>
+	old files are there to be read.</desc>
     </doc>
 
     <xsl:template match="/">
@@ -271,10 +268,8 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Calls templates that are responsible for creating all necessary files besides the
-            main document.xml
-    </desc>
+    <desc>Calls templates that are responsible for creating all necessary files besides the
+            main document.xml</desc>
   </doc>
   <xsl:template name="write-docxfiles">
     <!-- header and footers -->
@@ -303,9 +298,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="write-docxfile-docprops-custom"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Create the contents of the main document.xml file, that contains all "real" content.
-    </desc>
+    <desc>Create the contents of the main document.xml file, that contains all "real" content.</desc>
   </doc>
   <xsl:template name="create-document-dot-xml">
     <w:document>
@@ -322,9 +315,7 @@ of this software, even if advised of the possibility of such damage.
     </w:document>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Handles the front matter
-    </desc>
+    <desc>Handles the front matter</desc>
   </doc>
   <xsl:template name="write-document-dot-xml-frontmatter">
     <!-- are there specific titlepages -->
@@ -335,9 +326,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select=".//tei:text/tei:front"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Handles the main content
-    </desc>
+    <desc>Handles the main content</desc>
   </doc>
   <xsl:template name="write-document-dot-xml-maincontent">
     <!-- document title -->
@@ -346,9 +335,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates select=".//tei:text/tei:body"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Handles the back matter
-    </desc>
+    <desc>Handles the back matter</desc>
   </doc>
   <xsl:template name="write-document-dot-xml-backmatter">
     <!-- Describes the back matter of the document -->
@@ -505,9 +492,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <!-- end template _process-blockelement -->
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Anchors
-    </desc>
+    <desc>Anchors</desc>
   </doc>
   <xsl:template match="tei:anchor">
     <xsl:variable name="N">
@@ -517,8 +502,7 @@ of this software, even if advised of the possibility of such damage.
     <w:bookmarkEnd w:id="{number($N) + 20000}"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Handles text sections. Adds a bookmark if they are the
+    <desc>Handles text sections. Adds a bookmark if they are the
 	first text in this object. 
     </desc>
   </doc>
@@ -742,8 +726,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:for-each>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Tests whether to add rendering elements to a run.
+    <desc>Tests whether to add rendering elements to a run.
         Word styles cannot not be added in applyRend. If you want to add
         a style go for a get-style template. The order of these
 	elements in Word does matter, by the way. 
@@ -2503,8 +2486,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-	Paragraph in list
-      </desc>
+	Paragraph in list</desc>
   </doc>
   <xsl:template match="tei:item/tei:p[not(@rend)]" mode="pass0">
     <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass0"/>
@@ -2515,8 +2497,7 @@ of this software, even if advised of the possibility of such damage.
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-	remove confusing line breaks
-      </desc>
+	remove confusing line breaks</desc>
   </doc>
   <xsl:template match="tei:lb" mode="pass0">
     <xsl:choose>
@@ -2533,8 +2514,7 @@ of this software, even if advised of the possibility of such damage.
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-	Page break
-      </desc>
+	Page break</desc>
   </doc>
   <xsl:template match="tei:pb" mode="pass0">
     <xsl:choose>
@@ -2566,9 +2546,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        A signature block
-    </desc>
+    <desc>A signature block</desc>
   </doc>
   <xsl:template match="tei:signed">
     <xsl:call-template name="block-element">
@@ -2578,8 +2556,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
 	If you meet an inline element with a link inside it, pass by
-	on the other side
-      </desc>
+	on the other side</desc>
   </doc>
   <xsl:template match="tei:title[tei:ref]|tei:hi[tei:ref]" priority="-1">
     <xsl:apply-templates/>
@@ -2597,8 +2574,7 @@ of this software, even if advised of the possibility of such damage.
     <doc type="template" xmlns="http://www.oxygenxml.com/ns/doc/xsl"  >
       <desc>
 	Marginal notes map to corresponding Word style, albeit named
-	slightly differently
-      </desc>
+	slightly differently</desc>
     </doc>
   <xsl:template name="marginalNote">
     <xsl:call-template name="block-element">
@@ -2623,9 +2599,7 @@ of this software, even if advised of the possibility of such damage.
 
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template from msDescription for high-level section
-    </desc>
+    <desc>Generic template from msDescription for high-level section</desc>
   </doc>
   <xsl:template name="makeSection">
     <xsl:param name="level"/>
@@ -2644,9 +2618,7 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="block-element"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template for inline objects
-    </desc>
+    <desc>Generic template for inline objects</desc>
   </doc>
   <xsl:template name="makeInline">
     <xsl:param name="before"/>
@@ -2690,9 +2662,7 @@ of this software, even if advised of the possibility of such damage.
     </w:r>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template for mid-level block
-    </desc>
+    <desc>Generic template for mid-level block</desc>
   </doc>
   <xsl:template name="makeBlock">
     <xsl:param name="style"/>
@@ -2706,9 +2676,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:call-template>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Generic template for labelled object
-    </desc>
+    <desc>Generic template for labelled object</desc>
   </doc>
   <xsl:template name="makeWithLabel">
     <xsl:param name="before"/>

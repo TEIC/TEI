@@ -105,8 +105,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="generateSubjectHook"/>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[epub] Set unique identifier for output
-      </desc>
+    <desc>[epub] Set unique identifier for output</desc>
   </doc>
   <xsl:template name="generateID">
     <xsl:choose>
@@ -125,16 +124,14 @@ of this software, even if advised of the possibility of such damage.
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>[epub] Add specific linebreak in verbatim output, as
-      readers do not seem to grok the CSS
-      </desc>
+      readers do not seem to grok the CSS</desc>
   </doc>
   <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
     <br/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>[epub] Remove unwanted things from CSS
-      </desc>
+    <desc>[epub] Remove unwanted things from CSS</desc>
   </doc>
   <xsl:template name="purgeCSS">
     <xsl:choose>

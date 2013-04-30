@@ -88,9 +88,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Template called by a match on w:p[w:pPr/w:sectPr]|w:sectPr
-    </desc>
+      <desc>Template called by a match on w:p[w:pPr/w:sectPr]|w:sectPr</desc>
    </doc>
     <xsl:template name="paragraph-sectpr">
       <xsl:if test="$preserveWordSections='true'">

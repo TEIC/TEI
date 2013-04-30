@@ -73,53 +73,40 @@ the beginning of the document</desc>
    <xsl:template name="latexPreambleHook"/>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-      <desc>
-Optional parameters for documentclass
-</desc>
+      <desc>Optional parameters for documentclass</desc>
    </doc>
    <xsl:param name="classParameters">11pt,twoside</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
       <desc>
-	location of original XML file, for looking up relative pointers
-      </desc>
+	location of original XML file, for looking up relative pointers</desc>
    </doc>
    <xsl:param name="ORIGDIR"/>
     
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-      <desc>
-Logo graphics file
-</desc>
+      <desc>Logo graphics file</desc>
    </doc>
    <xsl:param name="latexLogo"/>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
-      <desc>
-URL root where referenced documents are located
-</desc>
+      <desc>URL root where referenced documents are located</desc>
    </doc>
    <xsl:param name="baseURL"/>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
-      <desc>
-Whether or not to load LaTeX packages which attempt to
+      <desc>Whether or not to load LaTeX packages which attempt to
 process the UTF-8 characters. Set to "false" if you are
-using XeTeX or similar.
-</desc>
+using XeTeX or similar.</desc>
    </doc>
    <xsl:param name="reencode">true</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
-      <desc>
-The name of a LaTeX style package which should be loaded
-</desc>
+      <desc>The name of a LaTeX style package which should be loaded</desc>
    </doc>
    <xsl:param name="userpackage"/>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="boolean">
-      <desc>
-Use real name of graphics files rather than pointers
-</desc>
+      <desc>Use real name of graphics files rather than pointers</desc>
    </doc>
    <xsl:param name="realFigures">true</xsl:param>
 
@@ -189,56 +176,42 @@ Use real name of graphics files rather than pointers
    </xsl:template>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="float">
-      <desc>
-When processing a "pb" element, decide what to generate: "active"
+      <desc>When processing a "pb" element, decide what to generate: "active"
 generates a page break; "visible" generates a bracketed number (with
 scissors), and "bracketsonly" generates a bracketed number (without
-scissors).
-</desc>
+scissors).</desc>
    </doc>
    <xsl:param name="pagebreakStyle"/>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="float">
-      <desc>
-When making a table, what width must be constrained to fit,
-as a proportion of the page width.
-</desc>
+      <desc>When making a table, what width must be constrained to fit,
+as a proportion of the page width.</desc>
    </doc>
    <xsl:param name="tableMaxWidth">0.85</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="boolean">
-      <desc>
-Whether to number lines of poetry
-</desc>
+      <desc>Whether to number lines of poetry</desc>
    </doc>
    <xsl:param name="verseNumbering">false</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="integer">
-      <desc>
-When numbering poetry, how often to put in a line number
-</desc>
+      <desc>When numbering poetry, how often to put in a line number</desc>
    </doc>
    <xsl:param name="everyHowManyLines">5</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout" type="string">
-      <desc>
-When numbering poetry, when to restart the sequence;
-this must be the name of a TEI element
-</desc>
+      <desc>When numbering poetry, when to restart the sequence;
+this must be the name of a TEI element</desc>
    </doc>
    <xsl:param name="resetVerseLineNumbering">div1</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
-      <desc>
-Options to pass to the geometry package to set margins etc
-</desc>
+      <desc>Options to pass to the geometry package to set margins etc</desc>
    </doc>
    <xsl:param name="latexGeometryOptions">twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in</xsl:param>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="userpackage" type="string">
-      <desc>
-Depth of nesting of reference documentation when processing ODD
-</desc>
+      <desc>Depth of nesting of reference documentation when processing ODD</desc>
    </doc>
    <xsl:param name="specLinkDepth">2</xsl:param>
 

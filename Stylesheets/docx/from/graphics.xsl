@@ -73,9 +73,7 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Convert Word drawing objects
-    </desc>
+      <desc>Convert Word drawing objects</desc>
    </doc>
     <xsl:template match="w:drawing">
       <xsl:param name="n" tunnel="yes"/>
@@ -171,9 +169,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>
-        Guides the identity transformation of blips
-    </desc>
+      <desc>Guides the identity transformation of blips</desc>
    </doc>
     <xsl:template match="a:blip" mode="iden">
         <a:blip>

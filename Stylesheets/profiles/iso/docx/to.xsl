@@ -79,8 +79,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
 	Inline Templates:
-	Here we can overwrite how inline elements are rendered
-      </desc>
+	Here we can overwrite how inline elements are rendered</desc>
   </doc>
   <xsl:template match="tei:c[@iso:style and @n]">
     <w:r>
@@ -589,8 +588,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-	Table of contents section
-      </desc>
+	Table of contents section</desc>
   </doc>
   <xsl:template match="tei:front/tei:div[@type='toc']">
     <xsl:call-template name="block-element">
@@ -783,9 +781,7 @@ of this software, even if advised of the possibility of such damage.
     </w:p>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-        Table of Contents
-    </desc>
+    <desc>Table of Contents</desc>
   </doc>
   <xsl:template name="generate-toc">
     <w:p>

@@ -403,8 +403,7 @@ of this software, even if advised of the possibility of such damage.
       Collapse all white space, then
       trim leading space on the first text node in an element and
       trim trailing space on the last text node in an element,
-      trim both if a text node is both first and last, i.e., is the only text node in the element.
-      </desc>
+      trim both if a text node is both first and last, i.e., is the only text node in the element.</desc>
   </doc>
     <xsl:template match="text()">
       <xsl:choose>
