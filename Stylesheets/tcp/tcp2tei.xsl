@@ -2271,25 +2271,10 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
-	A p inside add is lost, just a line-break added
+	A singleton p inside a note is bypassed
       </p>
     </desc>
   </doc>
-  <xsl:template match="tei:add/tei:p">
-    <lb/>
-    <xsl:apply-templates select="*|text()|processing-instruction()|comment()"  mode="pass2"/>
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>
-	A singleton p or q inside a note is bypassed
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:note[count(*)=1 and not(text())]/tei:q">
-    <xsl:apply-templates select="*|processing-instruction()|comment()|text()"  mode="pass2"/>
-  </xsl:template>
   <xsl:template match="tei:note[count(*)=1 and not(text())]/tei:p">
     <xsl:apply-templates select="*|processing-instruction()|comment()|text()"  mode="pass2"/>
   </xsl:template>
@@ -2297,7 +2282,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
-	A singleton p inside a cell is dropped
+	A singleton p inside a cell is bypassed
       </p>
     </desc>
   </doc>
@@ -2310,26 +2295,17 @@ of this software, even if advised of the possibility of such damage.
     </cell>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>
-	A singleton div inside a body is dropped
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="tei:body[count(*)=1]/tei:div" mode="pass2">
-    <xsl:apply-templates mode="pass2"/>
-  </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
-	A singleton floatingText inside a q drops the q
+	A p inside add is lost, just a line-break added
       </p>
     </desc>
   </doc>
-  <xsl:template match="tei:q[not(text()) and count(*)=1]/tei:floatingText" mode="pass2">
-    <xsl:apply-templates mode="pass2"/>
+  <xsl:template match="tei:add/tei:p">
+    <lb/>
+    <xsl:apply-templates select="*|text()|processing-instruction()|comment()"  mode="pass2"/>
   </xsl:template>
 
   <xsl:template match="tei:label[following-sibling::*[1][self::tei:head]]" mode="pass2"/>
