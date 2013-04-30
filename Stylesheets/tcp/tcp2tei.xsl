@@ -264,50 +264,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>
-	A paragraph with some types of child only can lose itself
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="P[not(parent::SP or parent::HEADNOTE or
-		       parent::POSTSCRIPT or parent::ARGUMENT) and count(*)=1 and
-		       not(text()) and 
-		       (LETTER or LIST or TABLE)]" 
-		>
-    <xsl:apply-templates select="*|text()|processing-instruction()|comment()" />
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>
-	A paragraph inside ADD is lost, just a line-break added
-      </p>
-    </desc>
-  </doc>
-  <xsl:template match="ADD/P">
-    <lb/>
-    <xsl:apply-templates select="*|text()|processing-instruction()|comment()" />
-  </xsl:template>
-
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>
-      <p>Remove gratuitous p layer inside cell</p>
-    </desc>
-</doc>
-  <xsl:template match="CELL[count(*)=1 and not(text()) and P]">
-    <cell>
-      <xsl:apply-templates select="@*" />
-      <xsl:for-each select="P">
-        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" />
-      </xsl:for-each>
-    </cell>
-  </xsl:template>
-
-  <xsl:template match="NOTE[count(*)=1 and not(text())]/Q">
-    <xsl:apply-templates select="*|processing-instruction()|comment()|text()" />
-  </xsl:template>
 
   <xsl:template match="TITLESTMT/TITLE/text()[last()]">
     <xsl:choose>
@@ -2285,10 +2241,13 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="makeID"/>
   <xsl:template name="idnoHook"/>
 
+
+  <!-- second pass to clean up -->
   <xsl:template match="@*|comment()|processing-instruction()|text()"
     mode="pass2">
     <xsl:copy-of select="."/>
   </xsl:template>
+
   <xsl:template match="*" mode="pass2">
     <xsl:copy>
       <xsl:apply-templates
@@ -2296,7 +2255,77 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A p with list, floatingText or table as singletons can lose itself
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:p[not(parent::tei:sp or parent::tei:headnote or
+		       parent::tei:postscript or parent::tei:argument) and count(*)=1 and
+		       not(text()) and   (tei:list or tei:table)]" >
+    <xsl:apply-templates select="*|text()|processing-instruction()|comment()"  mode="pass2"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A p inside add is lost, just a line-break added
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:add/tei:p">
+    <lb/>
+    <xsl:apply-templates select="*|text()|processing-instruction()|comment()"  mode="pass2"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A singleton q inside a note is bypassed
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:note[count(*)=1 and not(text())]/tei:q">
+    <xsl:apply-templates select="*|processing-instruction()|comment()|text()"  mode="pass2"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A singleton p inside a note is dropped
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:cell[count(*)=1 and not(text()) and tei:p]" mode="pass2">
+    <cell>
+      <xsl:apply-templates select="@*" />
+      <xsl:for-each select="tei:p">
+        <xsl:apply-templates select="*|processing-instruction()|comment()|text()" mode="pass2"/>
+      </xsl:for-each>
+    </cell>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A singleton div inside a body is dropped
+      </p>
+    </desc>
+  </doc>
   <xsl:template match="tei:body[count(*)=1]/tei:div" mode="pass2">
+    <xsl:apply-templates mode="pass2"/>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	A singleton floatingText inside a q drops the q
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:q[not(text()) and count(*)=1]/tei:floatingText" mode="pass2">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
 
