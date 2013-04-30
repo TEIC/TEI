@@ -237,13 +237,13 @@ of this software, even if advised of the possibility of such damage.
     <desc>Use value of "n" attribute to number
     sections</desc>
   </doc>
+  <xsl:param name="prenumberedHeadings">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="numbering" type="boolean">
     <desc>
     Automatically number paragraphs.
   </desc>
   </doc>
   <xsl:param name="numberParagraphs">false</xsl:param>
-  <xsl:param name="prenumberedHeadings">false</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="output" type="string">
     <desc>The complete URL when the document is
     being delivered from a web server (normally set by Apache or Cocoon)</desc>
