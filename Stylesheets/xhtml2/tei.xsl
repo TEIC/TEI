@@ -535,7 +535,8 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="ancestor::tei:classSpec and not($STDOUT='true')">
 	  <xsl:sequence select="concat('ref-',ancestor::tei:classSpec/@ident,$standardSuffix,'#',$ident)"/>
 	</xsl:when>
-	<xsl:when test="not($keep) and $STDOUT='true' and number($depth) &lt;= number($splitLevel)">
+	<xsl:when test="not($keep) and $STDOUT='true' and
+			number($depth) &lt;= number($splitLevel)">
 	  <xsl:sequence select="concat($masterFile,$standardSuffix,$urlChunkPrefix,$ident)"/>
 	</xsl:when>
 	<xsl:when test="ancestor::tei:back and not($splitBackmatter)">
@@ -569,6 +570,9 @@ of this software, even if advised of the possibility of such damage.
 	      <xsl:sequence select="concat($masterFile,$urlChunkPrefix,$parent,'#',$ident)"/>
 	    </xsl:when>
 	    <xsl:when test="ancestor::tei:group">
+	      <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
+	    </xsl:when>
+	    <xsl:when test="ancestor::tei:floatingText">
 	      <xsl:sequence select="concat($parent,$standardSuffix,'#',$ident)"/>
 	    </xsl:when>
 	    <xsl:when test="$keep and number($depth=0)">
