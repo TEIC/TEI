@@ -455,7 +455,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="LANGUSAGE/@ID" />
   <xsl:template match="PB/@REF">
     <xsl:attribute name="facs">
-      <xsl:text>p</xsl:text>
       <xsl:value-of select="."/>
     </xsl:attribute>
     <xsl:attribute name="rend">
@@ -2348,10 +2347,25 @@ of this software, even if advised of the possibility of such damage.
       </p>
     </desc>
   </doc>
-<!--
-  <xsl:template match="tei:list[teiL:label/tei:list]">
+
+  <xsl:template match="tei:list[tei:label/tei:list]">
+    <table rend="braced">
+      <xsl:for-each select="tei:label">
+	<row>
+	  <cell>
+	    <xsl:apply-templates
+		select="*|text()|processing-instruction()|comment()"
+		mode="pass2"/>
+	  </cell>
+	  <cell>
+	    <xsl:apply-templates
+	      select="following-sibling::item[1]"  mode="pass2"/>
+	  </cell>
+	</row>
+      </xsl:for-each>
+    </table>
   </xsl:template>
--->
+
   <xsl:template match="tei:label[following-sibling::*[1][self::tei:head]]" mode="pass2"/>
 
   <xsl:template match="tei:head[preceding-sibling::*[1][self::tei:label]]" mode="pass2">
