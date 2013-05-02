@@ -455,6 +455,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="LANGUSAGE/@ID" />
   <xsl:template match="PB/@REF">
     <xsl:attribute name="facs">
+      <xsl:text>p</xsl:text>
       <xsl:value-of select="."/>
     </xsl:attribute>
     <xsl:attribute name="rend">
@@ -1859,12 +1860,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:attribute>
   </xsl:template>
 
-  <xsl:template match="@FACS">
-    <xsl:attribute name="facs">
-      <xsl:value-of select="translate(.,' :[]','_')"/>
-    </xsl:attribute>
-  </xsl:template>
-
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
@@ -2255,6 +2250,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
   
+  <xsl:template match="@facs" mode="pass2">
+    <xsl:attribute name="facs">
+      <xsl:value-of select="translate(.,' []','_()')"/>
+    </xsl:attribute>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
@@ -2304,29 +2305,53 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="tei:add[tei:p]" mode="pass2">
-    <addSpan>
-      <xsl:attribute name="spanTo">
-	<xsl:text>#addSpan</xsl:text>
-	<xsl:number level="any"/>
-      </xsl:attribute>
-    </addSpan>
-      <xsl:apply-templates
-	      select="*|text()|processing-instruction()|comment()"
-	      mode="pass2"/>
-      <anchor>
-	<xsl:attribute name="xml:id">
-	<xsl:text>addSpan</xsl:text>
-	  <xsl:number level="any"/>
-      </xsl:attribute>
-      </anchor>
+    <xsl:choose>
+      <xsl:when test="count(tei:p)=1">
+	<add>
+	  <xsl:for-each select="tei:p">
+	    <xsl:apply-templates
+		select="*|text()|processing-instruction()|comment()"
+		mode="pass2"/>
+	  </xsl:for-each>
+	</add>
+      </xsl:when>
+      <xsl:otherwise>
+	<addSpan>
+	  <xsl:attribute name="spanTo">
+	    <xsl:text>#addSpan</xsl:text>
+	    <xsl:number level="any"/>
+	  </xsl:attribute>
+	</addSpan>
+	<xsl:apply-templates
+	    select="*|text()|processing-instruction()|comment()"
+	    mode="pass2"/>
+	<anchor>
+	  <xsl:attribute name="xml:id">
+	    <xsl:text>addSpan</xsl:text>
+	    <xsl:number level="any"/>
+	  </xsl:attribute>
+	</anchor>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
   <xsl:template match="tei:p[tei:add/tei:p and not(text())]" mode="pass2">
 	  <xsl:apply-templates
 	      select="*|text()|processing-instruction()|comment()"
 	      mode="pass2"/>
   </xsl:template>
 
-
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	a list inside a label will have to turn into a table
+      </p>
+    </desc>
+  </doc>
+<!--
+  <xsl:template match="tei:list[teiL:label/tei:list]">
+  </xsl:template>
+-->
   <xsl:template match="tei:label[following-sibling::*[1][self::tei:head]]" mode="pass2"/>
 
   <xsl:template match="tei:head[preceding-sibling::*[1][self::tei:label]]" mode="pass2">
