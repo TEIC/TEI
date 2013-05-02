@@ -2299,14 +2299,33 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
-	A p inside add is lost, just a line-break added
+	p inside add means we must make an addSpan
       </p>
     </desc>
   </doc>
-  <xsl:template match="tei:add/tei:p">
-    <lb/>
-    <xsl:apply-templates select="*|text()|processing-instruction()|comment()"  mode="pass2"/>
+  <xsl:template match="tei:add[tei:p]" mode="pass2">
+    <addSpan>
+      <xsl:attribute name="spanTo">
+	<xsl:text>#addSpan</xsl:text>
+	<xsl:number level="any"/>
+      </xsl:attribute>
+    </addSpan>
+      <xsl:apply-templates
+	      select="*|text()|processing-instruction()|comment()"
+	      mode="pass2"/>
+      <anchor>
+	<xsl:attribute name="xml:id">
+	<xsl:text>addSpan</xsl:text>
+	  <xsl:number level="any"/>
+      </xsl:attribute>
+      </anchor>
   </xsl:template>
+  <xsl:template match="tei:p[tei:add/tei:p and not(text())]" mode="pass2">
+	  <xsl:apply-templates
+	      select="*|text()|processing-instruction()|comment()"
+	      mode="pass2"/>
+  </xsl:template>
+
 
   <xsl:template match="tei:label[following-sibling::*[1][self::tei:head]]" mode="pass2"/>
 
