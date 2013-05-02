@@ -57,23 +57,10 @@ The element indicated by @spanTo must  follow the current element</sch:report>
 	current element</desc>
         <constraint>
 <sch:rule context="tei:*[@spanTo]">
-<sch:assert test="following::*[@xml:id=substring(current()/@spanTo,2)]">
-The element indicated by @spanTo must follow the current element <sch:name/></sch:assert>
+<sch:assert test="id(substring(@spanTo,2)) and following::*[@xml:id=substring(current()/@spanTo,2)]">
+The element indicated by @spanTo (<sch:value-of select="@spanTo"/>) must follow the current element <sch:name/></sch:assert>
 </sch:rule>      </constraint>
       </constraintSpec>
-
-
-      <constraintSpec ident="spanTo-3" scheme="isoschematron">
-        <desc xml:lang="fr">La valeur de @spanTo doit identifier un élément
-	dans le document actuel</desc>
-        <constraint>
-<sch:rule context="tei:*[@spanTo]">
-<sch:assert test="id(substring(@spanTo,2))">
-@spanTo on <sch:name/> must point to  the identifier of some element  in this document</sch:assert>
-</sch:rule>
-     </constraint>
-      </constraintSpec>
-
 
       <valDesc>points to an element following this one in the current document. </valDesc>
       <valDesc versionDate="2009-05-28" xml:lang="fr">pointe vers un élément qui suit celui présent dans le document courant.</valDesc>
