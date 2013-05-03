@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="teiant">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id: build-to.xml 12022 2013-04-27 11:25:40Z rahtz $
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+ Convert TEI documents .
+ -->
+  <property name="tempPrefix">build</property>
+  <!-- be talkative -->
+  <property name="verbose" value="false"/>
+  <!-- Path to TEI XML file. -->
+  <property name="inputFile" value=""/>
+  <!-- Path where the output file will be saved. -->
+  <property name="outputFile" value=""/>
+  <property name="catalogfile" value="../catalog.xml"/>
+  <!-- where does oxygen keep stuff -->
+  <property name="oxygenlib" value=""/>
+  <property name="profiledir" value="../profiles"/>
+  <!-- which profile -->
+  <property name="profile" value="default"/>
+  <!-- how to move graphics -->
+  <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
+  <!--
+    ODD processing.
+ -->
+  <!-- whether to make summary odd doc  -->
+  <property name="summaryDoc" value="false"/>
+  <property name="odd2oddxsl" value="../odds2/odd2odd.xsl"/>
+  <property name="odd2litexsl" value="../odds2/odd2lite.xsl"/>
+  <condition property="processODD">
+    <equals arg1="${odd}" arg2="true"/>
+  </condition>
+
+  <dirname property="outputDir" file="${outputFile}"/>
+  <dirname property="inputDir" file="${inputFile}"/>
+  <tempfile property="temp.file" destDir="${java.io.tmpdir}" prefix="${tempPrefix}"/>
+  <dirname property="outputTempDir" file="${temp.file}/ant${tempPrefix}"/>
+  <path id="classpath">
+    <pathelement path="${java.class.path}"/>
+  </path>
+
+  <macrodef name="buildepub">
+    <attribute name="in"/>
+    <attribute name="inDir"/>
+    <attribute name="out"/>
+    <sequential>
+      <!-- The transformation for EPUB output. -->
+      <echo level="info">XSLT generate ePub files in ${outputTempDir}</echo>
+      <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
+        <factory name="net.sf.saxon.TransformerFactoryImpl">
+	  <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+	</factory>
+        <classpath location="${oxygenlib}/saxon9ee.jar"/>
+        <param name="directory" expression="file:///${outputTempDir}"/>
+        <param name="inputDir" expression="@{inDir}/"/>
+        <param name="fixgraphicsurl" expression="true"/>
+        <!-- supply unique URN for ebook-->
+        <param name="uid" expression="${uid}" if="uid"/>
+        <!-- set splitting level-->
+        <param name="splitLevel" expression="${splitLevel}" if="splitLevel"/>
+        <!-- supply name of publisher for ebook-->
+        <param name="publisher" expression="${publisher}" if="publisher"/>
+        <!-- supply subject/category for ebook-->
+        <param name="subject" expression="${subject}" if="subject"/>
+        <!-- supply name of JPEG file for ebook cover-->
+        <param name="coverimage" expression="${coverimage}" if="coverimage"/>
+        <!-- supply name of CSS file-->
+        <param name="cssFile" expression="${cssFile}" if="cssFile"/>
+        <!-- name of media overlay file -->
+        <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+        <!-- file per page -->
+        <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+        <!-- epub viewport -->
+        <param name="viewPortHeight" expression="${viewPortHeight}" if="viewPortHeight"/>
+        <param name="viewPortWidth" expression="${viewPortWidth}" if="viewPortWidth"/>
+        <!-- supply name of language-->
+        <param name="lang" expression="${lang}" if="lang"/>
+        <!-- emit some diagnostics"-->
+        <param name="debug" expression="${debug}" if="debug"/>
+        <!-- be verbose-->
+        <param name="verbose" expression="${verbose}" if="verbose"/>
+        <!-- disable compression on the output ZIP -->
+        <param name="nocompress" expression="${nocompress}" if="nocompress"/>
+      </xslt>
+      <echo level="info">Get names of graphics files and write an ant  task</echo>
+      <xslt force="yes" style="${listgraphics}" in="@{in}" out="${outputTempDir}/copy.xml">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <classpath location="${oxygenlib}/saxon9ee.jar"/>
+        <param name="outputDir" expression="${outputTempDir}"/>
+        <param name="inputDir" expression="@{inDir}"/>
+        <param name="mediaDir" expression="OPS/media"/>
+        <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+        <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+      </xslt>
+      <echo level="info">Copy image files</echo>
+      <ant antfile="${outputTempDir}/copy.xml"/>
+      <echo level="info">ZIP: put files from ${outputTempDir} together into @{out}</echo>
+      <delete file="@{out}"/>
+      <zip destfile="@{out}" basedir="${outputTempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+      <zip destfile="@{out}" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="buildepubsimple">
+    <attribute name="in"/>
+    <attribute name="inDir"/>
+    <attribute name="out"/>
+    <sequential>
+      <echo level="info">XSLT generate ePub files in ${outputTempDir}</echo>
+      <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
+        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <classpath location="${oxygenlib}/saxon9ee.jar"/>
+        <param name="directory" expression="file:///${outputTempDir}"/>
+        <param name="inputDir" expression="@{inDir}/"/>
+      </xslt>
+      <echo level="info">ZIP: put files from ${outputTempDir} together into @{out}</echo>
+      <delete file="@{out}"/>
+      <zip destfile="@{out}" basedir="${outputTempDir}" compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+      <zip destfile="@{out}" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="buildhtml">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <sequential>
+    <echo level="info">XSLT generate HTML files</echo>
+    <xslt force="yes" style="${teitohtml}" in="@{in}" out="@{out}">
+      <factory name="net.sf.saxon.TransformerFactoryImpl">
+	  <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+      </factory>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="inputDir" expression="${inputDir}/"/>
+      <param name="cssFile" expression="${cssFile}" if="cssFile"/>
+      <!-- name of media overlay file -->
+      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+      <!-- file per page -->
+      <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="buildgeneric">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <attribute name="xsl"/>
+    <attribute name="type"/>
+    <sequential>
+    <echo level="info">XSLT generate @{type} files</echo>
+    <xslt force="yes" style="@{xsl}" in="@{in}" out="@{out}">
+      <factory name="net.sf.saxon.TransformerFactoryImpl">
+	  <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+      </factory>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="inputDir" expression="${inputDir}/"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="odd2odd">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <sequential>
+      <echo>Do ODD processing </echo>
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{in}.tmpodd">
+	<factory name="net.sf.saxon.TransformerFactoryImpl">
+	  <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+	</factory>
+	<classpath location="${oxygenlib}/saxon9ee.jar"/>
+	<param name="lang" expression="${lang}" if="lang"/>
+	<param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+	<param name="verbose" expression="${verbose}" if="verbose"/>
+      </xslt>
+      <xslt force="yes" style="${odd2litexsl}" in="@{in}.tmpodd" out="@{out}">
+	<factory name="net.sf.saxon.TransformerFactoryImpl"/>
+	<classpath location="${oxygenlib}/saxon9ee.jar"/>
+	<param name="summaryDoc" expression="${summaryDoc}" if="summaryDoc"/>
+	<param name="displayMode" expression="rnc"/>
+      </xslt>
+      <delete file="@{in}.tmpodd"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="oddexpand">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <sequential>
+      <echo>Do ODD expand processing </echo>
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{in}.processedodd">
+	<factory name="net.sf.saxon.TransformerFactoryImpl">
+	  <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+	</factory>
+	<classpath location="${oxygenlib}/saxon9ee.jar"/>
+	<param name="lang" expression="${lang}" if="lang"/>
+	<param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+	<param name="verbose" expression="${verbose}" if="verbose"/>
+      </xslt>
+    </sequential>
+  </macrodef>
+
+  <target name="setup">
+    <mkdir dir="${outputTempDir}"/>
+  </target>
+
+  <target name="cleanup" unless="${debug}">
+    <delete dir="${outputTempDir}"/>
+  </target>
+
+
+</project>

@@ -15,57 +15,24 @@
 	License along with this library; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	
-        Id: $Id: build-to.xml 9319 2011-09-14 15:25:52Z rahtz $
+        Id: $Id: build-to.xml 11933 2013-04-14 14:45:01Z rahtz $
         Copyright: 2011, TEI Consortium<
 -->
   <!--
  Convert TEI documents into JSON files.
  -->
-  <!-- Path to TEI XML file. -->
-  <property name="inputFile" value=""/>
-  <!-- Path where the output schema file will be saved. -->
-  <property name="outputFile" value=""/>
-  <!-- which profile -->
-  <property name="profile" value="default"/>
-  <property name="catalogfile" value="../catalog.xml"/>
-  <!-- where does oxygen keep stuff -->
-  <property name="oxygenlib" value=""/>
-  <property name="profiledir" value="../profiles"/>
-  <!-- Stylesheet for transformation -->
-  <property name="odd2json" value="${profiledir}/${profile}/json/to.xsl"/>
-  <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir" file="${outputFile}"/>
-  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
-  <path id="classpath">
-    <pathelement path="${java.class.path}"/>
-  </path>
-  <target name="setup">
-    <delete dir="${outputTempDir}"/>
-    <mkdir dir="${outputTempDir}"/>
+  <import file="../common2/teianttasks.xml"/>
+
+  <target name="dist" depends="setup,odd,notodd,cleanup"/>
+
+  <target name="odd" if="processODD">
+    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildgeneric type="json" xsl="${profiledir}/${profile}/json/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
+    <delete file="${inputFile}.processedodd"/>
   </target>
-  <target name="dist" depends="setup,convert,cleanup"/>
-  <target name="convert">
-    <!-- Recreate temporary output directory -->
-    <!-- The transformation for JSON output. -->
-    <echo level="info">XSLT generate JSON file</echo>
-    <xslt force="yes" style="${odd2json}" in="${inputFile}" out="${outputFile}">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="$catalogfile"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="directory" expression="file:///${outputTempDir}"/>
-      <!-- supply name of language-->
-      <param name="lang" expression="${lang}" if="lang"/>
-      <!-- emit some diagnostics"-->
-      <param name="debug" expression="${debug}" if="debug"/>
-      <!-- be verbose-->
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
+
+  <target name="notodd" unless="processODD">
+    <buildgeneric type="json" xsl="${profiledir}/${profile}/json/to.xsl" in="${inputFile}" out="${outputFile}"/>
   </target>
-  <target name="cleanup" unless="debug">
-    <delete dir="${outputTempDir}"/>
-  </target>
+
 </project>

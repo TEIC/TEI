@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitohtml">
+<project basedir="." default="dist" name="teitodocbook">
   <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -15,45 +15,24 @@
 	License along with this library; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	
-        Id: $Id: build-to.xml 9886 2011-12-04 22:50:41Z rahtz $
+        Id: $Id: build-to.xml 11933 2013-04-14 14:45:01Z rahtz $
         Copyright: 2011, TEI Consortium<
 -->
   <!--
- Convert TEId ocuments into Docbook files.
+ Convert TEI documents into DOCBOOK files.
  -->
-  <!-- Path to TEI XML file. -->
-  <property name="inputFile" value=""/>
-  <!-- Path where the output Docbook file will be saved. -->
-  <property name="outputFile" value=""/>
-  <!-- which profile -->
-  <property name="profile" value="default"/>
-  <property name="catalogfile" value="../catalog.xml"/>
-  <!-- where does oxygen keep stuff -->
-  <property name="oxygenlib" value=""/>
-  <!-- Stylesheet for transformation -->
-  <property name="teitodocbook" value="../profiles/${profile}/docbook/to.xsl"/>
-  <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir" file="${outputFile}"/>
-  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
-  <path id="classpath">
-    <pathelement path="${java.class.path}"/>
-  </path>
-  <target name="dist" depends="convert"/>
-  <target name="convert">
-    <echo level="info">XSLT generate Docbook files</echo>
-    <xslt force="yes" style="${teitodocbook}" in="${inputFile}" out="${outputFile}">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="$catalogfile"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="directory" expression="file:///${outputTempDir}"/>
-      <!-- emit some diagnostics"-->
-      <param name="debug" expression="${debug}" if="debug"/>
-      <!-- be verbose-->
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
+  <import file="../common2/teianttasks.xml"/>
+
+  <target name="dist" depends="setup,odd,notodd,cleanup"/>
+
+  <target name="odd" if="processODD">
+    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildgeneric type="docbook" xsl="${profiledir}/${profile}/docbook/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
+    <delete file="${inputFile}.processedodd"/>
   </target>
+
+  <target name="notodd" unless="processODD">
+    <buildgeneric type="docbook" xsl="${profiledir}/${profile}/docbook/to.xsl" in="${inputFile}" out="${outputFile}"/>
+  </target>
+
 </project>
