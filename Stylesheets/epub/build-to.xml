@@ -88,7 +88,9 @@
       </xslt>
       <echo level="info">Get names of graphics files and write an ant  task</echo>
       <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <factory name="net.sf.saxon.TransformerFactoryImpl">
+	  <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+	</factory>
         <classpath location="${oxygenlib}/saxon9ee.jar"/>
         <param name="outputDir" expression="${outputTempDir}"/>
         <param name="inputDir" expression="@{inDir}"/>
