@@ -135,6 +135,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:for-each select="row">
           <xsl:variable name="r" select="."/>
           <xsl:for-each select="tokenize(normalize-space(replace(cell[1],' ',' ')),' ')">
+	    <xsl:if test="not(.='External')">
             <session>
               <weekday>
                 <xsl:choose>
@@ -162,6 +163,7 @@ of this software, even if advised of the possibility of such damage.
                 <xsl:value-of select="$r/cell[7]"/>
               </demons>
             </session>
+	    </xsl:if>
           </xsl:for-each>
         </xsl:for-each>
       </sessions>
