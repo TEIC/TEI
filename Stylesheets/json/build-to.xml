@@ -23,15 +23,7 @@
  -->
   <import file="../common2/teianttasks.xml"/>
 
-  <target name="dist" depends="setup,odd,notodd,cleanup"/>
-
-  <target name="odd" if="processODD">
-    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
-    <buildgeneric type="json" xsl="${profiledir}/${profile}/json/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
-    <delete file="${inputFile}.processedodd"/>
-  </target>
-
-  <target name="notodd" unless="processODD">
+  <target name="dist">
     <buildgeneric type="json" xsl="${profiledir}/${profile}/json/to.xsl" in="${inputFile}" out="${outputFile}"/>
   </target>
 

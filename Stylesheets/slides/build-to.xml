@@ -15,67 +15,41 @@
 	License along with this library; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	
-        Id: $Id: build-to.xml 9319 2011-09-14 15:25:52Z rahtz $
+        Id: $Id: build-to.xml 12074 2013-05-03 18:30:52Z rahtz $
         Copyright: 2011, TEI Consortium<
 -->
   <!--
- Convert TEI documents into SLIDES files.
+ Convert TEI documents into HTML files.
  -->
-  <!-- Path to TEI XML file. -->
-  <property name="inputFile" value=""/>
-  <!-- Path where the output schema file will be saved. -->
-  <property name="outputFile" value=""/>
-  <!-- which profile -->
-  <property name="profile" value="default"/>
-  <property name="catalogfile" value="../catalog.xml"/>
-  <!-- where does oxygen keep stuff -->
-  <property name="oxygenlib" value=""/>
-  <property name="profiledir" value="../profiles"/>
-  <!-- Stylesheet for transformation -->
-  <property name="odd2slides" value="${profiledir}/${profile}/slides/to.xsl"/>
-  <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir" file="${outputFile}"/>
+  <import file="../common2/teianttasks.xml"/>
+
   <basename property="basefile" file="${outputFile}" suffix=".slides"/>
-  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
-  <path id="classpath">
-    <pathelement path="${java.class.path}"/>
-  </path>
-  <target name="setup">
-    <delete dir="${outputTempDir}"/>
-    <mkdir dir="${outputTempDir}"/>
+  <property name="texfile" value="${basefile}.tex"/>
+
+  <target name="dist" depends="odd,notodd,go,teicleanup"/>
+
+  <target name="odd" if="processODD">
+    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildgeneric type="slides" xsl="${profiledir}/${profile}/slides/to.xsl"  in="${inputFile}.processedodd" out="${inputDir}/${texfile}"/>
+    <delete file="${inputFile}.processedodd"/>
   </target>
-  <target name="dist" depends="setup,convert,cleanup"/>
-  <target name="convert">
-    <!-- Recreate temporary output directory -->
-    <!-- The transformation for SLIDES output. -->
-    <echo level="info">XSLT generate SLIDES file</echo>
-    <xslt force="yes" style="${odd2slides}" in="${inputFile}" out="${outputFile}">
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="directory" expression="file:///${outputTempDir}"/>
-      <!-- supply name of language-->
-      <param name="lang" expression="${lang}" if="lang"/>
-      <!-- emit some diagnostics"-->
-      <param name="debug" expression="${debug}" if="debug"/>
-      <param name="logoFile" expression="_slidelogo.png"/>
-      <!-- be verbose-->
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
-    <copy file="${profiledir}/${profile}/slides/logo.png" tofile="${outputDir}/_slidelogo.png"/>
-    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
-      <arg value="-interaction=nonstopmode"/>
-      <arg value="${outputFile}"/>
-    </exec>
-    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
-      <arg value="-interaction=batchmode"/>
-      <arg value="${outputFile}"/>
-    </exec>
-    <echo>wrote ${outputFile}.pdf</echo>
+
+  <target name="notodd" unless="processODD">
+    <buildgeneric type="slides" xsl="${profiledir}/${profile}/slides/to.xsl"  in="${inputFile}" out="${inputDir}/${texfile}"/>
   </target>
+
+  <target name="go">
+    <copy file="${profiledir}/${profile}/slides/logo.png"
+	  tofile="${outputDir}/_slidelogo.png"/>
+    <runtex in="${inputDir}/${texfile}" indir="${inputDir}"
+	    outdir="${outputDir}"/>
+  </target>
+
+
   <target name="handout">
     <!-- The transformation for SLIDES handout output. -->
     <echo level="info">XSLT generate slides handout file</echo>
-    <xslt force="yes" style="${odd2slides}" in="${inputFile}" out="${outputDir}/${basefile}-handout.tex">
+    <xslt force="yes" style="${odd2slides}" in="${inputFile}" out="${texfile}-handout.tex">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="directory" expression="file:///${outputTempDir}"/>
@@ -97,32 +71,12 @@
     </xslt>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=nonstopmode"/>
-      <arg value="${outputDir}/${basefile}-handout.tex"/>
+      <arg value="${texfile}-handout.tex"/>
     </exec>
     <exec executable="xelatex" dir="${outputDir}" failonerror="true">
       <arg value="-interaction=batchmode"/>
-      <arg value="${outputDir}/${basefile}-handout.tex"/>
+      <arg value="${texfile}-handout.tex"/>
     </exec>
-    <echo>wrote ${outputDir}/${basefile}-handout.tex</echo>
-  </target>
-  <target name="cleanup" unless="debug">
-    <delete file="${outputDir}/${basefile}.nav"/>
-    <delete file="${outputDir}/${basefile}.out"/>
-    <delete file="${outputDir}/${basefile}.log"/>
-    <delete file="${outputDir}/${basefile}.aux"/>
-    <delete file="${outputDir}/${basefile}.toc"/>
-    <delete file="${outputDir}/${basefile}.snm"/>
-    <delete file="${outputDir}/${basefile}.vrb"/>
-    <delete file="${outputDir}/${basefile}-handout.nav"/>
-    <delete file="${outputDir}/${basefile}-handout.out"/>
-    <delete file="${outputDir}/${basefile}-handout.log"/>
-    <delete file="${outputDir}/${basefile}-handout.aux"/>
-    <delete file="${outputDir}/${basefile}-handout.toc"/>
-    <delete file="${outputDir}/${basefile}-handout.snm"/>
-    <delete file="${outputDir}/${basefile}-handout.vrb"/>
-    <delete file="${outputDir}/${basefile}-handout.tex"/>
-    <delete file="${outputDir}/_slidelogo.png"/>
-    <delete file="${outputDir}/${outputFile}"/>
-    <delete dir="${outputTempDir}"/>
+    <echo>wrote ${texfile}-handout.tex</echo>
   </target>
 </project>

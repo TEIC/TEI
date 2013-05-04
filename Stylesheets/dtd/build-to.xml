@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitodtd">
+<project basedir="." default="go" name="teitodtd">
   <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -23,9 +23,7 @@
  -->
   <import file="../common2/teianttasks.xml"/>
 
-  <target name="dist" depends="setup,odd,cleanup"/>
-
-  <target name="odd">
+  <target name="go">
     <oddexpand in="${inputFile}" out="${inputFile}.processedodd"/>
     <buildgeneric type="dtd" xsl="${profiledir}/${profile}/dtd/to.xsl" in="${inputFile}.processedodd" out="${outputFile}"/>
     <delete file="${inputFile}.processedodd"/>

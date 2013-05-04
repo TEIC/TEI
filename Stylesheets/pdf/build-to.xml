@@ -15,94 +15,32 @@
 	License along with this library; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 	
-        Id: $Id: build-to.xml 9319 2011-09-14 15:25:52Z rahtz $
+        Id: $Id: build-to.xml 12074 2013-05-03 18:30:52Z rahtz $
         Copyright: 2011, TEI Consortium<
 -->
-  <import file="../odds2/build-to.xml"/>
   <!--
- Convert TEI documents into TEX files and thence to PDF
+ Convert TEI documents into HTML files.
  -->
-  <!-- Path to TEI XML file. -->
-  <property name="inputFile" value=""/>
-  <!-- Path where the output schema file will be saved. -->
-  <property name="outputFile" value=""/>
-  <!-- which profile -->
-  <property name="profile" value="default"/>
-  <property name="catalogfile" value="../catalog.xml"/>
-  <!-- where does oxygen keep stuff -->
-  <property name="oxygenlib" value=""/>
-  <property name="profiledir" value="../profiles"/>
-  <!-- Stylesheet for transformation -->
-  <property name="odd2tex" value="${profiledir}/${profile}/pdf/to.xsl"/>
-  <property name="listgraphics" value="../docx/tools/listgraphics.xsl"/>
-  <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir" file="${outputFile}"/>
+  <import file="../common2/teianttasks.xml"/>
+
   <basename property="basefile" file="${outputFile}" suffix=".pdf"/>
-  <property name="texfile" value="${outputDir}/${basefile}"/>
-  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
-  <path id="classpath">
-    <pathelement path="${java.class.path}"/>
-  </path>
-  <target name="setup">
-    <delete dir="${outputTempDir}"/>
-    <mkdir dir="${outputTempDir}"/>
+  <property name="texfile" value="${basefile}.tex"/>
+
+  <target name="dist" depends="odd,notodd,go,teicleanup"/>
+
+  <target name="odd" if="processODD">
+    <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
+    <buildgeneric type="pdf" xsl="${profiledir}/${profile}/pdf/to.xsl"  in="${inputFile}.processedodd" out="${inputDir}/${texfile}"/>
+    <delete file="${inputFile}.processedodd"/>
   </target>
-  <target name="graphics">
-    <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" in="${inputFile}" out="${outputTempDir}/copy.xml">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="$catalogfile"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="mediaDir" expression="${outputTempDir}"/>
-    </xslt>
-    <echo level="info">Copy image files by running ant task</echo>
-    <ant antfile="${outputTempDir}/copy.xml"/>
+
+  <target name="notodd" unless="processODD">
+    <buildgeneric type="pdf" xsl="${profiledir}/${profile}/pdf/to.xsl"  in="${inputFile}" out="${inputDir}/${texfile}"/>
   </target>
-  <target name="dist" depends="setup,odd,notodd,convert,graphics,run,cleanup"/>
-  <target name="convert">
-    <!-- Recreate temporary output directory -->
-    <!-- The transformation for TEX output. -->
-    <echo>XSLT generate ${outputFile} from ${inputFile}  via TeX ${texfile}</echo>
-    <xslt force="yes" style="${odd2tex}" in="${outputTempDir}/tmp2.xml" out="${texfile}.tex">
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="directory" expression="file:///${outputTempDir}"/>
-      <param name="realFigures" expression="true"/>
-      <!-- supply name of language-->
-      <param name="lang" expression="${lang}" if="lang"/>
-      <!-- emit some diagnostics"-->
-      <param name="debug" expression="${debug}" if="debug"/>
-      <!-- be verbose-->
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
+
+  <target name="go">
+    <runtex in="${inputDir}/${texfile}" indir="${inputDir}"  outdir="${outputDir}"/>
   </target>
-  <target name="run">
-    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
-      <arg value="-interaction=nonstopmode"/>
-      <arg value="${texfile}.tex"/>
-    </exec>
-    <exec executable="xelatex" dir="${outputDir}" failonerror="true">
-      <arg value="-interaction=nonstopmode"/>
-      <arg value="${texfile}.tex"/>
-    </exec>
-    <echo>wrote ${outputFile}</echo>
-  </target>
-  <target name="cleanup" unless="debug">
-    <delete file="${texfile}.nav"/>
-    <delete file="${texfile}.blg"/>
-    <delete file="${texfile}.bbl"/>
-    <delete file="${texfile}.out"/>
-    <delete file="${texfile}.log"/>
-    <delete file="${texfile}.aux"/>
-    <delete file="${texfile}.toc"/>
-    <delete file="${texfile}.snm"/>
-    <delete file="${texfile}.vrb"/>
-    <delete file="${texfile}.tex"/>
-    <delete dir="${outputTempDir}"/>
-  </target>
+
+
 </project>
