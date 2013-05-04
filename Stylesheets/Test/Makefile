@@ -222,6 +222,10 @@ oddity:
 	rm test.odd2lite
 	rm test.odd2relax
 	rm test.odd2xslstripspace
+foo:
+	../teitoxsd test.odd test.xsd
+	../teitodtd test.odd test.dtd
+	../teitornc test.odd test.rnc
 
 scripts:
 	for i in teitobibtex teitodocbook teitodocx teitodtd teitoepub teitoepub3 teitofo teitohtml teitohtml5 teitojson teitolatex teitoodt teitopdf teitordf teitorelaxng teitornc teitoslides teitotxt teitoxsd; do ../$$i maria.xml $$i.result; rm $$i.result; done
