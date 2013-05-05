@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="dist" name="teitooo">
+<project basedir="." default="dist" name="teiodt">
   <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -19,82 +19,20 @@
         Copyright: 2011, TEI Consortium<
 -->
   <!--
- Convert TEI documents into OO files.
+ Convert TEI documents into odt files.
  -->
-  <!-- Path to TEI XML file. -->
-  <property name="inputFile" value=""/>
-  <!-- Path where the output oo file will be saved. -->
-  <property name="outputFile" value=""/>
-  <!-- which profile -->
-  <property name="profile" value="default"/>
-  <!-- which language -->
-  <property name="lang" value="en"/>
-  <property name="catalogfile" value="../catalog.xml"/>
-  <!-- where does oxygen keep stuff -->
-  <property name="oxygenlib" value=""/>
-  <property name="profiledir" value="../profiles"/>
-  <!-- Stylesheet for transformation -->
-  <property name="stylesheetFile" value="${profiledir}/${profile}/odt/to.xsl"/>
-  <property name="listgraphics" value="../tools/makegraphicsanttask.xsl"/>
-  <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir" file="${outputFile}"/>
-  <dirname property="xslDir" file="${stylesheetFile}"/>
-  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
-  <path id="classpath">
-    <pathelement path="${java.class.path}"/>
-  </path>
-  <import file="../odds2/build-to.xml"/>
-  <target name="setup">
-    <taskdef name="images" classname="ImageTask" classpath="../tools/ImageInfo/ImageInfo.jar"/>
-    <delete dir="${outputTempDir}"/>
-    <mkdir dir="${outputTempDir}"/>
+  <import file="../common2/teianttasks.xml"/>
+
+  <target name="dist" depends="setup,odd,notodd,cleanup"/>
+
+  <target name="odd" if="processODD">
+   <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
+   <buildodt in="${inputFile}" out="${outputFile}" xsl="${profiledir}/${profile}/odt/to.xsl"/>
+   <delete file="${inputFile}.processedodd"/>
   </target>
-  <target name="dist" depends="setup,odd,notodd">
-    <!-- Recreate temporary output directory -->
-    <!-- The transformation for OO output. -->
-    <echo level="info">unzip ODT template</echo>
-    <unzip src="${xslDir}/template.odt" dest="${outputTempDir}"/>
-    <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/copy.xml">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="$catalogfile"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="inputDir" expression="${inputFileDir}"/>
-      <param name="mediaDir" expression="Pictures"/>
-    </xslt>
-    <echo level="info">Copy image files by running ant task</echo>
-    <ant antfile="${outputTempDir}/copy.xml"/>
-    <echo level="info">Read dimensions of image files and write info file</echo>
-    <images outputFile="${outputTempDir}/image-size-info.xml">
-      <fileset dir="${outputTempDir}" includes="Pictures/*.*"/>
-    </images>
-    <echo level="info">XSLT generate files for oo </echo>
-    <xslt force="yes" style="${stylesheetFile}" in="${outputTempDir}/tmp2.xml" out="${outputTempDir}/newdocument.xml">
-      <xmlcatalog>
-        <catalogpath>
-          <pathelement location="$catalogfile"/>
-        </catalogpath>
-      </xmlcatalog>
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-      <classpath location="${oxygenlib}/saxon9ee.jar"/>
-      <param name="outputDir" expression="file:///${outputTempDir}"/>
-      <param name="freestanding" expression="true"/>
-      <!-- supply name of language-->
-      <param name="lang" expression="${lang}" if="lang"/>
-      <!-- emit some diagnostics"-->
-      <param name="debug" expression="${debug}" if="debug"/>
-      <!-- be verbose-->
-      <param name="verbose" expression="${verbose}" if="verbose"/>
-    </xslt>
-    <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/content.xml" overwrite="true"/>
-    <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
-    <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,image-size-info.xml,copy.xml"/>
-    <copy file="${outputDir}/temp-for-ant.zip" tofile="${outputFile}" overwrite="true"/>
-    <delete file="${outputDir}/temp-for-ant.zip"/>
-    <delete dir="${outputTempDir}"/>
+
+  <target name="notodd" unless="processODD">
+    <buildodt in="${inputFile}" out="${outputFile}" xsl="${profiledir}/${profile}/odt/to.xsl"/>
   </target>
+
 </project>

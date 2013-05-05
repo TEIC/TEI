@@ -59,6 +59,62 @@
   <path id="classpath">
     <pathelement path="${java.class.path}"/>
   </path>
+
+  <macrodef name="buildodt">
+    <attribute name="in"/>
+    <attribute name="out"/>
+    <attribute name="xsl"/>
+    <sequential>
+    <!-- The transformation for OO output. -->
+    <property name="inputFilePath" location="@{in}"/>
+    <dirname property="xslDir" file="@{xsl}"/>
+    <echo level="info">unzip ODT template</echo>
+    <unzip src="${xslDir}/template.odt" dest="${outputTempDir}"/>
+    <echo level="info">Get names of graphics files and write an ant task</echo>
+    <xslt force="yes" style="${listgraphics}" in="@{in}" out="${outputTempDir}/copy.xml">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="$catalogfile"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="inputDir" expression="${inputDir}"/>
+      <param name="mediaDir" expression="Pictures"/>
+    </xslt>
+    <echo level="info">Copy image files by running ant task</echo>
+    <ant antfile="${outputTempDir}/copy.xml"/>
+    <echo level="info">Read dimensions of image files and write info file</echo>
+    <images outputFile="${outputTempDir}/image-size-info.xml">
+      <fileset dir="${outputTempDir}" includes="Pictures/*.*"/>
+    </images>
+    <echo level="info">XSLT generate files for oo </echo>
+    <xslt force="yes" style="@{xsl}" in="@{in}" out="${outputTempDir}/newdocument.xml">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="$catalogfile"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl">
+          <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+      </factory>
+      <classpath location="${oxygenlib}/saxon9ee.jar"/>
+      <param name="outputDir" expression="file:///${outputTempDir}"/>
+      <param name="freestanding" expression="true"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/content.xml" overwrite="true"/>
+    <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
+    <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,image-size-info.xml,copy.xml"/>
+    <copy file="${outputDir}/temp-for-ant.zip" tofile="@{out}" overwrite="true"/>
+    </sequential>
+  </macrodef>
+
   <macrodef name="builddocx">
     <attribute name="in"/>
     <attribute name="out"/>
@@ -129,7 +185,7 @@
         <!-- name of original input file -->
         <param name="inputFile" expression="${inputFilePath}"/>
         <!-- directory of original input file -->
-        <param name="inputDir" expression="${inputFileDir}"/>
+        <param name="inputDir" expression="${inputDir}"/>
         <!-- supply name of language-->
         <param name="lang" expression="${lang}" if="lang"/>
         <!-- emit some diagnostics"-->
@@ -237,7 +293,9 @@
       <mkdir dir="${outputTempDir}"/>
       <echo level="info">XSLT generate ePub files in ${outputTempDir}</echo>
       <xslt force="yes" style="${teitoepub}" in="@{in}" out="${outputTempDir}/OPS/index.html">
-        <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+        <factory name="net.sf.saxon.TransformerFactoryImpl">
+          <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
+	</factory>
         <classpath location="${oxygenlib}/saxon9ee.jar"/>
         <param name="directory" expression="file:///${outputTempDir}"/>
         <param name="inputDir" expression="@{inDir}/"/>
