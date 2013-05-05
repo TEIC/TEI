@@ -66,6 +66,7 @@
     <attribute name="xsl"/>
     <sequential>
     <!-- The transformation for OO output. -->
+    <taskdef name="images" classname="ImageTask" classpath="../tools/ImageInfo/ImageInfo.jar"/>
     <property name="inputFilePath" location="@{in}"/>
     <dirname property="xslDir" file="@{xsl}"/>
     <echo level="info">unzip ODT template</echo>
@@ -120,6 +121,7 @@
     <attribute name="out"/>
     <attribute name="xsl"/>
     <sequential>
+      <taskdef name="images" classname="ImageTask" classpath="../tools/ImageInfo/ImageInfo.jar"/>
       <property name="inputFilePath" location="@{in}"/>
       <dirname property="xslDir" file="@{xsl}"/>
       <!-- The transformation for DOCX output. -->
@@ -417,7 +419,7 @@
       </xslt>
     </sequential>
   </macrodef>
-  <taskdef name="images" classname="ImageTask" classpath="../tools/ImageInfo/ImageInfo.jar"/>
+
   <target name="cleanup"  unless="debug">
     <delete dir="${outputTempDir}"/>
   </target>
