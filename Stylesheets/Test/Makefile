@@ -1,6 +1,27 @@
-VERSION=`cat ../VERSION`
+VERSION=`cat VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
+SCRIPTS=teitobibtex \
+	teitodocbook \
+	teitodocx \
+	teitoepub \
+	teitoepub3 \
+	teitofo \
+	teitohtml \
+	teitohtml5 \
+	teitojson \
+	teitolatex \
+	teitoodt \
+	teitopdf \
+	teitordf \
+	teitoslides \
+	teitotxt 
+
+SCHEMASCRIPTS=teitornc \
+	teitorelaxng \
+	teitoxsd \
+	teitodtd 
+
 default: schema test-html test-latex test-fo test-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant scripts
 
 p4top5:
@@ -228,8 +249,9 @@ foo:
 	../teitornc test.odd test.rnc
 
 scripts:
+	for i in $(SCRIPTS); do ../$$i maria.xml $$i.result && rm $$i.result; done
 	../teitoodd test16.odd temp.odd
-	for i in `ls ../teito* | grep -v teitodd | sed 's/...//'`; do ../$$i temp.odd $$i.result; rm $$i.result; done
+	for i in $(SCHEMASCRIPTS) ; do ../$$i temp.odd $$i.result && rm $$i.result; done
 	rm temp.odd
 
 pureant:
