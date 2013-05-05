@@ -228,7 +228,9 @@ foo:
 	../teitornc test.odd test.rnc
 
 scripts:
-	for i in teitobibtex teitodocbook teitodocx teitodtd teitoepub teitoepub3 teitofo teitohtml teitohtml5 teitojson teitolatex teitoodt teitopdf teitordf teitorelaxng teitornc teitoslides teitotxt teitoxsd; do ../$$i maria.xml $$i.result; rm $$i.result; done
+	../teitoodd test16.odd temp.odd
+	for i in `ls ../teito* | grep -v teitodd | sed 's/...//'`; do ../$$i temp.odd $$i.result; rm $$i.result; done
+	rm temp.odd
 
 pureant:
 	java -Xmx256m \

@@ -45,7 +45,7 @@ of this software, even if advised of the possibility of such damage.
 </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id: to.xsl 8923 2011-05-25 13:11:45Z rahtz $</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
 

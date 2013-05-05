@@ -205,6 +205,7 @@
   </target>
   <macrodef name="runtex">
     <attribute name="in"/>
+    <attribute name="out"/>
     <attribute name="indir"/>
     <attribute name="outdir"/>
     <sequential>
@@ -212,15 +213,16 @@
         <arg value="-interaction=nonstopmode"/>
         <arg value="-output-directory"/>
         <arg value="@{outdir}"/>
-        <arg value="@{in}"/>
+        <arg value="@{in}.tex"/>
       </exec>
       <exec executable="xelatex" dir="@{indir}" failonerror="true">
         <arg value="-interaction=batchmode"/>
         <arg value="-output-directory"/>
         <arg value="@{outdir}"/>
-        <arg value="@{in}"/>
+        <arg value="@{in}.tex"/>
       </exec>
-      <delete file="@{in}"/>
+      <move file="@{in}.pdf" tofile="@{out}"/>
+      <delete file="@{in}.tex"/>
     </sequential>
   </macrodef>
   <macrodef name="buildepub">
@@ -402,7 +404,7 @@
     <attribute name="out"/>
     <sequential>
       <echo>Do ODD expand processing </echo>
-      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{in}.processedodd">
+      <xslt force="yes" style="${odd2oddxsl}" in="@{in}" out="@{out}">
         <factory name="net.sf.saxon.TransformerFactoryImpl">
           <attribute name="http://saxon.sf.net/feature/xinclude-aware" value="true"/>
         </factory>

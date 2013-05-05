@@ -43,7 +43,7 @@ of this software, even if advised of the possibility of such damage.
 </p>
       <p>Author: See AUTHORS</p>
       <p>Id: $Id$</p>
-      <p>Copyright: 2008, TEI Consortium</p>
+      <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
   <xsl:param name="typewriterFont">Courier</xsl:param>

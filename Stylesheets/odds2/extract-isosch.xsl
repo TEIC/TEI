@@ -48,7 +48,7 @@ of this software, even if advised of the possibility of such damage.
 </oxdoc:p>
       <oxdoc:p>Author: See AUTHORS</oxdoc:p>
       <oxdoc:p>Id: $Id$</oxdoc:p>
-      <oxdoc:p>Copyright: 2011, TEI Consortium</oxdoc:p>
+      <oxdoc:p>Copyright: 2013, TEI Consortium</oxdoc:p>
       <oxdoc:p/>
       <oxdoc:p>Modified 2012-05 by Syd Bauman: It seems that ISO Schematron does not have
         a <oxdoc:pre>&lt;key></oxdoc:pre> element. In fact, ISO 19757-3:2006 explicitly

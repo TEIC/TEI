@@ -24,22 +24,22 @@
   <import file="../common2/teianttasks.xml"/>
 
   <basename property="basefile" file="${outputFile}" suffix=".pdf"/>
-  <property name="texfile" value="${basefile}.tex"/>
+  <property name="texfile" value="${basefile}"/>
 
   <target name="dist" depends="odd,notodd,go,teicleanup"/>
 
   <target name="odd" if="processODD">
     <odd2odd in="${inputFile}" out="${inputFile}.processedodd"/>
-    <buildgeneric type="pdf" xsl="${profiledir}/${profile}/pdf/to.xsl"  in="${inputFile}.processedodd" out="${inputDir}/${texfile}"/>
+    <buildgeneric type="pdf" xsl="${profiledir}/${profile}/pdf/to.xsl"  in="${inputFile}.processedodd" out="${inputDir}/${texfile}.tex"/>
     <delete file="${inputFile}.processedodd"/>
   </target>
 
   <target name="notodd" unless="processODD">
-    <buildgeneric type="pdf" xsl="${profiledir}/${profile}/pdf/to.xsl"  in="${inputFile}" out="${inputDir}/${texfile}"/>
+    <buildgeneric type="pdf" xsl="${profiledir}/${profile}/pdf/to.xsl"  in="${inputFile}" out="${inputDir}/${texfile}.tex"/>
   </target>
 
   <target name="go">
-    <runtex in="${inputDir}/${texfile}" indir="${inputDir}"  outdir="${outputDir}"/>
+    <runtex out="${outputFile}" in="${inputDir}/${texfile}" indir="${inputDir}"  outdir="${outputDir}"/>
   </target>
 
 

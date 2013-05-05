@@ -38,7 +38,7 @@
             Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id$</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
     

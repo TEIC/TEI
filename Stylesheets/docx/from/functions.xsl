@@ -60,7 +60,7 @@ of this software, even if advised of the possibility of such damage.
 </p>
          <p>Author: See AUTHORS</p>
          <p>Id: $Id: functions.xsl 11232 2012-12-18 18:06:19Z rahtz $</p>
-         <p>Copyright: 2008, TEI Consortium</p>
+         <p>Copyright: 2013, TEI Consortium</p>
       </desc></doc>
 
     

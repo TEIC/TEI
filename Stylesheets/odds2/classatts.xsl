@@ -51,7 +51,7 @@ of this software, even if advised of the possibility of such damage.
 </p>
       <p>Author: See AUTHORS</p>
       <p>Id: $Id: odd2odd.xsl 10667 2012-07-19 09:04:45Z rahtz $</p>
-      <p>Copyright: 2011, TEI Consortium</p>
+      <p>Copyright: 2013, TEI Consortium</p>
     </desc>
   </doc>
   <xsl:output encoding="utf-8" indent="no"/>
