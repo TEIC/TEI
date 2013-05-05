@@ -111,7 +111,7 @@
     <move file="${outputTempDir}/newdocument.xml" tofile="${outputTempDir}/content.xml" overwrite="true"/>
     <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputFile}</echo>
     <zip destfile="${outputDir}/temp-for-ant.zip" basedir="${outputTempDir}" compress="true" excludes="tmp1.xml,tmp2.xml,image-size-info.xml,copy.xml"/>
-    <copy file="${outputDir}/temp-for-ant.zip" tofile="@{out}" overwrite="true"/>
+    <move file="${outputDir}/temp-for-ant.zip" tofile="@{out}" overwrite="true"/>
     </sequential>
   </macrodef>
 
