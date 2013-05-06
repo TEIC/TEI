@@ -20,7 +20,7 @@ EXTENDEDFILES = \
 	testplace-kml.special 
 #testi18n.xsd \
 
-default: normal detest special testmeta2010 test-extns test-frag 
+default: normal special testmeta2010 test-extns test-frag detest
 
 normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
