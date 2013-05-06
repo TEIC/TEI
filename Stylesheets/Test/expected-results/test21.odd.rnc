@@ -682,6 +682,27 @@ att.typed.attribute.subtype =
   
   ## provides a sub-categorization of the element, if needed
   attribute subtype { data.enumerated }?
+sch:pattern [
+  id = "att.typed-constraint-subtypeTyped"
+  "\x{a}" ~
+  "      "
+  sch:rule [
+    context = "*[@subtype]"
+    "\x{a}" ~
+    "	        "
+    sch:assert [
+      test = "@type"
+      "The "
+      sch:name [ ]
+      " element should not be categorized in detail with @subtype\x{a}" ~
+      " unless also categorized in general with @type"
+    ]
+    "\x{a}" ~
+    "      "
+  ]
+  "\x{a}" ~
+  "   "
+]
 att.pointing.attributes =
   att.pointing.attribute.targetLang,
   att.pointing.attribute.target,

@@ -1,4 +1,4 @@
-VERSION=`cat VERSION`
+nERSION=`cat VERSION`
 SAXONOPT=useFixedDate=true
 OXY=/usr/share/oxygen
 SCRIPTS=teitobibtex \
