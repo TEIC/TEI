@@ -2348,7 +2348,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
 
-  <xsl:template match="tei:list[tei:label/tei:list]">
+  <xsl:template match="tei:list[tei:label/tei:list]" mode="pass2">
     <table rend="braced">
       <xsl:for-each select="tei:label">
 	<row>
