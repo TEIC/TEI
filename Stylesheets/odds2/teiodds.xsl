@@ -412,6 +412,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:with-param>
 -->
         </xsl:apply-templates>
+	<xsl:apply-templates select="tei:constraintSpec"/>
       </xsl:when>
       <xsl:when test="@type='atts'">
         <xsl:call-template name="bitOut">
@@ -465,11 +466,13 @@ of this software, even if advised of the possibility of such damage.
               <xsl:apply-templates mode="tangle" select="tei:attList//tei:attDef">
                 <xsl:with-param name="element" select="$c"/>
               </xsl:apply-templates>
+	      <xsl:apply-templates select="tei:constraintSpec"/>
             </Wrapper>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:when>
     </xsl:choose>
+
   </xsl:template>
 
   <xsl:template match="tei:classSpec" mode="processModel">
@@ -1169,11 +1172,13 @@ select="$makeDecls"/></xsl:message>
                   </xsl:otherwise>
                 </xsl:choose>
               </define>
+	      <xsl:apply-templates select="tei:constraintSpec"/>
             </Wrapper>
           </xsl:with-param>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
+
   </xsl:template>
 
 

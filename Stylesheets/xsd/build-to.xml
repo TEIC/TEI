@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project basedir="." default="go" name="teitoxsd">
+<project basedir="." default="dist" name="teitoxsd">
   <!--
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -23,6 +23,8 @@
  -->
   <import file="../common2/teianttasks.xml"/>
 
+ <target name="dist" depends="go,oddcleanup"/>
+
   <!-- Obtain a Relax NG schema and afterward transform it to XSD using TRANG. -->
   <target name="go">
     <oddexpand in="${inputFile}" out="${inputFile}.processedodd"/>
@@ -41,6 +43,5 @@
       <arg value="${outputFile}"/>
     </java>
     <delete file="${outputFile}.rng"/>
-    <delete file="${inputFile}.processedodd"/>
   </target>
 </project>

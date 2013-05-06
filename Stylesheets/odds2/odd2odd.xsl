@@ -493,14 +493,14 @@ of this software, even if advised of the possibility of such damage.
 
 	<xsl:apply-templates mode="justcopy" select="tei:moduleRef[@url]"/>
 
+	<!-- constraints -->
+	<xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
       </xsl:copy>
 
     </xsl:variable>
     <xsl:for-each select="$oddsource">
       <xsl:apply-templates mode="odd2odd-pass2"/>
     </xsl:for-each>
-    <!-- constraints -->
-    <xsl:apply-templates mode="odd2odd-copy" select="tei:constraintSpec"/>
   </xsl:template>
 
 
@@ -1174,6 +1174,11 @@ of this software, even if advised of the possibility of such damage.
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
+          <!-- constraints -->
+          <xsl:call-template name="odd2odd-processConstraints">
+            <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
+            <xsl:with-param name="elementName" select="$specName"/>
+          </xsl:call-template>
           <!-- exemplum, remarks and listRef are either replacements or not -->
           <xsl:choose>
             <xsl:when test="$stripped='true'"/>
@@ -1289,6 +1294,11 @@ of this software, even if advised of the possibility of such damage.
               </xsl:otherwise>
             </xsl:choose>
           </classes>
+          <!-- constraints -->
+          <xsl:call-template name="odd2odd-processConstraints">
+            <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
+            <xsl:with-param name="elementName" select="$className"/>
+          </xsl:call-template>
           <!-- attList -->
           <attList xmlns="http://www.tei-c.org/ns/1.0">
             <xsl:call-template name="odd2odd-processAttributes">
