@@ -493,7 +493,7 @@ of this software, even if advised of the possibility of such damage.
         <!-- check for sense -->
         <xsl:variable name="imageHeight">
           <xsl:choose>
-            <xsl:when test="$Height &lt; 0">
+            <xsl:when test="number($Height) &lt; 0">
               <xsl:value-of select="$pageHeight"/>
             </xsl:when>
             <xsl:when test="number($Height) &gt; $pageHeight">
@@ -506,7 +506,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:variable>
         <xsl:variable name="imageWidth">
           <xsl:choose>
-            <xsl:when test="$Width &lt; 0">
+            <xsl:when test="number($Width) &lt; 0">
               <xsl:value-of select="$pageWidth"/>
             </xsl:when>
             <xsl:when test="number($Width) &gt; $pageWidth">
