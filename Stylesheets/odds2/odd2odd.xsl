@@ -116,7 +116,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:value-of select="$selectedSchema"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="key('SCHEMASPECS',1)[1]/@ident"/>
+        <xsl:value-of select="key('odd2odd-SCHEMASPECS',1)[1]/@ident"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
