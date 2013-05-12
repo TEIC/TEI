@@ -151,6 +151,11 @@ This page is made available under the Creative Commons General Public License "A
     </div>  
   </xsl:template>
 
+<xsl:template match="tei:byLine">
+<xsl:message>suppressing and</xsl:message>
+<xsl:apply-templates/>
+</xsl:template>
+
 
 <!-- these seem to be inherited -->
     <xsl:template match="html:*">
