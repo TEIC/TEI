@@ -171,7 +171,7 @@ of this software, even if advised of the possibility of such damage.
    </xsl:template>
    
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Named template for handling processing any cross-references found.</desc>
+      <desc>Named template for processing of any cross-references found.</desc>
     </doc>
     <xsl:template name="process-checking-for-crossrefs">
       <xsl:choose>
@@ -202,17 +202,18 @@ of this software, even if advised of the possibility of such damage.
 		    <xsl:call-template name="process-index-term">
 		      <xsl:with-param name="term">
 			<xsl:for-each select="current-group()//w:instrText">
-			  <!--xsl:message>[<xsl:value-of select="."/>]</xsl:message-->
 			  <xsl:apply-templates/>
 			</xsl:for-each>
 		      </xsl:with-param>
 		    </xsl:call-template>
 		  </xsl:when>
-		  <xsl:when test="$rends/tei:r='SEQ'">
-		    <xsl:variable name="What"
-				  select="following-sibling::w:r/w:instrText[1]"/>
-		    <xsl:number level="any" count="w:r[w:fldChar/@w:fldCharType='begin'][following-sibling::w:r/w:instrText=$What]"/>
-		  </xsl:when>
+		  <!-- this cant ever have worked, we have no w:r children.
+		       <xsl:when test="$rends/tei:r='SEQ'">
+		       <xsl:variable name="What"
+		       select="following-sibling::w:r/w:instrText[1]"/>
+		       <xsl:number level="any" count="w:r[w:fldChar/@w:fldCharType='begin'][following-sibling::w:r/w:instrText=$What]"/>
+		       </xsl:when>
+		  -->
 		  <xsl:otherwise>
 		    <ref>
 		      <xsl:if test="$rends/tei:r">
