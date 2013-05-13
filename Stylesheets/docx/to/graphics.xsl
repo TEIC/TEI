@@ -258,17 +258,9 @@ of this software, even if advised of the possibility of such damage.
                             <pic:blipFill>
                                 <a:blip>
 				  <xsl:attribute name="r:embed">
-				    <xsl:choose>
-				      <xsl:when test="$isofreestanding='true'">
-					<xsl:text>rId</xsl:text>
-					<xsl:value-of
-					    select="number($generatedID)
-						    + 300"/>
-				      </xsl:when>
-				      <xsl:otherwise>
-					<xsl:value-of select="document($relDoc)//rel:Relationship[@Target=$filename]/@Id"/>
-				      </xsl:otherwise>
-				    </xsl:choose>
+				    <xsl:text>rId</xsl:text>
+				    <xsl:value-of
+					select="number($generatedID) + 300"/>
 				  </xsl:attribute>
 				</a:blip>
 				<a:stretch>

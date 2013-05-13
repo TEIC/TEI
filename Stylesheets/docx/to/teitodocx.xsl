@@ -233,10 +233,6 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:message terminate="yes">The file <xsl:value-of
 	select="$numberDoc"/> cannot be read</xsl:message>
       </xsl:if>
-      <xsl:if test="not(doc-available($relDoc))">
-	<xsl:message terminate="yes">The file <xsl:value-of
-	select="$relDoc"/> cannot be read</xsl:message>
-      </xsl:if>
       <xsl:if test="not(doc-available($coreFile))">
 	<xsl:message terminate="yes">The file <xsl:value-of
 	select="$coreFile"/> cannot be read</xsl:message>

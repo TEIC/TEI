@@ -845,13 +845,13 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="write-docxfile-numbering-definition"/>
       <!-- main relationships -->
       <xsl:call-template name="write-docxfile-main-relationships"/>
-      <!-- relationships -->
-      <xsl:call-template name="write-docxfile-relationships"/>
       <!-- write Content Types -->
       <xsl:call-template name="write-docxfile-content-types"/>
       <!--  settings -->
       <xsl:call-template name="write-docxfile-settings"/>
     </xsl:if>
+    <!-- relationships -->
+    <xsl:call-template name="write-docxfile-relationships"/>
     <!-- footnotes file -->
     <xsl:call-template name="write-docxfile-footnotes-file"/>
     <!-- endnotes file -->
@@ -861,7 +861,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="write-docxfile-docprops-core"/>
     <xsl:call-template name="write-docxfile-docprops-app"/>
     <xsl:call-template name="write-docxfile-docprops-custom"/>
-
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc> Writes the main document.xml file, that contains all "real" content. </desc>

@@ -108,7 +108,7 @@ of this software, even if advised of the possibility of such damage.
     
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Write word/_rels/document.xml.rels</desc>
+      <desc>Write  word/_rels/document.xml.rels</desc>
    </doc>
     <xsl:template name="write-docxfile-relationships">
       <xsl:if test="$debug='true'">
