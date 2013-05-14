@@ -5,7 +5,7 @@
 # Sebastian Rahtz, April 2005
 # copyright: TEI Consortium
 # license: GPL
-# $Id: roma.sh 5777 2009-03-15 21:19:34Z rahtz $
+# $Id$
 #
 
 makeODD() 
