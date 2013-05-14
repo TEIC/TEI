@@ -162,7 +162,7 @@ echo "  Usage: roma [options] schemaspec [output_directory]"
 echo "  options, shown with defaults:"
 
 echo "  --xsl=$TEIXSLDIR"
-echo "  --localsource=$LOCALSOURCE  # local copy of P5 sources"
+echo "  --localsource=$LOCALSOURCE  # local copy of P5 sources. Run make in P5 source directory to generate p5subset.xml, then point to it."
 echo "  options, binary switches:"
 echo "  --compile          # create compiled file odd"
 echo "  --debug            # leave temporary files, etc."
