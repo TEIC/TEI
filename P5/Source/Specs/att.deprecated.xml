@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date:$
+$Id:$
+-->
+<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
+<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.deprecated" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" predeclare="true">
+  <desc>provides attributes indicating how a deprecated feature will be treated in future releases.</desc>
+  <attList>
+    <attDef ident="validUntil" usage="opt">
+      <desc>provides a date before which the construct being defined
+      will not be removed.</desc>
+      <datatype minOccurs="1" maxOccurs="1">
+	<rng:data type="date"/>
+	<!-- Note: the value is restricted to just a date (no
+	     dateTimes, no times, no gYearMonth, etc.; timezones are
+	     permitted, but I'm not sure I understand the point) in
+	     order to make the Schematron tests easy. -Syd 2013-05-16
+	     -->
+      </datatype>
+      <constraintSpec scheme="isoschematron" ident="deprecated">
+	<constraint>
+	  <sch:rule context="tei:*[@validUntil]">
+	    <sch:assert test="@validUntil cast as xs:date ge current-date()"><sch:value-of select="if (@ident) then concat('The ',@ident) else concat('This ',local-name(.),' of ',ancestor::tei:*[@ident][1]/@ident)"/> construct is outdated (as of <sch:value-of select="@validUntil"/>); ODD processors may ignore it, and it should probably be removed</sch:assert>
+	    <sch:report test="@validUntil cast as xs:date eq current-date()"><sch:value-of select="if (@ident) then concat('The ',@ident) else concat('This ',local-name(.),' of ',ancestor::tei:*[@ident][1]/@ident)"/> construct will be outdated as of tomorrow; ODD processors may then ignore it, and thus it should probably be removed soon</sch:report>
+	  </sch:rule>
+	</constraint>	  
+      </constraintSpec>
+      <valDesc>A date (in standard <code>yyyy-mm-dd</code> format); at
+      the time the attribute is added to an ODD, this date should be
+      in the future.</valDesc>
+      <remarks>
+	<p>Technically, this attribute asserts only the intent to
+	leave a construct in future releases of the markup language
+	being defined up to at least the specified date, and makes no
+	assertion about what happens past that date. In practice, the
+	expectation is that the construct will be removed from future
+	releases of the markup language being defined sometime shortly
+	after the <att>validUntil</att> date.</p>
+	<p>An ODD processor will typically not process a specification
+	element which has a <att>validUntil</att> date that is in the
+	past. An ODD processor will typically warn users about
+	constructs which have a <att>validUntil</att> date that is in
+	the future. E.g., the documentation for such a construct might
+	include the phrase <mentioned>warning: deprecated</mentioned>
+	in red.</p>
+      </remarks>
+    </attDef>
+  </attList>
+</classSpec>
