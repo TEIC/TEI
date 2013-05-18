@@ -154,8 +154,6 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template match="tei:cell/tei:lb"/>
-
   <xsl:template match="tei:body/tei:lb"/>
 
   <xsl:template match="tei:div/tei:lb"/>

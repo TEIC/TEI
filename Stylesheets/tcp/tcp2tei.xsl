@@ -105,10 +105,17 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="text()">
+    <xsl:variable name="parent" select="local-name(parent::*)"/>
     <xsl:analyze-string regex="([^∣]*)∣" select="translate(.,'¦','∣')">
       <xsl:matching-substring>
 	<xsl:value-of select="regex-group(1)"/>
-	<lb rend="hidden" type="hyphenInWord"/>
+	<xsl:if test="$parent='CELL'">-</xsl:if>
+	<lb>
+	  <xsl:if test="not($parent='CELL')">
+	    <xsl:attribute name="type">hyphenInWord</xsl:attribute>
+	    <xsl:attribute name="rend">hidden</xsl:attribute>
+	  </xsl:if>
+	</lb>
       </xsl:matching-substring>
       <xsl:non-matching-substring>
 	<xsl:value-of select="."/>
