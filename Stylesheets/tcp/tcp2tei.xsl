@@ -112,8 +112,8 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:if test="$parent='CELL'">-</xsl:if>
 	<lb>
 	  <xsl:if test="not($parent='CELL')">
-	    <xsl:attribute name="type">hyphenInWord</xsl:attribute>
 	    <xsl:attribute name="rend">hidden</xsl:attribute>
+	    <xsl:attribute name="type">hyphenInWord</xsl:attribute>
 	  </xsl:if>
 	</lb>
       </xsl:matching-substring>
@@ -2368,7 +2368,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>
-	a list inside a label will have to turn into a table
+	a list inside a label in a gloss list will have to turn into a table
       </p>
     </desc>
   </doc>
@@ -2394,6 +2394,14 @@ of this software, even if advised of the possibility of such damage.
     </table>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	a list inside a label in a gloss list (alternate way of doing
+	gloss lists will have to turn into a table
+      </p>
+    </desc>
+  </doc>
   <xsl:template match="tei:list[tei:item/tei:label/tei:list]" mode="pass2">
     <table rend="braced">
       <xsl:for-each select="tei:item">
@@ -2413,6 +2421,21 @@ of this software, even if advised of the possibility of such damage.
 	</row>
       </xsl:for-each>
     </table>
+  </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	a singleton label inside a paragraph, containing a list, can
+	be ignored.
+      </p>
+    </desc>
+  </doc>
+  <xsl:template match="tei:label[tei:list and parent::p]" mode="pass2">
+    <xsl:apply-templates
+	select="*|text()|processing-instruction()|comment()"
+	mode="pass2"/>
   </xsl:template>
 
   <xsl:template match="tei:label[following-sibling::*[1][self::tei:head]]" mode="pass2"/>
