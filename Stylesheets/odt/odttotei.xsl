@@ -1068,13 +1068,6 @@ of this software, even if advised of the possibility of such damage.
         <term>
           <xsl:value-of select="."/>
         </term>
-        <xsl:if test="key('secondary_children', generate-id())">
-          <index>
-	    <term>
-            <xsl:value-of select="key('secondary_children', generate-id())"/>
-	    </term>
-	  </index>
-        </xsl:if>
       </index>
     </xsl:for-each>
   </xsl:template>
