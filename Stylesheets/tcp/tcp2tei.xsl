@@ -2426,7 +2426,7 @@ of this software, even if advised of the possibility of such damage.
       </p>
     </desc>
   </doc>
-  <xsl:template match="tei:label[tei:list and parent::p]" mode="pass2">
+  <xsl:template match="tei:label[tei:list and parent::tei:p]" mode="pass2">
     <xsl:apply-templates
 	select="*|text()|processing-instruction()|comment()"
 	mode="pass2"/>
