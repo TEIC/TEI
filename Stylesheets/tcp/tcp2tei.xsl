@@ -318,12 +318,6 @@ of this software, even if advised of the possibility of such damage.
     </argument>
   </xsl:template>
 
-  <xsl:template match="FIGURE/BYLINE">
-    <signed>
-      <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
-    </signed>
-  </xsl:template>
-
   <xsl:template match="STAGE/STAGE">
     <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
   </xsl:template>
