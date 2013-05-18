@@ -231,7 +231,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>A HEAD/@TYPE='sub' can lose itself if it consists of
-      Q with L inside, though if thats all there is, looks like
+      Q with L inside; though if thats all there is, looks like
       an epigraph
       </p>
     </desc>
@@ -1942,6 +1942,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of select="."/>
     </xsl:attribute>
   </xsl:template>
+  <xsl:template match="CELL/@ROLE">
+    <xsl:attribute name="role">
+      <xsl:value-of select="."/>
+    </xsl:attribute>
+  </xsl:template>
   <!-- space does not have @EXTENT any more -->
   <xsl:template match="SPACE/@EXTENT">
     <xsl:attribute name="quantity">
@@ -2249,6 +2254,13 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
   
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>
+      <p>
+	The facs attribute should not have spaces or square brackets in
+      </p>
+    </desc>
+  </doc>
   <xsl:template match="@facs" mode="pass2">
     <xsl:attribute name="facs">
       <xsl:value-of select="translate(.,' []','_()')"/>
@@ -2334,6 +2346,12 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
+    <desc>
+      <p>
+	a paragraph containing add and nothing else, where those adds
+	themselves contains paragraphs, can be bypassed
+      </p>
+    </desc>
   <xsl:template match="tei:p[tei:add/tei:p and not(text())]" mode="pass2">
 	  <xsl:apply-templates
 	      select="*|text()|processing-instruction()|comment()"
@@ -2358,8 +2376,32 @@ of this software, even if advised of the possibility of such damage.
 		mode="pass2"/>
 	  </cell>
 	  <cell>
+	    <xsl:for-each select="following-sibling::tei:item[1]">
+	      <xsl:apply-templates
+		  select="*|text()|processing-instruction()|comment()"
+		  mode="pass2"/>
+	    </xsl:for-each>
+	  </cell>
+	</row>
+      </xsl:for-each>
+    </table>
+  </xsl:template>
+
+  <xsl:template match="tei:list[tei:item/tei:label/tei:list]" mode="pass2">
+    <table rend="braced">
+      <xsl:for-each select="tei:item">
+	<row>
+	  <cell>
+	    <xsl:for-each select="tei:label">
+	      <xsl:apply-templates
+		  select="*|text()|processing-instruction()|comment()"
+		  mode="pass2"/>
+	    </xsl:for-each>
+	  </cell>
+	  <cell>
 	    <xsl:apply-templates
-	      select="following-sibling::item[1]"  mode="pass2"/>
+		select="*[not(self::tei:label)]|text()|processing-instruction()|comment()"
+		mode="pass2"/>
 	  </cell>
 	</row>
       </xsl:for-each>
