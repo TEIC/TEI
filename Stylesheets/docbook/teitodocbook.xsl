@@ -386,7 +386,9 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template match="gi">
   <tag>
+    <xsl:text>&lt;</xsl:text>
     <xsl:apply-templates/>
+    <xsl:text>&gt;</xsl:text>
   </tag>
 </xsl:template>
 

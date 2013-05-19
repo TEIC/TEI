@@ -4,7 +4,7 @@ TRANG=trang
 SAXON=saxon
 SAXON_ARGS=-ext:on
 
-DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 json latex latex2 nlm odds2 odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt xhtml2 xsd xlsx pdf
+DIRS=bibtex common2 docx dtd docbook epub epub3 fo2 html html5 json latex latex2 nlm odd odds2 odt pdf profiles/default rdf relaxng rnc slides tbx tcp tite tools txt xhtml2 xsd xlsx pdf
 
 SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
 	teitodocx 	teitodtd 	teitoepub \
@@ -12,7 +12,7 @@ SCRIPTS=docbooktotei docxtotei odttotei transformtei tcptotei xlsxtotei \
 	teitohtml5 	teitojson 	teitolatex \
 	teitoodt 	teitordf 	teitorelaxng \
 	teitornc 	teitoslides 	teitotxt \
-	teitoxsd	teitopdf	teitobibtex teitodocbook
+	teitoxsd	teitopdf	teitobibtex teitodocbook teitoodd
 PREFIX=/usr
 OXY=/usr/share/oxygen
 DOCTARGETS= \
