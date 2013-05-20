@@ -516,6 +516,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:call-template>
         </xsl:when>
       </xsl:choose>
+<xsl:message>DO LIST</xsl:message>        
       <xsl:apply-templates/>
     </li>
   </xsl:template>
@@ -698,6 +699,7 @@ of this software, even if advised of the possibility of such damage.
     </desc>
   </doc>
   <xsl:template match="tei:list">
+
     <xsl:if test="tei:head">
       <xsl:element name="{if (not(tei:is-inline(.))) then 'div' else 'span' }">
         <xsl:attribute name="class">listhead</xsl:attribute>
@@ -768,7 +770,7 @@ of this software, even if advised of the possibility of such damage.
         </p>
       </xsl:when>
       <xsl:when test="tei:isUnorderedList(.)">
-        <ul>
+<xsl:message>DO LIST</xsl:message>        <ul>
           <xsl:call-template name="makeRendition">
             <xsl:with-param name="default">false</xsl:with-param>
           </xsl:call-template>

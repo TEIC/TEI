@@ -90,7 +90,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     Zap empty p and item </p>
+         <p>zap empty p</p>
       </desc>
     </doc>
  
@@ -99,7 +99,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     Inner lists in lists must be moved to inside items
+         <p>Inner lists in lists must be moved to inside items
 	 </p>
       </desc>
     </doc>
@@ -125,7 +125,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     Zap emdashes at start of head </p>
+         <p>Zap emdashes at start of head </p>
       </desc>
     </doc>
     <xsl:template match="tei:head/text()" mode="pass2">
@@ -147,7 +147,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A &lt;p&gt; or &lt;seg&gt; which does nothing is not worth having </p>
+         <p>A &lt;p&gt; or &lt;seg&gt; which does nothing is not worth having </p>
       </desc>
     </doc>
     <xsl:template match="tei:seg[not(@*)]" mode="pass2">
@@ -192,7 +192,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A &lt;p&gt; inside a listBibl is moved out</p>
+         <p>A &lt;p&gt; inside a listBibl is moved out</p>
       </desc>
     </doc>
     <xsl:template match="tei:listBibl/tei:p" mode="pass2"/>
@@ -237,7 +237,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     Top of a weird gloss list </p>
+         <p>Top of a weird gloss list </p>
       </desc>
     </doc>
     <xsl:template match="tei:list[@type='gloss']/tei:label[.='where']" mode="pass2">
@@ -248,14 +248,14 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A tab in a &lt;bibl&gt;? no. </p>
+         <p>A tab in a &lt;bibl&gt;? no. </p>
       </desc>
     </doc>
     <xsl:template match="tei:bibl/tei:g[@ref='x:tab']" mode="pass2"/>
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A tab in a &lt;gloss&gt;? no. </p>
+         <p>A tab in a &lt;gloss&gt;? no. </p>
       </desc>
     </doc>
     <xsl:template match="tei:gloss//tei:g[@ref='x:tab']" mode="pass2"/>
@@ -264,7 +264,7 @@ of this software, even if advised of the possibility of such damage.
     <!-- removed 2010-03-15, seems to screw up formulae
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A tab in a &lt;formula&gt;? no. </p>
+         <p>A tab in a &lt;formula&gt;? no. </p>
       </desc>
     </doc>
 
@@ -273,7 +273,7 @@ of this software, even if advised of the possibility of such damage.
     
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     A tab in a &lt;head&gt;? no. </p>
+         <p>A tab in a &lt;head&gt;? no. </p>
       </desc>
     </doc>
     <xsl:template match="tei:head/tei:g[@ref='x:tab']" mode="pass2"/>
@@ -281,7 +281,7 @@ of this software, even if advised of the possibility of such damage.
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>
-         <p>     An empty item</p>
+         <p>An empty item</p>
       </desc>
     </doc>
     <xsl:template match="tei:item[not(*) and not(text())]" mode="pass2"/>
