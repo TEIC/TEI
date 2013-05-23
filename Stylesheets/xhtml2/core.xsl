@@ -516,7 +516,6 @@ of this software, even if advised of the possibility of such damage.
           </xsl:call-template>
         </xsl:when>
       </xsl:choose>
-<xsl:message>DO LIST</xsl:message>        
       <xsl:apply-templates/>
     </li>
   </xsl:template>
