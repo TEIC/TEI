@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dom="http://www.w3.org/2001/xml-events" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:estr="http://exslt.org/strings" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:dbk="http://docbook.org/ns/docbook" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:oooc="http://openoffice.org/2004/calc" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" version="2.0" office:version="1.0">
-  <xsl:import href="../common2/core.xsl"/>
-  <xsl:import href="../common2/figures.xsl"/>
-  <xsl:import href="../common2/functions.xsl"/>
-  <xsl:import href="../common2/header.xsl"/>
-  <xsl:import href="../common2/i18n.xsl"/>
-  <xsl:import href="../common2/linking.xsl"/>
-  <xsl:import href="../common2/msdescription.xsl"/>
-  <xsl:import href="../common2/tei-param.xsl"/>
+  <xsl:import href="../common2/tei.xsl"/>
   <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:param name="useFixedDate">false</xsl:param>
   <xsl:param name="debug">false</xsl:param>
@@ -232,7 +225,8 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="META">
     <xsl:for-each select="*">
-      <office:meta>
+      <office:document-meta>
+	<office:meta>
         <meta:generator>TEI to OpenOffice XSLT</meta:generator>
         <dc:title>
           <xsl:sequence select="tei:generateTitle(.)"/>
@@ -260,7 +254,8 @@ of this software, even if advised of the possibility of such damage.
         <meta:user-defined meta:name="Info 3"/>
         <meta:user-defined meta:name="Info 4"/>
         <meta:document-statistic meta:table-count="1" meta:image-count="0" meta:object-count="0" meta:page-count="1" meta:paragraph-count="42" meta:word-count="144" meta:character-count="820"/>
-      </office:meta>
+	</office:meta>
+      </office:document-meta>
     </xsl:for-each>
   </xsl:template>
   <!-- base structure -->
@@ -559,7 +554,19 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
   <!-- lists -->
-  <xsl:template match="tei:list|tei:listBibl">
+  <xsl:template match="tei:listBibl">
+    <xsl:choose>
+      <xsl:when test="tei:msDesc">
+	<xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<text:list text:style-name="L2">
+	  <xsl:apply-templates/>
+	</text:list>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template match="tei:list">
     <xsl:if test="tei:head">
       <text:p>
         <xsl:attribute name="text:style-name">
@@ -574,7 +581,6 @@ of this software, even if advised of the possibility of such damage.
     <text:list>
       <xsl:attribute name="text:style-name">
         <xsl:choose>
-          <xsl:when test="self::tei:listBibl">L2</xsl:when>
           <xsl:when test="tei:isOrderedList(.)">L2</xsl:when>
           <xsl:otherwise>L1</xsl:otherwise>
         </xsl:choose>
@@ -601,7 +607,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:item">
     <text:list-item>
       <xsl:choose>
-        <xsl:when test="tei:list">
+        <xsl:when test="tei:list or teix:egXML">
           <xsl:apply-templates/>
         </xsl:when>
         <xsl:otherwise>
@@ -666,9 +672,20 @@ of this software, even if advised of the possibility of such damage.
         <xsl:number level="any" count="tei:note[@place='foot']"/>
       </text:note-citation>
       <text:note-body>
-        <text:p text:style-name="Footnote">
-          <xsl:apply-templates/>
-        </text:p>
+
+	<xsl:for-each-group select="node()" group-adjacent="if        (self::text())        then 1        else if        (tei:is-inline(.))        then 1        else 2        ">
+	  <xsl:choose>
+	    <xsl:when test="current-grouping-key()=2">
+	      <xsl:apply-templates select="current-group()"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <text:p text:style-name="Footnote">
+		<xsl:call-template name="test.id"/>
+		<xsl:apply-templates select="current-group()"/>
+	      </text:p>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each-group>
       </text:note-body>
     </text:note>
   </xsl:template>
@@ -800,7 +817,7 @@ of this software, even if advised of the possibility of such damage.
       </text:p>
     </text:list-item>
   </xsl:template>
-  <xsl:template match="tei:bibl|tei:signed|tei:byline">
+  <xsl:template match="tei:bibl|tei:signed|tei:byline|tei:titlePart|tei:docImprint">
     <text:p text:style-name="tei_{local-name(.)}">
       <xsl:apply-templates/>
     </text:p>
@@ -867,9 +884,19 @@ of this software, even if advised of the possibility of such damage.
     </text:p>
   </xsl:template>
   <xsl:template match="tei:quote">
-    <text:p text:style-name="Quote">
-      <xsl:apply-templates/>
-    </text:p>
+    <xsl:choose>
+      <xsl:when test="tei:p">
+	  <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:when test="not(tei:is-inline(.))">
+	<text:p text:style-name="Quote">
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:call-template name="makeQuote"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:ab">
     <text:p>
@@ -924,10 +951,20 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </text:span>
   </xsl:template>
-  <xsl:template match="tei:cit[@rend='display' or not(@rend)]">
-    <text:p text:style-name="tei_cit">
-      <xsl:apply-templates/>
-    </text:p>
+  <xsl:template match="tei:cit">
+    <xsl:choose>
+      <xsl:when test="@rend='display'">
+	<text:p text:style-name="tei_cit">
+	  <xsl:apply-templates/>
+	</text:p>
+      </xsl:when>
+      <xsl:when test="tei:quote/tei:l or tei:quote/tei:p">	
+	<xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:apply-templates/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template match="tei:mentioned">
     <text:span  text:style-name="Emphasis">
@@ -1101,7 +1138,6 @@ of this software, even if advised of the possibility of such damage.
           <xsl:attribute name="text:style-name">Emphasis</xsl:attribute>
         </xsl:when>
       </xsl:choose>
-      <xsl:attribute name="xml:space">preserve</xsl:attribute>
       <xsl:choose>
         <xsl:when test="$class='titles'">
           <xsl:text>, </xsl:text>
@@ -1165,6 +1201,13 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
+
+  <xsl:template name="appReading">
+     <xsl:param name="lemma"/>
+     <xsl:param name="lemmawitness"/>
+     <xsl:param name="readings"/>
+     <xsl:value-of select="$lemma"/>
+  </xsl:template>
 
 
 </xsl:stylesheet>

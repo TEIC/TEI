@@ -160,12 +160,12 @@ test-text:
 test-odt:
 	../teitoodt test.xml 
 	unzip -t test.xml.odt > test.xml.odt.listing
+	unzip -o -q test.xml.odt content.xml
+	xmllint --format content.xml > content.xml.odt
 	diff test.xml.odt.listing expected-results/test.xml.odt.listing
 	rm test.xml.odt.listing
-	../teitoodt test.xml 
-	unzip -t test.xml.odt > test.xml.odt.listing
-	diff test.xml.odt.listing expected-results/test.xml.odt.listing
-	rm test.xml.odt.listing
+	rm content.xml
+	diff content.xml.odt expected-results/content.xml.odt
 
 test-docx:
 	../docxtotei test-indexes.docx temp.xml
