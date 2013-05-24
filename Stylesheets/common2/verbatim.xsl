@@ -483,7 +483,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="verbatim-makeIndent"/>
           </xsl:when>
         </xsl:choose>
-	<xsl:call-template name="ElementName">
+	<xsl:call-template name="Element">
 	  <xsl:with-param name="content">
 	    <xsl:text>&lt;/</xsl:text>
 	    <xsl:call-template name="verbatim-makeElementName">
