@@ -634,7 +634,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <xsl:template name="verbatim-lineBreak">
     <xsl:param name="id"/>
-    <xsl:text disable-output-escaping="yes">&lt;br/&gt;</xsl:text>
+    <br/>
   </xsl:template>
   <xsl:template match="rng:ref/@name" mode="attributetext">
     <xsl:variable name="me">
