@@ -658,4 +658,69 @@ or columns</desc>
       <desc>Page number on which TOC should start</desc>
    </doc>
   <xsl:param name="tocStartPage">1</xsl:param>
+
+
+
+  <xsl:template name="Element">
+    <xsl:param name="content"/>
+    <inline>
+      <xsl:copy-of select="$content"/>
+    </inline>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML element name in a verbatim context</desc>
+  </doc>
+  <xsl:template name="ElementName">
+    <xsl:param name="content"/>
+    <inline>
+      <xsl:copy-of select="$content"/>
+    </inline>
+  </xsl:template>
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML element name highlighted in a verbatim context</desc>
+  </doc>
+ <xsl:template name="HighlightElementName">
+    <xsl:param name="content"/>
+    <inline>
+      <xsl:copy-of select="$content"/>
+    </inline>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML attribute value in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="AttributeValue">
+    <xsl:param name="content"/>
+    <inline>
+      <xsl:copy-of select="$content"/>
+    </inline>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML attribute in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Attribute">
+    <xsl:param name="content"/>
+    <inline>
+      <xsl:copy-of select="$content"/>
+    </inline>
+  </xsl:template>
+
+  <xsl:template name="Comment">
+    <xsl:param name="content"/>
+    <inline>
+      <xsl:copy-of select="$content"/>
+    </inline>
+  </xsl:template>
+  <xsl:template name="Namespace">
+    <xsl:param name="content"/>
+    <inline>
+      <xsl:copy-of select="$content"/>
+    </inline>
+  </xsl:template>
+
 </xsl:stylesheet>

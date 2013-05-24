@@ -824,5 +824,78 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
       </xsl:choose>
     </xsl:for-each-group>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML element in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Element">
+    <xsl:param name="content"/>
+    <span class="element">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML element name in a verbatim context</desc>
+  </doc>
+  <xsl:template name="ElementName">
+    <xsl:param name="content"/>
+    <span class="elementname">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML element name highlighted in a verbatim context</desc>
+  </doc>
+ <xsl:template name="HighlightElementName">
+    <xsl:param name="content"/>
+    <span class="highlightelementname">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML attribute value in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="AttributeValue">
+    <xsl:param name="content"/>
+    <span class="attributevalue">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML attribute in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Attribute">
+    <xsl:param name="content"/>
+    <span class="attribute">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML namespace in a verbatim context</desc>
+  </doc>
+  <xsl:template name="Namespace">
+    <xsl:param name="content"/>
+    <span class="namespace">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[html] show an XML comment in a verbatim context</desc>
+  </doc>
+  <xsl:template name="Comment">
+    <xsl:param name="content"/>
+    <span class="comment">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
    
 </xsl:stylesheet>

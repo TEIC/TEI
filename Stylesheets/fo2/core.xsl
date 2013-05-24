@@ -180,9 +180,9 @@ of this software, even if advised of the possibility of such damage.
             </xsl:attribute>
          </xsl:if>
          <xsl:apply-templates mode="verbatim">
-	           <xsl:with-param name="highlight">
-	              <xsl:value-of select="$highlight"/>
-	           </xsl:with-param>
+	   <xsl:with-param name="highlight">
+	     <xsl:value-of select="$highlight"/>
+	   </xsl:with-param>
          </xsl:apply-templates>
       </block>
   </xsl:template>

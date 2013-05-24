@@ -13,6 +13,7 @@
                 exclude-result-prefixes="#all"
                 version="2.0">
   <xsl:import href="../common2/tei.xsl"/>
+  <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:import href="tei-param.xsl"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
@@ -69,8 +70,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:include href="textcrit.xsl"/>
   <xsl:include href="transcr.xsl"/>
   <xsl:include href="verse.xsl"/>
-  <xsl:include href="../common2/verbatim.xsl"/>
-
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" type="string">
       <desc>Stylesheet constant setting the name of the main output file.</desc>

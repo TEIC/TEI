@@ -42,8 +42,6 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
   <xsl:param name="useNSPrefixes">true</xsl:param>
-  <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
-  <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
   <xsl:param name="spaceCharacter">&#160;</xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
   <xsl:param name="forceWrap">false</xsl:param>
@@ -113,26 +111,28 @@ of this software, even if advised of the possibility of such damage.
         <xsl:call-template name="verbatim-lineBreak">
           <xsl:with-param name="id">21</xsl:with-param>
         </xsl:call-template>
-        <xsl:value-of disable-output-escaping="yes" select="$startComment"/>
-        <xsl:text>&lt;!--</xsl:text>
-        <xsl:choose>
-          <xsl:when test="$forceWrap='true'">
-            <xsl:call-template name="verbatim-reformatText">
-              <xsl:with-param name="sofar">0</xsl:with-param>
-              <xsl:with-param name="indent">
-                <xsl:text> </xsl:text>
-              </xsl:with-param>
-              <xsl:with-param name="text">
-                <xsl:value-of select="normalize-space(.)"/>
-              </xsl:with-param>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="."/>
-          </xsl:otherwise>
-        </xsl:choose>
-        <xsl:text>--&gt;</xsl:text>
-        <xsl:value-of disable-output-escaping="yes" select="$endComment"/>
+        <xsl:call-template name="Comment">
+	  <xsl:with-param name="content">
+	    <xsl:text>&lt;!--</xsl:text>
+	    <xsl:choose>
+	      <xsl:when test="$forceWrap='true'">
+		<xsl:call-template name="verbatim-reformatText">
+		  <xsl:with-param name="sofar">0</xsl:with-param>
+		  <xsl:with-param name="indent">
+		    <xsl:text> </xsl:text>
+		  </xsl:with-param>
+		  <xsl:with-param name="text">
+		    <xsl:value-of select="normalize-space(.)"/>
+		  </xsl:with-param>
+		</xsl:call-template>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:value-of select="."/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    <xsl:text>--&gt;</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -711,46 +711,64 @@ of this software, even if advised of the possibility of such damage.
   </xsl:function>
 
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML element in a verbatim context</desc>
+  </doc>
+
   <xsl:template name="Element">
     <xsl:param name="content"/>
-    <span class="element">
       <xsl:copy-of select="$content"/>
-    </span>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML element name in a verbatim context</desc>
+  </doc>
   <xsl:template name="ElementName">
     <xsl:param name="content"/>
-    <span class="elementname">
       <xsl:copy-of select="$content"/>
-    </span>
   </xsl:template>
 
-  <xsl:template name="HighlightElementName">
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML element name highlighted in a verbatim context</desc>
+  </doc>
+ <xsl:template name="HighlightElementName">
     <xsl:param name="content"/>
-    <span class="highlightelementname">
       <xsl:copy-of select="$content"/>
-    </span>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML attribute value in a verbatim context</desc>
+  </doc>
 
   <xsl:template name="AttributeValue">
     <xsl:param name="content"/>
-    <span class="attributevalue">
       <xsl:copy-of select="$content"/>
-    </span>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML attribute in a verbatim context</desc>
+  </doc>
 
   <xsl:template name="Attribute">
     <xsl:param name="content"/>
-    <span class="attribute">
       <xsl:copy-of select="$content"/>
-    </span>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML namespace in a verbatim context</desc>
+  </doc>
   <xsl:template name="Namespace">
     <xsl:param name="content"/>
-    <span class="namespace">
       <xsl:copy-of select="$content"/>
-    </span>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML comment in a verbatim context</desc>
+  </doc>
+  <xsl:template name="Comment">
+    <xsl:param name="content"/>
+      <xsl:copy-of select="$content"/>
+  </xsl:template>
+
 
 </xsl:stylesheet>

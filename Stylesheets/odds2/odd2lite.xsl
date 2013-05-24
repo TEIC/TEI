@@ -79,18 +79,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="divName">ab</xsl:param>
   <xsl:param name="segName">seg</xsl:param>
   <xsl:param name="outputNS">http://www.tei-c.org/ns/1.0</xsl:param>
-  <xsl:param name="startAttribute"/>
-  <xsl:param name="endAttribute"/>
-  <xsl:param name="startAttributeValue"/>
-  <xsl:param name="endAttributeValue"/>
-  <xsl:param name="startComment"/>
-  <xsl:param name="endComment"/>
-  <xsl:param name="startElement"/>
-  <xsl:param name="endElement"/>
-  <xsl:param name="startElementName"/>
-  <xsl:param name="endElementName"/>
-  <xsl:param name="startNamespace"/>
-  <xsl:param name="endNamespace"/>
   <xsl:param name="spaceCharacter">&#160;</xsl:param>
   <xsl:param name="oddmode">tei</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
@@ -576,5 +564,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates/>
     </p>
   </xsl:template>
+
 
 </xsl:stylesheet>

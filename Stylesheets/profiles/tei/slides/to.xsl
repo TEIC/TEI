@@ -57,10 +57,6 @@ of this software, even if advised of the possibility of such damage.
 <xsl:param name="logoFile"></xsl:param>
 <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
 <xsl:param name="beamerClass">Singapore</xsl:param>
-<xsl:param name="startAttribute">{\color{blue2}</xsl:param>
-<xsl:param name="startAttributeValue">{\color{blue2}</xsl:param>
-<xsl:param name="startElement">{\color{blue1}</xsl:param>
-<xsl:param name="startElementName">\textbf{\color{blue1}</xsl:param>
 <xsl:param name="showNamespaceDecls">false</xsl:param>
 
   <xsl:param name="omitNSDecls">
@@ -163,6 +159,48 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="makeTable"/>
     <xsl:text>\end{longtable}\par\egroup </xsl:text>
   </xsl:template>
+
+
+  <xsl:template name="Element">
+    <xsl:param name="content"/>
+    <xsl:text>{\color{blue1}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML element name in a verbatim context</desc>
+  </doc>
+  <xsl:template name="ElementName">
+    <xsl:param name="content"/>
+    <xsl:text>\textbf{\color{blue1}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML attribute value in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="AttributeValue">
+    <xsl:param name="content"/>
+    <xsl:text>{\color{blue2}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML attribute in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Attribute">
+    <xsl:param name="content"/>
+    <xsl:text>{\color{blue2}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+  
+
 </xsl:stylesheet>
 
 

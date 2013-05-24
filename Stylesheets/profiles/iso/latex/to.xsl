@@ -65,7 +65,6 @@ of this software, even if advised of the possibility of such damage.
    <xsl:param name="numberFrontHeadings">i</xsl:param>
    <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
    <xsl:param name="classParameters">11pt,twoside</xsl:param>
-   <xsl:param name="startNamespace"/>
    <xsl:param name="tocNumberSuffix">.\ </xsl:param>
    <xsl:param name="numberSpacer">\ </xsl:param>
    <xsl:template name="latexPreambleHook">

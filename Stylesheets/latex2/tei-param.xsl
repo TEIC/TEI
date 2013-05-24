@@ -641,6 +641,78 @@ capable of dealing with UTF-8 directly.
 \makeatother
 </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML element in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Element">
+    <xsl:param name="content"/>
+    <xsl:text>{</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML element name in a verbatim context</desc>
+  </doc>
+  <xsl:template name="ElementName">
+    <xsl:param name="content"/>
+    <xsl:text>\textbf{</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML element name highlighted in a verbatim context</desc>
+  </doc>
+ <xsl:template name="HighlightElementName">
+    <xsl:param name="content"/>
+    <xsl:text>\textcolor{red}{</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML attribute value in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="AttributeValue">
+    <xsl:param name="content"/>
+    <xsl:text>{</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML attribute in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Attribute">
+    <xsl:param name="content"/>
+    <xsl:text>\textit{</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML namespace in a verbatim context</desc>
+  </doc>
+  <xsl:template name="Namespace">
+    <xsl:param name="content"/>
+    <xsl:text>\color{red}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text></xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML comment in a verbatim context</desc>
+  </doc>
+  <xsl:template name="Comment">
+    <xsl:param name="content"/>
+    <xsl:text>\textit{</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
   
 
 </xsl:stylesheet>

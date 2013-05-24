@@ -53,18 +53,6 @@ XSL LaTeX stylesheet to make slides
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:param name="documentclass">beamer</xsl:param>
-  <xsl:param name="startNamespace">\color{black}</xsl:param>
-  <xsl:param name="startElement">{\color{blue}</xsl:param>
-  <xsl:param name="startElementName">\textbf{\color{blue}</xsl:param>
-  <xsl:param name="startAttribute">{\color{blue}</xsl:param>
-  <xsl:param name="startAttributeValue">{\color{blue}</xsl:param>
-  <xsl:param name="startComment">\textit{</xsl:param>
-  <xsl:param name="endElement">}</xsl:param>
-  <xsl:param name="endElementName">}</xsl:param>
-  <xsl:param name="endComment">}</xsl:param>
-  <xsl:param name="endAttribute">}</xsl:param>
-  <xsl:param name="endAttributeValue">}</xsl:param>
-  <xsl:param name="endNamespace"/>
   <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
@@ -395,6 +383,46 @@ XSL LaTeX stylesheet to make slides
 	</xsl:non-matching-substring>
       </xsl:analyze-string>
   </xsl:template>
+
+  <xsl:template name="Element">
+    <xsl:param name="content"/>
+    <xsl:text>{\color{blue1}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML element name in a verbatim context</desc>
+  </doc>
+  <xsl:template name="ElementName">
+    <xsl:param name="content"/>
+    <xsl:text>\textbf{\color{blue1}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML attribute value in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="AttributeValue">
+    <xsl:param name="content"/>
+    <xsl:text>{\color{blue2}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>[latex] show an XML attribute in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Attribute">
+    <xsl:param name="content"/>
+    <xsl:text>{\color{blue2}</xsl:text>
+      <xsl:copy-of select="$content"/>
+    <xsl:text>}</xsl:text>
+  </xsl:template>
+  
 
 
 </xsl:stylesheet>

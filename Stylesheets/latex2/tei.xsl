@@ -6,6 +6,7 @@
                 exclude-result-prefixes="s xs tei"
                 version="2.0">
   <xsl:import href="../common2/tei.xsl"/>
+  <xsl:import href="../common2/verbatim.xsl"/>
   <xsl:import href="core.xsl"/>
   <xsl:import href="corpus.xsl"/>
   <xsl:import href="drama.xsl"/>
@@ -19,7 +20,7 @@
   <xsl:import href="verse.xsl"/>
   <xsl:import href="textcrit.xsl"/>
   <xsl:import href="tei-param.xsl"/>
-  <xsl:import href="../common2/verbatim.xsl"/>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
          <p>
@@ -65,21 +66,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:output method="text" encoding="utf8"/>
 
   <xsl:preserve-space elements="tei:hi tei:emph tei:foreign tei:p"/>
-<xsl:param name="outputTarget">latex</xsl:param>
-  <xsl:param name="startNamespace">\color{red}</xsl:param>
-  <xsl:param name="startElement">{</xsl:param>
-  <xsl:param name="highlightStartElementName">\textcolor{red}{</xsl:param>
-  <xsl:param name="highlightEndElementName">}</xsl:param>
-  <xsl:param name="startElementName">\textbf{</xsl:param>
-  <xsl:param name="startAttribute">{</xsl:param>
-  <xsl:param name="startAttributeValue">{</xsl:param>
-  <xsl:param name="startComment">\begin{it}</xsl:param>
-  <xsl:param name="endElement">}</xsl:param>
-  <xsl:param name="endElementName">}</xsl:param>
-  <xsl:param name="endComment">\end{it}</xsl:param>
-  <xsl:param name="endAttribute">}</xsl:param>
-  <xsl:param name="endAttributeValue">}</xsl:param>
-  <xsl:param name="endNamespace"/>
+  <xsl:param name="outputTarget">latex</xsl:param>
   <xsl:param name="documentclass">article</xsl:param>
   <xsl:param name="spaceCharacter">\hspace*{6pt}</xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

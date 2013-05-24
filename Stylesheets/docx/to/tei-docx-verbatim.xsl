@@ -57,36 +57,6 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
     
-    <!--
-        <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
-    <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
-    <xsl:param name="startElement">&lt;span class="element"&gt;</xsl:param>
-    <xsl:param name="endElement">&lt;/span&gt;</xsl:param>
-    <xsl:param name="startElementName">&lt;span class="elementname"&gt;</xsl:param>
-    <xsl:param name="endElementName">&lt;/span&gt;</xsl:param>
-    <xsl:param name="startAttribute">&lt;span class="attribute"&gt;</xsl:param>
-    <xsl:param name="endAttribute">&lt;/span&gt;</xsl:param>
-    <xsl:param name="startAttributeValue">&lt;span class="attributevalue"&gt;</xsl:param>
-    <xsl:param name="endAttributeValue">&lt;/span&gt;</xsl:param>
-    <xsl:param name="startNamespace">&lt;span class="namespace"&gt;</xsl:param>
-    <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
-    
-    <xsl:param name="spaceCharacter">&#xA0;</xsl:param>
-    <xsl:param name="showNamespaceDecls">true</xsl:param> -->
-    
-    <xsl:param name="startComment"/>
-    <xsl:param name="endComment"/>
-    <xsl:param name="startElement"/>
-    <xsl:param name="endElement"/>
-    <xsl:param name="startElementName"/>
-    <xsl:param name="endElementName"/>
-    <xsl:param name="startAttribute"/>
-    <xsl:param name="endAttribute"/>
-    <xsl:param name="startAttributeValue"/>
-    <xsl:param name="endAttributeValue"/>
-    <xsl:param name="startNamespace"/>
-    <xsl:param name="endNamespace"/>
-    
     <xsl:param name="spaceCharacter">&#160;</xsl:param>
     <xsl:param name="showNamespaceDecls">true</xsl:param>
     

@@ -53,20 +53,6 @@ of this software, even if advised of the possibility of such damage.
 
 
 <xsl:output method="xml" indent="yes" encoding="utf-8"/>
-  <xsl:param name="startComment">&lt;emphasis role="comment"&gt;</xsl:param>
-  <xsl:param name="endComment">&lt;/emphasis&gt;</xsl:param>
-  <xsl:param name="startElement">&lt;emphasis role="element"&gt;</xsl:param>
-  <xsl:param name="endElement">&lt;/emphasis&gt;</xsl:param>
-  <xsl:param name="startElementName">&lt;emphasis role="elementname"&gt;</xsl:param>
-  <xsl:param name="endElementName">&lt;/emphasis&gt;</xsl:param>
-  <xsl:param name="highlightStartElementName">&lt;emphasis role="highlightelementname"&gt;</xsl:param>
-  <xsl:param name="highlightEndElementName">&lt;/emphasis&gt;</xsl:param>
-  <xsl:param name="startAttribute">&lt;emphasis role="attribute"&gt;</xsl:param>
-  <xsl:param name="endAttribute">&lt;/emphasis&gt;</xsl:param>
-  <xsl:param name="startAttributeValue">&lt;emphasis role="attributevalue"&gt;</xsl:param>
-  <xsl:param name="endAttributeValue">&lt;/emphasis&gt;</xsl:param>
-  <xsl:param name="startNamespace">&lt;emphasis role="namespace"&gt;</xsl:param>
-  <xsl:param name="endNamespace">&lt;/emphasis&gt;</xsl:param>
   <xsl:param name="spaceCharacter">&#160;</xsl:param>
 
 <xsl:template match="text()|comment()">
@@ -488,5 +474,78 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </programlisting>
  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML element in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Element">
+    <xsl:param name="content"/>
+    <emphasis role="element">
+      <xsl:copy-of select="$content"/>
+    </emphasis>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML element name in a verbatim context</desc>
+  </doc>
+  <xsl:template name="ElementName">
+    <xsl:param name="content"/>
+    <emphasis role="elementname">
+      <xsl:copy-of select="$content"/>
+    </emphasis>
+  </xsl:template>
+
+   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML element name highlighted in a verbatim context</desc>
+  </doc>
+ <xsl:template name="HighlightElementName">
+    <xsl:param name="content"/>
+    <emphasis role="highlightelementname">
+      <xsl:copy-of select="$content"/>
+    </emphasis>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML attribute value in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="AttributeValue">
+    <xsl:param name="content"/>
+    <emphasis role="attributevalue">
+      <xsl:copy-of select="$content"/>
+    </emphasis>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML attribute in a verbatim context</desc>
+  </doc>
+
+  <xsl:template name="Attribute">
+    <xsl:param name="content"/>
+    <emphasis role="attribute">
+      <xsl:copy-of select="$content"/>
+    </emphasis>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML namespace in a verbatim context</desc>
+  </doc>
+  <xsl:template name="Namespace">
+    <xsl:param name="content"/>
+    <emphasis role="namespace">
+      <xsl:copy-of select="$content"/>
+    </emphasis>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>show an XML comment in a verbatim context</desc>
+  </doc>
+  <xsl:template name="Comment">
+    <xsl:param name="content"/>
+    <emphasis role="comment">
+      <xsl:copy-of select="$content"/>
+    </emphasis>
+  </xsl:template>
 
 </xsl:stylesheet>
