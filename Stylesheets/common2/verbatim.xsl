@@ -44,18 +44,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="useNSPrefixes">true</xsl:param>
   <xsl:param name="startComment">&lt;span class="comment"&gt;</xsl:param>
   <xsl:param name="endComment">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startElement">&lt;span class="element"&gt;</xsl:param>
-  <xsl:param name="endElement">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startElementName">&lt;span class="elementname"&gt;</xsl:param>
-  <xsl:param name="endElementName">&lt;/span&gt;</xsl:param>
-  <xsl:param name="highlightStartElementName">&lt;span class="highlightelementname"&gt;</xsl:param>
-  <xsl:param name="highlightEndElementName">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startAttribute">&lt;span class="attribute"&gt;</xsl:param>
-  <xsl:param name="endAttribute">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startAttributeValue">&lt;span class="attributevalue"&gt;</xsl:param>
-  <xsl:param name="endAttributeValue">&lt;/span&gt;</xsl:param>
-  <xsl:param name="startNamespace">&lt;span class="namespace"&gt;</xsl:param>
-  <xsl:param name="endNamespace">&lt;/span&gt;</xsl:param>
   <xsl:param name="spaceCharacter">&#160;</xsl:param>
   <xsl:param name="showNamespaceDecls">true</xsl:param>
   <xsl:param name="forceWrap">false</xsl:param>
@@ -432,32 +420,37 @@ of this software, even if advised of the possibility of such damage.
         <xsl:call-template name="verbatim-makeIndent"/>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
-    <xsl:text>&lt;</xsl:text>
-    <xsl:call-template name="verbatim-makeElementName">
-      <xsl:with-param name="start">true</xsl:with-param>
-      <xsl:with-param name="highlight">
-        <xsl:value-of select="$highlight"/>
-      </xsl:with-param>
-    </xsl:call-template>
-    <xsl:apply-templates select="@*" mode="verbatim"/>
-    <xsl:if test="local-name(.)='TEI' or local-name(.)='teiCorpus'">
-      <xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
-    </xsl:if>  
-    <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
-      <xsl:choose>
-        <xsl:when test="not(parent::*)">
-          <xsl:call-template name="nsList"/>
-        </xsl:when>
-        <xsl:when test="parent::teix:egXML and not(preceding-sibling::*)">
-          <xsl:call-template name="nsList"/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:if>
+    <xsl:variable name="eContents">
+      <xsl:text>&lt;</xsl:text>
+      <xsl:call-template name="verbatim-makeElementName">
+	<xsl:with-param name="start">true</xsl:with-param>
+	<xsl:with-param name="highlight">
+	  <xsl:value-of select="$highlight"/>
+	</xsl:with-param>
+      </xsl:call-template>
+      <xsl:apply-templates select="@*" mode="verbatim"/>
+      <xsl:if test="local-name(.)='TEI' or local-name(.)='teiCorpus'">
+	<xsl:text> xmlns="http://www.tei-c.org/ns/1.0"</xsl:text>
+      </xsl:if>  
+      <xsl:if test="$showNamespaceDecls='true' or parent::teix:egXML[@rend='full']">
+	<xsl:choose>
+	  <xsl:when test="not(parent::*)">
+	    <xsl:call-template name="nsList"/>
+	  </xsl:when>
+	  <xsl:when test="parent::teix:egXML and not(preceding-sibling::*)">
+	    <xsl:call-template name="nsList"/>
+	  </xsl:when>
+	</xsl:choose>
+      </xsl:if>
+    </xsl:variable>
     <xsl:choose>
       <xsl:when test="child::node()">
-        <xsl:text>&gt;</xsl:text>
-        <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
+	<xsl:call-template name="Element">
+	  <xsl:with-param name="content">
+	    <xsl:copy-of select="$eContents"/>
+	    <xsl:text>&gt;</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
         <xsl:apply-templates mode="verbatim">
           <xsl:with-param name="highlight">
             <xsl:value-of select="$highlight"/>
@@ -490,20 +483,26 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="verbatim-makeIndent"/>
           </xsl:when>
         </xsl:choose>
-        <xsl:value-of disable-output-escaping="yes" select="$startElement"/>
-        <xsl:text>&lt;/</xsl:text>
-        <xsl:call-template name="verbatim-makeElementName">
-          <xsl:with-param name="start">false</xsl:with-param>
-          <xsl:with-param name="highlight">
-            <xsl:value-of select="$highlight"/>
-          </xsl:with-param>
-        </xsl:call-template>
-        <xsl:text>&gt;</xsl:text>
-        <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
+	<xsl:call-template name="ElementName">
+	  <xsl:with-param name="content">
+	    <xsl:text>&lt;/</xsl:text>
+	    <xsl:call-template name="verbatim-makeElementName">
+	      <xsl:with-param name="start">false</xsl:with-param>
+	      <xsl:with-param name="highlight">
+		<xsl:value-of select="$highlight"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	    <xsl:text>&gt;</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>/&gt;</xsl:text>
-        <xsl:value-of disable-output-escaping="yes" select="$endElement"/>
+	<xsl:call-template name="Element">
+	  <xsl:with-param name="content">
+	    <xsl:copy-of select="$eContents"/>
+	    <xsl:text>/&gt;</xsl:text>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -512,9 +511,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="special"/>
     <xsl:choose>
       <xsl:when test="$special='true'">
-        <xsl:value-of disable-output-escaping="yes" select="$highlightStartElementName"/>
-        <xsl:value-of select="$name"/>
-        <xsl:value-of disable-output-escaping="yes" select="$highlightEndElementName"/>
+	<xsl:call-template name="HighlightElementName">
+	  <xsl:with-param name="content">
+	    <xsl:value-of select="$name"/>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$name"/>
@@ -583,14 +584,16 @@ of this software, even if advised of the possibility of such damage.
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of disable-output-escaping="yes" select="$startElementName"/>
-        <xsl:call-template name="verbatim-createElement">
-          <xsl:with-param name="name" select="local-name(.)"/>
-          <xsl:with-param name="special">
-            <xsl:value-of select="$highlightMe"/>
-          </xsl:with-param>
-        </xsl:call-template>
-        <xsl:value-of disable-output-escaping="yes" select="$endElementName"/>
+	<xsl:call-template name="ElementName">
+	  <xsl:with-param name="content">
+	    <xsl:call-template name="verbatim-createElement">
+	      <xsl:with-param name="name" select="local-name(.)"/>
+	      <xsl:with-param name="special">
+		<xsl:value-of select="$highlightMe"/>
+	      </xsl:with-param>
+	    </xsl:call-template>
+	  </xsl:with-param>
+	</xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -619,9 +622,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:with-param name="name" select="name()"/>
     </xsl:call-template>
     <xsl:text>="</xsl:text>
-    <xsl:value-of disable-output-escaping="yes" select="$startAttributeValue"/>
-    <xsl:apply-templates select="." mode="attributetext"/>
-    <xsl:value-of disable-output-escaping="yes" select="$endAttributeValue"/>
+    <xsl:call-template name="Attribute">
+      <xsl:with-param name="content">
+	<xsl:apply-templates select="." mode="attributetext"/>
+      </xsl:with-param>
+    </xsl:call-template>
     <xsl:text>"</xsl:text>
   </xsl:template>
   <xsl:template match="@*" mode="attributetext">
@@ -704,4 +709,48 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
+
+
+  <xsl:template name="Element">
+    <xsl:param name="content"/>
+    <span class="element">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template name="ElementName">
+    <xsl:param name="content"/>
+    <span class="elementname">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template name="HighlightElementName">
+    <xsl:param name="content"/>
+    <span class="highlightelementname">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template name="AttributeValue">
+    <xsl:param name="content"/>
+    <span class="attributevalue">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template name="Attribute">
+    <xsl:param name="content"/>
+    <span class="attribute">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
+  <xsl:template name="Namespace">
+    <xsl:param name="content"/>
+    <span class="namespace">
+      <xsl:copy-of select="$content"/>
+    </span>
+  </xsl:template>
+
 </xsl:stylesheet>
