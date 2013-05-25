@@ -76,11 +76,11 @@ of this software, even if advised of the possibility of such damage.
     
      <xsl:template name="write-docxfile-numbering-definition">
 	     <xsl:if test="$debug='true'">
-	        <xsl:message>Writing out <xsl:value-of select="concat($wordDirectory,'/word/numbering.xml')"/>
+	        <xsl:message>Writing out <xsl:value-of select="$numberDoc"/>
          </xsl:message>
 	     </xsl:if>
 
-        <xsl:result-document href="{concat($wordDirectory,'/word/numbering.xml')}">
+        <xsl:result-document href="{$numberDoc}">
             <w:numbering>
 
                 <!-- for headlines -->
