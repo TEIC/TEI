@@ -71,8 +71,8 @@ the <ref target="mailto:info@tei-c.org">TEI Consortium</ref>.
 <body>
 <div><head>Introduction</head>
 <p>This is a set of XSLT 2.0 specifications to transform TEI XML documents
-to various formst, including XHTML, LaTeX, XSL Formatting Objects,
-ePub, plain text, 
+to various forms, including XHTML, LaTeX, XSL Formatting Objects,
+ePub, plain text, RDF, JSON;
 and to/from Word OOXML (docx) and OpenOfice (odt).
 They concentrate on the core TEI
 modules which are used for simple transcription and <q>born
@@ -83,22 +83,25 @@ easy. It is important to understand that they do <hi>not</hi>:
 <item>attempt to define a standard TEI processing or rendering
 model</item>
 </list>
-and should be regarded more as a proof of concept than a standard model.</p>
+and should not be treated as the definitive view of the TEI Consortium.</p>
 
 </div>
 
 <div>
 <head>File organisation</head>
-<p>The stylesheets contain four directories where most of the work is done:
+<p>The stylesheets contain seven directories where most of the work is done:
 <list type="gloss">
-<label>common2</label><item>templates which are independent of output type</item>
-<label>xhtml2</label><item>templates for making HTML output</item>
+<label>common2</label><item>templates which are independent of output
+type, used by the other transformations</item>
+<label>xhtml2</label><item>templates for making HTML output (also used
+for ePub)</item>
 <label>latex2</label><item>templates for making LaTeX output</item>
 <label>docx</label><item>conversion to and from Word OOXML format</item>
+<label>odt</label><item>conversion to and from OpenOffice ODF format</item>
 <label>fo2</label><item>templates for making XSL FO output</item>
 <label>odds2</label><item>processing of TEI ODD files</item>
 </list>
-Within each directory there is a separate file for the templates
+Within each directory there is usually a separate file for the templates
 which implement each of the TEI modules (eg
 <ident>textstructure.xsl</ident>,
 <ident>linking.xsl</ident>, or <ident>drama.xsl</ident>); these
@@ -112,19 +115,18 @@ any necessary declaration of constants and XSL keys.</p>
 are built on top of the xhtml one above:
 <list type="gloss">
 <label>bibtex</label><item>conversion to BibTeX</item>
-<label>docbook</label><item>conversion from Docbook</item>
+<label>docbook</label><item>conversion to/from Docbook</item>
 <label>dtd</label><item>ODD conversion to DTD </item>
 <label>epub</label><item>conversion to ePub</item>
 <label>epub3</label><item>conversion to ePub3</item>
 <label>html5</label><item>conversion to HTML5 </item>
 <label>json</label><item>conversion to JSON</item>
 <label>nlm</label><item>conversion to NLM </item>
-<label>odt</label><item>conversion to and from OpenOffice Writer format</item>
 <label>rdf</label><item>conversion to RDF (CIDOC CRM)</item>
 <label>slides</label><item>conversion to LaTeX and HTML slides</item>
 <label>tbx</label><item>conversion to TBX</item>
 <label>tcp</label><item>conversion from Text Creation Partnership P4 XML</item>
-<label>tite</label><item>conversion from TEI Tite </item>
+<label>tite</label><item>conversion from TEI Tite to normal TEI P5</item>
 <label>txt</label><item>conversion to plain text</item>
 <label>xlsx</label><item>conversion from Microsoft Office spreadsheet format</item>
 </list>
@@ -160,7 +162,31 @@ to go <emph>from</emph> the selected format to TEI XML.</p>
 listed below.</p>
 
 <p>For the brave, there are Linux/OSX command-line shell scripts
-<ident>docbooktotei</ident>, <ident>docxtotei</ident>, <ident>odttotei</ident>, <ident>transformtei</ident>, <ident>tcptotei</ident>, <ident>xlsxtotei</ident>, <ident>teitodocx</ident>, <ident>teitodtd</ident>, <ident>teitoepub</ident>, <ident>teitoepub3</ident>, <ident>teitofo</ident>, <ident>teitohtml</ident>, <ident>teitohtml5</ident>, <ident>teitojson</ident>, <ident>teitolatex</ident>, <ident>teitoodt</ident>, <ident>teitordf</ident>, <ident>teitorelaxng</ident>, <ident>teitornc</ident>, <ident>teitoslides</ident>, <ident>teitotxt</ident> and <ident>teitoxsd</ident>
+<ident>docbooktotei</ident>,
+<ident>docxtotei</ident>,
+<ident>odttotei</ident>,
+<ident>tcptotei</ident>,
+<ident>teitobibtex</ident>,
+<ident>teitodocbook</ident>,
+<ident>teitodocx</ident>,
+<ident>teitodtd</ident>,
+<ident>teitoepub</ident>,
+<ident>teitoepub3</ident>,
+<ident>teitofo</ident>,
+<ident>teitohtml</ident>,
+<ident>teitohtml5</ident>,
+<ident>teitojson</ident>,
+<ident>teitolatex</ident>,
+<ident>teitoodd</ident>,
+<ident>teitoodt</ident>,
+<ident>teitopdf</ident>,
+<ident>teitordf</ident>,
+<ident>teitorelaxng</ident>,
+<ident>teitornc</ident>,
+<ident>teitoslides</ident>,
+<ident>teitotxt</ident>,
+<ident>teitoxsd</ident>, and
+<ident>xlsxtotei</ident>
 for converting to/from Word, to/from OpenOffice, and to DTD, ePub,
 HTML, RDF, Relax NG, plain text, W3C schema etc.  These are
 implemented using Ant tasks, which are also available within the
@@ -189,8 +215,7 @@ modules, requires good understanding of XSL.</p>
 <item><ref target="../tei-xsl-common2/odds2/odd2relax.html">Conversion of ODD to RELAX NG schema</ref></item>
 <item><ref target="../tei-xsl-common2/odds2/odd2dtd.html">Conversion of ODD to DTD</ref></item>
 <item><ref target="../tei-xsl-common2/slides/teihtml-slides.html">Default conversion to HTML slides</ref></item>
-<item><ref
-	  target="../tei-xsl-common2/slides/teilatex-slides.html">Default
+<item><ref target="../tei-xsl-common2/slides/teilatex-slides.html">Default
 conversion to LaTeX slides (using beamer package)</ref></item>
 </list>
 </div>

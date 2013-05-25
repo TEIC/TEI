@@ -45,12 +45,7 @@ PROFILEDOCTARGETS=\
 	profiles/enrich/docx/to.xsl \
 	profiles/enrich/fo/to.xsl \
 	profiles/enrich/html/to.xsl \
-	profiles/enrich/latex/to.xsl \
-	profiles/iso/docx/to.xsl \
-	profiles/iso/docx/from.xsl \
-	profiles/iso/fo/to.xsl \
-	profiles/iso/html/to.xsl \
-	profiles/iso/latex/to.xsl 
+	profiles/enrich/latex/to.xsl 
 
 .PHONY: doc release common profiles
 
