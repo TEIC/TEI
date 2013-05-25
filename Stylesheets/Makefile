@@ -24,24 +24,21 @@ DOCTARGETS= \
 	odds2/odd2dtd.xsl \
 	slides/teihtml-slides.xsl \
 	slides/teilatex-slides.xsl \
+	profiles/default/csv/from.xsl		\
 	profiles/default/csv/to.xsl	\
-	profiles/default/docx/to.xsl \
+	profiles/default/docbook/from.xsl	\
 	profiles/default/docx/from.xsl \
+	profiles/default/docx/to.xsl \
 	profiles/default/dtd/to.xsl	\
 	profiles/default/epub/to.xsl	\
 	profiles/default/fo/to.xsl	\
 	profiles/default/html/to.xsl \
 	profiles/default/latex/to.xsl \
 	profiles/default/lite/to.xsl \
+	profiles/default/odt/from.xsl \
 	profiles/default/odt/to.xsl \
-	profiles/default/odt/from.xsl \
-	profiles/default/relaxng/to.xsl	\
-	profiles/default/docx/from.xsl \
-	profiles/default/csv/from.xsl		\
-	profiles/default/odt/from.xsl \
-	profiles/default/docbook/from.xsl	\
 	profiles/default/p4/from.xsl \
-	profiles/default/docx/from.xsl
+	profiles/default/relaxng/to.xsl	
 
 PROFILEDOCTARGETS=\
 	profiles/enrich/docx/from.xsl \
