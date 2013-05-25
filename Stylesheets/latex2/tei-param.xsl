@@ -689,7 +689,7 @@ capable of dealing with UTF-8 directly.
 
   <xsl:template name="Attribute">
     <xsl:param name="content"/>
-    <xsl:text>\textit{</xsl:text>
+    <xsl:text>{</xsl:text>
       <xsl:copy-of select="$content"/>
     <xsl:text>}</xsl:text>
   </xsl:template>

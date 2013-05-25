@@ -73,10 +73,10 @@ of this software, even if advised of the possibility of such damage.
         </tei:hi>
     </xsl:template>
     
-    <xsl:template name="verbatim-createAttribute">
-        <xsl:param name="name"/>
+    <xsl:template name="Attribute">
+        <xsl:param name="content"/>
         <tei:hi rend="bold">
-            <xsl:value-of select="$name"/>
+            <xsl:value-of select="$content"/>
         </tei:hi>
     </xsl:template>    
     

@@ -522,10 +522,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template name="verbatim-createAttribute">
-    <xsl:param name="name"/>
-    <xsl:value-of select="$name"/>
-  </xsl:template>
   <xsl:template name="verbatim-makeElementName">
     <xsl:param name="start"/>
     <xsl:param name="highlight"/>
@@ -618,11 +614,11 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="verbatim-makeIndent"/>
     </xsl:if>
     <xsl:value-of select="$spaceCharacter"/>
-    <xsl:call-template name="verbatim-createAttribute">
-      <xsl:with-param name="name" select="name()"/>
+    <xsl:call-template name="Attribute">
+      <xsl:with-param name="content" select="name()"/>
     </xsl:call-template>
     <xsl:text>="</xsl:text>
-    <xsl:call-template name="Attribute">
+    <xsl:call-template name="AttributeValue">
       <xsl:with-param name="content">
 	<xsl:apply-templates select="." mode="attributetext"/>
       </xsl:with-param>

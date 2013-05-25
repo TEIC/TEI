@@ -92,11 +92,6 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template name="verbatim-newLine"/>
 
-  <xsl:template name="verbatim-createAttribute">
-      <xsl:param name="name"/>
-      <xsl:value-of select="$name"/>
-  </xsl:template>
-
   <xsl:template name="verbatim-Text">
       <xsl:param name="words"/>
       <xsl:choose>
