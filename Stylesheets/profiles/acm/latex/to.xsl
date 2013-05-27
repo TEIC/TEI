@@ -57,12 +57,13 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="reencode">false</xsl:param>
   <xsl:param name="classParameters"></xsl:param>
   <xsl:param name="longtables">false</xsl:param>
-  <xsl:param name="attsOnSameLine">2</xsl:param>
+  <xsl:param name="attsOnSameLine">1</xsl:param>
+  <xsl:param name="spaceCharacter">\hspace*{4pt}</xsl:param>
   <xsl:param name="documentclass">acm_proc_article-sp</xsl:param>  
   <xsl:template name="latexSetup"/>
   <xsl:template name="latexPackages">   
 \usepackage{color,framed,times}
-\definecolor{shadecolor}{gray}{0.95}
+\definecolor{shadecolor}{gray}{1}
   </xsl:template>
   <xsl:template name="latexLayout"/>
   <xsl:template name="latexBegin">
@@ -85,7 +86,7 @@ of this software, even if advised of the possibility of such damage.
 \maketitle
 \begin{abstract}
 <xsl:for-each
-    select="ancestor-or-self::TEI/front/div[@type='abstract']">
+    select="ancestor-or-self::TEI/text/front/div[@type='abstract']">
   <xsl:apply-templates/>
 </xsl:for-each>
 \end{abstract}
@@ -175,7 +176,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
       
    <xsl:template name="exampleFontSet">
-     <xsl:text>\ttfamily\fontsize{7pt}{8.5pt}\selectfont </xsl:text>
+     <xsl:text>\ttfamily\fontsize{7pt}{8pt}\selectfont </xsl:text>
    </xsl:template>
 
    <xsl:template match="ptr[@type='bibl']">
@@ -213,4 +214,11 @@ of this software, even if advised of the possibility of such damage.
        <xsl:apply-templates/>
      </xsl:for-each>
    </xsl:template>
+
+  <xsl:template match="tei:gi">
+      <xsl:text>{\ttfamily &lt;</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>&gt;}</xsl:text>
+  </xsl:template>
+
 </xsl:stylesheet>

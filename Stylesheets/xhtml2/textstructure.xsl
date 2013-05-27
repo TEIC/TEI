@@ -2224,10 +2224,20 @@ of this software, even if advised of the possibility of such damage.
                   <xsl:text>from </xsl:text>
                   <xsl:value-of select="$masterFile"/>
                </xsl:if>
-               <xsl:text> using an XSLT version </xsl:text>
-               <xsl:value-of select="system-property('xsl:version')"/> stylesheet
-	  based on <xsl:value-of select="$teixslHome"/>
-	  on <xsl:call-template name="whatsTheDate"/>
+               <xsl:text> using XSLT stylesheets </xsl:text>
+	       based on <xsl:value-of select="$teixslHome"/>
+	       on <xsl:call-template name="whatsTheDate"/>.
+	       <xsl:choose>
+		 <xsl:when test="$useFixedDate='true'">
+		   <xsl:value-of
+		       select="system-property('xsl:product-name')"/>.
+		 </xsl:when>
+		 <xsl:otherwise>
+		   <xsl:value-of
+		       select="(system-property('xsl:product-name'),system-property('xsl:product-version'))"
+		   separator=" "/>.
+		 </xsl:otherwise>
+	       </xsl:choose>
             </xsl:comment>
          </address>
       </div>
