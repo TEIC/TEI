@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
+                xmlns:teix="http://www.tei-c.org/ns/Examples"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"                
     xmlns:xi="http://www.w3.org/2003/XInclude"
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
@@ -54,7 +55,7 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-  <xsl:param name="reencode">false</xsl:param>
+  <xsl:param name="reencode">true</xsl:param>
   <xsl:param name="classParameters"></xsl:param>
   <xsl:param name="longtables">false</xsl:param>
   <xsl:param name="attsOnSameLine">1</xsl:param>
@@ -64,10 +65,19 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="latexPackages">   
 \usepackage{color,framed,times}
 \definecolor{shadecolor}{gray}{1}
-\FrameSep=\fboxsep
-\catcode`⃥=\active \def⃥{\textbackslash}
-\catcode`❴=\active \def❴{\{}
-\catcode`❵=\active \def❵{\}}
+\usepackage[utf8x]{inputenc}
+\PrerenderUnicode{–}
+\FrameSep=0.2\fboxsep
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage[]{ucs}
+\uc@dclc{8421}{default}{\textbackslash }
+\uc@dclc{10100}{default}{\{}
+\uc@dclc{10101}{default}{\}}
+\uc@dclc{8491}{default}{\AA{}}
+\uc@dclc{8239}{default}{\,}
+\uc@dclc{20154}{default}{ }
+\uc@dclc{10148}{default}{>}
   </xsl:template>
   <xsl:template name="latexLayout"/>
   <xsl:template name="latexBegin">
@@ -223,6 +233,36 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>{\ttfamily &lt;</xsl:text>
       <xsl:apply-templates/>
       <xsl:text>&gt;}</xsl:text>
+  </xsl:template>
+
+
+  <xsl:template match="teix:egXML">
+      <xsl:param name="simple">false</xsl:param>
+      <xsl:param name="highlight"/>
+      <xsl:text>\par\bgroup</xsl:text>
+      <xsl:call-template name="egXMLStartHook"/>
+      <xsl:call-template name="exampleFontSet"/>
+      <xsl:text>\begin{shaded}\noindent\mbox{}</xsl:text>
+      <xsl:apply-templates mode="verbatim">
+	<xsl:with-param name="highlight">
+	  <xsl:value-of select="$highlight"/>
+	</xsl:with-param>
+      </xsl:apply-templates>
+      <xsl:text>\end{shaded}</xsl:text>
+      <xsl:call-template name="egXMLEndHook"/>
+      <xsl:text>\egroup\vskip-\parskip </xsl:text>
+      <xsl:if test="parent::tei:p and following-sibling::node()">\noindent </xsl:if>
+  </xsl:template>
+
+
+  <xsl:template match="tei:eg">
+    <xsl:text>\par\bgroup</xsl:text>
+    <xsl:call-template name="exampleFontSet"/>
+    <xsl:text>\vskip 10pt\begin{shaded}
+    \obeylines\obeyspaces </xsl:text>
+    <xsl:apply-templates mode="eg"/>
+    <xsl:text>\end{shaded}
+    \egroup\vskip-\parskip </xsl:text>
   </xsl:template>
 
 </xsl:stylesheet>
