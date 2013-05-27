@@ -125,13 +125,8 @@ of this software, even if advised of the possibility of such damage.
          <xsl:call-template name="printTitleAndLogo"/>
       </xsl:if>
       <xsl:call-template name="beginDocumentHook"/>
-      <!-- certainly don't touch the next few lines -->
-      <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;
-      \catcode`\&amp;=12\relax </xsl:text>
-      <xsl:text>&#10;\catcode`\$=12\relax&#10;</xsl:text>
-      <xsl:text>\catcode`\^=12\relax&#10;</xsl:text>
-      <xsl:text>\catcode`\#=12\relax&#10;</xsl:text>
-      <xsl:text>\catcode`\%=12\relax&#10;</xsl:text>
+      <!-- certainly don't touch this line -->
+      <xsl:text disable-output-escaping="yes">\let\tabcellsep&amp;</xsl:text>
       <xsl:apply-templates/>
       <xsl:call-template name="latexEnd"/>
       <xsl:if test="key('ENDNOTES',1)">

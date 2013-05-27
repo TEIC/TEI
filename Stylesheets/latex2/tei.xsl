@@ -125,18 +125,24 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:function name="tei:escapeCharsVerbatim" as="xs:string">
     <xsl:param name="letters"/>
-    <xsl:value-of select="translate($letters, '\{}','⃥❴❵')"/>
+    <xsl:value-of select="replace(replace(replace(replace(translate($letters, '\{}','⃥❴❵'),
+		  '_','\\textunderscore '),
+		  '\^','\\textasciicircum '),
+		  '~','\\textasciitilde '),
+		  '([%&amp;\$#])','\\$1')"/>
   </xsl:function>
 
   <xsl:function name="tei:escapeChars" as="xs:string" override="yes">
     <xsl:param name="letters"/>
     <xsl:param name="context"/>
       <xsl:value-of
-	  select="replace(replace(replace(replace(translate($letters,'&#10;',' '), 
+	  select="replace(replace(replace(replace(replace(translate($letters,'&#10;',' '), 
 		  '\\','\\textbackslash '),
-		  '\{','\\{'),
-		  '\}','\\}'),
-		  '~','\\textasciitilde ')"/>
+		  '_','\\textunderscore '),
+		  '\^','\\textasciicircum '),
+		  '~','\\textasciitilde '),
+		  '([\}\{%&amp;\$#])','\\$1')"/>
+
   </xsl:function>
 
 

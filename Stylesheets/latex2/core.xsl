@@ -243,7 +243,7 @@ of this software, even if advised of the possibility of such damage.
 	       or (ancestor::tei:back and $numberBackHeadings='')
 	       or (not($numberHeadings='true') and ancestor::tei:body)
 	       or (ancestor::tei:front and  $numberFrontHeadings='')">*</xsl:when>
-	       <xsl:otherwise>[<xsl:value-of select="normalize-space(.)"/>]</xsl:otherwise>
+	       <xsl:otherwise>[<xsl:value-of select="tei:escapeChars(.,.)"/>]</xsl:otherwise>
             </xsl:choose>
 	    <xsl:text>{</xsl:text>
 	    <xsl:apply-templates/>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+>
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -37,7 +39,29 @@
 	    <date>1952</date>.
 	  </bibl></cit></p>
     		<p>Some text introducing <bibl>all things bibliographic</bibl>, followed by some more text.</p>
-  		</div>
+      </div>
+      <div>
+	<head>Verbatim</head>
+	<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <xsl:template name="makeExternalLink">
+      <xsl:param name="ptr" as="xs:boolean"  select="false()"/>
+      <xsl:param name="dest"/>
+      <xsl:choose>
+         <xsl:when test="$ptr">
+            <xsl:text>{\small\ttfamily </xsl:text>
+	    <xsl:sequence select="$dest"/>
+            <xsl:text>}</xsl:text>
+         </xsl:when>
+         <xsl:otherwise>
+            <xsl:apply-templates/>
+         </xsl:otherwise>
+      </xsl:choose>
+  </xsl:template>
+   <xsl:template name="tableHline">
+   <xsl:text>\hline </xsl:text>
+   </xsl:template>
+</egXML>
+      </div>
 		</body>
 	</text>
 </TEI>

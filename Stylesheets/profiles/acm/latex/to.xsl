@@ -64,6 +64,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="latexPackages">   
 \usepackage{color,framed,times}
 \definecolor{shadecolor}{gray}{1}
+\FrameSep=\fboxsep
+\catcode`⃥=\active \def⃥{\textbackslash}
+\catcode`❴=\active \def❴{\{}
+\catcode`❵=\active \def❵{\}}
   </xsl:template>
   <xsl:template name="latexLayout"/>
   <xsl:template name="latexBegin">
