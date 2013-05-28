@@ -88,6 +88,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="odd2odd-REFED" use="@name" match="rng:ref[parent::tei:datatype]"/>
   <xsl:key name="odd2odd-REFED" use="substring-before(@name,'.attribute')" match="tei:attRef"/>
   <xsl:key name="odd2odd-REFED" use="substring-before(@name,'_')" match="rng:ref[contains(@name,'_')]"/>
+  <xsl:key name="odd2odd-REFED" use="@key" match="tei:macroRef"/>
+  <xsl:key name="odd2odd-REFED" use="@key" match="tei:classRef"/>
+  <xsl:key name="odd2odd-REFED" use="@key" match="tei:elementRef"/>
   <xsl:key name="odd2odd-REPLACECONSTRAINT" match="tei:constraintSpec[@mode='replace']" use="concat(../@ident,'_',@ident)"/>
   <xsl:key name="odd2odd-SCHEMASPECS" match="tei:schemaSpec" use="@ident"/>
   <xsl:key match="tei:moduleSpec" name="odd2odd-MODULES" use="@ident"/>
