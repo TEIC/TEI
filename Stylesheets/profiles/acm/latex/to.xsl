@@ -58,7 +58,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="reencode">true</xsl:param>
   <xsl:param name="classParameters"></xsl:param>
   <xsl:param name="longtables">false</xsl:param>
-  <xsl:param name="attsOnSameLine">1</xsl:param>
+  <xsl:param name="attsOnSameLine">2</xsl:param>
+  <xsl:param name="attLength">35</xsl:param>
   <xsl:param name="spaceCharacter">\hspace*{4pt}</xsl:param>
   <xsl:param name="documentclass">acm_proc_article-sp</xsl:param>  
   <xsl:template name="latexSetup"/>
