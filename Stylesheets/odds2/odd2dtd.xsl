@@ -812,7 +812,10 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:text">
       <xsl:text> CDATA</xsl:text>
   </xsl:template>
-  <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:data">
+  <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:text">
+      <xsl:text> CDATA</xsl:text>
+  </xsl:template>
+  <xsl:template match="tei:macroSpec[@type='dt']/tei:content[@mixed='true']">
       <xsl:text> CDATA</xsl:text>
   </xsl:template>
   <xsl:template match="tei:macroSpec[@type='epe']/tei:content/rng:text">
