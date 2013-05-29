@@ -1045,7 +1045,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <xsl:apply-templates
-		select="tei:*|rng:*|processing-instruction()"/>
+		select="*|processing-instruction()"/>
 	  </xsl:otherwise>
 	</xsl:choose>
       </xsl:for-each>
