@@ -590,4 +590,138 @@ of this software, even if advised of the possibility of such damage.
       </xsl:copy>
   </xsl:template>
 
+<!-- for foxglove -->
+
+<xsl:template match="sequence">
+    <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:choose>
+      <xsl:when test="string-length($suffix)=0">
+        <group>
+          <xsl:apply-templates/>
+        </group>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{$suffix}">
+          <group>
+            <xsl:apply-templates/>
+          </group>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template match="alternate">
+    <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:choose>
+      <xsl:when test="string-length($suffix)=0">
+        <choice>
+          <xsl:if test="ancestor::content/@mixed='true'">
+            <text/>
+          </xsl:if>
+          <xsl:apply-templates/>
+        </choice>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{$suffix}">
+          <choice>
+            <xsl:if test="ancestor::content/@mixed='true'">
+              <text/>
+            </xsl:if>
+            <xsl:apply-templates/>
+          </choice>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template match="interleave">
+    <xsl:message>met an interleave</xsl:message>
+  </xsl:template>
+  <xsl:template match="elementRef|classRef|macroRef">
+    <xsl:variable name="suffix"
+		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="this" select="@key"/>
+    <xsl:variable name="c">
+      <xsl:choose>
+	<xsl:when test="not(@expand)">
+          <ref name="{@key}"/>
+	</xsl:when>
+        <xsl:when test="@expand='sequence'">
+	      <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	      <xsl:apply-templates select="." mode="classmember">
+		<xsl:with-param name="theClass" select="$this"/>
+		<xsl:with-param name="suffix" select="@expand"/>
+	      </xsl:apply-templates>
+	    </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="@expand='sequenceOptional'">
+          <xsl:for-each select="key('CLASSMEMBERS',$this)">
+            <optional>
+              <xsl:apply-templates select="." mode="classmember">
+                <xsl:with-param name="theClass" select="$this"/>
+                <xsl:with-param name="suffix" select="@expand"/>
+              </xsl:apply-templates>
+            </optional>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="@expand='sequenceRepeatable'">
+          <xsl:for-each select="key('CLASSMEMBERS',$this)">
+            <oneOrMore>
+              <xsl:apply-templates select="." mode="classmember">
+                <xsl:with-param name="theClass" select="$this"/>
+                <xsl:with-param name="suffix" select="@expand"/>
+              </xsl:apply-templates>
+            </oneOrMore>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="@expand='sequenceOptionalRepeatable'">
+          <xsl:for-each select="key('CLASSMEMBERS',$this)">
+            <zeroOrMore>
+              <xsl:apply-templates select="." mode="classmember">
+                <xsl:with-param name="suffix" select="@expand"/>
+                <xsl:with-param name="theClass" select="$this"/>
+              </xsl:apply-templates>
+            </zeroOrMore>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <choice>
+            <xsl:for-each select="key('CLASSMEMBERS',$this)">
+              <xsl:apply-templates select="." mode="classmember">
+                <xsl:with-param name="suffix" select="@expand"/>
+                <xsl:with-param name="theClass" select="$this"/>
+              </xsl:apply-templates>
+            </xsl:for-each>
+          </choice>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="number(@maxOccurs)&gt;1">
+	<xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
+	<xsl:for-each select="1 to $max">
+	    <xsl:copy-of select="$c"/>
+	</xsl:for-each>
+      </xsl:when>
+      <xsl:when test="string-length($suffix)=0">
+	<xsl:copy-of select="$c"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{$suffix}">
+	  <xsl:copy-of select="$c"/>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:function name="tei:generateIndicators">
+    <xsl:param name="min"/>
+    <xsl:param name="max"/>
+    <xsl:choose>
+      <xsl:when test="$min='0' and $max='1'">optional</xsl:when>
+      <xsl:when test="$min='0' and not($max)">optional</xsl:when>
+      <xsl:when test="$min='1' and $max='unbounded'">oneOrMore</xsl:when>
+      <xsl:when test="not($min) and $max='unbounded'">oneOrMore</xsl:when>
+      <xsl:when test="$min='0' and $max='unbounded'">zeroOrMore</xsl:when>
+      <xsl:otherwise/>
+    </xsl:choose>
+  </xsl:function>
+
 </xsl:stylesheet>
