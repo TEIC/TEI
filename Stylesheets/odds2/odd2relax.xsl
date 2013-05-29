@@ -592,39 +592,39 @@ of this software, even if advised of the possibility of such damage.
 
 <!-- for foxglove -->
 
-<xsl:template match="sequence">
+<xsl:template match="tei:sequence">
     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
       <xsl:when test="string-length($suffix)=0">
-        <group>
+        <group  xmlns="http://relaxng.org/ns/structure/1.0">
           <xsl:apply-templates/>
         </group>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{$suffix}">
-          <group>
+        <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
+          <group xmlns="http://relaxng.org/ns/structure/1.0">
             <xsl:apply-templates/>
           </group>
         </xsl:element>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="alternate">
+  <xsl:template match="tei:alternate">
     <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:choose>
       <xsl:when test="string-length($suffix)=0">
-        <choice>
-          <xsl:if test="ancestor::content/@mixed='true'">
-            <text/>
+        <choice xmlns="http://relaxng.org/ns/structure/1.0">
+          <xsl:if test="ancestor::tei:content/@mixed='true'">
+            <text xmlns="http://relaxng.org/ns/structure/1.0"/>
           </xsl:if>
           <xsl:apply-templates/>
         </choice>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{$suffix}">
-          <choice>
-            <xsl:if test="ancestor::content/@mixed='true'">
-              <text/>
+        <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
+          <choice xmlns="http://relaxng.org/ns/structure/1.0">
+            <xsl:if test="ancestor::tei:content/@mixed='true'">
+              <text xmlns="http://relaxng.org/ns/structure/1.0"/>
             </xsl:if>
             <xsl:apply-templates/>
           </choice>
@@ -632,17 +632,17 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="interleave">
+  <xsl:template match="tei:interleave">
     <xsl:message>met an interleave</xsl:message>
   </xsl:template>
-  <xsl:template match="elementRef|classRef|macroRef">
+  <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef">
     <xsl:variable name="suffix"
 		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
     <xsl:variable name="this" select="@key"/>
     <xsl:variable name="c">
       <xsl:choose>
 	<xsl:when test="not(@expand)">
-          <ref name="{@key}"/>
+          <ref  xmlns="http://relaxng.org/ns/structure/1.0" name="{@key}"/>
 	</xsl:when>
         <xsl:when test="@expand='sequence'">
 	      <xsl:for-each select="key('CLASSMEMBERS',$this)">
@@ -654,7 +654,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:when test="@expand='sequenceOptional'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <optional>
+            <optional  xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:apply-templates select="." mode="classmember">
                 <xsl:with-param name="theClass" select="$this"/>
                 <xsl:with-param name="suffix" select="@expand"/>
@@ -664,7 +664,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:when test="@expand='sequenceRepeatable'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <oneOrMore>
+            <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:apply-templates select="." mode="classmember">
                 <xsl:with-param name="theClass" select="$this"/>
                 <xsl:with-param name="suffix" select="@expand"/>
@@ -674,7 +674,7 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:when test="@expand='sequenceOptionalRepeatable'">
           <xsl:for-each select="key('CLASSMEMBERS',$this)">
-            <zeroOrMore>
+            <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
               <xsl:apply-templates select="." mode="classmember">
                 <xsl:with-param name="suffix" select="@expand"/>
                 <xsl:with-param name="theClass" select="$this"/>
@@ -683,7 +683,7 @@ of this software, even if advised of the possibility of such damage.
           </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-          <choice>
+          <choice xmlns="http://relaxng.org/ns/structure/1.0">
             <xsl:for-each select="key('CLASSMEMBERS',$this)">
               <xsl:apply-templates select="." mode="classmember">
                 <xsl:with-param name="suffix" select="@expand"/>
@@ -691,7 +691,7 @@ of this software, even if advised of the possibility of such damage.
               </xsl:apply-templates>
             </xsl:for-each>
           </choice>
-        </xsl:otherwise>
+v        </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <xsl:choose>
@@ -705,7 +705,7 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:copy-of select="$c"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:element name="{$suffix}">
+        <xsl:element name="{$suffix}" xmlns="http://relaxng.org/ns/structure/1.0">
 	  <xsl:copy-of select="$c"/>
         </xsl:element>
       </xsl:otherwise>
