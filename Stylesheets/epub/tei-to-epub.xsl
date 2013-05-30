@@ -343,7 +343,9 @@ height: </xsl:text>
               </xsl:for-each>
               <item href="titlepageback.html" id="titlepageback" media-type="application/xhtml+xml"/>
               <item id="print.css" href="print.css" media-type="text/css"/>
-              <item id="apt" href="page-template.xpgt" media-type="application/adobe-page-template+xml"/>
+              <item id="apt" href="page-template.xpgt"
+		    media-type="application/adobe-page-template+xml"
+		    fallback-style="css"/>
               <item id="start" href="index.html" media-type="application/xhtml+xml"/>
               <xsl:choose>
                 <xsl:when test="$filePerPage='true'">

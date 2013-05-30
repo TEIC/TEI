@@ -131,6 +131,7 @@ test-epub:
 	../teitoepub3  test.xml test.epub
 	java -jar epubcheck3.jar test.epub
 	../teitoepub  test.xml test.epub
+	java -jar epubcheck3.jar  test.epub
 	unzip -t test.epub > test.epub.listing
 	diff test.epub.listing expected-results/test.epub.listing
 	rm test.epub.listing
