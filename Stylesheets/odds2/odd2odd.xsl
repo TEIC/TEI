@@ -1744,7 +1744,9 @@ so that is only put back in if there is some content
     <xsl:if test="$verbose='true'">
       <xsl:message>Create <xsl:value-of select="local-name()"/> named <xsl:value-of select="@ident"/>            </xsl:message>
     </xsl:if>
-    <xsl:element xmlns="http://www.tei-c.org/ns/1.0" name="{local-name()}">
+    <xsl:element xmlns="http://www.tei-c.org/ns/1.0"
+		 name="{local-name()}">
+      <xsl:attribute name="rend">add</xsl:attribute>
       <xsl:choose>
 	<xsl:when test="@module"/>
 	<xsl:when test="ancestor::tei:schemaSpec/@module">

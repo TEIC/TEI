@@ -425,11 +425,22 @@ of this software, even if advised of the possibility of such damage.
 
   <xsl:template match="tei:schemaSpec">
       <xsl:if test="$verbose='true'">
-         <xsl:message>Processing schemaSpec <xsl:value-of select="@ident"/>, summaryDoc=<xsl:value-of select="$summaryDoc"/>
+         <xsl:message>Processing schemaSpec <xsl:value-of
+	 select="@ident"/>, summaryDoc=<xsl:value-of
+	 select="$summaryDoc"/>
          </xsl:message>
       </xsl:if>
       <xsl:choose>
          <xsl:when test="$summaryDoc='true'">
+	   <div>
+	     <head>Schema <xsl:value-of select="@ident"/>: Added components</head>
+	     <xsl:for-each select="tei:classSpec[@rend ='add']  
+				   | tei:macroSpec[@rend ='add']  
+				   | tei:elementSpec[@rend ='add']">
+	       <xsl:sort select="@ident"/>
+	       <xsl:apply-templates mode="weave" select="."/>
+	     </xsl:for-each>
+	   </div>
 	   <div>
 	     <head>Schema <xsl:value-of select="@ident"/>: changed components</head>
 	     <xsl:for-each select="tei:classSpec[@mode or @rend='change']  
