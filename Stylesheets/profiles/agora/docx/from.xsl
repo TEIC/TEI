@@ -197,7 +197,7 @@
 </xsl:when>
 <xsl:otherwise>
      <xsl:text>#P</xsl:text>
-     <xsl:number from="tei:body" count="tei:p" level="any"/>
+     <xsl:number from="tei:body" count="tei:p[not(ancestor::tei:note)]" level="any"/>
 </xsl:otherwise></xsl:choose></xsl:variable>
 
   <xsl:element name="ref">
