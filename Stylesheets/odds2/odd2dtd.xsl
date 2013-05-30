@@ -812,12 +812,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:text">
       <xsl:text> CDATA</xsl:text>
   </xsl:template>
-  <xsl:template match="tei:macroSpec[@type='dt']/tei:content/rng:text">
-      <xsl:text> CDATA</xsl:text>
-  </xsl:template>
-  <xsl:template match="tei:macroSpec[@type='dt']/tei:content[@mixed='true']">
-      <xsl:text> CDATA</xsl:text>
-  </xsl:template>
   <xsl:template match="tei:macroSpec[@type='epe']/tei:content/rng:text">
       <xsl:text>CDATA</xsl:text>
   </xsl:template>
@@ -1043,6 +1037,9 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:when test=".//rng:anyName">
 	    <xsl:text> ANY</xsl:text>
 	  </xsl:when>
+	  <xsl:when test="@mixed='true' and not(*)">
+	    <xsl:text> CDATA</xsl:text>
+	  </xsl:when>
 	  <xsl:when test="processing-instruction()[name()='NameList']">
 	    <xsl:text> ANY</xsl:text>
 	  </xsl:when>
@@ -1129,6 +1126,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="tei:content/rng:ref/@name='data.name'">
+	    <xsl:text> (#PCDATA)</xsl:text>
+	  </xsl:when>
+	  <xsl:when test="tei:content/tei:macroRef/@key='data.name'">
 	    <xsl:text> (#PCDATA)</xsl:text>
 	  </xsl:when>
 	  <xsl:when test="tei:valList[@type='closed']">
