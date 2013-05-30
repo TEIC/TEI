@@ -299,7 +299,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>\textit{</xsl:text>
       <xsl:value-of select="$before"/>
       <xsl:text>}: </xsl:text>
-      <xsl:value-of select="."/>
+      <xsl:apply-templates/>
     </xsl:template>
 
 
