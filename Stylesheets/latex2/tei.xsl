@@ -209,17 +209,17 @@ of this software, even if advised of the possibility of such damage.
       <xsl:choose>
 	<xsl:when test="$style='bibl'">
 	  <xsl:text>\textit{</xsl:text>
-	  <xsl:value-of select="normalize-space(.)"/>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
 	<xsl:when test="$style='italic'">
 	  <xsl:text>\textit{</xsl:text>
-	  <xsl:value-of select="normalize-space(.)"/>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
 	  <xsl:text>}</xsl:text>
 	</xsl:when>
 	<xsl:when test="$style='bold'">
 	  <xsl:text>\textbf{</xsl:text>
-	  <xsl:value-of select="normalize-space(.)"/>
+	  <xsl:value-of select="tei:escapeChars(normalize-space(.),.)"/>
 	  <xsl:text>}</xsl:text>	    
 	</xsl:when>
 	<xsl:when test="$style=''">
