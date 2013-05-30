@@ -1657,5 +1657,177 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="text"/>
   </xsl:template>
 
+<!-- for foxglove -->
+  <xsl:template match="tei:sequence">
+    <xsl:variable name="innards">
+      <xsl:variable name="suffix"
+		    select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+      <token>
+      <xsl:choose>
+	<xsl:when test="string-length($suffix)=0">
+          <xsl:text>(</xsl:text>
+	  <xsl:call-template name="innards">
+	    <xsl:with-param name="sep">,</xsl:with-param>
+	  </xsl:call-template>
+          <xsl:text>)</xsl:text>          
+	</xsl:when>
+	<xsl:otherwise>
+          <xsl:text>(</xsl:text>
+	  <xsl:call-template name="innards">
+	    <xsl:with-param name="sep">,</xsl:with-param>
+	  </xsl:call-template>
+          <xsl:text>)</xsl:text>
+	  <xsl:value-of select="$suffix"/>
+	</xsl:otherwise>
+      </xsl:choose>
+      </token>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="parent::tei:content and count($innards/*)&gt;1">
+	<xsl:text>(</xsl:text>
+	<xsl:value-of select="$innards/*" separator=","/>
+	<xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:when test="parent::tei:content">
+	<xsl:value-of select="$innards/*" separator=","/>
+      </xsl:when>
+      <xsl:otherwise>
+	<token>
+	  <xsl:copy-of select="$innards"/>
+	</token>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="tei:alternate">
+    <token>
+      <xsl:variable name="suffix" select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+      <xsl:choose>
+	<xsl:when test="string-length($suffix)=0">
+          <xsl:text>(</xsl:text>
+	  <xsl:call-template name="innards"/>
+	  <xsl:text>)</xsl:text>          
+	</xsl:when>
+	<xsl:otherwise>
+          <xsl:text>(</xsl:text>
+	  <xsl:call-template name="innards"/>
+          <xsl:text>)</xsl:text>
+	  <xsl:value-of select="$suffix"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </token>
+  </xsl:template>
+
+  <xsl:template match="tei:interleave">
+    <xsl:message>met an interleave</xsl:message>
+  </xsl:template>
+  
+  <xsl:template match="tei:elementRef|tei:classRef|tei:macroRef">
+    <xsl:variable name="exists">
+      <xsl:call-template name="checkClass">
+	<xsl:with-param name="id" select="@key"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="suffix"
+		  select="tei:generateIndicators(@minOccurs,@maxOccurs)"/>
+    <xsl:variable name="ename">
+      <xsl:choose>
+	<xsl:when test="self::tei:classRef and $exists=''">
+	  <xsl:text>_DUMMY_</xsl:text>
+	  <xsl:value-of select="@key"/>
+	</xsl:when>
+	<xsl:when test="self::tei:elementRef and $parameterize='true'">
+	  <xsl:value-of select="concat('%n.',@key,';')"/>
+	</xsl:when>
+	<xsl:when test="self::tei:elementRef">
+	  <xsl:value-of select="@key"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="concat('%',@key,';')"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="this" select="@key"/>
+
+    <token>
+      <xsl:choose>
+	<xsl:when test="ancestor::tei:macroSpec">
+	  <xsl:copy-of select="$ename"/>
+	</xsl:when>
+        <xsl:when test="@expand='sequenceOptionalRepeatable'">
+	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>)*</xsl:text>
+	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
+	  </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="@expand='sequenceOptional'">
+	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>)?</xsl:text>
+	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
+	  </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="@expand='sequence'">
+	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	    <xsl:value-of select="@ident"/>
+	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
+	  </xsl:for-each>
+        </xsl:when>
+        <xsl:when test="@expand='sequenceRepeatable'">
+	  <xsl:for-each select="key('CLASSMEMBERS',$this)">
+	    <xsl:text>(</xsl:text>
+	    <xsl:value-of select="@ident"/>
+	    <xsl:text>)+</xsl:text>
+	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
+	  </xsl:for-each>
+        </xsl:when>
+	<xsl:when test="number(@maxOccurs)&gt;1">
+	  <xsl:variable name="max" select="@maxOccurs" as="xs:integer"/>
+	  <xsl:for-each select="1 to $max">
+	    <xsl:copy-of select="$ename"/>
+	    <xsl:if test="position() &lt; last()"><xsl:text>,</xsl:text></xsl:if>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:when test="string-length($suffix)&gt;0">
+	  <xsl:text>(</xsl:text>
+	  <xsl:value-of select="$ename"/>
+	  <xsl:text>)</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$ename"/>
+      </xsl:otherwise>
+      </xsl:choose>
+      <xsl:value-of select="$suffix"/>
+    </token>
+  </xsl:template>
+  
+  <xsl:template name="innards">
+    <xsl:param name="sep">|</xsl:param>
+    <xsl:variable name="innards">
+      <xsl:if test="ancestor::tei:*/@mixed='true'">
+	<token>
+	  <xsl:text>#PCDATA</xsl:text>
+	</token>
+      </xsl:if>
+      <xsl:apply-templates/>
+    </xsl:variable>
+    <xsl:value-of select="$innards/*" separator="{$sep}"/>
+  </xsl:template>
+
+  <xsl:function name="tei:generateIndicators">
+    <xsl:param name="min"/>
+    <xsl:param name="max"/>
+    <xsl:choose>
+      <xsl:when test="$min='0' and $max='1'">?</xsl:when>
+      <xsl:when test="$min='0' and not($max)">?</xsl:when>
+      <xsl:when test="$min='1' and $max='unbounded'">+</xsl:when>
+      <xsl:when test="not($min) and $max='unbounded'">+</xsl:when>
+      <xsl:when test="$min='0' and $max='unbounded'">*</xsl:when>
+      <xsl:otherwise></xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 
 </xsl:stylesheet>
