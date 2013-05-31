@@ -1195,7 +1195,20 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:when test="@rend='norules'">
           <w:tblPr>
-            <w:tblW w:w="0" w:type="auto"/>
+	    <w:tblW>
+	      <xsl:choose>
+		<xsl:when test="not($tableWidthPercentage='')">
+		  <xsl:attribute name="w:w">
+		    <xsl:value-of  select="round(number($tableWidthPercentage)* 50)"/>
+		  </xsl:attribute>
+		  <xsl:attribute name="w:type">pct</xsl:attribute>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:attribute name="w:w">0</xsl:attribute>
+		  <xsl:attribute name="w:type">auto</xsl:attribute>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </w:tblW>
             <w:jc w:val="left"/>
             <w:tblBorders>
               <w:top w:val="nil" w:space="0" w:color="auto"/>
@@ -1223,7 +1236,20 @@ of this software, even if advised of the possibility of such damage.
         </xsl:when>
         <xsl:otherwise>
           <w:tblPr>
-            <w:tblW w:w="0" w:type="auto"/>
+	    <w:tblW>
+	      <xsl:choose>
+		<xsl:when test="not($tableWidthPercentage='')">
+		  <xsl:attribute name="w:w">
+		    <xsl:value-of  select="round(number($tableWidthPercentage)* 50)"/>
+		  </xsl:attribute>
+		  <xsl:attribute name="w:type">pct</xsl:attribute>
+		</xsl:when>
+		<xsl:otherwise>
+		  <xsl:attribute name="w:w">0</xsl:attribute>
+		  <xsl:attribute name="w:type">auto</xsl:attribute>
+		</xsl:otherwise>
+	      </xsl:choose>
+	    </w:tblW>
             <w:jc w:val="center"/>
             <w:tblBorders>
               <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
