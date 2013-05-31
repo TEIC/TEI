@@ -1,4 +1,4 @@
-# Main makefile for TEI P5
+#rend="none"/> Main makefile for TEI P5
 # $Id$
 ALLLANGUAGES=en
 LANGUAGE=en
