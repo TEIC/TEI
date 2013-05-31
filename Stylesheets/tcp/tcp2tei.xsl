@@ -408,11 +408,18 @@ of this software, even if advised of the possibility of such damage.
               <xsl:value-of select="BIBNO"/>
             </idno>
             <xsl:for-each select="VID">
-              <xsl:if test="@SET">
+	      <xsl:choose>
+              <xsl:when test="@SET">
                 <idno type="{@SET}">
                   <xsl:value-of select="."/>
                 </idno>
-              </xsl:if>
+	      </xsl:when>
+	      <xsl:otherwise>
+                <idno type="VID">
+                  <xsl:value-of select="."/>
+                </idno>
+	      </xsl:otherwise>
+	      </xsl:choose>
             </xsl:for-each>
           </xsl:for-each>
         </xsl:for-each>
@@ -420,7 +427,8 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
     </publicationStmt>
   </xsl:template>
-  <xsl:template match="PUBLICATIONSTMT/IDNO" />
+
+  <xsl:template match="PUBLICATIONSTMT/IDNO"/>
   <xsl:template match="FILEDESC/EXTENT" />
   <xsl:template match="EEBO/GROUP">
     <text>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" exclude-result-prefixes="xlink rng tei teix xhtml a html xs xsl" version="2.0">
+
+  <xsl:param name="directory">.</xsl:param>
   <xsl:param name="outputDir"><xsl:value-of select="$directory"/>/OPS</xsl:param>
   <xsl:key name="EXAMPLES" match="teix:*[ancestor::teix:egXML]" use="concat(ancestor::tei:div[last()]/@xml:id,local-name())"/>
   <xsl:key name="HEADS" match="tei:head" use="concat(@xml:lang,@corresp)"/>
@@ -42,8 +44,7 @@
     <head xml:lang="fr" corresp="TS">Transcriptions de la parole</head>
     <head xml:lang="fr" corresp="USE">Utiliser la TEI</head>
     <head xml:lang="fr" corresp="VE">Poésie</head>
-    <head xml:lang="fr" corresp="WD">Représentation des caractères et
-    des glyphes non standard</head>
+    <head xml:lang="fr" corresp="WD">Représentation des caractères et des glyphes non standard</head>
     <head xml:lang="zh-TW" corresp="AI">簡易分析機制</head>
     <head xml:lang="zh-TW" corresp="CE">確定程度與不確定程度</head>
     <head xml:lang="zh-TW" corresp="CO">所有TEI文件所通用的元素</head>
@@ -94,8 +95,7 @@
     <head xml:lang="it" corresp="GD">Grafici, reti e alberi</head>
     <head xml:lang="it" corresp="TS">Trascrizione del parlato</head>
     <head xml:lang="it" corresp="TD">Documentazione dei moduli TEI</head>
-    <head xml:lang="it" corresp="ST">Dichiarazione di classi, tipi di dati e macro
-</head>
+    <head xml:lang="it" corresp="ST">Dichiarazione di classi, tipi di dati e macro</head>
     <head xml:lang="it" corresp="TC">Apparato critico</head>
     <head xml:lang="it" corresp="DS">Struttura standard del testo</head>
     <head xml:lang="it" corresp="PH">Trascrizione di fonti primarie</head>
@@ -999,51 +999,53 @@
       </div>
     </xsl:if>
   </xsl:template>
+
+
   <xsl:template name="stdfooter">
     <xsl:param name="style" select="'plain'"/>
     <xsl:param name="file">index</xsl:param>
-    <xsl:variable name="date">
-      <xsl:sequence select="tei:generateDate(.)"/>
-    </xsl:variable>
-    <xsl:variable name="author">
-      <xsl:sequence select="tei:generateAuthor(.)"/>
-    </xsl:variable>
+    <xsl:variable name="date" select="tei:generateDate(.)"/>
+    <xsl:variable name="author" select="tei:generateAuthor(.)"/>
     <div class="stdfooter">
       <xsl:if test="$outputTarget='html'">
-        <p>
-	  [<a href="../../en/html/{$file}.html">English</a>]
-	  [<a href="../../de/html/{$file}.html">Deutsch</a>]
-	  [<a href="../../es/html/{$file}.html">Español</a>]
-	  [<a href="../../it/html/{$file}.html">Italiano</a>]
-	  [<a href="../../fr/html/{$file}.html">Français</a>]
-	  [<a href="../../ja/html/{$file}.html">日本語</a>]
-	  [<a href="../../kr/html/{$file}.html">한국어</a>]
-	  [<a href="../../zh-TW/html/{$file}.html">中文</a>]
-	</p>
-      </xsl:if>
+    <p>
+    [<a href="../../en/html/{$file}.html">English</a>]
+    [<a href="../../de/html/{$file}.html">Deutsch</a>]
+    [<a href="../../es/html/{$file}.html">Español</a>]
+    [<a href="../../it/html/{$file}.html">Italiano</a>]
+    [<a href="../../fr/html/{$file}.html">Français</a>]
+    [<a href="../../ja/html/{$file}.html">日本語</a>]
+    [<a href="../../ko/html/{$file}.html">한국어</a>]
+    [<a href="../../zh-TW/html/{$file}.html">中文</a>]
+    </p>
       <hr/>
+      </xsl:if>
       <xsl:if test="$linkPanel='true'">
         <div class="footer">
-          <xsl:if test="not($parentURL='')">
-            <a class="{$style}" href="{$parentURL}">
+          <xsl:if test="not($parentURL='')"><a class="{$style}"
+              href="{$parentURL}">
               <xsl:value-of select="$parentWords"/>
+            </a>  </xsl:if>
+          <xsl:if test="$searchURL"> | <a class="{$style}" href="{$searchURL}"
+              target="_top">
+              <xsl:call-template name="searchWords"/>
             </a>
           </xsl:if>
-          <xsl:if test="$searchURL"> | <a class="{$style}" href="{$searchURL}" target="_top"><xsl:call-template name="searchWords"/></a>
-          </xsl:if>
-          <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}"><xsl:call-template name="feedbackWords"/></a>
+          <xsl:if test="$feedbackURL"> | <a class="{$style}" href="{$feedbackURL}">
+              <xsl:call-template name="feedbackWords"/>
+            </a>
           </xsl:if>
         </div>
         <hr/>
       </xsl:if>
       <xsl:for-each
-	  select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:availability">
+	  select="ancestor-or-self::TEI/teiHeader/fileDesc/publicationStmt/availability">
 	<div class="availability">
 	  <xsl:apply-templates/>
 	  <xsl:choose>
-	    <xsl:when test="count(tei:licence)&gt;1">
+	    <xsl:when test="count(licence)&gt;1">
 	      <ol>
-		<xsl:for-each select="tei:licence">
+		<xsl:for-each select="licence">
 		  <li>
 		    <xsl:choose>
 		      <xsl:when test="@target">
@@ -1059,7 +1061,7 @@
 	    </xsl:when>
 	    <xsl:otherwise>
 	      <div class="licence">
-		<xsl:for-each select="tei:licence">
+		<xsl:for-each select="licence">
 		  <a href="{@target}">
 		    <xsl:apply-templates/>
 		  </a>
@@ -1069,29 +1071,32 @@
 	  </xsl:choose>
 	</div>
       </xsl:for-each>
-
       <address>
 	<br/>
-        <xsl:text>Version </xsl:text>
+        <xsl:text>TEI Guidelines </xsl:text> 
+        <a href="AB.html#ABTEI4">Version
         <xsl:value-of 
-	    select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:edition"/>
-        <xsl:text>This page generated on </xsl:text> 
+	    select="ancestor-or-self::TEI/teiHeader/fileDesc/editionStmt/edition"/></a>
+        <xsl:text> This page generated on </xsl:text> 
 	<xsl:call-template name="whatsTheDate"/>
-      </address>
+
+    </address>
     </div>
     <xsl:if test="not($googleAnalytics='')">
-      <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-        <!-- load google analytics -->
-      </script>
+      <script src="http://www.google-analytics.com/urchin.js"
+	      type="text/javascript"><!-- load goohle analytics --></script>
       <script type="text/javascript">
-        <xsl:text>_uacct = "</xsl:text>
-        <xsl:value-of select="$googleAnalytics"/>
-        <xsl:text>";
+	<xsl:text>_uacct = "</xsl:text>
+	<xsl:value-of select="$googleAnalytics"/>
+	<xsl:text>";
 	urchinTracker();
 	</xsl:text>
       </script>
-    </xsl:if>
+      </xsl:if>
   </xsl:template>
+
+  <xsl:template match="licence"/>
+
   <xsl:template name="guidelinesTop">
     <xsl:param name="name"/>
     <xsl:if test="$outputTarget='html'">
@@ -1185,4 +1190,34 @@
       </div>
     </xsl:if>
   </xsl:template>
+
+
+
+  <!-- Addition by Martin Holmes 2012-07-15 for ticket http://purl.org/tei/fr/3511134    -->
+  <xsl:template name="attDefHook">
+    <xsl:param name="attName"/>
+    <xsl:variable name="linkId" select="concat('tei_att.', translate($attName, ':', '-'))"/>
+    <xsl:choose>
+      <xsl:when test="string-length($attName) gt 0">
+        <span class="bookmarklink">
+          <a class="bookmarklink" id="{$linkId}" href="#{$linkId}">
+            <xsl:attribute name="title">
+              <xsl:text>link to this attribute </xsl:text>
+            </xsl:attribute>
+            <span class="invisible">
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="$attName"/>
+            </span>
+            <span class="pilcrow">
+              <xsl:text>¶</xsl:text>
+            </span>
+          </a>
+        </span>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:comment>No linking pilcrow inserted: attname not provided.</xsl:comment>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
