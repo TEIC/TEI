@@ -145,6 +145,13 @@ of this software, even if advised of the possibility of such damage.
 
   </xsl:function>
 
+  <xsl:function name="tei:escapeCharsPartial" as="xs:string" override="yes">
+    <xsl:param name="letters"/>
+      <xsl:value-of
+	  select="replace($letters,'([#])','\\$1')"/>
+
+  </xsl:function>
+
 
    <xsl:template name="emphasize">
       <xsl:param name="class"/>

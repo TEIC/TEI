@@ -81,7 +81,7 @@ of this software, even if advised of the possibility of such damage.
          </xsl:when>
          <xsl:otherwise>
             <xsl:text>\xref{</xsl:text>
-            <xsl:value-of select="$dest"/>
+            <xsl:value-of select="tei:escapeCharsPartial($dest)"/>
             <xsl:text>}{</xsl:text>
             <xsl:apply-templates/>
             <xsl:text>}</xsl:text>

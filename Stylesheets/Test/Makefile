@@ -184,6 +184,10 @@ test-docx:
 	xmllint --format temp.xml | perl cleanup.pl > test18.xml  && rm temp.xml
 	jing test.rng test18.xml
 	diff test18.xml expected-results/test18.xml
+	../docxtotei test-rtf2tei.docx temp.xml
+	xmllint --format temp.xml | perl cleanup.pl > test-indexes.xml  && rm temp.xml
+	jing test.rng test-rtf2tei.xml
+	diff test-rtf2tei.xml expected-results/test-rtf2tei.xml
 	../teitodocx test.xml 
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
 	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core
