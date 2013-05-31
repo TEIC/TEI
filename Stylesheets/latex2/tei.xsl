@@ -242,9 +242,9 @@ of this software, even if advised of the possibility of such damage.
    </doc>
     <xsl:template name="makeBlock">
       <xsl:param name="style"/>
-      <xsl:sequence select="concat('\',$style,'{')"/>
+      <xsl:sequence select="concat('\begin{',$style,'}')"/>
       <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
+      <xsl:sequence select="concat('\end{',$style,'}')"/>
     </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

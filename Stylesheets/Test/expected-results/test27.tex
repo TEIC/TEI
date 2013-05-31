@@ -40,16 +40,18 @@
 \def\textoverbar#1{\ensuremath{\overline{#1}}}
 \def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
 \def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
-\def\docImprint#1{\vskip 6pt#1\ifvmode\par\fi }
-\def\docDate#1{#1\ifvmode\par\fi }
-\def\docAuthor#1{{\ifvmode\vskip 4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape #1}\ifvmode\par\fi }
-\def\docTitle#1{\vskip 6pt{\bfseries\fontsize{18pt}{22pt}\selectfont#1}\par }
-\def\titlePart#1{#1\par }
-\def\byline#1{\vskip6pt{\itshape\fontsize{16pt}{18pt}\selectfont#1}\par }
-\def\citbibl#1{#1\ifvmode\par\fi }
-\def\biblfree#1{#1\ifvmode\par\fi }
-\def\bibl#1{#1}
-\def\rubric#1{#1}
+\newenvironment{biblfree}{}{\ifvmode\par\fi }
+\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
+\newenvironment{docDate}{}{\ifvmode\par\fi }
+\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
+\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
+\newenvironment{titlePart}{}{\par }
+\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
+\newenvironment{citbibl}{}{\ifvmode\par\fi }
+\newenvironment{bibl}{}{}
+\newenvironment{rubric}{}{}
+\newenvironment{msItem}{\vskip 6pt}{\par}
+\newenvironment{msHead}{\vskip 6pt}{\par}
 \def\titlem#1{\emph{#1}}
 \def\corr#1{#1}
 \def\sic#1{#1}
@@ -58,7 +60,6 @@
 \def\gap{}
 \def\abbr#1{#1}
 \def\expan#1{#1}
-\def\msItem#1{\vskip 6pt#1\par }
 \RequirePackage{array}
 \def\@testpach{\@chclass
  \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
@@ -352,13 +353,12 @@
 \bibitem[Durusau and O'Donnell (2002)]{NH-BIBL-6}\hypertarget{NH-BIBL-6}{}Patrick Durusau, Matthew Brook O'Donnell. ‘Coming down from the trees: next step in the evolution of markup?’. \textit{Proceedings of Extreme Markup Languages 2002}, 2002. 
 \bibitem[Tennison and Piez (2002)]{NH-BIBL-7}\hypertarget{NH-BIBL-7}{}Jeni Tennison, Wendell Piez. ‘The layered markup and annotation language’. \textit{Proceedings of Extreme Markup Languages Conference}, 2002. 
 \bibitem[Anglo-American Cataloguing Rules (2002–2005)]{HD-BIBL-1}\hypertarget{HD-BIBL-1}{}\textit{Anglo-American Cataloguing Rules}, Second Edition, 2002 revision, 2005 update. 2002–2005. Chicago, Ottawa: American Library Association. Canadian Library Association. 
-\bibitem[Федеральное агентство по техническому регулированию и метрологии (РОССТАНДАРТ) (2003)]{GOST-7.1}\hypertarget{GOST-7.1}{}Федеральное агентство по техническому регулированию и метрологии (РОССТАНДАРТ). \textit{ГОСТ 7.1—2003. Система стандартов по информации, библиотечному и издательскому делу. Библиографическая запись. Библоиграфическое описание. Общие требования и правила составления}, 2003. 
 \bibitem[Burnard and Rahtz (2004)]{TD-BIBL-01}\hypertarget{TD-BIBL-01}{}Lou Burnard, Sebastian Rahtz. \textit{RelaxNG with Son of ODD}, \textit{Proceedings of Extreme Markup Languages 2004}, 2004. \url{http://www.mulberrytech.com/Extreme/Proceedings/html/2004/Burnard01/EML2004Burnard01.pdf}
 \bibitem[van der Vlist (2004)]{SG-BIBL-1}\hypertarget{SG-BIBL-1}{}Eric van der Vlist. \textit{RELAX NG}, 2004. O'Reilly. 
 \bibitem[DeRose (2004)]{NH-BIBL-1}\hypertarget{NH-BIBL-1}{}Steven DeRose. ‘Markup overlap: a review and a horse’. \textit{Proceedings of Extreme Markup Languages 2004}, 2004.  <\url{http://www.mulberrytech.com/Extreme/Proceedings/html/2004/DeRose01/EML2004DeRose01.html}>.
-\bibitem[Jagadish et al. (2004)]{NH-BIBL-4}\hypertarget{NH-BIBL-4}{}H. V. Jagadish, Laks V. S. Lakshmanan, Monica Scannapieco, Divesh Srivastava, Nuwee Wiwatwattana. \textit{Colorful XML: one hierarchy isn't enough}, 2004.  <\url{http://www.research.att.com/~divesh/papers/jlssw2004-mct.pdf}>.
+\bibitem[Jagadish et al. (2004)]{NH-BIBL-4}\hypertarget{NH-BIBL-4}{}H. V. Jagadish, Laks V. S. Lakshmanan, Monica Scannapieco, Divesh Srivastava, Nuwee Wiwatwattana. \textit{Colorful XML: one hierarchy isn't enough}, 2004.  <\url{http://www.research.att.com/\textasciitilde divesh/papers/jlssw2004-mct.pdf}>.
 \bibitem[Hilbert et al. (2005)]{NH-BIBL-2}\hypertarget{NH-BIBL-2}{}Mirco Hilbert, Oliver Schonefeld, Andreas Witt. ‘Making CONCUR work’. \textit{Proceedings of Extreme Markup Languages 2005}, 2005.  <\url{http://www.mulberrytech.com/Extreme/Proceedings/html/2005/Witt01/EML2005Witt01.xml}>.
-\bibitem[Dekhtyar and Iacob (2005)]{NH-BIBL-3}\hypertarget{NH-BIBL-3}{}Alex Dekhtyar, Ionut E. Iacob. \textit{A framework for management of concurrent XML markup}, 2005.  <\url{http://www.eppt.org/~emil/publications/dke04-concurrent.pdf}>.
+\bibitem[Dekhtyar and Iacob (2005)]{NH-BIBL-3}\hypertarget{NH-BIBL-3}{}Alex Dekhtyar, Ionut E. Iacob. \textit{A framework for management of concurrent XML markup}, 2005.  <\url{http://www.eppt.org/\textasciitilde emil/publications/dke04-concurrent.pdf}>.
 \bibitem[Unicode Consortium (2006)]{CH-BIBL-3}\hypertarget{CH-BIBL-3}{}\textit{The Unicode Standard, Version 5.0}, Unicode Consortium. 2006. Addison-Wesley Professional.  <\url{http://www.unicode.org/}>.
 \bibitem[Phillips and Davis (eds.) (2006)]{CH-BIBL-4}\hypertarget{CH-BIBL-4}{}Addison Phillips, Mark Davis (eds.) \textit{Tags for Identifying Languages}, 2006. IETF.  RFC 4646
 \bibitem[Phillips and Davis (eds.) (2006)]{CH-BIBL-5}\hypertarget{CH-BIBL-5}{}Addison Phillips, Mark Davis (eds.) \textit{Matching of Language Tags}, 2006. IETF.  RFC 4647
@@ -366,7 +366,6 @@
 \bibitem[Freytag (2006)]{CH-eg-02}\hypertarget{CH-eg-02}{}Asmus Freytag. \textit{The Unicode Character Property Model}, Unicode Technical Report \#232006.  <\url{http://www.unicode.org/reports/tr23/}>.
 \bibitem[Die Deutsche Bibliothek (2006)]{RAK}\hypertarget{RAK}{}Die Deutsche Bibliothek. \textit{Regeln für die alphabetische Katalogisierung in wissenschaftlichen Bibliotheken RAK-WB}, 2006. 
 \bibitem[Chatti et al. (2007)]{NH-BIBL-5}\hypertarget{NH-BIBL-5}{}Noureddine Chatti, Suha Kaouk, Sylvie Calabretto, Jean Marie Pinon. ‘MultiX: an XML based formalism to encode multistructured documents’. \textit{Proceedings of Extreme Markup Languages 2007}, 2007.  <\url{http://www.idealliance.org/papers/extreme/proceedings/html/2007/Chatti01/EML2007Chatti01.html}>.
-\bibitem[Федеральное агентство по техническому регулированию и метрологии (РОССТАНДАРТ) (2008)]{GOST-7.0.5}\hypertarget{GOST-7.0.5}{}Федеральное агентство по техническому регулированию и метрологии (РОССТАНДАРТ). \textit{ГОСТ Р 7.0.5-2008: Система стандартов по информации, библиотечному и издательскому делу. Библиографическая ссылка. Общие требования и правила составления}, 2008. 
 \bibitem[International Organization for Standardization (2009)]{ISO-12620}\hypertarget{ISO-12620}{}International Organization for Standardization. \textit{ISO 12620:2009: Terminology and other language and content resources – Specification of data categories and management of a Data Category Registry for language resources}, 2009. 
 \bibitem[National Information Standards Organization (2010)]{ANSI-NISO-Z39.29}\hypertarget{ANSI-NISO-Z39.29}{}National Information Standards Organization. \textit{ANSI/NISO Z39.29 – 2005 (R2010) Bibliographic References}, 2010. 
 \bibitem[ISBD: International Standard Bibliographic Description IFLA Series on Bibliographic Control (2011)]{ISBD}\hypertarget{ISBD}{}\textit{ISBD: International Standard Bibliographic Description}, 2011. Berlin, München, De Gruyter Saur. \textit{IFLA Series on Bibliographic Control},  44. 
@@ -388,7 +387,7 @@ Edition) (2000)]{XHTML}\hypertarget{XHTML}{}\textit{XHTML™ 1.0 The Extensible 
 Denmark, København, Den Arnamagnæanske Samling, AM 62 fol. 74
 \section[Ólafs saga Tryggvasonar en mesta; 							Iceland, s. XIV 							2/2. This version of Ólafs saga Tryggvasonar en 								mesta incorporates various sagas or excerps of sagas and þættir about 							Ólafur, also at the point, where texts from other redactions of the saga end (here: 							fol. 51va:24 til englandz af syrlandi).]{\textit{Ólafs saga Tryggvasonar en mesta}; Iceland, s. XIV 2/2. [This version of \textit{Ólafs saga Tryggvasonar en mesta} incorporates various sagas or excerps of sagas and þættir about Ólafur, also at the point, where texts from other redactions of the saga end (here: fol. 51va:24 ‘til englandz af syrlandi’).] }\label{AM02-062-en}
 \section{Contents}
-\msItem{\textbf{1ra-51va:24}:  \textit{Ólafs saga Tryggvasonar en mesta}, \textit{Language of text}: Old Norse/Icelandic
+\begin{msItem}\textbf{1ra-51va:24}:  \textit{Ólafs saga Tryggvasonar en mesta}, \textit{Language of text}: Old Norse/Icelandic
 \subsection{Incipit}
 hann gret þo eigi. ok er Þorolfr vard þessa varr letti hann vpp
 \subsection{Explicit}
@@ -399,7 +398,7 @@ er {\hskip1pt}\newline  þa voro nykomnir til englandz af syrlandi \begin{bib
  \bibitem {bibitem-4}W. van Eeden, \xref{Hallfr1919}{Hallfreðar saga 1919} 109-112 (Text A. Fols 18va:13-19va:16); 113 (Text B. Fols 22ra:33-b:11); 113-118 (Text C. Fols 24va:12-25vb:32); 118-123 (Text DE. Fols 28ra:9-29ra); 123-126 (Text G. Fols 48ra-va:34)
 
 \end{bibitemlist}
-}\msItem{\textbf{29rb-31va:23}:  \textit{Norna-Gests þáttr}
+\end{msItem} \begin{msItem}\textbf{29rb-31va:23}:  \textit{Norna-Gests þáttr}
 \subsection{Incipit}
 ÞAt var a eini nott at
 \subsection{Explicit}
@@ -409,23 +408,23 @@ ok þottí sannaz vm lifdaga hans sva sem hann sagdí\begin{bibitemlist}{1}
  \bibitem {bibitem-7}Cipolla, \xref{NornaGestr1996}{Il racconto di Nornagestr} 227-244
 
 \end{bibitemlist}
-}\msItem{\textbf{31va:23-32rb}:  \textit{Helga Þáttr Þórissonar} \rubric{her segir fra {\hskip1pt}\newline  godmun {\hskip1pt}\newline di kkonvngi {\hskip1pt}\newline  af gl {\hskip1pt}\newline asisu{\hskip1pt}\newline ollum}
+\end{msItem} \begin{msItem}\textbf{31va:23-32rb}:  \textit{Helga Þáttr Þórissonar} \rubric{her segir fra {\hskip1pt}\newline  godmun {\hskip1pt}\newline di kkonvngi {\hskip1pt}\newline  af gl {\hskip1pt}\newline asisu{\hskip1pt}\newline ollum}
 \subsection{Incipit}
 Þorir het madr er bío j noregi
 \subsection{Explicit}
-ok hefir engí {\hskip1pt}\newline  madr þav sed sidanok lykr her þessi sǫgv etc.\biblfree{Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  38-44  (Ed. D\textsuperscript{1})}}\msItem{\textbf{33va-37vb}:  \textit{Færeyinga saga} \rubric{her hefir færeyíngar þattr}
+ok hefir engí {\hskip1pt}\newline  madr þav sed sidanok lykr her þessi sǫgv etc.\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  38-44  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{33va-37vb}:  \textit{Færeyinga saga} \rubric{her hefir færeyíngar þattr}
 \subsection{Incipit}
 Madr er nefndr grimr kamban
 \subsection{Explicit}
-varist [?] segía henni hvert þat [...]\gap{}dit\biblfree{Ólafur Halldórsson, \xref{Rit30}{Færeyinga saga} 3-5, 8-11, 13-37, 39-41, 43, 49-67  (Bottom text. Ed. D)}}\msItem{\textbf{44rb:3-46ra}:  \textit{Óláfr konungr braut goð þrænda} \rubric{Capitulum}
+varist [?] segía henni hvert þat [...]\gap{}dit\begin{biblfree}Ólafur Halldórsson, \xref{Rit30}{Færeyinga saga} 3-5, 8-11, 13-37, 39-41, 43, 49-67  (Bottom text. Ed. D)\end{biblfree} \end{msItem} \begin{msItem}\textbf{44rb:3-46ra}:  \textit{Óláfr konungr braut goð þrænda} \rubric{Capitulum}
 \subsection{Incipit}
 [E]\footnote{omitted}n er olafr konvngr hafdi skama stvnd verít i þrandheimi
 \subsection{Explicit}
-ef þer hafít adr illa ok oheyrilí{\hskip1pt}\newline ga af honvm gengít\biblfree{Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  1-14  (Ed. D\textsuperscript{1})}}\msItem{\textbf{50ra:2-b:4}:  \textit{Tryggva Óláfssonar hefnt} \rubric{Capitulum}
+ef þer hafít adr illa ok oheyrilí{\hskip1pt}\newline ga af honvm gengít\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  1-14  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{50ra:2-b:4}:  \textit{Tryggva Óláfssonar hefnt} \rubric{Capitulum}
 \subsection{Incipit}
 Sva bar at eítt sínn at haralldr konvngr {\hskip1pt}\newline  kom þar
 \subsection{Explicit}
-ok hafdi hann med ser j hírd sínní\biblfree{Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  45-47  (Ed. D\textsuperscript{1})}}\msItem{\textbf{51va:25-52va:36}:  \textit{Halldórs Þáttr Snorrasonar} \rubric{sidasti þattr olaf{\hskip1pt}\newline ssaug{\hskip1pt}\newline o try{\hskip1pt}\newline ggua{\hskip1pt}\newline son[ar]\footnote{omitted} {\hskip1pt}\newline  noreg{\hskip1pt}\newline s konvngs}
+ok hafdi hann med ser j hírd sínní\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  45-47  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{51va:25-52va:36}:  \textit{Halldórs Þáttr Snorrasonar} \rubric{sidasti þattr olaf{\hskip1pt}\newline ssaug{\hskip1pt}\newline o try{\hskip1pt}\newline ggua{\hskip1pt}\newline son[ar]\footnote{omitted} {\hskip1pt}\newline  noreg{\hskip1pt}\newline s konvngs}
 \subsection{Incipit}
 Halldor son snora goda af islandi var med haraldi konvngí sigvrdar syni
 \subsection{Explicit}
@@ -434,7 +433,7 @@ hann hafdi drepit {\hskip1pt}\newline  hirdmann haralldz konvngs ok hafdi [hann]
  \bibitem {bibitem-13}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  47-57  (Ed. D\textsuperscript{1})
 
 \end{bibitemlist}
-}\msItem{\textbf{52vb:10-53vb:10}:  \textit{Frá Sigurði byskupi}
+\end{msItem} \begin{msItem}\textbf{52vb:10-53vb:10}:  \textit{Frá Sigurði byskupi}
 \subsection{Incipit}
 Sęmilígr kenní madr ok godrar mínníngar
 \subsection{Explicit}
@@ -443,11 +442,11 @@ voro þav sammędd syskin in heilagri {\hskip1pt}\newline  olafr konvngr ok fyrn
  \bibitem {bibitem-15}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  57-64  (Ed. D\textsuperscript{1})
 
 \end{bibitemlist}
-}\msItem{\textbf{53vb:14-31}:  \textit{Sýn Brestis} \rubric{Kapitulum [...]\gap{}}
+\end{msItem} \begin{msItem}\textbf{53vb:14-31}:  \textit{Sýn Brestis} \rubric{Kapitulum [...]\gap{}}
 \subsection{Incipit}
 Sva hefir brodir Gvnlavgr ok sagt j latínv
 \subsection{Explicit}
-ok eptir þat hvarf þessi syn fra bresti\biblfree{Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  65  (Ed. D\textsuperscript{1})}}\msItem{\textbf{53vb:32-39}:  \textit{Frá Gunnlaugi ok Oddi}
+ok eptir þat hvarf þessi syn fra bresti\begin{biblfree}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  65  (Ed. D\textsuperscript{1})\end{biblfree} \end{msItem} \begin{msItem}\textbf{53vb:32-39}:  \textit{Frá Gunnlaugi ok Oddi}
 \subsection{Incipit}
 Sva segía brędr gvnlavgr ok oddr
 \subsection{Explicit}
@@ -456,7 +455,7 @@ Sva segía brędr gvnlavgr ok oddr
  \bibitem {bibitem-18}Ólafur Halldórsson, \xref{EA-A3}{Óláfs saga Tryggvasonar en mesta} III  66  (Ed. D\textsuperscript{1})
 
 \end{bibitemlist}
-}
+\end{msItem}
 \section{Physical description}
 
 \subsection{Object}

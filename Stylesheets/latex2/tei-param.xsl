@@ -287,16 +287,18 @@ capable of dealing with UTF-8 directly.
 \def\textoverbar#1{\ensuremath{\overline{#1}}}
 \def\textgothic#1{{\fontspec{<xsl:value-of select="$gothicFont"/>}#1}}
 \def\textcal#1{{\fontspec{<xsl:value-of select="$calligraphicFont"/>}#1}}
-\def\docImprint#1{\vskip 6pt#1\ifvmode\par\fi }
-\def\docDate#1{#1\ifvmode\par\fi }
-\def\docAuthor#1{{\ifvmode\vskip 4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape #1}\ifvmode\par\fi }
-\def\docTitle#1{\vskip 6pt{\bfseries\fontsize{18pt}{22pt}\selectfont#1}\par }
-\def\titlePart#1{#1\par }
-\def\byline#1{\vskip6pt{\itshape\fontsize{16pt}{18pt}\selectfont#1}\par }
-\def\citbibl#1{#1\ifvmode\par\fi }
-\def\biblfree#1{#1\ifvmode\par\fi }
-\def\bibl#1{#1}
-\def\rubric#1{#1}
+\newenvironment{biblfree}{}{\ifvmode\par\fi }
+\newenvironment{docImprint}{\vskip 6pt}{\ifvmode\par\fi }
+\newenvironment{docDate}{}{\ifvmode\par\fi }
+\newenvironment{docAuthor}{\ifvmode\vskip4pt\fontsize{16pt}{18pt}\selectfont\fi\itshape}{\ifvmode\par\fi }
+\newenvironment{docTitle}{\vskip6pt\bfseries\fontsize{18pt}{22pt}\selectfont}{\par }
+\newenvironment{titlePart}{}{\par }
+\newenvironment{byline}{\vskip6pt\itshape\fontsize{16pt}{18pt}\selectfont}{\par }
+\newenvironment{citbibl}{}{\ifvmode\par\fi }
+\newenvironment{bibl}{}{}
+\newenvironment{rubric}{}{}
+\newenvironment{msItem}{\vskip 6pt}{\par}
+\newenvironment{msHead}{\vskip 6pt}{\par}
 \def\titlem#1{\emph{#1}}
 \def\corr#1{#1}
 \def\sic#1{#1}
@@ -305,7 +307,6 @@ capable of dealing with UTF-8 directly.
 \def\gap{}
 \def\abbr#1{#1}
 \def\expan#1{#1}
-\def\msItem#1{\vskip 6pt#1\par }
 \RequirePackage{array}
 \def\@testpach{\@chclass
  \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
