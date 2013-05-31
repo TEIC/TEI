@@ -464,7 +464,8 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="LANGUSAGE/@ID" />
   <xsl:template match="PB/@REF">
     <xsl:attribute name="facs">
-      <xsl:value-of select="."/>
+      <xsl:value-of
+	  select="('eebopage',/ETS/EEBO/IDG/BIBNO[@T='umi' or @T='oclc' or @T='docno'],/ETS/EEBO/IDG/VID,.)" separator=":"/>
     </xsl:attribute>
     <xsl:attribute name="rend">
       <xsl:text>none</xsl:text>
@@ -728,6 +729,13 @@ of this software, even if advised of the possibility of such damage.
     <encodingDesc>
       <xsl:apply-templates  select="@*"/>
       <xsl:apply-templates />
+      <listPrefixDef>
+	<prefixDef
+	    ident="eebopage"
+	    matchPattern="([0-9]+):([0-9]+):([0-9]+)"
+	    replacementPattern="http://eebo.chadwyck.com/downloadtiff?vid=$2&amp;eeboid=$1&amp;page=$3">
+	</prefixDef>
+      </listPrefixDef>
     </encodingDesc>
   </xsl:template>
   <xsl:template match="ENTDOC">

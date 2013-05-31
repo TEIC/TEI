@@ -677,6 +677,9 @@ of this software, even if advised of the possibility of such damage.
             <xsl:value-of select="@n"/>
             <xsl:text>]</xsl:text>
          </xsl:when>
+	 <xsl:when test="@facs">
+	   <xsl:value-of select="concat('% image:', tei:resolveURI(.,@facs),'&#10;')"/>
+	 </xsl:when>
          <xsl:otherwise> </xsl:otherwise>
       </xsl:choose>
       <xsl:if test="@xml:id">
