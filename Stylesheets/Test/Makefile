@@ -184,7 +184,7 @@ test-docx:
 	xmllint --format temp.xml | perl cleanup.pl > test18.xml  && rm temp.xml
 	jing test.rng test18.xml
 	diff test18.xml expected-results/test18.xml
-	../docxtotei test-rtf2tei.docx temp.xml
+	../docxtotei --profile=transcription test-rtf2tei.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-rtf2tei.xml  && rm temp.xml
 	jing test.rng test-rtf2tei.xml
 	diff test-rtf2tei.xml expected-results/test-rtf2tei.xml

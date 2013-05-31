@@ -196,9 +196,9 @@ of this software, even if advised of the possibility of such damage.
        </xsl:for-each>
      </xsl:variable>		  
 
-     <!-- debug   
+     <!--
 	 <xsl:result-document href="/tmp/foo.xml">
-	 <xsl:copy-of select="$pass0"/>
+	 <xsl:copy-of select="$pass1"/>
 	 </xsl:result-document>
      -->
      <!-- Do the final parse and create valid TEI -->
@@ -507,14 +507,12 @@ of this software, even if advised of the possibility of such damage.
          <xsl:when test="starts-with(.,'HYPERLINK')"></xsl:when>
          <xsl:when test="starts-with(.,' XE')"></xsl:when>
          <xsl:when test="starts-with(.,'XE')"></xsl:when>
+	 <xsl:when test="contains(.,'SEQ')"/>
          <xsl:otherwise>
             <xsl:value-of select="."/>
          </xsl:otherwise>
       </xsl:choose>
    </xsl:template>
 
-    <xsl:template match="@rend[.='Body_Text']" mode="pass2"/>
-
-    <xsl:template match="@rend[.='Normal (Web)']" mode="pass2"/>
 
 </xsl:stylesheet>

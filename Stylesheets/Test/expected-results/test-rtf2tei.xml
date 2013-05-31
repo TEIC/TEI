@@ -1,1 +1,183 @@
-<?xml version="1.0" encoding="UTF-8"?><TEI xmlns="http://www.tei-c.org/ns/1.0"><teiHeader><fileDesc><titleStmt><title>Prvo poglavje</title><author>tomaz</author></titleStmt><editionStmt><edition><date>2012-04-10</date></edition></editionStmt><publicationStmt><p>unknown</p></publicationStmt><sourceDesc><p>Converted from a Word document </p></sourceDesc></fileDesc><encodingDesc><appInfo><application ident="TEI_fromDOCX" version="2.15.0"><label>DOCX to TEI</label></application></appInfo></encodingDesc><revisionDesc><change><date>$LastChangedDate: 2013-05-31T15:29:26Z$</date><name>tomaz</name></change></revisionDesc></teiHeader><text><body><div><head/><p><hi rend="bold">Pretvorba RTF v TEI P5<lb/>Navodila in testno besedilo</hi></p><p>Tomaž Erjavec<lb/>Odsek za tehnologije znanja<lb/>Institut »Jožef Stefan«<lb/><ref target="mailto:tomaz.erjavec@ijs.si">tomaz.erjavec@ijs.si</ref></p><p>2013-01-14</p><p>Na <ref target="http://nl.ijs.si/e-zrc/rtf2tei/">http://nl.ijs.si/e-zrc/rtf2tei/</ref> najdete servis za pretvorbo Word datotek v <ref target="http://www.tei-c.org/Guidelines/P5/">TEI P5</ref>. Spletna stran vsebuje tudi navodila za uporabo same spletnega servisa, pričujoče besedilo pa vsebuje navodila za oblikovanje Word datotek za servis in obenem služi kot testno besedilo, ki ga lahko pošljete servisu, da vam vrne ustrezno stavljen rezultat v XML oz. HTML. </p></div><div><head><anchor xml:id="Toc317600600"/>Splošna navodila</head><list type="ordered"><item>Besedilo naj uporablja naslove (Heading 1, Heading 2, itn.), saj bo le tako pravilno razčlenjeno na razdelke (&lt;div&gt;) v TEI. Besedilo pred prvim naslovom gre v element &lt;front&gt;. <lb/><hi rend="underline">Namig</hi>: Kaj točno so naslovi lahko preverite preko »prikaži ¶«. Pravilni naslovi imajo na začetku vrstice napisan kvadratek, ▪ <lb/><hi rend="underline">Pozor</hi>: »Naslovi« lahko pomotoma postanejo tudi prazne vrstice ali pa prelomi strani, kar preverite skozi kvadratek. Ali se naslovi res pravilno pretvorijo, preverite v kazalu generiranega HTML, pa tudi v sami datoteki Word lahko naredite kazalo.</item><item>Večina formatiranja (font, velikost, barva, vrsta podčrtaja, razmaki, zamik odstavkov, itd.) se pri pretvorbi izgubi. </item><item>Za bolj specifične elemente TEI je potrebno uporabiti vnaprej določene sloge, predstavljeni v naslednjih razdelkih. Slogi uporabljajo različne barve in podčrtanja, da se vizualno ločijo od drugega besedila. Ime sloga je tipično enako imenu elementa TEI v katerega se pretvori. <lb/><hi rend="underline">Namig</hi>: Pri delu s slogi pomaga, če vklopite podokno s slogi (Oblika – Slogi in oblikovanje). </item><item>Pretvorba ne ohrani paginacije, razen v primeru, ko vstavimo ročni prelom strani, ki se prevede v &lt;pb/&gt;; ta je primeren kot nosilec kazalke na faksimile. </item><item>Odstavek (Enter) in ročni prelom vrstice (Ctrl-Enter) se prevedeta v različna elementa (&lt;p&gt; in &lt;lb/&gt;). <lb/><hi rend="underline">Namig</hi>: Znake za odstavke, prelom strani in vrstic lahko vidite, če vklopite »prikaži ¶« v Wordu, oz. skozi generirani HTML.</item><item>Tabele in opombe naj bi se v pretvorbi ohranile, čeprav bodo verjetno drugače stavljene v HTML, kot pa so bile v Word.</item><item>Vrnjeno besedilo v TEI vsebuje tudi kolofon TEI - tega je treba v TEI ročno popraviti in izpolniti. </item></list><p>Tule je &lt;pb/&gt;, prelom strani!</p><p><pb/></p></div><div><head><anchor xml:id="Toc317600601"/>Uporaba slogov</head><p>V tem poglavju so podani primerov uporabe slogov, ki so definirani posebej za pretvorbo v TEI; te sloge spoznamo po tem, da se vsi začnejo z nizom »tei:«.  Najprej opišemo sloge, ki so definirani na ravni odstavkov, nato pa take, ki jih uporabljamo znotraj besedila za označevanje posameznih besed ali fraz. </p><div><head><anchor xml:id="Toc317600602"/>Slogi, definirani na ravni odstavkov</head><p>Spodnji slogi se vedno uporabijo za označevanje celotnih odstavkov.</p><div><head><anchor xml:id="Toc317600603"/>Avtor: <hi rend="italic">tei:docAuthor</hi> </head><p rend="tei:docAuthor">Matija Ogrin</p><p>Avtor se preslika v &lt;docAuthor&gt;.</p><p>Pozor: avtor se sme pojaviti samo neposredno po naslovu poglavja!</p></div><div><head><anchor xml:id="Toc317600604"/>Bibliografski seznam: <hi rend="italic">tei:listBibl</hi>  </head><p>Bibliografski seznam se preslika v &lt;listBibl&gt;, s postavkami &lt;bibl&gt;:</p><p rend="tei:listBibl">Matija Ogrin. Uvod v Brižinske spomenike. Acta Analytica 12/4, 1994, str. 3-120.</p><p rend="tei:listBibl">Matija Ogrin. Uvod v zbrana dela. Acta Analytica 12/5, 1995, str. 13-15. </p></div><div><head><anchor xml:id="Toc317600605"/>Citirano besedilo: <hi rend="italic">tei:cit</hi></head><p>Citirano besedilo, &lt;cit&gt;, lahko vsebuje več odstavkov. V spodnjem primeru je na koncu podan tudi vir s slogom bibl, glej naslednje poglavje:</p><p rend="tei:cit">Kar so govorili, to so mislili.</p><p rend="tei:cit">Česar niso, niso. <hi rend="tei:bibl">Wittgenstein, 1931</hi>.</p></div><div><head><anchor xml:id="Toc317600606"/>Dramski govor: <hi rend="italic">tei:sp</hi> </head><p>Govori v gledališkem delu; &lt;sp&gt;  (posamezni govori) so ločeni s praznim odstavkom, prvi odstavek govora se preslika v &lt;speaker&gt; (govorec), vsi naslednji pa v &lt;l&gt; (vrstica):</p><p rend="tei:sp">Romeo</p><p rend="tei:sp">Biti ali ne biti,</p><p rend="tei:sp">to je sedaj vprašanje.</p><p rend="tei:sp">Julija</p><p rend="tei:sp">Kakšno vprašanje le?</p><p rend="tei:sp">Bodi, pa je!</p></div><div><head><anchor xml:id="Toc317600607"/>Pesem: <hi rend="italic">tei:lg</hi></head><p>Pesmi se preslikajo v serijo &lt;lg&gt; (kitica); če ima pesem več kitic, naj bodo med sabo ločene s praznim odstavkom. Vsak odstavek znotraj kitice se preslika v &lt;l&gt; (vrstica):</p><p rend="tei:lg">Prva vrstica prve kitice pesmi,</p><p rend="tei:lg">druga vrstica prve kitice pesmi.</p><p rend="tei:lg">Prva vrstica druge kitice pesmi,</p><p rend="tei:lg">druga vrstica druge kitice pesmi.</p></div><div><head><anchor xml:id="Toc317600608"/>Kustoda: <hi rend="italic">tei:catch-word</hi></head><p>Čeprav se slog imenjuje »tei:catch-word«, tega elementa v TEI ne bomo našli. TEI namreč vsebuje element <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-fw.html">fw</ref> (forme work), vendar je pomen tega elementa širši kot samo kustoda, zato je mora biti za oznaka dodatno kvalificirana z atributom za tip, ki ima za kustodo vrednost »catch«, torej »&lt;<hi rend="italic">fw type="catch"&gt;.</hi> Primer uporabe:</p><p rend="tei:catch-word">Kust-</p></div><div><head><anchor xml:id="Toc317600609"/>Slike: <hi rend="italic">tei:figure</hi></head><p>Uporaba sloga povzroči, da se v dokument TEI vpiše element &lt;figure&gt;, ki vsebuje podnapis k sliki (&lt;head&gt;). V datoteki TEI bo nato na roke potrebno vstaviti še element &lt;graphic&gt;, ki bo vseboval kazalko na dejansko slikovno datoteko, npr. <hi rend="italic">&lt;graphic url="slika.jpg"/&gt;</hi>. Primer uporabe:</p><figure><p rend="tei:figure">Naslov slike</p></figure></div></div><div><head><anchor xml:id="Toc317600610"/>Slogi, definirani znotraj odstavka</head><list type="unordered"><item>Sloga za &lt;date&gt; (datum) in &lt;name&gt; (ime): <hi rend="tei:date">21. rujna 1845</hi> se je rodila <hi rend="tei:name">Jožica Širca.</hi></item><item>Slog za &lt;foreign&gt; (tujejezični citat): <hi rend="tei:foreign">Quis custodiet ipsos custodes?</hi></item><item>Slog za &lt;q&gt; (besedilo v narekovajih, manj določni navedki): In rekla si <hi rend="tei:q">sonce</hi>!</item><item>Slog za &lt;quote&gt; (določen navedek iz drugega teksta): Prešeren: <hi rend="tei:quote">O Vrba!</hi> </item><item>Slog za &lt;bibl&gt; (bibliografska enota): kot piše v <hi rend="tei:bibl">Ogrin, 2009</hi></item><item>Slog za &lt;gap&gt; (vrzel): <hi rend="tei:gap">velika packa</hi></item><item>Slog za &lt;damage&gt; (poškodovano):  Sloni in <hi rend="tei:damage">druge</hi> živali.</item><item>Slog za &lt;surplus&gt; (odvečno): Sloni in <hi rend="tei:surplus">dru</hi>druge živali.</item><item>Slog za &lt;supplied&gt; (vstavil urednik): Sloni in <hi rend="tei:supplied">dru</hi>ge živali.</item><item>Slog za &lt;unclear&gt; (nejasno): Sloni in <hi rend="tei:unclear">dru</hi>ge živali.</item></list><div><head><anchor xml:id="Toc317600611"/>Slogi za parne elemente</head><p>Če sta prisotna oba elementa sledečih parov in med njima ni besedila, ju združi &lt;subst&gt; (nadomestno) oz. &lt;choice&gt; (izbira):</p><list type="unordered"><item>Sloga za &lt;del&gt; (prečrtano) in &lt;add&gt; (dodano): <hi rend="tei:del">prečrtano </hi><hi rend="tei:add">dodano</hi>.</item><item>Sloga za &lt;sic&gt; (napaka) in &lt;corr&gt; (uredniški popravek): <hi rend="tei:sic">napaka</hi> <hi rend="tei:corr">popravek</hi>.</item><item>Sloga za &lt;abbr&gt; (okrajšava) in &lt;expan&gt; (razširjeno): <hi rend="tei:abbr">okrajšava </hi><hi rend="tei:expan">razširjeno</hi>.</item><item>Sloga za &lt;orig&gt; (izvorna oblika) in &lt;reg&gt; (regularizirano): <hi rend="tei:orig">izvorno</hi> <hi rend="tei:reg">regularizirano</hi>.</item></list></div></div></div><div><head><anchor xml:id="Toc317600612"/>Uporaba standardnega oblikovanja</head><p>V tem poglavju pokažemo še uporabo nekaterih standardnih načinov za oblikovanje besedila v urejevalniku Word, ki se tudi upoštevajo pri pretvorbi:</p><list type="unordered"><item>Opomba pod črto.<note place="foot" xml:id="ftn1" n="1"><p rend="FootnoteText"> Primer opombe pod črto.</p></note></item><item><ref target="http://nl.ijs.si/e-zrc/rtf2tei/">Spletna povezava</ref>.</item></list><p>Spodnji primeri se preslikajo v element &lt;hi&gt;, pri čemer je način oblikovanja izražen kot vrednost atributa @rend. </p><p><hi rend="italic">Pomembno</hi>: spremenjeni tisk ne sme zajemati celotnega besedila odstavka oz. alineje; vsaj končno ločijo ali presledek mora biti v privzetem zapisu.</p><list type="unordered"><item>Primer &lt;hi rend="italic"&gt; 	<hi rend="italic">Ležeči tisk.</hi></item><item>Primer &lt;hi rend="ul"&gt;	<hi rend="underline">Podčrtano besedilo.</hi> </item><item>Primer &lt;hi rend="bold"&gt;	<hi rend="bold">Krepko besedilo</hi>.</item></list><p>Primer tabele:</p><table rend="rules"><row><cell>Prva vrstica</cell><cell>1. stolpec</cell><cell>2. stolpec</cell><cell>3. stolpec</cell><cell>4. stolpec</cell></row><row><cell>Druga vrstica</cell><cell>1. stolpec</cell><cell>2. stolpec</cell><cell>3. stolpec</cell><cell>4. stolpec</cell></row></table><div><head><anchor xml:id="Toc317600613"/>Uporaba kazala</head><p>Za daljša besedila je lahko koristno uporabiti Wordovo kazalo (Vstavi / Reference / Navzkrižne reference / Kazalo), ki nam pokaže, ali je besedilo pravilno strukturirano po poglavjih oz. razdelkih. Kazalo se v TEI ne ohrani, vendar se ponovno avtomatsko generira v obliki HTML.</p><p>Kazalo za pričujoče besedilo:</p><divGen type="toc"/></div></div></body></text></TEI>
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Prvo poglavje</title>
+        <author>tomaz</author>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date>2012-04-10</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <p>unknown</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Converted from a Word document </p>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <appInfo>
+        <application ident="TEI_fromDOCX" version="2.15.0">
+          <label>DOCX to TEI</label>
+        </application>
+      </appInfo>
+    </encodingDesc>
+    <revisionDesc>
+      <change>
+        <date>$LastChanged</date>
+        <name>tomaz</name>
+      </change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div>
+        <head/>
+        <p>
+          <hi rend="bold">Pretvorba RTF v TEI P5<lb/>Navodila in testno besedilo</hi>
+        </p>
+        <p>Tomaž Erjavec<lb/>Odsek za tehnologije znanja<lb/>Institut »Jožef Stefan«<lb/><ref target="mailto:tomaz.erjavec@ijs.si">tomaz.erjavec@ijs.si</ref></p>
+        <p>2013-01-14</p>
+        <p>Na <ref target="http://nl.ijs.si/e-zrc/rtf2tei/">http://nl.ijs.si/e-zrc/rtf2tei/</ref> najdete servis za pretvorbo Word datotek v <ref target="http://www.tei-c.org/Guidelines/P5/">TEI P5</ref>. Spletna stran vsebuje tudi navodila za uporabo same spletnega servisa, pričujoče besedilo pa vsebuje navodila za oblikovanje Word datotek za servis in obenem služi kot testno besedilo, ki ga lahko pošljete servisu, da vam vrne ustrezno stavljen rezultat v XML oz. HTML. </p>
+      </div>
+      <div>
+        <head><anchor xml:id="Toc317600600"/>Splošna navodila</head>
+        <list type="ordered">
+          <item>Besedilo naj uporablja naslove (Heading 1, Heading 2, itn.), saj bo le tako pravilno razčlenjeno na razdelke (&lt;div&gt;) v TEI. Besedilo pred prvim naslovom gre v element &lt;front&gt;. <lb/><hi rend="underline">Namig</hi>: Kaj točno so naslovi lahko preverite preko »prikaži ¶«. Pravilni naslovi imajo na začetku vrstice napisan kvadratek, ▪ <lb/><hi rend="underline">Pozor</hi>: »Naslovi« lahko pomotoma postanejo tudi prazne vrstice ali pa prelomi strani, kar preverite skozi kvadratek. Ali se naslovi res pravilno pretvorijo, preverite v kazalu generiranega HTML, pa tudi v sami datoteki Word lahko naredite kazalo.</item>
+          <item>Večina formatiranja (font, velikost, barva, vrsta podčrtaja, razmaki, zamik odstavkov, itd.) se pri pretvorbi izgubi. </item>
+          <item>Za bolj specifične elemente TEI je potrebno uporabiti vnaprej določene sloge, predstavljeni v naslednjih razdelkih. Slogi uporabljajo različne barve in podčrtanja, da se vizualno ločijo od drugega besedila. Ime sloga je tipično enako imenu elementa TEI v katerega se pretvori. <lb/><hi rend="underline">Namig</hi>: Pri delu s slogi pomaga, če vklopite podokno s slogi (Oblika – Slogi in oblikovanje). </item>
+          <item>Pretvorba ne ohrani paginacije, razen v primeru, ko vstavimo ročni prelom strani, ki se prevede v &lt;pb/&gt;; ta je primeren kot nosilec kazalke na faksimile. </item>
+          <item>Odstavek (Enter) in ročni prelom vrstice (Ctrl-Enter) se prevedeta v različna elementa (&lt;p&gt; in &lt;lb/&gt;). <lb/><hi rend="underline">Namig</hi>: Znake za odstavke, prelom strani in vrstic lahko vidite, če vklopite »prikaži ¶« v Wordu, oz. skozi generirani HTML.</item>
+          <item>Tabele in opombe naj bi se v pretvorbi ohranile, čeprav bodo verjetno drugače stavljene v HTML, kot pa so bile v Word.</item>
+          <item>Vrnjeno besedilo v TEI vsebuje tudi kolofon TEI - tega je treba v TEI ročno popraviti in izpolniti. </item>
+        </list>
+        <p>Tule je &lt;pb/&gt;, prelom strani!</p>
+        <p>
+          <pb/>
+        </p>
+      </div>
+      <div>
+        <head><anchor xml:id="Toc317600601"/><pb type="soft"/>Uporaba slogov</head>
+        <p>V tem poglavju so podani primerov uporabe slogov, ki so definirani posebej za pretvorbo v TEI; te sloge spoznamo po tem, da se vsi začnejo z nizom »tei:«.  Najprej opišemo sloge, ki so definirani na ravni odstavkov, nato pa take, ki jih uporabljamo znotraj besedila za označevanje posameznih besed ali fraz. </p>
+        <div>
+          <head><anchor xml:id="Toc317600602"/>Slogi, definirani na ravni odstavkov</head>
+          <p>Spodnji slogi se vedno uporabijo za označevanje celotnih odstavkov.</p>
+          <div>
+            <head><anchor xml:id="Toc317600603"/>Avtor: <hi rend="italic">tei:docAuthor</hi></head>
+            <p rend="tei:docAuthor">Matija Ogrin</p>
+            <p>Avtor se preslika v &lt;docAuthor&gt;.</p>
+            <p>Pozor: avtor se sme pojaviti samo neposredno po naslovu poglavja!</p>
+          </div>
+          <div>
+            <head><anchor xml:id="Toc317600604"/>Bibliografski seznam: <hi rend="italic">tei:listBibl</hi></head>
+            <p>Bibliografski seznam se preslika v &lt;listBibl&gt;, s postavkami &lt;bibl&gt;:</p>
+            <p rend="tei:listBibl">Matija Ogrin. Uvod v Brižinske spomenike. Acta Analytica 12/4, 1994, str. 3-120.</p>
+            <p rend="tei:listBibl">Matija Ogrin. Uvod v zbrana dela. Acta Analytica 12/5, 1995, str. 13-15. </p>
+          </div>
+          <div>
+            <head><anchor xml:id="Toc317600605"/>Citirano besedilo: <hi rend="italic">tei:cit</hi></head>
+            <p>Citirano besedilo, &lt;cit&gt;, lahko vsebuje več odstavkov. V spodnjem primeru je na koncu podan tudi vir s slogom bibl, glej naslednje poglavje:</p>
+            <p rend="tei:cit">Kar so govorili, to so mislili.</p>
+            <p rend="tei:cit">Česar niso, niso. <bibl>Wittgenstein, 1931</bibl>.</p>
+          </div>
+          <div>
+            <head><anchor xml:id="Toc317600606"/>Dramski govor: <hi rend="italic">tei:sp</hi></head>
+            <p>Govori v gledališkem delu; &lt;sp&gt;  (posamezni govori) so ločeni s praznim odstavkom, prvi odstavek govora se preslika v &lt;speaker&gt; (govorec), vsi naslednji pa v &lt;l&gt; (vrstica):</p>
+            <p rend="tei:sp">Romeo</p>
+            <p rend="tei:sp">Biti ali ne biti,</p>
+            <p rend="tei:sp">to je sedaj vprašanje.</p>
+            <p rend="tei:sp">Julija</p>
+            <p rend="tei:sp">Kakšno vprašanje le?</p>
+            <p rend="tei:sp">Bodi, pa je!</p>
+          </div>
+          <div>
+            <head><anchor xml:id="Toc317600607"/>Pesem: <hi rend="italic">tei:lg</hi></head>
+            <p>Pesmi se preslikajo v serijo &lt;lg&gt; (kitica); če ima pesem več kitic, naj bodo med sabo ločene s praznim odstavkom. Vsak odstavek znotraj kitice se preslika v &lt;l&gt; (vrstica):</p>
+            <p rend="tei:lg"><pb type="soft"/>Prva vrstica prve kitice pesmi,</p>
+            <p rend="tei:lg">druga vrstica prve kitice pesmi.</p>
+            <p rend="tei:lg">Prva vrstica druge kitice pesmi,</p>
+            <p rend="tei:lg">druga vrstica druge kitice pesmi.</p>
+          </div>
+          <div>
+            <head><anchor xml:id="Toc317600608"/>Kustoda: <hi rend="italic">tei:catch-word</hi></head>
+            <p>Čeprav se slog imenjuje »tei:catch-word«, tega elementa v TEI ne bomo našli. TEI namreč vsebuje element <ref target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-fw.html">fw</ref> (forme work), vendar je pomen tega elementa širši kot samo kustoda, zato je mora biti za oznaka dodatno kvalificirana z atributom za tip, ki ima za kustodo vrednost »catch«, torej »&lt;<hi rend="italic">fw type="catch"&gt;.</hi> Primer uporabe:</p>
+            <p rend="tei:catch-word">Kust-</p>
+          </div>
+          <div>
+            <head><anchor xml:id="Toc317600609"/>Slike: <hi rend="italic">tei:figure</hi></head>
+            <p>Uporaba sloga povzroči, da se v dokument TEI vpiše element &lt;figure&gt;, ki vsebuje podnapis k sliki (&lt;head&gt;). V datoteki TEI bo nato na roke potrebno vstaviti še element &lt;graphic&gt;, ki bo vseboval kazalko na dejansko slikovno datoteko, npr. <hi rend="italic">&lt;graphic url="slika.jpg"/&gt;</hi>. Primer uporabe:</p>
+            <figure>
+              <p rend="tei:figure">Naslov slike</p>
+            </figure>
+          </div>
+        </div>
+        <div>
+          <head><anchor xml:id="Toc317600610"/>Slogi, definirani znotraj odstavka</head>
+          <list type="unordered">
+            <item>Sloga za &lt;date&gt; (datum) in &lt;name&gt; (ime): <date>21. rujna 1845</date> se je rodila <name>Jožica Širca.</name></item>
+            <item>Slog za &lt;foreign&gt; (tujejezični citat): <foreign>Quis custodiet ipsos custodes?</foreign></item>
+            <item>Slog za &lt;q&gt; (besedilo v narekovajih, manj določni navedki): In rekla si <q>sonce</q>!</item>
+            <item>Slog za &lt;quote&gt; (določen navedek iz drugega teksta): Prešeren: <quote>O Vrba!</quote> </item>
+            <item>Slog za &lt;bibl&gt; (bibliografska enota): kot piše v <bibl>Ogrin, 2009</bibl></item>
+            <item>Slog za &lt;gap&gt; (vrzel): <gap><desc>velika packa</desc></gap></item>
+            <item>Slog za &lt;damage&gt; (poškodovano):  Sloni in <damage>druge</damage> živali.</item>
+            <item>Slog za &lt;surplus&gt; (odvečno): Sloni in <surplus>dru</surplus>druge živali.</item>
+            <item>Slog za &lt;supplied&gt; (vstavil urednik): Sloni in <supplied>dru</supplied>ge živali.</item>
+            <item>Slog za &lt;unclear&gt; (nejasno): Sloni in <unclear>dru</unclear>ge živali.</item>
+          </list>
+          <div>
+            <head><anchor xml:id="Toc317600611"/>Slogi za parne elemente</head>
+            <p>Če sta prisotna oba elementa sledečih parov in med njima ni besedila, ju združi &lt;subst&gt; (nadomestno) oz. &lt;choice&gt; (izbira):</p>
+            <list type="unordered">
+              <item><pb type="soft"/>Sloga za &lt;del&gt; (prečrtano) in &lt;add&gt; (dodano): <del>prečrtano </del><add>dodano</add>.</item>
+              <item>Sloga za &lt;sic&gt; (napaka) in &lt;corr&gt; (uredniški popravek): <sic>napaka</sic> <corr>popravek</corr>.</item>
+              <item>Sloga za &lt;abbr&gt; (okrajšava) in &lt;expan&gt; (razširjeno): <abbr>okrajšava </abbr><expan>razširjeno</expan>.</item>
+              <item>Sloga za &lt;orig&gt; (izvorna oblika) in &lt;reg&gt; (regularizirano): <orig>izvorno</orig> <reg>regularizirano</reg>.</item>
+            </list>
+          </div>
+        </div>
+      </div>
+      <div>
+        <head><anchor xml:id="Toc317600612"/>Uporaba standardnega oblikovanja</head>
+        <p>V tem poglavju pokažemo še uporabo nekaterih standardnih načinov za oblikovanje besedila v urejevalniku Word, ki se tudi upoštevajo pri pretvorbi:</p>
+        <list type="unordered">
+          <item>Opomba pod črto.<note place="foot" xml:id="ftn1" n="1"><p rend="FootnoteText"> Primer opombe pod črto.</p></note></item>
+          <item><ref target="http://nl.ijs.si/e-zrc/rtf2tei/">Spletna povezava</ref>.</item>
+        </list>
+        <p>Spodnji primeri se preslikajo v element &lt;hi&gt;, pri čemer je način oblikovanja izražen kot vrednost atributa @rend. </p>
+        <p><hi rend="italic">Pomembno</hi>: spremenjeni tisk ne sme zajemati celotnega besedila odstavka oz. alineje; vsaj končno ločijo ali presledek mora biti v privzetem zapisu.</p>
+        <list type="unordered">
+          <item>Primer &lt;hi rend="italic"&gt; 	<hi rend="italic">Ležeči tisk.</hi></item>
+          <item>Primer &lt;hi rend="ul"&gt;	<hi rend="underline">Podčrtano besedilo.</hi> </item>
+          <item>Primer &lt;hi rend="bold"&gt;	<hi rend="bold">Krepko besedilo</hi>.</item>
+        </list>
+        <p>Primer tabele:</p>
+        <table rend="rules">
+          <row>
+            <cell>Prva vrstica</cell>
+            <cell>1. stolpec</cell>
+            <cell>2. stolpec</cell>
+            <cell>3. stolpec</cell>
+            <cell>4. stolpec</cell>
+          </row>
+          <row>
+            <cell>Druga vrstica</cell>
+            <cell>1. stolpec</cell>
+            <cell>2. stolpec</cell>
+            <cell>3. stolpec</cell>
+            <cell>4. stolpec</cell>
+          </row>
+        </table>
+        <div>
+          <head><anchor xml:id="Toc317600613"/>Uporaba kazala</head>
+          <p>Za daljša besedila je lahko koristno uporabiti Wordovo kazalo (Vstavi / Reference / Navzkrižne reference / Kazalo), ki nam pokaže, ali je besedilo pravilno strukturirano po poglavjih oz. razdelkih. Kazalo se v TEI ne ohrani, vendar se ponovno avtomatsko generira v obliki HTML.</p>
+          <p>Kazalo za pričujoče besedilo:</p>
+          <divGen type="toc"/>
+        </div>
+      </div>
+    </body>
+  </text>
+</TEI>
