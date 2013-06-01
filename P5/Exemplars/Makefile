@@ -30,7 +30,7 @@ DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 ROMAOPTS=--xsl=${XSL} --isoschematron
 SOURCE=${P5}/p5subset.xml 
-ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:../Utilities/lib/jing.jar -Dtrang=/usr/share/trang/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
+ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:/usr/share/java/jing.jar -Dtrang=/usr/share/trang/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
 
 default: schemas
 
