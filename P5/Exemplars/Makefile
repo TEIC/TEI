@@ -1,5 +1,5 @@
 PREFIX=/usr
-SAXON=java -Xmx752m -jar ../Utilities/lib/saxon9he.jar -ext:on
+SAXON=java -Xmx752m -jar ../Utilities/lib/Saxon-HE-9.4.0.6.jar -ext:on
 BIN=${PREFIX}/bin
 ODDS= \
 	tei_bare.dtd \
