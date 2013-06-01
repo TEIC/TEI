@@ -200,7 +200,7 @@ of this software, even if advised of the possibility of such damage.
 	 <xsl:result-document href="/tmp/foo.xml">
 	 <xsl:copy-of select="$pass1"/>
 	 </xsl:result-document>
-	 -->
+     -->
      <!-- Do the final parse and create valid TEI -->
 
      <xsl:apply-templates select="$pass1" mode="pass2"/>
@@ -343,6 +343,7 @@ of this software, even if advised of the possibility of such damage.
 				else  if (tei:is-toc(.))   then 2
 				else  if (tei:is-figure(.)) then 3
 				else  if (tei:is-line(.)) then 4
+				else  if (tei:is-caption(.)) then 5
 				else position() + 100">
 	      
 	      <!-- For each defined grouping call a specific template. If there is no
@@ -361,6 +362,9 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:when test="current-grouping-key()=4">
 		  <xsl:call-template name="lineSection"/>
 		</xsl:when>
+		<xsl:when test="current-grouping-key()=5">
+		  <xsl:call-template name="captionSection"/>
+		</xsl:when>
 		<!-- it is not a defined grouping .. apply templates -->
 		<xsl:otherwise>
 		  <xsl:apply-templates select="." mode="paragraph"/>
@@ -378,6 +382,17 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:apply-templates select="." mode="paragraph"/>
 	</xsl:for-each>
       </figure>
+    </xsl:template>
+
+    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Creating a group of a caption (figure or table)</desc>
+   </doc>
+    <xsl:template name="captionSection">
+      <CAPTION>
+	<xsl:for-each select="current-group()">
+	  <xsl:apply-templates select="." mode="paragraph"/>
+	</xsl:for-each>
+      </CAPTION>
     </xsl:template>
 
     <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

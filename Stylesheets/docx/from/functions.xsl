@@ -118,9 +118,18 @@ of this software, even if advised of the possibility of such damage.
         <xsl:param name="p"/>        
         <xsl:choose>
             <xsl:when test="$p[matches(w:pPr/w:pStyle/@w:val,'[Ff]igure')]">true</xsl:when>
+            <xsl:when test="$p[w:r/w:drawing and not(w:r/w:t)]">true</xsl:when>
+            <xsl:otherwise>false</xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+
+        <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+      <desc>Defines whether or not a word paragraph is a caption.</desc></doc>
+    <xsl:function name="tei:is-caption" as="xs:boolean">
+        <xsl:param name="p"/>        
+        <xsl:choose>
             <xsl:when test="$p[matches(w:pPr/w:pStyle/@w:val,'[Cc]aption')]">true</xsl:when>
             <xsl:when test="$p[matches(w:pPr/w:pStyle/@w:val,'Figuretitle')]">true</xsl:when>
-            <xsl:when test="$p[w:r/w:drawing and not(w:r/w:t)]">true</xsl:when>
             <xsl:otherwise>false</xsl:otherwise>
         </xsl:choose>
     </xsl:function>

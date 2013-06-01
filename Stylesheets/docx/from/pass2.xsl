@@ -392,6 +392,21 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc> &lt;CAPTION&gt; belongs to nearest figure or table</desc>
+  </doc>
+  <xsl:template match="tei:CAPTION" mode="pass2"/>
+  <xsl:template match="tei:table|tei:figure" mode="pass2">
+    <xsl:copy>
+      <xsl:apply-templates select="@*" mode="pass2"/>
+      <xsl:apply-templates mode="pass2"/>
+      <xsl:if test="following-sibling::*[1][self::tei:CAPTION]">
+	<xsl:apply-templates
+	    select="following-sibling::*[1][self::tei:CAPTION]/*" mode="pass2"/>
+      </xsl:if>
+    </xsl:copy>
+  </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Rename &lt;p&gt; to a more specific name based on @rend</desc>
   </doc>
   <xsl:template match="tei:p[starts-with(@rend,'tei:')]" mode="pass2">
@@ -416,6 +431,13 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="@rend[.='Normal (Web)']" mode="pass2"/>
 
 
+  <xsl:template match="tei:p[@rend='caption' or @rend='Figure title']"
+		mode="pass2">
+    <head>
+      <xsl:apply-templates mode="pass2"/>
+    </head>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Name for output element. If @rend starts with "TEI " or "tei:", rename the
     &lt;hi&gt; to the element name instead</desc>
@@ -425,9 +447,6 @@ of this software, even if advised of the possibility of such damage.
     <xsl:for-each select="$context">
       <xsl:choose>
 	<xsl:when test="@rend='italic' and ancestor::tei:bibl">title</xsl:when>
-	<xsl:when test="@rend='caption' or @rend='Figure title'">
-	  <xsl:text>head</xsl:text>
-	</xsl:when>
 	<xsl:when test="starts-with(@rend,'tei:')">
 	  <xsl:value-of select="substring(@rend,5)"/>
 	</xsl:when>
