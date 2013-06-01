@@ -97,36 +97,23 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template match="w:pStyle/@w:val|w:rStyle/@w:val" mode="pass0">
-      <xsl:variable name="old" select="."/>
-      <xsl:variable name="new">
-	<xsl:for-each select="document($styleDoc)">
-	  <xsl:value-of select="key('STYLES',$old)/w:name/@w:val"/>
-	</xsl:for-each>
-      </xsl:variable>
       <xsl:attribute name="w:val">
-         <xsl:choose>
-	   <xsl:when test="$new=''">
-	     <xsl:value-of select="$old"/>
-	     <xsl:if test="$debug='true'">
-	       <xsl:message>! style <xsl:value-of select="$old"/> ... NOT FOUND    </xsl:message>
-	     </xsl:if>
-	   </xsl:when>
-	   <xsl:when test="not($new=$old)">
-	     <xsl:if test="$debug='true'">
-	       <xsl:message>! style <xsl:value-of select="$old"/> ... CHANGED ...  <xsl:value-of select="$new"/>
-	       </xsl:message>
-	     </xsl:if>
-	     <xsl:value-of select="$new"/>
-	   </xsl:when>
-	   <xsl:otherwise>
-	     <xsl:value-of select="$old"/>
-	   </xsl:otherwise>
-         </xsl:choose>
+	<xsl:value-of select="tei:getWordStyleName(.)"/>
       </xsl:attribute>
   </xsl:template>
-  
-<!--
-  <xsl:template
-      match="w:r[w:instrText][normalize-space(w:instrText)='']" mode="pass0"/>
--->
+
+  <xsl:function name="tei:getWordStyleName">
+    <xsl:param name="val"/>
+    <xsl:for-each select="document($styleDoc)">
+      <xsl:choose>
+	<xsl:when test="key('STYLES',$val)">
+	  <xsl:value-of select="key('STYLES',$val)/w:name/@w:val"/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:value-of select="$val"/>
+	</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
 </xsl:stylesheet>

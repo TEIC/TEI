@@ -23,7 +23,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: schema test-html test-latex test-fo test-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant scripts
+default: schema test-html test-latex test-fo test-to-docx test-from-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant scripts
 
 p4top5:
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -167,7 +167,7 @@ test-odt:
 	rm content.xml
 	diff content.xml.odt expected-results/content.xml.odt
 
-test-docx:
+test-from-docx:
 	../docxtotei test-indexes.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-indexes.xml  && rm temp.xml
 	jing test.rng test-indexes.xml
@@ -186,8 +186,12 @@ test-docx:
 	diff test18.xml expected-results/test18.xml
 	../docxtotei --profile=transcription test-rtf2tei.docx temp.xml
 	xmllint --format temp.xml | perl cleanup.pl > test-rtf2tei.xml  && rm temp.xml
-	jing test.rng test-rtf2tei.xml
 	diff test-rtf2tei.xml expected-results/test-rtf2tei.xml
+	../docxtotei --profile=transcription test29.docx temp.xml
+	xmllint --format temp.xml | perl cleanup.pl > test29.xml  && rm temp.xml
+	diff test29.xml expected-results/test29.xml
+
+test-to-docx:
 	../teitodocx test.xml 
 	unzip -p test.xml.docx word/document.xml | xmllint --format - > test.xml.docx.document
 	unzip -p test.xml.docx docProps/core.xml | xmllint --format - | sed 's/>20.*Z</>20Z</' > test.xml.docx.core

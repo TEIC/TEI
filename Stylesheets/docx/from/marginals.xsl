@@ -81,8 +81,12 @@ of this software, even if advised of the possibility of such damage.
     <xsl:template match="w:footnoteReference">
         <note place="foot" xml:id="ftn{@w:id}" n="{@w:id}">
             <xsl:variable name="referenced-id" select="@w:id"/>
-            <xsl:for-each select="document(concat($wordDirectory,'/word/footnotes.xml'))//w:footnote[@w:id=$referenced-id]">
-                <xsl:apply-templates mode="paragraph"/>
+            <xsl:for-each
+		select="document(concat($wordDirectory,'/word/footnotes.xml'))//w:footnote[@w:id=$referenced-id]">
+	      <xsl:variable name="pass0">
+		<xsl:apply-templates mode="pass0"/>
+	      </xsl:variable>
+	      <xsl:apply-templates mode="paragraph" select="$pass0"/>
             </xsl:for-each>
         </note>
     </xsl:template>
@@ -95,7 +99,10 @@ of this software, even if advised of the possibility of such damage.
         <note place="end">
             <xsl:variable name="referenced-id" select="@w:id"/>
             <xsl:for-each select="document(concat($wordDirectory,'/word/endnotes.xml'))//w:endnote[@w:id=$referenced-id]">
-                <xsl:apply-templates mode="paragraph"/>
+	      <xsl:variable name="pass0">
+		<xsl:apply-templates mode="pass0"/>
+	      </xsl:variable>
+	      <xsl:apply-templates mode="paragraph" select="$pass0"/>
             </xsl:for-each>
         </note>
     </xsl:template>

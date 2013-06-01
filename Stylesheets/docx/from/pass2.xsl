@@ -56,7 +56,16 @@ of this software, even if advised of the possibility of such damage.
       <p>zap empty p</p>
     </desc>
   </doc>
-  <xsl:template match="tei:p[not(.//tei:pb) and normalize-space(.)='']" mode="pass2" priority="99"/>
+  <xsl:template match="tei:p[not(.//tei:pb) and
+		       normalize-space(.)='']" mode="pass2"
+		priority="99"/>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Singleton paragraphs in cells dropped</desc>
+  </doc>
+  <xsl:template match="tei:cell[count(*)=1]/tei:p" mode="pass2">
+    <xsl:apply-templates mode="pass2"/>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
       <p>Inner lists in lists must be moved to inside items
@@ -241,6 +250,9 @@ of this software, even if advised of the possibility of such damage.
     </xsl:template>
   <xsl:template match="tei:list[@type='gloss']/tei:item/tei:g[@ref='x:tab']" mode="pass2"/>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>zap footnote reference which only contains a space</desc>
+  </doc>
   <xsl:template match="tei:hi[@rend='footnote_reference' and
 		       count(*)=1 and tei:seg and
 		       normalize-space(.)='']" mode="pass2"
@@ -248,12 +260,15 @@ of this software, even if advised of the possibility of such damage.
     <xsl:text> </xsl:text>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>A footnote reference with a footnote inside it is in fact
+    just a footnote</desc>
+  </doc>
+
   <xsl:template match="tei:hi[@rend='footnote_reference' and count(*)=1 and tei:note]" mode="pass2" priority="99">
     <xsl:apply-templates select="tei:note" mode="pass2"/>
   </xsl:template>
 
-  <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="pass2">
-  </xsl:template>
   <xsl:template match="tei:hi[@rend='Endnote_anchor']" mode="pass2" priority="99">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
@@ -264,7 +279,13 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Clean up <gi>hi</gi> by merging adjacent &lt;hi&gt;s </desc>
+    <desc>a &lt;hi&gt; with just white space is ignored</desc>
+  </doc>
+  <xsl:template match="tei:hi[not(@rend) and not(*) and string-length(.)=0]" mode="pass2">
+  </xsl:template>
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Clean up by merging adjacent &lt;hi&gt;s with the same rend
+    value into one.</desc>
   </doc>
   <xsl:template match="tei:hi[@rend]" mode="pass2">
     <xsl:variable name="r" select="@rend"/>
@@ -286,17 +307,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:text> </xsl:text>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="ename">
-          <xsl:choose>
-            <xsl:when test="@rend='italic' and ancestor::tei:bibl">title</xsl:when>
-            <xsl:when test="starts-with(@rend,'tei:')">
-              <xsl:value-of select="substring(@rend,5)"/>
-            </xsl:when>
-            <xsl:otherwise>hi</xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
+        <xsl:variable name="ename" select="tei:nameOutputElement(.)"/>
         <xsl:element name="{$ename}">
-          <xsl:copy-of select="@*[not(starts-with(.,'tei'))]"/>
+          <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
 	  <xsl:choose>
 	    <xsl:when test="$ename='gap'">
 	      <desc>
@@ -353,15 +366,6 @@ of this software, even if advised of the possibility of such damage.
       </xsl:attribute>
     </anchor>
   </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-    <desc>Paragraphs in cells not allowed</desc>
-  </doc>
-  <xsl:template match="tei:cell/tei:p" mode="pass2">
-    <xsl:if test="preceding-sibling::tei:p">
-      <lb/>
-    </xsl:if>
-    <xsl:apply-templates mode="pass2"/>
-  </xsl:template>
   <xsl:template match="tei:speech" mode="pass2"/>
   <xsl:template match="tei:speech" mode="keep">
     <p>
@@ -386,23 +390,59 @@ of this software, even if advised of the possibility of such damage.
       <xsl:apply-templates select="following-sibling::tei:speech[1]" mode="keep"/>
     </sp>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Rename &lt;p&gt; to a more specific name based on @rend</desc>
+  </doc>
+  <xsl:template match="tei:p[starts-with(@rend,'tei:')]" mode="pass2">
+    <xsl:element name="{tei:nameOutputElement(.)}">
+      <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
+      <xsl:apply-templates mode="pass2"/>      
+    </xsl:element>
+  </xsl:template>
+
   <xsl:template match="tei:figure/tei:p[tei:graphic and count(*)=1]" mode="pass2" priority="99">
     <xsl:apply-templates mode="pass2"/>
   </xsl:template>
-  <xsl:template match="tei:p[@rend='caption' or @rend='Figure title']" mode="pass2">
-    <head>
-      <xsl:apply-templates mode="pass2"/>
-    </head>
-  </xsl:template>
+
   <xsl:template match="tei:div[count(*)=1 and tei:head[not(text())]]" mode="pass2"/>
+
   <xsl:template match="tei:figure/tei:p[@rend='caption' or @rend='Figure title']/text()[starts-with(.,'Figure  ')]" mode="pass2">
     <xsl:value-of select="substring(.,9)"/>
   </xsl:template>
+
   <xsl:template match="@rend[.='Body_Text']" mode="pass2"/>
+
   <xsl:template match="@rend[.='Normal (Web)']" mode="pass2"/>
-  <xsl:template match="tei:hi[@rend='foreign']" mode="pass2">
-    <foreign>
-      <xsl:apply-templates mode="pass2"/>
-    </foreign>
-  </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Name for output element. If @rend starts with "TEI " or "tei:", rename the
+    &lt;hi&gt; to the element name instead</desc>
+  </doc>
+  <xsl:function name="tei:nameOutputElement">
+    <xsl:param name="context"/>
+    <xsl:for-each select="$context">
+      <xsl:choose>
+	<xsl:when test="@rend='italic' and ancestor::tei:bibl">title</xsl:when>
+	<xsl:when test="@rend='caption' or @rend='Figure title'">
+	  <xsl:text>head</xsl:text>
+	</xsl:when>
+	<xsl:when test="starts-with(@rend,'tei:')">
+	  <xsl:value-of select="substring(@rend,5)"/>
+	</xsl:when>
+	<xsl:when test="starts-with(@rend,'TEI ')">
+	  <xsl:value-of select="substring(@rend,5)"/>
+	</xsl:when>
+	<xsl:when test="self::tei:p">
+	  <xsl:text>p</xsl:text>
+	</xsl:when>
+	<xsl:when test="@rend='foreign'">
+	  <xsl:text>foreign</xsl:text>
+	</xsl:when>
+	<xsl:otherwise>hi</xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
+
 </xsl:stylesheet>
