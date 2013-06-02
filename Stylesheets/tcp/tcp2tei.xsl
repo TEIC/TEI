@@ -416,7 +416,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:when>
 	      <xsl:otherwise>
                 <idno type="VID">
-                  <xsl:value-of select="."/>
+                  <xsl:value-of select="translate(normalize-space(.),' ','')"/>
                 </idno>
 	      </xsl:otherwise>
 	      </xsl:choose>
@@ -465,7 +465,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="PB/@REF">
     <xsl:attribute name="facs">
       <xsl:value-of
-	  select="('eebopage',/ETS/EEBO/IDG/VID,.)" separator=":"/>
+	  select="('eebopage',translate(normalize-space(/ETS/EEBO/IDG/VID),' ',''),.)" separator=":"/>
     </xsl:attribute>
     <xsl:attribute name="rend">
       <xsl:text>none</xsl:text>
