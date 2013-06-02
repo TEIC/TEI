@@ -164,7 +164,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:text>}&#10;\def\TheDate{</xsl:text>
       <xsl:sequence select="tei:generateDate(/*)"/>
       <xsl:text>}&#10;\title{</xsl:text>
-      <xsl:sequence select="tei:generateTitle(/*)"/>
+      <xsl:sequence select="tei:generateSimpleTitle(/*)"/>
       <xsl:text>}&#10;\author{</xsl:text>
       <xsl:sequence select="tei:generateAuthor(/*)"/>
       <xsl:text>}</xsl:text>
