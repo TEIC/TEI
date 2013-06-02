@@ -805,6 +805,11 @@ of this software, even if advised of the possibility of such damage.
             <xsl:apply-templates select="ancestor-or-self::tei:TEI/tei:text/tei:front//tei:docTitle"
                                  mode="simple"/>
          </xsl:when>
+         <xsl:when test="ancestor-or-self::tei:teiCorpus">	
+            <xsl:apply-templates
+		select="tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type='subordinate')]"
+		mode="simple"/>
+         </xsl:when>
          <xsl:otherwise>
             <xsl:for-each
 		select="ancestor-or-self::tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt">
@@ -814,6 +819,7 @@ of this software, even if advised of the possibility of such damage.
 		      select="tei:title[@type='main']" mode="simple"/>
 		</xsl:when>
 		<xsl:otherwise>
+<xsl:message>going with <xsl:value-of select="tei:title[1]"/></xsl:message>
 		  <xsl:apply-templates select="tei:title[1]" mode="simple"/>
 		</xsl:otherwise>
 	      </xsl:choose>
