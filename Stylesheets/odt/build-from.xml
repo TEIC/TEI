@@ -21,32 +21,11 @@
   <!--
  Convert odt files to TEI documents.
  -->
-  <!-- Path to ODT file. -->
-  <property name="inputFile" value=""/>
-  <!-- Path where the output TEI file will be saved. -->
-  <property name="outputFile" value=""/>
-  <!-- which profile -->
-  <property name="profile" value="default"/>
-  <!-- which language -->
-  <property name="lang" value="en"/>
-  <property name="catalogfile" value="../catalog.xml"/>
-  <!-- where does oxygen keep stuff -->
-  <property name="oxygenlib" value=""/>
-  <!-- Stylesheet for transformation -->
+
+  <import file="../common2/teianttasks.xml"/>
   <property name="odttotei" value="${profiledir}/${profile}/odt/from.xsl"/>
-  <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir" file="${outputFile}"/>
-  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
-  <path id="classpath">
-    <pathelement path="${java.class.path}"/>
-  </path>
-  <target name="setup">
-    <!-- Recreate temporary output directory -->
-    <delete dir="${outputTempDir}"/>
-    <mkdir dir="${outputTempDir}"/>
-  </target>
-  <target name="dist" depends="convert,mediadir.check,picturecopy,cleanup"/>
-  <target name="convert" depends="setup">
+  <target name="dist" depends="setup,convert,mediadir.check,picturecopy,cleanup"/>
+  <target name="convert">
     <unzip src="${inputFile}" dest="${outputTempDir}"/>
     <xslt force="yes" style="${odttotei}" in="${outputTempDir}/content.xml" out="${outputFile}">
       <xmlcatalog>
@@ -57,7 +36,7 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="dir" expression="${outputTempDir}"/>
-      <param name="inputDir" expression="${inputFileDir}"/>
+      <param name="inputDir" expression="${inputDir}"/>
       <param name="mediaDir" expression="Pictures"/>
     </xslt>
   </target>
@@ -71,7 +50,5 @@
       <fileset dir="${outputTempDir}/Pictures"/>
     </move>
   </target>
-  <target name="cleanup" unless="debug">
-    <delete dir="${outputTempDir}"/>
-  </target>
+
 </project>

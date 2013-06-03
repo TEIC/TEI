@@ -21,32 +21,13 @@
   <!--
  Convert docx files to TEI documents.
  -->
-  <!-- Path to docx file. -->
-  <property name="inputFile" value=""/>
-  <!-- Path where the output TEI file will be saved. -->
-  <property name="outputFile" value=""/>
-  <!-- which profile -->
-  <property name="profile" value="default"/>
-  <!-- which language -->
-  <property name="lang" value="en"/>
-  <property name="catalogfile" value="../catalog.xml"/>
-  <!-- where does oxygen keep stuff -->
-  <property name="oxygenlib" value=""/>
-  <!-- Stylesheet for transformation -->
+  <import file="../common2/teianttasks.xml"/>
+
+  <target name="dist" depends="convert,mediadir.check,embeddingdir.check,chartdir.check,picturecopy,embeddingcopy,chartcopy,cleanup"/>
+
   <property name="docxtoTEI" value="${profiledir}/${profile}/docx/from.xsl"/>
-  <dirname property="inputFileDir" file="${inputFile}"/>
-  <dirname property="outputDir" file="${outputFile}"/>
-  <property name="outputTempDir" value="${outputDir}/temp-dir-for-ant"/>
-  <path id="classpath">
-    <pathelement path="${java.class.path}"/>
-  </path>
-  <target name="setup">
-    <!-- Recreate temporary output directory -->
-    <delete dir="${outputTempDir}"/>
-    <mkdir dir="${outputTempDir}"/>
-  </target>
-  <target name="dist" depends="convert,mediadir.check,picturecopy,cleanup"/>
-  <target name="convert" depends="setup">
+
+  <target name="convert">
     <echo>Convert using ${docxtoTEI}</echo>
     <unzip src="${inputFile}" dest="${outputTempDir}"/>
     <xslt force="yes" style="${docxtoTEI}" in="${outputTempDir}/word/document.xml" out="${outputFile}">
@@ -58,7 +39,7 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <classpath location="${oxygenlib}/saxon9ee.jar"/>
       <param name="word-directory" expression="file:///${outputTempDir}"/>
-      <param name="inputDir" expression="${inputFileDir}"/>
+      <param name="inputDir" expression="${inputDir}"/>
       <param name="mediaDir" expression="word/media"/>
     </xslt>
   </target>
@@ -73,7 +54,26 @@
       <fileset dir="${outputTempDir}/word/media"/>
     </move>
   </target>
-  <target name="cleanup" unless="debug">
-    <delete dir="${outputTempDir}"/>
+  <target name="embeddingdir.check">
+    <condition property="embeddingdir.exists">
+      <available file="${outputTempDir}/word/embeddings" type="dir"/>
+    </condition>
+  </target>
+  <target name="embeddingcopy" if="${embeddingdir.exists}">
+    <mkdir dir="${outputDir}/embeddings"/>
+    <move todir="${outputDir}/embeddings" overwrite="true">
+      <fileset dir="${outputTempDir}/word/embeddings"/>
+    </move>
+  </target>
+  <target name="chartdir.check">
+    <condition property="chartdir.exists">
+      <available file="${outputTempDir}/word/charts" type="dir"/>
+    </condition>
+  </target>
+  <target name="chartcopy" if="${chartdir.exists}">
+    <mkdir dir="${outputDir}/charts"/>
+    <move todir="${outputDir}/charts" overwrite="true">
+      <fileset dir="${outputTempDir}/word/charts"/>
+    </move>
   </target>
 </project>

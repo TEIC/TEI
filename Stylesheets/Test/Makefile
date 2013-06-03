@@ -265,6 +265,14 @@ pureant:
 	-lib $(OXY)/lib/saxon9ee.jar \
 	-DoutputFile=`pwd`/test7.docx \
 	-DinputFile=`pwd`/test7.xml -Dprofile=default 
+	java -Xmx256m \
+	-classpath  "$(OXY)/tools/ant/lib/ant-launcher.jar" \
+	-Dant.home=$(OXY)/tools/ant \
+	org.apache.tools.ant.launch.Launcher \
+	-f ../docx/build-from.xml \
+	-lib $(OXY)/lib/saxon9ee.jar \
+	-DoutputFile=`pwd`/test29.xml \
+	-DinputFile=`pwd`/test29.docx -Dprofile=default 
 
 profile:
 	$(SAXON) -o:/dev/null	-TP test.xml ../xhtml2/tei.xsl >& profile1.html
@@ -287,3 +295,4 @@ clean:
 	rm -f test.xml.docx.core
 	rm -f test7.docx
 	rm -f test.html5
+	rm -rf media charts embeddings
