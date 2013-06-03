@@ -23,7 +23,7 @@ SCHEMASCRIPTS=teitornc \
 	teitoxsd \
 	teitodtd 
 
-default: schema test-html test-latex test-fo test-to-docx test-from-docx test-other test-epub test-rdf test-text test-odt p4top5 conversions-to  oddity pureant scripts
+default: schema test-html test-latex test-fo test-to-docx test-from-docx test-other test-epub test-rdf test-text test-odt p4top5 oddity pureant scripts
 
 p4top5:
 	$(SAXON) -o:test17.tei test17.xml ../profiles/default/p4/from.xsl
@@ -166,6 +166,9 @@ test-odt:
 	rm test.xml.odt.listing
 	rm content.xml
 	diff content.xml.odt expected-results/content.xml.odt
+	../odttotei test7.odt test7.xml
+	jing test.rng test7.xml
+	diff test7.xml expected-results/test7.xml
 
 test-from-docx:
 	../docxtotei test-indexes.docx temp.xml
@@ -206,11 +209,6 @@ test-to-docx:
 	unzip -p testnotes1.xml.docx word/document.xml | xmllint --format - > testnotes1.xml.docx.document
 	diff testnotes1.xml.docx.document expected-results/testnotes1.xml.docx.document
 	rm testnotes1.xml.docx.document
-
-conversions-to: 
-	../odttotei test7.odt test7.xml
-	jing test.rng test7.xml
-	diff test7.xml expected-results/test7.xml
 
 oddity:
 	../teitohtml --debug --summaryDoc --profile=tei --odd test15.odd test.odd.html
