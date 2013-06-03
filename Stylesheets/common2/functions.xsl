@@ -819,7 +819,6 @@ of this software, even if advised of the possibility of such damage.
 		      select="tei:title[@type='main']" mode="simple"/>
 		</xsl:when>
 		<xsl:otherwise>
-<xsl:message>going with <xsl:value-of select="tei:title[1]"/></xsl:message>
 		  <xsl:apply-templates select="tei:title[1]" mode="simple"/>
 		</xsl:otherwise>
 	      </xsl:choose>
