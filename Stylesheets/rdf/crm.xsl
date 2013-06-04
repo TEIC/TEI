@@ -53,6 +53,7 @@
       <xsl:apply-templates select="$rdf1" mode="rdf2"/>
   </xsl:template>
 
+
   <!-- clean up pass -->
 
   <xsl:template match="crm:*[crm:E53_Place]" mode="rdf2">
@@ -96,9 +97,9 @@
   <xsl:template name="E31">
     <E31_Document xmlns="http://purl.org/NET/crm-owl#" 
 	rdf:about="{tei:makeID(.,'id')}">
-      <xsl:apply-templates select="fileDesc"/>
+      <xsl:apply-templates select="parent::TEI/teiHeader/fileDesc"/>
     </E31_Document>
-    <xsl:apply-templates select="*[not(self::fileDesc)]"/>
+    <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template name="anonblock">

@@ -102,7 +102,6 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key match="tei:attDef" name="ATTRIBUTES" use="@ident"/>
   <xsl:key match="tei:classSpec//tei:attDef" name="ATTRIBUTES-CLASS" use="@ident"/>
   <xsl:key match="tei:elementSpec//tei:attDef" name="ATTRIBUTES-ELEMENT" use="@ident"/>
-  <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
   <xsl:key match="tei:classSpec[@type='atts']" name="ATTCLASSDOCS" use="1"/>
   <xsl:key match="tei:classSpec[@type='model']" name="MODELCLASSDOCS" use="1"/>
   <xsl:key match="tei:elementSpec" name="ELEMENTDOCS" use="1"/>

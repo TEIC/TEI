@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<XSL:stylesheet xmlns:XSL="http://www.w3.org/1999/XSL/Transform" version="2.0"
+<XSL:stylesheet xmlns:XSL="http://www.w3.org/1999/XSL/Transform"
+                version="2.0"
                 xpath-default-namespace="http://www.tei-c.org/ns/1.0">
    <XSL:import href="../tools/getfiles.xsl"/>
    <XSL:import href="crm.xsl"/>
@@ -20,11 +21,11 @@
    <XSL:template match="title">
       <XSL:call-template name="E35"/>
    </XSL:template>
-   <XSL:template match="teiHeader">
-      <XSL:call-template name="E31"/>
-   </XSL:template>
    <XSL:template match="TEI">
       <XSL:call-template name="TEI"/>
+   </XSL:template>
+   <XSL:template match="text">
+      <XSL:call-template name="E31"/>
    </XSL:template>
    <XSL:template match="persName">
       <XSL:call-template name="E82"/>
@@ -68,46 +69,46 @@
       <E55_Type xmlns="http://purl.org/NET/crm-owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 rdf:about="http://www.tei-c.org/type/place/placeName">
-         <label xmlns="http://www.w3.org/2000/01/rdf-schema#">contains an absolute or relative place name. </label>
+         <label xmlns="http://www.w3.org/2000/01/rdf-schema#">contains an absolute or relative place name.  [13.2.3. ]</label>
          <P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
       </E55_Type>
       <E55_Type xmlns="http://purl.org/NET/crm-owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 rdf:about="http://www.tei-c.org/type/place/bloc">
          <label xmlns="http://www.w3.org/2000/01/rdf-schema#">(bloc) contains the name of a geo-political unit consisting of two or more nation states or
-    countries.</label>
+    countries. [13.2.3. ]</label>
          <P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
       </E55_Type>
       <E55_Type xmlns="http://purl.org/NET/crm-owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 rdf:about="http://www.tei-c.org/type/place/country">
          <label xmlns="http://www.w3.org/2000/01/rdf-schema#">(country) contains the name of a geo-political unit, such as a nation, country, colony, or
-    commonwealth, larger than or administratively superior to a region and smaller than a bloc.</label>
+    commonwealth, larger than or administratively superior to a region and smaller than a bloc. [13.2.3. ]</label>
          <P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
       </E55_Type>
       <E55_Type xmlns="http://purl.org/NET/crm-owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 rdf:about="http://www.tei-c.org/type/place/region">
          <label xmlns="http://www.w3.org/2000/01/rdf-schema#">contains the name of an administrative unit such as a state, province, or county, larger
-    than a settlement, but smaller than a country.</label>
+    than a settlement, but smaller than a country. [13.2.3. ]</label>
          <P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
       </E55_Type>
       <E55_Type xmlns="http://purl.org/NET/crm-owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 rdf:about="http://www.tei-c.org/type/place/district">
-         <label xmlns="http://www.w3.org/2000/01/rdf-schema#">contains the name of any kind of subdivision of a settlement, such as a parish, ward, or other administrative or geographic unit.</label>
+         <label xmlns="http://www.w3.org/2000/01/rdf-schema#">contains the name of any kind of subdivision of a settlement, such as a parish, ward, or other administrative or geographic unit. [13.2.3. ]</label>
          <P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
       </E55_Type>
       <E55_Type xmlns="http://purl.org/NET/crm-owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 rdf:about="http://www.tei-c.org/type/place/settlement">
-         <label xmlns="http://www.w3.org/2000/01/rdf-schema#">contains the name of a settlement such as a city, town, or village identified as a single geo-political or administrative unit.</label>
+         <label xmlns="http://www.w3.org/2000/01/rdf-schema#">contains the name of a settlement such as a city, town, or village identified as a single geo-political or administrative unit. [13.2.3. ]</label>
          <P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
       </E55_Type>
       <E55_Type xmlns="http://purl.org/NET/crm-owl#"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 rdf:about="http://www.tei-c.org/type/place/geogName">
-         <label xmlns="http://www.w3.org/2000/01/rdf-schema#">(geographical name) a name associated with some geographical feature such as Windrush Valley or Mount Sinai.</label>
+         <label xmlns="http://www.w3.org/2000/01/rdf-schema#">(geographical name) identifies a name associated with some geographical feature such as Windrush Valley or Mount Sinai. [13.2.3. ]</label>
          <P127_has_broader_term rdf:resource="http://www.tei-c.org/type/place"/>
       </E55_Type>
    </XSL:template>

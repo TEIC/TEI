@@ -69,6 +69,7 @@ of this software, even if advised of the possibility of such damage.
   </doc>
 
   <xsl:key match="tei:schemaSpec" name="LISTSCHEMASPECS" use="@ident"/>
+  <xsl:key match="tei:schemaSpec" name="SCHEMASPECS" use="1"/>
   <xsl:param name="defaultSource"></xsl:param>
   <xsl:param name="defaultTEIVersion">current</xsl:param>
   <xsl:param name="defaultTEIServer">http://www.tei-c.org/Vault/P5/</xsl:param>
