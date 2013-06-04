@@ -674,61 +674,92 @@
 
   <xsl:template name="mainTOC">
     <xsl:param name="force"/>
-
-    <div class="toc_back">
-      <h3>
-      	  <xsl:sequence select="tei:i18n('Back Matter')"/>
-      </h3>
-      <xsl:for-each
-	  select="ancestor-or-self::TEI/text/back">
-	<xsl:if test="div">
-	  <ul class="toc{$force} toc_back">
-	    <xsl:apply-templates mode="maketoc"
-				 select="div">
-	      <xsl:with-param name="forcedepth" select="$force"/>
-              </xsl:apply-templates>
-	  </ul>
-	</xsl:if>
-      </xsl:for-each>
-    </div>
-
-    <div class="toc_front">
-      <h3>
-      	  <xsl:sequence select="tei:i18n('Front Matter')"/>
-      </h3>
-      <ul class="toc{$force} toc_front">
-	<li>
-	  <a href="TitlePageRecto.html">
-	    <xsl:sequence select="tei:i18n('title')"/>
-	  </a>
-	</li>
-	<xsl:for-each
-	    select="ancestor-or-self::TEI/text/front">
-	  <xsl:if test="div">
-	  <xsl:apply-templates mode="maketoc" select="div">
-	      <xsl:with-param name="forcedepth" select="$force"/>
-	    </xsl:apply-templates>
-	</xsl:if>
-      </xsl:for-each>
-      </ul>
-    </div>
-
-    <div class="toc_body">
-      <h3>
-      	  <xsl:sequence select="tei:i18n('Text body')"/>
-      </h3>
-      <xsl:for-each
-        select="ancestor-or-self::TEI/text/body">
-        <xsl:if          test="div">
-          <ul class="toc{$force}  toc_body">
-            <xsl:apply-templates mode="maketoc"
-              select="div">
-              <xsl:with-param name="forcedepth" select="$force"/>
-            </xsl:apply-templates>
-          </ul>
-        </xsl:if>
-      </xsl:for-each>
-    </div>
+  	
+  	
+<!-- MDH 2013-06: changes for new TOC page layout.	-->
+  	<div class="col_left">
+  		<div class="toc_front">
+  			<h3>
+  				<xsl:sequence select="tei:i18n('Front Matter')"/>
+  			</h3>
+  			<ul class="toc{$force} toc_front">
+  				<li>
+  					<a href="TitlePageRecto.html">
+  						<xsl:sequence select="tei:i18n('title')"/>
+  					</a>
+  				</li>
+  				<xsl:for-each
+  					select="ancestor-or-self::TEI/text/front">
+  					<xsl:if test="div">
+  						<xsl:apply-templates mode="maketoc" select="div">
+  							<xsl:with-param name="forcedepth" select="$force"/>
+  						</xsl:apply-templates>
+  					</xsl:if>
+  				</xsl:for-each>
+  			</ul>
+  		</div>
+  		
+  		<div class="toc_back">
+  			<h3>
+  				<xsl:sequence select="tei:i18n('Back Matter')"/>
+  			</h3>
+  			<xsl:for-each
+  				select="ancestor-or-self::TEI/text/back">
+  				<xsl:if test="div">
+  					<ul class="toc{$force} toc_back">
+  						<xsl:apply-templates mode="maketoc"
+  							select="div">
+  							<xsl:with-param name="forcedepth" select="$force"/>
+  						</xsl:apply-templates>
+  					</ul>
+  				</xsl:if>
+  			</xsl:for-each>
+  		</div>
+  		
+  		
+  	</div>
+  	
+  	<div class="col_centre">
+  		
+  		<div class="toc_body">
+  			<h3>
+  				<xsl:sequence select="tei:i18n('Text body')"/>
+  			</h3>
+  			<xsl:for-each
+  				select="ancestor-or-self::TEI/text/body">
+  				<xsl:if          test="div">
+  					<ul class="toc{$force}  toc_body">
+  						<xsl:apply-templates mode="maketoc"
+  							select="div">
+  							<xsl:with-param name="forcedepth" select="$force"/>
+  						</xsl:apply-templates>
+  					</ul>
+  				</xsl:if>
+  			</xsl:for-each>
+  		</div>
+  		
+  	</div>
+  	
+  	<div class="col_right">
+  		
+  		
+  		<div>
+  			<h3>TEI sourcecode</h3>
+  			<ul>
+  				<li>
+  					<a href="http://www.tei-c.org/Council/tcw06.xml">Using the TEI Sourceforge Repository</a>
+  				</li>
+  				<li>
+  					<a href="http://tei.svn.sourceforge.net/viewvc/tei/">Sourceforge Subversion Repository</a>
+  				</li>
+  				<li>
+  					<a href="https://sourceforge.net/p/tei/_list/tickets">Bug Reports, Feature Requests, etc.</a>
+  				</li>
+  			</ul>
+  			
+  		</div>
+  	</div>
+    
 
   </xsl:template>
 
