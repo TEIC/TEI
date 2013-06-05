@@ -558,7 +558,7 @@
                 <xsl:sequence select="tei:i18n('tocWords')"/>
               </a>
             </li>
-            <xsl:if test="$outputTarget='html'">
+            <xsl:if test="$outputTarget='html' or $outputTarget='html5'">
               <li>
                 <a href="../../en/Guidelines.pdf">PDF</a>
               </li>
@@ -1007,7 +1007,7 @@
     <xsl:variable name="date" select="tei:generateDate(.)"/>
     <xsl:variable name="author" select="tei:generateAuthor(.)"/>
     <div class="stdfooter">
-      <xsl:if test="$outputTarget='html'">
+      <xsl:if test="$outputTarget='html' or $outputTarget='html5'">
     <p>
     [<a href="../../en/html/{$file}.html">English</a>]
     [<a href="../../de/html/{$file}.html">Deutsch</a>]
@@ -1099,7 +1099,7 @@
 
   <xsl:template name="guidelinesTop">
     <xsl:param name="name"/>
-    <xsl:if test="$outputTarget='html'">
+    <xsl:if test="$outputTarget='html' or $outputTarget='html5'">
       <xsl:if test="not($googleAnalytics='')">
         <script type="text/javascript" src="udm-dom.js">
           <xsl:comment>&#160;</xsl:comment>
