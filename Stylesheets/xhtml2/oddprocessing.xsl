@@ -184,11 +184,6 @@ of this software, even if advised of the possibility of such damage.
             <body id="TOP">
               <xsl:call-template name="bodyMicroData"/>
               <xsl:call-template name="bodyHook"/>
-              <xsl:call-template name="guidelinesTop">
-                <xsl:with-param name="name">
-                  <xsl:value-of select="$name"/>
-                </xsl:with-param>
-              </xsl:call-template>
               <div class="main-content">
                 <xsl:call-template name="startDivHook"/>
                 <xsl:apply-templates mode="weavebody" select="."/>
