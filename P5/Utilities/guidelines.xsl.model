@@ -384,10 +384,7 @@
 	  <li class="subtoc"><xsl:call-template name="nextLink"/></li>
 	  <li class="subtoc"><a class="navigation" href="index.html">
 	  <xsl:sequence select="tei:i18n('homeWord')"/>
-	  </a> | <a
-	  class="navigation" href="index-toc.html">
-	  <xsl:sequence select="tei:i18n('tocWords')"/>
-	  </a></li>
+	  </a> </li>
 	  <xsl:choose>
 	      <xsl:when test="self::elementSpec">
 		<li class="subtoc">
@@ -468,199 +465,18 @@
   <xsl:template name="mainPage">
     <xsl:param name="currentID"/>
     <div id="onecol" class="main-content">
-      <xsl:call-template name="mainFrame">
-        <xsl:with-param name="currentID" select="$currentID"/>
-        <xsl:with-param name="minimal">true</xsl:with-param>
-      </xsl:call-template>
       <xsl:choose>
 	<xsl:when test="not($currentID='')">
+	  <xsl:call-template name="mainFrame">
+	    <xsl:with-param name="currentID" select="$currentID"/>
+	    <xsl:with-param name="minimal">true</xsl:with-param>
+	  </xsl:call-template>
 	  <xsl:call-template name="partialFootNotes">
 	    <xsl:with-param name="currentID" select="$currentID"/>
 	  </xsl:call-template>
 	</xsl:when>
 	<xsl:otherwise>
-	  <div style="float:left; margin:4%;">
-          <h3>
-	  	  <xsl:sequence select="tei:i18n('Versions of the Guidelines')"/>
-	  </h3>
-          <ul>
-            <li>
-              <a href="index-toc.html">
-	      	  <xsl:sequence select="tei:i18n('tocWords')"/>
-	      </a>
-            </li>
-            <li>
-              <a href="../../en/Guidelines.pdf">PDF</a>
-            </li>
-            <li><a
-              href="http://www.tei-c.org/Council/tcw06.xml">
-	      	  <xsl:sequence select="tei:i18n('Getting the most recent version')"/>
-	    </a></li>
-            <li><a
-              href="http://sourceforge.net/p/tei/code/">
-              	  <xsl:sequence select="tei:i18n('Sourceforge Subversion Repository')"/>
-	    </a></li>
-            <li>
-              <a
-                href="http://sourceforge.net/p/tei/_list/tickets">
-	      	  <xsl:sequence select="tei:i18n('BugsFeatures')"/>
-	      </a>
-	    </li>
-          </ul>
-        </div>
-        <div style="float:left; margin:4%;">
-          <h3>
-	  <xsl:sequence select="tei:i18n('Some Popular Sections')"/>
-	  </h3>
-          <ul>
-            <li>
-	      <a href="AB.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>AB</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="SG.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>SG</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="ST.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>ST</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="HD.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>HD</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="CO.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>CO</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="USE.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>USE</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="REF-CLASSES-MODEL.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>REF-CLASSES-MODEL</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="REF-CLASSES-ATTS.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>REF-CLASSES-ATTS</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-            <li>
-	      <a href="REF-ELEMENTS.html">
-		<xsl:call-template name="showHead">
-		  <xsl:with-param name="ID">
-		    <xsl:text>REF-ELEMENTS</xsl:text>
-		  </xsl:with-param>
-		</xsl:call-template>
-	      </a>
-            </li>
-          </ul>
-        </div>
-
-
-        <xsl:variable name="name">TEI Guidelines TOC </xsl:variable>
-
-	    <xsl:variable name="outName">
-	      <xsl:call-template name="outputChunkName">
-		<xsl:with-param name="ident">
-		  <xsl:text>index-toc</xsl:text>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:variable>
-	    
-	    <xsl:if test="$verbose='true'">
-	      <xsl:message>Opening file <xsl:value-of select="$outName"/></xsl:message>
-	    </xsl:if>
-	    <xsl:result-document doctype-public="{$doctypePublic}"
-				 omit-xml-declaration = "yes"			  
-				 doctype-system="{$doctypeSystem}" 
-				 encoding="{$outputEncoding}"
-				 href="{$outName}" 
-				 method="{$outputMethod}">
-            <html>
-              <xsl:comment>THIS IS A GENERATED FILE. DO NOT EDIT (99) </xsl:comment>
-              <head>
-                <title>
-                  <xsl:value-of select="$name"/>
-                </title>
-                <xsl:choose>
-                  <xsl:when test="$cssFile = ''"/>
-                  <xsl:when test="$cssFileInclude='true'">
-                    <style>
-		      <include href="{$cssFile}" parse="text" xmlns="http://www.w3.org/2001/XInclude"/>
-		    </style>
-                  </xsl:when>
-                  <xsl:otherwise>
-                    <link href="{$cssFile}" rel="stylesheet"
-                      type="text/css"/>
-                  </xsl:otherwise>
-                </xsl:choose>
-                <xsl:if test="not($cssSecondaryFile = '')">
-                  <link href="{$cssSecondaryFile}" rel="stylesheet"
-                    type="text/css"/>
-                </xsl:if>
-                <meta
-                  content="Text Encoding Initiative Consortium XSLT stylesheets"
-                  name="generator"/>
-		<xsl:call-template name="metaHTML">
-		  <xsl:with-param name="title" select="$name"/>
-		</xsl:call-template>
-             <xsl:call-template name="includeJavascript"/>
-                <xsl:call-template name="javascriptHook"/>
-              </head>
-              <body id="TOP">
-                <xsl:call-template name="bodyHook"/>
-		<div id="onecol" class="main-content">
-		  <xsl:call-template name="mainTOC"/>
-		</div>
-                <xsl:call-template name="stdfooter"/>
-              </body>
-            </html>
-	    </xsl:result-document>
-
-	    <xsl:if test="$verbose='true'">
-	      <xsl:message>Closing file <xsl:value-of select="$outName"/></xsl:message>
-	    </xsl:if>
+	  <xsl:call-template name="mainTOC"/>
 	</xsl:otherwise>
       </xsl:choose>
       <xsl:call-template name="stdfooter"/>
