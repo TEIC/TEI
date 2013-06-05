@@ -2,6 +2,7 @@
 <xsl:stylesheet 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:tei="http://www.tei-c.org/ns/1.0" 
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns="http://www.tei-c.org/ns/1.0"
     version="2.0">
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -160,12 +161,6 @@ of this software, even if advised of the possibility of such damage.
       </graphic>
       <xsl:apply-templates/>
     </figure>
-  </xsl:template>
-  
-  <xsl:template match="event">
-    <incident>
-      <xsl:apply-templates select="@*|*|text()|comment()|processing-instruction()"/>
-    </incident>
   </xsl:template>
   
   <xsl:template match="state">
@@ -413,7 +408,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   <xsl:template match="gap/@desc"/>
-
+  
   <xsl:template match="gap">
     <gap>
       <xsl:apply-templates select="@*"/>
@@ -424,7 +419,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:if>
     </gap>
   </xsl:template>
-
+    
   <xsl:template match="sic[@corr]">
     <choice>
       <sic>
@@ -792,6 +787,49 @@ of this software, even if advised of the possibility of such damage.
 </index></xsl:if>
 </index>
 </xsl:template>
+
+
+<!-- JC Additions 2013-06 -->
+
+<!-- foreName wasn't getting lower-cased. -->
+  <xsl:template match="foreName"><forename><xsl:apply-templates 
+    select="@*|*|processing-instruction()|comment()|text()"/>
+  </forename></xsl:template>
+
+<!-- events can have @desc -->
+  <xsl:template match="event/@desc"/>
+  <xsl:template match="event">
+    <incident>
+      <xsl:apply-templates select="@*"/>
+      <xsl:if test="@desc">
+        <desc>
+          <xsl:value-of select="@desc"/>
+        </desc>
+      </xsl:if>
+    </incident>
+  </xsl:template>
+  
+<!-- and vocal can have desc as well -->
+  <xsl:template match="vocal/@desc"/>
+  <xsl:template match="vocal">
+    <vocal>
+      <xsl:apply-templates select="@*"/>
+      <xsl:if test="@desc">
+        <desc>
+          <xsl:value-of select="@desc"/>
+        </desc>
+      </xsl:if>
+    </vocal>
+  </xsl:template>
+  
+  <!-- birth/@date wasn't being handled; because @date wasn't enforced as a date datatype
+    I check if @date is indeed a date and if it is make it a @when and if not make it an @n
+  -->
+  <xsl:template match="birth/@date"><xsl:choose>
+    <xsl:when test="string(.) castable as xs:date"><xsl:attribute name="when"><xsl:value-of select="."/></xsl:attribute></xsl:when>
+    <xsl:otherwise><xsl:attribute name="n"><xsl:value-of select="."/></xsl:attribute></xsl:otherwise>
+  </xsl:choose></xsl:template>
+
 
 
 </xsl:stylesheet>
