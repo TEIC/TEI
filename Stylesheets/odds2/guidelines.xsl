@@ -279,6 +279,7 @@
     <head xml:lang="kr" corresp="REF-ELEMENTS">요소</head>
     <head xml:lang="kr" corresp="REF-MACROS">자료유형과 다른 마크로</head>
   </heads>
+
   <xsl:template name="processTEIHook">
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
@@ -490,10 +491,6 @@
             <a class="navigation" href="index.html">
               <xsl:sequence select="tei:i18n('homeWord')"/>
             </a>
-            <xsl:text> | </xsl:text>
-            <a class="navigation" href="index-toc.html">
-              <xsl:sequence select="tei:i18n('tocWords')"/>
-            </a>
           </li>
           <li class="subtoc">
             <xsl:choose>
@@ -670,9 +667,12 @@
       </li>
     </xsl:if>
   </xsl:template>
+
+<!--
   <xsl:template match="tei:divGen[@type='toc']">
     <xsl:call-template name="mainPage"/>
   </xsl:template>
+-->
   <xsl:template name="javascriptHook">
     <script type="text/javascript" src="jquery-1.2.6.min.js">
       <xsl:comment>JQuery</xsl:comment>

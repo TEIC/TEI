@@ -1809,17 +1809,19 @@ of this software, even if advised of the possibility of such damage.
       <!-- header -->
     <div id="hdr">
          <xsl:call-template name="hdr"/>
-      </div>
+    </div>
+    <xsl:if test="not($REQUEST='')">
       <div id="accessibility">
-         <span class="tocontent">
-            <a href="{$REQUEST}?style=text">Text only</a>
-      | <a class="skiplinks" href="#rh-col" title="Go to main page content">Skip links</a>
+	<span class="tocontent">
+	  <a href="{$REQUEST}?style=text">Text only</a>
+	  | <a class="skiplinks" href="#rh-col" title="Go to main page content">Skip links</a>
          </span>
       </div>
-      <div id="hdr2">
-         <xsl:call-template name="hdr2"/>
-      </div>
-      <xsl:if test="not($contentStructure='all' or @rend='all')">
+    </xsl:if>
+    <div id="hdr2">
+      <xsl:call-template name="hdr2"/>
+    </div>
+    <xsl:if test="not($contentStructure='all' or @rend='all')">
          <div id="hdr3">
 	   <xsl:call-template name="hdr3"/>
          </div>

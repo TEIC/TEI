@@ -39,7 +39,6 @@
   <xsl:template name="copyrightStatement">Copyright TEI Consortium 2011</xsl:template>
   
   <xsl:template name="epubManifestHook">
-    <item xmlns="http://www.idpf.org/2007/opf" media-type="application/xhtml+xml" id="index-toc" href="index-toc.html"/>
     <xsl:for-each select="key('ATTCLASSDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
       <item xmlns="http://www.idpf.org/2007/opf" media-type="application/xhtml+xml" id="ref-{$me}" href="ref-{$me}.html"/>
@@ -60,7 +59,6 @@
   </xsl:template>
 
   <xsl:template name="epubSpineHook">
-    <itemref xmlns="http://www.idpf.org/2007/opf" idref="index-toc" linear="yes"/>
     <xsl:for-each select="key('ELEMENTDOCS',1)">
       <xsl:variable name="me" select="@ident"/>
       <itemref xmlns="http://www.idpf.org/2007/opf" idref="ref-{$me}" linear="no"/>

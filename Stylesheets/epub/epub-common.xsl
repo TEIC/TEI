@@ -512,4 +512,6 @@ of this software, even if advised of the possibility of such damage.
     </link>
   </xsl:template>
 
+  <xsl:template name="hdr3"/>
+
 </xsl:stylesheet>
