@@ -89,7 +89,7 @@ of this software, even if advised of the possibility of such damage.
 		 </xsl:for-each>
 	       </xsl:when>
 	       <xsl:otherwise>
-		 <xsl:value-of select="@facs"/>
+		 <xsl:value-of select="tei:resolveURI(.,@facs)"/>
 	       </xsl:otherwise>
 	     </xsl:choose>
 	   </xsl:variable>

@@ -1199,7 +1199,7 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:choose>
 		  <xsl:when test="starts-with(@facs,'#')">
 		    <xsl:for-each select="id(substring(@facs,2))">
-		      <xsl:value-of select="tei:graphic[1]/@url"/>
+		      <xsl:value-of select="tei:graphic[1]/tei:resolveURI(.,@url)"/>
 		    </xsl:for-each>
 		  </xsl:when>
 		  <xsl:otherwise>
