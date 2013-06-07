@@ -467,9 +467,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:value-of
 	  select="('eebopage',translate(normalize-space(/ETS/EEBO/IDG/VID),' ',''),.)" separator=":"/>
     </xsl:attribute>
-    <xsl:attribute name="rend">
-      <xsl:text>none</xsl:text>
-    </xsl:attribute>
   </xsl:template>
 
   <xsl:template match="KEYWORDS">

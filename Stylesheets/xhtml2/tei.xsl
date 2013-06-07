@@ -167,12 +167,8 @@ of this software, even if advised of the possibility of such damage.
     <xsl:call-template name="makeLang"/>
     <xsl:choose>
       <xsl:when test="(self::tei:q or self::tei:said or
-		      self::tei:quote) and @rend='inline' and
-		      not(@rendition) and not(key('TAGREND',local-name(.)))">
-	<xsl:sequence select="tei:processClass(local-name(),'')"/>
-      </xsl:when>
-      <xsl:when test="(self::tei:q or self::tei:said or
-		      self::tei:quote) and @rend='display' and
+		      self::tei:quote) and (@rend='inline' or
+		      @rend='display') and
 		      not(@rendition) and not(key('TAGREND',local-name(.)))">
 	<xsl:sequence select="tei:processClass(local-name(),'')"/>
       </xsl:when>

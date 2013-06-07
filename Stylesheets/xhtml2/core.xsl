@@ -1170,55 +1170,53 @@ of this software, even if advised of the possibility of such damage.
           <xsl:copy-of select="@facs"/>
         </PAGEBREAK>
       </xsl:when>
-      <xsl:when test="@facs and not(@rend='none')">
-        <xsl:variable name="IMG">
-          <xsl:choose>
-            <xsl:when test="starts-with(@facs,'#')">
-              <xsl:for-each select="id(substring(@facs,2))">
-                <xsl:value-of select="tei:graphic[1]/@url"/>
-              </xsl:for-each>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="@facs"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        <xsl:element name="{if (tei:is-inline(..)) then 'span' else 'div'}">
-          <xsl:call-template name="makeRendition"/>
-          <img src="{$IMG}" alt="page image"/>
-        </xsl:element>
-      </xsl:when>
       <xsl:when test="$pagebreakStyle='active'">
         <div>
           <xsl:call-template name="makeRendition">
-	    <xsl:with-param  name="default">pagebreak</xsl:with-param>
+	    <xsl:with-param  name="auto">pagebreak</xsl:with-param>
 	  </xsl:call-template>
         </div>
       </xsl:when>
-      <xsl:when test="$pagebreakStyle='visible' and (parent::tei:body         or parent::tei:front or parent::tei:back or parent::tei:group)">
-        <div class="pagebreak">
+      <xsl:otherwise>
+        <xsl:element name="{if (parent::tei:body or parent::tei:front
+			   or parent::tei:div  or parent::tei:back or parent::tei:group) then 'div' else 'span'}">
+          <xsl:call-template name="makeRendition">
+	    <xsl:with-param name="default">pagebreak</xsl:with-param>
+	  </xsl:call-template>
           <xsl:call-template name="makeAnchor"/>
-          <xsl:text> [</xsl:text>
-          <xsl:sequence select="tei:i18n('page')"/>
-          <xsl:if test="@n">
-            <xsl:text> </xsl:text>
-            <xsl:value-of select="@n"/>
-          </xsl:if>
-          <xsl:text>] </xsl:text>
-        </div>
-      </xsl:when>
-      <xsl:when test="$pagebreakStyle='visible'">
-        <span class="pagebreak">
-          <xsl:call-template name="makeAnchor"/>
-          <xsl:text> [</xsl:text>
-          <xsl:sequence select="tei:i18n('page')"/>
-          <xsl:if test="@n">
-            <xsl:text> </xsl:text>
-            <xsl:value-of select="@n"/>
-          </xsl:if>
-          <xsl:text>] </xsl:text>
-        </span>
-      </xsl:when>
+	  <xsl:variable name="Words">
+	    <xsl:text>[</xsl:text>
+	    <xsl:sequence select="tei:i18n('page')"/>
+	    <xsl:if test="@n">
+	      <xsl:text> </xsl:text>
+	      <xsl:value-of select="@n"/>
+	    </xsl:if>
+	    <xsl:text>]</xsl:text>
+	  </xsl:variable>
+	  <xsl:choose>
+	    <xsl:when test="@facs">
+	      <xsl:variable name="IMG">
+		<xsl:choose>
+		  <xsl:when test="starts-with(@facs,'#')">
+		    <xsl:for-each select="id(substring(@facs,2))">
+		      <xsl:value-of select="tei:graphic[1]/@url"/>
+		    </xsl:for-each>
+		  </xsl:when>
+		  <xsl:otherwise>
+		    <xsl:value-of select="tei:resolveURI(.,@facs)"/>
+		  </xsl:otherwise>
+		</xsl:choose>
+	      </xsl:variable>
+	      <a href="{$IMG}" alt="page image">
+		<xsl:copy-of select="$Words"/>
+	      </a>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:copy-of select="$Words"/>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:element>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
