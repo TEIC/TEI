@@ -1207,7 +1207,7 @@ of this software, even if advised of the possibility of such damage.
 		  </xsl:otherwise>
 		</xsl:choose>
 	      </xsl:variable>
-	      <a href="{$IMG}" alt="page image">
+	      <a href="{$IMG}">
 		<xsl:copy-of select="$Words"/>
 	      </a>
 	    </xsl:when>
