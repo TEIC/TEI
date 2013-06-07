@@ -19,59 +19,6 @@
   <xsl:apply-templates select="$Doctext" mode="pass3"/>
  </xsl:template>
 
- <!-- jiggle around the paragraphs which should be in front -->
- <xsl:template match="tei:text" mode="pass2">
-  <text>
-   <front>
-    <titlePage>
-     <docTitle>
-      <titlePart type="main">
-       <xsl:value-of select="//tei:p[@rend='Title']"/>
-      </titlePart>
-      <titlePart type="sub">
-       <xsl:value-of select="//tei:p[@rend='Subtitle']"/>
-      </titlePart>
-     </docTitle>
-     <docAuthor>
-      <xsl:value-of select="//tei:p[@rend='author']"/>
-     </docAuthor>
-    </titlePage>
-    <div type="abstract">
-     <xsl:for-each select="//tei:p[@rend='abstract']">
-      <p>
-       <xsl:apply-templates mode="pass2"/>
-      </p>
-     </xsl:for-each>
-    </div>
-   </front>
-   <body>
-    <xsl:apply-templates mode="pass2" select="tei:body/*"/>
-   </body>
-   <back>
-    <listBibl>
-     <xsl:for-each select="//tei:p[@rend='bibliography']">
-      <bibl>
-       <xsl:apply-templates mode="pass2"/>
-      </bibl>
-     </xsl:for-each>
-    </listBibl>
-   </back>
-  </text>
- </xsl:template>
- <!-- suppress paragraphs which have been jiggled into front/back -->
- <xsl:template match="tei:p[@rend='Title']" mode="pass2"/>
- <xsl:template match="tei:p[@rend='author']" mode="pass2"/>
- <xsl:template match="tei:p[@rend='Subtitle']" mode="pass2"/>
- <xsl:template match="tei:p[@rend='abstract']" mode="pass2"/>
- <xsl:template match="tei:p[@rend='bibliography']" mode="pass2"/>
- <!-- suppress empty head elements -->
- <xsl:template match="tei:head" mode="pass3">
-  <xsl:if test="string-length(.)!=0">
-   <head>
-    <xsl:value-of select="."/>
-   </head>
-  </xsl:if>
- </xsl:template>
  <!-- fix paragraph styles which should be TEI elements -->
  <xsl:template match="tei:p[@rend='epigraph']" mode="pass2">
   <epigraph>
@@ -97,7 +44,71 @@
   </xsl:element>
  </xsl:template>
 
-<!-- (2) and here's what do in pass 3 -->
+<!-- templates for pass3 start here -->
+
+ <!-- jiggle around the paragraphs which should be in front -->
+
+ <xsl:template match="tei:text" mode="pass3">
+  <text>
+   <front>
+    <titlePage>
+     <docTitle>
+      <titlePart type="main">
+	<xsl:value-of select="//tei:p[@rend='Title']/text()"/>
+       <xsl:apply-templates select="//tei:p[@rend='Title']/*" mode="pass3"/>
+      </titlePart>
+      <titlePart type="sub">
+       <xsl:copy-of select="//tei:p[@rend='Subtitle']/text()"/>
+       <xsl:copy-of select="//tei:p[@rend='Subtitle']/*"/>
+      </titlePart>
+
+     </docTitle>
+     <docAuthor>
+      <xsl:value-of select="//tei:p[@rend='author']/text()"/>
+       <xsl:copy-of select="//tei:p[@rend='author']/*"/>
+     </docAuthor>
+    </titlePage>
+    <div type="abstract">
+     <xsl:for-each select="//tei:p[@rend='abstract']">
+      <p>
+       <xsl:apply-templates mode="pass3"/>
+      </p>
+     </xsl:for-each>
+    </div>
+   </front>
+   <body>
+    <xsl:apply-templates mode="pass3" select="tei:body/*"/>
+   </body>
+   <back>
+    <listBibl>
+     <xsl:for-each select="//tei:p[@rend='bibliography']">
+      <bibl>
+       <xsl:apply-templates mode="pass3"/>
+      </bibl>
+     </xsl:for-each>
+    </listBibl>
+   </back>
+  </text>
+ </xsl:template>
+
+ <!-- suppress paragraphs which have been jiggled into front/back -->
+
+ <xsl:template match="tei:p[@rend='Title']" mode="pass3"/>
+ <xsl:template match="tei:p[@rend='author']" mode="pass3"/>
+ <xsl:template match="tei:p[@rend='Subtitle']" mode="pass3"/>
+ <xsl:template match="tei:p[@rend='abstract']" mode="pass3"/>
+ <xsl:template match="tei:p[@rend='bibliography']" mode="pass3"/>
+
+ <!-- suppress empty head elements -->
+
+ <xsl:template match="tei:head" mode="pass3">
+  <xsl:if test="string-length(.)!=0">
+   <head>
+    <xsl:value-of select="."/>
+   </head>
+  </xsl:if>
+ </xsl:template>
+
 
  <!-- fix up the default header -->
  <xsl:template match="tei:encodingDesc" mode="pass3"/>
@@ -167,7 +178,11 @@
   <xsl:value-of select="."/>
  </xsl:template>
 -->
- 
+
+<xsl:template match="tei:note/tei:p" mode="pass3">
+<xsl:apply-templates mode="pass3"/>
+</xsl:template>
+
 
  <xsl:template match="tei:p" mode="pass3">
   <xsl:if test="ancestor::tei:body">
@@ -178,6 +193,7 @@
     </xsl:attribute>
     <xsl:apply-templates mode="pass3"/>
    </xsl:element>
+
   </xsl:if>
  </xsl:template>
  <xsl:template match="tei:hi[matches(@rend,'color')]" mode="pass3"/>
@@ -217,7 +233,6 @@
 </hi>
 </xsl:template>
 
-
  <xsl:template match="tei:hi[@rend='reference']/text()" mode="pass3">
 <xsl:value-of select='substring-before(.,"&lt;")'/>
 <xsl:if test="not(contains(.,'&lt;'))">
@@ -243,5 +258,5 @@
    <xsl:apply-templates select="*|@*|processing-instruction()|comment()|text()" mode="pass3"/>
   </xsl:copy>
  </xsl:template>
- <!-- <xsl:template match="/">        <xsl:variable name="pass0">         <xsl:apply-templates mode="pass0"/>       </xsl:variable>        <xsl:variable name="pass1">         <xsl:for-each select="$pass0"> 	 <xsl:apply-templates mode="pass3"/>         </xsl:for-each>       </xsl:variable>		        <xsl:apply-templates select="$pass1" mode="pass2"/>              <xsl:call-template name="fromDocxFinalHook"/>     </xsl:template>  -->
+
 </xsl:stylesheet>
