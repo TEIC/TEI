@@ -1177,6 +1177,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:call-template>
         </div>
       </xsl:when>
+      <xsl:when test="$pagebreakStyle='none'"/>
       <xsl:otherwise>
         <xsl:element name="{if (parent::tei:body or parent::tei:front
 			   or parent::tei:div  or parent::tei:back or parent::tei:group) then 'div' else 'span'}">
@@ -1194,6 +1195,9 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:text>]</xsl:text>
 	  </xsl:variable>
 	  <xsl:choose>
+	    <xsl:when test="$pagebreakStyle='simple'">
+		<xsl:copy-of select="$Words"/>
+	    </xsl:when>
 	    <xsl:when test="@facs">
 	      <xsl:variable name="IMG">
 		<xsl:choose>

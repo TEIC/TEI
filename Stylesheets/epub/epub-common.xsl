@@ -50,6 +50,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:key name="objectOnPage" match="tei:*[@xml:id]" use="generate-id(preceding::tei:pb[1])"/>
 
   <xsl:param name="javascriptFiles"/>
+  <xsl:param name="pagebreakStyle">simple</xsl:param>
   <xsl:param name="epubMimetype">application/epub+zip</xsl:param>
 
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
