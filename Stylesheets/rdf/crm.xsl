@@ -505,7 +505,15 @@
     </P94i_was_created_by>
     </xsl:if>
   </xsl:template>
-  
+
+  <xsl:template name="F24">
+    <F24_Publication_Expression   xmlns="http://purl.org/NET/crm-owl#" >
+      <R24i_was_created_through>
+	<xsl:apply-templates/>
+      </R24i_was_created_through>
+    </F24_Publication_Expression>
+  </xsl:template>
+
   <!-- general templates -->
 
   <xsl:template name="calc-date-value">
