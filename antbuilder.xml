@@ -83,10 +83,13 @@
       <xslt processor="trax" force="yes" style="${XSL}/odds2/extract-isosch.xsl" in="${inputDir}/p5.xml" out="p5.isosch">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-      <xslt processor="trax" force="yes" style="Utilities/iso_schematron_message_xslt2.xsl" in="p5.isosch" out="p5.isosch.xsl">
+      <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5.isosch" out="p5.isosch.xsl">
 	<factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-
+      <xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5.isosch" out="p5examples.isosch.xsl">
+	<factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
+      <replace file="p5examples.isosch.xsl" token="tei-c.org/ns/1.0" value="tei-c.org/ns/Examples"/>
       <sequential>
         <echo>Do ODD processing for p5odds.odd</echo>
         <xslt force="yes" style="${XSL}/odds2/odd2odd.xsl" in="p5odds.odd" out="p5odds.compiled.xml">
@@ -169,8 +172,12 @@
   </target>
 
   <target name="validators">
-    <echo>Run Schematron script</echo>
-    <xslt processor="trax" force="yes" style="p5.isosch.xsl" in="p5.xml" out="/dev/stdout">
+    <echo>Run Schematron script (normal part of Guidelines)</echo>
+    <xslt processor="trax" force="yes" style="p5.isosch.xsl" in="p5.xml" out="Schematron1.xml">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <echo>Run Schematron script (Examples in Guidelines)</echo>
+    <xslt processor="trax" force="yes" style="p5examples.isosch.xsl" in="p5.xml" out="Schematron2.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
     <echo>Run ad hoc XSLT validators</echo>
