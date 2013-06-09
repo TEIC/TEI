@@ -58,8 +58,11 @@ the  manuscript being described. </desc>
   </content>
   <constraintSpec scheme="isoschematron" ident="msId_minimal">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="local-name(*[1])='idno' or local-name(*[1])='altIdentifier' or normalize-space(.)='' ">
-An msIdentifier must contain either a repository or location of some type, or a manuscript name</report>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron"
+	      test="not(parent::tei:msPart) and
+		    (local-name(*[1])='idno' or
+		    local-name(*[1])='altIdentifier' or
+		    normalize-space(.)='')">An msIdentifier must contain either a repository or location of some type, or a manuscript name</report>
     </constraint>
   </constraintSpec>
   <exemplum xml:lang="en">
