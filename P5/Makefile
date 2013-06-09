@@ -155,7 +155,7 @@ valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check.stamp p5.xml 
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
-	ant -lib Utilities/lib/Saxon-HE-9.4.0.6.jar -f antbuilder.xml -DXSL=${XSL} validators	
+	ant -lib Utilities/lib/Saxon-HE-9.4.0.6.jar -f antbuilder.xml -DXSL=${XSL} validators		
 	cat ValidatorLog.xml
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";false; fi)
 	diff ValidatorLog.xml expected-results/ValidatorLog.xml
@@ -413,4 +413,4 @@ clean:
 	rm -f teiwebsiteguidelines.zip
 	rm -rf FASC-*
 	rm -rf catalogue.* modList
-	rm -rf valid v.xml ValidatorLog.xml Utilities/pointerattributes.xsl graphics.sh missfont.log v.body v.header
+	rm -rf valid v.xml ValidatorLog.xml Utilities/pointerattributes.xsl graphics.sh missfont.log v.body v.header Schematron1.xml Schematron2.xml
