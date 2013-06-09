@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:teix="http://www.tei-c.org/ns/Examples" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0" exclude-result-prefixes="rng tei a teix">
+xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+xmlns:teix="http://www.tei-c.org/ns/Examples"
+xmlns:rng="http://relaxng.org/ns/structure/1.0"
+xmlns:tei="http://www.tei-c.org/ns/1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+exclude-result-prefixes="svrl rng tei a teix">
   <xsl:include href="pointerattributes.xsl"/>
   <xsl:key name="IDENTS" match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
   <xsl:key name="EXIDS" match="teix:*[@xml:id]" use="@xml:id"/>
@@ -21,7 +26,7 @@ xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:teix="http:/
 
   <xsl:template match="svrl:failed-assert">
     <ERROR>Schematron error: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
-    Location: <xsl:value-of select="@location"/></ERROR>
+    Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></ERROR>
   </xsl:template>
 
   <xsl:template match="text()"/>
