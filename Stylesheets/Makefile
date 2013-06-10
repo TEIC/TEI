@@ -38,6 +38,7 @@ DOCTARGETS= \
 	profiles/default/odt/from.xsl \
 	profiles/default/odt/to.xsl \
 	profiles/default/p4/from.xsl \
+	profiles/default/tcp/from.xsl \
 	profiles/default/relaxng/to.xsl	
 
 PROFILEDOCTARGETS=\
