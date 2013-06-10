@@ -19,6 +19,7 @@ DOCTARGETS= \
 	latex2/tei.xsl \
 	xhtml2/tei.xsl \
 	fo2/tei.xsl \
+	tcp/tcp2tei.xsl \
 	odds2/odd2odd.xsl \
 	odds2/odd2relax.xsl \
 	odds2/odd2dtd.xsl \
@@ -38,7 +39,6 @@ DOCTARGETS= \
 	profiles/default/odt/from.xsl \
 	profiles/default/odt/to.xsl \
 	profiles/default/p4/from.xsl \
-	profiles/default/tcp/from.xsl \
 	profiles/default/relaxng/to.xsl	
 
 PROFILEDOCTARGETS=\
