@@ -128,7 +128,9 @@ of this software, even if advised of the possibility of such damage.
     <xsl:apply-templates />
   </xsl:template>
 
-  <!-- TCP controversial changes -->
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>TCP controversial changes</desc>
+  </doc>
   <xsl:template match="PB/@MS" />
   <xsl:template match="LABEL/@ROLE" />
   <xsl:template match="TITLE/@TYPE" />
@@ -272,6 +274,9 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Strip $ from end of title</desc>
+  </doc>
   <xsl:template match="TITLESTMT/TITLE/text()[last()]">
     <xsl:choose>
       <xsl:when test="matches(.,':$')">
@@ -283,10 +288,21 @@ of this software, even if advised of the possibility of such damage.
     </xsl:choose>
   </xsl:template>
 
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>the HEADNOTE element can be bypassed if it just has a figure
+    in, and no following head or opener</desc>
+  </doc>
+
   <xsl:template match="HEADNOTE[P/FIGURE and
 		       not(following-sibling::HEAD or following-sibling::OPENER)]">
     <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
   </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Just a HEAD inside an ARGUMENT can be a paragraph</desc>
+  </doc>
 
   <xsl:template match="ARGUMENT[count(*)=1]/HEAD">
     <p>
@@ -294,11 +310,19 @@ of this software, even if advised of the possibility of such damage.
     </p>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Just a HEAD inside an HEADNOTE can be a paragraph</desc>
+  </doc>
   <xsl:template match="HEADNOTE[count(*)=1]/HEAD">
     <p>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </p>
   </xsl:template>
+
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>A HEADNOTE is an ARGUMENT </desc>
+  </doc>
 
   <xsl:template match="HEADNOTE">
     <argument>
@@ -306,17 +330,28 @@ of this software, even if advised of the possibility of such damage.
     </argument>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Just a HEAD inside an TAILNOTE can be a paragraph</desc>
+  </doc>
   <xsl:template match="TAILNOTE[count(*)=1]/HEAD">
     <p>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </p>
   </xsl:template>
 
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>A TAILNOTE is an ARGUMENT </desc>
+  </doc>
+
   <xsl:template match="TAILNOTE">
     <argument>
       <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
     </argument>
   </xsl:template>
+
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
+    <desc>Nested STAGE can be bypassed</desc>
+  </doc>
 
   <xsl:template match="STAGE/STAGE">
     <xsl:apply-templates select="@*|*|processing-instruction()|comment()|text()" />
