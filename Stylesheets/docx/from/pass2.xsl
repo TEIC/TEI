@@ -56,9 +56,11 @@ of this software, even if advised of the possibility of such damage.
       <p>zap empty p</p>
     </desc>
   </doc>
-  <xsl:template match="tei:p[not(.//tei:pb) and
-		       normalize-space(.)='']" mode="pass2"
-		priority="99"/>
+  <xsl:template match="tei:p[not(.//tei:pb) and       normalize-space(.)='']" mode="pass2"		priority="99"/>
+  <xsl:template match="tei:figure/tei:p[tei:graphic and count(*)=1]" mode="pass2" priority="101">
+    <xsl:apply-templates mode="pass2"/>
+  </xsl:template>
+
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>Singleton paragraphs in cells dropped</desc>
   </doc>
@@ -414,10 +416,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:copy-of select="@*[not(starts-with(.,'tei:'))]"/>
       <xsl:apply-templates mode="pass2"/>      
     </xsl:element>
-  </xsl:template>
-
-  <xsl:template match="tei:figure/tei:p[tei:graphic and count(*)=1]" mode="pass2" priority="99">
-    <xsl:apply-templates mode="pass2"/>
   </xsl:template>
 
   <xsl:template match="tei:div[count(*)=1 and tei:head[not(text())]]" mode="pass2"/>

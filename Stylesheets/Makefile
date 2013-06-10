@@ -86,7 +86,7 @@ profiles:
 	test -d release/profiles/xml/tei/stylesheet || mkdir -p release/profiles/xml/tei/stylesheet
 	tar cf - --exclude .svn profiles | (cd release/profiles/xml/tei/stylesheet; tar xf - )
 
-doc:
+doc: oxygendoc
 	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
 	saxon -o:doc/customize.xml doc/param.xml doc/param.xsl 
 	saxon -o:doc/style.xml doc/param.xml  doc/paramform.xsl 
