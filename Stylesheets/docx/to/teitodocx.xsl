@@ -164,7 +164,7 @@ of this software, even if advised of the possibility of such damage.
 			    tei:msItem tei:msItemStruct tei:msPart
 			    tei:namespace tei:node tei:normalization
 			    tei:notatedMusic tei:notesStmt tei:nym
-			    tei:objectDesc tei:org tei:particDesc
+			    tei:objectDesc tei:org tei:p tei:item tei:particDesc
 			    tei:performance tei:person tei:personGrp
 			    tei:physDesc tei:place tei:population
 			    tei:postscript tei:precision
