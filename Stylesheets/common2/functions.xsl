@@ -350,13 +350,9 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::w:drawing">true</xsl:when>
         <xsl:when test="self::m:oMath">true</xsl:when>
         <xsl:when test="parent::tei:note[tei:isEndNote(.)]">false</xsl:when>
-        <xsl:otherwise>
-          <xsl:choose>
-            <xsl:when test="empty($element/..)">false</xsl:when>
-            <xsl:when test="tei:is-inline($element/..)">true</xsl:when>
-            <xsl:otherwise>false</xsl:otherwise>
-          </xsl:choose>
-        </xsl:otherwise>
+	<xsl:when test="empty($element/..)">false</xsl:when>
+	<xsl:when test="not(self::tei:p) and tei:is-inline($element/..)">true</xsl:when>
+	<xsl:otherwise>false</xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:otherwise>
