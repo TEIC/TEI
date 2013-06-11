@@ -408,7 +408,7 @@ there are no bookmarks or other such features. Possible values are
       <desc>Font size for footnotes</desc>
    </doc>
   <xsl:param name="footnoteSize">
-      <xsl:value-of select="$bodyMaster * 0.8"/>
+      <xsl:value-of select="$bodyMaster * 0.9"/>
   </xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="style" type="string">
       <desc>Font size for footnote numbers</desc>
