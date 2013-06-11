@@ -1075,7 +1075,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:hi[@rend='specList-elementSpec']">
     <xsl:apply-templates/>
   </xsl:template>
-  <xsl:template match="tei:gi">
+  <xsl:template match="tei:gi|tei:tag">
     <w:r>
       <w:t>&lt;</w:t>
     </w:r>

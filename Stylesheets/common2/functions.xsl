@@ -339,6 +339,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:summary">true</xsl:when>
         <xsl:when test="self::tei:supplied">true</xsl:when>
         <xsl:when test="self::tei:surname">true</xsl:when>
+        <xsl:when test="self::tei:tag">true</xsl:when>
         <xsl:when test="self::tei:term">true</xsl:when>
         <xsl:when test="self::tei:textLang">true</xsl:when>
         <xsl:when test="self::tei:title">true</xsl:when>
