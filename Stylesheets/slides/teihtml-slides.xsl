@@ -10,6 +10,7 @@
                 xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 exclude-result-prefixes="tei xlink xhtml m"
                 version="2.0">
+
   <xsl:import href="../xhtml2/tei.xsl"/>
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
@@ -57,10 +58,10 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:output encoding="utf-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN"/>
   <xsl:param name="outputEncoding">utf-8</xsl:param>
-  <xsl:param name="outputMethod">xml</xsl:param>
-  <xsl:param name="outputSuffix">.xhtml</xsl:param>
-  <xsl:param name="doctypePublic">-//W3C//DTD XHTML 1.1//EN</xsl:param>
-  <xsl:param name="doctypeSystem">http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd</xsl:param>
+  <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
+  <xsl:param name="outputTarget">html5</xsl:param>
+  <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
+  <xsl:param name="doctypePublic"/>
   <xsl:param name="cssFile">http://www.tei-c.org/stylesheet/teislides.css</xsl:param>
   <xsl:param name="logoFile">logo.png</xsl:param>
   <xsl:param name="logoWidth">60</xsl:param>
@@ -123,10 +124,10 @@ of this software, even if advised of the possibility of such damage.
          <xsl:value-of select="$masterFile"/>0</xsl:param>
 
       <xsl:variable name="outName">
-         <xsl:call-template name="outputChunkName">
-	           <xsl:with-param name="ident">
-	              <xsl:value-of select="$slidenum"/>
-	           </xsl:with-param>
+	<xsl:call-template name="outputChunkName">
+	  <xsl:with-param name="ident">
+	    <xsl:value-of select="$slidenum"/>
+	  </xsl:with-param>
          </xsl:call-template>
       </xsl:variable>
 
