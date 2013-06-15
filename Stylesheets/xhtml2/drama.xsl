@@ -165,7 +165,9 @@ of this software, even if advised of the possibility of such damage.
    </doc>
   <xsl:template match="tei:sp">
     <div class="speaker">
-      <xsl:call-template name="makeAnchor"/>
+      <xsl:if test="@xml:id">
+	<xsl:call-template name="makeAnchor"/>
+      </xsl:if>
       <xsl:apply-templates select="tei:speaker"/>
     </div>
     <xsl:apply-templates select="tei:*[not(self::tei:speaker)]"/>

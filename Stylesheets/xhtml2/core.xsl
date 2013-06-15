@@ -461,8 +461,10 @@ of this software, even if advised of the possibility of such damage.
     <desc>Process element item</desc>
   </doc>
   <xsl:template match="tei:item" mode="bibl">
-    <p>
-      <xsl:call-template name="makeAnchor"/>
+    <p>      
+      <xsl:if test="@xml:id">
+	<xsl:call-template name="makeAnchor"/>
+      </xsl:if>
       <xsl:apply-templates/>
     </p>
   </xsl:template>
@@ -477,7 +479,9 @@ of this software, even if advised of the possibility of such damage.
         </strong>
       </td>
       <td>
-        <xsl:call-template name="makeAnchor"/>
+	<xsl:if test="@xml:id">
+	  <xsl:call-template name="makeAnchor"/>
+	</xsl:if>
         <xsl:apply-templates/>
       </td>
     </tr>
@@ -487,7 +491,9 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:item" mode="gloss">
     <dt>
-      <xsl:call-template name="makeAnchor"/>
+      <xsl:if test="@xml:id">
+	<xsl:call-template name="makeAnchor"/>
+      </xsl:if>
       <xsl:apply-templates mode="print" select="preceding-sibling::tei:label[1]"/>
     </dt>
     <dd>
@@ -502,11 +508,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="makeRendition"/>
       <xsl:choose>
         <xsl:when test="@xml:id">
-          <xsl:call-template name="makeAnchor">
-            <xsl:with-param name="name">
-              <xsl:value-of select="@xml:id"/>
-            </xsl:with-param>
-          </xsl:call-template>
+          <xsl:call-template name="makeAnchor"/>
         </xsl:when>
         <xsl:when test="$generateParagraphIDs='true'">
           <xsl:call-template name="makeAnchor">
@@ -551,7 +553,9 @@ of this software, even if advised of the possibility of such damage.
   </doc>
   <xsl:template match="tei:label" mode="print">
     <span>
-      <xsl:call-template name="makeAnchor"/>
+      <xsl:if test="@xml:id">
+	<xsl:call-template name="makeAnchor"/>
+      </xsl:if>
       <xsl:call-template name="makeRendition">
 	<xsl:with-param name="default">false</xsl:with-param>
       </xsl:call-template>
@@ -604,11 +608,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:l">
     <xsl:element name="{if (ancestor::tei:hi) then 'span' else 'div'}">
       <xsl:if test="@xml:id">
-	<xsl:call-template name="makeAnchor">
-	  <xsl:with-param name="name">
-	    <xsl:value-of select="@xml:id"/>
-	  </xsl:with-param>
-	</xsl:call-template>
+	<xsl:call-template name="makeAnchor"/>
       </xsl:if>
       <xsl:call-template name="makeRendition"/>
       <xsl:choose>
@@ -674,11 +674,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:otherwise>
         <div>
 	  <xsl:if test="@xml:id">
-	    <xsl:call-template name="makeAnchor">
-	      <xsl:with-param name="name">
-		<xsl:value-of select="@xml:id"/>
-	      </xsl:with-param>
-	    </xsl:call-template>
+	    <xsl:call-template name="makeAnchor"/>
 	  </xsl:if>
           <xsl:call-template name="makeRendition"/>
           <xsl:apply-templates/>
@@ -1272,22 +1268,9 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:call-template name="makeRendition">
 	    <xsl:with-param name="default">p</xsl:with-param>
 	  </xsl:call-template>
-	  <xsl:choose>
-	    <xsl:when test="@xml:id">
-	      <xsl:call-template name="makeAnchor">
-		<xsl:with-param name="name">
-		  <xsl:value-of select="@xml:id"/>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:when>
-	    <xsl:when test="$generateParagraphIDs='true'">
-	      <xsl:call-template name="makeAnchor">
-		<xsl:with-param name="name">
-		  <xsl:value-of select="generate-id()"/>
-		</xsl:with-param>
-	      </xsl:call-template>
-	    </xsl:when>
-	  </xsl:choose>
+	  <xsl:if test="@xml:id or $generateParagraphIDs='true'">
+	      <xsl:call-template name="makeAnchor"/>
+	  </xsl:if>
 	  <xsl:if test="$numberParagraphs='true'">
 	    <xsl:call-template name="numberParagraph"/>
 	  </xsl:if>
@@ -1427,6 +1410,9 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:call-template>
 	</xsl:otherwise>
       </xsl:choose>
+      <xsl:if test="@xml:id">
+	<xsl:call-template name="makeAnchor"/>
+      </xsl:if>
       <xsl:apply-templates/>
     </span>
   </xsl:template>
@@ -1693,7 +1679,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:comment>anchor</xsl:comment>
         </a>
       </xsl:when>
-      <xsl:when test="self::tei:anchor">
+      <xsl:when test="self::tei:anchor and @xml:id">
         <a id="{@xml:id}">
           <xsl:comment>anchor</xsl:comment>
         </a>
@@ -1703,7 +1689,7 @@ of this software, even if advised of the possibility of such damage.
           <xsl:comment>index</xsl:comment>
         </a>
       </xsl:when>
-      <xsl:when test="self::tei:index">
+      <xsl:when test="self::tei:index and @xml:id">
         <a id="{@xml:id}">
           <xsl:comment>index</xsl:comment>
         </a>

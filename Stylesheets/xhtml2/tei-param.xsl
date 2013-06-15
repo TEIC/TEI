@@ -783,11 +783,7 @@ correspond to the ID attribute of the &gt;div&lt;. Alternatively, you
 	<xsl:choose>
 	  <xsl:when test="not($copyid='true')"/>
 	  <xsl:when test="@xml:id">
-	    <xsl:call-template name="makeAnchor">
-	      <xsl:with-param name="name">
-		<xsl:value-of select="@xml:id"/>
-	      </xsl:with-param>
-	    </xsl:call-template>
+	    <xsl:call-template name="makeAnchor"/>
 	  </xsl:when>
 	  <xsl:when test="$generateParagraphIDs='true' and $element='p'">
 	    <xsl:call-template name="makeAnchor">

@@ -53,10 +53,12 @@ XSL LaTeX stylesheet to make slides
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:*"/>
   <xsl:output method="text" encoding="utf-8"/>
   <xsl:param name="documentclass">beamer</xsl:param>
-  <xsl:param name="spaceCharacter">\hspace*{1em}</xsl:param>
   <xsl:param name="classParameters"/>
   <xsl:param name="beamerClass">PaloAlto</xsl:param>
   <xsl:param name="pause">true</xsl:param>
+  <xsl:param name="attsOnSameLine">2</xsl:param>
+  <xsl:param name="attLength">35</xsl:param>
+  <xsl:param name="spaceCharacter">\hspace*{4pt}</xsl:param>
 
   <xsl:template name="verbatim-lineBreak">
       <xsl:param name="id"/>

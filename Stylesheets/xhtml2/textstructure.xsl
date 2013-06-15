@@ -948,11 +948,7 @@ of this software, even if advised of the possibility of such damage.
 		  </xsl:call-template>
 		</xsl:for-each>
 		<xsl:if test="@xml:id">
-		  <xsl:call-template name="makeAnchor">
-		    <xsl:with-param name="name">
-		      <xsl:value-of select="@xml:id"/>
-		    </xsl:with-param>
-		   </xsl:call-template>
+		  <xsl:call-template name="makeAnchor"/>
 		</xsl:if>
 		<xsl:call-template name="header">
 		  <xsl:with-param name="display">full</xsl:with-param>
