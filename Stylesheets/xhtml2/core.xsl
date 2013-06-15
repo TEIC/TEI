@@ -1156,6 +1156,11 @@ of this software, even if advised of the possibility of such damage.
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <xsl:template match="tei:gb">
+    <xsl:if test="@xml:id">
+      <xsl:call-template name="makeAnchor"/>
+    </xsl:if>
+  </xsl:template>
   <xsl:template match="tei:pb">
     <xsl:choose>
       <xsl:when test="$filePerPage='true'">
@@ -1679,18 +1684,13 @@ of this software, even if advised of the possibility of such damage.
           <xsl:comment>anchor</xsl:comment>
         </a>
       </xsl:when>
-      <xsl:when test="self::tei:anchor and @xml:id">
+      <xsl:when test="(self::tei:fb or self::tei:index or self::tei:anchor) and @xml:id">
         <a id="{@xml:id}">
-          <xsl:comment>anchor</xsl:comment>
+          <xsl:comment><xsl:value-of select="local-name()"/></xsl:comment>
         </a>
       </xsl:when>
       <xsl:when test="self::tei:index and $name">
         <a id="{$name}">
-          <xsl:comment>index</xsl:comment>
-        </a>
-      </xsl:when>
-      <xsl:when test="self::tei:index and @xml:id">
-        <a id="{@xml:id}">
           <xsl:comment>index</xsl:comment>
         </a>
       </xsl:when>
