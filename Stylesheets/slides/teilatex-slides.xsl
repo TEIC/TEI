@@ -76,6 +76,8 @@ XSL LaTeX stylesheet to make slides
 \usepackage{fancyvrb}
 \usepackage{fancyhdr}
 \def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
+\xdefinecolor{blue1}{rgb}{0, 0, 0.7}
+\xdefinecolor{blue2}{rgb}{0, 0, 1}
 \setbeamercovered{transparent}
 \let\mainmatter\relax
 \let\frontmatter\relax
@@ -425,6 +427,11 @@ XSL LaTeX stylesheet to make slides
     <xsl:text>}</xsl:text>
   </xsl:template>
   
+  <xsl:template match="tei:affiliation">
+      <xsl:text>\mbox{}\\(\textit{</xsl:text>
+      <xsl:apply-templates/>
+      <xsl:text>})</xsl:text>
+  </xsl:template>
 
 
 </xsl:stylesheet>

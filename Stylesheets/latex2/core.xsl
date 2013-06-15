@@ -284,7 +284,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template name="rendering">
       <xsl:variable name="cmd">
          <xsl:choose>
-            <xsl:when test="not(@rend)">\textit</xsl:when>
+            <xsl:when test="not(@rend) and self::tei:hi">\textit</xsl:when>
             <xsl:when test="starts-with(@rend,'color')">\textcolor</xsl:when>
             <xsl:when test="@rend='bold'">\textbf</xsl:when>
             <xsl:when test="@rend='calligraphic'">\textcal</xsl:when>
@@ -359,7 +359,7 @@ of this software, even if advised of the possibility of such damage.
 \item</xsl:text>
       <xsl:if test="@n">[<xsl:value-of select="@n"/>]</xsl:if>
       <xsl:text> </xsl:text>
-      <xsl:apply-templates/>
+      <xsl:call-template name="rendering"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element item</desc>
