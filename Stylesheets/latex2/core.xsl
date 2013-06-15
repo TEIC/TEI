@@ -334,9 +334,16 @@ of this software, even if advised of the possibility of such damage.
 	        <xsl:text>}</xsl:text>
 	</xsl:when>
       </xsl:choose>
-      <xsl:text>{</xsl:text>
-      <xsl:apply-templates/>
-      <xsl:text>}</xsl:text>
+      <xsl:choose>
+	<xsl:when test="$cmd=''">
+	  <xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>{</xsl:text>
+	  <xsl:apply-templates/>
+	  <xsl:text>}</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element hr</desc>
