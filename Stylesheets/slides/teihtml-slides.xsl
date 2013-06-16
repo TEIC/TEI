@@ -237,17 +237,17 @@ of this software, even if advised of the possibility of such damage.
                </ul>
             </div>
             <div class="slidebottom">
-	              <div class="slidebottom-image">
-	                 <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}"
-                       alt="logo"/>
-	              </div>
-	              <div class="slidebottom-text">
-	                 <xsl:variable name="next">
-	                    <xsl:value-of select="$masterFile"/>
-	                    <xsl:text>1</xsl:text>
-	                 </xsl:variable>
-	                 <a accesskey="n" href="{concat($next,$outputSuffix)}">Start</a>
-	              </div>
+	      <div class="slidebottom-image">
+		<img id="logo" src="{$logoFile}" width="{$logoWidth}" height="{$logoHeight}"
+		     alt="logo"/>
+	      </div>
+	      <div class="slidebottom-text">
+		<xsl:variable name="next">
+		  <xsl:value-of select="$masterFile"/>
+		  <xsl:text>1</xsl:text>
+		</xsl:variable>
+		<a accesskey="n" href="{concat($next,$outputSuffix)}">Start</a>
+	      </div>
             </div>
          </body>
       </html>
@@ -452,37 +452,35 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
   <xsl:template name="slidebody">
-      <div class="slidetop">
-         <div class="slidetitle">
-            <xsl:call-template name="header">
-	              <xsl:with-param name="display">full</xsl:with-param>
-	           </xsl:call-template>
-         </div>
-         <xsl:if test="$splitLevel &gt;-1">
-            <div class="xref">
-               <xsl:call-template name="xrefpanel"/>
-            </div>
-         </xsl:if>
+    <div class="slidetop">
+      <div class="slidetitle">
+	<xsl:call-template name="header">
+	  <xsl:with-param name="display">full</xsl:with-param>
+	</xsl:call-template>
       </div>
-      <div class="slidemain">
-         <xsl:apply-templates/>
-      </div>
-      <div class="slidebottom">
-         <xsl:call-template name="slideBottom"/>
-      </div>
+      <xsl:if test="$splitLevel &gt;-1">
+	<div class="xref">
+	  <xsl:call-template name="xrefpanel"/>
+	</div>
+      </xsl:if>
+    </div>
+    <div class="slidemain">
+      <xsl:apply-templates/>
+    </div>
+    <div class="slidebottom">
+      <xsl:call-template name="slideBottom"/>
+    </div>
   </xsl:template>
 
 
   <xsl:template name="slideBottom">
-      <div class="slidebottom">
-         <div class="slidebottom-image">
-	           <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}"
-                 alt="logo"/>
-         </div>
-         <div class="slidebottom-text">
-	           <xsl:sequence select="tei:generateTitle(.)"/>
-         </div>
-      </div>
+    <div class="slidebottom-image">
+      <img id="logo" src="{$logoFile}" width="{$logoWidth}" height="${logoHeight}"
+	   alt="logo"/>
+    </div>
+    <div class="slidebottom-text">
+      <xsl:sequence select="tei:generateTitle(.)"/>
+    </div>
   </xsl:template>
 
   <xsl:template match="tei:row">

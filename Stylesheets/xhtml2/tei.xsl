@@ -464,38 +464,38 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process any element and work out a unique identififying string</desc>
    </doc>
   <xsl:template match="*" mode="ident">
-      <xsl:variable name="BaseFile">
-         <xsl:value-of select="$masterFile"/>
-         <xsl:call-template name="addCorpusID"/>
-      </xsl:variable>
-
-      <xsl:choose>
-         <xsl:when test="@xml:id and $useIDs='true'">
-            <xsl:value-of select="@xml:id"/>
-         </xsl:when>
-         <xsl:when test="starts-with(local-name(.),'div') or
-			 self::tei:text">
-            <xsl:variable name="xpath">
-               <xsl:for-each select="ancestor-or-self::tei:*">
-	                 <xsl:value-of select="local-name()"/>
-	                 <xsl:text>.</xsl:text>
-	                 <xsl:number/>
-	                 <xsl:if test="not(position() = last())">
-	                    <xsl:text>_</xsl:text>
-	                 </xsl:if>
-	              </xsl:for-each>
-	           </xsl:variable>
-	           <xsl:value-of select="$BaseFile"/>
-	           <xsl:text>-</xsl:text>
-            <xsl:value-of select="substring-after(substring-after($xpath,'_text.'),'_')"/>
-         </xsl:when>
-         <xsl:when test="self::tei:TEI and parent::tei:teiCorpus">
-	   <xsl:value-of select="$masterFile"/>
-	   <xsl:call-template name="addCorpusID"/>
-	 </xsl:when>
-         <xsl:otherwise>
-	   <xsl:sequence select="concat($BaseFile,'-',local-name(),'-',generate-id())"/>
-         </xsl:otherwise>
+    <xsl:variable name="BaseFile">
+      <xsl:value-of select="$masterFile"/>
+      <xsl:call-template name="addCorpusID"/>
+    </xsl:variable>
+    
+    <xsl:choose>
+      <xsl:when test="@xml:id and $useIDs='true'">
+	<xsl:value-of select="@xml:id"/>
+      </xsl:when>
+      <xsl:when test="starts-with(local-name(.),'div') or
+		      self::tei:text">
+	<xsl:variable name="xpath">
+	  <xsl:for-each select="ancestor-or-self::tei:*">
+	    <xsl:value-of select="local-name()"/>
+	    <xsl:text>.</xsl:text>
+	    <xsl:number/>
+	    <xsl:if test="not(position() = last())">
+	      <xsl:text>_</xsl:text>
+	    </xsl:if>
+	  </xsl:for-each>
+	</xsl:variable>
+	<xsl:value-of select="$BaseFile"/>
+	<xsl:text>-</xsl:text>
+	<xsl:value-of select="substring-after(substring-after($xpath,'_text.'),'_')"/>
+      </xsl:when>
+      <xsl:when test="self::tei:TEI and parent::tei:teiCorpus">
+	<xsl:value-of select="$masterFile"/>
+	<xsl:call-template name="addCorpusID"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:sequence select="concat($BaseFile,'-',local-name(),'-',generate-id())"/>
+      </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
