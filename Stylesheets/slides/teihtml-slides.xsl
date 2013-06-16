@@ -458,11 +458,9 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="display">full</xsl:with-param>
 	</xsl:call-template>
       </div>
-      <xsl:if test="$splitLevel &gt;-1">
-	<div class="xref">
-	  <xsl:call-template name="xrefpanel"/>
-	</div>
-      </xsl:if>
+      <div class="xref">
+	<xsl:call-template name="xrefpanel"/>
+      </div>
     </div>
     <div class="slidemain">
       <xsl:apply-templates/>
