@@ -138,55 +138,6 @@ of this software, even if advised of the possibility of such damage.
 </xsl:template>
 
 
-  <xsl:template name="xrefpanel">
-      <xsl:param name="homepage"/>
-      <xsl:param name="mode"/>
-      <xsl:variable name="prev">
-         <xsl:choose>
-            <xsl:when test="preceding-sibling::div">
-               <xsl:apply-templates select="preceding-sibling::div[1]" mode="ident"/>
-            </xsl:when>
-            <xsl:when test="preceding::div">
-               <xsl:apply-templates select="preceding::div[1]" mode="ident"/>
-            </xsl:when>
-            <xsl:when test="preceding::div1">
-               <xsl:apply-templates select="preceding::div1[1]" mode="ident"/>
-            </xsl:when>
-         </xsl:choose>
-      </xsl:variable>
-      <xsl:if test="not($prev='')">
-         <a class="xreflink" accesskey="p" href="#{$prev}">
-            <span class="button">«</span>
-         </a>
-      </xsl:if>
-      <xsl:text>  </xsl:text>
-      <a class="xreflink" accesskey="f" href="">
-         <span class="button">^</span>
-      </a>
-      <xsl:variable name="next">
-         <xsl:choose>
-            <xsl:when test="div">
-               <xsl:apply-templates select="div[1]" mode="ident"/>
-	           </xsl:when>
-            <xsl:when test="following-sibling::div">
-               <xsl:apply-templates select="following-sibling::div[1]" mode="ident"/>
-            </xsl:when>
-            <xsl:when test="following::div">
-               <xsl:apply-templates select="following::div[1]" mode="ident"/>
-            </xsl:when>
-            <xsl:when test="following::div1">
-               <xsl:apply-templates select="following::div1[1]" mode="ident"/>
-            </xsl:when>
-         </xsl:choose>
-      </xsl:variable>
-      <xsl:if test="not($next='')">
-         <a class="xreflink" accesskey="n" href="#{$next}">
-            <span class="button">»</span>
-         </a>
-      </xsl:if>
-      <xsl:text> </xsl:text>
-      <xsl:apply-templates select="." mode="number"/>
-  </xsl:template>
 
 
   <xsl:template match="*" mode="ident">

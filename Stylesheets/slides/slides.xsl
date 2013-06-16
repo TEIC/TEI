@@ -11,7 +11,6 @@
                 exclude-result-prefixes="tei xlink xhtml m"
                 version="2.0">
 
-  <xsl:import href="../xhtml2/tei.xsl"/>
 
   <xsl:strip-space elements="teix:* rng:* xsl:* xhtml:* atom:* m:*"/>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
@@ -52,16 +51,23 @@ theory of liability, whether in contract, strict liability, or tort
 of this software, even if advised of the possibility of such damage.
 </p>
          <p>Author: See AUTHORS</p>
-         <p>Id: $Id$</p>
+         <p>Id: $Id: teihtml-slides.xsl 12255 2013-06-16 11:30:39Z rahtz $</p>
          <p>Copyright: 2013, TEI Consortium</p>
       </desc>
    </doc>
-  <xsl:output encoding="utf-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN"/>
-  <xsl:param name="outputEncoding">utf-8</xsl:param>
-  <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
-  <xsl:param name="outputTarget">html5</xsl:param>
-  <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
-  <xsl:param name="doctypePublic"/>
+  <xsl:param name="cssFile">http://www.tei-c.org/stylesheet/teislides.css</xsl:param>
+  <xsl:param name="logoFile">logo.png</xsl:param>
+  <xsl:param name="logoWidth">60</xsl:param>
+  <xsl:param name="logoHeight">60</xsl:param>
+  <xsl:param name="makingSlides">true</xsl:param>
+  <xsl:param name="numberHeadings"/>
+  <xsl:param name="splitLevel">0</xsl:param>
+  <xsl:param name="STDOUT">false</xsl:param>
+  <xsl:param name="subTocDepth">-1</xsl:param>
+  <xsl:param name="topNavigationPanel"/>
+  <xsl:param name="bottomNavigationPanel">true</xsl:param>
+  <xsl:param name="linkPanel"/>
+  <xsl:template name="copyrightStatement"/>
 
   <xsl:template match="tei:div" mode="number">
       <xsl:number level="any"/>
