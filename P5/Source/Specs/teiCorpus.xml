@@ -32,13 +32,26 @@
   </classes>
   <content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="teiHeader"/>
-      <oneOrMore>
-        <choice>
-          <ref name="TEI"/>
-          <ref name="teiCorpus"/>
-        </choice>
-      </oneOrMore>
+     <ref name="teiHeader"/>
+     <choice>
+       <group>
+	 <oneOrMore>
+	   <ref name="model.resourceLike"/>
+	 </oneOrMore>
+	 <zeroOrMore>
+	   <choice>
+	     <ref name="TEI"/>
+	     <ref name="teiCorpus"/>
+	   </choice>
+	 </zeroOrMore>
+       </group>
+       <oneOrMore>
+	 <choice>
+	   <ref name="TEI"/>
+	   <ref name="teiCorpus"/>
+	 </choice>
+       </oneOrMore>
+     </choice>
     </group>
   </content>
   <attList>
