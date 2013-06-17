@@ -1134,34 +1134,23 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
     <desc>
-      <p>Process element pb</p>
-      <p>Indication of a page break. For the purposes of HTML, we simply
+      <p>Process element pb and gb</p>
+      <p>Indication of a page or gathering break. For the purposes of HTML, we simply
       make it an anchor if it has an ID.</p>
     </desc>
   </doc>
-  <xsl:template match="tei:pb" mode="ident">
+  <xsl:template match="tei:pb|tei:gb" mode="ident">
     <xsl:choose>
       <xsl:when test="@xml:id">
         <xsl:value-of select="@xml:id"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:text>page</xsl:text>
-        <!--
-	<xsl:for-each select="ancestor::tei:div[1]">
-	  <xsl:number level="multiple" format="1.1.1.1.1"/>
-	  <xsl:text>-</xsl:text>
-	</xsl:for-each>
--->
+        <xsl:sequence select="if (self::tei:gb) then 'gathering' else 'page'"/>
         <xsl:number level="any"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="tei:gb">
-    <xsl:if test="@xml:id">
-      <xsl:call-template name="makeAnchor"/>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template match="tei:pb">
+  <xsl:template match="tei:pb|tei:gb">
     <xsl:choose>
       <xsl:when test="$filePerPage='true'">
         <PAGEBREAK>
@@ -1174,7 +1163,7 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="$pagebreakStyle='active'">
         <div>
           <xsl:call-template name="makeRendition">
-	    <xsl:with-param  name="auto">pagebreak</xsl:with-param>
+	    <xsl:with-param  name="default" select="'pagebreak'"/>
 	  </xsl:call-template>
         </div>
       </xsl:when>
@@ -1183,12 +1172,12 @@ of this software, even if advised of the possibility of such damage.
         <xsl:element name="{if (parent::tei:body or parent::tei:front
 			   or parent::tei:div  or parent::tei:back or parent::tei:group) then 'div' else 'span'}">
           <xsl:call-template name="makeRendition">
-	    <xsl:with-param name="default">pagebreak</xsl:with-param>
+	    <xsl:with-param  name="default" select="'pagebreak'"/>
 	  </xsl:call-template>
           <xsl:call-template name="makeAnchor"/>
 	  <xsl:variable name="Words">
 	    <xsl:text>[</xsl:text>
-	    <xsl:sequence select="tei:i18n('page')"/>
+	    <xsl:sequence select="if (self::tei:gb) then tei:i18n('gathering') else tei:i18n('page')"/>
 	    <xsl:if test="@n">
 	      <xsl:text> </xsl:text>
 	      <xsl:value-of select="@n"/>
