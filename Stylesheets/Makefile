@@ -98,9 +98,7 @@ doc: oxygendoc
 
 oxygendoc:
 	@echo text for existence of file $(OXY)/stylesheetDocumentation.sh
-	@test -f $(OXY)/stylesheetDocumentation.sh || exit 0
-	@echo using oXygen stylesheet documentation generator
-	for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY}/stylesheetDocumentation.sh $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
+	-test -f $(OXY)/stylesheetDocumentation.sh && for i in ${DOCTARGETS}; do echo process doc for $$i; export ODIR=release/common/doc/tei-xsl-common/`dirname $$i`; ${OXY}/stylesheetDocumentation.sh $$i -cfg:doc/oxydoc.cfg; (cd `dirname $$i`; tar cf - release) | tar xf -; rm -rf `dirname $$i`/release; done
 
 teioo.jar:
 	(cd odt;  mkdir TEIP5; saxon -o:TEIP5/teitoodt.xsl -s:teitoodt.xsl expandxsl.xsl ; cp odttotei.xsl TEIP5.ott teilite.dtd TEIP5; jar cf ../teioo.jar TEIP5 TypeDetection.xcu ; rm -rf TEIP5)
