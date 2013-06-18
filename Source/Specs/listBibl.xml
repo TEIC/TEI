@@ -16,10 +16,13 @@
         bibliographiques de toute nature.</desc><desc versionDate="2007-05-04" xml:lang="es">contiene una lista de citas bibliográficas de cualquier tipo.</desc><desc versionDate="2007-01-21" xml:lang="it">contiene una lista di citazioni bibliografiche di qualsiasi natura.</desc><classes>
     <memberOf key="att.global"/>
     <memberOf key="att.sortable"/>
-    <memberOf key="model.listLike"/>
+    <!--memberOf key="model.listLike"/-->
+<!-- incompatible with membership in model.biblLike since both are
+referenced from macro.inter -->
     <memberOf key="att.declarable"/>
     <memberOf key="att.typed"/>
-    <memberOf key="model.msItemPart"/>
+    <!--memberOf key="model.msItemPart"/-->
+    <memberOf key="model.biblLike"/>
   </classes><content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
       <zeroOrMore>
@@ -29,7 +32,6 @@
         <choice>
           <ref name="model.biblLike"/>
           <ref name="model.milestoneLike"/>
-          <ref name="listBibl"/>
         </choice>
       </oneOrMore>
     </group>
