@@ -59,8 +59,11 @@ of this software, even if advised of the possibility of such damage.
     <xsl:param name="numberHeadings"></xsl:param>
     <xsl:param name="numberBackHeadings"></xsl:param>
     <xsl:param name="numberFrontHeadings"></xsl:param>
+    <xsl:param name="filePerPage">true</xsl:param>
     <xsl:param name="autoToc">true</xsl:param>
     <xsl:param name="cssFile">../profiles/bodley/epub/bodley.css</xsl:param>
+    <xsl:param name="pagebreakStyle">none</xsl:param>
+    <xsl:param name="splitLevel">-1</xsl:param>
 
   <xsl:template name="myi18n">
      <xsl:param name="word"/>
