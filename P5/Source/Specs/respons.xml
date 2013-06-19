@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright TEI Consortium. 
-Dual-licensed under CC-by and BSD2 licences 
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
@@ -18,7 +18,7 @@ $Id$
   <gloss versionDate="2007-06-12" xml:lang="fr">Responsabilité</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">responsabilidad</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">responsabilità</gloss>
-  <desc>identifies the individual(s) responsible for some aspect of the
+  <desc>identifies the individual(s) responsible for some aspect of the content or
 markup of particular element(s).</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">특정 요소의 마크업에 대한 책임이 있는 개인 또는 개인들을 지저정한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">指出標記一或多個特定元素某部分的負責人。</desc>
@@ -46,8 +46,8 @@ markup of particular element(s).</desc>
   <attList>
     <attDef ident="locus" usage="req">
       <equiv/>
-      <desc>indicates the specific aspect of the markup for which
-responsibility is being assigned.</desc>
+      <desc>indicates the specific aspect of the encoding (markup or
+      content) for which responsibility is being assigned.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">책임성이 할당된 명시적인 마크업을 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出標記責任所屬的特定部分。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">
@@ -104,7 +104,7 @@ aspect of the electronic text.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>a pointer to one of the identifiers typically but not necessarily declared in the current 
+      <valDesc>a pointer to one of the identifiers typically but not necessarily declared in the current
       document header, associated with a person asserted as
       responsible for some aspect of the text's creation,
       transcription, editing, or encoding</valDesc>
@@ -139,6 +139,83 @@ aspect of the electronic text.</desc>
         <item xml:id="zh-tw_編碼員2"/>
       </list>
     </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>In this (partially fictional) example the entire document was
+    transcribed and encoded by a single encoder, except for one passage
+    which was transcribed and encoded by the proofreader.</p>
+    <!-- source: Michael Satlow's Inscriptions of Israel and Palestine, 'sepp0021' -->
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+
+      <!-- in the <teiHeader>: -->
+      <respStmt xml:id="enc01">
+	<name>C. Colin Backslash</name>
+	<resp>transcription</resp>
+	<resp>encoding</resp>
+      </respStmt>
+      <respStmt xml:id="prf01">
+	<name>Erin Spelling</name>
+	<resp>proofreading</resp>
+      </respStmt>
+
+      <!-- in the <text>: -->
+      <p>Θερινὴ τροπή
+        <lb/>
+        <foreign xml:lang="heb" xml:id="mp0a8">
+          ת
+          <supplied reason="undefined">קו</supplied>
+          <unclear>פ</unclear>
+          ת תמוז
+        </foreign>
+      </p>
+
+      <!-- elsewhere: -->
+      <respons target="#mp0a8" locus="name value" resp="#prf01"/>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <p>In this (partially fictional) example an initial encoder
+    (<quote>across.dta</quote>) encoded most of the document; a later
+    encoder (<quote>rcapolung.ewo</quote>) encoded a particular
+    passage; and a third encoder (<quote>sbauman.emt</quote>) fixed
+    some of that encoding.</p>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#RESPONS-eg-02">
+
+<!-- in the <teiHeader>: -->
+<respStmt xml:id="enc03">
+  <persName ref="../contextual/persons.xml#across.dta"/>
+  <resp>encoding</resp>
+</respStmt>
+
+<!-- in the <text>: -->
+<spGrp rend="braced(atonce1)" xml:id="sgrp05">
+  <sp who="#mo">
+    <speaker rend="align(left)slant(italic)"><persName>Mor</persName>.</speaker>
+    <p rend="break(no)">So, so, so!</p>
+  </sp>
+  <sp who="#hg">
+    <speaker rend="align(left)slant(italic)"><persName>Mr. H</persName>.</speaker>
+    <p rend="break(no)">What, without my Leave!</p>
+  </sp>
+  <sp who="#la">
+    <speaker rend="align(left)slant(italic)"><persName>Lady D</persName>.</speaker>
+    <p rend="break(no)">Amazing!</p>
+  </sp>
+</spGrp>
+<stage rend="align(right)slant(italic)"
+       type="delivery" xml:id="atonce1">All together.</stage>
+
+<!-- anywhere: -->
+<respons target="sgrp05" locus="name" resp="../contextual/persons.xml#rcapolung.ewo">
+  <desc>Ashley did not know what to do with this; I have decided it
+    best fits as a braced <gi>spGrp</gi></desc>
+</respons>
+<respons target="sgrp05"
+	 match=".//@rend"
+	 locus="value"
+	 resp="../contextual/persons.xml#sbauman.emt">
+  <desc>fixed <att>rend</att> attributes</desc>
+</respons></egXML>
   </exemplum>
   <remarks>
     <p>The <gi>respons</gi> element is designed for cases in which
