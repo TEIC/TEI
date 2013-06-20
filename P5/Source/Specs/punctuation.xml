@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="punctuation">
+  <equiv/>
+  <desc>specifies editorial practice adopted with respect to punctuation marks in the original. </desc>
+  <classes>
+    <memberOf key="att.declarable"/>
+    <memberOf key="model.encodingDescPart"/>
+  </classes>
+  <content>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.pLike"/>
+    </zeroOrMore>
+  </content>
+  <!--<constraintSpec ident="punctuationContents" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron"
+        test="">
+      </report>
+    </constraint>
+  </constraintSpec>-->
+  <attList>
+    <attDef ident="marks" usage="opt">
+      <desc>indicates whether or not punctation marks have been retained as content within the text. </desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="closed">
+        <valItem ident="none">
+          <equiv/>
+          <desc>no punctuation marks have been retained </desc>
+        </valItem>
+        <valItem ident="some">
+          <equiv/>
+          <desc>some punctuation marks have been retained </desc>
+        </valItem>
+        <valItem ident="all">
+          <equiv/>
+          <desc>all punctuation marks have been retained </desc>
+        </valItem>
+      </valList>
+    </attDef>
+    <attDef ident="placement" usage="opt">
+      <desc>indicates whether punctation marks have been captured inside or outside of an adjacent
+        element. </desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="closed">
+        <valItem ident="internal">
+          <equiv/>
+          <desc>punctuation marks are captured inside adjacent elements</desc>
+        </valItem>
+        <valItem ident="external">
+          <equiv/>
+          <desc>punctuation marks are captured outside adjacent elements </desc>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <punctuation marks="all" location="internal">
+        <p>All punctuation marks in the source text have been retained and represented using the
+          appropriate Unicode code point. In cases where a punctuation mark and nearby markup convey
+          the same information (for example, a sentence ends with a question mark and is also tagged
+          as <gi>s</gi>) the punctuation mark is captured as content within the element.
+        </p>
+      </punctuation>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#HD53"/>
+    <ptr target="#COPU"/>
+  </listRef>
+</elementSpec>
