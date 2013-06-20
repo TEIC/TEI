@@ -121,10 +121,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_label</xsl:text>
-          <xsl:if test="@status">
-            <xsl:text> status_</xsl:text>
-            <xsl:value-of select="@status"/>
-          </xsl:if>
         </xsl:attribute>
         <xsl:element namespace="{$outputNS}" name="{$codeName}">
           <xsl:attribute name="{$rendName}">
@@ -160,10 +156,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_label</xsl:text>
-          <xsl:if test="@status">
-            <xsl:text> status_</xsl:text>
-            <xsl:value-of select="@status"/>
-          </xsl:if>
         </xsl:attribute>
 	<xsl:element namespace="{$outputNS}" name="{$xrefName}">
 	  <xsl:attribute name="{$urlName}">
@@ -229,10 +221,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:element namespace="{$outputNS}" name="{$cellName}">
         <xsl:attribute name="{$rendName}">
           <xsl:text>odd_label</xsl:text>
-          <xsl:if test="@status">
-            <xsl:text> status_</xsl:text>
-            <xsl:value-of select="@status"/>
-          </xsl:if>
         </xsl:attribute>
         <xsl:value-of select="$name"/>
 <!-- Addition by Martin Holmes 2012-07-14 for ticket http://purl.org/tei/fr/3511134     -->        
@@ -280,6 +268,7 @@ of this software, even if advised of the possibility of such damage.
 	      </xsl:element>
 	    </xsl:element>	    
 	  </xsl:if>
+	  <xsl:call-template name="validUntil"/>
           <xsl:element namespace="{$outputNS}" name="{$rowName}">
             <xsl:element namespace="{$outputNS}" name="{$cellName}">
               <xsl:attribute name="{$rendName}">
@@ -523,6 +512,7 @@ of this software, even if advised of the possibility of such damage.
             </xsl:element>
           </xsl:element>
         </xsl:if>
+	<xsl:call-template name="validUntil"/>
         <xsl:if test="@module">
           <xsl:call-template name="moduleInfo"/>
         </xsl:if>
@@ -710,6 +700,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="makeDescription"/>
           </xsl:element>
         </xsl:element>
+	<xsl:call-template name="validUntil"/>
         <xsl:if test="@module">
           <xsl:call-template name="moduleInfo"/>
         </xsl:if>
@@ -1297,6 +1288,7 @@ of this software, even if advised of the possibility of such damage.
             <xsl:call-template name="makeDescription"/>
           </xsl:element>
         </xsl:element>
+	<xsl:call-template name="validUntil"/>
         <xsl:if test="@module">
           <xsl:call-template name="moduleInfo"/>
         </xsl:if>
@@ -2834,4 +2826,43 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 
+  <xsl:template name="validUntil">
+    <xsl:if test="@validUntil">
+      <xsl:element namespace="{$outputNS}" name="{$rowName}">
+	<xsl:element namespace="{$outputNS}" name="{$cellName}">
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:sequence select="if (ancestor::tei:attDef) then
+				  'odd_label' else 'wovenodd-col1'"/>
+	  </xsl:attribute>
+	  <xsl:element namespace="{$outputNS}" name="{$segName}">
+	    <xsl:attribute name="{$langAttributeName}">
+	      <xsl:value-of select="$documentationLanguage"/>
+	    </xsl:attribute>
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>deprecated</xsl:text>
+	    </xsl:attribute>
+	    <xsl:sequence select="tei:i18n('deprecated')"/>
+	  </xsl:element>
+	</xsl:element>
+	<xsl:element namespace="{$outputNS}" name="{$cellName}">
+	  <xsl:attribute name="{$colspan}">2</xsl:attribute>
+	  <xsl:attribute name="{$rendName}">
+	    <xsl:sequence select="if (ancestor::tei:attDef) then
+				  'odd_value' else 'wovenodd-col2'"/>
+	  </xsl:attribute>
+	  <xsl:element namespace="{$outputNS}" name="{$segName}">
+	    <xsl:attribute name="{$langAttributeName}">
+	      <xsl:value-of select="$documentationLanguage"/>
+	    </xsl:attribute>
+	    <xsl:attribute name="{$rendName}">
+	      <xsl:text>deprecated</xsl:text>
+	    </xsl:attribute>
+	    <xsl:sequence select="tei:i18n('validuntil')"/>
+	    <xsl:text> </xsl:text>
+	    <xsl:value-of select="@validUntil"/>
+	  </xsl:element>
+	</xsl:element>
+      </xsl:element>
+    </xsl:if>
+  </xsl:template>
 </xsl:stylesheet>
