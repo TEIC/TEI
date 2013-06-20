@@ -36,11 +36,10 @@
 \usepackage{colortbl}
 \usepackage{xunicode}
 %\setmonofont{Junicode}
-\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
-\setmonofont[Scale=0.86]{Andale Mono}
-%\setmonofont[Scale=0.8]{DejaVu Sans Mono}
+%\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
+\setmonofont[Scale=0.8]{DejaVu Sans Mono}
 %\setromanfont{Minion Pro}
-%\setsansfont{Myriad Pro}
+\setsansfont{Myriad Pro}
 \usetheme{<xsl:value-of select="$beamerClass"/>}
 \useinnertheme[shadow=true]{rounded}
 \usecolortheme{beaver}
