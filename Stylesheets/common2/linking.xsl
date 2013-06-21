@@ -112,6 +112,9 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process ptr and ref elements, hypertext pointers</desc>
    </doc>
   <xsl:template match="tei:ptr|tei:ref">
+    <xsl:if test="ancestor::tei:biblStruct">
+      <xsl:text> </xsl:text>
+    </xsl:if>
     <xsl:choose>
       <xsl:when test="@type='transclude' and self::tei:ptr">
 	<xsl:apply-templates select="doc(@target)"/>
@@ -170,6 +173,9 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>      
       </xsl:otherwise>
     </xsl:choose>
+    <xsl:if test="ancestor::tei:biblStruct">
+      <xsl:text> </xsl:text>
+    </xsl:if>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>[common] Making a heading for something
