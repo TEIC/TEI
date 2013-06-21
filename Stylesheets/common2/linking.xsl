@@ -112,7 +112,7 @@ of this software, even if advised of the possibility of such damage.
       <desc>Process ptr and ref elements, hypertext pointers</desc>
    </doc>
   <xsl:template match="tei:ptr|tei:ref">
-    <xsl:if test="ancestor::tei:biblStruct">
+    <xsl:if test="parent::tei:analytic or parent::tei:monogr">
       <xsl:text> </xsl:text>
     </xsl:if>
     <xsl:choose>
@@ -173,7 +173,7 @@ of this software, even if advised of the possibility of such damage.
 	</xsl:for-each>      
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:if test="ancestor::tei:biblStruct">
+    <xsl:if test="parent::tei:analytic or parent::tei:monogr">
       <xsl:text> </xsl:text>
     </xsl:if>
   </xsl:template>
