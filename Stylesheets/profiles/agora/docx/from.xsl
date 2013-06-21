@@ -27,7 +27,8 @@
  </xsl:template>
 
  <xsl:template match="tei:p[@rend='Quote']" mode="pass2">
-  <quote rend="block">
+<!-- need to keep centering if there is any -->
+  <quote rend="{@rend}">
    <p>
     <xsl:apply-templates mode="pass2"/>
    </p>
@@ -81,7 +82,7 @@
    </body>
    <back>
     <listBibl>
-     <xsl:for-each select="//tei:p[@rend='bibliography']">
+     <xsl:for-each select="//tei:p[@rend='Bibliography']">
       <bibl>
        <xsl:apply-templates mode="pass3"/>
       </bibl>
@@ -98,6 +99,7 @@
  <xsl:template match="tei:p[@rend='Subtitle']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='abstract']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='bibliography']" mode="pass3"/>
+ <xsl:template match="tei:p[@rend='Bibliography']" mode="pass3"/>
 
  <!-- suppress empty head elements -->
 

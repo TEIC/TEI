@@ -97,6 +97,18 @@ This page is made available under the Creative Commons General Public License "A
           <xsl:apply-templates select="tei:item"/>
 </ul></xsl:template>
 
+
+<!-- allow for @rend on head -->
+<xsl:template match="tei:head[@rend]">
+
+<xsl:attribute name="class">
+<xsl:value-of select="@rend"/>
+</xsl:attribute>
+
+</xsl:template>
+
+
+
 <xsl:template match="tei:ref">
   <span class="ref"><xsl:apply-templates/></span>
   <span class="contextaRef"><xsl:value-of select="@cRef"/></span>
