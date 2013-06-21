@@ -91,6 +91,9 @@ of this software, even if advised of the possibility of such damage.
       <xsl:when test="@n">
 	<xsl:value-of select="@n"/>
       </xsl:when>
+      <xsl:when test="tei:docDate">
+        <xsl:apply-templates select="tei:docDate" mode="plain"/>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:text>➤</xsl:text>
       </xsl:otherwise>
