@@ -530,10 +530,10 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:when test="ancestor::tei:classSpec and not($STDOUT='true')">
 	  <xsl:sequence select="concat('ref-',ancestor::tei:classSpec/@ident,$standardSuffix,'#',$ident)"/>
 	</xsl:when>
-	<xsl:when test="ancestor::tei:back and not($splitBackmatter='true')">
+	<xsl:when test="not ($STDOUT='true') and ancestor::tei:back and not($splitBackmatter='true')">
 	  <xsl:value-of select="concat('#',$ident)"/>
 	</xsl:when>
-	<xsl:when test="ancestor::tei:front and not($splitFrontmatter='true')">
+	<xsl:when test="not($STDOUT='true') and ancestor::tei:front and not($splitFrontmatter='true')">
 	  <xsl:value-of select="concat('#',$ident)"/>
 	</xsl:when>
 	<xsl:when test="not($keep) and $STDOUT='true' and
