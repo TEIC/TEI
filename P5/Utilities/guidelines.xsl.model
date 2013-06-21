@@ -785,4 +785,29 @@
     <xsl:value-of select="normalize-unicode($letters,'NFC')"/>
   </xsl:function>
 
+
+  <xsl:template name="myi18n">
+    <xsl:param name="word"/>
+    <xsl:choose>
+      <xsl:when test="$word='validuntil'">
+	<xsl:text>This feature will be withdrawn after</xsl:text>
+      </xsl:when>
+      <xsl:when test="$word='previousWord'">
+        <span class="icon">
+          <xsl:text>« </xsl:text>
+        </span>
+      </xsl:when>
+      <xsl:when test="$word='upWord'">
+        <span class="icon">
+          <xsl:text>↑ </xsl:text>
+        </span>
+      </xsl:when>
+      <xsl:when test="$word='nextWord'">
+        <span class="icon">
+          <xsl:text>» </xsl:text>
+        </span>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
 </xsl:stylesheet>
