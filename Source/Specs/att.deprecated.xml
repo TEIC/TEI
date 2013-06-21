@@ -29,6 +29,12 @@ $Id:$
 	    <sch:assert test="@validUntil cast as xs:date ge current-date()"><sch:value-of select="if (@ident) then concat('The ',@ident) else concat('This ',local-name(.),' of ',ancestor::tei:*[@ident][1]/@ident)"/> construct is outdated (as of <sch:value-of select="@validUntil"/>); ODD processors may ignore it, and it should probably be removed</sch:assert>
 	    <sch:report test="@validUntil cast as xs:date eq current-date()"><sch:value-of select="if (@ident) then concat('The ',@ident) else concat('This ',local-name(.),' of ',ancestor::tei:*[@ident][1]/@ident)"/> construct will be outdated as of tomorrow; ODD processors may then ignore it, and thus it should probably be removed soon</sch:report>
 	  </sch:rule>
+	<sch:rule context="tei:*[@validUntil]">
+            <sch:assert test="(@validUntil cast as xs:date -
+current-date()) lt (30*xs:dayTimeDuration('P1D'))"><sch:value-of select="if (@ident) then concat('The ',@ident) else concat('This ',local-name(.),' of ',ancestor::tei:*[@ident][1]/@ident)"/> construct is outdated (as of <sch:value-of select="@validUntil"/>); ODD processors may ignore it, and it should probably be removed</sch:assert>
+            <sch:report test="@validUntil cast as xs:date eq current-date()"><sch:value-of select="if (@ident) then concat('The ',@ident) else concat('This ',local-name(.),' of ',ancestor::tei:*[@ident][1]/@ident)"/> construct will be outdated as of tomorrow; ODD processors may then ignore it, and thus it should probably be removed soon</sch:report>
+          </sch:rule>
+
 	</constraint>	  
       </constraintSpec>
       <valDesc>A date (in standard <code>yyyy-mm-dd</code> format); at
