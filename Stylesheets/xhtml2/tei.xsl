@@ -531,10 +531,11 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:sequence select="concat('ref-',ancestor::tei:classSpec/@ident,$standardSuffix,'#',$ident)"/>
 	</xsl:when>
 	<xsl:when test="not ($STDOUT='true') and ancestor::tei:back and not($splitBackmatter='true')">
-	  <xsl:value-of select="concat('#',$ident)"/>
+	  <xsl:value-of select="concat($masterFile,$standardSuffix,'#',$ident)"/>
 	</xsl:when>
-	<xsl:when test="not($STDOUT='true') and ancestor::tei:front and not($splitFrontmatter='true')">
-	  <xsl:value-of select="concat('#',$ident)"/>
+	<xsl:when test="not($STDOUT='true') and ancestor::tei:front
+			and not($splitFrontmatter='true')">
+	  <xsl:value-of select="concat($masterFile,$standardSuffix,'#',$ident)"/>
 	</xsl:when>
 	<xsl:when test="not($keep) and $STDOUT='true' and
 			number($depth) &lt;= number($splitLevel)">
@@ -833,7 +834,8 @@ of this software, even if advised of the possibility of such damage.
 			or ancestor::tei:TEI/@rend='frontpage' 
 			or ancestor::tei:TEI/@rend='nosplit'">true</xsl:when>
 	<!-- 2. we are a singleton -->
-	<xsl:when test="parent::tei:body[count(*)=1]">true</xsl:when>
+	<xsl:when test="parent::tei:body[count(*)=1] and not(tei:div or
+			tei:div2)">true</xsl:when>
 	<!-- 1. we have no proceding sections at top level -->
 	<xsl:when test="not(ancestor::tei:group) and parent::tei:body and
 			not(parent::tei:body/preceding-sibling::tei:front)

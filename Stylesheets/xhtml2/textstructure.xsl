@@ -482,21 +482,6 @@ of this software, even if advised of the possibility of such damage.
       <xsl:call-template name="teiEndHook"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
-      <desc>Process elements front, body or back in splitting mode</desc>
-   </doc>
-  <xsl:template match="tei:front|tei:body|tei:back" mode="split">
-      <xsl:for-each select="*">
-         <xsl:choose>
-            <xsl:when test="starts-with(local-name(.),'div')">
-               <xsl:apply-templates mode="split" select="."/>
-            </xsl:when>
-            <xsl:otherwise>
-               <xsl:apply-templates select="."/>
-            </xsl:otherwise>
-         </xsl:choose>
-      </xsl:for-each>
-  </xsl:template>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element body in inner mode</desc>
    </doc>
   <xsl:template match="tei:body" mode="inner">
@@ -676,7 +661,8 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="depth" select="$depth"/>
 	</xsl:call-template>
       </xsl:when>
-      <xsl:when test="number($depth) &lt;= number($splitLevel) and ancestor::tei:body">
+      <xsl:when test="number($depth) &lt;= number($splitLevel) and
+		      ancestor::tei:body">
 	<xsl:call-template name="makeDivPage">
 	  <xsl:with-param name="depth" select="$depth"/>
 	</xsl:call-template>
