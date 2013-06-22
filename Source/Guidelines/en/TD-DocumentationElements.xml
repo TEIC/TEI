@@ -1315,16 +1315,17 @@ purpose.  The following elements are used to represent patterns:
 <p>The specification elements, and some of their children, are all
 members of the <ident type="class">att.identified</ident> class, from
 which they inherit the following attributes:
-
 <specList><specDesc key="att.identified" atts="ident predeclare module"/></specList>
-
 This attribute class is a subclass of the <ident
 type="class">att.combinable</ident> class from which it (and some
 other elements) inherits the following attribute:
-
 <specList><specDesc key="att.combinable" atts="mode"/></specList>
-
-</p>
+This attribute class, in turn, is a subclass of the <ident
+type="class">att.deprecated</ident> class, from which it inherits the
+following attriubte:
+<specList><specDesc key="att.deprecated" atts="validUntil"/></specList>
+The <att>validUntil</att> attribute may be used to signal an intent to
+remove a construct from future versions of the schema being specified.</p>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.combinable.xml"/> 
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.identified.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.deprecated.xml"/>
@@ -1336,10 +1337,8 @@ the object being created will belong to. In the case of
 <gi>schemaSpec</gi>, this  namespace is inherited by all the elements
 created in the schema, unless they have their own <att>ns</att>.
 <specList><specDesc key="att.namespaceable"/></specList>
-
 </p>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.namespaceable.xml"/>
-
 <p>These attributes are used by an ODD processor to determine how
 declarations are to be combined to form a schema or DTD, as further
 discussed in this section.</p>
