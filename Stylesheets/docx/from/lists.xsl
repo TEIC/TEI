@@ -144,7 +144,7 @@ of this software, even if advised of the possibility of such damage.
                             </xsl:when>
                             <xsl:otherwise>
                                 <!-- we might want to follow the basedOn reference, but not at the moment -->
-                                <xsl:value-of select="document($styleFile)//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:numId/@w:val"/>
+                                <xsl:value-of select="document($styleDoc)//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:numId/@w:val"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
@@ -157,7 +157,7 @@ of this software, even if advised of the possibility of such damage.
                             </xsl:when>
                             <xsl:otherwise>
                                 <!-- we might want to follow the basedOn reference, but not at the moment -->
-                                <xsl:value-of select="document($styleFile)//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:ilvl/@w:val"/>
+                                <xsl:value-of select="document($styleDoc)//w:style[w:name/@w:val=$style]/w:pPr/w:numPr/w:ilvl/@w:val"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>

@@ -120,13 +120,11 @@ of this software, even if advised of the possibility of such damage.
 	    <xsl:value-of
 		select="translate($word-directory,'\\','/')"/>
 	  </xsl:variable>
-	  <xsl:variable name="relsFile" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
-	  <xsl:variable name="numberFile" select="concat($wordDirectory,'/word/numbering.xml')"/>
-	  <xsl:variable name="styleFile" select="concat($wordDirectory,'/word/styles.xml')"/>
-	  <xsl:variable name="docProps" select="doc(concat($wordDirectory,'/docProps/core.xml'))"/>
 	  <xsl:variable name="customFile" select="concat($wordDirectory,'/docProps/custom.xml')"/>
+	  <xsl:variable name="docProps" select="doc(concat($wordDirectory,'/docProps/core.xml'))"/>
+	  <xsl:variable name="numberFile" select="concat($wordDirectory,'/word/numbering.xml')"/>
 	  <xsl:variable name="relsDoc" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
-
+	  <xsl:variable name="relsFile" select="concat($wordDirectory,'/word/_rels/document.xml.rels')"/>
 	  <xsl:variable name="styleDoc" select="concat($wordDirectory,'/word/styles.xml')"/>
 	<xsl:strip-space elements="*"/>
 	  <xsl:preserve-space elements="w:t"/>
@@ -181,9 +179,9 @@ of this software, even if advised of the possibility of such damage.
 	<xsl:message terminate="yes">The file <xsl:value-of
 	select="$relsFile"/> cannot be read</xsl:message>
       </xsl:if>
-      <xsl:if test="not(doc-available($styleFile))">
+      <xsl:if test="not(doc-available($styleDoc))">
 	<xsl:message terminate="yes">The file <xsl:value-of
-	select="$styleFile"/> cannot be read</xsl:message>
+	select="$styleDoc"/> cannot be read</xsl:message>
       </xsl:if>
      <xsl:variable name="pass0">
        <xsl:apply-templates mode="pass0"/>
