@@ -732,26 +732,6 @@
     </xsl:if>
   </xsl:template>
   <xsl:template match="/div"> </xsl:template>
-  <xsl:template name="myi18n">
-    <xsl:param name="word"/>
-    <xsl:choose>
-      <xsl:when test="$word='previousWord'">
-        <span class="icon">
-          <xsl:text>« </xsl:text>
-        </span>
-      </xsl:when>
-      <xsl:when test="$word='upWord'">
-        <span class="icon">
-          <xsl:text>↑ </xsl:text>
-        </span>
-      </xsl:when>
-      <xsl:when test="$word='nextWord'">
-        <span class="icon">
-          <xsl:text>» </xsl:text>
-        </span>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
 
   <!-- only use listBibl if its in right language-->
   <xsl:template match="tei:listBibl[@xml:lang and not($documentationLanguage=@xml:lang)]"/>
