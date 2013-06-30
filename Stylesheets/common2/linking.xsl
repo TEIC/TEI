@@ -315,6 +315,10 @@ of this software, even if advised of the possibility of such damage.
 		<xsl:with-param name="display" select="$display"/>
 	      </xsl:call-template>
 	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="substring(.,1,10)"/>
+	      <xsl:text>…</xsl:text>
+	    </xsl:otherwise>
          </xsl:choose>
       </xsl:if>
   </xsl:template>
