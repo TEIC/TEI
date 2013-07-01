@@ -63,13 +63,13 @@ Written 2010-05-29 by James Cummings
       character (a '/') and then takes the substring after the sourceforge url (leaving it as
       'tei/yyyy/mm/dd/title-here' and then translates the '-' of the title to '_' and then the '/'
       of the path to '-'. This is required since '/' is not a valid NCName for IDs.  -->
-    <xsl:variable name="articleID">
-      <xsl:value-of
-        select="translate(translate(substring-after(substring(atom:link[@rel='alternate'][1]/@href, 0,
-           string-length(atom:link[@rel='alternate'][1]/@href)),
-      'https://textencodinginitiative.wordpress.com/'), '-', '_'), '/', '-')"
-      />
-    </xsl:variable>
+     <xsl:variable name="href" select="atom:link[@rel='alternate'][1]/@href"/>
+     <xsl:variable name="articleID">
+        <xsl:value-of
+           select="translate(replace($href, 'https?://textencodinginitiative.wordpress.com/(.*)/','$1'),
+           '/-', '-_')"
+        />
+     </xsl:variable>
     <li class="toc">
       <a class="toc toc_0" href="{concat('#', $articleID)}" title="{d:htmlparse(atom:title)}">
         <xsl:value-of select="d:htmlparse(atom:title)"/>
@@ -79,14 +79,13 @@ Written 2010-05-29 by James Cummings
   </xsl:template>
 
   <xsl:template match="atom:entry">
-    <xsl:variable name="articleID">
-      <xsl:value-of
-        select="translate(translate(substring-after(substring(atom:link[@rel='alternate'][1]/@href, 0,
-        string-length(atom:link[@rel='alternate'][1]/@href)),
-        'https://textencodinginitiative.wordpress.com/'), '-', '_'), '/', '-')"
-      />
-    </xsl:variable>
-
+     <xsl:variable name="href" select="atom:link[@rel='alternate'][1]/@href"/>
+     <xsl:variable name="articleID">
+        <xsl:value-of
+           select="translate(replace($href, 'https?://textencodinginitiative.wordpress.com/(.*)/','$1'),
+           '/-', '-_')"
+        />
+     </xsl:variable>
     <xsl:comment>An atom:entry </xsl:comment>
     <div class="teidiv0" id="{$articleID}">
       <h2>

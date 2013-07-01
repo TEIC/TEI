@@ -76,13 +76,13 @@ This xslt stylesheet produces the iframe content for the TEI-C main page.
 
 <xsl:template name="makeHeadline">
 	<xsl:param name="Sticky">NotSticky</xsl:param>
-	<xsl:variable name="articleID">
-		<xsl:value-of
-			select="translate(translate(substring-after(substring(atom:link[@rel='alternate'][1]/@href, 0,
-			string-length(atom:link[@rel='alternate'][1]/@href)),
-			'https://textencodinginitiative.wordpress.com/'), '-', '_'), '/', '-')"
-		/>
-	</xsl:variable>	
+   <xsl:variable name="href" select="atom:link[@rel='alternate'][1]/@href"/>
+   <xsl:variable name="articleID">
+      <xsl:value-of
+         select="translate(replace($href, 'https?://textencodinginitiative.wordpress.com/(.*)/','$1'),
+         '/-', '-_')"
+      />
+   </xsl:variable>	
 	<li><xsl:if test="$Sticky='Sticky'"><xsl:attribute name="class">sticky</xsl:attribute></xsl:if><a href="{concat('/News/#', $articleID)}" target="_parent"><xsl:value-of select="d:htmlparse(atom:title)[1]"/></a>
 		<br/>
 		<span class="newsDate">Posted on: 

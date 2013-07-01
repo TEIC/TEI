@@ -1,7 +1,8 @@
 #!/bin/bash
 #Variables
 OUTPUTDIR="/projects/tei/web/include/"
-SCRIPTDIR="/home/oxford/newsfeed/"
+SCRIPTDIR=`pwd`
+#SCRIPTDIR="/home/oxford/newsfeed/"
 #OUTPUTDIR="/home/jamesc/tmp/TEI-newsfeed/"
 #SCRIPTDIR="/home/jamesc/tmp/TEI-newsfeed/"
 INCOMING="incoming.xml"
