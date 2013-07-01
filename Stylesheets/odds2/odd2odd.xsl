@@ -1445,7 +1445,10 @@ so that is only put back in if there is some content
     <xsl:apply-templates mode="justcopy"
 			 select="tei:attList/tei:attDef[(@mode='change'
 				 or @mode='delete'
-				 or @mode='replace') and not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
+				 or @mode='replace') and
+				 not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
+    <!-- any direct attRef elements -->
+      <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
     <!-- now look at each of the original element's attributes and see
     if we have an update -->
     <xsl:for-each select="$ORIGINAL/tei:attList">
