@@ -2,6 +2,7 @@
 #Variables
 OUTPUTDIR="/projects/tei/web/include/"
 SCRIPTDIR=`pwd`
+# script directory should not be hard-coded, for portability
 #SCRIPTDIR="/home/oxford/newsfeed/"
 #OUTPUTDIR="/home/jamesc/tmp/TEI-newsfeed/"
 #SCRIPTDIR="/home/jamesc/tmp/TEI-newsfeed/"
