@@ -260,7 +260,7 @@ XSL LaTeX stylesheet to make slides
    </xsl:template>
 
    <xsl:template match="tei:hi[not(@rend)]">
-      <xsl:text>\alert{</xsl:text>
+      <xsl:text>\alert{\relax </xsl:text>
       <xsl:apply-templates/>
       <xsl:text>}</xsl:text>
    </xsl:template>
