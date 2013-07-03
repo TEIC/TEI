@@ -1308,7 +1308,6 @@ of this software, even if advised of the possibility of such damage.
               <xsl:with-param name="ORIGINAL" select="$ORIGINAL"/>
               <xsl:with-param name="elementName" select="''"/>
             </xsl:call-template>
-            <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
           </attList>
         </xsl:for-each>
       </xsl:for-each>
@@ -1448,7 +1447,8 @@ so that is only put back in if there is some content
 				 or @mode='replace') and
 				 not(@ident=$ORIGINAL/tei:attList//tei:attDef/@ident)]"/>
     <!-- any direct attRef elements -->
-      <xsl:apply-templates mode="justcopy" select="tei:attList/tei:attRef"/>
+    <xsl:apply-templates mode="justcopy"
+			   select="tei:attList/tei:attRef"/>
     <!-- now look at each of the original element's attributes and see
     if we have an update -->
     <xsl:for-each select="$ORIGINAL/tei:attList">
