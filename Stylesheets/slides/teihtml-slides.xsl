@@ -60,6 +60,9 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="outputEncoding">utf-8</xsl:param>
   <xsl:output method="xml" omit-xml-declaration="yes" doctype-system="about:legacy-compat" />
   <xsl:param name="outputTarget">html5</xsl:param>
+  <xsl:param name="logoFile"></xsl:param>
+  <xsl:param name="logoWidth"></xsl:param>
+  <xsl:param name="logoHeight"></xsl:param>
   <xsl:param name="doctypeSystem">about:legacy-compat</xsl:param>
   <xsl:param name="doctypePublic"/>
 

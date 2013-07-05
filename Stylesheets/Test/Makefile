@@ -229,6 +229,10 @@ oddity:
 	localsource=`pwd`/p5subset.xml $(SAXONOPT) 
 	perl -p -i -e 's+ xml:base=".*testdrama.odd"++' testdrama.compiled.xml
 	diff testdrama.compiled.xml expected-results/testdrama.compiled.xml
+	../teitornc test30.odd test30.rnc
+	perl -p -i -e 's/generated from ODD source .*//' test30.rnc
+	jing -c test30.rnc test11.xml
+	diff test30.rnc expected-results/test30.rnc
 	$(SAXON) test.odd ../odds2/odd2odd.xsl > test.odd2odd
 	$(SAXON) test.odd2odd ../odds2/odd2dtd.xsl > test.odd2dtd
 	$(SAXON) test.odd2odd ../odds2/odd2html.xsl > test.odd2html

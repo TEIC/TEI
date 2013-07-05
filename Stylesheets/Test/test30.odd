@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Basic tests</title>
+        <author>TEI Council</author>
+      </titleStmt>
+      <publicationStmt>
+        <p/>
+      </publicationStmt>
+      <sourceDesc>
+        <p/>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec ident="testbasic" xml:lang="en" start="TEI div">
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="header"/>
+        <moduleRef key="namesdates"/>
+        <moduleRef key="transcr"/>
+        <moduleRef key="figures"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="textstructure"/>
+        <elementSpec ident="div1" module="textstructure" mode="delete"/>
+        <elementSpec ident="div2" module="textstructure" mode="delete"/>
+        <elementSpec ident="div3" module="textstructure" mode="delete"/>
+        <elementSpec ident="div4" module="textstructure" mode="delete"/>
+        <elementSpec ident="div5" module="textstructure" mode="delete"/>
+        <elementSpec ident="div6" module="textstructure" mode="delete"/>
+        <elementSpec ident="div7" module="textstructure" mode="delete"/>
+        <elementSpec ident="Menu" mode="add" ns="http://www.oucs.ox.ac.uk/ns">
+          <classes>
+            <memberOf key="model.pPart.data"/>
+          </classes>
+          <content>
+            <rng:text/>
+          </content>
+	  <attList>
+	    <attRef name="att.global.attribute.xmlid"/>
+	    <attRef name="att.global.attribute.rend"/>
+	  </attList>
+        </elementSpec>
+        <elementSpec ident="p" mode="change">
+          <classes mode="replace">
+	    <memberOf key="model.pLike"/>
+	  </classes>
+	  <attList>
+	    <attRef name="att.global.attribute.xmlid"/>
+	  </attList>
+        </elementSpec>
+        <classSpec ident="att.global" module="tei" mode="change" type="atts">
+          <attList>
+            <attDef ident="rend" mode="change">
+              <valList type="closed" mode="add">
+                <valItem ident="bold"/>
+                <valItem ident="boxed"/>
+                <valItem ident="center"/>
+                <valItem ident="italic"/>
+                <valItem ident="underline"/>
+              </valList>
+            </attDef>
+          </attList>
+        </classSpec>
+
+	<elementSpec ident="title" module="core" mode="change">
+	  <attList>
+	    <attDef ident="type" mode="change">
+	      <datatype minOccurs="1" maxOccurs="unbounded">
+		<rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+	      </datatype>
+	      <valList mode="replace" type="semi">
+		<valItem ident="biography"/>
+		<valItem ident="chronology"/>
+		<valItem ident="introduction"/>
+		<valItem ident="project"/>
+	      </valList>
+	    </attDef>
+	  </attList>
+	</elementSpec>
+
+        <elementSpec ident="div" module="textstructure" mode="change">
+          <attList>
+            <attDef ident="type" mode="change">
+              <valList type="closed" mode="add">
+                <valItem ident="Act"/>
+                <valItem ident="Scene"/>
+                <valItem ident="play"/>
+                <valItem ident="letter"/>
+              </valList>
+            </attDef>
+          </attList>
+	</elementSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>
