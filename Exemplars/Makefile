@@ -99,8 +99,8 @@ dist: schemas
 	mv *.properties  ../release/tei-p5-exemplars/share/xml/tei/custom/templates
 	mv *.xsd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/xsd
 	mv *.dtd ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
-	mv isofs.rng tei*.rnc tei*.rng ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
-	cp mathml*rng svg*rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
+	mv isofs.rngtei*.rnc tei*.rng ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
+	cp mathml*rng its.rng svg*rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	mv *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
 	mv *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf 
 	mv *.doc.epub ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
