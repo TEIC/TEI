@@ -45,11 +45,11 @@
   </xsl:element>
  </xsl:template>
 
-<!-- templates for pass3 start here -->
+
 
  <!-- jiggle around the paragraphs which should be in front -->
 
- <xsl:template match="tei:text" mode="pass3">
+ <xsl:template match="tei:text" mode="pass2">
   <text>
    <front>
     <titlePage>
@@ -92,7 +92,11 @@
   </text>
  </xsl:template>
 
- <!-- suppress paragraphs which have been jiggled into front/back -->
+
+
+ <!-- templates for pass3 start here -->
+ 
+ <!-- first, suppress paragraphs which have been jiggled into front/back -->
 
  <xsl:template match="tei:p[@rend='Title']" mode="pass3"/>
  <xsl:template match="tei:p[@rend='author']" mode="pass3"/>
@@ -111,6 +115,7 @@
   </xsl:if>
  </xsl:template>
 
+ 
 
  <!-- fix up the default header -->
  <xsl:template match="tei:encodingDesc" mode="pass3"/>
@@ -140,6 +145,12 @@
   </quote>
  </xsl:template>
 
+ <xsl:template match="tei:hi[@rend='CentredQuote']" mode="pass3">
+  <quote  rend="center">
+   <xsl:apply-templates mode="pass3"/>
+  </quote>
+ </xsl:template>
+ 
  <xsl:template match="tei:hi[@rend='foreign']" mode="pass3">
   <foreign>
    <xsl:apply-templates mode="pass3"/>
@@ -184,14 +195,17 @@
 <xsl:template match="tei:note/tei:p" mode="pass3">
 <xsl:apply-templates mode="pass3"/>
 </xsl:template>
-
+ <xsl:template match="tei:note/tei:seg" mode="pass3">
+  <xsl:apply-templates/>
+ </xsl:template>
 
  <xsl:template match="tei:p" mode="pass3">
   <xsl:if test="ancestor::tei:body">
    <xsl:element name="p">
     <xsl:attribute name="xml:id">
      <xsl:text>P</xsl:text>
-     <xsl:number from="tei:body" count="tei:p[not(ancestor::tei:note)]" level="any"/>
+     <xsl:number from="tei:body" count="tei:p[
+					not(ancestor::tei:note) ]" level="any"/>
     </xsl:attribute>
     <xsl:apply-templates mode="pass3"/>
    </xsl:element>
