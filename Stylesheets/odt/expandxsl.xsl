@@ -44,7 +44,8 @@ $Id$
 -->
 
 <xsl:template match="import">
-  <xsl:for-each select="doc(@href)/stylesheet">
+  <xsl:message>expand import of <xsl:value-of select="@href"/></xsl:message>
+  <xsl:for-each select="doc(resolve-uri(@href,base-uri(/)))/stylesheet">
     <xsl:apply-templates/>
   </xsl:for-each>
 </xsl:template>
