@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet 
+    xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="tei"
+    exclude-result-prefixes="tei html"
     version="2.0">
-
     <!-- import base conversion style -->
 
     <xsl:import href="../../../html5/tei.xsl"/>
     <xsl:import href="../../../html5/microdata.xsl"/>
 
-    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
+  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet" type="stylesheet">
       <desc>
 
          <p>This software is dual-licensed:
@@ -51,6 +51,14 @@ of this software, even if advised of the possibility of such damage.
       </desc>
    </doc>
 
-
+  <xsl:param name="splitLevel">-1</xsl:param>
+  <xsl:param name="cssFile"></xsl:param>
+  <xsl:param name="cssInlineFile">../tei.css</xsl:param>
+  <xsl:param name="institution"></xsl:param>
+  <xsl:param name="feedbackURL"/>
+  <xsl:param name="searchURL"/>
+  <xsl:template name="copyrightStatement"></xsl:template>
+  <xsl:param name="parentURL">http://www.tei-c.org/</xsl:param>
+  <xsl:param name="parentWords">TEI</xsl:param>
 
 </xsl:stylesheet>

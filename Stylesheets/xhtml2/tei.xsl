@@ -294,7 +294,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:variable>
     <xsl:if test="$values/values/c">
       <xsl:attribute name="class">
-	<xsl:value-of select="$values/values/c"/>
+	<xsl:value-of select="$values/values/c" separator=' '/>
       </xsl:attribute>
     </xsl:if>
     <xsl:if test="$values/values/s">

@@ -211,7 +211,7 @@ test-to-docx:
 	rm testnotes1.xml.docx.document
 
 oddity:
-	../teitohtml --debug --summaryDoc --profile=tei --odd test15.odd test.odd.html
+	../teitohtml5 --summaryDoc --profile=tei --odd test15.odd test.odd.html
 	xmllint --format test.odd.html | perl cleanup.pl> x ; mv x test.odd.html
 	diff test.odd.html expected-results/test.odd.html
 	$(SAXON) -it:main -o:oddbyexample.odd  -xsl:../tools/oddbyexample.xsl corpus=`pwd`/bare 
