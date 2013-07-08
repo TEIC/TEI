@@ -71,7 +71,7 @@ default: schemas
 	-rm $*.doc.xml
 
 %.doc.epub: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema 
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dlang=`echo $* | sed 's/.*_//'` -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema 
 	../run-onvdl $*.nvdl $*.odd
 	-rm $*.doc.xml
 	-rm $*.rng
