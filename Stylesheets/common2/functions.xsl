@@ -331,6 +331,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:repository">true</xsl:when>
         <xsl:when test="self::tei:roleName">true</xsl:when>
         <xsl:when test="self::tei:rubric">true</xsl:when>
+        <xsl:when test="self::tei:rs">true</xsl:when>
         <xsl:when test="self::tei:said">true</xsl:when>
         <xsl:when test="self::tei:seg">true</xsl:when>
         <xsl:when test="self::tei:sic">true</xsl:when>
