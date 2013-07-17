@@ -298,6 +298,7 @@ of this software, even if advised of the possibility of such damage.
         <xsl:when test="self::tei:gi">true</xsl:when>
         <xsl:when test="self::tei:gloss">true</xsl:when>
         <xsl:when test="self::tei:graphic">true</xsl:when>
+        <xsl:when test="self::tei:media">true</xsl:when>
         <xsl:when test="self::tei:height">true</xsl:when>
         <xsl:when test="self::tei:hi[not(w:*)]">true</xsl:when>
         <xsl:when test="self::tei:ident">true</xsl:when>

@@ -225,7 +225,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>handling graphics</desc>
    </doc>
-  <xsl:template match="tei:graphic">
+  <xsl:template match="tei:graphic|tei:media">
       <xsl:call-template name="makePic"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

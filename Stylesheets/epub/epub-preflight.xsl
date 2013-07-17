@@ -61,7 +61,7 @@ of this software, even if advised of the possibility of such damage.
     </xsl:copy>
   </xsl:template>
 
-  <xsl:template match="tei:graphic" mode="preflight">
+  <xsl:template match="tei:graphic|tei:media" mode="preflight">
     <xsl:copy>
       <xsl:choose>
         <xsl:when test="$fixgraphicsurl='true'">

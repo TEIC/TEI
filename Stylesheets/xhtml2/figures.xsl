@@ -251,7 +251,7 @@ of this software, even if advised of the possibility of such damage.
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">
       <desc>Process element graphic</desc>
    </doc>
-  <xsl:template match="tei:graphic|tei:binaryObject">
+  <xsl:template match="tei:graphic|tei:binaryObject|tei:media">
       <xsl:call-template name="showGraphic"/>
   </xsl:template>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl">

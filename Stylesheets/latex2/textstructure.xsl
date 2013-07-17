@@ -94,6 +94,9 @@ of this software, even if advised of the possibility of such damage.
 	       <xsl:when test="tei:graphic">
 		 <xsl:sequence select="tei:resolveURI(tei:graphic,tei:graphic/@url)"/>
 	       </xsl:when>
+	       <xsl:when test="tei:media">
+		 <xsl:sequence select="tei:resolveURI(tei:media,tei:media/@url)"/>
+	       </xsl:when>
 	     </xsl:choose>
 	   </xsl:variable>
 	   <xsl:choose>

@@ -33,7 +33,7 @@
     
     
   <xsl:key name="TARGETS" use="1" match="tei:ref[@target]|tei:ptr[@target]"/>
-  <xsl:key name="GRAPHICS" use="1" match="tei:graphic[@url]"/>
+  <xsl:key name="GRAPHICS" use="1" match="tei:graphic[@url]|tei:media[@url]"/>
   <xsl:key name="OLEOBJECTS" use="1" match="o:OLEObject"/>
   <xsl:key name="IMAGEDATA" use="1" match="v:imagedata"/>
 

@@ -165,7 +165,7 @@ of this software, even if advised of the possibility of such damage.
       </xsl:choose>
     </xsl:template>
     
-    <xsl:template match="tei:graphic">
+    <xsl:template match="tei:graphic|tei:media">
         <!-- perform some tests on the graphic -->
 	<xsl:variable name="maxWidth" select="number(number($pageWidth)*100) cast as xs:integer"/>
 	<xsl:variable name="maxHeight"

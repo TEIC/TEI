@@ -61,7 +61,7 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
   
   
-  <xsl:template match="tei:graphic">
+  <xsl:template match="tei:graphic|tei:media">
       <xsl:copy>
 	        <xsl:variable name="newName">
 	           <xsl:text>media/resource</xsl:text>

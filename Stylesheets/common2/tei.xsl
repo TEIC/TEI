@@ -87,7 +87,7 @@ of this software, even if advised of the possibility of such damage.
 			    tei:floatingText tei:forest tei:front
 			    tei:fs tei:fsConstraints tei:fsDecl
 			    tei:fsdDecl tei:fvLib tei:gap tei:glyph
-			    tei:graph tei:graphic tei:group
+			    tei:graph tei:graphic tei:medua tei:group
 			    tei:handDesc tei:handNotes tei:history
 			    tei:hom tei:hyphenation tei:iNode tei:if
 			    tei:imprint tei:incident tei:index
