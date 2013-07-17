@@ -47,7 +47,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="DIR"/>
   <xsl:param name="ORIG">.</xsl:param>
 
-  <xsl:key match="tei:graphic|tei:pb[@facs]" use="1" name="G"/>
+  <xsl:key match="tei:graphic|tei:media|tei:pb[@facs]" use="1" name="G"/>
 
   <xsl:template match="/">
       <xsl:for-each select="key('G',1)">

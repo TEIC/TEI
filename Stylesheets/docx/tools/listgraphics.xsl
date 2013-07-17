@@ -54,6 +54,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="inputDir">.</xsl:param>
 
   <xsl:key match="tei:graphic[not(ancestor::teix:egXML)]" use="1" name="G"/>
+  <xsl:key match="tei:media[not(ancestor::teix:egXML)]" use="1" name="G"/>
 
   <xsl:template match="/">
      <project xmlns="" basedir="." default="dist" name="imagecopy">

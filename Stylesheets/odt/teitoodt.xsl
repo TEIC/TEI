@@ -140,6 +140,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:param name="linkAttributeNamespace">http://www.w3.org/1999/xlink</xsl:param>
   <xsl:key name="IDS" match="tei:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="GRAPHICS" match="tei:graphic" use="1"/>
+  <xsl:key name="GRAPHICS" match="tei:media" use="1"/>
   <xsl:key name="Page" match="style:page-layout-properties" use="1"/>
   <xsl:template match="/">
     <xsl:choose>
@@ -357,7 +358,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:template match="tei:figure">
     <text:p text:style-name="Standard">
       <xsl:call-template name="test.id"/>
-      <xsl:apply-templates select="tei:graphic"/>
+      <xsl:apply-templates select="tei:graphic|tei:media"/>
     </text:p>
     <xsl:if test="tei:head">
       <text:p text:style-name="Caption">
@@ -373,7 +374,7 @@ of this software, even if advised of the possibility of such damage.
       </text:p>
     </xsl:if>
   </xsl:template>
-  <xsl:template match="tei:graphic">
+  <xsl:template match="tei:graphic|tei:media">
     <xsl:variable name="id">
       <xsl:choose>
         <xsl:when test="@xml:id">
