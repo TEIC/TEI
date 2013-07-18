@@ -1873,5 +1873,4 @@ so that is only put back in if there is some content
     </xsl:choose>
   </xsl:template>
 
-
 </xsl:stylesheet>
