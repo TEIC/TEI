@@ -68,96 +68,58 @@ the <ref target="mailto:info@tei-c.org">TEI Consortium</ref>.
     <body>
       <div>
         <head>Introduction</head>
-        <p>This is a set of XSLT 2.0 specifications to transform TEI XML documents
+        <p>This is a family of XSLT 2.0 stylesheets to transform TEI XML documents
 to various forms, including XHTML, LaTeX, XSL Formatting Objects,
 ePub, plain text, RDF, JSON;
 and to/from Word OOXML (docx) and OpenOfice (odt).
 They concentrate on the core TEI
 modules which are used for simple transcription and <q>born
-digital</q> writing, but adding support for other modules is fairly
-easy. It is important to understand that they do <hi>not</hi>:
-<list><item>cover all TEI elements and possible attribute values</item><item>attempt to define a standard TEI processing or rendering
+digital</q> writing. It is important to understand that they do <hi>not</hi>:
+<list><item>cover <hi>all</hi> TEI elements and possible attribute values</item>
+<item>attempt to define a standard TEI processing or rendering
 model</item></list>
 and should not be treated as the definitive view of the TEI Consortium.</p>
       </div>
       <div>
         <head>Using the stylesheets</head>
-        <div>
-          <head>OxGarage</head>
-          <p>OxGarage<note place="foot">Based on the Enrich Garage Engine
-developed by Poznan Supercomputing and Networking Center and Oxford
-University Computing Services for the ENRICH project.</note> is web,
-and RESTful, service to manage the transformation of documents between
-a variety of formats. The majority of transformations use the TEI
-format as a pivot format. It uses these stylesheets for the majority
-of its work</p>
-          <p>There are instances of OxGarage at <ptr target="http://www.tei-c.org/ege-webclient/"/>
-and
-	<ptr target="http://oxgarage.oucs.ox.ac.uk:8080/ege-webclient"/> 
-note that the latter is not a fully-supported service, so please do not rely on it for production use.</p>
-          <p>OxGarage is open source, and runs as a Java servlet. 
-A Debian package is available at <ptr target="http://tei.oucs.ox.ac.uk/teideb/"/>.
-Source code is on Github at <ptr target="https://github.com/sebastianrahtz/oxgarage.git"/></p>
-        </div>
-        <div>
-          <head>Command-line scripts</head>
-          <p>When the stylesheet package is installed, either by running <code>make install</code> from source,
-or installing a Debian package, there are Linux/OSX command-line shell scripts available
-<ident>docbooktotei</ident>,
-<ident>docxtotei</ident>,
-<ident>odttotei</ident>,
-<ident>tcptotei</ident>,
-<ident>teitobibtex</ident>,
-<ident>teitodocbook</ident>,
-<ident>teitodocx</ident>,
-<ident>teitodtd</ident>,
-<ident>teitoepub</ident>,
-<ident>teitoepub3</ident>,
-<ident>teitofo</ident>,
-<ident>teitohtml</ident>,
-<ident>teitohtml5</ident>,
-<ident>teitojson</ident>,
-<ident>teitolatex</ident>,
-<ident>teitoodd</ident>,
-<ident>teitoodt</ident>,
-<ident>teitopdf</ident>,
-<ident>teitordf</ident>,
-<ident>teitorelaxng</ident>,
-<ident>teitornc</ident>,
-<ident>teitoslides</ident>,
-<ident>teitotxt</ident>,
-<ident>teitoxsd</ident>, and
-<ident>xlsxtotei</ident>
-for converting to/from Word, to/from OpenOffice, and to DTD, ePub,
-HTML, RDF, Relax NG, plain text, W3C schema etc.  These are
-implemented using Ant tasks, so a local installation of Java 1.6+ and Ant
-is required.</p>
-        </div>
-      </div>
-      <div>
-        <head>The XSL stylesheets - file structure and customization</head>
-        <p>The stylesheets files consist of a number of scripts, and seven 
-main directories where most of the work is done:
-<list type="gloss"><label>common2</label><item>templates which are independent of output
-type, used by the other transformations</item><label>xhtml2</label><item>templates for making HTML output (also used
-for ePub)</item><label>latex2</label><item>templates for making LaTeX output</item><label>docx</label><item>conversion to and from Word OOXML format</item><label>odt</label><item>conversion to and from OpenOffice ODF format</item><label>fo2</label><item>templates for making XSL FO output</item><label>odds2</label><item>processing of TEI ODD files</item></list>
-Within each directory there is usually a separate file for the templates
-which implement each of the TEI modules (eg
-<ident>textstructure.xsl</ident>,
-<ident>linking.xsl</ident>, or <ident>drama.xsl</ident>); these
-are included by a master file <ident>tei.xsl</ident>. This also
-includes a parameterization layer in the file
-<ident>tei-param.xsl</ident>, and the parameterization file from
-the <ident>common2</ident> directory. The <ident>tei.xsl</ident> does
-any necessary declaration of constants and XSL keys.</p>
-        <p>There are further directories  for other conversions, some which
-are built on top of the xhtml one above:
-<list type="gloss"><label>bibtex</label><item>conversion to BibTeX</item><label>docbook</label><item>conversion to/from Docbook</item><label>dtd</label><item>ODD conversion to DTD </item><label>epub</label><item>conversion to ePub</item><label>epub3</label><item>conversion to ePub3</item><label>html5</label><item>conversion to HTML5 </item><label>json</label><item>conversion to JSON</item><label>nlm</label><item>conversion to NLM </item><label>rdf</label><item>conversion to RDF (CIDOC CRM)</item><label>slides</label><item>conversion to LaTeX and HTML slides</item><label>tbx</label><item>conversion to TBX</item><label>tcp</label><item>conversion from Text Creation Partnership P4 XML</item><label>tite</label><item>conversion from TEI Tite to normal TEI P5</item><label>txt</label><item>conversion to plain text</item><label>xlsx</label><item>conversion from Microsoft Office spreadsheet format</item></list>
-</p>
+	<p>The stylesheets are embedded in various services, or can be used on their own to perform
+	the transformations. </p>
+
+	<div>
+	  <head>oXygen editor</head>
+	  <p>The stylesheets are available for immediate use in the oXygen XML editor,
+if you have the TEI framework installed (it is enabled by default). This will make various transformations available
+immediately for documents which are detected as TEI. You set up a transformation
+	by pressing the icon which looks like this: <graphic url="oxdump1.png"/>. The first time you do this, you should be offered a choice
+          of built-in options: <lb/><graphic width="4in" url="oxdump2.png"/>.<lb/> From these, tick (for example) the
+	  box by 
+            <q>TEI P5 XHTML</q> and click on <code>Apply associated</code>.</p>
+        <p>The transformation is run, and the default web browser is fired up with the resulting web
+          page.</p>
+        <p>For each transformation there are a large number of parameters which you can change. Do this by  going back to the configuration.
+	Untick TEI P5 XHTML, but keep it highlighted and select
+	<q>Duplicate</q>. You should see something like this:<lb/>
+	<graphic  width="4in" url="oxygen-duplicate-scenario1.png"/>
+	<lb/>Select <q>Parameters</q>, and you should see this: <lb/>
+	<graphic  width="4in" url="oxygen-duplicate-scenario2.png"/>
+	<lb/>Now you can scroll down to find a parameter to change,
+	press <q>Edit</q> and you'll see a dialogue like this: <lb/>
+	<graphic  width="4in"  url="oxygen-duplicate-scenario3.png"/><lb/>
+	Change the value, press OK to exit each dialogue, and then
+	<q>Apply Associated</q> to see the result.</p>
+        <p>You might apply, for example, some changes to the HTML renderin, by setting parameters as followws, and
+          checking the results: <list><item>Set <code>autoToc</code> to <q>false</q></item><item>Set <code>numberHeadings</code> to false</item><item>Set <code>pageLayout</code> to <q>CSS</q></item><item>Set <code>numberParagraphs</code> to <q>true</q></item></list>
+        </p>
+
+	<p>If you want to make sure you keep up with the latest versions of these stylesheets, and the TEI P5 schemas, you can subscribe
+to the TEI addon (maintained by the TEI Consortium) for oXygen. Go to <code>Add-ons</code> section of oXygen's <code>Preferences</code> and add 
+<code>http://tei.oucs.ox.ac.uk/updateSite.xml</code> to the list. Then go to  <code>Help/Manage add-ons</code> and activate the <emph>TEI P5 + XSL</emph>
+entry. After a restart, you'll be using the latest version in preference to what is delivered with your copy of oXygen. When updates appear, you'll
+be asked if you want to install them.</p>
         <div>
           <head>Profiles</head>
-          <p>The most important directory is <ident>profiles</ident>, which has
-a set of predefined project starting points, each of which may have a file
+          <p>The stylesheets support a set of <ident>profiles</ident>, which are
+redefined project starting points. They are implemented as a set of directories each of which may have a file
 <ident>to.xsl</ident> for one or more of the supported output formats
 (<ident>csv</ident>,
 <ident>docbook</ident>,
@@ -181,10 +143,143 @@ a set of predefined project starting points, each of which may have a file
 <ident>txt</ident>, and
 <ident>xlsx</ident>). There may also be a <ident>from.xsl</ident>
 to go <emph>from</emph> the selected format to TEI XML.</p>
-          <p>For example, to convert TEI to HTML in the default mannner, the user may run
-<ident>profiles/default/html/to.xsl</ident> on the selected input file. Other starting points are
-listed below.</p>
         </div>
+
+      <div>
+        <head>Rolling your own</head>
+        <p>In addition to editing the copy of the stylesheets in oXygen, you can sett up a copy of TEI framework, and configure oXygen
+	  to look at it. First, grab the current oXygen TEI framework by downloading
+	the big zip file from <ptr target="http://code.google.com/p/oxygen-tei/downloads/list"/>. Create a directory in your
+	own directory area called <code>oxygenframeworks</code> and unpack
+	the zip file into there.</p>
+        <p>Start up oXygen, and go to Preferences/Global and
+	scroll down on the right to <q>Use custom frameworks</q>, and
+	put in your frameworks directory.</p>
+        <p>
+          <graphic width="3in" url="oxy-changeframeworks.png"/>
+        </p>
+        <p>Restart oXygen, and check that TEI support is still
+	there. You can now edit your copy of the stylesheets, by creating (for example)
+ a new profile directory, in
+	<code>tei/xml/tei/stylesheet/profiles</code>. For exammple, to create your local profile for Word to TEI, create and a directory
+	called <code>local</code>, and under that one called <code>docx</code>. In there, create a file
+	called <code>from.xsl</code> which looks like this:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.tei-c.org/ns/1.0" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" version="2.0" exclude-result-prefixes="w"><xsl:import href="../../default/docx/from.xsl"/></xsl:stylesheet></egXML>.
+Edit that accordingly, and then choose the <code>local</code> profile in oXygen transformations.</p>
+      </div>
+
+	</div>
+        <div>
+          <head>OxGarage web service</head>
+          <p>OxGarage<note place="foot">Based on the Enrich Garage Engine
+developed by Poznan Supercomputing and Networking Center and Oxford
+University Computing Services for the ENRICH project.</note> is web,
+and RESTful, service to manage the transformation of documents between
+a variety of formats. The majority of transformations have the TEI
+format as a pivot format, using these stylesheets.</p>
+          <p>There are instances of OxGarage at <ptr target="http://www.tei-c.org/ege-webclient/"/>
+and
+	<ptr target="http://oxgarage.oucs.ox.ac.uk:8080/ege-webclient"/> 
+note that the latter is not a fully-supported service, so please do not rely on it for production use.</p>
+          <p>OxGarage is open source, and runs as a Java servlet. 
+A Debian package is available at <ptr target="http://tei.oucs.ox.ac.uk/teideb/"/>.
+Source code is on Github at <ptr target="https://github.com/sebastianrahtz/oxgarage.git"/></p>
+
+<p>To use OxGarage, got to the web site, click on <emph>Documents</emph> and
+select <emph>TEI P5 XML Document</emph> as your input. When you do so a list of
+possible conversion targets should appear on the right. Choose, for
+example, <emph>Microsoft Word Document (.docx)</emph>. When you've
+done this a <emph>Choose File</emph> button should appear on the upper
+left. Click the button and navigate to your file. Click the
+<emph>Convert</emph> button and open the resulting document in
+Microsoft Word.</p>
+
+			    <p>By selecting <emph>Show Advanced options</emph> you can access a drop-down list of the
+different profiles supported for the current conversion path.</p>
+	</div>
+
+        <div>
+          <head>Command-line scripts</head>
+          <p>When the stylesheet package is installed, either by running <code>make install</code> from source,
+or installing a Debian package, there are Linux/OSX command-line shell scripts available
+(<ident>docbooktotei</ident>,
+<ident>docxtotei</ident>,
+<ident>odttotei</ident>,
+<ident>tcptotei</ident>,
+<ident>teitobibtex</ident>,
+<ident>teitodocbook</ident>,
+<ident>teitodocx</ident>,
+<ident>teitodtd</ident>,
+<ident>teitoepub</ident>,
+<ident>teitoepub3</ident>,
+<ident>teitofo</ident>,
+<ident>teitohtml</ident>,
+<ident>teitohtml5</ident>,
+<ident>teitojson</ident>,
+<ident>teitolatex</ident>,
+<ident>teitoodd</ident>,
+<ident>teitoodt</ident>,
+<ident>teitopdf</ident>,
+<ident>teitordf</ident>,
+<ident>teitorelaxng</ident>,
+<ident>teitornc</ident>,
+<ident>teitoslides</ident>,
+<ident>teitotxt</ident>,
+<ident>teitoxsd</ident>, and
+<ident>xlsxtotei</ident>)
+for converting to/from Word, to/from OpenOffice, and to DTD, ePub,
+HTML, RDF, Relax NG, plain text, W3C schema etc.  These are
+implemented using Ant tasks, so a local installation of Java 1.6+ and Ant
+is required.</p>
+<p>The simplest use of the scripts is (eg)
+<eg>teitohtml <emph>inputfile</emph> <emph>outputfile</emph></eg>
+but there are also a set of options, which you see by giving the command name followed by 
+<code>--help</code>:
+<eg xml:space="preserve">
+<emph>$ teitohtml --help</emph>
+
+TEI conversion: from tei to html
+
+  Usage: /usr/bin/teitohtml [options] inputfile [outputfile]
+
+  Options, binary switches:
+  --verbose            # be verbose
+  --debug              # be verbose, do not delete intermediate files
+  --apphome=/usr/share/xml/tei/stylesheet   # where to find app directory
+  --profiledir=/usr/share/xml/tei/stylesheet/profiles    # where to find profile directory
+  --profile=default    # which transformation profile to use
+  --oxygenlib=/usr/share/oxygen/lib    # where is oxygenlib
+  --odd                # perform processing of ODD (if appropriate)
+  --localsource=DIR    # where is local copy of source of TEI Guidelines
+  --summaryDoc         # only make summary, when doing ODD processing
+
+  Options, shown with defaults:
+  --saxonjar=/usr/share/saxon/saxon9he.jar  # location of Saxon jar file
+</eg>
+</p>
+
+        </div>
+      </div>
+      <div>
+        <head>The XSL stylesheets - file structure and customization</head>
+        <p>The stylesheets files consist of a number of scripts, and seven 
+main directories where most of the work is done:
+<list type="gloss"><label>common2</label><item>templates which are independent of output
+type, used by the other transformations</item><label>xhtml2</label><item>templates for making HTML output (also used
+for ePub)</item><label>latex2</label><item>templates for making LaTeX output</item><label>docx</label><item>conversion to and from Word OOXML format</item><label>odt</label><item>conversion to and from OpenOffice ODF format</item><label>fo2</label><item>templates for making XSL FO output</item><label>odds2</label><item>processing of TEI ODD files</item></list>
+Within each directory there is usually a separate file for the templates
+which implement each of the TEI modules (eg
+<ident>textstructure.xsl</ident>,
+<ident>linking.xsl</ident>, or <ident>drama.xsl</ident>); these
+are included by a master file <ident>tei.xsl</ident>. This also
+includes a parameterization layer in the file
+<ident>tei-param.xsl</ident>, and the parameterization file from
+the <ident>common2</ident> directory. The <ident>tei.xsl</ident> does
+any necessary declaration of constants and XSL keys.</p>
+        <p>There are further directories  for other conversions, some which
+are built on top of the xhtml one above:
+<list type="gloss"><label>bibtex</label><item>conversion to BibTeX</item><label>docbook</label><item>conversion to/from Docbook</item><label>dtd</label><item>ODD conversion to DTD </item><label>epub</label><item>conversion to ePub</item><label>epub3</label><item>conversion to ePub3</item><label>html5</label><item>conversion to HTML5 </item><label>json</label><item>conversion to JSON</item><label>nlm</label><item>conversion to NLM </item><label>rdf</label><item>conversion to RDF (CIDOC CRM)</item><label>slides</label><item>conversion to LaTeX and HTML slides</item><label>tbx</label><item>conversion to TBX</item><label>tcp</label><item>conversion from Text Creation Partnership P4 XML</item><label>tite</label><item>conversion from TEI Tite to normal TEI P5</item><label>txt</label><item>conversion to plain text</item><label>xlsx</label><item>conversion from Microsoft Office spreadsheet format</item></list>
+</p>
         <div xml:id="start">
           <head>Documentation of conversions and start points</head>
           <list>
@@ -244,46 +339,6 @@ listed below.</p>
             </item>
           </list>
         </div>
-      </div>
-      <div>
-        <head>Rolling our own</head>
-        <p>It is time to set up our own profile in the stylesheets,
-	and add some custom code. You will need to
-	<list><item>Set up a copy of TEI framework, and configure oXygen
-	  to look at it</item><item>Put in support for some elements you use which are not
-	  properly covered by the existing setup</item></list>
-	</p>
-        <p>First, grab the current oXygen TEI framework by downloading
-	the big zip file from <ptr target="http://code.google.com/p/oxygen-tei/downloads/list"/>
-	(the one for oXygen 14, called
-	<code>tei-2.1.0-6.14.zip</code>). Create a directory in your
-	working area called <code>oxygenframeworks</code> and unpack
-	the zip file into there.</p>
-        <p>Start up oXygen, and go to Preferences/Global and
-	scroll down on the right to <q>Use custom frameworks</q>, and
-	put in your frameworks directory.</p>
-        <p>
-          <graphic width="3in" url="oxy-changeframeworks.png"/>
-        </p>
-        <p>Restart oXygen, and check that TEI support is still
-	there.</p>
-        <p>Turn the file <code>ecco/K000039.000.xml</code> into docx
-	and look at the result. The original line breaks show, and
-	they look horrible. Go to the directory
-	<code>tei/xml/tei/stylesheet/profiles/default/docx</code> and
-	edit the file called <code>to.xsl</code>. Add a template at
-	the end which matches <tag>lb rend="hidden"</tag> and does
-	nothing. Save, and rerun the transform (close the previous
-	version in Word first). Do you see a change?</p>
-        <p>OPTIONAL NOTE: if you want to make your own new profile for
-	this work, create a directory <code>dhox</code> in the
-	frameworks directory, in
-	<code>tei/xml/tei/stylesheet/profiles</code>, and a directory
-	under that called <code>docx</code>. In there, create a file
-	called <code>from.xsl</code> which looks like this:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.tei-c.org/ns/1.0" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" version="2.0" exclude-result-prefixes="w"><xsl:import href="../../default/docx/from.xsl"/></xsl:stylesheet></egXML>
-  (there is a copy of this in <ptr target="skeleton-from.xsl"/>). Edit
-  that accordingly, and then choose the <code>dhox</code> profile in oXygen.</p>
       </div>
       <div>
         <head>XSL customization</head>
