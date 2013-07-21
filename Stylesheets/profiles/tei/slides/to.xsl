@@ -71,9 +71,6 @@ of this software, even if advised of the possibility of such damage.
 
 <xsl:template name="latexPackages">
 \usepackage{framed}
-\usepackage{fontspec}
-\usepackage{colortbl}
-\usepackage{xunicode}
 %\setmonofont{Junicode}
 %\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
 %\setmonofont[Scale=0.86]{Andale Mono}

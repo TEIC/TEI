@@ -32,9 +32,6 @@
 
 
 <xsl:template name="latexPackages">
-\usepackage{fontspec}
-\usepackage{colortbl}
-\usepackage{xunicode}
 %\setmonofont{Junicode}
 %\setmonofont[Scale=0.86]{Lucida Sans Typewriter}
 \setmonofont[Scale=0.8]{DejaVu Sans Mono}

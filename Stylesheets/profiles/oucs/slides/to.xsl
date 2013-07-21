@@ -68,9 +68,6 @@ of this software, even if advised of the possibility of such damage.
   </xsl:template>
 
 <xsl:template name="latexPackages">
-\usepackage{fontspec}
-\usepackage{colortbl}
-\usepackage{xunicode}
 \setmonofont[Scale=0.86]{Lucida Sans Typewriter}
 \setromanfont{Minion Pro}
 \setsansfont{Myriad Pro}
