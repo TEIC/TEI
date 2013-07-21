@@ -88,12 +88,11 @@ profiles:
 
 doc: oxygendoc
 	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
-	saxon -o:doc/customize.xml doc/param.xml doc/param.xsl 
+	saxon -o:doc/index.xml doc/teixsl.xml doc/param.xsl 
 	saxon -o:doc/style.xml doc/param.xml  doc/paramform.xsl 
-	saxon -o:release/common/doc/tei-xsl-common/index.html doc/teixsl.xml profiles/default/html/to.xsl 
+	saxon -o:release/common/doc/tei-xsl-common/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
 	saxon -o:release/common/doc/tei-xsl-common/style.html doc/style.xml  profiles/default/html/to.xsl 
-	saxon -o:release/common/doc/tei-xsl-common/customize.html doc/customize.xml  profiles/default/html/to.xsl cssFile=tei.css 
-	cp doc/teixsl.png doc/teixsl.xml doc/style.xml doc/customize.xml release/common/doc/tei-xsl-common
+	cp doc/*.png doc/teixsl.xml doc/style.xml release/common/doc/tei-xsl-common
 	cp VERSION tei.css ChangeLog LICENCE release/common/doc/tei-xsl-common
 
 oxygendoc:

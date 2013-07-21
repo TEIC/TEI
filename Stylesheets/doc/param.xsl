@@ -63,6 +63,7 @@ of this software, even if advised of the possibility of such damage.
   <xsl:copy>
     <xsl:apply-templates select="@*|text()|*"/>
     <xsl:if test="@xml:id">
+      <xsl:variable name="stuff">
       <div>
 	<head>Variables</head>
 	<table rend="rules" >
@@ -89,7 +90,7 @@ of this software, even if advised of the possibility of such damage.
 	  </xsl:call-template>
 	</table>
       </div>
-      
+
       <div>
 	<head>Templates</head>
 	<xsl:call-template name="listtemplates">
@@ -105,6 +106,8 @@ of this software, even if advised of the possibility of such damage.
 	  <xsl:with-param name="Type">latex</xsl:with-param>
 	</xsl:call-template>
       </div>
+      </xsl:variable>
+      <xsl:apply-templates select="$stuff"/>
     </xsl:if>
   </xsl:copy>
 </xsl:template>
@@ -128,7 +131,6 @@ of this software, even if advised of the possibility of such damage.
 	      </hi>
 	  </label>
 	     <item>
-	     (for <xsl:value-of select="$Type"/>)
 	     <xsl:value-of select="xd:desc"/>
 	     <xsl:for-each select="following-sibling::xsl:*[1]">
 		<xsl:choose>
@@ -225,6 +227,14 @@ of this software, even if advised of the possibility of such damage.
 <xsl:template match="text()|processing-instruction()|comment()|@*">
     <xsl:copy-of select="."/>
 </xsl:template>
+
+<xsl:template match="div[count(*)=1 and head]"/>
+
+<xsl:template match="div[count(*)=2 and head and table[count(row)=1]]"/>
+
+<xsl:template match="div[count(*)=3 and head and list[@type='gloss' and not(*)]]"/>
+
+<xsl:template match="list[@type='gloss' and not(*)]"/>
 
 </xsl:stylesheet>
 

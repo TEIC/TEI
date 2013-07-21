@@ -508,15 +508,6 @@ of &lt;item&gt; elements, each containing an &lt;xref&gt; link.</p>
 
    </doc>
   <xsl:param name="generateParagraphIDs">false</xsl:param>
-  <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="string">
-      <desc>     <p>Character separating values in a rend attribute.</p>
-         <p>Some projects use multiple values in <tt
-         xmlns="http://www.w3.org/1999/xhtml">rend</tt>
-         attributes. These are handled, but the separator character(s)
-         must be specified.</p>
-      </desc>
-   </doc>
-  <xsl:param name="rendSeparator">; </xsl:param>
   <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="misc" type="boolean">
       <desc>Show a title and author at start of document</desc>
 

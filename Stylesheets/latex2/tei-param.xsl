@@ -230,10 +230,11 @@ capable of dealing with UTF-8 directly.
    </doc>
    <xsl:template name="latexSetup">
    <xsl:call-template name="latexSetupHook"/>
-\IfFileExists{xcolor.sty}%
+<xsl:text>\IfFileExists{xcolor.sty}%
   {\RequirePackage{xcolor}}%
   {\RequirePackage{color}}
 \usepackage{colortbl}
+</xsl:text>
       <xsl:choose>
          <xsl:when test="$reencode='true'">
 \IfFileExists{utf8x.def}%
@@ -241,7 +242,6 @@ capable of dealing with UTF-8 directly.
     \PrerenderUnicode{–}
   }%
  {\usepackage[utf8]{inputenc}}
-
 <xsl:call-template name="latexBabel"/>
 \usepackage[T1]{fontenc}
 \usepackage{float}
@@ -377,12 +377,11 @@ capable of dealing with UTF-8 directly.
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">
       <desc>
-         <p>LaTeX babel setup</p>
          <p>LaTeX loading of babel with options</p>
       </desc>
    </doc>
    <xsl:template name="latexBabel">
-\usepackage[english]{babel}
+<xsl:text>\usepackage[english]{babel}</xsl:text>
 </xsl:template>
 
 
@@ -576,11 +575,13 @@ capable of dealing with UTF-8 directly.
       </desc>
    </doc>
 <xsl:template name="ledmacOptions">
+<xsl:text>
 \renewcommand{\notenumfont}{\bfseries}
 \lineation{page}
 \linenummargin{inner}
 \footthreecol{A}
 \foottwocol{B}
+</xsl:text>
 </xsl:template>
 
    <doc xmlns="http://www.oxygenxml.com/ns/doc/xsl" class="layout">

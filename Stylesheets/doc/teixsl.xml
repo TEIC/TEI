@@ -9,7 +9,7 @@
       </titleStmt>
       <editionStmt>
         <edition>
-          <date>2013-02-24</date>
+          <date>2013-07-20</date>
         </edition>
       </editionStmt>
       <publicationStmt>
@@ -18,7 +18,7 @@
 	    Distributed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
 	  </licence>
           <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
-            <p>Copyright 2011 TEI Consortium.</p>
+            <p>Copyright 2013 TEI Consortium.</p>
             <p>All rights reserved.</p>
             <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
             <list>
@@ -69,56 +69,19 @@ the <ref target="mailto:info@tei-c.org">TEI Consortium</ref>.
       <div>
         <head>Introduction</head>
         <p>This is a family of XSLT 2.0 stylesheets to transform TEI XML documents
-to various forms, including XHTML, LaTeX, XSL Formatting Objects,
+to various formats, including XHTML, LaTeX, XSL Formatting Objects,
 ePub, plain text, RDF, JSON;
 and to/from Word OOXML (docx) and OpenOfice (odt).
 They concentrate on the core TEI
 modules which are used for simple transcription and <q>born
 digital</q> writing. It is important to understand that they do <hi>not</hi>:
-<list><item>cover <hi>all</hi> TEI elements and possible attribute values</item>
-<item>attempt to define a standard TEI processing or rendering
+<list><item>cover <hi>all</hi> TEI elements and possible attribute values</item><item>attempt to define a standard TEI processing or rendering
 model</item></list>
 and should not be treated as the definitive view of the TEI Consortium.</p>
       </div>
-      <div>
-        <head>Using the stylesheets</head>
-	<p>The stylesheets are embedded in various services, or can be used on their own to perform
-	the transformations. </p>
-
-	<div>
-	  <head>oXygen editor</head>
-	  <p>The stylesheets are available for immediate use in the oXygen XML editor,
-if you have the TEI framework installed (it is enabled by default). This will make various transformations available
-immediately for documents which are detected as TEI. You set up a transformation
-	by pressing the icon which looks like this: <graphic url="oxdump1.png"/>. The first time you do this, you should be offered a choice
-          of built-in options: <lb/><graphic width="4in" url="oxdump2.png"/>.<lb/> From these, tick (for example) the
-	  box by 
-            <q>TEI P5 XHTML</q> and click on <code>Apply associated</code>.</p>
-        <p>The transformation is run, and the default web browser is fired up with the resulting web
-          page.</p>
-        <p>For each transformation there are a large number of parameters which you can change. Do this by  going back to the configuration.
-	Untick TEI P5 XHTML, but keep it highlighted and select
-	<q>Duplicate</q>. You should see something like this:<lb/>
-	<graphic  width="4in" url="oxygen-duplicate-scenario1.png"/>
-	<lb/>Select <q>Parameters</q>, and you should see this: <lb/>
-	<graphic  width="4in" url="oxygen-duplicate-scenario2.png"/>
-	<lb/>Now you can scroll down to find a parameter to change,
-	press <q>Edit</q> and you'll see a dialogue like this: <lb/>
-	<graphic  width="4in"  url="oxygen-duplicate-scenario3.png"/><lb/>
-	Change the value, press OK to exit each dialogue, and then
-	<q>Apply Associated</q> to see the result.</p>
-        <p>You might apply, for example, some changes to the HTML renderin, by setting parameters as followws, and
-          checking the results: <list><item>Set <code>autoToc</code> to <q>false</q></item><item>Set <code>numberHeadings</code> to false</item><item>Set <code>pageLayout</code> to <q>CSS</q></item><item>Set <code>numberParagraphs</code> to <q>true</q></item></list>
-        </p>
-
-	<p>If you want to make sure you keep up with the latest versions of these stylesheets, and the TEI P5 schemas, you can subscribe
-to the TEI addon (maintained by the TEI Consortium) for oXygen. Go to <code>Add-ons</code> section of oXygen's <code>Preferences</code> and add 
-<code>http://tei.oucs.ox.ac.uk/updateSite.xml</code> to the list. Then go to  <code>Help/Manage add-ons</code> and activate the <emph>TEI P5 + XSL</emph>
-entry. After a restart, you'll be using the latest version in preference to what is delivered with your copy of oXygen. When updates appear, you'll
-be asked if you want to install them.</p>
-        <div>
-          <head>Profiles</head>
-          <p>The stylesheets support a set of <ident>profiles</ident>, which are
+          <div>
+            <head>Profiles</head>
+            <p>The stylesheets support a set of <ident>profiles</ident>, which are
 redefined project starting points. They are implemented as a set of directories each of which may have a file
 <ident>to.xsl</ident> for one or more of the supported output formats
 (<ident>csv</ident>,
@@ -143,37 +106,56 @@ redefined project starting points. They are implemented as a set of directories 
 <ident>txt</ident>, and
 <ident>xlsx</ident>). There may also be a <ident>from.xsl</ident>
 to go <emph>from</emph> the selected format to TEI XML.</p>
-        </div>
+          </div>
 
       <div>
-        <head>Rolling your own</head>
-        <p>In addition to editing the copy of the stylesheets in oXygen, you can sett up a copy of TEI framework, and configure oXygen
+        <head>Using the stylesheets</head>
+        <p>The stylesheets are embedded in various services, or can be used on their own to perform
+	the transformations. </p>
+        <div>
+          <head>oXygen editor</head>
+          <p>The stylesheets are available for immediate use in the oXygen XML editor,
+if you have the TEI framework installed (it is enabled by default). This will make various transformations available
+immediately for documents which are detected as TEI. You set up a transformation
+	by pressing the icon which looks like this: <graphic url="oxdump1.png"/>. The first time you do this, you should be offered a choice
+          of built-in options: <lb/><graphic width="4in" url="oxdump2.png"/>.<lb/> From these, tick (for example) the
+	  box by 
+            <q>TEI P5 XHTML</q> and click on <code>Apply associated</code>.</p>
+          <p>The transformation is run, and the default web browser is fired up with the resulting web
+          page.</p>
+          <p>If you want to make sure you keep up with the latest versions of these stylesheets, and the TEI P5 schemas, you can subscribe
+to the TEI addon (maintained by the TEI Consortium) for oXygen. Go to <code>Add-ons</code> section of oXygen's <code>Preferences</code> and add 
+<code>http://tei.oucs.ox.ac.uk/updateSite.xml</code> to the list. Then go to  <code>Help/Manage add-ons</code> and activate the <emph>TEI P5 + XSL</emph>
+entry. After a restart, you'll be using the latest version in preference to what is delivered with your copy of oXygen. When updates appear, you'll
+be asked if you want to install them.</p>
+          <div>
+            <head>Rolling your own in oXygen</head>
+            <p>In addition to editing the copy of the stylesheets in oXygen, you can sett up a copy of TEI framework, and configure oXygen
 	  to look at it. First, grab the current oXygen TEI framework by downloading
 	the big zip file from <ptr target="http://code.google.com/p/oxygen-tei/downloads/list"/>. Create a directory in your
 	own directory area called <code>oxygenframeworks</code> and unpack
 	the zip file into there.</p>
-        <p>Start up oXygen, and go to Preferences/Global and
+            <p>Start up oXygen, and go to Preferences/Global and
 	scroll down on the right to <q>Use custom frameworks</q>, and
 	put in your frameworks directory.</p>
-        <p>
-          <graphic width="3in" url="oxy-changeframeworks.png"/>
-        </p>
-        <p>Restart oXygen, and check that TEI support is still
+            <p>
+              <graphic width="3in" url="oxy-changeframeworks.png"/>
+            </p>
+            <p>Restart oXygen, and check that TEI support is still
 	there. You can now edit your copy of the stylesheets, by creating (for example)
  a new profile directory, in
 	<code>tei/xml/tei/stylesheet/profiles</code>. For exammple, to create your local profile for Word to TEI, create and a directory
 	called <code>local</code>, and under that one called <code>docx</code>. In there, create a file
 	called <code>from.xsl</code> which looks like this:
-  <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.tei-c.org/ns/1.0" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" version="2.0" exclude-result-prefixes="w"><xsl:import href="../../default/docx/from.xsl"/></xsl:stylesheet></egXML>.
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" rend="full"><xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.tei-c.org/ns/1.0" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" version="2.0" exclude-result-prefixes="w"><xsl:import href="../../default/docx/from.xsl"/></xsl:stylesheet></egXML>
 Edit that accordingly, and then choose the <code>local</code> profile in oXygen transformations.</p>
-      </div>
-
-	</div>
+          </div>
+        </div>
         <div>
           <head>OxGarage web service</head>
           <p>OxGarage<note place="foot">Based on the Enrich Garage Engine
 developed by Poznan Supercomputing and Networking Center and Oxford
-University Computing Services for the ENRICH project.</note> is web,
+University Computing Services for the ENRICH project.</note> is a web,
 and RESTful, service to manage the transformation of documents between
 a variety of formats. The majority of transformations have the TEI
 format as a pivot format, using these stylesheets.</p>
@@ -184,8 +166,7 @@ note that the latter is not a fully-supported service, so please do not rely on 
           <p>OxGarage is open source, and runs as a Java servlet. 
 A Debian package is available at <ptr target="http://tei.oucs.ox.ac.uk/teideb/"/>.
 Source code is on Github at <ptr target="https://github.com/sebastianrahtz/oxgarage.git"/></p>
-
-<p>To use OxGarage, got to the web site, click on <emph>Documents</emph> and
+          <p>To use OxGarage, got to the web site, click on <emph>Documents</emph> and
 select <emph>TEI P5 XML Document</emph> as your input. When you do so a list of
 possible conversion targets should appear on the right. Choose, for
 example, <emph>Microsoft Word Document (.docx)</emph>. When you've
@@ -193,11 +174,9 @@ done this a <emph>Choose File</emph> button should appear on the upper
 left. Click the button and navigate to your file. Click the
 <emph>Convert</emph> button and open the resulting document in
 Microsoft Word.</p>
-
-			    <p>By selecting <emph>Show Advanced options</emph> you can access a drop-down list of the
+          <p>By selecting <emph>Show Advanced options</emph> you can access a drop-down list of the
 different profiles supported for the current conversion path.</p>
-	</div>
-
+        </div>
         <div>
           <head>Command-line scripts</head>
           <p>When the stylesheet package is installed, either by running <code>make install</code> from source,
@@ -231,7 +210,7 @@ for converting to/from Word, to/from OpenOffice, and to DTD, ePub,
 HTML, RDF, Relax NG, plain text, W3C schema etc.  These are
 implemented using Ant tasks, so a local installation of Java 1.6+ and Ant
 is required.</p>
-<p>The simplest use of the scripts is (eg)
+          <p>The simplest use of the scripts is (eg)
 <eg>teitohtml <emph>inputfile</emph> <emph>outputfile</emph></eg>
 but there are also a set of options, which you see by giving the command name followed by 
 <code>--help</code>:
@@ -257,11 +236,29 @@ TEI conversion: from tei to html
   --saxonjar=/usr/share/saxon/saxon9he.jar  # location of Saxon jar file
 </eg>
 </p>
-
+        </div>
+        <div>
+          <head>Importing the XSL into your own stylesheet</head>
+          <p>If, for example, you want to write a customization of the HTML conversion
+you can simply refer to the specification <code>xhtml2/tei.xsl</code>
+directly with your XSL processor, or install it locally on your own
+server.  For more flexibility, you may prefer to reference the
+specifications from an XSL wrapper of your own. The minimal
+specification would look like this:
+<eg><![CDATA[
+<xsl:stylesheet 
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:import href="xhtml2/tei.xsl"/>
+</xsl:stylesheet>
+]]></eg>
+You can customize the result by adding to this wrapper file.  The normal result will be a single stream of HTML
+which you can save in a file. You can also configure it to produce
+multiple output files, one per top-level <gi>div</gi> or <gi>div1</gi>.
+</p>
         </div>
       </div>
       <div>
-        <head>The XSL stylesheets - file structure and customization</head>
+        <head>File structure and customization</head>
         <p>The stylesheets files consist of a number of scripts, and seven 
 main directories where most of the work is done:
 <list type="gloss"><label>common2</label><item>templates which are independent of output
@@ -341,37 +338,153 @@ are built on top of the xhtml one above:
         </div>
       </div>
       <div>
-        <head>XSL customization</head>
-        <p>
-  The TEI stylesheets are designed to be customized, and I will
-  gladly add more parameterization in future. There are currently
-  several hundred things you can set to change the output, described
-  in the <ref target="customize.html">Customization Handbook</ref>.
-  They are either XSLT variables, or named templates, so
-  you need to understand a little of XSL syntax. If you know
-  a  bit more, you can override any of the templates in the style files, 
-  but then you are on your own.</p>
+        <head>Parameters and customizable templates</head>
+        <p>The TEI stylesheets are designed to be customized. There
+        are several hundred things you can set to change the output in
+        various formats.  They are either XSL variables,  named
+        templates which you can override, or  empty
+	<soCalled>hook</soCalled> templates
+into which you can add your own code. You need to understand a little of XSL
+        syntax to work with these. If you know a bit more, you can override any of the
+        templates in the style files, but then you are on your
+        own.</p>
         <p>The <ref target="style.html">Stylebear</ref> web form
   will construct a XSL file for you, with all the variables configured. 
   </p>
-      </div>
+        <p>You can also change any of the parameters from within the oXygen editor.
+Do this by  going  to the stylesheet configuration.
+Untick (eg) TEI P5 XHTML, but keep it highlighted and select
+<q>Duplicate</q>. You should see something like this:<lb/>
+<graphic width="4in" url="oxygen-duplicate-scenario1.png"/>
+<lb/>Select <q>Parameters</q>, and you should see this: <lb/>
+<graphic width="4in" url="oxygen-duplicate-scenario2.png"/>
+<lb/>Now you can scroll down to find a parameter to change,
+press <q>Edit</q> and you'll see a dialogue like this: <lb/>
+<graphic width="4in" url="oxygen-duplicate-scenario3.png"/><lb/>
+Change the value, press OK to exit each dialogue, and then
+  <q>Apply Associated</q> to see the result.</p>
+        <p>You might apply, for example, some changes to the HTML rendering, by setting parameters as followws, and
+  checking the results: <list><item>Set <code>autoToc</code> to <q>false</q></item><item>Set <code>numberHeadings</code> to false</item><item>Set <code>pageLayout</code> to <q>CSS</q></item><item>Set <code>numberParagraphs</code> to <q>true</q></item></list>
+  </p>
+          <p> There are 13 areas for customization. In most cases there are
+parameters and templates which are specific to one of the three main
+output methods (HTML, FO and LaTeX), and those which are common to all
+three.</p>
+          <div xml:id="links">
+            <head>Standard page features</head>
+            <p>The default behaviour of the system is to construct each HTML page
+with per-page navigation bars top and bottom, and a standard set of
+navigation links underneath. </p>
+          </div>
+          <div xml:id="layout">
+            <head>Layout</head>
+            <p>There are a few ways to provide a constant navigation aid,
+with a table of links on the left or right. </p>
+            <p>Hypertext links present special problems, as we have to choose
+whether they should start a new window, occupy all of the current
+window, or stay within the frame. These stylesheets implement the
+following rules:
+<list type="ordered"><item>Any <gi>ref</gi> or <gi>ptr</gi> link stays within the frame</item><item>Any link containing <q>://</q> uses the whole browser window</item><item>Any link starting <q>.</q> uses the whole browser window</item><item>If the stylesheet sets no splitting of the document,
+any <gi>ref</gi> or <gi>ptr</gi> link  uses the whole browser
+window</item><item>If a <gi>ref</gi> or <gi>ptr</gi> link has a
+<ident>rend</ident> attribute value of <q>noframe</q>, the whole browser
+window is used</item><item>If a <gi>ref</gi> or <gi>ptr</gi> link has a
+<ident>rend</ident> attribute value of <q>new</q>, a new browser window
+is started</item></list>
+</p>
+          </div>
+          <div xml:id="headings">
+            <head>Headings</head>
+            <p>Headings for sections can be customized in various ways.</p>
+          </div>
+          <div xml:id="numbering">
+            <head>Numbering</head>
+            <p>Section headings, figures, tables and notes can be numbered
+automatically.  We can set the numbering of front matter and back
+matter separately. If you prefer to supply your own numbering, using
+the <code>n</code> attribute, you can choose this over automatic
+numbering.</p>
+            <p>Normally, heading numbers are followed by <q>. </q>, but you can vary
+this. This would let you use eg fixed spaces.</p>
+          </div>
+          <div xml:id="output">
+            <head>Output</head>
+            <p>You can set a name for the output file(s); if you ask for multiple
+output files, this name will be used to create unique filenames for
+each section. By default, results will go to wherever your XSLT
+processor normally writes (usually standard output).  If you opt to
+have files created, you can specify the name of the directory where
+the output is to be placed.</p>
+            <p>If you are making HTML, do you want a single output page, or a
+separate one for each section of the document?   You
+can decide to have a different splitting policy for front and
+back matter.  </p>
+          </div>
+          <div xml:id="toc">
+            <head>Table of contents generation</head>
+            <p>You probably want tables of contents built for your document, using
+the <gi>div</gi> structure. However, if you have used a <tag>divGen
+type="toc"</tag> explicitly, that will also create a table of contents,
+so you can suppress the automatic one.  When a table of contents is
+created, you choose how many levels of headings it will show.
+You can choose whether or not the front and backmatter appear
+in the table of contents.</p>
+          </div>
+          <div xml:id="i18n">
+            <head>Internationalization</head>
+            <p>At various places, the system has to create text. You can choose
+the words it uses (eg translate them to another language).</p>
+          </div>
+          <div xml:id="CSS">
+            <head>CSS</head>
+            <p>Setting up material for the CSS file to accompany HTML output.</p>
+          </div>
+          <div xml:id="tables">
+            <head>Tables</head>
+            <p>Default behaviour of table elements.</p>
+          </div>
+          <div xml:id="figures">
+            <head>Figures and graphics</head>
+            <p>Sometimes you need to prefix the names of all graphics files with 
+a directory name or a URL, or provide a default suffix.
+You can also tell <gi>figure</gi> elements whether or not to
+produce anything.</p>
+          </div>
+          <div xml:id="style">
+            <head>Style</head>
+            <p>You can choose lots of features which affect the font, size, etc
+<list><item>What font to use for URLs.</item><item>Whether titles, dates and authors are shown.</item><item>Whether headings of objects are included in cross-references.</item></list>
+</p>
+          </div>
+          <div xml:id="hook">
+            <head>Hooks</head>
+            <p>A set of templates which are empty by default; they can be used
+to add code at strategic points. The content must be valid XSLT.</p>
+          </div>
+          <div xml:id="misc">
+            <head>Miscellaneous and advanced</head>
+            <p>Finally, some miscellaneous or advanced features which you probably won't
+use much.</p>
+          </div>
+        </div>
+
       <div>
         <head>Notes on XSLT processors and XSL FO</head>
-        <p>
-These stylesheets use XSLT 2.0, and have only been tested with
-Saxon (from <ptr target="http://saxon.sourceforge.net"/>). An older
-set of XSLT 1.0 stylesheets are also available, but is not
-maintained or updated.</p>
-        <p>It is up to the user to find out how to run the XSLT processor! This may
-be from within a Java program, from your editor, on the command-line,
-or inside a web server.</p>
-        <p>The XSL FO style sheets were developed for use with PassiveTeX (<ptr target="http://projects.oucs.ox.ac.uk/passivetex/"/>),
-a system using XSL formatting objects to render XML to PDF via
-LaTeX. They have not  been extensively tested with the
-other XSL FO implementations.</p>
+        <p>These stylesheets use XSLT 2.0, and have only been tested
+        with Saxon (from <ptr
+        target="http://saxon.sourceforge.net"/>). An older set of XSLT
+        1.0 stylesheets are also available, but is not maintained or
+        updated.</p>
+        <p>It is up to the user to find out how to run the XSLT
+        processor! This may be from within a Java program, from your
+        editor, on the command-line, or inside a web server.</p>
+        <p>The XSL FO style sheets were developed for use with
+        PassiveTeX (<ptr
+        target="http://projects.oucs.ox.ac.uk/passivetex/"/>), a
+        system using XSL formatting objects to render XML to PDF via
+        LaTeX. They have not been extensively tested with the other
+        XSL FO implementations.</p>
       </div>
     </body>
-    <back>
-</back>
   </text>
 </TEI>
