@@ -89,7 +89,7 @@ profiles:
 doc: oxygendoc
 	test -d release/common/doc/tei-xsl-common || mkdir -p release/common/doc/tei-xsl-common
 	saxon -o:doc/index.xml doc/teixsl.xml doc/param.xsl 
-	saxon -o:doc/style.xml doc/param.xml  doc/paramform.xsl 
+	saxon -o:doc/style.xml doc/teixsl.xml  doc/paramform.xsl 
 	saxon -o:release/common/doc/tei-xsl-common/index.html doc/index.xml profiles/tei/html5/to.xsl cssFile=tei.css 
 	saxon -o:release/common/doc/tei-xsl-common/style.html doc/style.xml  profiles/default/html/to.xsl 
 	cp doc/*.png doc/teixsl.xml doc/style.xml release/common/doc/tei-xsl-common

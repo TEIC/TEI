@@ -167,7 +167,7 @@ return "";
 <p>Name of output file:
  <html:input type="textbox" name="outputFile" value="myTei.xsl"/></p>
 
-   <xsl:for-each select="TEI/text/body/div[@xml:id]">
+   <xsl:for-each select="TEI/text/body/div[@type='param']">
        <p><hi><xsl:number/>: <xsl:value-of select="head"/></hi></p>
        <p><ref target="customize.html#{@xml:id}">Details of this section</ref></p>
        <table>
