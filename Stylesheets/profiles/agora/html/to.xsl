@@ -48,6 +48,12 @@
   <xsl:param name="feedbackURL"></xsl:param>
    <xsl:param name="homeWords">AGORA</xsl:param>
  
+
+<!-- dont wrap quotes in quotes -->
+<xsl:param name="preQuote"/>
+<xsl:param name="postQuote"/>
+
+
 <xsl:template name="copyrightStatement">
 This page is made available under the Creative Commons General Public License "Attribution, Non-Commercial, Share-Alike", version 3.0 (CCPL BY-NC-SA) 
 </xsl:template>
@@ -98,7 +104,7 @@ This page is made available under the Creative Commons General Public License "A
 </ul></xsl:template>
 
 
-<!-- allow for @rend on head -->
+<!-- allow for @rend on head 
 <xsl:template match="tei:head[@rend]">
 
 <xsl:attribute name="class">
@@ -106,7 +112,7 @@ This page is made available under the Creative Commons General Public License "A
 </xsl:attribute>
 
 </xsl:template>
-
+-->
 
 
 <xsl:template match="tei:ref">
