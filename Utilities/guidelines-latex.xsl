@@ -15,7 +15,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
-<xsl:import href="/usr/share/xml/tei/stylesheet/latex2/tei.xsl"/>
+<xsl:import href="/usr/share/xml/tei/stylesheet/latex/latex.xsl"/>
 <xsl:output method="text"/>
  <xsl:strip-space elements="tei:additional tei:address tei:adminInfo
 			    tei:altGrp tei:altIdentifier tei:analytic
