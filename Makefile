@@ -19,6 +19,7 @@ JING=jing
 TRANG=trang
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
+SAXONJAR=Saxon-HE-9.4.0.6.jar
 
 .PHONY: convert schemas html-web validate valid test clean dist exemplars
 
@@ -46,7 +47,7 @@ check.stamp:
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
-	ant -lib /usr/share/java/jing.jar:Utilities/lib/Saxon-HE-9.4.0.6.jar -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
+	ant -lib /usr/share/java/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 	touch schemas.stamp
@@ -73,7 +74,7 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 		echo "<buildweb lang=\"$$i\"/>" >> buildweb.xml; \
 	done
 	echo '</target></project>' >> buildweb.xml
-	ant -lib /usr/share/java/jing.jar:Utilities/lib/Saxon-HE-9.4.0.6.jar -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
+	ant -lib /usr/share/java/jing.jar:Utilities/lib/${SAXONJAR} -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
 	rm -f buildweb.xml Utilities/teic-index.xml
 	touch html-web.stamp
 
@@ -90,18 +91,18 @@ epub: Guidelines.epub
 
 Guidelines.epub: check.stamp p5.xml 
 	@echo BUILD: Make epub version of Guidelines
-	${XSL}/teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
+	ant -q -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub 
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 	touch Guidelines.epub
 
 epub3: check.stamp p5.xml 
-	${XSL}/teitoepub3 --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=tei p5.xml Guidelines.epub
+	ant -q -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 
 mobi:  Guidelines.mobi
 
 Guidelines.mobi: check.stamp p5.xml 
-	${XSL}/teitoepub --profiledir=${XSL}/profiles --coverimage=Utilities/cover.jpg --profile=teikindle p5.xml Guidelines-kindle.epub
+	ant -q -f ${XSL}/epub/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=teikindle -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub
 	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
 
@@ -124,10 +125,10 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	@echo BUILD: build Lite version of Guidelines, then LaTeX version of Guidelines from Lite, then run to PDF using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
-	ant -lib Utilities/lib/Saxon-HE-9.4.0.6.jar -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
+	ant -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
 
 pdf-complete:
-	ant -lib Utilities/lib/Saxon-HE-9.4.0.6.jar -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
+	ant -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 
@@ -155,7 +156,7 @@ valid: jing_version=$(wordlist 1,3,$(shell jing))
 valid: check.stamp p5.xml 
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
-	ant -lib Utilities/lib/Saxon-HE-9.4.0.6.jar -f antbuilder.xml -DXSL=${XSL} validators		
+	ant -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators		
 	cat ValidatorLog.xml
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";false; fi)
 	diff ValidatorLog.xml expected-results/ValidatorLog.xml
