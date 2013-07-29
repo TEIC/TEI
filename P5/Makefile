@@ -91,7 +91,7 @@ epub: Guidelines.epub
 
 Guidelines.epub: check.stamp p5.xml 
 	@echo BUILD: Make epub version of Guidelines
-	ant -q -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
+	ant -q -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub 
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 	touch Guidelines.epub
 
