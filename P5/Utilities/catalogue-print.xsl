@@ -11,10 +11,10 @@
     version="2.0">
   
   
-  <xsl:import href="/usr/share/xml/tei/stylesheet/odds2/teiodds.xsl"/>
+  <xsl:import href="/usr/share/xml/tei/stylesheet/odds/teiodds.xsl"/>
 
   <xsl:import
-      href="/usr/share/xml/tei/stylesheet/odds2/odd2lite.xsl"/>
+      href="/usr/share/xml/tei/stylesheet/odds/odd2lite.xsl"/>
   
   <xsl:param name="TEISERVER">http://tei.oucs.ox.ac.uk/Query/</xsl:param>
   <xsl:param name="displayMode">rnc</xsl:param>
