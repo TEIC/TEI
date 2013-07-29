@@ -209,10 +209,7 @@
 	      <xsl:text>: &lt;</xsl:text>
 	      <xsl:value-of select="$me"/>
 	      <xsl:text>&gt; </xsl:text>
-	      <xsl:call-template name="makeGloss">
-		<xsl:with-param name="langs"
-				select="$langs"/>
-	      </xsl:call-template>
+	      <xsl:sequence select="tei:makeGloss(.,$langs)"/>
 	    </title>
 	    <link href="{$cssFile}" rel="stylesheet" type="text/css"/>
 	    <xsl:if test="not($cssSecondaryFile = '')">
@@ -228,10 +225,7 @@
 		<xsl:text>: </xsl:text>
 		<xsl:value-of select="$me"/>
 		<xsl:text> </xsl:text>
-		<xsl:call-template name="makeGloss">
-		  <xsl:with-param name="langs"
-				  select="$langs"/>
-		</xsl:call-template>
+		<xsl:sequence select="tei:makeGloss(.,$langs)"/>
 	    </xsl:with-param>
 	  </xsl:call-template>
 	    <xsl:call-template name="includeJavascript"/>
@@ -248,10 +242,7 @@
 		<xsl:value-of select="$me"/>
 		<xsl:text>&gt; </xsl:text>
 		</a>
-		<xsl:call-template name="makeGloss">
-		  <xsl:with-param name="langs"
-				  select="$langs"/>
-		</xsl:call-template>
+		<xsl:sequence select="tei:makeGloss(.,$langs)"/>
 	      </h3>
 	      <p>These search results reproduce every example of the
 	      use of <xsl:text>&lt;</xsl:text>
