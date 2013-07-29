@@ -36,7 +36,7 @@ echo Try to fetch $version package from $dir
 case $package in 
   TEIP5)         names="tei-p5-source tei-p5-schema tei-p5-database tei-p5-doc tei-p5-exemplars tei-p5-test";;
   Stylesheets1)   names="tei-p5-xsl";;
-  Stylesheets)   names="tei-xsl-common tei-p5-xslprofiles tei-p5-xsl2";;
+  Stylesheets)   names="tei-xsl";;
   Roma)          names=tei-roma;;
   OxGarage)      names=tei-oxgarage;;
     *) echo "Error: package $package unsupported"; exit 1;;
