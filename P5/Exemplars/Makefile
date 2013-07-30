@@ -23,12 +23,10 @@ DOCONLYODDS=tei_lite_fr.doc.epub
 XODDS = tei_allPlus.special	
 
 DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf
-ROMA=roma2
 LANGUAGE=en
 P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-ROMAOPTS=--xsl=${XSL} --isoschematron
 SOURCE=${P5}/p5subset.xml 
 ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:/usr/share/java/jing.jar -Dtrang=/usr/share/trang/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
 
