@@ -70,7 +70,7 @@ release-stamp:
 	perl -p -i -e "s+.*define.*roma_version.*+define (\'roma_version\',\'$$V\');+" roma/config-dist.php; \
 	tar --exclude=.svn -c  -f - $(FILES) | (cd release/tei-roma; tar xf -); \
 	perl -p -i -e "s/{roma_version}/$$V/;s/{roma_date}/$$D/" release/tei-roma/roma/templates/main.tem
-	(cd roma; ../roma2.sh --xsl=${TEIXSLDIR} --nodtd --noxsd oddschema.odd .)
+	(cd roma; curl -s -F upload=@oddschema.odd  -o oddschema.rng http://oxgarage.oucs.ox.ac.uk:8080/ege-webservice/Conversions/ODD%3Atext%3Axml/ODDC%3Atext%3Axml/relaxng%3Aapplication%3Axml-relaxng/)
 	touch release-stamp
 
 clean:
