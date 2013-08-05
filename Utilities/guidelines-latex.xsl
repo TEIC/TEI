@@ -102,6 +102,8 @@
 <xsl:param name="tocNumberSuffix">.\ </xsl:param>
 <xsl:param name="numberSpacer">\ </xsl:param>
 <xsl:param name="specLinkDepth">1</xsl:param>
+<xsl:param name="exampleFont">DejaVu Sans Mono</xsl:param>
+
 
   <xsl:variable name="docClass">book</xsl:variable>
 <xsl:template name="latexPreambleHook">
