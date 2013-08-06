@@ -800,5 +800,45 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+  
+<!-- This template overrides the one in the git repo Stylesheets (odds/guidelines.xsl) to add the popup footnotes.
+    Added by MDH 2013-08-06. -->
+  <xsl:template name="javascriptHook">
+    <script type="text/javascript" src="jquery-1.2.6.min.js">
+      <xsl:comment>JQuery</xsl:comment>
+    </script>
+    <script type="text/javascript" src="popupFootnotes.js">
+      <xsl:comment>JS lib for popup footnotes added by MDH 2013-08.</xsl:comment>
+    </script>
+    <!--
+    <script type="text/javascript" src="jquery.treeview.js">	
+       <xsl:comment>JQuery treeview</xsl:comment>
+    </script>
+-->
+    <script type="text/javascript" src="columnlist.js">
+      <xsl:comment>JQuery columnlist</xsl:comment>
+    </script>
+    <script type="text/javascript">
+      $(function() {
+      $('ul.attrefs-class').columnizeList({cols:3,width:30,unit:'%'});
+      $('ul.attrefs-element').columnizeList({cols:3,width:30,unit:'%'});
+      $(".displayRelaxButton").click(function() {
+      $(this).parent().find('.RNG_XML').toggle();
+      $(this).parent().find('.RNG_Compact').toggle();
+      });
+      $(".tocTree .showhide").click(function() {
+      $(this).find(".tocShow,.tocHide").toggle();
+      $(this).parent().find("ul.continuedtoc").toggle();
+      });
+      })
+    </script>
+    <xsl:if test="not($googleAnalytics='')">
+      <script type="text/javascript" src="udm-all.js">
+        <xsl:comment>UDM</xsl:comment>
+      </script>
+      <link rel="stylesheet" href="udm.css"/>
+    </xsl:if>
+    <xsl:call-template name="jsForOdds"/>
+  </xsl:template>
 
 </xsl:stylesheet>
