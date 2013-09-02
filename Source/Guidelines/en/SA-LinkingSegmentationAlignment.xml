@@ -1232,29 +1232,32 @@ part of a biblical reference.</p>
 </refsDecl></egXML>
 </p>
 <p>When an application encounters a canonical reference as the
-value of <att>cRef</att> attribute, it  follows a sequence of
-specific steps to transform it into a URI reference.
+value of <att>cRef</att> attribute, it might follow this sequence of
+specific steps to transform it into a URI reference:
 <list type="ordered">
   <item>Ascertain the correct <gi>refsDecl</gi>
   following the rules summarized in section <ptr target="#CCAS3"/>.</item>
   <item>For each <gi>cRefPattern</gi> element encountered in
   the appropriate <gi>refsDecl</gi>, in the order encountered:
   <list type="ordered">
-    <item>match the value of <att>cRef</att> to the regular
+    <item>match the value of the <att>cRef</att> attribute to the regular
     expression found as the value of the <att>matchPattern</att>
     attribute</item>
-    <item>if the <att>cRef</att> value matches, take the value
-    of the <att>replacementPattern</att> attribute and substitute the back
-    references ($1, $2, etc.) with the corresponding matched
-    substrings</item>
-    <item>the result is taken as if it were a relative or
-    absolute URI reference specified on the <att>target</att>
-    attribute; i.e., it should be used as is or combined with
-    the current <att>xml:base</att> value as usual</item>
-    <item>no further processing of this <att>cRef</att> against
-    the <gi>refsDecl</gi> should take place</item>
-    <item>if, however, the <att>cRef</att> value does not match
-    the regular expression specified on <att>matchPattern</att> attribute,
+    <item>if the value of the <att>cRef</att> attribute matches:
+      <list type="ordered">
+        <item>take the value of the <att>replacementPattern</att> 
+          attribute and substitute the back references ($1, $2, 
+          etc.) with the corresponding matched substrings</item>
+        <item>the result is taken as if it were a relative or 
+          absolute URI reference specified on the <att>target</att> 
+          attribute; i.e., it should be used as is or combined with
+          the current <att>xml:base</att> attribute value as usual</item>
+        <item>no further processing of this value of the <att>cRef</att> 
+          attribute against the <gi>refsDecl</gi> should take place</item>
+      </list>
+    </item>
+    <item>if, however, the value of the <att>cRef</att> attribute does not match
+    the regular expression specified in the value of the <att>matchPattern</att> attribute,
     proceed to the next <gi>cRefPattern</gi></item>
   </list>
   </item>
@@ -1351,10 +1354,9 @@ corresponds to <q>Matt 5:7</q>.</p>
     <code>(.+)</code>, producing the matched substring <q>Matt</q>,
     and the URI Reference
     <code>http://www.example.org/resources/books/Bible.xml#xpath1(//div[@n='Matt'])</code>.</p>
-  <p>It is an error to reference more matched substrings than
-    are produced by the regular expression. For example:
+  <p>a <gi>cRefPattern</gi> should not reference more matched substrings. For example:
     <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><cRefPattern matchPattern="(.+) (.+):(.+)" replacementPattern="//div[@n='$1']/div[$2]/div[$3]/p[$4]"/></egXML>
-    would produce an error, since only three matched
+    is faulty, since only three matched
     substrings would have been produced, but a fourth (<code>$4</code>) was
     referenced.</p>
     <p>It is quite reasonable to believe that encoders would
