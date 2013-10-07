@@ -11,43 +11,12 @@
   </classes><content>
     <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
   </content>
-  <constraintSpec ident="linkTargets1" scheme="isoschematron">
-    <constraint>
-      <sch:report test="@target and @targets">You may not supply both @target and @targets on <sch:name/></sch:report>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec ident="linkTargets2" scheme="isoschematron">
-    <constraint>
-      <sch:report test="not(@target) and not(@targets)">You must supply either @target or @targets on <sch:name/></sch:report>
-    </constraint>
-  </constraintSpec>
   <constraintSpec ident="linkTargets3" scheme="isoschematron">
     <constraint>
-      <sch:assert test="contains(@targets,' ') or contains(@target,' ')">You must supply at least two values for  @target or @targets on <sch:name/></sch:assert>
+      <sch:assert test="contains(@target,' ')">You must supply at least two values for  @target or @targets on <sch:name/></sch:assert>
     </constraint>
-  </constraintSpec><attList>
-    <attDef ident="targets" usage="opt" validUntil="2013-09-20">
-      <equiv/>
-      <desc>specifies the identifiers of the elements or passages to be linked or associated. </desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">연결 또는 연관된 요소 또는 단락의 확인소를 명시한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">標明被連結元素或段落的識別符碼。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja"> リンク付けされれている当該要素または一節の識別子を示す． </desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">spécifie les identifiants des éléments ou des passages à lier ou à associer.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">especifica los identificadores de los elementos o divisiones de texto que son enlazados o asociados.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">specifica gli identificatori degli elementi o porzioni di testo da associare</desc>
-      <datatype minOccurs="2" maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-      <valDesc>two or more pointers (URIs), separated by whitespace</valDesc>
-      <valDesc xml:lang="fr" versionDate="2009-10-06">deux pointeurs au moins (URI), séparés par une espace.</valDesc>
-      <remarks>
-        <p>This attribute is deprecated. It is retained for backward compatibility
-only; the attribute <att>target</att> should be used for
-preference. It is an error to supply both attributes, but one or the
-other must be present.</p>
-      </remarks>
-    </attDef>
-  </attList><exemplum xml:lang="en">
+  </constraintSpec>
+  <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <s n="1">The state Supreme Court has refused to release <rs xml:id="R1"><rs xml:id="R2">Rahway State Prison</rs> inmate</rs> <rs xml:id="R3">James Scott</rs> on bail.</s>
       <s n="2"><rs xml:id="R4">The fighter</rs> is serving 30-40 years
