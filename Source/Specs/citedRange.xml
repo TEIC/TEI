@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
@@ -6,16 +6,20 @@
     $Date$
     $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="citedRange">
+  <gloss>cited range</gloss>
+  <desc>defines the range of cited content, often represented by pages or other units</desc>
+  <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.pointing"/>
     <memberOf key="model.biblPart"/>
-  </classes><content>
+  </classes>
+  <content>
     <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
-  </content><attList>
+  </content>
+  <attList>
     <attDef ident="unit" usage="opt">
       <desc>identifies the type of information conveyed by the element, e.g.
                 <val>columns</val>, <val>pages</val>, <val>volume</val>.</desc>
@@ -60,18 +64,22 @@
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
     </attDef>
-  </attList><exemplum xml:lang="en">
+  </attList>
+  <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <citedRange>pp 12–13</citedRange>
       <citedRange unit="page" from="12" to="13"/>
       <citedRange unit="volume">II</citedRange>
       <citedRange unit="page">12</citedRange>
     </egXML>
-  </exemplum><exemplum xml:lang="en">
+  </exemplum>
+  <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <bibl><ptr target="#mueller01"/>, <citedRange target="http://example.com/mueller3.xml#page4">vol. 3, pp.
         4-5</citedRange></bibl>
     </egXML>
-  </exemplum><listRef>
+  </exemplum>
+  <listRef>
     <ptr target="#COBICOI"/>
-  </listRef></elementSpec>
+  </listRef>
+</elementSpec>
