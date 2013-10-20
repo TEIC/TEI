@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,26 +6,29 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<elementSpec xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintSpec"><gloss>constraint on schema</gloss><desc>contains  a constraint, expressed in some formal syntax,
-  which cannot be expressed in the structural content model</desc><classes>
+<elementSpec xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintSpec">
+  <gloss>constraint on schema</gloss>
+  <desc>contains  a constraint, expressed in some formal syntax,
+  which cannot be expressed in the structural content model</desc>
+  <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.identified"/>
     <memberOf key="att.typed"/>
-  </classes><content>
+  </classes>
+  <content>
     <rng:zeroOrMore>
-      <rng:ref name="model.descLike"/>
-</rng:zeroOrMore>
-<rng:zeroOrMore>
-      <rng:ref name="model.glossLike"/>
+      <rng:choice>
+        <rng:ref name="model.glossLike"/>
+        <rng:ref name="model.descLike"/>
+      </rng:choice>
     </rng:zeroOrMore>
     <rng:optional>
       <rng:ref name="constraint"/>
     </rng:optional>
-  </content><constraintSpec ident="sch" scheme="isoschematron">
+  </content>
+  <constraintSpec ident="sch" scheme="isoschematron">
     <desc>Relationship between scheme attribute and contents</desc>
     <constraint>
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
@@ -34,7 +37,8 @@ $Id$
 	a constraint with a value of 'schematron' on the scheme attribute
       </sch:report>
     </constraint>
-  </constraintSpec><constraintSpec ident="isosch" scheme="isoschematron">
+  </constraintSpec>
+  <constraintSpec ident="isosch" scheme="isoschematron">
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
       <sch:report test="tei:constraint/sch:* and    not(@scheme='isoschematron')">
@@ -42,7 +46,8 @@ $Id$
 	a constraint with a value of 'isoschematron' on the scheme attribute
       </sch:report>
     </constraint>
-  </constraintSpec><attList>
+  </constraintSpec>
+  <attList>
     <attDef ident="scheme" usage="req">
       <desc>supplies the name of the language in which the constraints
       are defined</desc>
@@ -64,7 +69,8 @@ $Id$
         </valItem>
       </valList>
     </attDef>
-  </attList><exemplum xml:lang="en">
+  </attList>
+  <exemplum xml:lang="en">
     <p>This constraint uses Schematron to enforce the presence of the
     <att>spanTo</att> attribute (which comes from an attribute class)
     on the <gi>addSpan</gi> element: </p>
@@ -77,7 +83,8 @@ $Id$
         </constraint>
       </constraintSpec>
     </egXML>
-  </exemplum><exemplum xml:lang="en">
+  </exemplum>
+  <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <constraintSpec ident="demo-c2" scheme="isoschematron">
         <desc>Implement an accessibility rule which says that pictures should
@@ -89,7 +96,8 @@ $Id$
         </constraint>
       </constraintSpec>
     </egXML>
-  </exemplum><exemplum xml:lang="en">
+  </exemplum>
+  <exemplum xml:lang="en">
     <p>This constraint uses a language which is not
     expressed in XML to check whether the title and author are identical: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -99,6 +107,8 @@ $Id$
 	</constraint>
       </constraintSpec>
     </egXML>
-  </exemplum><listRef>
+  </exemplum>
+  <listRef>
     <ptr target="#TDTAG"/>
-  </listRef></elementSpec>
+  </listRef>
+</elementSpec>

@@ -34,31 +34,23 @@ module, i.e. a named and externally visible group of declarations.</desc>
       <memberOf key="att.typed"/>
   </classes>
   <content>
-      <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-         <rng:zeroOrMore>
-            <rng:ref name="model.glossLike"/>
-         </rng:zeroOrMore>
-         <rng:oneOrMore>
-            <rng:ref name="model.descLike"/>
-         </rng:oneOrMore>
-
-         <rng:zeroOrMore>
-            <rng:ref name="exemplum"/>
-         </rng:zeroOrMore>
-         <rng:optional>
-            <rng:ref name="remarks"/>
-         </rng:optional>
-         <rng:zeroOrMore>
-            <rng:ref name="listRef"/>
-         </rng:zeroOrMore>
-         <!--
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-	<rng:ref name="model.oddDecl"/>
-	<rng:ref name="model.oddRef"/>
-      </rng:choice>
-    </rng:zeroOrMore>-->
-    </rng:group>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <zeroOrMore>
+        <choice>
+          <ref name="model.glossLike"/>
+          <ref name="model.descLike"/>
+        </choice>
+      </zeroOrMore>      
+      <zeroOrMore>
+	<ref name="exemplum"/>
+      </zeroOrMore>
+      <optional>
+	<ref name="remarks"/>
+      </optional>
+      <zeroOrMore>
+	<ref name="listRef"/>
+      </zeroOrMore>
+    </group>
   </content>
    <!-- MDH: this element added to att.typed 2012-02-16. 
      See http://purl.org/TEI/BUGS/3486352  -->
