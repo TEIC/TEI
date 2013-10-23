@@ -116,11 +116,24 @@
     <xsl:apply-templates/>
   </xsl:template>
 
+  <xsl:template match="@ident">
+    <xsl:value-of select="."/>
+</xsl:template>
+
+  <xsl:template match="@*">
+    <xsl:text> </xsl:text>
+    <xsl:value-of select="local-name()"/>
+    <xsl:text>="</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>"</xsl:text>
+  </xsl:template>
+
   <xsl:template match="*">
     <xsl:text>&lt;</xsl:text>
     <xsl:value-of select="local-name()"/>
+    <xsl:apply-templates select="@*"/>
     <xsl:text>&gt;</xsl:text>
-    <xsl:apply-templates/>
+    <xsl:apply-templates select="*|text()"/>
     <xsl:text>&lt;/</xsl:text>
     <xsl:value-of select="local-name()"/>
     <xsl:text>&gt;</xsl:text>
