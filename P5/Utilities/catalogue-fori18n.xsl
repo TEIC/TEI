@@ -14,7 +14,6 @@
           <thead>
             <tr>
               <th>name</th>
-              <th>attr</th>
               <th>desc</th>
               <th>translation</th>
               <th>gloss</th>
@@ -26,18 +25,12 @@
           </thead>
           <xsl:for-each select="//elementSpec|//macroSpec|//classSpec">
             <xsl:sort select="@ident"/>
-            <xsl:message>
-              <xsl:value-of select="@ident"/>
-            </xsl:message>
-            <xsl:call-template name="show">
-	      <xsl:with-param name="att" select="false()"/>
-	    </xsl:call-template>
+            <xsl:call-template name="show"/>
             <xsl:for-each select=".//attDef">
-              <xsl:message>....<xsl:value-of
-	      select="@ident"/></xsl:message>
-	      <xsl:call-template name="show">
-		<xsl:with-param name="att" select="true()"/>
-	      </xsl:call-template>
+	      <xsl:call-template name="show"/>
+	      <xsl:for-each select=".//valItem[desc|gloss]">
+	      <xsl:call-template name="show"/>
+	      </xsl:for-each>
             </xsl:for-each>
           </xsl:for-each>
         </table>
@@ -55,58 +48,44 @@
   </xsl:template>
 
   <xsl:template  name="show">
-    <xsl:param name="att" select="false()"/>
     <tr>
-      <xsl:choose>
-	<xsl:when test="$att">
-	  <td style="border: 1px solid black; padding: 2px;vertical-align:top">—</td>
-	  <td style="font-weight:bold;border: 1px solid black; padding: 2px;vertical-align:top">
-	    <xsl:call-template name="display">
-	      <xsl:with-param name="data" select="@ident"/>
-	    </xsl:call-template>
-	  </td>
-	</xsl:when>
-	<xsl:otherwise>
-	  <td style="font-weight:bold;border: 1px solid black; padding: 2px;vertical-align:top">
-	    <xsl:call-template name="display">
-	      <xsl:with-param name="data" select="@ident"/>
-	    </xsl:call-template>
-	  </td>
-	  <td style="border: 1px solid black; padding: 2px;vertical-align:top"></td>
-	</xsl:otherwise>
-      </xsl:choose>
-      <td style="border: 1px solid black; padding: 2px;vertical-align:top;font-style:italic">
-        <xsl:call-template name="display">
-          <xsl:with-param name="data" select="desc[not(@xml:lang) or  @xml:lang='en']"/>
-        </xsl:call-template>
-      </td>
-      <td style="border: 1px solid black; padding: 2px;vertical-align:top">
-        <xsl:call-template name="display">
-	  <xsl:with-param name="where">desc</xsl:with-param>
-          <xsl:with-param name="data" select="desc[@xml:lang=$lang]"/>
-        </xsl:call-template>
+      <td style="font-weight:bold;border: 1px solid black; padding: 2px;vertical-align:top">
+	<xsl:message>  <xsl:value-of select="(ancestor-or-self::*[@ident]/@ident)" separator="/"/></xsl:message>
+	  <xsl:value-of select="(ancestor-or-self::*[@ident]/@ident)" separator="/"/>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top;font-style:italic">
-        <xsl:call-template name="display">
-          <xsl:with-param name="data" select="gloss[not(@xml:lang) or  @xml:lang='en']"/>
-        </xsl:call-template>
+	<xsl:call-template name="display">
+	    <xsl:with-param name="data" select="desc[not(@xml:lang) or  @xml:lang='en']"/>
+	</xsl:call-template>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top">
-        <xsl:call-template name="display">
+	<xsl:call-template name="display">
+	    <xsl:with-param name="where">desc</xsl:with-param>
+	    <xsl:with-param name="data" select="desc[@xml:lang=$lang]"/>
+	</xsl:call-template>
+      </td>
+      
+      <td style="border: 1px solid black; padding: 2px;vertical-align:top;font-style:italic">
+	<xsl:call-template name="display">
+	  <xsl:with-param name="data" select="gloss[not(@xml:lang) or  @xml:lang='en']"/>
+	</xsl:call-template>
+      </td>
+      <td style="border: 1px solid black; padding: 2px;vertical-align:top">
+	<xsl:call-template name="display">
 	  <xsl:with-param name="where">gloss</xsl:with-param>
-          <xsl:with-param name="data" select="gloss[@xml:lang=$lang]"/>
-        </xsl:call-template>
+	  <xsl:with-param name="data" select="gloss[@xml:lang=$lang]"/>
+	</xsl:call-template>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top;font-style:italic">
-        <xsl:call-template name="display">
-          <xsl:with-param name="data" select="remarks[not(@xml:lang) or  @xml:lang='en'][1]"/>
-        </xsl:call-template>
+	<xsl:call-template name="display">
+	  <xsl:with-param name="data" select="remarks[not(@xml:lang) or  @xml:lang='en'][1]"/>
+	</xsl:call-template>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top;">
-        <xsl:call-template name="display">
+	<xsl:call-template name="display">
 	  <xsl:with-param name="where">remarks</xsl:with-param>
-          <xsl:with-param name="data" select="remarks[@xml:lang=$lang][1]"/>
-        </xsl:call-template>
+	  <xsl:with-param name="data" select="remarks[@xml:lang=$lang][1]"/>
+	</xsl:call-template>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top"/>
     </tr>
