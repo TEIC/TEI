@@ -87,7 +87,7 @@ the status quo existed.
 	<xsl:attribute name="versionDate" select="$date"/>
 	<xsl:attribute name="xml:lang">en</xsl:attribute>
 	<xsl:apply-templates 
-	    select="*|processing-instruction()|comment()|text()"/>
+	    select="@*[not(name()='xml:lang' or name()='versionDate')]|*|processing-instruction()|comment()|text()"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:apply-templates 
