@@ -106,6 +106,9 @@
 	<xslt processor="trax" force="yes" style="${XSL}/odds/extract-isosch.xsl" in="p5odds.compiled.xml" out="p5odds.isosch">
 	  <factory name="net.sf.saxon.TransformerFactoryImpl"/>
 	</xslt>
+	<xslt processor="trax" force="yes" style="Utilities/iso_svrl_for_xslt2.xsl" in="p5odds.isosch" out="p5odds.isosch.xsl">
+	  <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      </xslt>
         <delete file="p5odds.compiled.xml"/>
       </sequential>
       <sequential>
@@ -173,7 +176,7 @@
 
   <target name="validators">
     <echo>Run Schematron script (normal part of Guidelines)</echo>
-    <xslt processor="trax" force="yes" style="p5.isosch.xsl" in="p5.xml" out="Schematron1.xml">
+    <xslt processor="trax" force="yes" style="p5odds.isosch.xsl" in="p5.xml" out="Schematron1.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
     <echo>Run Schematron script (Examples in Guidelines)</echo>

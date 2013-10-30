@@ -8,7 +8,9 @@ $Id$
 -->
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+<TEI xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xmlns:sch="http://purl.oclc.org/dsdl/schematron" >
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -391,6 +393,48 @@ $Id$
           <attList>
             <attDef mode="change" ident="xml:lang" usage="req"/>
           </attList>
+        </elementSpec>
+        <elementSpec ident="desc" mode="change">
+	  <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+	    <constraint>
+	      <sch:report test="not(@validDate and @xml:lang) and 
+				(parent::tei:elementSpec
+				or parent::tei:classSpec
+				or parent::tei:macroSpec
+				or parent::tei:attDef
+				or parent::tei:valItem)">The
+	      versionDate and xml:lang attributes of 'desc' on
+	      "<sch:value-of select="ancestor::*[@ident]/@ident"/>" are required.</sch:report>
+	    </constraint>
+	  </constraintSpec>
+        </elementSpec>
+        <elementSpec ident="gloss" mode="change">
+	  <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+	    <constraint>
+	      <sch:report test="not(@validDate and @xml:lang) and 
+				(parent::tei:elementSpec
+				or parent::tei:classSpec
+				or parent::tei:macroSpec
+				or parent::tei:attDef
+				or parent::tei:valItem)">The
+	      versionDate and xml:lang attributes of 'gloss' on
+	      "<sch:value-of select="ancestor::*[@ident]/@ident"/>" are required.</sch:report>
+	    </constraint>
+	  </constraintSpec>
+        </elementSpec>
+        <elementSpec ident="remarks" mode="change">
+	  <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+	    <constraint>
+	      <sch:report test="not(@validDate and @xml:lang) and 
+				(parent::tei:elementSpec
+				or parent::tei:classSpec
+				or parent::tei:macroSpec
+				or parent::tei:attDef
+				or parent::tei:valItem)">The
+	      versionDate and xml:lang attributes of 'remarks' on
+	      "<sch:value-of select="ancestor::*[@ident]/@ident"/>" are required.</sch:report>
+	    </constraint>
+	  </constraintSpec>
         </elementSpec>
         <elementSpec ident="idno" mode="change">
           <attList>
