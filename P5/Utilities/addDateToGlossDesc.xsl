@@ -4,12 +4,25 @@
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
     xmlns="http://www.tei-c.org/ns/1.0"
     version="2.0">
+<!--
+For a given *Spec file, make a basic copy,
+but look at each English desc/gloss/remarks and see
+if its unchanged since the version in a previous version
+whose file name and date are passed as parameters,
+bump the date in this file down to the date of the comparison file.
+Done repeatedly, this means each file has the earliest date on which
+the status quo existed.
+-->
 <xsl:param name="date">      
   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
 </xsl:param>
 <xsl:param name="file"/>
 
 
+<!-- 
+     identify the context with concatenation of @idents up the tree,
+     and the element name
+-->
 <xsl:key name="I" match="attDef/gloss[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
 <xsl:key name="I" match="valItem/gloss[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
 <xsl:key name="I" match="attDef/desc[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
