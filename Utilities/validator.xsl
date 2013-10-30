@@ -20,11 +20,18 @@ exclude-result-prefixes="svrl rng tei a teix">
 	  </xsl:if>
 	</xsl:for-each>
 	<xsl:apply-templates select="doc('../Schematron1.xml')//svrl:failed-assert"/>
+	<xsl:apply-templates select="doc('../Schematron1.xml')//svrl:successful-report"/>
 	<xsl:apply-templates select="doc('../Schematron2.xml')//svrl:failed-assert"/>
+	<xsl:apply-templates select="doc('../Schematron2.xml')//svrl:successful-report"/>
       </Messages>
   </xsl:template>
 
   <xsl:template match="svrl:failed-assert">
+    <ERROR>Schematron error: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
+    Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></ERROR>
+  </xsl:template>
+
+  <xsl:template match="svrl:successful-report">
     <ERROR>Schematron error: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
     Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></ERROR>
   </xsl:template>
