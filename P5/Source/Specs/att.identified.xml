@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,11 +6,9 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" type="atts" ident="att.identified">
-  <desc>provides the identifying attribute for elements which can be
+  <desc versionDate="2010-05-11" xml:lang="en">provides the identifying attribute for elements which can be
   subsequently referenced by means of a <att>key</att>
   attribute.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko"><att>key</att> 속성에
@@ -24,28 +22,24 @@ $Id$
   <desc versionDate="2007-05-04" xml:lang="es">elementos a los que se
   puede hacer referencia a través del atributo <att>key</att>.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">elementi ai quali si
-  può fare riferimento tramite l'attributo <att>key</att></desc>
+  può fare riferimento tramite l'attributo <att>key</att>
+   </desc>
   <classes>
     <memberOf key="att.combinable"/>
   </classes>
   <constraintSpec ident="spec-in-module" scheme="isoschematron">
     <constraint>
-      <rule context="tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]" xmlns="http://purl.oclc.org/dsdl/schematron">
-      <assert  test="
-        (not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or
-        (not(@module) or 
-        (not(//tei:moduleSpec) and not(//tei:moduleRef))  or
-        (//tei:moduleSpec[@ident = current()/@module]) or 
-        (//tei:moduleRef[@key = current()/@module]))
-        ">
+      <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:elementSpec[@module]|tei:classSpec[@module]|tei:macroSpec[@module]">
+        <assert test="         (not(ancestor::tei:schemaSpec | ancestor::tei:TEI | ancestor::tei:teiCorpus)) or         (not(@module) or          (not(//tei:moduleSpec) and not(//tei:moduleRef))  or         (//tei:moduleSpec[@ident = current()/@module]) or          (//tei:moduleRef[@key = current()/@module]))         ">
         Specification <value-of select="@ident"/>: the value of the module attribute ("<value-of select="@module"/>") 
 should correspond to an existing module, via a moduleSpec or
       moduleRef</assert>
       </rule>
-    </constraint></constraintSpec>
-<attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    </constraint>
+  </constraintSpec>
+  <attList xmlns:rng="http://relaxng.org/ns/structure/1.0">
     <attDef ident="ident" usage="req">
-      <desc>supplies the identifier by which this element may be referenced.</desc>
+      <desc versionDate="2012-12-27" xml:lang="en">supplies the identifier by which this element may be referenced.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 요소가 참조된 확인소를 제공한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供被參照的元素的識別符號。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該要素を参照する識別子を示す．</desc>
@@ -58,7 +52,7 @@ should correspond to an existing module, via a moduleSpec or
       </datatype>
     </attDef>
     <attDef ident="predeclare" usage="opt">
-      <desc>says whether this object should be predeclared in the
+      <desc versionDate="2012-12-27" xml:lang="en">says whether this object should be predeclared in the
       <ident type="module">tei</ident> infrastructure module.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko"><ident type="module">tei</ident> 하부구조 모듈에서 이 대상이 미리 선언되어야 하는지를 설명한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明該元素集是否為全域元素集，並必須在核心中宣告。</desc>
@@ -73,7 +67,7 @@ should correspond to an existing module, via a moduleSpec or
       <defaultVal>false</defaultVal>
     </attDef>
     <attDef ident="module" usage="opt">
-      <desc>supplies a name for the module in which this object is to
+      <desc versionDate="2012-12-27" xml:lang="en">supplies a name for the module in which this object is to
       be declared.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이 대상이 정의되어야 하는 모듈명을 제시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供定義該元素的模組名稱。</desc>
@@ -88,24 +82,31 @@ should correspond to an existing module, via a moduleSpec or
       <valDesc>a name of module</valDesc>
       <valDesc xml:lang="fr">un nom de module</valDesc>
     </attDef>
-<attDef ident="status" usage="opt" validUntil="2015-06-19">
-<desc>indicates the current status of the object identified with
+    <attDef ident="status" usage="opt" validUntil="2015-06-19">
+      <desc versionDate="2010-11-01" xml:lang="en">indicates the current status of the object identified with
 respect to the current version of the TEI Guidelines.</desc>
-  <datatype>
-    <rng:ref name="data.enumerated"/>
-  </datatype>
-<defaultVal>stable</defaultVal>
-<valList type="closed">
-<valItem ident="deprecated" validUntil="2015-06-30"><desc>the item is not recommended for use,
-and may be withdrawn at a future release.</desc></valItem>
-<valItem ident="unstable"><desc>the item is new and still under
-review.</desc></valItem>
-<valItem ident="changed"><desc>the item has changed significantly since the
-preceding version.</desc></valItem>
-<valItem ident="stable"><desc>the item has not recently changed and is
-not expected to do so except for correction of any errors.</desc></valItem>
-</valList>
-</attDef>
+      <datatype>
+        <rng:ref name="data.enumerated"/>
+      </datatype>
+      <defaultVal>stable</defaultVal>
+      <valList type="closed">
+        <valItem ident="deprecated" validUntil="2015-06-30">
+          <desc versionDate="2010-11-01" xml:lang="en">the item is not recommended for use,
+and may be withdrawn at a future release.</desc>
+        </valItem>
+        <valItem ident="unstable">
+          <desc versionDate="2010-11-01" xml:lang="en">the item is new and still under
+review.</desc>
+        </valItem>
+        <valItem ident="changed">
+          <desc versionDate="2010-11-01" xml:lang="en">the item has changed significantly since the
+preceding version.</desc>
+        </valItem>
+        <valItem ident="stable">
+          <desc versionDate="2010-11-01" xml:lang="en">the item has not recently changed and is
+not expected to do so except for correction of any errors.</desc>
+        </valItem>
+      </valList>
+    </attDef>
   </attList>
-  
 </classSpec>

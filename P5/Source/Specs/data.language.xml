@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,61 +6,56 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="dt" ident="data.language"><desc>defines the range of attribute values used to identify a particular combination of human
-    language and writing system.</desc><desc versionDate="2007-12-20" xml:lang="ko">인간의 언어와 문자 체계의 특별한 조합을 식별하는 속성 값 범위를 정의한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍標明人類語言與寫作系統的特殊結合</desc><desc versionDate="2008-04-05" xml:lang="ja">自然言語を示す属性値の範囲を定義する．</desc><desc versionDate="2007-06-12" xml:lang="fr">définit la gamme des
+<macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="dt" ident="data.language">
+  <desc versionDate="2007-10-18" xml:lang="en">defines the range of attribute values used to identify a particular combination of human
+    language and writing system.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">인간의 언어와 문자 체계의 특별한 조합을 식별하는 속성 값 범위를 정의한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">定義的屬性值範圍標明人類語言與寫作系統的特殊結合</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">自然言語を示す属性値の範囲を定義する．</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">définit la gamme des
   valeurs d'attributs exprimant 
-    une combinaison particulière du langage humain avec un système d'écriture.</desc><desc versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
-    identificar una combinación determinada de lenguaje y escritura humanos.</desc><desc versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
-    identificare una determinata combinazione di linguaggio e sistema di scrittura umani</desc><content>
+    une combinaison particulière du langage humain avec un système d'écriture.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">define la gama de valores de atributos usados para
+    identificar una combinación determinada de lenguaje y escritura humanos.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">definisce la gamma di valori di attributi usati per
+    identificare una determinata combinazione di linguaggio e sistema di scrittura umani</desc>
+  <content>
     <choice xmlns="http://relaxng.org/ns/structure/1.0">
       <data type="language"/>
       <value/>
     </choice>
-  </content><remarks>
+  </content>
+  <remarks versionDate="2009-06-29" xml:lang="en">
     <p>The values for this attribute are language <soCalled>tags</soCalled> as defined in <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref>. Currently BCP 47 comprises RFC 4646
       and RFC 4647; over time, other IETF documents may succeed these as the best current practice.</p>
     <p>A <soCalled>language tag</soCalled>, per BCP 47, is assembled from a sequence of components
       or <term>subtags</term> separated by the hyphen character (<mentioned>-</mentioned>, U+002D).
       The tag is made of the following subtags, in the following order. Every subtag except the
       first is optional. If present, each occurs only once, except the fourth and fifth components
-      (variant and extension), which are repeatable. <list type="gloss">
-        <label>language</label>
-        <item>The IANA-registered code for the language. This is almost always the same as the ISO
+      (variant and extension), which are repeatable. <list type="gloss"><label>language</label><item>The IANA-registered code for the language. This is almost always the same as the ISO
           639 2-letter language code if there is one. The list of available registered language
           subtags can be found at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. It is recommended
-          that this code be written in lower case.</item>
-        <label>script</label>
-        <item>The ISO 15924 code for the script. These codes consist of 4 letters, and it is
+          that this code be written in lower case.</item><label>script</label><item>The ISO 15924 code for the script. These codes consist of 4 letters, and it is
           recommended they be written with an initial capital, the other three letters in lower
           case. The canonical list of codes is maintained by the Unicode Consortium, and is
           available at <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>. The IETF
-          recommends this code be omitted unless it is necessary to make a distinction you need.</item>
-        <label>region</label>
-        <item>Either an ISO 3166 country code or a UN M.49 region code that is registered with IANA
+          recommends this code be omitted unless it is necessary to make a distinction you need.</item><label>region</label><item>Either an ISO 3166 country code or a UN M.49 region code that is registered with IANA
           (not all such codes are registered, e.g. UN codes for economic groupings or codes for
           countries for which there is already an ISO 3166 2-letter code are not registered). The
           former consist of 2 letters, and it is recommended they be written in upper case. The list
-          of codes can be found at <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>. The latter consist of 3 digits; the list of codes can be found at <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item>
-        <label>variant</label>
-        <item>An IANA-registered variation. These codes <quote rend="quoted">are used to indicate
+          of codes can be found at <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>. The latter consist of 3 digits; the list of codes can be found at <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item><label>variant</label><item>An IANA-registered variation. These codes <quote rend="quoted">are used to indicate
             additional, well-recognized variations that define a language or its dialects that are
             not covered by other available subtags</quote>.<!-- RFC 4646, sect
-      2.2.5 --></item>
-        <label>extension</label>
-        <item>An extension has the format of a single letter followed by a hyphen followed by
+      2.2.5 --></item><label>extension</label><item>An extension has the format of a single letter followed by a hyphen followed by
           additional subtags. These exist to allow for future extension to BCP 47, but as of this
-          writing no such extensions are in use.</item>
-        <label>private use</label>
-        <item>An extension that uses the initial subtag of the single letter
+          writing no such extensions are in use.</item><label>private use</label><item>An extension that uses the initial subtag of the single letter
           <mentioned>x</mentioned> (i.e., starts with <code>x-</code>) has no meaning except as
           negotiated among the parties involved. These should be used with great care, since they
           interfere with the interoperability that use of RFC 4646 is intended to promote. In order
           for a document that makes use of these subtags to be TEI conformant, a corresponding
-            <gi>language</gi> element must be present in the TEI header.</item>
-      </list></p>
+            <gi>language</gi> element must be present in the TEI header.</item></list>
+      </p>
     <p>There are two exceptions to the above format. First, there are language tags in the <ref target="http://www.iana.org/assignments/language-subtag-registry">IANA registry</ref> that
       do not match the above syntax, but are present because they have been
       <soCalled>grandfathered</soCalled> from previous specifications.</p>
@@ -69,108 +64,40 @@ $Id$
       endorsed by these Guidelines. Like all language tags that make use of private use subtags, the
       language in question must be documented in a corresponding <gi>language</gi> element in the
       TEI header.</p>
-    <p>Examples include <list type="gloss">
-        <label>
-          <val>sn</val>
-        </label>
-        <item>Shona</item>
-        <label>
-          <val>zh-TW</val>
-        </label>
-        <item>Taiwanese</item>
-        <label>
-          <val>zh-Hant-HK</val>
-        </label>
-        <item>Chinese written in traditional script as used in Hong Kong</item>
-        <label>
-          <val>en-SL</val>
-        </label>
-        <item>English as spoken in Sierra Leone</item>
-        <label>
-          <val>pl</val>
-        </label>
-        <item>Polish</item>
-        <label>
-          <val>es-MX</val>
-        </label>
-        <item>Spanish as spoken in Mexico</item>
-        <label>
-          <val>es-419</val>
-        </label>
-        <item>Spanish as spoken in Latin America</item>
-      </list>
-    </p>
+    <p>Examples include <list type="gloss"><label><val>sn</val></label><item>Shona</item><label><val>zh-TW</val></label><item>Taiwanese</item><label><val>zh-Hant-HK</val></label><item>Chinese written in traditional script as used in Hong Kong</item><label><val>en-SL</val></label><item>English as spoken in Sierra Leone</item><label><val>pl</val></label><item>Polish</item><label><val>es-MX</val></label><item>Spanish as spoken in Mexico</item><label><val>es-419</val></label><item>Spanish as spoken in Latin America</item></list>
+      </p>
     <p>The W3C Internationalization Activity has published a useful introduction to BCP 47, <ref target="http://www.w3.org/International/articles/language-tags/Overview.en.php">Language
         tags in HTML and XML</ref>.</p>
-  </remarks><remarks xml:lang="ja"><p> 当該属性値は， <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p> 当該属性値は， <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref>
       で定義されている言語<soCalled>タグ</soCalled>になる． 現行のBCPには，RFC4646とRFC4647の内容が含まれている．
       今後は，他のIETF文書も採用されるかもしれない． </p>
     <p> BCP 47にある<soCalled>言語タグ</soCalled>は，ハイフン (<mentioned>-</mentioned>, U+002D)で区切られた一連の
         <term>下位タグ</term>から構成されている．下位タグは，以下の順番 らなる．下位タグは，初めの1つは必須で，あとは選択的である．
-      variantとextensionは複数回，他は1回のみ出現出現する．この下位タグ のグループは繰り返し可能である． <list type="gloss">
-        <label>language</label>
-        <item> IANAの言語コード．この殆どは，該当言語が既にあれば，ISO 639の2文字 (以下，この場合の文字はラテン文字)言語コードと同じである．利用可能
+      variantとextensionは複数回，他は1回のみ出現出現する．この下位タグ のグループは繰り返し可能である． <list type="gloss"><label>language</label><item> IANAの言語コード．この殆どは，該当言語が既にあれば，ISO 639の2文字 (以下，この場合の文字はラテン文字)言語コードと同じである．利用可能
           な言語下位タグのリストは <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>
-          にある．言語コードは，小文字で書かれることが推奨されている． </item>
-        <label>script</label>
-        <item> ISO 15924による文字を示すコード．4文字から構成され，冒頭文字は大文 字で，残り3文字は小文字で書かれることが推奨されている．このコード
+          にある．言語コードは，小文字で書かれることが推奨されている． </item><label>script</label><item> ISO 15924による文字を示すコード．4文字から構成され，冒頭文字は大文 字で，残り3文字は小文字で書かれることが推奨されている．このコード
           は，ユニコードコンソーシアムで管理され， <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>か
-          ら入手することができる．IETFでは，不要であれば当該コードを省略する ことを推奨している． </item>
-        <label>region</label>
-        <item> ISO 3166またはUN M.49による国または地域コード．このコードはIANAに 登録されている(但し全てではない．例えば，UNコードには経済圏や， ISO
-          3166の2文字コードで既に登録されているところは含まれていない)． ISOコードは，2文字から構成され，大文字で書かれることが推奨されてい る．このコードは， <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>にある． またUNコードは，3文字から構成されている．このコードは， <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>にあ る． </item>
-        <label>variant</label>
-        <item> IANAにある登録値．このコードは，<quote rend="quoted"> 他の下位タグでは対応できない，追加的であるがよく知られている，ある言語
+          ら入手することができる．IETFでは，不要であれば当該コードを省略する ことを推奨している． </item><label>region</label><item> ISO 3166またはUN M.49による国または地域コード．このコードはIANAに 登録されている(但し全てではない．例えば，UNコードには経済圏や， ISO
+          3166の2文字コードで既に登録されているところは含まれていない)． ISOコードは，2文字から構成され，大文字で書かれることが推奨されてい る．このコードは， <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>にある． またUNコードは，3文字から構成されている．このコードは， <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>にあ る． </item><label>variant</label><item> IANAにある登録値．このコードは，<quote rend="quoted"> 他の下位タグでは対応できない，追加的であるがよく知られている，ある言語
             や方言の種類を示すために使用される</quote>． <!-- RFC 4646, sect  2.2.5 -->
-        </item>
-        <label>extension</label>
-        <item> いち文字，ハイフン，追加下位タグの順番で，拡張情報が示される． これは，BCP 47が将来拡張された時のためある．現時点ではそのような 拡張はない． </item>
-        <label>private use</label>
-        <item><mentioned>x</mentioned>Xで始まる(すなわち，<code>x-</code>)下位タ
+        </item><label>extension</label><item> いち文字，ハイフン，追加下位タグの順番で，拡張情報が示される． これは，BCP 47が将来拡張された時のためある．現時点ではそのような 拡張はない． </item><label>private use</label><item><mentioned>x</mentioned>Xで始まる(すなわち，<code>x-</code>)下位タ
           グで示される拡張情報は，関連する団体間で決められた範囲の意味を持つ． このコードは大文字で書かれるべきである．これは，RFC4646aで使われて
           いるタグとの相互運用性を保つためである． このタグを使用してTEI準拠の文書を作成するには，要素 <gi>language</gi>をTEIヘダー中に記述しなければならない．
-        </item>
-      </list>
-    </p>
+        </item></list>
+      </p>
     <p> 上記記述形式には，2つの例外がある．ひとつは，ここにある言語タグは， <ref target="http://www.iana.org/assignments/language-subtag-registry">
       IANA</ref>にある統語規則に違反しているものがある． これはIANAでは昔の規定を<soCalled>継承している</soCalled>からであ る． </p>
     <p> ふたつめは，言語タグを，下位タグprivateだけで構成することができる ことである．<code>x-</code>で始まるタグの内容は，IETFにある規定に
       も当該TEIガイドラインにある規定にも従う必要はない．他の言語タグと 同様に，このタグを使用した場合には，TEIヘダーにある要素
       <gi>language</gi>にこのタグを記述しなければならない． </p>
-    <p> 言語コードには，以下のようなものがある． <list type="gloss">
-        <label>
-          <val>sn</val>
-        </label>
-        <item>ショナ語</item>
-        <label>
-          <val>zh-TW</val>
-        </label>
-        <item>中国語，台湾</item>
-        <label>
-          <val>zh-Hant-HK</val>
-        </label>
-        <item>中国語，繁体字，香港</item>
-        <label>
-          <val>en-SL</val>
-        </label>
-        <item>英語，シエラレオネ共和国</item>
-        <label>
-          <val>pl</val>
-        </label>
-        <item>ポーランド語</item>
-        <label>
-          <val>es-MX</val>
-        </label>
-        <item>スペイン語，メキシコ</item>
-        <label>
-          <val>es-419</val>
-        </label>
-        <item>スペイン語，ラテンアメリカ</item>
-      </list>
-    </p>
+    <p> 言語コードには，以下のようなものがある． <list type="gloss"><label><val>sn</val></label><item>ショナ語</item><label><val>zh-TW</val></label><item>中国語，台湾</item><label><val>zh-Hant-HK</val></label><item>中国語，繁体字，香港</item><label><val>en-SL</val></label><item>英語，シエラレオネ共和国</item><label><val>pl</val></label><item>ポーランド語</item><label><val>es-MX</val></label><item>スペイン語，メキシコ</item><label><val>es-419</val></label><item>スペイン語，ラテンアメリカ</item></list>
+      </p>
     <p> W3Cの国際化活動では，BCP 47の解説を以下に用意している． <ref target="http://www.w3.org/International/articles/language-tags/Overview.en.php">
         HTMLとXMLで使用される言語タグ</ref>. </p>
-  </remarks><remarks versionDate="2009-10-06" xml:lang="fr">
+  </remarks>
+  <remarks versionDate="2009-10-06" xml:lang="fr">
     <p>Les valeurs pour cet attribut sont les <soCalled>étiquettes</soCalled> de langue définies
         dans la norme <ref target="http://tools.ietf.org/html/bcp47">BCP 47</ref>. Actuellement, la norme BCP 47
       intègre les normes RFC 4646 et RFC 4647 ; à l'avenir, d'autres documents de l'IETF pourront leur succéder en
@@ -180,43 +107,31 @@ $Id$
         (<mentioned>-</mentioned>, U+002D). L'étiquette est composée des sous-étiquettes suivantes,
       dans l'ordre indiqué. Chaque sous-étiquette est facultative, à l'exception de la première.
       Chacune ne peut avoir qu'une occurrence, sauf les quatrième et cinquième (variante
-      et extension), qui sont répétables. <list type="gloss">
-        <label>langue</label>
-        <item>Code de langue enregistré par l'IANA. Il est presque toujours identique au code
+      et extension), qui sont répétables. <list type="gloss"><label>langue</label><item>Code de langue enregistré par l'IANA. Il est presque toujours identique au code
           de langue alphabétique ISO 639-2, s'il y en a un. La liste des sous-étiquettes de langue
           enregistrées est disponible à : <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>Il est recommandé
-          d'écrire ce code en minuscules.</item>
-        <label>écriture</label>
-        <item>Code ISO 15924 pour l'écriture. Ces codes sont constitués de 4 lettres, et il est
+          d'écrire ce code en minuscules.</item><label>écriture</label><item>Code ISO 15924 pour l'écriture. Ces codes sont constitués de 4 lettres, et il est
           recommandé d'écrire la première lettre en majuscule, les trois autres en minuscules. La
           liste canonique des codes est maintenue par le Consortium Unicode, et elle est disponible
           à : <ptr target="http://unicode.org/iso15924/iso15924-codes.html"/>. L'IETF recommande
-          d'omettre ce code, sauf s'il est nécessaire pour établir une distinction.</item>
-        <label>région</label>
-        <item>Soit un code de pays ISO 3166, soit un code de région UN M.49 enregistré par
+          d'omettre ce code, sauf s'il est nécessaire pour établir une distinction.</item><label>région</label><item>Soit un code de pays ISO 3166, soit un code de région UN M.49 enregistré par
           l'IANA (tous les codes de ce type ne sont pas enregistrés : par exemple, ne sont pas
           enregistrés les codes UN pour des regroupements économiques ou les codes de pays pour
           lesquels il existe déjà un code de pays alphabétique ISO 3166-2). Le premier est constitué de
           2 lettres, et il est recommandé de l'écrire en majuscules. La liste des codes est
-          disponible à : <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>. Le second est constitué de 3 chiffres ; la liste des codes est disponible à : <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item>
-        <label>variante</label>
-        <item>Variante enregistrée par l'IANA. Ces codes <quote rend="quoted">sont utilisés
+          disponible à : <ptr target="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/index.html"/>. Le second est constitué de 3 chiffres ; la liste des codes est disponible à : <ptr target="http://unstats.un.org/unsd/methods/m49/m49.htm"/>.</item><label>variante</label><item>Variante enregistrée par l'IANA. Ces codes <quote rend="quoted">sont utilisés
             pour indiquer des variantes additionnelles et bien établies, qui définissent une langue
             ou ses dialectes et qui ne sont pas couverts par d'autres sous-étiquettes
           existantes</quote>.<!-- RFC 4646, sect
-                2.2.5 --></item>
-        <label>extension</label>
-        <item>Une extension a la forme d'une lettre unique, suivie d'un trait d'union, lui-même suivi de sous-étiquettes additionnelles. Ces dernières existent pour tenir compte d'une future extension
-          de la norme BCP 47, mais à l'heure actuelle de telles extensions ne sont pas utilisées.</item>
-        <label>usage privé</label>
-        <item>Une extension utilisant la sous-étiquette initiale de la lettre
+                2.2.5 --></item><label>extension</label><item>Une extension a la forme d'une lettre unique, suivie d'un trait d'union, lui-même suivi de sous-étiquettes additionnelles. Ces dernières existent pour tenir compte d'une future extension
+          de la norme BCP 47, mais à l'heure actuelle de telles extensions ne sont pas utilisées.</item><label>usage privé</label><item>Une extension utilisant la sous-étiquette initiale de la lettre
           <mentioned>x</mentioned> (i.e., commençant par <code>x-</code>) n'a pas d'autre signification
           que celle négociée entre les parties impliquées. Ces sous-étiquettes doivent être utilisées avec
           beaucoup de prudence, car elles interfèrent avec l'interopérabilité que l'utilisation de
           la norme RFC 4646 vise à promouvoir. Pour qu'un document qui utilise ces sous-étiquettes soit
           conforme à la TEI, un élément <gi>language</gi> correspondant doit être présent dans
-          l'en-tête TEI.</item>
-      </list></p>
+          l'en-tête TEI.</item></list>
+      </p>
     <p>Il y a deux exceptions au format ci-dessus. Premièrement, il y a des codes de langue dans
         le <ref target="http://www.iana.org/assignments/language-subtag-registry">registre de l'IANA</ref>
       qui ne correspondent pas à la syntaxe ci-dessus, mais qui sont présents car ils ont été
@@ -225,39 +140,13 @@ $Id$
       nécessaire qu'elles suivent les autres règles établies par l'IETF et acceptées par les présents 
       Principes directeurs. Comme toutes les étiquettes de langue qui utilisent des sous-étiquettes d'usage
       privé, la langue en question doit être documentée dans un élément correspondant <gi>language</gi> dans l'en-tête TEI.</p>
-    <p>Les exemples incluent :<list type="gloss">
-        <label>
-          <val>sn</val>
-        </label>
-        <item>Shona</item>
-        <label>
-          <val>zh-TW</val>
-        </label>
-        <item>Taïwanais</item>
-        <label>
-          <val>zh-Hant-HK</val>
-        </label>
-      <item>Chinois de Hong Kong écrit dans l'écriture traditionnelle</item>
-        <label>
-          <val>en-SL</val>
-        </label>
-        <item>Anglais parlé au Sierra Leone</item>
-        <label>
-          <val>pl</val>
-        </label>
-        <item>Polonais</item>
-        <label>
-          <val>es-MX</val>
-        </label>
-        <item>Espagnol parlé au Mexique</item>
-        <label>
-          <val>es-419</val>
-        </label>
-        <item>Espagnol parlé en Amérique latine</item>
-      </list>
-    </p>
+    <p>Les exemples incluent :<list type="gloss"><label><val>sn</val></label><item>Shona</item><label><val>zh-TW</val></label><item>Taïwanais</item><label><val>zh-Hant-HK</val></label><item>Chinois de Hong Kong écrit dans l'écriture traditionnelle</item><label><val>en-SL</val></label><item>Anglais parlé au Sierra Leone</item><label><val>pl</val></label><item>Polonais</item><label><val>es-MX</val></label><item>Espagnol parlé au Mexique</item><label><val>es-419</val></label><item>Espagnol parlé en Amérique latine</item></list>
+      </p>
     <p>La W3C Internationalization Activity a publié une introduction à la norme BCP 47 dont la lecture peut être utile : <ref target="http://www.w3.org/International/articles/language-tags/Overview.en.php">Language
         tags in HTML and XML</ref>.</p>
-<!-- shuld be in bibliog -->  </remarks><listRef>
+    <!-- shuld be in bibliog -->
+  </remarks>
+  <listRef>
     <ptr target="#CHSH"/>
-  </listRef></macroSpec>
+  </listRef>
+</macroSpec>

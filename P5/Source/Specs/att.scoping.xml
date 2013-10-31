@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,14 +6,14 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.scoping"><desc>provides attributes for selecting particular elements within a
-  document by means of  XPath.</desc><attList>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.scoping">
+  <desc versionDate="2010-01-25" xml:lang="en">provides attributes for selecting particular elements within a
+  document by means of  XPath.</desc>
+  <attList>
     <attDef ident="target" usage="opt">
-      <desc>points at one or several  elements or  sets of elements by
+      <desc versionDate="2010-01-25" xml:lang="en">points at one or several  elements or  sets of elements by
       means of one or more
       data pointers, using the URI syntax.</desc>
       <datatype maxOccurs="unbounded">
@@ -22,18 +22,18 @@ $Id$
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went
         to <persName xml:id="ESSEX">Essex</persName>
-	<certainty target="#ESSEX" locus="name" degree="0.6"/></egXML>
+	              <certainty target="#ESSEX" locus="name" degree="0.6"/>
+            </egXML>
       </exemplum>
-      <remarks>
+      <remarks versionDate="2010-01-25" xml:lang="en">
         <p>If more than one identifier is given, the implication is
         that all elements (or nodesets) are intended. The
         <att>match</att> attribute may also be used as a means of
         identifying groups of elements.</p>
       </remarks>
     </attDef>
-
     <attDef ident="match" usage="opt">
-      <desc>supplies an arbitrary XPath expression identifying a set
+      <desc versionDate="2010-02-01" xml:lang="en">supplies an arbitrary XPath expression identifying a set
       of nodes, selected within the context identified by the
       <att>target</att> attribute if this is supplied, or within the
       context of the element bearing this attribute if it is not.
@@ -41,18 +41,16 @@ $Id$
       <datatype>
         <rng:text/>
       </datatype>
-
-<valDesc>Any XPath expression using the syntax
+      <valDesc>Any XPath expression using the syntax
 defined in <ptr target="#XSLT2"/>. </valDesc>
-
-
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"><gap reason="cancelled">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <gap reason="cancelled">
             <certainty match="@reason" locus="value" cert="low"/>
           </gap>
-				</egXML>
+        </egXML>
       </exemplum>
-      <remarks>
+      <remarks versionDate="2010-02-01" xml:lang="en">
         <p>The expression of certainty applies to the nodeset
 	identified by the value of the <att>target</att> attribute,
 	possibly modified additionally by the value of the
@@ -60,11 +58,10 @@ defined in <ptr target="#XSLT2"/>. </valDesc>
 	the expression of certainty applies to the context of the
 	<gi>certainty</gi> element itself, i.e. its parent element.
 </p>
-<p>Note that the value of the <att>target</att> attribute may include
+        <p>Note that the value of the <att>target</att> attribute may include
 an XPointer expression including an XPath expression (see
 <ptr target="#SATS"/>). </p>
       </remarks>
     </attDef>
-
-
-  </attList></classSpec>
+  </attList>
+</classSpec>
