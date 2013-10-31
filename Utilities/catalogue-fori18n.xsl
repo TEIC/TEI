@@ -41,9 +41,16 @@
   <xsl:template name="display">
     <xsl:param name="where" select="."/>
     <xsl:param name="data"/>
-    <xsl:if test="string-length($data)=0 and *[name()=$where and not(@xml:lang)]">
+    <xsl:param name="older" select="false()"/>
+    <xsl:choose>
+    <xsl:when test="string-length($data)=0 and *[name()=$where and
+		    (@xml:lang='en' or not(@xml:lang))]">
       <xsl:attribute name="style">background-color: red</xsl:attribute>
-    </xsl:if>
+    </xsl:when>
+    <xsl:when test="$older">
+      <xsl:attribute name="style">background-color: yellow</xsl:attribute>
+    </xsl:when>
+    </xsl:choose>
     <xsl:apply-templates select="$data"/>
   </xsl:template>
 
@@ -61,19 +68,27 @@
       <td style="border: 1px solid black; padding: 2px;vertical-align:top">
 	<xsl:call-template name="display">
 	    <xsl:with-param name="where">desc</xsl:with-param>
-	    <xsl:with-param name="data" select="desc[@xml:lang=$lang]"/>
+	    <xsl:with-param name="data"
+			    select="desc[@xml:lang=$lang]"/>
+	    <xsl:with-param name="older" select="if
+	      (desc[@xml:lang='en']/@versionDate &gt;
+	      desc[@xml:lang=$lang]/@versionDate) then true() else false()"/>
 	</xsl:call-template>
       </td>
       
       <td style="border: 1px solid black; padding: 2px;vertical-align:top;font-style:italic">
 	<xsl:call-template name="display">
-	  <xsl:with-param name="data" select="gloss[not(@xml:lang) or  @xml:lang='en']"/>
+	  <xsl:with-param name="data" select="gloss[not(@xml:lang) or
+					      @xml:lang='en']"/>	  
 	</xsl:call-template>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top">
 	<xsl:call-template name="display">
 	  <xsl:with-param name="where">gloss</xsl:with-param>
 	  <xsl:with-param name="data" select="gloss[@xml:lang=$lang]"/>
+	    <xsl:with-param name="older" select="if
+	      (gloss[@xml:lang='en']/@versionDate &gt;
+	      gloss[@xml:lang=$lang]/@versionDate) then true() else false()"/>
 	</xsl:call-template>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top;font-style:italic">
@@ -85,6 +100,9 @@
 	<xsl:call-template name="display">
 	  <xsl:with-param name="where">remarks</xsl:with-param>
 	  <xsl:with-param name="data" select="remarks[@xml:lang=$lang][1]"/>
+	    <xsl:with-param name="older" select="if
+	      (remarks[@xml:lang='en']/@versionDate &gt;
+	      remarks[@xml:lang=$lang]/@versionDate) then true() else false()"/>
 	</xsl:call-template>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top"/>
