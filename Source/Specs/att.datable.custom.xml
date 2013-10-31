@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright TEI Consortium. 
     Dual-licensed under CC-by and BSD2 licences 
@@ -6,14 +6,14 @@
     $Date$
     $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="DATABLECUSTOM" type="atts" predeclare="true" ident="att.datable.custom"><desc>provides attributes for normalization of elements that contain datable events to a custom dating system
-    (i.e. other than the Gregorian used by W3 and ISO).</desc><attList>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" xml:id="DATABLECUSTOM" type="atts" predeclare="true" ident="att.datable.custom">
+  <desc versionDate="2011-11-11" xml:lang="en">provides attributes for normalization of elements that contain datable events to a custom dating system
+    (i.e. other than the Gregorian used by W3 and ISO).</desc>
+  <attList>
     <attDef ident="when-custom" usage="opt">
-      <desc>supplies the value of a date or time in some standard form.</desc>
+      <desc versionDate="2011-11-11" xml:lang="en">supplies the value of a date or time in some standard form.</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
@@ -31,7 +31,8 @@
           <p>The Battle of Meggidu
             (<date when-custom="Thutmose_III:23">23rd year of reign of Thutmose III</date>).</p>
           <p>Esidorus bixit in pace annos LXX plus minus sub
-            <date when-custom="Ind:4-10-11">die XI mensis Octobris indictione IIII</date></p>
+            <date when-custom="Ind:4-10-11">die XI mensis Octobris indictione IIII</date>
+               </p>
         </egXML>
         <p>Not all custom date formulations will have Gregorian equivalents.</p>
         <p>The <att>when-custom</att> attribute and other custom dating are not contrained to a datatype by the TEI, but
@@ -39,63 +40,68 @@
       </exemplum>
     </attDef>
     <attDef ident="notBefore-custom" usage="opt">
-      <desc>specifies the earliest possible date for the event in some custom standard form.</desc>
+      <desc versionDate="2011-11-11" xml:lang="en">specifies the earliest possible date for the event in some custom standard form.</desc>
       <datatype minOccurs="1" maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
       <valDesc>A normalized form of temporal expression.</valDesc>
-      </attDef>
-    <attDef ident="notAfter-custom" usage="opt">
-      <desc>specifies the latest possible date for the event in some custom standard form.</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression.</valDesc>
-      </attDef>
-    <attDef ident="from-custom" usage="opt">
-      <desc>indicates the starting point of the period in some standard form.</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-      </datatype>
-      <valDesc>A normalized form of temporal expression.</valDesc>
-      <exemplum xml:lang="en"><egXML xmlns="http://www.tei-c.org/ns/Examples"><event xml:id="FIRE1" datingMethod="#julian" from-custom="1666-09-02" to-custom="1666-09-05">
-        <head>The Great Fire of London</head>
-        <p>The Great Fire of London burned through a large part 
-          of the city of London.</p>
-      </event>
-      </egXML></exemplum>
     </attDef>
-      <attDef ident="to-custom" usage="opt">
-        <desc>indicates the ending point of the period in some standard form.</desc>
-        <datatype minOccurs="1" maxOccurs="unbounded">
-          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-        </datatype>
-        <valDesc>A normalized form of temporal expression.</valDesc>
-      </attDef>
-      <attDef ident="datingPoint" usage="opt">
-        <desc>supplies a pointer to some location defining a named point in time with reference to which the datable item is understood to have occurred</desc>
-        <datatype>
-          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-        </datatype>
-      </attDef>
-      <attDef ident="datingMethod" usage="opt">
-        <desc>supplies a pointer to a <gi>calendar</gi> element or other means of interpreting the values of the custom dating attributes.</desc>
-        <datatype>
-          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-        </datatype>
-        <exemplum xml:lang="en">
-          <egXML xmlns="http://www.tei-c.org/ns/Examples">Contayning the Originall, Antiquity, Increaſe, Moderne 
+    <attDef ident="notAfter-custom" usage="opt">
+      <desc versionDate="2011-11-11" xml:lang="en">specifies the latest possible date for the event in some custom standard form.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>A normalized form of temporal expression.</valDesc>
+    </attDef>
+    <attDef ident="from-custom" usage="opt">
+      <desc versionDate="2011-11-11" xml:lang="en">indicates the starting point of the period in some standard form.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>A normalized form of temporal expression.</valDesc>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <event xml:id="FIRE1" datingMethod="#julian" from-custom="1666-09-02" to-custom="1666-09-05">
+            <head>The Great Fire of London</head>
+            <p>The Great Fire of London burned through a large part 
+          of the city of London.</p>
+          </event>
+        </egXML>
+      </exemplum>
+    </attDef>
+    <attDef ident="to-custom" usage="opt">
+      <desc versionDate="2011-11-11" xml:lang="en">indicates the ending point of the period in some standard form.</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
+      </datatype>
+      <valDesc>A normalized form of temporal expression.</valDesc>
+    </attDef>
+    <attDef ident="datingPoint" usage="opt">
+      <desc versionDate="2011-11-25" xml:lang="en">supplies a pointer to some location defining a named point in time with reference to which the datable item is understood to have occurred</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+    <attDef ident="datingMethod" usage="opt">
+      <desc versionDate="2012-08-15" xml:lang="en">supplies a pointer to a <gi>calendar</gi> element or other means of interpreting the values of the custom dating attributes.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">Contayning the Originall, Antiquity, Increaſe, Moderne 
             eſtate, and deſcription of that Citie, written in the yeare 
             <date when-custom="1598" calendar="#julian" datingMethod="#julian">1598</date>. by Iohn Stow 
             Citizen of London.</egXML>
-        </exemplum>
-        <remarks>
-         <p>Here the <att>calendar</att> attribute points to a <gi>calendar</gi> element for the 
+      </exemplum>
+      <remarks versionDate="2013-01-25" xml:lang="en">
+        <p>Here the <att>calendar</att> attribute points to a <gi>calendar</gi> element for the 
          Julian calendar, specifying that the text content of the <gi>date</gi> element is a 
          Julian date, and the <att>datingMethod</att> attribute also points to the Julian calendar
          to indicate that the content of the <att>when-custom</att> attribute value is Julian too.</p>
-        </remarks>
-      </attDef>
-  </attList><listRef>
+      </remarks>
+    </attDef>
+  </attList>
+  <listRef>
     <ptr target="#NDDATE"/>
-  </listRef></classSpec>
+  </listRef>
+</classSpec>

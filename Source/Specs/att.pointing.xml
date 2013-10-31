@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,19 +6,24 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.pointing"><desc>defines a set of attributes used by all elements which point
-  to other elements by means of one or more URI references.</desc><desc versionDate="2007-12-20" xml:lang="ko">하나 이상의 URI 참조를 통해서 다른 요소를 가리키는 모든 요소에 의해 사용된 속성 집합을 정의한다.</desc><desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組與其他元素相連結的所有元素皆使用的屬性，連結是使用ㄧ個或多個統一資源識別符 (URI) 參照。</desc><desc versionDate="2008-04-05" xml:lang="ja">URIにより要素を参照する要素に共通して付与される属性を定義する．</desc><desc versionDate="2007-06-12" xml:lang="fr">définit un ensemble d'attributs utilisés par tous les éléments qui pointent vers d'autres éléments au moyen d'une ou de plusieurs références URI.</desc><desc versionDate="2007-05-04" xml:lang="es">define un conjunto de atributos usados por todos los elementos que señalan a otros elementos a través de uno o más URI.</desc><desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi usati da tutti gli elementi che puntano ad altri elementi tramite uno o più URI</desc><attList>
-
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.pointing">
+  <desc versionDate="2005-10-10" xml:lang="en">defines a set of attributes used by all elements which point
+  to other elements by means of one or more URI references.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">하나 이상의 URI 참조를 통해서 다른 요소를 가리키는 모든 요소에 의해 사용된 속성 집합을 정의한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">定義一組與其他元素相連結的所有元素皆使用的屬性，連結是使用ㄧ個或多個統一資源識別符 (URI) 參照。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">URIにより要素を参照する要素に共通して付与される属性を定義する．</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">définit un ensemble d'attributs utilisés par tous les éléments qui pointent vers d'autres éléments au moyen d'une ou de plusieurs références URI.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">define un conjunto de atributos usados por todos los elementos que señalan a otros elementos a través de uno o más URI.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi usati da tutti gli elementi che puntano ad altri elementi tramite uno o più URI</desc>
+  <attList>
     <attDef ident="targetLang" usage="opt">
-      <desc>specifies the language of the content to be found at the destination referenced by <att>target</att>, using a <soCalled>language tag</soCalled> generated
+      <desc versionDate="2012-06-16" xml:lang="en">specifies the language of the content to be found at the destination referenced by <att>target</att>, using a <soCalled>language tag</soCalled> generated
         according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
       </datatype>
-        <constraintSpec ident="targetLang" scheme="isoschematron">
+      <constraintSpec ident="targetLang" scheme="isoschematron">
         <constraint>
           <sch:rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
             <sch:assert test="count(@target)">@targetLang can only be used if @target is specified.</sch:assert>
@@ -37,7 +42,7 @@ $Id$
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <linkGrp xml:id="pol-swh_aln_2.1-linkGrp">
-            <ptr xml:id="pol-swh_aln_2.1.1-ptr" target="pol/UDHR/text.xml#pol_txt_1-head" type="tuv" targetLang="pl"/>            
+            <ptr xml:id="pol-swh_aln_2.1.1-ptr" target="pol/UDHR/text.xml#pol_txt_1-head" type="tuv" targetLang="pl"/>
             <ptr xml:id="pol-swh_aln_2.1.2-ptr" target="swh/UDHR/text.xml#swh_txt_1-head" type="tuv" targetLang="sw"/>
           </linkGrp>
         </egXML>
@@ -46,13 +51,14 @@ $Id$
         Declaration of Human Rights</title>: one of them is in Polish,
         the other in Swahili.</p>
       </exemplum>
-<!--      <remarks>
+      <!--      <remarks>
         <p>The function of this attribute is to identify not the language/script of the child of the element that uses it, but rather the language/script of the element or attribute addressed by the element that contains <att>refLang</att>, typically a <gi>ptr</gi>:</p>
-      </remarks> --><!-- remarks removed 2012-06-15 by LB as they are
+      </remarks> -->
+      <!-- remarks removed 2012-06-15 by LB as they are
 			 both inaccurate and redundant -->
     </attDef>
     <attDef ident="target" usage="opt">
-      <desc>specifies the destination of the reference by supplying one or more URI References</desc>
+      <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the reference by supplying one or more URI References</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">하나 혹은 다수의 URI 참조를 제시하여 참조의 목적지를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">用一個或多個統一資源識別符參照 (URI References) 來說明參照所指位置。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">ひとつ以上のURIで，参照先を特定する．</desc>
@@ -77,7 +83,7 @@ $Id$
     </attDef>
     <attDef ident="evaluate" usage="opt">
       <gloss versionDate="2009-05-28" xml:lang="fr">évalué</gloss>
-      <desc>specifies the intended meaning when the target of a
+      <desc versionDate="2005-10-10" xml:lang="en">specifies the intended meaning when the target of a
       pointer is itself a pointer.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">포인터의 대상이 포인터일 때 의도된 의미를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">若指標的目標本身為指標，則在此說明其用意。</desc>
@@ -90,7 +96,7 @@ $Id$
       </datatype>
       <valList type="closed">
         <valItem ident="all">
-          <desc>if the element pointed to is itself a pointer, then
+          <desc versionDate="2007-06-27" xml:lang="en">if the element pointed to is itself a pointer, then
 	  the target of that pointer will be taken, and so on, until
 	  an element is found which is not a pointer.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">만약 지시되는 요소가 포인터라면, 포인터의 대상은 포인터가 아닌 요소가 발견될 때까지 계속 연결된다.</desc>
@@ -103,7 +109,7 @@ $Id$
           <desc versionDate="2007-01-21" xml:lang="it">se l'elemento puntato è esso stesso un puntatore, allora sarà presa la destinazione di quel puntatore e così via fino a trovare un elemento che non è un puntatore</desc>
         </valItem>
         <valItem ident="one">
-          <desc>if the element pointed to is itself a pointer, then
+          <desc versionDate="2007-06-27" xml:lang="en">if the element pointed to is itself a pointer, then
 	  its target (whether a pointer or not) is taken as the target
 	  of this pointer.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">지시된 요소가 포인터라면, 그 대상(포인터이든지 아니든지)은 이 포인터의 대상으로 취급된다.</desc>
@@ -116,7 +122,7 @@ $Id$
           <desc versionDate="2007-01-21" xml:lang="it">se l'elemento puntato è esso stesso un puntatore, allora la sua destinazione (che sia un puntatore o meno) è presa come destinazione del puntatore</desc>
         </valItem>
         <valItem ident="none">
-          <desc>no further evaluation of targets is carried out
+          <desc versionDate="2007-06-27" xml:lang="en">no further evaluation of targets is carried out
 	  beyond that needed to find the element specified in the
 	  pointer's target.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">포인터의 대상에서 명시된 요소를 발견할 필요가 없을 때 더 이상의 대상에 대한 평가는 수행되지 않는다.</desc>
@@ -128,7 +134,7 @@ $Id$
           <desc versionDate="2007-01-21" xml:lang="it">non viene condotta altra valutazione delle destinazioni se non quella necessaria a rintracciare l'elemento specificato nella destinazione del puntatore</desc>
         </valItem>
       </valList>
-      <remarks>
+      <remarks versionDate="2005-10-10" xml:lang="en">
         <p>If no value is given, the application program is
           responsible for deciding (possibly on the basis of user
           input) how far to trace a chain of pointers.</p>
@@ -138,13 +144,16 @@ $Id$
                         (éventuellement à partir d'une donnée entrée par l'utilisateur) jusqu'où
                         retracer une chaîne de pointeurs.</p>
       </remarks>
-      <remarks xml:lang="ja"><p>
+      <remarks xml:lang="ja">
+        <p>
 	値がない場合，ソフトウェア側がポインター連鎖の扱いを決める(恐
 	  らく利用者が指示を元に行われる)．
 	  </p>
       </remarks>
     </attDef>
-  </attList><listRef>
+  </attList>
+  <listRef>
     <ptr target="#STGAla"/>
     <ptr target="#COXR"/>
-  </listRef></classSpec>
+  </listRef>
+</classSpec>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,18 +6,17 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5odds.isosch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" type="atts" ident="att.patternReplacement"><desc>provides attributes for regular-expression matching and replacement.</desc><attList>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" type="atts" ident="att.patternReplacement">
+  <desc versionDate="2012-11-22" xml:lang="en">provides attributes for regular-expression matching and replacement.</desc>
+  <attList>
     <attDef ident="matchPattern" usage="req">
-      <desc>specifies a regular expression against which the values of other attributes
+      <desc versionDate="2012-11-22" xml:lang="en">specifies a regular expression against which the values of other attributes
         can be matched.</desc>
-<!-- MDH 2012-11-22: The following translations are inherited from when these attributes 
+      <!-- MDH 2012-11-22: The following translations are inherited from when these attributes 
       were defined specifically on <cRef>; they need to be updated for the more general 
       desc above, now that they are also used on <prefixDef>. -->
-      
       <!--<desc versionDate="2009-01-05" xml:lang="fr">spécifie une expression régulière à laquelle vont
         être comparées les valeurs des attributs <att>cRef</att>.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko"><att>cRef</att> 속성 값이 대응하는 정규 표현을 명시한다.</desc>
@@ -32,8 +31,9 @@ $Id$
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
       </datatype>
-      <valDesc>must be a regular expression according to the <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">W3C XML Schema Language</ref></valDesc>
-      <remarks>
+      <valDesc>must be a regular expression according to the <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">W3C XML Schema Language</ref>
+         </valDesc>
+      <remarks versionDate="2012-11-22" xml:lang="en">
         <p>Parenthesized groups are used not only for establishing order of precedence and atoms for
           quantification, but also for creating subpatterns to be referenced by the
           <att>replacementPattern</att> attribute.</p>
@@ -53,7 +53,7 @@ $Id$
       </remarks>
     </attDef>
     <attDef ident="replacementPattern" usage="req">
-      <desc>specifies a <soCalled>replacement pattern</soCalled> which, once subpattern substitution
+      <desc versionDate="2012-11-22" xml:lang="en">specifies a <soCalled>replacement pattern</soCalled> which, once subpattern substitution
         has been performed, provides a URI.</desc>
       <desc versionDate="2009-01-05" xml:lang="fr">spécifie une <soCalled>règle de
         remplacement</soCalled> qui, après avoir opéré les substitutions prévues à chaque nœud,
@@ -78,7 +78,7 @@ $Id$
         the <att>matchPattern</att>.</valDesc>
       <valDesc xml:lang="fr">Devrait être le squelette d'un parent ou URI absolu, avec des
         références aux groupes dans <att>matchPattern</att>.</valDesc>
-      <remarks>
+      <remarks versionDate="2012-11-22" xml:lang="en">
         <p>The strings <q>$1</q> through <q>$9</q> are references to the corresponding group in the
           regular expression specified by <att>matchPattern</att> (counting open parenthesis, left
           to right). Processors are expected to replace them with whatever matched the corresponding
@@ -111,9 +111,11 @@ $Id$
         <p> ドル記号に続く数値が(後方参照に対する)置換パタンとして必要な場 合には，当該ドル記号は<code>%24</code>と書かれなければならない． </p>
       </remarks>
     </attDef>
-  </attList><listRef>
+  </attList>
+  <listRef>
     <ptr target="#SAPU"/>
     <ptr target="#HD54M"/>
     <ptr target="#HD54"/>
     <ptr target="#HD54S"/>
-  </listRef></classSpec>
+  </listRef>
+</classSpec>
