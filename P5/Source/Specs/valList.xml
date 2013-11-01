@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,17 +6,15 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="valList">
-  <gloss>value list</gloss>
+  <gloss versionDate="2005-01-14" xml:lang="en">value list</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">값 목록</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">屬性值列表</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">liste de valeurs</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">lista de valores</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">lista di valori</gloss>
-  <desc>contains one or more <gi>valItem</gi> elements defining possible values.</desc>
+  <desc versionDate="2012-09-23" xml:lang="en">contains one or more <gi>valItem</gi> elements defining possible values.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko"> 하나의 속성에 대한 가능한 값을 정의하는 하나 이상의 <gi>valItem</gi> 요소를
     포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含一個或多個元素<gi>valItem</gi>，以定義一個屬性可使用的屬性值。</desc>
@@ -31,12 +29,14 @@ $Id$
     <memberOf key="att.global"/>
     <memberOf key="att.combinable"/>
   </classes>
-  <content> <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-    <ref name="valItem"/>
-    </zeroOrMore> </content>
+  <content>
+    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="valItem"/>
+    </zeroOrMore>
+  </content>
   <attList>
     <attDef ident="type" usage="opt">
-      <desc>specifies the extensibility of the list of values specified.</desc>
+      <desc versionDate="2012-09-23" xml:lang="en">specifies the extensibility of the list of values specified.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">명시된 속성 값 목록의 확장성을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">標明該屬性值列表的延展性。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">属性値リストの拡張性を示す．</desc>
@@ -46,11 +46,13 @@ $Id$
         los valores especificados para los atributos.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la possibilità di estendere la lista dei
         valori specificati per gli attributi</desc>
-      <datatype> <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/> </datatype>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
       <defaultVal>open</defaultVal>
       <valList type="closed">
         <valItem ident="closed">
-          <desc>only the values specified are permitted.</desc>
+          <desc versionDate="2007-06-27" xml:lang="en">only the values specified are permitted.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">명시된 하나의 값만이 허용된다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">僅允許標明的屬性值。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">solamente los valores especificados estan
@@ -62,19 +64,18 @@ $Id$
             specificati</desc>
         </valItem>
         <valItem ident="semi">
-          <gloss>semi-open</gloss>
+          <gloss versionDate="2007-07-04" xml:lang="en">semi-open</gloss>
           <gloss versionDate="2007-12-20" xml:lang="ko">반개방</gloss>
           <gloss versionDate="2007-06-12" xml:lang="fr">semi-ouvert </gloss>
           <gloss versionDate="2007-11-06" xml:lang="it">semiaperto</gloss>
           <gloss versionDate="2007-05-04" xml:lang="es">todos los valores indicados deben ser
             soportados pero son consentidos otros valores para los que son necesarios sistemas de
             elaboración adecuados.</gloss>
-          <desc>all the values specified should be supported, but other values are legal and
+          <desc versionDate="2007-06-27" xml:lang="en">all the values specified should be supported, but other values are legal and
             software should have appropriate fallback processing for them.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">명시된 모든 값이 지원되어야하지만, 다른 값도 적법하며 소프트웨어는 이들에 대해
             적절한 준비 프로세서를 갖추어야 한다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW"
-            >所有標明的屬性值應該維持有效；但其他屬性值亦為合法，且所使用的軟體對於它們應該具有適當的後備處理程序。</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">所有標明的屬性值應該維持有效；但其他屬性值亦為合法，且所使用的軟體對於它們應該具有適當的後備處理程序。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">todos los valores especificados deben ser
             utilizados, pero otros valores son legales y el software debe tener la posibilidad
             apropiada para proseceralos</desc>
@@ -88,7 +89,7 @@ $Id$
             eleborazione adeguati</desc>
         </valItem>
         <valItem ident="open">
-          <desc>the values specified are sample values only.</desc>
+          <desc versionDate="2007-06-27" xml:lang="en">the values specified are sample values only.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">명시된 값만이 표본 값이다.</desc>
           <desc versionDate="2007-05-02" xml:lang="zh-TW">所標明的屬性值僅為樣本屬性值。</desc>
           <desc versionDate="2008-04-06" xml:lang="es">los valores especificados son valores de
@@ -103,43 +104,49 @@ $Id$
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"> <valList type="closed">
-      <valItem ident="req">
-        <gloss>required</gloss>
-      </valItem>
-      <valItem ident="rec">
-        <gloss>recommended</gloss>
-      </valItem>
-      <valItem ident="opt">
-        <gloss>optional</gloss>
-      </valItem>
-      </valList> </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <valList type="closed">
+        <valItem ident="req">
+          <gloss>required</gloss>
+        </valItem>
+        <valItem ident="rec">
+          <gloss>recommended</gloss>
+        </valItem>
+        <valItem ident="opt">
+          <gloss>optional</gloss>
+        </valItem>
+      </valList>
+    </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"> <valList type="closed">
-      <valItem ident="req">
-        <gloss>exigé</gloss>
-      </valItem>
-      <valItem ident="rec">
-        <gloss>Recommandé</gloss>
-      </valItem>
-      <valItem ident="opt">
-        <gloss>optionnel</gloss>
-      </valItem>
-      </valList> </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <valList type="closed">
+        <valItem ident="req">
+          <gloss>exigé</gloss>
+        </valItem>
+        <valItem ident="rec">
+          <gloss>Recommandé</gloss>
+        </valItem>
+        <valItem ident="opt">
+          <gloss>optionnel</gloss>
+        </valItem>
+      </valList>
+    </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples"> <valList type="closed">
-      <valItem ident="req">
-        <gloss>必要性</gloss>
-      </valItem>
-      <valItem ident="rec">
-        <gloss>建議性</gloss>
-      </valItem>
-      <valItem ident="opt">
-        <gloss>選擇性</gloss>
-      </valItem>
-      </valList> </egXML>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <valList type="closed">
+        <valItem ident="req">
+          <gloss>必要性</gloss>
+        </valItem>
+        <valItem ident="rec">
+          <gloss>建議性</gloss>
+        </valItem>
+        <valItem ident="opt">
+          <gloss>選擇性</gloss>
+        </valItem>
+      </valList>
+    </egXML>
   </exemplum>
   <listRef>
     <ptr target="#TDATT"/>
