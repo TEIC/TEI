@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,11 +6,9 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="span">
-  <desc>associates an interpretative annotation directly with a span of text.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">associates an interpretative annotation directly with a span of text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">해석적 부호를 텍스트의 일정 부분과 직접적으로 연결시킨다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">將詮釋性註釋直接和一段文字段連結。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">テキスト部分に解釈的注釈を関連づける．</desc>
@@ -32,34 +30,32 @@ $Id$
   <constraintSpec ident="targetfrom" scheme="isoschematron">
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@from and @target">
-Only one of the attributes @target and @from may be supplied on <name/></report>
-    </constraint></constraintSpec>
+Only one of the attributes @target and @from may be supplied on <name/>
+         </report>
+    </constraint>
+  </constraintSpec>
   <constraintSpec ident="targetto" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@to
-								 and
-								 @target">
-Only one of the attributes @target and @to may be supplied on <name/></report>
-    </constraint></constraintSpec>
-  <constraintSpec ident="tonotfrom" scheme="isoschematron">    <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@to
-								 and
-								 not(@from)">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@to          and          @target">
+Only one of the attributes @target and @to may be supplied on <name/>
+         </report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="tonotfrom" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@to          and          not(@from)">
 If @to is supplied on <name/>, @from must be supplied as well</report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="tofrom" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron"
-	      test="contains(@to,' ') or contains(@from,' ')">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="contains(@to,' ') or contains(@from,' ')">
 The attributes @to and @from on <name/> may each contain only a single value</report>
     </constraint>
   </constraintSpec>
-
-
   <attList>
     <attDef ident="from" usage="opt">
-      <desc>gives the identifier of the node which is the starting point of the span of text being annotated; if not accompanied by a <att>to</att> attribute, gives the identifier of the node of the entire span of text being annotated.</desc>
+      <desc versionDate="2013-01-15" xml:lang="en">gives the identifier of the node which is the starting point of the span of text being annotated; if not accompanied by a <att>to</att> attribute, gives the identifier of the node of the entire span of text being annotated.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">현재 부호를 붙이는 단락의 처음을 명시함; <att>to</att> 속성과 같이 쓰이지 않으면
         전체 문단을 명시함.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出被註解段落的起點；若沒有使用屬性<att>to</att>，則指出全部段落。</desc>
@@ -78,7 +74,7 @@ The attributes @to and @from on <name/> may each contain only a single value</re
       <valDesc versionDate="2009-02-13" xml:lang="fr">L'identificateur de l'élément qui figure au début du passage.</valDesc>
     </attDef>
     <attDef ident="to" usage="opt">
-      <desc>gives the identifier of the node which is the end-point of the span of text being annotated.</desc>
+      <desc versionDate="2013-01-15" xml:lang="en">gives the identifier of the node which is the end-point of the span of text being annotated.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">부호를 붙이는 단락의 끝을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出被註解段落的終點。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">注釈対象の終点を示す．</desc>

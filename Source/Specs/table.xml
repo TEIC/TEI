@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
@@ -6,12 +6,10 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="figures" ident="table">
   <gloss versionDate="2007-06-12" xml:lang="fr">tableau</gloss>
-  <desc>contains text displayed in tabular form, in rows and columns.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">contains text displayed in tabular form, in rows and columns.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">행과 열의 테이블 형식으로 제시된 텍스트를 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">以表格形式呈現、包含在直行橫列中的文字內容。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">表形式で示されるテキストを，行と列で示す．</desc>
@@ -28,40 +26,40 @@ $Id$
   <content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
       <zeroOrMore>
-	<choice>
-	  <ref name="model.headLike"/>
-	  <ref name="model.global"/>
-	</choice>
+        <choice>
+          <ref name="model.headLike"/>
+          <ref name="model.global"/>
+        </choice>
       </zeroOrMore>
       <choice>
-	<oneOrMore>
-	  <ref name="row"/>
-	  <zeroOrMore>
-	    <ref name="model.global"/>
-	  </zeroOrMore>
-	</oneOrMore>
-	<oneOrMore>
-	  <group>
-	    <ref name="model.graphicLike"/>
-	  </group>
-	  <zeroOrMore>
-	    <ref name="model.global"/>
-	  </zeroOrMore>
-	</oneOrMore>
+        <oneOrMore>
+          <ref name="row"/>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
+        <oneOrMore>
+          <group>
+            <ref name="model.graphicLike"/>
+          </group>
+          <zeroOrMore>
+            <ref name="model.global"/>
+          </zeroOrMore>
+        </oneOrMore>
       </choice>
       <zeroOrMore>
-    <group>
-      <ref name="model.divBottom"/>
-    </group>
-    <zeroOrMore>
-      <ref name="model.global"/>
-    </zeroOrMore>
-  </zeroOrMore>
+        <group>
+          <ref name="model.divBottom"/>
+        </group>
+        <zeroOrMore>
+          <ref name="model.global"/>
+        </zeroOrMore>
+      </zeroOrMore>
     </group>
   </content>
   <attList>
     <attDef ident="rows" usage="opt">
-      <desc>indicates the number of rows in the table.</desc>
+      <desc versionDate="2005-01-14" xml:lang="en">indicates the number of rows in the table.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">테이블의 행의 수를 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出表格中的列數。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該表中の行数を示す．</desc>
@@ -73,22 +71,23 @@ $Id$
       </datatype>
       <valDesc>If no number is supplied, an application must calculate the number of rows.</valDesc>
       <valDesc xml:lang="fr">Si aucun nombre n'est fourni, une application doit calculer le nombre de lignes.</valDesc>
-      <remarks>
+      <remarks versionDate="2005-01-14" xml:lang="en">
         <p>Rows should be presented from top to bottom.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>Les rangées sont ordonnées de haut en bas</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05"><p> 行は，上から下の順番で示される． </p>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p> 行は，上から下の順番で示される． </p>
       </remarks>
     </attDef>
     <attDef ident="cols" usage="opt">
-      <gloss>columns</gloss>
+      <gloss versionDate="2007-07-04" xml:lang="en">columns</gloss>
       <gloss versionDate="2007-12-20" xml:lang="ko">열</gloss>
       <gloss versionDate="2008-04-06" xml:lang="es">columnas</gloss>
       <gloss versionDate="2008-03-30" xml:lang="fr">colonnes</gloss>
       <gloss versionDate="2007-11-06" xml:lang="it">colonne</gloss>
-      <desc>indicates the number of columns in each row of the table.</desc>
+      <desc versionDate="2005-01-14" xml:lang="en">indicates the number of columns in each row of the table.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">테이블의 각 행별 열의 수를 표시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指出表格中每一列所包含的行數。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該表中の列数を示す．</desc>
@@ -103,13 +102,14 @@ $Id$
       </datatype>
       <valDesc>If no number is supplied, an application must calculate the number of columns.</valDesc>
       <valDesc xml:lang="fr">Si aucun nombre n'est fourni, une application doit calculer le nombre de colonnes.</valDesc>
-      <remarks>
+      <remarks versionDate="2005-01-14" xml:lang="en">
         <p>Within each row, columns should be presented left to right.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>Dans chaque rangée, les colonnes sont ordonnées de gauche à droite.</p>
       </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05"><p> 行中において，列は左から右への順番で示される． </p>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p> 行中において，列は左から右への順番で示される． </p>
       </remarks>
     </attDef>
   </attList>
@@ -156,14 +156,14 @@ $Id$
         <head>Persistance de la neige dans les Alpes suisses (Denzler). </head>
         <row>
           <cell role="label">A l'altitude de</cell>
-	  <cell role="data">650 m.</cell>
+          <cell role="data">650 m.</cell>
           <cell role="data">1300m.</cell>
           <cell role="data">1950m.</cell>
           <cell role="data">2700m.</cell>
         </row>
         <row>
           <cell role="label">la neige reste</cell>
-	  <cell role="data">77 jours.</cell>
+          <cell role="data">77 jours.</cell>
           <cell role="data"> 200 jours.</cell>
           <cell role="data"> 245 jours.</cell>
           <cell role="data"> 365 jours.</cell>
@@ -208,7 +208,7 @@ $Id$
       </table>
     </egXML>
   </exemplum>
-  <remarks>
+  <remarks versionDate="2005-01-14" xml:lang="en">
     <p rend="dataDesc">Contains an optional heading and a series of rows.</p>
     <p>Any rendition information should be supplied using the global <att>rend</att> attribute, at
       the table, row, or cell level as appropriate.</p>
