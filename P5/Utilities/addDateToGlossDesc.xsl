@@ -2,6 +2,7 @@
 <xsl:stylesheet 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+    xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns="http://www.tei-c.org/ns/1.0"
     version="2.0">
 <!--
@@ -17,31 +18,31 @@ the status quo existed.
   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
 </xsl:param>
 <xsl:param name="file"/>
-
+<xsl:param name="lang">en</xsl:param>
 
 <!-- 
      identify the context with concatenation of @idents up the tree,
      and the element name
 -->
-<xsl:key name="I" match="attDef/gloss[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
-<xsl:key name="I" match="valItem/gloss[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
-<xsl:key name="I" match="attDef/desc[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
-<xsl:key name="I" match="valItem/desc[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
+<xsl:key name="I" match="attDef/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
+<xsl:key name="I" match="valItem/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
+<xsl:key name="I" match="attDef/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
+<xsl:key name="I" match="valItem/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
 
-<xsl:key name="I" match="attDef/remarks[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
-<xsl:key name="I" match="valItem/remarks[not(@xml:lang) or @xml:lang='en']" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
+<xsl:key name="I" match="attDef/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
+<xsl:key name="I" match="valItem/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
 
-<xsl:key name="I" match="elementSpec/gloss[not(@xml:lang) or @xml:lang='en']" use="concat(parent::elementSpec/@ident,local-name())"/>
-<xsl:key name="I" match="classSpec/gloss[not(@xml:lang) or @xml:lang='en']" use="concat(parent::classSpec/@ident,local-name())"/>
-<xsl:key name="I" match="macroSpec/gloss[not(@xml:lang) or @xml:lang='en']" use="concat(parent::macroSpec/@ident,local-name())"/>
+<xsl:key name="I" match="elementSpec/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name())"/>
+<xsl:key name="I" match="classSpec/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name())"/>
+<xsl:key name="I" match="macroSpec/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name())"/>
 
-<xsl:key name="I" match="elementSpec/desc[not(@xml:lang) or @xml:lang='en']" use="concat(parent::elementSpec/@ident,local-name())"/>
-<xsl:key name="I" match="classSpec/desc[not(@xml:lang) or @xml:lang='en']" use="concat(parent::classSpec/@ident,local-name())"/>
-<xsl:key name="I" match="macroSpec/desc[not(@xml:lang) or @xml:lang='en']" use="concat(parent::macroSpec/@ident,local-name())"/>
+<xsl:key name="I" match="elementSpec/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name())"/>
+<xsl:key name="I" match="classSpec/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name())"/>
+<xsl:key name="I" match="macroSpec/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name())"/>
 
-<xsl:key name="I" match="elementSpec/remarks[not(@xml:lang) or @xml:lang='en']" use="concat(parent::elementSpec/@ident,local-name())"/>
-<xsl:key name="I" match="classSpec/remarks[not(@xml:lang) or @xml:lang='en']" use="concat(parent::classSpec/@ident,local-name())"/>
-<xsl:key name="I" match="macroSpec/remarks[not(@xml:lang) or @xml:lang='en']" use="concat(parent::macroSpec/@ident,local-name())"/>
+<xsl:key name="I" match="elementSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name())"/>
+<xsl:key name="I" match="classSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name())"/>
+<xsl:key name="I" match="macroSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name())"/>
 
 <xsl:output 
    method="xml"
@@ -60,13 +61,13 @@ the status quo existed.
   </xsl:copy>
 </xsl:template>
 
-<xsl:template match="gloss[not(@xml:lang) or @xml:lang='en']">
+<xsl:template match="gloss[not(@xml:lang) or @xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
-<xsl:template match="desc[not(@xml:lang) or @xml:lang='en']">
+<xsl:template match="desc[not(@xml:lang) or @xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
-<xsl:template match="remarks[not(@xml:lang) or @xml:lang='en']">
+<xsl:template match="remarks[not(@xml:lang) or @xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
 
@@ -75,9 +76,9 @@ the status quo existed.
       <xsl:value-of select="(ancestor::*[@ident]/@ident,local-name())"
 		    separator=""/>
   </xsl:variable>
-  <xsl:variable name="new" select="normalize-space(.)"/>
+  <xsl:variable name="new" select="tei:normalize(.)"/>
   <xsl:variable name="old"
-		select="normalize-space(doc(resolve-uri($file,base-uri(/*)))/key('I',$identifier)[1])"/>
+		select="tei:normalize(doc(resolve-uri($file,base-uri(/*)))/key('I',$identifier)[1])"/>
   <!--<xsl:message>check <xsl:value-of select="($identifier,$date,$old,$new)"	separator=" | "/></xsl:message>-->
   <xsl:copy>
     <xsl:choose>
@@ -96,5 +97,12 @@ the status quo existed.
   </xsl:choose>
   </xsl:copy>
 </xsl:template>
+
+<xsl:function name="tei:normalize">
+  <xsl:param name="text"/>
+  <!-- for comparison purposes, ignore trailing space, letter-case and
+  trailing -->
+  <xsl:sequence select="lower-case(replace(normalize-space($text),'\.$',''))"/>
+</xsl:function>
 
 </xsl:stylesheet>
