@@ -77,7 +77,7 @@ the status quo existed.
   </xsl:variable>
   <xsl:variable name="new" select="normalize-space(.)"/>
   <xsl:variable name="old"
-		select="normalize-space(doc(resolve-uri($file,base-uri(/*)))/key('I',$identifier))"/>
+		select="normalize-space(doc(resolve-uri($file,base-uri(/*)))/key('I',$identifier)[1])"/>
   <!--<xsl:message>check <xsl:value-of select="($identifier,$date,$old,$new)"	separator=" | "/></xsl:message>-->
   <xsl:copy>
     <xsl:choose>
