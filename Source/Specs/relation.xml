@@ -34,6 +34,13 @@ $Id$
       <ref name="desc"/>
     </optional>
   </content>
+  <constraintSpec ident="reforkeyname" scheme="isoschematron">
+    <constraint>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" 
+	      test="@ref or @key or @name">One of the attributes  'name', 'ref' or 'key' must be supplied</assert>
+    </constraint>
+  </constraintSpec>
+
   <constraintSpec ident="activemutual" scheme="isoschematron">
     <constraint>
       <report xmlns="http://purl.oclc.org/dsdl/schematron" test="@active and @mutual">Only one of the attributes
@@ -90,7 +97,7 @@ $Id$
         </valItem>
       </valList>
     </attDef>
-    <attDef ident="name" usage="req">
+    <attDef ident="name">
       <desc versionDate="2005-10-27" xml:lang="en">supplies a name for the kind of relationship of which this is an instance.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">이것이 실례인 관련성 종류에 대한 이름을 제공한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">提供該關係的確切名稱。</desc>
@@ -184,7 +191,7 @@ $Id$
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SAWS">
       <relation
         resp="http://viaf.org/viaf/44335536/"
-        ref="http://purl.org/saws/ontology#isVariantOf" name="variant"
+        ref="http://purl.org/saws/ontology#isVariantOf"
         active="http://www.ancientwisdoms.ac.uk/cts/urn:cts:greekLit:tlg3017.Syno298.sawsGrc01:divedition.divsection1.o14.a107"
         passive="http://data.perseus.org/citations/urn:cts:greekLit:tlg0031.tlg002.perseus-grc1:9.35"/>
     </egXML>
