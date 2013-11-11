@@ -32,17 +32,19 @@ $Id$
     <memberOf key="model.divWrapper"/>
   </classes>
   <content>
-    <!--    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+    <!-- MDH 2013-11-11: per http://sourceforge.net/p/tei/feature-requests/472/ adding 
+      docDate to the content model, so it now has to be explicit instead of 
+      macro.phraseSeq. -->
+    <!-- <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>-->
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
       <rng:choice>
         <rng:text/>
-        <rng:ref name="date"/>
-	<rng:ref name="time"/>  
-        <rng:ref name="model.nameLike"/>
-        <rng:ref name="address"/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
         <rng:ref name="model.global"/>
+        <rng:ref name="docDate"/>
       </rng:choice>
-    </rng:zeroOrMore> -->
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+    </rng:zeroOrMore>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
