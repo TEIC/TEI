@@ -26,6 +26,11 @@ exclude-result-prefixes="svrl rng tei a teix">
       </Messages>
   </xsl:template>
 
+  <xsl:template match="svrl:failed-assert[@role='nonfatal']">
+    <WARNING>Schematron warn: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
+    Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></WARNING>
+  </xsl:template>
+
   <xsl:template match="svrl:failed-assert">
     <ERROR>Schematron error: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
     Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></ERROR>
