@@ -5,6 +5,7 @@
 		xmlns:rng="http://relaxng.org/ns/structure/1.0"
 		xmlns:xs="http://www.w3.org/2001/XMLSchema"
 		xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+		exclude-result-prefixes="xi xs"
 		version="2.0">
 <!--
 This software is dual-licensed:
@@ -93,12 +94,13 @@ identity transform
 	  <xsl:value-of select="format-date($date cast as xs:date, '[Y]', 'en', (), ())"/>
       </xsl:when>
       <xsl:when test=".='revision'">
-	<xsl:value-of
+	<xsl:variable name="r"
 	    select="doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='commit']/@revision"/>
+	<ref
+	    target="http://sourceforge.net/p/tei/code/{$r}/tree/trunk/P5/"><xsl:value-of select="$r"/></ref>
       </xsl:when>
-      <xsl:when test=".='version'">
-	<xsl:value-of
-	    select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
+      <xsl:when test=".='version'">Version <ref target="AB.html#ABTEI4"><xsl:value-of
+	    select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/></ref>
       </xsl:when>
       <xsl:when test=".='totalElements'"><xsl:value-of select="count(distinct-values(//elementSpec/@ident))"/></xsl:when>
       <xsl:when test=".='tab-content-models'"><xsl:call-template name="tab-content-models"/></xsl:when>
