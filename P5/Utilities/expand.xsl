@@ -80,11 +80,11 @@ identity transform
 
   <xsl:template match="processing-instruction('insert')">
     <xsl:choose>
-      <xsl:when test=".='version'">
-	<xsl:value-of
-	    select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
-      </xsl:when>
       <xsl:when test=".='date'">
+	<xsl:value-of
+	    select="substring-before(doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='date'],'T')"/>
+      </xsl:when>
+      <xsl:when test=".='version'">
 	<xsl:value-of
 	    select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
       </xsl:when>
