@@ -81,8 +81,11 @@ identity transform
   <xsl:template match="processing-instruction('insert')">
     <xsl:choose>
       <xsl:when test=".='date'">
-	<xsl:value-of
+	<xsl:variable name="date"
 	    select="substring-before(doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='date'],'T')"/>
+	<date when="{$date}">
+	  <xsl:value-of select="format-date($date cast as xs:date, '[D1o] [MNn] [Y]', 'en', (), ())"/>
+	</date>
       </xsl:when>
       <xsl:when test=".='revision'">
 	<xsl:value-of
