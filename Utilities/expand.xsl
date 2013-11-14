@@ -87,6 +87,11 @@ identity transform
 	  <xsl:value-of select="format-date($date cast as xs:date, '[D1o] [MNn] [Y]', 'en', (), ())"/>
 	</date>
       </xsl:when>
+      <xsl:when test=".='year'">
+	<xsl:variable name="date"
+	    select="substring-before(doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='date'],'T')"/>
+	  <xsl:value-of select="format-date($date cast as xs:date, '[Y]', 'en', (), ())"/>
+      </xsl:when>
       <xsl:when test=".='revision'">
 	<xsl:value-of
 	    select="doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='commit']/@revision"/>
