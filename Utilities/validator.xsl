@@ -166,6 +166,7 @@ exclude-result-prefixes="svrl rng tei a teix">
 	<xsl:when test="starts-with($What,'tei:')"/>
 	<xsl:when test="starts-with($What,'mailto:')"/>
 	<xsl:when test="starts-with($What,'http:')"/>
+	<xsl:when test="contains($What,'.html')"/>
 	<xsl:when test="not(contains($What,'/')) and not(id($What))">
 	  <xsl:call-template name="Error">
 	    <xsl:with-param name="value" select="$What"/>
