@@ -84,6 +84,10 @@ identity transform
 	<xsl:value-of
 	    select="substring-before(doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='date'],'T')"/>
       </xsl:when>
+      <xsl:when test=".='revision'">
+	<xsl:value-of
+	    select="doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='commit']/@revision"/>
+      </xsl:when>
       <xsl:when test=".='version'">
 	<xsl:value-of
 	    select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
