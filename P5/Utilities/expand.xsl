@@ -101,7 +101,7 @@ identity transform
       </xsl:when>
       <xsl:when test=".='version'">
 	<xsl:variable name="v" select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
-	<ref   target="AB.html#ABTEI4">VERSION</ref> <ref target="../../readme-{replace($v,'[A-z]*','')}.html"><xsl:value-of
+	<ref   target="AB.html#ABTEI4">VERSION</ref> <ref target="../../readme-{replace($v,'[A-z]','')}.html"><xsl:value-of
 	    select="$v"/></ref>
       </xsl:when>
       <xsl:when test=".='totalElements'"><xsl:value-of select="count(distinct-values(//elementSpec/@ident))"/></xsl:when>
