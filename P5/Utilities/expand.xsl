@@ -99,8 +99,10 @@ identity transform
 	<ref
 	    target="http://sourceforge.net/p/tei/code/{$r}/tree/trunk/P5/"><xsl:value-of select="$r"/></ref>
       </xsl:when>
-      <xsl:when test=".='version'">Version <ref target="AB.html#ABTEI4"><xsl:value-of
-	    select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/></ref>
+      <xsl:when test=".='version'">
+	<xsl:variable name="v" select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>
+	<ref   target="AB.html#ABTEI4">VERSION</ref> <ref target="../../readme-{replace($v,'[A-z]*','')}.html"><xsl:value-of
+	    select="$v"/></ref>
       </xsl:when>
       <xsl:when test=".='totalElements'"><xsl:value-of select="count(distinct-values(//elementSpec/@ident))"/></xsl:when>
       <xsl:when test=".='tab-content-models'"><xsl:call-template name="tab-content-models"/></xsl:when>
