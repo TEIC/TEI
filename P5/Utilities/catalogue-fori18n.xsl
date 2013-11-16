@@ -8,6 +8,7 @@
     <html>
       <head>
         <title>TEI documentation strings</title>
+	<meta charset="utf-8"/>
       </head>
       <body>
         <table style="border-collapse:collapse;border-spacing:0;">
