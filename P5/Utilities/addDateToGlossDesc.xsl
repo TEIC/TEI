@@ -31,6 +31,7 @@ the status quo existed.
 
 <xsl:key name="I" match="attDef/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
 <xsl:key name="I" match="valItem/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
+<xsl:key name="I" match="attDef/valDesc[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
 
 <xsl:key name="I" match="elementSpec/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name())"/>
 <xsl:key name="I" match="classSpec/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name())"/>
@@ -43,6 +44,7 @@ the status quo existed.
 <xsl:key name="I" match="elementSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name())"/>
 <xsl:key name="I" match="classSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name())"/>
 <xsl:key name="I" match="macroSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name())"/>
+
 
 <xsl:output 
    method="xml"
@@ -64,10 +66,16 @@ the status quo existed.
 <xsl:template match="gloss[not(@xml:lang) or @xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
+
 <xsl:template match="desc[not(@xml:lang) or @xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
+
 <xsl:template match="remarks[not(@xml:lang) or @xml:lang=$lang]">
+  <xsl:call-template name="check"/>
+</xsl:template>
+
+<xsl:template match="valDesc[not(@xml:lang) or @xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
 
@@ -79,7 +87,7 @@ the status quo existed.
   <xsl:variable name="new" select="tei:normalize(.)"/>
   <xsl:variable name="old"
 		select="tei:normalize(doc(resolve-uri($file,base-uri(/*)))/key('I',$identifier)[1])"/>
-  <!--<xsl:message>check <xsl:value-of select="($identifier,$date,$old,$new)"	separator=" | "/></xsl:message>-->
+  <!-- <xsl:message>check <xsl:value-of select="($identifier,$date,$old,$new)"	separator=" | "/></xsl:message>-->
   <xsl:copy>
     <xsl:choose>
       <xsl:when test="$old=$new">
