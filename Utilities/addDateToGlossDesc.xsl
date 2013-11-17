@@ -7,12 +7,12 @@
     version="2.0">
 <!--
 For a given *Spec file, make a basic copy,
-but look at each English desc/gloss/remarks and see
+but look at each English desc/gloss/remarks/valDesc and see
 if its unchanged since the version in a previous version
-whose file name and date are passed as parameters,
-bump the date in this file down to the date of the comparison file.
-Done repeatedly, this means each file has the earliest date on which
-the status quo existed.
+whose file name and date are passed as parameters;
+bump the date in this file down to the date of the comparison file
+if the string is unchanged. Done repeatedly, this means each file
+has the earliest date on which the status quo existed.
 -->
 <xsl:param name="date">      
   <xsl:value-of select="format-dateTime(current-dateTime(),'[Y]-[M02]-[D02]')"/>
@@ -91,10 +91,10 @@ the status quo existed.
   <xsl:copy>
     <xsl:choose>
       <xsl:when test="$old=$new">
-	<xsl:message>Reset date for <xsl:value-of select="($identifier,$date)"
-	separator=" to "/></xsl:message>
+	<xsl:message>Reset date for <xsl:value-of select="($identifier,$lang,$date)"
+	separator=" / "/></xsl:message>
 	<xsl:attribute name="versionDate" select="$date"/>
-	<xsl:attribute name="xml:lang">en</xsl:attribute>
+	<xsl:attribute name="xml:lang"><xsl:value-of select="$lang"/></xsl:attribute>
 	<xsl:apply-templates 
 	    select="@*[not(name()='xml:lang' or name()='versionDate')]|*|processing-instruction()|comment()|text()"/>
       </xsl:when>
