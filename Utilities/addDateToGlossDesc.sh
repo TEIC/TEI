@@ -6,7 +6,7 @@
 #
 # if the checked-out version isnt a well-formed XML file, dont even try the comparison.
 #
-L=fr
+L=en
 echo pushd Source/Specs
 cd Source/Specs
 for i in $1

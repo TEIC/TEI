@@ -24,26 +24,26 @@ has the earliest date on which the status quo existed.
      identify the context with concatenation of @idents up the tree,
      and the element name
 -->
-<xsl:key name="I" match="attDef/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
-<xsl:key name="I" match="valItem/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
-<xsl:key name="I" match="attDef/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
-<xsl:key name="I" match="valItem/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
+<xsl:key name="I" match="attDef/gloss[@xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="valItem/gloss[@xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="attDef/desc[@xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="valItem/desc[@xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name(),@xml:lang)"/>
 
-<xsl:key name="I" match="attDef/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
-<xsl:key name="I" match="valItem/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name())"/>
-<xsl:key name="I" match="attDef/valDesc[not(@xml:lang) or @xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name())"/>
+<xsl:key name="I" match="attDef/remarks[@xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="valItem/remarks[@xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,parent::valItem/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="attDef/valDesc[@xml:lang=$lang]" use="concat(ancestor::attDef/parent::attList/parent::*/@ident,ancestor::attDef/@ident,local-name(),@xml:lang)"/>
 
-<xsl:key name="I" match="elementSpec/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name())"/>
-<xsl:key name="I" match="classSpec/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name())"/>
-<xsl:key name="I" match="macroSpec/gloss[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name())"/>
+<xsl:key name="I" match="elementSpec/gloss[@xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="classSpec/gloss[@xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="macroSpec/gloss[@xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name(),@xml:lang)"/>
 
-<xsl:key name="I" match="elementSpec/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name())"/>
-<xsl:key name="I" match="classSpec/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name())"/>
-<xsl:key name="I" match="macroSpec/desc[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name())"/>
+<xsl:key name="I" match="elementSpec/desc[@xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="classSpec/desc[@xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="macroSpec/desc[@xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name(),@xml:lang)"/>
 
-<xsl:key name="I" match="elementSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name())"/>
-<xsl:key name="I" match="classSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name())"/>
-<xsl:key name="I" match="macroSpec/remarks[not(@xml:lang) or @xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name())"/>
+<xsl:key name="I" match="elementSpec/remarks[@xml:lang=$lang]" use="concat(parent::elementSpec/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="classSpec/remarks[@xml:lang=$lang]" use="concat(parent::classSpec/@ident,local-name(),@xml:lang)"/>
+<xsl:key name="I" match="macroSpec/remarks[@xml:lang=$lang]" use="concat(parent::macroSpec/@ident,local-name(),@xml:lang)"/>
 
 
 <xsl:output 
@@ -63,31 +63,31 @@ has the earliest date on which the status quo existed.
   </xsl:copy>
 </xsl:template>
 
-<xsl:template match="gloss[not(@xml:lang) or @xml:lang=$lang]">
+<xsl:template match="gloss[@xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
 
-<xsl:template match="desc[not(@xml:lang) or @xml:lang=$lang]">
+<xsl:template match="desc[@xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
 
-<xsl:template match="remarks[not(@xml:lang) or @xml:lang=$lang]">
+<xsl:template match="remarks[@xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
 
-<xsl:template match="valDesc[not(@xml:lang) or @xml:lang=$lang]">
+<xsl:template match="valDesc[@xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
 
   <xsl:template name="check">
   <xsl:variable name="identifier">
-      <xsl:value-of select="(ancestor::*[@ident]/@ident,local-name())"
+      <xsl:value-of select="(ancestor::*[@ident]/@ident,local-name(),@xml:lang)"
 		    separator=""/>
   </xsl:variable>
   <xsl:variable name="new" select="tei:normalize(.)"/>
   <xsl:variable name="old"
 		select="tei:normalize(doc(resolve-uri($file,base-uri(/*)))/key('I',$identifier)[1])"/>
-  <!-- <xsl:message>check <xsl:value-of select="($identifier,$date,$old,$new)"	separator=" | "/></xsl:message>-->
+ <xsl:message>check <xsl:value-of select="($identifier,$date,$old,$new)"	separator=" | "/></xsl:message>
   <xsl:copy>
     <xsl:choose>
       <xsl:when test="$old=$new">
