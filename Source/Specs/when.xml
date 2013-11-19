@@ -80,10 +80,11 @@
           <gloss versionDate="2007-05-04" xml:lang="es">milésimas de segundo</gloss>
         </valItem>
       </valList>
-      <!--<valDesc>a semi-closed list of recognized time units such as <mentioned>millisecond</mentioned>, <mentioned>second</mentioned>, <mentioned>minute</mentioned></valDesc>-->
     </attDef>
     <attDef ident="interval" usage="opt">
-      <desc versionDate="2005-01-14" xml:lang="en">specifies the numeric portion of a time interval</desc>
+      <desc versionDate="2013-11-19" xml:lang="en">specifies a time
+      interval either as a number or as one of the keywords defined
+      by the datatype data.interval</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시구간의 수치 부분을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明時間區段中的數值部份</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">時間幅を数値で示す．</desc>
@@ -93,17 +94,6 @@
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.interval"/>
       </datatype>
-      <valDesc>a positive number, or the special value <val>unknown</val>.</valDesc>
-      <valDesc xml:lang="fr" versionDate="2009-10-06">contient un nombre positif, ou la valeur <val>unknown</val>.</valDesc>
-      <remarks versionDate="2005-10-12" xml:lang="en">
-        <p>The value <val>unknown</val> indicates uncertainty about the interval.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2009-10-06">
-        <p>La valeur <val>unknown</val> indique une incertitude sur l'intervalle.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 値<val>unknown</val>は，当該時間幅が不明であることを示す． </p>
-      </remarks>
     </attDef>
     <attDef ident="since" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">identifies the reference point for determining the time of the current <gi>when</gi> element, which is obtained by adding the interval to the time of the reference point.</desc>
@@ -116,10 +106,12 @@
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>Should point to another <gi>when</gi> element in the same <gi>timeline</gi>.</valDesc>
+      <valDesc>.</valDesc>
       <valDesc xml:lang="fr" versionDate="2009-10-06">Doit pointer vers un autre élément <gi>when</gi> dans la même frise chronologique <gi>timeline</gi>.</valDesc>
-      <remarks versionDate="2005-01-14" xml:lang="en">
-        <p>If this attribute is omitted, and the <att>absolute</att> attribute is not specified, then the reference point is understood to be the origin of the enclosing <gi>timeline</gi> tag.</p>
+      <remarks versionDate="2013-11-19" xml:lang="en">
+        <p>This attribute should point to another <gi>when</gi>
+	element in the same <gi>timeline</gi>. If no value is
+	supplied, and the <att>absolute</att> attribute is also unspecified, then the reference point is understood to be the origin of the enclosing <gi>timeline</gi> tag.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2009-10-06">
         <p>Si cet attribut est omis, et qu'il n'y a pas d'attribut <att>absolute</att>, le point de référence retenu est alors l'attribut <att>origin</att>de l'élément englobant <gi>timeline</gi>.</p>
