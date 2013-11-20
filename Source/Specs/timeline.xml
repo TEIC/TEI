@@ -36,10 +36,11 @@
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>if supplied, must point either to one of the <gi>when</gi> elements in its content, or to another <gi>timeline</gi> element.</valDesc>
-      <valDesc xml:lang="fr" versionDate="2009-04-17">doit pointer, soit vers l'un des éléments <gi>when</gi> qu'il contient, soit vers un autre élément <gi>timeline</gi>.</valDesc>
-      <remarks versionDate="2009-08-01" xml:lang="en">
-        <p>If this attribute is not supplied, the implication is that the time of origin is not known. </p>
+      <remarks versionDate="2013-11-21" xml:lang="en">
+        <p>If this attribute is not supplied, the implication is that
+	the time of origin is not known. If it is supplied, it must
+	point either to one of the <gi>when</gi> elements in its
+	content, or to another <gi>timeline</gi> element. </p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2009-10-06">
         <p>Si cet attribut n'est pas fourni, cela implique que le moment où commence la frise n'est pas connu.</p>
@@ -89,7 +90,9 @@
       </valList>
     </attDef>
     <attDef ident="interval" usage="opt">
-      <desc versionDate="2005-01-14" xml:lang="en">specifies the numeric portion of a time interval</desc>
+      <desc versionDate="2013-11-20" xml:lang="en">specifies a time
+      interval either as a positive integral value or using one of a
+      set of predefined codes.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">시구간의 수치 비율을 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明時間區段中的數值部份</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">間隔を表す数値を示す．</desc>
@@ -99,8 +102,6 @@
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.interval"/>
       </datatype>
-      <valDesc>a positive number, or one of the two special values <val>irregular</val> or <val>regular</val>.</valDesc>
-      <valDesc xml:lang="fr" versionDate="2009-10-06">un nombre positif, ou bien une ou plusieurs des valeurs <val>irregular</val> (irrégulier) ou <val>regular</val> (régulier).</valDesc>
       <remarks versionDate="2005-10-12" xml:lang="en">
         <p>The value <val>irregular</val> indicates uncertainty about all the intervals in the timeline; the value <val>regular</val> indicates that all the intervals are evenly spaced, but the size of the intervals is not known; numeric values indicate evenly spaced values of the size specified. If individual points in time in the timeline are given different values for the <att>interval</att> attribute, those values locally override the value given in the timeline.</p>
       </remarks>
