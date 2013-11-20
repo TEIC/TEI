@@ -717,19 +717,79 @@ listed above, it may contain the following subcomponents:
 </specList>
  </p>
 
-<div xml:id="TDTAGCONT"><head>Content models</head>
+<div xml:id="DEFCON"><head>Defining content models</head>
 
-<p>The content of the element <gi>content</gi> may be
-expressed in one of two ways. It may use a schema language of some
-kind, as defined by a pattern called
-<code>macro.schemaPattern</code>, which is provided by the
-module defined in this
-chapter. Alternatively, the legal content for an element may be fully
-specified using the <gi>valList</gi> element, described in <ptr target="#TDATT"/> below. </p>
-<p>In the case of the TEI
-Guidelines, element content models are defined using RELAX NG
-patterns, although the user may over-ride this by redefining the
-<code>macro.schemaPattern</code> pattern.</p>
+<p>The element <gi>content</gi> may have three different kinds of
+content.  It may express a content model directly using the TEI
+elements discussed in the remainder of this section. Alternatively, it
+may use a schema language of some kind, as defined by a pattern called
+<code>macro.schemaPattern</code>, which is provided by the module
+defined in this chapter. This is discussed in section <ptr
+target="TDTAGCONT"/> below. As a third possibility, the legal content
+for an element may be exhaustively specified using the
+<gi>valList</gi> element, described in <ptr target="#TDATT"/>
+below. </p>
+<p>The following elements are used to define a content model:
+<specList>
+<specDesc key="elementRef"/>
+<specDesc key="classRef"/>
+<specDesc key="macroRef"/>
+</specList>
+</p>
+<p>An <gi>elementRef</gi> provides the name of an element which may appear at
+a certain point in a content model. A <gi>classRef</gi> provides the
+name of a class, members of which may appear at a certain point in
+content model. A <gi>macroRef</gi> provides the name of a predefined
+macro, the contentr of which may be inserted at a certain point in a
+content model.</p>
+<p>These elements are all members of an attribute class which provides
+attributes that further modify their significance as follows:
+<specList>
+<specDesc key="att.repeatable" atts="minOccurs maxOccurs allowText
+				     context"/>
+</specList>
+</p>
+<p>Finally, two wrapper elements are provided to indicate whether the
+components of a content model form a sequence or an alternation:
+<specList>
+<specDesc key="sequence"/>
+<specDesc key="alternate"/>
+</specList>
+</p>
+
+
+<p>Here is a simple example:
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
+<classRef key="model.gLike" minOccurs="0" maxOccurs="unbounded" allowText="true"/>
+</content>
+</egXML>
+This is the content model for the macro <ident
+type="macro">macro.xText</ident>, which is defined as containing any
+number (including zero) of elements from the <ident
+type="class">model.gLike</ident> class mixed in with text. 
+</p>
+<p>Here is a more complex example:
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
+    <sequence>
+      <elementRef key="fileDesc"/>
+      <classRef key="model.teiHeaderPart" minOccurs="0" maxOccurs="unbounded" expand="alternate"/>
+       <elementRef key="revisionDesc" minOccurs="0"/>
+    </sequence>
+  </content>
+</egXML>
+This is the content model for the <gi>teiHeader</gi> element, which is
+defined as a sequence of components, firstly a mandatory
+<gi>fileDesc</gi>, followed by any number (including zero) of elements
+from the <ident type="class">model.teiHeaderPart</ident> class, and
+finally an optional <gi>revisionDesc</gi> element.</p>
+
+</div>
+
+<div xml:id="TDTAGCONT"><head>RELAXNG content models</head>
+
+<p>In the case of the TEI Guidelines, element content models are
+defined using RELAX NG patterns, although the user may over-ride this
+by redefining the <code>macro.schemaPattern</code> pattern.</p>
 <p>Here is a very simple example
 <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
     <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
@@ -1279,6 +1339,10 @@ schema. </p>
 
 <specGrp xml:id="TDSG5" n="Element specification elements">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/content.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.repeatable.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.contentPart.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/sequence.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/alternate.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/constraint.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/constraintSpec.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/macro.anyXML.xml"/>
@@ -1442,7 +1506,7 @@ the following example:
 <gi scheme="imaginary">soundClip</gi>, which is not defined in the TEI scheme, will be
 added to the output schema. This element will also be added to the
 existing TEI class <ident type="class">model.pPart.data</ident>, and
-will thus be available in TEI-conformant documents.</p>
+will thus be available in TEI conformant documents.</p>
 <p>A schema might also include re-declarations of existing elements, as
 in the following example:
 <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">

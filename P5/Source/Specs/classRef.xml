@@ -12,7 +12,9 @@
   <desc versionDate="2010-07-06" xml:lang="en">points to the specification for an attribute or model class which is to be included in a schema</desc>
   <classes>
     <memberOf key="att.global"/>
+<memberOf key="att.repeatable"/>
     <memberOf key="model.oddRef"/>
+    <memberOf key="model.contentPart"/>
     <memberOf key="att.readFrom"/>
   </classes>
   <content>
@@ -26,6 +28,48 @@
         <rng:ref name="data.xmlName"/>
       </datatype>
     </attDef>
+
+           <attDef ident="expand" usage="opt">
+              <desc versionDate="2013-11-21"  xml:lang="en">indicates how references
+	      to this class within a content model should be interpreted.</desc>
+              <valList type="closed">
+                <valItem ident="alternate">
+                  <desc versionDate="2013-11-21" xml:lang="en">any one member of the class may appear</desc>
+                </valItem>
+                <valItem ident="sequence">
+                  <desc  versionDate="2013-11-21" xml:lang="en">a single occurrence
+		  of all members of the class may appear in sequence</desc>
+                </valItem>
+                <valItem ident="sequenceOptional" >
+                  <desc  versionDate="2013-11-21" xml:lang="en">a single occurrence of
+		  one or more members
+		  of the class may appear in sequence
+	    </desc>
+                </valItem>
+                <valItem ident="sequenceOptionalRepeatable">
+                  <desc  versionDate="2013-11-21" xml:lang="en">one or more
+		  occurrences of one or more members of the class
+		  may appear in sequence. </desc>
+                </valItem>
+                <valItem ident="sequenceRepeatable">
+                  <desc   versionDate="2013-11-21" xml:lang="en">one or more
+		  occurrences of all members of the class may appear in sequence</desc>
+                </valItem>
+              </valList>
+<remarks xml:lang="en" versionDate="2013-11-20"><p>If the members of the class are <val>a</val>, <val>b</val>
+and  <val>c</val>, then a reference to the class within a content
+model is understood as being a reference to <val>a|b|c</val> when
+<att>expand</att> has the value <val>alternation</val>; to
+<val>a,b,c</val> when it has the value <val>sequence</val>; to
+<val>(a?,b?,c?)</val> when it has the value
+<val>sequenceOptional</val>; to (a*,b*, c*) when it has the value
+<val>sequenceOptionalRepeatable</val>; or to (a+,b+,c+) when it has
+the value <val>sequenceOptionalRepeatable</val>.</p>
+</remarks>            </attDef>
+
+
+
+
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
