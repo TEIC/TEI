@@ -45,9 +45,6 @@
       <datatype maxOccurs="unbounded">
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
-      <valDesc>one or more words describing the difficulty, e.g. <mentioned>faded</mentioned>,
-                    <mentioned>background-noise</mentioned>, <mentioned>passing-truck</mentioned>,
-                    <mentioned>illegible</mentioned>, <mentioned>eccentric-ductus</mentioned>.</valDesc>
       <exemplum xml:lang="mul">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <div>
@@ -57,6 +54,11 @@
           </div>
         </egXML>
       </exemplum>
+<remarks><p>One or more words may be used to describe the reason;
+usually each word will refer to a single cause. Typical examples might
+thus include  <mentioned>faded</mentioned>,  <mentioned>illegible</mentioned>, <mentioned>eccentric_ductus</mentioned>
+                    <mentioned>background_noise</mentioned>, <mentioned>passing_truck</mentioned>,etc.</p>
+</remarks>
     </attDef>
     <attDef ident="hand" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">Where the difficulty in transcription arises from action (partial deletion, etc.)
@@ -78,8 +80,6 @@
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>must point to a hand identifier typically but not necessarily declared in the document header (see
-                section <ptr target="#PHDH"/>).</valDesc>
     </attDef>
     <attDef ident="agent" usage="opt">
       <desc versionDate="2005-08-03" xml:lang="en">Where the difficulty in transcription arises from damage, categorizes the cause of
@@ -157,7 +157,11 @@ his att<unclear>ention</unclear>
             uncertainty, and reliability of tagging and transcription, see chapter <ptr target="#CE"/>.</p>
     <p>The <gi>damage</gi>, <gi>gap</gi>, <gi>del</gi>, <gi>unclear</gi> and <gi>supplied</gi>
             elements may be closely allied in use. See section <ptr target="#PHCOMB"/> for
-            discussion of which element is appropriate for which circumstance.</p>
+            discussion of which element is appropriate for which
+    circumstance.</p>
+<p>The <att>hand</att> attribute points to a definition of the hand
+concerned, as further discussed in section <ptr target="#PHDH"/>.</p>
+
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Le même élément est utilisé pour tous les cas d'incertitude portant sur la transcription
