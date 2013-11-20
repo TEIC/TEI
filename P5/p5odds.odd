@@ -395,7 +395,7 @@ $Id$
           </attList>
         </elementSpec>
         <elementSpec ident="desc" mode="change">
-	  <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+	  <constraintSpec mode="add" ident="desccheck" scheme="isoschematron">
 	    <constraint>
 	      <sch:report test="not(@versionDate and @xml:lang) and 
 				(parent::tei:elementSpec
@@ -408,8 +408,19 @@ $Id$
 	    </constraint>
 	  </constraintSpec>
         </elementSpec>
+	<!--
+        <elementSpec ident="valDesc" mode="change">
+	  <constraintSpec mode="add" ident="valdesccheck" scheme="isoschematron">
+	    <constraint>
+	      <sch:report test="not(@versionDate and @xml:lang) ">The
+	      versionDate and xml:lang attributes on "valDesc" for
+	      "<sch:value-of select="ancestor::*[@ident]/@ident"/>" are required.</sch:report>
+	    </constraint>
+	  </constraintSpec>
+        </elementSpec>
+	-->
         <elementSpec ident="gloss" mode="change">
-	  <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+	  <constraintSpec mode="add" ident="glosscheck" scheme="isoschematron">
 	    <constraint>
 	      <sch:report test="not(@versionDate and @xml:lang) and 
 				(parent::tei:elementSpec
@@ -423,7 +434,7 @@ $Id$
 	  </constraintSpec>
         </elementSpec>
         <elementSpec ident="remarks" mode="change">
-	  <constraintSpec mode="add" ident="c1" scheme="isoschematron">
+	  <constraintSpec mode="add" ident="remarkscheck" scheme="isoschematron">
 	    <constraint>
 	      <sch:report test="not(@versionDate and @xml:lang) and 
 				(parent::tei:elementSpec
