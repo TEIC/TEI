@@ -28,12 +28,18 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-<zeroOrMore  xmlns="http://relaxng.org/ns/structure/1.0">
+    <choice   xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+	<ref name="valList"/>
 	<choice>
-        <ref name="macro.schemaPattern"/>
-	<ref name="model.contentPart"/>
-</choice>
-    </zeroOrMore>
+	  <ref name="pattern"/>
+	  <ref name="define"/>
+	</choice>
+      </oneOrMore>
+      <zeroOrMore>
+	  <ref name="model.contentPart"/>
+      </zeroOrMore>
+    </choice>
   </content>
   <attList>
             <attDef ident="allowText">
@@ -77,7 +83,7 @@ $Id$
               <elementRef key="summary" minOccurs="0" maxOccurs="1"/>
 	      <elementRef key="msItem" maxOccurs="unbounded"/>
 	     </sequence>
-</alternate>
+	</alternate>
       </content>
     </egXML>
   </exemplum>
