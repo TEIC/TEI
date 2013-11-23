@@ -23,8 +23,8 @@ $Id$
   </classes>
   <attList>
     <attDef ident="hand" usage="opt">
-      <desc versionDate="2012-12-27" xml:lang="en">in the case of damage (deliberate defacement, inking out, etc.) assignable to a distinct
-        hand, signifies the hand responsible for the damage.</desc>
+      <desc versionDate="2013-11-22" xml:lang="en">in the case of damage (deliberate defacement, inking out, etc.) assignable to a distinct
+        hand, signifies the hand responsible for the damage by pointing to  one of the hand identifiers declared in the document header (see section <ptr target="#PHDH"/>).</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">(고의적 손상 등의) 식별가능한 방식의 손상의 경우 손상에 책임이 있는 당사자를 나타낸다.</desc>
       <desc versionDate="2008-04-21" xml:lang="ja">当該損傷部分の書き手が特定できる場合，それを示す．</desc>
       <desc versionDate="2008-03-30" xml:lang="fr">dans le cas de dommages (effacement volontaire, etc.)
@@ -36,9 +36,7 @@ $Id$
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>must be one of the hand identifiers declared in the document header (see section <ptr target="#PHDH"/>).</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">doit être l'un des identifiants de main déclarés dans l'en-tête du document (voir <ptr target="#PHDH"/>).</valDesc>
-    </attDef>
+</attDef>
     <attDef ident="agent" usage="opt">
       <desc versionDate="2007-09-03" xml:lang="en">categorizes the cause of the damage, if it can be identified.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">식별될 수 있다면 그 손상의 원인을 분류한다.</desc>
@@ -86,7 +84,10 @@ $Id$
       </valList>
     </attDef>
     <attDef ident="degree" usage="opt">
-      <desc versionDate="2012-12-27" xml:lang="en">signifies the degree of damage according to a convenient scale. The <gi>damage</gi> tag
+      <desc versionDate="2013-11-22" xml:lang="en">provides a coded representation of the degree of damage, either as
+ a number between 0 (undamaged) and 1 (very extensively damaged), or
+      as one of the codes <val>high</val>, <val>medium</val>, <val>low</val>, 
+        or <val>unknown</val>. The <gi>damage</gi> element
         with the <att>degree</att> attribute should only be used where the text may be read with
         some confidence; text supplied from other sources should be tagged as <gi>supplied</gi>.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">다양한 척도에 따라 손상 정도를 나타낸다. <att>degree</att> 속성과 함께
@@ -113,15 +114,10 @@ $Id$
           <rng:ref name="data.certainty"/>
         </rng:choice>
       </datatype>
-      <valDesc>a coded representation of the degree of damage, either as
- a number between 0 (undamaged) and 1 (very extensively damaged), or
-      as one of the codes <val>high</val>, <val>medium</val>, <val>low</val>, 
-        or <val>unknown</val>.</valDesc>
-      <remarks versionDate="2007-09-03" xml:lang="en">
-        <p>The <gi>damage</gi> tag with the <att>degree</att> attribute should only be used where
-          the text may be read with confidence despite the damage. It is appropriate where it is
-          desired to record the fact of damage, though this has not affected the readability of the
-          text (as may be the case with weathered inscriptional materials). Where the damage has
+      <remarks versionDate="2013-11-22" xml:lang="en">
+        <p>The <gi>damage</gi> element is appropriate where it is
+          desired to record the fact of damage although this has not affected the readability of the
+          text, for example a weathered inscription. Where the damage has
           rendered the text more or less illegible either the <gi>unclear</gi> tag (for partial
           illegibility) or the <gi>gap</gi> tag (for complete illegibility, with no text supplied)
           should be used, with the information concerning the damage given in the attribute values
