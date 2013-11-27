@@ -28,7 +28,137 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+    <!--<ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>-->
+    <!--  NOTE: MDH 2013-11-27. Working on https://sourceforge.net/p/tei/bugs/578/, I was required 
+         to replace the above simple content model with a more complex one which is identical except 
+         for the absence of <s> (so the element cannot nest). The rather horrendous result is below.
+         If macro.phraseSeq is ever modified, we must remember to modify this list as well.
+         
+         The Schematron constraint below should now be obsolete too. However, we may decide that the 
+         elegance of the simple content model + Schematron constraint is preferable to this horrible 
+         content model.
+    -->
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.global"/>
+        <!--All members from model.phrase except for <s>. -->
+        <rng:ref name="binaryObject"/>
+        <rng:ref name="formula"/>
+        <rng:ref name="graphic"/>
+        <rng:ref name="media"/>
+        <rng:ref name="code"/>
+        <rng:ref name="distinct"/>
+        <rng:ref name="emph"/>
+        <rng:ref name="foreign"/>
+        <rng:ref name="gloss"/>
+        <rng:ref name="ident"/>
+        <rng:ref name="mentioned"/>
+        <rng:ref name="soCalled"/>
+        <rng:ref name="term"/>
+        <rng:ref name="title"/>
+        <rng:ref name="hi"/>
+        <rng:ref name="caesura"/>
+        <rng:ref name="rhyme"/>
+        <rng:ref name="address"/>
+        <rng:ref name="affiliation"/>
+        <rng:ref name="email"/>
+        <rng:ref name="date"/>
+        <rng:ref name="time"/>
+        <rng:ref name="depth"/>
+        <rng:ref name="dim"/>
+        <rng:ref name="geo"/>
+        <rng:ref name="height"/>
+        <rng:ref name="measure"/>
+        <rng:ref name="measureGrp"/>
+        <rng:ref name="num"/>
+        <rng:ref name="width"/>
+        <rng:ref name="name"/>
+        <rng:ref name="orgName"/>
+        <rng:ref name="persName"/>
+        <rng:ref name="geogFeat"/>
+        <rng:ref name="offset"/>
+        <rng:ref name="addName"/>
+        <rng:ref name="forename"/>
+        <rng:ref name="genName"/>
+        <rng:ref name="nameLink"/>
+        <rng:ref name="roleName"/>
+        <rng:ref name="surname"/>
+        <rng:ref name="bloc"/>
+        <rng:ref name="country"/>
+        <rng:ref name="district"/>
+        <rng:ref name="geogName"/>
+        <rng:ref name="placeName"/>
+        <rng:ref name="region"/>
+        <rng:ref name="settlement"/>
+        <rng:ref name="climate"/>
+        <rng:ref name="location"/>
+        <rng:ref name="population"/>
+        <rng:ref name="state"/>
+        <rng:ref name="terrain"/>
+        <rng:ref name="trait"/>
+        <rng:ref name="idno"/>
+        <rng:ref name="lang"/>
+        <rng:ref name="rs"/>
+        <rng:ref name="abbr"/>
+        <rng:ref name="am"/>
+        <rng:ref name="choice"/>
+        <rng:ref name="ex"/>
+        <rng:ref name="expan"/>
+        <rng:ref name="subst"/>
+        <rng:ref name="add"/>
+        <rng:ref name="app"/>
+        <rng:ref name="corr"/>
+        <rng:ref name="damage"/>
+        <rng:ref name="del"/>
+        <rng:ref name="handShift"/>
+        <rng:ref name="mod"/>
+        <rng:ref name="orig"/>
+        <rng:ref name="redo"/>
+        <rng:ref name="reg"/>
+        <rng:ref name="restore"/>
+        <rng:ref name="retrace"/>
+        <rng:ref name="sic"/>
+        <rng:ref name="supplied"/>
+        <rng:ref name="surplus"/>
+        <rng:ref name="unclear"/>
+        <rng:ref name="undo"/>
+        <rng:ref name="catchwords"/>
+        <rng:ref name="dimensions"/>
+        <rng:ref name="heraldry"/>
+        <rng:ref name="locus"/>
+        <rng:ref name="locusGrp"/>
+        <rng:ref name="material"/>
+        <rng:ref name="objectType"/>
+        <rng:ref name="origDate"/>
+        <rng:ref name="origPlace"/>
+        <rng:ref name="secFol"/>
+        <rng:ref name="signatures"/>
+        <rng:ref name="stamp"/>
+        <rng:ref name="watermark"/>
+        <rng:ref name="att"/>
+        <rng:ref name="gi"/>
+        <rng:ref name="tag"/>
+        <rng:ref name="val"/>
+        <rng:ref name="ptr"/>
+        <rng:ref name="ref"/>
+        <rng:ref name="oRef"/>
+        <rng:ref name="oVar"/>
+        <rng:ref name="pRef"/>
+        <rng:ref name="pVar"/>
+        <rng:ref name="c"/>
+        <rng:ref name="cl"/>
+        <rng:ref name="m"/>
+        <rng:ref name="pc"/>
+        <rng:ref name="phr"/>
+        <!--<s> removed here. -->
+        <rng:ref name="seg"/>
+        <rng:ref name="w"/>
+        <rng:ref name="specDesc"/>
+        <rng:ref name="specList"/>
+      </rng:choice>
+    </rng:zeroOrMore>
   </content>
   <constraintSpec ident="noNestedS" scheme="isoschematron">
     <constraint>
