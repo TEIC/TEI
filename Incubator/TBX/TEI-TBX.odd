@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?oxygen RNGSchema="tei_odds.rnc" type="compact"?>
 <TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:tbx="http://www.tbx.org">
   <teiHeader>
@@ -27,32 +26,33 @@
         <div>
           <head>Introduction</head>
           <p>This chapter defines a module for encoding terminological resources as they are usually
-            used in a wide range of task oriented applications such as technical writing, translating
-            or domain-specific language learning. It implements an adaptation of ISO standard 320042
-            (TBX — TermBase eXchange) that optimises the re-use of TEI constructs in combination with
-            TBX elements. TBX is itself an application of ISO standard 16642 (TMF — Terminology
-            Marlup Framework) which provides a meta-model for the description of terminologies and
-            other onomasiological strcutures. This chapter is complementary to the <ref target="#DI">Dictionaries</ref>
-            chapter of these Guidelines, which focuses on word to sense lexical (that is,
-            semasiological) structures.</p>
+            used in a wide range of task oriented applications such as technical writing,
+            translating or domain-specific language learning. It implements an adaptation of ISO
+            standard 320042 (TBX — TermBase eXchange) that optimises the re-use of TEI constructs in
+            combination with TBX elements. TBX is itself an application of ISO standard 16642 (TMF —
+            Terminology Markup Framework) which provides a meta-model for the description of
+            terminologies and other onomasiological structures. This chapter is complementary to the
+              <ref target="#DI">Dictionaries</ref> chapter of these Guidelines, which focuses on
+            word to sense lexical (that is, semasiological) structures.</p>
           <p>Terminologies implement a concept-to-term (that is, onomasiological) representation of
             lexical information where the words are organised according to the concepts they
             express. This form of representation, initiated by scholars such as Eugen Wüster who
             worked on specialised lexica (<bibl>Wüster, E.: Einführung in die allgemeine
-              Terminologielehre und terminolo- gische Lexikographie.</bibl>), are intended to
-            represent the vocabulary specific to application domains. It is also essential for
-            software environments such as indexing, machine translation, or documentary systems.</p>
+              Terminologielehre und terminolo- gische Lexikographie.</bibl><!-- date?-->), is intended to
+            represent the vocabulary specific to particular application domains. It is also essential for
+            software environments such as indexing, machine translation, or documentary systems.<!-- what are these? and why? --></p>
           <p>The representation of terminologies is based on two underlying principles:</p>
           <list>
             <item>Concept orientation: All terminological information pertaining to one concept
-              including all terms (designing this concept) in all languages and all descriptive and
+              including all terms (designing <!-- designating ? --> this concept) in all languages and all descriptive and
               administrative data is handled as one terminological unit </item>
             <item>Term autonomy: All terms belonging to one concept should be managed (in one
               terminological entry) as autonomous (repeatable) blocks of data categories without any
               preference for a specific term.<note>This is typically where terminologies differ from
                 simpler forms of conceptual representations such as thesauri (see, for instance, the
                 simplified SKOS model)</note></item>
-          </list>
+            <!-- a formal definition of what is meant by "term" would be helpful here -->
+          </list> 
           <p>As a consequence, a terminological entry is organised, following the principles of TMF,
             as a 3-level representation:</p>
           <list>
@@ -87,25 +87,30 @@
               </langSet>
             </termEntry>
           </egXML>
+          <!-- from here to end of this div seems to be notes about context:  is it useful here?-->
           <p>Standardisation context TMF/data categories, TBX Basic/core data categories. What about
             SKOS and other Thesaurus standards. Objectif of this chapter: record and convey precise
-            terminological informaiton which in turn can be presented as flatter structures (in a
-            LOFD perspective)</p>
-          <p>More precise relation to MARTIF: </p>
+            terminological information which in turn can be presented as flatter structures (in a
+            LOFD perspective)</p> <!-- ? -->
+          <p>More precise relation to MARTIF: </p> <!-- ? -->
           <p>An inventory of types of data (called <soCalled>data categories</soCalled> by terminologists) for
             recording terminology has been defined in <title>ISO 12620:1999 — Computer applications in
-            Terminology — Data categories</title>. However, language industries typically only require a
-            small subset of the data categories that are defined in that standard.</p>
+            Terminology — Data categories</title>. However, language industries typically require only a
+            small subset of the data categories that are defined in that standard. 
+            <!-- ? isnt that the point? iand what is relevance of this to tbx? -->
+          </p>
           <p> smaller selection of data categories than TBX basic (but could be extended), entry
             point (termEntry), integration with TEI mechanisms (pointing, inline textual
             annotations, graphics, dictionary pbjects gramGrp, cit/. TBX often offers shallower or
             plain text construct where the TEI (e.g. for bibliographical references) offers highly
-            ellaborated mechanisms. The present chapter offers bith options and elicit when
-            necessary the tenets of the alternative.</p>
-          <p>Compliance with ISO 30042 => termEntry level; syntactic compliance: element can change
+            ellaborated mechanisms. The present chapter offers both options and elicit when
+            necessary the tenets of the alternative.</p> 
+          <p>Compliance with ISO 30042 <!-- shd be 320042 I assume? -->=> termEntry level; syntactic compliance: element can change
             namespace and termEntries be put in a TBX document. semantic compliance: possible to
             generate plain TBX entries without loss of information from TEI embedded termEntry
-            elements </p>
+            elements </p> 
+          <!-- this para is about reln of the TEI ele ments to TBX elements ? -->
+         
         </div>
         <div>
           <head>A brief history of terminology standards</head>
@@ -113,11 +118,12 @@
             <item>ISO 6156:1987, Magnetic tape exchange format for terminological/ lexicographical
               records MATER MicroMATER, to operate on Microcomputer</item>
             <item>1992 — TEI, chapter 13 (SGML!) — disappeared in P4</item>
+<!-- removed because Melby said it was out of date -->
             <item>ISO 12200:1999 Computer applications in terminology -- Machine-readable
               terminology interchange format (MARTIF) -- Negotiated interchange </item>
             <item>ISO 12620:1999 Computer applications in terminology -- Data categories</item>
           </list>
-          <p>Current setting</p>
+          <p>Current situation</p>
           <list>
             <item>ISO 16642:2003 Computer applications in terminology -- Terminological markup
               framework Abstract model for representing terminological structures </item>
@@ -131,7 +137,7 @@
           <div>
             <head>Terminological Entry</head>
             <p>Principles: qualifies the concept. Core data categories, Definition, Subject field,
-              Images (cf. deprecation of XREF) => figure</p>
+              Images (cf. deprecation of XREF) => figure</p> <!-- ? -->
             <p><tag>descrip type="definition"</tag>, possibly with <tag>admin type="source"</tag>
               within a <eg>descripGrp</eg></p>
             <p>Cross references => cf. section on conceptual systems</p>
@@ -148,17 +154,16 @@
               <p>Example: <term>pacemaker</term>
                 <gloss>implantable medical device that treats abnormal heart rhythms</gloss></p>
               <p>As this example illustrates, a terminological definition is not the same as a
-                lexicographical definition, which aims atproviding a complete description of all
-                senses of a term. </p>
+                lexicographical definition, which aims at providing a complete description of all
+                senses of a term. </p><!-- how does this example demonstrate that? I am none the wiser --> 
             </div>
             <div>
               <head>Subject fields </head>
-              <p>The majority of localization companies that manage terminology also collect
+              <p>Most localization companies managing terminology also collect
                 categorical information, such as subject fields, product identifiers, and so forth.
-                Therefore, for translation and localization business processes, this kind
-                of information is important. </p>
+                Such information is essential for translation and localization business processes. </p>
               <p>Well-organized and consistently applied categorical information can play an
-                important role in disambiguation.Disambiguation refers to the process of clarifying
+                important role in disambiguation. Disambiguation refers to the process of clarifying
                 the meaning of a term, where the term is used, or how the term is differentiated from
                 other terms. Categorical information, combined with grammatical and contextual
                 information, can help to narrow the scope of a term. In this sense, it has great
@@ -171,8 +176,8 @@
                 for terminology databases. A widely used categorical data field is "subject field"
                 or "domain." ISO 12620 defines a subject field as "an area of human knowledge to
                 which a terminological record is assigned."</p>
-              <p>Typically, categorical information like subject fields are chosen from a picklist.
-                The use of a picklist ensures that thevalues are entered correctly and that they are
+              <p>Typically, categorical information like subject fields are chosen from a picklist. <!-- define please -->
+                The use of a picklist ensures that the values are entered correctly and that they are
                 standardized.</p>
               <p>Multiple subject fields can be assigned to a concept, both on the same level
                 (biology + chemistry) or in a hierarchicalstructure (technical -> heavy machinery ->
@@ -192,7 +197,8 @@
             <p>The part of speech data category is required for the following purposes:</p>
             <list>
               <item>To differentiate homonyms, for instance, <mentioned>port</mentioned> is actually
-                two terms in English: a noun, and a verb. In a terminology database, each would be
+                two terms in English: a noun, and a verb. <!-- I would say it has two senses --> 
+                In a terminology database, each would be
                 recorded in its own entry. Without a part of speech value in the entry, it can be
                 difficult to determine which term the entry represents.</item>
               <item>To permit machine processing. Without a part of speech value, it is impossible
@@ -204,14 +210,14 @@
                 be impossible to use the terminology in extended applications such asspell checking
                 programs.</item>
               <item>To enable blind interchange. Blind interchange refers to the ability to receive
-                a terminology file and integrate itinto a target system, such as a Computer-Assisted
-                Translation (CAT) tool, without having to contact theoriginator of the file in order
-                to understand its contents. When there is no part of speech value, it
-                becomesnecessary to discuss many of the entries with the originator in order to
-                disambiguate their content.</item>
+                a terminology file and integrate it into a target system, such as a
+                Computer-Assisted Translation (CAT) tool, without having to contact the originator
+                of the file in order to understand its contents. When there is no part of speech
+                value, it becomes necessary to discuss many of the entries with the originator in
+                order to disambiguate their content.</item>
             </list>
 
-            <p>The TBX standard defines two main grammatical data category to qualify a term
+            <p>The TBX standard defines two main grammatical data categories to qualify a term
                 <tag>termNote type="partOfSpeech"</tag> noun; verb; adjective; adverb;
               properNoun</p>
             <p><tag>termNote type="grammaticalGender"</tag>
@@ -225,7 +231,7 @@
                 <gi>gender</gi> as children.</p>
             <p><tag>termNote type="termType"</tag> fullForm; acronym; abbreviation; shortForm;
               variant; phrase</p>
-            <p> This data category is useful for controlledauthoring and controlled
+            <p> This data category is useful for controlled authoring and controlled
               translationpurposes, to mark whether a term isapproved or not recommended for use.
                 <tag>termNote type="administrativeStatus"</tag> preferred; admitted; notRecommended;
               obsolete </p>
@@ -242,14 +248,16 @@
         </div>
         <div>
           <head>Transaction-related data categories</head>
-          <p>...</p>
+          <p>...</p><!-- eh? -->
           <div>
             <head>Dates</head>
-            <p>Two types of dates are permissible in TBX-Basic:</p>
+            <p>Two types of date are permissible in TBX-Basic:</p>
             <list>
               <item>Creation date - Date that the parent element was created.</item>
               <item>Last modified date - Date that the parent element was last modified.</item>
             </list>
+            <!-- what is "parent element"? -->
+            
           </div>
           <div>
             <head>Responsible persons</head>
@@ -261,10 +269,13 @@
               <item>Last modified by - Person who last modified the parent node (entry, language,
                 term, sub-term data fields).</item>
             </list>
+            
+            <!-- If X creates an entry, Y modifies it, and then Z modifies it again, does mention of Y's responsibility disappear ? -->?
+   
             <p>The responsibility data category can occur at any level of the entry (C, L, T).</p>
 
             <p>For these data categories, the way to distinguish whether the date or person pertains
-              to a creation or modificationactivity is determined by the value of the
+              to a creation or modification activity is determined by the value of the
                 <gi>transac</gi> element, which must be either origination or modification, asshown
               in the following two samples:</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -296,6 +307,8 @@
           <p>Generating LOD information. TBX2SKOS</p>
         </div>
       </div>
+      
+      
       <div>
         <schemaSpec ident="TBXBasic" start="TEI teiCorpus">
           <moduleRef key="tei"/>
@@ -307,11 +320,15 @@
           <moduleRef key="analysis"/>
           <moduleRef key="corpus"/>
           <moduleRef key="dictionaries"/>
-
+<!-- why include all these? -->
+          
           <!-- TBX is described from termEntry downwards -->
           <elementSpec ident="termEntry" ns="http://www.tbx.org">
-            <desc>Element grouping all information relevant to the Terminological Entry component as
+            <desc>groups the components of a single Terminological Entry as
               defined in ISO 16642 (TMF)</desc>
+            <!-- see TCW20 for TEI style rules e.g. each desc should be a headless sentence with implied subject "The componeent
+            
+           being defined ..."-->
             <classes>
               <memberOf key="att.global"/>
               <memberOf key="model.entryLike"/>
@@ -342,6 +359,7 @@
                 </termEntry>
               </egXML>
             </exemplum>
+            <remarks><p>Informally a Terminological Entry may be defined as .... </p></remarks>
           </elementSpec>
 
           <elementSpec ident="langSet" ns="http://www.tbx.org">
@@ -374,6 +392,7 @@
           <elementSpec ident="tig" ns="http://www.tbx.org">
             <desc>Element grouping all information relevant to the Term Section component as defined
               in ISO 16642 (TMF)</desc>
+            <!-- as above -->
             <classes>
               <memberOf key="att.global"/>
             </classes>
@@ -399,11 +418,15 @@
 
           <elementSpec ident="term" ns="http://www.tbx.org" prefix="t_">
             <desc>...</desc>
+<!-- ????? -->
+            <!-- if this is different from tei:term it should have a different name -->
+            
             <classes>
               <memberOf key="att.global"/>
             </classes>
             <content>
               <rng:text/>
+            <!-- no chance of <g>s? -->
             </content>
           </elementSpec>
 
@@ -415,6 +438,7 @@
             </classes>
             <content>
               <rng:text/>
+              <!-- should be limitedPhrase surely? -->
             </content>
           </elementSpec>
 
@@ -511,8 +535,6 @@
             </content>
           </elementSpec>
 
-
-
           <!-- simplify global attributes -->
           <classSpec ident="att.global.linking" type="atts" mode="change">
             <attList>
@@ -537,6 +559,7 @@
 
           <classSpec ident="model.auxInfo" type="model">
             <desc>...</desc>
+            <!-- please explain what this class is for! -->
           </classSpec>
 
           <classSpec ident="model.ptrLike" type="model" mode="change">
