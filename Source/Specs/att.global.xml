@@ -80,15 +80,8 @@ $Id$
       <datatype maxOccurs="1">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
       </datatype>
-      <valDesc>the value consists of a single token which may however
-      contain punctuation
-      characters, whitespace or word
-      separating characters. It need not be restricted to
-      numbers.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">toute chaîne de caractères ; souvent, mais pas
-        nécessairement, numérique.</valDesc>
-      <remarks versionDate="2005-10-10" xml:lang="en">
-        <p>The <att>n</att> attribute may be used to specify the numbering of chapters, sections,
+      <remarks versionDate="2013-12-06" xml:lang="en">
+        <p>The value of this attribute is always understood to be a single token, even if it contains space or other punctuation characters, and need not be composed of numbers only. It is typically used to specify the numbering of chapters, sections,
           list items, etc.; it may also be used in the specification of a standard reference system
           for the text.</p>
       </remarks>
@@ -133,18 +126,6 @@ $Id$
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
       </datatype>
-      <valDesc>The value must conform to BCP 47. If the value is a
-      private use code (i.e., starts with <val>x-</val> or contains
-      <val>-x-</val>), a <gi>language</gi> element with a matching
-      value for its <att>ident</att> attribute should be supplied in
-      the TEI header to document this value. Such documentation may
-      also optionally be supplied for non-private-use codes, though
-      these must remain consistent with their
-      <choice><abbr>IETF</abbr><expan>Internet Engineering Task
-      Force</expan></choice> definitions.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">La valeur doit être conforme au BCP 47. Si la
-        valeur est un code d'usage privé (c'est-à-dire commence par <code>x-</code> ou contient
-      <code>-x-</code>),  il devrait correspondre à la valeur d'un attribut <att>ident</att> d'un élément <gi>language</gi> fourni dans l'en-tête TEI du document courant.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
           <p> … The consequences of
@@ -154,8 +135,8 @@ $Id$
 	  ancestral territorial organization.</p>
         </egXML>
       </exemplum>
-      <remarks versionDate="2013-01-07" xml:lang="en">
-        <p>the xml:lang value will be inherited from the immediately
+      <remarks versionDate="2013-12-06" xml:lang="en">
+        <p>The xml:lang value will be inherited from the immediately
 enclosing element, or from its parent, and so on up the document hierarchy.
 It is generally good practice to specify xml:lang at the highest
 appropriate level, noticing that a different default may be needed for the
@@ -167,12 +148,24 @@ and that a single TEI document may contain texts in many languages.</p>
           <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
           a practical step-by-step guide, see 
           <ptr target="http://www.w3.org/International/questions/qa-choosing-language-tags"/>.</p>
+<p>The value used must conform with BCP 47. If the value is a
+      private use code (i.e., starts with <val>x-</val> or contains
+      <val>-x-</val>), a <gi>language</gi> element with a matching
+      value for its <att>ident</att> attribute should be supplied in
+      the TEI header to document this value. Such documentation may
+      also optionally be supplied for non-private-use codes, though
+      these must remain consistent with their
+      <choice><abbr>IETF</abbr><expan>Internet Engineering Task
+      Force</expan></choice> definitions.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p> Si aucune valeur n'est indiquée pour <att>xml:lang</att>, la valeur de
             l'attribut<att>xml:lang</att> de l'élément immédiatement supérieur est héritée ; c'est
           pour cette raison qu'une valeur devrait toujours être attribuée à l'élément du plus haut
           niveau hiérarchique (<gi>TEI</gi>).</p>
+<p>La valeur doit être conforme au BCP 47. Si la
+        valeur est un code d'usage privé (c'est-à-dire commence par <code>x-</code> ou contient
+      <code>-x-</code>),  il devrait correspondre à la valeur d'un attribut <att>ident</att> d'un élément <gi>language</gi> fourni dans l'en-tête TEI du document courant.</p>
       </remarks>
       <remarks xml:lang="es" versionDate="2008-04-06">
         <p>Si no se especifica ningún valor para <att>xml:lang</att>, el valor de <att>xml:lang</att> para el elemento inmediatamente englobado, se hereda; por esta razón, un valor
@@ -202,12 +195,6 @@ and that a single TEI document may contain texts in many languages.</p>
       <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
       </datatype>
-      <valDesc>may contain any number of tokens, each of which may
-      contain letters, punctuation marks, or symbols, but not whitespace or 
-      word-separating characters.</valDesc>
-      <valDesc versionDate="2009-05-25" xml:lang="fr">toute chaîne de caractères ; si la restitution
-        typographique d'un texte doit être systématiquement notée, un jeu systématique de
-        valeurs pour l'attribut <att>rend</att> doit être défini.</valDesc>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <head rend="align(center) case(allcaps)"><lb/>To The <lb/>Duchesse <lb/>of <lb/>Newcastle,
