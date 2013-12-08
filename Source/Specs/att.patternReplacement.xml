@@ -31,10 +31,8 @@ $Id$
       <datatype>
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
       </datatype>
-      <valDesc>must be a regular expression according to the <ref target="http://www.w3.org/TR/xpath-functions/#regex-syntax">W3C XPath syntax</ref>
-         </valDesc>
-      <remarks versionDate="2012-11-22" xml:lang="en">
-        <p>Parenthesized groups are used not only for establishing order of precedence and atoms for
+      <remarks versionDate="2013-12-08" xml:lang="en">
+        <p>The syntax used should follow that defined by <ref target="http://www.w3.org/TR/xpath-functions/#regex-syntax">W3C XPath syntax</ref>. Note that parenthesized groups are used not only for establishing order of precedence and atoms for
           quantification, but also for creating subpatterns to be referenced by the
           <att>replacementPattern</att> attribute.</p>
       </remarks>
@@ -53,8 +51,9 @@ $Id$
       </remarks>
     </attDef>
     <attDef ident="replacementPattern" usage="req">
-      <desc versionDate="2012-11-22" xml:lang="en">specifies a <soCalled>replacement pattern</soCalled> which, once subpattern substitution
-        has been performed, provides a URI.</desc>
+      <desc versionDate="2013-12-08" xml:lang="en">specifies a <soCalled>replacement pattern</soCalled>, that is, the skeleton of a relative or absolute URI containing references to groups in
+        the <att>matchPattern</att> which, once subpattern substitution
+        has been performed, complete the URI.</desc>
       <desc versionDate="2009-01-05" xml:lang="fr">spécifie une <soCalled>règle de
         remplacement</soCalled> qui, après avoir opéré les substitutions prévues à chaque nœud,
         génère une URI.</desc>
@@ -74,12 +73,8 @@ $Id$
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.replacement"/>
       </datatype>
-      <valDesc>Should be the skeleton of a relative or absolute URI, with references to groups in
-        the <att>matchPattern</att>.</valDesc>
-      <valDesc xml:lang="fr">Devrait être le squelette d'un parent ou URI absolu, avec des
-        références aux groupes dans <att>matchPattern</att>.</valDesc>
       <remarks versionDate="2012-11-22" xml:lang="en">
-        <p>The strings <q>$1</q> through <q>$9</q> are references to the corresponding group in the
+        <p>The strings <mentioned>$1</mentioned>, <mentioned>$2</mentioned> etc.  are references to the corresponding group in the
           regular expression specified by <att>matchPattern</att> (counting open parenthesis, left
           to right). Processors are expected to replace them with whatever matched the corresponding
           group in the regular expression.</p>
