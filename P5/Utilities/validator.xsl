@@ -7,7 +7,8 @@ xmlns:tei="http://www.tei-c.org/ns/1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
 exclude-result-prefixes="svrl rng tei a teix">
   <xsl:include href="pointerattributes.xsl"/>
-  <xsl:key name="IDENTS" match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
+  <xsl:key name="IDENTS" match="tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
+  <xsl:key name="MODULEIDENTS" match="tei:moduleSpec" use="@ident"/>
   <xsl:key name="EXIDS" match="teix:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
   <xsl:output indent="yes" omit-xml-declaration="yes"/>
@@ -81,13 +82,23 @@ exclude-result-prefixes="svrl rng tei a teix">
 </xsl:template>
 -->
   <!-- moduleRef must point to something -->
-  <xsl:template match="tei:memberOf|tei:moduleRef">
+  <xsl:template match="tei:moduleRef">
+    <xsl:if test="not(key('MODULEIDENTS',@key))">
+      <xsl:call-template name="Error">
+        <xsl:with-param name="value" select="@key"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- memberOf must point to something -->
+  <xsl:template match="tei:memberOf">
     <xsl:if test="not(key('IDENTS',@key))">
       <xsl:call-template name="Error">
         <xsl:with-param name="value" select="@key"/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
+
   <!-- source on egXML must point to something -->
   <xsl:template match="teix:egXML[@source]">
     <xsl:if test="not(id(substring(@source,2)))">
@@ -114,9 +125,13 @@ exclude-result-prefixes="svrl rng tei a teix">
     <xsl:choose>
       <xsl:when test="key('IDENTS',@key)">
         <xsl:if test="@atts">
-          <xsl:call-template name="checkAtts">
-            <xsl:with-param name="a" select="concat(normalize-space(@atts),' ')"/>
-          </xsl:call-template>
+	  <xsl:call-template name="checkAtts">
+	    <xsl:with-param name="loc">
+	      <xsl:value-of select="name(.)"/>
+	      <xsl:text>: </xsl:text>
+	      <xsl:call-template name="loc"/>
+	    </xsl:with-param>
+	  </xsl:call-template>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
@@ -127,25 +142,52 @@ exclude-result-prefixes="svrl rng tei a teix">
     </xsl:choose>
   </xsl:template>
   <xsl:template name="checkAtts">
-    <xsl:param name="a"/>
-    <xsl:variable name="me"><xsl:value-of select="name(.)"/>: <xsl:call-template name="loc"/></xsl:variable>
-    <xsl:variable name="k">
-      <xsl:value-of select="@key"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="contains($a,' ')">
-        <xsl:variable name="this">
-          <xsl:value-of select="substring-before($a,' ')"/>
-        </xsl:variable>
-        <xsl:if test="not(key('IDENTS',$k)/tei:attList//tei:attDef[@ident=$this])">
-          <ERROR><xsl:value-of select="$me"/> refers to <xsl:value-of select="$this"/> in <xsl:value-of select="$k"/>, which does not exist</ERROR>
-        </xsl:if>
-        <xsl:call-template name="checkAtts">
-          <xsl:with-param name="a" select="substring-after($a,' ')"/>
-        </xsl:call-template>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:param name="loc"/>
+    <xsl:variable name="atts" select="normalize-space(@atts)"/>
+    <xsl:for-each select="key('IDENTS',@key)">
+      <xsl:variable name="here" select="."/>
+      <xsl:for-each select="tokenize($atts, ' ')">
+	<xsl:variable name="this" select="."/>
+	<xsl:for-each select="$here">
+	  <xsl:choose>
+	    <xsl:when test="$this=''"/>
+	    <xsl:when test="$this='-'"/>
+	    <xsl:when test="$this='+'"/>
+	    <xsl:when test="tei:attList//tei:attDef[@ident=$this]">
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:variable name="ok">
+		<xsl:call-template name="checkClassesForAttribute">
+		  <xsl:with-param name="TOKEN" select="$this"/>
+		</xsl:call-template>
+	      </xsl:variable>
+	      <xsl:if test="$ok=''">
+		<ERROR>"<xsl:value-of select="@ident"/>" in <xsl:value-of select="$loc"/> refers to attribute "<xsl:value-of select="$this"/>" which does not exist</ERROR>
+	      </xsl:if>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:for-each>
+      </xsl:for-each>
+    </xsl:for-each>
   </xsl:template>
+
+
+  <xsl:template name="checkClassesForAttribute">
+    <xsl:param name="TOKEN"/>
+      <xsl:for-each select="tei:classes/tei:memberOf/key('IDENTS',@key)">
+	<xsl:choose>
+	  <xsl:when test="tei:attList//tei:attDef[@ident=$TOKEN]">
+	      <xsl:text>y</xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:call-template name="checkClassesForAttribute">
+	      <xsl:with-param name="TOKEN" select="$TOKEN"/>
+	    </xsl:call-template>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:for-each>
+  </xsl:template>
+
   <xsl:template name="checklinks">
     <xsl:param name="stuff"/>
     <xsl:variable name="context" select="."/>
