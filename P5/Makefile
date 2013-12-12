@@ -218,6 +218,9 @@ dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	webnav \
 	xhtml.rnc \
 	| (cd release/tei-p5-source/share/xml/tei/odd; tar xf - )
+	(cd release/tei-p5-source/share/xml/tei/odd/Source/Specs; for i in *.xml; do sed -i "" 's/http:\/\/tei.oucs.ox.ac.uk\/jenkins\/job\/TEIP5\/lastSuccessfulBuild\/artifact\/release\/xml\/tei\/odd\/p5.nvdl/..\/..\/p5.nvdl/' $$i;done)
+	(cd release/tei-p5-source/share/xml/tei/odd/Source/Guidelines/en; for i in *.xml; do sed -i "" 's/http:\/\/tei.oucs.ox.ac.uk\/jenkins\/job\/TEIP5\/lastSuccessfulBuild\/artifact\/release\/xml\/tei\/odd\/p5.nvdl/..\/..\/..\/p5.nvdl/' $$i;done)
+	(cd release/tei-p5-source/share/xml/tei/odd/Source/Guidelines/fr; for i in *.xml; do sed -i "" 's/http:\/\/tei.oucs.ox.ac.uk\/jenkins\/job\/TEIP5\/lastSuccessfulBuild\/artifact\/release\/xml\/tei\/odd\/p5.nvdl/..\/..\/..\/p5.nvdl/' $$i;done)
 	touch dist-source.stamp
 	rm p5subset.json p5subset.js p5attlist.txt stripspace.xsl.model
 
