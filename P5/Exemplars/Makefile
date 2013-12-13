@@ -8,7 +8,7 @@ ODDS= \
 	tei_minimal.dtd \
 	tei_ms.dtd \
 	tei_speech.dtd \
-	tei_all.dtd 
+	tei_all.dtd tei_tite.dtd tei_lite.dtd
 
 MOREODDS=	isofs.rng \
 	tei_svg.rng \
@@ -23,6 +23,7 @@ DOCONLYODDS=tei_lite_fr.doc.epub
 XODDS = tei_allPlus.special	
 
 DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf
+
 LANGUAGE=en
 P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
@@ -31,6 +32,12 @@ SOURCE=${P5}/p5subset.xml
 ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:/usr/share/java/jing.jar -Dtrang=/usr/share/trang/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
 
 default: schemas
+
+schemas: $(ODDS) $(MOREODDS) $(XODDS) 
+	echo Done
+
+docschemas: $(DOCODDS) $(DOCONLYODDS)
+	echo Done schemas which needed doc
 
 %.special: %.odd
 	xmllint --xinclude $*.odd > $*.odd.xinclude
@@ -60,13 +67,7 @@ default: schemas
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
 %.doc.pdf: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd docepub docpdf dochtml exampleschema 
-	../run-onvdl $*.nvdl $*.odd
-	trang  $*.rng $*.rnc
-	trang   -o disable-abstract-elements $*.rng $*.xsd
-	@echo Validate using xmllint for DTD  
-	xmllint --noout --dtdvalid $*.dtd $*.tei
-	-rm $*.doc.xml
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd docepub docpdf dochtml 
 
 %.doc.epub: %.odd
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dlang=`echo $* | sed 's/.*_//'` -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema 
@@ -74,10 +75,7 @@ default: schemas
 	-rm $*.doc.xml
 	-rm $*.rng
 
-schemas: $(ODDS) $(MOREODDS) $(DOCODDS) $(XODDS) $(DOCONLYODDS)
-	echo Done
-
-dist: schemas
+dist: schemas docschemas
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars
 	rm -f *-examples*
 	rm -f *compiled* *.doc.tex
