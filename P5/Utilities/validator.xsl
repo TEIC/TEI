@@ -1,50 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-xmlns:teix="http://www.tei-c.org/ns/Examples"
-xmlns:rng="http://relaxng.org/ns/structure/1.0"
-xmlns:tei="http://www.tei-c.org/ns/1.0"
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-exclude-result-prefixes="svrl rng tei a teix">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+  xmlns:teix="http://www.tei-c.org/ns/Examples"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  xmlns:tei="http://www.tei-c.org/ns/1.0" 
+  version="2.0" exclude-result-prefixes="svrl rng tei a teix">
+  
+  <!--
+    REVISIONS:
+    2013-12-10 by Syd Bauman:
+    * collapse the 3 (should have been 4) templates that matched
+      svrl:failed-assert and svrl:successful-report into one template
+    * iterate only over distinct IDs, so we only get 1 error for a
+      duplicate ID, rather than 1 error for each duplicate value
+  -->
+
+  <xsl:output indent="yes" omit-xml-declaration="yes"/>
+
   <xsl:include href="pointerattributes.xsl"/>
-  <xsl:key name="IDENTS" match="tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
-  <xsl:key name="MODULEIDENTS" match="tei:moduleSpec" use="@ident"/>
+  <xsl:key name="IDENTS" match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
   <xsl:key name="EXIDS" match="teix:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
-  <xsl:output indent="yes" omit-xml-declaration="yes"/>
-    <xsl:template match="/">
-      <Messages>
-	<xsl:apply-templates/>
-	<xsl:for-each select="//*[@xml:id]">
-	  <xsl:if test="count(key('IDS',@xml:id))&gt;1">
-	    <ERROR>id <xsl:value-of select="@xml:id"/> used more than once</ERROR>
-	  </xsl:if>
-	</xsl:for-each>
-	<xsl:apply-templates select="doc('../Schematron1.xml')//svrl:failed-assert"/>
-	<xsl:apply-templates select="doc('../Schematron1.xml')//svrl:successful-report"/>
-	<xsl:apply-templates select="doc('../Schematron2.xml')//svrl:failed-assert"/>
-	<xsl:apply-templates select="doc('../Schematron2.xml')//svrl:successful-report"/>
-      </Messages>
-  </xsl:template>
+  <xsl:variable name="root" select="/"/>
 
-  <xsl:template match="svrl:failed-assert[@role='nonfatal']">
-    <WARNING>Schematron warning: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
-    Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></WARNING>
+  <xsl:template match="/">
+    <Messages>
+      <xsl:apply-templates/>
+      <xsl:for-each select="distinct-values( //*[@xml:id]/@xml:id )">
+        <xsl:variable name="thisID" select="."/>
+        <xsl:for-each select="$root">
+          <xsl:if test="count( key('IDS', $thisID ) ) > 1">
+            <ERROR>id '<xsl:value-of select="$thisID"/>' used more than once</ERROR>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:for-each>
+      <xsl:apply-templates select="doc('../Schematron1.xml')//svrl:failed-assert"/>
+      <xsl:apply-templates select="doc('../Schematron1.xml')//svrl:successful-report"/>
+      <xsl:apply-templates select="doc('../Schematron2.xml')//svrl:failed-assert"/>
+      <xsl:apply-templates select="doc('../Schematron2.xml')//svrl:successful-report"/>
+    </Messages>
   </xsl:template>
-
-  <xsl:template match="svrl:failed-assert">
-    <ERROR>Schematron error: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
-    Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></ERROR>
-  </xsl:template>
-
-  <xsl:template match="svrl:successful-report[@role='nonfatal']">
-    <WARNING>Schematron warning: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
-    Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></WARNING>
-  </xsl:template>
-
-  <xsl:template match="svrl:successful-report">
-    <ERROR>Schematron error: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"/>] 
-    Location: <xsl:value-of select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"/></ERROR>
+  
+  <xsl:template match="svrl:failed-assert|svrl:successful-report">
+    <xsl:variable name="outGI">
+      <xsl:choose>
+        <xsl:when test="@role='nonfatal'">WARNING</xsl:when>
+        <xsl:otherwise>ERROR</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:element name="{$outGI}">Schematron <xsl:value-of
+      select="lower-case($outGI)"/>: <xsl:value-of select="svrl:text"/> [Test: <xsl:value-of select="@test"
+      />] Location: <xsl:value-of
+        select="replace(replace(@location,'\[namespace-uri\(\)=.http://www.tei-c.org/ns/1.0.\]',''),'/\*:','/')"
+      /></xsl:element>
   </xsl:template>
 
   <xsl:template match="text()"/>
@@ -82,23 +91,13 @@ exclude-result-prefixes="svrl rng tei a teix">
 </xsl:template>
 -->
   <!-- moduleRef must point to something -->
-  <xsl:template match="tei:moduleRef">
-    <xsl:if test="not(key('MODULEIDENTS',@key))">
-      <xsl:call-template name="Error">
-        <xsl:with-param name="value" select="@key"/>
-      </xsl:call-template>
-    </xsl:if>
-  </xsl:template>
-
-  <!-- memberOf must point to something -->
-  <xsl:template match="tei:memberOf">
+  <xsl:template match="tei:memberOf|tei:moduleRef">
     <xsl:if test="not(key('IDENTS',@key))">
       <xsl:call-template name="Error">
         <xsl:with-param name="value" select="@key"/>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
-
   <!-- source on egXML must point to something -->
   <xsl:template match="teix:egXML[@source]">
     <xsl:if test="not(id(substring(@source,2)))">
@@ -125,13 +124,9 @@ exclude-result-prefixes="svrl rng tei a teix">
     <xsl:choose>
       <xsl:when test="key('IDENTS',@key)">
         <xsl:if test="@atts">
-	  <xsl:call-template name="checkAtts">
-	    <xsl:with-param name="loc">
-	      <xsl:value-of select="name(.)"/>
-	      <xsl:text>: </xsl:text>
-	      <xsl:call-template name="loc"/>
-	    </xsl:with-param>
-	  </xsl:call-template>
+          <xsl:call-template name="checkAtts">
+            <xsl:with-param name="a" select="concat(normalize-space(@atts),' ')"/>
+          </xsl:call-template>
         </xsl:if>
       </xsl:when>
       <xsl:otherwise>
@@ -142,52 +137,27 @@ exclude-result-prefixes="svrl rng tei a teix">
     </xsl:choose>
   </xsl:template>
   <xsl:template name="checkAtts">
-    <xsl:param name="loc"/>
-    <xsl:variable name="atts" select="normalize-space(@atts)"/>
-    <xsl:for-each select="key('IDENTS',@key)">
-      <xsl:variable name="here" select="."/>
-      <xsl:for-each select="tokenize($atts, ' ')">
-	<xsl:variable name="this" select="."/>
-	<xsl:for-each select="$here">
-	  <xsl:choose>
-	    <xsl:when test="$this=''"/>
-	    <xsl:when test="$this='-'"/>
-	    <xsl:when test="$this='+'"/>
-	    <xsl:when test="tei:attList//tei:attDef[@ident=$this]">
-	    </xsl:when>
-	    <xsl:otherwise>
-	      <xsl:variable name="ok">
-		<xsl:call-template name="checkClassesForAttribute">
-		  <xsl:with-param name="TOKEN" select="$this"/>
-		</xsl:call-template>
-	      </xsl:variable>
-	      <xsl:if test="$ok=''">
-		<ERROR>"<xsl:value-of select="@ident"/>" in <xsl:value-of select="$loc"/> refers to attribute "<xsl:value-of select="$this"/>" which does not exist</ERROR>
-	      </xsl:if>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:for-each>
-      </xsl:for-each>
-    </xsl:for-each>
+    <xsl:param name="a"/>
+    <xsl:variable name="me"><xsl:value-of select="name(.)"/>: <xsl:call-template name="loc"
+      /></xsl:variable>
+    <xsl:variable name="k">
+      <xsl:value-of select="@key"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="contains($a,' ')">
+        <xsl:variable name="this">
+          <xsl:value-of select="substring-before($a,' ')"/>
+        </xsl:variable>
+        <xsl:if test="not(key('IDENTS',$k)/tei:attList//tei:attDef[@ident=$this])">
+          <ERROR><xsl:value-of select="$me"/> refers to <xsl:value-of select="$this"/> in
+              <xsl:value-of select="$k"/>, which does not exist</ERROR>
+        </xsl:if>
+        <xsl:call-template name="checkAtts">
+          <xsl:with-param name="a" select="substring-after($a,' ')"/>
+        </xsl:call-template>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
-
-
-  <xsl:template name="checkClassesForAttribute">
-    <xsl:param name="TOKEN"/>
-      <xsl:for-each select="tei:classes/tei:memberOf/key('IDENTS',@key)">
-	<xsl:choose>
-	  <xsl:when test="tei:attList//tei:attDef[@ident=$TOKEN]">
-	      <xsl:text>y</xsl:text>
-	  </xsl:when>
-	  <xsl:otherwise>
-	    <xsl:call-template name="checkClassesForAttribute">
-	      <xsl:with-param name="TOKEN" select="$TOKEN"/>
-	    </xsl:call-template>
-	  </xsl:otherwise>
-	</xsl:choose>
-      </xsl:for-each>
-  </xsl:template>
-
   <xsl:template name="checklinks">
     <xsl:param name="stuff"/>
     <xsl:variable name="context" select="."/>
@@ -200,25 +170,25 @@ exclude-result-prefixes="svrl rng tei a teix">
     <xsl:param name="Where"/>
     <xsl:for-each select="$Where">
       <xsl:choose>
-	<xsl:when test="starts-with($What,'#')">
-	  <xsl:choose>
-	    <xsl:when test="id(substring($What,2))"/>
-	    <xsl:otherwise>
-	      <xsl:call-template name="Error">
-		<xsl:with-param name="value" select="$What"/>
-	      </xsl:call-template>
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:when>
-	<xsl:when test="starts-with($What,'tei:')"/>
-	<xsl:when test="starts-with($What,'mailto:')"/>
-	<xsl:when test="starts-with($What,'http:')"/>
-	<xsl:when test="contains($What,'.html')"/>
-	<xsl:when test="not(contains($What,'/')) and not(id($What))">
-	  <xsl:call-template name="Error">
-	    <xsl:with-param name="value" select="$What"/>
-	  </xsl:call-template>
-	</xsl:when>
+        <xsl:when test="starts-with($What,'#')">
+          <xsl:choose>
+            <xsl:when test="id(substring($What,2))"/>
+            <xsl:otherwise>
+              <xsl:call-template name="Error">
+                <xsl:with-param name="value" select="$What"/>
+              </xsl:call-template>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+        <xsl:when test="starts-with($What,'tei:')"/>
+        <xsl:when test="starts-with($What,'mailto:')"/>
+        <xsl:when test="starts-with($What,'http:')"/>
+        <xsl:when test="contains($What,'.html')"/>
+        <xsl:when test="not(contains($What,'/')) and not(id($What))">
+          <xsl:call-template name="Error">
+            <xsl:with-param name="value" select="$What"/>
+          </xsl:call-template>
+        </xsl:when>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
@@ -247,11 +217,13 @@ exclude-result-prefixes="svrl rng tei a teix">
   </xsl:template>
   <xsl:template name="Remark">
     <xsl:param name="value"/>
-    <Note><xsl:value-of select="name(.)"/> points to ID not in my namespace: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </Note>
+    <Note><xsl:value-of select="name(.)"/> points to ID not in my namespace: <xsl:value-of
+        select="$value"/> (<xsl:call-template name="loc"/>) </Note>
   </xsl:template>
   <xsl:template name="Error">
     <xsl:param name="value"/>
-    <ERROR><xsl:value-of select="name(.)"/> points to non-existent <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) </ERROR>
+    <ERROR><xsl:value-of select="name(.)"/> points to non-existent <xsl:value-of select="$value"/>
+        (<xsl:call-template name="loc"/>) </ERROR>
   </xsl:template>
   <xsl:template name="Warning">
     <xsl:param name="value"/>
@@ -260,8 +232,8 @@ exclude-result-prefixes="svrl rng tei a teix">
       <xsl:text>@</xsl:text>
       <xsl:value-of select="name(.)"/>
     </xsl:variable>
-    <Note><xsl:value-of select="$where"/> points to something I cannot find: <xsl:value-of select="$value"/> (<xsl:call-template name="loc"/>) 
-</Note>
+    <Note><xsl:value-of select="$where"/> points to something I cannot find: <xsl:value-of
+        select="$value"/> (<xsl:call-template name="loc"/>) </Note>
   </xsl:template>
   <xsl:template name="checkexamplelinks">
     <xsl:param name="stuff"/>
@@ -276,52 +248,53 @@ exclude-result-prefixes="svrl rng tei a teix">
     <xsl:param name="Where"/>
     <xsl:for-each select="$Where">
       <xsl:choose>
-	<xsl:when test="starts-with($What,'#')">
-	  <xsl:variable name="N">
-	    <xsl:value-of select="substring-after($What,'#')"/>
-	  </xsl:variable>
-	  <xsl:choose>
-	    <xsl:when test="key('EXIDS',$N)"/>
-	    <xsl:when test="$N='COHQHF'"/> <!-- special exception -->
-	    <xsl:when test="id($N)">
-	      <xsl:call-template name="Remark">
-		<xsl:with-param name="value" select="$What"/>
-	      </xsl:call-template>
-	    </xsl:when>
-	    <!--
+        <xsl:when test="starts-with($What,'#')">
+          <xsl:variable name="N">
+            <xsl:value-of select="substring-after($What,'#')"/>
+          </xsl:variable>
+          <xsl:choose>
+            <xsl:when test="key('EXIDS',$N)"/>
+            <xsl:when test="$N='COHQHF'"/>
+            <!-- special exception -->
+            <xsl:when test="id($N)">
+              <xsl:call-template name="Remark">
+                <xsl:with-param name="value" select="$What"/>
+              </xsl:call-template>
+            </xsl:when>
+            <!--
 		<xsl:when test="not(ancestor::teix:egXML//teix:*[@xml:id=$N])">
 		<xsl:call-template name="Warning">
 		<xsl:with-param name="value" select="$What"/>
 		</xsl:call-template>
 		</xsl:when>
 	    -->
-	    <xsl:otherwise>
-	      <!--
+            <xsl:otherwise>
+              <!--
 		  <xsl:call-template name="Warning">
 		  <xsl:with-param name="value" select="$What"/>
 		  </xsl:call-template>
 	      -->
-	    </xsl:otherwise>
-	  </xsl:choose>
-	</xsl:when>
-	<xsl:when test="starts-with($What,'example.xml')"/>
-	<xsl:when test="ends-with($What,'.png')"/>
-	<xsl:when test="ends-with($What,'.mp4')"/>
-	<xsl:when test="ends-with($What,'.wav')"/>
-	<xsl:when test="ends-with($What,'.rng')"/>
-	<xsl:when test="starts-with($What,'tei:')"/>
-	<xsl:when test="starts-with($What,'mailto:')"/>
-	<xsl:when test="starts-with($What,'http:')"/>
-	<xsl:when test="name(.)='url' and         local-name(parent::*)='graphic'"/>
-	<xsl:when test="name(.)='url' and         local-name(parent::*)='fsdDecl'"/>
-	<xsl:when test="name(.)='target' and         local-name(parent::*)='ref'"/>
-	<xsl:when test="name(.)='target' and         local-name(parent::*)='ptr'"/>
-	<xsl:when test="name(.)='url' and local-name(parent::*)='graphic'"/>
-	<xsl:when test="not(contains($What,'/'))">
-	  <xsl:call-template name="Warning">
-	    <xsl:with-param name="value" select="$What"/>
-	  </xsl:call-template>
-	</xsl:when>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+        <xsl:when test="starts-with($What,'example.xml')"/>
+        <xsl:when test="ends-with($What,'.png')"/>
+        <xsl:when test="ends-with($What,'.mp4')"/>
+        <xsl:when test="ends-with($What,'.wav')"/>
+        <xsl:when test="ends-with($What,'.rng')"/>
+        <xsl:when test="starts-with($What,'tei:')"/>
+        <xsl:when test="starts-with($What,'mailto:')"/>
+        <xsl:when test="starts-with($What,'http:')"/>
+        <xsl:when test="name(.)='url' and         local-name(parent::*)='graphic'"/>
+        <xsl:when test="name(.)='url' and         local-name(parent::*)='fsdDecl'"/>
+        <xsl:when test="name(.)='target' and         local-name(parent::*)='ref'"/>
+        <xsl:when test="name(.)='target' and         local-name(parent::*)='ptr'"/>
+        <xsl:when test="name(.)='url' and local-name(parent::*)='graphic'"/>
+        <xsl:when test="not(contains($What,'/'))">
+          <xsl:call-template name="Warning">
+            <xsl:with-param name="value" select="$What"/>
+          </xsl:call-template>
+        </xsl:when>
       </xsl:choose>
     </xsl:for-each>
   </xsl:function>
