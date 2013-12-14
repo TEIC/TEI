@@ -175,11 +175,14 @@
   </target>
 
   <target name="validators">
+    <xslt processor="trax" force="yes" style="Utilities/extractegXML.xsl" in="p5.xml" out="v.xml">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
     <echo>Run Schematron script (normal part of Guidelines)</echo>
     <xslt processor="trax" force="yes" style="p5odds.isosch.xsl" in="p5.xml" out="Schematron1.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
-    <echo>Run Schematron script (Examples in Guidelines)</echo>
+    <echo>Run Schematron script (Examples in Guidelines marked as valid)</echo>
     <xslt processor="trax" force="yes" style="p5examples.isosch.xsl" in="p5.xml" out="Schematron2.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
@@ -194,9 +197,6 @@
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
     <xslt processor="trax" force="yes" style="Utilities/listgraphics.xsl" in="p5.xml" out="graphics.sh">
-      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
-    </xslt>
-    <xslt processor="trax" force="yes" style="Utilities/extractegXML.xsl" in="p5.xml" out="v.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
