@@ -45,7 +45,7 @@ p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	ant -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
-	(cd Schema; for i in *rng; do java -jar ../../Utilities/lib/trang.jar $$i `basename $$i .rng`.rnc;done)
+	(cd Schema; for i in *rng; do java -jar ../Utilities/lib/trang.jar $$i `basename $$i .rng`.rnc;done)
 	touch schemas.stamp
 
 schemas: schemas.stamp
