@@ -15,8 +15,7 @@ XSL=/usr/share/xml/tei/stylesheet
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
-JING=jing
-TRANG=trang
+TRANG=java -jar `pwd`/Utilities/lib/trang.jar
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 SAXONJAR=Saxon-HE-9.4.0.6.jar
@@ -39,17 +38,13 @@ check.stamp:
 	@command -v  java || exit 1
 	@echo -n xmllint: 
 	@command -v  xmllint || exit 1
-	@echo -n trang: 
-	@command -v  ${TRANG} || exit 1
-	@echo -n jing: 
-	@command -v  ${JING} || exit 1
 	touch check.stamp
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo get latest date
 	svn info --xml > svndate.xml
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
-	ant -lib /usr/share/java/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
+	ant -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
 	touch schemas.stamp
@@ -76,7 +71,7 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 		echo "<buildweb lang=\"$$i\"/>" >> buildweb.xml; \
 	done
 	echo '</target></project>' >> buildweb.xml
-	ant -lib /usr/share/java/jing.jar:Utilities/lib/${SAXONJAR} -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
+	ant -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
 	rm -f buildweb.xml Utilities/teic-index.xml
 	touch html-web.stamp
 
@@ -375,7 +370,6 @@ changelog:
 
 dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
-	@echo	jing
 	@echo	msttcorefonts
 	@echo	rnv
 	@echo	saxon
@@ -384,7 +378,6 @@ dependencies:
 	@echo	tei-p5-xsl
 	@echo	tei-p5-xsl2
 	@echo	tei-xsl-common
-	@echo	trang-java
 	@echo	ttf-arphic-ukai
 	@echo	ttf-arphic-uming 
 	@echo	ttf-baekmuk 
