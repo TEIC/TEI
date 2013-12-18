@@ -3,8 +3,10 @@ INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 DRIVER=guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
+TRANG=java -jar ../Utilities/lib/trang.jar
+JING=java -jar ../Utilities/lib/jing.jar
 SAXON=java -Xmx752m -jar ../Utilities/lib/Saxon-HE-9.4.0.6.jar -ext:on
-ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:/usr/share/java/jing.jar -Dtrang=/usr/share/trang/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
+ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
 
 NORMALFILES= \
 	testbare.dtd \
@@ -37,7 +39,7 @@ testall.examples: testall.xsd
 
 %.xsd: %.odd
 	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
-	trang   -o disable-abstract-elements $*.rng $*.xsd
+	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
 	@echo Validate XSD using Jing ...
 	cp xml.xsd.w3c xml.xsd
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
@@ -45,13 +47,13 @@ testall.examples: testall.xsd
 	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
 	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
 	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
-	jing $*.xsd $*.xml
+	${JING} $*.xsd $*.xml
 
 %.special: %.odd
 	@echo "BUILD:  Test schema from (special) $<" 
 	xmllint --xinclude $< > xi_$<
 	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
-	trang $*.rng $*.rnc
+	${TRANG} $*.rng $*.rnc
 	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc  
 	rm xi_$*.odd
 
@@ -68,7 +70,7 @@ testmeta2010:
 
 test-frag:
 	@echo BUILD: Testing files which exercise inclusion of fragments
-	jing -t -c frag.rnc testfrag.xml
+	${JING} -t -c frag.rnc testfrag.xml
 	rnv frag.rnc testfrag.xml 
 
 
@@ -83,8 +85,8 @@ test-sgml:
 detest:
 	@echo BUILD: Test file with deliberate mistakes
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
-	echo -jing -t detest.rng detest.xml  > detest.log.all
-	trang detest.rng detest.rnc
+	echo -${JING} -t detest.rng detest.xml  > detest.log.all
+	${TRANG} detest.rng detest.rnc
 	-rnv detest.rnc detest.xml 2>> detest.log.all
 	@echo Validate using Schematron
 	$(SAXON) detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl

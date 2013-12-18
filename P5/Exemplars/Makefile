@@ -1,5 +1,7 @@
 PREFIX=/usr
 SAXON=java -Xmx752m -jar ../Utilities/lib/Saxon-HE-9.4.0.6.jar -ext:on
+TRANG=java -jar ../Utilities/lib/trang.jar
+JING=java -jar ../Utilities/lib/jing.jar
 BIN=${PREFIX}/bin
 ODDS= \
 	tei_bare.dtd \
@@ -29,7 +31,7 @@ P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 SOURCE=${P5}/p5subset.xml 
-ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:/usr/share/java/jing.jar -Dtrang=/usr/share/trang/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
+ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
 
 default: schemas
 
@@ -44,25 +46,25 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron exampleschema  
 	../run-onvdl $*.nvdl $*.odd.xinclude
 	rm $*.odd.xinclude
-	trang $*.rng $*.rnc
+	${TRANG} $*.rng $*.rnc
 
 %.rng: %.odd 
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron exampleschema
 	../run-onvdl $*.nvdl $*.odd
-	trang  $*.rng $*.rnc
+	${TRANG}  $*.rng $*.rnc
 
 %.dtd: %.odd
 	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng dtd exampleschema isoschematron validateschematron cleanup
 	../run-onvdl $*.nvdl $*.odd
-	trang   -o disable-abstract-elements $*.rng $*.xsd
-	trang  $*.rng $*.rnc
+	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
+	${TRANG}  $*.rng $*.rnc
 	@echo Validate XSD using Jing ...
 	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
 	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
 	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
 	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
 	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
-	jing $*.xsd $*.tei
+	${JING} $*.xsd $*.tei
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
