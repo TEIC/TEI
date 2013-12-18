@@ -15,7 +15,6 @@ XSL=/usr/share/xml/tei/stylesheet
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
-TRANG=java -jar `pwd`/Utilities/lib/trang.jar
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 SAXONJAR=Saxon-HE-9.4.0.6.jar
@@ -46,7 +45,7 @@ p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	ant -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
-	(cd Schema; for i in *rng; do ${TRANG} $$i `basename $$i .rng`.rnc;done)
+	(cd Schema; for i in *rng; do java -jar ../Utilities/lib/trang.jar $$i `basename $$i .rng`.rnc;done)
 	touch schemas.stamp
 
 schemas: schemas.stamp
@@ -372,12 +371,7 @@ dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
 	@echo	msttcorefonts
 	@echo	rnv
-	@echo	saxon
-	@echo	tei-oxygen
-	@echo	tei-p5-source
 	@echo	tei-p5-xsl
-	@echo	tei-p5-xsl2
-	@echo	tei-xsl-common
 	@echo	ttf-arphic-ukai
 	@echo	ttf-arphic-uming 
 	@echo	ttf-baekmuk 
