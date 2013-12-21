@@ -35,30 +35,10 @@ $Id$
     <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
   </content>
   <attList>
-    <!--    <attDef ident="target" usage="req">
-      <desc>identifies the categories concerned</desc>
-      <desc versionDate="2009-01-05" xml:lang="fr">identifie les catégories concernées</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">관련된 범주를 식별한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">標明相關的類目。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該分類項目を定義する．</desc>
-      <desc versionDate="2006-10-18" xml:lang="de">bestimmt die entsprechenden Kategorien</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica las categorias concernientes.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">identifica le categorie interessate</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-      <valDesc>A series of one or more space-separated pointers (URIs) to <gi>category</gi>
-        elements, typically located within a <gi>taxonomy</gi> element inside a TEI header.</valDesc>
-
-      <valDesc xml:lang="fr">Suite d'un ou de plusieurs pointeurs séparés par des espaces (URIs)
-        appliqués à des éléments<gi>category</gi>, habituellement placés dans un élément
-          <gi>taxonomy</gi> à l'intérieur de l'en-tête TEI.</valDesc>
-
-    </attDef>
-    -->
     <attDef ident="scheme" usage="opt">
-      <desc versionDate="2005-01-14" xml:lang="en">identifies the classification scheme within which the set of categories concerned is
-        defined</desc>
+      <desc versionDate="2013-12-20" xml:lang="en">identifies the classification scheme within which the set of categories concerned is
+        defined, for example by a <gi>taxonomy</gi> element, or by
+      some other resource.</desc>
       <desc versionDate="2009-01-05" xml:lang="fr">identifie le schéma de classification dans lequel est
         défini le jeu de catégories concerné.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">관련 범주 집합이 정의된 분류 스키마를 표시한다.</desc>
@@ -73,16 +53,13 @@ $Id$
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <valDesc>May supply the identifier of the associated <gi>taxonomy</gi> element.</valDesc>
-      <valDesc xml:lang="fr">Peut fournir l'identifiant de l'élément <gi>taxonomy
-      </gi>associé.</valDesc>
     </attDef>
   </attList>
-  <exemplum xml:lang="en">
+  <exemplum versionDate="2013-12-20" xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <catRef target="#news #prov #sales2"/>
+      <catRef scheme="#myTopics" target="#news #prov #sales2"/>
       <!-- elsewhere -->
-      <taxonomy>
+      <taxonomy xml:id="myTopics">
         <category xml:id="news">
           <catDesc>Newspapers</catDesc>
         </category>
@@ -95,10 +72,11 @@ $Id$
       </taxonomy>
     </egXML>
   </exemplum>
-  <exemplum versionDate="2008-04-06" xml:lang="fr">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <catRef target="#fr_lex #fr_dict #fr_gloss"/>
-      <taxonomy>
+  <exemplum versionDate="2013-12-20" xml:lang="fr">
+    <egXML  xmlns="http://www.tei-c.org/ns/Examples">
+      <catRef scheme="#mesTopos" target="#fr_lex #fr_dict #fr_gloss"/>
+      <!-- ailleurs dans le document -->
+      <taxonomy xml:id="mesTopos">
         <category xml:id="fr_lexique">
           <catDesc>Lexique</catDesc>
         </category>
@@ -129,7 +107,8 @@ $Id$
     </egXML>
   </exemplum>
   <remarks versionDate="2005-01-14" xml:lang="en">
-    <p>The scheme attribute need be supplied only if more than one taxonomy has been declared</p>
+    <p>The scheme attribute need be supplied only if more than one
+    taxonomy has been declared. </p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>L'attribut scheme n'est donné que si plus d'une taxinomie a été déclarée.</p>
