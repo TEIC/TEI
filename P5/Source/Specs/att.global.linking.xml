@@ -36,21 +36,7 @@ $Id$
       <datatype maxOccurs="unbounded">
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
-      <!--
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
-          <p>
-            In order to meet your instructions more fully on that subject, 
-            I directed <persName corresp="personography.xml#pemberton_jd">Mr Surveyor Pemberton</persName> 
-            to draw up a report describing in a general manner the existing arrangements for the sale of 
-            land on <placeName corresp="placeography.xml#vancouver_island">Vancouver's Island</placeName>, 
-            and the proposed arrangements for the sale of land in 
-            <placeName corresp="placeography.xml#british_columbia">British Columbia</placeName>. 
-          </p>
-        </egXML>
-      </exemplum>
--->
-      <!-- this example is erroneous : should be ref -->
+
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
           <group>
@@ -74,6 +60,43 @@ $Id$
         </egXML>
         <p>In this example a <gi>group</gi> contains two <gi>text</gi>s, each containing the same document in a different language. The correspondence is indicated using <att>corresp</att>. The language is indicated using <code>xml:lang</code>, whose value is inherited; both the tag with the <att>corresp</att> and the tag pointed to by the <att>corresp</att> inherit the value from their immediate parent.  </p>
       </exemplum>
+      
+      <exemplum xml:lang="en" versionDate="2013-12-23">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+          
+        <!-- In a placeography -->
+        <place xml:id="LOND1" corresp="#LOND2 #GENI1">
+          <placeName>London</placeName>
+          <desc>The city of London...</desc>
+        </place>
+        
+        <!-- In a literary personography -->
+        <person xml:id="LOND6" corresp="#LOND1 #GENI1">
+          <persName type="lit">London</persName>
+          <note>
+            <p>Allegorical character representing the city of <ref 
+              target="LOND5.xml">London</ref>.
+            </p>
+          </note>
+        </person>
+        <person xml:id="GENI2" corresp="#LOND1 #LOND2">
+          <persName type="lit">London’s Genius</persName>
+          <note>
+            <p>Personification of London’s genius. Appears as an 
+              allegorical character in mayoral shows.
+            </p>
+          </note>
+        </person>
+      </egXML>
+        <p>In this example, a <gi>place</gi> element containing information about the city of 
+           London is linked with two <gi>person</gi> elements in a literary personography. 
+           This correspondence represents a slightly looser relationship than the one in the 
+           preceding example; there is no sense in which an allegorical character could be 
+           substituted for the physical city, or vice versa, but there is obviously a correspondence 
+           between them.
+        </p>
+      </exemplum>
+      
     </attDef>
     <attDef ident="synch" usage="opt">
       <gloss versionDate="2007-07-04" xml:lang="en">synchronous</gloss>
