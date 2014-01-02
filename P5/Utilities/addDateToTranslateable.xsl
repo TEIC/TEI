@@ -67,10 +67,11 @@ has the earliest date on which the status quo existed.
   </xsl:copy>
 </xsl:template>
 
+<!--
 <xsl:template match="exemplum[@xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
-<!--
+-->
 <xsl:template match="gloss[@xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
@@ -86,7 +87,7 @@ has the earliest date on which the status quo existed.
 <xsl:template match="valDesc[@xml:lang=$lang]">
   <xsl:call-template name="check"/>
 </xsl:template>
--->
+
   <xsl:template name="check">
   <xsl:variable name="identifier">
       <xsl:value-of select="(ancestor::*[@ident]/@ident,local-name(),@xml:lang)"
