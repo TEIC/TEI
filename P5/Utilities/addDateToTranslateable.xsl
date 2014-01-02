@@ -8,7 +8,7 @@
 <!--
 For a given *Spec file, make a basic copy,
 but look at each English desc/gloss/remarks/valDesc and see
-if its unchanged since the version in a previous version
+if its unchanged since what we find in a previous version
 whose file name and date are passed as parameters;
 bump the date in this file down to the date of the comparison file
 if the string is unchanged. Done repeatedly, this means each file

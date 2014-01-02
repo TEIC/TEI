@@ -1,6 +1,6 @@
 #!/bin/sh
 # run over *Spec files (listed as parameter to the script)
-# and add the date of the English (by default) version of gloss/desc/remarks.
+# and add the date of the English (by default) version of translateable objects
 # Get the SVN log, and parse it to create a shell script which
 # checks out each revision in turn, and compares that to the previous version.
 #
