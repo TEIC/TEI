@@ -13,7 +13,7 @@ for i in $1
 do
     echo svn up $i
     echo cp $i safe_$i
-    svn log $i | grep "^r[0-9]" | perl -p -e "s@([^\|]+)..[^\|]+..([^ |]+).*@svn cat -\1 $i > old_$i; xmllint --noout old_$i && saxon safe_$i ../../Utilities/addDateToGlossDesc.xsl lang=$L date=\2 file=old_$i | xmllint --format - > new_$i && mv new_$i safe_$i@"
+    svn log $i | grep "^r[0-9]" | perl -p -e "s@([^\|]+)..[^\|]+..([^ |]+).*@svn cat -\1 $i > old_$i; xmllint --noout old_$i && saxon safe_$i ../../Utilities/addDateToTranslateable.xsl lang=$L date=\2 file=old_$i | xmllint --format - > new_$i && mv new_$i safe_$i@"
     echo mv safe_$i $i
     echo rm old_$i
 done
