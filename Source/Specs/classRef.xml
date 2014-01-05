@@ -68,7 +68,21 @@ the value <val>sequenceOptionalRepeatable</val>.</p>
 </remarks>            </attDef>
 
 
-
+    <attList org="choice">
+      <attDef ident="include">
+        <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members which are to be included in the schema being defined.</desc>
+        <datatype minOccurs="0" maxOccurs="unbounded">
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xmlName"/>
+        </datatype>
+      </attDef>
+      <attDef ident="except">
+        <desc versionDate="2011-09-21" xml:lang="en">supplies a list of class members which are to be excluded from the schema being defined.</desc>
+        <datatype minOccurs="0" maxOccurs="unbounded">
+          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xmlName"/>
+        </datatype>
+      </attDef>
+     
+    </attList>
 
   </attList>
   <exemplum xml:lang="en">
@@ -83,6 +97,7 @@ the value <val>sequenceOptionalRepeatable</val>.</p>
     </egXML>
   </exemplum>
   <remarks versionDate="2010-07-06" xml:lang="en">
+ <p>If neither <att>include</att> nor <att>except</att> is specified, all class members are included in the schema being defined.</p>
     <p>Attribute and model classes are identified by the name supplied as value for the
     <att>ident</att> attribute on the <gi>classSpec</gi> element in
     which they are declared. All TEI  names are unique; attribute
