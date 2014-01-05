@@ -19,7 +19,8 @@
   <xsl:output indent="yes" omit-xml-declaration="yes"/>
 
   <xsl:include href="pointerattributes.xsl"/>
-  <xsl:key name="IDENTS" match="tei:moduleSpec|tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
+  <xsl:key name="IDENTS" match="tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
+  <xsl:key name="MIDENTS" match="tei:moduleSpec" use="@ident"/>
   <xsl:key name="EXIDS" match="teix:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
   <xsl:variable name="root" select="/"/>
@@ -91,7 +92,16 @@
 </xsl:template>
 -->
   <!-- moduleRef must point to something -->
-  <xsl:template match="tei:memberOf|tei:moduleRef">
+  <xsl:template match="tei:moduleRef">
+    <xsl:if test="not(key('MIDENTS',@key))">
+      <xsl:call-template name="Error">
+        <xsl:with-param name="value" select="@key"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- memberOf must point to something -->
+  <xsl:template match="tei:memberOf">
     <xsl:if test="not(key('IDENTS',@key))">
       <xsl:call-template name="Error">
         <xsl:with-param name="value" select="@key"/>
@@ -154,8 +164,7 @@
 	    <xsl:when test="$this=''"/>
 	    <xsl:when test="$this='-'"/>
 	    <xsl:when test="$this='+'"/>
-	    <xsl:when test="tei:attList//tei:attDef[@ident=$this]">
-	    </xsl:when>
+	    <xsl:when test=".//tei:attDef[@ident=$this]"/>
 	    <xsl:otherwise>
 	      <xsl:variable name="ok">
 		<xsl:call-template name="checkClassesForAttribute">
