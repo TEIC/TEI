@@ -48,9 +48,9 @@ classes, patterns, etc. such as those provided in <ptr target="#REF-ELEMENTS"/> 
 formal reference documentation, such as the tag description lists
 provided in this and other chapters of these Guidelines;</item>
 <item>declarative code for one or more XML schema languages,
-specifically RELAX NG or W3C Schema.</item>
-<item>declarative code for fragments which can be assembled to make up
-an XML Document Type Declaration.</item>
+such as RELAX NG,  W3C Schema, ISO Schematron, or DTD.</item>
+<!-- item>declarative code for fragments which can be assembled to make up
+an XML Document Type Declaration.</item-->
 </list>
 </p>
 <p>The input required to generate these outputs consists of running prose, and
@@ -453,10 +453,16 @@ of the word or phrase, omitting the remainder.</desc>
 <desc>the abbreviation omits some letter(s) in the middle.</desc>
 </valItem>
 <!--...-->
-</valList></egXML>
-Note that this is quite distinct from the use of the <gi>desc</gi>
-element, which contains a full description of the intended semantics
-for the object.
+</valList></egXML></p>
+  <p>Note that the <gi>gloss</gi> element is needed to explain the
+  significance of the identifier for an item only when this is not
+  apparent, for example because it is abbreviated, as in the above
+  example. It should  not be used to provide a full description of the
+  intended meaning (this is the function of the <gi>desc</gi> element),
+  nor to comment on equivalent values in other schemes (this is the
+  purpose of the <gi>equiv</gi> element), nor to provide alternative
+  versions of the <att>ident</att> attribute value in other languages
+  (this is the purpose of the <gi>altIdent</gi> element).
 </p>
 <p>The contents of the <gi>desc</gi> element provide a brief
 characterization of the intended function of the object
@@ -711,7 +717,7 @@ together with its associated attributes.  In addition to the elements
 listed above, it may contain the following subcomponents:
 <specList>
 <specDesc key="content" atts="autoPrefix"/>
-<specDesc key="constraint"/>
+<specDesc key="constraintSpec" atts="scheme"/>
 <specDesc key="attList" atts="org"/>
 </specList>
  </p>
@@ -990,8 +996,23 @@ collection of attributes, either within an <gi>elementSpec</gi>, or within a
 <gi>classSpec</gi>.  An attribute list can be organized either as a
 group of attribute definitions, all of which are understood to be
 available, or as a choice of attribute definitions, of which only one
-is understood to be available. An attribute list may also contain
+is understood to be available. An attribute list may thus contain
 nested attribute lists.  </p>
+<p>The attribute <att>org</att> is used to indicate whether its child <gi>attDef</gi> elements are all to be made available, or whether only one of them may be used. For example, the attribute list for the element <gi>moduleRef</gi> contains a nested attribute list to indicate that either the <att>include</att> or the <att>except</att> attribute may be supplied, but not both:
+ <egXML xml:lang="und"
+          xmlns="http://www.tei-c.org/ns/Examples"><attList>
+        <!-- other attribute definitions here -->
+            <attList org="choice">
+              <attDef ident="include">
+                <!-- definition for the include attribute -->
+              </attDef>
+              <attDef ident="except">
+                <!-- definition for the except attribute -->
+              </attDef>
+            </attList>  
+          </attList>
+        </egXML>
+</p> 
 <p>The <gi>attDef</gi> element is used to 
 document a single attribute, using an appropriate
 selection from the common elements already mentioned and the
@@ -1012,6 +1033,7 @@ declared by the classes of which the element is a member.  These extra
 attributes, which are shared by other elements, or by all elements,
 are specified by an <gi>attList</gi> contained within a
 <gi>classSpec</gi> element, as described in section <ptr target="#TDCLA"/> below. </p>
+  
 <div type="div4" xml:id="TD-datatypes"><head>Datatypes</head>
 <p>The <gi>datatype</gi> element is used to state what kind of value
 an attribute may have. The TEI defines a number of datatype macros, each with an identifier beginning <code>data.</code>, which are used in preference to the datatypes available natively from the target schema, since the facilities provided by different schema languages vary so widely. The available TEI datatypes are described in section <ptr target="#DTYPES"/> above.  </p>
@@ -1054,9 +1076,19 @@ the TEI-specific <gi>valList</gi> element described below), by
 reference to an existing datatype macro, or by definition of a new datatype, using the 
 <gi>macroSpec</gi> element discussed further in section <ptr target="#TDENT"/>.</p>
 
-<p>The attributes <att>minOccurs</att> and <att>maxOccurs</att> are provided for the case where an attribute may take more than one value of the type specified. 
-<!-- add discussion of string vs multiple tokens -->
-</p>
+<p>The attributes <att>minOccurs</att> and <att>maxOccurs</att> are provided for
+          the case where an attribute may take more than one value of the type
+          specified. The <att>target</att> attribute provided by the <ident type="class">att.pointing</ident> class for example has the following declaration:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples"><attDef ident="target">
+    <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the reference by supplying one or more URI References</desc>
+    <datatype maxOccurs="unbounded">
+      <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+    </datatype>
+  </attDef></egXML>
+indicating that the <att>target</att> attribute may take any number of values, each being of the type defined by the TEI <ident>data.pointer</ident> macro. As is usual in XML, multiple values for a single attribute are separated by one or more white space characters. Hence, values such as <code>#a #b #c</code> or <code>http://example.org http://www.tei-c.org/index.xml</code>  may be supplied. 
+  
+  <!-- add discussion of string vs multiple tokens? -->
+        </p>
 
 </div>
 <div type="div4" xml:id="TDATTvs"><head>Value Specification</head>
@@ -1070,17 +1102,45 @@ headings.</valDesc></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valDesc>A bookseller's surname,
  taken from the list in <title>Pollard and Redgrave</title></valDesc></egXML>
 </p>
-<p>As noted above, the <gi>datatype</gi> element 
+<!-- p>As noted above, the <gi>datatype</gi> element 
 constrains  the possible values for an attribute. The <gi>valDesc</gi> element can be used to
 describe further constraints. For example, to specify that an attribute
 <att>age</att> can take positive integer values less than 100, the
 datatype <ident type="datatype">data.numeric</ident> might be used in combination with
 a <gi>valDesc</gi> such as <q>values must be positive integers less
-than 100</q>. Constraints expressed in this way are purely
-documentary ; to enforce them, the <gi>constraintSpec</gi> element
-described in section <ptr target="#TDTAG"/> must be used.</p>
-<p>More usually, however, where constraints on values are explicitly
-enumerated, the <gi>valList</gi> element is used, as in the
+than 100</q>. -->
+ <p>Constraints expressed in this way are purely
+documentary; to enforce them, the <gi>constraintSpec</gi> element
+   described in section <ptr target="#TDTAG"/> must be used.  For example, to specify that an imaginary attribute
+   <att>ageAtDeath</att> must take positive integer values less than 150, the
+   datatype <ident type="datatype">data.numeric</ident> might be used in combination with
+   a <gi>constraintSpec</gi> such as the following:
+   <egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <attDef ident="age">
+     <desc>age in years at death</desc>
+   <datatype>data.numeric</datatype>
+     <constraintSpec ident="lessThan150" scheme="isoschematron">
+       <constraint>
+         <assert  xmlns="http://purl.oclc.org/dsdl/schematron"
+           test=". &lt; 150">
+           age at death must be a number less than 150
+         </assert>
+       </constraint>
+     </constraintSpec></attDef>
+   </egXML>
+  </p>
+  
+ <p>The elements <gi>altIdent</gi>, <gi>equiv</gi>, <gi>gloss</gi> and <gi>desc</gi> may all be used in the same way as they are elsewhere to describe fully the meaning of a coded value, as in the following example:   <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <valItem ident="dub">
+        <altIdent xml:lang="fr">dou</altIdent>
+        <equiv name="unknown"/>
+        <gloss>dubious</gloss>
+        <desc>used when the application of this element is doubtful or uncertain</desc>
+      </valItem>
+    </egXML>
+ </p>
+  <p>Where all the possible values for an attribute can be
+enumerated, the datatype <ident>data.enumerated</ident> should be used, together with a <gi>valList</gi> element to specify the values and their significance,  as in the
 following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><valList type="closed">
   <valItem ident="req"><gloss>required</gloss></valItem>
@@ -1090,34 +1150,51 @@ following example:
   <valItem ident="opt"><gloss>optional</gloss></valItem>
  </valList>
 </egXML>
+Note the use of the <gi>gloss</gi> element here to explain the otherwise less than obvious meaning of the codes used for these values. 
 Since this value list specifies that it is of type <val>closed</val>,
-only the values enumerated and glossed above are legal, and an ODD
+only the values enumerated are legal, and an ODD
 processor will typically enforce these constraints in the schema
 fragment generated. </p>
-<p>The <gi>valList</gi> element is also used to provide illustrative examples
-of the kinds of values expected. In such cases
-the <att>type</att> attribute will have the value <val>open</val> and
-the datatype will usually be <ident type="datatype">data.enumerated</ident>.</p>
+<p>The <gi>valList</gi> element can also be used to provide illustrative examples
+of the kinds of values expected without listing all of them. In such cases
+the <att>type</att> attribute will have the value <val>open</val>, as in the following example:
+  
+  <egXML xmlns="http://www.tei-c.org/ns/Examples"><attDef ident="type" usage="opt">
+    <desc versionDate="2005-01-14" xml:lang="en">characterizes the movement, for example as an entrance or exit.</desc>
+    <desc versionDate="2007-12-20" xml:lang="ko">예를 들어 입장 또는 퇴장과 같은, 이동의 특성을 기술한다.</desc>
+    <datatype>
+      <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+    </datatype>
+    <valList type="open">
+      <valItem ident="entrance">
+        <desc versionDate="2007-06-27" xml:lang="en">character is entering the stage.</desc>
+        <desc versionDate="2007-12-20" xml:lang="ko">등장인물이 무대에 등장하고 있다.</desc>
+      </valItem>
+      <valItem ident="exit">
+        <desc versionDate="2007-06-27" xml:lang="en">character is exiting the stage.</desc>
+        <desc versionDate="2007-12-20" xml:lang="ko">등장인물이 무대에서 퇴장하고 있다.</desc>
+      </valItem>
+      <valItem ident="onStage">
+        <desc versionDate="2007-07-04" xml:lang="en">character moves on stage</desc>
+        <desc versionDate="2007-12-20" xml:lang="ko">등장인물이 무대에서 이동한다.</desc>
+      </valItem>
+    </valList>
+  </attDef></egXML>
+  The
+datatype will  be <ident type="datatype">data.enumerated</ident> in either case.</p>
 <p>The <gi>valList</gi> element may also be used (as a child of the
 <gi>content</gi> element) to put constraints on the
 permitted content of an element, as noted at <ptr target="#TDTAGCONT"/>. This use is not however supported by
 all schema languages, and is therefore not recommended if
 support for non-RELAX NG systems is a consideration.</p>
-<p>Note that the <gi>gloss</gi> element is needed to explain the
-significance of the identifier for an item only when this is not
-apparent, for example because it is abbreviated, as in the above
-example. It should  not be used to provide a full description of the
-intended meaning (this is the function of the <gi>desc</gi> element),
-nor to comment on equivalent values in other schemes (this is the
-purpose of the <gi>equiv</gi> element), nor to provide alternative
-versions of the <att>ident</att> attribute value in other languages
-(this is the purpose of the <gi>altIdent</gi> element).</p>
+
 </div>
-<div type="div4" xml:id="TDATTex"><head>Examples</head>
+<!-- removed this section since it adds little to the existing examples, and we are likely to change list/@type values in the near future. removed discussion of alternated attributes also since it would be better done in pure ODD -->
+  <!-- div type="div4" xml:id="TDATTex"><head>Examples</head>
 <p>The following <gi>attList</gi> demonstrates some of the
 possibilities; for more detailed examples, consult the tagged version of
 the reference material in these Guidelines.
-<!-- replace this example if we change the definition of gloss list!  -->
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><attList>
     <attDef ident="type">
       <desc>describes the form of the list.</desc>
@@ -1158,26 +1235,26 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
   <datatype>
     <rng:text/>
   </datatype>
-  <!-- ... -->
+ 
 </attDef>
 <attList org="choice">
 <attDef ident="bar">
   <datatype>
     <rng:text/>
   </datatype>
-  <!-- ... -->
+
 </attDef>
 <attDef ident="baz">
   <datatype>
     <rng:text/>
   </datatype>
-  <!-- ... -->
+  
 </attDef>
 </attList>  
 </attList>
 </egXML>
 </p>
-</div>
+</div-->
 </div>
 <div type="div3" xml:id="TDCLA"><head>Element Classes</head>
 
@@ -1189,7 +1266,7 @@ available.
 <specList>
 <specDesc key="classSpec" atts="type "/>
 <specDesc key="classRef"/>
-<specDesc key="attList"/>
+<specDesc key="attList" atts="org"/>
 </specList>
 </p>
 
@@ -1382,7 +1459,7 @@ other elements) inherits the following attribute:
 <specList><specDesc key="att.combinable" atts="mode"/></specList>
 This attribute class, in turn, is a subclass of the <ident
 type="class">att.deprecated</ident> class, from which it inherits the
-following attriubte:
+following attribute:
 <specList><specDesc key="att.deprecated" atts="validUntil"/></specList>
 The <att>validUntil</att> attribute may be used to signal an intent to
 remove a construct from future versions of the schema being specified.</p>
@@ -1392,8 +1469,8 @@ remove a construct from future versions of the schema being specified.</p>
 
 <p>The <gi>elementSpec</gi>, <gi>attDef</gi> and <gi>schemaSpec</gi>
 specification elements also have an attribute which determines which
-namespace
-the object being created will belong to. In the case of
+namespace to which
+the object being created will belong. In the case of
 <gi>schemaSpec</gi>, this  namespace is inherited by all the elements
 created in the schema, unless they have their own <att>ns</att>.
 <specList><specDesc key="att.namespaceable"/></specList>
@@ -1429,10 +1506,11 @@ supplied as a URL, specifies any convenient location from which the
 relevant ODD files may be obtained. For the current release of the TEI
 Guidelines, a URL in the form
 <code>http://www.tei-c.org/Vault/P5/x.y.z/xml/tei/odd/p5subset.xml</code>
-may be used, where <code>x.y.z</code> represents the version number,
+may be used, where <code>x.y.z</code> represents the P5 version number,
 e.g. <code>1.3.0</code>. Alternatively, if the ODD files are locally
 installed, it may be more convenient to supply a value such as
-<val>../ODDs/p5subset.xml"</val>. <!--Returning to the above example, 
+<val>../ODDs/p5subset.xml"</val>. 
+  <!--Returning to the above example, 
 <egXML xml:lang="und"
        xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec
 						    ident="example" source="http://www.tei-c.org/release/xml/tei/odd/Source/Guidelines/fr/guidelines-en.xml">
@@ -1442,7 +1520,7 @@ installed, it may be more convenient to supply a value such as
 would have a similar effect, except that the French language source for the
 most recent version of the Guidelines would be used instead.--></p>
 
-<p>The value for the <att>source</att> attribute may any form of
+<p>The value for the <att>source</att> attribute may be any form of
 URI. A set of TEI-conformant specifications in a form directly usable
 by an ODD processor must be available at the location indicated. When
 no <att>source</att> value is supplied, an ODD processor may either
