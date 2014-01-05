@@ -57,7 +57,7 @@ testall.examples: testall.xsd
 	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc  
 	rm xi_$*.odd
 
-testmeta2010:test
+testmeta2010:
 	$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml validateodd
 	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _old `; do \
 		echo found schemaSpec $$j in testmeta2010; \
