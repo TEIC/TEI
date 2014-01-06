@@ -31,22 +31,23 @@ $Id$
   <classes>
     <memberOf key="att.global"/>
   </classes>
-  <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <group>
-	<oneOrMore>
-	  <ref name="model.publicationStmtPartPrimary"/>
-	  <ref name="model.publicationStmtPartSecondary"/>
-	</oneOrMore>
-	<zeroOrMore>
-	  <ref name="model.pLike"/>
-	</zeroOrMore>
-      </group>
-      <oneOrMore>
-	<ref name="model.pLike"/>
-      </oneOrMore>
-    </choice>
-  </content>
+ <content>
+   <choice  xmlns="http://relaxng.org/ns/structure/1.0">
+     <oneOrMore>
+       <group>
+	 <group>
+	   <ref name="model.publicationStmtPartPrimary"/>
+	 </group>
+	 <zeroOrMore>
+	   <ref name="model.publicationStmtPartSecondary"/>
+	 </zeroOrMore>
+       </group>
+     </oneOrMore>
+     <oneOrMore>
+       <ref name="model.pLike"/>
+     </oneOrMore>
+   </choice>
+ </content>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <publicationStmt>
@@ -59,8 +60,8 @@ $Id$
   <exemplum versionDate="2010-02-26" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Becque-ee">
       <publicationStmt>
-        <idno type="FRANTEXT">L434</idno>
         <distributor>ATILF (Analyse et Traitement Informatique de la Langue Française)</distributor>
+        <idno type="FRANTEXT">L434</idno>
         <address>
           <addrLine>44, avenue de la Libération</addrLine>
           <addrLine>BP 30687</addrLine>
