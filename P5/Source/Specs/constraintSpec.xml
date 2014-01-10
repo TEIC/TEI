@@ -34,7 +34,7 @@ $Id$
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
       <sch:report test="tei:constraint/s:* and    not(@scheme='schematron')">
 	Rules in the Schematron 1.* language must be inside
-	a constraint with a value of 'schematron' on the scheme attribute
+	a constraintSpec with a value of 'schematron' on the scheme attribute
       </sch:report>
     </constraint>
   </constraintSpec>
@@ -43,8 +43,16 @@ $Id$
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
       <sch:report test="tei:constraint/sch:* and    not(@scheme='isoschematron')">
 	Rules in the ISO Schematron language must be inside
-	a constraint with a value of 'isoschematron' on the scheme attribute
+	a constraintSpec with a value of 'isoschematron' on the scheme attribute
       </sch:report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="needrules" scheme="isoschematron">
+    <constraint>
+      <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
+      <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme='isoschematron']/tei:constraint">
+	<sch:report test="sch:assert|sch:report">An ISO Schematron constraint specification for a macro should not have an 'assert' or 'report' element without a parent 'rule' element</sch:report>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
