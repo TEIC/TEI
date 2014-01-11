@@ -7,100 +7,122 @@ $Date$
 $Id$
 -->
 <TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <teiHeader>
-    <fileDesc>
-      <titleStmt>
-        <title>TEI P5 version 2.6.0 release notes</title>
-      </titleStmt>
-      <editionStmt>
-        <edition>
-          <date when="2014-01">January 2014</date>
-        </edition>
-      </editionStmt>
-      <publicationStmt>
-        <authority>The Text Encoding Initiative</authority>
-      </publicationStmt>
-      <sourceDesc>
-        <p>created retrospectively from svn ChangeLog and SourceForge
-        trackers</p>
-      </sourceDesc>
-    </fileDesc>
-  </teiHeader>
-  <text>
-    <body>
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>TEI P5 version 2.6.0 release notes</title>
+            </titleStmt>
+            <editionStmt>
+                <edition> <date when="2014-01">January 2014</date> </edition>
+            </editionStmt>
+            <publicationStmt>
+                <authority>The Text Encoding Initiative</authority>
+            </publicationStmt>
+            <sourceDesc>
+                <p>created retrospectively from svn ChangeLog and SourceForge trackers</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
 
-<p>This release..... <!-- JC to update general prose -->. </p>
+            <p>This version of the TEI introduces new features and resolves a number of issues
+                raised by the TEI community. As always, the majority of these changes and
+                corrections are a consequence of feature requests or bugs reported by the TEI
+                community using the SourceForge tracking system. If you find something you think
+                needs to change in the TEI Guidelines, schemas, tools, or website, please submit a
+                feature request or bug ticket at <ref target="http://tei.sf.net/"
+                >http://tei.sf.net/</ref> for consideration. Lists of <ref
+                target="http://sourceforge.net/p/tei/bugs/search/?q=status%3Aclosed-wont-fix+or+status%3Aclosed-rejected+or+status%3Aclosed-out-of-date+or+status%3Aclosed-accepted+or+status%3Aclosed-works-for-me+or+status%3Aclosed+or+status%3Aclosed-duplicate+or+status%3Aclosed-invalid+or+status%3Aclosed-fixed"
+                >closed bugs</ref> and <ref
+                target="http://sourceforge.net/p/tei/feature-requests/search/?q=status%3Aclosed-wont-fix+or+status%3Aclosed-later+or+status%3Aclosed-rejected+or+status%3Aclosed-out-of-date+or+status%3Aclosed-accepted+or+status%3Aclosed-remind+or+status%3Aclosed+or+status%3Aclosed-duplicate+or+status%3Aclosed-invalid+or+status%3Aclosed-fixed"
+                >closed feature requests</ref> are available on the site. </p>
 
 
-<p>Some of the more noticeable changes in this release include:
+            <p>Some of the more noticeable changes in this release include: <list>
+                <item>Footnotes in the Guidelines now appear in a popup box when you click on them,
+                    rather than causing a jump to the bottom of the page. (This function depends on
+                    JavaScript; if you have JS turned off, the old behaviour will still
+                    work.)</item>
+                <item>The prose restriction that the <gi>pubPlace</gi>, <gi>address</gi>,
+                    <gi>idno</gi>, <gi>availability</gi>, and <gi>date</gi> children of
+                    <gi>publicationStmt</gi> occur in that order has been removed.</item>
+                <item>The content model of <gi>publicationStmt</gi> has been updated to reflect the
+                    restrictions detailed in the prose of section <ref
+                    target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4
+                    Publication, Distribution, Licensing, etc.</ref>.</item>
+                <item><gi>stage</gi> now claims membership of att.placement (and thus gets the
+                    <att>place</att> attribute) as per <ptr
+                    target="https://sourceforge.net/p/tei/feature-requests/476/" />.</item>
+                <item><gi>docDate</gi> is now available as a child of <gi>dateLine</gi> (<ref
+                    target="https://sourceforge.net/p/tei/feature-requests/472/"
+                    >https://sourceforge.net/p/tei/feature-requests/472/</ref>), and the content
+                    models of <gi>signed</gi> and <gi>salute</gi> been loosened (<ptr
+                    target="https://sourceforge.net/p/tei/feature-requests/433/" />; <ptr
+                    target="https://sourceforge.net/p/tei/feature-requests/478/" />) to allow more
+                    flexibility in the <q>top</q> <q>tail</q> of sections (prompted by experience in
+                    EEBO TCP)</item>
+                <item>poetry (<gi>l</gi>) is now allowed in the <gi>trailer</gi></item>
+                <item>Usage of <att>corresp</att> has been clarified (<ref
+                    target="https://sourceforge.net/p/tei/bugs/506/"
+                    >https://sourceforge.net/p/tei/bugs/506/</ref>).</item>
+                <item>The value of the <att>matchPattern</att> attribute is now defined as W3C XPath
+                    syntax rather than W3C XML Schema Language (<ref
+                    target="https://sourceforge.net/p/tei/feature-requests/432/"
+                    >https://sourceforge.net/p/tei/feature-requests/432/</ref>). This allows for
+                    more powerful regular expressions.</item>
+                <item><att>perf</att> on <gi>tech</gi> now has the datatype 1+ data.pointer, instead
+                    of data.enumerated (<ref target="http://sourceforge.net/p/tei/bugs/524/"
+                    >http://sourceforge.net/p/tei/bugs/524/</ref>).</item>
+                <item>support for <soCalled>pure ODD</soCalled>: it is now possible to define
+                    content models using TEI XML constructs only, as an alternative to the use of
+                    RELAX NG. This change is discussed further in a paper by Burnard and Rahtz
+                    presented at <ref target="http://www.doceng2013.org/programme">this year's ACM
+                    Document Engineering conference</ref>. Support for the new syntax in ODD
+                    processing scripts is incomplete, however, and not yet fully tested.</item>
+                <item>use of the element <gi>valDesc</gi> throughout the TEI specifications code was
+                    rationalised: mostly this involved removal of redundant commentary, but in some
+                    cases element or attribute descriptions have been extended or modified.</item>
+                <item>a new <gi>abstract</gi> element has been added to support descriptive metadata
+                    about a “born-digital” item (such as a journal article in a review) to be stored
+                    in the TEI Header per <ptr target="https://sourceforge.net/p/tei/bugs/506/"
+                     /></item>
+                <item><att>name</att> has been made optional (previously required) on
+                    <gi>relation</gi> as per <ptr
+                    target="https://sourceforge.net/p/tei/feature-requests/467/" /> since schematron
+                    now tests whether one of <att>name</att>, <att>ref</att>, or <att>key</att> is
+                    available.</item>
+                <item><gi>forest</gi> and <gi>forestGrp</gi>, <gi>colloc</gi> and others are
+                    examples of elements which used to have locally-declared <att>type</att>
+                    attributes which benefit from the ability to now modify class-provided
+                    attributes locally to the element. They now claim membership of att.typed (and
+                    thus get <att>type</att> and <att>subtype</att> attributes). Similarly
+                    <gi>desc</gi> also is now also a member of att.typed as per <ptr
+                    target="https://sourceforge.net/p/tei/feature-requests/473/" />. </item>
 
-<list>
-<!-- Note by MDH: I saw the item below, but actually the front page revision 
-  was in the last release, so I've commented it out. Popup footnotes are new,
-  though, so I've added that. -->
-  <!--<item>The front page of the online Guidelines has been
-  revised</item>-->
-  <item>Footnotes in the Guidelines now appear in a popup box when you click on them,
-  rather than causing a jump to the bottom of the page. (This function depends on JavaScript;
-  if you have JS turned off, the old behaviour will still work.)</item>
-	<item>The prose restriction that the <gi>pubPlace</gi>,
-	<gi>address</gi>, <gi>idno</gi>, <gi>availability</gi>, and
-	<gi>date</gi> children of <gi>publicationStmt</gi> occur in
-	that order has been removed.</item>	
-	<item>The content model of <gi>publicationStmt</gi> has been
-	updated to reflect the restrictions detailed in the prose of
-	section <ref
-	target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD24">2.2.4
-	Publication, Distribution, Licensing, etc.</ref>.</item>
-  <item><gi>docDate</gi> is now available as a child of <gi>dateLine</gi> (<ref
-  target="https://sourceforge.net/p/tei/feature-requests/472/">https://sourceforge.net/p/tei/feature-requests/472/</ref>),
- and the content models of <gi>signed</gi> and <gi>salute</gi>   been loosened 
-(<ptr
-target="https://sourceforge.net/p/tei/feature-requests/433/"/>; <ptr
-target="https://sourceforge.net/p/tei/feature-requests/478/"/>)
-to allow more flexibility in the <q>top</q> <q>tail</q> of sections
-  (prompted by experience in EEBO TCP)</item>
-<item>poetry (<gi>l</gi>) is now allowed in the <gi>trailer</gi></item>
-  <item>Usage of <att>corresp</att> has been clarified (<ref
-  target="https://sourceforge.net/p/tei/bugs/506/">https://sourceforge.net/p/tei/bugs/506/</ref>).</item>
-  <item>The value of the <att>matchPattern</att> attribute is now
-  defined as W3C XPath syntax rather than W3C XML Schema Language
-  (<ref
-  target="https://sourceforge.net/p/tei/feature-requests/432/">https://sourceforge.net/p/tei/feature-requests/432/</ref>). This
-  allows for more powerful regular expressions.</item>
-  <item><att>perf</att> on <gi>tech</gi> now has the datatype 1+
-  data.pointer, instead of data.enumerated (<ref
-  target="http://sourceforge.net/p/tei/bugs/524/">http://sourceforge.net/p/tei/bugs/524/</ref>).</item>
-<item>support for <soCalled>pure ODD</soCalled>: it is now possible to
-define content models using TEI XML constructs only, as an alternative
-to the use of RELAX NG. This change is discussed further in a paper by
-Burnard and Rahtz presented at  <ref
-target="http://www.doceng2013.org/programme">this year's ACM Document
-Engineering conference</ref>. Support for the new syntax in ODD
-processing scripts is incomplete, however, and not yet fully tested.</item>
-<item>use of the element <gi>valDesc</gi> throughout the TEI specifications code was rationalised: mostly this involved removal of redundant commentary, but in some cases element or attribute descriptions have been extended or modified.</item>
-<item>a new <gi>abstract</gi> element has been added to support descriptive metadata about a “born-digital” item (such as a journal article in a review) to be stored in the TEI Header per <ptr
-  target="https://sourceforge.net/p/tei/bugs/506/"/></item>
-  
+                <item>the <gi>s</gi> element has been modified to not allow it to self-nest as per
+                    <ptr target="https://sourceforge.net/p/tei/bugs/578" /></item>
 
-</list>
-</p>
 
-<p>There are also some changes to the way the Council is managing the
-Guidelines:
-<list>
-  <item>Pre-release versions of the TEI P5 development tree are now
-  tagged as “alpha” and “beta” in their version information.</item>
-  <item>In preparation for a program to get translations of
-  reference documentation up to date, all <gi>desc</gi> and
-  <gi>gloss</gi> elements have been dated. This allows us to easily generate
-  lists of translated blocks which are need revising.</item>
-</list>
-</p>
+                </list> </p>
 
-<p>The XSL stylesheets which provide processing of TEI ODD files for
-Roma and OxGarage have been updated, notably providing better support
-for multi-namespace ODD</p>
-    </body>
-  </text>
+            <p>There are also some changes to the way the Council is managing the Guidelines: <list>
+                <item>Pre-release versions of the TEI P5 development tree are now tagged as “alpha”
+                    and “beta” in their version information.</item>
+                <item>In preparation for a program to get translations of reference documentation up
+                    to date, all <gi>desc</gi> and <gi>gloss</gi> elements have been dated. This
+                    allows us to easily generate lists of translated blocks which are need
+                    revising.</item>
+                <item>More examples were added or corrected in this release and improvements to the
+                    overall way examples are maintained is under consideration by the TIE Technical
+                    Council.</item>
+                </list> </p>
+
+            <p>The XSL stylesheets which provide processing of TEI ODD files for Roma and OxGarage
+                have been updated, notably providing better support for multi-namespace ODD. The
+                Stylesheets are being maintained separately from the Guidelines and are at <ref
+                target="https://github.com/TEIC/Stylesheets"
+                >https://github.com/TEIC/Stylesheets</ref>.</p>
+        </body>
+    </text>
 </TEI>
