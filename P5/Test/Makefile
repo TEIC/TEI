@@ -92,7 +92,7 @@ detest:
 	@echo Validate using Schematron
 	$(SAXON) detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
 	$(SAXON) detest.xml detest.xsl &> detest3.log
-	cat detest*log | sed 's/.*detest.xml:/detest.xml:/' | sed 's/Elapsed time.*//' >  detest.log
+	cat detest*log | sed 's/.*detest.xml:/detest.xml:/' | sed 's/Elapsed time.*//' | sed 's/Loading stylesheet .*p5odds.message//' >  detest.log
 	diff detest.log expected-results/detest.log
 	rm -f detest*log
 
