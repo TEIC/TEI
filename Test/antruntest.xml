@@ -121,6 +121,10 @@
   <target name="validateodd">
     <echo level="info">Validate ${oddFile} as ODD </echo>
     <runjing rngfile="../p5odds.rng" file="${oddFile}"/>
+    <xslt processor="trax" force="yes" style="../p5odds.message.isosch.xsl"
+	  in="${oddFile}" out="/dev/stdout">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
   </target>
   <target name="validaterng">
     <echo level="info">Validate ${testfile} against RELAXNG ${outputname}.rng</echo>
