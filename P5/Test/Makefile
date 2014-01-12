@@ -89,11 +89,11 @@ detest:
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	${TRANG} detest.rng detest.rnc
 	@echo Validate ODD file using Schematron
-	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd &> detest1.log
-	-rnv detest.rnc detest.xml &> detest2.log
-	@echo Validate using Schematron
-	$(SAXON) detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
-	$(SAXON) detest.xml detest.xsl &> detest3.log
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest1.log 2>&1
+	@echo Validate ODD file using RELAX NG schema
+	-rnv detest.rnc detest.xml > detest2.log 2>&1
+	@echo Validate XML file using Schematron
+	$(SAXON) detest.xml detest.xsl > detest3.log 2>&1
 	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
 	sed 's/.*detest.xml:/detest.xml:/' detest2.log >> detest.log
 	sed 's/.*detest.xml:/detest.xml:/' detest3.log >> detest.log
