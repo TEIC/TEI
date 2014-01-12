@@ -28,7 +28,6 @@
   <property name="testfile2" value=""/>
   <property name="profile" value="default"/>
   <property name="lang" value="en"/>
-  <property name="validatelog" value="/dev/stdout"/>
   <property name="patternprefix" value="tei_"/>
   <property name="saxon" value="../Utilities/lib/Saxon-HE-9.4.0.6.jar"/>
   <property name="trang" value="/usr/share/trang/trang.jar"/>
@@ -122,8 +121,11 @@
   <target name="validateodd">
     <echo level="info">Validate ${oddFile} as ODD </echo>
     <runjing rngfile="../p5odds.rng" file="${oddFile}"/>
-    <xslt processor="trax" force="yes" style="../p5odds.message.isosch.xsl"
-	  in="${oddFile}" out="/dev/stdout">
+    <xslt processor="trax" 
+	  force="yes" 
+	  style="../p5odds.message.isosch.xsl"
+	  in="${oddFile}" 
+	  out="/dev/null">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
@@ -164,7 +166,7 @@
   </target>
   <target name="validateschematron">
     <echo level="info">Validate using Schematron</echo>
-    <xslt processor="trax" force="yes" style="${outputname}.xsl" in="${testfile}" out="${validatelog}">
+    <xslt processor="trax" force="yes" style="${outputname}.xsl" in="${testfile}" out="/dev/null">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>
