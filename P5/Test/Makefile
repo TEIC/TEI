@@ -59,7 +59,7 @@ testall.examples: testall.xsd
 
 testmeta2010:
 	echo check that TEI web site is up and responding
-	curl --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml
+	curl -s --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml
 	$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml validateodd
 	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _old `; do \
 		echo found schemaSpec $$j in testmeta2010; \
