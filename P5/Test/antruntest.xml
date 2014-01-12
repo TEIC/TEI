@@ -28,6 +28,7 @@
   <property name="testfile2" value=""/>
   <property name="profile" value="default"/>
   <property name="lang" value="en"/>
+  <property name="validatelog" value="/dev/stdout"/>
   <property name="patternprefix" value="tei_"/>
   <property name="saxon" value="../Utilities/lib/Saxon-HE-9.4.0.6.jar"/>
   <property name="trang" value="/usr/share/trang/trang.jar"/>
@@ -163,7 +164,7 @@
   </target>
   <target name="validateschematron">
     <echo level="info">Validate using Schematron</echo>
-    <xslt processor="trax" force="yes" style="${outputname}.xsl" in="${testfile}" out="/dev/stdout">
+    <xslt processor="trax" force="yes" style="${outputname}.xsl" in="${testfile}" out="${validatelog}">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
   </target>

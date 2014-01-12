@@ -87,7 +87,7 @@ detest:
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
 	${TRANG} detest.rng detest.rnc
 	@echo Validate ODD file using Schematron
-	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest1.log
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd -Dvalidatelog=detest1.log validateodd 
 	-rnv detest.rnc detest.xml &> detest2.log
 	@echo Validate using Schematron
 	$(SAXON) detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
