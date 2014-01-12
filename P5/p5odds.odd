@@ -364,29 +364,29 @@ $Id$
                           ident="require-translatability"
                           scheme="isoschematron">
             <constraint>
-                <sch:rule context="tei:elementSpec/desc
-                                 | tei:elementSpec/gloss
-                                 | tei:elementSpec/remarks
-                                 | tei:classSpec/desc
-                                 | tei:classSpec/gloss
-                                 | tei:classSpec/remarks
-                                 | tei:macroSpec/desc
-                                 | tei:macroSpec/gloss
-                                 | tei:macroSpec/remarks
-                                 | tei:attDef/desc
-                                 | tei:attDef/gloss
-                                 | tei:attDef/remarks
-                                 | tei:valItem/desc
-                                 | tei:valItem/gloss
-                                 | tei:valItem/remarks
+                <sch:rule context="tei:elementSpec/tei:desc
+                                 | tei:elementSpec/tei:gloss
+                                 | tei:elementSpec/tei:remarks
+                                 | tei:classSpec/tei:desc
+                                 | tei:classSpec/tei:gloss
+                                 | tei:classSpec/tei:remarks
+                                 | tei:macroSpec/tei:desc
+                                 | tei:macroSpec/tei:gloss
+                                 | tei:macroSpec/tei:remarks
+                                 | tei:attDef/tei:desc
+                                 | tei:attDef/tei:gloss
+                                 | tei:attDef/tei:remarks
+                                 | tei:valItem/tei:desc
+                                 | tei:valItem/tei:gloss
+                                 | tei:valItem/tei:remarks
                                  ">
                   <sch:report test="not( @xml:lang and @versionDate )">
-                    Both the versionDate and xml:lang attributes on "<sch:name/>" are required when it is a child of "<sch:value-of select="local-name(..)"/>.
+                    Both the versionDate and xml:lang attributes on "<sch:name/>" are required when it is a child of "<sch:value-of select="local-name(..)"/>".
                   </sch:report>
                 </sch:rule>
             </constraint>
           </constraintSpec>
-          <constraintSpec ident="all-siblings" scheme="isoschematron">
+          <constraintSpec ident="all-sibling-parent-desc" scheme="isoschematron">
             <constraint>
               <sch:let name="vDmsg" value="'elements with and without @versionDate.'"/>
               <sch:rule context="*[tei:desc[@versionDate]]">
@@ -398,6 +398,10 @@ $Id$
                   Sibling 'desc' <sch:value-of select="$vDmsg"/>
                 </sch:report>
               </sch:rule>
+	    </constraint>
+	  </constraintSpec>
+          <constraintSpec ident="all-sibling-parent-gloss" scheme="isoschematron">
+            <constraint>
               <sch:rule context="*[tei:gloss[@versionDate]]">
                 <sch:report role="nonfatal" test="
                      count( tei:gloss )
@@ -407,6 +411,10 @@ $Id$
                   Sibling 'gloss' <sch:value-of select="$vDmsg"/>
                 </sch:report>
               </sch:rule>
+	    </constraint>
+	  </constraintSpec>
+          <constraintSpec ident="all-sibling-parent-remarks" scheme="isoschematron">
+            <constraint>
               <sch:rule context="*[tei:remarks[@versionDate]]">
                 <sch:report role="nonfatal" test="
                      count( tei:remarks )
@@ -416,6 +424,10 @@ $Id$
                   Sibling 'remarks' <sch:value-of select="$vDmsg"/>
                 </sch:report>
               </sch:rule>
+	    </constraint>
+	  </constraintSpec>
+          <constraintSpec ident="all-sibling-parent-valDesc" scheme="isoschematron">
+            <constraint>
               <sch:rule context="*[tei:valDesc[@versionDate]]">
                 <sch:report role="nonfatal" test="
                      count( tei:valDesc )
