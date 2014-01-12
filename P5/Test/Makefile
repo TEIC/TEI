@@ -58,6 +58,8 @@ testall.examples: testall.xsd
 	rm xi_$*.odd
 
 testmeta2010:
+	echo check that TEI web site is up and responding
+	curl --head http://www.tei-c.org/Vault/P5/1.5.0/xml/tei/odd/p5subset.xml
 	$(ANT) -f antruntest.xml -DoddFile=testmeta2010.odd -Dtestfile=testmeta2010.xml validateodd
 	for j in `grep "<schemaSpec" testmeta2010.odd | sed 's/.*ident=.//' | sed 's/\".*//' | grep _old `; do \
 		echo found schemaSpec $$j in testmeta2010; \
@@ -92,7 +94,9 @@ detest:
 	@echo Validate using Schematron
 	$(SAXON) detest.isosch ../Utilities/iso_schematron_message_xslt2.xsl generate-paths=true full-path-notation=2 > detest.xsl
 	$(SAXON) detest.xml detest.xsl &> detest3.log
-	cat detest*log | sed 's/.*detest.xml:/detest.xml:/' | sed 's/Elapsed time.*//' | sed 's/Loading stylesheet .*p5odds.message//' >  detest.log
+	grep "\[xslt\]" detest1.log | sed 's/Processing.*detest.odd//' | sed 's/Loading.*message.isosch.xsl//' > detest.log
+	sed 's/.*detest.xml:/detest.xml:/' detest2.log >> detest.log
+	sed 's/.*detest.xml:/detest.xml:/' detest3.log >> detest.log
 	diff detest.log expected-results/detest.log
 	rm -f detest*log
 
