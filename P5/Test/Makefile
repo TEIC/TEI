@@ -85,7 +85,8 @@ test-sgml:
 detest:
 	@echo BUILD: Test file with deliberate mistakes
 	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd compileodd rng isoschematron cleanup
-	echo -${JING} -t detest.rng detest.xml  > detest.log.all
+	$(ANT) -f antruntest.xml -Doutputname=detest -DoddFile=detest.odd validateodd > detest.log.all
+	echo -${JING} -t detest.rng detest.xml  2>> detest.log.all
 	${TRANG} detest.rng detest.rnc
 	-rnv detest.rnc detest.xml 2>> detest.log.all
 	@echo Validate using Schematron
