@@ -575,15 +575,17 @@ the whole resource.</p>
 <div type="div3" xml:id="HD24"><head>Publication, Distribution,
 Licensing, etc.</head>
 <p>The <gi>publicationStmt</gi> element is the fourth component of the
-<gi>fileDesc</gi> element and is mandatory.
+<gi>fileDesc</gi> element and is mandatory. Its function is to name the agency by which a resource is made available (for example, a publisher or distributor) and to supply any additional information about the way in which it is made available such as licensing conditions, identifying numbers, etc.
 <specList><specDesc key="publicationStmt"/></specList>
 It may contain either a simple prose description organized as one or
-more paragraphs, or elements from the <ident
-type="class">model.publicationStmtPart.agency</ident> class and <ident
-type="class">model.publicationStmtPart.detail</ident>. These classes group
-a number of elements which are discussed in order below.
-<specList><specDesc key="publisher"/><specDesc key="distributor"/><specDesc key="authority"/></specList>
+more paragraphs, or the more specialised elements described below.
 </p>
+<p>A structured publication statement must begin with one of the following elements:
+<specList><specDesc key="publisher"/><specDesc key="distributor"/><specDesc key="authority"/></specList>
+These elements form the <ident
+type="class">model.publicationStmtPart.agency</ident> class; if the agency making the resource available is unknown, but other structured information about it is available, an explicit statement such as <soCalled>publisher unknown</soCalled> should be used. 
+</p>
+
 <p>The <term>publisher</term> is the person or institution by whose
 authority a given edition of the file is made public.  The
 <term>distributor</term> is the person or institution from whom copies
@@ -592,38 +594,29 @@ published, but is nevertheless made available for circulation by some
 individual or organization, this person or institution is termed the
 <term>release authority</term>.
 </p>
-<p>At least one of the above three elements must be present, unless
-the entire publication statement is given as prose.  Each may be
-followed by one or more of the following elements, in the following order:<note place="bottom">This constraint is not however enforced by the current
-version of the TEI Guidelines.</note>
-<specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc key="idno" atts="type"/><specDesc key="availability" atts="status"/><specDesc key="date"/></specList>
+<p>Whichever of these elements is chosen, it may be followed by one or more of the following elements, which together form the <ident
+type="class">model.publicationStmtPart.agency</ident> class
+ <specList><specDesc key="pubPlace"/><specDesc key="address"/><specDesc key="idno" atts="type"/><specDesc key="availability" atts="status"/><specDesc key="date"/><specDesc key="licence"/></specList>
 </p>
-<p>Note that the dates, places, etc., given in the publication statement
-relate to the publisher, distributor, or release authority most recently
-mentioned.  If the text was created at some date other than its date of
-publication, its date of creation should be given within the
-<gi>profileDesc</gi> element, not in the publication statement.  Give
-any other useful dates (e.g., dates of collection of data) in a note.
-</p>
-<p>Additional detailed elements  may be used for the encoding of names,
-dates, and addresses, as further described in section <ptr target="#CONA"/>
-when the module described in chapter <ptr target="#ND"/> is included
-in a schema.
-</p>
-  <p>Where the work is covered by a formal licence (such as a Creative Commons licence), the 
-       <gi>licence</gi> element may be included in <gi>availability</gi>, with its <att>target</att>
-       attribute pointing to an instance of the licence document. The content of the <gi>licence</gi>
-       element may include the full text of the licence, or a brief statement of its applicability.</p>
-<p>Examples:
+<p>Here is a simple example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
      <publisher>Oxford University Press</publisher>
      <pubPlace>Oxford</pubPlace> <date>1989</date>
      <idno type="ISBN">0-19-254705-4</idno>
      <availability><p>Copyright 1989, Oxford University Press</p></availability></publicationStmt></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
+</p>
+
+<p>The  <ident
+type="class">model.publicationStmtPart.detail</ident> elements all supply additional information relating to the
+the publisher, distributor, or release authority immediately preceding them.
+In the following example, Benson is identified as responsible for distribution of some resource at the date and place cited:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
     <authority>James D. Benson</authority>
-    <pubPlace>London</pubPlace> <date>1984</date></publicationStmt></egXML>
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
+    <pubPlace>London</pubPlace> <date>1994</date></publicationStmt></egXML>
+</p>
+<p>
+A resource may have (for example) both a publisher and a distributor, or more than one publisher each using different identifiers for the same resource, and so on. For this reason, the sequence of at least one <ident type="class">model.publicationStmtPart.agency</ident> element followed by zero or more <ident type="class">model.publicationStmtPart.detail</ident> elements may be repeated as often as necessary. </p>
+<p>The following example shows a resource published by one agency (Sigma Press) at one address and date, which is also distributed by another (Oxford Text Archive), with a specified identifier and a different date: <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
   <publisher>Sigma Press</publisher>
   <address>
     <addrLine>21 High Street,</addrLine> 
@@ -637,14 +630,23 @@ in a schema.
     <p>Available with prior consent of depositor for
       purposes of academic research and teaching only.</p>
   </availability>
+<date>1994</date>
 </publicationStmt></egXML>
+</p>
+<p>The <gi>date</gi> element used within <gi>publicationStmt</gi> always refers to the date of publication, first distribution, or initial release. 
+If the text was created at some other date, this may be recorded using the <gi>creation</gi> element within the
+<gi>profileDesc</gi> element. Other useful dates (such as dates of collection of data) may be given using a note in the <gi>notesStmt</gi> element.
+</p>
+  
+<p>The <gi>availability</gi> element may be used, as above, to provide a simple prose statement of any restrictions concerning the distribution of the resource. Alternatively, a more formal statement of the licensing conditions applicable may be provided using the <gi>licence</gi> element:
   <egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
     <publisher>University of Victoria Humanities Computing and Media Centre</publisher>
     <pubPlace>Victoria, BC</pubPlace> <date>2011</date><availability status="restricted"><licence target="http://creativecommons.org/licenses/by-sa/3.0/">
       Distributed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
     </licence></availability></publicationStmt></egXML>
-  
-</p>
+Note here the use of the <att>target</att> attribute to point to a location from which the licence document itself may be obtained. Alternatively, the licence document may simply be contained within the <gi>licence</gi>element.</p>
+
+
 <specGrp xml:id="D2224" n="The publication statement"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/publicationStmt.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/distributor.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/authority.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/idno.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/availability.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/licence.xml"/>
 </specGrp>
 </div>
