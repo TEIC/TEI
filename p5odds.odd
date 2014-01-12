@@ -381,21 +381,20 @@ $Id$
                                  | tei:valItem/tei:remarks
                                  ">
                   <sch:report test="not( @xml:lang and @versionDate )">
-                    Both the versionDate and xml:lang attributes on "<sch:name/>" are required when it is a child of "<sch:value-of select="local-name(..)"/>".
+                    Error: both the versionDate and xml:lang attributes on "<sch:name/>" are required when it is a child of "<sch:value-of select="local-name(..)"/>".
                   </sch:report>
                 </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="all-sibling-parent-desc" scheme="isoschematron">
             <constraint>
-              <sch:let name="vDmsg" value="'elements with and without @versionDate.'"/>
               <sch:rule context="*[tei:desc[@versionDate]]">
                 <sch:report role="nonfatal" test="
                      count( tei:desc )
                      ne
                      count( tei:desc[@versionDate] )
                      ">
-                  Sibling 'desc' <sch:value-of select="$vDmsg"/>
+                  Error: sibling 'desc' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
 	    </constraint>
@@ -408,7 +407,7 @@ $Id$
                      ne
                      count( tei:gloss[@versionDate] )
                      ">
-                  Sibling 'gloss' <sch:value-of select="$vDmsg"/>
+                  Error: sibling 'gloss' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
 	    </constraint>
@@ -421,7 +420,7 @@ $Id$
                      ne
                      count( tei:remarks[@versionDate] )
                      ">
-                  Sibling 'remarks' <sch:value-of select="$vDmsg"/>
+                  Error: sibling 'remarks' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
 	    </constraint>
@@ -434,7 +433,7 @@ $Id$
                      ne
                      count( tei:valDesc[@versionDate] )
                      ">
-                  Sibling 'valDesc' <sch:value-of select="$vDmsg"/>
+                  Error: sibling 'valDesc' elements with and without @versionDate.
                 </sch:report>
               </sch:rule>
             </constraint>
