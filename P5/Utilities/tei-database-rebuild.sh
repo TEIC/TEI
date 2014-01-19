@@ -13,7 +13,7 @@ PORT=8080
 WEBAPP=exist
 
 case $HOSTNAME in
-   teivm.village.Virginia.EDU) HOST=www.tei-c.org;PORT=8040;WEBAPP=exist;;
+   s16382816.onlinehome-server.info) HOST=www.tei-c.org;PORT=8040;WEBAPP=exist;;
    tei.oucs.ox.ac.uk) HOST=localhost;PORT=8080;WEBAPP=exist;;
 esac
 OPTS="--webapp=$WEBAPP --port=$PORT --host=localhost "
