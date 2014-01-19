@@ -153,7 +153,7 @@ valid: check.stamp p5.xml
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
 	ant -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators		
-	cat ValidatorLog.xml
+	grep -v "WARNING: use of deprecated element" ValidatorLog.xml
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";false; fi)
 	diff ValidatorLog.xml expected-results/ValidatorLog.xml
 	sh graphics.sh
