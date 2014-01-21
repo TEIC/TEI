@@ -98,6 +98,11 @@
 			    tei:vMerge tei:vNot tei:vRange tei:valItem
 			    tei:valList tei:vocal"/>
 
+ <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes"/>
+ <xsl:param name="outputTarget">html</xsl:param>
+ <xsl:param name="doctypeSystem"/>
+ <xsl:param name="doctypePublic"/>
+
   <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
   <xsl:param name="googleAnalytics"></xsl:param>
   <xsl:param name="pageLayout">Complex</xsl:param>
@@ -339,7 +344,7 @@
 	  <xsl:choose>
 	    <xsl:when test="ancestor::elementSpec">
 	      <a
-		  href="../../{ancestor::exemplum/@xml:lang}/html/ref-{ancestor::elementSpec/@ident}.html">
+		  href="../../{tei:checkLang(ancestor::exemplum/@xml:lang)}/html/ref-{ancestor::elementSpec/@ident}.html">
 		<xsl:text>&lt;</xsl:text>
 		<xsl:value-of
 		    select="ancestor::elementSpec/@ident"/>
@@ -801,6 +806,11 @@
     </xsl:choose>
   </xsl:template>
   
-
+  <xsl:function name="tei:checkLang" as="xs:string">
+    <xsl:param name="lang"/>
+      <xsl:sequence select="if
+			    ($lang=('de','en','es','fr','it','ko','zh-TW'))
+			    then $lang else 'en'"/>
+  </xsl:function>
 
 </xsl:stylesheet>
