@@ -98,11 +98,6 @@
 			    tei:vMerge tei:vNot tei:vRange tei:valItem
 			    tei:valList tei:vocal"/>
 
- <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes"/>
- <xsl:param name="outputTarget">html</xsl:param>
- <xsl:param name="doctypeSystem"/>
- <xsl:param name="doctypePublic"/>
-
   <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
   <xsl:param name="googleAnalytics"></xsl:param>
   <xsl:param name="pageLayout">Complex</xsl:param>
@@ -353,7 +348,7 @@
 	    </xsl:when>
 	    <xsl:when test="ancestor::classSpec">
 	      <a
-		  href="../../{ancestor::exemplum/@xml:lang}/html/ref-{ancestor::classSpec/@ident}.html">
+		  href="../../{tei:checkLang(ancestor::exemplum/@xml:lang)}/html/ref-{ancestor::classSpec/@ident}.html">
 		<xsl:value-of
 		    select="ancestor::classSpec/@ident"/>
 	      </a>
