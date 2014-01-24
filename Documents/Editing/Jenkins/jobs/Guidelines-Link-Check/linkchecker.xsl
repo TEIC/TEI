@@ -14,6 +14,10 @@
     
     <xsl:output method="text" indent="no"/>
   
+<!-- We are currently using linkchecker's ignore parameter to handle the differences between
+     alpha/beta and release versions, but this param mechanism may be extended at some point to
+     do more sophisticated things. -->
+  
     <xsl:param name="p5version"></xsl:param>
   <xsl:variable name="ignore" select="if (matches($p5version, '[a-z]+$')) then '((readme-\d\.\d\.\d\.html$)|(Guidelines\.mobi)|(tei-c\.org/$)|(google\.com/search))' else '((Guidelines\.mobi)|(tei-c\.org/$)|(google\.com/search))'"/>
     
