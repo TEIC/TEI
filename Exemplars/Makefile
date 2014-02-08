@@ -62,6 +62,7 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	-test -f teix.xsd && mv teix.xsd $*_teix.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_teix.xsd && perl -p -i -e "s/teix.xsd/$*_teix.xsd/" $*.xsd
 	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd
 	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
+	-test -f tite.xsd && mv tite.xsd $*_tite.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_tite.xsd && perl -p -i -e "s/tite.xsd/$*_tite.xsd/" $*.xsd
 	@echo Validate XSD using Jing ...
 	${JING} $*.xsd $*.tei
 	@echo Validate using xmllint for DTD  
