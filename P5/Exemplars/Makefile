@@ -10,11 +10,11 @@ ODDS= \
 	tei_minimal.dtd \
 	tei_ms.dtd \
 	tei_speech.dtd \
+	tei_enrich.dtd \
 	tei_all.dtd tei_tite.dtd tei_lite.dtd
 
 MOREODDS=	isofs.rng \
 	tei_svg.rng \
-	tei_enrich.dtd \
 	tei_xinclude.rng \
 	tei_its.rng \
 	tei_math.rng \
@@ -58,12 +58,11 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	../run-onvdl $*.nvdl $*.odd
 	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
 	${TRANG}  $*.rng $*.rnc
+	mv xml.xsd $*_xml.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*.xsd
+	-test -f teix.xsd && mv teix.xsd $*_teix.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_teix.xsd && perl -p -i -e "s/teix.xsd/$*_teix.xsd/" $*.xsd
+	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd
+	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
 	@echo Validate XSD using Jing ...
-	perl -p -i -e 's+http://www.w3.org/2004/10/xml.xsd+xml.xsd+' $*.xsd
-	-test -f teix.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' teix.xsd
-	-test -f spec.xsd && perl -p -i -e 's+<.*\"xml.xsd\".*++' spec.xsd
-	-test -f teix.xsd && mv teix.xsd $*.teix.xsd
-	-test -f $*.teix.xsd && perl -p -i -e "s/teix.xsd/$*.teix.xsd/" $*.xsd
 	${JING} $*.xsd $*.tei
 	@echo Validate using xmllint for DTD  
 	xmllint --noout --dtdvalid $*.dtd $*.tei
