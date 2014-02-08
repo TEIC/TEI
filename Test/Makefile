@@ -42,6 +42,7 @@ testall.examples: testall.xsd
 	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
 	-test -f xml.xsd && mv xml.xsd $*_xml.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*.xsd
 	-test -f teix.xsd && mv teix.xsd $*_teix.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_teix.xsd && perl -p -i -e "s/teix.xsd/$*_teix.xsd/" $*.xsd
+	-test -f examples.xsd && mv examples.xsd $*_examples.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_examples.xsd && perl -p -i -e "s/examples.xsd/$*_examples.xsd/" $*.xsd
 	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd
 	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
 	-test -f ns1.xsd && mv ns1.xsd $*_ns1.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_ns1.xsd  && perl -p -i -e "s/ns1.xsd/$*_ns1.xsd/" $*.xsd
@@ -100,7 +101,7 @@ detest:
 	rm -f detest*log
 
 clean:
-	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.teix.xsd test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
+	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
 	rm -rf LOG *~ *.xsd Schema RomaResults DTD 
 	rm -rf *.doc.*
 	rm -f detest.log detest.log.all
