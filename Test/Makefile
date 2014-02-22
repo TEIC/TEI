@@ -6,7 +6,7 @@ XSL=/usr/share/xml/tei/stylesheet/
 TRANG=java -jar ../Utilities/lib/trang.jar
 JING=java -jar ../Utilities/lib/jing.jar
 SAXON=java -Xmx752m -jar ../Utilities/lib/Saxon-HE-9.4.0.6.jar -ext:on
-ANT=ANT_OPTS="-Xss2m -Xmx752m" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
+ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
 
 NORMALFILES= \
 	testbare.dtd \
