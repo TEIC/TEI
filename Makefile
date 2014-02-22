@@ -18,7 +18,7 @@ XSL=/usr/share/xml/tei/stylesheet
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 SAXONJAR=Saxon-HE-9.4.0.6.jar
-antflag="-q -Djava.awt.headless=true"
+ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
 
 .PHONY: convert schemas html-web validate valid test clean dist exemplars
 
@@ -44,7 +44,7 @@ p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check
 	@echo get latest date
 	svn info --xml > svndate.xml
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
-	ant ${antflag} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
+	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
 	(cd Schema; for i in *rng; do java -jar ../Utilities/lib/trang.jar $$i `basename $$i .rng`.rnc;done)
 	touch schemas.stamp
@@ -71,7 +71,7 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 		echo "<buildweb lang=\"$$i\"/>" >> buildweb.xml; \
 	done
 	echo '</target></project>' >> buildweb.xml
-	ant ${antflag} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
+	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
 	rm -f buildweb.xml Utilities/teic-index.xml
 	touch html-web.stamp
 
@@ -88,18 +88,18 @@ epub: Guidelines.epub
 
 Guidelines.epub: check.stamp p5.xml 
 	@echo BUILD: Make epub version of Guidelines
-	ant ${antflag} -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
+	${ANT} -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 	touch Guidelines.epub
 
 epub3: check.stamp p5.xml 
-	ant ${antflag}  -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
+	${ANT}  -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 
 mobi:  Guidelines.mobi
 
 Guidelines.mobi: check.stamp p5.xml 
-	ant ${antflag}  -f ${XSL}/epub/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=teikindle -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines-kindle.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
+	${ANT}  -f ${XSL}/epub/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=teikindle -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines-kindle.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
 
@@ -122,10 +122,10 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	@echo BUILD: build Lite version of Guidelines, then LaTeX version of Guidelines from Lite, then run to PDF using XeLaTeX
 	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
-	ant ${antflag} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
+	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
 
 pdf-complete:
-	ant ${antflag} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
+	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfrest 2> pdfbuild.log 1> pdfbuild.log
 	grep -v "Failed to convert input string to UTF16" pdfbuild.log
 	for i in Guidelines*aux; do perl -p -i -e 's/.*zf@fam.*//' $$i; done
 
@@ -154,7 +154,7 @@ valid: check.stamp p5.xml
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
 	@echo BUILD: Check validity with special-purpose XSL code, looking for bad links etc
-	ant ${antflag} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators		
+	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators		
 	@grep -v "ARNING: use of deprecated element" ValidatorLog.xml
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";false; fi)
 	diff ValidatorLog.xml expected-results/ValidatorLog.xml
@@ -239,7 +239,7 @@ dist-doc.stamp:  check.stamp p5.xml
 	cp VERSION release/tei-p5-doc/share/doc/tei-p5-doc
 	@echo BUILD: Make web pages for release notes
 	for i in ReleaseNotes/readme*xml; do \
-	ant ${antflag}  -f ${XSL}/html/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=readme \
+	${ANT} -f ${XSL}/html/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=readme \
 	-DinputFile=`pwd`/$$i -DoutputFile=`pwd`/release/tei-p5-doc/share/doc/tei-p5-doc/`basename $$i .xml`.html; \
 	done
 	@echo BUILD: Make web guidelines in all supported languages
