@@ -156,8 +156,7 @@ valid: check.stamp p5.xml
 	@echo BUILD: Check validity with special-purpose XSL code, looking for bad links etc
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators		
 	@grep -v "ARNING: use of deprecated element" ValidatorLog.xml
-	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";false; fi)
-	diff ValidatorLog.xml expected-results/ValidatorLog.xml
+	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";diff ValidatorLog.xml expected-results/ValidatorLog.xml;false; fi)
 	sh graphics.sh
 	@echo BUILD: Check validity with nvdl, first examples with feasible validity, and then the valid ones
 	./run-onvdl p5.nvdl p5.xml 
