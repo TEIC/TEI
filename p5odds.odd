@@ -492,6 +492,16 @@ $Id$
             </attDef>
           </attList>
         </elementSpec>
+
+<elementSpec mode="change" ident="TEI">
+  <constraintSpec ident="must-have-attglobal" scheme="isoschematron" mode="add">
+    <constraint>
+      <rule context="tei:elementSpec[not(@mode)]" xmlns="http://purl.oclc.org/dsdl/schematron">
+        <assert test="tei:classes/tei:memberOf[@key='att.global']">Error: TEI element <value-of select="@ident"/> must be member of att.global class</assert>
+      </rule>
+    </constraint>
+  </constraintSpec>
+</elementSpec>
       </schemaSpec>
     </body>
   </text>
