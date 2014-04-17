@@ -17,7 +17,7 @@ XSL=/usr/share/xml/tei/stylesheet
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
-SAXONJAR=Saxon-HE-9.4.0.6.jar
+SAXONJAR=saxon9he.jar
 ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
 
 .PHONY: convert schemas html-web validate valid test clean dist exemplars

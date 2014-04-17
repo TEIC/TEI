@@ -1,5 +1,5 @@
 PREFIX=/usr
-SAXON=java -Xmx752m -jar ../Utilities/lib/Saxon-HE-9.4.0.6.jar -ext:on
+SAXON=java -Xmx752m -jar ../Utilities/lib/saxon9he.jar -ext:on
 TRANG=java -jar ../Utilities/lib/trang.jar
 JING=java -jar ../Utilities/lib/jing.jar
 BIN=${PREFIX}/bin
@@ -31,7 +31,7 @@ P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
 SOURCE=${P5}/p5subset.xml 
-ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/Saxon-HE-9.4.0.6.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
+ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
 
 default: schemas
 
