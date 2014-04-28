@@ -940,7 +940,7 @@ pre-existing document in a formal and standardized way. </p>
    <p>The following example shows three versions of the same poem: first in Japanese, written top to bottom; next in Romaji (Japanese in Latin script); and finally in an English translation. </p>
    <p>
                      <figure>
-                        <graphic url="Images/basho_furu_ike_ya.png"/>
+                        <graphic width="250px" url="Images/basho_furu_ike_ya.png"/>
                      </figure>
                   </p>
    <p>Taken from p.42 of <hi rend="italic">Haiku: Japanese Art and Poetry</hi>. Judith Patt, Michiko Warkentyne (calligraphy) and Barry Till. 2010. Used with permission.</p>
@@ -995,7 +995,7 @@ pre-existing document in a formal and standardized way. </p>
    form of a glossary list: </p>
    <p>
                      <figure>
-                        <graphic url="Images/ja_vertical_indonesian_frag.png"/>
+                        <graphic width="250px" url="Images/ja_vertical_indonesian_frag.png"/>
                      </figure>
                   </p>
    <p>Taken from p.62 of "インドネシア語". 崎山理. 1985. 外国語との対照<hi rend="italic">II</hi>. 講座日本語学 11.</p>
@@ -1012,7 +1012,7 @@ pre-existing document in a formal and standardized way. </p>
    <p>The rule <code>text-orientation: mixed</code> specifies that "characters from horizontal-only scripts are set sideways, i.e. 90° clockwise from their standard orientation in horizontal text. Characters from vertical scripts are set with their intrinsic orientation" (<ref target="http://www.w3.org/TR/2013/WD-css-writing-modes-3-20131024/#text-orientation">CSS Writing Modes</ref>). Since the default value for text-orientation is "mixed", this rule is not strictly required. However, if the Indonesian glyphs (which are roman characters) had been set vertically, like this:</p>
    <p>
                      <figure>
-                        <graphic url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
+                        <graphic width="250px" url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
                      </figure>
                   </p>
    <p>Fragment of previous image with Indonesian glyphs upright.</p>
@@ -1034,7 +1034,7 @@ Vertical orientation in horizontal scripts</head>
    <p>It is not unusual to see text from horizontal languages written vertically even where no vertically-written script is involved. This example is a fragment from a table of information about agricultural development on Vancouver Island, written in 1855: </p>
    <p>
                      <figure>
-                        <graphic url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
+                        <graphic width="450px" url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
                      </figure>
                   </p>
    <p>Enclosure with 10048, CO 305/6, p. 109 <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/>
@@ -1077,13 +1077,19 @@ Vertical orientation in horizontal scripts</head>
    <p> direction: ltr | rtl</p>
                                  <egXML xmlns="http://www.tei-c.org/ns/Examples"> <s xml:lang="en" style="direction: ltr">The Arabic term
  <term xml:lang="ar" style="direction: rtl; unicode-bidi: embed">قلم رصاص</term> means "pencil".</s></egXML>
-   <p>The use of the direction property to record the observed directionality of the text is unambiguous, even though it is (as we noted above) superfluous. <note place="foot"> The use of the unicode-bidi property here may require some explanation. By default this property has the value "normal", the effect of which in this context would be to ignore any value supplied for the direction property. The CSS Writing Modes specification stipulates that the direction property "has no effect on bidi reordering when specified on inline elements whose unicode-bidi property’s value is normal, because the element does not open an additional level of embedding with respect to the bidirectional algorithm."</note>
+   <p>The use of the direction property to record the observed directionality of the text is unambiguous, even though it is (as we noted above) superfluous. The use of the unicode-bidi property here may require some explanation. By default this property has the value "normal", the effect of which in this context would be to ignore any value supplied for the direction property. The CSS Writing Modes specification stipulates that the direction property "has no effect on bidi reordering when specified on inline elements whose unicode-bidi property’s value is normal, because the element does not open an additional level of embedding with respect to the bidirectional algorithm."
                   </p>
    <p>Mixed horizontal directionality is very common in languages such as Arabic
    and Hebrew, particularly when numbers (which are always given LTR)
    or phrases from LTR languages are embedded. It is not
    impossible, though quite unusual, for ambiguities 
-    to arise. </p>
+    to arise in such situations, which may give rise to the
+    parts of a document being displayed in unexpected ways that do
+    not correspond to the natural reading order. A more detailed 
+   discussion of this issue from an HTML perspective is provided by a
+   W3C Internationalization Working Group report <ref
+   target="http://www.w3.org/International/articles/inline-bidi-markup/#where">Inline
+   markup and bidirectional text in HTML</ref>. </p>
 
 
                   <!--p>[Would it be helpful to have another example presenting ambiguity arising out of the use of a g element at the end of a text run?] [how might a <g> element introduce ambiguity? only if the glyph or character concerned is vague about its directionality surely] [(MDH) A <g> element would normally be used for a glyph which has no Unicode representation; therefore it has no directionality per the Unicode character database; therefore its effect would be potentially disruptive. Imagine a case where a rtl text run ends with a weak-directionality character such as a period, followed by a <g> for a glyph which the encoder knows should represent an rtl character, but which isn't in Unicode, followed by a strongly ltr character.] [If the encoder knows that the glyph or character concerned has a strongly ltr character then they should use the <charProp> element to document this fact within the <glyph> or <char> definition, as per <ptr target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/WD.html#ucsprops"/>. If they want a rendering agent to deal with the character properly, they are at liberty to put a strongly ltr character as content for the <g> ]</p-->
@@ -1120,7 +1126,8 @@ Vertical orientation in horizontal scripts</head>
    <p>These are obviously trivial examples, but similar features do appear in historical texts. George Herbert's <hi rend="italic">The Temple</hi> includes two stanzas headed "Easter Wings" which are both normally printed in a rotated form so that they represent a pair of wings:</p>
    <p>
                      <figure>
-                        <graphic url="Images/herbert_church_p35_sm.jpg"/>
+                        <graphic
+			    url="Images/herbert_church_p35_sm.jpg" height="50%"/>
                      </figure>
                   </p>
    <p>Page 35 of Herbert's <hi rend="italic">The Temple</hi>, second stanza of Easter Wings (or second poem so named). Used with permission of the Folger Library.</p>
