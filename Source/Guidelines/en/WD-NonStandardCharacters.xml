@@ -880,8 +880,9 @@ Hebrew א (alef) is strongly right-to-left. Of course, some glyphs
 have weak or neutral settings because they may appear in several
 contexts. </p>
 
-<p>The Unicode Bidirectional Algorithm (<ptr
-target="http://www.unicode.org/reports/tr9/"/>) defines a number of
+<p>The Unicode Bidirectional Algorithm (<ref target="#WDBIDI">Unicode
+Consortium, 2013</ref>)
+ defines a number of
 rules enabling software to render sequences of characters which have
 differing directionality properties in a predictable and reliable way,
 using only those properties. <note place="foot"> Because this
@@ -902,7 +903,21 @@ should be displayed or rendered. For example, in a RTL language such
 as Hebrew, the first character in a file will be that which is
 displayed at the rightmost end of the first line of text.</p>
 
-<p>An encoder wishing to document or to control the order in which sequences of characters in a TEI document are displayed will usually do so by segmenting the text into sequences presented in the desired order and specifying an appropriate language code for each. In situations where this approach may result in ambiguity or lack of precision, or if the encoder wishes to record directional information explicitly in their encoding, we recommend using the global @style attribute to supply detail about the writing mode applicable to the content of any element. The @style attribute (discussed in section [ref to #STGAre here] ) permits use of any formatting language; for these purposes however, we recommend use of CSS, which now includes a Writing Modes module <note place="foot"> At the time of writing, this W3C module has the status of a candidate recommendation: see further <ptr target="http://dev.w3.org/csswg/css-writing-modes/"/>
+<p>An encoder wishing to document or to control the order in which
+sequences of characters in a TEI document are displayed will usually
+do so by segmenting the text into sequences presented in the desired
+order and specifying an appropriate language code for each. In
+situations where this approach may result in ambiguity or lack of
+precision, or if the encoder wishes to record directional information
+explicitly in their encoding, we recommend using the global @style
+attribute to supply detail about the writing mode applicable to the
+content of any element. The @style attribute (discussed in section
+[ref to #STGAre here] ) permits use of any formatting language; for
+these purposes however, we recommend use of CSS, which now includes a
+Writing Modes module <note place="foot"> At the time of writing, this
+W3C module has the status of a candidate recommendation: see further
+<ptr target="#W3CWM"/> <!--
+http://dev.w3.org/csswg/css-writing-modes/" is short lived editors draft-->
 </note> which permits direct specification of a number of useful properties associated with writing modes, notably  direction (ltr  or rtl);  writing-mode (horizontal-tb, vertical-rl, or vertical-lr); and text-orientation (mixed, upright,  sideways ...)  <!-- | use-glyph-orientation<anchor xml:id="id_cite_ref-2"/>
                   <ref target="#cite_note-2">[3]<note>The value "use-glyph-orientation" may be dropped from the CSS Writing Modes specification.</note></ref> -->
 <!-- suppressing this because we dont discuss it and its likely to be dropped (LB) -->
@@ -1013,7 +1028,13 @@ pre-existing document in a formal and standardized way. </p>
  <item>「新しい、ばかい」</item>
  <!-- ... -->
 </list></egXML>
-   <p>The rule <code>text-orientation: mixed</code> specifies that "characters from horizontal-only scripts are set sideways, i.e. 90° clockwise from their standard orientation in horizontal text. Characters from vertical scripts are set with their intrinsic orientation" (<ref target="http://www.w3.org/TR/2013/WD-css-writing-modes-3-20131024/#text-orientation">CSS Writing Modes</ref>). Since the default value for text-orientation is "mixed", this rule is not strictly required. However, if the Indonesian glyphs (which are roman characters) had been set vertically, like this:</p>
+   <p>The rule <code>text-orientation: mixed</code> specifies that
+   "characters from horizontal-only scripts are set sideways, i.e. 90°
+   clockwise from their standard orientation in horizontal
+   text. Characters from vertical scripts are set with their intrinsic
+   orientation" (<ref
+   target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+   2014</ref>). Since the default value for text-orientation is "mixed", this rule is not strictly required. However, if the Indonesian glyphs (which are roman characters) had been set vertically, like this:</p>
    <p>
                      <figure>
                         <graphic width="250px" url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
@@ -1031,7 +1052,8 @@ pre-existing document in a formal and standardized way. </p>
  <item>「新しい、ばかい」</item>
  <!-- ... -->
 </list></egXML>
-   <p>The rule <code>text-orientation: upright</code> specifies that "characters from horizontal-only scripts are rendered upright, i.e. in their standard horizontal orientation. Characters from vertical scripts are set with their intrinsic orientation and shaped normally" (<ref target="http://www.w3.org/TR/2013/WD-css-writing-modes-3-20131024/#text-orientation">CSS Writing Modes</ref>).</p>
+   <p>The rule <code>text-orientation: upright</code> specifies that "characters from horizontal-only scripts are rendered upright, i.e. in their standard horizontal orientation. Characters from vertical scripts are set with their intrinsic orientation and shaped normally" (<ref    target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+2014</ref>).</p>
    <p> </p>
                </div>
                <div type="div3" xml:id="WDWMEG3">
@@ -1112,14 +1134,19 @@ Vertical orientation in horizontal scripts</head>
             <div xml:id="WDWMTT">
                <head>
                   Text Rotation</head>
-   <p>In what follows, we examine a range of textual phenomena which in some ways appear very similar to those examined above, and even overlap with them. We can categorize these as text transformation features, and suggest some strategies for encoding them based on the properties detailed in the <ref target="http://www.w3.org/TR/css3-transforms/">CSS Transforms</ref> specification. This CSS module provides a complex array of properties, values and functions which can be used to rotate, skew, translate and otherwise transform textual and graphical objects. We can borrow this vocabulary in order to describe textual phenomena in a precise manner.</p>
+   <p>In what follows, we examine a range of textual phenomena which
+   in some ways appear very similar to those examined above, and even
+   overlap with them. We can categorize these as text transformation
+   features, and suggest some strategies for encoding them based on
+   the properties detailed in the <ref
+   target="#CSSTM">CSS Transforms (Fraser et al 2013)</ref> specification. This CSS module provides a complex array of properties, values and functions which can be used to rotate, skew, translate and otherwise transform textual and graphical objects. We can borrow this vocabulary in order to describe textual phenomena in a precise manner.</p>
    <p>We begin with a simple example of a rotational transform: </p>
    <p>
                      <figure>
                         <graphic url="Images/rotation_on_z_axis.png"/>
                      </figure>
                   </p>
-   <p>Here a block of text has been rotated around its z-axis. This is clearly not a "writing mode"; the writing mode for this text is horizontal, left to right. Furthermore, even if we wished to treat this as a writing mode, we could not do so, because there is no way to use writing modes properties to describe an text orientation which is angled at 45 degrees; no human languages are consistently written in this orientation. It is more appropriate to treat this as a rotational transformation. We can do this using two properties: transform and transform-origin. (Both of these properties have quite complex value sets, and we will not look at all of them here. See the <ref target="http://www.w3.org/TR/css3-transforms/">specification</ref> for full details.)</p>
+   <p>Here a block of text has been rotated around its z-axis. This is clearly not a "writing mode"; the writing mode for this text is horizontal, left to right. Furthermore, even if we wished to treat this as a writing mode, we could not do so, because there is no way to use writing modes properties to describe an text orientation which is angled at 45 degrees; no human languages are consistently written in this orientation. It is more appropriate to treat this as a rotational transformation. We can do this using two properties: transform and transform-origin. (Both of these properties have quite complex value sets, and we will not look at all of them here. See the <ref target="#CSSTM">specification</ref> for full details.)</p>
    <p>The transform property takes as its value one or more of the transform functions, one of which is the function rotateZ:</p>
                            <egXML xmlns="http://www.tei-c.org/ns/Examples"><ab style="transform:rotateZ(-45deg)">TEI-C.ORG</ab></egXML>
    <p>Any rotation must take place clockwise around an axis positioned relative to the element being rotated, and the transform-origin property can be used to specify the pivot point. By default, the value of transform-origin is "50% 50%", the point at the centre of the element, but these values can be changed to reflect rotation around a different origin point. (The TEI <gi>zone</gi> element also bears an attribute <att>rotate</att> which can specify rotation in degrees around the z-axis, but it is not available for any other element.)</p>
