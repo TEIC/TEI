@@ -941,11 +941,14 @@ pre-existing document in a formal and standardized way. </p>
    <p>
                      <figure>
                         <graphic width="250px" url="Images/basho_furu_ike_ya.png"/>
-                     </figure>
+			<head>Taken from p.42 of <title>Haiku: Japanese Art and Poetry</title>. Judith Patt, Michiko Warkentyne (calligraphy) and Barry Till. 2010. </head>
+               </figure>
                   </p>
-   <p>Taken from p.42 of <hi rend="italic">Haiku: Japanese Art and Poetry</hi>. Judith Patt, Michiko Warkentyne (calligraphy) and Barry Till. 2010. Used with permission.</p>
+   <p></p>
    <p>We might encode this as follows: </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div>
+                                 <egXML
+				     xmlns="http://www.tei-c.org/ns/Examples"
+	corresp="#WD-BASHO"><div>
  <lg xml:lang="ja" style="writing-mode: vertical-rl">
  <l>古池や</l>
  <l>蛙</l>
@@ -996,12 +999,13 @@ pre-existing document in a formal and standardized way. </p>
    <p>
                      <figure>
                         <graphic width="250px" url="Images/ja_vertical_indonesian_frag.png"/>
+<head>Detail from p.62 of <title>インドネシア語". 崎山理. 1985. 外国語との対照  II. 講座日本語学 11.</title></head>
                      </figure>
                   </p>
-   <p>Taken from p.62 of "インドネシア語". 崎山理. 1985. 外国語との対照<hi rend="italic">II</hi>. 講座日本語学 11.</p>
+
    <p>The text-orientation property allows us to indicate whether or not glyphs are rotated. In the following example, we have indicated that the list uses a vertical-rl writing mode, but that the orientation of individual glyphs may vary: </p>
  
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss" xml:lang="ja" 
+<egXML xmlns="http://www.tei-c.org/ns/Examples" corresp="#WD-VERT-IND"><list type="gloss" xml:lang="ja" 
  style="writing-mode: vertical-rl; text-orientation: mixed">
  <label xml:lang="id">hampir</label>
  <item>「近い、ほとんど」</item>
@@ -1013,9 +1017,11 @@ pre-existing document in a formal and standardized way. </p>
    <p>
                      <figure>
                         <graphic width="250px" url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
+   <head>Fragment of previous image with Indonesian glyphs upright.</head>
                      </figure>
+
+
                   </p>
-   <p>Fragment of previous image with Indonesian glyphs upright.</p>
    <p>then an encoding like the following could be used to make this explicit: </p>
                                  <egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss" xml:lang="ja" 
  style="writing-mode: vertical-rl; text-orientation: upright">
@@ -1035,11 +1041,12 @@ Vertical orientation in horizontal scripts</head>
    <p>
                      <figure>
                         <graphic width="450px" url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
+   <head>Enclosure with <title>Despatch to London</title> 10048, CO
+   305/6, p. 131v from <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/></head>
+
                      </figure>
                   </p>
-   <p>Enclosure with 10048, CO 305/6, p. 109 <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/>
-                  </p>
-   <p>Four subheading cells in this fragment contain English text, written vertically, bottom-to-top, to conserve space on the page. To describe this sort of phenomenon, we can use the text-orientation property again: </p>
+   <p>Four of the  subheading cells in this fragment contain English text, written vertically, bottom-to-top, to conserve space on the page. To describe this sort of phenomenon, we can use the text-orientation property again: </p>
    <p> text-orientation: mixed|upright|sideways-right|sideways-left|sideways|use-glyph-orientation</p>
    <p>For full details on this property, we refer the reader to the CSS Writing Modes specification. For the present example, we will make use only of the "sideways-left" value, which "causes text to be set as if in a horizontal layout, but rotated 90° counter-clockwise." We might encode the third of the four cells containing vertical text like this: </p>
                                  <egXML xmlns="http://www.tei-c.org/ns/Examples"> <cell style="writing-mode: vertical-lr; text-orientation: sideways-left">
@@ -1127,28 +1134,47 @@ Vertical orientation in horizontal scripts</head>
    <p>
                      <figure>
                         <graphic
-			    url="Images/herbert_church_p35_sm.jpg" height="50%"/>
+			    url="Images/herbert_church_p35_sm.jpg" width="300px"/>
+   <head>Page 35 of George Herbert's <title>The Temple</title>
+   (1633), from a copy in the Folger Library.</head>
+
                      </figure>
                   </p>
-   <p>Page 35 of Herbert's <hi rend="italic">The Temple</hi>, second stanza of Easter Wings (or second poem so named). Used with permission of the Folger Library.</p>
    <p>This could be encoded thus: </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"> <lg style="transform:rotateZ(90deg)">
+                                 <egXML
+				     xmlns="http://www.tei-c.org/ns/Examples">
+				   <lg
+				       style="transform:rotateZ(90deg)" >
  <l>My tender age in ſorrow did beginne:</l>
  <l>And ſtill with ſickneſſes and ſhame</l>
  <!-- ... -->
  </lg></egXML>
-   <p>We might also argue that this is in fact a vertical writing mode, and express it with writing-mode: vertical-rl; text-orientation: sideways-right.</p>
-   <p> </p>
+   <p>We might also argue that this is in fact a vertical writing
+   mode by supplying <code>writing-mode: vertical-rl;
+   text-orientation: sideways-right</code> as the value for the
+   <att>style</att> attribute in the preceding example.</p>
 
-   <p>We may also use rotation as a method of handling a true writing mode which is not covered by the CSS Writing Modes: boustrophedon. This is a writing mode common in inscriptions in Latin, Greek and other languages, in which alternate lines run from left to right and from right to left; its name derives from the path of an ox pulling a plough. Right-to-left lines in boustrophedon have another unexpected feature: their glyphs are reversed, so that these lines appear as "mirror writing". This example shows a transcription of a Greek inscription at Dodona: </p>
-   <p>
+   <p>Rotation is also useful as a method of handling a true writing
+   mode which is not covered by the CSS Writing Modes:
+   <term>boustrophedon</term>. This is a writing mode common in
+   inscriptions in Latin, Greek and other languages, in which
+   alternate lines run from left to right and from right to left<note
+   place="foot">The name is taken from the Greek βουστροφηδόν, meaning
+   “ox-turning” from βοῦς (an ox) and στροφή (“turn”); that is,
+   turning as an ox does when pulling a plough.</note>. Right-to-left
+   lines in boustrophedon have another unexpected feature: their
+   glyphs are reversed, so that these lines appear as "mirror
+   writing", as in the following ancient Greek inscription:
                      <figure>
                         <graphic url="Images/boustrophedon_small_J.NW.Epeiros.13.p03.jpg"/>
+<head>Leaden plaque bearing an inquiry by Hermon from the oracular
+precinct at Dodona. (L.H. Jeffery Archive)</head>
                      </figure>
                   </p>
-   <p>Drawing of a leaden plaque bearing an inquiry by Hermon from the oracular precinct at Dodona. Image and transcription from <ref target="http://poinikastas.csad.ox.ac.uk/">http://poinikastas.csad.ox.ac.uk</ref>, used with permission.</p>
    <p>This might be transcribed as follows (ignoring word boundaries for the moment): </p>
-                                 <egXML xmlns="http://www.tei-c.org/ns/Examples"> <ab>
+                                 <egXML
+				     xmlns="http://www.tei-c.org/ns/Examples"
+			corresp="#WD-BOUS"	     > <ab>
  <lb/>ΗΕΡΜΟΝΤΙΝA
  <lb/><seg style="rotateY(180deg)">ΚΑΘΕΟΝΠΟΤΘΕΜ</seg>
  <lb/>ΕΝΟΣΥΕΝΕΑϜ
