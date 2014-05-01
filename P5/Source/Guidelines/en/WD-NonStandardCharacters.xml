@@ -815,17 +815,17 @@ older East Asian scripts (Sinitic characters, Japanese Kana, Korean
 Hangul, Vietnamese chữ nôm). In many cases, a language normally uses
 the same <term>writing mode</term> (we use this term to
 refer to the orientation of individual glyphs within a line and the
-order in which they should be read), but there are exceptions in which
+order in which glyphs and lines should be read), but there are exceptions in which
 the same language may appear in different modes, for example either
-vertically or horizontally. East Asian scripts were traditionally
+vertically or horizontally. Many East Asian scripts were traditionally
 written from top to bottom within the line, with their lines sequenced
 from right to left. Although modern Japanese, Chinese, and Korean are
 often written horizontally, the traditional vertical writing mode is
 still widely used. There are also comparatively rare cases of ancient
 scripts written with lines running left to right, each line being read
 top to bottom (Ancient Uighur, classical Mongolian and Manchu), or
-scripts such as Ogham where the writing direction is from bottom to
-top around the edge of an inscribed object.</p>
+scripts such as Ogham where the writing direction may start from the 
+bottom left and run around the edge of an inscribed object.</p>
 
 <p>When different languages are combined, it is possible that
 different writing modes will be needed: for example, in Hebrew text,
@@ -840,7 +840,7 @@ the comma appears in the correct position relative to the surrounding
 glyphs. Even for scripts which are usually written in exactly the same
 way, different writing modes may be encountered in particular
 contexts; for example when a language using Roman script is embedded
-within vertically organized Chinese text, it may sometimes be
+within vertically-organized Chinese text, it may sometimes be
 displayed vertically and sometimes horizontally. The writing mode may
 also vary in response to layout constraints such as those imposed by a
 complex table, where column or row labels may be written vertically or
@@ -911,21 +911,27 @@ situations where this approach may result in ambiguity or lack of
 precision, or if the encoder wishes to record directional information
 explicitly in their encoding, we recommend using the global @style
 attribute to supply detail about the writing mode applicable to the
-content of any element. The @style attribute (discussed in section
-[ref to #STGAre here] ) permits use of any formatting language; for
+content of any element. The <att>style</att> attribute (discussed in 
+<ptr target="STGAre"/>) permits use of any formatting language; for
 these purposes however, we recommend use of CSS, which now includes a
 Writing Modes module <note place="foot"> At the time of writing, this
 W3C module has the status of a candidate recommendation: see further
 <ptr target="#CSSWM"/> <!--
-http://dev.w3.org/csswg/css-writing-modes/" is short lived editors draft-->
-</note> which permits direct specification of a number of useful properties associated with writing modes, notably  direction (ltr  or rtl);  writing-mode (horizontal-tb, vertical-rl, or vertical-lr); and text-orientation (mixed, upright,  sideways ...)  <!-- | use-glyph-orientation<anchor xml:id="id_cite_ref-2"/>
+http://www.w3.org/TR/css-writing-modes-3/ -->
+</note> which permits direct specification of a number of useful properties 
+associated with writing modes, notably <code>direction</code> (<code>ltr</code> 
+or <code>rtl</code>);  <code>writing-mode</code> 
+(<code>horizontal-tb</code>, <code>vertical-rl</code>, or <code>vertical-lr</code>); 
+and <code>text-orientation</code> (<code>mixed</code>, <code>upright</code>,  
+<code>sideways</code> ...)  <!-- | use-glyph-orientation<anchor xml:id="id_cite_ref-2"/>
                   <ref target="#cite_note-2">[3]<note>The value "use-glyph-orientation" may be dropped from the CSS Writing Modes specification.</note></ref> -->
 <!-- suppressing this because we dont discuss it and its likely to be dropped (LB) -->
-as well as properties affecting the behaviour of the unicode-bidi (bidirectional) algorithm. We discuss and exemplify how these properties may be used further below.</p> 
+as well as properties affecting the behaviour of the unicode-bidi (bidirectional) algorithm. 
+We discuss and exemplify how these properties may be used below.</p> 
 
 <p>The global TEI <att>style</att> attribute applies to the element on
 which it is specified (and in most cases, its descendants). Rather
-than specify it on every element, it will often be more efficient, to
+than specify it on every element, it will often be more efficient to
 express sets of commonly-used styling rules as <gi>rendition</gi>
 elements in the <gi>teiHeader</gi> and then point to them using the
 global <att>rendition</att> attribute, as further discussed in <ptr
@@ -934,25 +940,30 @@ provide instructions for software when rendering a digital text, they
 also provide a useful means of describing the visual properties of a
 pre-existing document in a formal and standardized way. </p>
 
-<p>The next section presents some examples of how CSS can be used to describe a variety of writing modes. A full description of the appearance of a document will probably include many other properties of course. </p>
+<p>The next section presents some examples of how CSS can be used to 
+describe a variety of writing modes. A full description of the appearance
+of a document will probably include many other properties of course. </p>
             </div>
+  
             <div type="div2" xml:id="WDWMEG">
                <head>Examples of Different Writing Modes</head>
 <p>The CSS recommendations provides several properties which can be used to encode aspects of the "writing mode". The most useful of these is the property "writing-mode" which may be used to specify a reading-order for both characters within a single line and lines within a single block of text. The property "text-orientation" may also used to indicate the orientation of individual characters with respect to the line, and the property "direction" to determine the reading order of characters within a line only. We give some examples of each below. </p>
                <div type="div3" xml:id="WDWMEG1">
-                  <head> Vertical writing modes</head>
-   <p>The writing-mode property is particularly useful for languages
+                  <head> Vertical Writing Modes</head>
+   <p>The <code>writing-mode</code> property is particularly useful for languages
    which can be written in different writing modes, such as Chinese
-   and Japanese. Its possible values include <val>horizontal-tb</val>,
-   <val>vertical-rl</val> and <val>vertical-lr</val>. Each value has
-   two components: "horizontal" or "vertical" specifies the inline
+   and Japanese. Its possible values include <code>horizontal-tb</code>,
+   <code>vertical-rl</code> and <code>vertical-lr</code>. Each value has
+   two components: <soCalled>horizontal</soCalled> or <soCalled>vertical</soCalled> specifies the inline
    writing direction, while the second component specifies the
    direction in which lines in a block, and blocks in a sequence are
    arranged: from top to bottom (as in most European languages, in
    which lines and paragraphs are arranged from top to bottom on a
-   page), from right to left (as in the case of Japanese), or
+   page), from right to left (as in the case of Japanese written vertically), or
    left-to-right (as in the case of Mongolian). </p>
-   <p>The following example shows three versions of the same poem: first in Japanese, written top to bottom; next in Romaji (Japanese in Latin script); and finally in an English translation. </p>
+   <p>The following example shows three versions of the same poem: first in 
+     Japanese, written top to bottom; next in <term>romaji</term> (Japanese in 
+     Latin script); and finally in an English translation. </p>
    <p>
                      <figure>
                         <graphic width="250px" url="Images/basho_furu_ike_ya.png"/>
@@ -988,15 +999,14 @@ pre-existing document in a formal and standardized way. </p>
    size etc. The Japanese transcription has <code>writing-mode:
    vertical-rl</code>, which is required because Japanese may be
    written either in this mode or horizontally. The transcription in
-   Romaji uses the attribute <att>xml:lang</att> to supply a value of
+   romaji uses the attribute <att>xml:lang</att> to supply a value of
    <val>ja-Latn</val>, indicating Japanese written in Latin
    script. Its <att>style</att> attribute specifies a horizontal
    writing mode; this may seem superfluous, but vertically-written
    romaji is not unknown.</p>
                </div>
                <div type="div3" xml:id="WDWMEG2">
-                  <head>
-                     Vertical text with embedded horizontal text</head>
+                  <head>Vertical Text with Embedded Horizontal Text</head>
 
    <p>When Japanese is written vertically, the glyph orientation
    remains the same as when it is written horizontally. In other
@@ -1018,7 +1028,10 @@ pre-existing document in a formal and standardized way. </p>
                      </figure>
                   </p>
 
-   <p>The text-orientation property allows us to indicate whether or not glyphs are rotated. In the following example, we have indicated that the list uses a vertical-rl writing mode, but that the orientation of individual glyphs may vary: </p>
+   <p>The text-orientation property allows us to indicate whether or 
+     not glyphs are rotated. In the following example, we have indicated 
+     that the list uses a <code>vertical-rl</code> writing mode, but that the orientation 
+     of individual glyphs may vary: </p>
  
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#WD-VERT-IND"><list type="gloss" xml:lang="ja" 
  style="writing-mode: vertical-rl; text-orientation: mixed">
@@ -1029,15 +1042,17 @@ pre-existing document in a formal and standardized way. </p>
  <!-- ... -->
 </list></egXML>
    <p>The rule <code>text-orientation: mixed</code> specifies that
-   "characters from horizontal-only scripts are set sideways, i.e. 90°
+   <quote>characters from horizontal-only scripts are set sideways, i.e. 90°
    clockwise from their standard orientation in horizontal
    text. Characters from vertical scripts are set with their intrinsic
-   orientation" (<ref
+   orientation</quote> (<ref
    target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
-   2014</ref>). Since the default value for text-orientation is "mixed", this rule is not strictly required. However, if the Indonesian glyphs (which are roman characters) had been set vertically, like this:</p>
+   2014</ref>). Since the default value for <code>text-orientation</code> is <code>mixed</code>, 
+     this rule is not strictly required. However, if the Indonesian glyphs (which are roman 
+     characters) had been set vertically, like this:</p>
    <p>
                      <figure>
-                        <graphic width="250px" url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
+                        <graphic width="150px" url="Images/ja_vertical_indonesian_frag.rotated.jpg"/>
    <head>Fragment of previous image with Indonesian glyphs upright.</head>
                      </figure>
 
@@ -1052,50 +1067,65 @@ pre-existing document in a formal and standardized way. </p>
  <item>「新しい、ばかい」</item>
  <!-- ... -->
 </list></egXML>
-   <p>The rule <code>text-orientation: upright</code> specifies that "characters from horizontal-only scripts are rendered upright, i.e. in their standard horizontal orientation. Characters from vertical scripts are set with their intrinsic orientation and shaped normally" (<ref    target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
+   <p>The rule <code>text-orientation: upright</code> specifies that 
+     <quote>characters from horizontal-only scripts are rendered upright, 
+       i.e. in their standard horizontal orientation. Characters from vertical 
+       scripts are set with their intrinsic orientation and shaped normally</quote> (<ref    target="http://www.w3.org/TR/css-writing-modes-3/#text-orientation">fantasai
 2014</ref>).</p>
    <p> </p>
                </div>
                <div type="div3" xml:id="WDWMEG3">
-                  <head>
-Vertical orientation in horizontal scripts</head>
-   <p>It is not unusual to see text from horizontal languages written vertically even where no vertically-written script is involved. This example is a fragment from a table of information about agricultural development on Vancouver Island, written in 1855: </p>
+                  <head>Vertical Orientation in Horizontal Scripts</head>
+   <p>It is not unusual to see text from horizontal languages written vertically 
+     even where no vertically-written script is involved. This example is a 
+     fragment from a table of information about agricultural development 
+     on Vancouver Island, written in 1855: </p>
    <p>
                      <figure>
                         <graphic width="450px" url="Images/bcgenesis_co_305_06_00131v_table_extract.jpg"/>
    <head>Enclosure with <title>Despatch to London</title> 10048, CO
    305/6, p. 131v from <ptr target="http://bcgenesis.uvic.ca/getDoc.htm?id=V55116.scx"/></head>
-
                      </figure>
                   </p>
-   <p>Four of the  subheading cells in this fragment contain English text, written vertically, bottom-to-top, to conserve space on the page. To describe this sort of phenomenon, we can use the text-orientation property again: </p>
-   <p> text-orientation: mixed|upright|sideways-right|sideways-left|sideways|use-glyph-orientation</p>
-   <p>For full details on this property, we refer the reader to the CSS Writing Modes specification. For the present example, we will make use only of the "sideways-left" value, which "causes text to be set as if in a horizontal layout, but rotated 90° counter-clockwise." We might encode the third of the four cells containing vertical text like this: </p>
+   <p>Four of the subheading cells in this fragment contain English text written vertically, 
+     bottom-to-top, to conserve space on the page. To describe this sort of phenomenon, 
+     we can use the <code>text-orientation</code> property again: </p>
+                 
+   <p><code>text-orientation: mixed | upright | sideways-right | sideways-left | sideways | use-glyph-orientation</code></p>
+                 
+   <p>For full details on this property, we refer the reader to the CSS Writing Modes specification. 
+     For the present example, we will make use only of the <soCalled>sideways-left</soCalled> value, 
+     which <quote>causes text to be set as if in a horizontal layout, but rotated 90° counter-clockwise.</quote> 
+     We might encode the third of the four cells containing vertical text like this: </p>
                                  <egXML xmlns="http://www.tei-c.org/ns/Examples"> <cell style="writing-mode: vertical-lr; text-orientation: sideways-left">
  <lb/>Cash Value
  <lb/>of
  <lb/>Farms
  </cell></egXML>
-   <p>The writing-mode captures the fact that the script is written vertically, and its lines are to be read from left to right (so the line containing "of" is to the right of that containing "Cash value"), while the text-orientation value encodes the orientation (rotated 90° counter-clockwise). We might also add text-align: center to the style, to express the fact that the text is centrally-aligned.</p>
+   <p>The <code>writing-mode</code> property captures the fact that the script is written vertically, and 
+     its lines are to be read from left to right (so the line containing <quote>of</quote> 
+     is to the right of that containing <quote>Cash value</quote>), while the <code>text-orientation</code> 
+     value encodes the orientation (rotated 90° counter-clockwise). We might also add 
+     <code>text-align: center</code> to the style, to express the fact that the text is centrally-aligned.</p>
                </div>
                <div type="div3" xml:id="WDWMEG4">
-                  <head>
- Bottom-to-top writing</head>
+                  <head>Bottom-to-top Writing</head>
    <p>Of the rather small number of scripts which appear to be written
    bottom-to-top, perhaps the best-known is Ogham, an alphabet used
    mainly to write Archaic Irish. Ogham is typically found inscribed
-   along the
-   edge of a standing stone, starting at its base.  The CSS Writing
+   along the edge of a standing stone, starting at its base. The CSS Writing
    Modes specification does not explicitly distinguish between
    vertical scripts which are written  top-to-bottom and those which
-   are written
-   bottom-to-top. Instead, such bottom-to-top scripts are best treated
+   are written bottom-to-top. Instead, such bottom-to-top scripts are best treated
    as left-to-right horizontal scripts, oriented vertically because of
    the constraints of the medium on which they are inscribed. Such
    scripts are analogous to the vertical English text-runs in the
    table cells in the example above, and can be handled in exactly the
    same manner (<code>writing-mode: vertical-lr; text-orientation:
-   sideways-left</code>).</p>
+   sideways-left</code>). In cases where writing follows a curved path 
+   (such as Ogham running around the edge of a stone), a meticulous 
+   encoder might resort to the use of SVG to describe the path, rather 
+   than treating the phenomenon as a writing mode.</p>
                </div>
                <div type="div3" xml:id="WDWMEG5">
                   <head>Mixed Horizontal Directionality</head>
@@ -1103,11 +1133,20 @@ Vertical orientation in horizontal scripts</head>
    <p>Returning to our previous simple example </p>
                   <eg> The Arabic term قلم رصاص means "pencil".</eg>
    <p>we could use the direction property to make directionality explicit:</p>
-   <p> direction: ltr | rtl</p>
+   <p><code>direction: ltr | rtl</code></p>
                                  <egXML xmlns="http://www.tei-c.org/ns/Examples"> <s xml:lang="en" style="direction: ltr">The Arabic term
  <term xml:lang="ar" style="direction: rtl; unicode-bidi: embed">قلم رصاص</term> means "pencil".</s></egXML>
-   <p>The use of the direction property to record the observed directionality of the text is unambiguous, even though it is (as we noted above) superfluous. The use of the unicode-bidi property here may require some explanation. By default this property has the value "normal", the effect of which in this context would be to ignore any value supplied for the direction property. The CSS Writing Modes specification stipulates that the direction property "has no effect on bidi reordering when specified on inline elements whose unicode-bidi property’s value is normal, because the element does not open an additional level of embedding with respect to the bidirectional algorithm."
+   <p>The use of the <code>direction</code> property to record the observed directionality 
+     of the text is unambiguous, even though it is (as we noted above) superfluous. 
+     The use of the <code>unicode-bidi</code> property here may require some explanation. 
+     By default this property has the value <soCalled>normal</soCalled>, the effect of which in this 
+     context would be to ignore any value supplied for the direction property. The CSS Writing 
+     Modes specification stipulates that the direction property <quote>has no effect on bidi 
+       reordering when specified on inline boxes whose <code>unicode-bidi</code> property’s 
+       value is <soCalled>normal</soCalled>, because the element does not open an additional 
+       level of embedding with respect to the bidirectional algorithm.</quote>
                   </p>
+                 
    <p>Mixed horizontal directionality is very common in languages such as Arabic
    and Hebrew, particularly when numbers (which are always given LTR)
    or phrases from LTR languages are embedded. It is not
@@ -1128,7 +1167,16 @@ Vertical orientation in horizontal scripts</head>
                <div type="div3">
                   <head>
                      Summary</head>
-   <p>For most texts,  information about text directionality need not be explicitly encoded in a TEI text, either because it follows unambiguously from <att>xml:lang</att> values, or because it can be expected to be handled unequivocally by the Unicode Bidi Algorithm. Where it is considered important to encode such information, properties and values taken from the CSS Writing Modes module may be used by means of the global TEI <att>style</att> attribute (or in the TEI <gi>rendition</gi> element and linked with the <att>rendition</att> attribute). Most  phenomena can be well described in this way; of those which cannot, other approaches based on the CSS Transforms module are presented in the next section.</p>
+   <p>For most texts,  information about text directionality need not be explicitly 
+     encoded in a TEI text, either because it follows unambiguously from 
+     <att>xml:lang</att> values, or because it can be expected to be handled 
+     unequivocally by the Unicode Bidi Algorithm. Where it is considered important 
+     to encode such information, properties and values taken from the CSS Writing 
+     Modes module may be used by means of the global TEI <att>style</att> attribute 
+     (or using the TEI <gi>rendition</gi> element, linked with the <att>rendition</att> 
+     attribute). Most  phenomena can be well described in this way; of those which 
+     cannot, other approaches based on the CSS Transforms module are presented 
+     in the next section.</p>
                </div>
             </div>
             <div xml:id="WDWMTT">
@@ -1139,34 +1187,66 @@ Vertical orientation in horizontal scripts</head>
    overlap with them. We can categorize these as text transformation
    features, and suggest some strategies for encoding them based on
    the properties detailed in the <ref
-   target="#CSSTM">CSS Transforms (Fraser et al 2013)</ref> specification. This CSS module provides a complex array of properties, values and functions which can be used to rotate, skew, translate and otherwise transform textual and graphical objects. We can borrow this vocabulary in order to describe textual phenomena in a precise manner.</p>
+   target="#CSSTM">CSS Transforms (Fraser et al 2013)</ref> specification. 
+     This CSS module provides a complex array of properties, values and 
+     functions which can be used to rotate, skew, translate and otherwise 
+     transform textual and graphical objects. We can borrow this vocabulary 
+     in order to describe textual phenomena in a precise manner.</p>
+              
    <p>We begin with a simple example of a rotational transform: </p>
    <p>
                      <figure>
                         <graphic url="Images/rotation_on_z_axis.png"/>
                      </figure>
                   </p>
-   <p>Here a block of text has been rotated around its z-axis. This is clearly not a "writing mode"; the writing mode for this text is horizontal, left to right. Furthermore, even if we wished to treat this as a writing mode, we could not do so, because there is no way to use writing modes properties to describe an text orientation which is angled at 45 degrees; no human languages are consistently written in this orientation. It is more appropriate to treat this as a rotational transformation. We can do this using two properties: transform and transform-origin. (Both of these properties have quite complex value sets, and we will not look at all of them here. See the <ref target="#CSSTM">specification</ref> for full details.)</p>
-   <p>The transform property takes as its value one or more of the transform functions, one of which is the function rotateZ:</p>
+   <p>Here a block of text has been rotated around its z-axis. This is clearly 
+     not a <soCalled>writing mode</soCalled>; the writing mode for this text 
+     is horizontal, left to right. Furthermore, even if we wished to treat this 
+     as a writing mode, we could not do so, because there is no way to use 
+     writing modes properties to describe an text orientation which is angled 
+     at 45 degrees; no human languages are consistently written in this 
+     orientation. It is more appropriate to treat this as a rotational transformation. 
+     We can do this using two properties: <code>transform</code> and 
+     <code>transform-origin</code>. (Both of these properties have quite complex 
+     value sets, and we will not look at all of them here. See the 
+     <ref target="#CSSTM">specification</ref> for full details.)</p>
+              
+   <p>The <code>transform</code> property takes as its value one or more of the transform functions, 
+     one of which is the function <code>rotateZ()</code>:</p>
+              
                            <egXML xmlns="http://www.tei-c.org/ns/Examples"><ab style="transform:rotateZ(-45deg)">TEI-C.ORG</ab></egXML>
-   <p>Any rotation must take place clockwise around an axis positioned relative to the element being rotated, and the transform-origin property can be used to specify the pivot point. By default, the value of transform-origin is "50% 50%", the point at the centre of the element, but these values can be changed to reflect rotation around a different origin point. (The TEI <gi>zone</gi> element also bears an attribute <att>rotate</att> which can specify rotation in degrees around the z-axis, but it is not available for any other element.)</p>
-   <p>An element may also be rotated about either of its other axes. For example, this shows rotation around the Y (vertical) axis: </p>
+              
+   <p>Any rotation must take place clockwise around an axis positioned relative 
+     to the element being rotated, and the <code>transform-origin</code> property 
+     can be used to specify the pivot point. By default, the value of <code>transform-origin</code> 
+     is <soCalled>50% 50%</soCalled>, the point at the centre of the element, but these 
+     values can be changed to reflect rotation around a different origin point. 
+     (The TEI <gi>zone</gi> element also bears an attribute <att>rotate</att> which can 
+     specify rotation in degrees around the z-axis, but it is not available for any other 
+     element.)</p>
+              
+   <p>A block of text may also be rotated about either of its other axes. For example, 
+     this shows rotation around the Y (vertical) axis: </p>
    <p>
                      <figure>
                         <graphic url="Images/rotation_on_y_axis.png"/>
                      </figure>
                   </p>
                                  <egXML xmlns="http://www.tei-c.org/ns/Examples"> <ab style="transform:rotateY(45deg)">TEI-C.ORG</ab></egXML>
-   <p>These are obviously trivial examples, but similar features do appear in historical texts. George Herbert's <hi rend="italic">The Temple</hi> includes two stanzas headed "Easter Wings" which are both normally printed in a rotated form so that they represent a pair of wings:</p>
+              
+   <p>These are obviously trivial examples, but similar features do appear in historical texts. 
+     George Herbert's <title level="m">The Temple</title> includes two stanzas headed 
+     <title level="a">Easter Wings</title> which are both normally printed in a rotated form 
+     so that they represent a pair of wings:</p>
    <p>
                      <figure>
                         <graphic
 			    url="Images/herbert_church_p35_sm.jpg" width="300px"/>
-   <head>Page 35 of George Herbert's <title>The Temple</title>
+   <head>Page 35 of George Herbert's <title level="m">The Temple</title>
    (1633), from a copy in the Folger Library.</head>
-
                      </figure>
                   </p>
+              
    <p>This could be encoded thus: </p>
                                  <egXML
 				     xmlns="http://www.tei-c.org/ns/Examples">
@@ -1187,11 +1267,11 @@ Vertical orientation in horizontal scripts</head>
    inscriptions in Latin, Greek and other languages, in which
    alternate lines run from left to right and from right to left<note
    place="foot">The name is taken from the Greek βουστροφηδόν, meaning
-   “ox-turning” from βοῦς (an ox) and στροφή (“turn”); that is,
+   <q>ox-turning</q> from βοῦς (an ox) and στροφή (<q>turn</q>); that is,
    turning as an ox does when pulling a plough.</note>. Right-to-left
    lines in boustrophedon have another unexpected feature: their
-   glyphs are reversed, so that these lines appear as "mirror
-   writing", as in the following ancient Greek inscription:
+   glyphs are reversed, so that these lines appear as <soCalled>mirror
+   writing</soCalled>, as in the following ancient Greek inscription:
                      <figure>
                         <graphic url="Images/boustrophedon_small_J.NW.Epeiros.13.p03.jpg"/>
 <head>Leaden plaque bearing an inquiry by Hermon from the oracular
@@ -1210,13 +1290,27 @@ precinct at Dodona. (L.H. Jeffery Archive)</head>
  <lb/><seg style="rotateY(180deg)">ΣΙΜΟΣΟΤΤΑΙΕ</seg>
  <lb/>ΑΣΣΑΙ
  </ab></egXML>
-   <p>The 180-degree rotation around the Y (vertical) axis here gives us exactly the effect of the RTL line in boustrophedon; the order of glyphs is reversed, and so is their individual orientation (in fact, we see them <soCalled>from the back</soCalled>, as it were). <gi>seg</gi> elements have been used here because these are clearly not "lines" in the sense of poetic lines; the text is continuous prose, and linebreaks are incidental.</p>
-   <p>There are obviously some unsatisfactory aspects of this manner of encoding boustrophedon. In the inscription above, some words run across linebreaks, so if we wished to tag both words and the right-to-left phenomena, one hierarchy would have to be privileged over the other. By using a transform function rather than a writing mode property, we are apparently suggesting that boustrophedon is not in fact a writing mode, whereas it clearly is. But the CSS Writing Modes specification does not provide support for boustrophedon, because it is a rather obscure historical phenomenon; using a rotational transform is one practical alternative. </p>
+   <p>The 180-degree rotation around the Y (vertical) axis here gives us 
+     exactly the effect of the RTL line in boustrophedon; the order of glyphs 
+     is reversed, and so is their individual orientation (in fact, we see them 
+     <soCalled>from the back</soCalled>, as it were). <gi>seg</gi> elements 
+     have been used here because these are clearly not <soCalled>lines</soCalled> 
+     in the sense of poetic lines; the text is continuous prose, and linebreaks 
+     are incidental.</p>
+              
+   <p>There are obviously some unsatisfactory aspects of this manner of encoding 
+     boustrophedon. In the inscription above, some words run across linebreaks, 
+     so if we wished to tag both words and the right-to-left phenomena, one 
+     hierarchy would have to be privileged over the other. By using a transform 
+     function rather than a writing mode property, we are apparently suggesting 
+     that boustrophedon is not in fact a writing mode, whereas it clearly is. But 
+     the CSS Writing Modes specification does not provide support for boustrophedon, 
+     because it is a rather obscure historical phenomenon; using a rotational transform 
+     is one practical alternative. </p>
 
                </div>
                <div xml:id="WDCAV">
-                  <head>
-                     Caveat</head>
+                  <head>Caveat</head>
 
    <p>As with other parts of the CSS specification, the intended
    effect of CSS Transforms properties and values is defined with
