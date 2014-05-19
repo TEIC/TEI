@@ -12,9 +12,6 @@ install()
     ${ECHO} mkdir -p ${Vault}/${name}/${version}
     echo unpack to ${Vault}/${name}/${version}
     ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
-    ${ECHO} rm ${Vault}/${name}/current
-    echo link ${Vault}/${name}/${version} to ${Vault}/${name}/current
-    ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
     case $package in 
 	Roma)
 	    ${ECHO} unzip -q -o ${pname}-${version}.zip -d /usr/share;;
@@ -26,6 +23,13 @@ install()
 	    ${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;
             ${ECHO} rm teiwebsiteguidelines.zip;;
     esac
+}
+
+makecurrent()
+{
+    ${ECHO} rm ${Vault}/${name}/current
+    echo link ${Vault}/${name}/${version} to ${Vault}/${name}/current
+    ${ECHO} ln -s ${Vault}/${name}/${version} ${Vault}/${name}/current
 }
 
 upload()
@@ -57,6 +61,7 @@ while test $# -gt 0; do
       --package=*)  package=`echo $1 | sed 's/.*=//'`;;
       --version=*)  version=`echo $1 | sed 's/.*=//'`;;
       --upload)  JOB=upload;;
+      --makecurrent)  JOB=makecurrent;;
       --install)  JOB=install;;
    *) if test "$1" = "${1#--}" ; then 
 	   break
@@ -90,9 +95,11 @@ rm -f ${pname}-${version}.zip
 ${ECHO} curl -O -s $jenkinsdir/${pname}-${version}.zip || \
     die "Unable to fetch package $jenkinsdir/${pname}-${version}.zip"
 
+echo Selected task is $JOB
 case $JOB in 
   all) install; upload;;
   install) install ;;
+  makecurrent) makecurrent ;;
   upload) upload;;
 esac
 
