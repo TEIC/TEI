@@ -2728,6 +2728,67 @@ express the same normalized value in any of the following ways:
 </specGrp>
 
 </div>
+  
+  <div type="div3" xml:id="NDDATECUSTOM"><head>Using Non-Gregorian Calendars</head>
+    <p>All date-related encoding described above makes use of the Gregorian calendar,
+    on which both the ISO and W3C datetime formats are based. However, historical texts
+    often pre-date the invention of the Gregorian calendar in the 16th century, or its adoption 
+    in Europe over the following centuries, and many other calendars are used in texts from 
+    other cultures and contexts. Non-Gregorian dates can be encoded using methods
+    described below.</p>
+    
+    <p>First, a Calendar Description element needs to be supplied in the <gi>teiHeader</gi> 
+      as described in <ptr target="#HD44"/>:</p>
+    
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <calendarDesc>
+        <calendar xml:id="Julian"><p>The Julian calendar, as used in late 16th-century England.</p></calendar>
+      </calendarDesc>
+    </egXML>
+    
+    <p>The following attributes can now be used to encode dates using this calendar:
+      <specList>
+        <specDesc key="att.datable" atts="when-custom notBefore-custom notAfter-custom from-custom to-custom calendar datingMethod"/>
+      </specList>
+      
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <p>The Poole by S. <hi>Giles</hi> Churchyarde was a 
+          large water in the yeare <date calendar="#Julian">1244</date>.
+        </p>
+      </egXML>
+      
+      Here, the <att>calendar</att> attribute points to the <gi>calendar</gi> element in the header which 
+      defines and describes the calendar used.</p>
+    
+    <p>The <att>calendar</att> attribute is used to specify the calendar used in the <emph>text content</emph> of 
+the dating element which bears it. However, just as we use, for instance, <att>when</att>, <att>notBefore</att>, 
+      <att>notAfter</att> etc. to provide more precise expressions of dates and times in a constrained and computable form,
+      it is often necessary to express a date or a date-range from a non-Gregorian calendar in a more precise manner. The 
+    attributes whose names end in <q>-custom</q> are provided for this purpose, and the <att>datingMethod</att> is used 
+    to identify the calendar used in the content of these attributes:
+    
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <head>
+          The Tryumphs of Peace.<lb/>
+          That Celebrated the Solemnity of theright Honorable 
+          Sr Francis Iones Knight, at his Inauguration into the 
+          Maioraltie of London, on Monday being the 
+          <date when-custom="1620-10-30" datingMethod="#Julian" calendar="#Julian">
+            30. of October, 1620.
+          </date>
+        </head>
+      </egXML>
+    
+    Here, the <att>calendar</att> attribute specifies the calendar used in the text content of the <gi>date</gi> 
+      element, as before, whereas the <att>datingMethod</att> attribute signifies that the calendar used in 
+      the <att>when-custom</att> attribute is also Julian. The schema could be customized in order to constrain
+      the content of custom attributes in a manner similar to the constraints provided on regular Gregorian 
+      dating attributes such as <att>when</att>, to enforce consistency in the use of non-Gregorian dates.
+    </p>
+    
+  </div>
+  
 </div></div>
 
 <div><head>Module for Names and Dates</head>
