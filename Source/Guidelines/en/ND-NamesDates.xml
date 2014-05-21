@@ -2299,7 +2299,10 @@ occupation and residence.</p>
 
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/org.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listRelation.xml"/>
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/relationGrp.xml"/> <!-- we keep it here for backward compatibility -->
+  
+  <!--        MDH: Deleted now-obsolete relationGrp element 2014-05-21.  -->
+<!--<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/relationGrp.xml"/> -->
+  
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/person.xml"/>
 
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/personGrp.xml"/>
@@ -2772,7 +2775,7 @@ the dating element which bears it. However, just as we use, for instance, <att>w
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <head>
           The Tryumphs of Peace.<lb/>
-          That Celebrated the Solemnity of theright Honorable 
+          That Celebrated the Solemnity of the right Honorable 
           Sr Francis Iones Knight, at his Inauguration into the 
           Maioraltie of London, on Monday being the 
           <date when-custom="1620-10-30" datingMethod="#Julian_England" calendar="#Julian_England">
@@ -2786,6 +2789,18 @@ the dating element which bears it. However, just as we use, for instance, <att>w
       the <att>when-custom</att> attribute is also Julian. The schema could be customized in order to constrain
       the content of custom attributes in a manner similar to the constraints provided on regular Gregorian 
       dating attributes such as <att>when</att>, to enforce consistency in the use of non-Gregorian dates.
+    </p>
+    
+    <p>Custom dating attributes can be combined with any of the standard dating attributes in order to provide
+    a standardized Gregorian version of a non-Gregorian date. We might enhance the preceding example with 
+    the addition of <att>when</att>, providing the Gregorian calendar equivalent of the Julian date:
+      
+      <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <date when-custom="1620-10-30" when="1620-11-09" datingMethod="#Julian_England" calendar="#Julian_England">
+            30. of October, 1620.
+          </date>
+      </egXML>
+    
     </p>
     
   </div>
