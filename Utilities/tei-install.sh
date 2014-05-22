@@ -2,7 +2,7 @@
 #
 # Install TEI packages on web site
 #
-# Sebastian Rahtz, May 2014 2011
+# Sebastian Rahtz, May 2014 
 # copyright: TEI Consortium
 # license: GPL
 #
