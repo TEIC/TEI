@@ -10,10 +10,10 @@ VERBOSE=
 PREFIX=/usr
 SOURCETREE=Source
 DRIVER=${SOURCETREE}/guidelines-${INPUTLANGUAGE}.xml
-XSL=/usr/share/xml/tei/stylesheet
+XSL=/Users/hcayless/Development/TEI-Stylesheets
 # If you have not installed the Debian packages, uncomment one
 # of the next two lines:
-#XSL=../Stylesheets/release/tei-xsl/p5
+XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
@@ -42,7 +42,7 @@ check.stamp:
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo get latest date
-	svn info --xml > svndate.xml
+#	svn info --xml > svndate.xml
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
