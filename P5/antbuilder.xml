@@ -22,7 +22,7 @@
       make TEI schemas in various forms
  -->
   <property name="trang" value="Utilities/lib/trang.jar"/>
-  <property name="XSL" value="/usr/share/xml/tei/stylesheet"/>
+  <property name="XSL" value="/Users/hcayless/Development/TEI-Stylesheets"/>
   <property name="XELATEXFLAGS" value=""/>
   <property name="XELATEX" value="xelatex"/>
   <property name="lang" value="en"/>
@@ -130,14 +130,14 @@
         </xslt>
         <delete file="p5odds-examples.compiled.xml"/>
 
-      <exec executable="trang" failonerror="true">
+      <java jar="${trang}" failonerror="true" fork="true">
 	<arg value="p5odds.rng"/>
 	<arg value="p5odds.rnc"/>
-      </exec>
-      <exec executable="trang" failonerror="true">
+      </java>
+      <java jar="${trang}" failonerror="true" fork="true">
 	<arg value="p5odds-examples.rng"/>
 	<arg value="p5odds-examples.rnc"/>
-      </exec>
+      </java>
       </sequential>
   </target>
 
