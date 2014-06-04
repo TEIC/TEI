@@ -42,7 +42,7 @@ check.stamp:
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo get latest date
-#	svn info --xml > svndate.xml
+	svn info --xml > svndate.xml
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
