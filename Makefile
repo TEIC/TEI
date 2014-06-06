@@ -13,7 +13,7 @@ DRIVER=${SOURCETREE}/guidelines-${INPUTLANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet
 # If you have not installed the Debian packages, uncomment one
 # of the next two lines:
-XSL=../Stylesheets/release/tei-xsl/p5
+#XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
