@@ -1,7 +1,7 @@
-// UDMv4.45 //
+// UDMv4.6 //
 ///////////////////////////////////////////////////////////////////
 //                                                               //
-//  ULTIMATE DROP DOWN MENU Version 4.45 by Brothercake          //
+//  ULTIMATE DROP DOWN MENU Version 4.6 by Brothercake          //
 //  http://www.udm4.com/                                         //
 //                                                               //
 //  This script may not be used or distributed without license   //
