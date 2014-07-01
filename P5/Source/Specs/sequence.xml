@@ -1,38 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="sequence">
-          <desc versionDate="2013-11-21" xml:lang="en">sequence of references</desc>
-          <classes>
-            <memberOf key="att.global"/>
-            <memberOf key="model.contentPart"/>
-            <memberOf key="att.repeatable"/>
-          </classes>
-          <content>
-            <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-              <ref name="model.contentPart"/>
-            </oneOrMore>
-          </content>
-	  <attList>
-	    <attDef ident="preserveOrder">
-	      <desc versionDate="2013-11-21" xml:lang="en">if true, indicates that
+  <desc versionDate="2013-11-21" xml:lang="en">sequence of references</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.contentPart"/>
+    <memberOf key="att.repeatable"/>
+  </classes>
+  <content>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.contentPart"/>
+    </oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="preserveOrder">
+      <desc versionDate="2013-11-21" xml:lang="en">if true, indicates that
 	      the order in which component elements of a sequence
 	      appear in a document must correspond to the order in
 	      which they are given in the content model.</desc>
-<datatype>data.truthValue</datatype>
-	    </attDef>
-	  </attList>
+      <datatype>data.truthValue</datatype>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en"><content>
-<sequence><alternate>
-<elementRef key="name"/>
-<elementRef key="persName"/>
-</alternate>
-<elementRef key="placeName" minoccurs="0" maxOccurs="5"/>
-</sequence>
-</content>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
+      <content>
+        <sequence>
+          <alternate>
+            <elementRef key="name"/>
+            <elementRef key="persName"/>
+          </alternate>
+          <elementRef key="placeName" minoccurs="0" maxOccurs="5"/>
+        </sequence>
+      </content>
     </egXML>
-<p>This example content model matches a sequence consisting of either
+    <p>This example content model matches a sequence consisting of either
 a <gi>name</gi> or a <gi>persName</gi> followed by nothing, or a
 sequence of up to five <gi>placeName</gi> elements. </p>
   </exemplum>
-
-
 </elementSpec>
