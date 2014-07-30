@@ -2292,12 +2292,22 @@ with them:
  </p>
 <p>The <gi>list</gi> element should be used to mark any kind of
 <term rend="noindex">list</term>:
-numbered, lettered, bulleted, or unmarked.  Lists formatted as such in
+numbered, lettered, bulleted, or unmarked. Lists formatted as such in
 the copy text should in general be encoded using this element, with an
-appropriate value for the <att>type</att> attribute.  Lists given as
-run-on text may also be encoded using this element, where this is felt
-to be appropriate.
- </p>
+appropriate value for the <att>rend</att> attribute. Suggested values 
+  for <att>rend</att> include:
+  <list rend="bulleted">
+    <item><term>bulleted</term> (items preceded by bullets or similar markings)</item>
+    <item><term>inline</term> (items rendered within continuous prose, with no linebreaks)</item>
+    <item><term>numbered</term> (items preceded by numbers or letters)</item>
+    <item><term>simple</term> (items rendered as blocks, but with no bullet or number)</item>
+  </list>
+  
+  Some of these values may of course be combined; a list may be inline, but also be rendered with 
+  numbers. An example appears below. For more sophisticated and detailed description of list rendering, consider using the <att>style</att>
+  attribute with Cascading Stylesheet properties and values, as described in the W3C's
+  <ref target="http://www.w3.org/TR/css-lists-3/">CSS Lists and Counters Module Level 3</ref>.</p>
+
 <p>Each distinct item in the list should be encoded as a distinct
 <gi>item</gi> element.  If the numbering or other identification for the
 items in a list is unremarkable and may be reconstructed by any
@@ -2308,7 +2318,7 @@ using a <gi>label</gi> element.  The following examples are thus
 equivalent:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#GibAut">I will add two facts, which have seldom occurred in
 the composition of six, or even five quartos.
-<list rend="runon" type="ordered">
+<list rend="inline numbered">
       <label>(1)</label>
       <item>My first rough manuscript, without any
 intermediate copy, has been sent to the press.</item>
@@ -2319,7 +2329,7 @@ the faults and the merits are exclusively my own.</item>
    </list></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"  source="#GibAut">I will add two facts, which have seldom occurred in
 the composition of six, or even five quartos.
-<list rend="runon" type="ordered">
+<list rend="inline numbered">
       <item n="1">My first rough manuscript, without any
 intermediate copy, has been sent to the press.</item>
       <item n="2">Not a sheet has been seen by any human
@@ -2333,7 +2343,7 @@ preceded by a label, all must be.
 example, the following is a reasonable encoding of a list which (in
 the original) is simply printed as a single paragraph:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COLI-eg-171">On those remote pages it is written that animals are
-divided into <list>
+divided into <list rend="inline">
    <item n="a">those that belong to the Emperor, </item>
    <item n="b">embalmed ones, </item>
    <item n="c">those that are trained, </item>
