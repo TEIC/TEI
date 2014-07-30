@@ -88,31 +88,13 @@
     </group>
   </content>
   <attList>
-    <attDef ident="type" usage="opt">
-      <desc versionDate="2005-01-14" xml:lang="en">describes the form of the list.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">목록의 형식을 기술한다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">描述列表的形式。</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該リストの形式を示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">décrit la forme de la liste.</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">describe la composición de una lista.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">descrive la forma della lista</desc>
+    <attDef ident="rend" usage="opt">
+      <desc versionDate="2014-07-29" xml:lang="en">describes the rendering of the list.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <defaultVal>simple</defaultVal>
       <valList type="semi">
-        <valItem ident="ordered">
-          <desc versionDate="2007-06-27" xml:lang="en">list items are numbered or lettered.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">목록의 각 항목은 숫자순 또는 문자순으로 정렬되어 있다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">列表項目以數字或字母依順序排列。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">los elementos de la lista se numeran (con números
-            o letras).</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">リストの項目は番号付けまたは文字付けされている．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">le classement des items de la liste est
-            alphanumérique</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">le voci della lista sono in ordine numerico o
-            alfabetico</desc>
-        </valItem>
         <valItem ident="bulleted">
           <desc versionDate="2007-06-27" xml:lang="en">list items are marked with a bullet or other typographic device.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">목록의 각 항목은 글머리표 또는 부호로 표지되어 있다.</desc>
@@ -125,6 +107,21 @@
           <desc versionDate="2007-01-21" xml:lang="it">le voci della lista sono contraddistinte da un
             punto o altro</desc>
         </valItem>
+        <valItem ident="inline">
+          <desc versionDate="2014-07-29" xml:lang="en">list items are rendered inline rather than as blocks, and have no marker of any kind</desc>
+        </valItem>
+        <valItem ident="numbered">
+          <desc versionDate="2007-06-27" xml:lang="en">list items are numbered or lettered.</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">목록의 각 항목은 숫자순 또는 문자순으로 정렬되어 있다.</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">列表項目以數字或字母依順序排列。</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">los elementos de la lista se numeran (con números
+            o letras).</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">リストの項目は番号付けまたは文字付けされている．</desc>
+          <desc versionDate="2008-03-30" xml:lang="fr">le classement des items de la liste est
+            alphanumérique</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">le voci della lista sono in ordine numerico o
+            alfabetico</desc>
+        </valItem>
         <valItem ident="simple">
           <desc versionDate="2007-06-27" xml:lang="en">list items are not numbered or bulleted.</desc>
           <desc versionDate="2007-12-20" xml:lang="ko">목록의 각 항목이 숫자 또는 글머리표로 표지되어 있지 않다.</desc>
@@ -136,6 +133,15 @@
             précédés d'une puce.</desc>
           <desc versionDate="2007-01-21" xml:lang="it">le voci della lista sono sono ordinate</desc>
         </valItem>
+      </valList>
+    </attDef>
+    
+    <attDef ident="type" usage="opt">
+      <desc versionDate="2014-07-29" xml:lang="en">describes the nature of the items in the list.</desc>
+      <datatype>
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="semi">
         <valItem ident="gloss">
           <desc versionDate="2007-06-27" xml:lang="en">each list item glosses some term or concept, which is given by a label element
             preceding the list item.</desc>
@@ -169,17 +175,17 @@
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <list type="ordered">
+      <list rend="numbered">
         <item>a butcher</item>
         <item>a baker</item>
-        <item>a candlestick maker, with <list type="bullets"><item>rings on his fingers</item><item>bells on his toes</item></list>
+        <item>a candlestick maker, with <list rend="bulleted"><item>rings on his fingers</item><item>bells on his toes</item></list>
             </item>
       </list>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Perec-vie">
-      <list type="unordered">
+      <list rend="bulleted">
         <item>Thé sans sucre et sans lait </item>
         <item>Un jus d'ananas</item>
         <item>Un yaourt</item>
@@ -197,7 +203,7 @@
       <div>
         <p> Selon des critères qui n'appartiennent qu'à lui, Rémi Plassaert a classé ses buvards
             en huit tas respectivement surmontés par :</p>
-        <list type="bullets">
+        <list rend="bulleted">
           <item>un toréador chantant (dentifrice émail Diamant)</item>
           <item>un tapis d'Orient du XVIIe siècle, provenant d'une basilique de Transylvanie
               (Kalium-Sedaph, soluté de propionate de potassium)</item>
@@ -212,7 +218,7 @@
       <div>
         <p> [...] et tout autour, la longue cohorte de ses personnages, avec leur histoire, leur
             passé, leurs légendes :</p>
-        <list type="ordered">
+        <list rend="numbered">
           <item n="1">Pélage vainqueur d'Alkhamah se faisant couronner à Covadonga </item>
           <item n="2">La cantatrice exilée de Russie suivant Schönberg à Amsterdam</item>
           <item n="3">Le petit chat sourd aux yeux vairons vivant au dernier étage</item>
@@ -223,10 +229,10 @@
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <list type="ordered">
+      <list rend="numbered">
         <item>一個屠夫</item>
         <item>一個糕點師父</item>
-        <item>一個燭台工人<list type="bullets"><item>手上戴了戒指</item><item>腳趾上有鈴鐺</item></list>
+        <item>一個燭台工人<list rend="bulleted"><item>手上戴了戒指</item><item>腳趾上有鈴鐺</item></list>
             </item>
       </list>
     </egXML>
@@ -235,12 +241,12 @@
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n11">
       <div1 type="section">
         <head>青年守則</head>
-        <list type="ordered">
-          <item n="1">守則一至五條包括八德：<list type="ordered"><item n="1.1">一、忠勇為愛國之本 。</item><item n="1.2">二、服從為負責之本。</item><item n="1.3">三、孝順為齊家之本。</item><item n="1.4">四、勤儉為服務之本。</item><item n="1.5">五、仁愛為接物之本。</item></list>
+        <list rend="numbered">
+          <item n="1">守則一至五條包括八德：<list rend="numbered"><item n="1.1">一、忠勇為愛國之本 。</item><item n="1.2">二、服從為負責之本。</item><item n="1.3">三、孝順為齊家之本。</item><item n="1.4">四、勤儉為服務之本。</item><item n="1.5">五、仁愛為接物之本。</item></list>
                </item>
-          <item n="2">六至九條意指四維：<list type="ordered"><item n="2.1">六、整潔為強身之本。</item><item n="2.2">七、信義為立業之本。</item><item n="2.3">八、助人為快樂之本。</item><item n="2.4">九、和平為處世之本</item></list>
+          <item n="2">六至九條意指四維：<list rend="numbered"><item n="2.1">六、整潔為強身之本。</item><item n="2.2">七、信義為立業之本。</item><item n="2.3">八、助人為快樂之本。</item><item n="2.4">九、和平為處世之本</item></list>
                </item>
-          <item n="3">十至十二條就是三達德：<list type="ordered"><item n="3.1">十、學問為濟世之本。</item><item n="3.2">十一、禮節為治事之本。</item><item n="3.3">十二、有恆為成功之本。</item></list>
+          <item n="3">十至十二條就是三達德：<list rend="numbered"><item n="3.1">十、學問為濟世之本。</item><item n="3.2">十一、禮節為治事之本。</item><item n="3.3">十二、有恆為成功之本。</item></list>
                </item>
         </list>
       </div1>
@@ -248,7 +254,7 @@
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n12">
-      <p>我們二人謹定于2008年7月3日正午十二時，在台北舉行結婚典禮，寫下海誓山盟，終身遵守，在婚姻路上，共同經營，災難病情，互相扶持，永不分離。并就下列事項，立下承諾，即令滄海化為桑田，桑田再變為滄海，也要攜手共進，相親相愛，直到白頭。<list type="simple"><item>我們宣誓：從結婚這一天開始，不但成為夫妻，互相敬愛，分擔對方的快樂和憂愁，也同時成為朋友，而且是諍友，互相勉勵，互相規勸，互相批評。</item><item>我們領悟：愉快的共同生活，全靠心靈溝通，所以，我們一定善用言語，不僅表達愛心、關心，也使彼此藉語言加深了解，一起成長。絕不粗聲叱責，絕不用肢體代替言語，絕不允許發生婚姻暴力。 </item><item>我們認知：家庭與事業是夫妻共同經營的果實，夫妻對家庭的貢獻等值，在家庭內或社會上，價值完全相同，社會工作薪俸無論多少，家務工作的薪俸都與其相同。</item><item>我們同意：將來我們有子女，管教上如果有不同的意見，甚至尖銳對立的意見，一定要克制自己，去請教專家，絕不把孩子當成實現自己希望的工具，也絕不用孩子來炫耀自己。 </item><item>我們認為：一夫一妻制，是社會安定的磐石，是孩子們成長最安全的溫床，我們喜愛并尊重這種制度，并用事實和行動，維護它的尊嚴。</item><item>我們警惕：婚姻生活并不多彩多姿，它不但平凡，而且瑣碎，如果不滋養珍惜，容易使生命憔悴，心靈粗俗，所以生活之中，我們一定保持適度的假期，與孩子一起長大。</item><item>我們謹記：我們孝敬自己的父母，也孝敬對方的父母，不僅是回報養育之恩，也是培養自己人格的完整，為我們的下一代立下榜樣。 </item><item>我們了解：我們將來會老，所以，我們從結婚這一天，就培養專業之外的其它藝朮興趣，如書、畫、音樂，使我們生命永遠充實燦爛。 </item></list>
+      <p>我們二人謹定于2008年7月3日正午十二時，在台北舉行結婚典禮，寫下海誓山盟，終身遵守，在婚姻路上，共同經營，災難病情，互相扶持，永不分離。并就下列事項，立下承諾，即令滄海化為桑田，桑田再變為滄海，也要攜手共進，相親相愛，直到白頭。<list rend="simple"><item>我們宣誓：從結婚這一天開始，不但成為夫妻，互相敬愛，分擔對方的快樂和憂愁，也同時成為朋友，而且是諍友，互相勉勵，互相規勸，互相批評。</item><item>我們領悟：愉快的共同生活，全靠心靈溝通，所以，我們一定善用言語，不僅表達愛心、關心，也使彼此藉語言加深了解，一起成長。絕不粗聲叱責，絕不用肢體代替言語，絕不允許發生婚姻暴力。 </item><item>我們認知：家庭與事業是夫妻共同經營的果實，夫妻對家庭的貢獻等值，在家庭內或社會上，價值完全相同，社會工作薪俸無論多少，家務工作的薪俸都與其相同。</item><item>我們同意：將來我們有子女，管教上如果有不同的意見，甚至尖銳對立的意見，一定要克制自己，去請教專家，絕不把孩子當成實現自己希望的工具，也絕不用孩子來炫耀自己。 </item><item>我們認為：一夫一妻制，是社會安定的磐石，是孩子們成長最安全的溫床，我們喜愛并尊重這種制度，并用事實和行動，維護它的尊嚴。</item><item>我們警惕：婚姻生活并不多彩多姿，它不但平凡，而且瑣碎，如果不滋養珍惜，容易使生命憔悴，心靈粗俗，所以生活之中，我們一定保持適度的假期，與孩子一起長大。</item><item>我們謹記：我們孝敬自己的父母，也孝敬對方的父母，不僅是回報養育之恩，也是培養自己人格的完整，為我們的下一代立下榜樣。 </item><item>我們了解：我們將來會老，所以，我們從結婚這一天，就培養專業之外的其它藝朮興趣，如書、畫、音樂，使我們生命永遠充實燦爛。 </item></list>
          </p>
     </egXML>
   </exemplum>
@@ -258,10 +264,10 @@
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <div1 type="section">
         <head>Athelstan's Ordinance</head>
-        <list type="ordered">
+        <list rend="numbered">
           <item n="1">Concerning thieves. First, that no thief is to be spared who is caught with
             the stolen goods, [if he is] over twelve years and [if the value of the goods is] over
-            eightpence. <list type="ordered"><item n="1.1">And if anyone does spare one, he is to pay for the thief with his
+            eightpence. <list rend="numbered"><item n="1.1">And if anyone does spare one, he is to pay for the thief with his
                 wergild — and the thief is to be no nearer a settlement on that account — or to
                 clear himself by an oath of that amount.</item><item n="1.2">If, however, he [the thief] wishes to defend himself or to escape, he is
                 not to be spared [whether younger or older than twelve].</item><item n="1.3">If a thief is put into prison, he is to be in prison 40 days, and he may
@@ -273,7 +279,7 @@
                </item>
           <item n="2">Concerning lordless men. And we pronounced about these lordless men, from whom
             no justice can be obtained, that one should order their kindred to fetch back such a
-            person to justice and to find him a lord in public meeting. <list type="ordered"><item n="2.1">And if they then will not, or cannot, produce him on that appointed day,
+            person to justice and to find him a lord in public meeting. <list rend="numbered"><item n="2.1">And if they then will not, or cannot, produce him on that appointed day,
                 he is then to be a fugitive afterwards, and he who encounters him is to strike him
                 down as a thief.</item><item n="2.2">And he who harbours him after that, is to pay for him with his wergild
                 or to clear himself by an oath of that amount.</item></list>
@@ -282,7 +288,7 @@
             his guilty man, so that the king is appealed to, is to repay the value of the goods and
             120 shillings to the king; and he who appeals to the king before he demands justice as
             often as he ought, is to pay the same fine as the other would have done, if he had
-            refused him justice. <list type="ordered"><item n="3.1">And the lord who is an accessory to a theft by his slave, and it becomes
+            refused him justice. <list rend="numbered"><item n="3.1">And the lord who is an accessory to a theft by his slave, and it becomes
                 known about him, is to forfeit the slave and be liable to his wergild on the first
                 occasionp if he does it more often, he is to be liable to pay all that he owns.</item><item n="3.2">And likewise any of the king's treasurers or of our reeves, who has been
                 an accessory of thieves who have committed theft, is to liable to the same.</item></list>
@@ -302,7 +308,7 @@
       <p>These decrees, most blessed Pope Hadrian, we propounded in the public council ... and they
         confirmed them in our hand in your stead with the sign of the Holy Cross, and afterwards
         inscribed with a careful pen on the paper of this page, affixing thus the sign of the Holy
-        Cross. <list type="simple"><item>I, Eanbald, by the grace of God archbishop of the holy church of York, have
+        Cross. <list rend="simple"><item>I, Eanbald, by the grace of God archbishop of the holy church of York, have
             subscribed to the pious and catholic validity of this document with the sign of the Holy
             Cross.</item><item>I, Ælfwold, king of the people across the Humber, consenting have subscribed with
             the sign of the Holy Cross.</item><item>I, Tilberht, prelate of the church of Hexham, rejoicing have subscribed with the
