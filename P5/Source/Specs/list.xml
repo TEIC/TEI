@@ -88,9 +88,9 @@
     </group>
   </content>
   <attList>
-    <attDef ident="rend" usage="opt">
+    <attDef ident="rend" usage="opt" mode="change">
       <desc versionDate="2014-07-29" xml:lang="en">describes the rendering of the list.</desc>
-      <datatype>
+      <datatype maxOccurs="unbounded">
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <defaultVal>simple</defaultVal>
@@ -134,6 +134,13 @@
           <desc versionDate="2007-01-21" xml:lang="it">le voci della lista sono sono ordinate</desc>
         </valItem>
       </valList>
+      <remarks xml:lang="en" versionDate="2014-07-29">
+        <p>Multiple values may be combined where appropriate; for instance, a list
+        rendered inline, but with numbering, could be encoded <tag>list rend="numbered inline"</tag>.
+        For more sophisticated and detailed description of list rendering, consider using the <att>style</att>
+          attribute with Cascading Stylesheet properties and values, as described in the W3C's
+          <ref target="http://www.w3.org/TR/css-lists-3/">CSS Lists and Counters Module Level 3</ref>.</p>
+      </remarks>
     </attDef>
     
     <attDef ident="type" usage="opt">
