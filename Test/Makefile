@@ -78,6 +78,7 @@ test-frag:
 test-extns:
 	@echo BUILD: Testing files which demonstrate user extensions
 	xmllint --noout --valid extns.xml
+	xmllint --noout --valid extns2.xml
 
 test-sgml:
 	@echo BUILD: Test SGML extension mechanism
