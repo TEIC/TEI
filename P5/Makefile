@@ -56,23 +56,33 @@ html-web: check.stamp p5.xml  html-web.stamp
 
 html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 	@echo BUILD: Making HTML Guidelines for language ${LANGUAGE}
+	@# remove vestiges of previous run
+	rm -rf Guidelines-web
+	@# generate XSL stylesheet by modifying paths in our model stylesheet
 	perl -p -e \
 		"s+http://www.tei-c.org/release/xml/tei/stylesheet+${XSL}+; \
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines.xsl.model > Utilities/guidelines.xsl
-	rm -rf Guidelines-web
 	if [ -n ${GOOGLEANALYTICS} ] ; then curl -s http://www.tei-c.org/index.xml | sed 's/content="text\/html"/content="text\/html; charset=utf-8"/' | xmllint --html --noent --dropdtd --xmlout - > Utilities/teic-index.xml;fi
-	echo '<project basedir="." default="html" name="buildweb"><import file="antbuildweb.xml"/><target name="html">' > buildweb.xml
+	@# for each language, create a subdirectory and pre-populate it with CSS, source, and web navigation stuff
 	for i in $(ALLLANGUAGES) ;do \
 		mkdir -p Guidelines-web/$$i/html; \
 		cp odd.css guidelines.css guidelines-print.css Guidelines-web/$$i/html; \
 		(cd Source/Guidelines/${INPUTLANGUAGE}; tar --exclude .svn -c -f - Images) | (cd Guidelines-web/$$i/html; tar xf - );\
 		(cd webnav; tar --exclude .svn -c -f - .) | (cd Guidelines-web/$$i/html; tar xf - ); \
+	done
+	@# create a temporary 'buildweb.xml' file for `ant` to run
+	echo '<project basedir="." default="html" name="buildweb"><import file="antbuildweb.xml"/><target name="html">' \
+		> buildweb.xml
+	for i in $(ALLLANGUAGES) ;do \
 		echo "<buildweb lang=\"$$i\"/>" >> buildweb.xml; \
 	done
 	echo '</target></project>' >> buildweb.xml
+	@# use `ant` to run the lovely ANT file we just generated
 	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f buildweb.xml -DgoogleAnalytics=${GOOGLEANALYTICS}
-	rm -f buildweb.xml Utilities/teic-index.xml
+	@# clean up after ourselves
+	# commented out for DEBUGing: rm -f buildweb.xml Utilities/teic-index.xml
+	@# let future `make`s know we been there, done that
 	touch html-web.stamp
 
 teiwebsiteguidelines:
