@@ -108,11 +108,19 @@ paralinguistic feature.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
+      <constraintSpec ident="shiftNew" scheme="isoschematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" >
+        <constraint>
+          <sch:rule context="tei:shift[@new]">
+            <sch:assert test="string-length(.) gt 0">
+              The special value "normal" should be used to
+              indicate that the feature concerned ceases to be remarkable at this point. In earlier versions of these Guidelines, a null value for this attribute was understood to have the same effect: this practice is now deprecated </sch:assert>
+          </sch:rule>
+        </constraint>
+      </constraintSpec>
       <defaultVal>normal</defaultVal>
-      <remarks versionDate="2013-12-06" xml:lang="en">
-        <p>An example list of possible values for this attribute is provided in section <ptr target="#TSSAPA"/>. If no value is specified, it is assumed that the feature
-concerned ceases to be remarkable. The value <q>normal</q> has the same
-effect.
+      <remarks versionDate="2014-08-04" xml:lang="en">
+        <p>Some possible values for this attribute are provided in section <ptr target="#TSSAPA"/>. The special value <val>normal</val> should be used to
+         indicate that the feature concerned ceases to be remarkable at this point. In earlier versions of these Guidelines, a null value for this attribute was understood to have the same effect: this practice is now deprecated and will be removed at a future release. 
    </p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
@@ -127,6 +135,7 @@ effect.
       </remarks>
     </attDef>
   </attList>
+ 
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <u who="#LB"><shift feature="loud" new="f"/>Elizabeth</u>
