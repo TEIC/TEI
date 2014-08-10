@@ -108,16 +108,13 @@ paralinguistic feature.</desc>
       <datatype>
         <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
-   <!--   <constraintSpec ident="shiftNew" scheme="isoschematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" >
+    <constraintSpec ident="shiftNew" scheme="isoschematron" >
         <constraint>
-          <sch:rule context="tei:shift[@new]">
-            <sch:assert test="string-length(.) gt 0">
-              The special value "normal" should be used to
-              indicate that the feature concerned ceases to be remarkable at this point. In earlier versions of these Guidelines, a null value for this attribute was understood to have the same effect: this practice is now deprecated </sch:assert>
-          </sch:rule>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@new">              The @new attribute should always be supplied; use the special value "normal" to
+              indicate that the feature concerned ceases to be remarkable at this point.</assert>
         </constraint>
       </constraintSpec>
-      --><defaultVal>normal</defaultVal>
+      <defaultVal>normal</defaultVal>
       <remarks versionDate="2014-08-04" xml:lang="en">
         <p>Some possible values for this attribute are provided in section <ptr target="#TSSAPA"/>. The special value <val>normal</val> should be used to
          indicate that the feature concerned ceases to be remarkable at this point. In earlier versions of these Guidelines, a null value for this attribute was understood to have the same effect: this practice is now deprecated and will be removed at a future release. 
