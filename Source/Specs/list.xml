@@ -89,62 +89,11 @@
     </group>
   </content>
   <attList>
-<!--    MDH: This was commented out because although Council agreed to implement it in July 2014, it's currently 
-        very difficult to get around a problem with overriding a global attribute for DTD generation. -->
-    <attDef ident="rend" usage="opt" mode="change">
-      <desc versionDate="2014-07-29" xml:lang="en">describes the appearance and rendering of the list.</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
-      <defaultVal>simple</defaultVal>
-      <valList type="semi" mode="add">
-        <valItem ident="bulleted">
-          <desc versionDate="2007-06-27" xml:lang="en">list items are marked with a bullet or other typographic device.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">목록의 각 항목은 글머리표 또는 부호로 표지되어 있다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">列表項目以黑點或其他印刷符號排列。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">los items de la lista se marcan con ul punto
-            negro o con cualquier otro caracter tipográfico.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">リスト項目は，中黒または他の印刷可能な印で示されている．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">les items de la liste sont marqués par une puce
-            ou avec un autre signe typographique.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">le voci della lista sono contraddistinte da un
-            punto o altro</desc>
-        </valItem>
-        <valItem ident="inline">
-          <desc versionDate="2014-07-29" xml:lang="en">list items are rendered inline rather than as blocks, and have no marker of any kind</desc>
-        </valItem>
-        <valItem ident="numbered">
-          <desc versionDate="2007-06-27" xml:lang="en">list items are numbered or lettered.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">목록의 각 항목은 숫자순 또는 문자순으로 정렬되어 있다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">列表項目以數字或字母依順序排列。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">los elementos de la lista se numeran (con números
-            o letras).</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">リストの項目は番号付けまたは文字付けされている．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">le classement des items de la liste est
-            alphanumérique</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">le voci della lista sono in ordine numerico o
-            alfabetico</desc>
-        </valItem>
-        <valItem ident="simple">
-          <desc versionDate="2007-06-27" xml:lang="en">list items are not numbered or bulleted.</desc>
-          <desc versionDate="2007-12-20" xml:lang="ko">목록의 각 항목이 숫자 또는 글머리표로 표지되어 있지 않다.</desc>
-          <desc versionDate="2007-05-02" xml:lang="zh-TW">列表項目的排列沒有用數字或任何其他符號作標記。</desc>
-          <desc versionDate="2008-04-06" xml:lang="es">los items de la lista no son numerados o
-            punteados.</desc>
-          <desc versionDate="2008-04-05" xml:lang="ja">リスト項目は，番号付けまたは中黒付けがされていない．</desc>
-          <desc versionDate="2008-03-30" xml:lang="fr">les items de la liste ne sont pas numérotés ni
-            précédés d'une puce.</desc>
-          <desc versionDate="2007-01-21" xml:lang="it">le voci della lista sono sono ordinate</desc>
-        </valItem>
-      </valList>
-      <remarks xml:lang="en" versionDate="2014-07-29">
-        <p>Multiple values may be combined where appropriate; for instance, a list
-        rendered inline, but with numbering, could be encoded <tag>list rend="numbered inline"</tag>.
-        For more sophisticated and detailed description of list rendering, consider using the <att>style</att>
-          attribute with Cascading Stylesheet properties and values, as described in the W3C's
-          <ref target="http://www.w3.org/TR/css-lists-3/">CSS Lists and Counters Module Level 3</ref>.</p>
-      </remarks>
-    </attDef>
+<!--    MDH 2014-08-31: I'm removing an override of @rend which was last present in rev 12971, per discussions
+        on the Council list. Its original purpose was to provide a guided transition between the old uses of 
+        @type and the new recommendation to use @rend, but the general consensus is that providing suggestions
+        in the prose is better than formalizing them in the ODD.
+    -->
     
     <attDef ident="type" usage="opt" mode="change">
       <desc versionDate="2014-07-29" xml:lang="en">describes the nature of the items in the list.</desc>
