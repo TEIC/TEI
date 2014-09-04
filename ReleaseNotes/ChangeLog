@@ -1,3 +1,1117 @@
+2014-08-06  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	Forgot mode="add" on valList for @type.
+
+2014-08-06  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	Adding <list> to att.typed, making the previously local @type attribute
+	an override of the class attribute, and providing @subtype, as part of
+	http://sourceforge.net/p/tei/feature-requests/460/.
+
+2014-08-05  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	Bringing parallel structure to list/@type definitions
+	(http://sourceforge.net/p/tei/bugs/460/).
+
+2014-08-04  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+	   M /trunk/P5/Test/Makefile
+	   A /trunk/P5/Test/extns2.xml
+
+	another test for parameterized DTDs
+
+2014-08-04  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	Adding more values suggested by PFS to <list>/@type, per
+	http://sourceforge.net/p/tei/bugs/460/.
+
+2014-08-01  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/relation.xml
+	   M /trunk/P5/Source/Specs/sequence.xml
+
+	fix bug 680 (also clarify wording on relation)
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CO-CoreElements.xml
+	   M /trunk/P5/Source/Specs/list.xml
+
+	More work on https://sourceforge.net/p/tei/bugs/460/: changes to chapter prose.
+	@rend override has now been commented out to avoid issue with DTDs, so recommendations
+	have been added to the CO chapter instead.
+
+2014-07-30  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	for now, dont override @rend on list, in order to get past non-compiling DTD
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	https://sourceforge.net/p/tei/bugs/460 cleanup again: valList/@mode='replace' is a) wrong
+	since the ancestor @rend in att.global has no valList, and b) strangely disruptive, causing
+	errors in the Test build related to att.global.linking for some reason. Switching to
+	@mode="add".
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	Test build is failing due to constraint in testbasic.odd; I think this is
+	because I need to use @mode="replace" on the @rend valList in <list>. We'll see.
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/p5odds.odd
+
+	It helps to add the new value instead of a copy of an old one.
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/p5odds.odd
+
+	Adding @rend="bulleted" to p5odds.odd to enable Guidelines source
+	to be validated following use of this value per https://sourceforge.net/p/tei/bugs/460.
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/fr/HD-Header.xml
+
+	Change to French header chapter, list/@type to @rend per https://sourceforge.net/p/tei/bugs/460.
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/AB-About.xml
+	   M /trunk/P5/Source/Guidelines/en/CC-LanguageCorpora.xml
+	   M /trunk/P5/Source/Guidelines/en/CE-CertaintyResponsibility.xml
+	   M /trunk/P5/Source/Guidelines/en/CO-CoreElements.xml
+	   M /trunk/P5/Source/Guidelines/en/DI-PrintDictionaries.xml
+	   M /trunk/P5/Source/Guidelines/en/DR-PerformanceTexts.xml
+	   M /trunk/P5/Source/Guidelines/en/DS-DefaultTextStructure.xml
+	   M /trunk/P5/Source/Guidelines/en/FM1-IntroductoryNote.xml
+	   M /trunk/P5/Source/Guidelines/en/FS-FeatureStructures.xml
+	   M /trunk/P5/Source/Guidelines/en/FT-TablesFormulaeGraphics.xml
+	   M /trunk/P5/Source/Guidelines/en/GD-GraphsNetworksTrees.xml
+	   M /trunk/P5/Source/Guidelines/en/HD-Header.xml
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+	   M /trunk/P5/Source/Guidelines/en/NH-Non-hierarchical.xml
+	   M /trunk/P5/Source/Guidelines/en/PH-PrimarySources.xml
+	   M /trunk/P5/Source/Guidelines/en/PrefatoryNote.xml
+	   M /trunk/P5/Source/Guidelines/en/SA-LinkingSegmentationAlignment.xml
+	   M /trunk/P5/Source/Guidelines/en/SG-GentleIntroduction.xml
+	   M /trunk/P5/Source/Guidelines/en/ST-Infrastructure.xml
+	   M /trunk/P5/Source/Guidelines/en/TC-CriticalApparatus.xml
+	   M /trunk/P5/Source/Guidelines/en/TD-DocumentationElements.xml
+	   M /trunk/P5/Source/Guidelines/en/TS-TranscriptionsofSpeech.xml
+	   M /trunk/P5/Source/Guidelines/en/USE.xml
+	   M /trunk/P5/Source/Guidelines/en/VE-Verse.xml
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+	   M /trunk/P5/Source/Specs/head.xml
+	   M /trunk/P5/Source/Specs/item.xml
+
+	Changes to usage of list/@type to @rend.
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	Adding remarks regarding use of @style, and allowing multiple values for
+	@rend, as part of https://sourceforge.net/p/tei/bugs/460.
+
+2014-07-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/list.xml
+
+	First part of https://sourceforge.net/p/tei/bugs/460/, involving changes to the spec file for
+	<list>. Next is adding some more remarks and suggestions regarding the use of @style.
+
+2014-07-28  Syd Bauman  <sbauman@brown.edu>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/att.datable.iso.xml
+	   M /trunk/P5/Source/Specs/att.datable.w3c.xml
+
+	fix typo in datable.W3C attrs; move <remarks> of datable.ISO attrs out of iso-when into general tagdoc (as was done for W3C last check-in :-)
+
+2014-07-27  Syd Bauman  <sbauman@brown.edu>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CO-CoreElements.xml
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+	   M /trunk/P5/Source/Guidelines/en/SG-GentleIntroduction.xml
+	   M /trunk/P5/Source/Guidelines/en/ST-Infrastructure.xml
+	   M /trunk/P5/Source/Specs/att.datable.iso.xml
+	   M /trunk/P5/Source/Specs/att.datable.w3c.xml
+	   M /trunk/P5/Source/Specs/data.temporal.w3c.xml
+	   M /trunk/P5/Source/Specs/docDate.xml
+	   M /trunk/P5/Source/Specs/metDecl.xml
+
+	Work on bug 632
+
+2014-07-11  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	JS comment in script
+
+2014-07-11  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	work around stupid HTML validaor warning
+
+2014-07-09  James Cummings <james.cummings@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/taxonomy.xml
+
+	additional example
+
+2014-07-09  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/certainty.xml
+
+	formatting example
+
+2014-07-07  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/SG-GentleIntroduction.xml
+
+	Fixing broken URL.
+
+2014-07-03  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   A /trunk/P5/Source/Specs/mixedContent.xml
+	   A /trunk/P5/Source/Specs/textNode.xml
+
+	add new elementspecs for pure odd text handling
+
+2014-07-03  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/webnav/popupFootnotes.js
+
+	Adding experimental support for popup bibliography entries to replace navigation away from the chapter.
+
+2014-07-03  stefaniegehrke
+	Changed paths:
+	   M /trunk/P5/Source/Specs/att.handFeatures.xml
+
+	Changed datatype for @medium in att.handFeatures to datatype minOccurs 1 maxOccurs unbounded, see https://sourceforge.net/p/tei/feature-requests/483/
+
+2014-07-03  stefaniegehrke
+	Changed paths:
+	   M /trunk/P5/Source/Specs/att.handFeatures.xml
+
+	Changed datatype for @medium in att.handFeatures to datatype minOccurs= 1 maxOccurs unbounded, see https://sourceforge.net/p/tei/bugs/483/
+
+2014-07-01  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/Incubator/TBX/TEI-TBX.odd
+	   M /trunk/P5/Source/Specs/att.coordinated.xml
+	   M /trunk/P5/Source/Specs/zone.xml
+
+	Moving @points from zone to att.coordinated per https://sourceforge.net/p/tei/feature-requests/488/.
+
+2014-07-01  stadlerpeter
+	Changed paths:
+	   M /trunk/P5/Source/Specs/rs.xml
+
+	added att.responsibility to rs, closes [feature:#509]
+
+2014-07-01  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CO-CoreElements.xml
+	   M /trunk/P5/Source/Guidelines/en/FT-TablesFormulaeGraphics.xml
+	   M /trunk/P5/Source/guidelines-en.xml
+
+	remove pubplace from titlepage
+
+2014-07-01  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/moduleRef.xml
+
+	correct except/exclude confusion and remove redundant eg
+
+2014-07-01  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/valItem.xml
+
+	revert unapproved change
+
+2014-07-01  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/moduleRef.xml
+	   M /trunk/P5/Source/Specs/sequence.xml
+	   M /trunk/P5/Source/Specs/valItem.xml
+
+	use @except not @exclude
+
+2014-07-01  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Exemplars/tei_tite.odd
+
+	Expanded the reference to lb in Tite per http://sourceforge.net/p/tei/bugs/228/.
+
+2014-06-30  hcayless
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/TC-CriticalApparatus.xml
+
+	Tweaked the prose for lem in critical apparatus.
+
+2014-06-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/AI-AnalyticMechanisms.xml
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+	   M /trunk/P5/Source/Guidelines/en/CE-CertaintyResponsibility.xml
+	   M /trunk/P5/Source/Guidelines/en/FT-TablesFormulaeGraphics.xml
+	   M /trunk/P5/Source/Guidelines/en/PrefatoryNote.xml
+	   M /trunk/P5/Source/Guidelines/en/TD-DocumentationElements.xml
+	   M /trunk/P5/Source/Guidelines/en/USE.xml
+
+	More corrections to headings for http://sourceforge.net/p/tei/bugs/667/; work on the
+	Guidelines text is now complete for this bug.
+
+2014-06-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CH-LanguagesCharacterSets.xml
+	   M /trunk/P5/Source/Guidelines/en/CO-CoreElements.xml
+	   M /trunk/P5/Source/Guidelines/en/DR-PerformanceTexts.xml
+	   M /trunk/P5/Source/Guidelines/en/HD-Header.xml
+	   M /trunk/P5/Source/Guidelines/en/MS-ManuscriptDescription.xml
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+	   M /trunk/P5/Source/Guidelines/en/PH-PrimarySources.xml
+	   M /trunk/P5/Source/Guidelines/en/ST-Infrastructure.xml
+
+	Fixes to capitalization in titles per https://sourceforge.net/p/tei/bugs/667/ (not finished yet).
+
+2014-06-30  pfschaffner
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/USE.xml
+
+	Partial completion of bug 634.
+	https://sourceforge.net/p/tei/bugs/634/
+
+2014-06-30  stefaniegehrke
+	Changed paths:
+	   M /trunk/P5/Source/Specs/summary.xml
+
+	Change content model of summary from https://sourceforge.net/p/tei/bugs/616/
+
+2014-06-30  hcayless
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/SA-LinkingSegmentationAlignment.xml
+
+	Fix for bug #629. Changed escape syntax for '$' in canonical references.
+
+2014-06-30  hcayless
+	Changed paths:
+	   M /trunk/P5/Source/Specs/link.xml
+	   M /trunk/P5/Source/Specs/span.xml
+
+	Fix for bug #671. Added normalize-space() to constraints for link/@target and span/@from|@to.
+
+2014-06-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/AB-About.xml
+	   M /trunk/P5/Source/Guidelines/en/CH-LanguagesCharacterSets.xml
+	   M /trunk/P5/Source/Guidelines/en/SG-GentleIntroduction.xml
+
+	Fixing some titles per https://sourceforge.net/p/tei/bugs/667/.
+
+2014-06-26  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/webnav/udm-all.js
+	   M /trunk/P5/webnav/udm-dom.js
+	   M /trunk/P5/webnav/udm-mod-keyboard.js
+
+	refresh copy of UDM
+
+2014-06-23  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/TD-DocumentationElements.xml
+	   M /trunk/P5/Source/Specs/att.transcriptional.xml
+	   M /trunk/P5/Source/Specs/attDef.xml
+	   M /trunk/P5/Source/Specs/persName.xml
+
+	Commenting out instances of mwa and rwa per http://sourceforge.net/p/tei/bugs/299/ and
+	http://sourceforge.net/p/tei/bugs/676/ . If no problems apparent in future, remove. Also
+	removed some previously commented-out code which used the values in persName.xml.
+
+2014-06-06  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/sequence.xml
+
+	correct egregious errors noted by MH bug #674 #673
+
+2014-06-06  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/DI-PrintDictionaries.xml
+
+	correction from bug 672
+
+2014-06-06  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Makefile
+
+	re-un-comment XSL= line
+
+2014-06-06  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/msDesc.xml
+
+	make it a member of att.declaring per fr 393
+
+2014-06-04  hcayless
+	Changed paths:
+	   M /trunk/P5/Makefile
+
+	Uncommented svndate.
+
+2014-06-04  hcayless
+	Changed paths:
+	   M /trunk/P5/Makefile
+
+	Fixing XSL path in Makefile.
+
+2014-06-04  hcayless
+	Changed paths:
+	   M /trunk/P5/antbuilder.xml
+
+	Fixed XSL property.
+
+2014-06-04  hcayless
+	Changed paths:
+	   M /trunk/P5/Makefile
+	   M /trunk/P5/Source/Guidelines/en/SA-LinkingSegmentationAlignment.xml
+	   M /trunk/P5/Source/Guidelines/en/TC-CriticalApparatus.xml
+	   M /trunk/P5/antbuilder.xml
+
+	Getting ready to commit pointers work.
+
+2014-05-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	Wording change in WD per suggestion from JC.
+
+2014-05-30  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+
+	amusing non-useful comments
+
+2014-05-30  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+
+	not useful comment
+
+2014-05-26  stadlerpeter
+	Changed paths:
+	   M /trunk/P5/Source/Specs/constraintSpec.xml
+	   M /trunk/P5/Source/Specs/schemaSpec.xml
+
+	added constraintSpec to model.oddDecl and removed duplicate ref from schemaSpec content model, closes [feature-requests:#508]
+
+2014-05-22  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/tei-install.sh
+
+	fix typo
+
+2014-05-21  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/att.damaged.xml
+	   M /trunk/P5/Source/Specs/att.global.xml
+	   M /trunk/P5/Source/Specs/att.tableDecoration.xml
+	   M /trunk/P5/Source/Specs/att.typed.xml
+	   M /trunk/P5/Source/Specs/metDecl.xml
+
+	tidying up Spanish translation oddities
+
+2014-05-21  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   A /trunk/P5/Source/Defunct/relationGrp.xml (from /trunk/P5/Source/Specs/relationGrp.xml:12897)
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+	   M /trunk/P5/Source/Specs/listEvent.xml
+	   M /trunk/P5/Source/Specs/listNym.xml
+	   M /trunk/P5/Source/Specs/listOrg.xml
+	   M /trunk/P5/Source/Specs/listPerson.xml
+	   M /trunk/P5/Source/Specs/listPlace.xml
+	   D /trunk/P5/Source/Specs/relationGrp.xml
+
+	Enhancement to ND section on @calendar and @datingMethod per suggestion
+	from LB; removal of obsolete <relationGrp> element.
+
+2014-05-21  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/att.xml
+
+	replace @style by @type in example; add some commonly used values for @scheme
+
+2014-05-21  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/NH-Non-hierarchical.xml
+	   M /trunk/P5/Source/Guidelines/en/SG-GentleIntroduction.xml
+	   M /trunk/P5/Source/Guidelines/en/TD-DocumentationElements.xml
+	   M /trunk/P5/Source/Specs/att.patternReplacement.xml
+	   M /trunk/P5/Source/Specs/att.pointing.group.xml
+	   M /trunk/P5/Source/Specs/datatype.xml
+	   M /trunk/P5/Source/Specs/fsDecl.xml
+	   M /trunk/P5/Source/Specs/gram.xml
+	   M /trunk/P5/Source/Specs/join.xml
+	   M /trunk/P5/Source/Specs/role.xml
+	   M /trunk/P5/Source/Specs/surface.xml
+
+	removing ghost attributes
+
+2014-05-20  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+
+	Minor tweak to inclusion of calendar specs.
+
+2014-05-20  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+
+	xml:id "Julian" had been used in HD. Now using something different in ND.
+
+2014-05-20  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/HD-Header.xml
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+
+	Adding a more detailed explanation of @datingMethod and @calendar to
+	Names and Dates, and a pointer to it in HD, per https://sourceforge.net/p/tei/bugs/668/.
+
+2014-05-20  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/HD-Header.xml
+
+	Fixing bad attribute name in HD chapter per http://sourceforge.net/p/tei/bugs/668/.
+
+2014-05-19  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/ST-Infrastructure.xml
+	   M /trunk/P5/Source/Guidelines/en/USE.xml
+	   M /trunk/P5/Source/Specs/schemaSpec.xml
+
+	slight clarification about @start on schemaSpec
+
+2014-05-19  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/tei-install.sh
+
+	add option to makecurrent
+
+2014-05-19  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/tei-install.sh
+
+	options to install script to allow just install or upload
+
+2014-05-13  James Cummings <james.cummings@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/TD-DocumentationElements.xml
+
+	correcting some inconsistencies/typos in specDesc example
+
+2014-05-13  James Cummings <james.cummings@oucs.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/TD-DocumentationElements.xml
+
+	adding @atts to specDesc example
+
+2014-05-11  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+
+	two surnames? yes, theoretically possibly but lets avoid it until forced to confront the issue
+
+2014-05-10  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+
+	more sustainable links to paper
+
+2014-05-06  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/antbuilder.xml
+
+	generate pure JSON properly
+
+2014-05-01  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/HD-Header.xml
+
+	Missed a reference to quotation/@form.
+
+2014-05-01  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/quotation.xml
+
+	Commenting out obsolete @form attribute (expired 2014-04-28).
+
+2014-05-01  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	correct cross ref
+
+2014-05-01  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CH-LanguagesCharacterSets.xml
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	Tweaks to the new text directionality sections; fix for a heading
+	that I noticed was in sentence case instead of title case.
+
+2014-04-28  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/am.xml
+
+	wrong target for egXML
+
+2014-04-28  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	correct xref
+
+2014-04-28  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+	   M /trunk/P5/Source/Specs/am.xml
+	   M /trunk/P5/Source/Specs/att.typed.xml
+
+	change from @corresp to @source on examples
+
+2014-04-28  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	more updates for the bibliog
+
+2014-04-28  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	add bibliog entries and heads to examples
+
+2014-04-28  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	please add this version
+
+2014-04-27  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	add text directionality material to WD and revise accordingly: first shot
+
+2014-04-27  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CH-LanguagesCharacterSets.xml
+
+	some rather evil textual cross-references
+
+2014-04-27  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/AI-AnalyticMechanisms.xml
+	   M /trunk/P5/Source/Guidelines/en/FS-FeatureStructures.xml
+	   M /trunk/P5/Source/Guidelines/en/PH-PrimarySources.xml
+	   M /trunk/P5/Source/Specs/att.global.xml
+	   M /trunk/P5/antbuilder.xml
+
+	rename a few IDs to avoid duplicates when expanded for making documentation
+
+2014-04-27  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   A /trunk/P5/Source/Guidelines/en/Images/ja_vertical_indonesian_frag.rotated.jpg
+
+	add missing graphic please
+
+2014-04-26  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/relatedItem.xml
+
+	put report and assert back in same container
+
+2014-04-26  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/channel.xml
+	   M /trunk/P5/Source/Specs/email.xml
+	   M /trunk/P5/Source/Specs/model.addressLike.xml
+
+	remove hyphen from "e-mail" per bugs 664
+
+2014-04-25  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/relatedItem.xml
+
+	Splitting out a sch:report and a sch:assert into two separate constraintSpec elements
+	(see message to Council list today).
+
+2014-04-17  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   A /trunk/P5/Utilities/lib/Saxon-HE-9.4.0.6.jar
+
+	needed for epubchecl
+
+2014-04-17  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Exemplars/Makefile
+	   M /trunk/P5/Makefile
+	   M /trunk/P5/Test/Makefile
+	   D /trunk/P5/Utilities/lib/Saxon-HE-9.4.0.6.jar
+	   A /trunk/P5/Utilities/lib/saxon9he.jar
+
+	update version of Saxon
+
+2014-04-01  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/state.xml
+
+	tidy up examples
+
+2014-04-01  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/trait.xml
+
+	remove another otiose duplicate cross ref
+
+2014-03-25  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Makefile
+	   M /trunk/P5/Source/Specs/punctuation.xml
+	   M /trunk/P5/p5odds.odd
+
+	add Schematron test to check elements are members of att.global
+
+2014-03-22  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/guidelines-en.xml
+	   M /trunk/P5/Source/guidelines-fr.xml
+
+	change titlepages per #638
+
+2014-03-22  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/personGrp.xml
+
+	make content model consistent with person, per bug #648
+
+2014-03-18  stadlerpeter
+	Changed paths:
+	   M /trunk/P5/Source/Specs/teiHeader.xml
+
+	changed English and German description for &lt;teiHeader&gt; according to [feature-requests:#501]
+
+2014-03-17  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/biblScope.xml
+	   M /trunk/P5/Source/Specs/citedRange.xml
+
+	fix cross reference per bug #652
+
+2014-03-10  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   A /trunk/P5/Exemplars/tei_lite_fr.nvdl
+
+	extra NVDL file
+
+2014-03-10  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/expected-results/ValidatorLog.xml
+
+	Trying again. This ValidatorLog.xml is saved directly from the workspace of
+	the P5 Test job.
+
+2014-03-10  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/expected-results/ValidatorLog.xml
+
+	Validator log has changed due to addition of deprecation.
+
+2014-03-10  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/PH-PrimarySources.xml
+
+	Fixing typo omission per https://sourceforge.net/p/tei/bugs/650/. Thanks to
+	Brett for reporting this.
+
+2014-02-22  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Makefile
+
+	make ant options consistent
+
+2014-02-22  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Exemplars/Makefile
+	   M /trunk/P5/Makefile
+	   M /trunk/P5/Test/Makefile
+
+	make ant run headless
+
+2014-02-20  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/constraint.xml
+
+	ensure constraint spec has one example of Schematron
+
+2014-02-19  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/MS-ManuscriptDescription.xml
+
+	abolish "manuscription"
+
+2014-02-19  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/MS-ManuscriptDescription.xml
+
+	correction from Jens
+
+2014-02-16  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CO-CoreElements.xml
+
+	xpoointer link
+
+2014-02-15  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/altIdentifier.xml
+
+	add missing versionDate attributes
+
+2014-02-14  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/altIdentifier.xml
+	   M /trunk/P5/Source/Specs/punctuation.xml
+
+	restore altIdentifier, and add att.global to punctuation
+
+2014-02-14  Syd Bauman  <sbauman@brown.edu>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/prefixDef.xml
+
+	Re-word remarks for <prefixDef> a bit, as it applies to any pointing attribute, not a particular attribute
+
+2014-02-13  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/classRef.xml
+
+	@include and @except on classRef are now allowed back in, as the ODD processor implements this functionality
+
+2014-02-11  Syd Bauman  <sbauman@brown.edu>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/prefixDef.xml
+
+	Fix wrong attr name, probably copy-paste-error.
+
+2014-02-10  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Exemplars/Makefile
+
+	more xsd nionsense
+
+2014-02-10  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   A /trunk/P5/Exemplars/pom.xml
+
+	maven setup for testing XSD
+
+2014-02-09  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Exemplars/Makefile
+
+	more xsd fixes
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+
+	hopefully right link for Welty/Ide
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CO-CoreElements.xml
+
+	simpler pointer to W3C doc about xpointer/xptr
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Exemplars/Makefile
+
+	allow for Tite namespace
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Test/Makefile
+
+	trying again with XSD
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Test/Makefile
+
+	another namespace
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Test/Makefile
+
+	have to allow for another namespace too
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Test/Makefile
+
+	not all schemas have an xml.xsd, and thats not an error
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Test/Makefile
+
+	not all schemas have an xml.xsd
+
+2014-02-08  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Exemplars/Makefile
+	   M /trunk/P5/Test/Makefile
+
+	rethink the way the supplementary XSD files are created; make distinct ones for each schema
+
+2014-02-04  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   A /trunk/P5/Source/Guidelines/en/Images/basho_furu_ike_ya.png
+	   A /trunk/P5/Source/Guidelines/en/Images/basho_furu_ike_ya.zip
+	   A /trunk/P5/Source/Guidelines/en/Images/bcgenesis_co_305_06_00131v_table_extract.jpg
+	   A /trunk/P5/Source/Guidelines/en/Images/bcgenesis_co_305_06_00131v_table_extract.zip
+	   A /trunk/P5/Source/Guidelines/en/Images/boustrophedon_small_J.NW.Epeiros.13.p03.jpg
+	   A /trunk/P5/Source/Guidelines/en/Images/boustrophedon_small_J.NW.Epeiros.13.p03.zip
+	   A /trunk/P5/Source/Guidelines/en/Images/en_he_embedding.png
+	   A /trunk/P5/Source/Guidelines/en/Images/en_he_embedding.zip
+	   A /trunk/P5/Source/Guidelines/en/Images/herbert_church_p35_sm.jpg
+	   A /trunk/P5/Source/Guidelines/en/Images/herbert_church_p35_sm.zip
+	   A /trunk/P5/Source/Guidelines/en/Images/ja_vertical_indonesian_frag.png
+	   A /trunk/P5/Source/Guidelines/en/Images/ja_vertical_indonesian_frag.zip
+	   A /trunk/P5/Source/Guidelines/en/Images/rotation_on_axes.zip
+	   A /trunk/P5/Source/Guidelines/en/Images/rotation_on_x_axis.png
+	   A /trunk/P5/Source/Guidelines/en/Images/rotation_on_y_axis.png
+	   A /trunk/P5/Source/Guidelines/en/Images/rotation_on_z_axis.png
+
+	Adding images from text-directionality draft section of Guidelines in preparation for its inclusion in a re-write of Chapter 10, per http://sourceforge.net/p/tei/feature-requests/342/.
+
+2014-02-03  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Specs/state.xml
+
+	Fix for duplicate reference in state.xml, http://sourceforge.net/p/tei/bugs/644/.
+
+2014-02-03  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+
+	better url for paper
+
+2014-02-01  Syd Bauman  <sbauman@brown.edu>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/DS-DefaultTextStructure.xml
+
+	a couple of valid examples had been flagged as feasibly valid; see thread "example validity" on Council list, started 2014-01-26 by James
+
+2014-01-30  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	Fixing typo in title of WD (chapter 5); somehow it had become
+	"Non-standard Characters and Glyph" (without the s).
+
+2014-01-29  Lou Burnard <lou.burnard@retired.ox.ac.uk>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/TD-DocumentationElements.xml
+	   M /trunk/P5/Source/Specs/content.xml
+	   M /trunk/P5/Source/Specs/datatype.xml
+
+	allow for pure content in datatype
+
+2014-01-24  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/Documents/Editing/Jenkins/jobs/Guidelines-Link-Check/linkchecker.xsl
+	   M /trunk/Documents/Editing/Jenkins/jobs/Guidelines-Link-Check/linkcheckerrcalphabeta
+	   M /trunk/Documents/Editing/Jenkins/jobs/Guidelines-Link-Check/linkcheckerrcrelease
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+	   M /trunk/P5/Source/Guidelines/en/SA-LinkingSegmentationAlignment.xml
+	   M /trunk/P5/Source/Guidelines/en/USE.xml
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+	   M /trunk/P5/Source/Guidelines/index.xml
+
+	A few more fixes for broken links that slipped by in the last pass, and
+	a couple of tweaks to the link checker config to ignore some unresolvable
+	links (such as xpointers).
+
+2014-01-23  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+
+	Last remaining broken URL.
+
+2014-01-23  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+	   M /trunk/P5/Source/Guidelines/en/FT-TablesFormulaeGraphics.xml
+	   M /trunk/P5/Source/Guidelines/en/ND-NamesDates.xml
+	   M /trunk/P5/Source/Specs/data.language.xml
+	   M /trunk/P5/Source/Specs/data.version.xml
+
+	Fixes for broken URLs.
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+
+	Many more broken link fixes from linkchecker.
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/BIB-Bibliography.xml
+	   M /trunk/P5/Source/Specs/data.namespace.xml
+
+	Many more link fixes from the linkchecker results.
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/WD-NonStandardCharacters.xml
+
+	Bad link fix.
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	Broken URL fix.
+
+2014-01-22  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	do it again, with the code right this time. smackd wrist
+
+2014-01-22  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	links coming TEI web site starting with / are prefixed by web site address, to make guidelines free-standing
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/SG-GentleIntroduction.xml
+
+	More incomplete URLs in links.
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/CH-LanguagesCharacterSets.xml
+	   M /trunk/P5/Source/Guidelines/en/SG-GentleIntroduction.xml
+	   M /trunk/P5/Source/Guidelines/en/ST-Infrastructure.xml
+
+	More incomplete URLs in links.
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Source/Guidelines/en/AB-About.xml
+
+	Another broken link fixed.
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	Another bad link (moved from Consortium to About).
+
+2014-01-22  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	Fixing a bad link found by linkchecker.
+
+2014-01-21  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	remove debug lines added in local test
+
+2014-01-21  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	the list of examples in reference pages link to the documentation for element in the appropriate language; but what if we dont have that language? default to en
+
+2014-01-21  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Makefile
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	remove spurious link to ID which does not exist, in all web pages
+
+2014-01-20  stadlerpeter
+	Changed paths:
+	   M /trunk/P5/VERSION
+
+	incrementing version number after release
+
+2014-01-20  Martin Holmes <mholmes@uvic.ca>
+	Changed paths:
+	   M /trunk/P5/Utilities/guidelines.xsl.model
+
+	Trying a fix for the index page footer language links which are currently borked.
+
+2014-01-20  stadlerpeter
+	Changed paths:
+	   M /trunk/P5/ReleaseNotes/ChangeLog
+	   M /trunk/P5/ReleaseNotes/readme-2.6.0.xml
+	   M /trunk/P5/VERSION
+
+	preparing release 2.6.0: modifying readme, changing version number and updating changelog
+
+2014-01-19  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Makefile
+
+	oh make thou art tricksy
+
+2014-01-19  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Makefile
+
+	pro tem, mask warnings
+
+2014-01-19  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/tei-database-rebuild.sh
+
+	change wording slightly
+
+2014-01-19  Sebastian Rahtz <sebastian.rahtz@gmail.com>
+	Changed paths:
+	   M /trunk/P5/Utilities/tei-database-rebuild.sh
+
+	change of hostname
+
 2014-01-19  Sebastian Rahtz <sebastian.rahtz@gmail.com>
 	Changed paths:
 	   M /trunk/P5/Makefile
