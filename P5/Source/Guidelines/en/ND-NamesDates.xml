@@ -1516,45 +1516,52 @@ described in <ptr target="#NDORG"/> is however strongly recommended.</p>
 <p>In other respects, the <gi>org</gi> element is used in much the
 same way as <gi>place</gi> or <gi>person</gi>. An organization may
 have different names at different times:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><org><orgName notAfter="1960">The Silver Beetles</orgName>
-<orgName from="1960-08">The Beatles</orgName></org></egXML>  
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><org xml:id="fab4">
+  <orgName notAfter="1960">The Silver Beetles</orgName>
+  <orgName from="1960-08">The Beatles</orgName>
+</org></egXML>  
 </p>
 <p>The names of the people making up an organization can also change
 over time, (if they are known at all). For example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><org><orgName notAfter="1960">The Silver Beetles</orgName>
-<orgName notBefore="1960">The Beatles</orgName>
-<state type="membership" from="1960-08" to="1962-05">
-<desc><persName>John Lennon</persName>
-<persName>Paul McCartney</persName>
-<persName>George Harrison</persName>
-<persName>Stuart Sutcliffe</persName>
-<persName>Pete Best</persName>
-</desc></state>
-<state type="membership" notBefore="1963">
-<desc><persName>John Lennon</persName>
-<persName>Paul McCartney</persName>
-<persName>George Harrison</persName>
-<persName>Ringo Starr</persName>
-</desc></state>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><org xml:id="FAB4">
+  <orgName notAfter="1960">The Silver Beetles</orgName>
+  <orgName notBefore="1960">The Beatles</orgName>
+  <state type="membership" from="1960-08" to="1962-05">
+    <desc>
+      <persName>John Lennon</persName>
+      <persName>Paul McCartney</persName>
+      <persName>George Harrison</persName>
+      <persName>Stuart Sutcliffe</persName>
+      <persName>Pete Best</persName>
+    </desc>
+  </state>
+  <state type="membership" notBefore="1963">
+    <desc>
+      <persName>John Lennon</persName>
+      <persName>Paul McCartney</persName>
+      <persName>George Harrison</persName>
+      <persName>Ringo Starr</persName>
+    </desc>
+  </state>
 </org></egXML>  
 </p>
 <p>An <gi>org</gi> may contain subordinate <gi>org</gi>s:
 
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><org>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><org xml:id="OUCS">
   <orgName>Oxford University Computing Services</orgName>
-  <org>
+  <org xml:id="OUCSisg">
      <orgName>Information and Support Group</orgName>
   </org>
-  <org>
+  <org xml:id="OUCSig">
      <orgName>Infrastructure Group</orgName>
-     <org>
+     <org xml:id="OUCSig.nt">
        <orgName>Networking Team</orgName>
      </org>
-     <org>
+     <org xml:id="OUCSig.sdt">
        <orgName>System Development Team</orgName>
      </org>
   </org>
-  <org>
+  <org xml:id="OUCSltg">
      <orgName>Learning Technologies Group</orgName>
   </org>
 </org>
@@ -1720,63 +1727,61 @@ xmlns="http://www.tei-c.org/ns/Examples">
     <gi>placeName</gi>, as discussed in <ptr target="#NDPLGU"/>. </p>
 <p>We may use the same procedure to represent the location of smaller
 places, such as a street or even an individual building:
- <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place type="building">
-        <placeName>Brasserie Georges</placeName>
-        <location>
-<country key="FR"/>
-<settlement type="city">Lyon</settlement>
-<district type="arrondissement">IIème</district>
-<district type="quartier">Perrache</district>
-<placeName type="street">Cours de Verdun</placeName>
-        </location>
-      </place>
-    </egXML>
-Note the use of the <att>type</att> attribute to categorize more
-precisely both the kind of place concerned (a building) and the kind
-of name used to locate it, for example by characterizing the generic
-<gi>district</gi> as an <soCalled>arrondissement</soCalled>, or a <soCalled>quartier</soCalled>. </p>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="BGbldg" type="building">
+  <placeName>Brasserie Georges</placeName>
+  <location>
+    <country key="FR"/>
+    <settlement type="city">Lyon</settlement>
+    <district type="arrondissement">IIème</district>
+    <district type="quartier">Perrache</district>
+    <placeName type="street">Cours de Verdun</placeName>
+  </location>
+</place></egXML> Note the use of the <att>type</att> attribute to
+categorize more precisely both the kind of place concerned (a
+building) and the kind of name used to locate it, for example by
+characterizing the generic <gi>district</gi> as an
+<soCalled>arrondissement</soCalled>, or a
+<soCalled>quartier</soCalled>.</p>
 
-<p>We may also treat imaginary places in the same way: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place type="imaginary">
-        <placeName>Atlantis</placeName>
-        <location>
-<offset>beyond</offset>
-<placeName>The Pillars of <persName>Hercules</persName></placeName>
-        </location>
-      </place>
-    </egXML></p>
+<p>We may also treat imaginary places in the same way:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="Atl" type="imaginary">
+  <placeName>Atlantis</placeName>
+  <location>
+    <offset>beyond</offset>
+    <placeName>The Pillars of <persName>Hercules</persName></placeName>
+  </location>
+</place></egXML></p>
 
 <p>A <gi>location</gi> sometimes resembles a set of instructions for
 finding a place, rather than a name:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place xml:id="MYF">
-        <placeName notAfter="1969">Yasgur's Farm</placeName>
-        <placeName notBefore="1969">Woodstock Festival Site</placeName>
-        <location>
-<measure>one mile</measure>
-<offset>north west of</offset>
-<settlement>Bethel</settlement>
-<region>New York</region>
-        </location>
-      </place>
-    </egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="MYF">
+  <placeName notAfter="1969">Yasgur's Farm</placeName>
+  <placeName notBefore="1969">Woodstock Festival Site</placeName>
+  <location>
+    <measure>one mile</measure>
+    <offset>north west of</offset>
+    <settlement>Bethel</settlement>
+    <region>New York</region>
+  </location>
+</place></egXML>
   </p>
   <p>The element <gi>address</gi> may also be used to identify a location in terms of its
-    postal or other address: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place type="cemetery">
-        <placeName>Protestant Cemetery</placeName>
-        <placeName type="official" xml:lang="it">Cimitero Acattolico</placeName>
-        <location type="geopolitical">
-<country>Italy</country>
-<settlement>Rome</settlement>
-<district>Testaccio</district>
-        </location>
-        <location type="address">
-<address><addrLine>Via Caio Cestio, 6</addrLine><addrLine>00153 Roma</addrLine></address>
-        </location>
-      </place>
-    </egXML> When, as here, the same place is given multiple
+    postal or other address:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="locCA" type="cemetery">
+  <placeName>Protestant Cemetery</placeName>
+  <placeName type="official" xml:lang="it">Cimitero Acattolico</placeName>
+  <location type="geopolitical">
+    <country>Italy</country>
+    <settlement>Rome</settlement>
+    <district>Testaccio</district>
+  </location>
+  <location type="address">
+    <address>
+      <addrLine>Via Caio Cestio, 6</addrLine>
+      <addrLine>00153 Roma</addrLine>
+    </address>
+  </location>
+</place></egXML> When, as here, the same place is given multiple
     locations, the <att>type</att> attribute should be used to
     characterize the kind of location, as a means of indicating that
     these are alternative ways of identifying the same place, rather
@@ -1822,23 +1827,24 @@ work. GML is also an ISO standard (ISO
 </list>
 </p>
 <p>In the following example, we have defined the location of the place
-<soCalled>Lyon</soCalled> using GML  and indicated the two names
+<soCalled>Lyon</soCalled> using GML and indicated the two names
     associated with it at different times: 
 <egXML xmlns:gml="http://www.opengis.net/gml" xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
-<place type="city">
-        <placeName notBefore="1400">Lyon</placeName>
-        <placeName notAfter="0056">Lugdunum</placeName>
-        <location>
-<geo>	
-<gml:Polygon>
-  <gml:exterior>
-    <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
-      45.256 -110.45 </gml:LinearRing>
-  </gml:exterior>
-</gml:Polygon></geo>
-        </location>
-      </place></egXML>
-  </p>
+<place xml:id="locLyon" type="city">
+  <placeName notBefore="1400">Lyon</placeName>
+  <placeName notAfter="0056">Lugdunum</placeName>
+  <location>
+    <geo>	
+      <gml:Polygon>
+	<gml:exterior>
+	  <gml:LinearRing> 45.256 -110.45 46.46 -109.48 43.84 -109.86 45.8 -109.2
+	  45.256 -110.45 </gml:LinearRing>
+	</gml:exterior>
+      </gml:Polygon>
+    </geo>
+  </location>
+</place></egXML>
+</p>
 
   <p>A <gi>bibl</gi> element may be used within <gi>location</gi> to
   indicate the source of the location information.</p>
@@ -1855,18 +1861,16 @@ work. GML is also an ISO standard (ISO
   <p>A place may contain other places. This containment relation can
   be directly modelled in XML: thus we can say that the towns of
   Vilnius and Kaunas are both in a place called Lithuania (or Lietuva)
-  as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
-      <place>
-        <country>Lithuania</country>
-        <country xml:lang="lt">Lietuva</country>
-        <place>
-<settlement>Vilnius</settlement>
-        </place>
-        <place>
-<settlement>Kaunas</settlement>
-        </place>
-      </place>
-    </egXML>
+  as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul"><place xml:id="locLith">
+  <country>Lithuania</country>
+  <country xml:lang="lt">Lietuva</country>
+  <place>
+    <settlement>Vilnius</settlement>
+  </place>
+  <place>
+    <settlement>Kaunas</settlement>
+  </place>
+</place></egXML>
   </p>
 <p>This does not, of course, imply that Vilnius and Kaunas are the
 only places constituting Lithuania; only that they are within it. A
@@ -1879,29 +1883,28 @@ Rodrigues are collectively known as the Mascarene Islands. Grouped
 together with Mauritius there are also several smaller offshore
 islands, with rather picturesque French names. These offshore islands
 do not however constitute an identifiable place as a whole. One way of
-representing this is as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place type="islandGroup">
-        <placeName>Mascarene Islands</placeName>
-        <placeName>Mascarenhas Archipelago</placeName>
-        <place type="island">
-<placeName>Mauritius</placeName>
-<listPlace type="offshoreIslands">
-  <place>
-    <placeName>La roche qui pleure</placeName>
-  </place>
-  <place>
-    <placeName>Île aux cerfs</placeName>
-  </place>
-</listPlace>
-        </place>
-        <place type="island">
-<placeName>Rodrigues</placeName>
-        </place>
-        <place type="island">
-<placeName>Réunion</placeName>
-        </place>
+representing this is as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="locMascarenes" type="islandGroup">
+  <placeName>Mascarene Islands</placeName>
+  <placeName>Mascarenhas Archipelago</placeName>
+  <place type="island">
+    <placeName>Mauritius</placeName>
+    <listPlace type="offshoreIslands">
+      <place>
+	<placeName xml:lang="fr">La roche qui pleure</placeName>
       </place>
-    </egXML>
+      <place>
+	<placeName xml:lang="fr">Île aux cerfs</placeName>
+      </place>
+    </listPlace>
+  </place>
+  <place type="island">
+    <placeName>Rodrigues</placeName>
+  </place>
+  <place type="island">
+    <placeName>Réunion</placeName>
+  </place>
+</place></egXML>
   </p>
   <p>Here is a more complex example, showing the variety of names
   associated at different times and in different languages with a set
@@ -1941,31 +1944,32 @@ places with some property in common are being grouped together for
 convenience, for example, in a gazetteer. The <gi>listPlace</gi>
 element is provided as a means of grouping places together where there
 is no implication that the grouped elements constitute a distinct
-place. For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place type="county">
-        <placeName>Herefordshire</placeName>
-        <listPlace type="villages">
-<place>
-  <placeName>Abbey Dore</placeName>
-  <location><geo>51.969604 -2.893146</geo></location>
-</place>
-<place>
-  <placeName>Acton Beauchamp</placeName>
-</place>
-<!-- ... -->
-        </listPlace>
-        <listPlace type="towns">
-<place>
-  <placeName>Hereford</placeName>
-</place>
-<place>
-  <placeName>Leominster</placeName>
-</place>
-<!-- ...  -->
-        </listPlace>
-      </place>
-    </egXML>
-  </p>
+place. For example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><place xml:id="pl-c-H" type="county">
+  <placeName>Herefordshire</placeName>
+  <listPlace type="villages">
+    <place xml:id="pl-v-AD">
+      <placeName>Abbey Dore</placeName>
+      <location>
+	<geo>51.969604 -2.893146</geo>
+      </location>
+    </place>
+    <place xml:id="pl-v-AB">
+      <placeName>Acton Beauchamp</placeName>
+    </place>
+    <!-- ... -->
+  </listPlace>
+  <listPlace type="towns">
+    <place xml:id="pl-t-H">
+      <placeName>Hereford</placeName>
+    </place>
+    <place xml:id="pl-t-L">
+      <placeName>Leominster</placeName>
+    </place>
+    <!-- ...  -->
+  </listPlace>
+</place></egXML>
+</p>
 </div>
 <div xml:id="NDGEOGste">
   <head>States, Traits, and Events</head>
