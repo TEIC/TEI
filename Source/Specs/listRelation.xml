@@ -30,14 +30,17 @@ $Id$
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <ref name="model.pLike"/>
-      </oneOrMore>
-      <oneOrMore>
-        <ref name="relation"/>
-      </oneOrMore>
-    </choice>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:ref name="model.headLike"/>
+      </rng:zeroOrMore>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="relation"/>
+          <rng:ref name="listRelation"/>
+        </rng:choice>
+      </rng:oneOrMore>
+    </rng:group>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
