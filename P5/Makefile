@@ -2,6 +2,7 @@
 # $Id$
 ALLLANGUAGES=en
 LANGUAGE=en
+INJENKINS=false
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
@@ -42,7 +43,7 @@ check.stamp:
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo get latest date
-	svn info --xml svn://svn.code.sf.net/p/tei/code/trunk/P5 > svndate.xml
+	if  ${INJENKINS} ; then svn info --xml svn://svn.code.sf.net/p/tei/code/trunk/P5  ; else svn info --xml  ;fi > svndate.xml
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
