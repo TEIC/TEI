@@ -9,7 +9,7 @@
         <p>Unpublished</p>
       </publicationStmt>
       <sourceDesc>
-        <p>all my own work</p>
+	<p>Born digital</p>
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
@@ -192,9 +192,51 @@ that's also OK.
 	<div subtype="minor">test @subtype only (should FAIL)</div>
 	<div>test neither</div>
       </div>
-<div><head>Shift should have a new attribute</head>
-<u who="who"><shift new="something"/>some thing<shift/>some more</u>
-</div>
+
+      <div>
+	<head>Shift should have a new attribute</head>
+	<u who="who"><shift new="something"/>some thing<shift/>some more</u>
+      </div>
+
+      <div>
+	<head>msPart/altIdentifier depreicated</head>
+	<p><label>Syd 2014-09-09:</label> Should get a deprecation
+	warning for <gi>altIdentifier</gi> as a child of
+	<gi>msPart</gi>. Someday (around 2016-09-09) this should
+	become outright invalid, and the Schematron rule should be
+	removed.</p>
+	<msDesc>
+	  <msIdentifier>
+	    <msName>Test msPart/altIdentifier rule</msName>
+	  </msIdentifier>
+	  <msPart>
+	    <altIdentifier>
+	      <idno>0BAD</idno>
+	    </altIdentifier>
+	  </msPart>
+	  <msPart>
+	    <msIdentifier>
+	      <msName>this one should be valid</msName>
+	    </msIdentifier>
+	  </msPart>
+	</msDesc>
+      </div>
+
+      <div>
+	<head>biblStruct/idno depricated</head>
+	<p><label>Syd 2014-09-09:</label> Should get a deprecation
+	warning for <gi>idno</gi> as a child of <gi>biblStruct</gi>.
+	Someday (around 2016-09-09) this should become outright
+	invalid, and the Schematron rule should be removed.</p>
+	<biblStruct>
+	  <monogr>
+	    <imprint>
+	      <date when="2014-09-09"/>
+	    </imprint>
+	  </monogr>
+	  <idno>0BAD</idno>
+	</biblStruct>
+      </div>
 
     </body>
   </text>
