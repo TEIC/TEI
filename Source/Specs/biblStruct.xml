@@ -60,6 +60,15 @@
       </zeroOrMore>
     </group>
   </content>
+  <constraintSpec scheme="isoschematron" ident="deprecate-altIdentifier-child">
+    <desc>The use of an <gi>idno</gi> element as a direct child of
+    <gi>biblStruct</gi> is deprecated. Rather, <gi>idno</gi> should
+    appear as a child of a <gi>monogr</gi>, <gi>analytic</gi>,
+    <gi>series</gi>.</desc>
+    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+      <sch:report test="child::tei:idno" role="nonfatal">WARNING: use of deprecated method — the use of the idno element as a direct child of the biblStruct element will be removed from the TEI on 2016-09-09</sch:report>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <biblStruct>
