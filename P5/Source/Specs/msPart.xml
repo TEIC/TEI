@@ -29,9 +29,6 @@ distinct manuscript or part of a manuscript, now forming part of a composite man
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <!--<!ELEMENT msPart  - -  (idno?, msHeading?, msContents?, 
-                 physDesc?, history?,  additional?, 
-                 msPart*)> -->
     <rng:group>
       <rng:choice>
         <rng:ref name="altIdentifier"/>
@@ -64,6 +61,15 @@ distinct manuscript or part of a manuscript, now forming part of a composite man
       </rng:choice>
     </rng:group>
   </content>
+  <constraintSpec scheme="isoschematron" ident="deprecate-altIdentifier-child">
+    <desc>The <gi>msIdentifier</gi> element is now allowed as a child
+    of <gi>msPart</gi>, and it (with its <gi>altIdentifier</gi>
+    children if needed) should be used instead of an
+    <gi>altIdentifier</gi> directly within <gi>msPart</gi>.</desc>
+    <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+      <sch:report test="child::tei:altIdentifier" role="nonfatal">WARNING: use of deprecated method — the use of the altIdentifier element as a direct child of the msPart element will be removed from the TEI on 2016-09-09</sch:report>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <msPart>
