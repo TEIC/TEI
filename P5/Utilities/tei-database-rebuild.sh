@@ -12,7 +12,7 @@ EXIST_USER=
 EXIST_USER_PASS=
 
 # All the parameters above can and shall be overwritten by a config file
-CONFIG=~/.tei-exist.conf
+CONFIG=~/etc/tei-exist.conf
 
 # Checking config with credentials …
 if [ -f $CONFIG ] ; then
