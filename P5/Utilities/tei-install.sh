@@ -6,6 +6,11 @@
 # copyright: TEI Consortium
 # license: GPL
 #
+
+# changed 2014-09-16 by Syd in the middle of trying to release 2.7.0:
+# bug fix: changed $dir to $jenkinsdir in the "Get special HTML pages
+# for TEI web site" section of install() function.
+
 install()
 {
     echo Install ${name}/${version} in ${Vault} as current
@@ -18,7 +23,7 @@ install()
 	TEIP5)
 	    ${ECHO} rm -f teiwebsiteguidelines.zip;
 	    echo Get special HTML pages for TEI web site;
-	    ${ECHO} curl -O -s $dir/teiwebsiteguidelines.zip || die "Unable to fetch package $dir/teiwebsiteguidelines.zip";
+	    ${ECHO} curl -O -s $jenkinsdir/teiwebsiteguidelines.zip || die "Unable to fetch package $jenkinsdir/teiwebsiteguidelines.zip";
 	    echo unpack web guidelines to ${Vault}/${name}/${version};
 	    ${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;
             ${ECHO} rm teiwebsiteguidelines.zip;;
