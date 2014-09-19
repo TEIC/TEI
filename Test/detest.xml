@@ -37,14 +37,15 @@
       </p>
       <p>This tests the constraint that every &lt;lg&gt; element should have at least one of &lt;lg&gt;, &lt;lg&gt; or &lt;gap&gt; inside it.</p>
       <p>Added by MDH.</p>
+
       <div>
         <lg/>
       </div>
 
-<div>
-  <p>Added by MDH. This tests the Schematron constraint that any element with @calendar must have some textual content.</p>
-  <p><date when="2012-09-06" calendar="http://en.wikipedia.org/wiki/Gregorian_calendar"/></p>
-</div>
+      <div>
+	<p>Added by MDH. This tests the Schematron constraint that any element with @calendar must have some textual content.</p>
+	<p><date when="2012-09-06" calendar="http://en.wikipedia.org/wiki/Gregorian_calendar"/></p>
+      </div>
 
       <div>
         <head>Testing schematron constraints</head>
@@ -179,11 +180,13 @@ that's also OK.
 	<p><alt target="#spanTest" mode="excl"/></p>
 	<p><alt target="#spanTest #spanTest2" mode="excl"/></p>
       </div>
+
       <div>
 	<head>Media</head>
 	<p><media mimeType="video/mp4"/></p>
 	<p><media url="foo.png"/></p>
       </div>
+
       <div xml:id="subtypeTyped">
 	<head>@subtype requires @type</head>
 	<p>Added 2013-01-11 17:31 by Syd</p>
@@ -199,7 +202,7 @@ that's also OK.
       </div>
 
       <div>
-	<head>msPart/altIdentifier depreicated</head>
+	<head>msPart/altIdentifier deprecated</head>
 	<p><label>Syd 2014-09-09:</label> Should get a deprecation
 	warning for <gi>altIdentifier</gi> as a child of
 	<gi>msPart</gi>. Someday (around 2016-09-09) this should
@@ -220,6 +223,28 @@ that's also OK.
 	    </msIdentifier>
 	  </msPart>
 	</msDesc>
+      </div>
+
+      <div>
+	<head>biblStruct/idno deprecated</head>
+	<p><label>Syd 2014-09-19:</label> Should get a deprecation
+	warning for <gi>idno</gi> as a child of <gi>biblStruct</gi>.
+	Someday (around 2016-09-09) this should become outright
+	invalid, and the Schematron rule should be removed.</p>
+	<biblStruct xml:id="previous_COHQHF-eg-5">
+	  <monogr>
+	    <author>Marriott, Henry J. L.</author>
+	    <title>Practical Electrocardiography</title>
+	    <edition>eighth edition</edition>
+	    <imprint>
+	      <pubPlace>Baltimore</pubPlace>
+	      <publisher>Williams &amp; Wilkins</publisher>
+	      <date when="1988"/>
+	    </imprint>
+	  </monogr>
+	  <idno type="isbn">0-683-05576-3</idno>
+	  <citedRange unit="pp">147</citedRange>
+	</biblStruct>
       </div>
 
     </body>
