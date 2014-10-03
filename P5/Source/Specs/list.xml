@@ -87,6 +87,15 @@
       </zeroOrMore>
     </group>
   </content>
+  <constraintSpec ident="gloss-list-must-have-labels"
+		  scheme="isoschematron"
+		  xmlns:sch="http://purl.oclc.org/dsdl/schematron">
+    <constraint>
+      <sch:rule context="tei:list[@type='gloss']">
+	<sch:assert test="tei:label">The content of a "gloss" list should include a sequence of one or more pairs of a label element followed by an item element</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
 <!--    MDH 2014-08-31: I'm removing an override of @rend which was last present in rev 12971, per discussions
         on the Council list. Its original purpose was to provide a guided transition between the old uses of 
@@ -133,16 +142,19 @@
         </valItem>
       </valList>
       <remarks versionDate="2014-07-30" xml:lang="en">
-        <p>Previous versions of these Guidelines recommended the use of <att>type</att> on <gi>list</gi> 
-        to encode the rendering or appearance of a list (whether it was bulleted, numbered, etc.). The current
-        recommendation is to use the <att>rend</att> or <att>style</att> attributes for these aspects of a 
-          list, while using <att>type</att> for the more appropriate task of characterizing the nature of the 
-          content of a list.</p>
+        <p>Previous versions of these Guidelines recommended the use
+        of <att>type</att> on <gi>list</gi> to encode the rendering or
+        appearance of a list (whether it was bulleted, numbered,
+        etc.). The current recommendation is to use the
+        <att>rend</att> or <att>style</att> attributes for these
+        aspects of a list, while using <att>type</att> for the more
+        appropriate task of characterizing the nature of the content
+        of a list.</p>
       </remarks>
       <remarks versionDate="2005-01-14" xml:lang="en">
-        <!-- schematron constraint needed here -->
-        <p>The formal syntax of the element declarations allows <gi>label</gi> tags to be omitted
-          from lists tagged <tag>list type="gloss"</tag>; this is however a semantic error.</p>
+        <p>The formal syntax of the element declarations allows
+        <gi>label</gi> tags to be omitted from lists tagged <tag>list
+        type="gloss"</tag>; this is however a semantic error.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>La syntaxe formelle des déclarations d'élément permet d'omettre les étiquettes de balises
