@@ -502,6 +502,39 @@ $Id$
           </attList>
         </elementSpec>
 
+        <elementSpec ident="content" mode="change" module="tagdocs">
+	  <content>
+	    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+	      <group>
+		<ref name="valList"/>
+	      </group>
+	      <oneOrMore>
+		<ref name="anyRelax"/>
+	      </oneOrMore>
+	      <zeroOrMore>
+		<ref name="model.contentPart"/>
+	      </zeroOrMore>
+	    </choice>
+	  </content>
+	</elementSpec>
+
+        <macroSpec ident="anyRelax" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://relaxng.org/ns/structure/1.0"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anyRelax"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
+
 <elementSpec mode="change" ident="TEI">
   <constraintSpec ident="must-have-attglobal" scheme="isoschematron" mode="add">
     <constraint>
