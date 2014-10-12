@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="sequence">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs"
+	     ident="sequence"
+	     xmlns:sch="http://purl.oclc.org/dsdl/schematron" >
   <desc versionDate="2013-11-21" xml:lang="en">sequence of references</desc>
   <classes>
     <memberOf key="att.global"/>
@@ -11,6 +13,11 @@
       <classRef key="model.contentPart"
 		maxOccurs="unbounded"/>
   </content>
+  <constraintSpec ident="sequencechilden" scheme="isoschematron">
+    <constraint>
+      <sch:assert test="count(*)&gt;1">The alternate element must have at least two child elements</sch:assert>
+    </constraint>
+  </constraintSpec>
   <attList>
     <attDef ident="preserveOrder">
       <desc versionDate="2013-11-21" xml:lang="en">if true, indicates that
