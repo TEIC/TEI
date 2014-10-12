@@ -6,7 +6,7 @@ See the file COPYING.txt for details
 $Date$
 $Id$
 -->
-<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec ident="alternate" module="tagdocs"  xmlns="http://www.tei-c.org/ns/1.0">
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" ident="alternate" module="tagdocs"  xmlns="http://www.tei-c.org/ns/1.0">
           <desc versionDate="2013-11-21" xml:lang="en">an alternation of references</desc>
           <classes>
             <memberOf key="model.contentPart"/>
@@ -17,16 +17,22 @@ $Id$
 	    <classRef key="model.contentPart"
 		maxOccurs="unbounded"/>
           </content>
+  <constraintSpec ident="alternatechilden" scheme="isoschematron">
+    <constraint>
+      <sch:assert test="count(*)&gt;1">The alternate element must have at least two child elements</sch:assert>
+    </constraint>
+  </constraintSpec>
 
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en"><content>
-<alternate>
-<elementRef key="name"/>
-<elementRef key="persName"/>
-</alternate>
-</content>
+      <alternate>
+	<elementRef key="name"/>
+	<elementRef key="persName"/>
+      </alternate>
+    </content>
     </egXML>
-<p>This example content model permits either a <gi>name</gi> or a
-<gi>persName</gi>. </p>
+    <p>This example content model permits either a <gi>name</gi> or a
+    <gi>persName</gi>. </p>
   </exemplum>
-        </elementSpec>
+</elementSpec>
+	
