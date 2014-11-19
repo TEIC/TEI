@@ -2482,6 +2482,54 @@ END
      <!-- ??? -->
      <classSpec type="model" ident="model.msQuoteLike" module="tei" mode="delete"/>
      <classSpec type="model" ident="model.personPart" module="tei" mode="delete"/>
+     
+     
+<!--     MH 2014-11-19: 
+     From http://sourceforge.net/p/tei/bugs/688/
+     Since we have to replace the examples in P5, which contain elements not 
+     permitted in TEI Lite, we might as well fix the confusing content model
+     at the same time.
+     -->
+     <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="editorialDecl" mode="change">
+      <content>
+       <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+        <choice>
+         <ref name="model.pLike"/>
+        </choice>
+       </oneOrMore>
+      </content>
+      
+      <exemplum xml:lang="en">
+       <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <editorialDecl>
+          <p>All words converted to Modern American spelling using
+           Websters 9th Collegiate dictionary
+          </p>
+          <p>All opening quotation marks converted to “ all closing
+           quotation marks converted to &amp;cdq;.</p>
+        </editorialDecl>
+       </egXML>
+      </exemplum>
+      <exemplum versionDate="2008-04-06" xml:lang="fr">
+       <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <editorialDecl>
+          <p>Certains mots coupés par accident typographique en fin de ligne ont été réassemblés
+           sans commentaire.</p>
+          <p>Les "guillements français" ont été remplacée par des "guillemets droits" (sans
+           symétrie)</p>
+        </editorialDecl>
+       </egXML>
+      </exemplum>
+      <exemplum xml:lang="zh-TW">
+       <egXML xmlns="http://www.tei-c.org/ns/Examples">
+        <editorialDecl>
+          <p> 所有字皆轉換為源自Websters 9th Collegiate字典的現代美語拼法</p>
+          <p>所有的前括號都改成" 後括號都改成 "</p>
+        </editorialDecl>
+       </egXML>
+      </exemplum>
+      
+     </elementSpec>
     </schemaSpec>
    </div>
   </back>
