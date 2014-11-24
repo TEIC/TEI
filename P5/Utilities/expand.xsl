@@ -80,24 +80,49 @@ identity transform
   </xsl:template>
 
   <xsl:template match="processing-instruction('insert')">
+    <xsl:variable name="info" select="doc(resolve-uri('../repodate.xml',base-uri(/)))"/>
     <xsl:choose>
       <xsl:when test=".='date'">
-	<xsl:variable name="date"
-	    select="substring-before(doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='date'],'T')"/>
+	<xsl:variable name="date">
+	  <xsl:choose>
+	    <xsl:when test="contains($info//*[local-name()='date'], 'T')">
+	      <xsl:value-of select="substring-before($info//*[local-name()='date'],'T')"></xsl:value-of>
+	    </xsl:when>
+	    <xsl:otherwise>
+	      <xsl:value-of select="substring-before($info//*[local-name()='date'],' ')"></xsl:value-of>
+	    </xsl:otherwise>
+	  </xsl:choose>
+	</xsl:variable>
 	<date when="{$date}">
 	  <xsl:value-of select="format-date($date cast as xs:date, '[D1o] [MNn] [Y]', 'en', (), ())"/>
 	</date>
       </xsl:when>
       <xsl:when test=".='year'">
-	<xsl:variable name="date"
-	    select="substring-before(doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='date'],'T')"/>
+        <xsl:variable name="date">
+          <xsl:choose>
+            <xsl:when test="contains($info//*[local-name()='date'], 'T')">
+              <xsl:value-of select="substring-before($info//*[local-name()='date'],'T')"></xsl:value-of>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="substring-before($info//*[local-name()='date'],' ')"></xsl:value-of>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
 	  <xsl:value-of select="format-date($date cast as xs:date, '[Y]', 'en', (), ())"/>
       </xsl:when>
       <xsl:when test=".='revision'">
 	<xsl:variable name="r"
-	    select="doc(resolve-uri('../svndate.xml',base-uri(/)))//*[local-name()='commit']/@revision"/>
-	<ref
-	    target="http://sourceforge.net/p/tei/code/{$r}/tree/trunk/P5/"><xsl:value-of select="$r"/></ref>
+	    select="$info//*[local-name()='commit']/@revision"/>
+        <xsl:choose>
+          <xsl:when test="$info/*/@type = 'git'">
+            <ref
+              target="https://github.com/hcayless/TEI-Guidelines/commit/{$r}"><xsl:value-of select="$r"/></ref>
+          </xsl:when>
+          <xsl:otherwise>
+            <ref
+              target="http://sourceforge.net/p/tei/code/{$r}/tree/trunk/P5/"><xsl:value-of select="$r"/></ref>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test=".='version'">
 	<xsl:variable name="v" select="normalize-space(unparsed-text(resolve-uri('../VERSION',base-uri(/))))"/>

@@ -16,10 +16,18 @@ XSL=/usr/share/xml/tei/stylesheet
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
+VCS=svn
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 SAXONJAR=saxon9he.jar
 ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
+
+# The following will include a local (not in the repo) makefile
+# called local.mk (if it exists) that you can use to (e.g.) override
+# the variables above. It might include
+# XSL=/path/to/my/copy/of/the/Stylesheets
+# for example.
+sinclude local.mk 
 
 .PHONY: convert schemas html-web validate valid test clean dist exemplars
 
@@ -42,8 +50,18 @@ check.stamp:
 	touch check.stamp
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
-	@echo get latest date
-	if  ${INJENKINS} ; then svn info --xml svn://svn.code.sf.net/p/tei/code/trunk/P5  ; else svn info --xml  ;fi > svndate.xml
+	@echo get latest date:
+	if [ ${VCS} = "svn" ] ; \
+	then \
+		if [ ${INJENKINS} ] ; \
+		then svn info --xml svn://svn.code.sf.net/p/tei/code/trunk/P5 ; \
+			else svn info --xml  ; \
+		fi > repodate.xml ; \
+	fi
+	if [ ${VCS} = "git" ] ; \
+	then \
+		git log --max-count=1 --pretty=format:"<info type=\"git\"><entry><commit revision=\"%h\"><date>%ai</date></commit></entry></info>" > repodate.xml ; \
+	fi
 	@echo BUILD: Generate modular DTDs, Schemas, Schematron and miscellaneous outputs
 	${ANT} -lib Utilities/lib/jing.jar:Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DDRIVER=${DRIVER} base subset outputs
 	@echo "BUILD: Generate modular RELAX NG (compact) schemas using trang"
