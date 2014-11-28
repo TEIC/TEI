@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="../teitalks.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Introducing Pure ODD</title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Publication Information</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Information about the source</p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc>
+      <change when="2014-11-28">Finalising discussion of text/interleave</change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div>
+        <head>Defining a content model</head>
+        <p>In Pure ODD, we use the <gi>content</gi> element to describe the intended content of an
+          element.</p>
+        <p>If the element concerned is empty, that is, it has no content at all, but only
+          attributes, then the <gi>content</gi> element itself is empty: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
+            <elementSpec ident="emptyElement">
+              <desc>an element which may not contain anything</desc>
+              <content/>
+            </elementSpec>
+          </egXML></p>
+        <p>If the element concerned contains text, we use the special element <gi>textNode</gi>
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <elementSpec ident="textElement">
+              <desc>an element which may contain only textual data</desc>
+              <content><textNode/></content>
+            </elementSpec>
+          </egXML> A text node may be of any length, including zero. </p>
+        <p>More usually, an element has what is known as <term>element content</term>. In this case,
+          the <gi>content</gi> element will contain references to one or more other elements, each
+          represented by an <gi>elementRef</gi> element. If there is only one such child element it
+          can be given directly: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <elementSpec ident="oneElement">
+              <desc>an element which may contain only a <gi>one</gi> element</desc>
+              <content><elementRef key="one"/></content>
+            </elementSpec>
+          </egXML>
+        </p>
+        <p>The attributes <att>minOccurs</att> and <att>maxOccurs</att> are used to indicate
+          repetition. In the following example, we define an element which may contain any number of
+          occurrences of the <gi>one</gi> element greater than two: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
+            <elementSpec ident="manyOneElements">
+              <desc>an element which may contain two or more <gi>one</gi> elements</desc>
+              <content><elementRef minOccurs="2" maxOccurs="unbounded" key="one"/></content>
+            </elementSpec>
+          </egXML>
+        </p>
+        <div>
+          <head>Grouping elements</head>
+          <p>An element may contain references to more than one different element. These elements
+            may be grouped in one of three ways: as a sequence, as an alternation, or interleaved. </p>
+          <p>In a sequence, all of the child elements must follow each other in the same order as
+            they appear within the <gi>content</gi> element: <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="OneTwo">
+                <desc>an element which may contain a <gi>one</gi> element followed by a <gi>two</gi>
+                  element</desc>
+                <content>
+                  <sequence>
+                    <elementRef key="one"/>
+                    <elementRef key="two"/>
+                  </sequence></content>
+              </elementSpec>
+            </egXML>
+          </p>
+          <p>In an alternation, any of the child elements may appear: <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="OneOrTwo">
+                <desc>an element which contains either a <gi>one</gi> element or a
+                  <gi>two</gi></desc>
+                <content>
+                  <alternate>
+                    <elementRef key="one"/>
+                    <elementRef key="two"/>
+                  </alternate></content>
+              </elementSpec>
+            </egXML>
+          </p>
+          <p>In an interleaved model, the child elements may appear in any order : <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="OneAndTwo">
+                <desc>an element which contains either a <gi>one</gi> element followed by a
+                    <gi>two</gi>, or a <gi>two</gi> element followed by a <gi>one</gi></desc>
+                <content>
+                  <interleave>
+                    <elementRef key="one"/>
+                    <elementRef key="two"/>
+                  </interleave></content>
+              </elementSpec>
+            </egXML> Not all target schema languages support the concept of interleaving. An ODD
+            processor may map specifications using the <gi>interleave</gi> element to a less precise
+            construct in the target language, or to a combination of constructs in different
+            constraint languages.</p>
+          <p>The attributes <att>minOccurs</att> and <att>maxOccurs</att> are also used on these
+            grouping elements to indicate repetition of the group. For example <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="onesTwos">
+                <desc>an element which contains up to three repetitions of pairs of elements, each
+                  containing a <gi>one</gi> followed by a <gi>two</gi></desc>
+                <content>
+                  <sequence minOccurs="1" maxOccurs="3">
+                    <elementRef key="one"/>
+                    <elementRef key="two"/>
+                  </sequence></content>
+              </elementSpec>
+            </egXML></p>
+          <p>When alternations are repeated, any one of the child elements may appear any number of
+            times <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="onesOrTwos">
+                <desc>an element which contains one or more <gi>one</gi> or <gi>two</gi>
+                  elements</desc>
+                <content>
+                  <alternate minOccurs="1" maxOccurs="unbounded">
+                    <elementRef key="one"/>
+                    <elementRef key="two"/>
+                  </alternate></content>
+              </elementSpec>
+            </egXML>
+          </p>
+          <p>Occurrence indicators may be given at both levels. For example <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="onesTwos">
+                <desc>an element which contains up to three repetitions of two or more<gi>one</gi>
+                  elements followed by a <gi>two</gi> element</desc>
+                <content>
+                  <sequence minOccurs="1" maxOccurs="3">
+                    <elementRef minOccurs="2" maxOccurs="unbounded" key="one"/>
+                    <elementRef key="two"/>
+                  </sequence></content>
+              </elementSpec>
+            </egXML></p>
+          <p>Sequences, alternations, and interleaved sequences may all be nested and combined as
+            necessary, permitting quite complex structures to be expressed.</p>
+        </div>
+        <div>
+          <head>Mixed content</head>
+          <p>An element may have what is known as <term>mixed content</term>, meaning that it may
+            contain a mixture of text fragments and some specified elements. This can be represented
+            in pure ODD using <gi>alternate</gi>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="mixedElement">
+                <desc>an element which contains any combination of text nodes, <gi>one</gi>
+                  elements, and <gi>two</gi> elements</desc>
+                <alternate minOccurs="0" maxOccurs="unlimited"><textNode/><elementRef key="one"
+                    /><elementRef key="two"/></alternate>
+              </elementSpec>
+            </egXML>
+          </p>
+          <p>It may also, more economically, be represented using <gi>interleave</gi>: <egXML
+              xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="mixedElement">
+                <desc>an element which contains any combination of text nodes, <gi>one</gi>
+                  elements, and <gi>two</gi> elements</desc>
+                <interleave><textNode/><elementRef key="one"/><elementRef key="two"/></interleave>
+              </elementSpec>
+            </egXML>
+          </p>
+          <p>A text node may appear anywhere within an alternation or a sequence. For example <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="textOne">
+                <desc>an element which may contain either two or more<gi>one</gi> elements, or a
+                  text node</desc>
+                <content>
+                  <alternate>
+                    <elementRef minOccurs="2" maxOccurs="unbounded" key="one"/>
+                    <textNode/>
+                  </alternate></content>
+              </elementSpec>
+            </egXML> However, not all current schema languages support such content models. </p>
+        </div>
+        <div>
+          <head>Class references</head>
+          <p> A <gi>classRef</gi> element can be used within a content model in the same way as an
+              <gi>elementRef</gi>. It is a shorthand way of saying that any member, or all members,
+            of a named <term>model class </term> of elements is permitted. For example <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <elementSpec ident="threeDigitals">
+                <desc>an element which contains a sequence of up to three elements which are members
+                  of the <gi>model.digital</gi> class </desc>
+                <content>
+                  <sequence minOccurs="1" maxOccurs="3">
+                    <classRef key="model.digital"/>
+                  </sequence></content>
+              </elementSpec>
+            </egXML></p>
+          <p>A model class can contain any predefined set of element types which we wish to
+            manipulate or reference together, usually because they can all appear in the same
+            context, or share other properties. Pure ODD allows us to define such classes by means
+            of a <gi>classSpec</gi> and to reference the members of that class by means of a
+              <gi>classRef</gi> element. An element specification (not discussed here) includes a
+            specification of the classes of which it is a member in its <gi>classes</gi> element.
+          </p>
+        </div>
+      </div>
+      <div>
+        <head>Datatypes</head>
+      </div>
+    </body>
+  </text>
+</TEI>
