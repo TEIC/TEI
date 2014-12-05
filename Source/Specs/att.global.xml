@@ -19,6 +19,7 @@ $Id$
   <desc versionDate="2007-01-21" xml:lang="it">stabilisce un insieme di attributi comuni a tutti gli
     elementi dello schema di codifica TEI</desc>
   <classes>
+    <memberOf key="att.global.rendition"/>
     <memberOf key="att.global.linking"/>
     <memberOf key="att.global.analytic"/>
     <memberOf key="att.global.facs"/>
@@ -176,164 +177,9 @@ and that a single TEI document may contain texts in many languages.</p>
           属性値は常に継承されることになる． </p>
       </remarks>
     </attDef>
-    <attDef ident="rend" usage="opt">
-      <gloss versionDate="2007-07-02" xml:lang="en">rendition</gloss>
-      <gloss versionDate="2007-12-20" xml:lang="ko">번역</gloss>
-      <gloss versionDate="2008-04-06" xml:lang="es">interpretación</gloss>
-      <gloss versionDate="2008-03-30" xml:lang="fr">interprétation</gloss>
-      <gloss versionDate="2007-11-06" xml:lang="it">resa</gloss>
-      <desc versionDate="2005-10-10" xml:lang="en">indicates how the element in question was rendered or presented in the source text.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">문제의 요소가 원본 텍스트에 제시된 방법을 나타낸다.</desc>
-      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該元素如何呈現於來源文件中</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素が，元資料でどのように表示されていたかを示す．</desc>
-      <desc versionDate="2007-06-12" xml:lang="fr">indique comment l'élément en question a été rendu ou
-        présenté dans le texte source</desc>
-      <desc versionDate="2007-05-04" xml:lang="es">indica cómo el elemento en cuestión ha sido dado o
-        proporcionado en el texto fuente.</desc>
-      <desc versionDate="2007-01-21" xml:lang="it">indica come l'elemento in questione è stato reso o
-        rappresentato nel testo originario</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-      </datatype>
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <head rend="align(center) case(allcaps)"><lb/>To The <lb/>Duchesse <lb/>of <lb/>Newcastle,
-            <lb/>On Her <lb/><hi rend="case(mixed)">New Blazing-World</hi>. </head>
-        </egXML>
-        <!--    <p>
-          <note type="cit">From the foreword by William Newcastle in
-        Margaret Cavendish, Duchess of Newcastle's <title>The
-        description of a new world, called the blazing-world</title>,
-        WWP TR00253</note>
-        </p>-->
-      </exemplum>
-      <exemplum versionDate="2010-02-26" xml:lang="fr">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Belloy">
-          <head rend="align(center) case(allcaps)">épître dédicatoire<lb/>à <lb/>Monsieur de Coucy <lb/>
-                  <lb/>.</head>
-        </egXML>
-      </exemplum>
-      <remarks versionDate="2012-10-24" xml:lang="en">
-        <p>These Guidelines make no binding recommendations for the values of the <att>rend</att>
-          attribute; the characteristics of visual presentation vary too much from text to text and
-          the decision to record or ignore individual characteristics varies too much from project
-          to project. Some potentially useful conventions are noted from time to time at appropriate
-          points in the Guidelines. The values of the <att>rend</att> attribute are a set of 
-	sequence-indeterminate individual tokens separated by whitespace.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>Ces Principes directeurs ne font aucune recommandation contraignante pour les valeurs de
-          l'attribut <att>rend</att>; les caractéristiques de la présentation visuelle changent trop
-          d'un texte à l'autre et la décision d'enregistrer ou d'ignorer des caractéristiques
-          individuelles est trop variable d'un projet à l'autre. Quelques conventions
-          potentiellement utiles sont notées de temps en temps à des points appropriés dans ces
-          Principes directeurs.</p>
-      </remarks>
-      <remarks xml:lang="es" versionDate="2008-04-06">
-        <p>Estas guías de consulta no hacen ninguna recomendación obligatoria para los valores del
-          atributo <att>rend</att>; las características de la presentación visual varían demasiado
-          de texto a texto y la decisión para registrar o para omitir características individuales
-          varía demasiado de proyecto a proyecto. Observar algunas convenciones que puedan resultar
-          útiles en los puntos indicados en las guías de consulta.</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 本ガイドラインでは，当該属性<att>rend</att>の値として推奨するも のはない．活字表現の特徴は様々であり，それらのどれを採用するかは
-          プロジェクトごとで異なるからである．当ガイドラインでは，有用な記 述法があれば，その都度示すことになっている． </p>
-      </remarks>
-    </attDef>
-    <attDef ident="style" usage="opt">
-      <desc versionDate="2012-10-05" xml:lang="en">contains an expression in some formal style definition language
-which defines the rendering or presentation
-used for this element in the source text</desc>
-      <datatype maxOccurs="1">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
-      </datatype>
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <head style="text-align: center; font-variant: small-caps"><lb/>To The <lb/>Duchesse <lb/>of <lb/>Newcastle, <lb/>On Her
-              <lb/><hi style="font-variant: normal">New Blazing-World</hi>. </head>
-        </egXML>
-      </exemplum>
-      <remarks versionDate="2014-09-09" xml:lang="en">
-        <p>Unlike the attribute values of <att>rend</att>, which uses whitespace as a separator, the <att>style</att> attribute may contain whitespace. This attribute is intended for recording inline stylistic information concerning the
-source, not any particular output.</p>
-        <p>The formal language in which values for this attribute are expressed may be specified using the <gi>styleDefDecl</gi> element in
-the TEI header.</p>
-      </remarks>
-    </attDef>
-    <attDef ident="rendition" usage="opt">
-      <desc versionDate="2007-09-22" xml:lang="en">points to a description of the rendering or presentation used for this element in the
-        source text.</desc>
-      <desc versionDate="2007-12-20" xml:lang="ko">원본 텍스트에서 이 요소에 대해 사용된 모양과 제시에 대한 기술을 가리킨다.</desc>
-      <desc versionDate="2008-04-06" xml:lang="es">indica una descripción de la representación o de la
-        presentación empleada para este elemento en el texto original.</desc>
-      <desc versionDate="2008-04-05" xml:lang="ja">当該要素が示す表現が現れている，元資料のテキスト部分を示す．</desc>
-      <desc versionDate="2008-03-30" xml:lang="fr">pointe vers une description du rendu ou de la
-        présentation utilisés pour cet élément dans le texte source</desc>
-      <desc versionDate="2007-11-06" xml:lang="it">indica una descrizione della resa o della
-        presentazione utilizzate per tale elemento nel testo di partenza</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-      <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <head rendition="#ac #sc"><lb/>To The <lb/>Duchesse <lb/>of <lb/>Newcastle, <lb/>On Her
-              <lb/><hi rendition="#normal">New Blazing-World</hi>. </head>
-          <!-- elsewhere... -->
-          <rendition xml:id="sc" scheme="css">font-variant: small-caps</rendition>
-          <rendition xml:id="normal" scheme="css">font-variant: normal</rendition>
-          <rendition xml:id="ac" scheme="css">text-align: center</rendition>
-        </egXML>
-      </exemplum>
-      <exemplum versionDate="2010-02-26" xml:lang="fr">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Belloy">
-          <head rendition="#ac #sc"><lb/>épître dédicatoire <lb/>à <lb/>Monsieur de Coucy <lb/>
-               </head>
-          <rendition xml:id="fr_sc" scheme="css">font-variant: uppercase</rendition>
-          <rendition xml:id="fr_ac" scheme="css">text-align: center</rendition>
-        </egXML>
-      </exemplum>
-      <remarks versionDate="2007-09-22" xml:lang="en">
-        <p>The <att>rendition</att> attribute is used in a very similar way to the <att>class</att>
-          attribute defined for XHTML but with the important distinction that its function is to
-          describe the appearance of the source text, not necessarily to determine how that text
-          should be presented on screen or paper.</p>
-        <p>Where both <att>rendition</att> and <att>rend</att> are supplied, the latter is
-          understood to override or complement the former.</p>
-        <p>Each URI provided should indicate a <gi>rendition</gi> element defining the intended
-          rendition in terms of some appropriate style language, as indicated by the
-          <att>scheme</att> attribute.</p>
-      </remarks>
-      <remarks xml:lang="fr" versionDate="2007-06-12">
-        <p>L'attribut <att>rendition</att> est employé à peu près de la même manière que l'attribut
-            <att>class</att> défini pour XHTML mais avec cette sérieuse différence que sa fonction
-          est de décrire la présentation du texte source mais pas nécessairement de déterminer
-          comment ce texte doit être représenté à l'écran ou sur le papier. </p>
-        <p>Où <att>rendition</att> et <att>rend</att> sont donnés ensembles, il faut comprendre que
-          le dernier remplace ou complète le premier.</p>
-        <p> Chaque URI fourni doit indiquer un élément <gi>rendition</gi> définissant le rendu prévu
-          dans les termes d'un langage approprié pour définir les styles, comme indiqué par
-          l'attribut <att>scheme</att>.</p>
-      </remarks>
-      <remarks xml:lang="es" versionDate="2008-04-06">
-        <p>El atributo <att>rendition</att> (interpretación) se utiliza en una manera muy similar al
-          atributo <att>clase</att> definido por XHTML pero con una diferencia importante: que su
-          función es describir el aspecto del texto original, no necesariamente para determinar la
-          presentación visual de ese texto en la pantalla o el papel.</p>
-        <p>Donde ambos <att>interpretación</att> y <att>rend</att> se dan, este último se emplea
-          para reemplazar o para complementar el anterior.</p>
-        <p>Cada URI proporcionado debe indicar al elemento <gi>interpretación</gi> que define la
-          interpretación prevista en términos de cualquier lenguaje apropiado del estilo, según lo
-          indicado por el atributo <att>scheme</att> (esquema).</p>
-      </remarks>
-      <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p> 属性<att>rendition</att>は，XHTMLの属性<att>class</att>と大変 似たように使用される．但し，重要な違いとして，当該属性は，元資
-          料の表現を記述するものであり，スクリーン上または紙上でどう表示 されているかを示すものではない． </p>
-        <p> 属性<att>rendition</att>と属性<att>rend</att>の両方が使用され ている場合，後者の値が前者の値を上書きする，または補うと判断さ れる． </p>
-        <p> 当該属性値となるURIは，属性<att>scheme</att>で提示されているス タイル言語により，当該表現を定義する要素<gi>rendition</gi>を示
-          すべきである． </p>
-      </remarks>
-    </attDef>
+    
+    
+    
     <attDef ident="xml:base" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">provides a base URI reference with which applications can resolve relative URI
         references into absolute URI references.</desc>
