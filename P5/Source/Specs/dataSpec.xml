@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date: $
+$Id:  $
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="dataSpec">
+  <gloss versionDate="2007-07-04" xml:lang="en">datatype specification</gloss>
+  
+  <desc versionDate="2005-01-14" xml:lang="en">documents a datatype.</desc>
+  
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.oddDecl"/>
+    <memberOf key="att.identified"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="model.glossLike"/>
+          <rng:ref name="model.descLike"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:choice>
+          <rng:ref name="content"/>
+          <rng:ref name="valList"/>
+        </rng:choice>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="constraintSpec"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="exemplum"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="remarks"/>
+      </rng:zeroOrMore>
+      <rng:zeroOrMore>
+        <rng:ref name="listRef"/>
+      </rng:zeroOrMore>
+    </rng:group>
+  </content> 
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+     <dataSpec ident="data.percentage">
+       <desc versionDate="2013-04-13" xml:lang="en">defines attribute values used to express a percentage value.</desc>
+       <content>
+         <data xmlns="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger">
+           <param name="maxInclusive">100</param>
+         </data>
+       </content>
+       <remarks versionDate="2013-04-13" xml:lang="en">
+         <p>Any non-negative integer value  less than 100.</p>
+       </remarks>  
+     </dataSpec>
+    </egXML>
+  </exemplum>
+  
+  <listRef>
+    <ptr target="#TDcrystals"/>
+    <ptr target="#TDENT"/>
+  </listRef>
+</elementSpec>
