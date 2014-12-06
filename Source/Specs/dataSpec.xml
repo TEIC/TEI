@@ -7,12 +7,9 @@ $Date: $
 $Id:  $
 -->
 <?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="dataSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">datatype specification</gloss>
-  
   <desc versionDate="2005-01-14" xml:lang="en">documents a datatype.</desc>
-  
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.oddDecl"/>
@@ -45,23 +42,46 @@ $Id:  $
         <rng:ref name="listRef"/>
       </rng:zeroOrMore>
     </rng:group>
-  </content> 
+  </content>
+  <attList>
+    <attDef ident="name">
+      <desc versionDate="2012-12-04" xml:lang="en">supplies the name of a predefined datatype in the datatype library specified by the
+          <att>source</att> attribute</desc>
+      <datatype><rng:data type="name" xmlns:rng="http://relaxng.org/ns/structure/1.0"/></datatype>
+    </attDef>
+    <attDef ident="source">
+      <desc versionDate="2012-12-04" xml:lang="en">points to the datatype library in which the name specified by the <att>name</att> attribute is defined
+        </desc>
+      <datatype><rng:data type="anyURI" xmlns:rng="http://relaxng.org/ns/structure/1.0"/> </datatype>
+        <defaultVal>http://www.w3.org/2001/XMLSchema-datatypes</defaultVal>
+      <remarks  versionDate="2012-12-04" xml:lang="en"><p>The default source is the list of datatypes provided by <ref target="#XSD2">XML Schema schema for XML Schemas: Part 2: Datatypes</ref> </p></remarks>
+    </attDef>
+    <attDef ident="match">
+      <desc versionDate="2012-12-04" xml:lang="en">supplies a string representing a regular expression providing additional constraints 
+        on the strings used to represent values conforming to this dataype</desc>
+    <datatype><rng:data type="string" xmlns:rng="http://relaxng.org/ns/structure/1.0"/> </datatype>
+    </attDef>
+  </attList>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-     <dataSpec ident="data.percentage">
-       <desc versionDate="2013-04-13" xml:lang="en">defines attribute values used to express a percentage value.</desc>
-       <content>
-         <data xmlns="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger">
-           <param name="maxInclusive">100</param>
-         </data>
-       </content>
-       <remarks versionDate="2013-04-13" xml:lang="en">
-         <p>Any non-negative integer value  less than 100.</p>
-       </remarks>  
-     </dataSpec>
-    </egXML>
+      <dataSpec ident="data.percentage" name="nonNegativeInteger" match="[0-9][0-9]?">
+        <desc versionDate="2013-04-13" xml:lang="en">defines attribute values used to express a
+          percentage value.</desc>
+      </dataSpec>
+         </egXML>
   </exemplum>
-  
+  <!-- equivalent to
+        <macrospec type="dt" ident="data.percentage"><desc>as above</desc>
+        <content>
+          <data xmlns="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger">
+            <param name="maxInclusive">100</param>
+          </data>
+        </content>
+        <remarks versionDate="2013-04-13" xml:lang="en">
+          <p>Any non-negative integer value less than 100.</p>
+        </remarks>
+      </datatype>
+-->
   <listRef>
     <ptr target="#TDcrystals"/>
     <ptr target="#TDENT"/>
