@@ -73,6 +73,10 @@
    </sourceDesc>
   </fileDesc>
   <revisionDesc>
+   <change when="2014-12-06" who="KSH">Renamed <gi>cols</gi> to <gi>colShift</gi> per https://sourceforge.net/p/tei/feature-requests/269/ .</change>
+   <change when="2014-12-05" who="SR">Fixed ODD deletion of <att>rendition</att>.</change>
+   <change when="2014-12-04" who="KSH">Clarified wording about use of <att>when</att> per https://sourceforge.net/p/tei/bugs/281/ .</change>
+   <change when="2014-11-21" who="LB">Fixed ODD inclusion of <gi>trailer</gi> per https://sourceforge.net/p/tei/bugs/700/ .</change>
    <change when="2012-09-10" who="RAW">Added prose explanation for handShift element to section 6.1 Typographical Changes, per ticket
     3418550</change>
    <change when="2011-11-01" who="KSH">Added add and del elements</change>
@@ -153,7 +157,7 @@
 
     <p>Tite uses a subset of the TEI's elements, except for a few shortcut elements for the
      convenience of use by vendors (<gi>b</gi>, <gi>i</gi>, <gi>ul</gi>, <gi>sup</gi>, <gi>sub</gi>,
-      <gi>smcap</gi>, <gi>cols</gi> and <gi>ornament</gi>) which can be transformed to normal TEI
+      <gi>smcap</gi>, <gi>colShift</gi> and <gi>ornament</gi>) which can be transformed to normal TEI
      elements. Tite is also not a TEI-conformant customization since it breaks the TEI Abstract
      Model by omitting <gi>teiHeader</gi> for encoder convenience. That is, Tite was created
      primarily by <emph>removing</emph> elements and attributes from the TEI, and not from extensive
@@ -517,7 +521,7 @@ some say, "No."
     </div>
     <div type="subsection" xml:id="newspaper">
      <head>Newspapers</head>
-     <p>Tite includes the elements <gi>cols</gi> and <gi>cb</gi> which are well suited for the
+     <p>Tite includes the elements <gi>colShift</gi> and <gi>cb</gi> which are well suited for the
       multi-column layout of newspapers. Additional relevant elements are: <gi>ref</gi>, to encode a
       pointer to the continuation of a story in a different column or on a different page; and
        <gi>figure</gi>, to describe illustrations, advertisements, and cartoons.</p>
@@ -717,8 +721,8 @@ some say, "No."
      place the <gi>pb</gi> element at the <q>top.</q></p>
     <p>If marking column breaks, follow the same rules as for page breaks. Column breaks are
      imagined to appear at the <emph>top</emph> of the column, at the beginning of the column's
-     text. The <gi>cols</gi> element exists to record a change in columnar layout. If such a change
-     occurs, mark the beginning of the new layout with <gi>cols</gi> and supply the new number of
+     text. The <gi>colShift</gi> element exists to record a change in columnar layout. If such a change
+     occurs, mark the beginning of the new layout with <gi>colShift</gi> and supply the new number of
      columns as the value for the <att>n</att> attribute.</p>
     <p>For many applications, it will not be important to capture line breaks in ordinary prose text, 
      but in cases where they are purposeful (such as the layout of acrostics, or where a word is 
@@ -746,7 +750,7 @@ some say, "No."
        provided </item>
       <item>provides some genre-specific elements in addition to those for verse that level three
        also provides (<gi>lg</gi>, <gi>l</gi>): <gi>sp</gi>, <gi>speaker</gi>, and <gi>stage</gi>
-       for drama, the <gi>cols</gi> element especially for newspapers. </item>
+       for drama, the <gi>colShift</gi> element especially for newspapers. </item>
      </list>
     </p>
     <p>The most useful comparison for Tite is to Level 4 (<q>Basic Content Analysis</q>), provides
@@ -1098,9 +1102,10 @@ some say, "No."
       </content>
      </elementSpec>
 
-     <elementSpec ident="cols" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
-      <equiv filter="tite-acdc.xsl" mimeType="text/xsl" name="cols"/>
-      <desc  xml:lang="en" versionDate="2014-01-12">(columns) with the <q>n</q> attribute (denoting new number of columns) is used to mark
+     <elementSpec ident="colShift" mode="add" ns="http://www.tei-c.org/ns/tite/1.0">
+      <equiv filter="tite-acdc.xsl" mimeType="text/xsl" name="colShift"/>
+      <gloss versionDate="2014-12-06">column shift</gloss>
+      <desc  xml:lang="en" versionDate="2014-12-06">with the <q>n</q> attribute (denoting new number of columns) is used to mark
        where a document changes columnar layout.</desc>
       <classes>
        <memberOf key="model.milestoneLike"/>
