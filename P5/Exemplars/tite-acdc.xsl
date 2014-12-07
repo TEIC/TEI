@@ -71,8 +71,8 @@
   </figure>
 </xsl:template>
 
-<xsl:template name="cols">
-  <milestone unit="cols">
+<xsl:template name="colShift">
+  <milestone unit="column">
     <xsl:apply-templates 
 	select="@*|*|text()|comment()|processing-instruction"/>  
   </milestone>
