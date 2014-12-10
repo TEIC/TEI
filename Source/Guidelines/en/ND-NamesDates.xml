@@ -136,10 +136,10 @@ it is the name itself which is of interest rather than the person,
 place, or organization being named. See section <ptr target="#NDNYM"/>
 for further discussion.</p>
 
-<p>Some members of the <ident type="class">att.naming</ident> class
-are also members of the <ident type="class">att.responsibility</ident>
-class, from which they inherit the following attributes:
-<specList><specDesc key="att.responsibility" atts="resp cert"/></specList>
+<p>All members of the <ident type="class">att.naming</ident> class
+  inherit the following attributes from the <ident type="class">att.global.responsibility</ident>
+class:
+<specList><specDesc key="att.global.responsibility" atts="resp cert"/></specList>
 This enables an encoder to record the agency responsible for a given
 assertion (for example, the name) and the confidence placed in that
 assertion by the encoder.
@@ -986,15 +986,16 @@ people of different kinds where this is considered convenient:
 </p>
 
 <p>The <gi>person</gi> element carries several  attributes.
-First, as a member of <ident type="class">att.editLike</ident>, which
-is a subclass of the <ident type="class">att.responsibility</ident>
-class, it carries the usual attributes for providing
-details about the information  
-recorded for that person itself, such as its reliability or source: <specList>
-<specDesc key="att.responsibility" atts="cert resp"/>
-<specDesc key="att.editLike" atts="evidence"/>
-<specDesc key="att.source" atts="source"/>
-</specList>
+  As a member of the classes <ident type="class">att.global.responsibility</ident>,
+  and <ident type="class">att.editLike</ident>, which
+  is a subclass of the <ident type="class">att.source</ident>
+  class, it carries the usual attributes for providing
+  details about the information  
+  recorded for that person, such as its reliability or source: <specList>
+    <specDesc key="att.global.responsibility" atts="cert resp"/>
+    <specDesc key="att.editLike" atts="evidence"/>
+    <specDesc key="att.source" atts="source"/>
+  </specList>
 In addition, a small number of very commonly used personal properties
 may be recorded using attributes specific to <gi>person</gi> and
 <gi>personGrp</gi>:  <specList><specDesc key="person"
@@ -1394,7 +1395,7 @@ David Jones changed his name in 1966 to David Bowie:
 </egXML>
 </p>
 <p>All the generic elements are also members of the <ident
-type="class">att.responsibility</ident> and <ident
+type="class">att.global.responsibility</ident> and <ident
 type="class">att.editLike</ident> classes. These classes make
 available the attributes <att>cert</att>, to indicate the degree of
 certainty, <att>resp</att>, the agency responsible, 

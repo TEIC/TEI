@@ -8,12 +8,13 @@ $Id$
 -->
 <?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.responsibility">
-  <desc versionDate="2009-11-02" xml:lang="en">provides attributes indicating who is responsible for
-  something asserted by the markup and the degree of certainty
-  associated with it.</desc>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.global.responsibility">
+  <desc versionDate="2014-12-10" xml:lang="en">provides attributes indicating the agency 
+    responsible for some aspect of the text, the markup or 
+    something asserted by the markup, and the degree of certainty 
+    associated with it.</desc>
   <classes>
-    <memberOf key="att.source"/>
+    
   </classes>
   <attList>
     <attDef ident="cert" usage="opt">
@@ -56,22 +57,50 @@ $Id$
       <datatype maxOccurs="unbounded">
         <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
       </datatype>
+      <remarks versionDate="2014-12-10" xml:lang="en">
+        <p>Note that a simple <att>resp</att> pointing to a person or 
+          organization is likely to be somewhat ambiguous with regard 
+          to the nature of the responsibility. For this reason, we 
+          recommend that <att>resp</att> be used to point not to an agent 
+          (<gi>person</gi> or <gi>org</gi>) but to a <gi>respStmt</gi>, 
+          <gi>author</gi>, <gi>editor</gi> or similar 
+          element which clarifies the exact role played by the agent. 
+          Pointing to multiple <gi>respStmt</gi>s allows the encoder to specify 
+          clearly each of the roles played in part of a TEI file (creating, 
+          transcribing, encoding, editing, proofing etc.).</p></remarks>
 <!--      <valDesc>A pointer to an element typically, but not necessarily, in the document header that is associated with a person
         asserted as responsible for some aspect of the text's creation, transcription, editing, or
         encoding.</valDesc>
       <valDesc versionDate="2009-05-25" xml:lang="fr">Pointeur vers un élément de l'en-tête du
         document TEI relatif à une personne déclarée comme responsable de l'un des aspects de la création, de la transcription, de l'édition ou de l'encodage du texte.</valDesc>
  --> 
-<!-- leaving this as a comment for the moment : use of the word "creation" may be interpreted as contreadicting what it sats in the deac : well known problem LB dec 2013 -->
+<!-- leaving this as a comment for the moment : use of the word "creation" may be interpreted as contradicting what it says in the desc : well known problem LB dec 2013 -->
   </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">Blessed are the 
       <choice><sic>placemakers</sic><corr resp="#editor" cert="high">peacemakers</corr></choice>: for they shall be called the children of God.</egXML>
   </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"><!-- in the <text> ... -->
+      
+      <l>Punkes, Panders, baſe extortionizing 
+        sla<choice><sic>n</sic><corr resp="#JENS1_transcriber">u</corr></choice>es,</l>
+      
+      <!-- in the <teiHeader> ... -->
+      
+      <respStmt xml:id="JENS1_transcriber">
+        <resp when="2014">Transcriber</resp>
+        <name>Janelle Jenstad</name>
+      </respStmt>
+    </egXML>
+  </exemplum>
+  
+  
   <listRef>
     <!--<ptr target="#ST"/>-->
     <ptr target="#COED"/>
+    <ptr target="#PHHR"/>
     <ptr target="#AISP"/>
     <ptr target="#NDATTSnr"/>
   </listRef>
