@@ -1222,21 +1222,20 @@ chapter <ptr target="#SA"/> should be used. To encode multiple
 witnesses of a particular text, a similar mechanism designed
 specifically for critical editions is described in chapter <ptr target="#TC"/>.</p>
 
-<p>For most of the elements discussed here, some encoders may wish to
-indicate both a <term>responsibility</term>, that is, a code
-indicating the person or agency responsible for making the editorial
-intervention in question, and also an indication of the degree of
-<term>certainty</term> which the encoder wishes to associate with the
-intervention. Because these requirements are common to many of the
-elements discussed in this section, they are provided by attribute
-classes, specifically  <ident type="class">att.editLike</ident>, which
-itself inherits attributes from three further classes called 
-<ident type="class">att.responsibility</ident>, 
-<ident type="class">att.source</ident>, and <ident 
-type="class">att.dimensions</ident> respectively. Any of the elements
-discussed here thus may potentially carry any of the following optional attributes:
+  <p>For most of the elements discussed here, some encoders 
+    may wish to indicate both a <term>responsibility</term>, that is, a 
+    code indicating the person or agency responsible for 
+    making the editorial intervention in question, and also 
+    an indication of the degree of <term>certainty</term> which the encoder 
+    wishes to associate with the intervention. These 
+    requirements are served by the 
+    <ident type="class">att.global.responsibility</ident>
+    class, along with <ident type="class">att.source</ident> and 
+    <ident type="class">att.dimensions</ident>. Any of 
+    the elements discussed here thus may potentially carry 
+    any of the following optional attributes:
 <specList>
-<specDesc key="att.responsibility" atts="cert resp"/>
+<specDesc key="att.global.responsibility" atts="cert resp"/>
 <specDesc key="att.source" atts="source"/>
 <specDesc key="att.editLike" atts="evidence"/>
 <specDesc key="att.dimensions" atts="unit quantity extent precision scope"/></specList>
@@ -1325,20 +1324,24 @@ the emendation, this might be done as follows:
   </choice> mentioned in the main body of the text are
   incorrect.
 <!-- within the header for this document ... -->
-<respStmt>
+<respStmt xml:id="msm">
 <resp>editor</resp>
-<name xml:id="msm">C.M. Sperberg-McQueen</name>
+<name>C.M. Sperberg-McQueen</name>
 </respStmt>
 </egXML>Here the <att>resp</att> attribute
-has been used to indicate responsibility for the correction. Its value (<val>#msm</val>) is an example of the <term>pointer</term> values discussed
-  in section <ptr target="#COXR"/>; in this case, it points to a
-  <gi>name</gi> element within the TEI header, but any element might be
-  indicated in this way, including for example a <gi>person</gi>
-  element (if the module described in <ptr target="#ND"/> has been
-  included), or one of the bibliographic elements described in <ptr target="#COBI"/>, if the correction has been taken from some other
-  source. The <att>resp</att> attribute is
-  available for all elements which are members of the <ident type="class">att.responsibility</ident> class. The same
-  class makes available a  <att>cert</att> attribute, which may be used
+  has been used to indicate responsibility for the 
+  correction. Its value (<val>#msm</val>) is an 
+  example of the <term>pointer</term> values discussed
+  in section <ptr target="#COXR"/>; in this case, 
+  it points to a <gi>respStmt</gi> element within the TEI 
+  header, but any element might be indicated in this way, 
+  including for example a <gi>name</gi> element, or (if the 
+  module described in <ptr target="#ND"/> has been included) a 
+  <gi>person</gi> element. 
+  The <att>resp</att> attribute is
+  available for all elements which are members of the 
+  <ident type="class">att.global.responsibility</ident> class. The same
+  class makes available a <att>cert</att> attribute, which may be used
   to indicate the degree of editorial
 confidence in a particular correction, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COEDCOR-eg-64">An <choice><corr cert="high">Autumn</corr><sic>Antony</sic></choice> it was,
