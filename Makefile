@@ -402,14 +402,15 @@ dependencies:
 	@echo	msttcorefonts
 	@echo	rnv
 	@echo	tei-p5-xsl
-	@echo	ttf-arphic-ukai
-	@echo	ttf-arphic-uming 
+	@echo	fonts-arphic-ukai
+	@echo	fonts-arphic-uming 
 	@echo	ttf-baekmuk 
 	@echo	ttf-junicode
 	@echo	ttf-kochi-gothic
 	@echo	ttf-kochi-mincho 
 	@echo	zip 
-
+	@echo   ttf-linux-libertine
+	@echo 	ttf-hannom 
 clean:
 	(cd Exemplars; make clean)
 	(cd Test; make clean)
