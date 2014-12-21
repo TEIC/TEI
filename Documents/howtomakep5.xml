@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_lite.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_lite.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>Building TEI P5 locally</title>
+            </titleStmt>
+            <publicationStmt>
+                <p>Publication Information</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Information about the source</p>
+            </sourceDesc>
+        </fileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <p>Alhough the Jenkins servers provide a complete validation service for any
+                modifications to the TEI project, developers may also like to check their
+                modifications locally before committing them to the server, as an optional
+                additional step in the development process. A local build of TEI P5 may also be
+                useful during development and experimentation.</p>
+            <p>This document describes briefly how to build a software environment for such a
+                purpose. It assumes that you have already installed subversion, and that you have
+                plenty of disk space. </p>
+            <div>
+                <head>Ubuntu or other Debian-based Linux distributions</head>
+                <p>The following procedure has been tested on a fresh installation of Ubuntu 14.04.
+                    Some modification may be needed for other distributions. </p>
+                <p>Open a terminal window and type the following shell commands : </p>
+                <list rend="numbered">
+                    <item>Create folders to hold the source files. I like to keep the TEI Source and
+                        the TEI Stylesheets separate but this is not important. <eg>mkdir TEI-Source
+                            Stylesheets</eg></item>
+                    <item>Use subversion to check out a fresh copy of the TEI and Stylesheets source
+                        trees and place them in the folders you just created <eg> svn co
+                            https://tei.svn.sourceforge.net/svnroot/tei/trunk TEI-Source</eg>
+                        <eg>svn co https://github.com/TEIC/Stylesheets Stylesheets</eg> You can of
+                        course use git rather than svn to get a copy of the Stylesheets if you
+                        prefer. Or you can elect not to maintain a local copy of the Stylesheets at
+                        all, but simply install the tei-xsl package from the Oxford repository (see
+                        below).</item>
+                    <item> You must have some sort of functioning java before trying to install the
+                        Stylesheets on your local system (you won't get far without them). We
+                        recommend something like this : <eg>sudo apt-get install openjdk-7-*</eg>
+                        <eg>cd Stylesheets/trunk; sudo make install</eg>
+                    </item>
+                    <item>You now need to install a mixed bag of XML tools since the build process
+                        uses several different XML validators. Start with the following: <eg>sudo
+                            apt-get install jing trang ant libxml2-utils curl </eg> The easiest way
+                        to get the remainder is from the debian repository at Oxford, though you
+                        could also get them individually elsewhere, To use the Oxford repo, you need
+                        to add it to your <ident>sources.list</ident> and install its public key.
+                        The procedure is described at <ptr target="http://tei.oucs.ox.ac.uk/teideb/"
+                        />
+                    </item>
+                    <item>The two remaining required validators (onvdl and rnv) are not available in
+                        package form from the usual repositories, so installing them requires you
+                        either to use the <q>unsupported and experimental</q> archive at Oxford, or
+                        to do some more fiddling about. First, if you are using the Oxford repo,
+                            <eg>sudo apt-get install onvdl rnv </eg> is all you need. </item>
+                    <item>Alternatively, you can download and install the ONVDL JAFR files as
+                        follows <eg>wget www.oxygenxml.com/InstData/Editor/onvdl/onvdl-2007517.zip;
+                            unzip onvdl-2007517.zip ; sudo mv onvdl-2007517/bin /usr/share/onvdl
+                        </eg>. You may then need to set up a suitable command to run the jar file.
+                        For example: <eg>sudo cat 'java -Xss2048k -jar /usr/share/onvdl/onvdl.jar
+                            ${1+"$@"}' > /usr/bin/onvdl </eg></item>
+                    <item>On a 64 bit architecture, you will in any case need to build rnv from source because
+                        the rnv package in the Oxford repo contains only the 32 bit version,
+                        which does not work. <eg>sudo apt-get install libexpat1-dev; wget
+                            http://ftp.davidshen.net/PreTI/RNV/RNV.ZIP; unzip ~/Downloads/RNV.ZIP;
+                            cd ~/Downloads/rnv-1.7.8; make; sudo mv rnv /usr/bin</eg> This step
+                        should not be necessary on a 32-bit machine. Or after the package gets
+                        updated. </item>
+                    <item>Now you're ready to boogie. <eg>cd TEI-Source; make clean; make</eg> will
+                        delete the results of any previous attempts, and build everything from fresh
+                        using whatever is in your TEI-Source directory. It will also run all the
+                        testfiles, and generate a new HTML source tree for P5. For other outputs,
+                        see below. </item>
+                </list>
+                <p>You can of course run parts of the Makefile separately. For example, run "make
+                    check" to run the TEI test suite; "make validate" to validate the P5 source;
+                    make exemplars to check that all the TEI explars still work; run "make ebook" or
+                    "make mobi" to produce an Ebook or Mobi version of the Guidelines respectively.
+                    "make pdf" will try to build the fancy PDF version of the Guidelines, but it
+                    won't get far unless you have a working LiveTex environment and the requisite
+                    fonts. (see <ptr target="#PDF"/> below) </p>
+            </div>
+            <div>
+                <head>Macintosh</head>
+                <p/>
+            </div>
+            <div>
+                <head>Windows</head>
+                <p/>
+            </div>
+            <div>
+                <head>What can possibly go wrong?</head>
+                <p>(Explain the expected-results thing)</p>
+            </div>
+            <div>
+                <head>Producing PDF on Ubuntu</head>
+                <p>The commands <ident>teitopdf</ident> and <ident>teitoslides</ident> expect to
+                    find LiveTex installed on your system, as does the command "make pdf". This
+                    means you need to install the following packages: <eg>sudo apt-get install
+                        texlive texlive-xetex texlive-latex-extra </eg></p>
+                <p>You'll also probably need something to read the PDF: try <eg>sudo apt-get install
+                        evince adobereader-en</eg></p>
+                <p>And you will also need several fonts, especially if you aim to produce the PDF
+                    version of P5. <eg>sudo apt-get install ttf-linux-libertine ttf-kochi-mincho </eg> should do it.</p>
+            </div>
+        </body>
+    </text>
+</TEI>
