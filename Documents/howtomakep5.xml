@@ -61,19 +61,18 @@
                     <item>The two remaining required validators (onvdl and rnv) are not available in
                         package form from the usual repositories, so installing them requires you
                         either to use the <q>unsupported and experimental</q> archive at Oxford, or
-                        to do some more fiddling about. First, if you are using the Oxford repo,
+                        to do some fiddling about. If you are using the Oxford repo,
                             <eg>sudo apt-get install onvdl rnv </eg> is all you need. </item>
-                    <item>Alternatively, you can download and install the ONVDL JAFR files as
+                    <item>Alternatively, you can download and install the oNVDL JAR files as
                         follows <eg>wget www.oxygenxml.com/InstData/Editor/onvdl/onvdl-2007517.zip;
                             unzip onvdl-2007517.zip ; sudo mv onvdl-2007517/bin /usr/share/onvdl
-                        </eg>. You may then need to set up a suitable command to run the jar file.
-                        For example: <eg>sudo cat 'java -Xss2048k -jar /usr/share/onvdl/onvdl.jar
-                            ${1+"$@"}' > /usr/bin/onvdl </eg></item>
+                        </eg>. You do not need to set up a suitable command to run the jar file as this is included in the Makefile.
+                       </item>
                     <item>On a 64 bit architecture, you will in any case need to build rnv from source because
                         the rnv package in the Oxford repo contains only the 32 bit version,
-                        which does not work. <eg>sudo apt-get install libexpat1-dev; wget
+                        which does not work on your hardware.  <eg>sudo apt-get install libexpat1-dev; wget
                             http://ftp.davidshen.net/PreTI/RNV/RNV.ZIP; unzip ~/Downloads/RNV.ZIP;
-                            cd ~/Downloads/rnv-1.7.8; make; sudo mv rnv /usr/bin</eg> This step
+                            cd ~/Downloads/rnv-1.7.8; ./configure; make; make install</eg> should do it. This step
                         should not be necessary on a 32-bit machine. Or after the package gets
                         updated. </item>
                     <item>Now you're ready to boogie. <eg>cd TEI-Source; make clean; make</eg> will
@@ -103,14 +102,14 @@
                 <p>(Explain the expected-results thing)</p>
             </div>
             <div>
-                <head>Producing PDF on Ubuntu</head>
+                <head>Producing PDF from TEI files on Ubuntu</head>
                 <p>The commands <ident>teitopdf</ident> and <ident>teitoslides</ident> expect to
-                    find LiveTex installed on your system, as does the command "make pdf". This
-                    means you need to install the following packages: <eg>sudo apt-get install
+                    find LiveTex installed on your system, as does the command "make pdf". To use these commands,
+                    you will need to install the following packages: <eg>sudo apt-get install
                         texlive texlive-xetex texlive-latex-extra </eg></p>
                 <p>You'll also probably need something to read the PDF: try <eg>sudo apt-get install
                         evince adobereader-en</eg></p>
-                <p>And you will also need several fonts, especially if you aim to produce the PDF
+                <p>And you will also probably need to install some fonts, especially if you aim to produce the PDF
                     version of P5. <eg>sudo apt-get install ttf-linux-libertine ttf-kochi-mincho </eg> should do it.</p>
             </div>
         </body>
