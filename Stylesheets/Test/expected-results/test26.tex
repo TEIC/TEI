@@ -1,0 +1,322 @@
+\documentclass[11pt,twoside]{article}\makeatletter
+
+\IfFileExists{xcolor.sty}%
+  {\RequirePackage{xcolor}}%
+  {\RequirePackage{color}}
+\usepackage{colortbl}
+      
+\IfFileExists{utf8x.def}%
+ {\usepackage[utf8x]{inputenc}
+    \PrerenderUnicode{–}
+  }%
+ {\usepackage[utf8]{inputenc}}
+
+
+\usepackage[english]{babel}
+
+\usepackage[T1]{fontenc}
+\usepackage{float}
+\usepackage[]{ucs}
+\uc@dclc{8421}{default}{\textbackslash }
+\uc@dclc{10100}{default}{\{}
+\uc@dclc{10101}{default}{\}}
+\uc@dclc{8491}{default}{\AA{}}
+\uc@dclc{8239}{default}{\,}
+\uc@dclc{20154}{default}{ }
+\uc@dclc{10148}{default}{>}
+\def\textschwa{\rotatebox{-90}{e}}
+\def\textJapanese{}
+\def\textChinese{}
+
+\DeclareTextSymbol{\textpi}{OML}{25}
+\usepackage{relsize}
+\def\textsubscript#1{%
+  \@textsubscript{\selectfont#1}}
+\def\@textsubscript#1{%
+  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+\def\textquoted#1{‘#1’}
+\def\textsmall#1{{\small #1}}
+\def\textlarge#1{{\large #1}}
+\def\textoverbar#1{\ensuremath{\overline{#1}}}
+\def\textgothic#1{{\fontspec{Lucida Blackletter}#1}}
+\def\textcal#1{{\fontspec{Lucida Calligraphy}#1}}
+\RequirePackage{array}
+\def\@testpach{\@chclass
+ \ifnum \@lastchclass=6 \@ne \@chnum \@ne \else
+  \ifnum \@lastchclass=7 5 \else
+   \ifnum \@lastchclass=8 \tw@ \else
+    \ifnum \@lastchclass=9 \thr@@
+   \else \z@
+   \ifnum \@lastchclass = 10 \else
+   \edef\@nextchar{\expandafter\string\@nextchar}%
+   \@chnum
+   \if \@nextchar c\z@ \else
+    \if \@nextchar l\@ne \else
+     \if \@nextchar r\tw@ \else
+   \z@ \@chclass
+   \if\@nextchar |\@ne \else
+    \if \@nextchar !6 \else
+     \if \@nextchar @7 \else
+      \if \@nextchar (8 \else
+       \if \@nextchar )9 \else
+  10
+  \@chnum
+  \if \@nextchar m\thr@@\else
+   \if \@nextchar p4 \else
+    \if \@nextchar b5 \else
+   \z@ \@chclass \z@ \@preamerr \z@ \fi \fi \fi \fi
+   \fi \fi  \fi  \fi  \fi  \fi  \fi \fi \fi \fi \fi \fi}
+
+\gdef\arraybackslash{\let\\=\@arraycr}
+\def\textxi{\ensuremath{\xi}}
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+
+\newcolumntype{L}[1]{){\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{){\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{){\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{P}[1]{){\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{){\arraybackslash}b{#1}}
+\newcolumntype{M}[1]{){\arraybackslash}m{#1}}
+\definecolor{label}{gray}{0.75}
+\def\unusedattribute#1{\sout{\textcolor{label}{#1}}}
+\DeclareRobustCommand*{\xref}{\hyper@normalise\xref@}
+\def\xref@#1#2{\hyper@linkurl{#2}{#1}}
+\def\Div[#1]#2{\section*{#2}}
+\begingroup
+\catcode`\_=\active
+\gdef_#1{\ensuremath{\sb{\mathrm{#1}}}}
+\endgroup
+\mathcode`\_=\string"8000
+\catcode`\_=12\relax
+
+\usepackage[a4paper,twoside,lmargin=1in,rmargin=1in,tmargin=1in,bmargin=1in]{geometry}
+\usepackage{framed}
+
+\definecolor{shadecolor}{gray}{0.95}
+\usepackage{longtable}
+\usepackage[normalem]{ulem}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage{marginnote}
+\renewcommand*{\marginfont}{\itshape\footnotesize}
+\setlength\marginparwidth{.75in}
+\usepackage{graphicx}
+
+\def\Gin@extensions{.pdf,.png,.jpg,.mps,.tif}
+
+\IfFileExists{tipa.sty}{\usepackage{tipa}}{}
+\usepackage{times}
+
+  \pagestyle{fancy} 
+
+\usepackage[pdftitle={Title},
+ pdfauthor={}]{hyperref}
+\hyperbaseurl{}
+
+	 \paperwidth210mm
+	 \paperheight297mm
+              
+\def\@pnumwidth{1.55em}
+\def\@tocrmarg {2.55em}
+\def\@dotsep{4.5}
+\setcounter{tocdepth}{3}
+\clubpenalty=8000
+\emergencystretch 3em
+\hbadness=4000
+\hyphenpenalty=400
+\pretolerance=750
+\tolerance=2000
+\vbadness=4000
+\widowpenalty=10000
+
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+     {-1.75ex \@plus -0.5ex \@minus -.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\Large\bfseries\sffamily}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+     {-1.75ex\@plus -0.5ex \@minus- .2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\Large\sffamily}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+     {-1.5ex\@plus -0.35ex \@minus -.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\large\sffamily}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+     {-1ex \@plus-0.35ex \@minus -0.2ex}%
+     {0.5ex \@plus .2ex}%
+     {\reset@font\normalsize\sffamily}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+     {1.5ex \@plus1ex \@minus .2ex}%
+     {-1em}%
+     {\reset@font\normalsize\bfseries}}
+
+
+\def\l@section#1#2{\addpenalty{\@secpenalty} \addvspace{1.0em plus 1pt}
+ \@tempdima 1.5em \begingroup
+ \parindent \z@ \rightskip \@pnumwidth 
+ \parfillskip -\@pnumwidth 
+ \bfseries \leavevmode #1\hfil \hbox to\@pnumwidth{\hss #2}\par
+ \endgroup}
+\def\l@subsection{\@dottedtocline{2}{1.5em}{2.3em}}
+\def\l@subsubsection{\@dottedtocline{3}{3.8em}{3.2em}}
+\def\l@paragraph{\@dottedtocline{4}{7.0em}{4.1em}}
+\def\l@subparagraph{\@dottedtocline{5}{10em}{5em}}
+\@ifundefined{c@section}{\newcounter{section}}{}
+\@ifundefined{c@chapter}{\newcounter{chapter}}{}
+\newif\if@mainmatter 
+\@mainmattertrue
+\def\chaptername{Chapter}
+\def\frontmatter{%
+  \pagenumbering{roman}
+  \def\thechapter{\@roman\c@chapter}
+  \def\theHchapter{\alph{chapter}}
+  \def\@chapapp{}%
+}
+\def\mainmatter{%
+  \cleardoublepage
+  \def\thechapter{\@arabic\c@chapter}
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \pagenumbering{arabic}
+  \setcounter{secnumdepth}{6}
+  \def\@chapapp{\chaptername}%
+  \def\theHchapter{\arabic{chapter}}
+}
+\def\backmatter{%
+  \cleardoublepage
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \setcounter{secnumdepth}{0}
+  \def\@chapapp{\appendixname}%
+  \def\thechapter{\@Alph\c@chapter}
+  \def\theHchapter{\Alph{chapter}}
+  \appendix
+}
+\newenvironment{bibitemlist}[1]{%
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+       {\settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}%
+	}%
+  \sloppy
+  \clubpenalty4000
+  \@clubpenalty \clubpenalty
+  \widowpenalty4000%
+  \sfcode`\.\@m}%
+  {\def\@noitemerr
+    {\@latex@warning{Empty `bibitemlist' environment}}%
+    \endlist}
+
+\def\tableofcontents{\section*{\contentsname}\@starttoc{toc}}
+\parskip0pt
+\parindent1em
+\def\Panel#1#2#3#4{\multicolumn{#3}{){\columncolor{#2}}#4}{#1}}
+\newenvironment{reflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\itshape ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{sansreflist}{%
+  \begin{raggedright}\begin{list}{}
+  {%
+   \setlength{\topsep}{0pt}%
+   \setlength{\rightmargin}{0.25in}%
+   \setlength{\itemindent}{0pt}%
+   \setlength{\parskip}{0pt}%
+   \setlength{\itemsep}{0pt}%
+   \setlength{\parsep}{2pt}%
+   \def\makelabel##1{\upshape\sffamily ##1}}%
+  }
+  {\end{list}\end{raggedright}}
+\newenvironment{specHead}[2]%
+ {\vspace{20pt}\hrule\vspace{10pt}%
+  \hypertarget{#1}{}%
+  \markright{#2}%
+
+  \pdfbookmark[2]{#2}{#1}%
+  \hspace{-0.75in}{\bfseries\fontsize{16pt}{18pt}\selectfont#2}%
+  }{}
+      
+\@ifundefined{chapter}{%
+    \def\DivI{\section}
+    \def\DivII{\subsection}
+    \def\DivIII{\subsubsection}
+    \def\DivIV{\paragraph}
+    \def\DivV{\subparagraph}
+    \def\DivIStar[#1]#2{\section*{#2}}
+    \def\DivIIStar[#1]#2{\subsection*{#2}}
+    \def\DivIIIStar[#1]#2{\subsubsection*{#2}}
+    \def\DivIVStar[#1]#2{\paragraph*{#2}}
+    \def\DivVStar[#1]#2{\subparagraph*{#2}}
+}{%
+    \def\DivI{\chapter}
+    \def\DivII{\section}
+    \def\DivIII{\subsection}
+    \def\DivIV{\subsubsection}
+    \def\DivV{\paragraph}
+    \def\DivIStar[#1]#2{\chapter*{#2}}
+    \def\DivIIStar[#1]#2{\section*{#2}}
+    \def\DivIIIStar[#1]#2{\subsection*{#2}}
+    \def\DivIVStar[#1]#2{\subsubsection*{#2}}
+    \def\DivVStar[#1]#2{\paragraph*{#2}}
+}
+\def\TheFullDate{1970-01-01}
+\def\TheID{\makeatother }
+\def\TheDate{1970-01-01}
+\title{Title}
+\author{}\let\tabcellsep&
+      \catcode`\&=12\relax \makeatletter 
+\makeatletter
+\thispagestyle{empty}
+\markright{\@title}\markboth{\@title}{\@author}
+\renewcommand\small{\@setfontsize\small{9pt}{11pt}\abovedisplayskip 8.5\p@ plus3\p@ minus4\p@
+\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip \z@ plus2\p@
+\belowdisplayshortskip 4\p@ plus2\p@ minus2\p@
+\def\@listi{\leftmargin\leftmargini
+               \topsep 2\p@ plus1\p@ minus1\p@
+               \parsep 2\p@ plus\p@ minus\p@
+               \itemsep 1pt}
+}
+\makeatother
+\fvset{frame=single,numberblanklines=false,xleftmargin=5mm,xrightmargin=5mm}
+\fancyhf{} 
+\setlength{\headheight}{14pt}
+\fancyhead[LE]{\bfseries\leftmark} 
+\fancyhead[RO]{\bfseries\rightmark} 
+\fancyfoot[RO]{}
+\fancyfoot[CO]{\thepage}
+\fancyfoot[LO]{\TheID}
+\fancyfoot[LE]{}
+\fancyfoot[CE]{\thepage}
+\fancyfoot[RE]{\TheID}
+\hypersetup{linkbordercolor=0.75 0.75 0.75,urlbordercolor=0.75 0.75 0.75,bookmarksnumbered=true}
+\fancypagestyle{plain}{\fancyhead{}\renewcommand{\headrulewidth}{0pt}}\makeatother 
+\begin{document}
+
+\makeatletter
+\noindent\parbox[b]{.75\textwidth}{\fontsize{14pt}{16pt}\bfseries\raggedright\sffamily\selectfont \@title}
+\vskip20pt
+\par\noindent{\fontsize{11pt}{13pt}\sffamily\itshape\raggedright\selectfont\@author\hfill\TheDate}
+\vspace{18pt}
+\makeatother
+
+\catcode`\$=12\relax
+\catcode`\^=12\relax
+\catcode`\#=12\relax
+\catcode`\%=12\relax
+ 
+\section{Identification}
+where is it, repository name, identifier
+\end{document}

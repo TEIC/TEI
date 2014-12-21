@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://relaxng.org/ns/structure/1.0" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:t="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:tm9901="http://www.oasis-open.org/specs/tm9901" xmlns:ns1="http://www.tei-c.org/ns/1.0" xmlns:structure="http://relaxng.org/ns/structure/1.0" xmlns:ns2="http://www.iso.org/ns/1.0" xmlns:examples="http://www.tei-c.org/ns/Examples" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <xs:import namespace="http://relaxng.org/ns/compatibility/annotations/1.0" schemaLocation="a.xsd"/>
+  <xs:import namespace="http://www.iso.org/ns/1.0" schemaLocation="ns2.xsd"/>
+  <xs:import namespace="http://www.lisa.org/TBX-Specification.33.0.html" schemaLocation="t.xsd"/>
+  <xs:import namespace="http://www.oasis-open.org/specs/tm9901" schemaLocation="tm9901.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/Examples" schemaLocation="examples.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/teidocx/1.0" schemaLocation="teidocx.xsd"/>
+  <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="isotei-odd.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:group name="element">
+    <xs:sequence>
+      <xs:element name="element">
+        <xs:complexType>
+          <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+          <xs:attribute name="name" use="required" type="xs:QName"/>
+          <xs:attribute name="ns" type="xs:anyURI"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="element1">
+    <xs:sequence>
+      <xs:element name="element">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="mathml:nameClass"/>
+            <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="attribute">
+    <xs:sequence>
+      <xs:element name="attribute">
+        <xs:complexType>
+          <xs:group minOccurs="0" ref="mathml:extrapattern"/>
+          <xs:attribute name="name" use="required" type="xs:QName"/>
+          <xs:attribute name="ns" type="xs:anyURI"/>
+          <xs:attribute ref="a:defaultValue"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="attribute1">
+    <xs:sequence>
+      <xs:element name="attribute">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="mathml:nameClass"/>
+            <xs:group minOccurs="0" ref="mathml:extrapattern"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="group">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="interleave">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="choice">
+    <xs:sequence>
+      <xs:element name="choice">
+        <xs:complexType>
+          <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="optional">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="zeroOrMore">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="oneOrMore">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="list">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mixed">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ref">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="parentRef">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="empty">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="text">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="value">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="type" type="xs:NCName"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="structure:param"/>
+        <xs:group minOccurs="0" ref="mathml:exceptExtrapattern"/>
+      </xs:sequence>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="notAllowed">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="externalRef">
+    <xs:complexType>
+      <xs:attribute name="href" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="grammar">
+    <xs:complexType>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="mathml:grammarContent"/>
+      <xs:attribute name="datatypeLibrary" type="xs:anyURI"/>
+      <xs:attribute name="ns" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="param">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="except">
+    <xs:sequence>
+      <xs:element name="except">
+        <xs:complexType>
+          <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="div">
+    <xs:sequence>
+      <xs:element name="div">
+        <xs:complexType>
+          <xs:group minOccurs="0" maxOccurs="unbounded" ref="mathml:grammarContent"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="include">
+    <xs:complexType>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="mathml:includeContent"/>
+      <xs:attribute name="href" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="div1">
+    <xs:sequence>
+      <xs:element name="div">
+        <xs:complexType>
+          <xs:group minOccurs="0" maxOccurs="unbounded" ref="mathml:includeContent"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="start">
+    <xs:complexType>
+      <xs:group ref="mathml:extrapattern"/>
+      <xs:attribute name="combine" type="mathml:method"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="define">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="mathml:extrapattern"/>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="combine" type="mathml:method"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:QName"/>
+  <xs:element name="anyName">
+    <xs:complexType>
+      <xs:group minOccurs="0" ref="mathml:exceptNameClass"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="nsName">
+    <xs:complexType>
+      <xs:group minOccurs="0" ref="mathml:exceptNameClass"/>
+      <xs:attribute name="ns" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="choice1">
+    <xs:sequence>
+      <xs:element name="choice">
+        <xs:complexType>
+          <xs:group maxOccurs="unbounded" ref="mathml:nameClass"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="except1">
+    <xs:sequence>
+      <xs:element name="except">
+        <xs:complexType>
+          <xs:group maxOccurs="unbounded" ref="mathml:nameClass"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+</xs:schema>

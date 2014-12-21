@@ -1,0 +1,1519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:mathml="http://www.w3.org/1998/Math/MathML" xmlns:t="http://www.lisa.org/TBX-Specification.33.0.html" xmlns:teidocx="http://www.tei-c.org/ns/teidocx/1.0" xmlns:tm9901="http://www.oasis-open.org/specs/tm9901" xmlns:ns1="http://www.tei-c.org/ns/1.0" xmlns:ns2="http://www.iso.org/ns/1.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <xs:import namespace="http://www.iso.org/ns/1.0" schemaLocation="ns2.xsd"/>
+  <xs:import namespace="http://www.oasis-open.org/specs/tm9901" schemaLocation="tm9901.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/1.0" schemaLocation="ns1.xsd"/>
+  <xs:import namespace="http://www.tei-c.org/ns/teidocx/1.0" schemaLocation="teidocx.xsd"/>
+  <xs:import namespace="http://www.w3.org/1998/Math/MathML" schemaLocation="isotei.xsd"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="admin">
+    <xs:annotation>
+      <xs:documentation>Contains information of an administrative nature for the node (parent element)
+					in question, such as the source of information, or the project or client for
+					which it applies. The type of administrative information is indicated by the
+					value of the type attribute. It can appear alone, or, if additional
+					information needs to be provided, such as a note or a reference, it can be
+					nested in an adminGrp element. This element can occur at any of
+						the three levels of the terminological entry. Several types, however,
+						logically should occur at restricted levels, as indicated with the
+						corresponding data-category descriptions. For instance,
+						databaseType and conceptOrigin would typically occur
+						at the termEntry level. Care should be taken to insert the admin at
+						the appropriate level of the entry according to its type attribute value and
+						the parent node to which the administrative information applies.
+                     </xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group ref="mathml:tbx_entity.noteText"/>
+      <xs:attributeGroup ref="mathml:IDLangTgtDtyp.attributes"/>
+      <xs:attribute name="type" use="required">
+        <xs:annotation>
+          <xs:documentation>Indicates the data-category type of the admin element, such
+							as originatingDatabase or entrySource.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="annotatedNote">
+              <xs:annotation>
+                <xs:documentation> (annotatedNote) A note that can be coupled with an adminNote element
+									to indicate the source of the note or other administrative
+									information about the note. If no source or additional
+									information about the note is required, use the note
+									element.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="applicationSubset">
+              <xs:annotation>
+                <xs:documentation> (applicationSubset) An identifier that indicates that the parent element to which
+									it applies is associated with a specific application. The
+									content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="businessUnitSubset">
+              <xs:annotation>
+                <xs:documentation> (businessUnitSubset) An identifier that indicates that the parent element to which
+									it applies is associated with a specific department, division,
+									or other unit of an enterprise. The content shall be in
+									plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="conceptOrigin">
+              <xs:annotation>
+                <xs:documentation> (conceptOrigin) The institution, region, community, culture, country, or other
+									venue from which a concept covered by a terminological entry
+									originates. Because this data-category provides information
+									about the origin of the concept, it should occur at the
+										termEntry level. The content shall be in
+								plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="customerSubset">
+              <xs:annotation>
+                <xs:documentation> (customerSubset) An identifier that indicates that the parent element to which
+									it applies is associated with a specific customer. The content
+									shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="databaseType">
+              <xs:annotation>
+                <xs:documentation> (databaseType) An identifier that indicates the type of database from which
+									the parent element originated. This element should normally
+									occur at the termEntry level because typically entire
+									entries originate from or are imported from another database.
+									The content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="domainExpert">
+              <xs:annotation>
+                <xs:documentation> (domainExpert) Subject field specialist who provides information for a
+									terminological entry, such as a definition or target language
+									equivalent. An admin element that has a type
+									attribute value of domainExpert can also have a
+										target attribute pointing to the identifier of a
+									reference entry in the back matter of the TBX document instance
+									that provides information about the domain expert. The content
+									shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="elementWorkingStatus">
+              <xs:annotation>
+                <xs:documentation> (elementWorkingStatus) A value indicating the level of completeness and accuracy of
+									an element (field, record, entry) within a terminological
+									collection. The element admin when its type
+									attribute has the value elementWorkingStatus shall
+									contain one of the following values:
+										                              * starterElement
+										                              * workingElement
+										                              * consolidatedElement
+										                              * archiveElement
+										                              * importedElement
+										                              * exportedElement
+
+									                           
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="entrySource">
+              <xs:annotation>
+                <xs:documentation> (entrySource) A database or file from which the entry was imported. The
+									content shall be in plainText. 
+									</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="environmentSubset">
+              <xs:annotation>
+                <xs:documentation> (environmentSubset) An identifier that indicates a specific computer environment
+									that the parent element is associated with. The content shall be
+									in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="indexHeading">
+              <xs:annotation>
+                <xs:documentation> (indexHeading) A term chosen to be used in an index to represent an item or a
+									concept in a document. The content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="keyword">
+              <xs:annotation>
+                <xs:documentation> (keyword) A word or group of words, possibly in lexicographically
+									standardized (lemmatized) form, taken out of the text of a
+									document, which characterizes the text and enables its
+									retrieval. For example, the terms data-category and
+										terminological entry are keywords for this
+									international standard. In a terminological database that
+									contains the terminology of ISO 30042, they could be identified
+									as keywords by using this element. The content shall be in
+									plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="originatingDatabase">
+              <xs:annotation>
+                <xs:documentation> (originatingDatabase) The database from which the parent element originated. The
+									content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="originatingInstitution">
+              <xs:annotation>
+                <xs:documentation> (originatingInstitution) An institution (i.e., company, government agency, etc.) that
+									provided the information in the parent element. The content
+									shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="originatingPerson">
+              <xs:annotation>
+                <xs:documentation> (originatingPerson) An individual who provided the information in the parent
+									element. The content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="productSubset">
+              <xs:annotation>
+                <xs:documentation> (productSubset) An identifier assigned to a term, record, or entry to indicate
+									that it is related to or used in a product. The content shall be
+									in plainText, and preferably one of a predefined set of picklist
+									values.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="projectSubset">
+              <xs:annotation>
+                <xs:documentation> (projectSubset) An identifier assigned to a term, record, or entry to indicate
+									that it is related to or used in a project. The content shall be
+									in plainText, and preferably one of a predefined set of picklist
+									values.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="searchTerm">
+              <xs:annotation>
+                <xs:documentation> (searchTerm) A term entered in a term entry for purposes of retrieval. The
+									content shall be in plainText
+									</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="securitySubset">
+              <xs:annotation>
+                <xs:documentation> (securitySubset) A classification of a term, record, or entry indicating that
+									its distribution is restricted for security reasons. Sometimes,
+									terms are not released to the public until the material that
+									uses the term (product, service, etc.) is released to the
+									public. Until that time, this element serves to protect the data
+									from distribution. The element admin when its
+									type attribute has the value
+									securitySubset shall contain one of the following values:
+										                              * public
+										                              * confidential
+									                           
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sortKey">
+              <xs:annotation>
+                <xs:documentation> (sortKey) A character string used for sorting and merging operations. A
+									sort key can enable alphabetic or systematic access. The content
+									shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="source">
+              <xs:annotation>
+                <xs:documentation> (source) A complete citation of the source of the information in the
+									parent element.
+									</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sourceIdentifier">
+              <xs:annotation>
+                <xs:documentation> (sourceIdentifier) A pointer to a bibliographic entry that contains information
+									about the source of the parent element. An admin
+									element that has a type attribute value of
+										sourceIdentifier also has a target
+									attribute containing the identifier of the bibliographic entry.
+									The content of the element is a display value for the
+								source.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="subsetOwner">
+              <xs:annotation>
+                <xs:documentation> (subsetOwner) The owner of the subset of terminological entries to which
+									this entry belongs. The content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="descrip">
+    <xs:annotation>
+      <xs:documentation>An element that contains descriptive information about a concept, or relations
+					to other concepts. The type of information that the element contains, and any
+					restrictions on the permissible values of the element, are determined by the
+					value of the type attribute.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="mathml:tbx_entity.noteText"/>
+      <xs:attributeGroup ref="mathml:IDLangTgtDtyp.attributes"/>
+      <xs:attribute name="type" use="required">
+        <xs:annotation>
+          <xs:documentation>Indicates the data-category type of the descrip element, such
+							as definition or associated-concept.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="antonymConcept">
+              <xs:annotation>
+                <xs:documentation> (antonymConcept) A concept that is opposite in meaning to the concept
+									represented by the entry containing the descrip
+									element. A descrip element that has a type
+									attribute value of antonymConcept can also have a
+										target attribute pointing to the entry ID of the
+										termEntry that contains the antonym concept. The
+									display term in the content of the element shall be expressed in
+									basicText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="associatedConcept">
+              <xs:annotation>
+                <xs:documentation> (associatedConcept) A concept that exhibits a relation to the subject concept that
+									can be established on the basis of non-hierarchical thematic
+									connections. A descrip element that has a
+									type attribute value of associatedConcept
+									can also have a target attribute pointing to the
+									entry ID of the termEntry that contains the associated
+									concept. For example, teacher and school
+									represent associated concepts.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="audio">
+              <xs:annotation>
+                <xs:documentation> (audio) A name or other identifier of an audio file: sound, spoken
+									words, music, or other audible representations used to
+									illustrate or explain terms or concepts. A descrip
+									element that has a type attribute value of
+									audio can also have a target attribute
+									pointing to the ID of a refObject in the back matter of
+									the TBX document instance that describes and points to the audio
+									file. The element content shall be in plainText. If a
+										direct pointer to the audio file is preferred within the
+											termEntry, rather than pointing to the back
+										matter, use an xref instead.
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="broaderConceptGeneric">
+              <xs:annotation>
+                <xs:documentation> (broaderConceptGeneric) A concept two or more levels of abstraction higher than
+									subject concept in a generic hierarchical concept system. A
+										descrip element that has a type
+									attribute value of broaderConceptGeneric can also
+									have a target attribute pointing to the entry ID of
+									the termEntry that contains the broader concept.
+									Generic relations between concepts are "is-a" relations. This
+									means that the narrower concept "is an" instance of its broader
+									generic concept. For example, a dog is a
+										canine animal, and a canine animal
+									is a mammal, therefore mammal is a
+									broader generic concept for dog.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="broaderConceptPartitive">
+              <xs:annotation>
+                <xs:documentation> (boaderConceptPartitive) A concept two or more levels of abstraction higher than
+									subject concept in a part-whole or meronymic hierarchical
+									concept system. A descrip element that has a
+									type attribute value of
+									broaderConceptPartitive can also have a
+									target attribute pointing to the entry ID of the
+										termEntry that contains the broader concept. For
+									example, a floor board is part of a
+									house (broader partitive concept), but it can be
+									more narrowly defined as being part of the floor
+									(superordinate partitive concept), which in turn is part of the
+									house. Partitive relations between concepts are "has-a"
+									relations. This means that the broader partitive concept "has"
+									its narrower concepts as parts of itself.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="characteristic">
+              <xs:annotation>
+                <xs:documentation> (characteristic) An abstraction of a property of an object or of a set of
+									objects. For example, flammability is a
+									characteristic of fuel. Essential characteristics
+									can be used to define concepts. The element content shall be in
+									plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="classificationCode">
+              <xs:annotation>
+                <xs:documentation> (classificationCode) A set of symbols, with rules for their application, used to
+									represent classes and their interrelations. A descrip
+									element that has a type attribute value of
+										classificationCode can also have a
+									target attribute pointing to the ID of a
+									bibliographic refobject in the back matter describing
+									the classification code. The element content shall be in plain
+									text. If a direct pointer to the classification code is
+										preferred within the termEntry, rather than
+										pointing to the back matter, use an xref
+									instead.
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="conceptPosition">
+              <xs:annotation>
+                <xs:documentation> (conceptPosition) The position of a concept in a concept system. A
+									descrip element that has a type attribute
+									value of conceptPosition can also have a
+									target attribute pointing to the ID of a position in
+									the concept system. The element content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="context">
+              <xs:annotation>
+                <xs:documentation> (context) A text which illustrates a concept or a term, by containing
+									the concept designation itself. Contexts must be authentic, that is, they must be obtained
+									from an existing source, and not created by the terminologist.
+									Contexts are documented very frequently in terminology
+									collections. Contexts can provide information for determining
+									term usage and collocations. In TBX, the context is a
+									term-related data-category. A context can be further categorized
+									according to context type.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="coordinateConceptGeneric">
+              <xs:annotation>
+                <xs:documentation> (coordinateConceptGeneric) A concept having the same nearest superordinate concept
+									 as the concept being
+									described by this descrip element in a generic concept
+									system. A descrip element that has a type
+									attribute value of coordinateConceptGeneric can also
+									have a target attribute pointing to the ID of the
+									coordinate concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="coordinateConceptPartitive">
+              <xs:annotation>
+                <xs:documentation> (coordinateConceptPartitive) A concept having the same nearest superordinate concept
+									 as the concept being
+									described by this descrip element in a partitive
+									concept system. A descrip element that has a
+									type attribute value of
+										coordinateConceptPartitive can also have a
+										target attribute pointing to the ID of the
+									coordinate concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="definition">
+              <xs:annotation>
+                <xs:documentation> (definition) A representation of a concept by a descriptive statement which
+									serves to differentiate that concept from related
+								concepts.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="example">
+              <xs:annotation>
+                <xs:documentation> (example) A text which illustrates a concept or a term, by providing an
+									example of the object designated by the concept or term, and not
+									necessarily containing the concept designation itself.
+									</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="explanation">
+              <xs:annotation>
+                <xs:documentation> (explanation) A statement that describes and clarifies a concept and makes
+									it understandable, but does not necessarily differentiate it
+									from other concepts.Some databases use example as a
+									label for contextual references. The content of those
+									data-categories should be converted to the data-category  for interchange purposes.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="figure">
+              <xs:annotation>
+                <xs:documentation> (figure) A name or other description of a diagram, picture, or other
+									graphic material used to illustrate a concept or group of
+									concepts. A descrip element that has a type
+									attribute value of figure can also have a
+									target attribute pointing to the ID of a
+										refObject in the back matter of the TBX document
+									instance that describes and points to the file that contains the
+									figure. The element content shall be in plainText. If a
+										direct pointer to the file that contains the figure is
+										preferred within the termEntry, rather than
+										pointing to the back matter, use an xref
+									instead.
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="otherBinaryData">
+              <xs:annotation>
+                <xs:documentation> (otherBinaryData) Any binary data not covered by the categories , , , and . A
+									descrip element that has a type attribute
+									value of otherBinaryData can also have a
+									target attribute pointing to the ID of a
+										refObject in the back matter of the TBX document
+									instance that describes and points to the binary file. The
+									element content shall be in plainText. If a direct pointer
+										to the binary file is preferred within the
+										termEntry, rather than pointing to the back matter,
+										use an xref instead.
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="quantity">
+              <xs:annotation>
+                <xs:documentation> (quantity) A measurable quantity associated with a concept. The element
+									content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="range">
+              <xs:annotation>
+                <xs:documentation> (range) The pair of limits within which a quantity is measured, as
+									expressed by stating the lower and upper permissible values.
+									The
+									element content shall be in plainText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="relatedConcept">
+              <xs:annotation>
+                <xs:documentation> (relatedConcept) A concept that has an associative relation to another concept,
+									such as teacher and school. A
+										descrip element that has a type
+									attribute value of relatedConcept can also have a
+										target attribute pointing to the entry identifier
+									of the related concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="relatedConceptBroader">
+              <xs:annotation>
+                <xs:documentation> (relatedConceptBroader) A concept that is broader at some level with respect to a
+									related or associated concept, but without comprising any
+									reference to a generic or partitive system. A descrip
+									element that has a type attribute value of
+										relatedConceptBroader can also have a
+									target attribute pointing to the entry identifier of
+									the related concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="relatedConceptNarrower">
+              <xs:annotation>
+                <xs:documentation> (relatedConceptNarrower) A concept that is narrower at some level with respect to a
+									related or associated concept, but without comprising any
+									reference to a generic or partitive system. A descrip
+									element that has a type attribute value of
+										relatedConceptNarrower can also have a
+										target attribute pointing to the entry identifier
+									of the related concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="reliabilityCode">
+              <xs:annotation>
+                <xs:documentation> (reliabilityCode) A code assigned to a data-category or record indicating
+									accuracy and/or completeness. The content of the
+									descrip element when it has a type attribute
+									value of reliabilityCode shall be a value from 1
+									(least reliable) to 10 (most reliable).</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sampleSentence">
+              <xs:annotation>
+                <xs:documentation> (sampleSentence) A sentence composed (frequently by a terminologist or language
+									planner) to illustrate the use of a term in cases where an
+									authentic context is unavailable. Although contextual
+									information should ideally be taken from actual texts written in
+									the language in question, such contextual references may not
+									exist for newly coined or suggested terms.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sequentiallyRelatedConcept">
+              <xs:annotation>
+                <xs:documentation> (sequentiallyRelatedConcept) A concept that has a relation to the subject concept based on
+									spatial or temporal proximity. Temporal relations and spatial
+									relations can be sequential. A descrip element that has
+									a type attribute value of
+										sequentiallyRelatedConcept can also have a
+										target attribute pointing to the entry identifier
+									of the related concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="spatiallyRelatedConcept">
+              <xs:annotation>
+                <xs:documentation> (spatiallyRelatedConcept) A concept that has a relation of dependence with the subject
+									concept, referring to objects based on their relative physical
+									positions. A descrip element that has a type
+									attribute value of spatiallyRelatedConcept can also
+									have a target attribute pointing to the entry
+									identifier of the related concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="subjectField">
+              <xs:annotation>
+                <xs:documentation> (subjectField) A field of special knowledge.
+									
+									Subject fields can be expressed in multiple levels, for example:
+									Subject field (level 1): disease, Subject field (level 2):
+									cancer, Subject field (level 3): non-Hodgkin's lymphoma. Subject
+									fields shall be expressed in plainText, and preferably be
+									selected from a defined set of picklist values. Subject fields
+									shall be specified at the concept (termEntry) level.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="subordinateConceptGeneric">
+              <xs:annotation>
+                <xs:documentation> (subordinateConceptGeneric) A concept that has a generic relation with the subject
+									concept, and a broader intension. A descrip element
+									that has a type attribute value of
+										subordinateConceptGeneric can also have a
+										target attribute pointing to the entry identifier
+									of the subordinate concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="subordinateConceptPartitive">
+              <xs:annotation>
+                <xs:documentation> (subordinateConceptPartitive) A concept that has a partitive relation with the subject
+									concept, and represents one of the parts of the subject concept.
+									A descrip element that has a type attribute
+									value of subordinateConceptPartitive can also have a
+										target attribute pointing to the entry identifier
+									of the subordinate concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="superordinateConceptGeneric">
+              <xs:annotation>
+                <xs:documentation> (superordinateConceptGeneric) A concept that has a generic relation with the subject
+									concept, and a narrower intension. A descrip element
+									that has a type attribute value of
+										superordinateConceptGeneric can also have a
+										target attribute pointing to the entry identifier
+									of the superordinate concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="superordinateConceptPartitive">
+              <xs:annotation>
+                <xs:documentation> (superordinateConceptPartitive) A concept that has a partitive relation with the subject
+									concept, and represents the sum of the parts; a
+										comprehensive concept. A descrip
+									element that has a type attribute value of
+										superordinateConceptPartitive can also have a
+										target attribute pointing to the entry identifier
+									of the superordinate concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="table">
+              <xs:annotation>
+                <xs:documentation> (table) The name of a table that is used to describe a concept. The
+									table itself can be contained (or referred to as an external
+									file) in a refobject in the back matter of a TBX
+									document instance. The target attribute points to the
+										refobject identifier. The element content shall be
+									in plainText. If a direct pointer to the file that
+										contains the table is preferred within the
+										termEntry, rather than pointing to the back matter,
+										use an xref instead.
+								                         </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="temporallyRelatedConcept">
+              <xs:annotation>
+                <xs:documentation> (temporallyRelatedConcept) A concept related to the subject concept through a sequential
+									relation involving events in time. A descrip element
+									that has a type attribute value of
+										temporallyRelatedConcept can also have a
+										target attribute pointing to the entry identifier
+									of the related concept.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="thesaurusDescriptor">
+              <xs:annotation>
+                <xs:documentation> (thesaurusDescriptor) The term in a thesaurus that can be used to represent a
+									concept in a terminological entry. A descrip element
+									that has a type attribute value of
+										thesaurusDescriptor can also have a
+									target attribute pointing to the ID of the
+										refObject in the back matter of the TBX document
+									instance that describes the thesaurus. The element content shall
+									be in plainText. If a direct pointer to the thesaurus is
+										preferred within the termEntry, rather than
+										pointing to the back matter, use an xref
+									instead.
+								                         </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="unit">
+              <xs:annotation>
+                <xs:documentation> (unit) A precisely-specified quantity in terms of which the
+									magnitudes of other quantities can be stated, such as meter or
+									volt. The element content shall be in plainText.
+									</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="video">
+              <xs:annotation>
+                <xs:documentation> (video) A name or other description of recorded visual images used to
+									represent or illustrate terminological information. A
+										descrip element that has a type
+									attribute value of video can also have a
+									target attribute pointing to the ID of a
+										refObject in the back matter of the TBX document
+									instance that describes and points to the video file. The
+									element content shall be in plainText. If a direct pointer
+										to the video file is preferred within the
+										termEntry, rather than pointing to the back matter,
+										use an xref instead.
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="descripGrp">
+    <xs:annotation>
+      <xs:documentation>Contains one descrip element as well as additional child elements for
+					associated administrative information.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="t:descrip"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="t:descripNote"/>
+          <xs:element ref="t:admin"/>
+          <xs:element ref="t:note"/>
+          <xs:element ref="t:ref"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attributeGroup ref="mathml:id.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="descripNote">
+    <xs:annotation>
+      <xs:documentation>Element used to indicate the type of definition or context with which it is
+					associated.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:attributeGroup ref="mathml:IDLangTgtDtyp.attributes"/>
+      <xs:attribute name="type" use="required">
+        <xs:annotation>
+          <xs:documentation>Indicates the data-category type of the descripNote element,
+							such as contextType.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="contextType">
+              <xs:annotation>
+                <xs:documentation> (contextType) The characterization of a context according to a set of
+									theoretical or pragmatic types.The content of the descripNote element when it has a
+										type attribute value of contextType
+									shall be one of the following:
+										                              * definingContext
+										                              * explanatoryContext
+										                              * associativeContext
+										                              * linguisticContext
+										                              * metalinguisticContext
+										                              * translatedContext
+									                           
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="definitionType">
+              <xs:annotation>
+                <xs:documentation> (definitionType) The characterization of a definition according to a set of
+									theoretical or pragmatic types.The content of the descripNote element when it has a
+										type attribute value of definitionType
+									shall be one of the following:
+										                              * intensionalDefinition
+										                              * extensionalDefinition
+										                              * partitiveDefinition
+										                              * translatedDefinition
+
+									                           
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hi">
+    <xs:annotation>
+      <xs:documentation> Highlights a segment of text and optionally points to another element.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:attributeGroup ref="mathml:target-IDREF.attributes"/>
+      <xs:attributeGroup ref="mathml:lang.attributes"/>
+      <xs:attribute name="type">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="entailedTerm">
+              <xs:annotation>
+                <xs:documentation> (entailedTerm) A term, found in the content of a text element such as
+										, that is defined in
+									another terminological entry in the same terminological
+									collection.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="hotkey">
+              <xs:annotation>
+                <xs:documentation> (hotkey) A key or a combination of keys on a computer keyboard that,
+									when pressed at one time, performs a task (such as starting an
+									application) as an alternative to using a mouse or other input
+									device. Hotkeys are supported by many operating systems and
+									applications (the hotkey is indicated by an ampersand in the
+									term and by an underscore in the visual display). This type of
+										hi element allows a hotkey to be identified as such
+									in a text field such as a context sentence. To identify a hotkey
+									for the head term of an entry, use the lionHotkey
+									value of the type attribute on a
+								termNote.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="italics">
+              <xs:annotation>
+                <xs:documentation> (italics) Indicates that the content enclosed in the hi element
+									must be rendered in italics. </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bold">
+              <xs:annotation>
+                <xs:documentation> (bold) Indicates that the content enclosed in the hi element
+									must be rendered in boldface. </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="superscript">
+              <xs:annotation>
+                <xs:documentation> (superscript) Indicates that the content enclosed in the hi element
+									must be rendered in superscript. </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="subscript">
+              <xs:annotation>
+                <xs:documentation> (subscript) Indicates that the content enclosed in the hi element
+									must be rendered in subscript.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="math">
+              <xs:annotation>
+                <xs:documentation> (math) Indicates that the content enclosed in the hi element
+									is mathematical in nature.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="langSet">
+    <xs:annotation>
+      <xs:documentation>A nesting element that contains all the information in a terminological entry
+					pertaining to one language, including all the tig or
+					ntigelements (terms and associated information) for that language.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="mathml:tbx_entity.auxInfo"/>
+        <xs:element maxOccurs="unbounded" ref="t:ntig"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="xml:lang2"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="note">
+    <xs:annotation>
+      <xs:documentation>Any kind of note. </xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group ref="mathml:tbx_entity.noteText"/>
+      <xs:attributeGroup ref="mathml:idlang.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ntig">
+    <xs:annotation>
+      <xs:documentation>A nesting term information group. A grouping element that
+					contains child elements describing a term. It is equivalent to a tig
+					except that it allows the description of term components.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="t:termGrp"/>
+        <xs:group ref="mathml:tbx_entity.auxInfo"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="mathml:id.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="term">
+    <xs:annotation>
+      <xs:documentation>The term that is being described in a tig or ntig. This
+					element, as well as other term-like elements such as those mentioned in the
+					table Types of terms, relations to terms in section 9, can contain
+					a hi element to allow a limited amount of inline markup. This is
+					intended to handle markup requirements in special cases such as may be required
+					for terms that represent scientific concepts. However, it is strongly
+					recommended to use inline markup only when necessary to represent the term in
+					its base form. Do not use the hi element for presentational styles
+					chosen for esthetic purposes.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mathml:tbx_entity.basicText">
+          <xs:attributeGroup ref="mathml:id.attributes"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ref">
+    <xs:annotation>
+      <xs:documentation>A cross-reference that points to another element within the martif
+					element of the TBX document instance. The content of the element is display text
+					of the target element (i.e. the term), and shall be in plainText.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:attributeGroup ref="mathml:IDLangTgtDtyp.attributes"/>
+      <xs:attribute name="type" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="crossReference">
+              <xs:annotation>
+                <xs:documentation> (crossReference) A pointer to another related location, such as another entry
+									or another term. The ref element with a type
+									attribute value of cross-reference shall also have a
+										target attribute to point to the identifier of
+									the entry or term.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="see">
+              <xs:annotation>
+                <xs:documentation> (see) An element that points to a location where additional
+									information can be found. The ref element with a
+										type attribute value of see shall also
+									have a target attribute to point to the location of
+									the information.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="termComp">
+    <xs:annotation>
+      <xs:documentation>A term component. It includes the text of a part of a word (such as a morpheme
+					or a syllable) or one of the words making up a multi-word term. The type of term
+					component will depend on the value of the type attribute of the
+						termCompList element.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:attributeGroup ref="mathml:idlang.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="termCompGrp">
+    <xs:annotation>
+      <xs:documentation>A grouping element that includes one termComp plus additional
+					elements describing the term component, such as notes, administrative
+					information, and cross references.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="t:termComp"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="t:termNote"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="mathml:id.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="termCompList">
+    <xs:annotation>
+      <xs:documentation>A grouping element that contains at least one termComp element
+					(usually more) or at least one termCompGrp element plus optionally some
+					additional information about the term components. This element is designed to
+					contain the components of a term. The value of the type attribute
+					indicates what type of term components it contains.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="mathml:tbx_entity.auxInfo"/>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="t:termComp"/>
+          <xs:element ref="t:termCompGrp"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attributeGroup ref="mathml:id.attributes"/>
+      <xs:attribute name="type" use="required">
+        <xs:annotation>
+          <xs:documentation>Indicates the type of the termCompList, such as
+								hyphenation. The value indicates on what basis the term
+							components were identified, such as by hyphenation parts or by
+							syllables.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="hyphenation">
+              <xs:annotation>
+                <xs:documentation> (Hyphenation) The termComp elements contain the parts of a term as
+									it would be hyphenated, such as at the end of a line, according
+									to a given set of rules.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="lemma">
+              <xs:annotation>
+                <xs:documentation> (Lemma) The termComp elements contain the base form of the
+									term or of the individual words that it comprises. A base form
+									of a word or term, sometimes called a lemma, is the
+									form that is used as the formal dictionary entry for the term.
+									For nouns, the base form is frequently the nominative singular
+									form (in languages that show variation by case). For adjectives
+									it is the positive form of the adjective, as opposed to the
+									comparative, and in some languages it is uninflected, whereas in
+									others it is the masculine singular. For verbs, it is generally
+									the infinitive.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="morphologicalElement">
+              <xs:annotation>
+                <xs:documentation> (Morphological element) The termComp elements contain the individual
+									morphemes that comprise the term. .</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="syllabification">
+              <xs:annotation>
+                <xs:documentation> (Syllabification) The termComp elements contain the individual
+									syllables that comprise the term.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="termElement">
+              <xs:annotation>
+                <xs:documentation> (Term element) The termComp elements contain any other logically
+									significant portion of the term. </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="termEntry">
+    <xs:annotation>
+      <xs:documentation>The root element of a terminological entry. It shall contain at least one
+					language section.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="mathml:tbx_entity.auxInfo"/>
+        <xs:element maxOccurs="unbounded" ref="t:langSet"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="mathml:id.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="termGrp">
+    <xs:annotation>
+      <xs:documentation>Element used in an ntig which contains one term and
+					optionally additional information about the term. This element is primarily used
+					in conjunction with ntig when the term is broken down into components. </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="t:term"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="t:termNote"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="t:termCompList"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="mathml:id.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="termNote">
+    <xs:annotation>
+      <xs:documentation>A meta data-category used for describing terms. A type attribute
+					specifies what kind of information is included in a particular instance of this
+					element.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:group ref="mathml:tbx_entity.noteText"/>
+      <xs:attributeGroup ref="mathml:IDLangTgtDtyp.attributes"/>
+      <xs:attribute name="type" use="required">
+        <xs:annotation>
+          <xs:documentation>Indicates the data-category type of the termNote, such as
+								partOfSpeech or termType.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="abbreviatedFormFor">
+              <xs:annotation>
+                <xs:documentation> (abbreviatedFormFor) A link used to identify a relation between a term that is an
+									abbreviated form, and its full or expanded form. It may be
+									coupled with a target attribute to point to the entry
+									of the full or expanded form. For example, the term
+									WWW could have the following tag to point to its
+									full form: World Wide
+									Web. The actual content of the element would
+									be the text World Wide Web, which allows the user
+									to see what term is the full form of the current term without
+									having to go to the location of the full form in the file (the
+									location would normally be somewhere within the current entry,
+									since the abbreviated form and the full form represent the same
+									concept). The element content shall be expressed in basicText.
+									The identification of a relation between an abbreviated term and
+									its full form indicates which term in a terminological entry is
+									the full form of the abbreviated term.
+									In
+									many languages, English abbreviations are commonly used, but the
+									English full form may be avoided in favor of an equivalent full
+									form in the language in question. In this case, the English
+									abbreviation and the target language full form will both appear
+									in the target language section of the entry.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="administrativeStatus">
+              <xs:annotation>
+                <xs:documentation> (administrativeStatus) The status of a term within a certain working environment. The
+									data-category administrativeStatus should be linked,
+									through a target attribute, to a refObject
+									in the back matter that identifies the administrative
+									organization that determined the status. The element
+										termNote when its type attribute has the
+									value administrativeStatus shall contain one of the
+									following values:
+										                              * admittedTerm-admn-sts
+										                              * deprecatedTerm-admn-sts
+										                              * legalTerm-admn-sts
+										                              * preferredTerm-admn-sts
+										                              * regulatedTerm-admn-sts
+										                              * standardizedTerm-admn-sts
+										                              * supersededTerm-admn-sts
+									                           
+									                           The status of terms with respect to a standardization
+										process is covered by normativeAuthorization.
+									
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="animacy">
+              <xs:annotation>
+                <xs:documentation> (animacy) The characteristic of a word indicating that in a given
+									discourse community, its referent is considered to be alive or
+									to possess a quality of volition or consciousness. The value of
+									the termNote element when it has a type
+									attribute value of animacy shall be one of:
+										animate, inanimate,
+									otherAnimacy.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="antonymTerm">
+              <xs:annotation>
+                <xs:documentation> (antonymTerm) A term that designates a concept that is opposite in meaning
+									to the concept being described in the current entry. A
+										termNote element that has a type
+									attribute value of antonymTerm can also have a
+										target attribute pointing to the term ID of the
+									term that represents the antonym concept. The display term in
+									the content of this element shall be expressed in basicText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="directionality">
+              <xs:annotation>
+                <xs:documentation> (directionality) A data-category that, through the value of its target
+									attribute, indicates the preferred translation of the term in
+									the term element of the current tig from among
+									the available translations in the entry. The target
+									attribute should point to the identifier of the tig
+									corresponding to the target term. In the case of the values
+										monodirectional and bidirectional, the
+									target term is the preferred translation. The content of the
+										termNote element when it has a type
+									attribute value of directionality indicates the scope
+									of directionality, and shall be one of the following:
+										                              * 
+                                          monodirectional: The translation is only
+											preferred going from the source language (current
+												tig to the target language (target
+											tig).
+
+										                              * 
+                                          bidirectional: The translation is preferred
+											in both directions, i.e. the term in the target
+											tig is a preferred translation of the term in
+											the current tig and vice-versa.
+
+										                              * 
+                                          incommensurate: The relation between the
+											term in the current tig and the term in the
+											target tig as translations is imperfect and
+											should be used with care. In this case, the concepts are
+											not equal. A 
+											should be used to provide information about the
+											difference between the concepts.
+
+										                              * 
+                                          undetermined: The scope of directionality
+											has not been determined.
+
+									                           
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="etymology">
+              <xs:annotation>
+                <xs:documentation> (etymology) Information on the origin of a word and the development of its
+									meaning. The element content shall be expressed in noteText.
+								</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="falseFriend">
+              <xs:annotation>
+                <xs:documentation> (falseFriend) A term in another language that appears to be semantically or
+									morphologically similar to the subject term in the entry, but
+									that does not represent the same concept. For example, in
+									French, the term réaliser means "to accomplish",
+									and therefore, it is a false friend of the English term
+										realize (i.e. to become conscious of). A
+										termNote element with the type attribute
+									value of falseFriend can also have a
+									target attribute whose value is a pointer to a term
+									in another entry. The element content shall be expressed in
+									basicText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="frequency">
+              <xs:annotation>
+                <xs:documentation> (frequency) The relative commonness with which a term occurs. The content
+									of the termNote element when it has a type
+									attribute value of frequency shall be one of:
+										commonlyUsed, infrequentlyUsed,
+										rarelyUsed. The assessment of frequency of a term
+									can be based on subjective criteria, or it can reflect computer
+									analysis of text corpora.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="geographicalUsage">
+              <xs:annotation>
+                <xs:documentation> (geographicalUsage) A code identifying any specific geographical area where the
+									term is used, for instance, to differentiate between UK English
+									and US English. Preferred values are language codes combined
+									with geographical codes, from IETF RFC 4646 or its successor, as
+									identified in IETF BCP 47. For example: en-US for American
+									English. The element content shall be expressed in plainText.
+								</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="grammaticalGender">
+              <xs:annotation>
+                <xs:documentation> (grammaticalGender) The gender of the word. The value of the termNote
+									element when it has a type attribute value of
+										grammaticalGender shall be one of:
+									masculine, feminine, neuter, or
+										otherGender.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="grammaticalNumber">
+              <xs:annotation>
+                <xs:documentation> (grammaticalNumber) A property of a term that indicates the number of objects
+									referred to by the term. The content of the termNote
+									element when it has a type attribute value of
+										grammaticalNumber shall be one of:
+									singular, plural, dual,
+										mass, or otherNumber. For example, the
+									terms rice and bread are mass nouns
+									because there are no separate singular and plural forms.
+										If the singular and the plural forms of a term do not
+										designate the same concept, they should be recorded in
+										separate entries.
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="grammaticalValency">
+              <xs:annotation>
+                <xs:documentation> (grammaticalValency) The range of syntactic elements either required or permitted
+									by a lexical unit. The valency of eat includes a
+									subject ("I" in "I am eating") and an object ("cheese" in "I am
+									eating cheese".) It can thus be said to be "bivalent". The
+									element content shall be expressed in plainText.
+									</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="homograph">
+              <xs:annotation>
+                <xs:documentation> (homograph) A word that is spelled like the subject term in the entry, but
+									that has a different meaning, and origin. Homographs are terms
+									that have the same written form, but are derived from different
+									etymological origins, for example, a port for boats
+									and a port for computer peripherals. A
+									termNote element having a type attribute
+									value of homograph can also have a target
+									attribute to point to the tig of the entry that
+									describes the homograph. The element content shall be expressed
+									in basicText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="language-planningQualifier">
+              <xs:annotation>
+                <xs:documentation> (language-planningQualifier) A qualifier assigned to a provisional term within a language
+									planning or descriptive terminology environment. The content of
+									the termNote element when it has a type
+									attribute value of language-planningQualifier shall
+									be one of: recommendedTerm,
+									nonstandardizedTerm, proposedTerm, or
+										newTerm.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="lionHotkey">
+              <xs:annotation>
+                <xs:documentation> (lionHotkey) The letter in a word that acts as a hotkey in a computer
+									application. A hotkey is a key or a combination of keys
+									on a computer keyboard
+									that, when pressed at one time, performs a task (such as
+									starting an application) as an alternative to using a mouse or
+									other input device. Hotkeys are supported by many operating
+									systems and applications. The hotkey is indicated by an
+									ampersand in the term in software interface files, and by an
+									underscore in the actual visual display. The element content
+									shall be expressed in plainText. </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normativeAuthorization">
+              <xs:annotation>
+                <xs:documentation> (normativeAuthorization) A term status qualifier assigned by an authoritative body,
+									such as a standards body or a governmental entity with a
+									regulatory function. The content of the termNote
+									element when it has a type attribute value of
+										normativeAuthorization shall be one of:
+										                              * standardizedTerm
+										                              * preferredTerm
+										                              * admittedTerm
+										                              * deprecatedTerm
+										                              * supersededTerm
+										                              * legalTerm
+										                              * regulatedTerm
+									                            The name of the authoritative body should be documented
+									in the terminology repository, and referenced in the TBX
+									document instance by using a refObject. </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="partOfSpeech">
+              <xs:annotation>
+                <xs:documentation> (partOfSpeech) A category assigned to a word based on its grammatical and
+									semantic properties. For example: noun,
+									verb, or adjective. The element content
+									shall be expressed in plainText, and preferably be limited to a
+									set of picklist values. Only one value shall be permitted for
+									each term in a given entry. For example, the following
+									values are permitted in the TBX-Basic TML:
+										                              * noun
+										                              * verb
+										                              * adjective
+										                              * adverb
+										                              * properNoun
+										                              * other
+									                           
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="processStatus">
+              <xs:annotation>
+                <xs:documentation> (processStatus) The status of a term with respect to its advancement within
+									the  terminology management process. The
+									content of the termNote element when it has a
+									type attribute value of processStatus
+									shall be one of: unprocessed,
+										provisionallyProcessed, or
+								finalized.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pronunciation">
+              <xs:annotation>
+                <xs:documentation> (pronunciation) The representation of the manner by which a term is spoken. In
+									TBX, pronunciation shall be represented in the International
+									Phonetic Alphabet. A given term can have more than one
+									pronunciation depending on the geographical area in which the
+									term is used. A given term can have more than one pronunciation
+									depending on the geographical area in which the term is used. In
+									this case use a separate tig or ntig element
+									for each pronunciation, and indicate the gegraphical area of
+									each by using a termNote element with a type
+									attribute value of geographicalUsage. The element
+									content shall be expressed in basicText.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="proprietaryRestriction">
+              <xs:annotation>
+                <xs:documentation> (proprietaryRestriction) A restriction placed on a term for the purpose of protecting
+									the right of an organization to the exclusive use of the term.
+									The content of the termNote element when it has a
+										type attribute value of
+										proprietaryRestriction shall be one of:
+										trademark, serviceMark or
+										tradeName. The content value "copyright" is
+										not included because copyright only applies to larger text
+										units, such as books, not to terms.
+                                 </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="register">
+              <xs:annotation>
+                <xs:documentation> (register) Classification indicating the level of language assigned to a
+									term. The content of the termNote element when it has a
+										type attribute value of register shall
+									be one of: 
+										                              * colloquialRegister
+										                              * neutralRegister
+										                              * technicalRegister
+										                              * in-houseRegister
+										                              * bench-levelRegister
+										                              * slangRegister
+										                              * vulgarRegister
+									                           
+									                        </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="shortFormFor">
+              <xs:annotation>
+                <xs:documentation> (shortFormFor) A linking element used to identify a relation between the
+									subject term when it is a short form, and its full or expanded
+									form. It may be coupled with a target attribute to
+									point to the full or expanded form. Normally both the short form
+									and the full form will be contained in the same entry, but each
+									in its own tig, because they represent the same
+									concept. For example, the term United States could
+									have the following markup to point to the full form term
+										United States of America: United States of
+										America. The content of the element
+									would be the target term, expressed in basicText, which allows
+									the user to see the target term without going to its location in
+									the entry. The identification of a relation between a short form
+									and its full form indicates which term in a terminological entry
+									is the full form of the short form.
+									</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="temporalQualifier">
+              <xs:annotation>
+                <xs:documentation> (temporalQualifier) A property of a term with respect to its use over time. The
+									content of the termNote element when it has a
+									type attribute value of temporalQualifier
+									shall be one of: archaicTerm,
+									outdatedTerm, obsoleteTerm.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="termLocation">
+              <xs:annotation>
+                <xs:documentation> (termLocation) A location in a document, computer file, or other information
+									medium, where the term frequently occurs, such as a user
+									interface object (in software), a packaging element, a component
+									in an industrial process, and so forth. The element content
+									shall be expressed in plainText, and preferably be restricted to
+									a set of picklist values. The following picklist values are
+									recommended for software user interface locations in a Windows
+									environment. 
+										                              * checkBox
+										                              * comboBox
+										                              * comboBoxElement
+										                              * dialogBox
+										                              * groupBox
+										                              * informativeMessage
+										                              * interactiveMessage
+										                              * menuItem
+										                              * progressBar
+										                              * pushButton
+										                              * radioButton
+										                              * slider
+										                              * spinBox
+										                              * tab
+										                              * tableText
+										                              * textBox
+										                              * toolTip
+										                              * user-definedType
+									                           
+								                         </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="termProvenance">
+              <xs:annotation>
+                <xs:documentation> (termProvenance) Classification of a term according to the methodology employed
+									in creating the term. The content of the termNote
+									element when it has a type attribute value of
+										termProvenance shall be one of:
+										transdisciplinaryBorrowing,
+										translingualBorrowing,
+									loanTranslation, or neologism.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="termStructure">
+              <xs:annotation>
+                <xs:documentation> (termStructure) The structure of the components of a term, indicated using
+									square brackets. For example, e.g. : [bank statement] [total]
+									versus [bank] [statement total]. The element content shall be
+									expressed in plainText.
+									</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="termType">
+              <xs:annotation>
+                <xs:documentation> (termType) A categorization of a term with respect to formal
+									representations of terms or where or how they are used, for
+									example, acronym. The content of the
+									termNote element when it has a type
+									attribute value of termType shall be one of the following:
+										                              * abbreviation
+										                              * acronym
+										                              * clippedTerm
+										                              * commonName
+										                              * entryTerm
+										                              * equation
+										                              * formula
+										                              * fullForm
+										                              * initialism
+										                              * internationalism
+										                              * internationalScientificTerm
+										                              * logicalExpression
+										                              * partNumber
+										                              * phraseologicalUnit
+										                              * transcribedForm
+										                              * transliteratedForm
+										                              * shortForm
+										                              * shortcut
+										                              * sku
+										                              * standardText
+										                              * string
+										                              * symbol
+										                              * synonym
+										                              * synonymousPhrase
+										                              * variant
+									                           Refer to ISO 12620 for definitions of the above term
+									types. The value shortcut refers to a string that
+									acts as a keyboard shortcut on computers, for example,
+										Ctrl + V is a term that represents a keyboard
+									shortcut for the concept of paste.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="timeRestriction">
+              <xs:annotation>
+                <xs:documentation> (timeRestriction) The indication of a period of time during or since which a
+									term was or has been subject to specified usage. For example,
+									several European countries have redefined the requirements for
+									certain university degrees in recent years. If, for instance,
+									the requirements for a baccalaureate degree changed from three
+									to four years in 1993, then any terminology entry defining the
+									term used to designate this degree would have to specify the
+									time restriction affecting the definition, which would be
+									different before 1993 and after 1993. The element content shall
+									be expressed in plainText. </xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="transferComment">
+              <xs:annotation>
+                <xs:documentation> (transferComment) Note included in a term entry providing information on the
+									degree of equivalence, directionality or other special features
+									affecting equivalence between a term in one language and another
+									term in a second language. This element can be used in
+									conjunction with the 
+									element to indicate the preferred translation of the term in
+									question. The termNote element with a type
+									attribute value of transferComment can also have a
+										target attribute to point to the term that is the
+									object of the transfer comment.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="usageNote">
+              <xs:annotation>
+                <xs:documentation> (usageNote) A note containing information on the usage of the term.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

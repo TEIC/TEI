@@ -61,20 +61,20 @@
                     <item>The two remaining required validators (onvdl and rnv) are not available in
                         package form from the usual repositories, so installing them requires you
                         either to use the <q>unsupported and experimental</q> archive at Oxford, or
-                        to do some fiddling about. If you are using the Oxford repo,
-                            <eg>sudo apt-get install onvdl rnv </eg> is all you need. </item>
-                    <item>Alternatively, you can download and install the oNVDL JAR files as
-                        follows <eg>wget www.oxygenxml.com/InstData/Editor/onvdl/onvdl-2007517.zip;
+                        to do some fiddling about. If you are using the Oxford repo, <eg>sudo
+                            apt-get install onvdl rnv </eg> is all you need. </item>
+                    <item>Alternatively, you can download and install the oNVDL JAR files as follows
+                            <eg>wget www.oxygenxml.com/InstData/Editor/onvdl/onvdl-2007517.zip;
                             unzip onvdl-2007517.zip ; sudo mv onvdl-2007517/bin /usr/share/onvdl
-                        </eg>. You do not need to set up a suitable command to run the jar file as this is included in the Makefile.
-                       </item>
-                    <item>On a 64 bit architecture, you will in any case need to build rnv from source because
-                        the rnv package in the Oxford repo contains only the 32 bit version,
-                        which does not work on your hardware.  <eg>sudo apt-get install libexpat1-dev; wget
-                            http://ftp.davidshen.net/PreTI/RNV/RNV.ZIP; unzip ~/Downloads/RNV.ZIP;
-                            cd ~/Downloads/rnv-1.7.8; ./configure; make; make install</eg> should do it. This step
-                        should not be necessary on a 32-bit machine. Or after the package gets
-                        updated. </item>
+                        </eg>. You do not need to set up a suitable command to run the jar file as
+                        this is included in the Makefile. </item>
+                    <item>On a 64 bit architecture, you will in any case need to build rnv from
+                        source because the rnv package in the Oxford repo contains only the 32 bit
+                        version, which does not work on your hardware. <eg>sudo apt-get install
+                            libexpat1-dev; wget http://ftp.davidshen.net/PreTI/RNV/RNV.ZIP; unzip
+                            ~/Downloads/RNV.ZIP; cd ~/Downloads/rnv-1.7.8; ./configure; make; make
+                            install</eg> should do it. This step should not be necessary on a 32-bit
+                        machine. Or after the package gets updated. </item>
                     <item>Now you're ready to boogie. <eg>cd TEI-Source; make clean; make</eg> will
                         delete the results of any previous attempts, and build everything from fresh
                         using whatever is in your TEI-Source directory. It will also run all the
@@ -83,11 +83,11 @@
                 </list>
                 <p>You can of course run parts of the Makefile separately. For example, run "make
                     check" to run the TEI test suite; "make validate" to validate the P5 source;
-                    make exemplars to check that all the TEI explars still work; run "make ebook" or
-                    "make mobi" to produce an Ebook or Mobi version of the Guidelines respectively.
-                    "make pdf" will try to build the fancy PDF version of the Guidelines, but it
-                    won't get far unless you have a working LiveTex environment and the requisite
-                    fonts. (see <ptr target="#PDF"/> below) </p>
+                    "make exemplars" to check that all the TEI exemplars still work; run "make
+                    ebook" or "make mobi" to produce an Ebook or Mobi version of the Guidelines
+                    respectively. "make pdf" will try to build the fancy PDF version of the
+                    Guidelines, but it won't get far unless you have a working LiveTex environment
+                    and the requisite fonts. (see <ptr target="#PDF"/> below) </p>
             </div>
             <div>
                 <head>Macintosh</head>
@@ -104,14 +104,19 @@
             <div>
                 <head>Producing PDF from TEI files on Ubuntu</head>
                 <p>The commands <ident>teitopdf</ident> and <ident>teitoslides</ident> expect to
-                    find LiveTex installed on your system, as does the command "make pdf". To use these commands,
-                    you will need to install the following packages: <eg>sudo apt-get install
-                        texlive texlive-xetex texlive-latex-extra </eg></p>
+                    find LiveTex installed on your system, as does the command "make pdf". To use
+                    these commands, you will need to install the following packages: <eg>sudo
+                        apt-get install texlive texlive-xetex texlive-latex-extra </eg></p>
                 <p>You'll also probably need something to read the PDF: try <eg>sudo apt-get install
-                        evince adobereader-en</eg></p>
-                <p>And you will also probably need to install some fonts, especially if you aim to produce the PDF
-                    version of P5. <eg>sudo apt-get install ttf-linux-libertine ttf-kochi-mincho </eg> should do it.</p>
-            </div>
+                        evince</eg></p>
+                <p>And you will also probably need to install some fonts, especially if you aim to
+                    produce the PDF version of P5. <eg>sudo apt-get install fonts-linuxlibertine
+                        fonts-junicode ttf-kochi-* fonts-arphic-uming</eg> will get <emph>almost</emph> everything you
+                    need: to complete it, you should also install the Han Nom A fonts which are
+                    (seemingly) only available from
+                    http://vietunicode.sourceforge.net/fonts/fonts_hannom.html Once downloaded
+                and unzipped, copy the font HAN NOM A to your /usr/share/fonts/truetype directory
+                and all should be well.</p></div>
         </body>
     </text>
 </TEI>
