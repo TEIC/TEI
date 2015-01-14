@@ -102,7 +102,7 @@ ${ECHO} curl -O -s $jenkinsdir/${pname}-${version}.zip || \
 
 echo Selected task is $JOB
 case $JOB in 
-  all) install; upload;;
+  all) install; makecurrent; upload;;
   install) install ;;
   makecurrent) makecurrent ;;
   upload) upload;;
