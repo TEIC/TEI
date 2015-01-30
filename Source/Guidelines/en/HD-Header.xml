@@ -1205,13 +1205,13 @@ of an element.</item></list></p>
 </specList></p>
 <p>The <gi>tagsDecl</gi> element consists of an optional sequence of
 <gi>rendition</gi> elements, each of which must bear a unique
-identifier, followed by an optional sequence of one or more <gi>namespace</gi>
-elements, each of which contains a series of <gi>tagUsage</gi> elements, one
-for each distinct element from that namespace occurring within the outermost
-<gi>text</gi> element of a TEI document. Note that these
-<gi>tagUsage</gi> elements must be nested within a <gi>namespace</gi>
-element, and cannot appear directly within the <gi>tagsDecl</gi>
-element. </p>
+identifier, followed by an optional sequence of one or more
+<gi>namespace</gi> elements, each of which contains a series of
+<gi>tagUsage</gi> elements, up to one for each element type from that
+namespace occurring within the associated <gi>text</gi> element. Note
+that these <gi>tagUsage</gi> elements must be nested within a
+<gi>namespace</gi> element, and cannot appear directly within the
+<gi>tagsDecl</gi> element.</p>
 
 <div xml:id="HD57-1"><head>Rendition</head><p>The <gi>rendition</gi>
 element allows the encoder to specify how one or more elements are
@@ -1362,42 +1362,44 @@ ago...</q>
 <div xml:id="HD57-2"><head>Tag Usage</head>
 
 <p>As noted above, each <gi>namespace</gi> element, if present,
-should contain exactly one occurrence of a <gi>tagUsage</gi> element
-for each distinct element from the given namespace that occurs within
+should contain up to one occurrence of a <gi>tagUsage</gi> element
+for each element type from the given namespace that occurs within
 the outermost <gi>text</gi> element associated with the
 <gi>teiHeader</gi> in which it appears.<note place="bottom">In the case
 of a TEI corpus (<ptr target="#CC"/>), a <gi>tagsDecl</gi> in a corpus
 header will describe tag usage across the whole corpus, while one in
 an individual text header will describe tag usage for the individual
-text concerned.</note> The <gi>tagUsage</gi> element is used to supply
+text concerned.</note> The <gi>tagUsage</gi> element may be used to supply
 a count of the number of occurrences of this element within the text,
 which is given as the value of its <att>occurs</att> attribute. It may
 also be used to hold any additional usage information, which is
-supplied as running prose within the element itself.</p><p>For example:
+supplied as running prose within the element itself.</p>
+<p>For example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="hi" occurs="28">
     Used only to mark English words italicised in the copy text.
 </tagUsage></egXML>
 This indicates that the <gi>hi</gi> element appears a total of 28 times
 in the <gi>text</gi> element in question, and that the encoder has used
 it to mark italicised English words only.</p>
-<p>The <att>withId</att> attribute may optionally be used to specify how
-many of the occurrences of the element in question bear a value for the
-global <att>xml:id</att> attribute, as in the following example:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage gi="pb" occurs="321" withId="321">
-    Marks page breaks in the York (1734) edition only
-</tagUsage></egXML>
-This indicates that the <gi>pb</gi> element occurs 321 times, on each
-of which an identifier is provided.</p>
+<p>The <att>withId</att> attribute may optionally be used to specify
+how many of the occurrences of the element in question bear a value
+for the global <att>xml:id</att> attribute, as in the following
+example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><tagUsage
+gi="pb" occurs="321" withId="321"> Marks page breaks in the York
+(1734) edition only </tagUsage></egXML> This indicates that the
+<gi>pb</gi> element occurs 321 times, on each of which an identifier
+is provided.</p>
+
 <p>The content of the <gi>tagUsage</gi> element is not susceptible of
-automatic processing.  It should not therefore be used to hold
+automatic processing. It should not therefore be used to hold
 information for which provision is already made by other components of
-the encoding description.  A TEI-conformant document is not required
-to provide any <gi>tagUsage</gi> elements, but if it does, then TEI
-recommended practice is to provide <gi>namespace</gi> and
-<gi>tagUsage</gi> elements for each distinct element and
-namespace used in the associated text. If, in addition, counts are
-specified by the <att>occurs</att> attributes, these must correspond
-with the number of such elements present in the document.<specGrp xml:id="DHD57" n="Tag usage and rendition declarations">
+the encoding description. A TEI-conformant document is not required to
+provide any <gi>tagUsage</gi> elements or <att>occurs</att>
+attributes, but if it does, then the counts provided must correspond
+with the number of such elements present in the associated
+<gi>text</gi>.
+
+<specGrp xml:id="DHD57" n="Tag usage and rendition declarations">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/tagsDecl.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/tagUsage.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/namespace.xml"/>

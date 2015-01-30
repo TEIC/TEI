@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="tagsDecl">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="tagsDecl" xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <gloss versionDate="2005-01-14" xml:lang="en">tagging declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration de balisage</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">태깅 선언</gloss>
@@ -39,6 +39,26 @@ $Id$
       </zeroOrMore>
     </group>
   </content>
+  <attList>
+    <attDef ident="partial" usage="rec">
+      <desc versionDate="2015-01-29" xml:lang="en">indicates whether
+      the element types listed exhaustively include all those found
+      within <gi>text</gi>, or represent only a subset.</desc>
+      <datatype minOccurs="1" maxOccurs="1">
+	<rng:ref name="data.truthValue"/>
+      </datatype>
+      <remarks>
+	<p>TEI recommended practice is to specify this attribute. When
+	the <gi>tagUsage</gi> elements inside <gi>tagsDecl</gi> are
+	used to list each of the element types in the associated
+	<gi>text</gi>, the value should be given as <val>false</val>.
+	When the <gi>tagUsage</gi> elements inside <gi>tagsDecl</gi>
+	are used to provide usage information or default renditions
+	for only a subset of the elements types within the associated
+	<gi>text</gi>, the value should be <val>true</val>.</p>
+      </remarks>
+    </attDef>
+  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <tagsDecl>
