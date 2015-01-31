@@ -35,7 +35,7 @@
     <xsl:choose>
       <xsl:when test="self::div">
 	<xsl:copy>
-	  <xsl:copy-of select="@*"/>
+	  <xsl:copy-of select="@*"/>	  <xsl:copy-of select="head"/>
 	  <xsl:apply-templates/>
 	</xsl:copy>
       </xsl:when>
