@@ -1246,26 +1246,29 @@ time</q>) are also often used.  In operatic or musical works in
 particular, the need to indicate timing and alignment of individual
 parts of a song may lead to very complex layout.</p>
 <p>One simple method of indicating the temporal alignment of speeches or
-actions is to use the <att>corresp</att> attribute discussed in
-section <ptr target="#SACS"/>, as in the following example:
+actions is to use the <gi>spGrp</gi> element discussed in
+section <ptr target="#DRSPG"/>, with an <att>type</att> attribute to specify the 
+reason for grouping, as in the following example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#DR-eg-08"><sp> <speaker>Mangan</speaker>
   <stage type="delivery">wildly</stage>
   <p>Look here: I'm going to take off all my clothes.</p>
   <stage type="action">he begins tearing off his coat.</stage>
 </sp>
-<sp xml:id="dr-s1"> <speaker>Lady Utterword</speaker>
+  <spGrp type="simultaneous" rend="braced">
+<sp> <speaker>Lady Utterword</speaker>
   <p>Mr Mangan!</p>
 </sp>
-<sp xml:id="dr-s2"> <speaker>Captain Shotover</speaker>
+<sp> <speaker>Captain Shotover</speaker>
   <p>Whats that?</p>
 </sp>
-<sp xml:id="dr-s3"> <speaker>Hector</speaker>
+<sp> <speaker>Hector</speaker>
   <p>Ha! ha! Do. Do.</p>
 </sp>
-<sp xml:id="dr-s4"> <speaker>Ellie</speaker>
+<sp> <speaker>Ellie</speaker>
   <p>Please dont.</p>
 </sp>
-<stage corresp="#dr-s1 #dr-s2 #dr-s3 #dr-s4" xml:id="dr-d1" rend="braced" type="delivery">in consternation</stage>
+<stage type="delivery">in consternation</stage>
+</spGrp>
 <sp> <speaker>Mrs. Hushabye</speaker>
   <stage type="action">catching his arm and stopping him</stage>
   <p>Alfred: for shame! Are you mad?</p>
@@ -1285,13 +1288,12 @@ four characters speak at once, and that the stage direction applies to
 all of them. Rather than attempting to represent the appearance of the
 source, this example encoding represents its presumed meaning: the
 <gi>stage</gi> element is placed arbitrarily after the last relevant
-speech,  and the four speeches with which it is to be
-associated are pointed to by means of the
-<att>corresp</att> attribute. This attribute, which is enabled by the
-linking module, provides a simple way of indicating the temporal
-alignment of speeches or actions in a play. Producing a readable
-version of the text which simulates the original printed effect may
-however require more complex markup and processing.
+speech,  and the four speeches with which it is to be associated are 
+grouped by means of the <gi>spGrp</gi> element. The <att>rend</att> 
+attribute is used to specify the fact that the three speeches were 
+grouped by the brace in the copy text. Producing a readable version 
+of the text which simulates the original printed effect may however
+require more complex markup and processing.
 </p>
 <p>More powerful and more precise mechanisms for temporal alignment are
 defined in chapter <ptr target="#TS"/>.  These would be appropriate for
