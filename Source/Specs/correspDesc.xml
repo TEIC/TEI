@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright TEI Consortium.
+  Dual-licensed under CC-by and BSD2 licences
+  See the file COPYING.txt for details
+  $Date: 2014-09-19 18:58:05 +0200 (Fr, 19 Sep 2014) $
+  $Id: biblStruct.xml 13042 2014-09-19 16:58:05Z sbauman $
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="correspDesc">
+  <gloss versionDate="2014-01-13" xml:lang="en">correspondence
+    description</gloss>
+  <desc versionDate="2015-01-29" xml:lang="en">contains a description
+    of the actions related to one act of correspondence</desc>
+  <classes>
+    <memberOf key="model.profileDescPart"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="att.canonical"/>
+    <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+  </classes>
+  <content>
+    <!-- modeled after publicationStmt -->
+    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+      <oneOrMore>
+        <ref name="model.correspDescPart"/>
+      </oneOrMore>
+      <oneOrMore>
+        <ref name="model.pLike"/>
+      </oneOrMore>
+    </choice>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <correspDesc>
+        <correspAction type="sending">
+          <persName>Carl Maria von Weber</persName>
+          <settlement>Dresden</settlement>
+          <date when="1817-06-23">23 June 1817</date>
+        </correspAction>
+        <correspAction type="receiving">
+          <persName>Caroline Brandt</persName>
+          <settlement>Prag</settlement>
+        </correspAction>
+        <correspContext>
+          <ref type="prev"
+            target="http://www.weber-gesamtausgabe.de/A041209"
+            >Previous letter of Carl Maria von Weber to Caroline Brandt 19/20 June 1817</ref>
+          <ref type="next"
+            target="http://www.weber-gesamtausgabe.de/A041217"
+            >Next letter of Carl Maria von Weber to Caroline Brandt: 27 June 1817</ref>
+        </correspContext>
+      </correspDesc>
+    </egXML>
+  </exemplum>
+</elementSpec>

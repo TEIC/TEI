@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright TEI Consortium.
+  Dual-licensed under CC-by and BSD2 licences
+  See the file COPYING.txt for details
+  $Date: 2014-09-19 18:58:05 +0200 (Fr, 19 Sep 2014) $
+  $Id: biblStruct.xml 13042 2014-09-19 16:58:05Z sbauman $
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="correspAction">
+    <desc versionDate="2014-09-05" xml:lang="en">contains a structured description of the place,  
+        the name of a person/organization and the date related to the sending/receiving of a message or any other action related to the correspondence</desc>
+    <classes>
+        <memberOf key="att.global"/>
+        <memberOf key="att.typed"/>
+        <memberOf key="att.sortable"/>
+        <memberOf key="model.correspDescPart"/>
+    </classes>
+    <content>
+        <choice xmlns="http://relaxng.org/ns/structure/1.0">
+            <oneOrMore>
+                <ref name="model.correspActionPart"/>
+            </oneOrMore>
+            <oneOrMore>
+                <ref name="model.pLike"/>
+            </oneOrMore>
+        </choice>
+    </content>
+    <attList>
+        <attDef ident="type" mode="change" usage="opt">
+            <desc versionDate="2015-01-29" xml:lang="en">describes the nature of the action</desc>
+            <datatype>
+                <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+            </datatype>
+            <valList type="semi" mode="add">
+                <valItem ident="sending">
+                    <desc versionDate="2014-11-25" xml:lang="en">identifies a/the sending action of the message</desc>
+                </valItem>
+                <valItem ident="receiving">
+                    <desc versionDate="2014-11-25" xml:lang="en">identifies a/the receiving action of the message</desc>
+                </valItem>
+                <valItem ident="transmitting">
+                    <desc versionDate="2014-11-25" xml:lang="en">identifies a/the transmitting action of the message</desc>
+                </valItem>
+                <valItem ident="redirecting">
+                    <desc versionDate="2014-11-25" xml:lang="en">identifies a/the redirecting action of the message</desc>
+                </valItem>
+                <valItem ident="forwarding">
+                    <desc versionDate="2014-11-25" xml:lang="en">identifies a/the forwarding action of the message</desc>
+                </valItem>
+            </valList>
+        </attDef>
+    </attList>
+    <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <correspAction type="sending">
+                <persName>Adelbert von Chamisso</persName>
+                <settlement>Vertus</settlement>
+                <date when="1807-01-29">29 January 1807</date>
+            </correspAction>
+        </egXML>
+    </exemplum>
+</elementSpec>
