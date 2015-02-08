@@ -2137,6 +2137,127 @@ expressed using that calendar system:
   <specGrp xml:id="D2242" n="Calendar Description"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/calendarDesc.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/calendar.xml"/>
   </specGrp>
 </div>
+    <div type="div3" xml:id="HD44CD">
+      <head>Correspondence Description</head>
+      <p>The <gi>correspDesc</gi> element is used within the <gi>profileDesc</gi> element 
+        to provide a detailed description of correspondence-specific meta data. 
+        The <gi>correspDesc</gi> element focuses on the communicative function 
+        of correspondence acts, i.e. the actions of sending, receiving, forwarding, etc.
+      </p>
+      <p>It is provided as a supplement to the physical description of a correspondence 
+        object which is to be encoded within the <gi>sourceDesc</gi> element. 
+        <specList>
+          <specDesc key="correspDesc"/>
+        </specList>
+      </p>
+      <p>The <gi>correspDesc</gi> element contains the elements <gi>correspAction</gi> 
+        and <gi>correspContext</gi>.
+        <specList>
+          <specDesc key="correspAction"/>
+        </specList>
+      </p>
+      <p>If the author of the message and sender are the same person – 
+        which in most letters will be the case – one can use a 
+        pointer to another part of the TEI header to indicate this:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspAction type="sending">
+            <name sameAs="#author"/>
+          </correspAction>
+        </egXML>
+      </p>
+      <p>Here is a basic example of how to use <gi>correspAction</gi>, describing the 
+        sending of a message (a letter) by Adelbert von Chamisso from Vertus at 29 January 1807 to 
+        Louis de La Foye at Caen. The date of reception is unknown:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspAction type="sending">
+            <persName>Adelbert von Chamisso</persName>
+            <placeName>Vertus</placeName>
+            <date when="1807-01-29">29 January 1807</date>
+          </correspAction>
+          <correspAction type="receiving">
+            <persName>Louis de La Foye</persName>
+            <placeName>Caen</placeName>
+            <date>unknown</date>
+          </correspAction>
+        </egXML>
+      </p>
+      <p>Several senders or recipients can be encoded within one <gi>correspAction</gi> 
+        (if they are considered one <soCalled>logical</soCalled> sender/recipient, 
+        i.e. one group or team of senders/recipients):
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspAction type="receiving">
+            <persName>Hermann Hesse</persName>
+            <persName>Ninon Hesse</persName>
+            <placeName>Montagnola</placeName>
+          </correspAction>
+        </egXML>
+      </p>
+      <p>Following is an example for an e-mail with several addressees and cc’d people 
+        where the <att>subtype</att> attribute is used to categorize the addressees 
+        (names are anonymized):
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspAction type="sending">
+            <persName>PN0001</persName>
+            <date when="1999-06-02">Wed, 02 Jun 1999</date>
+          </correspAction>
+          <correspAction type="receiving" subtype="to">
+            <persName>PN0002</persName>
+          </correspAction>
+          <correspAction type="receiving" subtype="to">
+            <persName>PN0003</persName>
+          </correspAction>
+          <correspAction type="receiving" subtype="cc">
+            <persName>PN0004</persName>
+          </correspAction>
+        </egXML>
+      </p>
+      <p>When there are several acts of correspondence on e.g. one sheet of paper, 
+        <gi>correspDesc</gi> is used for each separately:
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspDesc xml:id="message1">
+            <correspAction type="sending">
+              <persName>John Gneisenau Neihardt</persName>
+              <placeName>Branson (Montgomery)</placeName>
+              <date>17 December 1932</date>
+            </correspAction>
+            <correspAction type="receiving">
+              <persName>Julius Temple House</persName>
+              <placeName>New York</placeName>
+            </correspAction>
+          </correspDesc>
+          <correspDesc xml:id="message2">
+            <correspAction type="sending">
+              <persName>Enid Neihardt</persName>
+              <placeName>Branson (Montgomery)</placeName>
+              <date>17 December 1932</date>
+            </correspAction>
+            <correspAction type="receiving">
+              <persName>Julius Temple House</persName>
+              <placeName>New York</placeName>
+            </correspAction>
+          </correspDesc>
+        </egXML>
+      </p>
+      <p>Preceding or following correspondence is specified with the <gi>correspContext</gi> element.
+        <specList>
+          <specDesc key="correspContext"/>
+        </specList>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspContext>
+            <ref type="prev" target="http://...">Previous letter of Chamisso to de La Foye: 16 January 1807</ref>
+            <ref type="next" target="http://...">Next letter of Chamisso to de La Foye: 07 May 1810</ref>
+          </correspContext>
+        </egXML>
+      </p>
+      <specGrp xml:id="D2243" n="Correspondence Description">
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/correspDesc.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/correspAction.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/correspContext.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.correspActionPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.correspContextPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.correspDescPart.xml"/>
+      </specGrp>
+    </div>
   </div>
 <div type="div2" xml:id="HD6"><head>The Revision Description</head>
 <p>The final sub-element of the TEI header, the <gi>revisionDesc</gi>
