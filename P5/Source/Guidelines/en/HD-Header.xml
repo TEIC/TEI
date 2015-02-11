@@ -2139,36 +2139,43 @@ expressed using that calendar system:
 </div>
     <div type="div3" xml:id="HD44CD">
       <head>Correspondence Description</head>
-      <p>The <gi>correspDesc</gi> element is used within the <gi>profileDesc</gi> element 
-        to provide a detailed description of correspondence-specific meta data. 
-        The <gi>correspDesc</gi> element focuses on the communicative function 
-        of correspondence acts, i.e. the actions of sending, receiving, forwarding, etc.
-      </p>
-      <p>It is provided as a supplement to the physical description of a correspondence 
-        object which is to be encoded within the <gi>sourceDesc</gi> element. 
-        <specList>
+      <p>The <gi>correspDesc</gi> element is used within the <gi>profileDesc</gi> element to
+        provide detailed correspondence-specific metadata, concerning in particular the
+        communicative aspects (sending, receiving, forwarding etc.) associated with acts of
+        of correspondence. </p>
+      <p>This information is intended to complement the description of the objects recording
+        correspondence activities (such as letters), typically provided by the
+        <gi>sourceDesc</gi> element. <specList>
           <specDesc key="correspDesc"/>
         </specList>
       </p>
-      <p>The <gi>correspDesc</gi> element contains the elements <gi>correspAction</gi> 
-        and <gi>correspContext</gi>.
-        <specList>
-          <specDesc key="correspAction"/>
+      <p>The <gi>correspDesc</gi> element contains the elements <gi>correspAction</gi> and
+        <gi>correspContext</gi>, describing the actions identified and the context in
+        which the correspondence occurs respectively. <specList>
+          <specDesc key="correspAction" atts="type"/>
+          <specDesc key="correspContext"/>
         </specList>
       </p>
-      <p>If the author of the message and sender are the same person – 
-        which in most letters will be the case – one can use a 
-        pointer to another part of the TEI header to indicate this:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sending">
-            <name sameAs="#author"/>
-          </correspAction>
+      <p>Acts of correspondence typically do not occur in isolation from each other. The
+        <gi>correspContext</gi> element is used to group references relevant to the item
+        of correspondence being described, typically to other items such as the item to which
+        it is a reply, or the item which replies to it: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples">
+          <correspContext>
+            <ref type="replyTo" target="#CLF0102">Previous letter of Chamisso to de La
+              Foye: 16 January 1807</ref>
+            <ref type="replyFrom" target="#CLF0104">Next letter of Chamisso to de La Foye:
+              07 May 1810</ref>
+          </correspContext>
         </egXML>
       </p>
-      <p>Here is a basic example of how to use <gi>correspAction</gi>, describing the 
-        sending of a message (a letter) by Adelbert von Chamisso from Vertus at 29 January 1807 to 
-        Louis de La Foye at Caen. The date of reception is unknown:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Many types of correspondence action may be distinguished. The <att>type</att>
+        attribute should be used to indicate the type of action being documented, using values
+        such as those suggested above. </p>
+      <p>The following basic example uses <gi>correspAction</gi> to describe the sending of a
+        letter by Adelbert von Chamisso from Vertus at 29 January 1807 to Louis de La Foye at
+        Caen. The date of reception is unknown: <egXML
+          xmlns="http://www.tei-c.org/ns/Examples">
           <correspAction type="sending">
             <persName>Adelbert von Chamisso</persName>
             <placeName>Vertus</placeName>
@@ -2181,10 +2188,10 @@ expressed using that calendar system:
           </correspAction>
         </egXML>
       </p>
-      <p>Several senders or recipients can be encoded within one <gi>correspAction</gi> 
-        (if they are considered one <soCalled>logical</soCalled> sender/recipient, 
-        i.e. one group or team of senders/recipients):
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>Several senders, recipients, etc. can be specified for a single
+        <gi>correspAction</gi> if the action is considered to apply to them all acting as
+        a single group. In the following example two people are considered to have received
+        the communication. <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <correspAction type="receiving">
             <persName>Hermann Hesse</persName>
             <persName>Ninon Hesse</persName>
@@ -2192,10 +2199,10 @@ expressed using that calendar system:
           </correspAction>
         </egXML>
       </p>
-      <p>Following is an example for an e-mail with several addressees and cc’d people 
-        where the <att>subtype</att> attribute is used to categorize the addressees 
-        (names are anonymized):
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <!-- this example looks a bit unreal: why not give one with proper names? -->
+      <p>The <att>subtype</att> attribute may be used to further distinguish types of action.
+        In the following example, an e-mail is sent to two people directly and to a third by
+        <soCalled>carbon copy</soCalled> (<term>cc</term>). <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <correspAction type="sending">
             <persName>PN0001</persName>
             <date when="1999-06-02">Wed, 02 Jun 1999</date>
@@ -2211,9 +2218,28 @@ expressed using that calendar system:
           </correspAction>
         </egXML>
       </p>
-      <p>When there are several acts of correspondence on e.g. one sheet of paper, 
-        <gi>correspDesc</gi> is used for each separately:
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <p>The same person may often be associated with many actions. For example, it will often
+        be the case that the author and sender of a message are identical, and that many
+        individual letters will need to be associated with the same person. The
+        <att>sameAs</att> attribute defined in section <ptr target="#SAIE"/> may be used
+        to indicate that the same name applies to many actions. Its value will usually be the
+        identifier of an element defining the person or name concerned, which is supplied
+        elsewhere in the document. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspAction type="sending">
+            <name sameAs="#author"/>
+          </correspAction>
+        </egXML>
+        <!-- example needs expansion to include definition for #author -->
+      </p>
+      <p>It is assumed that each correspondence action applies to a single act of
+        communication. It may however be the case that the same physical object is involved
+        in several such acts, if for example person A sends a letter to person B,
+        who then annotates it and sends it on to person C, or if persons A and B both use
+        the same document to convey quite different messages. In such situations, multiple
+        <gi>correspDesc</gi> elements should be supplied, one for each communication. In
+        the following example, the same document contains distinct messages, sent by two
+        different people to the same destination: <gi>correspDesc</gi> is used for each
+        separately: <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <correspDesc xml:id="message1">
             <correspAction type="sending">
               <persName>John Gneisenau Neihardt</persName>
@@ -2221,7 +2247,7 @@ expressed using that calendar system:
               <date>17 December 1932</date>
             </correspAction>
             <correspAction type="receiving">
-              <persName>Julius Temple House</persName>
+              <persName xml:id="JTH">Julius Temple House</persName>
               <placeName>New York</placeName>
             </correspAction>
           </correspDesc>
@@ -2232,30 +2258,25 @@ expressed using that calendar system:
               <date>17 December 1932</date>
             </correspAction>
             <correspAction type="receiving">
-              <persName>Julius Temple House</persName>
+              <persName sameAs="#JTH"/>
               <placeName>New York</placeName>
             </correspAction>
           </correspDesc>
         </egXML>
-      </p>
-      <p>Preceding or following correspondence is specified with the <gi>correspContext</gi> element.
-        <specList>
-          <specDesc key="correspContext"/>
-        </specList>
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspContext>
-            <ref type="prev" target="http://...">Previous letter of Chamisso to de La Foye: 16 January 1807</ref>
-            <ref type="next" target="http://...">Next letter of Chamisso to de La Foye: 07 May 1810</ref>
-          </correspContext>
-        </egXML>
+        <!-- This example is very strange! Have I understood it correctly? 
+                  And is "Julius Temple House" really a person's name rather than that of an org? -->
       </p>
       <specGrp n="Correspondence Description">
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/correspDesc.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/correspAction.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/correspContext.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.correspActionPart.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.correspContextPart.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.correspDescPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/correspContext.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.correspActionPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.correspContextPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.correspDescPart.xml"/>
       </specGrp>
     </div>
   </div>
