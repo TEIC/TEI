@@ -2137,15 +2137,17 @@ expressed using that calendar system:
   <specGrp xml:id="D2242" n="Calendar Description"><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/calendarDesc.xml"/><include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/calendar.xml"/>
   </specGrp>
 </div>
+
     <div type="div3" xml:id="HD44CD">
       <head>Correspondence Description</head>
       <p>The <gi>correspDesc</gi> element is used within the <gi>profileDesc</gi> element to
         provide detailed correspondence-specific metadata, concerning in particular the
         communicative aspects (sending, receiving, forwarding etc.) associated with acts of
         of correspondence. </p>
-      <p>This information is intended to complement the description of the objects recording
-        correspondence activities (such as letters), typically provided by the
-        <gi>sourceDesc</gi> element. <specList>
+      <p>This information is complementary to the detailed
+      descriptions of physical objects (such as letters) associated
+      with correspondence activities, which are typically provided by
+      the sourceDesc element. <specList>
           <specDesc key="correspDesc"/>
         </specList>
       </p>
@@ -2169,25 +2171,31 @@ expressed using that calendar system:
           </correspContext>
         </egXML>
       </p>
+
+<!-- add an example using note or p ? -->
+
       <p>Many types of correspondence action may be distinguished. The <att>type</att>
         attribute should be used to indicate the type of action being documented, using values
         such as those suggested above. </p>
-      <p>The following basic example uses <gi>correspAction</gi> to describe the sending of a
-        letter by Adelbert von Chamisso from Vertus at 29 January 1807 to Louis de La Foye at
+      <p>The following simple example uses <gi>correspAction</gi> to describe the sending of a
+        letter by Adelbert von Chamisso from Vertus on 29 January 1807 to Louis de La Foye at
         Caen. The date of reception is unknown: <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sending">
+          <correspAction type="sentBy">
             <persName>Adelbert von Chamisso</persName>
             <placeName>Vertus</placeName>
             <date when="1807-01-29">29 January 1807</date>
           </correspAction>
-          <correspAction type="receiving">
+          <correspAction type="deliveredTo">
             <persName>Louis de La Foye</persName>
             <placeName>Caen</placeName>
             <date>unknown</date>
           </correspAction>
         </egXML>
-      </p>
+Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"/> to provide a normalized
+      form of the date. The content of the <gi>date</gi> element may
+      also be omitted, since no underlying source is being transcribed.      </p>
+
       <p>Several senders, recipients, etc. can be specified for a single
         <gi>correspAction</gi> if the action is considered to apply to them all acting as
         a single group. In the following example two people are considered to have received
@@ -2199,33 +2207,32 @@ expressed using that calendar system:
           </correspAction>
         </egXML>
       </p>
-      <!-- this example looks a bit unreal: why not give one with proper names? -->
       <p>The <att>subtype</att> attribute may be used to further distinguish types of action.
         In the following example, an e-mail is sent to two people directly and to a third by
         <soCalled>carbon copy</soCalled> (<term>cc</term>). <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sending">
+          <correspAction type="sentBy">
             <persName>PN0001</persName>
-            <date when="1999-06-02">Wed, 02 Jun 1999</date>
+            <date when="1999-06-02"/>
           </correspAction>
-          <correspAction type="receiving" subtype="to">
+          <correspAction type="deliveredTo" subtype="to">
             <persName>PN0002</persName>
           </correspAction>
-          <correspAction type="receiving" subtype="to">
+          <correspAction type="deliveredTo" subtype="to">
             <persName>PN0003</persName>
           </correspAction>
-          <correspAction type="receiving" subtype="cc">
+          <correspAction type="deliveredTo" subtype="cc">
             <persName>PN0004</persName>
           </correspAction>
         </egXML>
       </p>
-      <p>The same person may often be associated with many actions. For example, it will often
+      <p>The same person may be associated with many actions. For example, it will often
         be the case that the author and sender of a message are identical, and that many
         individual letters will need to be associated with the same person. The
         <att>sameAs</att> attribute defined in section <ptr target="#SAIE"/> may be used
         to indicate that the same name applies to many actions. Its value will usually be the
         identifier of an element defining the person or name concerned, which is supplied
         elsewhere in the document. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sending">
+          <correspAction type="sentBy">
             <name sameAs="#author"/>
           </correspAction>
         </egXML>
@@ -2241,31 +2248,30 @@ expressed using that calendar system:
         different people to the same destination: <gi>correspDesc</gi> is used for each
         separately: <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <correspDesc xml:id="message1">
-            <correspAction type="sending">
+            <correspAction type="sentBy">
               <persName>John Gneisenau Neihardt</persName>
               <placeName>Branson (Montgomery)</placeName>
-              <date>17 December 1932</date>
+              <date when="1932-12-17"/>
             </correspAction>
-            <correspAction type="receiving">
+            <correspAction type="deliveredTo">
               <persName xml:id="JTH">Julius Temple House</persName>
               <placeName>New York</placeName>
             </correspAction>
           </correspDesc>
           <correspDesc xml:id="message2">
-            <correspAction type="sending">
+            <correspAction type="sentBy">
               <persName>Enid Neihardt</persName>
               <placeName>Branson (Montgomery)</placeName>
-              <date>17 December 1932</date>
+              <date when="1932-12-17"/>
             </correspAction>
-            <correspAction type="receiving">
+	    <correspAction type="deliveredTo">
               <persName sameAs="#JTH"/>
               <placeName>New York</placeName>
             </correspAction>
           </correspDesc>
         </egXML>
-        <!-- This example is very strange! Have I understood it correctly? 
-                  And is "Julius Temple House" really a person's name rather than that of an org? -->
       </p>
+<!-- add a more complex example using more types of action -->
       <specGrp n="Correspondence Description">
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/correspDesc.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/correspAction.xml"/>
