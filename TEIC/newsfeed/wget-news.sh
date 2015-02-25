@@ -1,9 +1,8 @@
 #!/bin/bash
 #Variables
-OUTPUTDIR="/projects/tei/web/include/"
-SCRIPTDIR=/home/tei/newsfeed
+OUTPUTDIR="$HOME/projects/tei/web/include/"
+SCRIPTDIR=$HOME/newsfeed
 # script directory should not be hard-coded, for portability
-#SCRIPTDIR="/home/oxford/newsfeed/"
 #OUTPUTDIR="/home/jamesc/tmp/TEI-newsfeed/"
 #SCRIPTDIR="/home/jamesc/tmp/TEI-newsfeed/"
 INCOMING="incoming.xml"
