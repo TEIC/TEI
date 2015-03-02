@@ -60,7 +60,7 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	${TRANG}  $*.rng $*.rnc
 	-test -f xml.xsd && mv xml.xsd $*_xml.xsd                && perl -p -i -e "s+examples.xsd+$*_examples.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_xml.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*.xsd
 	-test -f examples.xsd && mv examples.xsd $*_examples.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_examples.xsd      && perl -p -i -e "s/examples.xsd/$*_examples.xsd/" $*.xsd
-	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd                && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+examples.xsd+$*_examples.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd
+	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd                && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+examples.xsd+$*_examples.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*_xml.xsd
 	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+examples.xsd+$*_examples.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
 	-test -f ns1.xsd && mv ns1.xsd $*_ns1.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_ns1.xsd  && perl -p -i -e "s/ns1.xsd/$*_ns1.xsd/" $*.xsd
 	-test -f tite.xsd && mv tite.xsd $*_tite.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_tite.xsd && perl -p -i -e "s/tite.xsd/$*_tite.xsd/" $*.xsd
