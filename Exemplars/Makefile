@@ -3,7 +3,7 @@ SAXON=java -Xmx752m -jar ../Utilities/lib/saxon9he.jar -ext:on
 TRANG=java -jar ../Utilities/lib/trang.jar
 JING=java -jar ../Utilities/lib/jing.jar
 BIN=${PREFIX}/bin
-ODDS= \
+NORMALODDS= \
 	tei_bare.dtd \
 	tei_corpus.dtd \
 	tei_drama.dtd \
@@ -11,9 +11,11 @@ ODDS= \
 	tei_ms.dtd \
 	tei_speech.dtd \
 	tei_enrich.dtd \
-	tei_all.dtd tei_tite.dtd tei_lite.dtd
+	tei_all.dtd \
+	tei_tite.dtd \
+	tei_lite.dtd 
 
-MOREODDS=	isofs.rng \
+ODDSJUSTRELAX=	isofs.rng \
 	tei_svg.rng \
 	tei_xinclude.rng \
 	tei_its.rng \
@@ -22,9 +24,9 @@ MOREODDS=	isofs.rng \
 
 DOCONLYODDS=tei_lite_fr.doc.epub
 
-XODDS = tei_allPlus.special	
+SPECIALODDS = tei_allPlus.special	
 
-DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf
+DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf 
 
 LANGUAGE=en
 P5=`(cd ..; pwd)`
@@ -35,7 +37,7 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/li
 
 default: schemas
 
-schemas: $(ODDS) $(MOREODDS) $(XODDS) 
+schemas: $(NORMALODDS) $(ODDSJUSTRELAX) $(SPECIALODDS) 
 	echo Done
 
 docschemas: $(DOCODDS) $(DOCONLYODDS)
