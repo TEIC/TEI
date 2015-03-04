@@ -13,7 +13,8 @@ NORMALODDS= \
 	tei_enrich.dtd \
 	tei_all.dtd \
 	tei_tite.dtd \
-	tei_lite.dtd 
+	tei_lite.dtd \
+	tei_jtei.dtd 
 
 ODDSJUSTRELAX=	isofs.rng \
 	tei_svg.rng \
