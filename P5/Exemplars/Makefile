@@ -26,7 +26,7 @@ DOCONLYODDS=tei_lite_fr.doc.epub
 
 SPECIALODDS = tei_allPlus.special	
 
-DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf
+DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf tei_jtei.doc.pdf
 
 LANGUAGE=en
 P5=`(cd ..; pwd)`
