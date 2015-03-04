@@ -2919,7 +2919,8 @@
               <constraint>
                 <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
                   role="warning">
-                  <sch:assert test="some $i in //tei:ref[@type='bibl'] satisfies tokenize($i/@target, '\s+')[replace(., '#', '') = current()/@xml:id]">
+                  <sch:let name="currId" value="@xml:id"/>
+                  <sch:assert test="some $i in //tei:ref[@type='bibl'] satisfies tokenize($i/@target, '\s+')[replace(., '#', '') = $currId]">
                     This bibliographic entry is an orphan: no ref[@type="bibl"] references to it occur in the text.
                   </sch:assert>
                 </sch:rule>
