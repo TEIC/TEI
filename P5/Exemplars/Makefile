@@ -52,8 +52,7 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	${TRANG} $*.rng $*.rnc
 
 %.rng: %.odd 
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng validatesecondrng isoschematron validateschematron exampleschema
-	../run-onvdl $*.nvdl $*.odd
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng  isoschematron validateschematron 
 	${TRANG}  $*.rng $*.rnc
 
 %.dtd: %.odd
