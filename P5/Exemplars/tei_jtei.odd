@@ -72,7 +72,7 @@
       </titlePage>
     </front>
     <body>
-      <div xml:id="intro">
+      <div xml:id="introduction">
         <head>Introduction</head>
 
         <p>This document introduces and documents the content and use of the schemas provided by the
@@ -994,10 +994,10 @@
             <cell>
               <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <cit>
-                  <quote source="quoteref1"><supplied>A</supplied>ccount books 
+                  <quote source="quoteref7"><supplied>A</supplied>ccount books 
                     are among the most common but least accessible primary sources 
                     for historians<gap/></quote> 
-                  <ref type="bibl" xml:id="quoteref1" target="#mcgaw85">McGaw 1985</ref>
+                  <ref type="bibl" xml:id="quoteref7" target="#mcgaw85">McGaw 1985</ref>
                 </cit>
               </egXML>
             </cell>
@@ -1708,7 +1708,7 @@
             <cell>a table</cell>
             <cell>
               <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <table xml:id="table2">
+                <table xml:id="table3">
                   <head>Allowable <att>rend</att> attribute values in 
                     <ident>tei_corset</ident> customization</head>
                   <row role="label">
@@ -1728,8 +1728,8 @@
               </egXML>
             </cell>
             <cell>
-              <hi rendition="#generic-head">Table 2: Allowable <hi rendition="#el-att">@rend</hi> attribute values in <hi rendition="#el-ident">tei_corset</hi> customization</hi>
-              <table xml:id="table2">
+              <hi rendition="#generic-head">Table 4: Allowable <hi rendition="#el-att">@rend</hi> attribute values in <hi rendition="#el-ident">tei_corset</hi> customization</hi>
+              <table xml:id="table4">
                 <row role="label">
                   <cell><hi rendition="#el-att">@rend</hi> <lb/>(renamed <hi rendition="#el-att">@r</hi>) <lb/>attribute value</cell>
                   <cell>Meaning</cell>
@@ -1893,7 +1893,16 @@
               <attDef ident="notAfter" mode="delete"/>
             </attList>
           </elementSpec>
-          <elementSpec ident="att" mode="change">
+          <elementSpec ident="att" module="tagdocs" mode="change">
+            <constraintSpec ident="jtei.sch-att" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:att">
+                  <sch:assert test="not(matches(., '^@'))">
+                    Attribute delimiters are not allowed for <sch:name/>: they are completed at processing time via XSLT.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="scheme" mode="delete"/>
             </attList>
@@ -2059,7 +2068,16 @@
               <attDef ident="subtype" mode="delete"/>
             </attList>
           </classSpec>
-          <elementSpec ident="author" mode="change">
+          <elementSpec ident="author" mode="change" module="core">
+            <constraintSpec ident="jtei.sch-author" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:titleStmt/tei:author">
+                  <sch:assert test="tei:name and tei:affiliation and tei:email">
+                    Author information in the &lt;titleStmt&gt; must include &lt;name&gt;, &lt;affiliation&gt; and &lt;email&gt;.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="role" mode="delete"/>
             </attList>
@@ -2069,7 +2087,28 @@
               <attDef ident="status" mode="delete"/>
             </attList>
           </elementSpec>
-          <elementSpec ident="bibl" mode="change">
+          <elementSpec ident="bibl" mode="change" module="core">
+            <constraintSpec ident="jtei.sch-bibl-id" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
+                  role="warning">
+                  <sch:assert test="@xml:id">
+                    A bibliographic entry should have a unique value for @xml:id.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="jtei.sch-bibl-orphan" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
+                  role="warning">
+                  <sch:let name="currId" value="@xml:id"/>
+                  <sch:assert test="some $i in //tei:ref[@type='bibl'] satisfies tokenize($i/@target, '\s+')[replace(., '#', '') = $currId]">
+                    This bibliographic entry is an orphan: no ref[@type="bibl"] references to it occur in the text.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="type" mode="delete"/>
             </attList>
@@ -2088,7 +2127,7 @@
               </attDef>
             </attList>
           </elementSpec>
-          <elementSpec ident="cit" mode="change">
+          <elementSpec ident="cit" mode="change" module="core">
             <gloss versionDate="2014-03-01" xml:lang="en">cited block quotation</gloss>
             <desc versionDate="2014-03-01" xml:lang="en">contains a quotation from some other
               document, together with a bibliographic reference to its source. In jTEI, this is used
@@ -2104,6 +2143,15 @@
                 </choice>
               </oneOrMore>
             </content>
+            <constraintSpec ident="jtei.sch-cit" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:cit" role="warning">
+                  <sch:assert test="tei:ref">
+                    <sch:name/> is normally expected to have a bibliographic reference (ref[@type="bibl"]). Please make sure you intended not to add one here.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="type" mode="delete"/>
             </attList>
@@ -2455,6 +2503,24 @@
           </elementSpec>
           
           <elementSpec ident="head" module="core" mode="change">
+            <constraintSpec ident="jtei.sch-head-number" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:head">
+                  <sch:report test="matches(., '^\s*((figure|table|example|section) )?\d', 'i')">
+                    Headings are numbered and labeled automatically, please remove the hard-coded label from the text.
+                  </sch:report>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="jtei.sch-figure-head" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:figure/tei:head">
+                  <sch:assert test="@type = ('legend', 'license')">
+                    Figure titles must have a type 'legend' or 'license'.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="type" usage="opt" mode="change">
                 <desc versionDate="2014-03-18" xml:lang="en">indicates the type of heading.
@@ -2552,18 +2618,54 @@
               <attDef ident="type" mode="delete"/>
             </attList>
           </elementSpec>
-          <elementSpec ident="quote" mode="change">
+          <elementSpec ident="quote" mode="change" module="core">
+            <constraintSpec ident="jtei.sch-core" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:quote">
+                  <sch:assert test="id(substring-after(@source, '#'))/(self::tei:ref[@type eq 'bibl']|self::tei:bibl[ancestor::tei:body])">
+                    <sch:name/> must be accompanied by a bibliographic reference (ref[@type="bibl"]) or a bibliographic description in the running text.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="type" mode="delete"/>
             </attList>
           </elementSpec>
-          <elementSpec ident="ref" mode="change">
+          <elementSpec ident="ref" mode="change" module="core">
             <constraintSpec ident="jtei.sch-ref-multipleTargets" scheme="isoschematron">
               <constraint>
                 <sch:rule context="tei:ref">
                   <sch:report test="count(tokenize(normalize-space(@target), '\s+')) > 1">
                     <sch:name/> with multiple targets is not supported.
                   </sch:report>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="jtei.sch-biblref-parentheses" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:ref[@type eq 'bibl']">
+                  <sch:assert test="not(matches(., '^\(.*\)$'))">
+                    Parentheses are not part of bibliographic references. Please move them out of <sch:name/>.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="jtei.sch-biblref-target" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:ref[@type eq 'bibl']">
+                  <sch:assert test="id(substring-after(@target, '#'))/(self::tei:bibl|self::tei:person[ancestor::tei:particDesc/parent::tei:profileDesc])">
+                    A bibliographic reference must point to an entry in the bibliography.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
+            <constraintSpec ident="jtei.sch-biblref-type" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:ref[id(substring-after(@target, '#'))/self::tei:bibl]">
+                  <sch:assert test="@type eq 'bibl'">
+                    A bibliographic reference must be typed as @type="bibl".
+                  </sch:assert>
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2587,7 +2689,16 @@
               </attDef>
             </attList>
           </elementSpec>
-          <elementSpec ident="rendition" mode="change">
+          <elementSpec ident="rendition" mode="change" module="header">
+            <constraintSpec ident="jtei.sch-rendition" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:rendition">
+                  <sch:assert test="some $i in //@rendition satisfies tokenize($i, '\s+')[replace(., '#', '') = current()/@xml:id]">
+                    Please remove all <sch:name/> definitions that aren't actually being used in the article.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
             <attList>
               <attDef ident="scope" mode="delete"/>
               <attDef ident="scheme" mode="change">
@@ -2824,17 +2935,7 @@
               </constraint>
             </constraintSpec>
           </elementSpec>
-          <elementSpec ident="att" module="tagdocs" mode="change">
-            <constraintSpec ident="jtei.sch-att" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:att">
-                  <sch:assert test="not(matches(., '^@'))">
-                    Attribute delimiters are not allowed for <sch:name/>: they are completed at processing time via XSLT.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-          </elementSpec>
+          
           <elementSpec ident="val" module="tagdocs" mode="change">
             <constraintSpec ident="jtei.sch-att" scheme="isoschematron">
               <constraint>
@@ -2857,80 +2958,7 @@
               </constraint>
             </constraintSpec>
           </elementSpec>
-          <elementSpec ident="ref" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-biblref-parentheses" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:ref[@type eq 'bibl']">
-                  <sch:assert test="not(matches(., '^\(.*\)$'))">
-                    Parentheses are not part of bibliographic references. Please move them out of <sch:name/>.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-            <constraintSpec ident="jtei.sch-biblref-target" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:ref[@type eq 'bibl']">
-                  <sch:assert test="id(substring-after(@target, '#'))/(self::tei:bibl|self::tei:person[ancestor::tei:particDesc/parent::tei:profileDesc])">
-                    A bibliographic reference must point to an entry in the bibliography.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-            <constraintSpec ident="jtei.sch-biblref-type" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:ref[id(substring-after(@target, '#'))/self::tei:bibl]">
-                  <sch:assert test="@type eq 'bibl'">
-                    A bibliographic reference must be typed as @type="bibl".
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-          </elementSpec>
-          <elementSpec ident="cit" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-cit" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:cit" role="warning">
-                  <sch:assert test="tei:ref">
-                    <sch:name/> is normally expected to have a bibliographic reference (ref[@type="bibl"]). Please make sure you intended not to add one here.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-          </elementSpec>
-          <elementSpec ident="quote" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-core" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:quote">
-                  <sch:assert test="id(substring-after(@source, '#'))/(self::tei:ref[@type eq 'bibl']|self::tei:bibl[ancestor::tei:body])">
-                    <sch:name/> must be accompanied by a bibliographic reference (ref[@type="bibl"]) or a bibliographic description in the running text.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-          </elementSpec>
-          <elementSpec ident="bibl" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-bibl-id" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
-                  role="warning">
-                  <sch:assert test="@xml:id">
-                    A bibliographic entry should have a unique value for @xml:id.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-            <constraintSpec ident="jtei.sch-bibl-orphan" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:back/tei:div[@type eq 'bibliography']//tei:bibl"
-                  role="warning">
-                  <sch:let name="currId" value="@xml:id"/>
-                  <sch:assert test="some $i in //tei:ref[@type='bibl'] satisfies tokenize($i/@target, '\s+')[replace(., '#', '') = $currId]">
-                    This bibliographic entry is an orphan: no ref[@type="bibl"] references to it occur in the text.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-          </elementSpec>
+          
           <elementSpec ident="idno" module="header" mode="change">
             <constraintSpec ident="jtei.sch-doi-order" scheme="isoschematron">
               <constraint>
@@ -2979,48 +3007,6 @@
                 <sch:rule context="tei:table">
                   <sch:assert test="not(ancestor::tei:list)">
                     No tables are are allowed inside lists.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-          </elementSpec>
-          <elementSpec ident="author" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-author" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:titleStmt/tei:author">
-                  <sch:assert test="tei:name and tei:affiliation and tei:email">
-                    Author information in the &lt;titleStmt&gt; must include &lt;name&gt;, &lt;affiliation&gt; and &lt;email&gt;.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-          </elementSpec>
-          <elementSpec ident="rendition" module="header" mode="change">
-            <constraintSpec ident="jtei.sch-rendition" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:rendition">
-                  <sch:assert test="some $i in //@rendition satisfies tokenize($i, '\s+')[replace(., '#', '') = current()/@xml:id]">
-                    Please remove all <sch:name/> definitions that aren't actually being used in the article.
-                  </sch:assert>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-          </elementSpec>
-          <elementSpec ident="head" module="core" mode="change">
-            <constraintSpec ident="jtei.sch-head-number" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:head">
-                  <sch:report test="matches(., '^\s*((figure|table|example|section) )?\d', 'i')">
-                    Headings are numbered and labeled automatically, please remove the hard-coded label from the text.
-                  </sch:report>
-                </sch:rule>
-              </constraint>
-            </constraintSpec>
-            <constraintSpec ident="jtei.sch-figure-head" scheme="isoschematron">
-              <constraint>
-                <sch:rule context="tei:figure/tei:head">
-                  <sch:assert test="@type = ('legend', 'license')">
-                    Figure titles must have a type 'legend' or 'license'.
                   </sch:assert>
                 </sch:rule>
               </constraint>
