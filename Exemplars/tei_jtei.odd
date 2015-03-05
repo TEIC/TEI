@@ -478,7 +478,7 @@
                 </item>
               </list>
             </egXML></p>
-          <p>In jTEI, the content of list items is highly constrained: you can only use phrase-level elements, lists, simple quotations (<gi>quote</gi> or <gi>q</gi>) directly inside <gi>item</gi>. If you want to use more complex structures, such as figures and notes, the list item text should be wrapped in a <gi>p</gi> element. There are two things of notice: <gi>item</gi> can either contain text and phrase-level elements, or paragraphs; and you can't use <gi>table</gi> anywhere inside <gi>item</gi>.</p>
+          <p>For processing reasongs, jTEI puts one restriction on what can appear inside lists: you can't use <gi>table</gi> anywhere inside <gi>item</gi>.</p>
         </div>
       <div xml:id="quotations">
         <head>Quotations, Inline and Block</head>
@@ -2417,48 +2417,7 @@
                    <item>ordered</item></list>.                 
                </p>
               </egXML>
-            </exemplum>
-            
-          </elementSpec>
-          
-<!--     [MDH] This is a simpler content model for list items. It does not 
-        allow block-level elements which will complicate list-handling considerably.
-          In particular:
-            - model.inter is excluded to remove things like cit, floatingText
-              and table, and instead, some specific elements and models are
-              added explicitly;
-            - model.divPart is eliminated entirely;
-            - model.global is replaced by note and lb, the only elements we 
-              really need from it.
-             
-          -->
-          <elementSpec ident="item" module="core" mode="change">
-            <desc versionDate="2014-03-19" xml:lang="en">In the jTEI schema, a list item has a much 
-            reduced content model compared with that in generic TEI. It can basically only include 
-            ordinary paragraph content, consisting of text or inline elements, without block-level
-            elements. Or, if block-level elements are needed, they should be wrapped in a 
-            paragraph.</desc>
-            <content>
-              <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-                <rng:oneOrMore>
-                <rng:choice>
-                  <rng:text/>
-                  <rng:ref name="model.gLike"/>
-                  <rng:ref name="model.phrase"/>
-                  
-                  <rng:ref name="model.egLike"/>
-                  <rng:ref name="list"/>
-                  <rng:ref name="quote"/>
-                  <rng:ref name="q"/>
-                  
-                  <rng:ref name="lb"/>
-                </rng:choice>
-                </rng:oneOrMore>
-                <rng:oneOrMore>
-                  <rng:ref name="p"/>
-                </rng:oneOrMore>
-              </rng:choice>
-            </content>
+            </exemplum>            
           </elementSpec>
           
           <elementSpec ident="listBibl" mode="change">
