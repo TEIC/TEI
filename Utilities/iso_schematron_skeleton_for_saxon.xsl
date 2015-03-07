@@ -1638,11 +1638,20 @@ which require a preprocess.
 					<xsl:with-param name="subject" select="@subject" />
 			</xsl:call-template>
 			 
-				
-			<xsl:apply-templates/>
-			<!-- DPC introduce context-xpath and select-contexts variables -->
-			<xsl:if test="not($select-contexts)">
-			  <axsl:apply-templates select="{$context-xpath}" mode="M{count(../preceding-sibling::*)}"/>
+			  <xsl:apply-templates/>
+			  <!-- DPC introduce context-xpath and select-contexts variables -->
+			  <xsl:if test="not($select-contexts)">
+			    <xsl:choose>
+			    <xsl:when
+				test="starts-with(@context,'text(')"/>
+			    <xsl:when
+				test="starts-with(@context,'@')"/>
+			    <xsl:otherwise>
+			      <axsl:apply-templates
+				  select="{$context-xpath}"
+			      mode="M{count(../preceding-sibling::*)}"/>
+			    </xsl:otherwise>
+			    </xsl:choose>
 			</xsl:if>
 		</axsl:template>
 	</xsl:template>
