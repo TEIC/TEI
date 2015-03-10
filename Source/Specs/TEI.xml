@@ -15,9 +15,11 @@ $Id$
   <gloss versionDate="2006-10-18" xml:lang="de">TEI-Dokument</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">documento TEI</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">documento TEI</gloss>
-  <desc versionDate="2005-12-24" xml:lang="en">contains a single TEI-conformant document,
-comprising a TEI header and a text, either in isolation or as part of a
-<gi>teiCorpus</gi> element.</desc>
+  <desc versionDate="2015-03-10" xml:lang="en">contains a single
+  TEI-conformant document, containing a single TEI header, a single text, one or  
+more members of the model.resourceLike class, or a combination of
+these. A series of <gi>TEI</gi> elements may be combined together to
+form a <gi>teiCorpus</gi> element.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">TEI 헤더와 텍스트로 구성된 단일 TEI 구조 문서를 포함한다. 독립 요소 또는 <gi>teiCorpus</gi> 요소의 부분.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含符合TEI標準的單一文件，由一個TEI標頭及一份文本組成，可單獨出現或是作為元素<gi>teiCorpus</gi>的一部分。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">TEIに準拠する文書</desc>
@@ -42,7 +44,6 @@ enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) un
           <oneOrMore>
             <ref name="model.resourceLike"/>
           </oneOrMore>
-          <!--	<rng:ref name="text"/>-->
           <optional>
             <ref name="text"/>
           </optional>
@@ -110,6 +111,32 @@ P5. </p>
       </TEI>
     </egXML>
   </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <TEI version="5.0">
+        <teiHeader>
+          <fileDesc>
+            <titleStmt>
+              <title>A TEI Document containing four page images </title>
+            </titleStmt>
+            <publicationStmt>
+              <p>Unpublished demonstration file.</p>
+            </publicationStmt>
+            <sourceDesc>
+              <p>No source: this is an original work.</p>
+            </sourceDesc>
+          </fileDesc>
+        </teiHeader>
+<facsimile>
+<graphic url="page1.png"/>
+<graphic url="page2.png"/>
+<graphic url="page3.png"/>
+<graphic url="page4.png"/>
+</facsimile>
+      </TEI>
+    </egXML>
+  </exemplum>
+
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <TEI version="5.0">
@@ -158,8 +185,10 @@ P5. </p>
       </TEI>
     </egXML>
   </exemplum>
-  <remarks versionDate="2005-12-24" xml:lang="en">
-    <p>This element is required.</p>
+  <remarks versionDate="2015-03-10" xml:lang="en">
+    <p>This element is required. It is customary to specify the
+TEI namespace <code>http://www.tei-c.org/ns/1.0</code> on it, using
+    the <att>xmlns</att> attribute.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
     <p>Cet élément est obligatoire.</p>
