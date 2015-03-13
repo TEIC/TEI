@@ -54,7 +54,7 @@
   </target>
   <target name="compileodd">
     <echo>Do ODD processing using ${saxon} and source ${defaultSource}</echo>
-    <xslt processor="trax" force="yes" style="${odd2odd}" in="${oddFile}" out="${outputname}.odd.compiled">
+    <xslt processor="trax" force="yes" style="${odd2odd}" in="${oddFile}" out="${outputname}.odd.processed">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -72,7 +72,7 @@
   </target>
   <target name="dtd">
     <echo level="info">XSLT generate DTD ${outputname}.dtd</echo>
-    <xslt processor="trax" force="yes" style="${odd2dtd}" in="${outputname}.odd.compiled" out="${outputname}.dtd">
+    <xslt processor="trax" force="yes" style="${odd2dtd}" in="${outputname}.odd.processed" out="${outputname}.dtd">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -91,7 +91,7 @@
   </target>
   <target name="rng">
     <echo level="info">XSLT generate RELAXNG ${outputname}.rng</echo>
-    <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}.odd.compiled" out="${outputname}.rng">
+    <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}.odd.processed" out="${outputname}.rng">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -157,7 +157,7 @@
   </target>
   <target name="isoschematron">
     <echo level="info">XSLT generate ISO schematron ${outputname}.isosch from compiled ODD </echo>
-    <xslt processor="trax" force="yes" style="${odd2isosch}" in="${outputname}.odd.compiled" out="${outputname}.isosch">
+    <xslt processor="trax" force="yes" style="${odd2isosch}" in="${outputname}.odd.processed" out="${outputname}.isosch">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
     <xslt processor="trax" force="yes" style="../Utilities/iso_schematron_message_xslt2.xsl" in="${outputname}.isosch" out="${outputname}.xsl">
@@ -172,7 +172,7 @@
   </target>
   <target name="dochtml">
     <echo level="info">XSLT generate HTML ${outputname}.doc.html from compiled ODD (${lang})</echo>
-    <xslt processor="trax" force="yes" style="${odd2html}" in="${outputname}.odd.compiled" out="${outputname}.doc.html">
+    <xslt processor="trax" force="yes" style="${odd2html}" in="${outputname}.odd.processed" out="${outputname}.doc.html">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
       <param name="documentationLanguage" expression="${lang}" if="lang"/>
@@ -182,7 +182,7 @@
   </target>
   <target name="doclite">
     <echo level="info">XSLT generate TEI Lite ${outputname}.doc.xml from compiled ODD (${lang})</echo>
-    <xslt processor="trax" force="yes" style="${odd2lite}" in="${outputname}.odd.compiled" out="${outputname}.doc.xml">
+    <xslt processor="trax" force="yes" style="${odd2lite}" in="${outputname}.odd.processed" out="${outputname}.doc.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
       <param name="documentationLanguage" expression="${lang}" if="lang"/>
@@ -224,7 +224,7 @@
   <target name="docepub" depends="compileodd">
     <!-- The transformation for EPUB output. -->
     <echo level="info">XSLT generate ePub ${outputname}.doc.epub</echo>
-    <xslt force="yes" style="${teitoepub}" in="${outputname}.odd.compiled" out="${outputTempDir}/OPS/index.html">
+    <xslt force="yes" style="${teitoepub}" in="${outputname}.odd.processed" out="${outputTempDir}/OPS/index.html">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -266,7 +266,7 @@
       <param name="nocompress" expression="${nocompress}" if="nocompress"/>
     </xslt>
     <echo level="info">Get names of graphics files and write an ant task</echo>
-    <xslt force="yes" style="${listgraphics}" in="${outputname}.odd.compiled" out="${outputTempDir}/copy.xml">
+    <xslt force="yes" style="${listgraphics}" in="${outputname}.odd.processed" out="${outputTempDir}/copy.xml">
       <xmlcatalog>
         <catalogpath>
           <pathelement location="../../../../catalog.xml"/>
@@ -293,7 +293,7 @@
     <xslt processor="trax" force="yes" style="../Utilities/odd2exodd.xsl" in="${oddFile}" out="${outputname}-examples.odd">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
-    <xslt processor="trax" force="yes" style="${odd2odd}" in="${outputname}-examples.odd" out="${outputname}-examples.compiled">
+    <xslt processor="trax" force="yes" style="${odd2odd}" in="${outputname}-examples.odd" out="${outputname}-examples.processed">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="lang" expression="${lang}" if="lang"/>
       <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
@@ -302,7 +302,7 @@
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
-    <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}-examples.compiled" out="${outputname}-examples.rng">
+    <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}-examples.processed" out="${outputname}-examples.rng">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
       <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
@@ -312,13 +312,13 @@
       <param name="verbose" expression="${verbose}" if="verbose"/>
     </xslt>
     <delete file="${outputname}-examples.odd"/>
-    <delete file="${outputname}-examples.compiled"/>
+    <delete file="${outputname}-examples.processed"/>
 
   </target>
 
 
   <target name="cleanup" unless="debug">
-    <delete file="${outputname}.odd.compiled"/>
+    <delete file="${outputname}.odd.processed"/>
     <delete dir="${outputTempDir}"/>
   </target>
 
