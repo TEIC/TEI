@@ -631,14 +631,19 @@ to mark any technical term, thus:
           chapter. This is discussed in section <ptr target="#TDTAGCONT"/> below. As a third
           possibility, the legal content for an element may be exhaustively specified using the
             <gi>valList</gi> element, described in <ptr target="#TDATT"/> below. </p>
-        <p>In the simplest case, the <gi>content</gi> element may be empty. This implies that the
-          element being specified is also empty. </p>
         <p>The following elements are used to define a content model: <specList>
+	            <specDesc key="textNode"/>
             <specDesc key="elementRef"/>
             <specDesc key="classRef"/>
             <specDesc key="macroRef"/>
+
           </specList>
         </p>
+        <p>In the simplest case, the <gi>content</gi> element may be empty. This implies that the
+          element being specified is also empty. </p>
+	<p>An element may contain nothing but strings of Unicode
+	characters. This is indicated by supplying the special element
+	<gi>textNode</gi> within the <gi>content</gi> element. </p>  
         <p>An <gi>elementRef</gi> provides the name of an element which may appear at a certain
           point in a content model. A <gi>classRef</gi> provides the name of a class, members of
           which may appear at a certain point in content model. A <gi>macroRef</gi> provides the
@@ -646,8 +651,7 @@ to mark any technical term, thus:
           content model.</p>
         <p>These elements are all members of an attribute class which provides attributes that
           further modify their significance as follows: <specList>
-            <specDesc key="att.repeatable" atts="minOccurs maxOccurs allowText
-				     context"/>
+            <specDesc key="att.repeatable" atts="minOccurs maxOccurs context"/>
           </specList>
         </p>
         <p>Finally, two wrapper elements are provided to indicate whether the components of a
@@ -658,8 +662,11 @@ to mark any technical term, thus:
         </p>
 
         <p>Here is a simple example: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><content>
-              <classRef key="model.gLike" minOccurs="0" maxOccurs="unbounded" allowText="true"/>
-            </content>
+              <alternate minOccurs="0" maxOccurs="unbounded">
+		<classRef key="model.gLike"/>
+		<textNode/>
+	      </alternate>            
+	    </content>
           </egXML> This is the content model for the macro <ident type="macro">macro.xText</ident>,
           which is defined as containing any number (including zero) of elements from the <ident
             type="class">model.gLike</ident> class mixed in with text. </p>
