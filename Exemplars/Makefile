@@ -29,6 +29,8 @@ SPECIALODDS = tei_allPlus.special
 
 DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf tei_jtei.doc.pdf
 
+ADDITIONALXSDS=tei_jtei.xsd
+
 LANGUAGE=en
 P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
@@ -38,7 +40,7 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/li
 
 default: schemas
 
-schemas: $(NORMALODDS) $(ODDSJUSTRELAX) $(SPECIALODDS) 
+schemas: $(NORMALODDS) $(ODDSJUSTRELAX) $(SPECIALODDS) $(ADDITIONALXSDS)
 	echo Done
 
 docschemas: $(DOCODDS) $(DOCONLYODDS)
@@ -79,6 +81,9 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	../run-onvdl $*.nvdl $*.odd
 	-rm $*.doc.xml
 	-rm $*.rng
+	
+%.xsd: %.rng
+	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
 
 dist: schemas docschemas
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars
