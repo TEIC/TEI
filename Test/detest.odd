@@ -14,6 +14,10 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2015-03-27" who="#sbauman.emt">
+	Added an element specification to test constraints on
+	<gi>defaultVal</gi>
+      </change>
       <change when="2014-09-10" who="#sbauman.emt">
 	Added <name type="module">msdescription</name> and
 	<name type="module">tagdocs</name>
@@ -320,6 +324,85 @@
               </attDef>
             </attList>
           </elementSpec>
+	  <elementSpec ident="blort2" mode="add">
+            <desc xml:lang="en" versionDate="2015-03-27">another completely spurious element made up for testing purposes only</desc>
+            <classes>
+              <memberOf key="model.pPart.data"/>
+            </classes>
+            <content>
+              <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq"/>
+            </content>
+            <attList>
+	      <attDef ident="default-is-in-list-opt" usage="opt">
+		<datatype>
+		  <rng:ref name="data.enumerated"/>
+		</datatype>
+		<defaultVal>ONE</defaultVal>
+		<valList mode="add" type="closed">
+		  <valItem ident="ONE"/>
+		  <valItem ident="TWO"/>
+		  <valItem ident="THREE"/>
+		</valList>
+	      </attDef>
+	      <attDef ident="default-is-in-list-rec" usage="rec">
+		<datatype>
+		  <rng:ref name="data.enumerated"/>
+		</datatype>
+		<defaultVal>ONE</defaultVal>
+		<valList mode="add" type="closed">
+		  <valItem ident="ONE"/>
+		  <valItem ident="TWO"/>
+		  <valItem ident="THREE"/>
+		</valList>
+	      </attDef>
+	      <attDef ident="default-is-in-list-req" usage="req">
+		<datatype>
+		  <rng:ref name="data.enumerated"/>
+		</datatype>
+		<defaultVal>ONE</defaultVal>
+		<valList mode="add" type="closed">
+		  <valItem ident="ONE"/>
+		  <valItem ident="TWO"/>
+		  <valItem ident="THREE"/>
+		</valList>
+	      </attDef>
+	      <attDef ident="default-NOT-in-list-opt" usage="opt">
+		<datatype>
+		  <rng:ref name="data.enumerated"/>
+		</datatype>
+		<defaultVal>ONE</defaultVal>
+		<valList mode="add" type="closed">
+		  <valItem ident="TWO"/>
+		  <valItem ident="THREE"/>
+		</valList>
+	      </attDef>
+	      <attDef ident="default-NOT-in-list-rec" usage="rec">
+		<datatype>
+		  <rng:ref name="data.enumerated"/>
+		</datatype>
+		<defaultVal>ONE</defaultVal>
+		<valList mode="add" type="closed">
+		  <valItem ident="TWO"/>
+		  <valItem ident="THREE"/>
+		</valList>
+	      </attDef>
+	      <attDef ident="default-NOT-in-list-req" usage="req">
+		<datatype>
+		  <rng:ref name="data.enumerated"/>
+		</datatype>
+		<defaultVal>ONE</defaultVal>
+		<valList mode="add" type="closed">
+		  <valItem ident="TWO"/>
+		  <valItem ident="THREE"/>
+		</valList>
+	      </attDef>
+	    </attList>
+	    <remarks>
+	      <p>This element tests schematron constraints that try to
+	      ensure the saneness of <gi>defaultVal</gi></p>
+	    </remarks>
+	  </elementSpec>
+
           <elementSpec ident="relation" mode="change">
             <constraintSpec ident="activepassive" mode="delete" scheme="isoschematron"/>
           </elementSpec>
