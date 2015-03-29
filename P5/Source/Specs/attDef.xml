@@ -7,7 +7,7 @@ $Date$
 $Id$
 -->
 <?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="attDef">
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="attDef" xmlns:sch="http://purl.oclc.org/dsdl/schematron" >
   <gloss versionDate="2005-01-14" xml:lang="en">attribute definition</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">속성 정의</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">屬性定義</gloss>
@@ -28,33 +28,33 @@ $Id$
   <content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
       <zeroOrMore>
-        <choice>
-          <ref name="model.glossLike"/>
-          <ref name="model.descLike"/>
-        </choice>
+	<choice>
+	  <ref name="model.glossLike"/>
+	  <ref name="model.descLike"/>
+	</choice>
       </zeroOrMore>
       <optional>
-        <ref name="datatype"/>
+	<ref name="datatype"/>
       </optional>
       <zeroOrMore>
-        <ref name="constraintSpec"/>
+	<ref name="constraintSpec"/>
       </zeroOrMore>
       <optional>
-        <ref name="defaultVal"/>
+	<ref name="defaultVal"/>
       </optional>
       <optional>
-        <choice>
-          <ref name="valList"/>
-          <oneOrMore>
-            <ref name="valDesc"/>
-          </oneOrMore>
-        </choice>
+	<choice>
+	  <ref name="valList"/>
+	  <oneOrMore>
+	    <ref name="valDesc"/>
+	  </oneOrMore>
+	</choice>
       </optional>
       <zeroOrMore>
-        <ref name="exemplum"/>
+	<ref name="exemplum"/>
       </zeroOrMore>
       <zeroOrMore>
-        <ref name="remarks"/>
+	<ref name="remarks"/>
       </zeroOrMore>
     </group>
   </content>
@@ -63,8 +63,73 @@ $Id$
       <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
       <assert xmlns="http://purl.oclc.org/dsdl/schematron" 
 	      test="ancestor::teix:egXML[@valid='feasible'] or @mode eq 'change' or @mode eq 'delete' or tei:datatype or tei:valList[@type='closed']">Attribute: the definition of the @<value-of select="@ident"/> attribute in the <value-of select="ancestor::*[@ident][1]/@ident"/>
-            <value-of select="' '"/>
-            <value-of select="local-name(ancestor::*[@ident][1])"/> should have a closed valList or a datatype</assert>
+      <value-of select="' '"/>
+      <value-of select="local-name(ancestor::*[@ident][1])"/> should have a closed valList or a datatype</assert>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="noDefault4Required" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:attDef[@usage eq 'req']">
+	<sch:report test="tei:defaultVal">It does not make sense to make "<sch:value-of select="normalize-space(tei:defaultVal)"/>" the default value of @<sch:value-of select="@ident"/>, because that attribute is required.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <!-- The next 2 <constraintSpec>s produce exactly the same message, and -->
+  <!-- thus arguably should be only 1 <constraintSpec> with the test on -->
+  <!-- @maxOccurs moved into the @test of the assertion. However, I have -->
+  <!-- made them separate for now to make debugging easier. After we're -->
+  <!-- confident these work properly, could condense them to one. -->
+  <!-- -Syd, 2015-03-29 -->
+  <constraintSpec ident="defaultIsInClosedList-twoOrMore" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:attDef[
+	 tei:defaultVal
+	 and
+	 tei:valList[@type eq 'closed']
+	 and
+	 tei:datatype[
+		 @maxOccurs > 1
+		 or
+		 @minOccurs > 1
+		 or
+		 @maxOccurs = 'unbounded'
+		 ]
+	 ]">
+	<sch:assert
+	    test="
+		  tokenize(normalize-space(tei:defaultVal),' ')
+		  =
+		  tei:valList/tei:valItem/@ident"
+	    >In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+	<sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
+	@<sch:value-of select="@ident"/> attribute is not among the closed list of possible
+	values</sch:assert>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="defaultIsInClosedList-one" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:attDef[
+	 tei:defaultVal
+	 and
+	 tei:valList[@type eq 'closed']
+	 and
+	 tei:datatype[
+		 not(@maxOccurs)
+		 or (
+		 if ( @maxOccurs castable as xs:integer )
+			 then ( @maxOccurs cast as xs:integer eq 1 )
+			 else false()
+		 )]
+	 ]">
+	<sch:assert test="string(tei:defaultVal)
+			  =
+			  tei:valList/tei:valItem/@ident"
+		    >In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+	<sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
+	@<sch:value-of select="@ident"/> attribute is not among the closed list of possible
+	values</sch:assert>
+      </sch:rule>
     </constraint>
   </constraintSpec>
   <attList>
@@ -74,59 +139,40 @@ $Id$
       <desc versionDate="2007-05-02" xml:lang="zh-TW">說明屬性或元素的必備性。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">属性または要素の選択性を示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">précise qu'un attribut ou un élément sont
-        facultatifs.</desc>
+      facultatifs.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el caracter opcional de un atributo o un
-        elemento</desc>
+      elemento</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il carattere facoltativo di un attributo o
-        elemento</desc>
+      elemento</desc>
       <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
       </datatype>
       <defaultVal>opt</defaultVal>
       <valList type="closed">
-        <valItem ident="req">
-          <gloss versionDate="2005-01-14" xml:lang="en">required</gloss>
-          <gloss versionDate="2008-04-05" xml:lang="ja">必須．</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">requis</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">richiesto</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">requerido</gloss>
-          <gloss xml:lang="zh-TW" versionDate="2007-05-02">必備的</gloss>
-        </valItem>
-        <!-- MDH 2014-06-22: commenting mwa and rwa out per http://sourceforge.net/p/tei/bugs/299/ and 
-                  http://sourceforge.net/p/tei/bugs/676/ . If no problems apparent in future, remove. -->
-        <!--<valItem ident="mwa">
-          <gloss versionDate="2005-01-14" xml:lang="en">mandatory when applicable </gloss>
-          <gloss versionDate="2008-04-05" xml:lang="ja">可能であれば，必須．</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">obligatoire si c'est applicable</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">obbligatorio se rilevante</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">obligatorio cuando es pertinente</gloss>
-        </valItem>-->
-        <valItem ident="rec">
-          <gloss versionDate="2005-01-14" xml:lang="en">recommended </gloss>
-          <gloss xml:lang="zh-TW" versionDate="2007-05-02">推薦的</gloss>
-          <gloss versionDate="2008-04-05" xml:lang="ja">推奨．</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">recommandé</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">consigliato</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">recomendado</gloss>
-        </valItem>
-        <!-- MDH 2014-06-22: commenting mwa and rwa out per http://sourceforge.net/p/tei/bugs/299/ and 
-                  http://sourceforge.net/p/tei/bugs/676/ . If no problems apparent in future, remove. -->
-        <!--<valItem ident="rwa">
-          <gloss versionDate="2005-01-14" xml:lang="en">recommended when applicable </gloss>
-          <gloss versionDate="2008-04-05" xml:lang="ja">可能であれば，推奨．</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">recommandé si c'est applicable</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">consigliato se rilevante</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">recomendado cuando es pertinente</gloss>
-          <gloss xml:lang="zh-TW" versionDate="2007-05-02">可應用時必備的</gloss>
-        </valItem>-->
-        <valItem ident="opt">
-          <gloss versionDate="2005-01-14" xml:lang="en">optional </gloss>
-          <gloss versionDate="2008-04-05" xml:lang="ja">選択的．</gloss>
-          <gloss versionDate="2007-06-12" xml:lang="fr">facultatif</gloss>
-          <gloss versionDate="2007-11-06" xml:lang="it">facoltativo</gloss>
-          <gloss versionDate="2007-05-04" xml:lang="es">opcional</gloss>
-          <gloss xml:lang="zh-TW" versionDate="2007-05-02">非必備的</gloss>
-        </valItem>
+	<valItem ident="req">
+	  <gloss versionDate="2005-01-14" xml:lang="en">required</gloss>
+	  <gloss versionDate="2008-04-05" xml:lang="ja">必須．</gloss>
+	  <gloss versionDate="2007-06-12" xml:lang="fr">requis</gloss>
+	  <gloss versionDate="2007-11-06" xml:lang="it">richiesto</gloss>
+	  <gloss versionDate="2007-05-04" xml:lang="es">requerido</gloss>
+	  <gloss xml:lang="zh-TW" versionDate="2007-05-02">必備的</gloss>
+	</valItem>
+	<valItem ident="rec">
+	  <gloss versionDate="2005-01-14" xml:lang="en">recommended </gloss>
+	  <gloss xml:lang="zh-TW" versionDate="2007-05-02">推薦的</gloss>
+	  <gloss versionDate="2008-04-05" xml:lang="ja">推奨．</gloss>
+	  <gloss versionDate="2007-06-12" xml:lang="fr">recommandé</gloss>
+	  <gloss versionDate="2007-11-06" xml:lang="it">consigliato</gloss>
+	  <gloss versionDate="2007-05-04" xml:lang="es">recomendado</gloss>
+	</valItem>
+	<valItem ident="opt">
+	  <gloss versionDate="2005-01-14" xml:lang="en">optional </gloss>
+	  <gloss versionDate="2008-04-05" xml:lang="ja">選択的．</gloss>
+	  <gloss versionDate="2007-06-12" xml:lang="fr">facultatif</gloss>
+	  <gloss versionDate="2007-11-06" xml:lang="it">facoltativo</gloss>
+	  <gloss versionDate="2007-05-04" xml:lang="es">opcional</gloss>
+	  <gloss xml:lang="zh-TW" versionDate="2007-05-02">非必備的</gloss>
+	</valItem>
       </valList>
     </attDef>
     <attDef ident="ns" usage="opt">
@@ -141,13 +187,13 @@ $Id$
       <desc versionDate="2007-05-02" xml:lang="zh-TW">指明該屬性所屬的名稱空間。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該属性が属する名前空間を示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">précise l'espace de noms auquel appartient cet
-        attribut.</desc>
+      attribut.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el espacio del nombre al que pertenece el
-        atributo.</desc>
+      atributo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene
-        l'attributo</desc>
+      l'attributo</desc>
       <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
+	<ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
       </datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
@@ -155,36 +201,36 @@ $Id$
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <attDef usage="rec" ident="type">
-        <desc>specifies a name conventionally used for this level of subdivision, e.g.
-          <val>act</val>, <val>volume</val>, <val>book</val>, <val>section</val>, <val>canto</val>,
-          etc.</desc>
-        <datatype>
-          <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
-        </datatype>
+	<desc>specifies a name conventionally used for this level of subdivision, e.g.
+	<val>act</val>, <val>volume</val>, <val>book</val>, <val>section</val>, <val>canto</val>,
+	etc.</desc>
+	<datatype>
+	  <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+	</datatype>
       </attDef>
     </egXML>
   </exemplum>
   <exemplum versionDate="2008-04-06" xml:lang="fr">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <attDef usage="rec" ident="type">
-        <desc>spécifie un nom conventionnellement utilisé pour ce niveau de divisions , par ex.
-              <val>acte</val>, <val>volume</val>, <val>livre</val>, <val>section</val>,
-            <val>chant</val>, etc.</desc>
-        <datatype>
-          <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
-        </datatype>
+	<desc>spécifie un nom conventionnellement utilisé pour ce niveau de divisions , par ex.
+	<val>acte</val>, <val>volume</val>, <val>livre</val>, <val>section</val>,
+	<val>chant</val>, etc.</desc>
+	<datatype>
+	  <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+	</datatype>
       </attDef>
     </egXML>
   </exemplum>
   <exemplum xml:lang="zh-TW">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <attDef usage="rec" ident="type">
-        <desc>具體指定慣例上使用的分部名稱，例如：
-          <val>幕</val>, <val>卷</val>, <val>冊</val>, <val>節</val>, <val>篇章</val>,
-          等。</desc>
-        <datatype>
-          <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
-        </datatype>
+	<desc>具體指定慣例上使用的分部名稱，例如：
+	<val>幕</val>, <val>卷</val>, <val>冊</val>, <val>節</val>, <val>篇章</val>,
+	等。</desc>
+	<datatype>
+	  <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+	</datatype>
       </attDef>
     </egXML>
   </exemplum>
