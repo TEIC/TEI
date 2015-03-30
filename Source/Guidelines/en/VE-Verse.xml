@@ -368,6 +368,50 @@ $Id$
          <!-- I agree, but it seems rather late to change it now.      -->
          <!-- But better late than never.  Changed! (msm)              --></p>
    </div>
+   <div type="div2" xml:id="VESA">
+      <head>Encoding Textual Structures Across Verses</head>
+      <p>It is possible that certain textual structures may span multiple lines of verse, either by 
+         incorporating more than one, or by crossing line hierarchy. This is common,
+         for example, when lines contain reported thought or speech (i.e. <gi>said</gi>), 
+         or other forms of quotation (i.e. <gi>q</gi>). For these cases, it is recommended practice 
+         to fragment and reconstruct the elements representing the textual structures.
+      </p>
+      <p>The following example from Margaret Cavendish's <title>Nature's Pictures</title> shows speech
+         encoded across two lines reconstructed by chaining elements with <att>prev</att> and 
+         <att>next</att> attributes: <egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples"
+            source="#VESA-eg-1"><lg type="couplet">
+               <l>
+                  <said xml:id="said1297" next="#said1298">Our lives</said>, ſaid he,
+                  <said xml:id="said1298" next="#said1299" prev="#said1297">wee'll give before we yield</said>,
+               </l>
+               <l>
+                  <said xml:id="said1299" prev="#said1298">Wee'll win your battles, or dye in the field</said>.
+               </l>
+            </lg></egXML>
+      </p>
+      <p>Alternatively, the elements may be reconstructed with stand-off markup using the element <gi>join</gi>: 
+         <egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples"
+            source="#VESA-eg-1"><lg type="couplet">
+               <l>
+                  <seg xml:id="said1297">Our lives</seg>, ſaid he,
+                  <seg xml:id="said1298">wee'll give before we yield</seg>,
+               </l>
+               <l>
+                  <seg xml:id="said1299">Wee'll win your battles, or dye in the field</seg>.
+               </l>
+            </lg>
+            <!-- Elsewhere in the document -->
+            <p>
+               <join result="said" scope="root"
+                  target="#said1297 #said1298 #said1299"/>
+            </p>
+         </egXML>
+      </p>
+      <p>
+         A more general discussion of these and other strategies to deal with fragmentation and reconstruction 
+         appears in section <ptr target="#NHVE"/>.
+      </p>
+   </div>
    <div type="div2" xml:id="VEME">
       <head>Rhyme and Metrical Analysis</head>
       <p>When the module for verse is in use, the following additional attributes are available to
