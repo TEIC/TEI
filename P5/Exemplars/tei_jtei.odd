@@ -1856,7 +1856,7 @@
           <moduleRef key="corpus" include="particDesc"/>
           <moduleRef key="figures" include="cell figure row table"/>
           <moduleRef key="header"
-            include="appInfo application availability catRef change classCode edition encodingDesc fileDesc idno keywords langUsage language listChange profileDesc projectDesc publicationStmt rendition revisionDesc sourceDesc tagsDecl teiHeader textClass titleStmt"/>
+            include="appInfo application availability catRef change classCode edition encodingDesc fileDesc idno keywords langUsage language listChange profileDesc projectDesc publicationStmt rendition revisionDesc seriesStmt sourceDesc tagsDecl teiHeader textClass titleStmt"/>
           <moduleRef key="namesdates"
             include="affiliation forename listPerson person orgName roleName surname"/>
           <moduleRef key="tagdocs" include="att code eg egXML gi ident tag val"/>
@@ -1883,6 +1883,15 @@
                 </oneOrMore>
               </group>
             </content>
+            <constraintSpec ident="jtei.sch-title" scheme="isoschematron">
+              <constraint>
+                <sch:rule context="tei:titleStmt">
+                  <sch:assert test="tei:title[@type = 'main']">
+                    A title of type "main" is required in <sch:name/>.
+                  </sch:assert>
+                </sch:rule>
+              </constraint>
+            </constraintSpec>
           </elementSpec>
           <elementSpec ident="textClass" module="header" mode="change">
             <content>
@@ -2267,6 +2276,10 @@
               <attDef ident="role" mode="change">
                 <valList mode="add" type="closed">
                   <valItem ident="translator"/>
+                  <valItem ident="guest"/>
+                  <valItem ident="chief"/>
+                  <valItem ident="managing"/>
+                  <valItem ident="technical"/>
                 </valList>
               </attDef>
             </attList>
