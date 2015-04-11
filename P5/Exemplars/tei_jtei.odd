@@ -93,13 +93,12 @@
 
         <p>The reasons for this are fairly obvious. From the XML document you submit, we need to
           generate a range of different outputs—ODT for reviewers and copyeditors to read and
-          annotate, and OpenEdition XML for submission to the 
-          <ref target="http://wwww.revues.org/">revues.org</ref> publication engine that
-          supports the journal website. We must enforce a degree of conformity across all
-          submissions, not only in order to maintain consistency when we publish, but also to ensure
-          that contributions are assessed by reviewers in as fair a manner as possible, without
-          possible influences due to divergence from the expected style rules or formatting
-          conventions.</p>
+          annotate, OpenEdition XML for submission to the <ref target="http://wwww.revues.org/"
+            >revues.org</ref> publication engine that supports the journal website, and an
+          accompanying PDF version. We must enforce a degree of conformity across all submissions,
+          not only in order to maintain consistency when we publish, but also to ensure that
+          contributions are assessed by reviewers in as fair a manner as possible, without possible
+          influences due to divergence from the expected style rules or formatting conventions.</p>
 
         <p>However, this constraint and conformity has advantages for you too, as an author. Our
           schemas will enforce a number of constraints which, we believe, may assist you in
@@ -123,7 +122,8 @@
         <p>In what follows, we aim to provide a readable guide to encoding your article (or perhaps
           even composing it) according to the journal schemas, beginning with the template we
           provide, and viewing your results as you work through the use of CSS (in Author Mode in
-          Oxygen) or by transforming it into ODT for examination in your word-processor.</p>
+          Oxygen) or by transforming it into ODT for examination in your word-processor, or to
+          PDF.</p>
 
         <p>This document is a work-in-progress (always), and we welcome your feedback at either <ref target="mailto:mholmes@uvic.ca">mholmes@uvic.ca</ref> (Martin Holmes) or <ref target="mailto:ron.vandenbranden@kantl.be">ron.vandenbranden@kantl.be</ref> (Ron Van den Branden).</p>
       </div>
@@ -156,12 +156,13 @@
       </div>
       <div xml:id="testing">
         <head>Testing Your Document</head>
-        <p>The Oxygen framework provides one output rendering scenario, which allows you to transform 
-          your jTEI article to the ODT format. Open the ODT file you create in a recent
-          version of LibreOffice or OpenOffice; Microsoft Office does not support the current ODT
-          specification. If you see any problems with the rendering, don't worry, and please don't
-          change good TEI XML to bad TEI in an attempt to make it render more successfully; report the
-          problem to us and we'll look into it.</p>
+        <p>The Oxygen framework provides two output rendering scenarios, which allow you to
+            transform your jTEI article to the ODT and PDF formats. Open the ODT file you create in
+            a recent version of LibreOffice or OpenOffice; Microsoft Office does not support the
+            current ODT specification. The PDF file can be viewed in a PDF viewer such as Adobe
+            Reader. If you see any problems with the rendering, don't worry, and please don't change
+            good TEI XML to bad TEI in an attempt to make it render more successfully; report the
+            problem to us and we'll look into it.</p>
       </div>
       </div>
       <div xml:id="structure">
@@ -810,8 +811,9 @@
               </row>
               <!-- ... -->
             </table>
-          </egXML>In the generated ODT and OpenEdition version, the cross-reference is  is rendered
-          as: <q>Table X shows allowable @rend values and their equivalent meanings.</q></p>
+          </egXML>In the generated ODT, OpenEdition, and PDF version, the cross-reference is is
+          rendered as: <q>Table X shows allowable @rend values and their equivalent
+          meanings.</q></p>
         <p>Note how internal links are rendered as plain text instead of hyperlinks in the ODT
           version and the final version in revues.org.</p>
         <p>Another type of internal linking consists of bibliographic references, pointing to entries in the bibliography. This should be done with a specific type of <gi>ref</gi> element, with value <val>bibl</val> for the <att>type</att> attribute. The value of the <att>target</att> attribute for bibliographic references must point to a <gi>bibl</gi> element in the bibliography:
