@@ -485,7 +485,7 @@ made are identified using the same <att>target</att> and
 previous section and in the same way. Other aspects are provided by
 other attributes as further discussed below.
 <specList>
-<specDesc key="precision" atts="degree stdDeviation"/>
+<specDesc key="precision" atts="precision stdDeviation"/>
 </specList>
 </p>
 <p>In <ptr target="#CONANU"/> several ways of indicating ranges of
@@ -509,18 +509,18 @@ Augustus</q>. In this case, the precision of one end of the range (the
 death of Augustus) is higher than the other, assuming we know when
 Augustus died. We can say that the latest possible date is probably 50
 years after that, but with less confidence than we can attach to the
-earliest possible date. </p>
+earliest possible date.</p>
 <p>The <gi>precision</gi> element allows us to indicate the two
-attributes concerned and attach different degrees of precision to
-them, using the same mechanism as that provided for the
-<gi>certainty</gi> element:
+attributes concerned and attach different levels of precision to them,
+using a similar mechanism as that provided for the <gi>certainty</gi>
+element:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <date xml:id="d001" notBefore="0014" notAfter="0064">About 50
 years after the death of Augustus</date>
-<precision target="#d001" match="@notAfter" degree="0.3"/>
-<precision target="#d001" match="@notBefore" degree="0.9"/>
+<precision target="#d001" match="@notAfter" precision="low"/>
+<precision target="#d001" match="@notBefore" precision="high"/>
 </egXML></p>
-<p>In much the same way, we may wish to indicate different degrees of
+<p>In much the same way, we may wish to indicate different levels of
 precision about the dating of either end of a historical period. For example,
  the elements defined for encoding personal data all bear a similar
  set of attributes to indicate normalized values for earliest or
@@ -530,7 +530,7 @@ precision about the dating of either end of a historical period. For example,
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <residence from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
 some time in April of 1857.
-<precision match="@notAfter" degree="0.5"/></residence>
+<precision match="@notAfter" precision="medium"/></residence>
 </egXML>
 </p>
 <p>It may also be useful to indicate that the precisions given for 
@@ -538,7 +538,7 @@ minimum and maximum quanta differ. For example, to indicate that all
 pages measure at least 10 cm wide, and at most <emph>about</emph> 30:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <width xml:id="w00t" atLeast="10" atMost="30" unit="cm" scope="all"/>
-<precision target="#w00t" match="@atMost" degree="0.3"/>
+<precision target="#w00t" match="@atMost" precision="low"/>
 </egXML>
 </p>
 <p>The 
