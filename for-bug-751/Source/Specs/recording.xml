@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="recording">
+  <gloss versionDate="2005-01-14" xml:lang="en">recording event</gloss>
+  <gloss versionDate="2009-01-05" xml:lang="fr">enregistrement</gloss>
+  <gloss versionDate="2007-12-20" xml:lang="ko">녹음 사건</gloss>
+  <gloss versionDate="2007-05-02" xml:lang="zh-TW">影音錄製</gloss>
+  <gloss versionDate="2006-10-18" xml:lang="de">Aufnahmevorgang</gloss>
+  <gloss versionDate="2007-05-04" xml:lang="es">acontecimiento de grabación</gloss>
+  <gloss versionDate="2007-01-21" xml:lang="it">registrazione</gloss>
+  <desc versionDate="2012-12-27" xml:lang="en">provides details of an audio or video recording event
+used as the source of a spoken text, either directly or from
+a public broadcast.</desc>
+  <desc versionDate="2009-04-17" xml:lang="fr">décrit en détail l’événement audio ou vidéo utilisé comme source de la parole transcrite, que ce soit un enregistrement direct ou une émission diffusée.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">구어 텍스트 원본으로 사용된 ,직접 또는 공공 방송에서 입수한 오디오 또는 비디오 녹음 사건에 대한 상세 항목.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">包含口說文本的影像或聲音來源錄製細節，該來源可以是直接錄製或是經由公開播放的管道取得。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">発話テキストの元資料として使われる，直接または放送から事象を録音，録
+  画したものの詳細を示す．</desc>
+  <desc versionDate="2006-10-18" xml:lang="de">Angaben zur Ton- oder
+  Videoaufnahme, die als Quelle eines gesprochenen Textes dient und
+  entweder direkt aufgenommen wurde oder von einem öffentlichen Sender
+  stammt.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">detalla un acontecimiento de audio o video registrado usado como fuente de un texto hablado, no obtenido directamente ni de una emisión pública.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">fornisce i dettagli di una registrazione audio o video usata come fonte di un testo orale, sia diretta sia da messa in onda pubblica.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.declarable"/>
+    <memberOf key="att.duration"/>
+  </classes>
+  <content>
+   <zeroOrMore  xmlns="http://relaxng.org/ns/structure/1.0">
+    <choice>
+        <ref name="model.recordingPart"/>
+        <ref name="model.pLike"/>
+      </choice>
+   </zeroOrMore>
+  </content>
+  <attList>
+    <attDef ident="type" usage="opt">
+      <desc versionDate="2005-01-14" xml:lang="en">the kind of recording.</desc>
+      <desc versionDate="2009-01-05" xml:lang="fr">type de l’enregistrement.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">녹음 종류</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">錄製類型</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">録音，録画の種類．</desc>
+      <desc versionDate="2006-10-18" xml:lang="de">Art der Aufnahme</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">tipo de grabación</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">tipo di registrazione.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <defaultVal>audio</defaultVal>
+      <valList type="closed">
+        <valItem ident="audio">
+          <desc versionDate="2007-06-27" xml:lang="en">audio recording</desc>
+          <desc versionDate="2009-01-05" xml:lang="fr">enregistrement audio</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">오디오 녹음</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">聲音錄製</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">grabación de audio</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">録音．</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">registrazione audio</desc>
+        </valItem>
+        <valItem ident="video">
+          <desc versionDate="2007-06-27" xml:lang="en">audio and video recording</desc>
+          <desc versionDate="2009-01-05" xml:lang="fr">enregistrement audio et vidéo</desc>
+          <desc versionDate="2007-12-20" xml:lang="ko">오디오와 비디오 녹화</desc>
+          <desc versionDate="2007-05-02" xml:lang="zh-TW">聲音及影像錄製</desc>
+          <desc versionDate="2008-04-06" xml:lang="es">grabación de audio y video</desc>
+          <desc versionDate="2008-04-05" xml:lang="ja">録音，録画．</desc>
+          <desc versionDate="2007-01-21" xml:lang="it">registrazione audio e video</desc>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <recording type="audio" dur="P30M">
+        <equipment>
+          <p>Recorded on a Sony TR444 walkman by unknown participants; remastered 
+	  to digital tape at <placeName>Borehamwood Studios</placeName> by
+	  <orgName>Transcription Services Inc</orgName>.</p>
+        </equipment>
+      </recording>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <recording type="audio" dur="P30M">
+        <p><orgName>Harmonia Mundi</orgName> S.A., enregistré à <placeName>Boughton Aluph Saints
+              Church</placeName>, <date>septembre 1977</date>.</p>
+      </recording>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Teleph_sonne">
+      <recording type="audio" dur="P10M">
+        <equipment>
+          <p>podcast</p>
+        </equipment>
+        <broadcast>
+          <bibl>
+            <title>Questions sur la souffrance et la santé au travail : pénibilité, stress,
+              dépression, harcèlement, maladies et accidents...</title>
+            <author>France Inter</author>
+            <respStmt>
+              <resp>Présentateur</resp>
+              <name>Alain Bédouet</name>
+            </respStmt>
+            <respStmt>
+              <resp>Personne interrogée</resp>
+              <name> Marie Pezé, Docteur en psychologie, psychanalyste, expert judiciaire ; dirige
+                la consultation « souffrance et travail » à l’Hôpital de Nanterre (92), auteure de
+                  <title>ils ne mourraient pas tous mais tous étaient frappés</title>, Editions
+                Pearson.</name>
+            </respStmt>
+            <series>
+              <title>Le Téléphone sonne</title>
+            </series>
+            <note>Première diffusion le <date when="2008-09-24">mercredi 24 septembre
+            2008</date>
+                  </note>
+          </bibl>
+        </broadcast>
+      </recording>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <recording type="audio" dur="P30M">
+        <equipment>
+          <p>以Sony TR444 walkman錄成，參與者不明；<orgName>中國廣播公司</orgName>在<placeName>中廣電台</placeName>以數位磁帶重製。</p>
+        </equipment>
+      </recording>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <recording type="audio" dur="P10M">
+        <equipment>
+          <p>將FM廣播重錄成數位磁帶</p>
+        </equipment>
+        <broadcast>
+          <bibl>
+            <title>鬼話連篇</title>
+            <author>中國廣播公司</author>
+            <respStmt>
+              <resp>男主持人</resp>
+              <name>司馬中原</name>
+            </respStmt>
+            <respStmt>
+              <resp>女主持人</resp>
+              <name>常勤芬</name>
+            </respStmt>
+            <series>
+              <title>鬼吹燈</title>
+            </series>
+            <note>首播於<date when="1989-11-27">1989年11月27日</date>
+                  </note>
+          </bibl>
+        </broadcast>
+      </recording>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <recording type="audio" dur="P10M">
+        <equipment>
+          <p>Recorded from FM Radio to digital tape</p>
+        </equipment>
+        <broadcast>
+          <bibl>
+            <title>Interview on foreign policy</title>
+            <author>BBC Radio 5</author>
+            <respStmt>
+              <resp>interviewer</resp>
+              <name>Robin Day</name>
+            </respStmt>
+            <respStmt>
+              <resp>interviewee</resp>
+              <name>Margaret Thatcher</name>
+            </respStmt>
+            <series>
+              <title>The World Tonight</title>
+            </series>
+            <note>First broadcast on
+        <date when="1989-11-27">27 Nov 89</date>
+                  </note>
+          </bibl>
+        </broadcast>
+      </recording>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2007-04-09" xml:lang="en">
+    <p>The <att>dur</att> attribute is used to indicate the original
+    duration of the recording.</p>
+    <!--
+    I've put the remark above in to replicate what was here:
+     <attDef ident="dur" usage="opt">
+      <desc>the original duration of the recording.</desc>
+      <desc versionDate="2006-10-28" xml:lang="ja">録音・録画の時間．</desc>
+      <desc xml:lang="fr" versionDate="2007-06-12">durée originale de l’enregistrement.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.duration"/>
+      </datatype>
+    </attDef>
+    I put this comment here partly because I did not want to discard
+    the Japanese & French versions. But I have to admit, this description
+    seems ambiguous to me: is it the duration of the original recording, or
+    the original duration of the recording before ... what?  - - Syd
+-->
+  </remarks>
+  <remarks xml:lang="fr" versionDate="2007-06-12">
+    <p>L'attribut <att>dur</att> est employé pour indiquer la durée originale de
+                l'enregistrement.</p>
+  </remarks>
+  <remarks xml:lang="ja" versionDate="2008-04-05">
+    <p>
+    属性<att>dur</att>は，当該録音，録画の，元の長さを示すために使用さ
+    れる．
+    </p>
+    <!--
+    I've put the remark above in to replicate what was here:
+     <attDef ident="dur" usage="opt">
+      <desc>the original duration of the recording.</desc>
+      <desc versionDate="2006-10-28" xml:lang="ja">録音・録画の時間．</desc>
+      <desc xml:lang="fr" versionDate="2007-06-12">durée originale de l’enregistrement.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.duration"/>
+      </datatype>
+    </attDef>
+    I put this comment here partly because I did not want to discard
+    the Japanese & French versions. But I have to admit, this description
+    seems ambiguous to me: is it the duration of the original recording, or
+    the original duration of the recording before ... what?  - - Syd
+-->
+  </remarks>
+  <listRef>
+    <ptr target="#HD32"/>
+    <ptr target="#CCAS2"/>
+  </listRef>
+</elementSpec>

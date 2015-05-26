@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="writing">
+  <gloss xml:lang="fr" versionDate="2009-04-17">texte écrit</gloss>
+  <desc versionDate="2012-12-27" xml:lang="en">contains a passage of written text revealed to participants in the
+  course of a spoken text.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">구어 텍스트의 진행과정에서 참여자에게 제공되는 문어 텍스트 단락</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">在口說的過程中，參與者可觀看的一段書面文字。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">発話テキストで参加している表す，書き起こしテキストの一節を示す．</desc>
+  <desc versionDate="2009-04-17" xml:lang="fr">fragment d'un texte écrit communiqué aux
+			participants au cours du discours objet de la transcription.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">pasaje escrito hecho disponible para los participantes durante un texto dialogado.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">testo scritto reso disponibile durante un testo parlato</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.global.spoken"/>
+    <memberOf key="att.ascribed"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="att.timed"/>
+    <memberOf key="att.source"/>
+  </classes>
+  <content>
+    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+  </content>
+  <attList>
+    <attDef ident="gradual" usage="opt">
+      <desc versionDate="2005-01-14" xml:lang="en">indicates whether the writing is revealed all at once or
+	gradually.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">글이 동시에 또는 점차적으로 드러나는지를 나타낸다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">指出該書面文字是一次全部出現或逐步出現</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該書き起こしは一度に見られるか，または少しずつ見られるものかを示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">indique si l'écrit est communiqué en une
+					fois ou progressivement.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">indica si el texto escrito aparece de repente o gradualmente.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">indica se il testo scritto appare in un'unica soluzione o gradualmente</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
+      </datatype>
+      <remarks versionDate="2007-07-03" xml:lang="en">
+        <p>The value <val>true</val> indicates the writing is
+	  revealed gradually; the value <val>false</val> that the
+	  writing is revealed all at once.</p>
+      </remarks>
+      <remarks xml:lang="fr" versionDate="2007-06-12">
+        <p>La valeur <val> true</val> indique que le texte écrit est transmis
+                        progressivement, la valeur <val>false</val> que le texte écrit est transmis
+                        en une fois.</p>
+      </remarks>
+      <remarks xml:lang="ja" versionDate="2008-04-05">
+        <p>
+        値<val>true</val>は，当該書き起こしが，少しずつ見えることを示
+        す．値<val>false</val>は，当該書き起こしが，一度に見えることを
+        示す．
+        </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <!-- ... -->
+      <l>man in a coonskin cap</l>
+      <writing>coonskin</writing>
+      <l>in a pig pen</l>
+      <writing>pig pen</writing>
+      <l>wants eleven dollar bills</l>
+      <writing>20 dollar bills</writing>
+      <l>you only got ten</l>
+      <writing>10</writing>
+      <!-- ... -->
+    </egXML>
+    <!-- Bob Dylan, Subterranean Homesick Blues, in
+    D.A. Pennebaker (director), Don't Look Back, http://myplay.com/video-player/bob_dylan/?bcpid=187832446&bclid=187743874&bctid=187835137-->
+  </exemplum>
+  <remarks versionDate="2005-01-14" xml:lang="en">
+    <p>The <gi>writing</gi> element will usually be short
+    and most simply transcribed as a character string; the content
+    model also allows a sequence of paragraphs and paragraph-level
+    elements, in case the writing has enough internal structure to
+    warrant such markup.  In either case the usual phrase-level
+    tags for written text are available.</p>
+  </remarks>
+  <remarks xml:lang="fr" versionDate="2009-04-17">
+    <p>l'élément <gi>writing</gi> sera habituellement court et transcrit simplement comme
+                une chaîne de caractères ; le modèle de contenu autorise aussi une suite de
+                paragraphes et d'éléments de niveau paragraphe, dans le cas où la structure du texte écrit
+                justifie un tel codage. Dans l'un ou l'autre
+                cas, les balises du niveau expression utilisables pour le texte écrit sont
+            disponibles.</p>
+  </remarks>
+  <remarks xml:lang="ja" versionDate="2008-04-05">
+    <p>
+    要素<gi>writing</gi>は，一般には，文字列として，ごく短く，簡単に転
+    記されたものになる．当該書き起こしにそれなりの内部構造がある場合に
+    は，その内容モデルとして，一連の段落や，段落レベルの要素をとる．ま
+    た，いずれの場合も，句レベルの要素もとることができる．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#TSBAWR"/>
+  </listRef>
+</elementSpec>

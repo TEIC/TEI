@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" ident="witList">
+  <equiv/>
+  <gloss>witness list</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-TW">版本列表</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">liste de témoins</gloss>
+  <gloss version="2007-05-04" xml:lang="es">lista de testimonios</gloss>
+  <gloss version="2007-01-21" xml:lang="it">lista dei testimoni</gloss>
+  <desc>lists definitions for all the witnesses referred to by a critical
+  apparatus, optionally grouped hierarchically.</desc>
+  <desc version="2007-05-02" xml:lang="zh-TW">包含一份所有版本的列表，這些版本在學術編輯註解中的元素<gi>wit</gi>或屬性<att>wit</att>內指明。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  校勘資料中で参照される全文献の定義リストを示す．構造化されていること
+  もある．
+</desc>
+  <desc version="2007-06-12" xml:lang="fr">cet élément décrit sous la forme d'une liste tous
+			les témoins auxquels fait référence un apparat critique ; ces descriptions peuvent être
+			groupées de façon hiérarchisée</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene la lista con todos los testimonios a los cuales se hace referencia en los elementos y atributos relativos a los testimonios en el aparato crítico</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una lista di tutti i testimoni a cui si fa riferimento negli elementi e attributi relativi ai testimoni nell'apparato critico</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.listLike"/>
+  </classes>
+  <content>
+    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <!--      <rng:zeroOrMore>
+        <rng:ref name="model.global"/>
+      </rng:zeroOrMore>-->
+      <rng:optional>
+        <rng:ref name="model.headLike"/>
+      </rng:optional>
+      <rng:oneOrMore>
+        <rng:choice>
+          <rng:ref name="witness"/>
+          <rng:ref name="witList"/>
+        </rng:choice>
+        <!--        <rng:zeroOrMore>
+          <rng:ref name="model.global"/>
+        </rng:zeroOrMore>-->
+      </rng:oneOrMore>
+    </rng:group>
+  </content>
+  <remarks>
+    <p rend="dataDesc">May contain
+a series of <gi>witness</gi>  or <gi>witList</gi> elements.
+</p>
+    <p>The provision of a <gi>witList</gi> element simplifies
+the automatic processing of the apparatus, e.g. the reconstruction
+of the readings for all witnesses from an exhaustive apparatus.</p>
+    <p>Situations commonly arise where there are many more or less
+fragmentary witnesses, such that there may be quite distinct groups
+of witnesses for different parts of a text or collection of
+texts. Such groups may be given separately, or nested within a single
+<gi>witList</gi> element at the beginning of the file listing all the
+witnesses, partial and complete, for the text, with the attestation
+of fragmentary witnesses indicated within the apparatus by use of the
+<gi>witStart</gi> and <gi>witEnd</gi> elements described in section
+<ptr target="#TCAPMI"/>.</p>
+    <p>Note however that a given witness can only be defined once, and can
+therefore only appear within a single <gi>witList</gi> element. </p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    一連の要素<gi>witness</gi>や<gi>witList</gi>を含むかもしれない．
+    </p>
+    <p>
+    当該要素<gi>witList</gi>により，校勘資料の自動処理が可能になる．例
+    えば，全校勘資料から全文献の解釈を再構成する処理である．
+    </p>
+    <p>
+    文献が断片的であるのはよくあることで，この場合，テキストの部分毎に
+    文献をまとめることがあるかもしれない．このようなグループは，独立し
+    ているかもしれないし，または，全文献のリストを持つファイルの冒頭に
+    あるにあるいち要素<gi>witList</gi>の中に入れ子化され，要素
+    <gi>witStart</gi>や<gi>witEnd</gi>が，当該文献中で示されている断片
+    的な文献を示すかもしれない．詳細は，<ptr target="#TCAPMI"/>を参照
+    のこと．
+    </p>
+    <p>
+    しかし，文献は一度だけ定義され，要素<gi>witList</gi>の中にのみ出現
+    することに注意すること．
+     </p>
+  </remarks>
+  <listRef>
+    <ptr target="#TCAPLL"/>
+  </listRef>
+</elementSpec>

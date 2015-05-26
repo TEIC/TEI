@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project basedir="." default="dist" name="testtei">
+  <!--
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public
+	License as published by the Free Software Foundation; either
+	version 2.1 of the License, or (at your option) any later version.
+	
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+	Lesser General Public License for more details.
+	
+	You should have received a copy of the GNU Lesser General Public
+	License along with this library; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+        Id: $Id$
+        Copyright: 2011, TEI Consortium<
+-->
+  <!--
+      run ODD document through to different schemas and formats, and validate
+      test file using those schemas
+ -->
+  <property name="oddFile" value=""/>
+  <property name="outputname" value=""/>
+  <property name="testfile" value=""/>
+  <property name="testfile2" value=""/>
+  <property name="profile" value="default"/>
+  <property name="lang" value="en"/>
+  <property name="patternprefix" value="tei_"/>
+  <property name="saxon" value="../Utilities/lib/Saxon-HE-9.4.0.6.jar"/>
+  <property name="trang" value="/usr/share/trang/trang.jar"/>
+  <property name="jing" value="../Utilities/lib/jing.jar"/>
+  <property name="XSL" value="../../Stylesheets"/>
+  <property name="odd2dtd" value="${XSL}/profiles/${profile}/dtd/to.xsl"/>
+  <property name="odd2html" value="${XSL}/odds/odd2html.xsl"/>
+  <property name="odd2lite" value="${XSL}/odds/odd2lite.xsl"/>
+  <property name="lite2latex" value="${XSL}/profiles/${profile}/latex/to.xsl"/>
+  <property name="odd2relax" value="${XSL}/profiles/${profile}/relaxng/to.xsl"/>
+  <property name="odd2odd" value="${XSL}/odds/odd2odd.xsl"/>
+  <property name="odd2isosch" value="${XSL}/odds/extract-isosch.xsl"/>
+  <property name="teitoepub"  value="${XSL}/profiles/${profile}/epub/to.xsl"/>
+  <property name="listgraphics" value="${XSL}/tools/makegraphicsanttask.xsl"/>
+  <dirname property="inputDir" file="${oddFile}"/>
+  <property name="outputTempDir" value="${inputDir}/temp-dir-for-ant"/>
+
+  <path id="classpath">
+    <pathelement path="${java.class.path}"/>
+  </path>
+  <taskdef name="runjing" classpath="${jing}" classname="com.thaiopensource.relaxng.util.JingTask"/>
+  <target name="dist" depends="setup,validateodd,compileodd,dtd,rng,rnc,xsd,validaterng,isoschematron,validateschematron,dochtml,cleanup"/>
+  <target name="setup">
+  </target>
+  <target name="compileodd">
+    <echo>Do ODD processing using ${saxon} and source ${defaultSource}</echo>
+    <xslt processor="trax" force="yes" style="${odd2odd}" in="${oddFile}" out="${outputname}.odd.processed">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
+      <param name="selectedSchema" expression="${schema}" if="schema"/>
+      <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+  <target name="dtd">
+    <echo level="info">XSLT generate DTD ${outputname}.dtd</echo>
+    <xslt processor="trax" force="yes" style="${odd2dtd}" in="${outputname}.odd.processed" out="${outputname}.dtd">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="debug" expression="${debug}" if="debug"/>
+      <param name="selectedSchema" expression="${schema}" if="schema"/>
+      <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+      <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
+    </xslt>
+  </target>
+  <target name="rng">
+    <echo level="info">XSLT generate RELAXNG ${outputname}.rng</echo>
+    <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}.odd.processed" out="${outputname}.rng">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="selectedSchema" expression="${schema}" if="schema"/>
+      <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="debug" expression="${debug}" if="debug"/>
+      <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+  <target name="rnc">
+    <echo level="info">TRANG generate RNC from RELAXNG files</echo>
+    <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+      <classpath location="${trang}"/>
+      <arg value="-O"/>
+      <arg value="rnc"/>
+      <arg value="${outputname}.rng"/>
+      <arg value="${outputname}.rnc"/>
+    </java>
+  </target>
+  <target name="validateodd">
+    <echo level="info">Validate ${oddFile} as ODD </echo>
+    <runjing rngfile="../p5odds.rng" file="${oddFile}"/>
+    <xslt processor="trax" 
+	  force="yes" 
+	  style="../p5odds.message.isosch.xsl"
+	  in="${oddFile}" 
+	  out="/dev/null">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+  </target>
+  <target name="validaterng">
+    <echo level="info">Validate ${testfile} against RELAXNG ${outputname}.rng</echo>
+    <runjing rngfile="${outputname}.rng" file="${testfile}"/>
+  </target>
+  <target name="validatesecondrng">
+    <echo level="info">Validate ${testfile2} against RELAXNG ${outputname}.rng</echo>
+    <runjing rngfile="${outputname}.rng" file="${testfile2}"/>
+  </target>
+  <target name="validatedtd">
+    <echo level="info">Validate ${testfile} against DTD ${outputname}.dtd</echo>
+    <xmlvalidate failonerror="yes" file="${testfile}">
+      <dtd location="${outputname}.dtd"/>
+    </xmlvalidate>
+  </target>
+  <target name="xsd">
+    <echo level="info">TRANG generate XSD from RELAXNG files</echo>
+    <java classname="com.thaiopensource.relaxng.translate.Driver" fork="no">
+      <!-- Even though the output type is inferred from the output file extension,
+	   make sure it's the right one. -->
+      <classpath location="${trang}"/>
+      <arg value="-O"/>
+      <arg value="xsd"/>
+      <arg value="${outputname}.rng"/>
+      <arg value="${outputname}.xsd"/>
+    </java>
+  </target>
+  <target name="isoschematron">
+    <echo level="info">XSLT generate ISO schematron ${outputname}.isosch from compiled ODD </echo>
+    <xslt processor="trax" force="yes" style="${odd2isosch}" in="${outputname}.odd.processed" out="${outputname}.isosch">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <xslt processor="trax" force="yes" style="../Utilities/iso_schematron_message_xslt2.xsl" in="${outputname}.isosch" out="${outputname}.xsl">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+  </target>
+  <target name="validateschematron">
+    <echo level="info">Validate using Schematron</echo>
+    <xslt processor="trax" force="yes" style="${outputname}.xsl" in="${testfile}" out="/dev/null">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+  </target>
+  <target name="dochtml">
+    <echo level="info">XSLT generate HTML ${outputname}.doc.html from compiled ODD (${lang})</echo>
+    <xslt processor="trax" force="yes" style="${odd2html}" in="${outputname}.odd.processed" out="${outputname}.doc.html">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="documentationLanguage" expression="${lang}" if="lang"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+  <target name="doclite">
+    <echo level="info">XSLT generate TEI Lite ${outputname}.doc.xml from compiled ODD (${lang})</echo>
+    <xslt processor="trax" force="yes" style="${odd2lite}" in="${outputname}.odd.processed" out="${outputname}.doc.xml">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="documentationLanguage" expression="${lang}" if="lang"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+  </target>
+
+  <target name="doclatex" depends="doclite">
+    <echo level="info">XSLT generate LaTeX from Lite</echo>
+    <xslt processor="trax" force="yes" style="${lite2latex}" in="${outputname}.doc.xml" out="${outputname}.doc.tex">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+      <param name="useHeaderFrontMatter"  expression="true"/>
+      <param name="reencode"  expression="false"/>
+      <param name="preQuote"  expression=""/>
+      <param name="postQuote"  expression=""/>
+    </xslt>
+  </target>
+
+  <target name="docpdf" depends="doclatex">
+    <echo level="info">Generate PDF ${outputname}.doc.pdf from LaTeX</echo>
+    <exec executable="xelatex" failonerror="true">
+      <arg value="-interaction=batchmode"/>
+      <arg value="${outputname}.doc.tex" />
+    </exec>
+    <exec executable="xelatex" failonerror="true">
+      <arg value="-interaction=batchmode"/>
+      <arg value="${outputname}.doc.tex" />
+    </exec>
+    <delete file="${outputname}.doc.aux"/>
+    <delete file="${outputname}.doc.html"/>
+    <delete file="${outputname}.doc.log"/>
+    <delete file="${outputname}.doc.out"/>
+  </target>
+
+  <target name="docepub" depends="compileodd">
+    <!-- The transformation for EPUB output. -->
+    <echo level="info">XSLT generate ePub ${outputname}.doc.epub</echo>
+    <xslt force="yes" style="${teitoepub}" in="${outputname}.odd.processed" out="${outputTempDir}/OPS/index.html">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="directory" expression="file:///${outputTempDir}"/>
+      <param name="inputDir" expression="${inputDir}/"/>
+      <param name="fixgraphicsurl" expression="true"/>
+      <param name="summaryDoc"  expression="true"/>
+      <!-- supply unique URN for ebook-->
+      <param name="uid" expression="${uid}" if="uid"/>
+      <!-- set splitting level-->
+      <param name="splitLevel" expression="${splitLevel}" if="splitLevel"/>
+      <!-- supply name of publisher for ebook-->
+      <param name="publisher" expression="${publisher}" if="publisher"/>
+      <!-- supply subject/category for ebook-->
+      <param name="subject" expression="${subject}" if="subject"/>
+      <!-- supply name of JPEG file for ebook cover-->
+      <param name="coverimage" expression="${coverimage}" if="coverimage"/>
+      <!-- supply name of CSS file-->
+      <param name="cssFile" expression="${cssFile}" if="cssFile"/>
+      <!-- name of media overlay file -->
+      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+      <!-- file per page -->
+      <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+      <!-- epub viewport -->
+      <param name="viewPortHeight" expression="${viewPortHeight}" if="viewPortHeight"/>
+      <param name="viewPortWidth" expression="${viewPortWidth}" if="viewPortWidth"/>
+      <!-- supply name of language-->
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="documentationLanguage" expression="${lang}" if="lang"/>
+      <!-- emit some diagnostics"-->
+      <param name="debug" expression="${debug}" if="debug"/>
+      <!-- be verbose-->
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+      <!-- disable compression on the output ZIP -->
+      <param name="nocompress" expression="${nocompress}" if="nocompress"/>
+    </xslt>
+    <echo level="info">Get names of graphics files and write an ant task</echo>
+    <xslt force="yes" style="${listgraphics}" in="${outputname}.odd.processed" out="${outputTempDir}/copy.xml">
+      <xmlcatalog>
+        <catalogpath>
+          <pathelement location="../../../../catalog.xml"/>
+          <pathelement location="../../../../../xhtml11/dtd/xhtmlcatalog.xml"/>
+        </catalogpath>
+      </xmlcatalog>
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="inputDir" expression="${inputDir}"/>
+      <param name="mediaDir" expression="OPS/media"/>
+      <param name="mediaoverlay" expression="${mediaoverlay}" if="mediaoverlay"/>
+      <param name="filePerPage" expression="${filePerPage}" if="filePerPage"/>
+    </xslt>
+    <echo level="info">Copy image files</echo>
+    <ant antfile="${outputTempDir}/copy.xml"/>
+    <echo level="info">ZIP: put files from ${outputTempDir} together into ${outputname}.doc.epub</echo>
+    <delete file="${outputname}.doc.epub"/>
+    <zip destfile="${outputname}.doc.epub" basedir="${outputTempDir}"
+	 compress="true" excludes="mimetype,tmp1.xml,tmp2.xml,copy.xml"/>
+    <zip destfile="${outputname}.doc.epub" basedir="${outputTempDir}" includes="mimetype" update="true" keepcompression="true" compress="false"/>
+  </target>
+
+  <target name="exampleschema">
+    <echo>Do example ODD processing using ${saxon} and source ${defaultSource}</echo>
+    <xslt processor="trax" force="yes" style="../Utilities/odd2exodd.xsl" in="${oddFile}" out="${outputname}-examples.odd">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
+    <xslt processor="trax" force="yes" style="${odd2odd}" in="${outputname}-examples.odd" out="${outputname}-examples.processed">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
+      <param name="selectedSchema" expression="${schema}" if="schema"/>
+      <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <xslt processor="trax" force="yes" style="${odd2relax}" in="${outputname}-examples.processed" out="${outputname}-examples.rng">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+      <param name="patternprefix" expression="${patternprefix}" if="patternprefix"/>
+      <param name="defaultSource" expression="${defaultSource}" if="defaultSource"/>
+      <param name="lang" expression="${lang}" if="lang"/>
+      <param name="debug" expression="${debug}" if="debug"/>
+      <param name="autoGlobal" expression="${autoGlobal}" if="autoGlobal"/>
+      <param name="verbose" expression="${verbose}" if="verbose"/>
+    </xslt>
+    <delete file="${outputname}-examples.odd"/>
+    <delete file="${outputname}-examples.processed"/>
+
+  </target>
+
+
+  <target name="cleanup" unless="debug">
+    <delete file="${outputname}.odd.processed"/>
+    <delete dir="${outputTempDir}"/>
+  </target>
+
+</project>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" ident="locusGrp">
+  <gloss xml:lang="fr" versionDate="2009-04-17">groupe d'emplacements</gloss>
+  <desc versionDate="2009-01-24" xml:lang="en">groups a number of locations which together form a
+  distinct but discontinuous item within a manuscript or manuscript
+  part, according to a specific foliation.</desc>
+  <desc xml:lang="fr" versionDate="2009-04-17">
+    regroupe un certain nombre d'emplacements qui forment ensemble un item identifiable bien que discontinu dans un manuscrit ou une partie de manuscrit selon une foliotation spécifique.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.pPart.msdesc"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:ref name="locus"/>
+    </rng:oneOrMore>
+  </content>
+  <attList>
+    <attDef ident="scheme">
+      <gloss versionDate="2007-06-12" xml:lang="fr">système</gloss>
+      <desc versionDate="2009-01-24" xml:lang="en">identifies the foliation scheme in terms of which all the
+      locations contained by the group are specified by pointing to some <gi>foliation</gi> element
+	defining it, or to some other equivalent resource.</desc>
+      <desc xml:lang="fr" versionDate="2009-04-17">désigne le système de foliotation selon lequel les emplacements contenus dans le groupe sont définis.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="mul">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="de">
+      <msItem>
+        <locusGrp>
+          <locus from="13" to="26">Bl. 13--26</locus>
+          <locus from="37" to="58">37--58</locus>
+          <locus from="82" to="96">82--96</locus>
+        </locusGrp>
+        <note>Stücke von Daniel Ecklin’s Reise ins h. Land</note>
+      </msItem>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2009-01-24" xml:lang="en">
+    <p/>
+  </remarks>
+  <listRef>
+    <ptr target="#msloc"/>
+  </listRef>
+</elementSpec>

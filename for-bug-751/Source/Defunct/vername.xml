@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent" ident="vername">
+  <equiv/>
+  <gloss>version name</gloss>
+  <desc>serves as the root element for a concurrent markup stream which
+will be used to mark page and line numbers of a reference edition of the
+text.</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+テキストの参照版にあるパージ番号や行番号を示すために使われるマークアッ
+プデータの根要素となる．
+</desc>
+  <classes>
+    <memberOf key="att.global"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="page"/>
+        <rng:ref name="vol"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum xml:lang="und">
+    <eg>&lt;!DOCTYPE TEI SYSTEM "tei2.dtd" [
+	   &lt;!ENTITY % TEI.XML      'IGNORE' &gt;&lt;!-- SGML --&gt;
+ ]&gt;
+ &lt;!DOCTYPE La    SYSTEM "teip2.dtd" [
+        &lt;!ENTITY % version "La"&gt;
+ ]&gt;
+ &lt;(TEI)TEI&gt;&lt;(La)La&gt;
+ &lt;(TEI)TEI.Header&gt; ... &lt;/(TEI)TEI.Header&gt;
+ &lt;(TEI)text&gt;
+ &lt;(La)page n='[1]'&gt;
+   ...
+ &lt;(La)page n='4'&gt;
+   ...
+ &lt;(La)page n='5'&gt;
+   ...
+ &lt;/(TEI)text&gt;
+ &lt;/(La)La&gt;
+ &lt;/(TEI)TEI&gt;</eg>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain character data, <gi>vol</gi>, and <gi>page</gi>
+elements.</p>
+    <p>The version name should be short (one or two characters), as
+it must be prefixed to all page and line tags in the concurrent markup
+stream.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    文字列，要素<gi>vol</gi>, <gi>page</gi>をとるかもしれない．
+    </p>
+    <p>
+    当該要素で示される版名は，要素<gi>page</gi>や<gi>page</gi>の全てに
+    必ず付与されることから，短いものであるべきである．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#CORS" type="div3"/>
+  </listRef>
+</elementSpec>

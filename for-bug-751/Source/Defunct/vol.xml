@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent" ident="vol">
+  <equiv/>
+  <gloss>volume</gloss>
+  <desc>marks the individual volumes of a reference edition.</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+参照版の独立した巻を示す．
+</desc>
+  <classes>
+    <memberOf key="att.global"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="page"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum xml:lang="und">
+    <eg>&lt;(La)vol  n="2"&gt;&lt;!-- text of edition La, volume 2 --&gt;
+ &lt;(La)page n="32"&gt; &lt;!-- text of edition La, vol. 2, page 32 --&gt;&lt;/(La)page&gt;
+ &lt;(La)page n="33"&gt; &lt;!-- text of edition La, vol. 2, page 33 --&gt;&lt;/(La)page&gt;
+ &lt;(La)page n="34"&gt; &lt;!-- text of edition La, vol. 2, page 34 --&gt;&lt;/(La)page&gt;
+ &lt;(La)page n="35"&gt; &lt;!-- text of edition La, vol. 2, page 35 --&gt;&lt;/(La)page&gt;
+&lt;/(La)vol&gt;</eg>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain character data and <gi>page</gi> elements.</p>
+    <p>The <gi>vol</gi> may be used if the reference edition has
+more than one volume; otherwise it need not be used.  Any data contained
+within a <gi>vol</gi> element but not within a <gi>page</gi> element is
+assumed not to appear in the edition from which the reference scheme
+derives.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    文字列と要素<gi>page</gi>をとる．
+    </p>
+    <p>
+    当該要素<gi>vol</gi>は，参照版が複数の巻を持つ場合に使用される．そ
+    うでなければ，使用されない．要素<gi>vol</gi>の中にあるデータは，要
+    素<gi>page</gi>の場合とは異なり，当該参照スキームを元にした版の中
+    では使えないとされる．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#NHRS" type="div3"/>
+  </listRef>
+</elementSpec>

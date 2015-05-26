@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI Absolutely Bare</title>
+        <author>Laurent Romary</author>
+        <editor xml:id="sbauman.emt">Syd Bauman</editor>
+        <editor xml:id="LB">Lou Burnard</editor>
+        <editor xml:id="SR">Sebastian Rahtz</editor>
+      </titleStmt>
+      <publicationStmt>
+	<publisher>TEI Consortium</publisher>
+        <availability status="free">
+          <p>This template file is freely available and you are hereby
+            authorised to copy, modify, and redistribute it in any way without
+            further reference or permissions.</p>
+          <p>When making such modifications, you are strongly recommended to
+            change the present text to include an accurate statement of the
+            licencing conditions applicable to your modified text.</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Initially created on <date when="2006-10-12T05:24:41">Thursday 12th
+            October 2006</date> by the form at
+        http://www.tei-c.org.uk/Roma/.</p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc>
+      <change when="2011-03-26" who="#SR">rewrite as new-style ODD </change>
+      <change when="2007-08-12" who="#LB">Removed further elements added
+since this ODD was first created </change>
+      <change when="2007-04-09" who="#LB">Added prose and reorganized
+structure to make it more document-like; changed deletion of attribute
+decls into deletion of att.declaring class; add deletes for elements
+email and floatingText added to P5 since this ODD was first created;
+considered but did not implement removal of all irrelevant datatype specs...</change>
+      <change when="2006-10-14" who="#sbauman.emt"> Made valid: <list><item>removed empty <att>prefix</att> attribute</item><item>added required <att>type</att> attribute to
+          <gi>classSpec</gi>s</item></list><!--. <note>Sebastian had also made the above changes.</note> -->Also
+        removed extraneous <gi>altIdent</gi> elements, improved
+        <gi>sourceDesc</gi>, changed the <att>ident</att> of <gi>schemaSpec</gi>
+        to match the filename, and added this revision description. </change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <!--    <front>
+      <divGen type="toc"/>
+    </front>-->
+    <body>
+      <p>This customization creates a TEI schema with the bare minimum of tags
+        to make a recognizable document. It combines the four basic modules, but
+removes most of the available elements and changes several attribute classes.</p>
+      <div>
+        <head>Basic text structure</head>
+        <p>In this very simple schema, a document may contain <gi>front</gi>,
+<gi>body</gi> and <gi>back</gi> elements as in standard TEI. However,
+within these, only the following elements are  permitted:
+<specList><specDesc key="div"/><specDesc key="head"/><specDesc key="list"/><specDesc key="p"/></specList>
+</p>
+        <p>The <gi>list</gi> element may contain a <gi>head</gi> followed by a
+sequence either of <gi>label</gi>-<gi>item</gi> pairs, or of
+<gi>item</gi> elements alone. </p>
+        <p>The <gi>item</gi> and <gi>p</gi> elements have the same structure:
+either may  contain just text, or a mixture of text with
+<gi>list</gi>, or <gi>title</gi> elements.</p>
+        <p>Similarly, the <gi>div</gi> element may contain a <gi>head</gi>,
+followed by a nested <gi>div</gi>, or one or more <gi>p</gi> elements.
+</p>
+        <p>The <att>version</att> attribute on the <gi>TEI</gi> element is
+removed, as is the <att>level</att> attribute on the <gi>title</gi>
+element. Other attributes are also removed as a consequence of the
+class modifications described below.</p>
+        <p>The following specification group deletes the unwanted attributes:
+<specGrp xml:id="bodyfixes">
+        <elementSpec ident="title" mode="change" module="core"><attList><attDef ident="level" mode="delete"/></attList></elementSpec>
+        <elementSpec ident="TEI" mode="change" module="textstructure"><attList><attDef ident="version" mode="delete"/></attList></elementSpec>
+</specGrp>
+</p>
+      </div>
+      <div>
+        <head>Header structure</head>
+        <p>A much simplified version of the TEI Header is defined, again by
+the deletion of many elements. For validity, all that is required
+within it is the <gi>fileDesc</gi>, which contains only the following elements:
+<specList><specDesc key="titleStmt"/><specDesc key="publicationStmt"/><specDesc key="sourceDesc"/></specList>
+</p>
+        <p>Within the <gi>titleStmt</gi> only a <gi>title</gi> is permitted;
+	within the other two elements only a <gi>p</gi> is permitted.
+	The <att>default</att> attribute on the <gi>sourceDesc</gi> element is
+	also removed.
+	<specGrp xml:id="hdrfixes">
+	  <elementSpec ident="sourceDesc"  mode="change" module="header">
+	    <attList><attDef ident="default" mode="delete"/></attList>
+	  </elementSpec>
+	</specGrp>
+	</p>
+      </div>
+      <div>
+        <head>Class modifications</head>
+        <p>Finally three of  the TEI attribute
+classes are simplified. The attributes xml:space, rend, and xml:base
+are removed from the att.global class, so that this now makes
+available to all elements only the following attributes:
+<att>xml:id</att>, <att>n</att>, and
+<att>xml:lang</att>.
+</p>
+        <p>Three un-needed attributes are removed from the  att.divLike class so that
+the <gi>div</gi> element inherits from it only
+the following attributes: <att>xml:id</att>,
+<att>n</att>,
+<att>xml:lang</att>.
+The attribute class <ident>att.declaring</ident> is deleted
+completely, so that none of its members inherit the <att>decls</att>
+attribute defined in the unmodified TEI.</p>
+        <specGrp xml:id="classmods">
+          <classSpec ident="att.global" mode="change" module="tei" type="atts">
+            <attList>
+              <attDef ident="xml:space" mode="delete"/>
+              <attDef ident="rend" mode="delete"/>
+              <attDef ident="xml:base" mode="delete"/>
+            </attList>
+          </classSpec>
+        <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
+          <classSpec ident="att.divLike" mode="change" module="tei" type="atts">
+            <attList>
+              <attDef ident="org" mode="delete"/>
+              <attDef ident="sample" mode="delete"/>
+            </attList>
+          </classSpec>
+          <classSpec ident="att.declaring" mode="delete" module="tei" type="atts"/>
+        </specGrp>
+      </div>
+      <div>
+        <head>Formal declaration</head>
+        <schemaSpec ident="tei_bare" xml:lang="en">
+          <moduleRef key="core" include="p list item label head author title"/>
+          <moduleRef key="tei"/>
+          <moduleRef key="header" include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
+          <moduleRef key="textstructure" include="TEI text body div front back"/>
+          <specGrpRef target="#classmods"/>
+          <specGrpRef target="#bodyfixes"/>
+          <specGrpRef target="#hdrfixes"/>
+        </schemaSpec>
+      </div>
+    </body>
+  </text>
+</TEI>

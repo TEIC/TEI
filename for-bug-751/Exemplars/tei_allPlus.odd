@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en" 
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+     xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with maximal setup, plus external additions</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+	<publisher>TEI Consortium</publisher>
+        <availability status="free">
+          <p>This template file is freely available and you are hereby
+            authorised to copy, modify, and redistribute it in any way without
+            further reference or permissions.</p>
+          <p>When making such modifications, you are strongly recommended to
+            change the present text to include an accurate statement of the
+            licencing conditions applicable to your modified text.</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>This digital file is the original, although it is heavily based on the
+          file tei_all.odd.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>TEI Complete, Plus</head>
+      <p>This TEI customization describes a schema that includes
+        <emph>all</emph> of the TEI (P5) modules, and all of the recommended
+        external schemas. This is a very useful starting place for manually
+        creating your own customizations — it is much easier to
+        delete the modules you do not want than to add the modules you do.
+        Furthermore this customization often provides helpful for testing TEI
+        software. </p>
+      <p>However, this particular TEI customization is <emph>not
+        recommended</emph> for actual use for encoding documents. It produces
+        schemas and reference documentation that will be much larger, and
+        include many more elements, than almost anyone could conceivably ever
+        need. Tempting though it may be simply to have absolutely everything,
+        and <q>just ignore</q> elements not required, experience has shown that
+        their presence makes the documentation harder to read and use, and makes
+        a schema that is often more lax than desired.</p>
+
+      <schemaSpec ident="tei_allPlus" prefix="tei_" start="TEI teiCorpus">
+        <moduleRef key="tei"/>           <!-- required -->
+        <moduleRef key="core"/>          <!-- required -->
+        <moduleRef key="analysis"/>
+        <moduleRef key="certainty"/>
+        <moduleRef key="corpus"/>
+        <moduleRef key="declarefs"/>
+        <moduleRef key="dictionaries"/>
+        <moduleRef key="drama"/>
+        <moduleRef key="figures"/>
+        <moduleRef key="gaiji"/>
+        <moduleRef key="header"/>         <!-- required -->
+        <moduleRef key="iso-fs"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="msdescription"/>
+        <moduleRef key="namesdates"/>
+        <moduleRef key="nets"/>
+        <moduleRef key="spoken"/>
+	<moduleRef key="tagdocs"/>
+        <moduleRef key="textcrit"/>
+        <moduleRef key="textstructure"/>  <!-- required -->
+        <moduleRef key="transcr"/>
+        <moduleRef key="verse"/>
+
+
+        <xi:include href="tei_svg.odd"
+          xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url])">
+          <xi:fallback> ERROR: cannot locate ODD changes for SVG </xi:fallback>
+        </xi:include>
+
+        <xi:include href="tei_math.odd"
+          xpointer="xmlns(t=http://www.tei-c.org/ns/1.0)xpointer(//t:moduleRef[@url]|//t:elementSpec[@ident='formula'])">
+          <xi:fallback> ERROR: cannot locate ODD changes for MathML </xi:fallback>
+        </xi:include>
+
+    <elementSpec ident="egXML" mode="change" module="tagdocs"
+     ns="http://www.tei-c.org/ns/Examples">
+      <content>
+	<oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	  <choice>
+	    <text/>
+	    <ref name="macro.anyThing"/>
+	  </choice>
+	</oneOrMore>
+      </content>
+    </elementSpec>
+  
+    <macroSpec ident="macro.anyThing" mode="add">
+      <content>
+	<?NameList?>
+      </content>
+    </macroSpec>
+
+    <macroSpec mode="change" ident="macro.anyXML">
+      <content>
+	<element xmlns="http://relaxng.org/ns/structure/1.0">
+	  <anyName>
+	    <except>
+	      <nsName ns="http://www.tei-c.org/ns/1.0"/>
+	      <nsName ns="http://www.w3.org/1998/Math/MathML"/>
+	      <nsName ns="http://www.w3.org/2000/svg"/>
+	      <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+	    </except>
+	  </anyName>
+	  <zeroOrMore>
+	    <attribute>
+	      <anyName/>
+	    </attribute>
+	  </zeroOrMore>
+	  <zeroOrMore>
+	    <choice>
+	      <text/>
+	      <ref name="macro.anyXML"/>
+	    </choice>
+	  </zeroOrMore>
+	</element>
+      </content>
+      </macroSpec>
+
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

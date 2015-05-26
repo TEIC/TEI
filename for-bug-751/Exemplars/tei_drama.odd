@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0"
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI with Drama</title>
+        <author>Syd Bauman</author>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+<publisher>TEI Consortium</publisher>
+        <availability status="free">
+          <p>This template file is freely available and you are hereby
+            authorised to copy, modify, and redistribute it in any way without
+            further reference or permissions.</p>
+          <p>When making such modifications, you are strongly recommended to
+            change the present text to include an accurate statement of the
+            licencing conditions applicable to your modified text.</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>No source; this was originally written from scratch in digital
+        form.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>In addition to the required modules, this customization loads the
+        modules for drama and for linking, segmentation, and alignment. The
+        latter provides the <att>next</att> and <att>prev</att> attributes which
+        are often useful when dramatic speeches overlap verse lines in a
+        non-hierarchical manner. Other global attributes which are normally
+        provided by this module have been deleted from this customization. In
+        addition the <att>xml:base</att> and <att>xml:space</att> attributes
+        have been removed.</p>
+      <schemaSpec ident="tei_drama" start="TEI teiCorpus">
+        <!-- get required modules -->
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure"/>
+        <!-- get optional modules -->
+        <moduleRef key="linking"/>
+        <moduleRef key="drama"/>
+        <!-- required to avoid Sanity Checker complaint -->
+        <elementSpec ident="handNote" mode="delete" module="header"/>
+        <!-- remove some global attributes -->
+        <classSpec predeclare="true" module="linking" xml:id="CLLINK"
+          type="atts" ident="att.global.linking" mode="change">
+          <desc xml:lang="en" versionDate="2014-01-12">defines the attributes used for aggregating partial elements
+            into a single virtual element.</desc>
+          <attList>
+            <attDef ident="corresp" usage="opt" mode="delete"/>
+            <attDef ident="synch" usage="opt" mode="delete"/>
+            <attDef ident="sameAs" usage="opt" mode="delete"/>
+            <attDef ident="copyOf" usage="opt" mode="delete"/>
+            <attDef ident="next" usage="opt" mode="change">
+              <valDesc mode="change">a URI which should point to an element of
+                the same type, typically within the same document</valDesc>
+            </attDef>
+            <attDef ident="prev" usage="opt" mode="change">
+              <valDesc mode="change">a URI which should point to an element of
+                the same type, typically within the same document</valDesc>
+            </attDef>
+            <attDef ident="exclude" usage="opt" mode="delete"/>
+            <attDef ident="select" usage="opt" mode="delete"/>
+          </attList>
+          <listRef>
+            <ptr target="#SAAG"/>
+          </listRef>
+        </classSpec>
+        <!-- -->
+        <classSpec module="tei" xml:id="GLOBAL" type="atts" ident="att.global"
+          mode="change">
+          <desc  xml:lang="en" versionDate="2014-01-12">provides a set of attributes common to all elements in the
+              <name>tei_drama</name> customization of the TEI encoding scheme.</desc>
+          <classes>
+            <memberOf key="att.global.linking"/>
+            <memberOf key="att.global.analytic"/>
+          </classes>
+          <attList>
+            <attDef ident="xml:space" usage="opt" mode="delete"/>
+            <attDef ident="xml:base" usage="opt" mode="delete"/>
+          </attList>
+        </classSpec>
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

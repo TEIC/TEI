@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent" ident="page">
+  <equiv/>
+  <desc>marks pages in a reference edition.</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+参照番におけるページを示す．
+</desc>
+  <desc version="2006-10-15" xml:lang="es">marca páginas en una edición de referencia.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="line"/>
+        <rng:ref name="col"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum xml:lang="en">
+    <eg>&lt;(La)page n="32"&gt; &lt;!-- text of edition La, page 32 --&gt;&lt;/(La)page&gt;
+ &lt;(La)page n="33"&gt; &lt;!-- text of edition La, page 33 --&gt; &lt;/(La)page&gt;
+ &lt;(La)page n="34"&gt; &lt;!-- text of edition La, page 34 --&gt; &lt;/(La)page&gt;
+ &lt;(La)page n="35"&gt; &lt;!-- text of edition La, page 35 --&gt; &lt;/(La)page&gt;</eg>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain <gi>col</gi> elements, <gi>line</gi> elements, or
+character data.</p>
+    <p>The <gi>page</gi> element in a concurrent page-reference DTD
+may be subdivided into columns or lines if desired, or left unanalysed.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    要素<gi>col</gi>か<gi>line</gi>または文字データをとるかもしれない．
+    </p>
+    <p>
+    現行ページ参照DTD中にある要素<gi>page</gi>は，カラム(列)またはレコー
+    ド(行)へと分割される，またはそのままかもしれない．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#NHRS" type="div3"/>
+  </listRef>
+</elementSpec>

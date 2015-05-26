@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING for details.
+$Date$
+$Id$
+-->
+
+
+<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+
+<div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="SH" n="24">
+<head>The TEI Header and Other Metadata Standards</head>
+<p>Many libraries, text repositories, research sites and related
+institutions with collections of TEI documents need to map, or export,
+metadata from the TEI header to other metadata formats such as MARC,
+Dublin Core (DC), or MODS.  The increasing momentum behind recent
+efforts such as the Z39.50 Bath Profile (interoperability) (<ptr
+target="http://www.collectionscanada.ca/bath/bp-current.htm"/>) and
+the Open Archive Initiative (OAI) (<ptr
+target="http://www.openarchives.org/"/>), which facilitate the
+automated publishing, harvesting, and aggregation of digital object
+metadata, increases the need for such mappings.</p>
+<p>This section of the Guidelines outlines practices recommended for
+encoders (especially those responsible for the documentation of text)
+and catalogers when creating TEI headers that will require mapping to
+other schema and specifies the set of recommended elements that should
+be included to facilitate such mappings. It also discusses the
+relationship between TEI headers elements and MARC fields and between
+TEI elements and Dublin Core elements, to facilitate cataloguing of
+TEI documents and the loading of TEI header metadata into MARC-based
+bibliographic databases, HTML/XHTML <gi scheme="XHTML">meta</gi> tags,
+OAI data providers, or other metadata systems.
+</p>
+<div type="div2" xml:id="SHDEF"><head>Principles for Encoders</head>
+<p>The richness and size of the header reflect the diversity of uses
+to which electronic texts conforming to these Guidelines will be put.
+As described in section <ptr target="#HD7"/>, the TEI header allows for
+the provision of a very large amount of information concerning the
+text itself, its source, encodings, and revisions as well as detailed
+descriptive information that can be used by researchers in analysing
+the text.  The richness of the header will depend on the nature and
+intended use of the text.  At one extreme, an encoder may expect that
+the header will only provide bibliographic information about the text
+adequate to local needs.  At the other, wishing to ensure that their
+texts can be used for the widest range of applications, encoders will
+want to document as explicitly as possible both bibliographic and
+descriptive information in such a way that no prior or ancillary
+knowledge about the text is needed in order to process it.  The
+header, in the latter case, will be very full, approximating the kind
+of documentation often supplied in the form of a manual.  Most texts
+will lie somewhere between these extremes; textual corpora in
+particular will tend toward the latter extreme.</p>
+<p>For a successful and complete mapping from the TEI header to other
+standards and formats, the TEI header should be as complete as
+possible.  <!-- LB: targetted section has been deleted:  
+Therefore, many tags that are listed as optional in the
+"Minimal and Recommended Headers" section of this chapter should be
+considered "recommended" for TEI headers that require mapping to other
+standards and formats. --> When deciding which information
+to include in a TEI header that will be mapped to another metadata
+standard and the format or structure of that header information, the
+following should be kept in mind:
+<list>
+<item>The header should provide full bibliographic information on the
+encoded text, its source, where the text can be located, and any
+restrictions governing its use.</item>
+<item>The header should contain useful information about the encoding of
+the text itself.  In this regard, it is highly recommended that the
+encoding description be as complete as possible.  The Guidelines do
+not require that the encoding description be included in the header
+(since some simple transcriptions of small items may not require it),
+but in practice a header without an encoding description
+would prove difficult mor impossible to map satisfactorily to most other
+metadata formats.</item>
+<item>The header should be amenable to automatic processing, particularly
+for loading into databases and for the creation of publications,
+indexes, and finding aids, without undue editorial intervention.  For
+this reason, two recommendations are made regarding the format or
+structure of the header: first, where there is a choice between a
+prose content model and one that contains a formal series of
+specialized elements, <emph>wherever possible and appropriate the
+specialized elements should be preferred to unstructured prose</emph>.
+For instance, the source description can contain either a free-prose
+citation (tagged <gi>bibl</gi> or even <gi>p</gi>) or a
+<gi>biblStruct</gi> element, which provides a more rigorous structure
+for the bibliographic information (see examples in section <ptr target="#COBI"/>).  The more structured <gi>biblStruct</gi> element is
+more suitable for automatic processing, and is therefore recommended
+over the less structured alternatives whenever the header is to be
+mapped to another standard.  Second, with respect to corpora,
+information about each of the texts within a corpus should be included
+in the overall corpus-level <gi>teiHeader</gi>.  That is, source
+information, editorial practices, encoding descriptions, and the like
+should be included in the relevant sections of the corpus
+<gi>teiHeader</gi>, with pointers to them from the headers of the
+individual texts included in the corpus.  There are three reasons for
+this recommendation: first, the corpus-level header will contain the
+full array of bibliographic and documentary information for each of
+the texts in a corpus, and thus be of great benefit to remote users,
+who may have access only to metadata from the corpus-level header;
+second, such a layout is easier for the coder to maintain than
+searching for information throughout a text; and third, generally
+speaking, this practice results in greater overall consistency,
+especially with respect to bibliographic citations.</item>
+</list></p>
+<p>The distribution and retrieval of TEI header metadata enable
+resource discovery by other means. The mappings to MARC and Dublin Core
+discussed in the remainder of this section provide two examples of
+how TEI header metadata may be re-used and re-purposed.</p>
+</div>
+<div type="div2" xml:id="SHMARC"><head>Header Elements and their Relationship to the MARC Record</head>
+<!--<p>This entire section is undergoing review by professional catalogers and members of the
+TEI in Libraries SIG </p>-->
+<!-- jawalsh: This section needs to be reviewed by catalogers.  Natasha and I are planning to have
+     catalogers at Indiana and/or North Carolina do such a review -->
+<p>This section offers some guidance to both cataloguers and
+bibliographic analysts who want to load metadata from TEI headers into a
+MARC-based retrieval system. Because there are variations in
+cataloguing practice across local sites, among bibliographic utilities
+(such as OCLC and RLIN), and differences in MARC usage in different
+countries, only tentative advice is possible. Note that the following
+examples are based on USMARC, <emph>not</emph> UNIMARC.<note place="bottom">For
+more information on UNIMARC, see <bibl>Brian P. Holt,
+<title>UNIMARC Manual</title> (London, U.K.: IFLA Universal
+Bibliographic Control and International MARC Programme, British Library,
+1987)</bibl>. For USMARC, see <bibl> Walt Crawford, <title>MARC
+for library use: understanding USMARC</title> (Boston: G.K. Hall,
+1989)</bibl>, <bibl><title>USMARC format for bibliographic data,
+including content designation</title> (Washington, D.C.: Library of
+Congress, 1987)</bibl>, and <bibl>Deborah J. Byrne, <title>MARC
+manual : understanding and using MARC records</title> (Englewood, Colo.:
+Libraries Unlimited, Inc., 1991)</bibl>.</note>
+UNIMARC offers cataloguers in different countries the opportunity to
+combine different national practices in a single MARC format, and is the
+preferred variety of MARC records for distribution
+across national boundaries. The implementation of UNIMARC, however,
+will be affected by local practice and by guidelines offered by the
+bibliographic utilities. Though UNIMARC is a stable format, the
+guidelines for its implementation are not sufficiently known or
+stabilized to be included in this chapter.</p>
+<p>There are some major differences between the MARC record and the TEI
+header that will cause problems for librarians trying to map from the
+TEI header to the MARC record. The most important
+difference between the MARC record and the TEI header is the function of
+each. <!-- Despite the efforts and claims of some members of the library
+community, the MARC record remains fundamentally an electronic version
+of the catalogue card, with the limitations of its model.--><!-- Natasha: I am not sure that we can  go with this statement anymore??? thatÕs why we need catalogers to see it Ð I am sure my catalogers will agree to do it.--><note place="bottom">The
+primary function of the MARC record when it was
+first designed in the mid-1960s was to allow for the electronic
+distribution of cataloguing records in support of card production. See
+<bibl>Henriette Avram, <title>The MARC Pilot Project</title>
+(Washington D.C.: Library of Congress, 1968), p. 3.</bibl> For
+discussion of the relationship between the MARC record and the catalogue
+card, see <bibl>Michael Gorman, <title level="a">After AACR2R: The Future of the
+Anglo-American Cataloging Rules</title>, in Richard Smiraglia, ed.,
+<title>Origins, Content and Future of AACR2 Revised</title> (Chicago:
+American Library Association, 1992)</bibl>.</note>
+The catalogue card is a unitary record for a physical object containing
+complex <emph>bibliographic data</emph> of varying sorts. The catalogue
+card points to the physical object. The TEI header provides full
+bibliographic information (as would a card), as well as documentary
+non-bibliographic information that supports the analysis, either by
+humans or machines, of the electronic text documented by header. Most
+of this analytical information, which is found in the profile description,
+encoding description, and revision history, has little direct provision
+for it in the MARC record,
+and if retained must be recorded as unstructured notes (55XX) fields.
+Notes fields usually do not have the structure to support machine
+retrieval and analysis, while properly formatted profile, encoding, and
+revision descriptions lend themselves to retrieval, can support machine
+processing (including analysis), and point directly to the electronic
+text attached to the header. Moreover, the electronic text points back
+to the relevant elements in the header.</p>
+<p>Though this section offers some advice on where the profile,
+encoding, and revision descriptions might go in a MARC record, for
+practical reasons a repository might want create a codebook from these
+divisions of the header, and create a MARC record from the file
+description only. The MARC record should contain a reference to the
+codebook.</p>
+<p>Subfields (or delimiters) are conventionally indicated by the
+dollar sign.</p>
+<div type="div3" xml:id="SHFD"><head>MARC Fields for the File Description</head>
+<p>Note that there is no provision for the <soCalled>Main
+Entry</soCalled> (or USMARC <ident type="field">1XX</ident> fields) in the TEI
+header. The main entry should be constructed, using appropriate name
+authority control, by the cataloguer from information derived from the
+header that indicates who is primarily responsible for the
+intellectual content of the work. There is an <gi>author</gi> element,
+but the form of the name will have to be checked by a cataloguer
+before the main entry is constructed.
+<list type="gloss">
+<label><gi>titleStmt</gi></label><item> corresponds to title and statement of
+responsibility fields in MARC, typically <ident type="field">240</ident> (for uniform
+title) and <ident type="field">245</ident> (for title proper).</item>
+<label><gi>title</gi></label><item> <ident type="field">240 $a</ident> (for uniform titles) or
+<ident type="field">245 $a</ident> fields. Put any subtitles in <ident type="field">24X $b</ident>.
+Insert the constant, <q>[computer file]</q> in the <ident type="field">24X $h gmd</ident>
+subfield.  Put any alternate titles in <ident type="field">246 $a.</ident></item>
+<label><gi>author</gi></label><item><ident type="field">100 $a, $b, $c, $q</ident>.  The form of the name will typically need to be checked by a cataloguer who will be consulting name authority files.</item>
+</list></p>
+<p>The elements <gi>sponsor</gi>, 
+<gi>funder</gi>, and <gi>principal</gi> all belong in the <ident type="field">245 $c</ident> subfield:
+statement of responsibility, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><titleStmt>
+   <title>Two stories by Edgar Allen Poe: electronic
+      version</title>
+   <author>Poe, Edgar Allen (1809-1849)</author>
+   <respStmt>
+      <resp>compiled by</resp>
+      <name>James D. Benson</name>
+   </respStmt>
+</titleStmt></egXML>
+This might be tagged in MARC as:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">245 Two stories by Edgar Allen Poe :$belectronic version ;
+ compiled by $cJames D. Benson.</egXML>
+<!-- Natasha:
+I do not agree completely with this Ð we need to consult with catalogers. I only know for sure that our catalogers map resp like illustrated by to MARC 700-711.
+Also, our local practice maps funding information to MARC 536 field, ex.:
+536;   ;a Funding from the Institute of Museum and Library Services supported the electronic publication of this title. $
+-->
+</p>
+<p>The  <gi>edition</gi> and <gi>name</gi> (within responsibility
+statement) elements correspond with MARC fields <ident type="field">250
+$a</ident> and <ident type="field">250 $b</ident> respectively, as in the
+following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><editionStmt>
+   <edition>Student's edition,
+       <date>June 1987</date>
+   </edition>
+   <respStmt>
+      <resp>New annotation by</resp>
+      <name>George Brown</name>
+   </respStmt>
+</editionStmt></egXML>
+<!-- N.B. the awkward tagging here is required by the fact    -->
+	<!-- that editionStmt *can* contain phrase data.  It ought    -->
+	<!-- to be just p instead. (msm)                              -->
+This might be tagged in MARC as:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">250  $aStudent's edition, June, 1987, new annotation by
+  $bGeorge Brown.</egXML>
+<!-- Natasha:
+In our local practice, catalogers record information about this particular electronic edition in the MARC 250 field. For example, for for ÒChristoph von Graffenried's Account of the Founding of New BernÉÓ (http://docsouth.unc.edu/nc/graffenried/menu.html) :
+250 $a Electronic ed.
+ÒIncidents in the Life of a Slave GirlÓ by Harriet Jacobs (http://docsouth.unc.edu/jacobs/menu.html) shows as a second edition, with a relevant note about the first edition:
+250 $a Electronic ed., 2nd ed.
+500 $a Second ed. has updated encoding and formatting, and replaces the 1st ed. published in 1998
+-->
+</p>
+<p>The <gi>extent</gi> element is analogous to the
+<soCalled>Physical Description</soCalled> MARC field.  Fields
+<ident type="field">256</ident> or <ident type="field">3XX</ident> are
+appropriate, depending on local practice. 
+The children of the <gi>publicationStmt</gi> element may be put in MARC <ident type="field">260</ident>.  The 
+<gi>pubPlace</gi> element corresponds with field <ident type="field">260
+$a</ident>; the 
+<gi>publisher</gi>, <gi>distributor</gi>, or <gi>authority</gi>
+elements correspond with the MARC field <ident type="field">260 $b</ident>; while the <gi>date</gi> element in
+this context
+corresponds with the <ident type="field">260 $c</ident>, as in the following example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><publicationStmt>
+   <publisher>Columbia University Press</publisher>
+   <pubPlace>New York</pubPlace>
+   <date>1993</date>
+</publicationStmt></egXML>
+This may be tagged in MARC as:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">260 $aNew York :$bColumbia University Press, $c1993.</egXML></p>
+<p>Local practice will determine appropriate MARC fields for
+<gi>address</gi>, <gi>idno</gi>, and <gi>availability</gi>.
+Restrictions on access should normally be placed in the
+<ident type="field">506</ident> field, while the place where an item may be ordered
+will be located in a local notes (<ident type="field">590</ident>) field.  If local
+practice warrants it, the address of the publisher should be indicated
+in the <ident type="field">260</ident> field.
+<!-- Natasha: If URL is used, it usually corresponds to MARC 856. -->
+<!-- jawalsh: Natasha, I agree we may want to mention 856, but is there a tag in TEI that is regularly used in this self-referential manner?  That is, is there a TEI element encoders use to include the URL for the TEI document (or for a transformed HTML or other version of the document?)-->
+<!-- LB: this is a FAQ. The most obvious candidate imo would be an idno
+     type="uri" or "purl" or whatever" but there's no reason not to
+     propose a specific new element if you think this would be better  -->
+</p>
+<p>The series <gi>title</gi> and the <gi>idno</gi> should be placed in
+the appropriate <ident type="field">490</ident> fields (series untraced), if series
+authority checking needs to be done.  Further, because the TEI elements do
+not differentiate between name, conference, or title series, there is
+no simple mechanical method for determining which MARC tag (<ident type="field">410,
+411,</ident> etc.)  should be used.  Safe practice would be to load any
+series statements into <ident type="field">490</ident> fields, and then to conduct
+authority work on those fields.
+</p>
+<p>The <gi>notesStmt</gi> element is  usually reserved for general note
+(<ident type="field">5XX</ident>) fields.</p>
+<p>The <gi>sourceDesc</gi> can be mapped to be a <soCalled>source of
+data</soCalled> note (<ident type="field">537</ident> in RLIN MDF format) with the
+print constant <q>Transcribed from:</q> at the beginning of the note. <!-- Natash: It corresponds to MARC 534; jawalsh: What is "it"? The whole <sourceDesc>?-->
+The <gi>biblStruct</gi> itself can be mapped onto a <ident type="field">581</ident>
+field (note on primary publication) using the ISBD format to separate
+each data element.</p>
+<p>The <gi>scriptStmt</gi>, <gi>recordingStmt</gi>,
+<gi>recording</gi>, <gi>equipment</gi>, and <gi>broadcast</gi>
+elements do not easily map to existing MARC fields, and should be
+put into a local notes field (<ident type="field">590</ident>) treating the TEI element
+introducing each component as a print constant at the head of the
+field in order to facilitate future local processing and retrieval.
+Example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><scriptStmt>
+   <bibl>
+      <author>CNN Network News</author>
+      <title>News Headlines</title>
+      <date>12 Jun 1991</date>
+   </bibl>
+</scriptStmt></egXML>
+This may be tagged in MARC thus:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">590  <scriptStmt>
+<bibl>
+   <author>CNN Network News</author>
+   <title>News Headlines</title>
+   <date> 12 Jun 1991</date>
+</bibl>
+</scriptStmt></egXML>
+Example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><recordingStmt>
+   <recording type="video" dur="P10M">
+      <equipment>
+         <p>Recorded from FM radio to chrome tape</p>
+      </equipment>
+      <broadcast>
+         <bibl>         
+            <title>Britain's pleasure parade</title>
+            <author>BBC Radio 4 FM</author>
+            <editor role="interviewer">Robin Day</editor>
+            <editor role="interviewee">Margaret Thatcher</editor>
+            <series> <title>The World Tonight</title> </series>
+            <date>27 Nov 89</date>
+         </bibl>
+      </broadcast>
+   </recording>
+</recordingStmt></egXML>
+This can be tagged in MARC as:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">590 <recordingStmt>
+<recording type="video" dur="P10M">
+   <equipment>
+      <p>Recorded from FM radio to chrome tape</p>
+   </equipment>
+   <broadcast>
+      <bibl>
+         <title>Britain's pleasure parade</title>
+         <author>BBC Radio 4 FM</author>
+         <editor role="interviewer">Robin Day</editor>
+         <editor role="interviewee">Margaret Thatcher</editor>
+         <series> <title>The World Tonight</title> </series>
+         <date>27 Nov 89</date>
+      </bibl>
+   </broadcast>
+</recording>
+</recordingStmt></egXML></p></div>
+<div type="div3" xml:id="SHED"><head>MARC Fields for the Encoding Description</head>
+<p>The <gi>encodingDesc</gi> element provides useful information
+documenting the relationship between an electronic text and the source
+or sources from which it was derived. The <gi>projectDesc</gi>,
+<gi>samplingDecl</gi>, <gi>editorialDecl</gi>, and <gi>refsDecl</gi>
+elements provide details of decisions and rationales used about the
+process and purposes of the project, how text was sampled, principles
+of editorial practice, and how canonical references are constructed.
+The <ident type="field">567</ident> field (notes on methodology) appears to be the
+most appropriate for this sort of information, though this field is
+normally intended for methodologies characterizing the social
+sciences. Practically, it would be wise to transcribe the
+<gi>projectDesc</gi>, <gi>editorialDecl</gi>, <gi>refsDecl</gi>, and
+<gi>classDecl</gi> elements directly as one or more 567 fields without
+intervention, with the element name at the beginning of each field,
+and any TEI tagging left intact. This may facilitate any
+locally-developed retrieval software.</p>
+<!-- Natasha: Our local practice is to use also 516 field. -->
+<p>Example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc>
+  <projectDesc>
+    <p>Texts were collected to illustrate the full range of
+      twentieth-century spoken and written Swedish, written by native
+      Swedish authors.</p>
+  </projectDesc>
+  <samplingDecl>
+    <p>Sample of 2000 words taken from the beginning of the text.</p>
+  </samplingDecl>
+  <editorialDecl>
+    <interpretation>
+      <p>Errors in transcription controlled by using the SUC spell
+        checker, v.2.4</p>
+    </interpretation>
+  </editorialDecl>
+</encodingDesc></egXML>
+This may be tagged in MARC as:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">567  
+<projectDesc>
+      <p>Texts were collected to illustrate the
+      full range of twentieth-century spoken and written
+      Swedish, written by native Swedish authors.</p>
+   </projectDesc>567  <samplingDecl>
+      <p>Sample of 2000 words taken from the
+     beginning of the text.</p>
+   </samplingDecl>567  <editorialDecl>
+      <interpretation>
+         <p>Errors in transcription controlled
+      by using the SUC spell checker, v. 2.4</p>
+      </interpretation>
+   </editorialDecl></egXML></p></div>
+<div type="div3" xml:id="SHPD"><head>MARC Fields for the Profile Description</head>
+<p>The profile description is the most problematic element in the TEI
+header for librarian cataloguers, because it provides a detailed
+description of the <emph>non-bibliographic</emph> aspects of the text,
+specifically the languages and sublanguages used, the situation in which
+it was produced, and the participants and their setting.  This
+information can be used for retrieval purposes or in
+machine-supported analysis of the text.  The information can be loaded
+into a separate <soCalled>codebook</soCalled> and referenced by the MARC
+record.  While some components of the profile description have clear counterparts in MARC, little guidance can be offered on the appropriate MARC
+location for many of the elements that make up the profile description. One option is
+to load the profile description into a
+MARC record for archival and possibly retrieval purposes, then the
+contents of the profile description may be mapped into a locally-defined
+notes field (<ident type="field">59X</ident>) with its TEI tagging intact, as in the examples
+above.
+<!-- jawalsh:  I think we can do better than the above paragraph.  I've started to revise it, but the suggestion in P4 that there it's not really possible to provide mapping guidance for the whole of the profile desciption is untrue.  There are things in there that can be cleanly mapped to MARC. -->
+</p>
+<p>Elements from the profile description that suggest clear mappings to MARC include the individual <gi>language</gi> children of <gi>langUsage</gi> which correspond to MARC 041. 
+<!--
+Natasha: possible example:
+<langUsage>  maps to MARC 041:
+<language>
+  <language id="eng">English</language> 
+  <language id="lat">Latin</language> 
+  <language id="fre">French</language> 
+  <language id="ger">German</language>
+In MARC: 
+041	1 	$a eng $a fre $a ger $h fre $h ger
+-->
+</p>
+<p>The metadata typically contained in <gi>textClass</gi> corresponds to MARC 6XX fields.
+<!-- jawalsh: This statement needs good examples.  It's hard to describe in prose, because the mapping is not
+from <textClass> to MARC 6XX.  It's from textClass/keywords/list/item to MARC 6XX. -->
+<!-- Natasha: possible example:
+excerpts from the MARC record for ÒChristoph von Graffenried's Account of the Founding of New BernÉÓ (http://docsouth.unc.edu/nc/graffenried/menu.html) shows LCSH assigned to the title:
+600	10	$a Graffenried, Christoph von, $c Baron, $d 1661-1743.
+651	 0	$a New Bern (N.C.) $x History.
+650	 0	$a Swiss Americans $z North Carolina.
+650	 0	$a Palatine Americans $z North Carolina.
+650	 0	$a Whites $z North Carolina $x Relations with Indians.
+651	 0	$a North Carolina $x Description and travel $v Early works to 1
+651	 0	$a Virginia $x Description and travel $v Early works to 1800.
+651	 0	$a North Carolina $x History $y Colonial period, ca. 1600-1775.
+651	 0	$a North Carolina $x Politics and government $y To 1775.
+-->
+</p>
+<!-- jawalsh: Do we want a separate section on MODS or a note to catalogers that they use the TEI<->MARC mapping for guidance on MODS? -->
+</div>
+<div type="div3" xml:id="SHRD"><head>MARC fields for the Revision Description</head>
+<p>The revision history (<gi>revisionDesc</gi>) logs all changes to a
+machine readable file whether or not these constitute a new edition of
+the file.  Aside from the edition area of the MARC record, there are
+no MARC fields that deal specifically with changes of this sort.  This
+information might be best included in a <soCalled>codebook</soCalled>,
+rather than a MARC record. As before, the simplest way of approaching
+this problem is to include the material with its TEI tagging intact as a
+locally-defined note (<ident type="field">59X</ident>) in order to support future
+local processing.<!-- Natasha: I think our catalogers record the local notes in MARC 9XX. We really have to check that.--></p></div></div>
+<div type="div2" xml:id="SHDC"><head>Header Elements and their Relationship to Dublin Core</head>
+<p>
+&lt;!-- TEI header / Dublin Core discussion to go here. --&gt;
+</p>
+</div>
+<!-- Natasha:
+WE CAN ALSO GIVE A LOOK-UP TABLE OF CORRESPONDING TEIHEADER ELEMENTS AND MARC FIELDS. THE SAME FOR DC AND MODS, ETC.)-->
+</div>

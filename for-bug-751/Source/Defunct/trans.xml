@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="trans">
+  <equiv/>
+  <gloss>translation information</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-TW">翻譯資訊</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">informations sur la traduction</gloss>
+  <gloss version="2007-05-04" xml:lang="es">información traducida</gloss>
+  <gloss version="2007-01-21" xml:lang="it">informazioni sulla traduzione</gloss>
+  <desc>contains translation text and related information (within an entry in a multilingual dictionary).</desc>
+  <desc version="2007-05-02" xml:lang="zh-TW">包含翻譯文字以及相關資訊 (在多語字典的辭條中) 。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  多言語辞書中のいち項目において，翻訳や関連情報を示す．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr">contient le texte de la traduction et les
+			informations associées (dans l’entrée d'un dictionnaire multilingue)</desc>
+  <desc version="2007-05-04" xml:lang="es">contiene el texto traducido y la información relativa (al interno de una entrada en diccionario multilingüe)</desc>
+  <desc version="2007-01-21" xml:lang="it">contiene una traduzione ed informazioni ad essea collegate (all'interno di una voce in un dizionario multilinue).</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.entryPart.top"/>
+    <memberOf key="model.entryPart"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="model.phrase"/>
+        <rng:ref name="model.inter"/>
+        <rng:ref name="model.entryPart"/>
+        <rng:ref name="model.global"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <remarks>
+    <p rend="dataDesc">May contain character data mixed with any other elements defined in the
+            dictionary tag set.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    テキストの他，辞書向けタグ集合で定義されている他の要素を含むかもし
+    れない．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DITPTR" type="div2"/>
+  </listRef>
+</elementSpec>

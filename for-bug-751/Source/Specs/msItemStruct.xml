@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date$
+$Id$
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSITEMSTRUCT" ident="msItemStruct">
+  <gloss versionDate="2007-07-04" xml:lang="en">structured manuscript item</gloss>
+  <gloss versionDate="2007-12-20" xml:lang="ko">구조화된 원고 항목</gloss>
+  <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
+  <gloss versionDate="2008-04-06" xml:lang="es">elemento estructurado del manuscrito</gloss>
+  <gloss versionDate="2007-06-12" xml:lang="fr">description structurée d'un item de manuscrit</gloss>
+  <gloss versionDate="2007-11-06" xml:lang="it">parte strutturata di manoscritto</gloss>
+  <desc versionDate="2005-03-05" xml:lang="en" xml:id="msitem.desc">contains a structured description for an
+  individual work or item within the intellectual content of a
+  manuscript or manuscript part.</desc>
+  <desc versionDate="2007-12-20" xml:lang="ko">원고 또는 원고 일부의 지적 내용 내에서 개별 작품 또는 항목에 대한 구조화된 기술을 포함한다.</desc>
+  <desc versionDate="2007-05-02" xml:lang="zh-TW">包含某單一作品或項目的結構性描述，該作品或項目存在於手稿或手稿部分的智慧內容中。</desc>
+  <desc versionDate="2008-04-05" xml:lang="ja">手書き資料の知的内容の中に出現する，独立した作品または項目の構造的解
+  説を示す．</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient la description structurée d'un item ou d'une
+      œuvre, dans le contenu intellectuel d'un manuscrit ou d'une partie d'un manuscrit.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">contiene una descripción estructurada de una obra individual o de un objeto al interno del contenido intelectual de un manuscrito o de una de sus partes.</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">contiene una descrizione strutturata di una singola opera o oggetto all'interno del contenuto intellettuale di un manoscritto o di una sua parte</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.msItemPart"/>
+    <memberOf key="att.msExcerpt"/>
+  </classes>
+  <content>
+    <group xmlns="http://relaxng.org/ns/structure/1.0">
+      <optional>
+        <choice>
+          <ref name="locus"/>
+          <ref name="locusGrp"/>
+        </choice>
+      </optional>
+      <choice>
+        <oneOrMore>
+          <ref name="model.pLike"/>
+        </oneOrMore>
+        <group>
+          <zeroOrMore>
+            <ref name="author"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="respStmt"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="title"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="rubric"/>
+          </optional>
+          <optional>
+            <ref name="incipit"/>
+          </optional>
+          <zeroOrMore>
+            <ref name="msItemStruct"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="explicit"/>
+          </optional>
+          <optional>
+            <ref name="finalRubric"/>
+          </optional>
+          <zeroOrMore>
+            <ref name="colophon"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="decoNote"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="listBibl"/>
+          </zeroOrMore>
+          <zeroOrMore>
+            <choice>
+              <ref name="bibl"/>
+              <ref name="biblStruct"/>
+            </choice>
+          </zeroOrMore>
+          <zeroOrMore>
+            <ref name="model.noteLike"/>
+          </zeroOrMore>
+          <optional>
+            <ref name="textLang"/>
+          </optional>
+        </group>
+      </choice>
+    </group>
+  </content>
+  <attList>
+    <attDef ident="class">
+      <gloss versionDate="2007-06-12" xml:lang="fr">classe</gloss>
+      <desc versionDate="2013-12-21" xml:lang="en">identifies the text types or classifications applicable to
+      this item by pointing to other elements or resources defining the
+      classification concerned.</desc>
+      <desc versionDate="2007-12-20" xml:lang="ko">이 항목에 적용 가능한 텍스트 유형 또는 분류를 표시한다.</desc>
+      <desc versionDate="2007-05-02" xml:lang="zh-TW">標明適合的文字類型或分類。</desc>
+      <desc versionDate="2008-04-05" xml:lang="ja">当該テキストの種類を示す．</desc>
+      <desc versionDate="2007-06-12" xml:lang="fr">spécifie la ou les catégories ou classes
+          auxquelles l'item appartient.</desc>
+      <desc versionDate="2007-05-04" xml:lang="es">identifica la tipología textual u otras clasificaciones aplicables al objeto en cuestión.</desc>
+      <desc versionDate="2007-01-21" xml:lang="it">identifica la tipologia testuale o altre classificazioni applicabili all'oggetto in questione</desc>
+      <datatype minOccurs="1" maxOccurs="unbounded">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
+      </datatype>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="mul">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <msItemStruct n="2" defective="false" class="#biblComm">
+        <locus from="24v" to="97v">24v-97v</locus>
+        <author>Apringius de Beja</author>
+        <title type="uniform" xml:lang="la">Tractatus in Apocalypsin</title>
+        <rubric>Incipit Trac<supplied reason="omitted">ta</supplied>tus 
+in apoka<lb/>lipsin eruditissimi uiri <lb/> Apringi ep<expan>iscop</expan>i 
+Pacensis eccl<expan>esi</expan>e</rubric>
+        <finalRubric>EXPLIC<ex>IT</ex> EXPO<lb/>SITIO APOCALIPSIS 
+QVA<ex>M</ex> EXPOSVIT DOM<lb/>NVS APRINGIUS EP<ex>ISCOPU</ex>S.
+DEO GR<ex>ACI</ex>AS AGO. FI<lb/>NITO LABORE ISTO.</finalRubric>
+        <bibl><ref target="http://amiBibl.xml#Apringius1900">Apringius</ref>, ed. Férotin</bibl>
+        <textLang mainLang="la">Latin</textLang>
+      </msItemStruct>
+    </egXML>
+  </exemplum>
+  <exemplum versionDate="2008-04-06" xml:lang="fr">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <msItemStruct n="2" defective="false" class="#biblComm">
+        <locus from="24v" to="97v">24v-97v</locus>
+        <author>Apringius de Beja</author>
+        <title type="uniform" xml:lang="la">Tractatus in Apocalypsin</title>
+        <rubric>Incipit Trac<supplied reason="omitted">ta</supplied>tus in apoka<lb/>lipsin
+            eruditissimi uiri <lb/> Apringi ep<ex>iscop</ex>i Pacensis eccl<ex>esi</ex>e</rubric>
+        <finalRubric>EXPLIC<ex>IT</ex> EXPO<lb/>SITIO APOCALIPSIS QVA<ex>M</ex>
+            EXPOSVIT DOM<lb/>NVS APRINGIUS EP<ex>ISCOPU</ex>S. DEO GR<ex>ACI</ex>AS AGO.
+            FI<lb/>NITO LABORE ISTO.</finalRubric>
+        <bibl><ref target="http://amiBibl.xml#Apringius1900">Apringius</ref>, ed. Férotin</bibl>
+        <textLang mainLang="la">Latin</textLang>
+      </msItemStruct>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="zh-TW">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <msItemStruct>
+        <locus from="1" to="4">pp.1-4</locus>
+        <author>不詳</author>
+        <title xml:lang="zh-TW">麻薯舊社屯外委潘清章等立招給墾批總約字</title>
+        <rubric>4號，第九例。</rubric>
+        <finalRubric>代筆社記</finalRubric>
+        <bibl><ref target="http://catalog.ndap.org.tw/?URN=2155368">數位典藏聯合目錄</ref>，國立臺灣大學圖書館管理</bibl>
+        <textLang mainLang="zh-tw">繁體中文</textLang>
+      </msItemStruct>
+    </egXML>
+  </exemplum>
+  <listRef>
+    <ptr target="#mscoit"/>
+  </listRef>
+</elementSpec>
