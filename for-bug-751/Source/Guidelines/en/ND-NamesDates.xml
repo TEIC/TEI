@@ -1052,14 +1052,14 @@ and <val>retired</val>. For more information on customization see <ptr
 target="#MD"/>.</p>
 
 <p>The <gi>person</gi> element may contain many sub-elements, each
-specifying a different property of the person being described.  The
+specifying a different property of the person being described. The
 remainder of this section describes these more specific elements. For
-convenience, these elements are grouped into three classes, corresponding with
-the tripartite division outlined above: one for traits, one for states
-and one for events.  Each class  contains both 
-specific elements for  common types of biographical
-information, and a generic element for other, user-defined, types
-of information.</p> 
+convenience, these elements are grouped into three classes,
+corresponding with the tripartite division outlined above: one for
+traits, one for states and one for events. Each class may contain
+specific elements for common types of biographical information, and
+contains a generic element for other, user-defined, types of
+information.</p>
 <p>All the elements in these three classes belong to the attribute
 class <ident type="class">att.datable</ident>, which provides the
 following attributes:
@@ -1300,100 +1300,100 @@ he should exchange livings with
 </div>
 <div type="div4" xml:id="NDPERSEpe">
 <head>Personal Events</head>
- <p>The <ident type="class">model.persEventLike</ident> class contains elements
-describing specific events in a person's
-history, for example birth, marriage, or appointment. These are not
-characteristics of an individual, but often cause an individual to
-gain such characteristics, or to enter a new state.  Members of this
-class comprise the following  elements:
-<specList>
-<specDesc key="birth"/>
-<specDesc key="death"/>
-</specList>
-Only two specific elements (<gi>birth</gi> and <gi>death</gi>) are
-proposed.  The generic element <gi>event</gi> has a similar content
-model to that of <gi>state</gi> and <gi>trait</gi>; the chief
-difference being that it can include a <gi>placeName</gi> element to
-identify the name of the place where the event occurred. It is used 
-to describe any event in the life of an individual or organization. </p>
-
-<p>In the following example, we give a brief summary of the wedding of
-Jane Burden to the English writer, designer, and socialist William
-Morris, encoded as an <gi>event</gi> element embedded within the
-<gi>person</gi> element used to record data about Morris, though we
-could equally well have embedded the event within the <gi>person</gi>
-element for Burden, or have given it as a freestanding <gi>event</gi>
-independent of either <gi>person</gi> element:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<person xml:id="WM">
-<!-- ... -->
-<event type="marriage" when="1859-04-26">
-    <label>Marriage</label>
-   <desc><name type="person" ref="#WM">William Morris</name> and <name type="person" ref="http://en.wikipedia.org/wiki/Jane_Burden">Jane Burden</name> were 
-married at <name type="place">St Michael's Church, Ship Street, Oxford</name> on
-   <date when="1859-04-26">26 April 1859</date>. The wedding was
-   conducted by Morris's friend <name type="person" ref="#RWD">R. W. 
-Dixon</name> with <name type="person" ref="#CBF">Charles
-Faulkner</name> as 
-the best man. The bride was given away by her father, 
-<name type="person" ref="#RB">Robert Burden</name>. 
-According to the account that <name type="person" ref="http://en.wikipedia.org/wiki/Edward_Burne-Jones">Burne-Jones</name> 
-gave <name type="person" ref="#JWM">Mackail</name> 
-<quote>M. said to Dixon beforehand <said>Mind
-   you don't call her Mary</said> but he did</quote>. The entry in the
-   Register reads: <quote>William Morris, 25, Bachelor Gentleman, 13
-   George Street, son of William Morris decd. Gentleman. Jane Burden,
-   minor, spinster, 65 Holywell Street, d. of Robert Burden,
-   Groom.</quote> The witnesses were Jane's parents and Faulkner. None of
-   Morris's family attended the ceremony. Morris presented Jane with a
-   plain gold ring bearing the London hallmark for 1858. She gave her
-   husband a double-handled antique silver cup.</desc>
-    <bibl>J. W. Mackail, <title>The Life of William Morris</title>, 1899.</bibl>
-</event>
-</person>
-<person xml:id="RB">
-  <persName>Robert Burden</persName>
-</person>
-<person xml:id="RWD">
-  <persName>R.W. Dixon</persName>
-</person>
-<person xml:id="CBF">
-  <persName>Charles Faulkner</persName>
-</person>
-<person xml:id="EBJ">
-  <persName>
-    <forename>Edward</forename>
-    <surname>Burne-Jones</surname>
-  </persName>
-</person>
-<person xml:id="JWM">
-  <persName>J.W. Mackail</persName>
-</person>
-</egXML>
-In this example the <att>ref</att> attributes on the various
-<gi>name</gi> elements point either to an external source or to a
-<gi>person</gi> element within which other information about the
-person named may be found. As further
-discussed below (<ptr target="#NDPERSREL"/>), a <gi>relation</gi>
-element may then be used to link them in a more meaningful way:
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<relation name="spouse" mutual="#WM #JBM"/>
-<relation name="friend" mutual="#WM #RWD"/>
-<relation name="parent" active="#RB" passive="#JBM"/>
-</egXML>
-</p>
-<p>As mentioned above, all these elements, both the specific and the
-generic, are members of the <ident type="class">att.datable</ident> attribute
-class, which means they can be limited in terms of time. The
-following encoding, for example, demonstrates that the person named
-David Jones changed his name in 1966 to David Bowie:
-  <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
-<person xml:id="DB">
-    <persName notAfter="1966">David Jones</persName>
+ <p>Events in a person's history are not characteristics of an
+ individual, but often cause an individual to gain such
+ characteristics, or to enter a new state. Most such events, for
+ example marriage, appointment, promotion, or a journey may be
+ recorded using the generic element <gi>event</gi>, which may be
+ grouped with <gi>listEvent</gi>, and has a content model similar to
+ that of <gi>state</gi> and <gi>trait</gi>. The chief difference is
+ that <gi>event</gi> can include a <gi>placeName</gi> element to
+ identify the name of the place where the event occurred.</p>
+ <p>Two particular events in a persons life, namely birth and death,
+ are both ubiquitous and usually considered particularly important,
+ and thus may be represented by specialized elements for the purpose:
+ <specList>
+   <specDesc key="birth"/>
+   <specDesc key="death"/>
+ </specList>
+ </p>
+ <p>In the following example, we give a brief summary of the wedding
+ of Jane Burden to the English writer, designer, and socialist William
+ Morris, encoded as an <gi>event</gi> element embedded within the
+ <gi>person</gi> element used to record data about Morris, though we
+ could equally well have embedded the event within the <gi>person</gi>
+ element for Burden, or have given it as a freestanding <gi>event</gi>
+ independent of either <gi>person</gi> element:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <person xml:id="WM">
+     <!-- ... -->
+     <event type="marriage" when="1859-04-26">
+       <label>Marriage</label>
+       <desc><name type="person" ref="#WM">William Morris</name> and <name type="person" ref="http://en.wikipedia.org/wiki/Jane_Burden">Jane Burden</name> were 
+       married at <name type="place">St Michael's Church, Ship Street, Oxford</name> on
+       <date when="1859-04-26">26 April 1859</date>. The wedding was
+       conducted by Morris's friend <name type="person" ref="#RWD">R. W. 
+       Dixon</name> with <name type="person" ref="#CBF">Charles
+       Faulkner</name> as 
+       the best man. The bride was given away by her father, 
+       <name type="person" ref="#RB">Robert Burden</name>. 
+       According to the account that <name type="person" ref="http://en.wikipedia.org/wiki/Edward_Burne-Jones">Burne-Jones</name> 
+       gave <name type="person" ref="#JWM">Mackail</name> 
+       <quote>M. said to Dixon beforehand <said>Mind
+       you don't call her Mary</said> but he did</quote>. The entry in the
+       Register reads: <quote>William Morris, 25, Bachelor Gentleman, 13
+       George Street, son of William Morris decd. Gentleman. Jane Burden,
+       minor, spinster, 65 Holywell Street, d. of Robert Burden,
+       Groom.</quote> The witnesses were Jane's parents and Faulkner. None of
+       Morris's family attended the ceremony. Morris presented Jane with a
+       plain gold ring bearing the London hallmark for 1858. She gave her
+       husband a double-handled antique silver cup.</desc>
+       <bibl>J. W. Mackail, <title>The Life of William Morris</title>, 1899.</bibl>
+     </event>
+   </person>
+   <person xml:id="RB">
+     <persName>Robert Burden</persName>
+   </person>
+   <person xml:id="RWD">
+     <persName>R.W. Dixon</persName>
+   </person>
+   <person xml:id="CBF">
+     <persName>Charles Faulkner</persName>
+   </person>
+   <person xml:id="EBJ">
+     <persName>
+       <forename>Edward</forename>
+       <surname>Burne-Jones</surname>
+     </persName>
+   </person>
+   <person xml:id="JWM">
+     <persName>J.W. Mackail</persName>
+   </person>
+ </egXML>
+ In this example the <att>ref</att> attributes on the various
+ <gi>name</gi> elements point either to an external source or to a
+ <gi>person</gi> element within which other information about the
+ person named may be found. As further
+ discussed below (<ptr target="#NDPERSREL"/>), a <gi>relation</gi>
+ element may then be used to link them in a more meaningful way:
+ <egXML xmlns="http://www.tei-c.org/ns/Examples">
+   <relation name="spouse" mutual="#WM #JBM"/>
+   <relation name="friend" mutual="#WM #RWD"/>
+   <relation name="parent" active="#RB" passive="#JBM"/>
+ </egXML>
+ </p>
+ <p>As mentioned above, all these elements, both the specific and the
+ generic, are members of the <ident type="class">att.datable</ident> attribute
+ class, which means they can be limited in terms of time. The
+ following encoding, for example, demonstrates that the person named
+ David Jones changed his name in 1966 to David Bowie:
+ <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples">
+   <person xml:id="DB">
+     <persName notAfter="1966">David Jones</persName>
     <persName notBefore="1966">David Bowie</persName>
-</person>
-</egXML>
-</p>
+   </person>
+ </egXML>
+ </p>
 <p>All the generic elements are also members of the <ident
 type="class">att.global.responsibility</ident> and <ident
 type="class">att.editLike</ident> classes. These classes make
