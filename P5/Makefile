@@ -53,7 +53,7 @@ p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check
 	@echo get latest date:
 	if [ ${VCS} = "svn" ] ; \
 	then \
-		if [ ${INJENKINS} ] ; \
+		if [ ${INJENKINS} = "true" ] ; \
 		then svn info --xml svn://svn.code.sf.net/p/tei/code/trunk/P5 ; \
 			else svn info --xml  ; \
 		fi > repodate.xml ; \
