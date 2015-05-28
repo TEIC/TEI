@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+$Date:$
+$Id:$
+-->
+<elementSpec ident="interleave" xmlns="http://www.tei-c.org/ns/1.0">
+  
+  <desc versionDate="2013-11-21" xml:lang="en">interleaved references</desc>
+  <classes>
+    <memberOf key="model.contentPart"/>
+    <memberOf key="att.global"/>
+    <memberOf key="att.repeatable"/>
+  </classes>
+  <content>
+    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+      <ref name="model.contentPart"/>
+    </oneOrMore>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en"><content>
+      <interleave>
+	<elementRef key="name"/>
+	<elementRef key="persName"/>
+      </interleave>
+    </content>
+    </egXML>
+    <p>This example content model permits either a <gi>name</gi> followed by a
+    <gi>persName</gi>, or a <gi>persName</gi> followed by a <gi>name</gi>. </p>
+  </exemplum>
+</elementSpec>
 
-      <elementSpec ident="interleave" xmlns="http://www.tei-c.org/ns/1.0">
-        
-        <desc versionDate="2013-11-21" xml:lang="en">interleaved references</desc>
-        <classes>
-          <memberOf key="model.contentPart"/>
-          <memberOf key="att.global"/>
-          <memberOf key="att.repeatable"/>
-        </classes>
-        <content>
-          <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-            <ref name="model.contentPart"/>
-          </oneOrMore>
-        </content>
-        <exemplum xml:lang="en">
-          <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en"><content>
-            <interleave>
-              <elementRef key="name"/>
-              <elementRef key="persName"/>
-            </interleave>
-          </content>
-          </egXML>
-          <p>This example content model permits either a <gi>name</gi> followed by a
-            <gi>persName</gi>, or a <gi>persName</gi> followed by a <gi>name</gi>. </p>
-        </exemplum>
-      </elementSpec>
-     
