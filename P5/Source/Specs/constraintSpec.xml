@@ -30,22 +30,24 @@ $Id$
     </rng:optional>
   </content>
   <constraintSpec ident="sch" scheme="isoschematron">
-    <desc>Relationship between scheme attribute and contents</desc>
+    <desc>Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
       <sch:ns prefix="s" uri="http://www.ascc.net/xml/schematron"/>
-      <sch:report test="tei:constraint/s:* and    not(@scheme='schematron')">
-	Rules in the Schematron 1.* language must be inside
-	a constraintSpec with a value of 'schematron' on the scheme attribute
-      </sch:report>
+      <sch:report test="tei:constraint/s:*  and  @scheme ne 'schematron'">Rules in the Schematron 1.* language must be inside a constraintSpec with a value of 'schematron' on the scheme attribute</sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="isosch" scheme="isoschematron">
+    <desc>Relationship between scheme attribute and contents: ISO Schematron</desc>
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
-      <sch:report test="tei:constraint/sch:* and    not(@scheme='isoschematron')">
-	Rules in the ISO Schematron language must be inside
-	a constraintSpec with a value of 'isoschematron' on the scheme attribute
-      </sch:report>
+      <sch:report test="tei:constraint/sch:*  and  @scheme ne 'isoschematron'">Rules in the ISO Schematron language must be inside a constraintSpec with a value of 'isoschematron' on the scheme attribute</sch:report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="xslt" scheme="isoschematron">
+    <desc>Relationship between scheme attribute and contents: XSLT</desc>
+    <constraint>
+      <sch:ns prefix="xsl" uri="http://www.w3.org/1999/XSL/Transform"/>
+      <sch:report test="tei:constraint/xsl:*  and  @scheme ne 'XSLT'">Rules in XSLT must be inside a constraintSpec with a value of 'isoschematron' on the scheme attribute</sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="needrules" scheme="isoschematron">
