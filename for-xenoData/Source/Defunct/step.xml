@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="step">
+  <equiv/>
+  <gloss>step</gloss>
+  <gloss version="2009-01-05" xml:lang="fr">Emplacement</gloss>
+  <desc>specifies one component of a canonical reference defined by
+the stepwise method.</desc>
+  <desc version="2009-01-05" xml:lang="fr">L'élément Emplacement <gi>step</gi> désigne un composant d'une référence canonique définie par la méthode de l'emplacement identifié.</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  段階的な手法で定義されている標準的な参照の構成要素をひとつ指定する．
+  </desc>
+  <classes>
+    <memberOf key="att.global"/>
+  </classes>
+  <content>
+    <rng:empty xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+  </content>
+  <attList>
+    <attDef ident="refunit" usage="rec">
+      <equiv/>
+      <desc>names the unit (book, chapter, canto, verse, ...) identified
+by this step in a canonical reference.</desc>
+      <desc version="2009-01-05" xml:lang="fr">désigne l'unité (livre, chapitre, chant, vers, ...) identifiée à cet emplacement par la référence canonique.</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      当該単位の名前(書籍，節，編，詩など)を示す．
+      </desc>
+      <datatype>
+        <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+      <valDesc>any string of characters; typically a word or phrase in
+some natural language.</valDesc>
+      <remarks>
+        <p>The provision of this attribute helps make the structure
+of the canonical reference much clearer. Its use is strongly recommended.</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Renseigner cet attribut aide à rendre la structure de la référence canonique beaucoup plus claire. Son utilisation est vivement recommandée.</p>
+      </remarks>
+    </attDef>
+    <attDef ident="length" usage="opt">
+      <equiv/>
+      <desc>specifies the fixed length of the reference component.</desc>
+      <desc version="2009-01-05" xml:lang="fr">fixe la longueur du composant de la référence.</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      固定長の参照要素．
+      </desc>
+      <datatype>
+        <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger"/>
+      </datatype>
+      <valDesc>Should be a positive integer; if no value is provided,
+    the length is unlimited and goes to the next delimiter or to the
+    end of the value.</valDesc>
+      <remarks>
+        <p>When constructing a reference, if the reference component
+  found is of numeric type, the length
+  is made up by inserting leading zeros; if it is not, by inserting
+  trailing blanks. In either case, reference components are truncated
+  if necessary at the right hand side.
+  </p>
+        <p>When seeking a reference, the length indicates the
+  number of characters which should be compared. Values longer than
+  this will be regarded as matching, if they start correctly. </p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Quand on construit une référence, si le composant de la référence est numérique, on introduit des zéros à gauche pour parvenir à la longueur souhaitée ; s'il n'est pas numérique, on insère des espaces à la fin de la référence. Dans les deux cas, les composants de la référence sont tronqués à droite si nécessaire.</p>
+        <p>Quand on recherche une référence, la longueur indique le nombre de caractères à comparer. Les valeurs plus longues sont considérées comme correspondant au critère, si elles commencent par les bons caractères.</p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+        参照をとる場合，その構成要素は数値型になり，必要であれば先頭に
+        0を付加して決められた固定長を作る．非数値型の場合，語末に空白
+        が続く．どちらの場合でも，参照構成要素は，必要であれば，右端は
+        丸められる．
+        </p>
+        <p>
+        参照を求める場合，当該属性lengthは，比較される文字列の長さを示
+        す．当該属性値より長い値でも，始点が正しければ，マッチしたとす
+        る．
+        </p>
+      </remarks>
+    </attDef>
+    <attDef ident="delim" usage="opt">
+      <equiv/>
+      <desc>supplies a delimiting string following the reference
+          component.</desc>
+      <desc version="2009-01-05" xml:lang="fr">fournit une chaîne de caractères délimitante après le composant de la référence.</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      参照構成要素に続く区切子を示す．
+      </desc>
+      <datatype>
+        <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+      <valDesc>If a single space is used it is interpreted as
+         whitespace</valDesc>
+      <remarks/>
+    </attDef>
+    <attDef ident="from" usage="req">
+      <equiv/>
+      <desc>specifies the starting point of the area referred to by this
+step in the canonical reference.</desc>
+      <desc version="2009-01-05" xml:lang="fr">spécifie le point de départ de la zone désignée par cet emplacement dans la référence canonique.</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      標準的参照において参照される領域の始点を示す．
+      </desc>
+      <datatype>
+        <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+      <valDesc>a valid expression in the TEI extended pointer notation
+documented in section <ptr target="#SAXR"/>.</valDesc>
+    </attDef>
+    <attDef ident="to" usage="opt">
+      <equiv/>
+      <desc>specifies the ending point of the area referred to by this step
+in the canonical reference.</desc>
+      <desc version="2009-01-05" xml:lang="fr">spécifie la fin de la zone désignée par cet emplacement dans la référence canonique.</desc>
+      <desc version="2008-04-05" xml:lang="ja">
+      標準的参照において参照される領域の終点を示す．
+      </desc>
+      <datatype>
+        <rng:text xmlns:rng="http://relaxng.org/ns/structure/1.0"/>
+      </datatype>
+      <defaultVal>DITTO</defaultVal>
+      <valDesc>a valid expression in the TEI extended pointer notation
+documented in section <ptr target="#SAXR"/>.</valDesc>
+      <remarks>
+        <p>If this attribute is not specified, its value is
+      assumed to be the same as that of the <ident>from</ident> attribute</p>
+      </remarks>
+      <remarks xml:lang="fr">
+        <p>Si cet attribut n'est pas précisé, sa valeur est supposée être identique à celle de l'attribut <ident>from</ident>.
+      </p>
+      </remarks>
+      <remarks xml:lang="ja">
+        <p>
+        当該属性がない場合，属性<ident>from</ident>の値と同じであると
+        推測される．
+        </p>
+      </remarks>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="und">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <step refunit="book" delim=":" from="CHILD (1 DIV1 N %1)"/>
+    </egXML>
+  </exemplum>
+  <remarks>
+    <p>With two differences, the extended pointer expressions given
+as values for the <att>from</att> and <att>to</att> attributes behave
+like those given for the corresponding attributes of an extended pointer
+element like <gi>xptr</gi>.  First:  unlike normal extended pointer
+expressions, those on a <gi>step</gi> element can contain references to
+tokens in the canonical reference string itself, expressed as
+<code type="frag">%1</code>, <code type="frag">%2</code>, etc.  Second:  the initial location
+source for the first step is the root of the document, as for normal
+extended pointers.  The initial location source for subsequent steps,
+however, is the result of the previous step, not the root.</p>
+  </remarks>
+  <remarks xml:lang="fr">
+    <p>A deux différences près, les expressions de pointeurs étendus données comme valeurs des attributs <att>from</att> et <att>to</att> se comportent comme celles données pour les attributs correspondants d'un élément de pointeur étendu tel que <gi>xptr</gi>.  La première : contrairement aux expressions normales de pointeurs étendus, celles d'un élément <gi>step</gi> peuvent contenir des références à des éléments dans la chaîne de référence canonique elle-même, exprimés comme <code type="frag">%1</code>, <code type="frag">%2</code>, etc.  La seconde : la localisation initiale de la source pour le premier emplacement est la racine du document, comme pour tous les pointeurs étendus normaux. Par contre, pour les emplacements suivants, la localisation initiale de la source sera le résultat de l'étape précédente, pas la racine.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p>
+    属性<att>from</att>や<att>to</att>の値で示された拡張ポインタ表現は，
+    要素<gi>xptr</gi>などの拡張ポインタ要素中で対応する属性のように振
+    る舞う．但し，通常の拡張ポインタ表現とは異なり，要素<gi>step</gi>
+    のそれは標準的な参照文字列となる参照をとることができる．例えば，
+    <code type="frag">%1</code>, <code type="frag">%2</code>など．また，
+    最初の段階にある始点となる資料が，標準拡張ポインタにとって，根文書
+    となる．しかし，続く段階にある始点は，以前の段階の結果であり，ここ
+    でいう根文書とな異なる．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#HD54M"/>
+    <ptr target="#HD54"/>
+    <ptr target="#HD54S"/>
+  </listRef>
+</elementSpec>

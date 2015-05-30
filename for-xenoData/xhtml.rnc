@@ -1,0 +1,3294 @@
+# .......................................................................
+
+# XHTML 1.1 DTD  ........................................................
+
+# file: xhtml11.dtd
+
+# XHTML 1.1 DTD
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# 
+# The Extensible HyperText Markup Language (XHTML)
+# Copyright 1998-2000 World Wide Web Consortium
+#    (Massachusetts Institute of Technology, Institut National de
+#     Recherche en Informatique et en Automatique, Keio University).
+#     All Rights Reserved.
+# 
+# Permission to use, copy, modify and distribute the XHTML DTD and its 
+# accompanying documentation for any purpose and without fee is hereby 
+# granted in perpetuity, provided that the above copyright notice and 
+# this paragraph appear in all copies.  The copyright holders make no 
+# representation about the suitability of the DTD for any purpose.
+# 
+# It is provided "as is" without expressed or implied warranty.
+# 
+#    Author:     Murray M. Altheim <altheim@eng.sun.com>
+#    Revision:   $Id$
+#
+
+# This is the driver file for version 1.1 of the XHTML DTD.
+# 
+# Please use this formal public identifier to identify it:
+# 
+#     "-//W3C//DTD XHTML 1.1//EN"
+
+# Use this URI to identify the default namespace:
+# 
+#     "http://www.w3.org/1999/xhtml"
+# 
+# See the Qualified Names module for information
+# on the use of namespace prefixes in the DTD.
+
+# Reserved for use with the XLink namespace:
+
+default namespace = "http://www.w3.org/1999/xhtml"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+XLINK.xmlns.attrib = empty
+# For example, if you are using XHTML 1.1 directly, use the FPI
+# in the DOCTYPE declaration, with the xmlns attribute on the
+# document element to identify the default namespace:
+# 
+#   <?xml version="1.0"?>
+#   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "xhtml11.dtd">
+#   <html xmlns="http://www.w3.org/1999/xhtml"
+#         xml:lang="en">
+#   ...
+#   </html>
+# 
+# Revisions:
+# (none)
+
+# reserved for future use with document profiles
+
+# Bidirectional Text features
+# This feature-test entity is used to declare elements
+# and attributes used for bidirectional text support.
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+# Pre-Framework Redeclaration placeholder  ....................
+
+# this serves as a location to insert markup declarations
+# into the DTD prior to the framework declarations.
+
+# Inline Style Module  ........................................
+
+# ......................................................................
+
+# XHTML Inline Style Module  ...........................................
+
+# file: xhtml-inlstyle-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ENTITIES XHTML Inline Style 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-inlstyle-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Inline Style
+# 
+# This module declares the 'style' attribute, used to support inline
+# style markup. This module must be instantiated prior to the XHTML
+# Common Attributes module in order to be included in %Core.attrib;.
+style.attrib = attribute style { text }?
+Core.extra.attrib = style.attrib
+# end of xhtml-inlstyle-1.mod
+
+# declare Document Model module instantiated in framework
+
+# Modular Framework Module (required) .........................
+
+# ......................................................................
+
+# XHTML Modular Framework Module  ......................................
+
+# file: xhtml-framework-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ENTITIES XHTML Modular Framework 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-framework-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Modular Framework
+# 
+# This required module instantiates the modules needed
+# to support the XHTML modularization model, including:
+# 
+#    +  notations
+#    +  datatypes
+#    +  namespace-qualified names
+#    +  common attributes
+#    +  document model
+#    +  character entities
+# 
+# The Intrinsic Events module is ignored by default but
+# occurs in this module because it must be instantiated
+# prior to Attributes but after Datatypes.
+
+# ......................................................................
+
+# XHTML Notations Module  ..............................................
+
+# file: xhtml-notations-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//NOTATIONS XHTML Notations 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-notations-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Notations
+# 
+# defines the following notations, many of these imported from
+# other specifications and standards. When an existing FPI is
+# known, it is incorporated here.
+
+# XML Notations .....................................
+
+# SGML and XML Notations ............................
+
+# W3C XML 1.0 Recommendation
+
+# XML 1.0 CDATA
+
+# SGML Formal Public Identifiers
+
+# XHTML Notations ...................................
+
+# Length defined for cellpadding/cellspacing
+
+# nn for pixels or nn% for percentage length
+
+# space-separated list of link types
+
+# single or comma-separated list of media descriptors
+
+# pixel, percentage, or relative
+
+# one or more digits (NUMBER)
+
+# integer representing length in pixels
+
+# script expression
+
+# textual content
+
+# Imported Notations ................................
+
+# a single character from [ISO10646]
+
+# a character encoding, as per [RFC2045]
+
+# a space separated list of character encodings, as per [RFC2045]
+
+# media type, as per [RFC2045]
+
+# comma-separated list of media types, as per [RFC2045]
+
+# date and time information. ISO date format
+
+# a language code, as per [RFC3066]
+
+# a Uniform Resource Identifier, see [URI]
+
+# a space-separated list of Uniform Resource Identifiers, see [URI]
+
+# end of xhtml-notations-1.mod
+
+# ......................................................................
+
+# XHTML Datatypes Module  ..............................................
+
+# file: xhtml-datatypes-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ENTITIES XHTML Datatypes 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-datatypes-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Datatypes
+# 
+# defines containers for the following datatypes, many of
+# these imported from other specifications and standards.
+
+# Length defined for cellpadding/cellspacing
+
+# nn for pixels or nn% for percentage length
+Length.datatype = string
+# space-separated list of link types
+LinkTypes.datatype = xsd:NMTOKENS
+# single or comma-separated list of media descriptors
+MediaDesc.datatype = string
+# pixel, percentage, or relative
+MultiLength.datatype = string
+# one or more digits (NUMBER)
+Number.datatype = string
+# integer representing length in pixels
+Pixels.datatype = string
+# script expression
+Script.datatype = string
+# textual content
+Text.datatype = string
+# Imported Datatypes ................................
+
+# a single character from [ISO10646]
+Character.datatype = string
+# a character encoding, as per [RFC2045]
+Charset.datatype = string
+# a space separated list of character encodings, as per [RFC2045]
+Charsets.datatype = string
+# media type, as per [RFC2045]
+ContentType.datatype = string
+# comma-separated list of media types, as per [RFC2045]
+ContentTypes.datatype = string
+# date and time information. ISO date format
+Datetime.datatype = string
+# formal public identifier, as per [ISO8879]
+FPI.datatype = string
+# a language code, as per [RFC3066]
+LanguageCode.datatype = xsd:NMTOKEN
+# a Uniform Resource Identifier, see [URI]
+URI.datatype = string
+# a space-separated list of Uniform Resource Identifiers, see [URI]
+URIs.datatype = string
+# end of xhtml-datatypes-1.mod
+
+# placeholder for XLink support module
+
+# .......................................................................
+
+# XHTML Qname Module  ...................................................
+
+# file: xhtml-qname-1.mod
+# 
+#      This is XHTML, a reformulation of HTML as a modular XML application.
+#      Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+#      Revision: $Id$ SMI
+# 
+#      This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#        PUBLIC "-//W3C//ENTITIES XHTML Qualified Names 1.0//EN"
+#        SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-qname-1.mod"
+# 
+#      Revisions:
+# #2000-10-22: added qname declarations for ruby elements
+#      .......................................................................
+
+# XHTML Qname (Qualified Name) Module
+# 
+# This module is contained in two parts, labeled Section 'A' and 'B':
+# 
+#   Section A declares parameter entities to support namespace-
+#   qualified names, namespace declarations, and name prefixing
+#   for XHTML and extensions.
+# 
+#   Section B declares parameter entities used to provide
+#   namespace-qualified names for all XHTML element types:
+# 
+#     %applet.qname;   the xmlns-qualified name for <applet>
+#     %base.qname;     the xmlns-qualified name for <base>
+#     ...
+# 
+# XHTML extensions would create a module similar to this one.
+# Included in the XHTML distribution is a template module
+# ('template-qname-1.mod') suitable for this purpose.
+
+# Section A: XHTML XML Namespace Framework ::::::::::::::::::::
+
+# 1. Declare a %XHTML.prefixed; conditional section keyword, used
+# to activate namespace prefixing. The default value should
+# inherit '%NS.prefixed;' from the DTD driver, so that unless
+# overridden, the default behaviour follows the overall DTD
+# prefixing scheme.
+
+# 2. Declare a parameter entity (eg., %XHTML.xmlns;) containing
+# the URI reference used to identify the XHTML namespace:
+
+# 3. Declare parameter entities (eg., %XHTML.prefix;) containing
+#    the default namespace prefix string(s) to use when prefixing
+#    is enabled. This may be overridden in the DTD driver or the
+#    internal subset of an document instance. If no default prefix
+#    is desired, this may be declared as an empty string.
+# 
+# NOTE: As specified in [XMLNAMES], the namespace prefix serves
+# as a proxy for the URI reference, and is not in itself significant.
+
+# 4. Declare parameter entities (eg., %XHTML.pfx;) containing the
+# colonized prefix(es) (eg., '%XHTML.prefix;:') used when
+# prefixing is active, an empty string when it is not.
+
+# declare qualified name extensions here ............
+
+# 5. The parameter entity %XHTML.xmlns.extra.attrib; may be
+# redeclared to contain any non-XHTML namespace declaration
+# attributes for namespaces embedded in XHTML. The default
+# is an empty string.  XLink should be included here if used
+# in the DTD.
+
+# The remainder of Section A is only followed in XHTML, not extensions.
+
+# Declare a parameter entity %NS.decl.attrib; containing
+# all XML Namespace declarations used in the DTD, plus the
+# xmlns declaration for XHTML, its form dependent on whether
+# prefixing is active.
+
+# This is a placeholder for future XLink support.
+
+# Declare a parameter entity %NS.decl.attrib; containing all
+# XML namespace declaration attributes used by XHTML, including
+# a default xmlns attribute when prefixing is inactive.
+XHTML.xmlns.attrib = XLINK.xmlns.attrib
+# placeholder for qualified name redeclarations
+
+# Section B: XHTML Qualified Names :::::::::::::::::::::::::::::
+
+# 6. This section declares parameter entities used to provide
+# namespace-qualified names for all XHTML element types.
+
+# module:  xhtml-applet-1.mod
+
+# module:  xhtml-base-1.mod
+
+# module:  xhtml-bdo-1.mod
+
+# module:  xhtml-blkphras-1.mod
+
+# module:  xhtml-blkpres-1.mod
+
+# module:  xhtml-blkstruct-1.mod
+
+# module:  xhtml-edit-1.mod
+
+# module:  xhtml-form-1.mod
+
+# module:  xhtml-hypertext-1.mod
+
+# module:  xhtml-image-1.mod
+
+# module:  xhtml-inlphras-1.mod
+
+# module:  xhtml-inlpres-1.mod
+
+# module:  xhtml-inlstruct-1.mod
+
+# module:  xhtml-ismap-1.mod (also csismap, ssismap)
+
+# module:  xhtml-link-1.mod
+
+# module:  xhtml-list-1.mod
+
+# module:  xhtml-meta-1.mod
+
+# module:  xhtml-param-1.mod
+
+# module:  xhtml-object-1.mod
+
+# module:  xhtml-script-1.mod
+
+# module:  xhtml-struct-1.mod
+
+# module:  xhtml-style-1.mod
+
+# module:  xhtml-table-1.mod
+
+# module:  xhtml-ruby-1.mod
+
+# Provisional XHTML 2.0 Qualified Names  ......................
+
+# module:  xhtml-image-2.mod
+
+# end of xhtml-qname-1.mod
+
+# ......................................................................
+
+# XHTML Intrinsic Events Module  .......................................
+
+# file: xhtml-events-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ENTITIES XHTML Intrinsic Events 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-events-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Intrinsic Event Attributes
+# 
+#  These are the event attributes defined in HTML 4.0,
+#  Section 18.2.3 "Intrinsic Events". This module must be
+#  instantiated prior to the Attributes Module but after
+#  the Datatype Module in the Modular Framework module.
+# 
+# "Note: Authors of HTML documents are advised that changes
+#  are likely to occur in the realm of intrinsic events
+#  (e.g., how scripts are bound to events). Research in
+#  this realm is carried on by members of the W3C Document
+#  Object Model Working Group (see the W3C Web site at
+#  http://www.w3.org/ for more information)."
+
+# NOTE: Because the ATTLIST declarations in this module occur
+# before their respective ELEMENT declarations in other
+# modules, there may be a dependency on this module that
+# should be considered if any of the parameter entities used
+# for element type names (eg., %a.qname;) are redeclared.
+Events.attrib =
+  attribute onclick { Script.datatype }?,
+  attribute ondblclick { Script.datatype }?,
+  attribute onmousedown { Script.datatype }?,
+  attribute onmouseup { Script.datatype }?,
+  attribute onmouseover { Script.datatype }?,
+  attribute onmousemove { Script.datatype }?,
+  attribute onmouseout { Script.datatype }?,
+  attribute onkeypress { Script.datatype }?,
+  attribute onkeydown { Script.datatype }?,
+  attribute onkeyup { Script.datatype }?
+# additional attributes on anchor element
+a.attlist &=
+  attribute onfocus { Script.datatype }?,
+  attribute onblur { Script.datatype }?
+# additional attributes on form element
+form.attlist &=
+  attribute onsubmit { Script.datatype }?,
+  attribute onreset { Script.datatype }?
+# additional attributes on label element
+label.attlist &=
+  attribute onfocus { Script.datatype }?,
+  attribute onblur { Script.datatype }?
+# additional attributes on input element
+input.attlist &=
+  attribute onfocus { Script.datatype }?,
+  attribute onblur { Script.datatype }?,
+  attribute onselect { Script.datatype }?,
+  attribute onchange { Script.datatype }?
+# additional attributes on select element
+select.attlist &=
+  attribute onfocus { Script.datatype }?,
+  attribute onblur { Script.datatype }?,
+  attribute onchange { Script.datatype }?
+# additional attributes on textarea element
+textarea.attlist &=
+  attribute onfocus { Script.datatype }?,
+  attribute onblur { Script.datatype }?,
+  attribute onselect { Script.datatype }?,
+  attribute onchange { Script.datatype }?
+# additional attributes on button element
+button.attlist &=
+  attribute onfocus { Script.datatype }?,
+  attribute onblur { Script.datatype }?
+# additional attributes on body element
+body.attlist &=
+  attribute onload { Script.datatype }?,
+  attribute onunload { Script.datatype }?
+# additional attributes on area element
+area.attlist &=
+  attribute onfocus { Script.datatype }?,
+  attribute onblur { Script.datatype }?
+# end of xhtml-events-1.mod
+
+# ......................................................................
+
+# XHTML Common Attributes Module  ......................................
+
+# file: xhtml-attribs-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ENTITIES XHTML Common Attributes 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-attribs-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Common Attributes
+# 
+# This module declares many of the common attributes for the XHTML DTD.
+# %NS.decl.attrib; is declared in the XHTML Qname module.
+id.attrib = attribute id { xsd:ID }?
+class.attrib = attribute class { xsd:NMTOKENS }?
+title.attrib = attribute title { Text.datatype }?
+Core.attrib =
+  XHTML.xmlns.attrib,
+  id.attrib,
+  class.attrib,
+  title.attrib,
+  Core.extra.attrib
+lang.attrib = attribute xml:lang { LanguageCode.datatype }?
+dir.attrib = attribute dir { "ltr" | "rtl" }?
+I18n.attrib = dir.attrib, lang.attrib
+Common.extra.attrib = empty
+# intrinsic event attributes declared previously
+Common.attrib =
+  Core.attrib, I18n.attrib, Events.attrib, Common.extra.attrib
+# end of xhtml-attribs-1.mod
+
+# placeholder for content model redeclarations
+
+# instantiate the Document Model module declared in the DTD driver
+
+# .......................................................................
+
+# XHTML 1.1 Document Model Module  ......................................
+
+# file: xhtml11-model-1.mod
+# 
+# This is XHTML 1.1, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2000 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ENTITIES XHTML 1.1 Document Model 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml11/DTD/xhtml11-model-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# XHTML 1.1 Document Model
+# 
+# This module describes the groupings of elements that make up
+# common content models for XHTML elements.
+# 
+# XHTML has three basic content models:
+# 
+#     %Inline.mix;  character-level elements
+#     %Block.mix;   block-like elements, eg., paragraphs and lists
+#     %Flow.mix;    any block or inline elements
+# 
+# Any parameter entities declared in this module may be used
+# to create element content models, but the above three are
+# considered 'global' (insofar as that term applies here).
+# 
+# The reserved word '#PCDATA' (indicating a text string) is now
+# included explicitly with each element declaration that is
+# declared as mixed content, as XML requires that this token
+# occur first in a content model specification.
+
+# Extending the Model
+# 
+# While in some cases this module may need to be rewritten to
+# accommodate changes to the document model, minor extensions
+# may be accomplished by redeclaring any of the three *.extra;
+# parameter entities to contain extension element types as follows:
+# 
+#     %Misc.extra;    whose parent may be any block or
+#                     inline element.
+# 
+#     %Inline.extra;  whose parent may be any inline element.
+# 
+#     %Block.extra;   whose parent may be any block element.
+# 
+# If used, these parameter entities must be an OR-separated
+# list beginning with an OR separator ("|"), eg., "| a | b | c"
+# 
+# All block and inline *.class parameter entities not part
+# of the *struct.class classes begin with "| " to allow for
+# exclusion from mixes.
+
+# ..............  Optional Elements in head  ..................
+HeadOpts.mix = (script | style | meta | link | object)*
+# .................  Miscellaneous Elements  ..................
+
+# ins and del are used to denote editing changes
+Edit.class = ins | del
+# script and noscript are used to contain scripts
+# and alternative content
+Script.class = script | noscript
+Misc.extra = notAllowed
+# These elements are neither block nor inline, and can
+# essentially be used anywhere in the document body.
+Misc.class = Edit.class | Script.class | Misc.extra
+# ....................  Inline Elements  ......................
+InlStruct.class = br | span
+InlPhras.class =
+  em
+  | strong
+  | dfn
+  | code
+  | samp
+  | kbd
+  | var
+  | cite
+  | abbr
+  | acronym
+  | q
+InlPres.class = tt | i | b | big | small | sub | sup
+I18n.class = bdo
+Anchor.class = a
+InlSpecial.class = img | map | object
+InlForm.class = input | select | textarea | label | button
+Inline.extra = notAllowed
+Ruby.class = ruby
+# %Inline.class; includes all inline elements,
+# used as a component in mixes
+Inline.class =
+  InlStruct.class
+  | InlPhras.class
+  | InlPres.class
+  | I18n.class
+  | Anchor.class
+  | InlSpecial.class
+  | InlForm.class
+  | Ruby.class
+  | Inline.extra
+# %InlNoRuby.class; includes all inline elements
+# except ruby, used as a component in mixes
+InlNoRuby.class =
+  InlStruct.class
+  | InlPhras.class
+  | InlPres.class
+  | I18n.class
+  | Anchor.class
+  | InlSpecial.class
+  | InlForm.class
+  | Inline.extra
+# %NoRuby.content; includes all inlines except ruby
+NoRuby.content = (text | InlNoRuby.class | Misc.class)*
+# %InlNoAnchor.class; includes all non-anchor inlines,
+# used as a component in mixes
+InlNoAnchor.class =
+  InlStruct.class
+  | InlPhras.class
+  | InlPres.class
+  | I18n.class
+  | InlSpecial.class
+  | InlForm.class
+  | Ruby.class
+  | Inline.extra
+# %InlNoAnchor.mix; includes all non-anchor inlines
+InlNoAnchor.mix = InlNoAnchor.class | Misc.class
+# %Inline.mix; includes all inline elements, including %Misc.class;
+Inline.mix = Inline.class | Misc.class
+# .....................  Block Elements  ......................
+
+# In the HTML 4.0 DTD, heading and list elements were included
+# in the %block; parameter entity. The %Heading.class; and
+# %List.class; parameter entities must now be included explicitly
+# on element declarations where desired.
+Heading.class = h1 | h2 | h3 | h4 | h5 | h6
+List.class = ul | ol | dl
+Table.class = table
+Form.class = form
+Fieldset.class = fieldset
+BlkStruct.class = p | \div
+BlkPhras.class = pre | blockquote | address
+BlkPres.class = hr
+BlkSpecial.class = Table.class | Form.class | Fieldset.class
+Block.extra = notAllowed
+# %Block.class; includes all block elements,
+# used as an component in mixes
+Block.class =
+  BlkStruct.class
+  | BlkPhras.class
+  | BlkPres.class
+  | BlkSpecial.class
+  | Block.extra
+# %Block.mix; includes all block elements plus %Misc.class;
+Block.mix = Heading.class | List.class | Block.class | Misc.class
+# ................  All Content Elements  ..................
+
+# %Flow.mix; includes all text content, block and inline
+Flow.mix =
+  Heading.class | List.class | Block.class | Inline.class | Misc.class
+# end of xhtml11-model-1.mod
+
+# ......................................................................
+
+# XHTML Character Entities Module  .........................................
+
+# file: xhtml-charent-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ENTITIES XHTML Character Entities 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-charent-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Character Entities for XHTML
+# 
+# This module declares the set of character entities for XHTML,
+# including the Latin 1, Symbol and Special character collections.
+
+# Portions (C) International Organization for Standardization 1986
+# Permission to copy in any form is granted for use with
+# conforming SGML systems and applications as defined in
+# ISO 8879, provided this notice is included in all copies.
+
+# Character entity set. Typical invocation:
+# <!ENTITY % HTMLlat1 PUBLIC
+#    "-//W3C//ENTITIES Latin 1 for XHTML//EN"
+#    "http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent">
+# %HTMLlat1;
+
+# no-break space = non-breaking space,
+# U+00A0 ISOnum
+
+# inverted exclamation mark, U+00A1 ISOnum
+
+# cent sign, U+00A2 ISOnum
+
+# pound sign, U+00A3 ISOnum
+
+# currency sign, U+00A4 ISOnum
+
+# yen sign = yuan sign, U+00A5 ISOnum
+
+# broken bar = broken vertical bar,
+# U+00A6 ISOnum
+
+# section sign, U+00A7 ISOnum
+
+# diaeresis = spacing diaeresis,
+# U+00A8 ISOdia
+
+# copyright sign, U+00A9 ISOnum
+
+# feminine ordinal indicator, U+00AA ISOnum
+
+# left-pointing double angle quotation mark
+# = left pointing guillemet, U+00AB ISOnum
+
+# not sign = discretionary hyphen,
+# U+00AC ISOnum
+
+# soft hyphen = discretionary hyphen,
+# U+00AD ISOnum
+
+# registered sign = registered trade mark sign,
+# U+00AE ISOnum
+
+# macron = spacing macron = overline
+# = APL overbar, U+00AF ISOdia
+
+# degree sign, U+00B0 ISOnum
+
+# plus-minus sign = plus-or-minus sign,
+# U+00B1 ISOnum
+
+# superscript two = superscript digit two
+# = squared, U+00B2 ISOnum
+
+# superscript three = superscript digit three
+# = cubed, U+00B3 ISOnum
+
+# acute accent = spacing acute,
+# U+00B4 ISOdia
+
+# micro sign, U+00B5 ISOnum
+
+# pilcrow sign = paragraph sign,
+# U+00B6 ISOnum
+
+# middle dot = Georgian comma
+# = Greek middle dot, U+00B7 ISOnum
+
+# cedilla = spacing cedilla, U+00B8 ISOdia
+
+# superscript one = superscript digit one,
+# U+00B9 ISOnum
+
+# masculine ordinal indicator,
+# U+00BA ISOnum
+
+# right-pointing double angle quotation mark
+# = right pointing guillemet, U+00BB ISOnum
+
+# vulgar fraction one quarter
+# = fraction one quarter, U+00BC ISOnum
+
+# vulgar fraction one half
+# = fraction one half, U+00BD ISOnum
+
+# vulgar fraction three quarters
+# = fraction three quarters, U+00BE ISOnum
+
+# inverted question mark
+# = turned question mark, U+00BF ISOnum
+
+# latin capital letter A with grave
+# = latin capital letter A grave,
+# U+00C0 ISOlat1
+
+# latin capital letter A with acute,
+# U+00C1 ISOlat1
+
+# latin capital letter A with circumflex,
+# U+00C2 ISOlat1
+
+# latin capital letter A with tilde,
+# U+00C3 ISOlat1
+
+# latin capital letter A with diaeresis,
+# U+00C4 ISOlat1
+
+# latin capital letter A with ring above
+# = latin capital letter A ring,
+# U+00C5 ISOlat1
+
+# latin capital letter AE
+# = latin capital ligature AE,
+# U+00C6 ISOlat1
+
+# latin capital letter C with cedilla,
+# U+00C7 ISOlat1
+
+# latin capital letter E with grave,
+# U+00C8 ISOlat1
+
+# latin capital letter E with acute,
+# U+00C9 ISOlat1
+
+# latin capital letter E with circumflex,
+# U+00CA ISOlat1
+
+# latin capital letter E with diaeresis,
+# U+00CB ISOlat1
+
+# latin capital letter I with grave,
+# U+00CC ISOlat1
+
+# latin capital letter I with acute,
+# U+00CD ISOlat1
+
+# latin capital letter I with circumflex,
+# U+00CE ISOlat1
+
+# latin capital letter I with diaeresis,
+# U+00CF ISOlat1
+
+# latin capital letter ETH, U+00D0 ISOlat1
+
+# latin capital letter N with tilde,
+# U+00D1 ISOlat1
+
+# latin capital letter O with grave,
+# U+00D2 ISOlat1
+
+# latin capital letter O with acute,
+# U+00D3 ISOlat1
+
+# latin capital letter O with circumflex,
+# U+00D4 ISOlat1
+
+# latin capital letter O with tilde,
+# U+00D5 ISOlat1
+
+# latin capital letter O with diaeresis,
+# U+00D6 ISOlat1
+
+# multiplication sign, U+00D7 ISOnum
+
+# latin capital letter O with stroke
+# = latin capital letter O slash,
+# U+00D8 ISOlat1
+
+# latin capital letter U with grave,
+# U+00D9 ISOlat1
+
+# latin capital letter U with acute,
+# U+00DA ISOlat1
+
+# latin capital letter U with circumflex,
+# U+00DB ISOlat1
+
+# latin capital letter U with diaeresis,
+# U+00DC ISOlat1
+
+# latin capital letter Y with acute,
+# U+00DD ISOlat1
+
+# latin capital letter THORN,
+# U+00DE ISOlat1
+
+# latin small letter sharp s = ess-zed,
+# U+00DF ISOlat1
+
+# latin small letter a with grave
+# = latin small letter a grave,
+# U+00E0 ISOlat1
+
+# latin small letter a with acute,
+# U+00E1 ISOlat1
+
+# latin small letter a with circumflex,
+# U+00E2 ISOlat1
+
+# latin small letter a with tilde,
+# U+00E3 ISOlat1
+
+# latin small letter a with diaeresis,
+# U+00E4 ISOlat1
+
+# latin small letter a with ring above
+# = latin small letter a ring,
+# U+00E5 ISOlat1
+
+# latin small letter ae
+# = latin small ligature ae, U+00E6 ISOlat1
+
+# latin small letter c with cedilla,
+# U+00E7 ISOlat1
+
+# latin small letter e with grave,
+# U+00E8 ISOlat1
+
+# latin small letter e with acute,
+# U+00E9 ISOlat1
+
+# latin small letter e with circumflex,
+# U+00EA ISOlat1
+
+# latin small letter e with diaeresis,
+# U+00EB ISOlat1
+
+# latin small letter i with grave,
+# U+00EC ISOlat1
+
+# latin small letter i with acute,
+# U+00ED ISOlat1
+
+# latin small letter i with circumflex,
+# U+00EE ISOlat1
+
+# latin small letter i with diaeresis,
+# U+00EF ISOlat1
+
+# latin small letter eth, U+00F0 ISOlat1
+
+# latin small letter n with tilde,
+# U+00F1 ISOlat1
+
+# latin small letter o with grave,
+# U+00F2 ISOlat1
+
+# latin small letter o with acute,
+# U+00F3 ISOlat1
+
+# latin small letter o with circumflex,
+# U+00F4 ISOlat1
+
+# latin small letter o with tilde,
+# U+00F5 ISOlat1
+
+# latin small letter o with diaeresis,
+# U+00F6 ISOlat1
+
+# division sign, U+00F7 ISOnum
+
+# latin small letter o with stroke,
+# = latin small letter o slash,
+# U+00F8 ISOlat1
+
+# latin small letter u with grave,
+# U+00F9 ISOlat1
+
+# latin small letter u with acute,
+# U+00FA ISOlat1
+
+# latin small letter u with circumflex,
+# U+00FB ISOlat1
+
+# latin small letter u with diaeresis,
+# U+00FC ISOlat1
+
+# latin small letter y with acute,
+# U+00FD ISOlat1
+
+# latin small letter thorn with,
+# U+00FE ISOlat1
+
+# latin small letter y with diaeresis,
+# U+00FF ISOlat1
+
+# Mathematical, Greek and Symbolic characters for HTML
+
+# Character entity set. Typical invocation:
+# <!ENTITY % HTMLsymbol PUBLIC
+#    "-//W3C//ENTITIES Symbols for XHTML//EN"
+#    "http://www.w3.org/TR/xhtml1/DTD/xhtml-symbol.ent">
+# %HTMLsymbol;
+
+# Portions (C) International Organization for Standardization 1986:
+# Permission to copy in any form is granted for use with
+# conforming SGML systems and applications as defined in
+# ISO 8879, provided this notice is included in all copies.
+
+# Relevant ISO entity set is given unless names are newly introduced.
+# New names (i.e., not in ISO 8879 list) do not clash with any
+# existing ISO 8879 entity names. ISO 10646 character numbers
+# are given for each character, in hex. values are decimal
+# conversions of the ISO 10646 values and refer to the document
+# character set. Names are Unicode names. 
+
+# Latin Extended-B
+
+# latin small f with hook = function
+# = florin, U+0192 ISOtech
+
+# Greek
+
+# greek capital letter alpha, U+0391
+
+# greek capital letter beta, U+0392
+
+# greek capital letter gamma,
+# U+0393 ISOgrk3
+
+# greek capital letter delta,
+# U+0394 ISOgrk3
+
+# greek capital letter epsilon, U+0395
+
+# greek capital letter zeta, U+0396
+
+# greek capital letter eta, U+0397
+
+# greek capital letter theta,
+# U+0398 ISOgrk3
+
+# greek capital letter iota, U+0399
+
+# greek capital letter kappa, U+039A
+
+# greek capital letter lambda,
+# U+039B ISOgrk3
+
+# greek capital letter mu, U+039C
+
+# greek capital letter nu, U+039D
+
+# greek capital letter xi, U+039E ISOgrk3
+
+# greek capital letter omicron, U+039F
+
+# greek capital letter pi, U+03A0 ISOgrk3
+
+# greek capital letter rho, U+03A1
+
+# there is no Sigmaf, and no U+03A2 character either
+
+# greek capital letter sigma,
+# U+03A3 ISOgrk3
+
+# greek capital letter tau, U+03A4
+
+# greek capital letter upsilon,
+# U+03A5 ISOgrk3
+
+# greek capital letter phi,
+# U+03A6 ISOgrk3
+
+# greek capital letter chi, U+03A7
+
+# greek capital letter psi,
+# U+03A8 ISOgrk3
+
+# greek capital letter omega,
+# U+03A9 ISOgrk3
+
+# greek small letter alpha,
+# U+03B1 ISOgrk3
+
+# greek small letter beta, U+03B2 ISOgrk3
+
+# greek small letter gamma,
+# U+03B3 ISOgrk3
+
+# greek small letter delta,
+# U+03B4 ISOgrk3
+
+# greek small letter epsilon,
+# U+03B5 ISOgrk3
+
+# greek small letter zeta, U+03B6 ISOgrk3
+
+# greek small letter eta, U+03B7 ISOgrk3
+
+# greek small letter theta,
+# U+03B8 ISOgrk3
+
+# greek small letter iota, U+03B9 ISOgrk3
+
+# greek small letter kappa,
+# U+03BA ISOgrk3
+
+# greek small letter lambda,
+# U+03BB ISOgrk3
+
+# greek small letter mu, U+03BC ISOgrk3
+
+# greek small letter nu, U+03BD ISOgrk3
+
+# greek small letter xi, U+03BE ISOgrk3
+
+# greek small letter omicron, U+03BF NEW
+
+# greek small letter pi, U+03C0 ISOgrk3
+
+# greek small letter rho, U+03C1 ISOgrk3
+
+# greek small letter final sigma,
+# U+03C2 ISOgrk3
+
+# greek small letter sigma,
+# U+03C3 ISOgrk3
+
+# greek small letter tau, U+03C4 ISOgrk3
+
+# greek small letter upsilon,
+# U+03C5 ISOgrk3
+
+# greek small letter phi, U+03C6 ISOgrk3
+
+# greek small letter chi, U+03C7 ISOgrk3
+
+# greek small letter psi, U+03C8 ISOgrk3
+
+# greek small letter omega,
+# U+03C9 ISOgrk3
+
+# greek small letter theta symbol,
+# U+03D1 NEW
+
+# greek upsilon with hook symbol,
+# U+03D2 NEW
+
+# greek pi symbol, U+03D6 ISOgrk3
+
+# General Punctuation
+
+# bullet = black small circle,
+# U+2022 ISOpub
+
+# bullet is NOT the same as bullet operator, U+2219
+
+# horizontal ellipsis = three dot leader,
+# U+2026 ISOpub
+
+# prime = minutes = feet, U+2032 ISOtech
+
+# double prime = seconds = inches,
+# U+2033 ISOtech
+
+# overline = spacing overscore,
+# U+203E NEW
+
+# fraction slash, U+2044 NEW
+
+# Letterlike Symbols
+
+# script capital P = power set
+# = Weierstrass p, U+2118 ISOamso
+
+# blackletter capital I = imaginary part,
+# U+2111 ISOamso
+
+# blackletter capital R = real part symbol,
+# U+211C ISOamso
+
+# trade mark sign, U+2122 ISOnum
+
+# alef symbol = first transfinite cardinal,
+# U+2135 NEW
+
+# alef symbol is NOT the same as hebrew letter alef,
+# U+05D0 although the same glyph could be used to depict both characters
+
+# Arrows
+
+# leftwards arrow, U+2190 ISOnum
+
+#  upwards arrow, U+2191 ISOnum
+
+# rightwards arrow, U+2192 ISOnum
+
+# downwards arrow, U+2193 ISOnum
+
+# left right arrow, U+2194 ISOamsa
+
+# downwards arrow with corner leftwards
+# = carriage return, U+21B5 NEW
+
+# leftwards double arrow, U+21D0 ISOtech
+
+# Unicode does not say that lArr is the same as the 'is implied by' arrow
+# but also does not have any other character for that function. So ? lArr can
+# be used for 'is implied by' as ISOtech suggests
+
+# upwards double arrow, U+21D1 ISOamsa
+
+# rightwards double arrow,
+# U+21D2 ISOtech
+
+# Unicode does not say this is the 'implies' character but does not have 
+# another character with this function so ?
+# rArr can be used for 'implies' as ISOtech suggests
+
+# downwards double arrow, U+21D3 ISOamsa
+
+# left right double arrow,
+# U+21D4 ISOamsa
+
+# Mathematical Operators
+
+# for all, U+2200 ISOtech
+
+# partial differential, U+2202 ISOtech
+
+# there exists, U+2203 ISOtech
+
+# empty set = null set = diameter,
+# U+2205 ISOamso
+
+# nabla = backward difference,
+# U+2207 ISOtech
+
+# element of, U+2208 ISOtech
+
+# not an element of, U+2209 ISOtech
+
+# contains as member, U+220B ISOtech
+
+# should there be a more memorable name than 'ni'?
+
+# n-ary product = product sign,
+# U+220F ISOamsb
+
+# prod is NOT the same character as U+03A0 'greek capital letter pi' though
+# the same glyph might be used for both
+
+# n-ary sumation, U+2211 ISOamsb
+
+# sum is NOT the same character as U+03A3 'greek capital letter sigma'
+# though the same glyph might be used for both
+
+# minus sign, U+2212 ISOtech
+
+# asterisk operator, U+2217 ISOtech
+
+# square root = radical sign,
+# U+221A ISOtech
+
+# proportional to, U+221D ISOtech
+
+# infinity, U+221E ISOtech
+
+# angle, U+2220 ISOamso
+
+# logical and = wedge, U+2227 ISOtech
+
+# logical or = vee, U+2228 ISOtech
+
+# intersection = cap, U+2229 ISOtech
+
+# union = cup, U+222A ISOtech
+
+# integral, U+222B ISOtech
+
+# therefore, U+2234 ISOtech
+
+# tilde operator = varies with = similar to,
+# U+223C ISOtech
+
+# tilde operator is NOT the same character as the tilde, U+007E,
+# although the same glyph might be used to represent both
+
+# approximately equal to, U+2245 ISOtech
+
+# almost equal to = asymptotic to,
+# U+2248 ISOamsr
+
+# not equal to, U+2260 ISOtech
+
+# identical to, U+2261 ISOtech
+
+# less-than or equal to, U+2264 ISOtech
+
+# greater-than or equal to,
+# U+2265 ISOtech
+
+# subset of, U+2282 ISOtech
+
+# superset of, U+2283 ISOtech
+
+# note that nsup, 'not a superset of, U+2283' is not covered by the Symbol 
+# font encoding and is not included. Should it be, for symmetry?
+# It is in ISOamsn
+
+# not a subset of, U+2284 ISOamsn
+
+# subset of or equal to, U+2286 ISOtech
+
+# superset of or equal to,
+# U+2287 ISOtech
+
+# circled plus = direct sum,
+# U+2295 ISOamsb
+
+# circled times = vector product,
+# U+2297 ISOamsb
+
+# up tack = orthogonal to = perpendicular,
+# U+22A5 ISOtech
+
+# dot operator, U+22C5 ISOamsb
+
+# dot operator is NOT the same character as U+00B7 middle dot
+
+# Miscellaneous Technical
+
+# left ceiling = apl upstile,
+# U+2308 ISOamsc
+
+# right ceiling, U+2309 ISOamsc
+
+# left floor = apl downstile,
+# U+230A ISOamsc
+
+# right floor, U+230B ISOamsc
+
+# left-pointing angle bracket = bra,
+# U+2329 ISOtech
+
+# lang is NOT the same character as U+003C 'less than' 
+# or U+2039 'single left-pointing angle quotation mark'
+
+# right-pointing angle bracket = ket,
+# U+232A ISOtech
+
+# rang is NOT the same character as U+003E 'greater than' 
+# or U+203A 'single right-pointing angle quotation mark'
+
+# Geometric Shapes
+
+# lozenge, U+25CA ISOpub
+
+# Miscellaneous Symbols
+
+# black spade suit, U+2660 ISOpub
+
+# black here seems to mean filled as opposed to hollow
+
+# black club suit = shamrock,
+# U+2663 ISOpub
+
+# black heart suit = valentine,
+# U+2665 ISOpub
+
+# black diamond suit, U+2666 ISOpub
+
+# Special characters for HTML
+
+# Character entity set. Typical invocation:
+# <!ENTITY % HTMLspecial PUBLIC
+#    "-//W3C//ENTITIES Special for XHTML//EN"
+#    "http://www.w3.org/TR/xhtml1/DTD/xhtml-special.ent">
+# %HTMLspecial;
+
+# Portions (C) International Organization for Standardization 1986:
+# Permission to copy in any form is granted for use with
+# conforming SGML systems and applications as defined in
+# ISO 8879, provided this notice is included in all copies.
+
+# Relevant ISO entity set is given unless names are newly introduced.
+# New names (i.e., not in ISO 8879 list) do not clash with any
+# existing ISO 8879 entity names. ISO 10646 character numbers
+# are given for each character, in hex. values are decimal
+# conversions of the ISO 10646 values and refer to the document
+# character set. Names are Unicode names. 
+
+# C0 Controls and Basic Latin
+
+# quotation mark = APL quote,
+# U+0022 ISOnum
+
+# ampersand, U+0026 ISOnum
+
+# less-than sign, U+003C ISOnum
+
+# greater-than sign, U+003E ISOnum
+
+# apostrophe mark, U+0027 ISOnum
+
+# Latin Extended-A
+
+# latin capital ligature OE,
+# U+0152 ISOlat2
+
+# latin small ligature oe, U+0153 ISOlat2
+
+# ligature is a misnomer, this is a separate character in some languages
+
+# latin capital letter S with caron,
+# U+0160 ISOlat2
+
+# latin small letter s with caron,
+# U+0161 ISOlat2
+
+# latin capital letter Y with diaeresis,
+# U+0178 ISOlat2
+
+# Spacing Modifier Letters
+
+# modifier letter circumflex accent,
+# U+02C6 ISOpub
+
+# small tilde, U+02DC ISOdia
+
+# General Punctuation
+
+# en space, U+2002 ISOpub
+
+# em space, U+2003 ISOpub
+
+# thin space, U+2009 ISOpub
+
+# zero width non-joiner,
+# U+200C NEW RFC 2070
+
+# zero width joiner, U+200D NEW RFC 2070
+
+# left-to-right mark, U+200E NEW RFC 2070
+
+# right-to-left mark, U+200F NEW RFC 2070
+
+# en dash, U+2013 ISOpub
+
+# em dash, U+2014 ISOpub
+
+# left single quotation mark,
+# U+2018 ISOnum
+
+# right single quotation mark,
+# U+2019 ISOnum
+
+# single low-9 quotation mark, U+201A NEW
+
+# left double quotation mark,
+# U+201C ISOnum
+
+# right double quotation mark,
+# U+201D ISOnum
+
+# double low-9 quotation mark, U+201E NEW
+
+# dagger, U+2020 ISOpub
+
+# double dagger, U+2021 ISOpub
+
+# per mille sign, U+2030 ISOtech
+
+# single left-pointing angle quotation mark,
+# U+2039 ISO proposed
+
+# lsaquo is proposed but not yet ISO standardized
+
+# single right-pointing angle quotation mark,
+# U+203A ISO proposed
+
+# rsaquo is proposed but not yet ISO standardized
+
+# euro sign, U+20AC NEW
+
+# end of xhtml-charent-1.mod
+
+# end of xhtml-framework-1.mod
+
+# Post-Framework Redeclaration placeholder  ...................
+
+# this serves as a location to insert markup declarations
+# into the DTD following the framework declarations.
+
+# Text Module (Required)  .....................................
+
+# ......................................................................
+
+# XHTML Text Module  ...................................................
+
+# file: xhtml-text-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Text 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-text-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Textual Content
+# 
+# The Text module includes declarations for all core
+# text container elements and their attributes.
+
+# ......................................................................
+
+# XHTML Inline Structural Module  ......................................
+
+# file: xhtml-inlstruct-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Inline Structural 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-inlstruct-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Inline Structural
+# 
+#    br, span
+# 
+# This module declares the elements and their attributes
+# used to support inline-level structural markup.
+
+# br: forced line break .............................
+br.content = empty
+br = element br { br.attlist, br.content }
+# end of br.element
+br.attlist &= Core.attrib
+# end of br.attlist
+
+# span: generic inline container ....................
+span.content = (text | Inline.mix)*
+span = element span { span.attlist, span.content }
+# end of span.element
+span.attlist &= Common.attrib
+# end of span.attlist
+
+# end of xhtml-inlstruct-1.mod
+
+# ......................................................................
+
+# XHTML Inline Phrasal Module  .........................................
+
+# file: xhtml-inlphras-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Inline Phrasal 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-inlphras-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Inline Phrasal
+# 
+#    abbr, acronym, cite, code, dfn, em, kbd, q, samp, strong, var
+# 
+# This module declares the elements and their attributes used to
+# support inline-level phrasal markup.
+abbr.content = (text | Inline.mix)*
+abbr = element abbr { abbr.attlist, abbr.content }
+# end of abbr.element
+abbr.attlist &= Common.attrib
+# end of abbr.attlist
+acronym.content = (text | Inline.mix)*
+acronym = element acronym { acronym.attlist, acronym.content }
+# end of acronym.element
+acronym.attlist &= Common.attrib
+# end of acronym.attlist
+cite.content = (text | Inline.mix)*
+cite = element cite { cite.attlist, cite.content }
+# end of cite.element
+cite.attlist &= Common.attrib
+# end of cite.attlist
+code.content = (text | Inline.mix)*
+code = element code { code.attlist, code.content }
+# end of code.element
+code.attlist &= Common.attrib
+# end of code.attlist
+dfn.content = (text | Inline.mix)*
+dfn = element dfn { dfn.attlist, dfn.content }
+# end of dfn.element
+dfn.attlist &= Common.attrib
+# end of dfn.attlist
+em.content = (text | Inline.mix)*
+em = element em { em.attlist, em.content }
+# end of em.element
+em.attlist &= Common.attrib
+# end of em.attlist
+kbd.content = (text | Inline.mix)*
+kbd = element kbd { kbd.attlist, kbd.content }
+# end of kbd.element
+kbd.attlist &= Common.attrib
+# end of kbd.attlist
+q.content = (text | Inline.mix)*
+q = element q { q.attlist, q.content }
+# end of q.element
+q.attlist &=
+  Common.attrib,
+  attribute cite { URI.datatype }?
+# end of q.attlist
+samp.content = (text | Inline.mix)*
+samp = element samp { samp.attlist, samp.content }
+# end of samp.element
+samp.attlist &= Common.attrib
+# end of samp.attlist
+strong.content = (text | Inline.mix)*
+strong = element strong { strong.attlist, strong.content }
+# end of strong.element
+strong.attlist &= Common.attrib
+# end of strong.attlist
+var.content = (text | Inline.mix)*
+var = element var { var.attlist, var.content }
+# end of var.element
+var.attlist &= Common.attrib
+# end of var.attlist
+
+# end of xhtml-inlphras-1.mod
+
+# ......................................................................
+
+# XHTML Block Structural Module  .......................................
+
+# file: xhtml-blkstruct-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Block Structural 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-blkstruct-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Block Structural
+# 
+#    div, p
+# 
+# This module declares the elements and their attributes used to
+# support block-level structural markup.
+div.content = (text | Flow.mix)*
+\div = element div { div.attlist, div.content }
+# end of div.element
+div.attlist &= Common.attrib
+# end of div.attlist
+p.content = (text | Inline.mix)*
+p = element p { p.attlist, p.content }
+# end of p.element
+p.attlist &= Common.attrib
+# end of p.attlist
+
+# end of xhtml-blkstruct-1.mod
+
+# ......................................................................
+
+# XHTML Block Phrasal Module  ..........................................
+
+# file: xhtml-blkphras-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Block Phrasal 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-blkphras-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Block Phrasal
+# 
+#    address, blockquote, pre, h1, h2, h3, h4, h5, h6
+# 
+# This module declares the elements and their attributes used to
+# support block-level phrasal markup.
+address.content = (text | Inline.mix)*
+address = element address { address.attlist, address.content }
+# end of address.element
+address.attlist &= Common.attrib
+# end of address.attlist
+blockquote.content = Block.mix+
+blockquote =
+  element blockquote { blockquote.attlist, blockquote.content }
+# end of blockquote.element
+blockquote.attlist &=
+  Common.attrib,
+  attribute cite { URI.datatype }?
+# end of blockquote.attlist
+pre.content =
+  (text
+   | InlStruct.class
+   | InlPhras.class
+   | tt
+   | i
+   | b
+   | I18n.class
+   | Anchor.class
+   | script
+   | map
+   | Inline.extra)*
+pre = element pre { pre.attlist, pre.content }
+# end of pre.element
+pre.attlist &=
+  Common.attrib,
+  [ a:defaultValue = "preserve" ] attribute xml:space { "preserve" }?
+# end of pre.attlist
+
+# ...................  Heading Elements  ...................
+Heading.content = (text | Inline.mix)*
+h1 = element h1 { h1.attlist, Heading.content }
+# end of h1.element
+h1.attlist &= Common.attrib
+# end of h1.attlist
+h2 = element h2 { h2.attlist, Heading.content }
+# end of h2.element
+h2.attlist &= Common.attrib
+# end of h2.attlist
+h3 = element h3 { h3.attlist, Heading.content }
+# end of h3.element
+h3.attlist &= Common.attrib
+# end of h3.attlist
+h4 = element h4 { h4.attlist, Heading.content }
+# end of h4.element
+h4.attlist &= Common.attrib
+# end of h4.attlist
+h5 = element h5 { h5.attlist, Heading.content }
+# end of h5.element
+h5.attlist &= Common.attrib
+# end of h5.attlist
+h6 = element h6 { h6.attlist, Heading.content }
+# end of h6.element
+h6.attlist &= Common.attrib
+# end of h6.attlist
+
+# end of xhtml-blkphras-1.mod
+
+# end of xhtml-text-1.mod
+
+# Hypertext Module (required) .................................
+
+# ......................................................................
+
+# XHTML Hypertext Module  ..............................................
+
+# file: xhtml-hypertext-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Hypertext 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-hypertext-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Hypertext
+# 
+#    a
+# 
+# This module declares the anchor ('a') element type, which
+# defines the source of a hypertext link. The destination
+# (or link 'target') is identified via its 'id' attribute
+# rather than the 'name' attribute as was used in HTML.
+
+# ............  Anchor Element  ............
+a.content = (text | InlNoAnchor.mix)*
+a = element a { a.attlist, a.content }
+# end of a.element
+a.attlist &=
+  Common.attrib,
+  attribute href { URI.datatype }?,
+  attribute charset { Charset.datatype }?,
+  attribute type { ContentType.datatype }?,
+  attribute hreflang { LanguageCode.datatype }?,
+  attribute rel { LinkTypes.datatype }?,
+  attribute rev { LinkTypes.datatype }?,
+  attribute accesskey { Character.datatype }?,
+  attribute tabindex { Number.datatype }?
+# end of a.attlist
+
+# end of xhtml-hypertext-1.mod
+
+# Lists Module (required)  ....................................
+
+# ......................................................................
+
+# XHTML Lists Module  ..................................................
+
+# file: xhtml-list-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Lists 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-list-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Lists
+# 
+#    dl, dt, dd, ol, ul, li
+# 
+# This module declares the list-oriented element types
+# and their attributes.
+
+# dl: Definition List ...............................
+dl.content = (dt | dd)+
+dl = element dl { dl.attlist, dl.content }
+# end of dl.element
+dl.attlist &= Common.attrib
+# end of dl.attlist
+
+# dt: Definition Term ...............................
+dt.content = (text | Inline.mix)*
+dt = element dt { dt.attlist, dt.content }
+# end of dt.element
+dt.attlist &= Common.attrib
+# end of dt.attlist
+
+# dd: Definition Description ........................
+dd.content = (text | Flow.mix)*
+dd = element dd { dd.attlist, dd.content }
+# end of dd.element
+dd.attlist &= Common.attrib
+# end of dd.attlist
+
+# ol: Ordered List (numbered styles) ................
+ol.content = li+
+ol = element ol { ol.attlist, ol.content }
+# end of ol.element
+ol.attlist &= Common.attrib
+# end of ol.attlist
+
+# ul: Unordered List (bullet styles) ................
+ul.content = li+
+ul = element ul { ul.attlist, ul.content }
+# end of ul.element
+ul.attlist &= Common.attrib
+# end of ul.attlist
+
+# li: List Item .....................................
+li.content = (text | Flow.mix)*
+li = element li { li.attlist, li.content }
+# end of li.element
+li.attlist &= Common.attrib
+# end of li.attlist
+
+# end of xhtml-list-1.mod
+
+# :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+# Edit Module  ................................................
+
+# ......................................................................
+
+# XHTML Editing Elements Module  .......................................
+
+# file: xhtml-edit-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Editing Markup 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-edit-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Editing Elements
+# 
+#    ins, del
+# 
+# This module declares element types and attributes used to indicate
+# inserted and deleted content while editing a document.
+
+# ins: Inserted Text  ...............................
+ins.content = (text | Flow.mix)*
+ins = element ins { ins.attlist, ins.content }
+# end of ins.element
+ins.attlist &=
+  Common.attrib,
+  attribute cite { URI.datatype }?,
+  attribute datetime { Datetime.datatype }?
+# end of ins.attlist
+
+# del: Deleted Text  ................................
+del.content = (text | Flow.mix)*
+del = element del { del.attlist, del.content }
+# end of del.element
+del.attlist &=
+  Common.attrib,
+  attribute cite { URI.datatype }?,
+  attribute datetime { Datetime.datatype }?
+# end of del.attlist
+
+# end of xhtml-edit-1.mod
+
+# BIDI Override Module  .......................................
+
+# ......................................................................
+
+# XHTML BDO Element Module .............................................
+
+# file: xhtml-bdo-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML BDO Element 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-bdo-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Bidirectional Override (bdo) Element
+# 
+# This modules declares the element 'bdo', used to override the
+# Unicode bidirectional algorithm for selected fragments of text.
+# 
+# DEPENDENCIES:
+# Relies on the conditional section keyword %XHTML.bidi; declared
+# as "INCLUDE". Bidirectional text support includes both the bdo
+# element and the 'dir' attribute.
+bdo.content = (text | Inline.mix)*
+bdo = element bdo { bdo.attlist, bdo.content }
+# end of bdo.element
+bdo.attlist &=
+  Core.attrib,
+  attribute xml:lang { LanguageCode.datatype }?,
+  attribute dir { "ltr" | "rtl" }
+# end of xhtml-bdo-1.mod
+
+# Ruby Module  ................................................
+Ruby.common.attrib = Common.attrib
+# ......................................................................
+
+# XHTML Ruby Module ....................................................
+
+# file: xhtml-ruby-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1999-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$
+# 
+# This module is based on the W3C Ruby Annotation Specification:
+# 
+#    http://www.w3.org/TR/ruby
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Ruby 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/ruby/xhtml-ruby-1.mod"
+# 
+# ......................................................................
+
+# Ruby Elements
+# 
+#    ruby, rbc, rtc, rb, rt, rp
+# 
+# This module declares the elements and their attributes used to
+# support ruby annotation markup.
+
+# declare qualified element type names:
+
+# rp fallback is included by default.
+
+# Complex ruby is included by default; it may be 
+# overridden by other modules to ignore it.
+
+# Fragments for the content model of the ruby element
+Ruby.content.simple =
+  rb,
+  (rt | (rp, rt, rp))
+Ruby.content.complex = rbc, rtc, rtc?
+# Content models of the rb and the rt elements are intended to
+# allow other inline-level elements of its parent markup language,
+# but it should not include ruby descendent elements. The following
+# parameter entity %NoRuby.content; can be used to redefine
+# those content models with minimum effort.  It's defined as
+# '( #PCDATA )' by default.
+
+# one or more digits (NUMBER)
+
+# ruby element ......................................
+ruby.content = Ruby.content.simple | Ruby.content.complex
+ruby = element ruby { ruby.attlist, ruby.content }
+# end of ruby.element
+
+# rbc (ruby base component) element .................
+rbc.content = rb+
+rbc = element rbc { rbc.attlist, rbc.content }
+# end of rbc.element
+
+# rtc (ruby text component) element .................
+rtc.content = rt+
+rtc = element rtc { rtc.attlist, rtc.content }
+# end of rtc.element
+
+# rb (ruby base) element ............................
+
+# %rb.content; uses %NoRuby.content; as its content model,
+# which is '( #PCDATA )' by default. It may be overridden
+# by other modules to allow other inline-level elements
+# of its parent markup language, but it should not include
+# ruby descendent elements.
+rb.content = NoRuby.content
+rb = element rb { rb.attlist, rb.content }
+# end of rb.element
+
+# rt (ruby text) element ............................
+
+# %rt.content; uses %NoRuby.content; as its content model,
+# which is '( #PCDATA )' by default. It may be overridden
+# by other modules to allow other inline-level elements
+# of its parent markup language, but it should not include
+# ruby descendent elements.
+rt.content = NoRuby.content
+rt = element rt { rt.attlist, rt.content }
+# end of rt.element
+
+# rbspan attribute is used for complex ruby only ......
+rt.attlist &=
+  [ a:defaultValue = "1" ] attribute rbspan { Number.datatype }?
+# end of rt.attlist
+
+# rp (ruby parenthesis) element .....................
+rp.content = text
+rp = element rp { rp.attlist, rp.content }
+# end of rp.element
+
+# Ruby Common Attributes
+# 
+# The following optional ATTLIST declarations provide an easy way
+# to define common attributes for ruby elements.  These declarations
+# are ignored by default.
+# 
+# Ruby elements are intended to have common attributes of its
+# parent markup language.  For example, if a markup language defines
+# common attributes as a parameter entity %attrs;, you may add
+# those attributes by just declaring the following parameter entities
+# 
+#     <!ENTITY % Ruby.common.attlists  "INCLUDE" >
+#     <!ENTITY % Ruby.common.attrib  "%attrs;" >
+# 
+# before including the Ruby module.
+
+# common attributes for ruby ........................
+ruby.attlist &= Ruby.common.attrib
+# end of Ruby.common.attlist
+
+# common attributes for rbc .........................
+rbc.attlist &= Ruby.common.attrib
+# end of Rbc.common.attlist
+
+# common attributes for rtc .........................
+rtc.attlist &= Ruby.common.attrib
+# end of Rtc.common.attlist
+
+# common attributes for rb ..........................
+rb.attlist &= Ruby.common.attrib
+# end of Rb.common.attlist
+
+# common attributes for rt ..........................
+rt.attlist &= Ruby.common.attrib
+# end of Rt.common.attlist
+
+# common attributes for rp ..........................
+rp.attlist &= Ruby.common.attrib
+# end of Rp.common.attlist
+
+# end of xhtml-ruby-1.mod
+
+# Presentation Module  ........................................
+
+# ......................................................................
+
+# XHTML Presentation Module ............................................
+
+# file: xhtml-pres-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Presentation 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-pres-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Presentational Elements
+# 
+# This module defines elements and their attributes for
+# simple presentation-related markup.
+
+# ......................................................................
+
+# XHTML Inline Presentation Module  ....................................
+
+# file: xhtml-inlpres-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Inline Presentation 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-inlpres-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Inline Presentational Elements
+# 
+#    b, big, i, small, sub, sup, tt
+# 
+# This module declares the elements and their attributes used to
+# support inline-level presentational markup.
+b.content = (text | Inline.mix)*
+b = element b { b.attlist, b.content }
+# end of b.element
+b.attlist &= Common.attrib
+# end of b.attlist
+big.content = (text | Inline.mix)*
+big = element big { big.attlist, big.content }
+# end of big.element
+big.attlist &= Common.attrib
+# end of big.attlist
+i.content = (text | Inline.mix)*
+i = element i { i.attlist, i.content }
+# end of i.element
+i.attlist &= Common.attrib
+# end of i.attlist
+small.content = (text | Inline.mix)*
+small = element small { small.attlist, small.content }
+# end of small.element
+small.attlist &= Common.attrib
+# end of small.attlist
+sub.content = (text | Inline.mix)*
+sub = element sub { sub.attlist, sub.content }
+# end of sub.element
+sub.attlist &= Common.attrib
+# end of sub.attlist
+sup.content = (text | Inline.mix)*
+sup = element sup { sup.attlist, sup.content }
+# end of sup.element
+sup.attlist &= Common.attrib
+# end of sup.attlist
+tt.content = (text | Inline.mix)*
+tt = element tt { tt.attlist, tt.content }
+# end of tt.element
+tt.attlist &= Common.attrib
+# end of tt.attlist
+
+# end of xhtml-inlpres-1.mod
+
+# ......................................................................
+
+# XHTML Block Presentation Module  .....................................
+
+# file: xhtml-blkpres-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Block Presentation 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-blkpres-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Block Presentational Elements
+# 
+#    hr
+# 
+# This module declares the elements and their attributes used to
+# support block-level presentational markup.
+hr.content = empty
+hr = element hr { hr.attlist, hr.content }
+# end of hr.element
+hr.attlist &= Common.attrib
+# end of hr.attlist
+
+# end of xhtml-blkpres-1.mod
+
+# end of xhtml-pres-1.mod
+
+# Link Element Module  ........................................
+
+# ......................................................................
+
+# XHTML Link Element Module  ...........................................
+
+# file: xhtml-link-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Link Element 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-link-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Link element
+# 
+#    link
+# 
+# This module declares the link element type and its attributes,
+# which could (in principle) be used to define document-level links
+# to external resources such as:
+# 
+# a) for document specific toolbars/menus, e.g. start, contents,
+#    previous, next, index, end, help
+# b) to link to a separate style sheet (rel="stylesheet")
+# c) to make a link to a script (rel="script")
+# d) by stylesheets to control how collections of html nodes are
+#    rendered into printed documents
+# e) to make a link to a printable version of this document
+#    e.g. a postscript or pdf version (rel="alternate" media="print")
+
+# link: Media-Independent Link ......................
+link.content = empty
+link = element link { link.attlist, link.content }
+# end of link.element
+link.attlist &=
+  Common.attrib,
+  attribute charset { Charset.datatype }?,
+  attribute href { URI.datatype }?,
+  attribute hreflang { LanguageCode.datatype }?,
+  attribute type { ContentType.datatype }?,
+  attribute rel { LinkTypes.datatype }?,
+  attribute rev { LinkTypes.datatype }?,
+  attribute media { MediaDesc.datatype }?
+# end of link.attlist
+
+# end of xhtml-link-1.mod
+
+# Document Metainformation Module  ............................
+
+# ......................................................................
+
+# XHTML Document Metainformation Module  ...............................
+
+# file: xhtml-meta-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Metainformation 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-meta-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Meta Information
+# 
+#    meta
+# 
+# This module declares the meta element type and its attributes,
+# used to provide declarative document metainformation.
+
+# meta: Generic Metainformation .....................
+meta.content = empty
+meta = element meta { meta.attlist, meta.content }
+# end of meta.element
+meta.attlist &=
+  XHTML.xmlns.attrib,
+  I18n.attrib,
+  attribute http-equiv { xsd:NMTOKEN }?,
+  attribute name { xsd:NMTOKEN }?,
+  attribute content { text },
+  attribute scheme { text }?
+# end of meta.attlist
+
+# end of xhtml-meta-1.mod
+
+# Base Element Module  ........................................
+
+# ......................................................................
+
+# XHTML Base Element Module  ...........................................
+
+# file: xhtml-base-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Base Element 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-base-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Base element
+# 
+#    base
+# 
+# This module declares the base element type and its attributes,
+# used to define a base URI against which relative URIs in the
+# document will be resolved.
+# 
+# Note that this module also redeclares the content model for
+# the head element to include the base element.
+
+# base: Document Base URI ...........................
+base.content = empty
+base = element base { base.attlist, base.content }
+# end of base.element
+base.attlist &=
+  XHTML.xmlns.attrib,
+  attribute href { URI.datatype }
+# end of base.attlist
+head.content =
+  HeadOpts.mix,
+  ((title, HeadOpts.mix, (base, HeadOpts.mix)?)
+   | (base, HeadOpts.mix, (title, HeadOpts.mix)))
+# end of xhtml-base-1.mod
+
+# Scripting Module  ...........................................
+
+# ......................................................................
+
+# XHTML Document Scripting Module  .....................................
+
+# file: xhtml-script-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Scripting 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-script-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Scripting
+# 
+#    script, noscript
+# 
+# This module declares element types and attributes used to provide
+# support for executable scripts as well as an alternate content
+# container where scripts are not supported.
+
+# script: Scripting Statement .......................
+script.content = text
+script = element script { script.attlist, script.content }
+# end of script.element
+script.attlist &=
+  XHTML.xmlns.attrib,
+  attribute charset { Charset.datatype }?,
+  attribute type { ContentType.datatype },
+  attribute src { URI.datatype }?,
+  attribute defer { "defer" }?,
+  [ a:defaultValue = "preserve" ] attribute xml:space { "preserve" }?
+# end of script.attlist
+
+# noscript: No-Script Alternate Content .............
+noscript.content = Block.mix+
+noscript = element noscript { noscript.attlist, noscript.content }
+# end of noscript.element
+noscript.attlist &= Common.attrib
+# end of noscript.attlist
+
+# end of xhtml-script-1.mod
+
+# Style Sheets Module  .........................................
+
+# ......................................................................
+
+# XHTML Document Style Sheet Module  ....................................
+
+# file: xhtml-style-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//DTD XHTML Style Sheets 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-style-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Style Sheets
+# 
+#    style
+# 
+# This module declares the style element type and its attributes,
+# used to embed stylesheet information in the document head element.
+
+# style: Style Sheet Information .....................
+style.content = text
+style = element style { style.attlist, style.content }
+# end of style.element
+style.attlist &=
+  XHTML.xmlns.attrib,
+  title.attrib,
+  I18n.attrib,
+  attribute type { ContentType.datatype },
+  attribute media { MediaDesc.datatype }?,
+  [ a:defaultValue = "preserve" ] attribute xml:space { "preserve" }?
+# end of style.attlist
+
+# end of xhtml-style-1.mod
+
+# Image Module  ...............................................
+
+# ......................................................................
+
+# XHTML Images Module  .................................................
+
+# file: xhtml-image-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Rovision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Images 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-image-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Images
+# 
+#    img
+# 
+# This module provides markup to support basic image embedding.
+
+# To avoid problems with text-only UAs as well as to make
+# image content understandable and navigable to users of
+# non-visual UAs, you need to provide a description with
+# the 'alt' attribute, and avoid server-side image maps.
+img.content = empty
+img = element img { img.attlist, img.content }
+# end of img.element
+img.attlist &=
+  Common.attrib,
+  attribute src { URI.datatype },
+  attribute alt { Text.datatype },
+  attribute longdesc { URI.datatype }?,
+  attribute height { Length.datatype }?,
+  attribute width { Length.datatype }?
+# end of img.attlist
+
+# end of xhtml-image-1.mod
+
+# Client-side Image Map Module  ...............................
+
+# ......................................................................
+
+# XHTML Client-side Image Map Module  ..................................
+
+# file: xhtml-csismap-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Client-side Image Maps 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-csismap-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Client-side Image Maps
+# 
+#    area, map
+# 
+# This module declares elements and attributes to support client-side
+# image maps. This requires that the Image Module (or a module
+# declaring the img element type) be included in the DTD.
+# 
+# These can be placed in the same document or grouped in a
+# separate document, although the latter isn't widely supported
+area.content = empty
+area = element area { area.attlist, area.content }
+# end of area.element
+Shape.datatype = "rect" | "circle" | "poly" | "default"
+Coords.datatype = string
+area.attlist &=
+  Common.attrib,
+  attribute href { URI.datatype }?,
+  [ a:defaultValue = "rect" ] attribute shape { Shape.datatype }?,
+  attribute coords { Coords.datatype }?,
+  attribute nohref { "nohref" }?,
+  attribute alt { Text.datatype },
+  attribute tabindex { Number.datatype }?,
+  attribute accesskey { Character.datatype }?
+# end of area.attlist
+
+# modify anchor attribute definition list
+# to allow for client-side image maps
+a.attlist &=
+  [ a:defaultValue = "rect" ] attribute shape { Shape.datatype }?,
+  attribute coords { Coords.datatype }?
+# modify img attribute definition list
+# to allow for client-side image maps
+img.attlist &= attribute usemap { xsd:IDREF }?
+# modify form input attribute definition list
+# to allow for client-side image maps
+input.attlist &= attribute usemap { xsd:IDREF }?
+# modify object attribute definition list
+# to allow for client-side image maps
+object.attlist &= attribute usemap { xsd:IDREF }?
+# 'usemap' points to the 'id' attribute of a <map> element,
+# which must be in the same document; support for external
+# document maps was not widely supported in HTML and is
+# eliminated in XHTML.
+# 
+# It is considered an error for the element pointed to by
+# a usemap IDREF to occur in anything but a <map> element.
+map.content = (Block.mix | area)+
+map = element map { map.attlist, map.content }
+# end of map.element
+map.attlist &=
+  XHTML.xmlns.attrib,
+  attribute id { xsd:ID },
+  class.attrib,
+  title.attrib,
+  Core.extra.attrib,
+  I18n.attrib,
+  Events.attrib
+# end of map.attlist
+
+# end of xhtml-csismap-1.mod
+
+# Server-side Image Map Module  ...............................
+
+# ......................................................................
+
+# XHTML Server-side Image Map Module  ..................................
+
+# file: xhtml-ssismap-1.mod
+# 
+#      This is XHTML, a reformulation of HTML as a modular XML application.
+#      Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+#      Revision: $Id$ SMI
+# 
+#      This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#        PUBLIC "-//W3C//ELEMENTS XHTML Server-side Image Maps 1.0//EN"
+#        SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-ssismap-1.mod"
+# 
+#      Revisions:
+# #2000-10-22: added declaration for 'ismap' on <input>
+#      .......................................................................
+
+# Server-side Image Maps
+# 
+# This adds the 'ismap' attribute to the img and input elements
+# to support server-side processing of a user selection.
+img.attlist &= attribute ismap { "ismap" }?
+input.attlist &= attribute ismap { "ismap" }?
+# end of xhtml-ssismap-1.mod
+
+# Param Element Module  .......................................
+
+# ......................................................................
+
+# XHTML Param Element Module  .....................................
+
+# file: xhtml-param-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Param Element 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-param-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Parameters for Java Applets and Embedded Objects
+# 
+#    param
+# 
+# This module provides declarations for the param element,
+# used to provide named property values for the applet
+# and object elements.
+
+# param: Named Property Value .......................
+param.content = empty
+param = element param { param.attlist, param.content }
+# end of param.element
+param.attlist &=
+  XHTML.xmlns.attrib,
+  id.attrib,
+  attribute name { text },
+  attribute value { text }?,
+  [ a:defaultValue = "data" ]
+  attribute valuetype { "data" | "ref" | "object" }?,
+  attribute type { ContentType.datatype }?
+# end of param.attlist
+
+# end of xhtml-param-1.mod
+
+# Embedded Object Module  .....................................
+
+# ......................................................................
+
+# XHTML Embedded Object Module  ........................................
+
+# file: xhtml-object-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Embedded Object 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-object-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Embedded Objects
+# 
+#    object
+# 
+# This module declares the object element type and its attributes, used
+# to embed external objects as part of XHTML pages. In the document,
+# place param elements prior to other content within the object element.
+# 
+# Note that use of this module requires instantiation of the Param
+# Element Module.
+
+# object: Generic Embedded Object ...................
+object.content = (text | Flow.mix | param)*
+object = element object { object.attlist, object.content }
+# end of object.element
+object.attlist &=
+  Common.attrib,
+  attribute declare { "declare" }?,
+  attribute classid { URI.datatype }?,
+  attribute codebase { URI.datatype }?,
+  attribute data { URI.datatype }?,
+  attribute type { ContentType.datatype }?,
+  attribute codetype { ContentType.datatype }?,
+  attribute archive { URIs.datatype }?,
+  attribute standby { Text.datatype }?,
+  attribute height { Length.datatype }?,
+  attribute width { Length.datatype }?,
+  attribute name { text }?,
+  attribute tabindex { Number.datatype }?
+# end of object.attlist
+
+# end of xhtml-object-1.mod
+
+# Tables Module ...............................................
+
+# ......................................................................
+
+# XHTML Table Module  ..................................................
+
+# file: xhtml-table-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Tables 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-table-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Tables
+# 
+#    table, caption, thead, tfoot, tbody, colgroup, col, tr, th, td
+# 
+# This module declares element types and attributes used to provide
+# table markup similar to HTML 4.0, including features that enable
+# better accessibility for non-visual user agents.
+
+# declare qualified element type names:
+
+# The frame attribute specifies which parts of the frame around
+# the table should be rendered. The values are not the same as
+# CALS to avoid a name clash with the valign attribute.
+frame.attrib =
+  attribute frame {
+    "void"
+    | "above"
+    | "below"
+    | "hsides"
+    | "lhs"
+    | "rhs"
+    | "vsides"
+    | "box"
+    | "border"
+  }?
+# The rules attribute defines which rules to draw between cells:
+# 
+# If rules is absent then assume:
+# 
+#   "none" if border is absent or border="0" otherwise "all"
+rules.attrib =
+  attribute rules { "none" | "groups" | "rows" | "cols" | "all" }?
+# horizontal alignment attributes for cell contents
+CellHAlign.attrib =
+  attribute align { "left" | "center" | "right" | "justify" | "char" }?,
+  attribute char { Character.datatype }?,
+  attribute charoff { Length.datatype }?
+# vertical alignment attribute for cell contents
+CellVAlign.attrib =
+  attribute valign { "top" | "middle" | "bottom" | "baseline" }?
+# scope is simpler than axes attribute for common tables
+scope.attrib =
+  attribute scope { "row" | "col" | "rowgroup" | "colgroup" }?
+# table: Table Element ..............................
+table.content =
+  caption?,
+  (col* | colgroup*),
+  ((thead?, tfoot?, tbody+) | tr+)
+table = element table { table.attlist, table.content }
+# end of table.element
+table.attlist &=
+  Common.attrib,
+  attribute summary { Text.datatype }?,
+  attribute width { Length.datatype }?,
+  attribute border { Pixels.datatype }?,
+  frame.attrib,
+  rules.attrib,
+  attribute cellspacing { Length.datatype }?,
+  attribute cellpadding { Length.datatype }?
+# end of table.attlist
+
+# caption: Table Caption ............................
+caption.content = (text | Inline.mix)*
+caption = element caption { caption.attlist, caption.content }
+# end of caption.element
+caption.attlist &= Common.attrib
+# end of caption.attlist
+
+# thead: Table Header ...............................
+
+# Use thead to duplicate headers when breaking table
+# across page boundaries, or for static headers when
+# tbody sections are rendered in scrolling panel.
+thead.content = tr+
+thead = element thead { thead.attlist, thead.content }
+# end of thead.element
+thead.attlist &= Common.attrib, CellHAlign.attrib, CellVAlign.attrib
+# end of thead.attlist
+
+# tfoot: Table Footer ...............................
+
+# Use tfoot to duplicate footers when breaking table
+# across page boundaries, or for static footers when
+# tbody sections are rendered in scrolling panel.
+tfoot.content = tr+
+tfoot = element tfoot { tfoot.attlist, tfoot.content }
+# end of tfoot.element
+tfoot.attlist &= Common.attrib, CellHAlign.attrib, CellVAlign.attrib
+# end of tfoot.attlist
+
+# tbody: Table Body .................................
+
+# Use multiple tbody sections when rules are needed
+# between groups of table rows.
+tbody.content = tr+
+tbody = element tbody { tbody.attlist, tbody.content }
+# end of tbody.element
+tbody.attlist &= Common.attrib, CellHAlign.attrib, CellVAlign.attrib
+# end of tbody.attlist
+
+# colgroup: Table Column Group ......................
+
+# colgroup groups a set of col elements. It allows you
+# to group several semantically-related columns together.
+colgroup.content = col*
+colgroup = element colgroup { colgroup.attlist, colgroup.content }
+# end of colgroup.element
+colgroup.attlist &=
+  Common.attrib,
+  [ a:defaultValue = "1" ] attribute span { Number.datatype }?,
+  attribute width { MultiLength.datatype }?,
+  CellHAlign.attrib,
+  CellVAlign.attrib
+# end of colgroup.attlist
+
+# col: Table Column .................................
+
+# col elements define the alignment properties for
+# cells in one or more columns.
+# 
+# The width attribute specifies the width of the
+# columns, e.g.
+# 
+#   width="64"        width in screen pixels
+#   width="0.5*"      relative width of 0.5
+# 
+# The span attribute causes the attributes of one
+# col element to apply to more than one column.
+col.content = empty
+col = element col { col.attlist, col.content }
+# end of col.element
+col.attlist &=
+  Common.attrib,
+  [ a:defaultValue = "1" ] attribute span { Number.datatype }?,
+  attribute width { MultiLength.datatype }?,
+  CellHAlign.attrib,
+  CellVAlign.attrib
+# end of col.attlist
+
+# tr: Table Row .....................................
+tr.content = (th | td)+
+tr = element tr { tr.attlist, tr.content }
+# end of tr.element
+tr.attlist &= Common.attrib, CellHAlign.attrib, CellVAlign.attrib
+# end of tr.attlist
+
+# th: Table Header Cell .............................
+
+# th is for header cells, td for data,
+# but for cells acting as both use td
+th.content = (text | Flow.mix)*
+th = element th { th.attlist, th.content }
+# end of th.element
+th.attlist &=
+  Common.attrib,
+  attribute abbr { Text.datatype }?,
+  attribute axis { text }?,
+  attribute headers { xsd:IDREFS }?,
+  scope.attrib,
+  [ a:defaultValue = "1" ] attribute rowspan { Number.datatype }?,
+  [ a:defaultValue = "1" ] attribute colspan { Number.datatype }?,
+  CellHAlign.attrib,
+  CellVAlign.attrib
+# end of th.attlist
+
+# td: Table Data Cell ...............................
+td.content = (text | Flow.mix)*
+td = element td { td.attlist, td.content }
+# end of td.element
+td.attlist &=
+  Common.attrib,
+  attribute abbr { Text.datatype }?,
+  attribute axis { text }?,
+  attribute headers { xsd:IDREFS }?,
+  scope.attrib,
+  [ a:defaultValue = "1" ] attribute rowspan { Number.datatype }?,
+  [ a:defaultValue = "1" ] attribute colspan { Number.datatype }?,
+  CellHAlign.attrib,
+  CellVAlign.attrib
+# end of td.attlist
+
+# end of xhtml-table-1.mod
+
+# Forms Module  ...............................................
+
+# ......................................................................
+
+# XHTML Forms Module  ..................................................
+
+# file: xhtml-form-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Forms 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-form-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Forms
+# 
+#    form, label, input, select, optgroup, option,
+#    textarea, fieldset, legend, button
+# 
+# This module declares markup to provide support for online
+# forms, based on the features found in HTML 4.0 forms.
+
+# declare qualified element type names:
+
+# %BlkNoForm.mix; includes all non-form block elements,
+# plus %Misc.class;
+BlkNoForm.mix =
+  Heading.class
+  | List.class
+  | BlkStruct.class
+  | BlkPhras.class
+  | BlkPres.class
+  | Table.class
+  | Block.extra
+  | Misc.class
+# form: Form Element ................................
+form.content = (BlkNoForm.mix | fieldset)+
+form = element form { form.attlist, form.content }
+# end of form.element
+form.attlist &=
+  Common.attrib,
+  attribute action { URI.datatype },
+  [ a:defaultValue = "get" ] attribute method { "get" | "post" }?,
+  [ a:defaultValue = "application/x-www-form-urlencoded" ]
+  attribute enctype { ContentType.datatype }?,
+  attribute accept-charset { Charsets.datatype }?,
+  attribute accept { ContentTypes.datatype }?
+# end of form.attlist
+
+# label: Form Field Label Text ......................
+
+# Each label must not contain more than ONE field
+label.content =
+  (text
+   | input
+   | select
+   | textarea
+   | button
+   | InlStruct.class
+   | InlPhras.class
+   | I18n.class
+   | InlPres.class
+   | Anchor.class
+   | InlSpecial.class
+   | Inline.extra
+   | Misc.class)*
+label = element label { label.attlist, label.content }
+# end of label.element
+label.attlist &=
+  Common.attrib,
+  attribute for { xsd:IDREF }?,
+  attribute accesskey { Character.datatype }?
+# end of label.attlist
+
+# input: Form Control ...............................
+input.content = empty
+input = element input { input.attlist, input.content }
+# end of input.element
+InputType.class =
+  "text"
+  | "password"
+  | "checkbox"
+  | "radio"
+  | "submit"
+  | "reset"
+  | "file"
+  | "hidden"
+  | "image"
+  | "button"
+# attribute 'name' required for all but submit & reset
+input.attlist &=
+  Common.attrib,
+  [ a:defaultValue = "text" ] attribute type { InputType.class }?,
+  attribute name { text }?,
+  attribute value { text }?,
+  attribute checked { "checked" }?,
+  attribute disabled { "disabled" }?,
+  attribute readonly { "readonly" }?,
+  attribute size { Number.datatype }?,
+  attribute maxlength { Number.datatype }?,
+  attribute src { URI.datatype }?,
+  attribute alt { Text.datatype }?,
+  attribute tabindex { Number.datatype }?,
+  attribute accesskey { Character.datatype }?,
+  attribute accept { ContentTypes.datatype }?
+# end of input.attlist
+
+# select: Option Selector ...........................
+select.content = (optgroup | option)+
+select = element select { select.attlist, select.content }
+# end of select.element
+select.attlist &=
+  Common.attrib,
+  attribute name { text }?,
+  attribute size { Number.datatype }?,
+  attribute multiple { "multiple" }?,
+  attribute disabled { "disabled" }?,
+  attribute tabindex { Number.datatype }?
+# end of select.attlist
+
+# optgroup: Option Group ............................
+optgroup.content = option+
+optgroup = element optgroup { optgroup.attlist, optgroup.content }
+# end of optgroup.element
+optgroup.attlist &=
+  Common.attrib,
+  attribute disabled { "disabled" }?,
+  attribute label { Text.datatype }
+# end of optgroup.attlist
+
+# option: Selectable Choice .........................
+option.content = text
+option = element option { option.attlist, option.content }
+# end of option.element
+option.attlist &=
+  Common.attrib,
+  attribute selected { "selected" }?,
+  attribute disabled { "disabled" }?,
+  attribute label { Text.datatype }?,
+  attribute value { text }?
+# end of option.attlist
+
+# textarea: Multi-Line Text Field ...................
+textarea.content = text
+textarea = element textarea { textarea.attlist, textarea.content }
+# end of textarea.element
+textarea.attlist &=
+  Common.attrib,
+  attribute name { text }?,
+  attribute rows { Number.datatype },
+  attribute cols { Number.datatype },
+  attribute disabled { "disabled" }?,
+  attribute readonly { "readonly" }?,
+  attribute tabindex { Number.datatype }?,
+  attribute accesskey { Character.datatype }?
+# end of textarea.attlist
+
+# fieldset: Form Control Group ......................
+
+# #PCDATA is to solve the mixed content problem,
+# per specification only whitespace is allowed
+fieldset.content = (text | legend | Flow.mix)*
+fieldset = element fieldset { fieldset.attlist, fieldset.content }
+# end of fieldset.element
+fieldset.attlist &= Common.attrib
+# end of fieldset.attlist
+
+# legend: Fieldset Legend ...........................
+legend.content = (text | Inline.mix)*
+legend = element legend { legend.attlist, legend.content }
+# end of legend.element
+legend.attlist &=
+  Common.attrib,
+  attribute accesskey { Character.datatype }?
+# end of legend.attlist
+
+# button: Push Button ...............................
+button.content =
+  (text
+   | BlkNoForm.mix
+   | InlStruct.class
+   | InlPhras.class
+   | InlPres.class
+   | I18n.class
+   | InlSpecial.class
+   | Inline.extra)*
+button = element button { button.attlist, button.content }
+# end of button.element
+button.attlist &=
+  Common.attrib,
+  attribute name { text }?,
+  attribute value { text }?,
+  [ a:defaultValue = "submit" ]
+  attribute type { "button" | "submit" | "reset" }?,
+  attribute disabled { "disabled" }?,
+  attribute tabindex { Number.datatype }?,
+  attribute accesskey { Character.datatype }?
+# end of button.attlist
+
+# end of xhtml-form-1.mod
+
+# Legacy Markup ...............................................
+
+# Document Structure Module (required)  .......................
+
+# ......................................................................
+
+# XHTML Structure Module  ..............................................
+
+# file: xhtml-struct-1.mod
+# 
+# This is XHTML, a reformulation of HTML as a modular XML application.
+# Copyright 1998-2001 W3C (MIT, INRIA, Keio), All Rights Reserved.
+# Revision: $Id$ SMI
+# 
+# This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+# 
+#   PUBLIC "-//W3C//ELEMENTS XHTML Document Structure 1.0//EN"
+#   SYSTEM "http://www.w3.org/TR/xhtml-modularization/DTD/xhtml-struct-1.mod"
+# 
+# Revisions:
+# (none)
+# .......................................................................
+
+# Document Structure
+# 
+#    title, head, body, html
+# 
+# The Structure Module defines the major structural elements and
+# their attributes.
+# 
+# Note that the content model of the head element type is redeclared
+# when the Base Module is included in the DTD.
+# 
+# The parameter entity containing the XML namespace URI value used
+# for XHTML is '%XHTML.xmlns;', defined in the Qualified Names module.
+
+# title: Document Title .............................
+
+# The title element is not considered part of the flow of text.
+# It should be displayed, for example as the page header or
+# window title. Exactly one title is required per document.
+title.content = text
+title = element title { title.attlist, title.content }
+# end of title.element
+title.attlist &= XHTML.xmlns.attrib, I18n.attrib
+# end of title.attlist
+
+# head: Document Head ...............................
+head = element head { head.attlist, head.content }
+# end of head.element
+
+# reserved for future use with document profiles
+profile.attrib =
+  [ a:defaultValue = "" ] attribute profile { URI.datatype }?
+head.attlist &= XHTML.xmlns.attrib, I18n.attrib, profile.attrib
+# end of head.attlist
+
+# body: Document Body ...............................
+body.content = Block.mix+
+body = element body { body.attlist, body.content }
+# end of body.element
+body.attlist &= Common.attrib
+# end of body.attlist
+
+# html: XHTML Document Element ......................
+html.content = head, body
+html = element html { html.attlist, html.content }
+# end of html.element
+
+# version attribute value defined in driver
+XHTML.version.attrib =
+  [ a:defaultValue = "-//W3C//DTD XHTML 1.1//EN" ]
+  attribute version { string "-//W3C//DTD XHTML 1.1//EN" }?
+# see the Qualified Names module for information
+# on how to extend XHTML using XML namespaces
+html.attlist &= XHTML.xmlns.attrib, XHTML.version.attrib, I18n.attrib
+start = html
+# end of html.attlist
+
+# end of xhtml-struct-1.mod
+
+# end of XHTML 1.1 DTD  .................................................
+
+# .......................................................................

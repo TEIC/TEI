@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns="http://www.tei-c.org/ns/1.0" 
+  xmlns:teix="http://www.tei-c.org/ns/Examples" 
+  xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI for authoring ODD</title>
+        <author>Sebastian Rahtz</author>
+      </titleStmt>
+      <publicationStmt>
+<publisher>TEI Consortium</publisher>
+        <availability status="free">
+    <licence target="http://creativecommons.org/licenses/by-sa/3.0/"> Distributed under a Creative
+      Commons Attribution-ShareAlike 3.0 Unported License </licence>
+     <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
+      <p>Copyright 2013 TEI Consortium.</p>
+      <p>All rights reserved.</p>
+      <p>Redistribution and use in source and binary forms, with or without modification, are
+       permitted provided that the following conditions are met:</p>
+      <list>
+       <item>Redistributions of source code must retain the above copyright notice, this list of
+        conditions and the following disclaimer.</item>
+       <item>Redistributions in binary form must reproduce the above copyright notice, this list of
+        conditions and the following disclaimer in the documentation and/or other materials provided
+        with the distribution.</item>
+      </list>
+      <p>This software is provided by the copyright holders and contributors "as is" and any express
+       or implied warranties, including, but not limited to, the implied warranties of
+       merchantability and fitness for a particular purpose are disclaimed. In no event shall the
+       copyright holder or contributors be liable for any direct, indirect, incidental, special,
+       exemplary, or consequential damages (including, but not limited to, procurement of substitute
+       goods or services; loss of use, data, or profits; or business interruption) however caused
+       and on any theory of liability, whether in contract, strict liability, or tort (including
+       negligence or otherwise) arising in any way out of the use of this software, even if advised
+       of the possibility of such damage.</p>
+     </licence>
+     <p>TEI material can be licensed differently depending on the use you intend to make of it.
+      Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is
+      generally appropriate for usages which treat TEI content as data or documentation. The BSD-2
+      licence is generally appropriate for usage of TEI content in a software environment. For
+      further information or clarification, please contact the <ref target="mailto:info@tei-c.org"
+       >TEI Consortium</ref>. </p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Written from scratch.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>This customization loads the modules and external
+schemata necessary for writing TEI ODD documents.</p>
+      <schemaSpec ident="tei_odds" start="TEI schemaSpec elementSpec classSpec macroSpec div">
+        <moduleRef url="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/relaxng.rng"/>
+        <moduleRef key="header"/>
+        <moduleRef key="core"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="gaiji"/>
+        <moduleRef key="textstructure"/>
+        <moduleRef key="tagdocs"/>
+        <moduleRef key="dictionaries"/>
+        <moduleRef key="linking"/>
+        <moduleRef key="figures"/>
+        <elementSpec ident="teiCorpus" mode="delete" module="core"/>
+        <!-- required to avoid Sanity Checker complaint -->
+        <elementSpec ident="handNote" mode="delete" module="header"/>
+        <macroSpec ident="macro.schemaPattern" mode="change" module="tagdocs">
+          <content>
+            <group xmlns="http://relaxng.org/ns/structure/1.0">
+              <choice>
+                <text/>
+                <oneOrMore>
+                  <choice>
+                    <ref name="pattern"/>
+                    <ref name="define"/>
+                  </choice>
+                </oneOrMore>
+              </choice>
+              <zeroOrMore>
+                <ref name="anySchematron"/>
+              </zeroOrMore>
+            </group>
+          </content>
+        </macroSpec>
+
+        <macroSpec ident="anySchematron" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://www.ascc.net/xml/schematron"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anySchematron"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
+
+        <elementSpec ident="content" mode="change" module="tagdocs">
+	  <content>
+	    <choice xmlns="http://relaxng.org/ns/structure/1.0">
+	      <group>
+		<ref name="valList"/>
+	      </group>
+	      <oneOrMore>
+		<ref name="anyRelax"/>
+	      </oneOrMore>
+	      <zeroOrMore>
+		<ref name="model.contentPart"/>
+	      </zeroOrMore>
+	    </choice>
+	  </content>
+	</elementSpec>
+
+        <macroSpec ident="anyRelax" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://relaxng.org/ns/structure/1.0"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anyRelax"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
+
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>

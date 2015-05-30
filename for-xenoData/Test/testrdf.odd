@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  
+     xmlns="http://www.tei-c.org/ns/1.0"
+     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+     xmlns:cc="http://web.resource.org/cc/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with RDF</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+         <publicationStmt>
+	   <p> </p>
+	 </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+<schemaSpec ident="testrdf" start="TEI">
+    <moduleRef url="rdfxml.rng"/>
+    <moduleRef key="header"/>
+    <moduleRef key="core"/>
+    <moduleRef key="tei"/>
+    <moduleRef key="textstructure"/>
+    <moduleRef key="linking"/>
+    <moduleRef key="figures"/>
+    <elementSpec module="header" ident="availability" mode="change">
+      <content>
+	<rng:ref name="RDF"/>
+      </content>
+    </elementSpec>
+    <elementSpec ident="email" mode="add">
+      <classes>
+	<memberOf key="model.addrPart"/>
+      </classes>
+      <content>
+	<rng:text/>
+      </content>
+    </elementSpec>
+</schemaSpec>
+</body>
+</text>
+</TEI>
+
+
+

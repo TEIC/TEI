@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="concurrent" ident="col">
+  <equiv/>
+  <gloss>column</gloss>
+  <desc>contains one column of a multi-column reference edition.</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+多段組みになっている参照版(reference edition)の1段を示す．
+</desc>
+  <desc version="2006-10-15" xml:lang="es">contiene una columna de una edición de referencia multi-columna.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+  </classes>
+  <content>
+    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:text/>
+        <rng:ref name="model.gLike"/>
+        <rng:ref name="line"/>
+      </rng:choice>
+    </rng:zeroOrMore>
+  </content>
+  <exemplum xml:lang="und">
+    <eg>&lt;(La)page n="32"&gt;
+ &lt;(La)col n='a'&gt; ... &lt;/(La)col&gt;
+ &lt;(La)col n='b'&gt; ... &lt;/(La)col&gt;
+ &lt;/(La)page&gt;</eg>
+  </exemplum>
+  <remarks>
+    <p rend="dataDesc">May contain <gi>line</gi> elements, or character data.</p>
+    <p>The <gi>col</gi> tag should be used wherever a standard
+reference scheme uses references to individual columns of a reference
+edition; otherwise it need not be used.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    要素<gi>line</gi>または文字データを含むかもしれない．
+    </p>
+    <p>
+    要素<gi>col</gi>は，標準的な参照スキームが参照版(reference
+    edition)における1段を参照している際には必ず使用されるべきである．
+    そうでなければ，使う必要はない．
+    </p>
+  </remarks>
+  <listRef>
+    <ptr target="#NHRS" type="div3"/>
+  </listRef>
+</elementSpec>

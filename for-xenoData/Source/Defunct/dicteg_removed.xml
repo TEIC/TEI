@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright TEI Consortium. 
+Licensed under the GNU General Public License. 
+See the file COPYING for details
+$Date$
+
+$Id$
+-->
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="dicteg">
+  <equiv/>
+  <gloss>example (exempli gratia)</gloss>
+  <gloss version="2007-05-02" xml:lang="zh-TW">字典中的範例</gloss>
+  <gloss version="2008-04-05" xml:lang="ja"/>
+  <gloss version="2007-06-12" xml:lang="fr">exemple (exempli gratia)</gloss>
+  <gloss version="2007-05-04" xml:lang="es">ejemplo (p.ej.)</gloss>
+  <gloss version="2007-01-21" xml:lang="it">esempio (per esempio)</gloss>
+  <desc>(in a dictionary) contains an example text containing at least one occurrence of the word
+        form, used in the sense being described; examples may be quoted from (named) authors or contrived.</desc>
+  <desc version="2007-05-02" xml:lang="zh-TW">範例文字中至少出現一次被解釋的單字形式；也許為引用範例或是設計範例。</desc>
+  <desc version="2008-04-05" xml:lang="ja">
+  辞書において，当該語形の少なくともひとつの出現形を含む用例を示す．
+  当該用例は，作者提示の引用かもしれないし，作例かもしれない．
+  </desc>
+  <desc version="2007-06-12" xml:lang="fr"> (dans un dictionnaire) contient un exemple
+			comportant au moins une occurrence de la forme du mot dans le sens dont il est question
+			; des exemples peuvent être des citations d'auteurs (nommés) ou avoir été
+		inventés.</desc>
+  <desc version="2007-05-04" xml:lang="es">(en un diccionario) contiene un texto de ejemplo que contiene al menos una aparición de la forma léxica, usada en el sentido que se define; los ejemplos pueden ser citados (indicando la fuente o autoría) o inventados.</desc>
+  <desc version="2007-01-21" xml:lang="it">(in un dizionario) contiene un esempio composto di almeno un'occorrenza della parola, usata nell'accezione descritta; gli esempi possono essere ciatzioni da autori (nominati) o costruiti.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.typed"/>
+    <memberOf key="model.entryPart.top"/>
+    <memberOf key="model.entryPart"/>
+    <memberOf key="att.lexicographic"/>
+  </classes>
+  <content>
+    <rng:oneOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
+      <rng:choice>
+        <rng:ref name="q"/>
+        <rng:ref name="quote"/>
+        <rng:ref name="cit"/>
+        <rng:ref name="model.entryPart"/>
+      </rng:choice>
+    </rng:oneOrMore>
+  </content>
+  <remarks>
+    <p rend="dataDesc">May contain a quotation, pronunciation, definition, or translation information.</p>
+    <p>In some cases the quoted example may be followed by a bibliographic citation for
+            the source; this citation may be tagged with the tags described in section <ptr target="#COBI" type="div2"/>. The quotation and the indication of its source should
+            be enclosed in a <gi>cit</gi> element.</p>
+  </remarks>
+  <remarks xml:lang="ja">
+    <p rend="dataDesc">
+    引用符，句点，定義，翻訳が含まれているかもしれない．
+    </p>
+    <p>
+    引用された用例には，元資料に関する書誌情報が示されているかもしれな
+  い．この場合の用例の符号化については，
+  <ptr target="#COBI" type="div2"/>を参照のこと．当該引用や元資料への
+  参照は，要素<gi>cit</gi>で示されるべきである．
+  </p>
+  </remarks>
+  <listRef>
+    <ptr target="#DITPEG" type="div2"/>
+  </listRef>
+</elementSpec>

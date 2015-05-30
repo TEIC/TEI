@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en"  xmlns="http://www.tei-c.org/ns/1.0"
+ xmlns:rng="http://relaxng.org/ns/structure/1.0"
+ n="tei_xinclude">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with XInclude (experimental)</title>
+            <author>Sebastian Rahtz</author>
+         </titleStmt>
+	   <publicationStmt>
+<publisher>TEI Consortium</publisher>
+	     <availability status="free">
+     <licence target="http://creativecommons.org/licenses/by-sa/3.0/"> Distributed under a Creative
+      Commons Attribution-ShareAlike 3.0 Unported License </licence>
+     <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
+      <p>Copyright 2013 TEI Consortium.</p>
+      <p>All rights reserved.</p>
+
+      <p>Redistribution and use in source and binary forms, with or without modification, are
+       permitted provided that the following conditions are met:</p>
+      <list>
+       <item>Redistributions of source code must retain the above copyright notice, this list of
+        conditions and the following disclaimer.</item>
+       <item>Redistributions in binary form must reproduce the above copyright notice, this list of
+        conditions and the following disclaimer in the documentation and/or other materials provided
+        with the distribution.</item>
+      </list>
+
+
+      <p>This software is provided by the copyright holders and contributors "as is" and any express
+       or implied warranties, including, but not limited to, the implied warranties of
+       merchantability and fitness for a particular purpose are disclaimed. In no event shall the
+       copyright holder or contributors be liable for any direct, indirect, incidental, special,
+       exemplary, or consequential damages (including, but not limited to, procurement of substitute
+       goods or services; loss of use, data, or profits; or business interruption) however caused
+       and on any theory of liability, whether in contract, strict liability, or tort (including
+       negligence or otherwise) arising in any way out of the use of this software, even if advised
+       of the possibility of such damage.</p>
+     </licence>
+     <p>TEI material can be licensed differently depending on the use you intend to make of it.
+      Hence it is made available under both the CC+BY and BSD-2 licences. The CC+BY licence is
+      generally appropriate for usages which treat TEI content as data or documentation. The BSD-2
+      licence is generally appropriate for usage of TEI content in a software environment. For
+      further information or clarification, please contact the <ref target="mailto:info@tei-c.org"
+       >TEI Consortium</ref>. </p>
+	     </availability>
+	   </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+<text>
+<body>
+  <p>This customization loads the normal four modules, and adds the
+  <gi>include</gi> element from XInclude (see <ptr
+  target="http://www.w3.org/TR/xinclude/"/> for details on this
+  scheme). This allows you to validate TEI documents
+<emph>before</emph> XInclude processing. In general, this is not
+the right way to work, since you would normally validate after
+any inclusions have been resolved. <gi>include</gi> is set up here to
+  be allowed in the <gi>teiHeader</gi> and instead of or between
+  paragraph-like objects.</p>
+
+    <schemaSpec ident="tei_xinclude" start="TEI teiCorpus">
+      <moduleRef key="header"/>
+      <moduleRef key="core"/>
+      <moduleRef key="tei"/>
+      <moduleRef key="textstructure"/>
+      <!-- required to avoid Sanity Checker complaint -->
+      <elementSpec ident="handNote" mode="delete" module="header"/>
+      <elementSpec 
+	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	  ident="include" 
+	  ns="http://www.w3.org/2001/XInclude" 
+	  mode="add">
+	<desc  xml:lang="en" versionDate="2014-01-12">The W3C XInclude element</desc>
+	<classes>
+	  <memberOf key="model.common"/>
+	  <memberOf key="model.teiHeaderPart"/>
+	</classes>
+	<content>
+	  <rng:optional>
+	    <rng:ref name="fallback"/>
+	  </rng:optional>
+	</content>
+	<attList>
+	  <attDef ident="href">
+	    <desc  xml:lang="en" versionDate="2014-01-12">pointer to the resource being included</desc>
+	    <datatype>
+	      <rng:ref name="data.pointer"/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="parse"  usage="opt">
+	    <defaultVal>xml</defaultVal>
+	    <valList type="closed">
+	      <valItem ident="xml"/>
+	      <valItem ident="text"/>
+	    </valList>
+	  </attDef>
+	  
+	  <attDef ident="xpointer" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="encoding"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept" usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-charset"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	  
+	  <attDef ident="accept-language"  usage="opt">
+	    <datatype>
+	      <rng:text/>
+	    </datatype>
+	  </attDef>
+	</attList>
+      </elementSpec>
+      
+      <elementSpec 
+	  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+	  ident="fallback" 
+	  ns="http://www.w3.org/2001/XInclude" 
+	  mode="add">
+	<desc  xml:lang="en" versionDate="2014-01-12">Wrapper for fallback elements if an XInclude fails</desc>
+	<content>
+	  <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
+	    <choice>
+	      <text/>
+	      <ref name="macro.anyThing"/>
+	    </choice>
+	  </oneOrMore>
+	</content>
+      </elementSpec>
+ <macroSpec ident="macro.anyThing" mode="add">
+      <content>
+	<?NameList?>
+      </content>
+    </macroSpec>
+      
+    </schemaSpec>
+</body>
+</text>
+</TEI>
+
+
+

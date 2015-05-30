@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+        <groupId>test-tei</groupId>
+	<artifactId>test-tei</artifactId>
+	<packaging>jar</packaging>
+	<name>JIBX TEI Test</name>
+        <version>0.0.0</version>
+
+
+       <properties>
+         <jibix.run.version>1.2.5</jibix.run.version>
+       </properties>
+
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.jibx</groupId>
+				<artifactId>jibx-maven-plugin</artifactId>
+				<version>1.2.5</version>
+
+				<executions>
+					<execution>
+						<id>generate-java-code-from-schema</id>
+						<goals>
+							<goal>schema-codegen</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>compile-binding</id>
+						<goals>
+							<goal>bind</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaLocation>http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/custom/schema/xsd/</schemaLocation>
+					<includeSchemas>
+						<includeSchema>tei_all.xsd</includeSchema>
+					</includeSchemas>
+					<includeBaseBindings>
+						<includeBaseBinding>
+							<groupId>fr.scpo</groupId>
+							<artifactId>spire-interface-hal-schema</artifactId>
+							<directory>META-INF</directory>
+							<includes>
+								<include>binding.xml</include>
+							</includes>
+						</includeBaseBinding>
+					</includeBaseBindings>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+
+
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jibx</groupId>
+			<artifactId>jibx-run</artifactId>
+			<version>${jibix.run.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>
