@@ -33,12 +33,17 @@
     <memberOf key="att.editLike"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="model.pLike"/>
-      <oneOrMore>
-        <ref name="langKnown"/>
-      </oneOrMore>
-    </choice>
+     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
+        <rng:zeroOrMore>
+           <rng:ref name="precision"/>
+        </rng:zeroOrMore>
+        <rng:choice>
+           <rng:ref name="model.pLike"/>
+           <rng:oneOrMore>
+              <rng:ref name="langKnown"/>
+           </rng:oneOrMore>
+        </rng:choice>
+     </rng:group>
   </content>
   <attList>
     <attDef ident="tags" usage="opt">
