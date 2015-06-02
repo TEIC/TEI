@@ -3159,94 +3159,148 @@ In order to record both of these reference systems  one
 could employ any of a variety of methods discussed in chapter <ptr target="#NH"/>.
  </p></div>
 <div type="div3" xml:id="CORS2"><head>Creating New Reference Systems</head>
-<p>If a text has no canonical reference system of its own, a reference
-system, if needed, may be derived from the structure of the electronic
-text, specifically from the markup of the text.  As with any
-reference system intended for long-term use, it is important to see the
-reference as an established, unchanging point in the text.  Should the
-text be revised or rearranged, the reference-system identifiers
-associated with any bit of text must stay with that bit of text, even if
-it means the reference numbers fall out of sequence.  (A new reference
-system may always be created beside the old one if out-of-sequence
-numbers must be avoided.)
- </p>
+<p>If a text has no canonical reference system of its own, a new custom reference
+system may be used.</p>
+  
 <p>The global attributes <att>n</att> and <att>xml:id</att> may be used to
-assign reference identifiers to segments of the text.  Identifiers
-specified by either attribute apply to the entire element for which they
-are given.  ID attributes must be unique within a single
-document, and ID values must begin with a letter.  No such restrictions
-are made on the values of <att>n</att> attributes.
- </p>
-<p>A convenient method of mechanically generating unique values for
-<att>xml:id</att> or <att>n</att> attributes based on the structure of
-the document is to construct, for each element, a <term>domain-style
-address</term> comprising a series of components separated by full
-stops, with one component for each level of the document hierarchy.
-Two methods may be used.  In the <term>typed path</term> form of
-identifier, each component in the identifier takes the form of an
-element identifier, a hyphen, and a number, for example
-<code>p-2</code>. The element name specifies what type of
-element is to be sought, and the number specifies which occurrence of that
-element type is to be selected.  (The hyphen and number may be omitted
-if there is only one element of the given type.)  In the <term>untyped
-path</term> form of identifier, each component consists of a number,
-indicating which element in the sequence of nodes at each level is to be
-selected.  To make the resulting identifier a valid XML identifier, it
-may need to be prefixed with an unchanging alphabetic letter.</p>
-<p>Identifiers generated with these methods should use the <gi>text</gi>
-element as their starting point, rather than the <gi>TEI</gi> or
-<gi>body</gi> elements. The <gi>TEI</gi> element may be taken
-as a starting point only if identifiers need to be generated for the
-<gi>teiHeader</gi>, which is not usually the case;  using the
-<gi>body</gi> element as a root would prevent assignment of identifiers
-for the front and back matter.  The component corresponding to the root
-element can be omitted from identifiers, if no confusion will result.
-In collections and corpora, the component corresponding to the root may
-be replaced by the unique identifier assigned to the text or sample.
- </p>
-<p>In the following example, each element within the <gi>text</gi>
-element has been given a typed-path identifier as its <att>xml:id</att>
-value, and an untyped-path identifier as its <att>n</att> value; the
-latter are prefixed with the string <mentioned>AB</mentioned>, which may be
-imagined to be the general identifier for this text.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><text xml:id="Text-1" n="AB">
-  <front xml:id="Front" n="AB.1">
-    <div xml:id="Front.div-1" n="AB.1.1">
-      <p> ... </p> 
-    </div>
-    <titlePage xml:id="Front.titlePage" n="AB.1.2">
-      <titlePart> ... </titlePart>       
-    </titlePage>
-    <div xml:id="Front.div-2" n="AB.1.3">
-      <p> ... </p> 
-    </div>
-  </front>
-  <body xml:id="Body" n="AB.2">
-    <p xml:id="Body.p-1" n="AB.2.1"> ... </p>
-    <p xml:id="Body.p-2" n="AB.2.2"> ... </p>
-    <div xml:id="Body.div-1" n="AB.2.3">
-      <head xml:id="Body.div-1.head" n="AB.2.3.1"> ... </head>
-      <p xml:id="Body.div-1.p-1" n="AB.2.3.2"> ... </p>
-      <p xml:id="Body.div-1.p-2" n="AB.2.3.3"> ... </p>
-    </div>
-    <div xml:id="Body.div-2" n="AB.2.4">
-      <head xml:id="Body.div-2.head" n="AB.2.4.1"> ... </head>
-      <p xml:id="Body.div-2.p-1" n="AB.2.4.2"> ... </p>
-      <p xml:id="Body.div-2.p-2" n="AB.2.4.3"> ... </p>
-    </div>
-  </body>
-</text></egXML>
-The typed and untyped path methods are convenient, but are in no way
-required for anyone creating a reference system.
- </p>
-<p>If the <att>xml:id</att> attribute is used to record the reference
-identifiers generated, each value should record the entire path.  If the
-<att>n</att> attribute is used, each value may record either the entire
-path or only the subpath from the parent element.  The attribute
-used, the elements which can bear standard reference identifiers, and
-the method for constructing standard reference identifiers, should all
-be declared in the header as described in section <ptr target="#HD54"/>.
- </p>
+  assign reference identifiers to segments of the text.  Identifiers
+  specified by either attribute apply to the entire element for which they
+  are given. <att>xml:id</att> attributes must be unique within a single
+  document, and <att>xml:id</att> values must begin with a letter.  No such restrictions
+  are made on the values of <att>n</att> attributes.
+</p>
+
+<p>Determining a referencing system for a TEI encoding depends on many factors 
+  that may either be derived from textual structure, or influenced by extra-textual 
+  contingencies such as project and file management concerns. It is important,
+  therefore, that the attribute used, the elements which can bear standard
+  reference identifiers, and the method for constructing standard reference 
+  identifiers, should all be declared in the header as described in section
+  <ptr target="#HD54"/>.
+</p>
+
+<p>The Guidelines do not recommend one specific method for creating new referencing
+   systems; however, the rest of this section lists some possibly useful strategies.</p>
+
+  <div type="div4" xml:id="CORS2-1">
+    <head>Referencing system derived from markup</head>
+    <p>
+      A new referencing system may be derived from the structure of the electronic
+      text, specifically from the markup of the text. As with any
+      reference system intended for long-term use, it is important to see the
+      reference as an established, unchanging point in the text. Should the
+      text be revised or rearranged, the reference-system identifiers
+      associated with any section of text must stay with that section of text, even if
+      it means the reference numbers fall out of sequence.  (A new reference
+      system may always be created beside the old one if out-of-sequence
+      numbers must be avoided.)
+    </p>
+    <p>A convenient method of mechanically generating unique values for
+      <att>xml:id</att> or <att>n</att> attributes based on the structure of
+      the document is to construct, for each element, a <term>domain-style
+        address</term> comprising a series of components separated by full
+      stops, with one component for each level of the document hierarchy.
+      Two methods may be used.  In the <term>typed path</term> form of
+      identifier, each component in the identifier takes the form of an
+      element identifier, a hyphen, and a number, for example
+      <code>p-2</code>. The element name specifies what type of
+      element is to be sought, and the number specifies which occurrence of that
+      element type is to be selected.  (The hyphen and number may be omitted
+      if there is only one element of the given type.)  In the <term>untyped
+        path</term> form of identifier, each component consists of a number,
+      indicating which element in the sequence of nodes at each level is to be
+      selected.  To make the resulting identifier a valid XML identifier, it
+      may need to be prefixed with an unchanging alphabetic letter.</p>
+    <p>Identifiers generated with these methods should use the <gi>text</gi>
+      element as their starting point, rather than the <gi>TEI</gi> or
+      <gi>body</gi> elements. The <gi>TEI</gi> element may be taken
+      as a starting point only if identifiers need to be generated for the
+      <gi>teiHeader</gi>, which is not usually the case;  using the
+      <gi>body</gi> element as a root would prevent assignment of identifiers
+      for the front and back matter.  The component corresponding to the root
+      element can be omitted from identifiers, if no confusion will result.
+      In collections and corpora, the component corresponding to the root may
+      be replaced by the unique identifier assigned to the text or sample.
+    </p>
+    <p>In the following example, each element within the <gi>text</gi>
+      element has been given a typed-path identifier as its <att>xml:id</att>
+      value, and an untyped-path identifier as its <att>n</att> value; the
+      latter are prefixed with the string <mentioned>AB</mentioned>, which may be
+      imagined to be the general identifier for this text.
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><text xml:id="Text-1" n="AB">
+        <front xml:id="Front" n="AB.1">
+          <div xml:id="Front.div-1" n="AB.1.1">
+            <p> ... </p> 
+          </div>
+          <titlePage xml:id="Front.titlePage" n="AB.1.2">
+            <titlePart> ... </titlePart>       
+          </titlePage>
+          <div xml:id="Front.div-2" n="AB.1.3">
+            <p> ... </p> 
+          </div>
+        </front>
+        <body xml:id="Body" n="AB.2">
+          <p xml:id="Body.p-1" n="AB.2.1"> ... </p>
+          <p xml:id="Body.p-2" n="AB.2.2"> ... </p>
+          <div xml:id="Body.div-1" n="AB.2.3">
+            <head xml:id="Body.div-1.head" n="AB.2.3.1"> ... </head>
+            <p xml:id="Body.div-1.p-1" n="AB.2.3.2"> ... </p>
+            <p xml:id="Body.div-1.p-2" n="AB.2.3.3"> ... </p>
+          </div>
+          <div xml:id="Body.div-2" n="AB.2.4">
+            <head xml:id="Body.div-2.head" n="AB.2.4.1"> ... </head>
+            <p xml:id="Body.div-2.p-1" n="AB.2.4.2"> ... </p>
+            <p xml:id="Body.div-2.p-2" n="AB.2.4.3"> ... </p>
+          </div>
+        </body>
+      </text></egXML>
+      The typed and untyped path methods are convenient, but are in no way
+      required for anyone creating a reference system.
+    </p>
+    <p>If the <att>xml:id</att> attribute is used to record the reference
+      identifiers generated, each value should record the entire path.  If the
+      <att>n</att> attribute is used, each value may record either the entire
+      path or only the subpath from the parent element.  The attribute
+      used, the elements which can bear standard reference identifiers, and
+      the method for constructing standard reference identifiers, should all
+      be declared in the header as described in section <ptr target="#HD54"/>.
+    </p>
+  </div>
+
+  <div type="div4" xml:id="CORS2-2">
+    <head>Referencing systems based on project conventions</head>
+    <p>A reference system may be based on an agreed project-specific convention for <att>xml:id</att> attributes.
+      Every convention will have strengths and weaknesses and it is left to  
+      encoders to make a decision that enables them to locate information in their TEI document.</p>
+    
+    <p>Here are some examples of referencing systems that have been used in TEI project:
+      <list>
+        <item><label>Title-based identifiers:</label> identifiers constructed with a 
+          number of characters from the main document title, followed by an incremental 
+          number. E.g. HOL001, HOL002, etc. using a fixed number of digits; or without 
+          fixed digits: HOL1, HOL2, etc.</item>
+        <item><label>Based on markup, with prefix:</label> identifiers constructed on 
+          the markup itself, as described in the previous section. To facilitate uniqueness 
+          in a corpus, each identifier may be prefixed with the identifier of the root <gi>TEI</gi> element.
+          E.g. RootID-Body-p-1.</item>
+        <item><label>Opaque identifiers:</label> computed identifiers using either a 
+          randomized algorithm or a universally unique identifier (UUID) algorithm.
+          Note that XSLT's function generate-id() only guarantees identifier unique 
+          to the document being processed.</item>
+      </list>
+    </p>
+    
+    <p>XML well-formedness requires only that xml:id attributes be unique within a single document. 
+      However, it is also worth keeping in mind that for operating with
+      referencing systems across a corpus of TEI files it is helpful (or even necessary in some 
+      circumstances) to have unique identifiers across the whole corpus.</p>
+    <p>Values of <att>xml:id</att> may be either populated computationally or manually. In the latter
+    case, it is advisable to put measures in place to avoid human error. Custom data types and Schematron rules may be 
+    defined in a customization ODD, and a check digit may be added to prevent unwanted changes.
+    <note place="bottom">A check digit is computed from the value of an identifier and appended to the value itself. 
+    If the identifier is changed, the check digit would therefore invalidate it.</note></p>
+  </div>
+
 </div>
 <div type="div3" xml:id="CORS5"><head>Milestone
 Elements</head><p>Where the desired reference system does not
