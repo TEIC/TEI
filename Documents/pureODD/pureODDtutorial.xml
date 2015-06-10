@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 <?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_odds.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<?xml-model href="../teitalks.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
@@ -198,17 +197,53 @@
                   </sequence></content>
               </elementSpec>
             </egXML></p>
-          <p>A model class can contain any predefined set of element types which we wish to
-            manipulate or reference together, usually because they can all appear in the same
-            context, or share other properties. Pure ODD allows us to define such classes by means
-            of a <gi>classSpec</gi> and to reference the members of that class by means of a
-              <gi>classRef</gi> element. An element specification (not discussed here) includes a
-            specification of the classes of which it is a member in its <gi>classes</gi> element.
-          </p>
+          <p>A model class contains a predefined set of element types which we wish to manipulate or
+            reference together, usually because they can all appear in the same context, or share
+            other properties. Pure ODD allows us to define such classes by means of a
+              <gi>classSpec</gi> element. Once defined, members of that class can be referenced by
+            means of a <gi>classRef</gi> element, as we have just seen. An element specification
+            (not discussed here) includes a specification of the classes of which it is a member in
+            its <gi>classes</gi> element. </p>
         </div>
       </div>
       <div>
         <head>Datatypes</head>
+        <p>A further part of the specification for an element is the list of attributes it may bear,
+          provided by an <gi>attList</gi> element. The specification for an attribute (provided by
+          an <gi>attDef</gi> element) also includes information about the kinds of value which are
+          permitted for it, which we call its <term>datatype</term>.</p>
+        <p>In Pure ODD, a datatype is specified using the <gi>dataRef</gi> element. In the following
+          example we define an attribute called <att>count</att> on the element <gi>one</gi>, and
+          specify that its value must be a positive integer: <egXML
+            xmlns="http://www.tei-c.org/ns/Examples">
+            <elementSpec ident="one">
+              <desc>an empty element with an attribute</desc>
+              <content/>
+              <attList>
+                <attDef ident="count">
+                  <desc>how often the one element is used</desc>
+                  <dataRef name="nonNegativeInteger"/>
+                </attDef>
+              </attList>
+            </elementSpec>
+          </egXML>
+        </p>
+        <p>The name <code>nonNegativeInteger</code> identifies one of the datatypes defined by the
+          W3C as part of its schema language, and is not further described in our ODD. </p>
+        <p>It is however possible to provide a more detailed specification for a datatype using the
+            <gi>dataSpec</gi> element to document its values, intended uses, etc. The TEI defines
+          many such datatypes in the Guidelines, and these can also be re-used directly within your
+          ODD. The attribute <att>key</att> is used (rather than <att>name</att>) to indicate that a
+          TEI-defined or locally-defined datatype is intended, as in the following example : <egXML
+            xmlns="http://www.tei-c.org/ns/Examples"><attList>
+              <attDef ident="count">
+                <desc>how often the one element is used</desc>
+                <dataRef key="teidata.count"/>
+              </attDef>
+            </attList></egXML></p><p>In this example, the name <code>teidata.count</code> identifies a datatype specification. That
+          specification is provided by a <gi>dataSpec</gi> element which will contain (amongst other
+          things) a <gi>dataRef</gi> element, a number of such elements, or a value list
+            (<gi>valList</gi>). </p>
       </div>
     </body>
   </text>
