@@ -1198,7 +1198,7 @@ specified elsewhere in the header.</item>
 of an element.</item></list></p>
 <p>This information is conveyed by the following elements:
 <specList>
-<specDesc key="rendition"/>
+<specDesc key="rendition" atts="selector"/>
   <specDesc key="att.styleDef" atts="scheme schemeVersion"/>
 <specDesc key="namespace"/>
 <specDesc key="tagUsage"/>
@@ -1223,12 +1223,13 @@ XSL-FO</item>
 <item>using a project-defined formal language</item>
 </list></p>
 <p>One or more such specifications may be associated with elements of
-a document in two ways:
+a document in three ways:
 <list rend="bulleted">
 <item>the 
 <att>render</att> attribute of the appropriate <gi>tagUsage</gi>
 element may be used to indicate a default rendition for all occurrences of the named
 element</item>
+  <item>the <att>selector</att> attribute on any <gi>rendition</gi> element may be used to select a collection of elements to which it applies</item>
 <item>the global <att>rendition</att> attribute may be used on any
 element to
 indicate its rendition, overriding or complementing any supplied default value
@@ -1273,6 +1274,30 @@ supplied within the <gi>encodingDesc</gi> to specify which of these
 applies by default; it may be overridden for one or more specific
 <gi>rendition</gi> elements using the <att>scheme</att> attribute.
 </p> 
+  
+  <p>In the above example, all <gi>p</gi> elements are styled in the same way, as are all <gi>hi</gi> elements, except where <att>rendition</att> is used to override the default at the element level. However, suppose that all paragraphs in the <gi>front</gi> of a text appear in a large font, with significant top and bottom margins, while paragraphs in the main <gi>body</gi> are in regular font size and have no top and bottom margins. This would be difficult to express using <gi>tagUsage</gi>; and it would be inefficient to have to provide repeated <att>rendition</att> attributes on every paragraph in one or the other context. Instead, we can use the <att>selector</att> attribute on <gi>rendition</gi> for a more elegant solution:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <rendition 
+    scheme="css" 
+    selector="front p">  
+    font-size: 110%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  </rendition>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <rendition 
+    scheme="css" 
+    selector="body p">  
+    font-size: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+  </rendition>
+</egXML>
+    
+It is recommended that in a single text, either <gi>rendition</gi>/<att>selector</att> or <gi>tagUsage</gi>/<att>render</att> be used; the combination of both is potentially confusing and harder to process.
+    
+</p>
 
 <p>In the following extended example we consider how to capture the
 appearance of a typical early 20th century titlepage, such as that in the
@@ -1413,13 +1438,14 @@ with the number of such elements present in the associated
 
 <div xml:id="HD57-1a"><head>The Default Style Definition
 Language Declaration</head>
-<p>The content of  the <gi>rendition</gi> element and the value of the
+  <p>The content of  the <gi>rendition</gi> element, the value of its 
+    <att>selector</att> attribute, and the value of the
 <att>style</att> attribute are expressed using one of a small number
 of formally defined style definition languages. For ease of processing, it is strongly
 recommended to use a single such language throughout an encoding
 project, although the TEI system permits a mixture. </p>
 <p>The element <gi>styleDefDecl</gi>, a sibling of the
-<gi>tagsDecl</gi> element,   is used to supply the name of the
+<gi>tagsDecl</gi> element, is used to supply the name of the
 default style definition language. The name is supplied as the value
 of the <att>scheme</att> attribute and may take any of the
 following values:

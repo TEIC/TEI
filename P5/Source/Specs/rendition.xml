@@ -57,6 +57,46 @@ the target element</desc>
         </valItem>
       </valList>
     </attDef>
+    <attDef ident="selector">
+      <desc versionDate="2015-06-14" xml:lang="en">
+        contains a selector or series of selectors specifying the elements to which the contained style 
+        description applies, expressed in the language specified in the <att>scheme</att> attribute.
+      </desc>
+      <datatype maxOccurs="1">
+        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
+      </datatype>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <rendition 
+            scheme="css" 
+            selector="text, front, back, body, div, p, ab">  
+            display: block;
+          </rendition>
+        </egXML>
+      </exemplum>
+      <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">  
+          <rendition 
+            scheme="css" 
+            selector="*[rend*=italic]">
+            font-style: italic;
+          </rendition>
+        </egXML>
+      </exemplum>
+      <remarks versionDate="2015-06-14" xml:lang="en">
+        Since the default value of the <att>scheme</att> attribute is assumed to be CSS, the default 
+        expectation for this attribute, in the absence of <att>scheme</att>, is that CSS selector
+        syntax will be used.
+      </remarks>
+      <remarks versionDate="2015-06-14" xml:lang="en">
+        While <att>rendition</att> is used to point from an element in the transcribed source to a 
+        <gi>rendition</gi> element in the header which describes how it appears, the <att>selector</att>
+        attribute allows the encoder to point in the other direction: from a <gi>rendition</gi> in the
+        header to a collection of elements which all share the same renditional features. In both cases,
+        the intention is to record the appearance of the source text, not to prescribe any particular 
+        output rendering.
+      </remarks>
+    </attDef>
   </attList>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
