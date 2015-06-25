@@ -51,7 +51,7 @@ check.stamp:
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo get latest date:
-	if [ ${VCS} = "svn" ] ; \
+	if [ "${VCS}" = "svn" ] ; \
 	then \
 		if [ ${INJENKINS} = "true" ] ; \
 		then svn info --xml svn://svn.code.sf.net/p/tei/code/trunk/P5 ; \
