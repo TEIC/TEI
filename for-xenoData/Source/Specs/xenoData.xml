@@ -13,6 +13,7 @@ $Id:$
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declarable"/>
+    <memberOf key="att.typed"/>
     <memberOf key="model.teiHeaderPart"/>
   </classes>
   <content>
@@ -25,16 +26,13 @@ $Id:$
   <!-- Northeastern University Library Digital Scholarship Group -->
   <!-- for the examples below                                    -->
   <attList>
-    <!-- NOTE: this attribute is here to see how it would work; it may well be removed -->
-    <!-- soon in favor of putting <xenoData> into model.sourceDescPart. See e-mail to  -->
-    <!-- Council list "question on <xenoData>", 2015-07-04 10:13 -04.                  -->
-    <attDef ident="describes" usage="rec">
+    <attDef ident="type" mode="change" usage="rec">
       <datatype minOccurs="1" maxOccurs="1">
-	<rng:ref name="att.enumerated" />
+	<rng:ref name="att.enumerated"/>
       </datatype>
-      <valList type="semi">
-	<valItem ident="this">
-	  <desc xml:lang="en" versionDate="2015-07-04">The metadata
+      <valList type="semi" mode="add">
+	<valItem ident="transcription">
+	  <desc xml:lang="en" versionDate="2015-07-08">The metadata
 	  stored in this <gi>xenoData</gi> element describes this
 	  digital TEI document.</desc>
 	</valItem>
@@ -51,7 +49,7 @@ $Id:$
     <p>This example presumes that the prefix <code>dc</code> has been bound to the namespace <code>http://purl.org/dc/elements/1.1/</code>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"
 	   valid="false">
-      <xenoData describes="this">
+      <xenoData type="transcription">
 	<dc:title>British Library Harley MS 4955</dc:title>
 	<dc:creator>William Cavendish, Earl (later Duke) of Newcastle</dc:creator>
 	<dc:creator>John Rolleston, secretart to William Cavendish</dc:creator>
