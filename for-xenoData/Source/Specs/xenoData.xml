@@ -3,13 +3,15 @@
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
-$Date:$
-$Id:$
+$Date$
+$Id$
 -->
 <?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="xenoData" xmlns:rng="http://relaxng.org/ns/structure/1.0">
   <gloss versionDate="2015-05-30" xml:lang="en">outside metadata</gloss>
-  <desc versionDate="2015-05-30" xml:lang="en">provides a container element into which metadata elements from non-TEI languages may be placed.</desc>
+  <desc versionDate="2015-05-30" xml:lang="en">provides a container
+  element into which metadata elements from non-TEI languages may be
+  placed.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.declarable"/>
@@ -18,13 +20,11 @@ $Id:$
   </classes>
   <content>
     <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="macro.anyXML"/>
+      <oneOrMore>
+	<ref name="macro.anyXML"/>
+      </oneOrMore>
     </group>
   </content>
-  <!-- Thanks to                                                 -->
-  <!-- Sarah Sweeney, Digital Repository Manager                 -->
-  <!-- Northeastern University Library Digital Scholarship Group -->
-  <!-- for the examples below                                    -->
   <attList>
     <attDef ident="type" mode="change" usage="rec">
       <datatype minOccurs="1" maxOccurs="1">
@@ -44,9 +44,17 @@ $Id:$
       </valList>
     </attDef>
   </attList>
+  <!-- Thanks to                                                 -->
+  <!-- Sarah Sweeney, Digital Repository Manager                 -->
+  <!-- Northeastern University Library Digital Scholarship Group -->
+  <!-- for the examples below except for the UVic "colonial      -->
+  <!-- despatches of Vancouver Island" example, for which thanks -->
+  <!-- to Martin Holmes, who posted it on the ticket, FR 453.    --> 
   <exemplum versionDate="2015-05-30" xml:lang="en"
 	   xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <p>This example presumes that the prefix <code>dc</code> has been bound to the namespace <code>http://purl.org/dc/elements/1.1/</code>.</p>
+    <p>This example presumes that the prefix <code>dc</code> has been
+    bound to the namespace
+    <code>http://purl.org/dc/elements/1.1/</code>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"
 	   valid="false">
       <xenoData type="transcription">
@@ -85,9 +93,58 @@ $Id:$
 	</rdf:RDF>
       </xenoData></egXML>
   </exemplum>
+  <exemplum versionDate="2015-07-11" xml:lang="en"
+	    xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	    xmlns:dc="http://purl.org/dc/elements/1.1/" >
+    <p>In this example, the prefix
+    <code>dc</code> is again bound to the namespace
+    <code>http://www.openarchives.org/OAI/2.0/oai_dc/</code>, and the prefix
+    <code>oai_dc</code> is bound to the namespace <code>http://www.openarchives.org/OAI/2.0/oai_dc/</code>.</p>
+    <egXML valid="false" xmlns="http://www.tei-c.org/ns/Examples"> <xenoData>
+      <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/"
+		 xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+	<dc:title>The colonial despatches of Vancouver Island and British
+	Columbia 1846-1871: 11566, CO 60/2, p. 291; received 13 November.
+	Trevelyan to Merivale (Permanent Under-Secretary)</dc:title>
+	<dc:date>1858-11-12</dc:date>
+	<dc:creator>Trevelyan</dc:creator>
+	<dc:publisher>University of Victoria Humanities Computing and Media
+	Centre, and UVic Libraries</dc:publisher>
+	<dc:type>InteractiveResource</dc:type>
+	<dc:format>application/xhtml+xml</dc:format>
+	<dc:type>text</dc:type>
+	<dc:identifier>http://bcgenesis.uvic.ca/getDoc.htm?id=B585TE13.scx</dc:identifier>
+	<dc:rights>This document is licensed under a Creative Commons &#x2026;</dc:rights>
+	<dc:language>(SCHEME=ISO639) en</dc:language>
+	<dc:source>Transcribed from microfilm and/or original documents, and
+	marked up in TEI P5 XML. The interactive XHTML resource is generated
+	from the XHTML using XQuery and XSLT.</dc:source>
+	<dc:source>repository: CO</dc:source>
+	<dc:source>coNumber: 60</dc:source>
+	<dc:source>coVol: 2</dc:source>
+	<dc:source>page: 291</dc:source>
+	<dc:source>coRegistration: 11566</dc:source>
+	<dc:source>received: received 13 November</dc:source>
+	<dc:subject>Trevelyan, Sir Charles Edward</dc:subject>
+	<dc:subject>Merivale, Herman</dc:subject>
+	<dc:subject>Elliot, T. Frederick</dc:subject>
+	<dc:subject>Moody, Colonel Richard Clement</dc:subject>
+	<dc:subject>Lytton, Sir Edward George Earle Bulwer</dc:subject>
+	<dc:subject>Jadis, Vane</dc:subject>
+	<dc:subject>Carnarvon, Earl</dc:subject>
+	<dc:subject>British Columbia</dc:subject>
+	<dc:description>British Columbia correspondence: Public Offices
+	document (normally correspondence between government
+	departments)</dc:description>
+      </oai_dc:dc>
+    </xenoData>
+    </egXML>
+  </exemplum>
   <exemplum versionDate="2015-06-25" xml:lang="en"
-	     xmlns:mods="http://www.loc.gov/mods/v3">
-    <p>In this example, the prefix <code>mods</code> is bound to the namespace <code>http://www.loc.gov/mods/v3</code>.</p>
+	    xmlns:mods="http://www.loc.gov/mods/v3">
+    <p>In this example, the prefix <code>mods</code> is bound to the
+    namespace <code>http://www.loc.gov/mods/v3</code>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples"
 	   valid="false">
       <xenoData>
@@ -184,7 +241,9 @@ $Id:$
 	      <degree>Ed.D.</degree>
 	    </scholarly_object>
 	  </mods:extension>
-	  <mods:accessCondition type="use and reproduction">Copyright 2013, Hong Zhang.</mods:accessCondition>
+	  <mods:accessCondition type="use and reproduction">
+	    Copyright 2013, Hong Zhang.
+	  </mods:accessCondition>
 	</mods:mods>
       </xenoData>
     </egXML>
