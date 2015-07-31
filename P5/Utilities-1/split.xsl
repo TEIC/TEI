@@ -3,12 +3,11 @@
   xmlns:teix="http://www.tei-c.org/ns/Examples"
   xmlns:rng="http://relaxng.org/ns/structure/1.0"
   xmlns:estr="http://exslt.org/strings"
-  xmlns:pantor="http://www.pantor.com/ns/local"
   xmlns:exsl="http://exslt.org/common"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:edate="http://exslt.org/dates-and-times"
   extension-element-prefixes="exsl estr edate"
-  exclude-result-prefixes="exsl rng edate estr tei a pantor teix" 
+  exclude-result-prefixes="exsl rng edate estr tei a teix" 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="/">
   <xsl:for-each select=".//tei:elementSpec">

@@ -13,14 +13,13 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:local="http://www.pantor.com/ns/local"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
     xmlns:edate="http://exslt.org/dates-and-times"
     xmlns:exsl="http://exslt.org/common"
     xmlns:estr="http://exslt.org/strings"
     xmlns:spec="http://example.com/xmlspec"
-    exclude-result-prefixes="exsl estr edate fo a xd tei rng local teix xs eg its html dbk xlink" 
+    exclude-result-prefixes="exsl estr edate fo a xd tei rng teix xs eg its html dbk xlink" 
     extension-element-prefixes="edate exsl estr spec"
     version="1.0">
 
