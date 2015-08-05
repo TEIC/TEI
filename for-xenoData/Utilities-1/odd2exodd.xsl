@@ -1,5 +1,5 @@
 <xsl:stylesheet
-  exclude-result-prefixes="xlink dbk rng tei teix xhtml a edate estr html pantor xd xs xsl"
+  exclude-result-prefixes="xlink dbk rng tei teix xhtml a edate estr html xd xs xsl"
   extension-element-prefixes="exsl estr edate" 
   version="1.0"
   xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -14,7 +14,6 @@
   xmlns:edate="http://exslt.org/dates-and-times"
   xmlns:estr="http://exslt.org/strings" xmlns:exsl="http://exslt.org/common"
   xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:pantor="http://www.pantor.com/ns/local"
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
