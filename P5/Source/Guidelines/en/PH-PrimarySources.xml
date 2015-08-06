@@ -1445,12 +1445,15 @@ in the Eliot typescript mentioned above, there are --> several
                it is illegible, or for some other reason such as editorial policy, the <gi>gap</gi>
                core element may be used to register the omission; where such text is transcribed,
                but the editor wishes to indicate that they consider it to be superfluous, for
-               example because it is an inadvertent scribal repetition, the <gi>surplus</gi> element
-               may be used in preference. Where text not present in the source is supplied (whether
+               example because it is an inadvertent scribal repetition or an interpolation from another 
+               source, the <gi>surplus</gi> element may be used in preference. Where the editor believes 
+               text to be interpolated but genuine, the <gi>secl</gi> element may be used instead. 
+               Where text not present in the source is supplied (whether
                conjecturally or from other witnesses) to fill an apparent gap in the text, the
                   <gi>supplied</gi> element may be used. <specList>
                   <specDesc key="gap" atts="reason hand agent"/>
                   <specDesc key="surplus" atts="reason"/>
+                  <specDesc key="secl" atts="reason"/>
                   <specDesc key="supplied" atts="reason"/>
                </specList></p>
             <p>By its nature, the <gi>gap</gi> element has no content. It marks a point in the text
@@ -1511,6 +1514,25 @@ in the Eliot typescript mentioned above, there are --> several
                   <l n="44">Più v'amo, dëa, che non faccio Deo</l>
                </egXML> The words marked as <gi>surplus</gi> here are metrically inconsistent with
                the rest and have been marked by the editor as such. </p>
+           
+           <p>In the case of an interpolation which the editor regards as genuine (i.e. written by 
+             the author in question), but out of its original place, the <gi>secl</gi> element should 
+             be used instead of <gi>surplus</gi>. For example:
+             <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#PHOM-eg-secl" xml:space="preserve">
+<sp>
+  <lb n="545"/>Great praise and thanks be to Perfidy as she
+  <lb n="546"/>deserves, since by our swindles, tricks, and clever moves, relying 
+  <lb n="547"/>on the daring of our shoulder blades and the excellence of our 
+  <lb n="548"/>forearms who went against cattle-prods, hot iron-blades, 
+  <lb n="549-550"/>crosses and shackles, neck-irons, chains, prisons, collars, fetters, 
+  <lb n="551"/>and yokes, the fiercest painters fully acquainted with our backs 
+  <lb n="552"/><secl>who have often before put scars on our shoulder blades</secl>
+  ...
+</sp>
+           </egXML> The final line is bracketed in the Loeb edition, with a note: <q>versum secl. Bothe</q>,
+             meaning Bothe regarded this line as Plautine, but probably interpolated. It is easy to see how 
+             the line might have crept in as a gloss on the metaphor in the previous line.
+           </p>
 
             <p>If some part of the source text is completely illegible or missing, an encoder may
                sometimes wish to supply new (conjectural) material to replace it. This conjectural
@@ -3096,6 +3118,7 @@ following ...-->
          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/substJoin.xml"/>
          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/supplied.xml"/>
          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/surplus.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/secl.xml"/>
          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/line.xml"/>
          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listChange.xml"/>
          <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/listTranspose.xml"/>
