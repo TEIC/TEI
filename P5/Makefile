@@ -51,7 +51,7 @@ check.stamp:
 
 p5.xml: ${DRIVER} Source/Specs/*.xml Source/Guidelines/en/*.xml p5odds.odd check.stamp
 	@echo get latest date:
-	@echo $VCS
+	@echo VCS is ${VCS}
 	if [ "${VCS}" = "svn" ] ; \
 	then \
 		if [ ${INJENKINS} = "true" ] ; \
