@@ -1,5 +1,6 @@
 #rend="none"/> Main makefile for TEI P5
 # $Id$
+VCS := svn
 ALLLANGUAGES=en
 LANGUAGE=en
 INJENKINS=false
@@ -16,7 +17,6 @@ XSL=/usr/share/xml/tei/stylesheet
 # of the next two lines:
 #XSL=../Stylesheets/release/tei-xsl/p5
 #XSL=http://www.tei-c.org/stylesheet/release/xml/tei
-VCS=svn
 VERSION=`cat VERSION`
 UPVERSION=`cat ../VERSION`
 SAXONJAR=saxon9he.jar
@@ -194,11 +194,11 @@ valid: check.stamp p5.xml
 
 test: schemas.stamp
 	@echo BUILD Run test cases for P5
-	(cd Test; make XSL=${XSL})
+	(cd Test; make XSL=${XSL} VCS=${VCS})
 
 exemplars:  schemas.stamp 
 	@echo BUILD TEI Exemplars
-	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX})
+	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX} VCS=${VCS})
 
 dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	@echo BUILD: Make distribution directory for source
@@ -351,17 +351,17 @@ deb: debversion
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*build
 	@echo BUILD: make Debian tei-p5-database package
-	(cd debian-tei-p5-database; debclean;debuild -eXSL=${XSL} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-database; debclean;debuild -eXSL=${XSL} -eVCS=${VCS} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 	@echo BUILD: make Debian tei-p5-doc package
-	(cd debian-tei-p5-doc; debclean;debuild -eXSL=${XSL} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-doc; debclean;debuild -eXSL=${XSL} -eVCS=${VCS} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 	@echo BUILD: make Debian tei-p5-exemplars package
-	(cd debian-tei-p5-exemplars; debclean;debuild -eXSL=${XSL} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-exemplars; debclean;debuild -eXSL=${XSL} -eVCS=${VCS} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 	@echo BUILD: make Debian tei-p5-schema package
-	(cd debian-tei-p5-schema; debclean;debuild -eXSL=${XSL} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-schema; debclean;debuild -eXSL=${XSL} -eVCS=${VCS} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 	@echo BUILD: make Debian tei-p5-source package
-	(cd debian-tei-p5-source; debclean;debuild -eXSL=${XSL} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-source; debclean;debuild -eXSL=${XSL} -eVCS=${VCS} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 	@echo BUILD: make Debian tei-p5-test package
-	(cd debian-tei-p5-test; debclean;debuild -eXSL=${XSL} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
+	(cd debian-tei-p5-test; debclean;debuild -eXSL=${XSL} -eVCS=${VCS} -eINJENKINS=${INJENKINS} --no-lintian  -nc  -b  -i.svn -I.svn -uc -us)
 
 install-schema: dist-schema
 	@echo Making schema release in ${PREFIX}
