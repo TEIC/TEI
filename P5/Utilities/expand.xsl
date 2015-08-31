@@ -116,7 +116,7 @@ identity transform
         <xsl:choose>
           <xsl:when test="$info/*/@type = 'git'">
             <ref
-              target="https://github.com/hcayless/TEI-Guidelines/commit/{$r}"><xsl:value-of select="$r"/></ref>
+              target="https://github.com/TEIC/Guidelines/commit/{$r}"><xsl:value-of select="$r"/></ref>
           </xsl:when>
           <xsl:otherwise>
             <ref
