@@ -392,7 +392,7 @@ install: clean install-schema install-doc install-test install-exemplars install
 
 changelog:
 	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
-	svn log -v -r 'HEAD:{'$$LastDate'}' | perl ../gnuify-changelog.pl | grep -v "^;" > newchanges)
+        git log --since="$$LastDate" --date=short --name-status --pretty=format:"%ad  %an <%aE> %h%n%n        %s%n" > newchanges)
 	mv ReleaseNotes/ChangeLog oldchanges
 	cat newchanges oldchanges > ReleaseNotes/ChangeLog
 	rm newchanges oldchanges
