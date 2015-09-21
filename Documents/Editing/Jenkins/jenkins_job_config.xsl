@@ -8,11 +8,11 @@
     <xd:desc>
       <xd:p><xd:b>Created on:</xd:b> May 31, 2012</xd:p>
       <xd:p><xd:b>Author:</xd:b> mholmes</xd:p>
-      <xd:p>This transformation is designed to modify config.xml files for Jenkins TEI build jobs which are 
+      <xd:p>This transformation is designed to modify config.xml files for Jenkins TEI build jobs which are
                   checked out from the TEI SourceForge SVN. It does two things:
       <xd:ul>
-        <xd:li>Replaces the email addresses of Sebastian and Martin with that of the person creating 
-        the Jenkins server, if they provided one, or nothing if they didn't. This prevents a new Jenkins 
+        <xd:li>Replaces the email addresses of Sebastian and Martin with that of the person creating
+        the Jenkins server, if they provided one, or nothing if they didn't. This prevents a new Jenkins
         server from emailing SR and MDH if builds fail.</xd:li>
         <xd:li>Inserts job priorty settings into the properties element if these are not already present.
         This enables the Jenkins Priority Sorter plugin to schedule jobs correctly so that dependencies
@@ -22,38 +22,27 @@
       </xd:p>
     </xd:desc>
   </xd:doc>
-  
+
   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
-  
+
   <xsl:param name="jobPriority">100</xsl:param>
   <xsl:param name="email"></xsl:param>
-  
+
   <xsl:template match="/">
     <xsl:apply-templates/>
   </xsl:template>
-  
-<!-- If any jobs use the svn: protocol, they'll fail on a default install of Ubuntu 12.04 server. 
+
+<!-- If any jobs use the svn: protocol, they'll fail on a default install of Ubuntu 12.04 server.
   We change it to http.-->
   <xsl:template match="remote[starts-with(., 'svn://')]">
     <remote><xsl:value-of select="replace(., 'svn://', 'http://')"/></remote>
   </xsl:template>
-  
-<!-- Insert the appropriate priority setting for this job, as specified in the parameter. -->
-  
-  <xsl:template match="properties[not(hudson.queueSorter.PrioritySorterJobProperty)]">
-    <properties>
-        <xsl:apply-templates/>
-        <hudson.queueSorter.PrioritySorterJobProperty>
-          <priority><xsl:value-of select="$jobPriority"/></priority>
-        </hudson.queueSorter.PrioritySorterJobProperty>
-    </properties>
-</xsl:template>
-  
+
 <!-- Insert the email address for the server administrator, as specified in the parameter. -->
   <xsl:template match="hudson.tasks.Mailer/recipients">
     <recipients><xsl:value-of select="$email"/></recipients>
   </xsl:template>
-  
+
 <!-- Provide mailer section if it is not already there (e.g. in OxGarage job config). -->
   <xsl:template match="publishers[not(hudson.tasks.Mailer)]">
     <publishers>
@@ -67,11 +56,11 @@
       </xsl:if>
     </publishers>
   </xsl:template>
-  
+
   <xsl:template match="@*|*|processing-instruction()|comment()" priority="-1">
     <xsl:copy>
       <xsl:apply-templates select="*|@*|text()|processing-instruction()|comment()"/>
     </xsl:copy>
   </xsl:template>
-  
+
 </xsl:stylesheet>

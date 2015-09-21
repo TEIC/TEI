@@ -193,8 +193,11 @@ echo "Installing the Maven project tool, and Git"
 apt-get -y install maven2 git
 echo ""
 
+# Set up Jenkins' git identity
+sudo su jenkins
 git config --global user.email "tei-council@lists.tei-c.org"
 git config --global user.name "TEI Council"
+exit
 
 echo "Installing core packages we need."
 apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe-java debhelper subversion trang zip &&
@@ -393,12 +396,12 @@ echo "Downloaded and set up root configuration file."
 echo "Configuring job priorities settings."
 
 echo "Running transformations on job configurations."
-saxon -s:/var/lib/jenkins/jobs/OxGarage/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/OxGarage/config.xml jobPriority=90 email=
-saxon -s:/var/lib/jenkins/jobs/Roma/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/Roma/config.xml jobPriority=90 email=
-saxon -s:/var/lib/jenkins/jobs/Stylesheets/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/Stylesheets/config.xml jobPriority=100 email=
-saxon -s:/var/lib/jenkins/jobs/TEIP5/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5/config.xml jobPriority=10 email=
-saxon -s:/var/lib/jenkins/jobs/TEIP5-Documentation/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5-Documentation/config.xml jobPriority=10 email=
-saxon -s:/var/lib/jenkins/jobs/TEIP5-Test/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5-Test/config.xml jobPriority=10 email=
+saxon -s:/var/lib/jenkins/jobs/OxGarage/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/OxGarage/config.xml email=
+saxon -s:/var/lib/jenkins/jobs/Roma/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/Roma/config.xml email=
+saxon -s:/var/lib/jenkins/jobs/Stylesheets/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/Stylesheets/config.xml email=
+saxon -s:/var/lib/jenkins/jobs/TEIP5/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5/config.xml email=
+saxon -s:/var/lib/jenkins/jobs/TEIP5-Documentation/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5-Documentation/config.xml email=
+saxon -s:/var/lib/jenkins/jobs/TEIP5-Test/config.xml -xsl:/var/lib/jenkins/jenkins_job_config.xsl -o:/var/lib/jenkins/jobs/TEIP5-Test/config.xml email=
 echo ""
 
 echo "Starting the Jenkins server."
