@@ -194,10 +194,13 @@ apt-get -y install maven2 git
 echo ""
 
 echo "Installing core packages we need."
-apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc debhelper subversion trang zip &&
+apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe debhelper subversion trang zip &&
 echo "Installing curl, required for some tei building stuff."
 apt-get -y install curl &&
 echo ""
+
+#Set up saxon command-line executables
+cp ${currDir}/bin/saxon* /usr/bin/
 
 #TEI packages
 #echo "Installing TEI packages."
@@ -297,6 +300,14 @@ echo ""
 # Start Jenkins if it's already installed
 /etc/init.d/jenkins start
 
+#Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
+echo "Discovering Jenkins version..."
+cd /tmp
+wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+sleep 10
+JINKSVERSION=`java -jar jenkins-cli.jar -s http://localhost:8080 version`
+echo "version $JINKSVERSION"
+
 #Configuration for Jenkins
 echo "Starting configuration of Jenkins."
 echo "Getting the Hudson log parsing rules from TEI SVN."
@@ -313,14 +324,6 @@ echo "Getting all the job data from TEI."
 cp -R ${currDir}/jobs ./
 chown -R jenkins jobs
 echo ""
-
-#Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
-echo "Discovering Jenkins version..."
-cd /tmp
-wget http://localhost:8080/jnlpJars/jenkins-cli.jar
-sleep 10
-JINKSVERSION=`java -jar jenkins-cli.jar -s http://localhost:8080 version`
-echo "version $JINKSVERSION"
 
 echo "Installing Jenkins plugins."
 rm -rf plugins
