@@ -323,6 +323,7 @@ echo ""
 echo "Installing Jenkins plugins."
 rm -rf plugins
 mkdir plugins
+chown -R jenkins plugins
 cd plugins
 wget --no-check-certificate http://updates.jenkins-ci.org/latest/copyartifact.hpi
 chown jenkins copyartifact.hpi
@@ -358,6 +359,7 @@ echo ""
 echo "Discovering Jenkins version..."
 cd /tmp
 wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+sleep 5
 JINKSVERSION=`java -jar jenkins-cli.jar -s http://localhost:8080 version`
 
 echo "Stopping Jenkins server, so that we can reconfigure all the jobs a little."
@@ -379,7 +381,7 @@ chown jenkins jenkins_job_config.xsl
 cp ${currDir}/jenkins_main_config.xsl ./
 chown jenkins jenkins_main_config.xsl
 #svn export svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenkins/defaultConfig.xml
-cp ${currDir}/defaultConfig.xml config.xml 
+cp ${currDir}/defaultConfig.xml config.xml
 #mv defaultConfig.xml config.xml
 saxon -s:/var/lib/jenkins/config.xml -xsl:/var/lib/jenkins/jenkins_main_config.xsl -o:/var/lib/jenkins/config.xml jinksVersion=$JINKSVERSION
 chown jenkins config.xml
