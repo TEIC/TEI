@@ -305,6 +305,8 @@ cp ${currDir}/hudson-log-parse-rules ./
 chown jenkins hudson-log-parse-rules
 cp ${currDir}/hudson.plugins.logparser.LogParserPublisher.xml ./
 chown jenkins hudson.plugins.logparser.LogParserPublisher.xml
+cp ${currDir}/jenkins.advancedqueue.PriorityConfiguration.xml ./
+chown jenkins jenkins.advancedqueue.PriorityConfiguration.xml
 echo ""
 
 echo "Getting all the job data from TEI."
