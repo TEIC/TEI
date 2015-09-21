@@ -171,12 +171,12 @@ echo "deb http://pkg.jenkins-ci.org/debian binary/" > /etc/apt/sources.list.d/je
 echo ""
 
 #Next TEI. Allow a 5-minute timeout for this one; it's insanely slow.
-echo "Adding TEI Debian repository. It may take some time
-to retrieve the key."
-gpg --keyserver wwwkeys.pgp.net --keyserver-options timeout=300 --recv-keys FEA4973F86A9A497
-apt-key add ~/.gnupg/pubring.gpg
-echo "deb http://tei.oucs.ox.ac.uk/teideb/binary ./" > /etc/apt/sources.list.d/tei.list
-echo ""
+#echo "Adding TEI Debian repository. It may take some time
+#to retrieve the key."
+#gpg --keyserver wwwkeys.pgp.net --keyserver-options timeout=300 --recv-keys FEA4973F86A9A497
+#apt-key add ~/.gnupg/pubring.gpg
+#echo "deb http://tei.oucs.ox.ac.uk/teideb/binary ./" > /etc/apt/sources.list.d/tei.list
+#echo ""
 
 #Now we can start installing packages.
 echo "Updating for new repositories."
@@ -200,10 +200,10 @@ apt-get -y install curl &&
 echo ""
 
 #TEI packages
-echo "Installing TEI packages."
-apt-get -y --force-yes install psgml xmlstarlet debiandoc-sgml linuxdoc-tools jing jing-trang-doc libjing-java texlive-xetex &&
-apt-get -y --force-yes install libtrang-java saxon tei-p5-exemplars tei-roma tei-p5-doc tei-xsl tei-p5-source tei-p5-schema tei-oxygen zip &&
-echo ""
+#echo "Installing TEI packages."
+#apt-get -y --force-yes install psgml xmlstarlet debiandoc-sgml linuxdoc-tools jing jing-trang-doc libjing-java texlive-xetex &&
+#apt-get -y --force-yes install libtrang-java saxon tei-p5-exemplars tei-roma tei-p5-doc tei-xsl tei-p5-source tei-p5-schema tei-oxygen zip &&
+#echo ""
 
 if [ ! -d /usr/share/fonts/truetype/hannom ]
 then
@@ -301,66 +301,59 @@ echo ""
 echo "Starting configuration of Jenkins."
 echo "Getting the Hudson log parsing rules from TEI SVN."
 cd /var/lib/jenkins
-#svn export svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenkins/hudson-log-parse-rules
 cp ${currDir}/hudson-log-parse-rules ./
 chown jenkins hudson-log-parse-rules
-#svn export svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenkins/hudson.plugins.logparser.LogParserPublisher.xml
 cp ${currDir}/hudson.plugins.logparser.LogParserPublisher.xml ./
 chown jenkins hudson.plugins.logparser.LogParserPublisher.xml
 echo ""
 
-echo "Getting all the job data from TEI SVN."
-#Don't bring down the config.xml file for now; that contains security settings specific to
-#Sebastian's setup, and will prevent anyone from logging in. We leave the server unsecured,
-#and make it up to the user to secure it.
-#svn export svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenkins/config.xml
-#chown jenkins config.xml
-#svn export --force svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenkins/jobs/ jobs
+echo "Getting all the job data from TEI."
 cp -R ${currDir}/jobs ./
 chown -R jenkins jobs
-echo ""
-
-echo "Installing Jenkins plugins."
-rm -rf plugins
-mkdir plugins
-chown -R jenkins plugins
-cd plugins
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/copyartifact.hpi
-chown jenkins copyartifact.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/emotional-jenkins-plugin.hpi
-chown jenkins emotional-jenkins-plugin.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/greenballs.hpi
-chown jenkins greenballs.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/jobConfigHistory.hpi
-chown jenkins jobConfigHistory.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/plot.hpi
-chown jenkins plot.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/log-parser.hpi
-chown jenkins log-parser.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/scp.hpi
-chown jenkins scp.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/WebSVN2.hpi
-chown jenkins WebSVN2.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/PrioritySorter.hpi
-chown jenkins PrioritySorter.hpi
-
-#New Git-related plugins added March 2013 for OxGarage move to GitHub.
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/git.hpi
-chown jenkins git.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/git-client.hpi
-chown jenkins git-client.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/github.hpi
-chown jenkins github.hpi
-wget --no-check-certificate http://updates.jenkins-ci.org/latest/github-api.hpi
-chown jenkins github-api.hpi
 echo ""
 
 #Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
 echo "Discovering Jenkins version..."
 cd /tmp
 wget http://localhost:8080/jnlpJars/jenkins-cli.jar
-sleep 5
+sleep 10
 JINKSVERSION=`java -jar jenkins-cli.jar -s http://localhost:8080 version`
+echo "version $JINKSVERSION"
+
+echo "Installing Jenkins plugins."
+rm -rf plugins
+mkdir plugins
+chown -R jenkins plugins
+cd plugins
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/copyartifact.hpi
+chown jenkins copyartifact.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/emotional-jenkins-plugin.hpi
+chown jenkins emotional-jenkins-plugin.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/greenballs.hpi
+chown jenkins greenballs.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/jobConfigHistory.hpi
+chown jenkins jobConfigHistory.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/plot.hpi
+chown jenkins plot.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/log-parser.hpi
+chown jenkins log-parser.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/scp.hpi
+chown jenkins scp.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/WebSVN2.hpi
+chown jenkins WebSVN2.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/PrioritySorter.hpi
+chown jenkins PrioritySorter.hpi
+
+#New Git-related plugins added March 2013 for OxGarage move to GitHub.
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/git.hpi
+chown jenkins git.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/git-client.hpi
+chown jenkins git-client.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/github.hpi
+chown jenkins github.hpi
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/github-api.hpi
+chown jenkins github-api.hpi
+echo ""
 
 echo "Stopping Jenkins server, so that we can reconfigure all the jobs a little."
 /etc/init.d/jenkins stop
