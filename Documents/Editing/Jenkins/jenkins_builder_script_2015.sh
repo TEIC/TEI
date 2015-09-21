@@ -194,7 +194,7 @@ apt-get -y install maven2 git
 echo ""
 
 echo "Installing core packages we need."
-apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe debhelper subversion trang zip &&
+apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe-java debhelper subversion trang zip &&
 echo "Installing curl, required for some tei building stuff."
 apt-get -y install curl &&
 echo ""
@@ -299,13 +299,12 @@ apt-get -y install jenkins
 echo ""
 # Start Jenkins if it's already installed
 /etc/init.d/jenkins start
-sleep 10
+sleep 30
 
 #Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
 echo "Discovering Jenkins version..."
 cd /tmp
 wget http://localhost:8080/jnlpJars/jenkins-cli.jar
-sleep 10
 JINKSVERSION=`java -jar jenkins-cli.jar -s http://localhost:8080 version`
 echo "version $JINKSVERSION"
 
@@ -351,6 +350,8 @@ wget --no-check-certificate https://updates.jenkins-ci.org/latest/PrioritySorter
 chown jenkins PrioritySorter.hpi
 
 #New Git-related plugins added March 2013 for OxGarage move to GitHub.
+wget --no-check-certificate https://updates.jenkins-ci.org/latest/scm-api.hpi
+chown jenkins scm-api.hpi
 wget --no-check-certificate https://updates.jenkins-ci.org/latest/git.hpi
 chown jenkins git.hpi
 wget --no-check-certificate https://updates.jenkins-ci.org/latest/git-client.hpi
