@@ -299,6 +299,7 @@ apt-get -y install jenkins
 echo ""
 # Start Jenkins if it's already installed
 /etc/init.d/jenkins start
+sleep 10
 
 #Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
 echo "Discovering Jenkins version..."
