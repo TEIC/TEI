@@ -193,6 +193,9 @@ echo "Installing the Maven project tool, and Git"
 apt-get -y install maven2 git
 echo ""
 
+git config --global user.email "tei-council@lists.tei-c.org"
+git config --global user.name "TEI Council"
+
 echo "Installing core packages we need."
 apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe-java debhelper subversion trang zip &&
 echo "Installing curl, required for some tei building stuff."
