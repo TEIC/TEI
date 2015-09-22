@@ -302,10 +302,8 @@ echo ""
 sleep 30
 
 # Set up Jenkins' git identity
-su jenkins
-git config --global user.email "tei-council@lists.tei-c.org"
-git config --global user.name "TEI Council"
-exit
+sudo -u jenkins git config --global user.email "tei-council@lists.tei-c.org"
+sudo -u jenkins git config --global user.name "TEI Council"
 
 #Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
 echo "Discovering Jenkins version..."
