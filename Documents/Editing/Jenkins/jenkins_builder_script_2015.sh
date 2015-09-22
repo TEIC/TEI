@@ -36,7 +36,7 @@ P5 Guidelines (in various formats) and the Roma schema
 generation tool."
 echo ""
 echo "This script is designed to be run on a fully-updated
-install of Ubuntu Precise Pangolin (Ubuntu 12.04). Precise was
+install of Ubuntu Trusty Tahr (Ubuntu 14.04). Trusty was
 chosen because it is a Long-Term Support edition, and
 will be available for around two years from the time
 of writing the script."
