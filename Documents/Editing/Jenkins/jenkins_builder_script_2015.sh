@@ -193,12 +193,6 @@ echo "Installing the Maven project tool, and Git"
 apt-get -y install maven2 git
 echo ""
 
-# Set up Jenkins' git identity
-sudo su jenkins
-git config --global user.email "tei-council@lists.tei-c.org"
-git config --global user.name "TEI Council"
-exit
-
 echo "Installing core packages we need."
 apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe-java debhelper subversion trang zip &&
 echo "Installing curl, required for some tei building stuff."
@@ -306,6 +300,12 @@ echo ""
 # Start Jenkins if it's already installed
 /etc/init.d/jenkins start
 sleep 30
+
+# Set up Jenkins' git identity
+su jenkins
+git config --global user.email "tei-council@lists.tei-c.org"
+git config --global user.name "TEI Council"
+exit
 
 #Now we need to find out what the Jenkins version is, and stash the result in a variable for later use.
 echo "Discovering Jenkins version..."

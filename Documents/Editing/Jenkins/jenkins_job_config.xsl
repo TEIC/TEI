@@ -25,7 +25,6 @@
 
   <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
-  <xsl:param name="jobPriority">100</xsl:param>
   <xsl:param name="email"></xsl:param>
 
   <xsl:template match="/">
