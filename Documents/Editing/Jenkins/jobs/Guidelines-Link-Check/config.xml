@@ -4,10 +4,10 @@
   <description>Runs a script which checks links on the Guidelines HTML output from TEIP5.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <jenkins.advancedqueue.AdvancedQueueSorterJobProperty plugin="PrioritySorter@2.6">
-      <useJobPriority>false</useJobPriority>
-      <priority>-1</priority>
-    </jenkins.advancedqueue.AdvancedQueueSorterJobProperty>
+    <jenkins.advancedqueue.jobinclusion.strategy.JobInclusionJobProperty plugin="PrioritySorter@3.4">
+      <useJobGroup>true</useJobGroup>
+      <jobGroupName>LinkChecker</jobGroupName>
+    </jenkins.advancedqueue.jobinclusion.strategy.JobInclusionJobProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
@@ -19,7 +19,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>VERSIONFILE=$JENKINS_HOME/jobs/TEIP5/workspace/VERSION
-VERSION=`cat ${VERSIONFILE}` 
+VERSION=`cat ${VERSIONFILE}`
 TARGET=$JENKINS_HOME/jobs/TEIP5/lastSuccessful/archive/release/doc/tei-p5-doc/en/html/index.html
 
 
@@ -28,7 +28,7 @@ echo &quot;Running link checking for P5 version $VERSION.&quot;
 if [[ $VERSION =~ [a-z]+$ ]]; then
 	echo &quot;Using configuration for pre-release version.&quot;
 	linkchecker --config=$JENKINS_HOME/jobs/Guidelines-Link-Check/linkcheckerrcalphabeta $TARGET
-	
+
 else
 	echo &quot;Using configuration for release version.&quot;
 	linkchecker --config=$JENKINS_HOME/jobs/Guidelines-Link-Check/linkcheckerrcrelease $TARGET

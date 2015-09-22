@@ -405,9 +405,9 @@ echo ""
 
 echo "Starting the Jenkins server."
 /etc/init.d/jenkins start
-sleep 30
+#sleep 30
 
-echo "Now we want to trigger the server to save its configuration before restarting it."
+#echo "Now we want to trigger the server to save its configuration before restarting it."
 
 #Now we try making Jinks save its configuration. This appallingly messy line of code comes from
 #using Firefox's Live HTTP Headers extension to figure out what happens when you save the
