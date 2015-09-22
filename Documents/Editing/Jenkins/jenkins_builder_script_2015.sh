@@ -194,7 +194,7 @@ apt-get -y install maven2 git
 echo ""
 
 echo "Installing core packages we need."
-apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe-java debhelper subversion trang zip &&
+apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe-java debhelper subversion trang jing zip texlive-xetex &&
 echo "Installing curl, required for some tei building stuff."
 apt-get -y install curl &&
 echo ""
@@ -404,10 +404,10 @@ echo ""
 
 echo "Starting the Jenkins server."
 /etc/init.d/jenkins start
+sleep 30
 
 echo "Now we want to trigger the server to save its configuration before restarting it."
-#Sleep while waiting for Jinks to come back up.
-sleep 10
+
 #Now we try making Jinks save its configuration. This appallingly messy line of code comes from
 #using Firefox's Live HTTP Headers extension to figure out what happens when you save the
 #config. If we don't do this, it seems that Jenkins will never figure out that it needs to use the
