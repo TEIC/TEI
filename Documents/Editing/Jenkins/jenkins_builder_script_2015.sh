@@ -194,7 +194,7 @@ apt-get -y install maven2 git
 echo ""
 
 echo "Installing core packages we need."
-apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe-java debhelper subversion trang jing zip &&
+apt-get -y install openssh-server libxml2 libxml2-utils devscripts xsltproc libsaxonhe-java debhelper trang jing zip &&
 apt-get -y install texlive-xetex texlive-latex-extra texlive-fonts-recommended &&
 echo "Installing curl, required for some tei building stuff."
 apt-get -y install curl &&
@@ -315,7 +315,6 @@ echo "version $JINKSVERSION"
 
 #Configuration for Jenkins
 echo "Starting configuration of Jenkins."
-echo "Getting the Hudson log parsing rules from TEI SVN."
 cd /var/lib/jenkins
 cp ${currDir}/hudson-log-parse-rules ./
 chown jenkins hudson-log-parse-rules
@@ -349,8 +348,6 @@ wget --no-check-certificate https://updates.jenkins-ci.org/latest/log-parser.hpi
 chown jenkins log-parser.hpi
 wget --no-check-certificate https://updates.jenkins-ci.org/latest/scp.hpi
 chown jenkins scp.hpi
-wget --no-check-certificate https://updates.jenkins-ci.org/latest/WebSVN2.hpi
-chown jenkins WebSVN2.hpi
 wget --no-check-certificate https://updates.jenkins-ci.org/latest/PrioritySorter.hpi
 chown jenkins PrioritySorter.hpi
 
@@ -379,13 +376,10 @@ echo ""
 
 echo "Downloading various configuration files for Jenkins."
 cd /var/lib/jenkins
-#svn export svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenkins/jenkins_job_config.xsl
 cp ${currDir}/jenkins_job_config.xsl ./
 chown jenkins jenkins_job_config.xsl
-#svn export svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenkins/jenkins_main_config.xsl
 cp ${currDir}/jenkins_main_config.xsl ./
 chown jenkins jenkins_main_config.xsl
-#svn export svn://svn.code.sf.net/p/tei/code/trunk/Documents/Editing/Jenkins/defaultConfig.xml
 cp ${currDir}/defaultConfig.xml config.xml
 #mv defaultConfig.xml config.xml
 saxon -s:/var/lib/jenkins/config.xml -xsl:/var/lib/jenkins/jenkins_main_config.xsl -o:/var/lib/jenkins/config.xml jinksVersion=$JINKSVERSION
