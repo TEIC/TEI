@@ -55,7 +55,7 @@ text profile may however be of use in any form of automatic text
 processing.  The TEI elements used to encode the profile description
 are described in section <ptr target="#HD4"/> below.</item>
 <item>a container element, tagged <gi>xenoData</gi>, which allows easy
-inclusion of XML metadata from non-TEI schemes (i.e., other than
+inclusion of metadata from non-TEI schemes (i.e., other than
 elements in the TEI namespace). For example, the MARC record for the
 encoded document might be included using MARCXML or MODS. A simple set
 of metadata for harvesting might be included encoded in Dublin
@@ -2451,12 +2451,19 @@ is provided for this purpose.
 <specList>
   <specDesc key="xenoData"/>
 </specList></p>
-<p>The <gi>xenoData</gi> element may not be empty, and may not contain
-TEI elements. Thus it must contain one or more elements from outside
-the TEI. <note place="bottom">As is always the case when mixing
-elements from different namespaces in an XML document, the namespace
-of these non-TEI elements must be declared either on the elements
-themselves or on an ancestor element.</note></p>
+<p>The <gi>xenoData</gi> element may contain anything except TEI
+elements. It may contain one or more elements from outside the
+TEI<note place="bottom">As is always the case when mixing elements
+from different namespaces in an XML document, the namespace of these
+non-TEI elements must be declared either on the elements themselves or
+on an ancestor element.</note> or data in some non-XML text
+format.<note place="bottom">As is always the case when using text
+inside an XML document, certain characters cannot occur in their
+normal form, and must be <soCalled>escaped</soCalled>. The most common
+of these are LESS-THAN SIGN (<q>&lt;</q>, U+003C) and AMPERSAND
+(<q>&amp;</q>, U+0026), which may be escaped with
+<code>&amp;lt;</code> and <code>&amp;amp;</code> respectively. See
+<ptr target="#SG-er"/>.</note></p>
 <specGrp n="non-TEI Metadata" xml:id="D227">
   <xi:include href="../../Specs/xenoData.xml"/>
 </specGrp>

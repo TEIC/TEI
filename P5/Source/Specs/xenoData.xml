@@ -19,16 +19,23 @@ $Id$
     <memberOf key="model.teiHeaderPart"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-	<ref name="macro.anyXML"/>
-      </oneOrMore>
-    </group>
+    <!-- alternate>
+      <textNode/>
+      <macroRef maxOccurs="unbound" key="macro.anyXML"/>
+    </alternate -->
+    <rng:zeroOrMore>
+      <rng:group>
+        <rng:choice>
+          <rng:text/>
+          <rng:ref name="macro.anyXML"/>
+        </rng:choice>
+      </rng:group>
+    </rng:zeroOrMore>
   </content>
   <attList>
-    <attDef ident="type" mode="change" usage="rec">
+    <attDef ident="scope" mode="add" usage="rec">
       <datatype minOccurs="1" maxOccurs="1">
-	<rng:ref name="att.enumerated"/>
+	<macroRef key="att.enumerated"/>
       </datatype>
       <valList type="semi" mode="add">
 	<valItem ident="source">
@@ -41,6 +48,27 @@ $Id$
 	  stored in this <gi>xenoData</gi> element describes the
 	  digital TEI document in which said <gi>xenoData</gi> is
 	  found.</desc>
+	</valItem>
+	<valItem ident="either">
+	  <desc xml:lang="en" versionDate="2015-09-23">Some children
+	  of this <gi>xenoData</gi> element describe the source
+	  document(s) identified in <gi>sourceDesc</gi>, others
+	  describe the digital TEI document in which the
+	  <gi>xenoData</gi> itself is found.</desc>
+	</valItem>
+	<valItem ident="both">
+	  <desc xml:lang="en" versionDate="2015-09-23">All of the
+	  content of this <gi>xenoData</gi> element simultaneously
+	  describe the source document(s) identified in
+	  <gi>sourceDesc</gi> and the digital TEI document in which
+	  the <gi>xenoData</gi> itself is found.</desc>
+	</valItem>
+	<valItem ident="other">
+	  <desc xml:lang="en" versionDate="2015-09-23">The metadata
+	  stored in this <gi>xenoData</gi> element describe something
+	  other than the source document(s) identified in
+	  <gi>sourceDesc</gi> or the digital TEI document in which the
+	  <gi>xenoData</gi> itself is found.</desc>
 	</valItem>
       </valList>
     </attDef>
