@@ -1,9 +1,4 @@
-# Guidelines-TEST
-Test repo for porting GLs to github 
-
-Note: CHANGES PUSHED HERE WILL BE DISCARDED
-
-# Notes for Council members
+# Notes on using Git to edit the Guidelines
 
 ## Where do I start?
 Well, first, you'll need Git. You may already have it, but if not, see 

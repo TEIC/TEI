@@ -1,13 +1,13 @@
 #rend="none"/> Main makefile for TEI P5
 # $Id$
-VCS := svn
+VCS := git
 ALLLANGUAGES=en
 LANGUAGE=en
 INJENKINS=false
 INPUTLANGUAGE=en
 DOCUMENTATIONLANGUAGE=en
 LATEX=pdflatex
-XELATEX=xelatex 
+XELATEX=xelatex
 VERBOSE=
 PREFIX=/usr
 SOURCETREE=Source
@@ -27,7 +27,7 @@ ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -q
 # the variables above. It might include
 # XSL=/path/to/my/copy/of/the/Stylesheets
 # for example.
-sinclude local.mk 
+sinclude local.mk
 
 .PHONY: convert schemas html-web validate valid test clean dist exemplars
 
@@ -37,15 +37,15 @@ convert: schemas
 
 check: check.stamp  p5.xml
 
-check.stamp: 
+check.stamp:
 	@echo Checking you have running XML tools and Perl before trying to run transform...
-	@echo -n Ant: 
+	@echo -n Ant:
 	@command -v  ant || exit 1
-	@echo -n Perl: 
+	@echo -n Perl:
 	@command -v  perl || exit 1
-	@echo -n Java: 
+	@echo -n Java:
 	@command -v  java || exit 1
-	@echo -n xmllint: 
+	@echo -n xmllint:
 	@command -v  xmllint || exit 1
 	touch check.stamp
 
@@ -107,34 +107,34 @@ html-web.stamp:  check.stamp p5.xml  Utilities/guidelines.xsl.model
 
 teiwebsiteguidelines:
 	@echo BUILD: make HTML version of Guidelines just for TEI web site
-	rm -rf teiwebsiteguidelines.zip 
+	rm -rf teiwebsiteguidelines.zip
 	rm -f html-web.stamp
 	make html-web ALLLANGUAGES="en es de ja ko fr it zh-TW" GOOGLEANALYTICS=UA-4372657-1
-	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . ) 
+	(cd Guidelines-web; zip -r -q ../teiwebsiteguidelines.zip . )
 
 pdf: Guidelines.pdf pdf-complete
 
 epub: Guidelines.epub
 
-Guidelines.epub: check.stamp p5.xml 
+Guidelines.epub: check.stamp p5.xml
 	@echo BUILD: Make epub version of Guidelines
 	${ANT} -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 	touch Guidelines.epub
 
-epub3: check.stamp p5.xml 
+epub3: check.stamp p5.xml
 	${ANT}  -f ${XSL}/epub3/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=tei -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	java -jar Utilities/epubcheck3.jar Guidelines.epub
 
 mobi:  Guidelines.mobi
 
-Guidelines.mobi: check.stamp p5.xml 
+Guidelines.mobi: check.stamp p5.xml
 	${ANT}  -f ${XSL}/epub/build-to.xml -lib Utilities/lib/${SAXONJAR} -Dprofiledir=${XSL}/profiles -Dprofile=teikindle -DinputFile=`pwd`/p5.xml -DoutputFile=`pwd`/Guidelines-kindle.epub -Dcoverimage=`pwd`/Utilities/cover.jpg
 	-command -v  kindlegen && kindlegen Guidelines-kindle.epub -o Guidelines.mobi
 	rm Guidelines-kindle.epub
 
 fonttest:
-	-xelatex --interaction=batchmode Utilities/fonttest 
+	-xelatex --interaction=batchmode Utilities/fonttest
 	if [ -f "missfont.log" ]  ; then  \
 	  perl -p -i -e 's/(.*Minion)/%\1/;s/(.*Myriad)/%\1/' Utilities/guidelines.xsl ;\
 	  echo "========================="; \
@@ -151,7 +151,7 @@ Guidelines.pdf: check.stamp p5.xml Utilities/guidelines-latex.xsl
 		 s+/usr/share/xml/tei/stylesheet+${XSL}+;" \
 		Utilities/guidelines-latex.xsl > Utilities/guidelines.xsl
 	@echo BUILD: build Lite version of Guidelines, then LaTeX version of Guidelines from Lite, then run to PDF using XeLaTeX
-	@echo Make sure you have Junicode, Arphic and Mincho fonts installed 
+	@echo Make sure you have Junicode, Arphic and Mincho fonts installed
 	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} -DXELATEX=${XELATEX} pdfonce
 
 pdf-complete:
@@ -177,26 +177,26 @@ chapterpdfs: check
 	perl -p -i -e 's/.*zf@fam.*//' $$i.aux; \
 	done
 
-validate: schemas.stamp valid 
+validate: schemas.stamp valid
 
 valid: jing_version=$(wordlist 1,3,$(shell jing))
-valid: check.stamp p5.xml 
+valid: check.stamp p5.xml
 	@echo BUILD: Check validity with rnv if we have it
 	-command -v  rnv && rnv -v p5odds.rnc p5.xml
 	@echo BUILD: Check validity with special-purpose XSL code, looking for bad links etc
-	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators		
+	${ANT} -lib Utilities/lib/${SAXONJAR} -f antbuilder.xml -DXSL=${XSL} validators
 	@grep -v "ARNING: use of deprecated element" ValidatorLog.xml
 	(grep -q "<ERROR>" ValidatorLog.xml;if [ $$? -ne 1 ] ; then echo "Oh dear me. ERROR found";diff ValidatorLog.xml expected-results/ValidatorLog.xml;false; fi)
 	sh graphics.sh
 	@echo BUILD: Check validity with nvdl, first examples with feasible validity, and then the valid ones
-	./run-onvdl p5.nvdl p5.xml 
+	./run-onvdl p5.nvdl p5.xml
 	./run-onvdl p5valid.nvdl v.xml
 
 test: schemas.stamp
 	@echo BUILD Run test cases for P5
 	(cd Test; make XSL=${XSL} VCS=${VCS})
 
-exemplars:  schemas.stamp 
+exemplars:  schemas.stamp
 	@echo BUILD TEI Exemplars
 	(cd Exemplars; make XSL=${XSL} PREFIX=${PREFIX} VCS=${VCS})
 
@@ -249,7 +249,7 @@ dist-source.stamp: check.stamp p5.xml  schemas.stamp
 	touch dist-source.stamp
 	rm p5subset.json p5subset.js p5attlist.txt stripspace.xsl.model
 
-dist-schema.stamp:check.stamp p5.xml schemas.stamp 
+dist-schema.stamp:check.stamp p5.xml schemas.stamp
 	@echo BUILD: Make distribution directory for schema
 	rm -rf release/tei-p5-schema*
 	mkdir -p release/tei-p5-schema/share/xml/tei/schema/dtd
@@ -261,7 +261,7 @@ dist-schema.stamp:check.stamp p5.xml schemas.stamp
 	| (cd release/tei-p5-schema/share/xml/tei/schema/relaxng; tar xf - )
 	touch dist-schema.stamp
 
-dist-doc.stamp:  check.stamp p5.xml 
+dist-doc.stamp:  check.stamp p5.xml
 	@echo BUILD: Make distribution directory for doc
 	rm -rf release/tei-p5-doc*
 	mkdir -p release/tei-p5-doc/share/doc/tei-p5-doc/en
@@ -283,7 +283,7 @@ dist-doc.stamp:  check.stamp p5.xml
 	-test -f Guidelines.mobi  && cp Guidelines.mobi release/tei-p5-doc/share/doc/tei-p5-doc/en
 	touch dist-doc.stamp
 
-dist-test.stamp: check.stamp p5.xml 
+dist-test.stamp: check.stamp p5.xml
 	@echo BUILD: Make distribution directory for test
 	rm -rf release/tei-p5-test*
 	mkdir -p release/tei-p5-test/share/xml/tei
@@ -299,7 +299,7 @@ dist-exemplars.stamp: check.stamp p5.xml  schemas.stamp
 	| (cd release/tei-p5-exemplars/share/xml/tei; tar xf - )
 	touch dist-exemplars.stamp
 
-dist-database.stamp: check.stamp p5.xml 
+dist-database.stamp: check.stamp p5.xml
 	@echo BUILD: Make distribution directory for database
 	rm -rf release/tei-p5-database*
 	mkdir -p release/tei-p5-database/share/xml/tei/xquery
@@ -404,24 +404,24 @@ dependencies:
 	@echo	rnv
 	@echo	tei-p5-xsl
 	@echo	fonts-arphic-ukai
-	@echo	fonts-arphic-uming 
-	@echo	ttf-baekmuk 
+	@echo	fonts-arphic-uming
+	@echo	ttf-baekmuk
 	@echo	ttf-junicode
 	@echo	ttf-kochi-gothic
-	@echo	ttf-kochi-mincho 
-	@echo	zip 
+	@echo	ttf-kochi-mincho
+	@echo	zip
 	@echo   ttf-linux-libertine
-	@echo 	ttf-hannom 
+	@echo 	ttf-hannom
 clean:
 	(cd Exemplars; make clean)
 	(cd Test; make clean)
-	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split 
-	rm -rf Guidelines.??? Guidelines-* 
-	rm -f *.isosch.xsl 
+	rm -rf release Guidelines Guidelines-web Schema DTD dtd Split
+	rm -rf Guidelines.??? Guidelines-*
+	rm -f *.isosch.xsl
 	rm -f *.stamp
-	rm -f *.xsd 
+	rm -f *.xsd
 	rm -f Exemplars/stdout
-	rm -f Test/*.isosch 
+	rm -f Test/*.isosch
 	rm -f Test/detest.dtd Test/detest.rnc Test/detest.rng Test/detest.xsl
 	rm -f Test/stdout
 	rm -f Utilities/guidelines.xsl
@@ -431,7 +431,7 @@ clean:
 	rm -f p5odds-examples.rng p5odds-examples.rnc p5odds.rng p5odds.rnc p5odds.isosch
 	rm -f pdfbuild.log
 	rm -f stripspace.xsl.model
-	rm -f tei-*.zip 
+	rm -f tei-*.zip
 	rm -f tei-p5-*_*build
 	rm -f tei-p5-*_*changes
 	rm -f tei-p5-*_*deb

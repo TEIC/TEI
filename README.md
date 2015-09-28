@@ -1,0 +1,3 @@
+# [http://www.tei-c.org](Text Encoding Initiative) Repository
+
+This repository contains the sources for building the TEI P5 Guidelines and schemas as well as documentation and scripts for setting up the Continuous Integration platform. If you want to work on the Guidelines, you should look in the [./tree/master/P5](P5 directory). Some notes on working with Git may be found in the [./blob/master/Documents/Git-README.md](Git README) document.

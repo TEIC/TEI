@@ -7,7 +7,6 @@ $Date$
 $Id$
 -->
 
-
 <?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TC" n="19">
@@ -20,7 +19,10 @@ $Id$
     variants. This chapter defines a module for use in encoding such an apparatus of variants, which
     may be used in conjunction with any of the modules defined in these Guidelines. It also defines
     an element class which provides extra attributes for some elements of the core tag set when this
-    module is selected.</p>
+    module is selected. In printed critical editions, the apparatus takes the form of highly-compressed
+    notes at the bottom of each page. TEI’s critical apparatus module allows variation to be encoded
+    so that such notes may be generated, but it also models the variation so that, for example,
+    interactive editions in which readers can choose which witness readings to display are possible.</p>
 
   <p>Information about variant readings (whether or not represented by a critical apparatus in the
     source text) may be recorded in a series of <term>apparatus entries</term>, each entry
@@ -123,7 +125,8 @@ To speke of wo that is in mariage; ...</q>-->
 <q>a subsidiary proposition introduced in the proof of some other
 proposition; a helping theorem.</q>--></p>
       <p>In recording readings within an apparatus entry, the <gi>rdg</gi> element should always be
-        used; each <gi>app</gi> usually contains at least one <gi>rdg</gi>, though it may contain only <gi>note</gi>s.</p>
+        used; each <gi>app</gi> usually contains at least one <gi>rdg</gi>, though it may contain only 
+        <gi>note</gi>s.</p>
       <p>The <gi>lem</gi> element may also be used to record the base text of the source edition, 
         to mark the readings of a base witness, to indicate the preference of an editor or encoder 
         for a particular reading, or (e.g. in the case of an external apparatus) to indicate 
@@ -909,20 +912,18 @@ Group C</soCalled> are themselves first allocated sigla in individual
       <head>The Parallel Segmentation Method</head>
       <p>This method differs from the double end-point attachment method in that all variants at any
         point of the text are expressed as variants on one another. In this method, no two
-        variations can overlap, although they may nest. Thus, the concepts of a base text and of a
-        lemma become unnecessary: the texts compared are divided into matching segments all
+        variations can overlap, although they may nest. The texts compared are divided into matching segments all
         synchronized with one another. This permits direct comparison of any span of text in any
         witness with that in any other witness. It is also very easy with this method for an
         application to extract the full text of any one witness from the apparatus.</p>
       <p>This method will (by definition) always be satisfactory when there are just two texts for
-        comparison (assuming they are in the same language and script). It will also be useful where
-        editors do not wish to privilege a text as the <soCalled>base</soCalled> or when editors
-        wish to present parallel texts. It will become less convenient as traditions become more
-        complex and tension develops between the need to segment on the largest variation found and
-        the need to express the finest detail of agreement between witnesses.</p>
+        comparison (assuming they are in the same language and script). It will however be less convenient 
+        for very complex traditions, where establishing a base text with variations from it is not a 
+        satisfactory goal for the edition, or in some cases where every detail of variation needs
+        to be modeled.</p>
       <p>In the parallel segmentation method, each segment of text on which there is variation is
-        marked by an <gi>app</gi> element; each reading is given in a <gi>rdg</gi> element; if it is
-        desired to single out one reading as preferred, it may be tagged <gi>lem</gi>:
+        marked by an <gi>app</gi> element; the preferred (or base) reading is tagged with <gi>lem</gi>;
+        each reading is given in a <gi>rdg</gi> element:
         <egXML xmlns="http://www.tei-c.org/ns/Examples"><variantEncoding method="parallel-segmentation" location="internal"/>
 <!-- ... -->
   <l n="1">
@@ -1038,14 +1039,14 @@ Group C</soCalled> are themselves first allocated sigla in individual
         
         <!-- In another file -->
         
-        <app from="example.xml#string-range(WBP.1a, 0, 10)">
+        <app from="example.xml#string-range(WP.1a, 0, 10)">
           <lem>Experience</lem>
           <rdg wit="#La">Experiment</rdg>
           <rdg wit="#Ra2">Eryment</rdg>
         </app>
    </egXML>
       </p>
-      <p> If only the <att>from</att> attribute is provided then it should be understood that this
+      <p>If only the <att>from</att> attribute is provided then it should be understood that this
         supplies the location of the textual variance that the apparatus documents. If the
           <att>from</att> attribute contains an XPointer scheme that identifies a range of text (or
         elements) then this is understood to record the starting and ending of the range as in the
@@ -1079,9 +1080,9 @@ Group C</soCalled> are themselves first allocated sigla in individual
       follows:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">Virginite is grete
 <app>
-  <rdg resp="#ES">perfectio<am><g ref="#ii"/></am></rdg>
-  <rdg resp="#FJF">perfectio<ex>u</ex>n</rdg>
-  <rdg resp="#PGR">perfectiou<ex>n</ex></rdg>
+  <rdg source="#ES">perfectio<am><g ref="#ii"/></am></rdg>
+  <rdg source="#FJF">perfectio<ex>u</ex>n</rdg>
+  <rdg source="#PGR">perfectiou<ex>n</ex></rdg>
 </app></egXML>
       This example uses special purpose elements <gi>am</gi> and <gi>ex</gi> used to represent
       abbreviation marks and editorial expansion respectively; these elements are provided by the
@@ -1116,9 +1117,9 @@ not for those for elements nested within.--></p>
       editorial preference for Ruggiers' expansion and an explanation of that preference is given:
       <egXML xmlns="http://www.tei-c.org/ns/Examples">Virginite is grete
 <app>
-  <rdg resp="#ES">perfecti<am><g ref="#ii"/></am></rdg>
-  <rdg xml:id="f105" resp="#FJF">perfectio<ex>u</ex>n</rdg>
-  <rdg xml:id="r105" resp="#PGR">perfectiou<ex>n</ex></rdg>
+  <rdg source="#ES">perfecti<am><g ref="#ii"/></am></rdg>
+  <rdg xml:id="f105" source="#FJF">perfectio<ex>u</ex>n</rdg>
+  <rdg xml:id="r105" source="#PGR">perfectiou<ex>n</ex></rdg>
 </app>
 <!-- ... <note> appearing elsewhere in the document ... -->
 <note target="#r105 #f105">Furnivall's expansion implies that the bar
@@ -1141,6 +1142,64 @@ not for those for elements nested within.--></p>
       important to record the fact that all were deleted by the same act, the markup may use the
         <gi>join</gi> element or the <att>next</att> and <att>prev</att> attributes defined by
       chapter <ptr target="#SA"/>.</p>
+  </div>
+  
+  <div>
+    <head>Strategies for Encoding Variation</head>
+    <p>Textual variation may manifest in many ways. Variation most frequently occurs at the phrase level,
+      but is also common at higher structural levels, such as the verse line, paragraph, or chapter. When
+      these structures are involved, some care must be taken in their encoding to ensure that TEI's
+      Abstract Model is not being broken. It would be an error, for example, to have a <gi>div</gi> in
+      the <gi>lem</gi>, but a <gi>p</gi> in a <gi>rdg</gi> inside the same apparatus entry, because these 
+      structures cannot occur at the same level. Similarly, it is an error if the contents of an 
+      apparatus entry place a <gi>p</gi> inside another <gi>p</gi> or an <gi>l</gi> inside an <gi>l</gi>.</p>
+    <p>Phenomena such as omissions and transpositions in witnesses will require some encoding strategies
+      that differ from those in the examples above. An omission in on witness may be encoded using an
+      empty <gi>rdg</gi>, thus:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><app xml:id="d1e372">
+  <lem xml:id="d1e373" source="#Heyworth"><l n="18">Hypsipyle uacuo constitit in thalamo:</l></lem>
+  <rdg xml:id="d1e376" wit="#J" cause="homeoarchon"/>
+</app></egXML>
+      Notice that in this example, the variation occurs at the unit of the verse line. The scribe of MS J has 
+      skipped line 18 (probably by mistake) because, like line 19, it begins with the name "Hypsipyle."
+    </p>
+    <p>Transpositions are a harder phenomenon to encode, because they involve variation that occurs in different 
+      locations. A single <gi>app</gi> will therefore not be sufficient, and the variants must be linked. 
+      For example, in his edition of Propertius 1.16, Housman printed lines 25-6 after line 32, Heyworth prints 
+      them in place. We might encode Heyworth's edition, which records Housman's conjecture despite disagreeing 
+      with it, as follows:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><app xml:id="app-lem-l25-l26" exclude="#app-rdg-Housman-l25-26">
+  <lem xml:id="d1e462" source="#Heyworth">
+    <l n="25" xml:id="l25">desine iam reuocare tuis periuria verbis,</l>
+    <l n="26" xml:id="l26">Cynthia, et oblitos parce movere deos;</l>
+  </lem>
+</app></egXML> and then, after line 32:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><app xml:id="app-rdg-Housman-l25-26" exclude="#app-lem-l25-l26">
+  <rdg xml:id="d1e603" source="#Housman">
+    <l copyOf="#l25"/>
+    <l copyOf="#l26"/>
+  </rdg>
+  <note target="#d1e603">Housman put these lines after 32.</note>
+</app></egXML>
+      Note that both <gi>app</gi>s are linked via the <att>exclude</att> attribute, because they are mutually
+      exclusive: if one reading is chosen for display in a reading interface, for example, the other must 
+      disappear and vice versa. To avoid repetition, the second pair of lines can make use of the <att>copyOf</att> 
+      attribute. If they were both transposed and somewhat different, then both sets would be written in full.
+    </p>
+    <p>Apparatus entries may nest when there is variation at both higher and lower structural levels, e.g.:
+      <egXML xmlns="http://www.tei-c.org/ns/Examples"><app xml:id="d1e275">
+  <lem xml:id="d1e277" source="#Heyworth">
+    <l n="8"><app xml:id="d1e280"><lem xml:id="d1e281" wit="#N #Λ">ut</lem><rdg xml:id="d1e283" wit="#A">et</rdg><rdg xml:id="d1e285" source="#Nodell">ac</rdg> <note target="#d1e287">perhaps</note><rdg xml:id="d1e287" source="#Heyworth" cert="low">quam</rdg></app> formosa nouo quae parat ire uiro.</l>
+    <l n="9"><app xml:id="d1e294"><lem xml:id="d1e295">at</lem><rdg xml:id="d1e297" wit="#A">et</rdg></app> non sic, Ithaci digressu <app xml:id="d1e300"><lem xml:id="d1e301">mota</lem><rdg xml:id="d1e303" source="#Graevius">immota</rdg></app>, Calypso</l>
+    <l n="10">desertis olim fleuerat aequoribus:</l>
+    <l n="11">multos illa dies incomptis maesta capillis</l>
+  </lem>
+  <rdg xml:id="d1e314" wit="#C" cause="homoeoteleuton"/><note target="#d1e314">omits lines 8-11 because of homoeoteleuton.</note>
+</app></egXML>
+      Here, MS C omits lines 8-11, but there are variations the editor wishes to record in the other witnesses 
+      which do have these lines. Therefore, an outer <gi>app</gi> gives the lines in the <gi>lem</gi> and the
+      omission in a <gi>rdg</gi>. Further variation is encoded for lines 8 and 9 using nested <gi>app</gi>s.
+    </p>
   </div>
 
   <div>

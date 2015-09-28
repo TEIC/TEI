@@ -31,6 +31,20 @@
   <content>
     <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
   </content>
+  <constraintSpec ident="abstractModel-structure-p" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:p or ancestor::tei:ab">
+        Abstract model violation: ab may not contain paragraphs or other ab elements.
+      </report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l or ancestor::tei:lg">
+        Abstract model violation: Lines may not contain higher-level divisions such as p or ab.
+      </report>
+    </constraint>
+  </constraintSpec>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <div type="book" n="Genesis">
