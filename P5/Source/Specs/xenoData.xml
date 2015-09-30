@@ -35,7 +35,8 @@ $Id$
   <attList>
     <attDef ident="scope" mode="add" usage="rec">
       <datatype minOccurs="1" maxOccurs="1">
-	<macroRef key="att.enumerated"/>
+	<!-- <macroRef key="att.enumerated"/> -->
+	<rng:ref name="att.enumerated"/>
       </datatype>
       <valList type="semi" mode="add">
 	<valItem ident="source">
@@ -44,18 +45,18 @@ $Id$
 	  source document(s) identified in <gi>sourceDesc</gi>.</desc>
 	</valItem>
 	<valItem ident="transcription">
-	  <desc xml:lang="en" versionDate="2015-07-11">The metadata
+	  <desc xml:lang="en" versionDate="2015-09-30">The metadata
 	  stored in this <gi>xenoData</gi> element describes the
-	  digital TEI document in which said <gi>xenoData</gi> is
-	  found.</desc>
+	  digital TEI document in which it is found.</desc>
 	</valItem>
-	<valItem ident="either">
+	<!-- Not suggested, as it makes no useful assertion: -->
+	<!-- valItem ident="either">
 	  <desc xml:lang="en" versionDate="2015-09-23">Some children
 	  of this <gi>xenoData</gi> element describe the source
 	  document(s) identified in <gi>sourceDesc</gi>, others
 	  describe the digital TEI document in which the
 	  <gi>xenoData</gi> itself is found.</desc>
-	</valItem>
+	</valItem -->
 	<valItem ident="both">
 	  <desc xml:lang="en" versionDate="2015-09-23">All of the
 	  content of this <gi>xenoData</gi> element simultaneously
@@ -73,27 +74,34 @@ $Id$
       </valList>
     </attDef>
   </attList>
-  <!-- Thanks to                                                 -->
-  <!-- Sarah Sweeney, Digital Repository Manager                 -->
-  <!-- Northeastern University Library Digital Scholarship Group -->
-  <!-- for the examples below except for the UVic "colonial      -->
-  <!-- despatches of Vancouver Island" example, for which thanks -->
-  <!-- to Martin Holmes, who posted it on the ticket, FR 453.    --> 
   <exemplum versionDate="2015-05-30" xml:lang="en"
 	   xmlns:dc="http://purl.org/dc/elements/1.1/">
     <p>This example presumes that the prefix <code>dc</code> has been
     bound to the namespace
     <code>http://purl.org/dc/elements/1.1/</code>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
-      <xenoData type="transcription">
-	<dc:title>British Library Harley MS 4955</dc:title>
-	<dc:creator>William Cavendish, Earl (later Duke) of Newcastle</dc:creator>
-	<dc:creator>John Rolleston, secretart to William Cavendish</dc:creator>
-	<dc:rights>Not to be shared or published without permission</dc:rights>
-	<dc:source>British Library Harley 4955 The Newcastle MS</dc:source>
+      <xenoData scope="source">
+	<dc:title>The description of a new world, called the blazing-world</dc:title>
+	<dc:creator>The Duchess of Newcastle</dc:creator>
+	<dc:date>1667</dc:date>
+	<dc:identifier>British Library, 8407.h.10</dc:identifier>
+	<dc:subject>utopian fiction</dc:subject>
+      </xenoData>
+      <xenoData scope="transcription">
+	<dc:title>The Description of a New World, Called the Blazing-World, 1668</dc:title>
+	<dc:creator>Cavendish, Margaret (Lucas), Duchess of Newcastle</dc:creator>
+	<dc:publisher>Women Writers Project</dc:publisher>
+	<dc:date>2002-02-12</dc:date>
+	<dc:subject>utopian fiction</dc:subject>
       </xenoData>
     </egXML>
   </exemplum>
+  <!-- Thanks to                                                 -->
+  <!-- Sarah Sweeney, Digital Repository Manager                 -->
+  <!-- Northeastern University Library Digital Scholarship Group -->
+  <!-- for the examples below except for the UVic "colonial      -->
+  <!-- despatches of Vancouver Island" example, for which thanks -->
+  <!-- to Martin Holmes, who posted it on the ticket, FR 453.    --> 
   <exemplum versionDate="2015-05-30"
 	    xml:lang="en"
 	    xmlns:cc="http://web.resource.org/cc/"
@@ -169,13 +177,12 @@ $Id$
     </xenoData>
     </egXML>
   </exemplum>
-  <exemplum versionDate="2015-06-25" xml:lang="en"
-	    xmlns:mods="http://www.loc.gov/mods/v3">
+  <exemplum versionDate="2015-06-25" xml:lang="en" xmlns:mods="http://www.loc.gov/mods/v3">
     <p>In this example, the prefix <code>mods</code> is bound to the
     namespace <code>http://www.loc.gov/mods/v3</code>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
       <xenoData>
-	<mods:mods xmlns="">
+	<mods:mods>
 	  <mods:titleInfo>
 	    <mods:title>Academic adaptation and cross-cultural
 	    learning experiences of Chinese students at American
@@ -199,22 +206,7 @@ $Id$
 	    <mods:namePart type="given">Liliana</mods:namePart>
 	    <mods:namePart type="family">Meneses</mods:namePart>
 	  </mods:name>
-	  <mods:name type="personal" authority="local">
-	    <mods:namePart/>
-	    <mods:role>
-	      <mods:roleTerm authority="local" type="text">Committee member</mods:roleTerm>
-	    </mods:role>
-	    <mods:namePart type="given">Carol</mods:namePart>
-	    <mods:namePart type="family">Sharicz</mods:namePart>
-	  </mods:name>
-	  <mods:name type="personal" authority="local">
-	    <mods:namePart/>
-	    <mods:role>
-	      <mods:roleTerm authority="local" type="text">Committee member</mods:roleTerm>
-	    </mods:role>
-	    <mods:namePart type="given">Celia-Regina P.</mods:namePart>
-	    <mods:namePart type="family">Bianconi</mods:namePart>
-	  </mods:name>
+	  <!-- ... -->
 	  <mods:typeOfResource>text</mods:typeOfResource>
 	  <mods:genre>doctoral theses</mods:genre>
 	  <mods:originInfo>
@@ -231,46 +223,7 @@ $Id$
 	    <mods:form authority="marcform">electronic</mods:form>
 	    <mods:digitalOrigin>born digital</mods:digitalOrigin>
 	  </mods:physicalDescription>
-	  <mods:abstract>Studies on the &#x2026; different academic
-	  setting.</mods:abstract>
-	  <mods:subject>
-	    <mods:topic>academic adaptation</mods:topic>
-	  </mods:subject>
-	  <mods:subject>
-	    <mods:topic>American universities</mods:topic>
-	  </mods:subject>
-	  <mods:subject>
-	    <mods:topic>cross-cultural learning</mods:topic>
-	  </mods:subject>
-	  <mods:subject>
-	    <mods:topic>Hofstede's five cultural dimensions</mods:topic>
-	  </mods:subject>
-	  <mods:subject>
-	    <mods:topic>undergraduate students from China</mods:topic>
-	  </mods:subject>
-	  <mods:subject>
-	    <mods:topic>Bilingual, Multilingual, and Multicultural Education</mods:topic>
-	  </mods:subject>
-	  <mods:subject>
-	    <mods:topic>Education</mods:topic>
-	  </mods:subject>
-	  <mods:subject>
-	    <mods:topic>Educational Leadership</mods:topic>
-	  </mods:subject>
-	  <mods:subject>
-	    <mods:topic>Higher Education Administration</mods:topic>
-	  </mods:subject>
-	  <mods:identifier type="hdl" displayLabel="Permanent Link">http://hdl.handle.net/2047/d20003367</mods:identifier>
-	  <mods:extension>
-	    <scholarly_object>
-	      <category>Theses and Dissertations</category>
-	      <department>School of Education</department>
-	      <degree>Ed.D.</degree>
-	    </scholarly_object>
-	  </mods:extension>
-	  <mods:accessCondition type="use and reproduction">
-	    Copyright 2013, Hong Zhang.
-	  </mods:accessCondition>
+	  <!-- ... -->
 	</mods:mods>
       </xenoData>
     </egXML>
