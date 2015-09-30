@@ -13,7 +13,7 @@ NORMALODDS= \
 	tei_enrich.dtd \
 	tei_all.dtd \
 	tei_tite.dtd \
-	tei_lite.dtd 
+	tei_lite.dtd
 
 ODDSJUSTRELAX=	isofs.rng \
 	tei_svg.rng \
@@ -25,7 +25,7 @@ ODDSJUSTRELAX=	isofs.rng \
 
 DOCONLYODDS=tei_lite_fr.doc.epub
 
-SPECIALODDS = tei_allPlus.special	
+SPECIALODDS = tei_allPlus.special
 
 DOCODDS=tei_tite.doc.pdf tei_lite.doc.pdf tei_jtei.doc.pdf
 
@@ -35,7 +35,7 @@ LANGUAGE=en
 P5=`(cd ..; pwd)`
 DRIVER=guidelines-${LANGUAGE}.xml
 XSL=/usr/share/xml/tei/stylesheet/
-SOURCE=${P5}/p5subset.xml 
+SOURCE=${P5}/p5subset.xml
 ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -Dprofile=tei -DdefaultSource=${SOURCE} -DXSL=${XSL} -Dbasedir=`pwd`
 
 default: schemas
@@ -48,13 +48,13 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 
 %.special: %.odd
 	xmllint --xinclude $*.odd > $*.odd.xinclude
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron exampleschema  
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron exampleschema
 	../run-onvdl $*.nvdl $*.odd.xinclude
 	rm $*.odd.xinclude
 	${TRANG} $*.rng $*.rnc
 
-%.rng: %.odd 
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng  isoschematron validateschematron 
+%.rng: %.odd
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng  isoschematron validateschematron
 	${TRANG}  $*.rng $*.rnc
 
 %.dtd: %.odd
@@ -70,14 +70,14 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	-test -f tite.xsd && mv tite.xsd $*_tite.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_tite.xsd && perl -p -i -e "s/tite.xsd/$*_tite.xsd/" $*.xsd
 	@echo Validate XSD using Jing ...
 	${JING} $*.xsd $*.tei
-	@echo Validate using xmllint for DTD  
+	@echo Validate using xmllint for DTD
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
 %.doc.pdf: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd docepub docpdf dochtml 
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd docepub docpdf dochtml
 
 %.doc.epub: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dlang=`echo $* | sed 's/.*_//'` -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema 
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dlang=`echo $* | sed 's/.*_//'` -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema
 	../run-onvdl $*.nvdl $*.odd
 	-rm $*.doc.xml
 	-rm $*.rng
@@ -116,15 +116,16 @@ dist: schemas docschemas
 	mv isofs.rng tei*.rnc tei*.rng ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	cp mathml*rng relaxng.rng its.rng svg*rng *.mod ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	cp -r images ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html
-	mv *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html 
-	mv *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf 
+	mv *.doc.html ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/html
+	mv *.doc.pdf ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/pdf
 	mv *.doc.epub ../release/tei-p5-exemplars/share/doc/tei-p5-exemplars/epub
 	cp ../catalog.p5.custom ../release/tei-p5-exemplars/share/xml/tei/custom/schema/catalog.xml
 
 clean:
+	mv tei_lite_fr.nvdl tei_lite_fr.nvdl.bak
 	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html *.nvdl *-examples*
+	mv tei_lite_fr.nvdl.bak tei_lite_fr.nvdl
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
 	rm -f names.xml *properties
 	rm -f [A-Z]*xml
-
