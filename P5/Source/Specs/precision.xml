@@ -17,8 +17,6 @@
     <memberOf key="att.scoping"/>
     <memberOf key="att.ranging"/>
     <memberOf key="model.certLike"/>
-    <!--   MDH 2014-11-19: per https://sourceforge.net/p/tei/feature-requests/519/, 
-    adding dating attributes. -->
     <memberOf key="att.datable"/>
   </classes>
   <content>
@@ -30,13 +28,6 @@
     </rng:zeroOrMore>
   </content>
   <attList>
-    <attDef ident="degree" usage="opt" validUntil="2015-11-12">
-      <desc versionDate="2009-06-07" xml:lang="en">indicates the degree of precision to be assigned as a
-      value between 0 (none) and 1 (optimally precise)</desc>
-      <datatype>
-        <rng:ref name="data.probability"/>
-      </datatype>
-    </attDef>
     <attDef ident="precision">
       <desc versionDate="2011-04-13" xml:lang="en">characterizes the precision of the element or attribute pointed 
         to by the <gi>precision</gi> element.</desc>
@@ -53,11 +44,11 @@
     </attDef>
   </attList>
   <exemplum xml:lang="en">
-    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <date xml:id="date001" notBefore="0014" notAfter="0064">Within about 50
         years of the death of Augustus</date>
-      <precision target="#date001" match="@notBefore" degree="0.9"/>
-      <precision target="#date001" match="@notAfter" degree="0.3"/>
+      <precision target="#date001" match="@notBefore" precision="high"/>
+      <precision target="#date001" match="@notAfter" precision="low"/>
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
