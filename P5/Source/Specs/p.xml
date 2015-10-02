@@ -51,8 +51,15 @@
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="(ancestor::tei:l or ancestor::tei:lg) and not(parent::tei:note)">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
+      </report>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="abstractModel-structure-div" scheme="isoschematron">
+    <constraint>
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:body[not(.//tei:*[starts-with(local-name(.),'div')]//tei:p[. = current()])]">
+        Abstract model violation: Paragraphs in the body must occur inside a div.
       </report>
     </constraint>
   </constraintSpec>
