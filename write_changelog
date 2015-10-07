@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mv P5/ReleaseNotes/ChangeLog P5/ReleaseNotes/ChangeLog.tmp
+git log --since="`head -1 P5/ReleaseNotes/ChangeLog.tmp | awk '{print $1}'`" --date=short --name-status --pretty=format:"%ad  %an <%aE>  %h%n%n        %s%n" > P5/ReleaseNotes/ChangeLog
+printf "\n" >> P5/ReleaseNotes/ChangeLog
+cat P5/ReleaseNotes/ChangeLog.tmp >> P5/ReleaseNotes/ChangeLog
