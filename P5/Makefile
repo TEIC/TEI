@@ -389,14 +389,8 @@ install-database: dist-database
 
 install: clean install-schema install-doc install-test install-exemplars install-source install-database
 
-
 changelog:
-	(LastDate=`head -1 ReleaseNotes/ChangeLog | awk '{print $$1}'`; \
-        git log --since="$$LastDate" --date=short --name-status --pretty=format:"%ad  %an <%aE> %h%n%n        %s%n" > newchanges)
-	mv ReleaseNotes/ChangeLog oldchanges
-	cat newchanges oldchanges > ReleaseNotes/ChangeLog
-	rm newchanges oldchanges
-
+	../write_changelog
 
 dependencies:
 	@echo to make this thing build under Ubuntu/Debian, here are all the packages you will need:
