@@ -12,10 +12,9 @@ it handy. You should set your name and email address, so Git will be able to rec
 
 will do the trick. See also <https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup>.
 
-Next, you should clone the repo. If you want to be able to make changes and push them back to this repo (and you are 
-encouraged to do so, they won't be kept, so you can't break anything), you should log in to GitHub, creating an account 
-if you don't have one yet. If you haven't been added to the TEI Technical Council team yet, and I believe a couple of us 
-haven't, then email the Council list and ask to be added with your GitHub username. Once you are logged in and have been 
+Next, you should clone the repo. If you want to be able to make changes and push them back to this repo, you should log 
+in to GitHub, creating an account if you don't have one yet. If you haven't been added to the TEI Technical Council team 
+yet, then email the Council list and ask to be added with your GitHub username. Once you are logged in and have been 
 given access, you should be able to clone the repo using the URL on the right side of the repo page. You can clone anyway, 
 even without signing in, but you won't be able to push your changes back.
 
