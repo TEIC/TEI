@@ -2438,11 +2438,11 @@ which process additional information is added to the
 the web, a Dublin Core record is generated for discoverability of the
 resource. It is sometimes advantageous to store some or all of the
 non-TEI metadata in the TEI file.</p>
-<p>Such non-TEI elements may be placed anywhere within a TEI file
-(other than as the root element), as they do not affect TEI
-conformance. However, it is easier for humans to manage these elements
+<p>Such non-TEI data may be placed anywhere within a TEI file
+(other than as the root element), as it does not affect TEI
+conformance. However, it is easier for humans to manage these kinds of data
 if they are grouped together in a single location. In addition, such
-grouping makes it easy to avoid flagging such elements as errors
+grouping makes it easy to avoid accidentally flagging non-TEI data as errors
 during validation of the file against a TEI schema. The
 <gi>xenoData</gi> element, which may appear in the TEI Header after
 the <gi>fileDesc</gi> but before the optional <gi>revisionDesc</gi>,
@@ -2466,6 +2466,27 @@ of these are LESS-THAN SIGN (<q>&lt;</q>, U+003C) and AMPERSAND
 <specGrp n="non-TEI Metadata" xml:id="D227">
   <xi:include href="../../Specs/xenoData.xml"/>
 </specGrp>
+<p>The following example presumes that the prefix <code>dc</code> has been
+bound to the namespace
+<code>http://purl.org/dc/elements/1.1/</code>. The first <gi>xenoData</gi>
+block provides Dublin Core XML data for the source of a TEI transcription,
+and the second, data describing the transcription itself.
+  <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
+<xenoData scope="source" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <dc:title>The description of a new world, called the blazing-world</dc:title>
+  <dc:creator>The Duchess of Newcastle</dc:creator>
+  <dc:date>1667</dc:date>
+  <dc:identifier>British Library, 8407.h.10</dc:identifier>
+  <dc:subject>utopian fiction</dc:subject>
+</xenoData>
+<xenoData scope="transcription" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <dc:title>The Description of a New World, Called the Blazing-World, 1668</dc:title>
+  <dc:creator>Cavendish, Margaret (Lucas), Duchess of Newcastle</dc:creator>
+  <dc:publisher>Women Writers Project</dc:publisher>
+  <dc:date>2002-02-12</dc:date>
+  <dc:subject>utopian fiction</dc:subject>
+</xenoData>
+</egXML></p>
 </div>
 
 <div type="div2" xml:id="HD6"><head>The Revision Description</head>
