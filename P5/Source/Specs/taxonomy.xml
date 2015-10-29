@@ -28,6 +28,7 @@ $Id$
   <classes>
     <memberOf key="att.global"/>
   </classes>
+  <!-- MDH changed content model for issue #496 2015-10-29. -->
   <content>
     <choice xmlns="http://relaxng.org/ns/structure/1.0">
       <zeroOrMore>
@@ -37,7 +38,10 @@ $Id$
         </choice>
       </zeroOrMore>
       <oneOrMore>
-        <ref name="category"/>
+        <choice>
+          <ref name="category"/>
+          <ref name="taxonomy"/>
+        </choice>
       </oneOrMore>
       <group>
         <group>
@@ -45,7 +49,10 @@ $Id$
           <ref name="model.biblLike"/>
         </group>
         <zeroOrMore>
-          <ref name="category"/>
+          <choice>
+            <ref name="category"/>
+            <ref name="taxonomy"/>
+          </choice>
         </zeroOrMore>
       </group>
     </choice>
