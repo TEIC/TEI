@@ -299,16 +299,16 @@ an XML Document Type Declaration.</item-->
     <p>The <gi>attRef</gi> element is rarely used directly in ODD files, although it is commonly created 
     and consumed during intermediate stages when ODD files are processed to produce schemas. 
     It allows an ODD creator to reference (i.e. copy)
-    an attribute defined elsewhere. In the example below, the <att>source</att> attribute (defined 
-    in the <ident>att.source</ident> class) is added to the <gi>p</gi> element:
+    an attribute defined elsewhere. In the example below, the <att>type</att> attribute (defined 
+    in the <ident>att.typed</ident> class) is added to the <gi>p</gi> element:
       <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="p" module="core" mode="change">
         <attList>
-          <attRef name="source" class="att.source"/>
+          <attRef name="type" class="att.type"/>
         </attList>
       </elementSpec></egXML>
       A more conventional approach would be to add <gi>p</gi> to the <ident>att.source</ident>
       class and then delete any attributes from that class which are not required. However, when the 
-      attribute class is large, many elements may need to be deleted, so it may be more efficient to 
+      attribute class is large, many attributes may need to be deleted, so it may be more efficient to 
       use <gi>attRef</gi>. A common use-case might be the requirement for the global @xml:id attribute
       to be added to a new custom element which does not require any of the other <ident>att.global</ident>
       attributes:
