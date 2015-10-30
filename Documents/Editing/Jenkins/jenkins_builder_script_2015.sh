@@ -299,7 +299,7 @@ echo "Replacing default port and waiting for Jenkins to restart …"
 /etc/init.d/jenkins stop
 sleep 20
 # replace the default port
-sed -i 's/HTTP_PORT=[0-9]*/HTTP_PORT=$JENKINS_PORT/' /etc/default/jenkins 
+sed -i "s/HTTP_PORT=.*$/HTTP_PORT=$JENKINS_PORT/" /etc/default/jenkins 
 
 # start Jenkins
 /etc/init.d/jenkins start
