@@ -25,7 +25,7 @@
 #Note that this should be run as root (with sudo).
 
 # port the Jenkins server will listen to
-JENKINS_PORT=9042
+JENKINS_PORT=8080
 JENKINS_USER_NAME="TEI Council"
 JENKINS_USER_EMAIL="tei-council@lists.tei-c.org"
 
