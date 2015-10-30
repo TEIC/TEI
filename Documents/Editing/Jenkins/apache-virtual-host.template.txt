@@ -1,0 +1,25 @@
+#
+# Virtual host config for jenkins.tei-c.org
+#
+# There are several TEI jenkins servers around the world:
+# * http://teijenkins.hcmc.uvic.ca
+# * http://nagano.upb.de:7042
+# * http://tei.it.ox.ac.uk/jenkins/
+#
+# Please make sure to have mod_proxy and mod_proxy_http 
+# installed and activated (for apache 2.4)
+
+<VirtualHost *:80>
+	ServerAdmin pstadler@mail.uni-paderborn.de
+	ServerName jenkins.tei-c.org
+
+	ErrorLog ${APACHE_LOG_DIR}/error_jenkins.tei-c.org.log	
+	CustomLog ${APACHE_LOG_DIR}/access_jenkins.tei-c.org.log combined
+	LogLevel warn
+
+	<Location />
+		ProxyPass  http://localhost:7042/
+		ProxyPassReverse  http://localhost:7042/
+	</Location>
+
+</VirtualHost>
