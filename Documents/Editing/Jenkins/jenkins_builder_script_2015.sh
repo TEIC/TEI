@@ -289,19 +289,6 @@ script again. Otherwise, press return to continue."
 
 echo ""
 
-#Setting up configuration for oXygen
-#This particular line is very unfortunate, but we apparently have to do it.
-if [ ! -d /root/.com.oxygenxml ]
-then {
-  chmod a+x /root
-  mkdir /root/.com.oxygenxml
-  chmod a+x /root/.com.oxygenxml
-  mkdir /root/.java
-  chmod a+x /root/.java
-  touch  /root/.java/.com.oxygenxml.rk
-  chmod a+w /root/.java/.com.oxygenxml.rk
-}
-fi
 
 #Jenkins
 echo "Installing the Jenkins CI Server."
