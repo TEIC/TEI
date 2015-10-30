@@ -204,6 +204,10 @@ apt-get -y install texlive-xetex texlive-latex-extra texlive-fonts-recommended &
 echo "Installing curl, required for some tei building stuff."
 apt-get -y install curl &&
 echo ""
+# linkchecker is needed for the linkchecker Jenkins project
+echo "Installing linkchecker."
+apt-get -y install linkchecker
+echo ""
 
 #Set up saxon command-line executables
 cp ${currDir}/bin/saxon* /usr/bin/
