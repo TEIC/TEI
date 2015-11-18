@@ -1899,17 +1899,9 @@
             <constraintSpec ident="jtei.sch-title" scheme="isoschematron">
               <constraint>
                 <sch:rule context="tei:titleStmt">
-                  <sch:assert test="tei:title[@type = 'main']" sqf:fix="title.add type.add">
+                  <sch:assert test="tei:title[@type = 'main']" sqf:fix="type.add">
                     A title of type "main" is required in <sch:name/>.
                   </sch:assert>
-                  <sqf:fix id="title.add">
-                    <sqf:description>
-                      <sqf:title>Add a title.</sqf:title>
-                    </sqf:description>
-                    <sqf:add match=".">
-                      <tei:title type="main"/>
-                    </sqf:add>
-                  </sqf:fix>
                   <sqf:fix id="type.add">
                     <sqf:description>
                       <sqf:title>Add a @type='main' attribute to the first title.</sqf:title>
