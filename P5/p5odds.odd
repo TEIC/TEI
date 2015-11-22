@@ -119,6 +119,22 @@ $Id$
             </element>
           </content>
         </macroSpec>
+        <macroSpec ident="anySchematronQuickFix" mode="add">
+          <content>
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+              <nsName ns="http://www.schematron-quickfix.com/validator/process"/>
+              <zeroOrMore>
+                <choice>
+                  <attribute>
+                    <anyName/>
+                  </attribute>
+                  <ref name="anySchematronQuickFix"/>
+                  <text/>
+                </choice>
+              </zeroOrMore>
+            </element>
+          </content>
+        </macroSpec>
         <elementSpec ident="constraint" mode="change" module="tagdocs">
           <content>
             <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
@@ -126,6 +142,8 @@ $Id$
                 <text/>
                 <ref name="anySchematron"/>
                 <ref name="anyISOSchematron"/>
+                <ref name="anySchematronQuickFix"/>
+               
               </choice>
             </zeroOrMore>
           </content>
@@ -136,7 +154,7 @@ $Id$
         <elementSpec ident="include" ns="http://www.example.org/cannot/really/use/XInclude" mode="add">
           <!-- the content and attributes were devised based on my reading of the spec at
              http://www.w3.org/TR/2006/REC-xinclude-20061115/, also having looked at
-             Norm Walsh's implimentation for DocBook. -sb -->
+             Norm Walsh's implementation for DocBook. -sb -->
           <content>
             <optional xmlns="http://relaxng.org/ns/structure/1.0">
               <ref name="fallback"/>
