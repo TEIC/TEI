@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI xmlns="http://www.tei-c.org/ns/1.0" 
   xmlns:sch="http://purl.oclc.org/dsdl/schematron" 
+  xmlns:sqf="http://www.schematron-quickfix.com/validator/process"
   xmlns:eg="http://www.tei-c.org/ns/Examples"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
   xml:lang="en">
   <teiHeader>
     <fileDesc>
@@ -1897,9 +1899,15 @@
             <constraintSpec ident="jtei.sch-title" scheme="isoschematron">
               <constraint>
                 <sch:rule context="tei:titleStmt">
-                  <sch:assert test="tei:title[@type = 'main']">
+                  <sch:assert test="tei:title[@type = 'main']" sqf:fix="type.add">
                     A title of type "main" is required in <sch:name/>.
                   </sch:assert>
+                  <sqf:fix id="type.add">
+                    <sqf:description>
+                      <sqf:title>Add a @type='main' attribute to the first title.</sqf:title>
+                    </sqf:description>
+                    <sqf:add match="tei:title[not(@type='main')][1]" node-type="attribute" target="type">main</sqf:add>
+                  </sqf:fix>                  
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -2660,9 +2668,16 @@
             <constraintSpec ident="jtei.sch-biblref-type" scheme="isoschematron">
               <constraint>
                 <sch:rule context="tei:ref[id(substring-after(@target, '#'))/self::tei:bibl]">
-                  <sch:assert test="@type eq 'bibl'">
+                  <sch:assert test="@type eq 'bibl'" sqf:fix="bibltype.add">
                     A bibliographic reference must be typed as @type="bibl".
                   </sch:assert>
+                  <sqf:fix id="bibltype.add">
+                    <sqf:description>
+                      <sqf:title>Add @type='bibl'.</sqf:title>
+                    </sqf:description>
+                    <sqf:add match="." node-type="attribute" target="type" select="'bibl'"/>
+                  </sqf:fix>
+                  
                 </sch:rule>
               </constraint>
             </constraintSpec>
@@ -3033,12 +3048,18 @@
           <constraintSpec ident="jtei.sch-straightApos" scheme="isoschematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
-                <sch:report test="matches(., $apos.straight)">
+                <sch:report test="matches(., $apos.straight)" sqf:fix="apostrophe.replace">
                   "Straight apostrophe" characters are not permitted. Please use the
                   Right Single Quotation Mark (U+2019 or ’) character instead. On the other hand, if the straight 
                   apostrophe characters function as quotation marks, please replace them with appropriate mark-up 
                   that will ensure the appropriate quotation marks will be generated consistently.
                 </sch:report>
+                <sqf:fix id="apostrophe.replace">
+                  <sqf:description>
+                    <sqf:title>Replace straight apostrophe with ’.</sqf:title>
+                  </sqf:description>
+                  <sqf:stringReplace regex="{$apos.straight}">’</sqf:stringReplace>
+                </sqf:fix>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -3063,29 +3084,47 @@
           <constraintSpec ident="jtei.sch-doubleHyphens" scheme="isoschematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:ref)]">
-                <sch:assert test="not(contains(., '--'))">
+                <sch:assert test="not(contains(., '--'))" sqf:fix="dash.replace">
                   Double hyphens should not be used for dashes. Please use 
                   the EM Dash (U+2014 or —) instead.
                 </sch:assert>
+                <sqf:fix id="dash.replace">
+                  <sqf:description>
+                    <sqf:title>Replace double hyphens with —.</sqf:title>
+                  </sqf:description>
+                  <sqf:stringReplace regex="--">—</sqf:stringReplace>
+                </sqf:fix>
               </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="jtei.sch-rangeHyphen" scheme="isoschematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag|ancestor::tei:idno)][not(. = parent::*/@*)]">
-                <sch:assert test="not(matches(., '\d-\d'))">
+                <sch:assert test="not(matches(., '\d-\d'))" sqf:fix="hyphen.replace">
                   Numeric ranges should not be indicated with a hyphen. Please use 
                   the EN Dash (U+2013 or –) character instead.
                 </sch:assert>
+                <sqf:fix id="hyphen.replace">
+                  <sqf:description>
+                    <sqf:title>Replace hyphen with –.</sqf:title>
+                  </sqf:description>
+                  <sqf:stringReplace regex="(\d)-(\d)">$1–$2</sqf:stringReplace>
+                </sqf:fix>
               </sch:rule>
             </constraint>
           </constraintSpec>
           <constraintSpec ident="jtei.sch-ieEg" scheme="isoschematron">
             <constraint>
               <sch:rule context="text()[not(ancestor::tei:eg|ancestor::eg:egXML|ancestor::tei:code|ancestor::tei:tag)]">
-                <sch:report test="matches(., '(i\.e\.|e\.g\.)[^,]', 'i')">
+                <sch:report test="matches(., '(i\.e\.|e\.g\.)[^,]', 'i')" sqf:fix="comma.add">
                   You should put a comma after "i.e." and "e.g.". 
                 </sch:report>
+                <sqf:fix id="comma.add">
+                  <sqf:description>
+                    <sqf:title>Add a comma.</sqf:title>
+                  </sqf:description>
+                  <sqf:stringReplace regex="([iI]\.[eE]\.|[eE]\.[gG]\.)([^,])">$1,$2</sqf:stringReplace>
+                </sqf:fix>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -3101,9 +3140,15 @@
           <constraintSpec ident="jtei.sch-quoteDelim" scheme="isoschematron">
             <constraint>
               <sch:rule context="tei:title[@level eq 'a']|tei:mentioned|tei:soCalled|tei:quote|tei:q">
-                <sch:assert test="not(matches(., concat('^', $double.quotes, '|', $double.quotes, '$')))">
+                <sch:assert test="not(matches(., concat('^', $double.quotes, '|', $double.quotes, '$')))" sqf:fix="quotation.remove">
                   Quotation mark delimiters are not allowed for <sch:name/>: they are completed at processing time via XSLT.
                 </sch:assert>
+                <sqf:fix id="quotation.remove">
+                  <sqf:description>
+                    <sqf:title>Remove quotation marks.</sqf:title>
+                  </sqf:description>
+                  <sqf:stringReplace regex="{concat('^', $double.quotes, '|', $double.quotes, '$')}"></sqf:stringReplace>
+                </sqf:fix>
               </sch:rule>
             </constraint>
           </constraintSpec>
@@ -3141,9 +3186,15 @@
           <constraintSpec ident="jtei.sch-crossrefType" scheme="isoschematron">
             <constraint>
               <sch:rule context="tei:ptr[not(@type='crossref')]|tei:ref[not(@type='crossref')]">
-                <sch:report test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table)">
+                <sch:report test="id(substring-after(@target, '#'))/(self::tei:div|self::tei:figure|self::tei:table)" sqf:fix="crossreftype.add">
                   Please type internal cross-references as 'crossref' (<sch:name/>[@type="crossref"]).
                 </sch:report>
+                <sqf:fix id="crossreftype.add">
+                  <sqf:description>
+                    <sqf:title>Add @type='crossref'.</sqf:title>
+                  </sqf:description>
+                  <sqf:add match="." node-type="attribute" target="type" select="'crossref'"/>
+                </sqf:fix>
               </sch:rule>
             </constraint>
           </constraintSpec>
