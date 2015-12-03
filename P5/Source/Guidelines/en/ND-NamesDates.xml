@@ -213,7 +213,29 @@ associated with a specific period:
 <placeName period="#christian">Stauropolis</placeName></egXML></p>
 <p>The other dating attributes provided by this class support a wide
 range of methods of specifying temporal information in a normalized
-form. Some simple examples follow:
+form. The <att>from</att> and <att>to</att> attributes may be used to
+express the begining and ending of a period of time, for example:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <event xml:id="eMBB" from="1955-12-01" to="1956-12-20">
+    <label>Montgomery Bus Boycott</label>
+    <desc>A political and social protest campaign against the policy of racial segregation on
+    the public transit system of the city of <placeName ref="#MONT">Montgomery</placeName>.</desc>
+  </event>
+</egXML>
+The <att>notBefore</att> and <att>notAfter</att> attributes may be
+used to express a range of possibilities for a particular date (or
+time). For example the following element, extracted from an imaginary
+prosopographic entry for Anne Calthorpe, indicates that although the
+exact date of her death is not known, it can be narrowed down to a
+particular range: from 22 August 1579 to 28 March 1582, inclusive.
+Ostensibly the encoder has evidence that Anne Calthorpe was alive on
+the 22nd of August 1579 and evidence that she was already dead on the
+28th of March 1582. 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <death notBefore="1579-08-22" notAfter="1582-03-28"/>
+</egXML>
+
+Some simple examples follow:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <birth when="1857-03-15">15 March 1857.</birth> 
 </egXML>
@@ -1321,9 +1343,8 @@ he should exchange livings with
  of Jane Burden to the English writer, designer, and socialist William
  Morris, encoded as an <gi>event</gi> element embedded within the
  <gi>person</gi> element used to record data about Morris, though we
- could equally well have embedded the event within the <gi>person</gi>
- element for Burden, or have given it as a freestanding <gi>event</gi>
- independent of either <gi>person</gi> element:
+ could equally well have embedded the <gi>event</gi> element within the <gi>person</gi>
+ element for Burden, or have encoded it independently of either <gi>person</gi> element:
  <egXML xmlns="http://www.tei-c.org/ns/Examples">
    <person xml:id="WM">
      <!-- ... -->
@@ -1735,7 +1756,7 @@ places, such as a street or even an individual building:
     <settlement type="city">Lyon</settlement>
     <district type="arrondissement">IIème</district>
     <district type="quartier">Perrache</district>
-    <placeName type="street">Cours de Verdun</placeName>
+    <placeName type="street"><num>30</num>, Cours de Verdun</placeName>
   </location>
 </place></egXML> Note the use of the <att>type</att> attribute to
 categorize more precisely both the kind of place concerned (a
