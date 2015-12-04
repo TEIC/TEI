@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="bicond">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="bicond">
   <gloss versionDate="2005-01-14" xml:lang="en">bi-conditional feature-structure constraint</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">이중 조건 자질-구조 제약</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">雙條件功能結構限制</gloss>
@@ -34,17 +31,17 @@ subsume a given feature structure, or if both do not.</desc>
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:ref name="fs"/>
-        <rng:ref name="f"/>
-      </rng:choice>
-      <rng:ref name="iff"/>
-      <rng:choice>
-        <rng:ref name="fs"/>
-        <rng:ref name="f"/>
-      </rng:choice>
-    </rng:group>
+    <sequence>
+      <alternate>
+        <elementRef key="fs"/>
+        <elementRef key="f"/>
+      </alternate>
+      <elementRef key="iff"/>
+      <alternate>
+        <elementRef key="fs"/>
+        <elementRef key="f"/>
+      </alternate>
+    </sequence>
   </content>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

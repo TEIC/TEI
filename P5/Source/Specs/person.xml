@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   Copyright TEI Consortium. 
   Dual-licensed under CC-by and BSD2 licences 
   See the file COPYING.txt for details
   $Date$
   $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="person">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="person">
   <gloss versionDate="2008-12-09" xml:lang="fr">personne</gloss>
   <desc versionDate="2005-12-14" xml:lang="en">provides information about an identifiable individual, for example a participant in a language interaction, or a person referred to in a
         historical source.</desc>
@@ -27,17 +24,17 @@
     <memberOf key="att.sortable"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <ref name="model.pLike"/>
-      </oneOrMore>
-      <zeroOrMore>
-        <choice>
-          <ref name="model.personPart"/>
-          <ref name="model.global"/>
-        </choice>
-      </zeroOrMore>
-    </choice>
+    <alternate>
+      
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.personPart"/>
+          <classRef key="model.global"/>
+        </alternate>
+      
+    </alternate>
   </content>
   <attList>
     <attDef ident="role" usage="opt">
@@ -48,9 +45,7 @@
       <desc versionDate="2009-03-19" xml:lang="fr">précise un rôle principal ou une classification principale pour cette personne.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">establece el rol o la clasificación primaria de una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">stabilisce il ruolo o la classificazione primaria di una persona</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.enumerated"/></datatype>
 <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
 	project, using arbitrary keywords such as <val>artist</val>,
@@ -68,9 +63,7 @@ specification.</p></remarks>
       <desc versionDate="2009-03-19" xml:lang="fr">précise le sexe de la personne.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el sexo de una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il sesso di una persona</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.sex"/>
-      </datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.sex"/></datatype>
       <remarks versionDate="2013-04-14" xml:lang="en">
         <p>Values for this attribute may be locally defined by a project, or may refer to an external standard, such as
           vCard's sex property <ptr target="http://microformats.org/wiki/gender-formats"/>
@@ -91,9 +84,7 @@ specification.</p></remarks>
       <desc versionDate="2009-03-19" xml:lang="fr">précise une tranche d'âge pour la personne.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica un intervalo de edad para una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la fascia di età di una persona</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
 <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
 	project, using arbitrary keywords such as <val>infant</val>,

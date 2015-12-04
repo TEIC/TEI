@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" ident="castItem">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" ident="castItem">
   <gloss versionDate="2007-07-04" xml:lang="en">cast list item</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">배역 목록 항목</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">角色項目</gloss>
@@ -28,15 +25,15 @@ either a single role or a list of non-speaking roles.</desc>
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <text/>
-        <ref name="model.gLike"/>
-        <ref name="model.castItemPart"/>
-        <ref name="model.phrase"/>
-        <ref name="model.global"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.gLike"/>
+        <classRef key="model.castItemPart"/>
+        <classRef key="model.phrase"/>
+        <classRef key="model.global"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -47,9 +44,7 @@ either a single role or a list of non-speaking roles.</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該項目の種類を示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">caractérise le personnage.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la voce della lista dei personaggi</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>role</defaultVal>
       <valList type="closed">
         <valItem ident="role">

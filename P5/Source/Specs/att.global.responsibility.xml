@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" predeclare="true" type="atts" ident="att.global.responsibility">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" predeclare="true" type="atts" ident="att.global.responsibility">
   <desc versionDate="2014-12-10" xml:lang="en">provides attributes indicating the agent
     responsible for some aspect of the text, the markup or 
     something asserted by the markup, and the degree of certainty 
@@ -34,10 +30,7 @@ $Id$
       <desc versionDate="2007-01-21" xml:lang="it">corrisponde al grado di certezza associato
         all'intervento o interpretazione</desc>
       <datatype>
-        <rng:choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
-          <rng:ref name="data.certainty"/>
-          <rng:ref name="data.probability"/>
-        </rng:choice>
+        <dataRef key="teidata.probCert"/>
       </datatype>
       <remarks versionDate="2015-10-25" xml:lang="en">
         <p>Note that the datatype <ident type="class">data.certainty</ident> is best suited for 
@@ -63,9 +56,7 @@ $Id$
         interpretación, p.ej. un editor o un transcriptor.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il responsabile dell'intervento o
         interpretazione, per esempio un curatore o trascrittore</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2014-12-10" xml:lang="en">
         <p>Note that a simple <att>resp</att> pointing to a person or 
           organization is likely to be somewhat ambiguous with regard 

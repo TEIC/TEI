@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="datatype">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="datatype">
   <gloss versionDate="2007-06-12" xml:lang="fr">type de données</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">specifies the declared value for an attribute, by referring to
   any datatype defined by the chosen schema language.</desc>
@@ -22,13 +19,13 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="macroRef"/>
-    <oneOrMore>
-      <group>
-        <ref name="macro.schemaPattern"/>
-      </group>
-    </oneOrMore></choice>
+    <alternate>
+      <elementRef key="macroRef"/>
+    
+      
+        <macroRef key="macro.schemaPattern"/>
+      
+    </alternate>
   </content>
   <attList>
     <attDef ident="minOccurs">
@@ -48,9 +45,7 @@ $Id$
 					de ce type de données dans la spécification de l'attribut.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica il numero minimo di volte che questo tipo di dati può verificarsi nella definizione dell'attributo da definire</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el mínimo número de veces que los tipo de datos pueden aparecer en la especificación del atributo que se define.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
       <defaultVal>1</defaultVal>
     </attDef>
     <attDef ident="maxOccurs">
@@ -70,10 +65,7 @@ $Id$
       <desc versionDate="2007-11-06" xml:lang="it">indica il numero massimo di volte che questo tipo di dati può verificarsi nella definizione dell'attributo da definire</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el máximo número de veces que los tipo de datos pueden aparecer en la especificación del atributo que se define.</desc>
       <datatype>
-        <choice xmlns="http://relaxng.org/ns/structure/1.0">
-          <ref name="data.count"/>
-          <value>unbounded</value>
-        </choice>
+        <dataRef key="teidata.unboundedInt"/>
       </datatype>
       <defaultVal>1</defaultVal>
     </attDef>

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="biblFull">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="biblFull">
   <gloss versionDate="2007-07-04" xml:lang="en">fully-structured bibliographic citation</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">완전히 구조화된 서지 인용 정보</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -34,28 +31,28 @@ $Id$
     <memberOf key="att.docStatus"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
+    <sequence>
       <!--      <rng:ref name="macro.fileDescPart"/>-->
-      <group>
-        <ref name="titleStmt"/>
-        <optional>
-          <ref name="editionStmt"/>
-        </optional>
-        <optional>
-          <ref name="extent"/>
-        </optional>
-        <ref name="publicationStmt"/>
-        <optional>
-          <ref name="seriesStmt"/>
-        </optional>
-        <optional>
-          <ref name="notesStmt"/>
-        </optional>
-      </group>
-      <zeroOrMore>
-        <ref name="sourceDesc"/>
-      </zeroOrMore>
-    </group>
+      <sequence>
+        <elementRef key="titleStmt"/>
+        
+          <elementRef key="editionStmt" minOccurs="0"/>
+        
+        
+          <elementRef key="extent" minOccurs="0"/>
+        
+        <elementRef key="publicationStmt"/>
+        
+          <elementRef key="seriesStmt" minOccurs="0"/>
+        
+        
+          <elementRef key="notesStmt" minOccurs="0"/>
+        
+      </sequence>
+      
+        <elementRef key="sourceDesc" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

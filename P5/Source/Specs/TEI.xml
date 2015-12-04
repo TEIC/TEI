@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="TEI">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="TEI">
   <gloss versionDate="2005-12-24" xml:lang="en">TEI document</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">TEI 문서</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">TEI文件</gloss>
@@ -37,20 +34,20 @@ enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) un
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="teiHeader"/>
-      <choice>
-        <group>
-          <oneOrMore>
-            <ref name="model.resourceLike"/>
-          </oneOrMore>
-          <optional>
-            <ref name="text"/>
-          </optional>
-        </group>
-        <ref name="text"/>
-      </choice>
-    </group>
+    <sequence>
+      <elementRef key="teiHeader"/>
+      <alternate>
+        <sequence>
+          
+            <classRef key="model.resourceLike" minOccurs="1" maxOccurs="unbounded"/>
+          
+          
+            <elementRef key="text" minOccurs="0"/>
+          
+        </sequence>
+        <elementRef key="text"/>
+      </alternate>
+    </sequence>
   </content>
   <constraintSpec ident="c1" scheme="isoschematron">
     <constraint>
@@ -74,9 +71,7 @@ enthält ein einzelnes TEI-konformes Dokument, das aus TEI-Header (Dateikopf) un
       <desc versionDate="2006-10-18" xml:lang="de"> Version des TEI-Schemas</desc>
       <desc versionDate="2007-05-04" xml:lang="es">Versión del esquema TEI</desc>
       <desc versionDate="2007-01-21" xml:lang="it">versione dello schema TEI</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.version"/>
-      </datatype>
+      <datatype><dataRef key="teidata.version"/></datatype>
       <remarks versionDate="2012-07-17" xml:lang="en">
         <p>The major version number is historically prefixed by a P
 (for Proposal), and is distinct from the version number

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="vColl">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="vColl">
   <gloss versionDate="2005-09-29" xml:lang="en">collection of values</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">값의 집합</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">值集合</gloss>
@@ -29,14 +26,14 @@ $Id$
     <memberOf key="model.featureVal.complex"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <choice>
-          <ref name="fs"/>
-          <ref name="model.featureVal.single"/>
-        </choice>
-      </zeroOrMore>
-    </group>
+    
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="fs"/>
+          <classRef key="model.featureVal.single"/>
+        </alternate>
+      
+    
   </content>
   <attList>
     <attDef ident="org" usage="opt">
@@ -55,9 +52,7 @@ $Id$
           données sous forme d'ensemble, de paquet ou de liste.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la organización del valor o valores dados como conjunto o lista.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il tipo di organizzazione di un dato valore come insieme, borsa o lista.</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="set">
           <desc versionDate="2007-06-27" xml:lang="en">indicates that the given values are organized as a set.</desc>

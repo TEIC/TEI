@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="tagUsage">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="tagUsage">
   <gloss versionDate="2009-01-05" xml:lang="fr">usage des balises.</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">supplies information about the usage of a specific element within a text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">donne des informations sur l’utilisation d’un élément
@@ -25,7 +22,7 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.limitedContent"/>
+    <macroRef key="macro.limitedContent"/>
   </content>
   <attList>
     <attDef ident="gi" usage="req">
@@ -48,9 +45,7 @@ $Id$
         indicado mediante una etiqueta.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">il nome (identificatore generico) dell'elemento
         indicato dal marcatore.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
-      </datatype>
+      <datatype><dataRef key="teidata.name"/></datatype>
     </attDef>
     <attDef ident="occurs" usage="rec">
       <desc versionDate="2005-01-14" xml:lang="en">specifies the number of occurrences of this element within the text.</desc>
@@ -64,9 +59,7 @@ $Id$
         determinado aparece en el texto.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il numero di occorrenze dell'elemento nel
         testo.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
     </attDef>
     <attDef ident="withId" usage="rec">
       <gloss versionDate="2007-07-04" xml:lang="en">with unique identifier</gloss>
@@ -88,9 +81,7 @@ $Id$
         en el texto con un valor distintivo apara el atributo global <att>xml:id</att>.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il numero di occorrenze dell'elemento nel
         testo e che reca un valore distinto dall'attributo globale <att>xml:id</att>.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
     </attDef>
     <attDef ident="render" usage="opt">
       <desc versionDate="2012-12-19" xml:lang="en">specifies the identifier of a <gi>rendition</gi> element which defines how this element was rendered in the source text.</desc>
@@ -105,9 +96,7 @@ $Id$
           <gi>rendition</gi> que define cómo este elemento ha de ser interpretado.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica l'identificatore di un elemento
         <gi>rendition</gi> che definisce in che modo è stato reso l'elemento</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

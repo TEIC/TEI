@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.pointing">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.pointing">
   <desc versionDate="2005-10-10" xml:lang="en">defines a set of attributes used by all elements which point
   to other elements by means of one or more URI references.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">하나 이상의 URI 참조를 통해서 다른 요소를 가리키는 모든 요소에 의해 사용된 속성 집합을 정의한다.</desc>
@@ -20,9 +17,7 @@ $Id$
     <attDef ident="targetLang" usage="opt">
       <desc versionDate="2012-06-16" xml:lang="en">specifies the language of the content to be found at the destination referenced by <att>target</att>, using a <soCalled>language tag</soCalled> generated
         according to <ref target="http://www.rfc-editor.org/rfc/bcp/bcp47.txt">BCP 47</ref>.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
-      </datatype>
+      <datatype><dataRef key="teidata.language"/></datatype>
       <constraintSpec ident="targetLang" scheme="isoschematron">
         <constraint>
           <sch:rule context="tei:*[not(self::tei:schemaSpec)][@targetLang]">
@@ -63,9 +58,7 @@ $Id$
         proporcionando una o más referencias URI.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica la destinazione di un riferimento, fornendo
         uno o più riferimenti URI</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2007-01-21" xml:lang="en"><p>One or more syntactically valid URI references, separated by whitespace. Because
         whitespace is used to separate URIs, no whitespace is permitted inside a single URI. If a
         whitespace character is required in a URI, it should be escaped with the normal mechanism,
@@ -86,9 +79,7 @@ $Id$
       <desc versionDate="2007-06-12" xml:lang="fr">détermine le sens attendu, si la cible d'un pointeur est elle-même un pointeur.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el significado previsto cuando la meta de un indicador es también un indicador.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il significato previsto quando la destinazione di un puntatore è essa stessa un puntatore</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="all">
           <desc versionDate="2007-06-27" xml:lang="en">if the element pointed to is itself a pointer, then

@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MODULESPEC" ident="moduleSpec">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" xml:id="MODULESPEC" ident="moduleSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">module specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">모듈 명시</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación de módulo</gloss>
@@ -32,23 +28,23 @@ module, i.e. a named and externally visible group of declarations.</desc>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <choice>
-          <ref name="model.glossLike"/>
-          <ref name="model.descLike"/>
-        </choice>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="exemplum"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="remarks"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="listRef"/>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.glossLike"/>
+          <classRef key="model.descLike"/>
+        </alternate>
+      
+      
+        <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="remarks" minOccurs="0"/>
+      
+      
+        <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

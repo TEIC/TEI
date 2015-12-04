@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="eLeaf">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="eLeaf">
   <gloss versionDate="2007-09-24" xml:lang="en">leaf or terminal node of an embedding tree</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">내포 수형도의 단말 노드</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">嵌入樹狀結構的葉節點。</gloss>
@@ -28,14 +25,14 @@ be encoded with the eTree element.</desc>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <optional>
-        <ref name="model.ptrLike"/>
-      </optional>
-    </group>
+    <sequence>
+      
+        <elementRef key="label" minOccurs="0"/>
+      
+      
+        <classRef key="model.ptrLike" minOccurs="0"/>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="value" usage="opt">
@@ -48,9 +45,7 @@ structure or other analytic element.</desc>
       素である．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">fournit l'identifiant de l'objet représenté par la feuille de l'arbre englobant ; cet objet peut être une paire nom-valeur ou tout autre élément analytique.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna alla foglia integrata un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
 </attDef>  </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="rendition">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="rendition">
   <gloss versionDate="2007-06-12" xml:lang="fr">rendu</gloss>
   <desc versionDate="2007-09-22" xml:lang="en">supplies information about the rendition or appearance of one or more elements in the source
     text.</desc>
@@ -27,16 +24,14 @@ $Id$
     <memberOf key="att.styleDef"/>
   </classes>
   <content>
-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.limitedContent"/>
+    <macroRef key="macro.limitedContent"/>
   </content>
   <attList>
     <attDef ident="scope">
       <desc versionDate="2009-05-29" xml:lang="en">where CSS is used, provides a way of defining
 <soCalled>pseudo-elements</soCalled>, that is, styling rules
 applicable to specific sub-portions of an element.</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="open">
         <valItem ident="first-line">
           <desc versionDate="2009-05-29" xml:lang="en">styling applies to the first line of
@@ -62,23 +57,17 @@ the target element</desc>
         contains a selector or series of selectors specifying the elements to which the contained style 
         description applies, expressed in the language specified in the <att>scheme</att> attribute.
       </desc>
-      <datatype maxOccurs="1">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
-      </datatype>
+      <datatype maxOccurs="1"><dataRef key="teidata.text"/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <rendition 
-            scheme="css" 
-            selector="text, front, back, body, div, p, ab">  
+          <rendition scheme="css" selector="text, front, back, body, div, p, ab">  
             display: block;
           </rendition>
         </egXML>
       </exemplum>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">  
-          <rendition 
-            scheme="css" 
-            selector="*[rend*=italic]">
+          <rendition scheme="css" selector="*[rend*=italic]">
             font-style: italic;
           </rendition>
         </egXML>

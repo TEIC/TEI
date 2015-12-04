@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="relation">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="relation">
   <gloss versionDate="2005-01-14" xml:lang="en">relationship</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">관련성</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">人際關係</gloss>
@@ -31,14 +28,13 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <optional xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="desc"/>
-    </optional>
+    
+      <elementRef key="desc" minOccurs="0"/>
+    
   </content>
   <constraintSpec ident="reforkeyorname" scheme="isoschematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" 
-	      test="@ref or @key or @name">One of the attributes  'name', 'ref' or 'key' must be supplied</assert>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@ref or @key or @name">One of the attributes  'name', 'ref' or 'key' must be supplied</assert>
     </constraint>
   </constraintSpec>
 
@@ -67,9 +63,7 @@ $Id$
       <desc versionDate="2007-06-12" xml:lang="fr">fournit un nom pour le type de relation dont elle est une instance.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona un nombre para elipo de relación que representan.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna un nome al tipo di relazione che rappresenta</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
     </attDef>
     <attList org="choice">
       <attDef ident="active">
@@ -81,9 +75,7 @@ $Id$
                     dans une relation réciproque.</desc>
         <desc versionDate="2007-11-06" xml:lang="it">identifica i partecipanti attivi in una relazione di non reciprocità, oppure tutti i
                     partecipanti in una relazione di reciprocità</desc>
-        <datatype maxOccurs="unbounded">
-          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-        </datatype>
+        <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       </attDef>
       <attDef ident="mutual" usage="opt">
         <desc versionDate="2005-07-24" xml:lang="en">supplies a list of participants amongst all of whom the relationship holds equally.</desc>
@@ -91,9 +83,7 @@ $Id$
                     relación</desc>
         <desc versionDate="2009-03-19" xml:lang="fr">fournit une liste de participants entre lesquels la relation est réciproque.</desc>
         <desc versionDate="2007-11-06" xml:lang="it">fornisce una lista di partecipanti tra i quali c'è una relazione paritaria</desc>
-        <datatype maxOccurs="unbounded">
-          <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-        </datatype>
+        <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       </attDef>
     </attList>
     <attDef ident="passive" usage="opt">
@@ -104,9 +94,7 @@ $Id$
       <desc versionDate="2009-03-19" xml:lang="fr">identifie les participants <q>passifs</q> dans une relation non mutuelle.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">identifica los participantes <q>pasivos</q> en una relación de no reciprocidad.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">identifica i partecipanti <q>passivi</q>all'interno di una relazione di non reciprocità.</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -136,20 +124,14 @@ $Id$
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <relation type="CRM" name="P89_falls_within" 
-		active="http://id.clarosnet.org/places/metamorphoses/place/italy-orvieto" 
-		passive="http://id.clarosnet.org/places/metamorphoses/country/IT"/>
+      <relation type="CRM" name="P89_falls_within" active="http://id.clarosnet.org/places/metamorphoses/place/italy-orvieto" passive="http://id.clarosnet.org/places/metamorphoses/country/IT"/>
     </egXML>
     <p>This indicates that there is a relation, defined by CIDOC CRM,
     between two resources identified by URLs.</p>
   </exemplum>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SAWS">
-      <relation
-        resp="http://viaf.org/viaf/44335536/"
-        ref="http://purl.org/saws/ontology#isVariantOf"
-        active="http://www.ancientwisdoms.ac.uk/cts/urn:cts:greekLit:tlg3017.Syno298.sawsGrc01:divedition.divsection1.o14.a107"
-        passive="http://data.perseus.org/citations/urn:cts:greekLit:tlg0031.tlg002.perseus-grc1:9.35"/>
+      <relation resp="http://viaf.org/viaf/44335536/" ref="http://purl.org/saws/ontology#isVariantOf" active="http://www.ancientwisdoms.ac.uk/cts/urn:cts:greekLit:tlg3017.Syno298.sawsGrc01:divedition.divsection1.o14.a107" passive="http://data.perseus.org/citations/urn:cts:greekLit:tlg0031.tlg002.perseus-grc1:9.35"/>
     </egXML>
     <p>This example records a relationship, defined by the SAWS ontology, between a passage of text
     identified by a CTS URN, and a variant passage of text in the Perseus Digital Library, and assigns

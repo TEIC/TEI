@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="root">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="root">
   <gloss versionDate="2005-01-14" xml:lang="en">root node</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">뿌리 노드</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">根節點</gloss>
@@ -25,9 +22,9 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <optional xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="label"/>
-    </optional>
+    
+      <elementRef key="label" minOccurs="0"/>
+    
   </content>
   <attList>
     <attDef ident="value" usage="opt">
@@ -39,9 +36,7 @@ other analytic element.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">fournit l'identifiant de l'objet représenté par la racine ; cet objet peut être une paire nom-valeur ou tout autre élément analytique.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el valor de la raíz, que puede ser una estructura de rasgos u otro elemento de análisis.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna alla radice un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="children" usage="req">
       <desc versionDate="2005-01-14" xml:lang="en">identifies the elements which are the children of the root node.</desc>
@@ -51,9 +46,7 @@ other analytic element.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">fournit la liste des identifiants des éléments qui sont les enfants du nœud racine.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona una lista de identificadores de elementos que son hijos (descendientes) de la raíz.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce una lista di identificatori degli elementi figli del nodo radice</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2013-12-06" xml:lang="en">
         <p>If the root has no children (i.e., the tree is
 <soCalled>trivial</soCalled>), then the <att>children</att>
@@ -83,9 +76,7 @@ attribute should be omitted.  </p>
       <desc versionDate="2007-06-12" xml:lang="fr">indique si la racine est ordonnée ou non.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica si la raíz es o no ordenada.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica se la radice è ordinata</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
-      </datatype>
+      <datatype><dataRef key="teidata.xTruthValue"/></datatype>
       <remarks versionDate="2007-04-22" xml:lang="en">
         <p>The value <val>true</val> indicates that the children of
           the root are ordered, whereas <val>false</val> indicates the
@@ -117,9 +108,7 @@ attribute should be omitted.  </p>
       <desc versionDate="2007-06-12" xml:lang="fr">donne le degré sortant de la racine, c'est-à-dire le nombre de ses enfants.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el grado en salida de la raíz, es decir, el número de hijos de esta.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il grado in uscita della radice, cioè il numero dei suoi figli</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
       <remarks versionDate="2005-01-14" xml:lang="en">
         <p>The in degree of the root is always 0.</p>
       </remarks>

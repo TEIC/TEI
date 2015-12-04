@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="SUPPORTDESC" ident="supportDesc">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="msdescription" xml:id="SUPPORTDESC" ident="supportDesc">
   <gloss versionDate="2007-07-04" xml:lang="en">support description</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">보충 기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -26,28 +23,28 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <rng:choice>
-      <rng:oneOrMore>
-        <rng:ref name="model.pLike"/>
-      </rng:oneOrMore>
-      <rng:group>
-        <rng:optional>
-          <rng:ref name="support"/>
-        </rng:optional>
-        <rng:optional>
-          <rng:ref name="extent"/>
-        </rng:optional>
-        <rng:zeroOrMore>
-          <rng:ref name="foliation"/>
-        </rng:zeroOrMore>
-        <rng:optional>
-          <rng:ref name="collation"/>
-        </rng:optional>
-        <rng:optional>
-          <rng:ref name="condition"/>
-        </rng:optional>
-      </rng:group>
-    </rng:choice>
+    <alternate>
+      
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      <sequence>
+        
+          <elementRef key="support" minOccurs="0"/>
+        
+        
+          <elementRef key="extent" minOccurs="0"/>
+        
+        
+          <elementRef key="foliation" minOccurs="0" maxOccurs="unbounded"/>
+        
+        
+          <elementRef key="collation" minOccurs="0"/>
+        
+        
+          <elementRef key="condition" minOccurs="0"/>
+        
+      </sequence>
+    </alternate>
   </content>
   <attList>
     <attDef ident="material">
@@ -61,9 +58,7 @@ $Id$
           le matériau qui a principalement servi pour fabriquer le support.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">un nombre breve definido en el ámbito de un proyecto y referente al material que costituye la mayor parte del suporte.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">un nome breve definito nell'ambito di un progetto e riferito al materiale che costituisce la maggior parte del supporto</desc>
-      <datatype>
-        <rng:ref name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="paper"/>
         <valItem ident="parch">

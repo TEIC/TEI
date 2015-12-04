@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="verse" ident="metDecl">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="verse" ident="metDecl">
   <gloss versionDate="2007-07-04" xml:lang="en">metrical notation declaration</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">déclaration sur la métrique</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">운율적 표기법 선언</gloss>
@@ -47,17 +44,17 @@ $Id$
     <memberOf key="att.declarable"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <choice>
-          <ref name="model.pLike"/>
-          <ref name="model.noteLike"/>
-        </choice>
-      </oneOrMore>
-      <oneOrMore>
-        <ref name="metSym"/>
-      </oneOrMore>
-    </choice>
+    <alternate>
+      
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.pLike"/>
+          <classRef key="model.noteLike"/>
+        </alternate>
+      
+      
+        <elementRef key="metSym" minOccurs="1" maxOccurs="unbounded"/>
+      
+    </alternate>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -78,9 +75,7 @@ $Id$
         ello.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica se l'annotazione fornisce la forma metrica
         estratta, la sua realizzazione prosodica,lo schema delle rime o un loro combinazione</desc>
-      <datatype minOccurs="1" maxOccurs="3">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype minOccurs="1" maxOccurs="3"><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>met real</defaultVal>
       <valList type="closed">
         <valItem ident="met">
@@ -185,14 +180,12 @@ $Id$
         valor válido para esta notación.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica un'espressione regolare che definisce
         qualsiasi valore legale per l'annotazione</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pattern"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pattern"/></datatype>
       <remarks xml:lang="en" versionDate="2013-12-21"><p>The value must be a valid regular expression per the World Wide Web Consortium's
       <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>,
       <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix F</ref>
 </p></remarks>
-<remarks  xml:lang="fr" versionDate="2013-12-21"><p>La valeur doit être une expression régulière valide pour le Consortium
+<remarks xml:lang="fr" versionDate="2013-12-21"><p>La valeur doit être une expression régulière valide pour le Consortium
         du World Wide Web <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>, <ref target="http://www.w3.org/TR/xmlschema-2/#regexs">Appendix F</ref></p></remarks>
          
     </attDef>

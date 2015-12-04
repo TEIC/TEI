@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="front">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="front">
   <gloss versionDate="2005-01-14" xml:lang="en">front matter</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">전면부 내용</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">正文前資訊</gloss>
@@ -33,64 +30,64 @@ found  at the start of a document, before the main body.</desc>
     <memberOf key="att.declaring"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
+    <sequence>
       <!-- 
 	   we start with allowing a group of mixed-up p-like elements.
 	   when we are done with them, we can start considering
 	   div-like elements, and the things that
 	   can occur after them.
       -->
-      <group>
-        <zeroOrMore>
-          <choice>
-            <ref name="model.frontPart"/>
-            <ref name="model.pLike"/>
-            <ref name="model.pLike.front"/>
-            <ref name="model.global"/>
-          </choice>
-        </zeroOrMore>
-      </group>
-      <optional>
-        <choice>
+      
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.frontPart"/>
+            <classRef key="model.pLike"/>
+            <classRef key="model.pLike.front"/>
+            <classRef key="model.global"/>
+          </alternate>
+        
+      
+      <sequence minOccurs="0">
+        <alternate>
           <!-- 1. has a div1Like, after optional front parts -->
-          <group>
-            <ref name="model.div1Like"/>
-            <zeroOrMore>
-              <choice>
-                <ref name="model.div1Like"/>
-                <ref name="model.frontPart"/>
-                <ref name="model.global"/>
-              </choice>
-            </zeroOrMore>
-          </group>
+          <sequence>
+            <classRef key="model.div1Like"/>
+            
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.div1Like"/>
+                <classRef key="model.frontPart"/>
+                <classRef key="model.global"/>
+              </alternate>
+            
+          </sequence>
           <!-- 1. has a divLike, after optional front parts -->
-          <group>
-            <ref name="model.divLike"/>
-            <zeroOrMore>
-              <choice>
-                <ref name="model.divLike"/>
-                <ref name="model.frontPart"/>
-                <ref name="model.global"/>
-              </choice>
-            </zeroOrMore>
-          </group>
-        </choice>
+          <sequence>
+            <classRef key="model.divLike"/>
+            
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.divLike"/>
+                <classRef key="model.frontPart"/>
+                <classRef key="model.global"/>
+              </alternate>
+            
+          </sequence>
+        </alternate>
         <!-- and some bottoms, mebbe -->
-        <group>
-          <optional>
-            <group>
-              <ref name="model.divBottom"/>
-            </group>
-            <zeroOrMore>
-              <choice>
-                <ref name="model.divBottom"/>
-                <ref name="model.global"/>
-              </choice>
-            </zeroOrMore>
-          </optional>
-        </group>
-      </optional>
-    </group>
+        
+          <sequence minOccurs="0">
+            
+              <classRef key="model.divBottom"/>
+            
+            
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.divBottom"/>
+                <classRef key="model.global"/>
+              </alternate>
+            
+          </sequence>
+        
+      </sequence>
+    </sequence>
   </content>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

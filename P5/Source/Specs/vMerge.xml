@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="vMerge">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="vMerge">
   <gloss versionDate="2007-07-05" xml:lang="en">merged collection of values</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">값의 통합 집합</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">合併的值集合</gloss>
@@ -32,9 +29,9 @@ contenidos por sus hijos, considerando la organización especificada por el atri
     <memberOf key="model.featureVal.complex"/>
   </classes>
   <content>
-    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="model.featureVal"/>
-    </oneOrMore>
+    
+      <classRef key="model.featureVal" minOccurs="1" maxOccurs="unbounded"/>
+    
   </content>
   <attList>
     <attDef ident="org" usage="opt">
@@ -48,9 +45,7 @@ contenidos por sus hijos, considerando la organización especificada por el atri
           résultantes comme un ensemble, un paquet ou une liste.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica que la organización resultante de la fusión de valores se muestra como un conjunto, multiconjunto o como una lista.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica l'organizzazione dei valori risultanti dall'unificazione in un insieme, borsa o lista.</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="set">
           <desc versionDate="2007-06-27" xml:lang="en">indicates that the resulting values are organized as a set.</desc>

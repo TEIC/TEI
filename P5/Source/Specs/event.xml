@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   Copyright TEI Consortium. 
   Dual-licensed under CC-by and BSD2 licences 
   See the file COPYING.txt for details
   $Date$
   $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="event">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="event">
   <gloss versionDate="2008-12-09" xml:lang="fr">évènement</gloss>
   <desc versionDate="2007-08-01" xml:lang="en">contains data relating to any kind of significant event associated with a person, place, or organization.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">개인, 장소, 또는 조직과 관련된 중요한 사건에 해당하는 데이터를 포함한다.</desc>
@@ -30,34 +26,34 @@
     <memberOf key="model.eventLike"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <ref name="model.headLike"/>
-      </zeroOrMore>
-      <choice>
-        <group>
-          <oneOrMore>
-            <ref name="model.pLike"/>
-          </oneOrMore>
-        </group>
-        <group>
-          <oneOrMore>
-            <ref name="model.labelLike"/>
-          </oneOrMore>
-        </group>
-      </choice>
-      <zeroOrMore>
-        <choice>
-          <ref name="model.noteLike"/>
-          <ref name="model.biblLike"/>
-          <ref name="linkGrp"/>
-          <ref name="link"/>
-        </choice>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="event"/>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <alternate>
+        
+          
+            <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+          
+        
+        
+          
+            <classRef key="model.labelLike" minOccurs="1" maxOccurs="unbounded"/>
+          
+        
+      </alternate>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.noteLike"/>
+          <classRef key="model.biblLike"/>
+          <elementRef key="linkGrp"/>
+          <elementRef key="link"/>
+        </alternate>
+      
+      
+        <elementRef key="event" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="where" usage="opt">
@@ -68,9 +64,7 @@
       <desc versionDate="2008-12-09" xml:lang="fr">indique la localisation d'un évènement en pointant vers un élément <gi>place</gi>
          </desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica la posizione di un evento facendo riferimento a un elemento place</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">element specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">요소 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -31,49 +28,44 @@ $Id$
     <memberOf key="att.namespaceable"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <choice>
-          <ref name="model.glossLike"/>
-          <ref name="model.descLike"/>
-        </choice>
-      </zeroOrMore>
-      <optional>
-        <ref name="classes"/>
-      </optional>
-      <optional>
-        <ref name="content"/>
-      </optional>
-      <optional>
-        <ref name="valList"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="constraintSpec"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="attList"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="exemplum"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="remarks"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="listRef"/>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.glossLike"/>
+          <classRef key="model.descLike"/>
+        </alternate>
+      
+      
+        <elementRef key="classes" minOccurs="0"/>
+      
+      
+        <elementRef key="content" minOccurs="0"/>
+      
+      
+        <elementRef key="valList" minOccurs="0"/>
+      
+      
+        <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="attList" minOccurs="0"/>
+      
+      
+        <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="prefix" usage="opt">
       <desc versionDate="2010-06-23" xml:lang="en">specifies a default prefix which will be prepended to all patterns
       relating to the element, unless otherwise stated.</desc>
-      <datatype>
-        <choice xmlns="http://relaxng.org/ns/structure/1.0">
-          <value/>
-          <ref name="data.xmlName"/>
-        </choice>
-      </datatype>
+      <datatype minOccurs="0"><dataRef key="teidata.xmlName"/></datatype>
       <remarks versionDate="2010-06-23" xml:lang="en">
         <p>Colons, although permitted inside the value, will cause an
 	invalid schema to be generated.</p>

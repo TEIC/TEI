@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="docTitle">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="docTitle">
   <gloss versionDate="2005-01-14" xml:lang="en">document title</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">문서 제목</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">文件題名</gloss>
@@ -32,17 +29,17 @@ constituents, as given on a title page.</desc>
     <memberOf key="att.canonical"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <ref name="model.global"/>
-      </zeroOrMore>
-      <oneOrMore>
-        <ref name="titlePart"/>
-        <zeroOrMore>
-          <ref name="model.global"/>
-        </zeroOrMore>
-      </oneOrMore>
-    </group>
+    <sequence>
+      
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <elementRef key="titlePart"/>
+        
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+        
+      </sequence>
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

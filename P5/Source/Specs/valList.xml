@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="valList">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="valList">
   <gloss versionDate="2005-01-14" xml:lang="en">value list</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">값 목록</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">屬性值列表</gloss>
@@ -30,9 +27,9 @@ $Id$
     <memberOf key="att.combinable"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="valItem"/>
-    </zeroOrMore>
+    
+      <elementRef key="valItem" minOccurs="0" maxOccurs="unbounded"/>
+    
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -46,9 +43,7 @@ $Id$
         los valores especificados para los atributos.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la possibilità di estendere la lista dei
         valori specificati per gli attributi</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>open</defaultVal>
       <valList type="closed">
         <valItem ident="closed">

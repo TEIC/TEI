@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="zone" module="transcr">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="zone" module="transcr">
   <desc versionDate="2011-11-20" xml:lang="en">defines any two-dimensional area within a <gi>surface</gi>
 element.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko"><gi>surface</gi> 요소 내에 포함된 직사각형 영역을 정의한다.</desc>
@@ -23,15 +19,15 @@ element.</desc>
     <memberOf key="model.linePart"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.graphicLike"/>
-        <rng:ref name="model.global"/>
-        <rng:ref name="surface"/>
-        <rng:ref name="model.linePart"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.graphicLike"/>
+        <classRef key="model.global"/>
+        <elementRef key="surface"/>
+        <classRef key="model.linePart"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="rotate">
@@ -41,9 +37,7 @@ element.</desc>
          dimensions given in the <gi>msDesc</gi> element or by the
          coordinates of the <gi>surface</gi> itself. The orientation
          is expressed in arc degrees.</desc>
-      <datatype minOccurs="1" maxOccurs="1">
-        <rng:ref name="data.count"/>
-      </datatype>
+      <datatype minOccurs="1" maxOccurs="1"><dataRef key="teidata.count"/></datatype>
       <defaultVal>0</defaultVal>
     </attDef>
   </attList>

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="w">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="w">
   <gloss versionDate="2005-01-14" xml:lang="en">word</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">단어</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">單字</gloss>
@@ -29,21 +26,21 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <text/>
-        <ref name="model.gLike"/>
-        <ref name="seg"/>
-        <ref name="w"/>
-        <ref name="m"/>
-        <ref name="c"/>
-        <ref name="pc"/>
-        <ref name="model.global"/>
-        <ref name="model.lPart"/>
-        <ref name="model.hiLike"/>
-        <ref name="model.pPart.edit"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.gLike"/>
+        <elementRef key="seg"/>
+        <elementRef key="w"/>
+        <elementRef key="m"/>
+        <elementRef key="c"/>
+        <elementRef key="pc"/>
+        <classRef key="model.global"/>
+        <classRef key="model.lPart"/>
+        <classRef key="model.hiLike"/>
+        <classRef key="model.pPart.edit"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="lemma" usage="opt">
@@ -56,16 +53,12 @@ $Id$
           dictionnaire)</desc>
       <desc versionDate="2007-05-04" xml:lang="es">identifica el lema de una palabra (forma en que se encuentra como entrada en un diccionario).</desc>
       <desc versionDate="2007-01-21" xml:lang="it">identifica il lemma (la voce di un dizionario)</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
-      </datatype>
+      <datatype><dataRef key="teidata.text"/></datatype>
     </attDef>
     <attDef ident="lemmaRef">
       <desc versionDate="2010-07-20" xml:lang="en">provides a pointer to a definition of the lemma for the
       word, for example in an online lexicon.</desc>
-      <datatype maxOccurs="1">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="1"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

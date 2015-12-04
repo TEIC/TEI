@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="timeline">
+<?xml version="1.0" encoding="UTF-8"?><!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ --><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="timeline">
   <gloss versionDate="2007-12-20" xml:lang="ko">시간선상</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">時間進程</gloss>
   <gloss versionDate="2009-04-17" xml:lang="fr">frise chronologique</gloss>
@@ -19,9 +16,9 @@
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="when"/>
-    </oneOrMore>
+    
+      <elementRef key="when" minOccurs="1" maxOccurs="unbounded"/>
+    
   </content>
   <attList>
     <attDef ident="origin" usage="opt">
@@ -32,9 +29,7 @@
       <desc versionDate="2007-06-12" xml:lang="fr">désigne le début de la frise chronologique, c'est-à-dire le moment où elle commence.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el origen de la escala temporal, es decir, el momento en que inicia.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica l'origine della scala temporale, cioè il momento in cui ha inizio</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2013-11-21" xml:lang="en">
         <p>If this attribute is not supplied, the implication is that
 	the time of origin is not known. If it is supplied, it must
@@ -53,9 +48,7 @@
       <desc versionDate="2009-04-17" xml:lang="fr">spécifie l'unité de temps correspondant à la valeur de l'attribut <att>interval</att> de la frise chronologique ou des points temporels qui la constituent.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica la unidad temporal correspondiente al valor del atributo <att>interval</att> (intervalo) de la escala temporal o de sus puntos constitutivos.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica l'unità temporale corrispondente al valore dell'attributo <att>interval</att> della scala temporale o dei suoi punti costitutivi</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
         <valItem ident="d">
           <gloss versionDate="2005-08-28" xml:lang="en">days</gloss>
@@ -98,9 +91,7 @@
       <desc versionDate="2007-06-12" xml:lang="fr">spécifie la partie numérique d'un intervalle de temps.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica los componentes numéricos de un intervalo de tiempo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la componente numerica di un intervallo temporale</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.interval"/>
-      </datatype>
+      <datatype><dataRef key="teidata.interval"/></datatype>
       <remarks versionDate="2005-10-12" xml:lang="en">
         <p>The value <val>irregular</val> indicates uncertainty about all the intervals in the timeline; the value <val>regular</val> indicates that all the intervals are evenly spaced, but the size of the intervals is not known; numeric values indicate evenly spaced values of the size specified. If individual points in time in the timeline are given different values for the <att>interval</att> attribute, those values locally override the value given in the timeline.</p>
       </remarks>

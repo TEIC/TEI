@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="state">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="state">
   <gloss versionDate="2009-03-19" xml:lang="fr">statut</gloss>
   <desc versionDate="2011-12-01" xml:lang="en">contains a description of some status or quality attributed to a person, place, or organization often at some specific time or for a specific date range.</desc>
   <desc versionDate="2009-03-19" xml:lang="fr">contient la description d'un statut ou d'une qualité actuels attribués à une personne, un lieu ou une
@@ -29,39 +25,39 @@ $Id$
     <memberOf key="model.placeStateLike"/>
   </classes>
   <content>
-     <group xmlns="http://relaxng.org/ns/structure/1.0">
-        <zeroOrMore>
-           <ref name="precision"/>
-        </zeroOrMore>
-        <choice xmlns="http://relaxng.org/ns/structure/1.0">
-           <oneOrMore>
-              <ref name="state"/>
-           </oneOrMore>
-           <group>
-              <zeroOrMore>
-                 <ref name="model.headLike"/>
-              </zeroOrMore>
-              <oneOrMore>
-                 <ref name="model.pLike"/>
-              </oneOrMore>
-              <zeroOrMore>
-                 <choice>
-                    <ref name="model.noteLike"/>
-                    <ref name="model.biblLike"/>
-                 </choice>
-              </zeroOrMore>
-           </group>
-           <group>
-              <zeroOrMore>
-                 <choice>
-                    <ref name="model.labelLike"/>
-                    <ref name="model.noteLike"/>
-                    <ref name="model.biblLike"/>
-                 </choice>
-              </zeroOrMore>
-           </group>
-        </choice>
-     </group>
+     <sequence>
+        
+           <elementRef key="precision" minOccurs="0" maxOccurs="unbounded"/>
+        
+        <alternate>
+           
+              <elementRef key="state" minOccurs="1" maxOccurs="unbounded"/>
+           
+           <sequence>
+              
+                 <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+              
+              
+                 <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+              
+              
+                 <alternate minOccurs="0" maxOccurs="unbounded">
+                    <classRef key="model.noteLike"/>
+                    <classRef key="model.biblLike"/>
+                 </alternate>
+              
+           </sequence>
+           
+              
+                 <alternate minOccurs="0" maxOccurs="unbounded">
+                    <classRef key="model.labelLike"/>
+                    <classRef key="model.noteLike"/>
+                    <classRef key="model.biblLike"/>
+                 </alternate>
+              
+           
+        </alternate>
+     </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
