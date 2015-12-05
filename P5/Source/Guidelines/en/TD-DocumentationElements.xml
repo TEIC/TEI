@@ -338,10 +338,11 @@ an XML Document Type Declaration.</item-->
 
   <div type="div2" xml:id="TDcrystals">
     <head>Specification Elements</head>
-    <p>The following elements are used to declare elements, classes, and patterns: <specList>
+    <p>The following elements are used to declare elements, classes, patterns, and datatypes: <specList>
         <specDesc key="elementSpec"/>
         <specDesc key="classSpec" atts="generate"/>
-        <specDesc key="macroSpec"/></specList>
+        <specDesc key="macroSpec"/>
+    <specDesc key="dataSpec"/></specList>
     </p>
     <p>Unlike most elements in the TEI scheme, each of these <soCalled>specification
         elements</soCalled> has a fairly rigid internal structure consisting of a large number of
@@ -370,6 +371,7 @@ element -->
     <specGrp xml:id="TDSG3" n="Specification elements">
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/elementSpec.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/classSpec.xml"/>
+      <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/dataSpec.xml"/>
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/macroSpec.xml"/>
     </specGrp>
   </div>
@@ -792,8 +794,8 @@ to mark any technical term, thus:
           notation used must be recorded using the <att>scheme</att> attribute.</p>
 
         <p>Schematron is an ISO standard (<ref target="#ISO-19757-3">ISO/IEC 19757-3:2006</ref>)
-          which defines a simple XML vocabulary for a <soCalled>assertion language</soCalled>,
-          together with a RELAXNG to validate it. The Schematron assertion language provides a
+          which defines a simple XML vocabulary for an <soCalled>assertion language</soCalled>,
+          together with a RELAXNG schema to validate it. The Schematron assertion language provides a
           powerful way of expressing constraints on the content of any XML document in addition to
           those provided by other schema languages. Such constraints can be embedded within a TEI
           schema specification using the methods exemplified in this chapter. An ODD processor will
@@ -951,6 +953,7 @@ to mark any technical term, thus:
         attributes: <specList>
           <specDesc key="attDef" atts="usage"/>
           <specDesc key="datatype" atts="minOccurs maxOccurs"/>
+          <specDesc key="dataRef"/>
           <specDesc key="defaultVal"/>
           <specDesc key="valDesc"/>
           <specDesc key="valList"/>
@@ -966,6 +969,45 @@ to mark any technical term, thus:
 
       <div type="div4" xml:id="TD-datatypes">
         <head>Datatypes</head>
+        <p>The <soCalled>datatype</soCalled> (i.e. the kind of value) for an attribute may be
+          specified using  the elements <gi>datatype</gi> and
+          <gi>dataRef</gi>. A datatype may be defined in any of the following
+          three ways: <list>
+            <item>by reference to the identifier of an existing TEI datatype definition; </item>
+            <item>by use of its name in the widely used schema datatype library maintained by the
+              W3C as part of the definition of its schema language; </item>
+            <item>by referencing its URI within some other datatype library.</item>
+          </list>The TEI defines a number of datatypes, each with an identifier beginning
+          <code>teidata.</code>, which are used in preference to the datatypes available natively
+          from a target schema such as RELAX NG or W3C Schema since the facilities provided by
+          different schema languages vary so widely. The TEI datatypes available are described in
+          section <ptr target="#DTYPES"/> above. Note that each is, of necessity, mapped eventually
+          to an externally defined datatype such as W3C Schema's <ident>text</ident> or
+          <ident>name</ident>, possibly combined to give more expressivity, or constrained to a
+          particular defined application. </p>
+        
+        <p>Attributes <att>minOccurs</att> and <att>maxOccurs</att> are available for the case where
+          an attribute may take more than one value of the type specified. For example, the
+          <att>target</att> attribute provided by the <ident type="class">att.pointing</ident>
+          class has the following declaration:  <egXML xmlns="http://www.tei-c.org/ns/Examples"
+            ><attDef ident="target">
+              <desc versionDate="2010-05-02" xml:lang="en">specifies the destination of the
+                reference by supplying one or more URI References</desc>
+              <datatype  minOccurs="1" maxOccurs="unbounded">
+                <dataRef  key="teidata.pointer"/>
+              </datatype>
+            </attDef></egXML> indicating that the <att>target</att> attribute may take any number of
+          values, each being of the same datatype, namely the TEI data specification <ident>teidata.pointer</ident>. As is
+          usual in XML, multiple values for a single attribute are separated by one or more white
+          space characters. Hence, values such as <code>#a #b #c</code> or <code>http://example.org
+            http://www.tei-c.org/index.xml</code> may be supplied.
+          <!-- add discussion of string vs multiple tokens? -->
+        </p>
+        
+        
+      </div>
+      <!--<div type="div4" xml:id="TD-datatypes">
+        <head>Datatypes</head>
         <p>The <gi>datatype</gi> element is used to state what kind of value an attribute may have.
           The TEI defines a number of datatype macros, each with an identifier beginning
             <code>data.</code>, which are used in preference to the datatypes available natively
@@ -980,7 +1022,7 @@ to mark any technical term, thus:
           is thus the equivalent of <code>CDATA</code> in DTD language. </p>
         <p>The RELAX NG language also provides support for a number of more complex cases such as
           choices or lists.
-          <!--primitive datatypes which may be specified here, using the
+          <!-\-primitive datatypes which may be specified here, using the
 <gi>rng:data</gi> element: thus one may write
 <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><datatype>
   <rng:data xmlns:rng="http://relaxng.org/ns/structure/1.0" type="boolean"/>
@@ -1000,7 +1042,7 @@ which would permit either a date or a real number. In fact, the child
 element might be a <code>rng:list</code> element to indicate that a
 sequence of values is required, a <code>rng:param</code> element to
 specify a regular expression, or even a list of explicit
-<code>rng:value</code>s. -->
+<code>rng:value</code>s. -\->
           Such usages are permitted by the scheme documented here, but are not recommended when it
           is desired to remain independent of a particular schema language, since the full
           generality of one schema language cannot readily be converted to that of another. In the
@@ -1025,10 +1067,10 @@ specify a regular expression, or even a list of explicit
           usual in XML, multiple values for a single attribute are separated by one or more white
           space characters. Hence, values such as <code>#a #b #c</code> or <code>http://example.org
             http://www.tei-c.org/index.xml</code> may be supplied.
-          <!-- add discussion of string vs multiple tokens? -->
+          <!-\- add discussion of string vs multiple tokens? -\->
         </p>
 
-      </div>
+      </div>-->
       <div type="div4" xml:id="TDATTvs">
         <head>Value Specification</head>
         <p>The <gi>valDesc</gi> element may be used to describe constraints on data content in an
@@ -1052,11 +1094,11 @@ than 100</q>. -->
           used. For example, to specify that an imaginary attribute
 	  <att scheme="imaginary">ageAtDeath</att> must take
           positive integer values less than 150, the datatype <ident type="datatype"
-            >data.numeric</ident> might be used in combination with a <gi>constraintSpec</gi> such
+            >teidata.numeric</ident> might be used in combination with a <gi>constraintSpec</gi> such
           as the following: <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <attDef ident="age">
               <desc>age in years at death</desc>
-              <datatype>data.numeric</datatype>
+              <datatype><dataRef>teidata.numeric</dataRef></datatype>
               <constraintSpec ident="lessThan150" scheme="isoschematron">
                 <constraint>
                   <assert xmlns="http://purl.oclc.org/dsdl/schematron" test=". &lt; 150"> age at
@@ -1078,7 +1120,7 @@ than 100</q>. -->
           </egXML>
         </p>
         <p>Where all the possible values for an attribute can be enumerated, the datatype
-            <ident>data.enumerated</ident> should be used, together with a <gi>valList</gi> element
+            <ident>teidata.enumerated</ident> should be used, together with a <gi>valList</gi> element
           to specify the values and their significance, as in the following example: <egXML
             xmlns="http://www.tei-c.org/ns/Examples"><valList type="closed">
               <valItem ident="req"><gloss>required</gloss></valItem>
@@ -1097,7 +1139,7 @@ than 100</q>. -->
                 as an entrance or exit.</desc>
               <desc versionDate="2007-12-20" xml:lang="ko">예를 들어 입장 또는 퇴장과 같은, 이동의 특성을 기술한다.</desc>
               <datatype>
-                <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+                <dataRef key="teidata.enumerated"/>
               </datatype>
               <valList type="open">
                 <valItem ident="entrance">
@@ -1115,7 +1157,7 @@ than 100</q>. -->
                   <desc versionDate="2007-12-20" xml:lang="ko">등장인물이 무대에서 이동한다.</desc>
                 </valItem>
               </valList>
-            </attDef></egXML> The datatype will be <ident type="datatype">data.enumerated</ident> in
+            </attDef></egXML> The datatype will be <ident type="datatype">teidata.enumerated</ident> in
           either case.</p>
         <p>The <gi>valList</gi> element may also be used (as a child of the <gi>content</gi>
           element) to put constraints on the permitted content of an element, as noted at <ptr
@@ -1338,6 +1380,7 @@ xmlns="http://www.tei-c.org/ns/Examples"><attList>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/attDef.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/attRef.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/datatype.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/dataRef.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/defaultVal.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valDesc.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/valItem.xml"/>
