@@ -19,7 +19,7 @@
   <xsl:output indent="yes" omit-xml-declaration="yes"/>
 
   <xsl:include href="pointerattributes.xsl"/>
-  <xsl:key name="IDENTS" match="tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
+  <xsl:key name="IDENTS" match="tei:dataSpec|tei:elementSpec|tei:classSpec|tei:macroSpec" use="@ident"/>
   <xsl:key name="MIDENTS" match="tei:moduleSpec" use="@ident"/>
   <xsl:key name="EXIDS" match="teix:*[@xml:id]" use="@xml:id"/>
   <xsl:key name="IDS" match="*[@xml:id]" use="@xml:id"/>
