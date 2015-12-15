@@ -12,7 +12,7 @@ $Id$
 
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TD" n="27"
   xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:s="http://www.ascc.net/xml/schematron"
-  xmlns:sch="http://purl.oclc.org/dsdl/schematron"> 
+  xmlns:sch="http://purl.oclc.org/dsdl/schematron">
   <head>Documentation Elements</head>
   <p>This chapter describes a module which may be used for the documentation of the XML elements and
     element classes which make up any markup scheme, in particular that described by the TEI
@@ -294,34 +294,6 @@ an XML Document Type Declaration.</item-->
       that the specification groups will refer to elements that come from different modules.
       Specification groups are always local to the document in which they are defined, and cannot be
       referenced externally (unlike modules). </p>
-    
-    <!--    NEW section on <attRef> added 2015-10-24 by MDH per https://github.com/TEIC/TEI/issues/1196. -->
-    <p>The <gi>attRef</gi> element is rarely used directly in ODD files, although it is commonly created 
-    and consumed during intermediate stages when ODD files are processed to produce schemas. 
-    It allows an ODD creator to reference (i.e. copy)
-    an attribute defined elsewhere. In the example below, the <att>type</att> attribute (defined 
-    in the <ident>att.typed</ident> class) is added to the <gi>p</gi> element:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="p" module="core" mode="change">
-        <attList>
-          <attRef name="type" class="att.type"/>
-        </attList>
-      </elementSpec></egXML>
-      A more conventional approach would be to add <gi>p</gi> to the <ident>att.source</ident>
-      class and then delete any attributes from that class which are not required. However, when the 
-      attribute class is large, many attributes may need to be deleted, so it may be more efficient to 
-      use <gi>attRef</gi>. A common use-case might be the requirement for the global @xml:id attribute
-      to be added to a new custom element which does not require any of the other <ident>att.global</ident>
-      attributes:
-      <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="vesselName" ns="http://hcmc.uvic.ca/ns" mode="add">
-        <!-- ... -->
-        <attList>
-          <attRef class="att.global" name="xmlid"/>
-        </attList>
-        <!-- ... -->
-      </elementSpec></egXML>
-    Note that the colon in <att>xml:id</att> should not be included in the 
-      <att>name</att> attribute.
-    </p>
 
     <specGrp xml:id="TDSG2" n="Modules and Specification Groups">
       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/classRef.xml"/>
