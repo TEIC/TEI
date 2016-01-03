@@ -14,8 +14,9 @@ $Id$
    <head>Representation of Primary Sources</head>
 
    <p>This chapter defines a module intended for use in the representation of primary sources, such
-      as manuscripts or other written materials. Section <ptr target="#PHFAX"/> provides elements
-for handling digitally-encoded images of such materials. This module may
+      as manuscripts or other written materials. Section <ptr target="#PHFAX"/> discusses ways of 
+      encoding <soCalled>digital facsimiles</soCalled>, such as collections of page images of such materials, while the remainder of the
+      chapter discusses ways of encoding detailed transcriptions of such materials. This module may
       also be useful in the preparation of critical editions, but the module defined here is
       distinct from that defined in chapter <ptr target="#TC"/>, and may be used independently of
       it. Detailed metadata relating to primary sources of any kind may be recorded using the
@@ -49,7 +50,7 @@ Physical Bibliography workgroup.</p-->
       <p>These Guidelines are mostly concerned with the preparation of digital texts in which
          pre-existing sources are transcribed or otherwise converted into character form, and marked
          up in XML. However, it is also very common practice to make a different form of
-            <soCalled>digital text</soCalled>, which is instead composed of digital images of the
+            <soCalled>digital edition</soCalled>, which is instead composed of digital images of the
          original source, typically one per page, or other written surface. We call such a resource
          a <term>digital facsimile</term>. A digital facsimile may, in the simplest case, just
          consist of a collection of images, with some metadata to identify them and the source
@@ -73,7 +74,8 @@ Physical Bibliography workgroup.</p-->
          usual URI pointing mechanism. <!-- i.e. URI reference? -->
       </p>
 
-      <p>In the simple case where a digital text is composed of page images, the <att>facs</att>
+
+      <p>In the simple case where a digital edition is composed only of page images, the <att>facs</att>
          attribute on the <gi>pb</gi> element may be used to associate each image with an
          appropriate point in the text: <egXML xmlns="http://www.tei-c.org/ns/Examples"
             valid="feasible">
@@ -106,8 +108,8 @@ Physical Bibliography workgroup.</p-->
          provided by this module. These elements make it possible to accommodate multiple images of
          each page, as well as to record the position and relative size of elements identified on any
          kind of written surface and to link such elements with digital facsimile images of them.
-         Typical applications include the provision of full text search in <soCalled>digital
-            facsimile editions</soCalled>, and ways of annotating graphics, for example so as to
+         Typical applications include the provision of full text search <!--in <soCalled>digital
+            facsimile editions</soCalled>,--> and ways of annotating graphics, for example so as to
          identify individuals appearing in group portraits and link them to data about the people
          represented. </p>
 
@@ -121,9 +123,9 @@ Physical Bibliography workgroup.</p-->
       </p>
 
       <p>Either of the <gi>facsimile</gi> or <gi>sourceDoc</gi> elements may be used to represent a
-         digital facsimile. Either may appear within a TEI document along with, or instead of, the
+         digital edition. Either may appear within a TEI document along with, or instead of, the
             <gi>text</gi> element introduced in section <ptr target="#DS"/>. The <gi>facsimile</gi>
-         element is designed for the case where the digital facsimile contains only images, whereas
+         element is designed for the case where the digital edition contains only images, whereas
          the <gi>sourceDoc</gi> element is for use in the case where such images are complemented by
          a documentary transcription. In this section, we first discuss the simpler case, returning
          to the use of the <gi>sourceDoc</gi> element in section <ptr target="#PH-transcr"/> below.
@@ -141,7 +143,7 @@ Physical Bibliography workgroup.</p-->
             <gi>front</gi> or <gi>back</gi> element, used in the same way as described in sections
             <ptr target="#DSFRONT"/> and <ptr target="#DSBACK"/>. </p>
 
-      <p>In the simplest case, a facsimile just contains a series of <gi>graphic</gi> elements, each
+      <p>In the simplest case, the <gi>facsimile</gi> element contains a series of <gi>graphic</gi> elements, each
          of which identifies an image file: <egXML xml:lang="und"
             xmlns="http://www.tei-c.org/ns/Examples">
             <facsimile>
@@ -300,7 +302,7 @@ used to define a polygon of any shape using this coordinate system:-->
                      <!-- right hand page -->
                   </zone>
                   <zone ulx="90" uly="40" lrx="200" lry="225">
-                     <!--- written part of left hand page -->
+                     <!-- written part of left hand page -->
                   </zone>
                </surface>
             </facsimile></egXML></p>
@@ -400,7 +402,7 @@ used to define a polygon of any shape using this coordinate system:-->
          illustrated in section <ptr target="#PH-bov"/> below. Alternatively, if the transcription
          is intended not to prioritize representation of the final text so much as the process by
          which the document came to take its present form, or the physical disposition of its
-         component parts, it may be preferable to present it as an embedding transcription, as
+         component parts, it may be preferable to present it as an embedded transcription, as
          further described in section <ptr target="#PHZLAB"/> below.</p>
       <div xml:id="PH-bov">
          <head>Parallel Transcription</head>
@@ -554,7 +556,7 @@ used to define a polygon of any shape using this coordinate system:-->
             which a poem is being drafted: <figure xml:id="sleeprs">
                <graphic url="Images/whitman01.jpg" width="400px"/>
                <head rend="it">Single leaf of notes possibly related to the poem eventually titled
-                  Sleepers. From the Walt Whitman Archive (Duke 258). </head>
+                  Sleepers. From the Walt Whitman Archive (duk.00258). </head>
             </figure> The two pieces of newsprint might simply be regarded as special kinds of zone,
             but they are also new surfaces, since they might contain additional written zones
             themselves (such as the numbers in this case). </p>
@@ -632,8 +634,9 @@ used to define a polygon of any shape using this coordinate system:-->
             <item>methods of recording editorial or other alterations to the text, such as expansion
                of abbreviations, corrections, conjectures, etc. (section <ptr target="#PHCH"
                />)</item>
-            <item>methods of describing important extra-linguistic phenomena in the source: unusual
-               spaces, lines, page and line breaks, changes of manuscript hand, etc. (section <ptr
+            <item>methods of describing important extra-linguistic phenomena in the source, in particular changes of manuscript hand, etc.
+            <!--unusual
+               spaces, lines, page and line breaks,-->  (section <ptr
                   target="#PHPH"/>)</item>
             <item>methods of representing complex organizations of surfaces and zones (section <ptr
                   target="#PH-surfzone"/>) </item>
@@ -662,7 +665,7 @@ used to define a polygon of any shape using this coordinate system:-->
 
       <p>These recommendations are not intended to meet every transcriptional circumstance likely to
          be faced by any scholar. Rather, they should be regarded as a base which can be elaborated
-         if necessary by different scholars in different disciplines </p>
+         if necessary by different scholars in different disciplines. </p>
       <!-- , with
 distinct scholarly domains eventually developing their own document
 types.  In time, the feature structure notation developed in chapter
@@ -1164,7 +1167,7 @@ recommendations form a good basis for such future work.-->
                   <head>Draft letter from Robert Graves to Desmond Flower, 17 Dec 1938 (detail).
                   </head>
                </figure> At the end of this extract, the writer inserts the word <q>cant,</q> above
-               the line, with a stroke to indicate insertion. Assuming that we have previously
+               the line, with a stroke to indicate insertion. Assume that we have previously
                defined the identifier <code>RG</code> somewhere: <egXML
                   xmlns="http://www.tei-c.org/ns/Examples">
                   <listPerson>
@@ -1172,7 +1175,7 @@ recommendations form a good basis for such future work.-->
                         <!-- information about Robert Graves here -->
                      </person>
                   </listPerson>
-               </egXML>, this extract might now be encoded as follows: <egXML
+               </egXML>We may now encode this example as follows: <egXML
                   xmlns="http://www.tei-c.org/ns/Examples" source="#PH-eg-07"> The O.E.D. is not a
                   dictionary so much as a corpus of precedents <del hand="#RG">in the</del>:
                   current, obsolete, <add hand="#RG" place="above">cant,</add> cataphretic and
@@ -1241,9 +1244,9 @@ a line through it. </p>
 
             <p>The <gi>add</gi> and <gi>del</gi> elements defined in the core module suffice only
                for the description of additions and deletions which fit within the structure of the
-               text being transcribed, that is, which each deletion or addition is completely
-               contained by the structural element (paragraph, line, division) within which it
-               occurs. Where this is not the case, for example because an individual addition or
+               text being transcribed, that is, for cases in which each deletion or addition is completely
+               contained by some structural element (paragraph, line element, division). 
+               Where this is not the case, for example because an individual addition or
                deletion involves several distinct structural subdivisions, such as poems or prose
                items, or otherwise crosses a structural boundary in the text being encoded, special
                treatment is needed. The <gi>addSpan</gi> and <gi>delSpan</gi> elements are provided
@@ -1276,9 +1279,9 @@ a line through it. </p>
             <p>The <gi>delSpan</gi> element is used in the same way. An authorial manuscript will
                often contain
                <!-- For example,
-in the Eliot typescript mentioned above, there are --> several
-               occasions where sequences of whole lines are marked for deletion, either by boxes or
-               by being struck out. If the encoder is marking up individual verse lines with the
+in the Eliot typescript mentioned above, there are --> 
+               occasions where sequences of whole lines are marked for deletion in various ways. 
+               If the encoder is marking up individual verse lines with the
                   <gi>l</gi> element, such deletions are problematic: deletion of two consecutive
                lines should be regarded as a single deletion, but the <gi>del</gi> element must be
                properly nested within a single <gi>l</gi> element. The <gi>delSpan</gi> element
@@ -1401,7 +1404,7 @@ in the Eliot typescript mentioned above, there are --> several
                </list>
             </p>
             <p>The <gi>app</gi> element presented in chapter <ptr target="#TC"/> provides similar
-               facilities, by treating each state of the text as a distinct reading. The
+               facilities to those discussed here, by treating each state of the text as a distinct reading. The
                   <gi>rdg</gi> element has a <att>varSeq</att> attribute which may be used in the
                same way as the <att>seq</att> attribute to indicate the preferred sequence. The
                James example above might thus be represented as follows: <egXML
@@ -1431,11 +1434,11 @@ in the Eliot typescript mentioned above, there are --> several
                writing <q>stet</q> in the margin. This may be encoded: <egXML
                   xmlns="http://www.tei-c.org/ns/Examples">For I hate this <restore hand="#dhl"
                      type="marginalStetNote"><del>my</del></restore> body</egXML></p>
-            <p>Another feature commonly encountered in manuscripts is the use of circles, lines, or
+           <!-- <p>Another feature commonly encountered in manuscripts is the use of circles, lines, or
                arrows to indicate transposition of material from one point in the text to another.
                No specific markup for this phenomenon is proposed at this time. Such cases are most
                simply encoded as additions at the point of insertion and deletions at the point of
-               encirclement or other marking. </p>
+               encirclement or other marking. </p>-->
          </div>
 
          <div type="div3" xml:id="PHOM">
@@ -1567,8 +1570,8 @@ in the Eliot typescript mentioned above, there are --> several
          <div type="div3" xml:id="PHDH">
             <head>Document Hands</head>
 
-            <p>For many text-critical purposes it is important to signal the person responsible (the
-                  <term>hand</term>) for the writing of a whole document, a stretch of text within a
+            <p>For many text-critical purposes it is important to signal the <term>hand</term> responsible 
+               for the writing of a whole document, a stretch of text within a
                document, or a particular feature within the document. A hand, as the name suggests,
                need not necessarily be identified with a particular known (or unknown) scribe or
                author; it may simply indicate a particular combination of writing features
@@ -1696,7 +1699,7 @@ in the Eliot typescript mentioned above, there are --> several
                underlining, etc.—within the primary text being transcribed. The scribal or authorial
                responsibility for this marking may be inferred from the value of the <att>hand</att>
                attribute. The value of the <att>hand</att> attribute should be a pointer to a hand
-               identifiers typically declared in the document header but potentially in another
+               identifier, typically declared in the document header but potentially in another
                document or repository (see section <ptr target="#PHDH"/>).</p>
             <p>The <att>resp</att> attribute, by contrast, indicates the person responsible for
                deciding to mark up this part of the text with this particular element. In the case
@@ -1846,7 +1849,7 @@ lead to unpredictable results.</p>
                   </p>
                   <p> .... </p>
                   <p> .... <pb n="5v" xml:id="damageEnd"/>
-                  </p></egXML> Note that in this example the <att>spanTo</att> element points to the
+                  </p></egXML> Note that in this example the <att>spanTo</att> attribute points to the
                next <gi>pb</gi> element rather than to an inserted <gi>anchor</gi> element, since it
                is the whole of the leaf (the text between the two <gi>pb</gi> elements) which has
                sustained damage. For other techniques of handling non-nesting information, see
@@ -1858,20 +1861,19 @@ lead to unpredictable results.</p>
                In this (imaginary) text of Fitzgerald's translation from Omar Khayam, water damage
                has affected an area covering parts of several lines: <egXML
                   xmlns="http://www.tei-c.org/ns/Examples"><l> The Moving Finger wri<damage
-                        agent="water" group="1">es; and</damage> having writ,</l>
-                  <l>Moves <damage agent="water" group="1">on: nor all your</damage> Piety nor
+                        agent="water" group="1">tes; and</damage> having writ,</l>
+                  <l>Moves <damage agent="water" group="1">on: nor all thy</damage> Piety nor
                      Wit</l>
                   <l><damageSpan agent="water" group="1" spanTo="#washOut"/>Shall lure it back to
                      cancel half a Line,</l>
-                  <l>Nor all your Tears wash <anchor xml:id="washOut"/> out a Word of it</l>
+                  <l>Nor all thy Tears wash <anchor xml:id="washOut"/> out a Word of it</l>
                </egXML>
             </p>
             <p>A more general solution to this problem is provided by the <gi>join</gi> element
                discussed in <ptr target="#SAAG"/> which may be used to link together arbitrary
-               elements of any kind in the transcription. Here, several phenomena of illegibility
-               and conjecture all result from a single cause: an area of damage to the text caused
-               by rubbing at various points. The damage is not continuous, and affects the text at
-               irregular points. In cases such as this, the join element may be used to indicate
+               elements of any kind. Here,  several phenomena of illegibility and conjecture all 
+               result from a single cause: water has damaged the text at various points.
+               A <gi>join</gi> element might therefore be used to indicate
                which tagged features are part of the same physical phenomenon. </p>
 
             <p>If the damage has been so severe as to render parts of the text only imperfectly
@@ -2065,8 +2067,9 @@ lead to unpredictable results.</p>
                </specList>
             </p>
 
-            <p>Unlike marginal notes or other additions to the text, metamarks are used by the
-               writer to indicate a deliberate alteration of the writing itself, such as <q>move
+            <p>Unlike textual additions or marginal notes intended to be read as part of the text,
+               metamarks are used by the writer to indicate <emph>how</emph> the text is to be read,
+               for example <q>move
                   this passage over there</q>. An addition or annotation by contrast would typically
                concern some property of the passage other than its intended location or status
                within the text flow. A metamark may contain text, or some other graphic which the
@@ -2086,8 +2089,8 @@ lead to unpredictable results.</p>
                document where the passage concerned begins; in the former case it may be supplied at
                any convenient point. Both attributes should not be supplied. </p>
 
-            <p>The following example is taken from an 15th century legal book from the city of
-               Göttingen, containing regulations of everyday life issued by the city council <figure>
+            <p>The following example is taken from an15th century legal book from the city of
+               Göttingen, containing regulations of everyday life issued by the city council. <figure>
                   <graphic url="Images/ka04_1v-dtl.jpg" width="70%"/>
                   <head><title>Kundige bok 2</title>, fol 1v. </head>
                </figure>
@@ -2117,14 +2120,15 @@ lead to unpredictable results.</p>
                elements <gi>addSpan</gi> and <gi>delSpan</gi> are discussed in section <ptr
                   target="#PHAD"/>. </p>
 
-            <p>The <gi>metamark</gi> element may also be used to encode the symbols etc. often found
+            <p>The <gi>metamark</gi> element may also be used to encode the symbols  often found
                in marked-up proofs such as the following, taken from the Walt Whitman archive: <figure>
                   <graphic url="Images/whitman-03.jpg" width="400px"/>
                   <head>From a corrected proof of <title>Miracles</title> (Walt Whitman
                      Archive)</head>
                </figure></p>
             <!-- loc.00295 detail -->
-            <p>In this example, the whole of what was originally the 14th section of the poem has
+            <p>In this example, <!-- the whole of what was originally the 14th section of the poem -->
+               a block of several lines has
                been marked for deletion, both by horizontal and vertical lines, and by the metamarks
                resembling the <q>delta</q> deletion symbol to left and right of the section. The
                deletion itself might be encoded by using the normal <gi>del</gi> or <gi>delSpan</gi>
@@ -2285,8 +2289,8 @@ has identifier <val>z2</val>. -->
                         /> sample <undo spanTo="#Xb" rend="dotted" change="#s3"/>text, <anchor
                            xml:id="Xb"/> we need</del>
                      <add change="#s2">not</add> a real example.</line>
-               </egXML> using two <gi>undo</gi> elements, each with a <att>spanTo</att> attribute,
-               to delimit the two parts of the deletion which were reverted at change s3. Note that
+               </egXML> The two <gi>undo</gi> elements, each with a <att>spanTo</att> attribute,
+               delimit the two parts of the deletion which were reversed at change s3. Note that
                in this case, since <att>target</att> is not supplied, it is the effect of the parent
                element (the <gi>del</gi>) which is assumed to be undone. </p>
 
@@ -2308,16 +2312,23 @@ individual tokens. Or one from a real doc -->
          <div xml:id="transpo">
             <head>Transpositions</head>
 
-            <p>A <term>transposition</term> occurs when metamarks are found in a document indicating
+            <p>Documents sometimes contain a metamark or metamarks indicating that a passage should be moved to a 
+            different position in the textual flow. Such <term>transpositions</term> are often indicated with arrows, 
+            asterisks or numbers, or other means. By definition the result of a transposition is not present in the 
+            document. Therefore, when the encoder's intention is to represent the actual appearance of the document, 
+            the result should not appear in the encoding. Instead, the following elements may be used to indicate 
+            the intended reordering:
+       
+              <!-- A <term>transposition</term> occurs when metamarks are found in a document indicating
                that passages should be moved to a different position. Typically this may be done
                using arrows, asterisks or numbers, or other means. By definition the result of a
                transposition is not present in the document, and should not therefore be encoded, if
                the intention is to represent the actual appearance of the document. Instead, the
-               following elements may be used to indicate the intended reordering: <specList>
+               following elements may be used to indicate the intended reordering:--> <specList>
                   <specDesc key="listTranspose"/>
                   <specDesc key="transpose"/>
                </specList></p>
-            <p>Consider for example, the following extract from an Ibsen manuscript <figure>
+            <p>Consider for example, the following extract from an Ibsen manuscript. <figure>
                   <graphic url="Images/ibsen01.jpg" width="400px"/>
                   <head>Extract from autograph <title>Digte</title> (Poems) NBO Ms. 4º 1110a</head>
                </figure> The underlined numbers 1 and 2 here indicate that, although the word
@@ -2869,7 +2880,7 @@ referring to the zone marked in purple on the right
             </creation>
          </profileDesc>
       </egXML>
-      <p>A nested <gi>listChange</gi> elements is also useful to indicate a <emph>partial</emph>
+      <p>A nested <gi>listChange</gi> element is also useful to indicate a <emph>partial</emph>
          ordering of revision campaigns.</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <listChange ordered="true">
@@ -2888,7 +2899,7 @@ referring to the zone marked in purple on the right
             <ident type="class">att.datable</ident> class (<att>period</att>, <att>when</att>,
             <att>notBefore</att>, <att>notAfter</att>, <att>from</att>, and <att>to</att>) which
          allow each stage to be dated as exactly or inexactly as necessary, in the same way as is
-         currently possible for the TEI <gi>date</gi> element.</p>
+         possible for other members of that class, such as <gi>date</gi>.</p>
       <!-- Maybe note that absolute dates and relative order can conflict -->
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <profileDesc>

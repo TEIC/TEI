@@ -2286,12 +2286,12 @@ expressed using that calendar system:
 <div type="div3" xml:id="HD44CD"><head>Correspondence Description</head>
       <p>The <gi>correspDesc</gi> element is used within the <gi>profileDesc</gi> element to
         provide detailed correspondence-specific metadata, concerning in particular the
-        communicative aspects (sending, receiving, forwarding etc.) associated with acts of
+        communicative aspects (sending, receiving, forwarding etc.) associated with an act
         of correspondence. </p>
       <p>This information is complementary to the detailed
       descriptions of physical objects (such as letters) associated
-      with correspondence activities, which are typically provided by
-      the sourceDesc element. <specList>
+      with correspondence acts, which are typically provided by
+      the <gi>sourceDesc</gi> element. <specList>
           <specDesc key="correspDesc"/>
         </specList>
       </p>
@@ -2308,9 +2308,9 @@ expressed using that calendar system:
         it is a reply, or the item which replies to it: <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <correspContext>
-            <ref type="replyTo" target="#CLF0102">Previous letter of <persName>Chamisso</persName> to <persName>de La
+            <ref type="prev" target="#CLF0102">Previous letter of <persName>Chamisso</persName> to <persName>de La
               Foye</persName>: <date when="1807-01-16">16 January 1807</date></ref>
-            <ref type="replyFrom" target="#CLF0104">Next letter of <persName>Chamisso</persName> to <persName>de La Foye</persName>:
+            <ref type="next" target="#CLF0104">Next letter of <persName>Chamisso</persName> to <persName>de La Foye</persName>:
               <date when="1810-05-07">07 May 1810</date></ref>
           </correspContext>
         </egXML>
@@ -2318,7 +2318,7 @@ expressed using that calendar system:
 
 <!-- add an example using note or p ? -->
 
-      <p>Many types of correspondence action may be distinguished. The <att>type</att>
+      <p>Many types of correspondence actions may be distinguished. The <att>type</att>
         attribute should be used to indicate the type of action being documented, using values
         such as those suggested above. </p>
       <p>The following simple example uses <gi>correspAction</gi> to describe the sending of a
@@ -2338,13 +2338,13 @@ expressed using that calendar system:
         </egXML>
 Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"/> to provide a normalized
       form of the date. The content of the <gi>date</gi> element may
-      also be omitted, since no underlying source is being transcribed.      </p>
+      be omitted, since no underlying source is being transcribed.</p>
 
       <p>Several senders, recipients, etc. can be specified for a single
         <gi>correspAction</gi> if the action is considered to apply to them all acting as
-        a single group. In the following example two people are considered to have received
-        the communication. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="receiving">
+        a single group. In the following example, two people are considered to have received
+        the piece of correspondence. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspAction type="received">
             <persName>Hermann Hesse</persName>
             <persName>Ninon Hesse</persName>
             <placeName>Montagnola</placeName>
@@ -2369,7 +2369,7 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
           </correspAction>
         </egXML>
       </p>
-      <p>The same person may be associated with many actions. For example, it will often
+      <p>The same person may be associated with several actions. For example, it will often
         be the case that the author and sender of a message are identical, and that many
         individual letters will need to be associated with the same person. The
         <att>sameAs</att> attribute defined in section <ptr target="#SAIE"/> may be used
@@ -2383,7 +2383,7 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
         <!-- example needs expansion to include definition for #author -->
       </p>
       <p>It is assumed that each correspondence action applies to a single act of
-        communication. It may however be the case that the same physical object is involved
+        communication. However, it may be the case that the same physical object is involved
         in several such acts, if for example person A sends a letter to person B,
         who then annotates it and sends it on to person C, or if persons A and B both use
         the same document to convey quite different messages. In such situations, multiple

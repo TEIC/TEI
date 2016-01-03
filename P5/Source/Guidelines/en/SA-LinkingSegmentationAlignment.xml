@@ -917,7 +917,7 @@ to the following TEI fragment<anchor xml:id="SATSXP-ex"/>:
 <!-- Ostrakon from Trimithis (O.Trim 1, 1)  http://papyri.info/ddbdp/o.trim;1;1 -->
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <div xml:lang="la" type="edition" xml:space="preserve"><ab>
-<lb n="1"/><supplied reason="lost">si</supplied> non <choice><reg>habui</reg><orig>abui</orig></choice> quidquam vaco 
+<lb n="1" xml:id="line1"/><supplied reason="lost">si</supplied> non <choice><reg>habui</reg><orig>abui</orig></choice> quidquam vaco 
 <lb n="2"/>si<gap reason="illegible" quantity="3" unit="character"/>b<gap reason="illegible" quantity="3" unit="character"/> 
   cohort<unclear>e</unclear> mi rescribas 
 <lb n="3"/><unclear>s</unclear>emp<unclear>er</unclear> in <choice><reg>mente</reg><orig>mentem</orig></choice> 
@@ -962,7 +962,7 @@ for the pointer.</p>
 <p>Example: the pointer <code>#left(//gap[1])</code> 
 indicates the point between the first <code>lb</code> and the first
   <code>gap</code> in the <ref target="#SATSXP-ex">example</ref> above.</p>
-<p>Example: <code>#left(l1)</code> indicates the point immediately before
+<p>Example: <code>#left(line1)</code> indicates the point immediately before
 the <code><![CDATA[<lb n="1"/>]]></code> element.</p></div>
 
 <div type="div4" xml:id="SATSR">
@@ -990,6 +990,22 @@ first following text node, if the addressed element contains
 no text node descendants.</p>
 <p>Example: <code>#string-index(//lb[@n='2'],1)</code> indicates the point
 between the <q>s</q> and the <q>i</q> in the word <q>si</q> in line 2.</p>
+<p><hi rend="bold">Note</hi>: The OFFSET parameter (and similarly the 
+LENGTH parameter found below in the <name type="xpscheme">string-range()</name>
+scheme) are measured in characters. What is considered a single character will
+depend (assuming the document being evaluated is in Unicode) on the 
+Normalization Form in use (see 
+<ref target="http://unicode.org/reports/tr15/">UNICODE NORMALIZATION 
+FORMS</ref>). A letter followed by a combining diacritic counts as two 
+characters, but the same diacritic precombined with a letter would count 
+as a single character. Compare, for example, é (<code>\u0060</code> 
+followed by <code>\u0301</code>) and é (<code>\u00E9</code>). These are 
+equivalent, and a conversion between Normalization Forms C and D will 
+transform one into the other. This specification does not mandate a 
+particular Normalization Form (see <ptr target="#D4-46-2"/>), but 
+users and implementers should be aware that it affects the character count 
+and therefore the result of evaluating pointers that rely on character 
+counting.</p>
 </div>
 
 <div type="div4" xml:id="SATSRN">
@@ -1044,7 +1060,7 @@ the resulting sequence, but the LENGTH count will not increment when
 it is captured.</p>
 <p>Example: <code>#string-range(//lb[@n='5'],0,27)</code> indicates 
 the whole of <ref target="#SATSXP-ex">line 5</ref> from the text immediately 
-following the<code>lb</code> to the point right before the closing 
+following the <code>lb</code> to the point right before the closing 
 <code>ab</code> tag.</p>
 <p>Example: <code>#string-range(//lb[@n='4'],7,8)</code>
 indicates the sequence <q>in mente</q>.</p>
