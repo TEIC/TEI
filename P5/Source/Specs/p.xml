@@ -29,14 +29,26 @@
   </content>
   <constraintSpec ident="abstractModel-p" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="(ancestor::tei:p or ancestor::tei:ab)          and not(parent::tei:exemplum                |parent::tei:item                |parent::tei:note                |parent::tei:q                |parent::tei:quote                |parent::tei:remarks                |parent::tei:said                |parent::tei:sp                |parent::tei:stage                |parent::tei:cell                |parent::tei:figure)">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" 
+        test="(ancestor::tei:p or ancestor::tei:ab) 
+        and not(parent::tei:exemplum
+               |parent::tei:item
+               |parent::tei:note
+               |parent::tei:q
+               |parent::tei:quote
+               |parent::tei:remarks
+               |parent::tei:said
+               |parent::tei:sp
+               |parent::tei:stage
+               |parent::tei:cell
+               |parent::tei:figure)">
         Abstract model violation: Paragraphs may not contain other paragraphs or ab elements.
       </report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l[not(.//tei:note//tei:p[. = current()])]">
         Abstract model violation: Lines may not contain higher-level structural elements such as div, p, or ab.
       </report>
     </constraint>
