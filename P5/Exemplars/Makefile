@@ -62,10 +62,10 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	../run-onvdl $*.nvdl $*.odd
 	${TRANG}  $*.rng $*.rnc
 	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
-	-test -f xml.xsd && mv xml.xsd $*_xml.xsd                && perl -p -i -e "s+examples.xsd+$*_examples.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_xml.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*.xsd
-	-test -f examples.xsd && mv examples.xsd $*_examples.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_examples.xsd      && perl -p -i -e "s/examples.xsd/$*_examples.xsd/" $*.xsd
-	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd                && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+examples.xsd+$*_examples.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*_xml.xsd
-	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+examples.xsd+$*_examples.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
+	-test -f xml.xsd && mv xml.xsd $*_xml.xsd                && perl -p -i -e "s+teix.xsd+$*_teix.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_xml.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*.xsd
+	-test -f teix.xsd && mv teix.xsd $*_teix.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_teix.xsd      && perl -p -i -e "s/teix.xsd/$*_teix.xsd/" $*.xsd
+	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd                && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*_xml.xsd
+	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
 	-test -f ns1.xsd && mv ns1.xsd $*_ns1.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_ns1.xsd  && perl -p -i -e "s/ns1.xsd/$*_ns1.xsd/" $*.xsd
 	-test -f tite.xsd && mv tite.xsd $*_tite.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_tite.xsd && perl -p -i -e "s/tite.xsd/$*_tite.xsd/" $*.xsd
 	@echo Validate XSD using Jing ...
@@ -84,10 +84,10 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 
 %.xsd: %.rng
 	${TRANG}   -o disable-abstract-elements $*.rng $*.xsd
-	-test -f xml.xsd && mv xml.xsd $*_xml.xsd                && perl -p -i -e "s+examples.xsd+$*_examples.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_xml.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*.xsd
-	-test -f examples.xsd && mv examples.xsd $*_examples.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_examples.xsd      && perl -p -i -e "s/examples.xsd/$*_examples.xsd/" $*.xsd
-	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd                && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+examples.xsd+$*_examples.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*_xml.xsd
-	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+examples.xsd+$*_examples.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
+	-test -f xml.xsd && mv xml.xsd $*_xml.xsd                && perl -p -i -e "s+teix.xsd+$*_teix.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_xml.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*.xsd
+	-test -f teix.xsd && mv teix.xsd $*_teix.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+" $*_teix.xsd      && perl -p -i -e "s/teix.xsd/$*_teix.xsd/" $*.xsd
+	-test -f dcr.xsd && mv dcr.xsd $*_dcr.xsd                && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*_dcr.xsd  && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*.xsd && perl -p -i -e "s/dcr.xsd/$*_dcr.xsd/" $*_xml.xsd
+	-test -f spec.xsd && mv spec.xsd $*_spec.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+;s+ns1.xsd+$*_ns1.xsd+;s+teix.xsd+$*_teix.xsd+" $*_spec.xsd && perl -p -i -e "s/spec.xsd/$*_spec.xsd/" $*.xsd
 	-test -f ns1.xsd && mv ns1.xsd $*_ns1.xsd    && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_ns1.xsd  && perl -p -i -e "s/ns1.xsd/$*_ns1.xsd/" $*.xsd
 	-test -f tite.xsd && mv tite.xsd $*_tite.xsd && perl -p -i -e "s+xml.xsd+$*_xml.xsd+" $*_tite.xsd && perl -p -i -e "s/tite.xsd/$*_tite.xsd/" $*.xsd
 	@echo Validate XSD using Jing ...
@@ -95,7 +95,7 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 
 dist: schemas docschemas
 	rm -rf tei[0-9]*.xml ../release/tei-p5-exemplars
-	rm -f *-examples*
+	rm -f *-teix*
 	rm -f *compiled* *.doc.tex
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/relaxng
 	mkdir -p ../release/tei-p5-exemplars/share/xml/tei/custom/schema/dtd
@@ -123,7 +123,7 @@ dist: schemas docschemas
 
 clean:
 	mv tei_lite_fr.nvdl tei_lite_fr.nvdl.bak
-	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html *.nvdl *-examples*
+	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html *.nvdl *-teix*
 	mv tei_lite_fr.nvdl.bak tei_lite_fr.nvdl
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
