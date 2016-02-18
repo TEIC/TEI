@@ -27,57 +27,50 @@ $Id$
         <memberOf key="att.global"/>
     </classes>
     <content>
-        <rng:group>
-            <rng:ref name="msIdentifier"/>
-            <rng:zeroOrMore>
-                <rng:ref name="model.headLike"/>
-            </rng:zeroOrMore>
-            <rng:choice>
-                <rng:oneOrMore>
-                    <rng:ref name="model.pLike"/>
-                </rng:oneOrMore>
-                <rng:group>
-                    <rng:optional>
-                        <rng:ref name="msContents"/>
-                    </rng:optional>
-                    <rng:optional>
-                        <rng:ref name="physDesc"/>
-                    </rng:optional>
-                    <rng:optional>
-                        <rng:ref name="history"/>
-                    </rng:optional>
-                    <rng:optional>
-                        <rng:ref name="additional"/>
-                    </rng:optional>
-                </rng:group>
-            </rng:choice>
-        </rng:group>
+        <sequence>
+            <alternate>
+                <elementRef key="altIdentifier"/>
+                <elementRef key="msIdentifier"/>
+            </alternate>
+            <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+            <alternate>
+                <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+                <sequence>
+                    <elementRef key="msContents" minOccurs="0"/>
+                    <elementRef key="physDesc" minOccurs="0"/>
+                    <elementRef key="history" minOccurs="0"/>
+                    <elementRef key="additional" minOccurs="0"/>
+                </sequence>
+            </alternate>
+        </sequence>
     </content>
-
-    <exemplum versionDate="2015-10-26" xml:lang="en"><!-- To be delivered by HC ? -->
+    <exemplum versionDate="2015-10-26" xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <msDesc>
                 <msIdentifier>
-                    <msName></msName>
+                    <msName xml:lang="la">Codex Suprasliensis</msName>
                 </msIdentifier>
-                <msContents></msContents>
-                <physDesc></physDesc>
-                <history><origin><origPlace></origPlace><origDate></origDate></origin></history>
-                <additional></additional>
                 <msFrag>
                     <msIdentifier>
-                        <Repository></Repository>
-                        <idno></idno>
+                        <settlement>Ljubljana</settlement>
+                        <repository>Narodna in univerzitetna knjiznica</repository>
+                        <idno>MS Kopitar 2</idno>
+                        <note>Contains ff. 10 to 42 only</note>
                     </msIdentifier>
-                    <msContents>
-                        <msItem></msItem>
-                    </msContents>
-                    <physDesc></physDesc>
-                    <history>
-                        <provenance></provenance>
-                        <aquisition></aquisition>
-                    </history>
-                    <additional></additional>
+                </msFrag>
+                <msFrag>
+                    <msIdentifier>
+                        <settlement>Warszawa</settlement>
+                        <repository>Biblioteka Narodowa</repository>
+                        <idno>BO 3.201</idno>
+                    </msIdentifier>
+                </msFrag>
+                <msFrag>
+                    <msIdentifier>
+                        <settlement>Sankt-Peterburg</settlement>
+                        <repository>Rossiiskaia natsional'naia biblioteka</repository>
+                        <idno>Q.p.I.72</idno>
+                    </msIdentifier>
                 </msFrag>
             </msDesc>
         </egXML>
