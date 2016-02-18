@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   Copyright TEI Consortium. 
   Dual-licensed under CC-by and BSD2 licences 
   See the file COPYING.txt for details
   $Date$
   $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="gap">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="gap">
   <gloss versionDate="2008-12-09" xml:lang="fr">omission</gloss>
   <desc versionDate="2008-01-24" xml:lang="en">indicates a point where material has been omitted in a transcription, whether for editorial
     reasons described in the TEI header, as part of sampling practice, or because the material is
@@ -34,12 +31,12 @@
     <memberOf key="att.editLike"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <ref name="model.descLike"/>
-        <ref name="model.certLike"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.descLike"/>
+        <classRef key="model.certLike"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="reason" usage="opt">
@@ -64,9 +61,7 @@
       <desc versionDate="2007-01-21" xml:lang="it">indica il motivo dell'omisione. Fra i valori
         possibili ci sono <val>campionatura</val>, <val>incomprensibile</val>,
         <val>irrilevante</val>, <val>cancellato</val>, <val>cancellato e illegibile</val>.</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
     </attDef>
     <attDef ident="hand" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">in the case of text omitted from the transcription because of deliberate deletion by an
@@ -82,9 +77,7 @@
         la omisión.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato volontariamente
         omesso dalla trascrizione da una mano identificabile, indica la mano autrice dell'omissione</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="agent" usage="opt">
       <desc versionDate="2005-08-03" xml:lang="en">in the case of text omitted because of damage, categorizes the cause of the damage, if
@@ -98,9 +91,7 @@
         identifica (si es posible) la causa de tal daño.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato omesse a causa di
         danneggiamento, indica la causa del danno qualora possa essere identificata.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="open">
         <valItem ident="rubbing">
           <desc versionDate="2007-06-27" xml:lang="en">damage results from rubbing of the leaf edges</desc>

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="space">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="transcr" ident="space">
   <gloss versionDate="2007-06-12" xml:lang="fr">espace</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">indicates the location of a significant space in the text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">복사본에서 중요한 공간의 위치를 표시한다.</desc>
@@ -24,12 +21,12 @@ $Id$
     <memberOf key="att.source"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <ref name="model.descLike"/>
-        <ref name="model.certLike"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.descLike"/>
+        <classRef key="model.certLike"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="dim" usage="rec">
@@ -45,9 +42,7 @@ $Id$
       <desc versionDate="2009-11-16" xml:lang="fr">indique si l'espace est vertical ou horizontal.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica si el espacio es vertical u horizontal.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica se lo spazio è orizzontale o verticale</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="horizontal">
           <desc versionDate="2007-06-27" xml:lang="en">the space is horizontal.</desc>

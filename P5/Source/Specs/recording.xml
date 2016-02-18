@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="recording">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="recording">
   <gloss versionDate="2005-01-14" xml:lang="en">recording event</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">enregistrement</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">녹음 사건</gloss>
@@ -36,12 +33,12 @@ a public broadcast.</desc>
     <memberOf key="att.typed"/>
   </classes>
   <content>
-   <zeroOrMore  xmlns="http://relaxng.org/ns/structure/1.0">
-    <choice>
-        <ref name="model.recordingPart"/>
-        <ref name="model.pLike"/>
-      </choice>
-   </zeroOrMore>
+   
+    <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.recordingPart"/>
+        <classRef key="model.pLike"/>
+      </alternate>
+   
   </content>
   <attList>
     <attDef ident="type" mode="change" usage="opt">
@@ -53,9 +50,7 @@ a public broadcast.</desc>
       <desc versionDate="2006-10-18" xml:lang="de">Art der Aufnahme</desc>
       <desc versionDate="2007-05-04" xml:lang="es">tipo de grabación</desc>
       <desc versionDate="2007-01-21" xml:lang="it">tipo di registrazione.</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>audio</defaultVal>
       <valList type="closed" mode="add">
         <valItem ident="audio">

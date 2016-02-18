@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="application" module="header">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="application" module="header">
   <desc versionDate="2007-07-31" xml:lang="en">provides information about an application which has acted upon the document.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">문서에 사용한 애플리케이션에 관한 정보를 제시한다.</desc>
   <desc versionDate="2008-04-06" xml:lang="es">proporciona información sobre la aplicación que ha
@@ -25,19 +21,19 @@ $Id$
     <memberOf key="model.applicationLike"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <ref name="model.labelLike"/>
-      </oneOrMore>
-      <choice>
-        <zeroOrMore>
-          <ref name="model.ptrLike"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="model.pLike"/>
-        </zeroOrMore>
-      </choice>
-    </group>
+    <sequence>
+      
+        <classRef key="model.labelLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      <alternate>
+        
+          <classRef key="model.ptrLike" minOccurs="0" maxOccurs="unbounded"/>
+        
+        
+          <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
+        
+      </alternate>
+    </sequence>
   </content>
   <attList>
     <attDef ident="ident" usage="req">
@@ -51,9 +47,7 @@ $Id$
         indépendamment de son numéro de version ou du nom affiché.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica un identificatore per l'applicazione,
         indipendentemente dal numero di versione o dal nome visualizzato</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
-      </datatype>
+      <datatype><dataRef key="teidata.name"/></datatype>
     </attDef>
     <attDef ident="version" usage="req">
       <desc versionDate="2013-04-12" xml:lang="en">supplies a version number for the application, independent of its identifier or display
@@ -66,9 +60,7 @@ $Id$
         indépendamment de son identifiant ou du nom affiché.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica un numero di versione per l'applicazione,
         indipendentemente dall'identificatore o dal nome visualizzato</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.versionNumber"/>
-      </datatype>
+      <datatype><dataRef key="teidata.versionNumber"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

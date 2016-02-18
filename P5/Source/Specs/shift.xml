@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="shift">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="spoken" ident="shift">
   <gloss xml:lang="fr" versionDate="2009-04-17">changement</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">marks the point at which some paralinguistic feature of a series of
 utterances by any one speaker changes.</desc>
@@ -24,12 +21,11 @@ utterances by any one speaker changes.</desc>
     <memberOf key="att.ascribed"/>
   </classes>
   <content>
-    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+    
   </content>
-  <constraintSpec ident="shiftNew" scheme="isoschematron" >
+  <constraintSpec ident="shiftNew" scheme="isoschematron">
     <constraint>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@new"
-	      role="warning">              
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="@new" role="warning">              
 The @new attribute should always be supplied; use the special value
 "normal" to indicate that the feature concerned ceases to be
 remarkable at this point.</assert>
@@ -45,9 +41,7 @@ paralinguistic feature.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">caractéristique paralinguistique.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">enunciado paralingüístico</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fenomeno paralinguistico</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="tempo">
           <desc versionDate="2007-06-27" xml:lang="en">speed of utterance.</desc>
@@ -114,9 +108,7 @@ paralinguistic feature.</desc>
 					caractéristique paralinguistique en question.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el nuevo estado del fenómeno paralingüístico especificado.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il nuovo stato del fenomeno paralinguistico specificato</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>normal</defaultVal>
       <remarks versionDate="2014-08-04" xml:lang="en">
         <p>Some possible values for this attribute are provided in section <ptr target="#TSSAPA"/>. The special value <val>normal</val> should be used to
@@ -140,7 +132,7 @@ paralinguistic feature.</desc>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <u who="#LB"><shift feature="loud" new="f"/>Elizabeth</u>
       <u who="#EB">Yes</u>
-      <u who="#LB"><shift feature="loud" new='normal'/>Come and try this 
+      <u who="#LB"><shift feature="loud" new="normal"/>Come and try this 
 	<pause/><shift feature="loud" new="ff"/>come on</u>
       <!-- ... -->
       <listPerson type="speakers">

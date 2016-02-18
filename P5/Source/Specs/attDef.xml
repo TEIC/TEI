@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="attDef" xmlns:sch="http://purl.oclc.org/dsdl/schematron" >
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tagdocs" ident="attDef">
   <gloss versionDate="2005-01-14" xml:lang="en">attribute definition</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">속성 정의</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">屬性定義</gloss>
@@ -26,43 +23,42 @@ $Id$
     <memberOf key="att.identified"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-	<choice>
-	  <ref name="model.glossLike"/>
-	  <ref name="model.descLike"/>
-	</choice>
-      </zeroOrMore>
-      <optional>
-	<ref name="datatype"/>
-      </optional>
-      <zeroOrMore>
-	<ref name="constraintSpec"/>
-      </zeroOrMore>
-      <optional>
-	<ref name="defaultVal"/>
-      </optional>
-      <optional>
-	<choice>
-	  <ref name="valList"/>
-	  <oneOrMore>
-	    <ref name="valDesc"/>
-	  </oneOrMore>
-	</choice>
-      </optional>
-      <zeroOrMore>
-	<ref name="exemplum"/>
-      </zeroOrMore>
-      <zeroOrMore>
-	<ref name="remarks"/>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      
+	<alternate minOccurs="0" maxOccurs="unbounded">
+	  <classRef key="model.glossLike"/>
+	  <classRef key="model.descLike"/>
+	</alternate>
+      
+      
+	<elementRef key="datatype" minOccurs="0"/>
+      
+      
+	<elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+	<elementRef key="defaultVal" minOccurs="0"/>
+      
+      
+	<alternate minOccurs="0">
+	  <elementRef key="valList"/>
+	  
+	    <elementRef key="valDesc" minOccurs="1" maxOccurs="unbounded"/>
+	  
+	</alternate>
+      
+      
+	<elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+	<elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <constraintSpec ident="attDefContents" scheme="isoschematron">
     <constraint>
       <ns xmlns="http://purl.oclc.org/dsdl/schematron" prefix="teix" uri="http://www.tei-c.org/ns/Examples"/>
-      <assert xmlns="http://purl.oclc.org/dsdl/schematron" 
-	      test="ancestor::teix:egXML[@valid='feasible'] or @mode eq 'change' or @mode eq 'delete' or tei:datatype or tei:valList[@type='closed']">Attribute: the definition of the @<value-of select="@ident"/> attribute in the <value-of select="ancestor::*[@ident][1]/@ident"/>
+      <assert xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::teix:egXML[@valid='feasible'] or @mode eq 'change' or @mode eq 'delete' or tei:datatype or tei:valList[@type='closed']">Attribute: the definition of the @<value-of select="@ident"/> attribute in the <value-of select="ancestor::*[@ident][1]/@ident"/>
       <value-of select="' '"/>
       <value-of select="local-name(ancestor::*[@ident][1])"/> should have a closed valList or a datatype</assert>
     </constraint>
@@ -82,25 +78,8 @@ $Id$
   <!-- -Syd, 2015-03-29 -->
   <constraintSpec ident="defaultIsInClosedList-twoOrMore" scheme="isoschematron">
     <constraint>
-      <sch:rule context="tei:attDef[
-	 tei:defaultVal
-	 and
-	 tei:valList[@type eq 'closed']
-	 and
-	 tei:datatype[
-		 @maxOccurs > 1
-		 or
-		 @minOccurs > 1
-		 or
-		 @maxOccurs = 'unbounded'
-		 ]
-	 ]">
-	<sch:assert
-	    test="
-		  tokenize(normalize-space(tei:defaultVal),' ')
-		  =
-		  tei:valList/tei:valItem/@ident"
-	    >In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+      <sch:rule context="tei:attDef[   tei:defaultVal   and   tei:valList[@type eq 'closed']   and   tei:datatype[    @maxOccurs &gt; 1    or    @minOccurs &gt; 1    or    @maxOccurs = 'unbounded'    ]   ]">
+	<sch:assert test="     tokenize(normalize-space(tei:defaultVal),' ')     =     tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
 	<sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
 	@<sch:value-of select="@ident"/> attribute is not among the closed list of possible
 	values</sch:assert>
@@ -109,23 +88,8 @@ $Id$
   </constraintSpec>
   <constraintSpec ident="defaultIsInClosedList-one" scheme="isoschematron">
     <constraint>
-      <sch:rule context="tei:attDef[
-	 tei:defaultVal
-	 and
-	 tei:valList[@type eq 'closed']
-	 and
-	 tei:datatype[
-		 not(@maxOccurs)
-		 or (
-		 if ( @maxOccurs castable as xs:integer )
-			 then ( @maxOccurs cast as xs:integer eq 1 )
-			 else false()
-		 )]
-	 ]">
-	<sch:assert test="string(tei:defaultVal)
-			  =
-			  tei:valList/tei:valItem/@ident"
-		    >In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
+      <sch:rule context="tei:attDef[   tei:defaultVal   and   tei:valList[@type eq 'closed']   and   tei:datatype[    not(@maxOccurs)    or (    if ( @maxOccurs castable as xs:integer )     then ( @maxOccurs cast as xs:integer eq 1 )     else false()    )]   ]">
+	<sch:assert test="string(tei:defaultVal)      =      tei:valList/tei:valItem/@ident">In the <sch:value-of select="local-name(ancestor::*[@ident][1])"/> defining
 	<sch:value-of select="ancestor::*[@ident][1]/@ident"/> the default value of the
 	@<sch:value-of select="@ident"/> attribute is not among the closed list of possible
 	values</sch:assert>
@@ -144,9 +108,7 @@ $Id$
       elemento</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il carattere facoltativo di un attributo o
       elemento</desc>
-      <datatype>
-	<rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>opt</defaultVal>
       <valList type="closed">
 	<valItem ident="req">
@@ -192,9 +154,7 @@ $Id$
       atributo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica lo spazio del nome al quale appartiene
       l'attributo</desc>
-      <datatype>
-	<ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.namespace"/>
-      </datatype>
+      <datatype><dataRef key="teidata.namespace"/></datatype>
       <defaultVal>http://www.tei-c.org/ns/1.0</defaultVal>
     </attDef>
   </attList>

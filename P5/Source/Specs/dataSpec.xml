@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="dataSpec">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="dataSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">datatype specification</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">documents a datatype.</desc>
   <classes>
@@ -16,42 +13,41 @@ $Id$
     <memberOf key="att.identified"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.glossLike"/>
-          <rng:ref name="model.descLike"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore><!-- why ? -->
-        <rng:choice>
-          <rng:ref name="content"/> <!-- need to constrain this -->
-          <rng:ref name="valList"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="constraintSpec"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="exemplum"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="remarks"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="listRef"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <sequence>
+         <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.glossLike"/>
+          <classRef key="model.descLike"/>
+        </alternate>
+      
+      <!-- why ? -->
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="content"/> <!-- need to constrain this -->
+          <elementRef key="valList"/> <!-- also now available inside content -->
+        </alternate>
+      
+      
+        <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<dataSpec ident="data.pointer">
+<dataSpec ident="teidata.pointer">
   <desc versionDate="2013-01-19" xml:lang="en">defines the range of
   attribute values used to provide a single URI, absolute or relative,
   pointing to some other resource, either within the current document
   or elsewhere.</desc>
   <content>
-      <dataNode name="anyURI"/>
+      <dataRef name="anyURI"/>
   </content>
 </dataSpec>
          </egXML>

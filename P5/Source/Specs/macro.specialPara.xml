@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="pe" ident="macro.specialPara">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="pe" ident="macro.specialPara">
   <gloss versionDate="2005-01-14" xml:lang="en">'special' paragraph content</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">특별 문단 내용</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">「特殊」段落內容</gloss>
@@ -33,16 +30,16 @@ $Id$
     o voci di lista che contiene una serie di elementi a livello di componenti aventi la stessa
     struttura di un paragrafo con una serie di elementi a livello sintagmatico e interlivello</desc>
   <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.gLike"/>
-        <rng:ref name="model.phrase"/>
-        <rng:ref name="model.inter"/>
-        <rng:ref name="model.divPart"/>
-        <rng:ref name="model.global"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.gLike"/>
+        <classRef key="model.phrase"/>
+        <classRef key="model.inter"/>
+        <classRef key="model.divPart"/>
+        <classRef key="model.global"/>
+      </alternate>
+    
   </content>
   <listRef>
     <ptr target="#STEC"/>

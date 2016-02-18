@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" xml:id="MEASUREMENT" ident="att.measurement">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" xml:id="MEASUREMENT" ident="att.measurement">
   <desc versionDate="2006-01-05" xml:lang="en">provides attributes to represent a regularized or normalized measurement.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">정상화 또는 규격화된 측정 방식을 표상하는 속성을 제시한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供屬性，代表一般化或規格化的度量。</desc>
@@ -29,10 +26,7 @@ $Id$
           s'agit en général du symbole normalisé pour les unités dont on a besoin.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica las unidades usadas para la medición, normalmente utilizando el símbolo estándard para la unidad de medición en cuestión.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica le unità impiegate per la misurazione, generalmente utilizzando il simbolo standard per l'unità di misura in questione</desc>
-      <datatype>
-        <rng:ref name="data.enumerated"/>
-        <!-- this only works because data.enumerated is currently mis-defeined as xsd:token instead of data.name -->
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="semi">
         <!-- base SI units -->
         <valItem ident="m">
@@ -378,9 +372,7 @@ $Id$
       <desc versionDate="2009-05-28" xml:lang="fr">spécifie le nombre des unités indiquées que comprend la mesure.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el número de las unidades que costituyen la medición</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il numero delle unità che costituiscono la misurazione</desc>
-      <datatype>
-        <rng:ref name="data.numeric"/>
-      </datatype>
+      <datatype><dataRef key="teidata.numeric"/></datatype>
     </attDef>
     <attDef ident="commodity" usage="opt">
       <gloss versionDate="2009-05-28" xml:lang="fr">article</gloss>
@@ -391,9 +383,7 @@ $Id$
       <desc versionDate="2007-06-12" xml:lang="fr">indique ce qui est mesuré.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la substancia que está siendo medida.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">identifica la sostanza misurata</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref name="data.word"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
       <remarks versionDate="2005-11-20" xml:lang="en">
         <p>In general, when the commodity is made of discrete
 	entities, the plural form should be used, even when the
@@ -470,7 +460,7 @@ baby?</l></egXML>
     <val>lines</val>や<val>characters</val>も使用してもよい．
 </p>
   </remarks>
-  <remarks  versionDate="2005-11-20" xml:lang="en">
+  <remarks versionDate="2005-11-20" xml:lang="en">
     <p>The unit should normally be named using the standard
       abbreviation for an SI unit (see further <ptr target="http://www.bipm.org/en/publications/si-brochure/"/>; <ptr target="http://physics.nist.gov/cuu/Units/"/>). However, encoders
     may also specify measurements using informally defined units such

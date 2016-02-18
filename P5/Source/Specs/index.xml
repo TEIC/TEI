@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="index">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="index">
   <gloss versionDate="2005-01-14" xml:lang="en">index entry</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">색인 표제 항목</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">索引項目</gloss>
@@ -27,14 +24,14 @@
     <memberOf key="att.spanning"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <group>
-        <ref name="term"/>
-        <optional>
-          <ref name="index"/>
-        </optional>
-      </group>
-    </zeroOrMore>
+    
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="term"/>
+        
+          <elementRef key="index" minOccurs="0"/>
+        
+      </sequence>
+    
   </content>
   <attList>
     <attDef ident="indexName" usage="opt">
@@ -49,9 +46,7 @@
         (de entre varios) pertence la entrada de íncide.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce un nome per specificare a quale indice (o
         indici) la voce di indice appartiene.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
-      </datatype>
+      <datatype><dataRef key="teidata.name"/></datatype>
       <remarks versionDate="2005-06-24" xml:lang="en">
         <p>This attribute makes it possible to create multiple indexes for a text.</p>
       </remarks>

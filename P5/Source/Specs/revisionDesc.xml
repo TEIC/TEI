@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="revisionDesc">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="revisionDesc">
   <gloss versionDate="2005-01-14" xml:lang="en">revision description</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">descriptif des révisions</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">수정 기술</gloss>
@@ -30,13 +27,13 @@ $Id$
     <memberOf key="att.docStatus"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="list"/>
-      <ref name="listChange"/>
-      <oneOrMore>
-        <ref name="change"/>
-      </oneOrMore>
-    </choice>
+    <alternate>
+      <elementRef key="list"/>
+      <elementRef key="listChange"/>
+      
+        <elementRef key="change" minOccurs="1" maxOccurs="unbounded"/>
+      
+    </alternate>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -66,7 +63,7 @@ $Id$
     <p>If present on this element, the <att>status</att> attribute
     should indicate the current status of the document. The same
     attribute may appear on any <gi>change</gi> to record the status
-    at the time of that change. Change elements should
+    at the time of that change. Conventionally change elements should
     be given in reverse date order, with the most recent change at the
     start of the list.</p>
   </remarks>

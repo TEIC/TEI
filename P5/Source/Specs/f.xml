@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="f">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="f">
   <gloss versionDate="2007-07-05" xml:lang="en">feature</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">자질</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">功能</gloss>
@@ -29,13 +26,13 @@ $Id$
     <memberOf key="att.datcat"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <text/>
-        <ref name="model.gLike"/>
-        <ref name="model.featureVal"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.gLike"/>
+        <classRef key="model.featureVal"/>
+      </alternate>
+    
   </content>
   <constraintSpec ident="fValConstraints" scheme="isoschematron">
     <constraint>
@@ -59,9 +56,7 @@ $Id$
       <desc versionDate="2007-06-12" xml:lang="fr">donne un nom pour le trait</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona un nombre para un rasgo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce il nome del tratto.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
-      </datatype>
+      <datatype><dataRef key="teidata.name"/></datatype>
     </attDef>
     <attDef ident="fVal" usage="opt">
       <gloss versionDate="2007-07-04" xml:lang="en">feature value</gloss>
@@ -78,9 +73,7 @@ $Id$
           utilisé pour représenter la valeur d'un trait.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica cualquier elemento que puede ser usado para representar el valor de un rasgo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica un qualsiasi elemento che può essere usato come valore di un tratto.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2005-01-14" xml:lang="en">
         <p>If this attribute is supplied as well as content, the value referenced is to be unified with  that contained.</p>
       </remarks>

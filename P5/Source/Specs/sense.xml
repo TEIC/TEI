@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="sense">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="sense">
   <desc versionDate="2007-10-18" xml:lang="en">groups together all information relating to one word sense in a dictionary entry, for
     example definitions, examples, and translation equivalents.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">하나의 사전 표제 항목에서 하나의 단어 의미와 관련된 모든 정보를 모아 놓는다. 예를 들어 정의,
@@ -27,16 +24,16 @@ $Id$
     <memberOf key="att.lexicographic"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <text/>
-        <ref name="model.gLike"/>
-        <ref name="sense"/>
-        <ref name="model.entryPart.top"/>
-        <ref name="model.phrase"/>
-        <ref name="model.global"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.gLike"/>
+        <elementRef key="sense"/>
+        <classRef key="model.entryPart.top"/>
+        <classRef key="model.phrase"/>
+        <classRef key="model.global"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="level" usage="opt">
@@ -47,9 +44,7 @@ $Id$
       <desc versionDate="2007-06-12" xml:lang="fr">indique le niveau de ce sens dans la hiérarchie.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">la profundidad de anidamiente</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce il grado di nidificazione del senso</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="mul">

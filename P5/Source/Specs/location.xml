@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium. 
     Dual-licensed under CC-by and BSD2 licences 
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="location" module="namesdates">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="location" module="namesdates">
   <gloss versionDate="2008-12-09" xml:lang="fr">localisation</gloss>
   <desc versionDate="2012-02-14" xml:lang="en">defines the location of a place as a set of geographical coordinates, in terms of other named geo-political entities, or as an
         address.</desc>
@@ -28,18 +24,18 @@
     <memberOf key="att.editLike"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:choice>
-        <rng:ref name="precision"/>
-        <rng:ref name="model.labelLike"/>
-        <rng:ref name="model.placeNamePart"/>
-        <rng:ref name="model.offsetLike"/>
-        <rng:ref name="model.measureLike"/>
-        <rng:ref name="model.addressLike"/>
-        <rng:ref name="model.noteLike"/>
-        <rng:ref name="model.biblLike"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="precision"/>
+        <classRef key="model.labelLike"/>
+        <classRef key="model.placeNamePart"/>
+        <classRef key="model.offsetLike"/>
+        <classRef key="model.measureLike"/>
+        <classRef key="model.addressLike"/>
+        <classRef key="model.noteLike"/>
+        <classRef key="model.biblLike"/>
+      </alternate>
+    
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -53,13 +49,14 @@
   </exemplum>
   <exemplum xml:lang="mul">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <place type="building">
+      <place xml:id="BGbuilding" type="building">
         <placeName>Brasserie Georges</placeName>
         <location>
           <country key="FR"/>
           <settlement type="city">Lyon</settlement>
-          <district type="arrondissement">Perrache</district>
-          <placeName type="street">Rue de la Charité</placeName>
+          <district type="arrondissement">IIème</district>
+          <district type="quartier">Perrache</district>
+          <placeName type="street"><num>30</num>, Cours de Verdun</placeName>
         </location>
       </place>
     </egXML>

@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" xml:id="SCHEMASPEC" ident="schemaSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">schema specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">스키마 명시</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación de esquema</gloss>
@@ -31,20 +27,20 @@ $Id$
     <memberOf key="att.readFrom"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.glossLike"/>
-          <rng:ref name="model.descLike"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.oddRef"/>
-          <rng:ref name="model.oddDecl"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+    <sequence>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.glossLike"/>
+          <classRef key="model.descLike"/>
+        </alternate>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.oddRef"/>
+          <classRef key="model.oddDecl"/>
+        </alternate>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="start" usage="opt">
@@ -60,9 +56,7 @@ $Id$
 					conforment à ce schéma.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica los puntos de acceso al esquema, es decir, qué elementos son los permitidos para ser usados como raíz de los documentos conforme al esquema mismo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica i punti di accesso allo schema, cioè quali elementi sono consentiti come radice dei documenti conformi allo schema stesso</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref name="data.name"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.name"/></datatype>
       <defaultVal>TEI</defaultVal>
     </attDef>
     <attDef ident="prefix" usage="opt">
@@ -77,11 +71,8 @@ $Id$
 					des schémas externes ayant des éléments de même nom que ceux de la TEI</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica un prefijo que será antepuesto a todos los patrones relativos a los elementos TEI.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica un prefisso che sarà anteposto a tutti i pattern relativi a elementi TEI; questo consente</desc>
-      <datatype>
-        <rng:choice>
-          <rng:value/>
-          <rng:ref name="data.xmlName"/>
-        </rng:choice>
+      <datatype minOccurs="0">
+        <dataRef key="teidata.xmlName"/>
       </datatype>
       <remarks versionDate="2013-05-06" xml:lang="en">
         <p>Use of this attribute allows an external schema which
@@ -116,9 +107,7 @@ $Id$
 					utiliser lors de la création d'objets dans un schéma .</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se utiliza para la creación de objetos en el esquema en el caso en que los nombres de elementos o atributos esten disponibles en otras lenguas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione di oggetti nello schema nel caso in cui i nomi di elementi o attributi siano disponibili in più lingue</desc>
-      <datatype>
-        <rng:ref name="data.language"/>
-      </datatype>
+      <datatype><dataRef key="teidata.language"/></datatype>
     </attDef>
     <attDef ident="docLang" usage="opt">
       <gloss versionDate="2007-07-04" xml:lang="en">documentation language</gloss>
@@ -138,9 +127,7 @@ $Id$
 					précise quelle langue utiliser lors de la création de la documentation.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la lengua que se ha de utilizar para la creación de la documentación en el caso en que las descripciones de elementos, atributos, clases o macros esten disponibles en más lenguas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la lingua da utilizzare per la creazione della documentazione nel caso in cui le descrizioni di elementi, attributi, classi o macro siano disponibili in più lingue</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <rng:ref name="data.language"/>
-      </datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="und">

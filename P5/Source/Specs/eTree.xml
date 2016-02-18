@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="eTree">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="eTree">
   <gloss versionDate="2005-01-14" xml:lang="en">embedding tree</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">내포 수형도</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">嵌入樹狀結構</gloss>
@@ -28,19 +25,19 @@ $Id$
     <memberOf key="att.typed"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <zeroOrMore>
-        <choice>
-          <ref name="eTree"/>
-          <ref name="triangle"/>
-          <ref name="eLeaf"/>
-          <ref name="model.ptrLike"/>
-        </choice>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      
+        <elementRef key="label" minOccurs="0"/>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="eTree"/>
+          <elementRef key="triangle"/>
+          <elementRef key="eLeaf"/>
+          <classRef key="model.ptrLike"/>
+        </alternate>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="value" usage="opt">
@@ -52,9 +49,7 @@ structure or other analytic element.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">fournit l'identifiant de l'objet représenté par l'arbre englobant ; cet objet peut être une paire nom-valeur ou tout autre élément analytique.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">adscribe al árbol integrado un valor, que puede ser una estructura de rasgos u otro elemento de análisis.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna all'albero integrato un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

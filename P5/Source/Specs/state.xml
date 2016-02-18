@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="state">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="state">
   <gloss versionDate="2009-03-19" xml:lang="fr">statut</gloss>
   <desc versionDate="2011-12-01" xml:lang="en">contains a description of some status or quality attributed to a person, place, or organization often at some specific time or for a specific date range.</desc>
   <desc versionDate="2009-03-19" xml:lang="fr">contient la description d'un statut ou d'une qualité actuels attribués à une personne, un lieu ou une
@@ -16,8 +12,9 @@ $Id$
   <desc versionDate="2007-12-20" xml:lang="ko">개인, 장소, 또는 조직에 관련한 현재 지위 또는 특성 기술을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">標明分界方法所定義的權威參照標準裡其中ㄧ個組件。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">人物，場所，組織などの，現在の社会的状態や地位を示す．</desc>
-  <gloss versionDate="2015-10-25" xml:lang="de">Status</gloss>
-  <desc versionDate="2015-10-25" xml:lang="de">enthält eine Beschreibung eines Status, Zustandes oder einer Eigenschaft, die oder der einer Person, einem Ort oder Organisation (zu einem bestimmten Zeitpunkt oder für eine gewisse Dauer) zugeschrieben wird.</desc>
+  <desc versionDate="2006-10-18" xml:lang="de">beschreibt einen Bestandteil einer Standardreferenz mittels der Milestone-Methode.</desc>
+  <desc versionDate="2007-05-04" xml:lang="es">especifica un componente de una referencia canónica definida por el método milestone (hito).</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">specifica un componente di un riferimento canonico definito dal metodo milestone.</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.datable"/>
@@ -29,39 +26,39 @@ $Id$
     <memberOf key="model.placeStateLike"/>
   </classes>
   <content>
-     <group xmlns="http://relaxng.org/ns/structure/1.0">
-        <zeroOrMore>
-           <ref name="precision"/>
-        </zeroOrMore>
-        <choice xmlns="http://relaxng.org/ns/structure/1.0">
-           <oneOrMore>
-              <ref name="state"/>
-           </oneOrMore>
-           <group>
-              <zeroOrMore>
-                 <ref name="model.headLike"/>
-              </zeroOrMore>
-              <oneOrMore>
-                 <ref name="model.pLike"/>
-              </oneOrMore>
-              <zeroOrMore>
-                 <choice>
-                    <ref name="model.noteLike"/>
-                    <ref name="model.biblLike"/>
-                 </choice>
-              </zeroOrMore>
-           </group>
-           <group>
-              <zeroOrMore>
-                 <choice>
-                    <ref name="model.labelLike"/>
-                    <ref name="model.noteLike"/>
-                    <ref name="model.biblLike"/>
-                 </choice>
-              </zeroOrMore>
-           </group>
-        </choice>
-     </group>
+     <sequence>
+        
+           <elementRef key="precision" minOccurs="0" maxOccurs="unbounded"/>
+        
+        <alternate>
+           
+              <elementRef key="state" minOccurs="1" maxOccurs="unbounded"/>
+           
+           <sequence>
+              
+                 <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+              
+              
+                 <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+              
+              
+                 <alternate minOccurs="0" maxOccurs="unbounded">
+                    <classRef key="model.noteLike"/>
+                    <classRef key="model.biblLike"/>
+                 </alternate>
+              
+           </sequence>
+           
+              
+                 <alternate minOccurs="0" maxOccurs="unbounded">
+                    <classRef key="model.labelLike"/>
+                    <classRef key="model.noteLike"/>
+                    <classRef key="model.biblLike"/>
+                 </alternate>
+              
+           
+        </alternate>
+     </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

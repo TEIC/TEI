@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="altGrp">
+<?xml version="1.0" encoding="UTF-8"?><!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ --><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="altGrp">
   <gloss versionDate="2005-01-14" xml:lang="en">alternation group</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">교체군</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">替換群組</gloss>
@@ -24,12 +21,12 @@
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <ref name="alt"/>
-        <ref name="ptr"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="alt"/>
+        <elementRef key="ptr"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="mode" usage="opt">
@@ -44,9 +41,7 @@
                 conjunto son exclusivas o inclusivas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">dichiara se le alternative contenute
                 nell'insieme sono esclusive o inclusive</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>excl</defaultVal>
       <valList type="closed">
         <valItem ident="excl">

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="seriesStmt">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="seriesStmt">
   <gloss versionDate="2005-01-14" xml:lang="en">series statement</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">mention de collection</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">연속간행물 진술</gloss>
@@ -31,28 +28,28 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <ref name="model.pLike"/>
-      </oneOrMore>
-      <group>
-        <oneOrMore>
-          <ref name="title"/>
-        </oneOrMore>
-        <zeroOrMore>
-          <choice>
-            <ref name="editor"/>
-            <ref name="respStmt"/>
-          </choice>
-        </zeroOrMore>
-        <zeroOrMore>
-          <choice>
-            <ref name="idno"/>
-            <ref name="biblScope"/>
-          </choice>
-        </zeroOrMore>
-      </group>
-    </choice>
+    <alternate>
+      
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      <sequence>
+        
+          <elementRef key="title" minOccurs="1" maxOccurs="unbounded"/>
+        
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="editor"/>
+            <elementRef key="respStmt"/>
+          </alternate>
+        
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="idno"/>
+            <elementRef key="biblScope"/>
+          </alternate>
+        
+      </sequence>
+    </alternate>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

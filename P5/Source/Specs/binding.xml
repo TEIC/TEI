@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="BINDING" ident="binding">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="BINDING" ident="binding">
   <gloss versionDate="2007-06-12" xml:lang="fr">reliure</gloss>
   <desc versionDate="2007-10-18" xml:lang="en" xml:id="binding.desc">contains a description of one binding, i.e. type of covering, boards,
     etc. applied to a manuscript.</desc>
@@ -25,13 +22,13 @@ $Id$
     <memberOf key="att.datable"/>
   </classes>
   <content>
-    <oneOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <ref name="model.pLike"/>
-        <ref name="condition"/>
-        <ref name="decoNote"/>
-      </choice>
-    </oneOrMore>
+    
+      <alternate minOccurs="1" maxOccurs="unbounded">
+        <classRef key="model.pLike"/>
+        <elementRef key="condition"/>
+        <elementRef key="decoNote"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="contemporary">
@@ -47,9 +44,7 @@ $Id$
         mayoría del contenido del manuscrito.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica se la legatura è coeva o meno rispetto alla
         maggior parte del suo contenuto</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
-      </datatype>
+      <datatype><dataRef key="teidata.xTruthValue"/></datatype>
       <remarks versionDate="2007-04-22" xml:lang="en">
         <p>The value <val>true</val> indicates that the binding is contemporaneous with its
           contents; the value <val>false</val> that it is not. The value <val>unknown</val> should

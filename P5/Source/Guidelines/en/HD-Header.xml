@@ -2325,12 +2325,12 @@ expressed using that calendar system:
         letter by Adelbert von Chamisso from Vertus on 29 January 1807 to Louis de La Foye at
         Caen. The date of reception is unknown: <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sent">
+          <correspAction type="sentBy">
             <persName>Adelbert von Chamisso</persName>
             <placeName>Vertus</placeName>
             <date when="1807-01-29"/>
           </correspAction>
-          <correspAction type="received">
+          <correspAction type="deliveredTo">
             <persName>Louis de La Foye</persName>
             <placeName>Caen</placeName>
             <date>unknown</date>
@@ -2338,13 +2338,13 @@ expressed using that calendar system:
         </egXML>
 Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"/> to provide a normalized
       form of the date. The content of the <gi>date</gi> element may
-      also be omitted, since no underlying source is being transcribed.      </p>
+      be omitted, since no underlying source is being transcribed.</p>
 
       <p>Several senders, recipients, etc. can be specified for a single
         <gi>correspAction</gi> if the action is considered to apply to them all acting as
         a single group. In the following example two people are considered to have received
         the communication. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="received">
+          <correspAction type="receiving">
             <persName>Hermann Hesse</persName>
             <persName>Ninon Hesse</persName>
             <placeName>Montagnola</placeName>
@@ -2354,17 +2354,17 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
       <p>The <att>subtype</att> attribute may be used to further distinguish types of action.
         In the following example, an e-mail is sent to two people directly and to a third by
         <soCalled>carbon copy</soCalled> (<term>cc</term>). <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sent">
+          <correspAction type="sentBy">
             <persName>PN0001</persName>
             <date when="1999-06-02"/>
           </correspAction>
-          <correspAction type="received" subtype="to">
+          <correspAction type="deliveredTo" subtype="to">
             <persName>PN0002</persName>
           </correspAction>
-          <correspAction type="received" subtype="to">
+          <correspAction type="deliveredTo" subtype="to">
             <persName>PN0003</persName>
           </correspAction>
-          <correspAction type="received" subtype="cc">
+          <correspAction type="deliveredTo" subtype="cc">
             <persName>PN0004</persName>
           </correspAction>
         </egXML>
@@ -2376,7 +2376,7 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
         to indicate that the same name applies to many actions. Its value will usually be the
         identifier of an element defining the person or name concerned, which is supplied
         elsewhere in the document. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="sent">
+          <correspAction type="sentBy">
             <name sameAs="#author"/>
           </correspAction>
         </egXML>
@@ -2392,23 +2392,23 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
         different people to the same destination: <gi>correspDesc</gi> is used for each
         separately: <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <correspDesc xml:id="message1">
-            <correspAction type="sent">
+            <correspAction type="sentBy">
               <persName>John Gneisenau Neihardt</persName>
               <placeName>Branson (Montgomery)</placeName>
               <date when="1932-12-17"/>
             </correspAction>
-            <correspAction type="received">
+            <correspAction type="deliveredTo">
               <persName xml:id="JTH">Julius Temple House</persName>
               <placeName>New York</placeName>
             </correspAction>
           </correspDesc>
           <correspDesc xml:id="message2">
-            <correspAction type="sent">
+            <correspAction type="sentBy">
               <persName>Enid Neihardt</persName>
               <placeName>Branson (Montgomery)</placeName>
               <date when="1932-12-17"/>
             </correspAction>
-            <correspAction type="received">
+	    <correspAction type="deliveredTo">
               <persName sameAs="#JTH"/>
               <placeName>New York</placeName>
             </correspAction>

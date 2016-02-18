@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="content">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="content">
   <gloss versionDate="2007-07-04" xml:lang="en">content model</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">내용 모델</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">模型宣告</gloss>
@@ -28,17 +25,12 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <group>
-	<ref name="valList"/>
-      </group>
-      <oneOrMore>
-	<ref name="macro.anyXML"/>
-      </oneOrMore>
-      <zeroOrMore>
-	<ref name="model.contentPart"/>
-      </zeroOrMore>
-    </choice>
+    <alternate maxOccurs="unbounded">
+  <!--    
+	<elementRef key="valList"/>-->    
+	<macroRef key="macro.anyXML" />
+	<classRef key="model.contentPart" />
+    </alternate>
   </content>
   <attList>
 <!--            <attDef ident="allowText">
@@ -52,9 +44,7 @@ $Id$
     <attDef ident="autoPrefix">
       <desc versionDate="2010-05-13" xml:lang="en">controls whether or not pattern names generated in the corresponding Relax NG schema
         source are automatically prefixed to avoid potential nameclashes.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
-      </datatype>
+      <datatype><dataRef key="teidata.truthValue"/></datatype>
       <defaultVal>true</defaultVal>
       <valList type="closed">
         <valItem ident="true">

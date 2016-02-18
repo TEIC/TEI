@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="DIMENSIONS" ident="dimensions">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="DIMENSIONS" ident="dimensions">
   <gloss xml:lang="fr" versionDate="2009-04-17">dimensions</gloss>
   <desc versionDate="2007-08-02" xml:lang="en" xml:id="dimensions.desc">contains a dimensional specification.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">어떤 차원의 명세를 포함한다.</desc>
@@ -22,15 +19,15 @@ $Id$
     <memberOf key="model.pPart.msdesc"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
+    
       <!--this group is only needed for DTDs-->
-      <zeroOrMore>
-        <choice>
-          <ref name="dim"/>
-          <ref name="model.dimLike"/>
-        </choice>
-      </zeroOrMore>
-    </group>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="dim"/>
+          <classRef key="model.dimLike"/>
+        </alternate>
+      
+    
   </content>
   <constraintSpec scheme="isoschematron" ident="duplicateDim">
     <constraint>
@@ -54,9 +51,7 @@ The element <name/> may appear once only
       <desc versionDate="2008-03-30" xml:lang="fr">indique quel aspect de l'objet est mesuré.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica que aspecto del objeto se mide.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica quale aspetto dell'oggetto viene misurato</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="open">
         <valItem ident="leaves">
           <desc versionDate="2007-06-27" xml:lang="en">dimensions relate to one or more leaves (e.g. a single leaf, a

@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="macroRef">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="dataRef">
   <desc versionDate="2010-05-14" xml:lang="en">identifies the datatype of an attribute value, either by referencing an item in an externally defined datatype library, or by
     pointing to a TEI-defined data specification</desc>
   <classes>
@@ -18,33 +14,27 @@
     <memberOf key="att.readFrom"/>
   </classes>
   <content>
-    <rng:empty/>
+    
   </content>
  <attList> <attList org="choice">
-    <attDef ident="key" >
+    <attDef ident="key">
       <desc versionDate="2010-05-14" xml:lang="en">the identifier used for this datatype specification</desc>
-      <datatype>
-        <rng:ref name="data.xmlName"/>
-      </datatype>
+      <datatype><dataRef key="teidata.xmlName"/></datatype>
     </attDef>
-    <attDef ident="name" >
+    <attDef ident="name">
       <desc versionDate="2010-05-14" xml:lang="en">the name of a datatype in the list provided by 
         <ref target="#XSD2">XML Schemas: Part 2: Datatypes</ref> </desc>
-      <datatype>
-        <rng:ref name="data.xmlName"/>
-      </datatype>
+      <datatype><dataRef key="teidata.xmlName"/></datatype>
     </attDef>
     <attDef ident="ref">
       <desc versionDate="2010-05-14" xml:lang="en">a pointer to a datatype defined in some datatype library</desc>
-      <datatype>
-        <rng:ref name="data.xmlName"/>
-      </datatype>
+      <datatype><dataRef key="teidata.xmlName"/></datatype>
     </attDef>
   </attList>
    <attDef ident="restriction">
      <desc versionDate="2012-12-04" xml:lang="en">supplies a string representing a regular expression providing additional constraints 
        on the strings used to represent values of this datatype</desc>
-     <datatype><rng:data type="string" xmlns:rng="http://relaxng.org/ns/structure/1.0"/> </datatype>
+     <datatype><dataRef name="string"/></datatype>
    </attDef></attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -59,7 +49,7 @@
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <schemaSpec ident="myTEI" source="http://www.tei-c.org/Vault/P5/current/xml/tei/odd/p5subset.xml">
         <!-- ... -->
-        <dataRef name="float" />
+        <dataRef name="float"/>
         <!-- ... -->
       </schemaSpec>
     </egXML></exemplum>
@@ -67,8 +57,8 @@
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
         <dataSpec ident="data.percentage">
           <desc>datatype used for attributes taking an integer value between 0 and 99</desc>     
-        <dataRef name="nonNegativeInteger" match="[0-9][0-9]?"/>
-        </dataSpec>
+     <content>   <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>
+    </content>    </dataSpec>
       </egXML>
     </exemplum>
     
