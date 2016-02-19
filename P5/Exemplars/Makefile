@@ -48,13 +48,13 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 
 %.special: %.odd
 	xmllint --xinclude $*.odd > $*.odd.xinclude
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron exampleschema
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile2=$*.template -Dtestfile=$*.tei -DoddFile=$*.odd.xinclude validateodd compileodd rng validaterng validatesecondrng isoschematron validateschematron exampleschema cleanup
 	../run-onvdl $*.nvdl $*.odd.xinclude
 	rm $*.odd.xinclude
 	${TRANG} $*.rng $*.rnc
 
 %.rng: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng  isoschematron validateschematron
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd dtd rng validaterng  isoschematron validateschematron cleanup
 	${TRANG}  $*.rng $*.rnc
 
 %.dtd: %.odd
@@ -74,10 +74,10 @@ docschemas: $(DOCODDS) $(DOCONLYODDS)
 	xmllint --noout --dtdvalid $*.dtd $*.tei
 
 %.doc.pdf: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd docepub docpdf dochtml
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd docepub docpdf dochtml cleanup
 
 %.doc.epub: %.odd
-	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dlang=`echo $* | sed 's/.*_//'` -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema
+	$(ANT) -f ../Test/antruntest.xml -Doutputname=$* -Dlang=`echo $* | sed 's/.*_//'` -Dtestfile=$*.tei -DoddFile=$*.odd validateodd compileodd rng docepub docpdf dochtml exampleschema cleanup
 	../run-onvdl $*.nvdl $*.odd
 	-rm $*.doc.xml
 	-rm $*.rng
@@ -123,7 +123,7 @@ dist: schemas docschemas
 
 clean:
 	mv tei_lite_fr.nvdl tei_lite_fr.nvdl.bak
-	rm -f *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html *.nvdl *-teix*
+	rm -f *.processed *.xsd *.dtd *.doc.* *.rnc tei*.xsl tei*.rng *.compiled* *~ *.xi *.isosch *.epub *.pdf *.html *.nvdl *-teix*
 	mv tei_lite_fr.nvdl.bak tei_lite_fr.nvdl
 	rm -f exnames.xml
 	rm -f enrich.rng isofs.rng
