@@ -31,12 +31,10 @@
     <memberOf key="att.editLike"/>
   </classes>
   <content>
-    
-      <alternate minOccurs="0" maxOccurs="unbounded">
+        <alternate minOccurs="0" maxOccurs="unbounded">
         <classRef key="model.descLike"/>
         <classRef key="model.certLike"/>
       </alternate>
-    
   </content>
   <attList>
     <attDef ident="reason" usage="opt">
@@ -63,7 +61,7 @@
         <val>irrilevante</val>, <val>cancellato</val>, <val>cancellato e illegibile</val>.</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
     </attDef>
-    <attDef ident="hand" usage="opt">
+  <attDef ident="hand" usage="opt" validUntil="2017-08-01">
       <desc versionDate="2005-01-14" xml:lang="en">in the case of text omitted from the transcription because of deliberate deletion by an
         identifiable hand, indicates the hand which made the deletion.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">어떤 특정 수작업자가 의도적으로 전사본에서 생략된 텍스트의 경우, 그 생략의 장본인을 표시한다.</desc>
@@ -78,6 +76,10 @@
       <desc versionDate="2007-01-21" xml:lang="it">nel caso in cui il testo sia stato volontariamente
         omesso dalla trascrizione da una mano identificabile, indica la mano autrice dell'omissione</desc>
       <datatype><dataRef key="teidata.pointer"/></datatype>
+    <remarks versionDate="2016-02-20" xml:lang="p"><p>The hand responsible for the deletion
+      should be specified on a surrounding <gi>del</gi> element rather than directly on the 
+      <gi>gap</gi> element. </p></remarks>
+    
     </attDef>
     <attDef ident="agent" usage="opt">
       <desc versionDate="2005-08-03" xml:lang="en">in the case of text omitted because of damage, categorizes the cause of the damage, if
