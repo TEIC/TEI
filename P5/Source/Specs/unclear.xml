@@ -4,7 +4,7 @@
     See the file COPYING.txt for details
     $Date$
     $Id$
---><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="unclear">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="unclear">
   <gloss versionDate="2009-01-06" xml:lang="fr">incertain</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a word, phrase, or passage which cannot be transcribed with certainty because it
         is illegible or inaudible in the source.</desc>
@@ -23,7 +23,7 @@
     <memberOf key="model.pPart.transcriptional"/>
     <memberOf key="model.choicePart"/>
     <memberOf key="att.editLike"/>
-  </classes>
+   </classes>
   <content>
     <macroRef key="macro.paraContent"/>
   </content>
@@ -55,7 +55,7 @@ thus include  <mentioned>faded</mentioned>,  <mentioned>illegible</mentioned>, <
                     <mentioned>background_noise</mentioned>, <mentioned>passing_truck</mentioned>,etc.</p>
 </remarks>
     </attDef>
-    <attDef ident="hand" usage="opt">
+  <attDef ident="hand" usage="opt" validUntil="2017-08-01">
       <desc versionDate="2005-01-14" xml:lang="en">Where the difficulty in transcription arises from action (partial deletion, etc.)
                 assignable to an identifiable hand, signifies the hand responsible for the action.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">알려진 인물의 부분적 삭제 등의 작업으로 인하여 전사가 어려운 경우, 그 행위에
@@ -72,7 +72,11 @@ thus include  <mentioned>faded</mentioned>,  <mentioned>illegible</mentioned>, <
       <desc versionDate="2007-01-21" xml:lang="it">qualora la difficoltà nella trascrizione emerga
                 dall'azione (parziale cancellazione, ecc.) ascrivibile ad una mano identificabile,
                 indica la mano responsabile dell'azione.</desc>
-      <datatype><dataRef key="teidata.pointer"/></datatype>
+    <datatype><dataRef key="teidata.pointer"/></datatype>
+    <remarks versionDate="2016-02-20" xml:lang="p"><p>The hand causing the difficulty in reading the transcription
+   should be specified on a surrounding <gi>del</gi> element rather than directly on the 
+   <gi>unclear</gi> element. </p></remarks>
+   
     </attDef>
     <attDef ident="agent" usage="opt">
       <desc versionDate="2005-08-03" xml:lang="en">Where the difficulty in transcription arises from damage, categorizes the cause of
