@@ -1,0 +1,27 @@
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" 
+    schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"
+?>
+<elementSpec ident="annotationBlock" module="spoken">
+    <!-- should this be in spoken module or analysis ? -->
+    <desc>groups together various annotations, for instance for parallel interpretations of a spoken segment</desc>
+    <classes>
+        <memberOf key="model.annotationPart"/>
+        <memberOf key="model.divPart.spoken"/>
+        <memberOf key="att.ascribed"/>
+        <memberOf key="att.timed"/>
+        <memberOf key="att.global"/>                    
+    </classes>
+    <content>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="u" />
+            <elementRef  key="spanGrp"/>
+            <classRef key="model.global.spoken"/>
+        </alternate>
+    </content>     
+    <!-- shd there be a constraint to say if no child element is supplied the @corresp attrib must be used -->
+</elementSpec>
