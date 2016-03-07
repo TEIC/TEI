@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="teiHeader">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="teiHeader">
   <gloss versionDate="2013-02-02" xml:lang="en">TEI header</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">en-tête TEI</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">TEI 헤더</gloss>
@@ -15,8 +12,9 @@ $Id$
   <gloss versionDate="2006-10-18" xml:lang="de">TEI-Header (elektronische Titelseite)</gloss>
   <gloss versionDate="2007-05-04" xml:lang="es">Encabezado TEI</gloss>
   <gloss versionDate="2007-01-21" xml:lang="it">intestazione</gloss>
-  <desc versionDate="2014-03-18" xml:lang="en">supplies the descriptive and declarative information making up an electronic title page
-    for every TEI-conformant document.</desc>
+  <desc versionDate="2016-02-19" xml:lang="en">supplies descriptive and
+    declarative metadata associated with a digital resource or set of
+    resources.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">fournit des informations descriptives et déclaratives qui
     constituent une page de titre électronique au début de tout texte conforme à la TEI.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">모든 TEI 구조의 텍스트 서두에 위치하는 전자 제목 페이지를 구성하는 기술적이고 선언적인 정보를
@@ -33,15 +31,15 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="fileDesc"/>
-      <zeroOrMore>
-        <ref name="model.teiHeaderPart"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="revisionDesc"/>
-      </optional>
-    </group>
+    <sequence>
+      <elementRef key="fileDesc"/>
+      
+        <classRef key="model.teiHeaderPart" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="revisionDesc" minOccurs="0"/>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="type" usage="opt" validUntil="2016-11-18">
@@ -58,9 +56,7 @@ $Id$
         se refiere, por ejemplo si este es un corpus o un texto individual.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il tipo di documento al quale è legata
         l'intestazione.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>text</defaultVal>
       <valList type="open">
         <valItem ident="text">

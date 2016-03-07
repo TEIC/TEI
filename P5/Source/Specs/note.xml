@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium. 
     Dual-licensed under CC-by and BSD2 licences 
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="note">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="note">
   <desc versionDate="2005-01-14" xml:lang="en">contains a note or annotation.</desc>
   <desc versionDate="2009-01-06" xml:lang="fr">contient une note ou une annotation</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene una nota o aclaración</desc>
@@ -21,12 +18,13 @@
     <memberOf key="att.pointing"/>
     <memberOf key="att.source"/>
     <memberOf key="att.typed"/>
+    <memberOf key="att.written"/>
     <memberOf key="model.correspDescPart"/>
     <memberOf key="model.correspActionPart"/>
     <memberOf key="model.correspContextPart"/>
   </classes>
   <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
+    <macroRef key="macro.specialPara"/>
   </content>
   <attList>
     <attDef ident="anchored" usage="opt">
@@ -39,9 +37,7 @@
       <desc versionDate="2007-01-21" xml:lang="it">indica se il testo copia mostra l'esatta posizione di
         riferimento della nota.</desc>
       <desc versionDate="2006-10-28" xml:lang="ja">当該注釈がある場所への参照は，正確にその場所を示しているかどうか．</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
-      </datatype>
+      <datatype><dataRef key="teidata.truthValue"/></datatype>
       <defaultVal>true</defaultVal>
       <remarks versionDate="2007-04-22" xml:lang="en">
         <p>In modern texts, notes are usually anchored by means of explicit footnote or endnote
@@ -76,9 +72,7 @@
       <desc versionDate="2007-01-21" xml:lang="it">rimanda alla fine della porzione di testo a cui la
         nota è allegata nel caso in cui la nota non sia inclusa nel testo in quel punto.</desc>
       <desc versionDate="2006-10-28" xml:lang="ja">当該注釈・コメントの終了点を示す．(当該注釈が注釈先の場所に埋め込 まれていない場合)</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2009-01-23" xml:lang="en">
         <p>This attribute is retained for backwards compatibility; it may be removed at a subsequent
           release of the Guidelines. The recommended way of pointing to a span of elements is by

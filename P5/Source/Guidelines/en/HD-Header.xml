@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="HD" n="5">
 <head>The TEI Header</head>
 <p>This chapter addresses the problems of describing an encoded work
@@ -1237,7 +1237,7 @@ section <ptr target="#CCAS"/>.
 <div type="div3" xml:id="HD57"><head>The Tagging Declaration</head>
 <p>The <gi>tagsDecl</gi> element is used to record
 the following information about the tagging used within a particular
-text:
+document:
 <list rend="bulleted">
 <item>the namespace to which elements appearing within the transcribed
 text belong.</item>
@@ -1253,7 +1253,12 @@ of an element.</item></list></p>
   <specDesc key="att.styleDef" atts="scheme schemeVersion"/>
 <specDesc key="namespace"/>
 <specDesc key="tagUsage"/>
-</specList></p>
+</specList></p><p>The <gi>tagsDecl</gi> element is descriptive, rather than prescriptive: if used, it simply documents
+practice in the TEI document containing it. The elements constituting a TEI customization file (discussed in chapter <ptr target="#TD"/>) by contrast
+document expected practice in a number of documents, and may thus be used prescriptively. If there is an inconsistency between 
+the actual state of a document and what is documented by its <gi>tagsDecl</gi>, then the latter should be corrected. If there is an
+inconsistency between a document and what is required by the customization file, or a schema derived from it, then it will usually be the
+document that requires correction.</p>
 <p>The <gi>tagsDecl</gi> element consists of an optional sequence of
 <gi>rendition</gi> elements, each of which must bear a unique
 identifier, followed by an optional sequence of one or more
@@ -2286,12 +2291,12 @@ expressed using that calendar system:
 <div type="div3" xml:id="HD44CD"><head>Correspondence Description</head>
       <p>The <gi>correspDesc</gi> element is used within the <gi>profileDesc</gi> element to
         provide detailed correspondence-specific metadata, concerning in particular the
-        communicative aspects (sending, receiving, forwarding etc.) associated with an act
+        communicative aspects (sending, receiving, forwarding etc.) associated with acts of
         of correspondence. </p>
       <p>This information is complementary to the detailed
       descriptions of physical objects (such as letters) associated
-      with correspondence acts, which are typically provided by
-      the <gi>sourceDesc</gi> element. <specList>
+      with correspondence activities, which are typically provided by
+      the sourceDesc element. <specList>
           <specDesc key="correspDesc"/>
         </specList>
       </p>
@@ -2308,9 +2313,9 @@ expressed using that calendar system:
         it is a reply, or the item which replies to it: <egXML
           xmlns="http://www.tei-c.org/ns/Examples">
           <correspContext>
-            <ref type="prev" target="#CLF0102">Previous letter of <persName>Chamisso</persName> to <persName>de La
+            <ref type="replyTo" target="#CLF0102">Previous letter of <persName>Chamisso</persName> to <persName>de La
               Foye</persName>: <date when="1807-01-16">16 January 1807</date></ref>
-            <ref type="next" target="#CLF0104">Next letter of <persName>Chamisso</persName> to <persName>de La Foye</persName>:
+            <ref type="replyFrom" target="#CLF0104">Next letter of <persName>Chamisso</persName> to <persName>de La Foye</persName>:
               <date when="1810-05-07">07 May 1810</date></ref>
           </correspContext>
         </egXML>
@@ -2318,7 +2323,7 @@ expressed using that calendar system:
 
 <!-- add an example using note or p ? -->
 
-      <p>Many types of correspondence actions may be distinguished. The <att>type</att>
+      <p>Many types of correspondence action may be distinguished. The <att>type</att>
         attribute should be used to indicate the type of action being documented, using values
         such as those suggested above. </p>
       <p>The following simple example uses <gi>correspAction</gi> to describe the sending of a
@@ -2342,9 +2347,9 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
 
       <p>Several senders, recipients, etc. can be specified for a single
         <gi>correspAction</gi> if the action is considered to apply to them all acting as
-        a single group. In the following example, two people are considered to have received
-        the piece of correspondence. <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <correspAction type="received">
+        a single group. In the following example two people are considered to have received
+        the communication. <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          <correspAction type="receiving">
             <persName>Hermann Hesse</persName>
             <persName>Ninon Hesse</persName>
             <placeName>Montagnola</placeName>
@@ -2369,7 +2374,7 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
           </correspAction>
         </egXML>
       </p>
-      <p>The same person may be associated with several actions. For example, it will often
+      <p>The same person may be associated with many actions. For example, it will often
         be the case that the author and sender of a message are identical, and that many
         individual letters will need to be associated with the same person. The
         <att>sameAs</att> attribute defined in section <ptr target="#SAIE"/> may be used
@@ -2383,7 +2388,7 @@ Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"
         <!-- example needs expansion to include definition for #author -->
       </p>
       <p>It is assumed that each correspondence action applies to a single act of
-        communication. However, it may be the case that the same physical object is involved
+        communication. It may however be the case that the same physical object is involved
         in several such acts, if for example person A sends a letter to person B,
         who then annotates it and sends it on to person C, or if persons A and B both use
         the same document to convey quite different messages. In such situations, multiple

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="fDecl">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="fDecl">
   <gloss versionDate="2005-01-14" xml:lang="en">feature declaration</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">자질 선언</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">功能宣告</gloss>
@@ -30,15 +27,15 @@ range of allowed values, and optionally its default value.</desc>
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:optional>
-        <rng:ref name="fDescr"/>
-      </rng:optional>
-      <rng:ref name="vRange"/>
-      <rng:optional>
-        <rng:ref name="vDefault"/>
-      </rng:optional>
-    </rng:group>
+    <sequence>
+      
+        <elementRef key="fDescr" minOccurs="0"/>
+      
+      <elementRef key="vRange"/>
+      
+        <elementRef key="vDefault" minOccurs="0"/>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="name" usage="req">
@@ -53,9 +50,7 @@ range of allowed values, and optionally its default value.</desc>
           l'attribut <att>name</att> des éléments <gi>f</gi> du texte.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el nombre del rasgo que está siendo declarado; combina el atributo <att>name</att> de elementos <gi>f</gi> en el texto.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il nome del tratto che si sta dichiarando; corrisponde all'attributo <att>name</att> dell'elemento <gi>f</gi> nel testo.</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.name"/>
-      </datatype>
+      <datatype><dataRef key="teidata.name"/></datatype>
     </attDef>
     <attDef usage="opt" ident="optional">
       <desc versionDate="2006-10-07" xml:lang="en">indicates whether or not the value of this feature may
@@ -67,9 +62,7 @@ range of allowed values, and optionally its default value.</desc>
           exister</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica si el valor del rasgo debe estar presente o no.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica se il valore del tratto possa o meno essere presente</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.truthValue"/>
-      </datatype>
+      <datatype><dataRef key="teidata.truthValue"/></datatype>
       <defaultVal>true</defaultVal>
       <remarks versionDate="2006-10-07" xml:lang="en">
         <p>If a feature is marked as optional, it is possible

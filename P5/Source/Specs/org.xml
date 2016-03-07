@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium. 
     Dual-licensed under CC-by and BSD2 licences 
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="org">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="namesdates" ident="org">
   <gloss versionDate="2007-07-04" xml:lang="en">organization</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">조직</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">organización</gloss>
@@ -32,38 +28,38 @@
     <memberOf key="att.sortable"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-        <rng:ref name="model.headLike"/>
-      </rng:zeroOrMore>
-      <rng:choice>
-        <rng:group>
-          <rng:zeroOrMore>
-            <rng:ref name="model.pLike"/>
-          </rng:zeroOrMore>
-        </rng:group>
-        <rng:zeroOrMore>
-          <rng:choice>
-            <rng:ref name="model.labelLike"/>
-            <rng:ref name="model.nameLike"/>
-            <rng:ref name="model.placeLike"/>
-            <rng:ref name="model.orgPart"/>
-	    <rng:ref name="model.milestoneLike"/>
-          </rng:choice>
-        </rng:zeroOrMore>
-      </rng:choice>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.noteLike"/>
-          <rng:ref name="model.biblLike"/>
-          <rng:ref name="linkGrp"/>
-          <rng:ref name="link"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="model.personLike"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <alternate>
+        
+          
+            <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
+          
+        
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.labelLike"/>
+            <classRef key="model.nameLike"/>
+            <classRef key="model.placeLike"/>
+            <classRef key="model.orgPart"/>
+	    <classRef key="model.milestoneLike"/>
+          </alternate>
+        
+      </alternate>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.noteLike"/>
+          <classRef key="model.biblLike"/>
+          <elementRef key="linkGrp"/>
+          <elementRef key="link"/>
+        </alternate>
+      
+      
+        <classRef key="model.personLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="role" usage="opt">
@@ -76,9 +72,7 @@
                 una persona.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">stabilisce il ruolo o la classificazione
                 primaria di una persona</desc>
-      <datatype maxOccurs="unbounded">
-        <rng:ref name="data.word"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
 <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
 	project, using arbitrary keywords such as <val>artist</val>,

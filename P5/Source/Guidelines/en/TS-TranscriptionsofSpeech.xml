@@ -8,7 +8,7 @@ $Id$
 -->
 
 
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="TS" n="11">
 <head>Transcriptions of Speech</head>
@@ -211,6 +211,7 @@ within the source description component of the TEI header:
   <specDesc key="scriptStmt"/>
   <specDesc key="recordingStmt"/>
   <specDesc key="recording" atts="type"/>
+<specDesc key="transcriptionDesc" atts="ident version"/>
 </specList>
 As a member of the <ident type="class">att.duration</ident> class,
 the <gi>recording</gi> element inherits the  following attribute:
@@ -340,13 +341,24 @@ nested within the <gi>broadcast</gi> element.
 <!-- need a real example here -->
 	<!-- damn straight.  -msm     -->
  </p>
+<p>The <gi>transcriptionDesc</gi> element can be used to document the particular transcription conventions (use of space,
+punctuation, special characters etc.) used in making the transcription. A number of sets of such conventions have been defined
+within particular research communities, or by users of particular transcription tools. The attributes <att>ident</att>
+and <att>version</att> may be used to refer to such conventions in a machine tractable way, where this is appropriate.
 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<transcriptionDesc ident="HIAT" version="2004"/>
+</egXML>
+
+</p>
 <specGrp xml:id="D2231" n="Script statement and recording statement">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/scriptStmt.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/recordingStmt.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/recording.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/equipment.xml"/>
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/broadcast.xml"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/transcriptionDesc.xml"/>
+
 </specGrp>
 </div>
 
@@ -763,8 +775,10 @@ implication is that the feature concerned ceases to be remarkable at this point.
 <item> sighing</item></list></item></list>
  </p>
 <p>A full definition of the sense of the values provided for each
-feature should be provided in the encoding description section of the
-text header (see section <ptr target="#HD5"/>).
+feature may be provided either in the encoding description section of the
+text header (see section <ptr target="#HD5"/>) or as part of a TEI customization, 
+  as described in section <ptr target="#MD"/>.  
+
  </p>
 <specGrp xml:id="DTSCOMP" n="Components of Transcribed Speech">
 
@@ -1430,6 +1444,13 @@ type of speech act (imperative, concessive, etc.), or information status
 the general purpose analytic tools discussed in chapters <ptr target="#SA"/>, <ptr target="#AI"/>, and <ptr target="#FS"/> may be used to
 advantage.
 </p>
+<p>The general-purpose <gi>annotationBlock</gi> element may be used to group together a transcription and multiple layers of annotation. It also serves
+to divide a transcribed text up into meaningful analytic sections. 
+<specList>
+<specDesc key="annotationBlock"/>
+</specList>/>
+</p>
+
 </div>
 </div>
 
@@ -1447,26 +1468,8 @@ The selection and combination of modules to form a TEI schema is described in
 <ptr target="#STIN"/>.
 </p>
 <specGrp>
-
-
-
-
-
-
-
-
-
-
-
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.divPart.spoken.xml"/>
-
-
-
-
- 
 <specGrpRef target="#DTSCOMP"/>
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/annotationBlock.xml"/>
 </specGrp>
-
-
-
 </div></div>

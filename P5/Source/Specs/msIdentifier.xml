@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSIDENTIFIER" ident="msIdentifier">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSIDENTIFIER" ident="msIdentifier">
   <gloss versionDate="2007-07-04" xml:lang="en">manuscript identifier</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">원고 확인소</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -28,29 +25,29 @@ the  manuscript being described.</desc>
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <group>
-        <ref name="model.placeNamePart_sequenceOptional"/>
-        <optional>
-          <ref name="institution"/>
-        </optional>
-        <optional>
-          <ref name="repository"/>
-        </optional>
-        <zeroOrMore>
-          <ref name="collection"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="idno"/>
-        </optional>
-      </group>
-      <zeroOrMore>
-        <choice>
-          <ref name="msName"/>
-          <ref name="altIdentifier"/>
-        </choice>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      <sequence>
+        <classRef key="model.placeNamePart" expand="sequenceOptional"/>
+        
+          <elementRef key="institution" minOccurs="0"/>
+        
+        
+          <elementRef key="repository" minOccurs="0"/>
+        
+        
+          <elementRef key="collection" minOccurs="0" maxOccurs="unbounded"/>
+        
+        
+          <elementRef key="idno" minOccurs="0"/>
+        
+      </sequence>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="msName"/>
+          <elementRef key="altIdentifier"/>
+        </alternate>
+      
+    </sequence>
   </content>
   <constraintSpec scheme="isoschematron" ident="msId_minimal">
     <constraint>

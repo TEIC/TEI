@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   Copyright TEI Consortium. 
   Dual-licensed under CC-by and BSD2 licences 
   See the file COPYING.txt for details
   $Date$
   $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="langKnowledge">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="langKnowledge">
   <gloss versionDate="2007-07-04" xml:lang="en">language knowledge</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">언어 지식</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">conocimiento del lenguaje</gloss>
@@ -33,17 +29,17 @@
     <memberOf key="att.editLike"/>
   </classes>
   <content>
-     <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-        <rng:zeroOrMore>
-           <rng:ref name="precision"/>
-        </rng:zeroOrMore>
-        <rng:choice>
-           <rng:ref name="model.pLike"/>
-           <rng:oneOrMore>
-              <rng:ref name="langKnown"/>
-           </rng:oneOrMore>
-        </rng:choice>
-     </rng:group>
+     <sequence>
+        
+           <elementRef key="precision" minOccurs="0" maxOccurs="unbounded"/>
+        
+        <alternate>
+           <classRef key="model.pLike"/>
+           
+              <elementRef key="langKnown" minOccurs="1" maxOccurs="unbounded"/>
+           
+        </alternate>
+     </sequence>
   </content>
   <attList>
     <attDef ident="tags" usage="opt">
@@ -54,9 +50,7 @@
       <desc versionDate="2009-03-19" xml:lang="fr">fournit un ou plusieurs codes de langue valides pour les langues spécifiées.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">asigna uno o más marcadores válidos a las lenguas indicadas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna uno o più marcatori validi alle lingue indicate</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
-      </datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.language"/></datatype>
       <remarks versionDate="2007-04-20" xml:lang="en">
         <p>This attribute should be supplied only if the element contains no <gi>langKnown</gi> children. Its values are language
                         <soCalled>tags</soCalled> as defined in <ref target="http://www.rfc-editor.org/rfc/rfc4646.txt">RFC 4646</ref> or its

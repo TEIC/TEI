@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="pe" ident="macro.phraseSeq.limited">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><macroSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="pe" ident="macro.phraseSeq.limited">
   <gloss versionDate="2007-04-14" xml:lang="en">limited phrase sequence</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">한정된 구 연쇄</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">限定詞組序列</gloss>
@@ -25,13 +21,13 @@ used for transcribing extant documents.</desc>
       documents existants.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">define una secuencia de caracteres y elementos de tipo sintagmático que no se usan normalmente para transcribir.</desc>
   <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.limitedPhrase"/>
-        <rng:ref name="model.global"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.limitedPhrase"/>
+        <classRef key="model.global"/>
+      </alternate>
+    
   </content>
   <listRef>
     <ptr target="#STECST"/>

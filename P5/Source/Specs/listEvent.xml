@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   Copyright TEI Consortium. 
   Dual-licensed under CC-by and BSD2 licences 
   See the file COPYING.txt for details
   $Date$
   $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listEvent">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listEvent">
   <gloss versionDate="2009-01-21" xml:lang="en">list of events</gloss>
   <gloss xml:lang="fr" versionDate="2009-03-19">liste d'événements</gloss>
   <desc versionDate="2009-01-21" xml:lang="en">contains a list of descriptions, each of which provides information
@@ -23,23 +19,23 @@
     <memberOf key="model.eventLike"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.headLike"/>
-      </rng:zeroOrMore>
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="event"/>
-          <rng:ref name="listEvent"/>
-        </rng:choice>
-      </rng:oneOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="relation"/>
-          <rng:ref name="listRelation"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <elementRef key="event"/>
+          <elementRef key="listEvent"/>
+        </alternate>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="relation"/>
+          <elementRef key="listRelation"/>
+        </alternate>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

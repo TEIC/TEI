@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="iNode">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="iNode">
   <gloss versionDate="2005-01-14" xml:lang="en">intermediate (or internal) node</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">중간 (또는 내부) 노드</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">中間 (或內部) 節點</gloss>
@@ -25,9 +22,9 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <optional xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="label"/>
-    </optional>
+    
+      <elementRef key="label" minOccurs="0"/>
+    
   </content>
   <attList>
     <attDef ident="value" usage="opt">
@@ -39,9 +36,7 @@ structure or other analytic element.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">fournit l'identifiant de l'objet représenté par le nœud intermédiaire ; cet objet peut être une paire nom-valeur ou tout autre élément analytique.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el valor de un nodo intermedio, que puede ser una estructura de rasgos u otro elemento de análisis.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna a un nodo intermedio un valore, che può essere una struttura di tratti o altro elemento di analisi</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="children" usage="req">
       <desc versionDate="2005-01-14" xml:lang="en">provides a list of identifiers of the elements which are the children of
@@ -53,9 +48,7 @@ the intermediate node.</desc>
         éléments qui sont les enfants du nœud intermédiaire.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona una lista de identificadores de elementos que son hijos de un nodo intermedio.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce una lista di identificatori degli elementi figli del nodo intermedio</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="parent" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">provides the identifier of the element which is the parent of this node.</desc>
@@ -66,9 +59,7 @@ the intermediate node.</desc>
         de ce nœud.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el identificador del elemento padre de un nodo dado.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna un identificatore all'elemento genitore del nodo</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="ord" usage="opt">
       <gloss versionDate="2007-07-04" xml:lang="en">ordered</gloss>
@@ -83,9 +74,7 @@ the intermediate node.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">indique si le nœud interne est ou non ordonné.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica si el nodo interno está ordenado o no.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica se il nodo interno è ordinato o meno</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.xTruthValue"/>
-      </datatype>
+      <datatype><dataRef key="teidata.xTruthValue"/></datatype>
       <remarks versionDate="2007-04-22" xml:lang="en">
         <p>The value <val>true</val> indicates that the children of
 	the intermediate node are ordered, whereas <val>false</val>
@@ -119,9 +108,7 @@ an element which this node follows.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">fournit l'identifiant de l'élément que ce nœud suit.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona un identificador al elemento que precede al nodo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna un identificatore all'elemento che precede il nodo</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2005-01-14" xml:lang="en">
         <p>If the tree is unordered or partially ordered, this attribute
 has the property of fixing the relative order of the intermediate node
@@ -149,9 +136,7 @@ children.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">donne le degré sortant d'un nœud intermédiaire, c'est-à-dire le nombre de ses enfants.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el grado de salida del nodo intermedio, es decir, el número de sus hijos.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il grado in uscita di un nodo intermedio, cioè il numero dei suoi figli</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
       <remarks versionDate="2005-01-14" xml:lang="en">
         <p>The in degree of an intermediate node is always 1.</p>
       </remarks>

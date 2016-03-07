@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="OBJECTDESC" ident="objectDesc">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="OBJECTDESC" ident="objectDesc">
   <gloss versionDate="2007-06-12" xml:lang="fr">description d'objet</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains a description of the physical
   components making up the object which is being described.</desc>
@@ -23,19 +20,19 @@ $Id$
     <memberOf key="model.physDescPart"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <ref name="model.pLike"/>
-      </oneOrMore>
-      <group>
-        <optional>
-          <ref name="supportDesc"/>
-        </optional>
-        <optional>
-          <ref name="layoutDesc"/>
-        </optional>
-      </group>
-    </choice>
+    <alternate>
+      
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      <sequence>
+        
+          <elementRef key="supportDesc" minOccurs="0"/>
+        
+        
+          <elementRef key="layoutDesc" minOccurs="0"/>
+        
+      </sequence>
+    </alternate>
   </content>
   <attList>
     <attDef ident="form">
@@ -52,9 +49,7 @@ $Id$
           de feuillet, découpe, etc.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">un nombre breve específico de un proyecto que identifica la forma física del documento, por ejemplo códex, rollo, fragmento, folio parcial, recorte, etc.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">un nome breve specifico di un progetto che identifica la forma fisica del documento, per esempio codice, rotolo, frammento, foglio parziale, ritaglio, ecc.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
 <remarks versionDate="2013-12-21" xml:lang="en"><p>Definitions for the
 terms used may typically be provided by a
 	<gi>valList</gi> element in the project schema

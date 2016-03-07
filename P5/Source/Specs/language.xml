@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="language">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="language">
   <gloss versionDate="2009-01-05" xml:lang="fr">langue</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">characterizes a single language or sublanguage used within a text.</desc>
   <desc versionDate="2009-01-05" xml:lang="fr">caractérise une langue ou une variété de langue utilisée
@@ -24,7 +21,7 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.phraseSeq.limited"/>
+    <macroRef key="macro.phraseSeq.limited"/>
   </content>
   <attList>
     <attDef ident="ident" usage="req">
@@ -58,9 +55,7 @@ $Id$
         definito in <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC 3066</ref> (o nei sui
         successori), utilizzato per identificare la lingua documentata da questo elemento e che è
         indicato dall'attributo globale <att>xml:lang</att>.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
-      </datatype>
+      <datatype><dataRef key="teidata.language"/></datatype>
     </attDef>
     <attDef ident="usage" usage="opt">
       <desc versionDate="2005-01-14" xml:lang="en">specifies the approximate percentage (by volume) of the text which uses this language.</desc>
@@ -75,11 +70,7 @@ $Id$
         texto que usa esa lengua.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica la percentuale approsimativa (per volume)
         di testo che usa questa lingua.</desc>
-      <datatype>
-        <data xmlns="http://relaxng.org/ns/structure/1.0" type="nonNegativeInteger">
-          <param name="maxInclusive">100</param>
-        </data>
-      </datatype>
+      <datatype><dataRef name="nonNegativeInteger"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

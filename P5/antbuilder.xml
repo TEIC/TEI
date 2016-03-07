@@ -45,6 +45,9 @@
     <xslt processor="trax" force="yes" style="Utilities/subset.xsl" in="${inputDir}/p5.xml" out="p5subset.xml">
       <factory name="net.sf.saxon.TransformerFactoryImpl"/>
     </xslt>
+    <xslt processor="trax" force="yes" style="Utilities/dtdMagic.xsl" in="${inputDir}/p5subset.xml" out="p5subsetDoctored.xml">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+    </xslt>
   </target>
 
   <target name="outputs">
@@ -69,7 +72,7 @@
       <xslt processor="trax" force="yes" style="Utilities/listofattributes.xsl" in="${inputDir}/p5.xml" out="p5attlist.txt">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
       </xslt>
-      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2dtd.xsl" in="p5subset.xml" out="/dev/stdout">
+      <xslt processor="trax" force="yes" style="${XSL}/odds/odd2dtd.xsl" in="p5subsetDoctored.xml" out="/dev/stdout">
         <factory name="net.sf.saxon.TransformerFactoryImpl"/>
         <param name="outputDir" expression="${inputDir}/DTD"/>
         <param name="lang" expression="${lang}"/>

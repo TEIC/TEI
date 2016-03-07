@@ -7,13 +7,9 @@ $Date$
 $Id$
 -->
 
-
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ST" n="3">
-
   <head>The TEI Infrastructure</head>
-
   <p>This chapter describes the infrastructure for the encoding scheme defined by these Guidelines.
     It introduces the conceptual framework within which the following chapters are to be understood,
     and the means by which that conceptual framework is implemented. It assumes some familiarity
@@ -23,15 +19,14 @@ $Id$
     themselves, and chapter <ptr target="#USE"/> which combines a discussion of modification and
     conformance issues with a description of the intended behaviour of an ODD processor; these
     chapters should be read by anyone intending to implement a new TEI-based system.</p>
-
   <p>The TEI encoding scheme consists of a number of <term>modules</term>, each of which declares
     particular XML elements and their attributes. Part of an element's declaration includes its
-    assignment to one or more element <term>classes</term>. Another part defines its possible    content and attributes with reference to these classes. This indirection gives the TEI system
+    assignment to one or more element <term>classes</term>. Another part defines its possible
+    content and attributes with reference to these classes. This indirection gives the TEI system
     much of its strength and its flexibility. Elements may be combined more or less freely to form a
       <term>schema</term> appropriate to a particular set of requirements. It is also easy to add
     new elements which reference existing classes or elements to a schema, as it is to exclude some
     of the elements provided by any module included in a schema.</p>
-
   <p>In principle, a TEI schema may be constructed using any combination of modules. However,
     certain TEI modules are of particular importance, and should always be included in all but
     exceptional circumstances: the module <ident type="module">tei</ident> described in the present
@@ -46,7 +41,6 @@ $Id$
     encoding of most book-like objects. Most schemas will therefore need to include these four
     modules.<!--, but are free to mix and match them
 with others.--></p>
-
   <p>The specification for a TEI schema is itself a TEI document, using elements from the module
     described in chapter <ptr target="#TD"/>: we refer to such a document informally as an
       <term>ODD</term> document, from the design goal originally formulated for the system: <q>One
@@ -56,27 +50,20 @@ with others.--></p>
     expressed using any of the three schema languages currently in wide use: the XML DTD language,
     the ISO RELAX NG language, or the W3C Schema language, as well as to generate documentation such
     as the <title>Guidelines</title> and their associated web site.</p>
-
   <p>The bulk of this chapter describes the TEI infrastructure module itself. Although it may be
     skipped at a first reading, an understanding of the topics addressed here is essential for
     anyone planning to take full advantage of the TEI customization techniques described in chapter
       <ptr target="#MD"/>.</p>
-
   <p>The chapter begins by briefly characterizing each of the modules available in the TEI scheme.
     Section <ptr target="#STIN"/> describes in general terms the method of constructing a TEI schema
     in a specific schema language such as XML DTD language, RELAX NG, or W3C Schema.</p>
-
   <p>The next and largest part of the chapter introduces the attribute and element classes used to
     define groups of elements and their characteristics (section <ptr target="#STEC"/>).</p>
-
   <p>Finally, section <ptr target="#STmacros"/> introduces the concept of <term>macros</term>, which
     are used to express some commonly used content models, and lists the <term>datatypes</term> used
     to constrain the range of legal values for TEI attributes (section <ptr target="#DTYPES"/>). </p>
-
-
   <div type="div2" xml:id="STMA">
     <head>TEI Modules</head>
-
     <p>These Guidelines define several hundred elements and attributes for marking up documents of
       any kind. Each definition has the following components: <list rend="simple">
         <item>a prose description</item>
@@ -94,8 +81,6 @@ with others.--></p>
       grouping together a number of associated element declarations. In the simple case, a TEI
       schema is made by combining together a small number of modules, as further described in
       section <ptr target="#STIN"/> below.</p>
-
-
     <p>The following table lists the modules defined by the current release of the Guidelines: <!-- table can be re-autogenerated from modules.xsl LB 20-xii-05 -->
       <table xml:id="tab-mods">
         <row role="label">
@@ -212,16 +197,12 @@ with others.--></p>
         </row>
       </table>
     </p>
-
     <p>For each module listed above, the corresponding chapter gives a full description of the
       classes, elements, and macros which it makes available when it is included in a schema. Other
       chapters of these Guidelines explore other aspects of using the TEI scheme.</p>
   </div>
-
-
   <div type="div2" xml:id="STIN">
     <head>Defining a TEI Schema</head>
-
     <p>To determine that an XML document is valid (as opposed to merely well-formed), its structure
       must be checked against a schema, as discussed in chapter <ptr target="#SG"/>. For a valid TEI
       document, this schema must be a conformant TEI schema, as further defined in chapter <ptr
@@ -229,7 +210,6 @@ with others.--></p>
       purposes the schema associated with a document <emph>must</emph> be made explicit. The method
       of doing this recommended by these Guidelines is to provide explicitly or by reference a TEI
       schema specification against which the document may be validated.</p>
-
     <p>A TEI-conformant schema is a specific combination of TEI modules, possibly also including
       additional declarations that modify the element and attribute declarations contained by each
       module, for example to suppress or rename some elements. The TEI provides an
@@ -241,7 +221,6 @@ with others.--></p>
       W3C Schema. These output schemas can then be used by an XML processor such as a validator or
       editor to validate or otherwise process documents. Further information about the processing of
       a TEI formal specification is given in chapter <ptr target="#USE"/>.</p>
-
     <div type="div3" xml:id="STINsimpleExample">
       <head>A Simple Customization</head>
       <p>The simplest customization of the TEI scheme combines just the four recommended modules
@@ -261,15 +240,13 @@ with others.--></p>
         language, the ISO RELAX NG language, the W3C Schema language, or in principle any other
         adequately powerful schema language. The resulting schema may then be associated with the
         document instance by one of a number of different mechanisms, as further described in
-        chapter <ptr target="#SG"/>. The start point (or root element) of document
-        instances to be validated against the schema is specified by means of the <att>start</att>
-        attribute. Further information about the processing of an ODD specification is given in <ptr
+        chapter <ptr target="#SG"/>. The start point (or root element) of document instances to be
+        validated against the schema is specified by means of the <att>start</att> attribute.
+        Further information about the processing of an ODD specification is given in <ptr
           target="#IM"/>. </p>
     </div>
-
     <div type="div3" xml:id="STINlargerExample">
       <head>A Larger Customization</head>
-
       <p>These Guidelines introduce each of the modules making up the TEI scheme one by one, and
         therefore, for clarity of exposition, each chapter focusses on elements drawn from a single
         module. In reality, of course, the markup of a text will draw on elements taken from many
@@ -290,7 +267,6 @@ with others.--></p>
           <item>the description of a text may require additional specialized metadata elements, for
             example when describing manuscript material in detail.</item>
         </list></p>
-
       <p>The TEI provides mechanisms to support all of these and many other use cases. The
         architecture permits elements and attributes from any combination of modules to co-exist
         within a single schema. Within particular modules, elements and attributes are provided to
@@ -308,7 +284,6 @@ with others.--></p>
       <p>Subsequent chapters of these Guidelines describe in detail markup constructs appropriate
         for these and many other possible features of interest. The markup constructs can be
         combined as needed for any given set of applications or project.</p>
-
       <p>For example, a project aiming to produce an ambitious digital edition of a collection of
         manuscript materials, to include detailed metadata about each source, digital images of the
         content, along with a detailed transcription of each source, and a supporting biographical
@@ -327,7 +302,6 @@ with others.--></p>
             <moduleRef key="namesdates"/>
             <!-- names, dates, people, and places -->
           </schemaSpec></egXML></p>
-
       <p>Alternatively, a simpler schema might be used for a part of such a project: those preparing
         the transcriptions, for example, might need only elements from the <ident type="module"
           >core</ident>, <ident type="module">textstructure</ident>, and <ident type="module"
@@ -340,7 +314,6 @@ with others.--></p>
             <moduleRef key="transcr"/>
           </schemaSpec></egXML>
       </p>
-
       <p>The TEI architecture also supports more detailed customization beyond the simple selection
         of modules. A schema may suppress elements from a module, suppress some of their attributes,
         change their names, or even add new elements and attributes. Detailed discussion of the kind
@@ -352,11 +325,8 @@ with others.--></p>
         language (see further <ptr target="#ST-aliens"/>).</p>
     </div>
   </div>
-
-
   <div type="div2" xml:id="STEC">
     <head>The TEI Class System</head>
-
     <p>The TEI scheme distinguishes about five hundred different elements. To aid comprehension,
       modularity, and modification, the majority of these elements are formally classified in some
       way. Classes are used to express two distinct kinds of commonality among elements. The
@@ -365,23 +335,16 @@ with others.--></p>
       attributes, and as a <term>model class</term> if its members appear in the same locations. In
       either case, an element is said to <term>inherit</term> properties from any classes of which
       it is a member. </p>
-
     <p>Classes (and therefore elements which are members of those classes) may also inherit
       properties from other classes. For example, supposing that class A is a member (or a
         <term>subclass</term>) of class B, any element which is a member of class A will inherit not
       only the properties defined by class A, but also those defined by class B. In such a
       situation, we also say that class B is a <term>superclass</term> of class A. The properties of
       a superclass are inherited by all members of its subclasses. </p>
-
-
     <p>A basic understanding of the classes into which the TEI scheme is organized is strongly
       recommended and is essential for any successful customization of the system.</p>
-
-
-
     <div type="div2" xml:id="STECAT">
       <head>Attribute Classes</head>
-
       <p>An attribute class groups together elements which share some set of common attributes.
         Attribute classes are given names composed of the prefix <code>att.</code>, often followed
         by an adjective. For example, the members of the class <ident type="class"
@@ -394,12 +357,10 @@ with others.--></p>
           >att.canonical</ident> class. Note also that this method ensures that the attributes in
         question are always defined in the same way, taking the same default values etc., no matter
         which element they are attached to.</p>
-
       <p>Some attribute classes are defined within the <ident type="module">tei</ident>
         infrastructural module and are thus globally available. Other attribute classes are specific
         to particular modules and thus defined in other chapters. Attributes defined by such classes
         will not be available unless the module concerned is included in a schema.</p>
-
       <p>The attributes provided by an attribute class are those specified by the class itself,
         either directly, or by inheritance from another class. For example, the attribute class
           <ident type="class">att.pointing.group</ident> provides attributes <att>domains</att> and
@@ -408,44 +369,35 @@ with others.--></p>
         attributes <att>target</att>, <att>targetLang</att> and <att>evaluate</att>. Members of the
         class <ident type="class">att.pointing</ident> will thus have these three attributes, while
         members of the class <ident type="class">att.pointing.group</ident> will have all five.</p>
-
-
       <p>Note that some modules define superclasses of an existing infrastructural class. For
         example, the global attribute class <ident type="class">att.divLike</ident> makes attributes
-          <att>org</att> and <att>sample</att> available, while the <ident
-          type="class">att.metrical</ident> class, which is specific to the <ident type="module"
-          >verse</ident> module, provides attributes <att>met</att>, <att>real</att>, and
-          <att>rhyme</att>. Because <ident type="class">att.metrical</ident> is defined as a
-        superclass of <ident type="class">att.divLike</ident>, all five of these attributes are
-        available to elements; the declaration for <ident type="class">att.metrical</ident> adds its
-        three attributes to the three already defined by <ident type="class">att.divLike</ident>
-        when the <ident type="module">verse</ident> module is included in a schema. If, however,
-        this module is not included in a schema, then the <ident type="class">att.divLike</ident>
-        class supplies only the two attributes first mentioned.</p>
-
-
+          <att>org</att> and <att>sample</att> available, while the <ident type="class"
+          >att.metrical</ident> class, which is specific to the <ident type="module">verse</ident>
+        module, provides attributes <att>met</att>, <att>real</att>, and <att>rhyme</att>. Because
+          <ident type="class">att.metrical</ident> is defined as a superclass of <ident type="class"
+          >att.divLike</ident>, all five of these attributes are available to elements; the
+        declaration for <ident type="class">att.metrical</ident> adds its three attributes to the
+        three already defined by <ident type="class">att.divLike</ident> when the <ident
+          type="module">verse</ident> module is included in a schema. If, however, this module is
+        not included in a schema, then the <ident type="class">att.divLike</ident> class supplies
+        only the two attributes first mentioned.</p>
       <p>Attributes specific to particular modules are documented along with the relevant module
         rather than in the present chapter. One particular attribute class, known as <ident
           type="class">att.global</ident>, is common to all modules, and is therefore described in
         some detail in the next section. A full list of all attribute classes is given in <ptr
           target="#REF-CLASSES-ATTS"/> below. </p>
-
       <div type="div2" xml:id="STGA">
         <head>Global Attributes</head>
-
         <p>The following attributes are defined for every TEI element. <specList>
             <specDesc key="att.global"
               atts="xml:id n xml:lang rend style
               rendition xml:base xml:space"/>
           </specList>
         </p>
-
         <p>These attributes are optionally available for any TEI element; none of them is required.
           Their usage is discussed in the following subsections. </p>
-
         <div xml:id="STGAid">
           <head>Element Identifiers and Labels</head>
-
           <p>The value supplied for the <att>xml:id</att> attribute must be a legal
               <term>name</term>, as defined in the World Wide Web Consortium's <ref
               target="http://www.w3.org/TR/REC-xml/">XML Recommendation</ref>. This means that it
@@ -506,7 +458,6 @@ with others.--></p>
         </div>
         <div xml:id="STGAla">
           <head>Language Indicators</head>
-
           <p>The <att>xml:lang</att> attribute indicates the natural language and writing system
             applicable to the content of a given element. If it is not specified, the value is
             inherited from that of the immediately enclosing element. As a rule, therefore, it is
@@ -514,12 +465,12 @@ with others.--></p>
             most elements to take the default value for <att>xml:lang</att>; the language of an
             element then need be explicitly specified only for elements in languages other than the
             base language. For this reason, it is recommended practice to supply a default value for
-            the <att>xml:lang</att> attribute, either on the <gi>TEI</gi> root element, or on both the
-              <gi>teiHeader</gi> and the <gi>text</gi> element. The latter is appropriate in the not
-            uncommon case where the text element in a TEI document uses a different default language
-            from that of the TEI header attached to it. Other language shifts in the source should
-            be explicitly identified by use of the <att>xml:lang</att> attribute on an element at an
-            appropriate level wherever possible. </p>
+            the <att>xml:lang</att> attribute, either on the <gi>TEI</gi> root element, or on both
+            the <gi>teiHeader</gi> and the <gi>text</gi> element. The latter is appropriate in the
+            not uncommon case where the text element in a TEI document uses a different default
+            language from that of the TEI header attached to it. Other language shifts in the source
+            should be explicitly identified by use of the <att>xml:lang</att> attribute on an
+            element at an appropriate level wherever possible. </p>
           <p>In the following example schematic, an English language TEI header is attached to an
             English language text: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"
               valid="feasible">
@@ -529,7 +480,8 @@ with others.--></p>
                 </teiHeader>
                 <text>
                   <!-- ... -->
-                </text></TEI></egXML>
+                </text>
+              </TEI></egXML>
           </p>
           <p>The same effect would be obtained by specifying the default language for both header
             and text: <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"
@@ -540,7 +492,8 @@ with others.--></p>
                 </teiHeader>
                 <text xml:lang="en">
                   <!-- ... -->
-                </text></TEI></egXML>
+                </text>
+              </TEI></egXML>
           </p>
           <p>The latter approach is necessary in the case where the two differ: for example, where
             an English language header is applied to a French text: <egXML xml:lang="und"
@@ -551,7 +504,8 @@ with others.--></p>
                 </teiHeader>
                 <text xml:lang="fr">
                   <!-- ... -->
-                </text></TEI></egXML>
+                </text>
+              </TEI></egXML>
           </p>
           <p>The same principle applies at any hierarchic level. In the following example, the
             default language of the text is French, but one section of it is in German: <egXML
@@ -573,9 +527,9 @@ with others.--></p>
                     </div>
                     <!-- ... -->
                   </body>
-                </text></TEI></egXML>
+                </text>
+              </TEI></egXML>
           </p>
-
           <p>Similarly, in the following example the <att>xml:lang</att> attribute on the
               <gi>term</gi> element allows us to record the fact that the technical terms used are
             Latin rather than English; no <att>xml:lang</att> attribute is needed on the <gi>q</gi>
@@ -588,8 +542,8 @@ with others.--></p>
             text that is pointed at, the (non-global) attribute <att>targetLang</att> should be
             used, for example in <egXML xmlns="http://www.tei-c.org/ns/Examples"><ptr target="x12"
                 targetLang="fr"/></egXML> the pointer references text written in French.</p>
-          <p>The values used for the <att>xml:lang</att> and <att>targetLang</att> attributes must be
-            constructed in a particular way, using values from standard lists. See further <ptr
+          <p>The values used for the <att>xml:lang</att> and <att>targetLang</att> attributes must
+            be constructed in a particular way, using values from standard lists. See further <ptr
               target="#CHSH"/>.</p>
           <p>Additional information about a particular language may be supplied in the
               <gi>language</gi> element within the header (see section <ptr target="#HD41"/>).</p>
@@ -600,12 +554,12 @@ with others.--></p>
             to give information about the physical presentation of the text in the source. In the
             following example, <att>rend</att> is used to indicate that both the emphasized word and
             the proper name are printed in italics: <egXML xmlns="http://www.tei-c.org/ns/Examples"
- source="#STGA-eg-11"><p> ... Their motives <emph rend="italics">might</emph> be pure
+              source="#STGA-eg-11"><p> ... Their motives <emph rend="italics">might</emph> be pure
                 and pious; but he was equally alarmed by his knowledge of the ambitious <name
                   rend="italics">Bohemond</name>, and his ignorance of the Transalpine chiefs:
                 ...</p></egXML> The same effect might be achieved using the <att>style</att>
             attribute, as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"
- source="#STGA-eg-11"><p> ... Their motives <emph style="font-style: italic"
+              source="#STGA-eg-11"><p> ... Their motives <emph style="font-style: italic"
                   >might</emph> be pure and pious; but he was equally alarmed by his knowledge of
                 the ambitious <name style="font-style: italic">Bohemond</name>, and his ignorance of
                 the Transalpine chiefs: ...</p></egXML> If all or most <gi>emph</gi> and
@@ -616,8 +570,8 @@ with others.--></p>
           <p>The main difference between <att>rend</att> attribute and <att>style</att> is that the
             value used for the former may contain one or more tokens from any vocabulary devised by
             the encoder, separated by space characters, whereas the value used for the latter must
-            be a single string taken from a formally-defined style definition language such as CSS. 
-	The <att>rend</att> attribute values are sequence-indeterminate set of
+            be a single string taken from a formally-defined style definition language such as CSS.
+            The <att>rend</att> attribute values are sequence-indeterminate set of
             whitespace-separated tokens, whereas <att>style</att> values allow whitespace and
             sequence relationships as part of the formally-defined style definition language.</p>
           <p>The <gi>rendition</gi> element defined in <ptr target="#HD57"/> may be used to hold
@@ -638,17 +592,19 @@ with others.--></p>
                 </namespace>
               </tagsDecl>
               <!-- ... -->
-              <text><body>
+              <text>
+                <body>
                   <div>
                     <p rendition="#IT"
                       ><!-- this paragraph uses the seriffed font, but is in italic--></p>
                     <p>
                       <!-- this paragraph uses the seriffed font, but is not in
    italic --></p>
-                  </div></body></text>
+                  </div>
+                </body>
+              </text>
             </egXML>
           </p>
-
           <p>The <att>rendition</att> attribute always points to one or more <gi>rendition</gi>
             elements, each of which defines some aspect of the rendering or appearance of the text
             in its original form. These details may most conveniently be described using a formal
@@ -674,9 +630,10 @@ with others.--></p>
               <item>One or more properties may be specified as the default for all elements of a
                 given type, using the <att>render</att> attribute to point to <gi>rendition</gi>
                 elements ;</item>
-	      <item>One or more properties may be specified for individual element occurrences, 
-                using the <att>rend</att> attribute with any convenient set of one or more sequence-indeterminate tokens; </item> 
-<item>One or more properties may be specified for individual element occurrences,
+              <item>One or more properties may be specified for individual element occurrences,
+                using the <att>rend</att> attribute with any convenient set of one or more
+                sequence-indeterminate tokens; </item>
+              <item>One or more properties may be specified for individual element occurrences,
                 using the <att>rendition</att> attribute to point to <gi>rendition</gi> elements; </item>
               <item>One or more properties may be supplied explicitly for individual element
                 occurrences, using the <att>style</att> attribute. </item>
@@ -693,28 +650,22 @@ with others.--></p>
             meaningfully combined. Similar considerations apply to the use of the <att>rend</att>
             attribute, if this is used in combination with either <att>rendition</att> or
               <att>style</att>. </p>
-
           <p>Note that these TEI attributes always describe the rendition or appearance of the
             source document, <emph>not</emph> intended output renditions, although often the two may
             be closely related. </p>
-
         </div>
-
         <div xml:id="STGAba">
           <head>Evaluation of Links</head>
-          <p>Several TEI elements carry attributes whose values are
-	  defined as <code>anyURI</code>, meaning that such attributes
-	  supply a link or pointer, typically expressed as a URL. Like
-	  other XML applications, the TEI allows use of a special
-	  attribute to set the context within which relative URLs are
-	  to be evaluated. The global attribute <att>xml:base</att> is defined as part
-            of the XML specification and belongs to the XML namespace rather than the TEI namespace.
-            We do not describe it in detail here: reference
-	    information about <att>xml:base</att> is
-            provided by <ptr target="#XMLBASE"/> </p>
-
-          <p>In essence <att>xml:base</att> is used to set a context for all relative URLs
-            within the scope of the element on which it is specified. For example: <egXML
+          <p>Several TEI elements carry attributes whose values are defined as <code>anyURI</code>,
+            meaning that such attributes supply a link or pointer, typically expressed as a URL.
+            Like other XML applications, the TEI allows use of a special attribute to set the
+            context within which relative URLs are to be evaluated. The global attribute
+              <att>xml:base</att> is defined as part of the XML specification and belongs to the XML
+            namespace rather than the TEI namespace. We do not describe it in detail here: reference
+            information about <att>xml:base</att> is provided by <ptr target="#XMLBASE"/>
+          </p>
+          <p>In essence <att>xml:base</att> is used to set a context for all relative URLs within
+            the scope of the element on which it is specified. For example: <egXML
               xmlns="http://www.tei-c.org/ns/Examples">
               <body>
                 <div xml:base="http://www.example.org/somewhere.xml">
@@ -737,84 +688,65 @@ with others.--></p>
             with the value <code>p1</code> for its <att>xml:id</att> attribute. Further discussion
             of this element and its effect on TEI linking methods is provided in chapter <ptr
               target="#SA"/>. </p>
-</div>
-<div xml:id="STGAxs">
-<head>XML Whitespace</head>
-<p>The global attribute <att>xml:space</att> provides a mechanism for
-indicating to systems processing
-an XML file how they should treat whitespace, that is, any sequences
-of consecutive tab (#x09), space
-(#x20), carriage return (#x0D) or linefeed (#x0A) characters. Like
-<att>xml:id</att> this attribute is defined as part           of the XML specification and belongs to the XML
-namespace rather than the TEI namespace. Complete information about
-this attribute is provided by  <ref
-target="http://www.w3.org/TR/REC-xml/#sec-white-space">section 2.10 of the XML
-Specification</ref>; here we provide a summary of how
-its use affects users of the TEI scheme.</p>
-<p>The <att>xml:space</att> attribute has  only two permitted values: <val>preserve</val> and
-<val>default</val>. The first indicates that whitespace in a text
-node—every
-carriage return, every tab, etc.—should be maintained as is when the
-document is processed. The
-second (which is implied when the attribute is not supplied),
-indicates that whitespace should be
-handled <soCalled>as appropriate</soCalled>. Exactly what is deemed appropriate is left unspecified by
-the XML Recommendation. </p>
-<p>These Guidelines assume one of two different ways of processing
-whitespace will apply in a given case, depending on an element's
-content model. For an element that can
-contain only other elements with no
-intervening non-whitespace characters, 
-whitespace is considered to have no semantic significance, and should
-therefore be discarded by a processor. For example, in a <gi>choice</gi> element, such as 
-   <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<choice>
-<sic>1724</sic>
-<corr>1728</corr>
-</choice>
-</egXML>
-since non-whitespace text  is not permitted  between  the
-<gi>choice</gi>
-start-tag and  the <gi>sic</gi> tags or between the <gi>sic</gi> and
-<gi>corr</gi> tags, 
-any whitespace found there has no significance and can be ignored
-completely by a processor.</p>
-<p>Similarly,  the <gi>address</gi> element has a content model
-containing only elements: any punctuation or
-whitespace required between the
-lines of an address must therefore be supplied by the processor, as
-any whitespace present in the input document will be ignored. </p>
-
-<p>Elements with content models of this type are comparatively unusual
-in the TEI: a list of them is provided in the TEI release file
-<ident type="file">stripspace.xsl.model</ident>, formatted there for use as an
-<gi>xsl:strip-space</gi>
-command for XSL stylesheets.</p>
-<p>Most TEI elements permit what is known as mixed-content: that is,
-they can contain both text and other elements. Here the assumption of
-these Guidelines is
-that whitespace
-will be normalized. This means that all space, carriage return, linefeed,
-and tab characters are converted into spaces, all consecutive spaces are
-then deleted and replaced by one space, and then space immediately after a
-start-tag or immediately before an end-tag is deleted. The result is that
-this encoding,
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<persName>
-<forename>Edward</forename>
-<forename>George</forename>
-<surname type="linked">Bulwer-Lytton</surname>,
-<roleName>Baron Lytton of
-<placeName>Knebworth</placeName>
-</roleName>
-</persName>
-</egXML>
-would be rendered as <q>Edward George Bulwer-Lytton, Baron Lytton of Knebworth</q>.
-The space before his name has been removed, a space is included between his
-forenames, the comma is preserved, and the newlines within his name have all been removed.
-</p>
-
-<!--
+        </div>
+        <div xml:id="STGAxs">
+          <head>XML Whitespace</head>
+          <p>The global attribute <att>xml:space</att> provides a mechanism for indicating to
+            systems processing an XML file how they should treat whitespace, that is, any sequences
+            of consecutive tab (#x09), space (#x20), carriage return (#x0D) or linefeed (#x0A)
+            characters. Like <att>xml:id</att> this attribute is defined as part of the XML
+            specification and belongs to the XML namespace rather than the TEI namespace. Complete
+            information about this attribute is provided by <ref
+              target="http://www.w3.org/TR/REC-xml/#sec-white-space">section 2.10 of the XML
+              Specification</ref>; here we provide a summary of how its use affects users of the TEI
+            scheme.</p>
+          <p>The <att>xml:space</att> attribute has only two permitted values: <val>preserve</val>
+            and <val>default</val>. The first indicates that whitespace in a text node—every
+            carriage return, every tab, etc.—should be maintained as is when the document is
+            processed. The second (which is implied when the attribute is not supplied), indicates
+            that whitespace should be handled <soCalled>as appropriate</soCalled>. Exactly what is
+            deemed appropriate is left unspecified by the XML Recommendation. </p>
+          <p>These Guidelines assume one of two different ways of processing whitespace will apply
+            in a given case, depending on an element's content model. For an element that can
+            contain only other elements with no intervening non-whitespace characters, whitespace is
+            considered to have no semantic significance, and should therefore be discarded by a
+            processor. For example, in a <gi>choice</gi> element, such as <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <choice>
+                <sic>1724</sic>
+                <corr>1728</corr>
+              </choice>
+            </egXML> since non-whitespace text is not permitted between the <gi>choice</gi>
+            start-tag and the <gi>sic</gi> tags or between the <gi>sic</gi> and <gi>corr</gi> tags,
+            any whitespace found there has no significance and can be ignored completely by a
+            processor.</p>
+          <p>Similarly, the <gi>address</gi> element has a content model containing only elements:
+            any punctuation or whitespace required between the lines of an address must therefore be
+            supplied by the processor, as any whitespace present in the input document will be
+            ignored. </p>
+          <p>Elements with content models of this type are comparatively unusual in the TEI: a list
+            of them is provided in the TEI release file <ident type="file"
+              >stripspace.xsl.model</ident>, formatted there for use as an <gi>xsl:strip-space</gi>
+            command for XSL stylesheets.</p>
+          <p>Most TEI elements permit what is known as mixed-content: that is, they can contain both
+            text and other elements. Here the assumption of these Guidelines is that whitespace will
+            be normalized. This means that all space, carriage return, linefeed, and tab characters
+            are converted into spaces, all consecutive spaces are then deleted and replaced by one
+            space, and then space immediately after a start-tag or immediately before an end-tag is
+            deleted. The result is that this encoding, <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <persName>
+                <forename>Edward</forename>
+                <forename>George</forename>
+                <surname type="linked">Bulwer-Lytton</surname>, <roleName>Baron Lytton of
+                    <placeName>Knebworth</placeName>
+                </roleName>
+              </persName>
+            </egXML> would be rendered as <q>Edward George Bulwer-Lytton, Baron Lytton of
+              Knebworth</q>. The space before his name has been removed, a space is included between
+            his forenames, the comma is preserved, and the newlines within his name have all been
+            removed. </p>
+          <!--
 <p>The <gi>persName</gi> element is a mixed-content element; punctuation
 such as the
 comma in the above example lies outside any of the child elements. The
@@ -830,48 +762,41 @@ components of the address. Treating a structured element as a
 mixed-content
 one, or vice versa, should be done with care. </p>
 -->
-
-<p>If the default treatment described above is not appropriate for a
-mixed content element, the processing required may be described in the
-<gi>encodingDesc</gi> element of the TEI header, but generic XML processing
-tools may not take note of this. </p>
-<p>Alternatively, the <att>xml:space</att> attribute may be supplied
-with a value of <val>preserve</val> in order to
-indicate that every space, tab, carriage return and linefeed character
-found within that element in the document being processed is significant. Typically, the result of that processing will be to retain
-the whitespace characters in the output. Thus if the above example
-began  
-<tag>persName xml:space="preserve"</tag>, the resulting text would
-most likely be rendered over
-five lines, indented, and with a blank line following. </p>
-<p>The
-<code>xml:space="preserve"</code> attribute is rarely used in TEI
-documents because such layout features are generally captured with
-less risk and more precision by using native TEI elements such as
-<gi>lb</gi> or <gi>space</gi>, or by using the renditional attributes
-described in section  <ptr target="#STGAre"/>.</p>
-
-
+          <p>If the default treatment described above is not appropriate for a mixed content
+            element, the processing required may be described in the <gi>encodingDesc</gi> element
+            of the TEI header, but generic XML processing tools may not take note of this. </p>
+          <p>Alternatively, the <att>xml:space</att> attribute may be supplied with a value of
+              <val>preserve</val> in order to indicate that every space, tab, carriage return and
+            linefeed character found within that element in the document being processed is
+            significant. Typically, the result of that processing will be to retain the whitespace
+            characters in the output. Thus if the above example began <tag>persName
+              xml:space="preserve"</tag>, the resulting text would most likely be rendered over five
+            lines, indented, and with a blank line following. </p>
+          <p>The <code>xml:space="preserve"</code> attribute is rarely used in TEI documents because
+            such layout features are generally captured with less risk and more precision by using
+            native TEI elements such as <gi>lb</gi> or <gi>space</gi>, or by using the renditional
+            attributes described in section <ptr target="#STGAre"/>.</p>
           <specGrp xml:id="DSTECAT" n="Attribute classes">
-
-
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.ascribed.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.canonical.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.ranging.xml"/>
             <!-- must come before att.dimensions -->
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.dimensions.xml"/>
             <!-- must come before att.damaged -->
+            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.written.xml"/>
+            <!-- must come before att.damaged -->
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.damaged.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.breaking.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.cReferencing.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.datable.custom.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude"
+              href="../../Specs/att.datable.custom.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.datable.w3c.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.datable.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.datcat.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.declarable.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.declaring.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.fragmentable.xml"/>
-<!-- must come before att.divLike -->
+            <!-- must come before att.divLike -->
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.divLike.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.docStatus.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.duration.w3c.xml"/>
@@ -881,21 +806,27 @@ described in section  <ptr target="#STGAre"/>.</p>
               href="../../Specs/att.global.responsibility.xml"/>
             <!-- referenced by att.editLike, att.interpLike, att.testCritical -->
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.editLike.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.global.rendition.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude"
+              href="../../Specs/att.global.rendition.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.global.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.handFeatures.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.internetMedia.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude"
+              href="../../Specs/att.internetMedia.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.media.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.resourced.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.interpLike.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.measurement.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.milestoneUnit.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude"
+              href="../../Specs/att.milestoneUnit.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.naming.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.notated.xml"/>
+            
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.placement.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.typed.xml"/>
             <!-- must precede pointing.group -->
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.pointing.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.pointing.group.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude"
+              href="../../Specs/att.pointing.group.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.readFrom.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.scoping.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.segLike.xml"/>
@@ -903,35 +834,31 @@ described in section  <ptr target="#STGAre"/>.</p>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.edition.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.spanning.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.styleDef.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.tableDecoration.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude"
+              href="../../Specs/att.tableDecoration.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.timed.xml"/>
-            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.transcriptional.xml"/>
+            <include xmlns="http://www.w3.org/2001/XInclude"
+              href="../../Specs/att.transcriptional.xml"/>
             <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.translatable.xml"/>
-	    <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.citing.xml"/>
-
-
-
+                   
+            <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/att.citing.xml"/>
           </specGrp>
-	</div>
+        </div>
       </div>
     </div>
-
     <div type="div2" xml:id="STECCM">
       <head>Model Classes</head>
-
       <p>As noted above, the members of a given TEI model class share the property that they can all
         appear in the same location within a document. Wherever possible, the content model of a TEI
         element is expressed not directly in terms of specific elements, but indirectly in terms of
         particular model classes. This makes content models simpler and more consistent; it also
         makes them much easier to understand and to modify.</p>
-
       <p>Like attribute classes, model classes may have subclasses or superclasses. Just as elements
         inherit from a class the ability to appear in certain locations of a document (wherever the
         class can appear), so all members of a subclass inherit the ability to appear wherever any
         superclass can appear. To some extent, the class system thus provides a way of reducing the
         whole TEI galaxy of elements into a tidy hierarchy. This is however not entirely the
         case.</p>
-
       <p>In fact, the nature of a given class of elements can be considered along two dimensions: as
         noted, it defines a set of places where the class members are permitted within the document
         hierarchy; it also implies a semantic grouping of some kind. For example, the very large
@@ -942,7 +869,6 @@ described in section  <ptr target="#STGAre"/>.</p>
           permitted</soCalled> is very constrained: it may just be within one specific element, or
         one class of element, for example. In other cases, elements may be permitted to appear in
         very many places, or in more than one such set of places.</p>
-
       <p>These factors are reflected in the way that model classes are named. If a model class has a
         name containing <val>part</val>, such as <ident type="class">model.divPart</ident> or <ident
           type="class">model.biblPart</ident> then it is primarily defined in terms of its
@@ -961,7 +887,6 @@ described in section  <ptr target="#STGAre"/>.</p>
           >model.dateLike</ident>, <ident type="class">model.measureLike</ident>, and <ident
           type="class">model.nameLike</ident>), the last of these being itself a superclass with
         several members.</p>
-
       <p>Although most classes are defined by the <ident type="module">tei</ident> infrastructure
         module, a class cannot be populated unless some other specific module is included in a
         schema, since element declarations are contained by modules. Classes are not declared
@@ -970,7 +895,6 @@ described in section  <ptr target="#STGAre"/>.</p>
         different members, depending on which modules are active. Consequently, the content model of
         a given element (being expressed in terms of model classes) may differ depending on which
         modules are active. </p>
-
       <p>Some classes contain only a single member, even when all modules are loaded. One reason for
         declaring such a class is to make it easier for a customization to add new member elements
         in a specific place, particularly in areas where the TEI does not make fully elaborated
@@ -979,7 +903,6 @@ described in section  <ptr target="#STGAre"/>.</p>
         TEI <gi>rdg</gi> element. A project wishing to add an alternative way of structuring
         text-critical information could do so by defining their own elements and adding it to this
         class.</p>
-
       <p>Another reason for declaring single-member classes is where the class members are not
         needed in all documents, but appear in the same place as elements which are very frequently
         required. For example, the specialized element <gi>g</gi> used to represent a non-Unicode
@@ -988,24 +911,17 @@ described in section  <ptr target="#STGAre"/>.</p>
         a schema. References to this class are included in almost every content model, since if it
         is used at all the <gi>g</gi> must be available wherever text is available; however these
         references have no effect unless the gaiji module is loaded.</p>
-
-      <p>At the other end of the scale, a few of the classes
-      predefined by the tei module are subsequently populated with
-      very many members. For example, the class <ident type="class"
-      >model.pPart.edit</ident> groups all the classes of element for
-      simple editorial correction and transcription which can appear
-      within a <gi>p</gi> or paragraph element. The <ident
-      type="module">core</ident> module alone adds more than fifty
-      elements to this class; the <ident
-      type="module">namesdates</ident> module adds another twenty, as
-      does the <ident type="module">tagdocs</ident> module. Since the
-      <gi>p</gi> element is one of the basic building blocks of a TEI
-      document it is not surprising that each module will need to add
-      elements to it. The class system here provides a very convenient
-      way of controlling the resulting complexity. Typically, elements
-      are not added directly to these very general classes, but via
-      some intermediate semantically-motivated class. </p>
-
+      <p>At the other end of the scale, a few of the classes predefined by the tei module are
+        subsequently populated with very many members. For example, the class <ident type="class"
+          >model.pPart.edit</ident> groups all the classes of element for simple editorial
+        correction and transcription which can appear within a <gi>p</gi> or paragraph element. The
+          <ident type="module">core</ident> module alone adds more than fifty elements to this
+        class; the <ident type="module">namesdates</ident> module adds another twenty, as does the
+          <ident type="module">tagdocs</ident> module. Since the <gi>p</gi> element is one of the
+        basic building blocks of a TEI document it is not surprising that each module will need to
+        add elements to it. The class system here provides a very convenient way of controlling the
+        resulting complexity. Typically, elements are not added directly to these very general
+        classes, but via some intermediate semantically-motivated class. </p>
       <p>Just as there are a few classes which have a single member, so there are some classes which
         are used only once in the TEI architecture. These classes, which have no superclass and
         therefore do not fit into the class hierarchy defined here, are a convenient way of
@@ -1017,19 +933,15 @@ described in section  <ptr target="#STGAre"/>.</p>
           >model.addrPart</ident> is used only to express the content model for the element
           <gi>address</gi>; it references some other classes of elements, which can appear
         elsewhere, and also some elements which can only appear inside an address.</p>
-
       <div xml:id="STBTC">
         <head>Informal Element Classifications </head>
-
         <p>Most TEI elements may also be informally classified as belonging to one of the following
           groupings: <list type="gloss">
             <label><term>divisions</term></label>
-
             <item>high level, possibly self-nesting, major divisions of texts. These elements
               populate such classes as <ident type="class">model.divLike</ident> or <ident
                 type="class">model.div1Like</ident>, and typically form the largest component units
               of a text. </item>
-
             <label><term>chunks</term>
             </label>
             <item>elements such as paragraphs and other paragraph-level elements, which can appear
@@ -1038,7 +950,6 @@ described in section  <ptr target="#STGAre"/>.</p>
               either directly or by means of other classes such as <ident type="class"
                 >model.pLike</ident> (paragraph-like elements), <ident type="class"
                 >model.entryLike</ident>, etc.</item>
-
             <label><term>phrase-level elements</term>
             </label>
             <item>elements such as highlighted phrases, book titles, or editorial corrections which
@@ -1062,7 +973,6 @@ described in section  <ptr target="#STGAre"/>.</p>
               both chunk-like and phrase-like. However, the classes <ident type="class"
                 >model.phrase</ident>, <ident type="class">model.pLike</ident>, and <ident
                 type="class">model.inter</ident> are all disjoint.</item>
-
             <label><term>components</term>
             </label>
             <item>elements which can appear directly within texts or text divisions; this is a
@@ -1073,18 +983,14 @@ described in section  <ptr target="#STGAre"/>.</p>
                 <ident type="class">model.entryLike</ident>.</item>
           </list> Broadly speaking, the front, body, and back of a text each comprises a series of
           components, optionally grouped into divisions. </p>
-
         <p>As noted above, some elements do not belong to any model class, and some model classes
           are not readily associated with any of the above informal groupings. However, over
-          two-thirds of the <?insert totalElements?> elements defined in the present edition of these Guidelines are
-          classified in this way, and future editions of these recommendations will extend and
-          develop this classification scheme.</p>
-
+          two-thirds of the <?insert totalElements?> elements defined in the present edition of
+          these Guidelines are classified in this way, and future editions of these recommendations
+          will extend and develop this classification scheme.</p>
         <p>A complete alphabetical list of all model classes is provided in <ptr
             target="#REF-CLASSES-MODEL"/>.</p>
-
         <!-- all model class declarations: nb order is critical -->
-
         <!-- inline things -->
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.nameLike.agent.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.segLike.xml"/>
@@ -1098,8 +1004,10 @@ described in section  <ptr target="#STGAre"/>.</p>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.graphicLike.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.offsetLike.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.pPart.msdesc.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.pPart.editorial.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.pPart.transcriptional.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.pPart.editorial.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.pPart.transcriptional.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.pPart.edit.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.linePart.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.ptrLike.xml"/>
@@ -1121,8 +1029,10 @@ described in section  <ptr target="#STGAre"/>.</p>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.pLike.xml"/>
         <!-- used by model.divPart -->
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.stageLike.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.featureVal.complex.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.featureVal.single.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.featureVal.complex.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.featureVal.single.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.entryPart.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.entryPart.top.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.eventLike.xml"/>
@@ -1135,9 +1045,12 @@ described in section  <ptr target="#STGAre"/>.</p>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.placeNamePart.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.placeStateLike.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.orgPart.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.publicationStmtPart.agency.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.publicationStmtPart.detail.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.availabilityPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.publicationStmtPart.agency.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.publicationStmtPart.detail.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.availabilityPart.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.certLike.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.descLike.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.glossLike.xml"/>
@@ -1148,7 +1061,8 @@ described in section  <ptr target="#STGAre"/>.</p>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.divWrapper.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.divTopPart.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.divTop.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.frontPart.drama.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.frontPart.drama.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.pLike.front.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.divBottomPart.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.divBottom.xml"/>
@@ -1190,12 +1104,16 @@ described in section  <ptr target="#STGAre"/>.</p>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.div6Like.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.div7Like.xml"/>
         <!-- remainder are left overs -->
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.applicationLike.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.applicationLike.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.teiHeaderPart.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.sourceDescPart.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.encodingDescPart.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.editorialDeclPart.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/model.profileDescPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.encodingDescPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.editorialDeclPart.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude"
+          href="../../Specs/model.profileDescPart.xml"/>
       </div>
     </div>
   </div>
@@ -1222,15 +1140,11 @@ entities in the XML DTD fragments.--></p>
           <specDesc key="macro.xtext"/>
         </specList>
       </p>
-      
-<!-- MDH 2013-04-25: Processing instructions to insert content per 
+      <!-- MDH 2013-04-25: Processing instructions to insert content per 
       https://sourceforge.net/p/tei/bugs/512/. -->
-
-      <p>The present version of the TEI Guidelines includes some
-      <?insert totalElements?> different elements. <ptr
-      target="#tab-content-models"/> shows, in descending order of
-      frequency, the seven most commonly used content models.<?insert
-      tab-content-models?></p>
+      <p>The present version of the TEI Guidelines includes some <?insert totalElements?> different
+        elements. <ptr target="#tab-content-models"/> shows, in descending order of frequency, the
+        seven most commonly used content models.<?insert tab-content-models?></p>
       <specGrp>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/macro.paraContent.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/macro.limitedContent.xml"/>
@@ -1239,139 +1153,116 @@ entities in the XML DTD fragments.--></p>
           href="../../Specs/macro.phraseSeq.limited.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/macro.specialPara.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/macro.xtext.xml"/>
-	<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/macro.anyXML.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/macro.anyXML.xml"/>
       </specGrp>
     </div>
-    <div type="div3" xml:id="DTYPES">
-      <head>Datatype Macros</head>
+    <div type="div3" xml:id="DTYPEDECS">
+      <head>Datatype Specifications</head>
       <p>The values which attributes may take in a TEI schema are defined, for the most part, by
-        reference to a TEI <term>datatype</term>. Each such datatype is defined in terms of other
-        primitive datatypes, derived mostly from <ref target="#XSD2">W3C
-          Schema Datatypes</ref>, literal values, or other datatypes. This indirection makes it
-        possible for a TEI application to set constraints either globally or in individual cases, by
+        reference to a TEI <term>datatype specification</term>. Each such specification is defined
+        in terms of other primitive datatypes, derived mostly from <ref target="#XSD2">W3C Schema
+          Datatypes</ref>, literal values, or other datatypes. This indirection makes it possible
+        for a TEI application to set constraints either globally or in individual cases, by
         redefining the datatype definition or the reference to it respectively. In some cases, the
         TEI datatype includes additional usage constraints which cannot be enforced by existing
         schema languages, although a TEI-compliant processor should attempt to validate them (see
         further discussion in chapter <ptr target="#CF"/>).</p>
-      <p>Where literal values or name tokens are used in a datatype definition, an associated value
-        list supplies definitions for the significance of suggested or (in the case of closed lists)
-        all possible values.</p>
-      <!-- but can we put a valList in a macroSpec ? -->
+      <p>The following element is used to define a TEI datatype: <specList>
+          <specDesc key="dataSpec"/>
+        </specList>
+      </p>
       <p>TEI-defined datatypes may be grouped into those which define normalized values for numeric
         quantities, probabilities, or temporal expressions, those which define various kinds of
         shorthand codes or keys, and those which define pointers or links.</p>
       <p>The following datatypes are used for attributes which are intended to hold normalized
         values of various kinds. First, expressions of quantity or probability: <specList>
-          <specDesc key="data.certainty"/>
-          <specDesc key="data.probability"/>
-          <specDesc key="data.numeric"/>
-          <specDesc key="data.interval"/>
-          <specDesc key="data.percentage"/>
-          <specDesc key="data.count"/>
+          <specDesc key="teidata.certainty"/>
+          <specDesc key="teidata.probability"/>
+          <specDesc key="teidata.numeric"/>
+          <specDesc key="teidata.interval"/>
+          <specDesc key="teidata.percentage"/>
+          <specDesc key="teidata.count"/>
         </specList>
       </p>
-      <p>Examples of attributes using the <ident type="datatype">data.probability</ident> datatype
-        include <att>degree</att> on <gi>damage</gi> or <gi>certainty</gi>; examples of <ident
-          type="datatype">data.numeric</ident> include <att>quantity</att> on members of the <ident
-          type="class">att.measurement</ident> class or <att>value</att> on <gi>numeric</gi>;
-        examples of <ident type="datatype">data.count</ident> include <att>cols</att> on
-          <gi>cell</gi> and <gi>table</gi>.</p>
+      <p>Examples of attributes using the <ident type="datatype">teidata.probability</ident>
+        datatype include <att>degree</att> on <gi>damage</gi> or <gi>certainty</gi>; examples of
+          <ident type="datatype">teidata.numeric</ident> include <att>quantity</att> on members of
+        the <ident type="class">att.measurement</ident> class or <att>value</att> on
+          <gi>numeric</gi>; examples of <ident type="datatype">teidata.count</ident> include
+          <att>cols</att> on <gi>cell</gi> and <gi>table</gi>.</p>
       <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-1"
         n="Numeric Datatypes">
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.certainty.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.probability.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.numeric.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.interval.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.percentage.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.count.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.certainty.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.probability.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.numeric.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.interval.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.percentage.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.count.xml"/>
       </specGrp>
       <p>Next, the datatypes used for attributes which are intended to hold normalized dates or
-        times, durations, or truth values: <specList>
-          <specDesc key="data.duration.w3c"/>
-          <specDesc key="data.duration.iso"/>
-          <specDesc key="data.temporal.w3c"/>
-          <specDesc key="data.temporal.iso"/>
-          <specDesc key="data.truthValue"/>
-          <specDesc key="data.xTruthValue"/>
-          <specDesc key="data.language"/>
+        times, durations, truth values, and language identifiers: <specList>
+          <specDesc key="teidata.duration.w3c"/>
+          <specDesc key="teidata.duration.iso"/>
+          <specDesc key="teidata.temporal.w3c"/>
+          <specDesc key="teidata.temporal.iso"/>
+          <specDesc key="teidata.truthValue"/>
+          <specDesc key="teidata.xTruthValue"/>
+          <specDesc key="teidata.language"/>
         </specList>
       </p>
       <p>Note that in each of these cases the values used are those recommended by existing
-        international standards: ISO 8601 as profiled by <title ref="#XSD2">XML Schema Part 2: Datatypes Second
-          Edition</title> in the case of durations, times, and date; W3C Schema datatypes in the
-        case of truth values; BCP 47 in the case of language; and ISO 5218 in the case of sex.</p>
+        international standards: ISO 8601 as profiled by <title ref="#XSD2">XML Schema Part 2:
+          Datatypes Second Edition</title> in the case of durations, times, and date; W3C Schema
+        datatypes in the case of truth values; and BCP 47 in the case of language<!--; and ISO 5218 in the
+        case of sex-->.</p>
       <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-2"
         n="Normalized Datatypes">
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.temporal.w3c.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.duration.w3c.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.truthValue.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.xTruthValue.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.language.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.temporal.w3c.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.duration.iso.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.temporal.iso.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.duration.w3c.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.truthValue.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.xTruthValue.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.language.xml"/>
       </specGrp>
       <p>The following datatypes have more specialized uses: <specList>
-          <specDesc key="data.namespace"/>
-          <specDesc key="data.outputMeasurement"/>
-          <specDesc key="data.pattern"/>
-          <specDesc key="data.point"/>
-          <specDesc key="data.pointer"/>
-          <specDesc key="data.version"/>
-          <specDesc key="data.versionNumber"/>
-	  <specDesc key="data.replacement"/>
-	  <specDesc key="data.xpath"/>
+          <specDesc key="teidata.namespace"/>
+          <specDesc key="teidata.outputMeasurement"/>
+          <specDesc key="teidata.pattern"/>
+          <specDesc key="teidata.point"/>
+          <specDesc key="teidata.pointer"/>
+          <specDesc key="teidata.version"/>
+          <specDesc key="teidata.versionNumber"/>
+          <specDesc key="teidata.replacement"/>
+          <specDesc key="teidata.xpath"/>
         </specList>
       </p>
       <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-3"
         n="Notation and pointer datatypes">
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.namespace.xml"/>
-
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.namespace.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude"
-          href="../../Specs/data.outputMeasurement.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.pattern.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.point.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.pointer.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.version.xml"/> <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.versionNumber.xml"/>
+          href="../../Specs/teidata.outputMeasurement.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.pattern.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.point.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.pointer.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.version.xml"/>
         <include xmlns="http://www.w3.org/2001/XInclude"
-		 href="../../Specs/data.replacement.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.xpath.xml"/>
+          href="../../Specs/teidata.versionNumber.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.replacement.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.xpath.xml"/>
       </specGrp>
       <p>By far the largest number of TEI attributes take values which are coded values or names of
         some kind. These values may be constrained or defined in a number of different ways, each of
         which is given a different name, as follows: <specList>
-          <!--specDesc key="data.key"/-->
-          <specDesc key="data.word"/>
-          <specDesc key="data.text"/>
-          <specDesc key="data.name"/>
-          <specDesc key="data.enumerated"/>
-          <specDesc key="data.sex"/>
-          <specDesc key="data.xmlName"/>
-
-          <!-- MDH 2013-02-06: Removed as data.code is no longer in use.     -->
-          <!--<specDesc key="data.code"/>-->
-        </specList>
+          <specDesc key="teidata.word"/>
+          <specDesc key="teidata.text"/>
+          <specDesc key="teidata.name"/>
+          <specDesc key="teidata.enumerated"/>
+          <specDesc key="teidata.sex"/>
+          <specDesc key="teidata.xmlName"/>
+           </specList>
       </p>
-      <!-- <p>The attributes <att>key</att> provided by the <ident type="class">att.canonical</ident> class is currently the only attribute
-of type <ident type="datatype">data.key</ident>. It is used to supply
-an externally-defined identifier, such as a database key or
-filename. Because such identifiers are externally-defined, no
-constraints are placed on their possible values: any string of Unicode
-characters may be used. Any constraints on their values, such as the
-rules for constructing a valid database key in a particular system,
-may be documented by a <gi>tagUsage</gi> element in the TEI header,
-but are not enforced by the datatype as defined here. Such
-system-specific constraints may however be added to a TEI schema by
-using the customization techniques methods described in <ptr
-target="#MD"/>.</p>-->
-      <!-- removed as we don't now use data.key LB 2012-06-17-->
-      <p>Attributes of type <ident type="datatype">data.word</ident>, such as <att>age</att> on
+      <p>Attributes of type <ident type="datatype">teidata.word</ident>, such as <att>age</att> on
           <gi>person</gi>, are used to supply an identifier expressed as any kind of single token or
         word. The TEI places a few constraints on the characters which may be used for this purpose:
         only Unicode characters classified as letters, digits, punctuation characters, or symbols
@@ -1384,58 +1275,61 @@ target="#MD"/>.</p>-->
         the inability to include whitespace or other special characters in a value may be
         problematic. In other cases, it may also be simply more convenient to supply a short
         sequence of natural language words including spaces as a single value. For these reasons, we
-        also provide a datatype <ident>data.text</ident> which does permit whitespace and indeed any
-        other Unicode character. Legal values include <val>cholmondeley</val>, <val>été</val>,
+        also provide a datatype <ident>teidata.text</ident> which does permit whitespace and indeed
+        any other Unicode character. Legal values include <val>cholmondeley</val>, <val>été</val>,
           <val>1234</val>, <val>e-content</val>, <val>xml:id</val>, and <val>grand wazoo</val>. This
         datatype should be used with care since XML will not normalize whitespace characters within
-        it: for example the values <code>n="a b"</code> (two spaces)
-	and <code>n="a  b"</code> (three
+        it: for example the values <code>n="a b"</code> (two spaces) and <code>n="a b"</code> (three
         spaces) would be considered distinct. This case should be distinguished from that of an
         attribute permitting multiple values, each of which may be separated by whitespace which
           <emph>will</emph> be normalized (see further <ptr target="#TD-datatypes"/>). </p>
-      <p>Attributes of type <ident type="datatype">data.name</ident> are similar to those of type
-          <ident type="datatype">data.word</ident>, but with the additional constraint that they
+      <p>Attributes of type <ident type="datatype">teidata.name</ident> are similar to those of type
+          <ident type="datatype">teidata.word</ident>, but with the additional constraint that they
         must be legal XML identifiers, as defined by the XML 1.0 specification, or successors.
         Hence, they may not begin with digits or punctuation characters. Legal identifiers include
           <val>cholmondeley</val>, <val>été</val>, <val>e_content</val>, or <val>xml:id</val>, but
         not <val>grand wazoo</val> or <val>1234</val>. Attributes of this kind are typically used to
         represent XML element or attribute names.</p>
-      <p>Attributes of type <ident type="datatype">data.enumerated</ident>, such as <att>new</att>
-        on <gi>shift</gi> or <att>evidence</att> supplied by <ident type="class"
+      <p>Attributes of type <ident type="datatype">teidata.enumerated</ident>, such as
+          <att>new</att> on <gi>shift</gi> or <att>evidence</att> supplied by <ident type="class"
           >att.editLike</ident>, have the same definition as <ident type="datatype"
-          >data.word</ident> above, with the added constraint that the word supplied is taken from a
-        specific list of possibilities. In each case, the element or class specification which
-        includes the definition for the attribute will also contain a list of possible values,
+          >teidata.word</ident> above, with the added constraint that the word supplied is taken
+        from a specific list of possibilities. In each case, the element or class specification
+        which includes the definition for the attribute will also contain a list of possible values,
         together with a prose description of their intended significance. This list may be open (in
         which case the list is advisory), or closed (in which case it determines the range of legal
         values). In this latter case, the datatype will not be <ident type="datatype"
-          >data.enumerated</ident>, but an explicit list of the possible values.</p>
-<!-- MDH 2013-02-06: Removed as data.code is no longer in use.     -->
-      <p><!--Attributes of type <ident type="datatype">data.code</ident> are similar in function, in
-        that they also supply encoded names for values which are defined in more detail elsewhere.
-        In this case, however, the full definition is supplied as content of another XML element,
-        typically but not necessarily in the same document, and it is referenced by means of a
-        pointer.--></p>
+          >teidata.enumerated</ident>, but an explicit list of the possible values.</p>
       <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-4"
         n="Coded value datatypes">
-        <!--<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.key.xml"/>-->
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.word.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.sex.xml"/>
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.text.xml"/>
-        <!-- MDH 2013-02-06: Removed as data.code is no longer in use.     -->
-        <!-- <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.code.xml"/>-->
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.name.xml"/>
-       <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.xmlName.xml"/>
-
-        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.enumerated.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.word.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.sex.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.text.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.name.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.xmlName.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.enumerated.xml"/>
       </specGrp>
       <p>An attribute may, of course, take more than one value of a given type, for example a list
         of pointer values, or a list of words. In the TEI scheme, this information is regarded as a
         property of the <gi>datatype</gi> element used to document the attribute in question rather
-        than as a distinct <soCalled>datatype</soCalled>. See further <ptr target="#TD-datatypes"
-        />.</p>
+        than as a distinct <soCalled>datatype</soCalled>, and is provided by the
+          <att>minOccurs</att> or <att>maxOccurs</att> attribute. See further <ptr
+          target="#TD-datatypes"/>.</p>
+      <p>In a small number of cases, an attribute may take a value of either one datatype or
+        another. These cases are considered as distinct datatypes:
+        <specList>
+          <specDesc key="teidata.probCert"/>
+          <specDesc key="teidata.unboundedInt"/>
+          <specDesc key="teidata.nullOrName"/>
+          
+        </specList>
+        </p>
+      <specGrp xmlns:rng="http://relaxng.org/ns/structure/1.0" xml:id="DTYPES-5"
+        n="Complex datatypes">
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.probCert.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.unboundedInt.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/teidata.nullOrName.xml"/>
+      </specGrp>
     </div>
   </div>
   <div type="div2" xml:id="STOV">
@@ -1465,4 +1359,35 @@ target="#MD"/>.</p>-->
       similarly predeclares a number of patterns with null (<soCalled>notAllowed</soCalled>) values.
       These issues are further discussed in chapter <ptr target="#IM"/>.</p>
   </div>
+<div><head>Deprecated datatype macros</head>
+<p>The following datatype macros are retained for backwards compatibility but will be removed at a future release.</p>
+
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.certainty.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.probability.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.numeric.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.interval.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.percentage.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.count.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.temporal.w3c.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.duration.w3c.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.truthValue.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.xTruthValue.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.language.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.namespace.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.outputMeasurement.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.pattern.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.point.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.pointer.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.version.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.versionNumber.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.replacement.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.xpath.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.word.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.sex.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.text.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.name.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.xmlName.xml"/>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/data.enumerated.xml"/>
+     
+</div>
 </div>

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="head">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="head">
   <gloss versionDate="2005-01-14" xml:lang="en">heading</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">표제부</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">標題</gloss>
@@ -28,21 +25,22 @@
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="att.typed"/>
+    <memberOf key="att.written"/>
     <memberOf key="model.headLike"/>
     <memberOf key="model.pLike.front"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <text/>
-        <ref name="lg"/>
-        <ref name="model.gLike"/>
-        <ref name="model.phrase"/>
-        <ref name="model.inter"/>
-        <ref name="model.lLike"/>
-        <ref name="model.global"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <elementRef key="lg"/>
+        <classRef key="model.gLike"/>
+        <classRef key="model.phrase"/>
+        <classRef key="model.inter"/>
+        <classRef key="model.lLike"/>
+        <classRef key="model.global"/>
+      </alternate>
+    
   </content>
   <exemplum xml:lang="en">
     <p>The most common use for the <gi>head</gi> element is to mark the headings of sections. In

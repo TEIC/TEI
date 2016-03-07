@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="fs">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="iso-fs" ident="fs">
   <gloss versionDate="2007-07-04" xml:lang="en">feature structure</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">자질 구조</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">功能結構</gloss>
@@ -32,9 +29,9 @@ structural unit.</desc>
     <memberOf key="att.datcat"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="f"/>
-    </zeroOrMore>
+    
+      <elementRef key="f" minOccurs="0" maxOccurs="unbounded"/>
+    
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -45,9 +42,7 @@ structural unit.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">spécifie le type de la structure de traits.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el tipo de estructura de rasgo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il tipo di struttura dei tratti</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
     </attDef>
     <attDef ident="feats" usage="opt">
       <gloss versionDate="2007-07-04" xml:lang="en">features</gloss>
@@ -64,9 +59,7 @@ structural unit.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica las especificaciones de valor de rasgo que constituyen esta estructura de
 rasgo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica le specifiche del valore dei tratti che formano questa struttura.</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2005-01-14" xml:lang="en">
         <p>May be used either instead of having features as content, or in
   addition. In the latter case, the features referenced and contained

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="analytic">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="analytic">
   <gloss versionDate="2005-01-14" xml:lang="en">analytic level</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">분석적 층위</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">分析層書目</gloss>
@@ -33,19 +30,19 @@
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <rng:zeroOrMore xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:choice>
-        <rng:ref name="author"/>
-        <rng:ref name="editor"/>
-        <rng:ref name="respStmt"/>
-        <rng:ref name="title"/>
-        <rng:ref name="model.ptrLike"/>
-        <rng:ref name="date"/>
-        <rng:ref name="textLang"/>
-        <rng:ref name="idno"/>
-        <rng:ref name="availability"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="author"/>
+        <elementRef key="editor"/>
+        <elementRef key="respStmt"/>
+        <elementRef key="title"/>
+        <classRef key="model.ptrLike"/>
+        <elementRef key="date"/>
+        <elementRef key="textLang"/>
+        <elementRef key="idno"/>
+        <elementRef key="availability"/>
+      </alternate>
+    
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="xenoData" xmlns:rng="http://relaxng.org/ns/structure/1.0">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="header" ident="xenoData">
   <gloss versionDate="2015-05-30" xml:lang="en">outside metadata</gloss>
   <desc versionDate="2015-05-30" xml:lang="en">provides a container
   element into which metadata in non-TEI formats may be
@@ -19,22 +16,24 @@ $Id$
     <memberOf key="model.teiHeaderPart"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:group>
-        <rng:choice>
-          <rng:text/>
-          <rng:ref name="macro.anyXML"/>
-        </rng:choice>
-      </rng:group>
-    </rng:zeroOrMore>
+    <alternate>
+      <textNode/>
+      <macroRef key="macro.anyXML"/>
+    </alternate>
   </content>
-  <exemplum versionDate="2015-05-30" xml:lang="en"
-	   xmlns:dc="http://purl.org/dc/elements/1.1/"
-	   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <p>This example presumes that the prefix <code>dc</code> has been
-    bound to the namespace
-    <code>http://purl.org/dc/elements/1.1/</code> and the prefix <code>rdf</code> 
-    is bound to the namespace <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>.</p>
+  <exemplum xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" versionDate="2015-05-30" xml:lang="en">
+    <p>This example presumes that the prefix <code>dc</code> has been bound to the namespace
+        <code>http://purl.org/dc/elements/1.1/</code> and the prefix <code>rdf</code> is bound to
+      the namespace <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>. Note: The
+        <att>about</att> attribute on the <code>rdf:Description</code> in this example gives a URI
+      indicating the resource to which the metadata contained therein refer. The
+        <code>rdf:Description</code> in the second <gi>xenoData</gi> block has a blank
+        <att>about</att>, meaning it is pointing at the <hi rend="italic">current</hi> document, so
+      the RDF is about the document within which it is contained, i.e. the TEI document containing
+      the <gi>xenoData</gi> block. Similarly, any kind of relative URI may be used, including
+      fragment identifiers (see <ptr target="#SG-id"/>). Do note, however, that if the contents of
+      the <gi>xenoData</gi> block are to be extracted and used elsewhere, any relative URIs will
+      have to be resolved accordingly.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">
       <xenoData>
         <rdf:RDF><rdf:Description rdf:about="http://www.worldcat.org/oclc/606621663"><dc:title>The description of a new world, called the blazing-world</dc:title>
@@ -58,20 +57,16 @@ $Id$
   <!-- for the examples below except for the UVic "colonial      -->
   <!-- despatches of Vancouver Island" example, for which thanks -->
   <!-- to Martin Holmes, who posted it on the ticket, FR 453.    --> 
-  <exemplum versionDate="2015-05-30"
-	    xml:lang="en"
-	    xmlns:cc="http://web.resource.org/cc/"
-	    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	    xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <exemplum xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" versionDate="2015-05-30" xml:lang="en">
     <p>In this example, the prefix
     <code>rdf</code> is bound to the namespace <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>, the prefix
     <code>dc</code> is bound to the namespace <code>http://purl.org/dc/elements/1.1/</code>, and the prefix
     <code>cc</code> is bound to the namespace <code>http://web.resource.org/cc/</code>.</p>
-    <egXML valid="feasible" xmlns="http://www.tei-c.org/ns/Examples"><xenoData>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"><xenoData>
 	<rdf:RDF>
 	  <cc:Work rdf:about="">
 	    <dc:title>Applied Software Project Management  - review</dc:title>
-	    <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text"></dc:type>
+	    <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text"/>
 	    <dc:license rdf:resource="http://creativecommons.org/licenses/by-sa/2.0/uk/"/>
 	  </cc:Work>
 	  <cc:License rdf:about="http://creativecommons.org/licenses/by-sa/2.0/uk/">
@@ -85,17 +80,13 @@ $Id$
 	</rdf:RDF>
 </xenoData></egXML>
   </exemplum>
-  <exemplum versionDate="2015-07-11" xml:lang="en"
-	    xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
-	    xmlns:dc="http://purl.org/dc/elements/1.1/" >
+  <exemplum xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" versionDate="2015-07-11" xml:lang="en">
     <p>In this example, the prefix
     <code>dc</code> is again bound to the namespace
     <code>http://www.openarchives.org/OAI/2.0/oai_dc/</code>, and the prefix
     <code>oai_dc</code> is bound to the namespace <code>http://www.openarchives.org/OAI/2.0/oai_dc/</code>.</p>
-    <egXML valid="feasible" xmlns="http://www.tei-c.org/ns/Examples"> <xenoData>
-      <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/"
-		 xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+    <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible"> <xenoData>
+      <oai_dc:dc xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<dc:title>The colonial despatches of Vancouver Island and British
 	Columbia 1846-1871: 11566, CO 60/2, p. 291; received 13 November.
 	Trevelyan to Merivale (Permanent Under-Secretary)</dc:title>
@@ -107,7 +98,7 @@ $Id$
 	<dc:format>application/xhtml+xml</dc:format>
 	<dc:type>text</dc:type>
 	<dc:identifier>http://bcgenesis.uvic.ca/getDoc.htm?id=B585TE13.scx</dc:identifier>
-	<dc:rights>This document is licensed under a Creative Commons &#x2026;</dc:rights>
+	<dc:rights>This document is licensed under a Creative Commons …</dc:rights>
 	<dc:language>(SCHEME=ISO639) en</dc:language>
 	<dc:source>Transcribed from microfilm and/or original documents, and
 	marked up in TEI P5 XML. The interactive XHTML resource is generated
@@ -133,7 +124,7 @@ $Id$
     </xenoData>
     </egXML>
   </exemplum>
-  <exemplum versionDate="2015-06-25" xml:lang="en" xmlns:mods="http://www.loc.gov/mods/v3">
+  <exemplum xmlns:mods="http://www.loc.gov/mods/v3" versionDate="2015-06-25" xml:lang="en">
     <p>In this example, the prefix <code>mods</code> is bound to the
     namespace <code>http://www.loc.gov/mods/v3</code>.</p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples" valid="feasible">

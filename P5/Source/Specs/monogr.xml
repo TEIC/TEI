@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="monogr">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="monogr">
   <gloss versionDate="2005-01-14" xml:lang="en">monographic level</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">단행본 층위</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">專題層書目</gloss>
@@ -33,90 +30,90 @@
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:optional>
-        <rng:choice>
-          <rng:group>
-            <rng:choice>
-              <rng:ref name="author"/>
-              <rng:ref name="editor"/>
-              <rng:ref name="meeting"/>
-              <rng:ref name="respStmt"/>
-            </rng:choice>
-            <rng:zeroOrMore>
-              <rng:choice>
-                <rng:ref name="author"/>
-                <rng:ref name="editor"/>
-                <rng:ref name="meeting"/>
-                <rng:ref name="respStmt"/>
-              </rng:choice>
-            </rng:zeroOrMore>
-            <rng:oneOrMore>
-              <rng:ref name="title"/>
-            </rng:oneOrMore>
-            <rng:zeroOrMore>
-              <rng:choice>
-                <rng:ref name="model.ptrLike"/>
-                <rng:ref name="idno"/>
-                <rng:ref name="textLang"/>
-                <rng:ref name="editor"/>
-                <rng:ref name="respStmt"/>
-              </rng:choice>
-            </rng:zeroOrMore>
-          </rng:group>
-          <rng:group>
-            <rng:oneOrMore>
-              <rng:choice>
-                <rng:ref name="title"/>
-                <rng:ref name="model.ptrLike"/>
-                <rng:ref name="idno"/>
-              </rng:choice>
-            </rng:oneOrMore>
-            <rng:zeroOrMore>
-              <rng:choice>
-                <rng:ref name="textLang"/>
-                <rng:ref name="author"/>
-                <rng:ref name="editor"/>
-                <rng:ref name="meeting"/>
-                <rng:ref name="respStmt"/>
-              </rng:choice>
-            </rng:zeroOrMore>
-          </rng:group>
-          <rng:group>
+    <sequence>
+      
+        <alternate minOccurs="0">
+          <sequence>
+            <alternate>
+              <elementRef key="author"/>
+              <elementRef key="editor"/>
+              <elementRef key="meeting"/>
+              <elementRef key="respStmt"/>
+            </alternate>
+            
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <elementRef key="author"/>
+                <elementRef key="editor"/>
+                <elementRef key="meeting"/>
+                <elementRef key="respStmt"/>
+              </alternate>
+            
+            
+              <elementRef key="title" minOccurs="1" maxOccurs="unbounded"/>
+            
+            
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <classRef key="model.ptrLike"/>
+                <elementRef key="idno"/>
+                <elementRef key="textLang"/>
+                <elementRef key="editor"/>
+                <elementRef key="respStmt"/>
+              </alternate>
+            
+          </sequence>
+          <sequence>
+            
+              <alternate minOccurs="1" maxOccurs="unbounded">
+                <elementRef key="title"/>
+                <classRef key="model.ptrLike"/>
+                <elementRef key="idno"/>
+              </alternate>
+            
+            
+              <alternate minOccurs="0" maxOccurs="unbounded">
+                <elementRef key="textLang"/>
+                <elementRef key="author"/>
+                <elementRef key="editor"/>
+                <elementRef key="meeting"/>
+                <elementRef key="respStmt"/>
+              </alternate>
+            
+          </sequence>
+          <sequence>
             <!-- specific to patents -->
-            <rng:ref name="authority"/>
-            <rng:ref name="idno"/>
-          </rng:group>
-        </rng:choice>
-      </rng:optional>
-      <rng:zeroOrMore>
-        <rng:ref name="availability"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="model.noteLike"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="edition"/>
-        <rng:zeroOrMore>
-          <rng:choice>
-            <rng:ref name="idno"/>
-            <rng:ref name="model.ptrLike"/>
-            <rng:ref name="editor"/>
-            <rng:ref name="sponsor"/>
-            <rng:ref name="funder"/>
-            <rng:ref name="respStmt"/>
-          </rng:choice>
-        </rng:zeroOrMore>
-      </rng:zeroOrMore>
-      <rng:ref name="imprint"/>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="imprint"/>
-          <rng:ref name="extent"/>
-          <rng:ref name="biblScope"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+            <elementRef key="authority"/>
+            <elementRef key="idno"/>
+          </sequence>
+        </alternate>
+      
+      
+        <elementRef key="availability" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <classRef key="model.noteLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        <elementRef key="edition"/>
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="idno"/>
+            <classRef key="model.ptrLike"/>
+            <elementRef key="editor"/>
+            <elementRef key="sponsor"/>
+            <elementRef key="funder"/>
+            <elementRef key="respStmt"/>
+          </alternate>
+        
+      </sequence>
+      <elementRef key="imprint"/>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="imprint"/>
+          <elementRef key="extent"/>
+          <elementRef key="biblScope"/>
+        </alternate>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="stage">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="stage">
   <gloss versionDate="2005-01-14" xml:lang="en">stage direction</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">무대지시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">舞台指示</gloss>
@@ -31,7 +28,7 @@
     <memberOf key="model.stageLike"/>
   </classes>
   <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.specialPara"/>
+    <macroRef key="macro.specialPara"/>
   </content>
   <attList>
     <attDef ident="type" usage="rec">
@@ -42,9 +39,7 @@
       <desc versionDate="2009-01-06" xml:lang="fr">indique le type d'indication scénique</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el tipo de acotación.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il tipo di direttiva di scena</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype maxOccurs="unbounded" minOccurs="0"><dataRef key="teidata.enumerated"  /></datatype>
       <valList type="semi">
         <valItem ident="setting">
           <desc versionDate="2007-06-27" xml:lang="en">describes a setting.</desc>
@@ -137,18 +132,21 @@
           <desc versionDate="2007-01-21" xml:lang="it">più di uno dei valori descritti.</desc>
         </valItem>
       </valList>
+      <remarks versionDate="2016-02-21" xml:lang="en"><p>If the value <code>mixed</code> is used, it must be the only value. Multiple values may however be supplied
+      if a single stage direction performs multiple functions, for example is both an entrance and a modifier. </p></remarks>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <stage type="setting">A curtain being drawn.</stage>
       <stage type="setting">Music</stage>
-      <stage type="entrance">Enter Husband as being thrown off his horse.</stage>
+      <stage type="entrance">Enter Husband as being thrown off his horse and falls.</stage><!-- Middleton : Yorkshire Tragedy -->
       <stage type="exit">Exit pursued by a bear.</stage>
       <stage type="business">He quickly takes the stone out.</stage>
       <stage type="delivery">To Lussurioso.</stage>
-      <stage type="novelistic">Having had enough, and embarrassed for the family.</stage>
+      <stage type="novelistic">Having had enough, and embarrassed for the family.</stage> <!-- Lorraine Hansbury : a raisin in in the sun -->
       <stage type="modifier">Disguised as Ansaldo.</stage>
+      <stage type="entrance modifier">Enter Latrocinio disguised as an empiric</stage><!-- Middleton: The Widow -->
       <stage type="location">At a window.</stage>
       <stage rend="inline" type="delivery">Aside.</stage>
     </egXML>

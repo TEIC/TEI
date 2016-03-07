@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="tree">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="nets" ident="tree">
   <gloss versionDate="2007-06-12" xml:lang="fr">arbre</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">encodes a tree, which is made up of a root, internal nodes,
 leaves, and arcs from root to leaves.</desc>
@@ -22,26 +19,26 @@ leaves, and arcs from root to leaves.</desc>
     <memberOf key="model.divPart"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <optional>
-        <ref name="label"/>
-      </optional>
-      <group>
-        <zeroOrMore>
-          <choice>
-            <ref name="leaf"/>
-            <ref name="iNode"/>
-          </choice>
-        </zeroOrMore>
-        <ref name="root"/>
-        <zeroOrMore>
-          <choice>
-            <ref name="leaf"/>
-            <ref name="iNode"/>
-          </choice>
-        </zeroOrMore>
-      </group>
-    </group>
+    <sequence>
+      
+        <elementRef key="label" minOccurs="0"/>
+      
+      <sequence>
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="leaf"/>
+            <elementRef key="iNode"/>
+          </alternate>
+        
+        <elementRef key="root"/>
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="leaf"/>
+            <elementRef key="iNode"/>
+          </alternate>
+        
+      </sequence>
+    </sequence>
   </content>
   <attList>
     <attDef ident="arity" usage="opt">
@@ -54,9 +51,7 @@ nodes of the tree.</desc>
         racine et des nœuds internes de l'arbre.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">establece el número máximo de hijos (descendientes) de la raíz y de los nodos internos del árbol.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">stabilisce il numero massimo di figli della radice e dei nodi interni dell'albero</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
     </attDef>
     <attDef ident="ord" usage="req">
       <gloss versionDate="2007-07-04" xml:lang="en">ordered</gloss>
@@ -72,9 +67,7 @@ partially ordered.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">indique si l'arbre est ordonné ou non ou s'il l'est partiellement.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica si el árbol es o no ordenado, o si es parcialmente ordenado.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica se l'albero è ordinato o parzialmente ordinato</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <!-- cant be boolean because we have to allow for partial ordering -->
       <valList type="closed">
         <valItem ident="true">
@@ -120,9 +113,7 @@ unordered.</desc>
         nombre de ses nœuds.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el orden del árbol, es decir, el número de los nodos.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica l'ordine dell'albero, cioè il numero dei suoi nodi</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
       <remarks versionDate="2005-01-14" xml:lang="en">
         <p>The size of a tree is always one less than its order, hence
 there is no need for both a <att>size</att> and <att>order</att>

@@ -7,43 +7,62 @@
     <fileDesc>
       <titleStmt>
         <title>Introducing Pure ODD</title>
+        <author>Lou Burnard</author>
       </titleStmt>
       <publicationStmt>
-        <p>Publication Information</p>
+        <p>Unpublished draft</p>
       </publicationStmt>
       <sourceDesc>
-        <p>Information about the source</p>
+        <p>No other source: this is a born digital document</p>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2016-02-26">Typos etc from Martina</change>
+      <change when="2016-01-25">Finalising discussion of dataspec</change>
       <change when="2014-11-28">Finalising discussion of text/interleave</change>
     </revisionDesc>
   </teiHeader>
   <text>
     <body>
+      <p> This document is a tutorial guide to some new features of the ODD language introduced at
+        release 3.0 of TEI P5. It assumes the reader already knows something about how ODD is
+        designed and used, and presents only those aspects which have changed with the introduction
+        of <soCalled>Pure ODD</soCalled>. For discussion and background information about the
+        motivation for these changes see <title>Resolving the Durand Conundrum</title>, published in
+        the <ref target="https://jtei.revues.org/842">TEI Journal (issue 6, 2013)</ref>. </p>
+      <p>Two major changes are described. Firstly, the <term>content model</term> of an element
+        specification, the content of the <gi>content</gi> element in an <gi>elementSpec</gi>, is
+        now expressed using some new TEI elements, rather than (as previously) expressions in the
+        RELAXNG syntax. Secondly, TEI-defined data specifications are now expressed using a
+          <gi>dataSpec</gi> element rather than by a macro specification (<gi>macroSpec</gi> of
+        type="dt") and a new <gi>dataRef</gi> element is used to select one as content for the
+          <gi>datatype</gi> element which defines the datatype of an attribute </p>
       <div>
         <head>Defining a content model</head>
         <p>In Pure ODD, we use the <gi>content</gi> element to describe the intended content of an
           element.</p>
         <p>If the element concerned is empty, that is, it has no content at all, but only
-          attributes, then the <gi>content</gi> element itself is empty: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+          attributes, then the <gi>content</gi> element itself is empty:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <elementSpec ident="emptyElement">
               <desc>an element which may not contain anything</desc>
               <content/>
             </elementSpec>
-          </egXML></p>
+          </egXML>
+        </p>
         <p>If the element concerned contains text, we use the special element <gi>textNode</gi>
           <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <elementSpec ident="textElement">
               <desc>an element which may contain only textual data</desc>
               <content><textNode/></content>
             </elementSpec>
-          </egXML> A text node may be of any length, including zero. </p>
+          </egXML>
+           A text node may be of any length, including zero. </p>
         <p>More usually, an element has what is known as <term>element content</term>. In this case,
           the <gi>content</gi> element will contain references to one or more other elements, each
           represented by an <gi>elementRef</gi> element. If there is only one such child element it
-          can be given directly: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          can be given directly:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <elementSpec ident="oneElement">
               <desc>an element which may contain only a <gi>one</gi> element</desc>
               <content><elementRef key="one"/></content>
@@ -52,8 +71,8 @@
         </p>
         <p>The attributes <att>minOccurs</att> and <att>maxOccurs</att> are used to indicate
           repetition. In the following example, we define an element which may contain any number of
-          occurrences of the <gi>one</gi> element greater than two: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+          occurrences of the <gi>one</gi> element greater than two:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <elementSpec ident="manyOneElements">
               <desc>an element which may contain two or more <gi>one</gi> elements</desc>
               <content><elementRef minOccurs="2" maxOccurs="unbounded" key="one"/></content>
@@ -65,8 +84,8 @@
           <p>An element may contain references to more than one different element. These elements
             may be grouped in one of three ways: as a sequence, as an alternation, or interleaved. </p>
           <p>In a sequence, all of the child elements must follow each other in the same order as
-            they appear within the <gi>content</gi> element: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+            they appear within the <gi>content</gi> element:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="OneTwo">
                 <desc>an element which may contain a <gi>one</gi> element followed by a <gi>two</gi>
                   element</desc>
@@ -78,11 +97,11 @@
               </elementSpec>
             </egXML>
           </p>
-          <p>In an alternation, any of the child elements may appear: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+          <p>In an alternation, any of the child elements may appear:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="OneOrTwo">
                 <desc>an element which contains either a <gi>one</gi> element or a
-                  <gi>two</gi></desc>
+                  <gi>two</gi> element</desc>
                 <content>
                   <alternate>
                     <elementRef key="one"/>
@@ -91,24 +110,25 @@
               </elementSpec>
             </egXML>
           </p>
-          <p>In an interleaved model, the child elements may appear in any order : <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+          <p>In an interleaved model, the child elements may appear in any order:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="OneAndTwo">
                 <desc>an element which contains either a <gi>one</gi> element followed by a
-                    <gi>two</gi>, or a <gi>two</gi> element followed by a <gi>one</gi></desc>
+                    <gi>two</gi> element, or a <gi>two</gi> element followed by a <gi>one</gi> element.</desc>
                 <content>
                   <interleave>
                     <elementRef key="one"/>
                     <elementRef key="two"/>
                   </interleave></content>
               </elementSpec>
-            </egXML> Not all target schema languages support the concept of interleaving. An ODD
-            processor may map specifications using the <gi>interleave</gi> element to a less precise
-            construct in the target language, or to a combination of constructs in different
-            constraint languages.</p>
+            </egXML>
+             Not all target schema languages support the concept of interleaving. An ODD processor
+            may map specifications using the <gi>interleave</gi> element to a less precise construct
+            in the target language, or to a combination of constructs in different constraint
+            languages.</p>
           <p>The attributes <att>minOccurs</att> and <att>maxOccurs</att> are also used on these
-            grouping elements to indicate repetition of the group. For example <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+            grouping elements to indicate repetition of the group. For example:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="onesTwos">
                 <desc>an element which contains up to three repetitions of pairs of elements, each
                   containing a <gi>one</gi> followed by a <gi>two</gi></desc>
@@ -118,9 +138,11 @@
                     <elementRef key="two"/>
                   </sequence></content>
               </elementSpec>
-            </egXML></p>
+            </egXML>
+          </p>
           <p>When alternations are repeated, any one of the child elements may appear any number of
-            times <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            times:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="onesOrTwos">
                 <desc>an element which contains one or more <gi>one</gi> or <gi>two</gi>
                   elements</desc>
@@ -132,8 +154,8 @@
               </elementSpec>
             </egXML>
           </p>
-          <p>Occurrence indicators may be given at both levels. For example <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+          <p>Occurrence indicators may be given at both levels. For example:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="onesTwos">
                 <desc>an element which contains up to three repetitions of two or more<gi>one</gi>
                   elements followed by a <gi>two</gi> element</desc>
@@ -143,7 +165,8 @@
                     <elementRef key="two"/>
                   </sequence></content>
               </elementSpec>
-            </egXML></p>
+            </egXML>
+          </p>
           <p>Sequences, alternations, and interleaved sequences may all be nested and combined as
             necessary, permitting quite complex structures to be expressed.</p>
         </div>
@@ -151,7 +174,7 @@
           <head>Mixed content</head>
           <p>An element may have what is known as <term>mixed content</term>, meaning that it may
             contain a mixture of text fragments and some specified elements. This can be represented
-            in pure ODD using <gi>alternate</gi>
+            in Pure ODD using the <gi>alternate</gi> element:
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="mixedElement">
                 <desc>an element which contains any combination of text nodes, <gi>one</gi>
@@ -161,16 +184,16 @@
               </elementSpec>
             </egXML>
           </p>
-          <p>It may also, more economically, be represented using <gi>interleave</gi>: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="mixedElement">
+          <p>It may also, more economically, be represented using <gi>interleave</gi>:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="mixedElement">
                 <desc>an element which contains any combination of text nodes, <gi>one</gi>
                   elements, and <gi>two</gi> elements</desc>
                 <interleave><textNode/><elementRef key="one"/><elementRef key="two"/></interleave>
               </elementSpec>
             </egXML>
           </p>
-          <p>A text node may appear anywhere within an alternation or a sequence. For example <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+          <p>A text node may appear anywhere within an alternation or a sequence. For example:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="textOne">
                 <desc>an element which may contain either two or more<gi>one</gi> elements, or a
                   text node</desc>
@@ -180,14 +203,15 @@
                     <textNode/>
                   </alternate></content>
               </elementSpec>
-            </egXML> However, not all current schema languages support such content models. </p>
+            </egXML>
+             However, not all current schema languages support such content models. </p>
         </div>
         <div>
           <head>Class references</head>
           <p> A <gi>classRef</gi> element can be used within a content model in the same way as an
               <gi>elementRef</gi>. It is a shorthand way of saying that any member, or all members,
-            of a named <term>model class </term> of elements is permitted. For example <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+            of a named <term>model class </term> of elements is permitted. For example:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <elementSpec ident="threeDigitals">
                 <desc>an element which contains a sequence of up to three elements which are members
                   of the <gi>model.digital</gi> class </desc>
@@ -196,7 +220,8 @@
                     <classRef key="model.digital"/>
                   </sequence></content>
               </elementSpec>
-            </egXML></p>
+            </egXML>
+          </p>
           <p>A model class contains a predefined set of element types which we wish to manipulate or
             reference together, usually because they can all appear in the same context, or share
             other properties. Pure ODD allows us to define such classes by means of a
@@ -206,47 +231,99 @@
             its <gi>classes</gi> element. </p>
         </div>
       </div>
-      <div>
+        <div>
         <head>Datatypes</head>
         <p>A further part of the specification for an element is the list of attributes it may bear,
           provided by an <gi>attList</gi> element. The specification for an attribute (provided by
-          an <gi>attDef</gi> element) also includes information about the kinds of value which are
-          permitted for it, which we call its <term>datatype</term>.</p>
+          an <gi>attDef</gi> element) also includes information about the kinds of value it is
+          permitted to take, for example, whether it is a date or an integer. We call this its
+            <term>datatype</term>.</p>
         <p>In Pure ODD, a datatype is specified using the <gi>dataRef</gi> element. In the following
           example we define an attribute called <att>count</att> on the element <gi>one</gi>, and
-          specify that its value must be a positive integer: <egXML
-            xmlns="http://www.tei-c.org/ns/Examples">
+          specify that its value must be a positive integer:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <elementSpec ident="one">
               <desc>an empty element with an attribute</desc>
               <content/>
               <attList>
                 <attDef ident="count">
-                  <desc>how often the one element is used</desc>
-                  <dataRef name="nonNegativeInteger"/>
+                  <desc>indicates how often the one element is used</desc>
+                  <datatype><dataRef name="nonNegativeInteger"/></datatype>
                 </attDef>
               </attList>
             </elementSpec>
           </egXML>
         </p>
         <p>The name <code>nonNegativeInteger</code> identifies one of the datatypes defined by the
-          W3C as part of its schema language, and is not further described in our ODD. </p>
+          W3C as part of its schema language, and is not further defined by our ODD. </p>
         <p>It is however possible to provide a more detailed specification for a datatype using the
             <gi>dataSpec</gi> element to document its values, intended uses, etc. The TEI defines
           many such datatypes in the Guidelines, and these can also be re-used directly within your
           ODD. The attribute <att>key</att> is used (rather than <att>name</att>) to indicate that a
-          TEI-defined or locally-defined datatype is intended, as in the following example : <egXML
-            xmlns="http://www.tei-c.org/ns/Examples"><attList>
+          TEI-defined or locally-defined datatype is intended, as in the following example:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><attList>
               <attDef ident="count">
-                <desc>how often the one element is used</desc>
-                <dataRef key="teidata.count"/>
+                <desc>indicates how often the one element is used</desc>
+                <datatype><dataRef key="teidata.count"/></datatype>
               </attDef>
-            </attList></egXML></p><p>In this example, the name <code>teidata.count</code> identifies a datatype specification. That
-          specification is provided by a <gi>dataSpec</gi> element which will contain (amongst other
-          things) a <gi>dataRef</gi> element, or a number of such elements, or a value list
-            (<gi>valList</gi>). This enables the definition of quite complex project-specific
-          datatypes. Suppose, for example, that we wish to limit the values of a particular
-          attribute @level to one of a  </p>
-      </div>
+            </attList></egXML>
+        </p>
+        <p>In this example, the name <code>teidata.count</code> identifies a TEI datatype specification.
+          That specification is provided by a <gi>dataSpec</gi> element with the identifier
+            <ident>teidata.count</ident>, which is provided as part of the TEI system. A TEI
+            <gi>dataSpec</gi> is similar to an <gi>elementSpec</gi>. Its <gi>content</gi> element
+          may contain a <gi>dataRef</gi> element or a <gi>valList</gi>, or a number of such elements
+          combined using the elements <gi>alternate</gi> or <gi>sequence</gi> in the same way as
+            <gi>elementRef</gi>s are combined.</p>
+        <p> For example, if we wish to say that the value of the attribute <att>count</att> can be
+          either a non-negative integer or the string <val>unknown</val> we would first define a
+            <gi>dataSpec</gi> element with appropriate <gi>content</gi>:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <dataSpec ident="dataCountPlus">
+              <desc>permits non-negative integers or the string <q>unknown</q> or equivalent</desc>
+              <content>
+                <alternate>
+                  <dataRef name="nonNegativeInteger"/>
+                  <valList>
+                    <valItem ident="unknown"/>
+                    <valItem ident="inconnu"/>
+                    <valItem ident="unbekannt"/>
+                  </valList>
+                </alternate>
+              </content>
+            </dataSpec>
+          </egXML>
+           As noted above, the <att>key</att> attribute on <gi>dataRef</gi> can then be used to
+          refer to this data specification:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><attList>
+              <attDef ident="count">
+                <desc>may indicate how often the <gi>one</gi> element is used if we know</desc>
+               <datatype> <dataRef key="dataCountPlus"/></datatype>
+              </attDef>
+            </attList></egXML>
+        </p>
+        <p>A <gi>dataRef</gi> element can also be used to define the content of an element. For
+          example, there is a TEI data specification called <ident>teidata.xpath</ident> which can
+          be used to indicate that the value of an attribute must be a conformant XPath
+          specification.
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><attList>
+              <attDef ident="path">
+                <desc>indicates an XPath to the nodes required</desc>
+                <dataRef key="teidata.xpath"/>
+              </attDef>
+            </attList></egXML>
+        </p>
+        <p> The same <gi>dataRef</gi> might also be used to indicate that the content of an element
+          must be a conformant XPath specification:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="path">
+              <desc>indicates an XPath to the nodes required</desc>
+              <content>
+               <datatype> <dataRef key="teidata.xpath"/></datatype>
+              </content>
+            </elementSpec></egXML>
+       </p><p>Note however that not all schema languages support the ability to constrain element content in
+       this way. </p>
+      </div><div><head>Macro specifications</head></div>
     </body>
   </text>
 </TEI>

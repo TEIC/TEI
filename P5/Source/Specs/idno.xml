@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="idno">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="idno">
   <gloss versionDate="2010-04-30" xml:lang="en">identifier</gloss>
   <gloss versionDate="2009-01-05" xml:lang="fr">identifiant</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">식별 숫자</gloss>
@@ -38,13 +35,13 @@ $Id$
     <memberOf key="model.personPart"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:zeroOrMore>
-      <rng:choice>
-        <rng:text/>
-        <rng:ref name="model.gLike"/>
-        <rng:ref name="idno"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.gLike"/>
+        <elementRef key="idno"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -61,9 +58,7 @@ $Id$
         cualquier otro número estándard.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica l'identificatore, ad esempio come codice
         ISBN o altri generi di identificatori standard.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="und">

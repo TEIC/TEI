@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSDESC" ident="msDesc">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSDESC" ident="msDesc">
   <gloss versionDate="2007-07-04" xml:lang="en">manuscript description</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">원고 기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -15,12 +12,11 @@ $Id$
   <gloss versionDate="2007-06-12" xml:lang="fr">description d'un manuscrit</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">decrizione del manoscritto</gloss>
   <desc versionDate="2009-06-29" xml:lang="en" xml:id="msdesc.desc">contains a description of a single identifiable
-manuscript or other text-bearing object.</desc>
+    manuscript or other text-bearing object.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">하나의 식별가능한 원고에 대한 기술을 포함한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">包含單一份可識別手稿的描述。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">単一の識別可能な手書き資料の解説を示す．</desc>
-  <desc versionDate="2007-06-12" xml:lang="fr">contient la description d'un manuscrit bien
-      individualisé</desc>
+  <desc versionDate="2007-06-12" xml:lang="fr">contient la description d'un manuscrit individuel</desc>
   <desc versionDate="2007-05-04" xml:lang="es">contiene la definición de un único manuscrito.</desc>
   <desc versionDate="2007-01-21" xml:lang="it">contiene la descrizione di un unico manoscritto</desc>
   <classes>
@@ -31,34 +27,23 @@ manuscript or other text-bearing object.</desc>
     <memberOf key="att.declaring"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <ref name="msIdentifier"/>
-      <zeroOrMore>
-        <ref name="model.headLike"/>
-      </zeroOrMore>
-      <choice>
-        <oneOrMore>
-          <ref name="model.pLike"/>
-        </oneOrMore>
-        <group>
-          <optional>
-            <ref name="msContents"/>
-          </optional>
-          <optional>
-            <ref name="physDesc"/>
-          </optional>
-          <optional>
-            <ref name="history"/>
-          </optional>
-          <optional>
-            <ref name="additional"/>
-          </optional>
-          <zeroOrMore>
-            <ref name="msPart"/>
-          </zeroOrMore>
-        </group>
-      </choice>
-    </group>
+    <sequence>
+      <elementRef key="msIdentifier"/>
+      <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      <alternate>
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+        <sequence>
+          <elementRef key="msContents" minOccurs="0"/>
+          <elementRef key="physDesc" minOccurs="0"/>
+          <elementRef key="history" minOccurs="0"/>
+          <elementRef key="additional" minOccurs="0"/>
+          <alternate>
+            <elementRef key="msPart" minOccurs="0" maxOccurs="unbounded"/>
+            <elementRef key="msFrag" minOccurs="0" maxOccurs="unbounded"/>
+          </alternate>
+        </sequence>
+      </alternate>
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -77,11 +62,11 @@ manuscript or other text-bearing object.</desc>
         <physDesc>
           <objectDesc>
             <p>A parchment codex of 136 folios, measuring approx
-28 by 19 inches, and containing 24 quires.</p>
+              28 by 19 inches, and containing 24 quires.</p>
             <p>The pages are margined and ruled throughout.</p>
             <p>Four hands have been identified in the manuscript: the first 44
-folios being written in two cursive anglicana scripts, while the
-remainder is for the most part in a mixed secretary hand.</p>
+              folios being written in two cursive anglicana scripts, while the
+              remainder is for the most part in a mixed secretary hand.</p>
           </objectDesc>
         </physDesc>
       </msDesc>
@@ -126,7 +111,7 @@ remainder is for the most part in a mixed secretary hand.</p>
             <note>Exemplaire avec rehauts peints en argent, or et bleu.</note>
             <note>
               <ref target="http://catalogue.bnf.fr/ark:/12148/cb31088624r">Notice bibliographique
-                  dans le Catalogue général</ref>
+                dans le Catalogue général</ref>
             </note>
           </msItem>
         </msContents>
@@ -150,14 +135,14 @@ remainder is for the most part in a mixed secretary hand.</p>
             <binding contemporary="true">
               <p><index indexName="typo_reliure"><term>Reliure à décor</term></index><index indexName="typo_decor"><term>Entrelacs géométriques</term></index> Reliure en <material>maroquin</material> brun jaspé</p>
               <decoNote type="plats"> à décor d’entrelacs géométriques (structure de losange et
-                  rectangle) complété de fers évidés.</decoNote>
+                rectangle) complété de fers évidés.</decoNote>
               <decoNote type="plat_sup">Titre <q>ivvenalis. persivs</q> et ex-libris de Jean
-                  Grolier <q>io. grolierii et amicorvm.</q> dorés respectivement au centre et au bas
-                  du plat supérieur. </decoNote>
+                Grolier <q>io. grolierii et amicorvm.</q> dorés respectivement au centre et au bas
+                du plat supérieur. </decoNote>
               <decoNote type="plat_inf">Devise de Jean Grolier<q>portio mea sit in terra
-                  viventivm</q> dorée au centre du plat inférieur.</decoNote>
+                viventivm</q> dorée au centre du plat inférieur.</decoNote>
               <decoNote type="dos">Dos à cinq nerfs, sans décor ; simple filet doré sur chaque
-                  nerf et en encadrement des caissons ; passages de chaînette marqués de même.</decoNote>
+                nerf et en encadrement des caissons ; passages de chaînette marqués de même.</decoNote>
               <decoNote type="tranchefiles">Tranchefiles simples unicolores, vert foncé.</decoNote>
               <decoNote type="coupes">Filet doré sur les coupes.</decoNote>
               <decoNote type="annexes"/>
@@ -166,13 +151,13 @@ remainder is for the most part in a mixed secretary hand.</p>
               <decoNote type="chasses">Filet doré sur les chasses.</decoNote>
               <!-- Description des gardes : gardes blanches ; gardes couleurs (marbrées, gaufrées, peintes, dominotées, etc.) généralement suivies de gardes blanches ; dans tous les cas, spécifier le nombre de gardes (début + fin du volume)-->
               <decoNote type="gardes">Gardes en papier et vélin (2+1+2 / 2+1+2) ; filigrane au
-                    pot.<ref>Briquet N° XX</ref>
-                     </decoNote>
+                pot.<ref>Briquet N° XX</ref>
+              </decoNote>
               <!-- Élément qui inclut aussi bien des remarques sur la couture que les charnières, claies ou modes d'attaches des plats : tous éléments de la structure dont la description est jugée utile à la description et l'identification de la reliure-->
               <decoNote type="structure">Defet manuscrit utilisé comme claie au contreplat
-                  inférieur (visible par transparence, sous la contregarde en vélin).</decoNote>
+                inférieur (visible par transparence, sous la contregarde en vélin).</decoNote>
               <condition>Traces de mouillures anciennes plus ou moins importantes au bas des
-                  feuillets, qui n'ont pas affecté la reliure ; éraflure en tête du plat
+                feuillets, qui n'ont pas affecté la reliure ; éraflure en tête du plat
                 inférieur.</condition>
             </binding>
           </bindingDesc>
@@ -185,18 +170,18 @@ remainder is for the most part in a mixed secretary hand.</p>
             <p/>
           </provenance>
           <acquisition notBefore="1680-12-31" notAfter="1724-12-31">Estampille n° 1, utilisée de
-              la fin du XVIIe siècle à 1724 (page de titre).</acquisition>
+            la fin du XVIIe siècle à 1724 (page de titre).</acquisition>
         </history>
         <additional>
           <adminInfo>
             <recordHist>
               <source>Notice établie à partir du document original</source>
               <change when="2009-10-05" who="Markova">Description mise à jour le <date type="crea">5 octobre 2009 </date>en vue de l'encodage en TEI des descriptions des reliure
-                  de la Réserve des livres rares</change>
+                de la Réserve des livres rares</change>
               <change when="2009-06-01" who="Le Bars">Description revue le <date type="maj">1er
-                    juin 2009 </date> par Fabienne Le Bars.....</change>
+                juin 2009 </date> par Fabienne Le Bars.....</change>
               <change when="2009-06-25" who="Le Bars">Description validée le<date type="valid">25
-                    juin 2009</date>par Fabienne Le Bars</change>
+                juin 2009</date>par Fabienne Le Bars</change>
             </recordHist>
           </adminInfo>
         </additional>

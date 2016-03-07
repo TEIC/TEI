@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="alt">
+<?xml version="1.0" encoding="UTF-8"?><!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="alt">
   <gloss versionDate="2005-01-14" xml:lang="en">alternation</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">교체</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">替換</gloss>
@@ -25,13 +22,11 @@
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <empty xmlns="http://relaxng.org/ns/structure/1.0"/>
+    
   </content>
   <attList>
     <attDef ident="target" mode="change">
-      <datatype minOccurs="2" maxOccurs="unbounded">
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype minOccurs="2" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
     <attDef ident="mode" usage="rec">
       <desc versionDate="2005-01-14" xml:lang="en">states whether the alternations gathered in this collection are exclusive or
@@ -45,9 +40,7 @@
                 conjunto son exclusivas o inclusivas.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">dichiara se le alternative contenute
                 nell'insieme sono esclusive o inclusive</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="excl">
           <gloss versionDate="2007-07-04" xml:lang="en">exclusive</gloss>
@@ -117,9 +110,7 @@
                 corrispondente; se l'attributo <att>mode</att> è <val>incl</val> ogni peso
                 rappresenta la probabilità che compaia l'alternativa corrispondente a patto che
                 compaia almeno un'altra delle possibili alternative</desc>
-      <datatype minOccurs="2" maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.probability"/>
-      </datatype>
+      <datatype minOccurs="2" maxOccurs="unbounded"><dataRef key="teidata.probability"/></datatype>
       <remarks versionDate="2005-09-25" xml:lang="en">
         <p>If <att>mode</att> is <code>excl</code>, the sum of weights must be 1. If
                         <att>mode</att> is <code>incl</code>, the sum of weights must be in the

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="sp">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="sp">
   <gloss versionDate="2005-01-14" xml:lang="en">speech</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">대화</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">演說</gloss>
@@ -32,30 +29,30 @@
     <memberOf key="att.ascribed"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <ref name="model.global"/>
-      </zeroOrMore>
-      <optional>
-        <ref name="speaker"/>
-        <zeroOrMore>
-          <ref name="model.global"/>
-        </zeroOrMore>
-      </optional>
-      <oneOrMore>
-        <choice>
-          <ref name="lg"/>
-          <ref name="model.lLike"/>
-          <ref name="model.pLike"/>
-          <ref name="model.listLike"/>
-          <ref name="model.stageLike"/>
-          <ref name="model.qLike"/>
-        </choice>
-        <zeroOrMore>
-          <ref name="model.global"/>
-        </zeroOrMore>
-      </oneOrMore>
-    </group>
+    <sequence>
+      
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <sequence minOccurs="0">
+        <elementRef key="speaker"/>
+        
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+        
+      </sequence>
+      <sequence minOccurs="1" maxOccurs="unbounded">
+        <alternate>
+          <elementRef key="lg"/>
+          <classRef key="model.lLike"/>
+          <classRef key="model.pLike"/>
+          <classRef key="model.listLike"/>
+          <classRef key="model.stageLike"/>
+          <classRef key="model.qLike"/>
+        </alternate>
+        
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+        
+      </sequence>
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#CODR-eg-296">
@@ -114,17 +111,6 @@
         <gi>speaker</gi> element or as an alternative.</p>
   </remarks>
   <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p>L'attribut <att>who</att> peut être utilisé soit en complément de l'élément <gi>speaker</gi>,
-      soit comme une alternative à cet élément.</p>
-  </remarks>
-  <remarks versionDate="2005-01-14" xml:lang="en">
-    <p rend="dataDesc">Lines or paragraphs, stage directions, and phrase-level elements.</p>
-    <p>The <att>who</att> attribute on this element may be used either in addition to the
-        <gi>speaker</gi> element or as an alternative.</p>
-  </remarks>
-  <remarks xml:lang="fr" versionDate="2007-06-12">
-    <p rend="dataDesc">Cet élément peut contenir des lignes, des paragraphes, des indications
-      scéniques et des éléments du niveau de l'expression.</p>
     <p>L'attribut <att>who</att> peut être utilisé soit en complément de l'élément <gi>speaker</gi>,
       soit comme une alternative à cet élément.</p>
   </remarks>

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="div4">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="div4">
   <gloss versionDate="2005-01-14" xml:lang="en">level-4 text division</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">4 층위 텍스트 구역</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">區段層次四</gloss>
@@ -35,54 +32,54 @@ $Id$
     <memberOf key="model.div4Like"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <choice>
-          <ref name="model.divTop"/>
-          <ref name="model.global"/>
-        </choice>
-      </zeroOrMore>
-      <optional>
-        <choice>
-          <oneOrMore>
-            <choice>
-              <ref name="model.div5Like"/>
-              <ref name="model.divGenLike"/>
-            </choice>
-            <zeroOrMore>
-              <ref name="model.global"/>
-            </zeroOrMore>
-          </oneOrMore>
-          <group>
-            <oneOrMore>
-              <group>
-                <ref name="model.common"/>
-              </group>
-              <zeroOrMore>
-                <ref name="model.global"/>
-              </zeroOrMore>
-            </oneOrMore>
-            <zeroOrMore>
-              <choice>
-                <ref name="model.div5Like"/>
-                <ref name="model.divGenLike"/>
-              </choice>
-              <zeroOrMore>
-                <ref name="model.global"/>
-              </zeroOrMore>
-            </zeroOrMore>
-          </group>
-        </choice>
-        <zeroOrMore>
-          <group>
-            <ref name="model.divBottom"/>
-          </group>
-          <zeroOrMore>
-            <ref name="model.global"/>
-          </zeroOrMore>
-        </zeroOrMore>
-      </optional>
-    </group>
+    <sequence>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.divTop"/>
+          <classRef key="model.global"/>
+        </alternate>
+      
+      <sequence minOccurs="0">
+        <alternate>
+          <sequence minOccurs="1" maxOccurs="unbounded">
+            <alternate>
+              <classRef key="model.div5Like"/>
+              <classRef key="model.divGenLike"/>
+            </alternate>
+            
+              <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+            
+          </sequence>
+          <sequence>
+            <sequence minOccurs="1" maxOccurs="unbounded">
+              
+                <classRef key="model.common"/>
+              
+              
+                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+              
+            </sequence>
+            <sequence minOccurs="0" maxOccurs="unbounded">
+              <alternate>
+                <classRef key="model.div5Like"/>
+                <classRef key="model.divGenLike"/>
+              </alternate>
+              
+                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+              
+            </sequence>
+          </sequence>
+        </alternate>
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          
+            <classRef key="model.divBottom"/>
+          
+          
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+          
+        </sequence>
+      </sequence>
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

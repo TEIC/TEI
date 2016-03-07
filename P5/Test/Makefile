@@ -6,18 +6,18 @@ XSL=/usr/share/xml/tei/stylesheet/
 TRANG=java -jar ../Utilities/lib/trang.jar
 JING=java -jar ../Utilities/lib/jing.jar
 SAXON=java -Xmx752m -jar ../Utilities/lib/saxon9he.jar -ext:on
-ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL} 
+ANT=ANT_OPTS="-Xss2m -Xmx752m -Djava.awt.headless=true" ant -lib ../Utilities/lib/saxon9he.jar:../Utilities/lib/jing.jar -Dtrang=../Utilities/lib/trang.jar  -DdefaultSource=`pwd`/../p5subset.xml -DXSL=${XSL}
 
 NORMALFILES= \
 	testbare.dtd \
 	testbasic.xsd \
 	testall.xsd \
-	testplus.special 
+	testplus.special
 
 EXTENDEDFILES = \
 	testjustfs.xsd \
 	testp4compat.xsd \
-	testplace-kml.special 
+	testplace-kml.special
 #testi18n.xsd \
 
 default: normal special testmeta2010 test-extns test-frag detest
@@ -26,7 +26,7 @@ normal: $(NORMALFILES)
 special: $(EXTENDEDFILES)
 
 testall.examples: testall.xsd
-	$(SAXON) -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl 
+	$(SAXON) -o:testall-ex.odd -s:testall.odd -xsl:../Utilities/odd2exodd.xsl
 	$(ANT) -f antruntest.xml -Doutputname=testall-examples -DoddFile=testall-ex.odd compileodd rng cleanup
 	@echo check egXML in testall.odd
 	perl -p -e "s/testlite-examples/testall-examples/" ex.nvdl > testall.nvdl
@@ -35,7 +35,7 @@ testall.examples: testall.xsd
 %.dtd: %.odd
 	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd dtd rng validaterng cleanup
 	@echo Check file using DOCTYPE in instance
-	xmllint --noout --valid $*.xml 
+	xmllint --noout --valid $*.xml
 
 %.xsd: %.odd
 	$(ANT) -f antruntest.xml -Doutputname=$* -Dtestfile=$*.xml -DoddFile=$*.odd validateodd compileodd rng validaterng  isoschematron validateschematron cleanup
@@ -49,11 +49,11 @@ testall.examples: testall.xsd
 	${JING} $*.xsd $*.xml
 
 %.special: %.odd
-	@echo "BUILD:  Test schema from (special) $<" 
+	@echo "BUILD:  Test schema from (special) $<"
 	xmllint --xinclude $< > xi_$<
 	$(ANT) -f antruntest.xml -Dtestfile=$*.xml -DoddFile=xi_$*.odd -Doutputname=$* validateodd compileodd rng validaterng cleanup
 	${TRANG} $*.rng $*.rnc
-	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc  
+	xmllint --noent --dropdtd  $*.xml | rnv $*.rnc
 	rm xi_$*.odd
 
 testmeta2010:
@@ -72,7 +72,7 @@ testmeta2010:
 test-frag:
 	@echo BUILD: Testing files which exercise inclusion of fragments
 	${JING} -t -c frag.rnc testfrag.xml
-	rnv frag.rnc testfrag.xml 
+	rnv frag.rnc testfrag.xml
 
 
 test-extns:
@@ -82,7 +82,7 @@ test-extns:
 
 test-sgml:
 	@echo BUILD: Test SGML extension mechanism
-	onsgmls -e -g -s  sgmldecl.tei extns.sgm 
+	onsgmls -e -g -s  sgmldecl.tei extns.sgm
 
 detest:
 	@echo BUILD: Test file with deliberate mistakes
@@ -102,11 +102,8 @@ detest:
 
 clean:
 	rm -f test*.doc.xml test*.rnc test*.dtd test*.compiled.* test*.xsd test*.rnc test*.rng test*.xsl test*.isosch
-	rm -rf LOG *~ *.xsd Schema RomaResults DTD 
+	rm -rf LOG *~ *.xsd Schema RomaResults DTD
 	rm -rf *.doc.*
 	rm -f detest.log detest.log.all
 	rm -f *-examples.rng *-examples.rnc *test*.nvdl *-ex.odd
 	rm -f detest.rnc    detest.rng   detest.dtd   detest.isosch
-
-
-

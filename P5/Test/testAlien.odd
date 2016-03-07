@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xml:lang="en" xmlns="http://www.tei-c.org/ns/1.0"
+   xmlns:rng="http://relaxng.org/ns/structure/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>TEI with alien extensions</title>
+            <author>Lou Burnard</author>
+         </titleStmt>
+         <publicationStmt>
+            <p> </p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>authored from scratch</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <p>This rather boring schema introduces a new paragraph like element in an alien namespace.
+            This element is called <gi>alien</gi> and here is its specification:
+         <specList><specDesc key="alien"/></specList></p>
+         <p>And here is an example of its use:
+         <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <div><alien xmlns="http://myAlienNamespace.com">wibble</alien></div>
+         </egXML></p>
+        
+         <schemaSpec ident="testalien" start="TEI">
+            <moduleRef key="header"/>
+            <moduleRef key="core"/>
+            <moduleRef key="tei"/>
+            <moduleRef key="textstructure"/>
+            <elementRef key="gi"/>
+            <elementSpec ident="alien" ns="http://myAlienNamespace.com">
+               <desc>an element in some other namespace</desc>
+               <classes>
+                  <memberOf key="model.pLike"/>
+               </classes>
+               <content>
+                  <macroRef key="macro.paraContent"/>
+               </content>
+            </elementSpec>
+         </schemaSpec>
+      </body>
+   </text>
+</TEI>

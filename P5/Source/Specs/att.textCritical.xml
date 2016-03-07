@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" xml:id="READINGS" type="atts" ident="att.textCritical">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="textcrit" xml:id="READINGS" type="atts" ident="att.textCritical">
   <desc versionDate="2005-10-10" xml:lang="en">defines a set of attributes common to all elements representing variant readings in text critical work.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트 비평 작품에서 이문 독법을 나타내는 모든 요소에 공통된 속성 집합을 정의한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">定義在文件評論作品中，所有標記變異對應本的元素可用的一套屬性。</desc>
@@ -18,6 +15,7 @@ $Id$
   <desc versionDate="2007-01-21" xml:lang="it">definisce un insieme di attributi comuni a tutti gli elementi che rappresentano letture di varianti nella lettura critica di un'opera</desc>
   <classes>
     <memberOf key="att.source"/>
+    <memberOf key="att.written"/>
   </classes>
   <attList>
     <attDef ident="type" usage="opt">
@@ -28,9 +26,7 @@ $Id$
       <desc versionDate="2009-05-28" xml:lang="fr">établit une classification de la leçon selon une typologie utile.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">clasifica la lectura según alguna tipología funcional.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica la lettura secondo una tipologia funzionale</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="open">
         <valItem ident="substantive">
           <gloss versionDate="2009-05-28" xml:lang="fr">substantif</gloss>
@@ -64,9 +60,7 @@ any appropriate typology of possible origins.</desc>
       <desc versionDate="2009-05-28" xml:lang="fr">établit une classification de la cause d'une variante de leçon, selon une typologie appropriée aux origines possibles de cette variation.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">clasifica la causa de una lectura alternativa según cualquier tipología adecuada de posibles orígenes.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica le ragioni di una lettura alternativa secondo una qualsiasi tipologia adeguata di origini possibili</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="open">
         <valItem ident="homeoteleuton"/>
         <valItem ident="homeoarchy"/>
@@ -95,9 +89,7 @@ sequence, when there is reason to presume a sequence to the variants.
 					variantes de chaque lemme.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona un número que indica la posición de tal lectura dentro de una secuencia, cuando se de el caso de suponer una secuencia respecto a las variantes de un lema dado</desc>
       <desc versionDate="2007-01-21" xml:lang="it">fornisce un numero che indica la posizione di tale lettura all'interno di una sequenza, qualora ci sia motivo di supporre una sequenza rispetto alle varianti per un dato lemma</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.count"/>
-      </datatype>
+      <datatype><dataRef key="teidata.count"/></datatype>
       <remarks versionDate="2005-10-10" xml:lang="en">
         <p>Different variant sequences could be coded with distinct
 number trails: 1-2-3 for one sequence, 5-6-7 for another.  More
@@ -118,7 +110,7 @@ des séquences de variantes plus complexes (par exemple comportant de multiples 
         </p>
       </remarks>
     </attDef>
-    <attDef ident="hand" usage="opt">
+  <!--  <attDef ident="hand" usage="opt">
       <desc versionDate="2005-10-10" xml:lang="en">indicates the hand responsible for a particular reading in the
 witness.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">비교 대상 텍스트에서 특정 독본에 대한 책임이 있는 기법을 표시한다.</desc>
@@ -127,11 +119,7 @@ witness.</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">désigne la main responsable d'une leçon particulière dans le témoin.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica la mano responsable de una lectura determinada en el testimonio.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">identifica la mano responsabile di una determinata lettura nel testimone</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
-<!--      <valDesc>must be one of the hand identifiers declared in the document
-header (see section <ptr target="#PHDH"/>).</valDesc>-->
+      <datatype><dataRef key="teidata.pointer"/></datatype>
       <remarks versionDate="2005-10-10" xml:lang="en">
         <p>This attribute is only available within an apparatus
 gathering variant readings in the transcription of an individual
@@ -152,7 +140,7 @@ different witnesses.
     資料中では使われないかもしれない．
 	</p>
       </remarks>
-    </attDef>
+    </attDef>-->
   </attList>
   <remarks versionDate="2005-10-10" xml:lang="en">
     <p>This element class defines attributes inherited by

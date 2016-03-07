@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="body">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="textstructure" ident="body">
   <gloss versionDate="2005-01-14" xml:lang="en">text body</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">텍스트 본문</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">正文</gloss>
@@ -33,40 +30,40 @@ $Id$
     <memberOf key="att.declaring"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:group>
+    <sequence>
       <!-- globals as usual -->
-      <rng:zeroOrMore>
-        <rng:ref name="model.global"/>
-      </rng:zeroOrMore>
+      
+        <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+      
       <!--possibly some divTops, interspersed with globals -->
-      <rng:optional>
-        <rng:group>
-          <rng:group>
-            <rng:ref name="model.divTop"/>
-          </rng:group>
-          <rng:zeroOrMore>
-            <rng:choice>
-              <rng:ref name="model.global"/>
-              <rng:ref name="model.divTop"/>
-            </rng:choice>
-          </rng:zeroOrMore>
-        </rng:group>
-      </rng:optional>
+      
+        <sequence minOccurs="0">
+          
+            <classRef key="model.divTop"/>
+          
+          
+            <alternate minOccurs="0" maxOccurs="unbounded">
+              <classRef key="model.global"/>
+              <classRef key="model.divTop"/>
+            </alternate>
+          
+        </sequence>
+      
       <!-- possibly some generated divs, interspersed with globals -->
-      <rng:optional>
-        <rng:group>
-          <rng:group>
-            <rng:ref name="model.divGenLike"/>
-          </rng:group>
-          <rng:zeroOrMore>
-            <rng:choice>
-              <rng:ref name="model.global"/>
-              <rng:ref name="model.divGenLike"/>
-            </rng:choice>
-          </rng:zeroOrMore>
-        </rng:group>
-      </rng:optional>
-      <rng:group>
+      
+        <sequence minOccurs="0">
+          
+            <classRef key="model.divGenLike"/>
+          
+          
+            <alternate minOccurs="0" maxOccurs="unbounded">
+              <classRef key="model.global"/>
+              <classRef key="model.divGenLike"/>
+            </alternate>
+          
+        </sequence>
+      
+      
         <!-- 
 	   now a choice between
 	   
@@ -76,93 +73,93 @@ $Id$
 	     and generated divs after them if needed 
 	   c) same again, preceded by model.common
       -->
-        <rng:choice>
+        <alternate>
           <!-- a -->
-          <rng:oneOrMore>
-            <rng:group>
-              <rng:group>
-                <rng:ref name="model.divLike"/>
-              </rng:group>
-              <rng:zeroOrMore>
-                <rng:choice>
-                  <rng:ref name="model.global"/>
-                  <rng:ref name="model.divGenLike"/>
-                </rng:choice>
-              </rng:zeroOrMore>
-            </rng:group>
-          </rng:oneOrMore>
+          
+            <sequence minOccurs="1" maxOccurs="unbounded">
+              
+                <classRef key="model.divLike"/>
+              
+              
+                <alternate minOccurs="0" maxOccurs="unbounded">
+                  <classRef key="model.global"/>
+                  <classRef key="model.divGenLike"/>
+                </alternate>
+              
+            </sequence>
+          
           <!-- b -->
-          <rng:oneOrMore>
-            <rng:group>
-              <rng:group>
-                <rng:ref name="model.div1Like"/>
-              </rng:group>
-              <rng:zeroOrMore>
-                <rng:choice>
-                  <rng:ref name="model.global"/>
-                  <rng:ref name="model.divGenLike"/>
-                </rng:choice>
-              </rng:zeroOrMore>
-            </rng:group>
-          </rng:oneOrMore>
+          
+            <sequence minOccurs="1" maxOccurs="unbounded">
+              
+                <classRef key="model.div1Like"/>
+              
+              
+                <alternate minOccurs="0" maxOccurs="unbounded">
+                  <classRef key="model.global"/>
+                  <classRef key="model.divGenLike"/>
+                </alternate>
+              
+            </sequence>
+          
           <!-- c -->
-          <rng:group>
-            <rng:oneOrMore>
-              <rng:group>
-                <rng:ref name="model.common"/>
-              </rng:group>
-              <rng:zeroOrMore>
-                <rng:ref name="model.global"/>
-              </rng:zeroOrMore>
-            </rng:oneOrMore>
-            <rng:optional>
-              <rng:choice>
+          <sequence>
+            <sequence minOccurs="1" maxOccurs="unbounded">
+              
+                <classRef key="model.common"/>
+              
+              
+                <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+              
+            </sequence>
+            
+              <alternate minOccurs="0">
                 <!-- a -->
-                <rng:oneOrMore>
-                  <rng:group>
-                    <rng:group>
-                      <rng:ref name="model.divLike"/>
-                    </rng:group>
-                    <rng:zeroOrMore>
-                      <rng:choice>
-                        <rng:ref name="model.global"/>
-                        <rng:ref name="model.divGenLike"/>
-                      </rng:choice>
-                    </rng:zeroOrMore>
-                  </rng:group>
-                </rng:oneOrMore>
+                
+                  <sequence minOccurs="1" maxOccurs="unbounded">
+                    
+                      <classRef key="model.divLike"/>
+                    
+                    
+                      <alternate minOccurs="0" maxOccurs="unbounded">
+                        <classRef key="model.global"/>
+                        <classRef key="model.divGenLike"/>
+                      </alternate>
+                    
+                  </sequence>
+                
                 <!-- b -->
-                <rng:oneOrMore>
-                  <rng:group>
-                    <rng:group>
-                      <rng:ref name="model.div1Like"/>
-                    </rng:group>
-                    <rng:zeroOrMore>
-                      <rng:choice>
-                        <rng:ref name="model.global"/>
-                        <rng:ref name="model.divGenLike"/>
-                      </rng:choice>
-                    </rng:zeroOrMore>
-                  </rng:group>
-                </rng:oneOrMore>
-              </rng:choice>
-            </rng:optional>
-          </rng:group>
-        </rng:choice>
+                
+                  <sequence minOccurs="1" maxOccurs="unbounded">
+                    
+                      <classRef key="model.div1Like"/>
+                    
+                    
+                      <alternate minOccurs="0" maxOccurs="unbounded">
+                        <classRef key="model.global"/>
+                        <classRef key="model.divGenLike"/>
+                      </alternate>
+                    
+                  </sequence>
+                
+              </alternate>
+            
+          </sequence>
+        </alternate>
         <!-- end of choice -->
-      </rng:group>
+      
       <!-- finally, some divBottoms interspersed with globals  -->
-      <rng:zeroOrMore>
-        <rng:group>
-          <rng:group>
-            <rng:ref name="model.divBottom"/>
-          </rng:group>
-          <rng:zeroOrMore>
-            <rng:ref name="model.global"/>
-          </rng:zeroOrMore>
-        </rng:group>
-      </rng:zeroOrMore>
-    </rng:group>
+      
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          
+            <classRef key="model.divBottom"/>
+          
+          
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+          
+        </sequence>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="ang">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

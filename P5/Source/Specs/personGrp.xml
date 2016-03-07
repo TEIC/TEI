@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium. 
     Dual-licensed under CC-by and BSD2 licences 
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="personGrp">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="personGrp">
   <gloss versionDate="2005-01-14" xml:lang="en">personal group</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">개인군</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">人物團體</gloss>
@@ -27,17 +24,17 @@
     <memberOf key="att.sortable"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <ref name="model.pLike"/>
-      </oneOrMore>
-      <zeroOrMore>
-        <choice>
-          <ref name="model.personPart"/>
-          <ref name="model.global"/>
-        </choice>
-      </zeroOrMore>
-    </choice>
+    <alternate>
+      
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.personPart"/>
+          <classRef key="model.global"/>
+        </alternate>
+      
+    </alternate>
   </content>
   <attList>
     <attDef ident="role" usage="opt">
@@ -48,9 +45,7 @@
       <desc versionDate="2008-12-09" xml:lang="fr">précise le rôle joué par ce groupe de personnes dans l'interaction.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el role de ese grupo de participantes en la interacción.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica il ruolo del gruppo di partecipanti all'interazione</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
 
 <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
@@ -69,9 +64,7 @@ specification.</p></remarks>
       <desc versionDate="2009-03-19" xml:lang="fr">précise le sexe du groupe participant.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el sexo del grupo de participantes.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il sesso del gruppo di partecipanti</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.sex"/>
-      </datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.sex"/></datatype>
       <remarks versionDate="2013-04-14" xml:lang="en">
         <p>Values for this attribute may be locally defined by a project, or may refer to an external standard, such as
           vCard's sex property <ptr target="http://microformats.org/wiki/gender-formats"/>
@@ -93,9 +86,7 @@ specification.</p></remarks>
       <desc versionDate="2009-03-19" xml:lang="fr">précise la tranche d'âge des participants.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica el intervalo de edad del grupo de partecipantes.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica la fascia di età del gruppo di partecipanti</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
 <remarks versionDate="2013-12-21" xml:lang="en">
         <p>Values for this attribute may be locally defined by a
 	project, using arbitrary keywords such as <val>infant</val>,
@@ -115,9 +106,7 @@ specification.</p></remarks>
       <desc versionDate="2009-03-19" xml:lang="fr">précise la taille exacte ou approximative du groupe.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica la dimensión o dimensiones aproximadas del grupo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica le dimensioni (anche approssimative) del gruppo</desc>
-      <datatype maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.word"/>
-      </datatype>
+      <datatype maxOccurs="unbounded"><dataRef key="teidata.word"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

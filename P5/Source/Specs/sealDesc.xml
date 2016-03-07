@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="SEALDESC" ident="sealDesc">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="SEALDESC" ident="sealDesc">
   <gloss versionDate="2007-07-04" xml:lang="en">seal description</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">봉인 기술</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -33,23 +30,23 @@ eventualmente con ulteriori elementi <gi>decoNote</gi>
     <memberOf key="model.physDescPart"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <ref name="model.pLike"/>
-      </oneOrMore>
-      <group>
-        <optional>
-          <ref name="summary"/>
-        </optional>
-        <oneOrMore>
-          <choice>
-            <ref name="decoNote"/>
-            <ref name="seal"/>
-            <ref name="condition"/>
-          </choice>
-        </oneOrMore>
-      </group>
-    </choice>
+    <alternate>
+      
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      <sequence>
+        
+          <elementRef key="summary" minOccurs="0"/>
+        
+        
+          <alternate minOccurs="1" maxOccurs="unbounded">
+            <elementRef key="decoNote"/>
+            <elementRef key="seal"/>
+            <elementRef key="condition"/>
+          </alternate>
+        
+      </sequence>
+    </alternate>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
