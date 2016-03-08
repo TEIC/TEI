@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date: 2015-08-21 10:44:07 +0100 (Fri, 21 Aug 2015) $
+    $Id:  $
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="modelGrp" module="tagdocs">
+  <desc versionDate="2015-05-15" xml:lang="en">any grouping of model or modelSequence elements with
+    a common output method</desc>
+  <classes>
+    <memberOf key="att.global"/>
+  </classes>
+  <content>
+    <sequence>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.glossLike"/>
+        <classRef key="model.descLike"/>
+      </alternate>
+      <elementRef key="outputRendition" minOccurs="0"/>
+      <alternate minOccurs="1" maxOccurs="unbounded">
+        <elementRef key="modelSequence"/>
+        <elementRef key="model"/>
+      </alternate>
+    </sequence>
+  </content>
+  <attList>
+    <attDef ident="useSourceRendition" usage="opt">
+      <desc versionDate="2015-05-15" xml:lang="en">whether to obey any rendition attribute which is
+        present</desc>
+      <datatype>
+        <dataRef key="teidata.truthValue"/>
+      </datatype>
+    </attDef>
+    <attDef ident="output" usage="opt">
+      <desc versionDate="2015-05-15" xml:lang="en">the intended output method</desc>
+      <datatype>
+        <dataRef key="teidata.enumerated"/>
+      </datatype>
+      <valList type="semi">
+        <valItem ident="web">
+          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
+            web format</desc>
+        </valItem>
+        <valItem ident="print">
+          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
+            print format</desc>
+        </valItem>
+        <valItem ident="plaintext">
+          <desc versionDate="2015-05-15" xml:lang="en">the output is intended for presentation in a
+            plain text format</desc>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <elementSpec mode="change" ident="abbr">
+        <modelGrp output="web">
+          <model predicate="parent::choice" behaviour="omit"/>
+          <model predicate="ancestor::front" behaviour="inline">
+            <outputRendition>font-style:italic; </outputRendition>
+          </model>
+          <model predicate="not(parent::choice)" behaviour="inline">
+            <outputRendition scope="before">content: ' ('</outputRendition>
+            <outputRendition scope="after">content: ')'</outputRendition>
+          </model>
+        </modelGrp>
+        <modelGrp output="print">
+          <model predicate="parent::choice" behaviour="omit"/>
+          <model predicate="not(parent::choice)" behaviour="note">
+            <param name="place" value="'foot'"/>
+          </model>
+        </modelGrp>
+      </elementSpec>
+    </egXML>
+  </exemplum>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <modelGrp output="print">
+        <modelSequence>
+          <model behaviour="inline">
+            <param name="content" value="@n"/>
+          </model>
+          <model behaviour="note">
+            <param name="place" value="'foot'"/>
+          </model>
+        </modelSequence>
+      </modelGrp>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2015-08-21" xml:lang="en">
+    <!-- <p>The <gi>modelGrp</gi> element may be used to group <gi>model</gi> elements for any purpose
+      but if doing so by major output format (web, print, plaintext) then the <att>output</att>
+      attribute should be used.</p>-->
+    <p>The child <gi>model</gi> elements of a <gi>modelGrp</gi> are always processed
+      independently.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#TDPMMC"/>
+  </listRef>
+</elementSpec>

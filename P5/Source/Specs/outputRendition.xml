@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright TEI Consortium.
+    Dual-licensed under CC-by and BSD2 licences
+    See the file COPYING.txt for details
+    $Date: 2015-08-21 10:44:07 +0100 (Fri, 21 Aug 2015) $
+    $Id:  $
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="outputRendition" module="tagdocs">
+  <desc versionDate="2015-08-21" xml:lang="en">
+    describes the rendering or
+    appearance intended for all occurrences of an element in a specified
+    context for a specified type of output.</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="model.oddDecl"/>
+  </classes>
+  <content>
+    <textNode/>
+  </content>
+  <attList>
+    <attDef ident="scope">
+      <desc versionDate="2016-02-05" xml:lang="en">provides a way of defining
+          <soCalled>pseudo-elements</soCalled>, that is, styling rules applicable to specific
+        sub-portions of an element.</desc>
+      <datatype>
+        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
+      </datatype>
+      <valList type="open">
+        <valItem ident="first-line">
+          <desc versionDate="2016-02-05" xml:lang="en">styling applies to the first line of the
+            target element.</desc>
+        </valItem>
+        <valItem ident="first-letter">
+          <desc versionDate="2016-02-05" xml:lang="en">styling applies to the first character of the
+            target element.</desc>
+        </valItem>
+        <valItem ident="before">
+          <desc versionDate="2016-02-05" xml:lang="en">styling should be applied immediately before
+            the content of the target element.</desc>
+        </valItem>
+        <valItem ident="after">
+          <desc versionDate="2016-02-05" xml:lang="en">styling should be applied immediately after
+            the content of the target element.</desc>
+        </valItem>
+      </valList>
+    </attDef>
+  </attList>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <model predicate="ancestor::p" behaviour="inline">
+        <outputRendition>font-style: italic;</outputRendition>
+      </model>
+      <model behaviour="block">
+        <outputRendition>left-margin: 2em;</outputRendition>
+      </model>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2016-02-05" xml:lang="en">
+    <p>This component of an element specification describes the rendering or
+      appearance intended for all occurrences of the element in a specified
+      context for a specified type of output. The <gi>rendition</gi> element, by
+        contrast, describes the actual rendering or appearance of all occurrences
+        of the specified element in a source document. The
+        <att>useSourceRendition</att> attribute may however be used to indicate
+        that formatting information provided by a <gi>rendition</gi> element is to
+        be combined with any provided by an <gi>outputRendition</gi> element.</p>
+    <p>It is strongly recommended that the W3C Cascading Stylesheet language
+      (CSS2 or later) be used to express the required formatting information.</p>
+   
+  </remarks>
+  <!-- 
+  <listRef>
+    <ptr target="#WhereWeDiscussIt" type="div2"/>
+    <ptr target="#WhereWeDiscussIt" type="div2"/>
+  </listRef>
+  -->
+</elementSpec>

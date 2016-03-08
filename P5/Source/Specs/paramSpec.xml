@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
+See the file COPYING.txt for details
+$Date: 2015-08-21 10:44:07 +0100 (Fri, 21 Aug 2015) $
+$Id:  $
+-->
+<?xml-model href="http://tei.it.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="paramSpec" module="tagdocs">
+  <desc versionDate="2015-05-15" xml:lang="en">supplies specification for one parameter of a model
+    behaviour</desc>
+  <classes>
+    <memberOf key="att.global"/>
+    <memberOf key="att.identified"/>
+  </classes>
+  <content>
+    <alternate minOccurs="0" maxOccurs="unbounded">
+      <classRef key="model.glossLike"/>
+      <classRef key="model.descLike"/>
+    </alternate>
+  </content>
+  <exemplum xml:lang="en">
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">
+      <valItem ident="link">
+        <desc>create a hyperlink</desc>
+        <paramList>
+          <paramSpec ident="content">
+            <desc>supplies the location of some content describing the link</desc>
+          </paramSpec>
+          <paramSpec ident="link">
+            <desc>supplies the location of the intended URL</desc>
+          </paramSpec>
+        </paramList>
+      </valItem>
+    </egXML>
+  </exemplum>
+  <remarks versionDate="2016-02-29" xml:lang="en">
+    <p>Where a model behaviour uses more than one parameter, individual <gi>paramSpec</gi> elements
+      should be grouped together using a <gi>paramList</gi> element, as above. Parameter
+      specifications are provided within the <gi>valItem</gi> used to define a particular behaviour,
+      which forms part of the specification of a <gi>model</gi> element's <att>behaviour</att>
+      attribute. In the example above, the behaviour <ident>link</ident> has two parameters:
+        <val>content</val> and <val>link</val>.</p>
+    <p> Using a <gi>desc</gi> attribute within a <gi>paramSpec</gi> is optional but recommended
+      practice.</p>
+  </remarks>
+  <listRef>
+    <ptr target="#TDPMDEF"/>
+  </listRef>
+</elementSpec>

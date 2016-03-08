@@ -4,14 +4,16 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec">
+--><?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="elementSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">element specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">요소 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
   <gloss versionDate="2008-04-06" xml:lang="es">especificación del elemento</gloss>
   <gloss versionDate="2007-06-12" xml:lang="fr">spécification d'élément</gloss>
   <gloss versionDate="2007-11-06" xml:lang="it">specifica dell'elemento</gloss>
-  <desc versionDate="2005-01-14" xml:lang="en">documents the structure, content, and purpose of a single element type.</desc>
+  <desc versionDate="2005-01-14" xml:lang="en">documents the structure, content, and purpose of a
+    single element type.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">단일 요소 유형의 구조, 내용 및 목적을 기록한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">紀錄單一元素類型的結構、內容、以及用途。</desc>
   <desc versionDate="2008-04-05" xml:lang="ja">構造，内容，その要素の目的などを示す．</desc>
@@ -19,8 +21,8 @@ $Id$
     élément.</desc>
   <desc versionDate="2007-05-04" xml:lang="es">documenta la estructura, contenido y finalidad de un
     único tipo de elemento.</desc>
-  <desc versionDate="2007-01-21" xml:lang="it">documenta struttura, contenuto e scopo di un unico tipo
-    di elemento</desc>
+  <desc versionDate="2007-01-21" xml:lang="it">documenta struttura, contenuto e scopo di un unico
+    tipo di elemento</desc>
   <classes>
     <memberOf key="att.global"/>
     <memberOf key="model.oddDecl"/>
@@ -29,55 +31,40 @@ $Id$
   </classes>
   <content>
     <sequence>
-      
-        <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.glossLike"/>
-          <classRef key="model.descLike"/>
-        </alternate>
-      
-      
-        <elementRef key="classes" minOccurs="0"/>
-      
-      
-        <elementRef key="content" minOccurs="0"/>
-      
-      
-        <elementRef key="valList" minOccurs="0"/>
-      
-      
-        <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="attList" minOccurs="0"/>
-      
-      
-        <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
-      
-      
-        <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
-      
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.glossLike"/>
+        <classRef key="model.descLike"/>
+      </alternate>
+      <elementRef key="classes" minOccurs="0"/>
+      <elementRef key="content" minOccurs="0"/>
+      <elementRef key="valList" minOccurs="0"/>
+      <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="attList" minOccurs="0"/>
+      <alternate maxOccurs="unbounded" minOccurs="0">
+        <elementRef key="model"/>
+        <elementRef key="modelGrp"/>
+        <elementRef key="modelSequence"/>
+      </alternate>
+      <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+      <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </content>
   <attList>
     <attDef ident="prefix" usage="opt">
-      <desc versionDate="2010-06-23" xml:lang="en">specifies a default prefix which will be prepended to all patterns
-      relating to the element, unless otherwise stated.</desc>
+      <desc versionDate="2010-06-23" xml:lang="en">specifies a default prefix which will be
+        prepended to all patterns relating to the element, unless otherwise stated.</desc>
       <datatype minOccurs="0"><dataRef key="teidata.xmlName"/></datatype>
       <remarks versionDate="2010-06-23" xml:lang="en">
-        <p>Colons, although permitted inside the value, will cause an
-	invalid schema to be generated.</p>
+        <p>Colons, although permitted inside the value, will cause an invalid schema to be
+          generated.</p>
       </remarks>
       <remarks xml:lang="fr" versionDate="2007-06-12">
         <p>Les deux-points, bien qu'ils soient permis à l'intérieur de la valeur, provoqueront la
-                        génération d'un schéma invalide. </p>
+          génération d'un schéma invalide. </p>
       </remarks>
       <remarks xml:lang="ja" versionDate="2008-04-05">
-        <p>
-        コロンは，値としては認められるが，スキーマ中では使用できない．
-        </p>
+        <p> コロンは，値としては認められるが，スキーマ中では使用できない． </p>
       </remarks>
     </attDef>
     <!-- removed @usage -->
