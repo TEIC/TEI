@@ -2794,28 +2794,28 @@ referring to the zone marked in purple on the right
    <div xml:id="PH-changes">
       <head>Changes</head>
       <p>A major purpose of genetic editing is the identification of <soCalled>revision
-            campaigns</soCalled> or, more generally, <term>changes</term>. An editor may wish to
-         assign a set of alterations (deletions, additions, substitutions, transpositions, etc.) or
-         any other act of writing to a particular change, to indicate both that one or more of such
+         campaigns</soCalled> or, more generally, <term>changes</term>. An editor may wish to
+         regard a particular set of alterations (deletions, additions, substitutions, transpositions, etc.) or
+         any other act of writing as a single object for which we use the general term <term>change</term>, to indicate both that one or more of such
          phenomena preceded or followed another and also to indicate that they are related in some
          way, for example that one is a consequence of the other. They might also wish to group
          together certain revisions, regardless of when they might have occurred, based on a variety
          of other shared characteristics (e.g., corrections of factual errors or revisions that
          incorporate suggestions made by a given reader). To document this we need: <list>
-            <item>a system to assign phenomena to a particular change</item>
-            <item>a way to characterize a change, in itself and in relation to other changes.</item>
+            <item>a system to assign phenomena to a particular <soCalled>change</soCalled> as defined above</item>
+            <item>a way to characterize each such change, in itself and in relation to others.</item>
          </list></p>
 
       <p>The element <gi>creation</gi> (within the TEI header profile description) contains all
          information relating to the genesis or production of a text. It may contain a
             <gi>listChange</gi> element which contains a number of <gi>change</gi> elements, one for
-         each identified change: <specList>
+         each set of alterations identified: <specList>
             <specDesc key="listChange" atts="ordered"/>
             <specDesc key="change"/>
          </specList>
       </p>
 
-      <p>In the following example an editor has identified four distinct changes:</p>
+      <p>In the following example an editor has identified four distinct sets of alterations:</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <profileDesc>
             <creation>
@@ -2834,7 +2834,7 @@ referring to the zone marked in purple on the right
       <p>The <gi>listChange</gi> element carries an attribute <att>ordered</att>, which can take the
          values <code>true</code> or <code>false</code> (the default). The attribute specifies
          whether the order of child elements signifies a temporal order for the revision campaigns
-         which they document. In the example above, the editor has asserted that the four stages
+         which they document. In the example above, the editor has asserted that the four sets
          distinguished are ordered chronologically according to the order of the <gi>change</gi>
          elements.
          <!-- Note that asserting a specific order early on, though probably
@@ -2847,8 +2847,8 @@ referring to the zone marked in purple on the right
       <p>-->
          If necessary, <gi>listChange</gi> elements can be nested hierarchically. This may be
          helpful in two cases. Firstly one can build up hypotheses about related revisions
-         step-by-step, starting with stages of smaller coverage, whose members are certainly
-         related, and then in a subsequent pass grouping these stages in turn, thereby extending
+         step-by-step, starting with <gi>change</gi> elements of smaller coverage, whose members are certainly
+         related, and then in a subsequent pass grouping these  in turn, thereby extending
          their reach.</p>
 
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -2868,7 +2868,7 @@ referring to the zone marked in purple on the right
          </profileDesc>
       </egXML>
       <p>A nested <gi>listChange</gi> elements is also useful to indicate a <emph>partial</emph>
-         ordering of revision campaigns.</p>
+         ordering of <gi>change</gi> elements.</p>
       <egXML xmlns="http://www.tei-c.org/ns/Examples">
          <listChange ordered="true">
             <change xml:id="ST1">The first stage</change>
@@ -2881,10 +2881,11 @@ referring to the zone marked in purple on the right
             <change xml:id="STX">The last stage</change>
          </listChange>
       </egXML>
-      <p>In addition to the possibility of ordering text stages in relation to each other,
+      <p>In addition to the possibility of being ordered by their sequence within
+         a <gi>listChange</gi> element, 
             <gi>change</gi> elements may carry a number of attributes from the <ident type="class"
             >att.datable</ident> class (<att>period</att>, <att>when</att>, <att>notBefore</att>,
-            <att>notAfter</att>, <att>from</att>, and <att>to</att>) which allow each stage to be
+            <att>notAfter</att>, <att>from</att>, and <att>to</att>) which allow each element to be
          dated as exactly or inexactly as necessary, in the same way as is currently possible for
          the TEI <gi>date</gi> element.</p>
       <!-- Maybe note that absolute dates and relative order can conflict -->
@@ -2911,13 +2912,14 @@ referring to the zone marked in purple on the right
             </creation>
          </profileDesc>
       </egXML>
-      <p>Each <gi>change</gi> element, apart from declaring a distinct change in the creation of the
+      <p>Each <gi>change</gi> element, apart from declaring a distinct moment or phase in the creation of the
          document, may also contain references to other annotations contained within the
             <gi>teiHeader</gi> or in the document (as shown in the previous example). Such
-         references, along with the textual content, are purely documentary and do not affect the
-         textual stage associated with any element thus referred to. The association of a textual
-         component with a change is always made explicitly, either by using the <att>target</att>
-         attribute on the <gi>change</gi> element to point to one or more elements, or by pointing
+         references, along with the textual content, are purely documentary<!-- and do not affect the
+         textual stage associated with any element thus referred to-->. The association between  a textual
+         component and a <gi>change</gi>  element
+         is always made explicitly, either by using the <att>target</att>
+         attribute on the <gi>change</gi> element to point to one or more textual elements, or by pointing
          from the element or elements concerned to the <gi>change</gi> element by means of their
             <att>change</att> attribute. If a <gi>change</gi> element is associated with some
          element, it is also associated with all of that element's children, unless otherwise
@@ -2935,16 +2937,17 @@ referring to the zone marked in purple on the right
                   <add>mouse</add>
                </mod>.</line>
          </egXML> Note that in this case both the deletion and the addition are associated with the
-         second stage. The word <q>house</q>, because it was deleted at the second stage, must have
-         been present at the first stage, whereas the word <q>mouse</q> must have been added during
-         the second stage. </p>
+         second <gi>change</gi> element. The word <q>house</q>, because its deletion forms part of
+         this second set of alterations, must have
+         been present originally, whereas the word <q>mouse</q> must have been added during
+         the second set of alterations. </p>
 
       <p>Elements such as <gi>add</gi> and <gi>del</gi> and the like carry an implied semantics
          concerning the order in which events in the writing of a document was carried out:
          something which is deleted must have been written before it was deleted; something which is
          added must have been added at a later stage of the writing. Even when a combination of such
          elements is used, the chronology can usually be inferred (see further <ptr target="#PHCOMB"
-         />). Explicit indication of the stage to which some modification belongs is mostly useful
+         />). Explicit indication of the set of alterations to which some modification belongs is mostly useful
          in situations where all the alterations identified in a document are to be grouped, for
          example chronologically. </p>
       <!--For example, in the
@@ -3002,7 +3005,7 @@ following ...-->
          in the second stage and is repeated or fixed in the third. Also the substitution in the
          second line is done repeatedly: initially it takes place in the second stage, but is
          fixated as a whole in the third.</p>-->
-      <p>The interpretation of change assignments for a particular text passage is based on a number
+      <p>The interpretation of <gi>change</gi> elements with respect to a particular text passage is based on a number
          of implicit assumptions and constraints which have the effect of minimizing the amount of
          tagging necessary. The system is also flexible enough to support an explicit distinction
          between acts of writing and textual alterations, since either of these can be associated
@@ -3059,7 +3062,7 @@ following ...-->
       <p>The documentary transcription stresses the writing process, while the textual transcription
          emphasizes textual alterations. In either case, the change of writing activity associated
          with a particular feature in the transcript is explicitly indicated. From the documentary
-         perspective, by assigning particular modifications to a specific change, we describe the
+         perspective, by assigning particular modifications to a specific <gi>change</gi> element, we describe the
          writing process, in that they specify which segment has been written when
          <!-- and how often-->. From the textual perspective, the markup concentrates simply on the
          existence of textual alterations and makes no explicit claims about the order of writing.
