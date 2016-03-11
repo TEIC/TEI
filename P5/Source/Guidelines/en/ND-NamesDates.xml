@@ -174,35 +174,35 @@ Header. A <gi>taxonomy</gi> may contain simply a bibliographic
 reference to an external definition for it. More usefully, it may also
 contain a series of <gi>category</gi> elements, each with an
 identifier and a description. The identifier can then be used as the
-target for a <att>period</att> attribute. For example, a taxonomy of named periods might be defined as
-follows:
+target for a <att>period</att> attribute. For example, a taxonomy of
+named periods might be defined as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<taxonomy xml:id="greekperiods">
-<category xml:id="tyranny">
-<catDesc>Before 510 BC</catDesc></category>
-<category xml:id="classical">
-<catDesc>Between 510 and 323 BC</catDesc></category>
-          <category xml:id="hellenistic">
-            <catDesc>
-              <ref target="http://www.wikipedia.com/wiki/Hellenistic"
-                >Hellenistic</ref>. Commonly treated as 
-	      <date notBefore="-0323" notAfter="-0031">from 
-	      the death of Alexander to the Roman conquest.</date>
-            </catDesc>
-          </category>
-          <category xml:id="roman">
-            <catDesc>
-              <ref target="http://www.wikipedia.com/wiki/Roman_Empire"
-              >Roman</ref>
-            </catDesc>
-          </category>
-          <category xml:id="christian">
-            <catDesc> The Christian period technically starts at the
-	    birth of Jesus, but in
-	    practice is considered to date from the conversion of Constantine
-	    in <date when="0312">312 AD</date>. </catDesc>
-          </category>
-        </taxonomy>
+  <taxonomy xml:id="greekperiods">
+    <category xml:id="tyranny">
+    <catDesc>Before 510 BC</catDesc></category>
+    <category xml:id="classical">
+    <catDesc>Between 510 and 323 BC</catDesc></category>
+    <category xml:id="hellenistic">
+      <catDesc>
+	<ref target="http://www.wikipedia.com/wiki/Hellenistic"
+	     >Hellenistic</ref>. Commonly treated as 
+	<date notBefore="-0323" notAfter="-0031">from 
+	the death of Alexander to the Roman conquest.</date>
+      </catDesc>
+    </category>
+    <category xml:id="roman">
+      <catDesc>
+	<ref target="http://www.wikipedia.com/wiki/Roman_Empire"
+	     >Roman</ref>
+      </catDesc>
+    </category>
+    <category xml:id="christian">
+      <catDesc> The Christian period technically starts at the
+      birth of Jesus, but in
+      practice is considered to date from the conversion of Constantine
+      in <date when="0312">312 AD</date>. </catDesc>
+    </category>
+  </taxonomy>
 </egXML>
 </p>
 <p>With these definitions in place, any datable element may be
@@ -233,118 +233,16 @@ the 22nd of August 1579 and evidence that she was already dead on the
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <death notBefore="1579-08-22" notAfter="1582-03-28"/>
 </egXML></p>
+<p>Since <att>when</att> is used for a particular date or time,
+<att>from</att> and <att>to</att> for a duration, and
+<att>notBefore</att> and <att>notAfter</att> for a particular date or
+time within a range, it makes no sense to use <att>when</att> in
+combination with one or more of the others.</p>
 <p>The assertion of <att>from</att> or <att>to</att> that a temporal
 expression signifies a duration takes higher precedence than the
 assertion of <att>notBefore</att> or <att>notAfter</att> that a
 temporal expression indicates a particular date or time within a
 range.
-<p><label style="font-weight: bold;">table version 1: complete</label></p>
-<table style="border-collapse:separate; border-style:solid;">
-  <row role="label" style="border: thin solid black;">
-    <cell style="border: thin solid black;"/>
-    <cell style="border: thin solid black;"><att>notBefore</att></cell>
-    <cell style="border: thin solid black;"><att>notAfter</att></cell>
-    <cell style="border: thin solid black;"><att>from</att></cell>
-    <cell style="border: thin solid black;"><att>to</att></cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>notBefore</att></cell>
-    <cell style="border: thin solid black;">∅</cell>
-    <cell style="border: thin solid black;">range of possibilities, exclusive</cell>
-    <cell style="border: thin solid black;">??</cell>
-    <cell style="border: thin solid black;">duration from sometime after <att>notBefore</att> (exclusive) to <att>to</att> (inclusive)</cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>notAfter</att></cell>
-    <cell style="border: thin solid black;">range of possibilities, exclusive</cell>
-    <cell style="border: thin solid black;">∅</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> (inclusive) to sometime before <att>notAfter</att> (exclusive)</cell>
-    <cell style="border: thin solid black;">??</cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>from</att></cell>
-    <cell style="border: thin solid black;">??</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> (inclusive) to sometime before <att>notAfter</att> (exclusive)</cell>
-    <cell style="border: thin solid black;">∅</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> to <att>to</att>, inclusive</cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>to</att></cell>
-    <cell style="border: thin solid black;">duration from sometime after <att>notBefore</att> (exclusive) to <att>to</att> (inclusive)</cell>
-    <cell style="border: thin solid black;">??</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> to <att>to</att>, inclusive</cell>
-    <cell style="border: thin solid black;">∅</cell>
-  </row>
-</table>
-<!-- ************************************* -->
-<p><label style="font-weight: bold;">table version 2: complete, duplicate cells blanked</label></p>
-<table style="border-collapse:separate; border-style:solid;">
-  <row role="label" style="border: thin solid black;">
-    <cell style="border: thin solid black;"/>
-    <cell style="border: thin solid black;"><att>notBefore</att></cell>
-    <cell style="border: thin solid black;"><att>notAfter</att></cell>
-    <cell style="border: thin solid black;"><att>from</att></cell>
-    <cell style="border: thin solid black;"><att>to</att></cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>notBefore</att></cell>
-    <cell style="border: thin solid black;">∅</cell>
-    <cell style="border: thin solid black;">&#x2014; &#x2014;</cell>
-    <cell style="border: thin solid black;">&#x2014; &#x2014;</cell>
-    <cell style="border: thin solid black;">&#x2014; &#x2014;</cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>notAfter</att></cell>
-    <cell style="border: thin solid black;">range of possibilities, exclusive</cell>
-    <cell style="border: thin solid black;">∅</cell>
-    <cell style="border: thin solid black;">&#x2014; &#x2014;</cell>
-    <cell style="border: thin solid black;">&#x2014; &#x2014;</cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>from</att></cell>
-    <cell style="border: thin solid black;">??</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> (inclusive) to sometime before <att>notAfter</att> (exclusive)</cell>
-    <cell style="border: thin solid black;">∅</cell>
-    <cell style="border: thin solid black;">&#x2014; &#x2014;</cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>to</att></cell>
-    <cell style="border: thin solid black;">duration from sometime after <att>notBefore</att> (exclusive) to <att>to</att> (inclusive)</cell>
-    <cell style="border: thin solid black;">??</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> to <att>to</att>, inclusive</cell>
-    <cell style="border: thin solid black;">∅</cell>
-  </row>
-</table>
-<!-- ************************************* -->
-<p><label style="font-weight: bold;">table version 3: trimmed</label></p>
-<table style="border-collapse:separate; border-style:solid;">
-  <row role="label" style="border: thin solid black;">
-    <cell style="border: thin solid black;"/>
-    <cell style="border: thin solid black;"><att>notBefore</att></cell>
-    <cell style="border: thin solid black;"><att>notAfter</att></cell>
-    <cell style="border: thin solid black;"><att>from</att></cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>notAfter</att></cell>
-    <cell style="border: thin solid black;">range of possibilities, exclusive</cell>
-    <cell style="border: thin solid black;">∅</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> (inclusive) to sometime before <att>notAfter</att> (exclusive)</cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>from</att></cell>
-    <cell style="border: thin solid black;">??</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> (inclusive) to sometime before <att>notAfter</att> (exclusive)</cell>
-    <cell style="border: thin solid black;">∅</cell>
-  </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>to</att></cell>
-    <cell style="border: thin solid black;">duration from sometime after <att>notBefore</att> (exclusive) to <att>to</att> (inclusive)</cell>
-    <cell style="border: thin solid black;">??</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> to <att>to</att>, inclusive</cell>
-  </row>
-</table>
-<!-- ************************************* -->
-<p><label style="font-weight: bold;">table version 4: trimmed, duplicate cell blanked</label></p>
 <table style="border-collapse:separate; border-style:solid;">
   <row role="label" style="border: thin solid black;">
     <cell style="border: thin solid black;"/>
@@ -360,19 +258,35 @@ range.
   </row>
   <row style="border: thin solid black;">
     <cell style="border: thin solid black;" role="label"><att>from</att></cell>
-    <cell style="border: thin solid black;">??</cell>
+    <cell style="border: thin solid black;">not allowed</cell>
     <cell style="border: thin solid black;">duration from <att>from</att> (inclusive) to sometime before <att>notAfter</att> (exclusive)</cell>
     <cell style="border: thin solid black;">∅</cell>
   </row>
   <row style="border: thin solid black;">
     <cell style="border: thin solid black;" role="label"><att>to</att></cell>
     <cell style="border: thin solid black;">duration from sometime after <att>notBefore</att> (exclusive) to <att>to</att> (inclusive)</cell>
-    <cell style="border: thin solid black;">??</cell>
+    <cell style="border: thin solid black;">not allowed</cell>
     <cell style="border: thin solid black;">duration from <att>from</att> to <att>to</att>, inclusive</cell>
   </row>
 </table>
 </p>
-<p>Some further self-explanatory examples follow:
+<p>Furthermore, a duration for which one endpoint or the other is
+within a range of possibilities may be expressed by using either
+<att>from</att> or <att>to</att> for the known endpoint and both
+<att>notBefore</att> and <att>notAfter</att> to indicate the range of
+possibilities of the other endpoint. For example, 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <time from="01:26:03" notBefore="05:00:00" notAfter="06:30:00"/>
+</egXML>
+indicates a duration of time that started at a specific time (01:26:03), and ended sometime
+between 05:00 and 06:30.</p>
+<p>A duration for which both endpoints occur not on a particular date
+or time but rather during a specifiable range cannot be formally
+expressed using only the attributes of <ident
+type="class">att.datable.w3c</ident> discussed here. See
+<ptr target="#NDDATEISO"/>.</p>
+<p>Some
+further self-explanatory examples follow:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <birth when="1857-03-15">15 March 1857.</birth> 
 </egXML>
@@ -388,6 +302,7 @@ in March or April of 1857.</birth>
 some time later in March or April of 1857.</residence>
 </egXML>
 </p>
+<p>Note that 
 <p>Normalization of date and time values permits the efficient
 processing of data (for example, to determine whether one event
 precedes or follows another). These examples all use the W3C standard
