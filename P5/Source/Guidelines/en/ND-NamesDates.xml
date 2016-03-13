@@ -237,49 +237,55 @@ the 22nd of August 1579 and evidence that she was already dead on the
 <att>from</att> and <att>to</att> for a duration, and
 <att>notBefore</att> and <att>notAfter</att> for a particular date or
 time within a range, it makes no sense to use <att>when</att> in
-combination with one or more of the others.</p>
+combination with one or more of the others.
+Thus these Guidelines at present recommend against the use of
+<att>when</att> in combination with any of <att>from</att>,
+<att>to</att>, <att>notBefore</att>, or <att>notAfter</att>.</p>
 <p>The assertion of <att>from</att> or <att>to</att> that a temporal
 expression signifies a duration takes higher precedence than the
 assertion of <att>notBefore</att> or <att>notAfter</att> that a
 temporal expression indicates a particular date or time within a
 range.
 <table style="border-collapse:separate; border-style:solid;">
-  <row role="label" style="border: thin solid black;">
-    <cell style="border: thin solid black;"/>
-    <cell style="border: thin solid black;"><att>notBefore</att></cell>
-    <cell style="border: thin solid black;"><att>notAfter</att></cell>
-    <cell style="border: thin solid black;"><att>from</att></cell>
+  <row role="label">
+    <cell style="border: thin solid black; padding: 1ex;"/>
+    <cell style="border: thin solid black; padding: 1ex;"><att>notBefore</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;"><att>notAfter</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;"><att>from</att></cell>
   </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>notAfter</att></cell>
-    <cell style="border: thin solid black;">range of possibilities, exclusive</cell>
-    <cell style="border: thin solid black;">∅</cell>
-    <cell style="border: thin solid black;">&#x2014; &#x2014;</cell>
+  <row>
+    <cell style="border: thin solid black; padding: 1ex;" role="label"><att>notAfter</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;">range of possibilities, inclusive</cell>
+    <cell style="border: thin solid black; padding: 1ex; text-align: center; ">∅</cell>
+    <cell style="border: thin solid black; padding: 1ex;">&#x2014; &#x2014;</cell>
   </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>from</att></cell>
-    <cell style="border: thin solid black;">not allowed</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> (inclusive) to sometime before <att>notAfter</att> (exclusive)</cell>
-    <cell style="border: thin solid black;">∅</cell>
+  <row>
+    <cell style="border: thin solid black; padding: 1ex;" role="label"><att>from</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;  text-align: center; font-style: italic;">not allowed</cell>
+    <cell style="border: thin solid black; padding: 1ex;">duration from <att>from</att> to sometime before <att>notAfter</att>, inclusive</cell>
+    <cell style="border: thin solid black; padding: 1ex; text-align: center; ">∅</cell>
   </row>
-  <row style="border: thin solid black;">
-    <cell style="border: thin solid black;" role="label"><att>to</att></cell>
-    <cell style="border: thin solid black;">duration from sometime after <att>notBefore</att> (exclusive) to <att>to</att> (inclusive)</cell>
-    <cell style="border: thin solid black;">not allowed</cell>
-    <cell style="border: thin solid black;">duration from <att>from</att> to <att>to</att>, inclusive</cell>
+  <row>
+    <cell style="border: thin solid black; padding: 1ex;" role="label"><att>to</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;">duration from sometime after <att>notBefore</att> to <att>to</att>, inclusive</cell>
+    <cell style="border: thin solid black; padding: 1ex; text-align: center; font-style: italic;">not allowed</cell>
+    <cell style="border: thin solid black; padding: 1ex;">duration from <att>from</att> to <att>to</att>, inclusive</cell>
   </row>
 </table>
 </p>
-<p>Furthermore, a duration for which one endpoint or the other is
-within a range of possibilities may be expressed by using either
-<att>from</att> or <att>to</att> for the known endpoint and both
-<att>notBefore</att> and <att>notAfter</att> to indicate the range of
-possibilities of the other endpoint. For example, 
+<p>Furthermore, a duration for which one endpoint is known and the
+other is within a range of possibilities may be expressed by using
+either <att>from</att> or <att>to</att> for the known endpoint, and
+both <att>notBefore</att> and <att>notAfter</att> to indicate the
+range of possibilities of the other endpoint. For example,
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <time from="01:26:03" notBefore="05:00:00" notAfter="06:30:00"/>
 </egXML>
-indicates a duration of time that started at a specific time (01:26:03), and ended sometime
-between 05:00 and 06:30.</p>
+<!-- This is the time range that the Chernobyl nuclear plant was burning, except for -->
+<!-- thoe fires contained inside reactor 4. Reports vary as to when they were out;   -->
+<!-- even wikipedia reports 2 different times, 05:00 and 06:30.                      -->
+indicates a duration of time that started at a specific time
+(01:26:03), and ended sometime between 05:00 and 06:30 (inclusive).</p>
 <p>A duration for which both endpoints occur not on a particular date
 or time but rather during a specifiable range cannot be formally
 expressed using only the attributes of <ident
@@ -288,27 +294,36 @@ type="class">att.datable.w3c</ident> discussed here. See
 <p>Some
 further self-explanatory examples follow:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<birth when="1857-03-15">15 March 1857.</birth> 
+  <birth when="1857-03-15">15 March 1857.</birth> 
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<birth notBefore="1857-03-01" notAfter="1857-04-30">Some time 
-in March or April of 1857.</birth> 
+  <birth notBefore="1857-03-01" notAfter="1857-04-30">Some time in
+  March or April of 1857.</birth>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<residence from="1857-03-01" to="1857-04-30">In March and April of 1857.</residence> 
+  <residence from="1857-03-01" to="1857-04-30">Lived in Amsterdam
+  during March and April of 1857.</residence>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<residence from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
-some time later in March or April of 1857.</residence>
+  <date from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
+  some time later in March or April of 1857.</date>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <residence notBefore="1857-03-01" to="1857-04-30">From the 1st of
+  March or sometime later to the end of April, 1857.</residence>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <residence from="1856-03" to="1858-04">From sometime in March of
+  1856 to sometime in April of 1858.</residence>
 </egXML>
 </p>
-<p>Note that 
-<p>Normalization of date and time values permits the efficient
-processing of data (for example, to determine whether one event
-precedes or follows another). These examples all use the W3C standard
-format for representation of dates and times. Further examples, and
-discussion of some alternative approaches to normalization are given
-in section <ptr target="#NDDATEISO"/> below. </p>
+<p>Normalization of date and time values permits
+the efficient processing of data (for example, to determine whether
+one event precedes or follows another). These examples all use the W3C
+standard format for representation of dates and times. Further
+examples, and discussion of some alternative approaches to
+normalization are given in section <ptr target="#NDDATEISO"/> below.
+</p>
 <!-- need reference to something on date normalization issues here -->
 </div>
 
