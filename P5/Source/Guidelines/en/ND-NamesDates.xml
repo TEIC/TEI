@@ -6,8 +6,6 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-
-
 <?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="ND" n="20">
@@ -176,35 +174,35 @@ Header. A <gi>taxonomy</gi> may contain simply a bibliographic
 reference to an external definition for it. More usefully, it may also
 contain a series of <gi>category</gi> elements, each with an
 identifier and a description. The identifier can then be used as the
-target for a <att>period</att> attribute. For example, a taxonomy of named periods might be defined as
-follows:
+target for a <att>period</att> attribute. For example, a taxonomy of
+named periods might be defined as follows:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<taxonomy xml:id="greekperiods">
-<category xml:id="tyranny">
-<catDesc>Before 510 BC</catDesc></category>
-<category xml:id="classical">
-<catDesc>Between 510 and 323 BC</catDesc></category>
-          <category xml:id="hellenistic">
-            <catDesc>
-              <ref target="http://www.wikipedia.com/wiki/Hellenistic"
-                >Hellenistic</ref>. Commonly treated as 
-	      <date notBefore="-0323" notAfter="-0031">from 
-	      the death of Alexander to the Roman conquest.</date>
-            </catDesc>
-          </category>
-          <category xml:id="roman">
-            <catDesc>
-              <ref target="http://www.wikipedia.com/wiki/Roman_Empire"
-              >Roman</ref>
-            </catDesc>
-          </category>
-          <category xml:id="christian">
-            <catDesc> The Christian period technically starts at the
-	    birth of Jesus, but in
-	    practice is considered to date from the conversion of Constantine
-	    in <date when="0312">312 AD</date>. </catDesc>
-          </category>
-        </taxonomy>
+  <taxonomy xml:id="greekperiods">
+    <category xml:id="tyranny">
+    <catDesc>Before 510 BC</catDesc></category>
+    <category xml:id="classical">
+    <catDesc>Between 510 and 323 BC</catDesc></category>
+    <category xml:id="hellenistic">
+      <catDesc>
+	<ref target="http://www.wikipedia.com/wiki/Hellenistic"
+	     >Hellenistic</ref>. Commonly treated as 
+	<date notBefore="-0323" notAfter="-0031">from 
+	the death of Alexander to the Roman conquest.</date>
+      </catDesc>
+    </category>
+    <category xml:id="roman">
+      <catDesc>
+	<ref target="http://www.wikipedia.com/wiki/Roman_Empire"
+	     >Roman</ref>
+      </catDesc>
+    </category>
+    <category xml:id="christian">
+      <catDesc> The Christian period technically starts at the
+      birth of Jesus, but in
+      practice is considered to date from the conversion of Constantine
+      in <date when="0312">312 AD</date>. </catDesc>
+    </category>
+  </taxonomy>
 </egXML>
 </p>
 <p>With these definitions in place, any datable element may be
@@ -213,28 +211,119 @@ associated with a specific period:
 <placeName period="#christian">Stauropolis</placeName></egXML></p>
 <p>The other dating attributes provided by this class support a wide
 range of methods of specifying temporal information in a normalized
-form. Some simple examples follow:
+form. The <att>from</att> and <att>to</att> attributes may be used to
+express the begining and ending of a period of time, for example:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<birth when="1857-03-15">15 March 1857.</birth> 
+  <event xml:id="eMBB" from="1955-12-01" to="1956-12-20">
+    <label>Montgomery Bus Boycott</label>
+    <desc>A political and social protest campaign against the policy of
+    racial segregation on the public transit system of the city of
+    <placeName ref="#MONT">Montgomery</placeName>.</desc>
+  </event>
+</egXML></p>
+<p>The <att>notBefore</att> and <att>notAfter</att> attributes may be
+used to express a range of possibilities for a particular date (or
+time). For example the following element, extracted from an imaginary
+prosopographic entry for Anne Calthorpe, indicates that although the
+exact date of her death is not known, it can be narrowed down to a
+particular range: from 22 August 1579 to 28 March 1582, inclusive.
+Ostensibly the encoder has evidence that Anne Calthorpe was alive on
+the 22nd of August 1579 and evidence that she was already dead on the
+28th of March 1582. 
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <death notBefore="1579-08-22" notAfter="1582-03-28"/>
+</egXML></p>
+<p>Since <att>when</att> is used for a particular date or time,
+<att>from</att> and <att>to</att> for a duration, and
+<att>notBefore</att> and <att>notAfter</att> for a particular date or
+time within a range, it makes no sense to use <att>when</att> in
+combination with one or more of the others.
+Thus these Guidelines at present recommend against the use of
+<att>when</att> in combination with any of <att>from</att>,
+<att>to</att>, <att>notBefore</att>, or <att>notAfter</att>.</p>
+<p>The assertion of <att>from</att> or <att>to</att> that a temporal
+expression signifies a duration takes higher precedence than the
+assertion of <att>notBefore</att> or <att>notAfter</att> that a
+temporal expression indicates a particular date or time within a
+range.
+<table style="border-collapse:separate; border-style:solid;">
+  <row role="label">
+    <cell style="border: thin solid black; padding: 1ex;"/>
+    <cell style="border: thin solid black; padding: 1ex;"><att>notBefore</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;"><att>notAfter</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;"><att>from</att></cell>
+  </row>
+  <row>
+    <cell style="border: thin solid black; padding: 1ex;" role="label"><att>notAfter</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;">range of possibilities, inclusive</cell>
+    <cell style="border: thin solid black; padding: 1ex; text-align: center; ">∅</cell>
+    <cell style="border: thin solid black; padding: 1ex;">&#x2014; &#x2014;</cell>
+  </row>
+  <row>
+    <cell style="border: thin solid black; padding: 1ex;" role="label"><att>from</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;  text-align: center; font-style: italic;">not allowed</cell>
+    <cell style="border: thin solid black; padding: 1ex;">duration from <att>from</att> to sometime before <att>notAfter</att>, inclusive</cell>
+    <cell style="border: thin solid black; padding: 1ex; text-align: center; ">∅</cell>
+  </row>
+  <row>
+    <cell style="border: thin solid black; padding: 1ex;" role="label"><att>to</att></cell>
+    <cell style="border: thin solid black; padding: 1ex;">duration from sometime after <att>notBefore</att> to <att>to</att>, inclusive</cell>
+    <cell style="border: thin solid black; padding: 1ex; text-align: center; font-style: italic;">not allowed</cell>
+    <cell style="border: thin solid black; padding: 1ex;">duration from <att>from</att> to <att>to</att>, inclusive</cell>
+  </row>
+</table>
+</p>
+<p>Furthermore, a duration for which one endpoint is known and the
+other is within a range of possibilities may be expressed by using
+either <att>from</att> or <att>to</att> for the known endpoint, and
+both <att>notBefore</att> and <att>notAfter</att> to indicate the
+range of possibilities of the other endpoint. For example,
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <time from="01:26:03" notBefore="05:00:00" notAfter="06:30:00"/>
+</egXML>
+<!-- This is the time range that the Chernobyl nuclear plant was burning, except for -->
+<!-- thoe fires contained inside reactor 4. Reports vary as to when they were out;   -->
+<!-- even wikipedia reports 2 different times, 05:00 and 06:30.                      -->
+indicates a duration of time that started at a specific time
+(01:26:03), and ended sometime between 05:00 and 06:30 (inclusive).</p>
+<p>A duration for which both endpoints occur not on a particular date
+or time but rather during a specifiable range cannot be formally
+expressed using only the attributes of <ident
+type="class">att.datable.w3c</ident> discussed here. See
+<ptr target="#NDDATEISO"/>.</p>
+<p>Some
+further self-explanatory examples follow:
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <birth when="1857-03-15">15 March 1857.</birth> 
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<birth notBefore="1857-03-01" notAfter="1857-04-30">Some time 
-in March or April of 1857.</birth> 
+  <birth notBefore="1857-03-01" notAfter="1857-04-30">Some time in
+  March or April of 1857.</birth>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<residence from="1857-03-01" to="1857-04-30">In March and April of 1857.</residence> 
+  <residence from="1857-03-01" to="1857-04-30">Lived in Amsterdam
+  during March and April of 1857.</residence>
 </egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
-<residence from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
-some time in April of 1857.</residence>
+  <date from="1857-03-01" notAfter="1857-04-30">From the 1st of March to
+  some time later in March or April of 1857.</date>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <residence notBefore="1857-03-01" to="1857-04-30">From the 1st of
+  March or sometime later to the end of April, 1857.</residence>
+</egXML>
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+  <residence from="1856-03" to="1858-04">From sometime in March of
+  1856 to sometime in April of 1858.</residence>
 </egXML>
 </p>
-<p>Normalization of date and time values permits the efficient
-processing of data (for example, to determine whether one event
-precedes or follows another). These examples all use the W3C standard
-format for representation of dates and times. Further examples, and
-discussion of some alternative approaches to normalization are given
-in section <ptr target="#NDDATEISO"/> below. </p>
+<p>Normalization of date and time values permits
+the efficient processing of data (for example, to determine whether
+one event precedes or follows another). These examples all use the W3C
+standard format for representation of dates and times. Further
+examples, and discussion of some alternative approaches to
+normalization are given in section <ptr target="#NDDATEISO"/> below.
+</p>
 <!-- need reference to something on date normalization issues here -->
 </div>
 
@@ -1321,9 +1410,8 @@ he should exchange livings with
  of Jane Burden to the English writer, designer, and socialist William
  Morris, encoded as an <gi>event</gi> element embedded within the
  <gi>person</gi> element used to record data about Morris, though we
- could equally well have embedded the event within the <gi>person</gi>
- element for Burden, or have given it as a freestanding <gi>event</gi>
- independent of either <gi>person</gi> element:
+ could equally well have embedded the <gi>event</gi> element within the <gi>person</gi>
+ element for Burden, or have encoded it independently of either <gi>person</gi> element:
  <egXML xmlns="http://www.tei-c.org/ns/Examples">
    <person xml:id="WM">
      <!-- ... -->
@@ -1576,8 +1664,8 @@ containing other names.
 <p>The TEI institutional hosts are: <listOrg>
  <org xml:id="bu">
   <orgName>Brown University</orgName>
-  <desc>The host contribution is made jointly by the <orgName
-  type="project">Brown University Women Writers Project</orgName> and the
+  <desc>The host contribution is made jointly by the <name
+  type="project">Brown University Women Writers Project</name> and the
   <orgName>Brown University Library's Center for Digital
   Initiatives</orgName>.</desc>
  </org>
