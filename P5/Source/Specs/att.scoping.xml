@@ -4,55 +4,55 @@ Dual-licensed under CC-by and BSD2 licences
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tei" type="atts" ident="att.scoping">
-  <desc versionDate="2016-03-15" xml:lang="en">provides attributes for selecting particular elements within a
-    document.</desc>
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
+  module="tei" type="atts" ident="att.scoping">
+  <desc versionDate="2016-03-15" xml:lang="en">provides attributes for selecting particular elements
+    within a document.</desc>
   <attList>
     <attDef ident="target" usage="opt">
-      <desc versionDate="2010-01-25" xml:lang="en">points at one or several  elements or  sets of elements by
-      means of one or more
-      data pointers, using the URI syntax.</desc>
+      <desc versionDate="2010-01-25" xml:lang="en">points at one or several elements or sets of
+        elements by means of one or more data pointers, using the URI syntax.</desc>
       <datatype maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
       <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went
-        to <persName xml:id="ESSEX">Essex</persName>
-	              <certainty target="#ESSEX" locus="name" degree="0.6"/>
-            </egXML>
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">Elizabeth went to <persName xml:id="ESSEX"
+            >Essex</persName>
+          <certainty target="#ESSEX" locus="name" degree="0.6"/>
+        </egXML>
       </exemplum>
-      <remarks versionDate="2010-01-25" xml:lang="en">
-        <p>If more than one identifier is given, the implication is
-        that all elements (or nodesets) are intended. The
-        <att>match</att> attribute may also be used as a means of
-        identifying groups of elements.</p>
-      </remarks>
+
     </attDef>
     <attDef ident="match" usage="opt">
-      <desc versionDate="2010-02-01" xml:lang="en">supplies an arbitrary XPath expression using the syntax
-defined in <ptr target="#XSLT2"/> which  identifies a set
-      of nodes, selected within the context identified by the
-      <att>target</att> attribute if this is supplied, or within the
-      context of the element bearing this attribute if it is not.
-</desc>
+      <desc versionDate="2010-02-01" xml:lang="en">supplies an arbitrary XPath expression using the
+        syntax defined in <ptr target="#XSLT2"/> which identifies a set of nodes, selected within
+        the context identified by the <att>target</att> attribute if this is supplied, or within the
+        context of the element bearing this attribute if it is not. </desc>
       <datatype><textNode/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <gap reason="cancelled">
-            <certainty match="parent::gap/@reason" locus="value" cert="low"/>
+            <certainty match="@reason" locus="value" cert="low"/>
           </gap>
         </egXML>
       </exemplum>
-      <remarks versionDate="2010-02-01" xml:lang="en">
-        <p>The expression of certainty applies to the nodeset
-	identified by the value of the <att>target</att> attribute,
-	possibly modified additionally by the value of the
-	<att>match</att> attribute. If neither attribute is present,
-	the expression of certainty applies to the context of the
-	<gi>certainty</gi> element itself, i.e. its parent element.
-</p>
-        <p>Note that the value of the <att>target</att> attribute may include
-an XPointer expression including an XPath expression (see
-<ptr target="#SATS"/>). </p>
+
+      <remarks versionDate="2016-03-15" xml:lang="en">
+        <p>The expression of certainty applies to the nodeset identified by the value of the
+            <att>target</att> attribute, possibly modified additionally by the value of the
+            <att>match</att> attribute. If more than one identifier is given, the implication is
+          that all elements (or nodesets) are intended. The <att>match</att> attribute may also be
+          used as a means of identifying groups of elements. </p>
+        <p> If <att>target</att> and <att>match</att> are present, <att>target</att> selects an
+          element and the XPath expression in <att>match</att> is evaluated in the context of that
+          element. If neither attribute is present, the expression applies to its parent element. If
+          only <att>target</att> is given, the expression refers to the selected element or nodeset.
+          If only <att>match</att> is given, the XPath expression is evaluated in the context of the
+          parent element of the bearing element. </p>
+        <p>Note that the value of the <att>target</att> attribute may include an XPointer expression
+          including an XPath expression (see <ptr target="#SATS"/>). </p>
       </remarks>
+
+
     </attDef>
   </attList>
 </classSpec>
