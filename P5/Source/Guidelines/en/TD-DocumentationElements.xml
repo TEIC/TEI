@@ -771,8 +771,8 @@ to mark any technical term, thus:
             <constraint>
               <ns prefix="tei" uri="http://www.tei-c.org/ns/1.0" xmlns="http://purl.oclc.org/dsdl/schematron"/>
               <rule context="tei:div" xmlns="http://purl.oclc.org/dsdl/schematron">
-                <assert test="not(tei:div) or count(tei:div)&gt;1">a division must contain at least two
-                  subdivisions</assert>
+                <report test="count( tei:div ) eq 1">if it contains any subdivisions, a
+		division must contain at least two of them</report>
               </rule>
             </constraint>
           </constraintSpec>
