@@ -830,16 +830,28 @@ to mark any technical term, thus:
           </constraintSpec>
         </egXML>
       </p>
-      <p>Constraints can be expressed using any convenient language. The following example uses a pattern
-        matching language called SPITBOL to express the requirement that title and author should be different.
-        Implementing private schemes of this kind will generally be more problematic than simply adopting a
-        widely-deployed system such as ISO Schematron however.
+      <p>Constraints can be expressed using any convenient language.
+      The following example uses a pattern matching language called
+      SPITBOL to express the requirement that title and author should
+      be different. 
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
-          <constraintSpec ident="local" scheme="private">
+          <constraintSpec ident="local" scheme="SPITBOL">
             <constraint> (output = leq(title,author) "title and author cannot be the same") </constraint>
           </constraintSpec>
         </egXML>
-      </p>
+	Note that the value of <att>scheme</att> is
+	<val>SPITBOL</val>. In order to properly constrain and
+	document the values of <att>scheme</att> used in their
+	customization file, a project may wish to create a
+	customization that (among other things) adds and explains this
+	value for use in validating their customization file. Thus
+	using schemes other than those provided for by the TEI
+	(currently <val>schematron</val> and <val>isoschematron</val>)
+	may require somewhat more effort when creating a customization
+	file. Such private schemes will generally be even more
+	problematic on implementation of the constraints themselves,
+	as it may require siginficant programming work. The TEI only
+	provides this capability for the suggested values.</p>
     </div>
     <div type="div3" xml:id="TDATT">
       <head>Attribute List Specification</head>
