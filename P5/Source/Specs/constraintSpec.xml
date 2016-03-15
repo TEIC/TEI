@@ -20,8 +20,7 @@ $Id$
       <classRef key="model.descLike"/>
       <elementRef key="constraint"/>
     </alternate>
-    
-  </content>
+  </content>    
   <constraintSpec ident="sch" scheme="isoschematron">
     <desc>Relationship between scheme attribute and contents: Schematron 1.x</desc>
     <constraint>
@@ -34,13 +33,6 @@ $Id$
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
       <sch:report test="tei:constraint/sch:*  and  @scheme ne 'isoschematron'">Rules in the ISO Schematron language must be inside a constraintSpec with a value of 'isoschematron' on the scheme attribute</sch:report>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec ident="xslt" scheme="isoschematron">
-    <desc>Relationship between scheme attribute and contents: XSLT</desc>
-    <constraint>
-      <sch:ns prefix="xsl" uri="http://www.w3.org/1999/XSL/Transform"/>
-      <sch:report test="tei:constraint/xsl:*  and  @scheme ne 'XSLT'">Rules in XSLT must be inside a constraintSpec with a value of 'isoschematron' on the scheme attribute</sch:report>
     </constraint>
   </constraintSpec>
   <constraintSpec ident="needrules" scheme="isoschematron">
@@ -56,18 +48,12 @@ $Id$
       <desc versionDate="2009-06-10" xml:lang="en">supplies the name of the language in which the constraints
       are defined</desc>
       <datatype><dataRef key="teidata.enumerated"/></datatype>
-      <valList type="closed">
+      <valList type="semi">
         <valItem ident="schematron">
           <gloss versionDate="2009-06-10" xml:lang="en">Schematron</gloss>
         </valItem>
         <valItem ident="isoschematron">
           <gloss versionDate="2009-06-10" xml:lang="en">ISO Schematron</gloss>
-        </valItem>
-        <valItem ident="xsl">
-          <gloss versionDate="2009-06-10" xml:lang="en">XSLT</gloss>
-        </valItem>
-        <valItem ident="private">
-          <gloss versionDate="2009-06-10" xml:lang="en">private constraint language</gloss>
         </valItem>
       </valList>
     </attDef>
@@ -100,10 +86,10 @@ $Id$
     </egXML>
   </exemplum>
   <exemplum xml:lang="en">
-    <p>This constraint uses a language which is not
-    expressed in XML to check whether the title and author are identical: </p>
+    <p>This constraint uses SPITBOL (a language which is not
+    expressed in XML) to check whether the title and author are identical: </p>
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
-      <constraintSpec ident="local" scheme="private">
+      <constraintSpec ident="local" scheme="SPITBOL">
         <constraint> 
 (output = leq(title,author)  "title and author cannot be the same")
 	</constraint>
