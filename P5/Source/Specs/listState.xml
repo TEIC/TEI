@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   Copyright TEI Consortium. 
   Dual-licensed under CC-by and BSD2 licences 
   See the file COPYING.txt for details
   $Date$
   $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listState">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listState">
   <gloss versionDate="2012-04-18" xml:lang="en">list of states and/or traits</gloss>
   <desc versionDate="2012-04-18" xml:lang="en">contains a list of various kinds of characteristics of people, places, and organizations.</desc>
   <classes>
@@ -19,19 +15,19 @@
     <memberOf key="model.listLike"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <ref name="model.headLike"/>
-      </zeroOrMore>
-      <oneOrMore>
-        <choice>
-          <ref name="model.orgStateLike"/>
-          <ref name="listState"/>
-        </choice>
-      </oneOrMore>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.orgStateLike"/>
+          <elementRef key="listState"/>
+        </alternate>
+      
       <!--          <oneOrMore><ref name="model.persStateLike"/></oneOrMore>
           <oneOrMore><ref name="model.placeStateLike"/></oneOrMore>-->
-    </group>
+    </sequence>
   </content>
   <remarks versionDate="2012-04-18" xml:lang="en">
     <p rend="dataDesc">The <att>type</att> attribute may be used to distinguish lists of characteristics of a particular type if convenient.</p>

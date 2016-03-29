@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="usg">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="usg">
   <gloss versionDate="2005-01-14" xml:lang="en">usage</gloss>
   <gloss versionDate="2008-10-02" xml:lang="fr">usage</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">용법</gloss>
@@ -27,11 +24,13 @@ $Id$
     <memberOf key="att.global"/>
     <memberOf key="model.entryPart.top"/>
     <memberOf key="model.entryPart"/>
-    <memberOf key="model.gramPart"/>
+    <!--memberOf key="model.gramPart"/-->
+    <memberOf key="model.lexicalRefinement"/>
+    
     <memberOf key="att.lexicographic"/>
   </classes>
   <content>
-    <ref xmlns="http://relaxng.org/ns/structure/1.0" name="macro.paraContent"/>
+    <macroRef key="macro.paraContent"/>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -45,9 +44,7 @@ $Id$
         tipología funcional.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">classifica le informazioni sull'uso secondo una
         tipologia funzionale.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="open">
         <valItem ident="geo">
           <gloss versionDate="2007-07-04" xml:lang="en">geographic</gloss>

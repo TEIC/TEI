@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="lg">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="core" ident="lg">
   <gloss versionDate="2005-01-14" xml:lang="en">line group</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">시행군</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">行組</gloss>
@@ -33,37 +30,37 @@
     <memberOf key="att.declaring"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <choice>
-          <ref name="model.divTop"/>
-          <ref name="model.global"/>
-        </choice>
-      </zeroOrMore>
-      <choice>
-        <ref name="model.lLike"/>
-        <ref name="model.stageLike"/>
-        <ref name="model.labelLike"/>
-        <ref name="lg"/>
-      </choice>
-      <zeroOrMore>
-        <choice>
-          <ref name="model.lLike"/>
-          <ref name="model.stageLike"/>
-          <ref name="model.labelLike"/>
-          <ref name="model.global"/>
-          <ref name="lg"/>
-        </choice>
-      </zeroOrMore>
-      <zeroOrMore>
-        <group>
-          <ref name="model.divBottom"/>
-        </group>
-        <zeroOrMore>
-          <ref name="model.global"/>
-        </zeroOrMore>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.divTop"/>
+          <classRef key="model.global"/>
+        </alternate>
+      
+      <alternate>
+        <classRef key="model.lLike"/>
+        <classRef key="model.stageLike"/>
+        <classRef key="model.labelLike"/>
+        <elementRef key="lg"/>
+      </alternate>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.lLike"/>
+          <classRef key="model.stageLike"/>
+          <classRef key="model.labelLike"/>
+          <classRef key="model.global"/>
+          <elementRef key="lg"/>
+        </alternate>
+      
+      <sequence minOccurs="0" maxOccurs="unbounded">
+        
+          <classRef key="model.divBottom"/>
+        
+        
+          <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+        
+      </sequence>
+    </sequence>
   </content>
   <constraintSpec scheme="isoschematron" ident="atleast1oflggapl">
     <constraint xmlns:sch="http://purl.oclc.org/dsdl/schematron">
@@ -73,8 +70,7 @@
   </constraintSpec>
   <constraintSpec ident="abstractModel-structure-l" scheme="isoschematron">
     <constraint>
-      <report xmlns="http://purl.oclc.org/dsdl/schematron" 
-        xmlns:tei="http://www.tei-c.org/ns/1.0" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
+      <report xmlns="http://purl.oclc.org/dsdl/schematron" test="ancestor::tei:l[not(.//tei:note//tei:lg[. = current()])]">
         Abstract model violation: Lines may not contain line groups.
       </report>
     </constraint>

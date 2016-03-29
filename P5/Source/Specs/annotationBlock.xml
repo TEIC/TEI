@@ -1,0 +1,47 @@
+<!--
+Copyright TEI Consortium. 
+Dual-licensed under CC-by and BSD2 licences 
+See the file COPYING.txt for details
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec ident="annotationBlock" module="spoken" xmlns="http://www.tei-c.org/ns/1.0">
+    <!-- should this be in spoken module or analysis ? -->
+    <desc xml:lang="en" versionDate="2016-02-27">groups together various annotations, e.g.
+        for parallel interpretations of a spoken segment.</desc>
+    <classes>
+        <!--memberOf key="model.annotationPart"/-->
+        <memberOf key="model.divPart.spoken"/>
+        <memberOf key="att.ascribed"/>
+        <memberOf key="att.timed"/>
+        <memberOf key="att.global"/>
+    </classes>
+    <content>
+        <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="u"/>
+            <elementRef key="spanGrp"/>
+            <classRef key="model.global.spoken"/>
+        </alternate>
+    </content>
+    <!-- shd there be a constraint to say if no child element is supplied the @corresp attrib must be used -->
+    <exemplum xml:lang="en">
+        <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <annotationBlock who="#SPK1" start="#T2" end="#T3" xml:id="ag20">
+                <u xml:id="u20">
+                    <seg xml:id="seg37" type="utterance" subtype="modeless">
+                        <w xml:id="w46">Yeah</w>
+                    </seg>
+                </u>
+            </annotationBlock>
+            <annotationBlock who="#SPK1" start="#T5" end="#T6" xml:id="ag21">
+                <u xml:id="u21">
+                    <seg xml:id="seg38" type="utterance" subtype="modeless">
+                        <w xml:id="w47">Mhm</w>
+                    </seg>
+                </u>
+            </annotationBlock>
+        </egXML>
+    </exemplum>
+  <listRef>
+    <ptr target="#TSTPAC"/>
+  </listRef>
+</elementSpec>

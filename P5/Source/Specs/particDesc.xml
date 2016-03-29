@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" ident="particDesc">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="corpus" ident="particDesc">
     <gloss versionDate="2005-01-14" xml:lang="en">participation description</gloss>
     <gloss versionDate="2007-12-20" xml:lang="ko">참여 기술</gloss>
     <gloss versionDate="2007-05-02" xml:lang="zh-TW">參與描述</gloss>
@@ -27,27 +24,26 @@ $Id$
     <desc versionDate="2007-01-21" xml:lang="it">descrive parlanti, voci o altri parlanti
         identificabili in una interazione linguistica.</desc>
     <classes>
-        <memberOf key="att.global" />
-        <memberOf key="model.profileDescPart" />
-        <memberOf key="att.declarable" />
+        <memberOf key="att.global"/>
+        <memberOf key="model.profileDescPart"/>
+        <memberOf key="att.declarable"/>
     </classes>
     <content>
-        <choice xmlns="http://relaxng.org/ns/structure/1.0">
-            <oneOrMore>
-                <ref name="model.pLike" />
-            </oneOrMore>
-            <oneOrMore>
-                <choice>
-                    <ref name="model.personLike" />
-                    <ref name="listPerson" />
-                    <ref name="listOrg" />
-                </choice>
-            </oneOrMore>
-        </choice>
+        <alternate>
+            
+                <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+            
+            
+                <alternate minOccurs="1" maxOccurs="unbounded">
+                    <classRef key="model.personLike"/>
+                    <elementRef key="listPerson"/>
+                    <elementRef key="listOrg"/>
+                </alternate>
+            
+        </alternate>
     </content>
     <exemplum xml:lang="en">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <particDesc> <listPerson> <person
-            xml:id="P-1234" sex="2" age="mid"> <p>Female informant, well-educated, born in
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <particDesc> <listPerson> <person xml:id="P-1234" sex="2" age="mid"> <p>Female informant, well-educated, born in
             Shropshire UK, 12 Jan 1950, of unknown occupation. Speaks French fluently.
             Socio-Economic status B2.</p> </person> <person xml:id="P-4332" sex="1"> <persName>
             <surname>Hancock</surname> <forename>Antony</forename> <forename>Aloysius</forename>
@@ -56,26 +52,22 @@ $Id$
                 <street>Railway Cuttings</street>
                 <settlement>East Cheam</settlement>
               </address>
-            </residence> <occupation>comedian</occupation> </person> <listRelation> <relation
-            type="personal" name="spouse" mutual="#P-1234 #P-4332" /> </listRelation> </listPerson>
+            </residence> <occupation>comedian</occupation> </person> <listRelation> <relation type="personal" name="spouse" mutual="#P-1234 #P-4332"/> </listRelation> </listPerson>
             </particDesc> </egXML>
         <p>This example shows both a very simple person description, and a very detailed one, using
             some of the more specialized elements from the module for Names and Dates. </p>
     </exemplum>
     <exemplum versionDate="2008-04-06" xml:lang="fr">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <particDesc> <listPerson> <person
-            xml:id="fr_P-1234" sex="2" age="mid"> <p>informateur, sexe féminin, bonne éducation, née
+        <egXML xmlns="http://www.tei-c.org/ns/Examples"> <particDesc> <listPerson> <person xml:id="fr_P-1234" sex="2" age="mid"> <p>informateur, sexe féminin, bonne éducation, née
             à Shropshire UK, 12 Jan 1950, commerçante parle français couramment., Statut
             socio-économique (SSE) : commerçant.</p> </person> <person xml:id="fr_P-4332" sex="1">
             <persName> <surname>Delaunay</surname> <forename>Liliane</forename>
-            <forename>Andrée</forename> <forename>Alberte</forename> </persName> <residence
-            notAfter="1959">
+            <forename>Andrée</forename> <forename>Alberte</forename> </persName> <residence notAfter="1959">
             <address>
                 <street>rue de Falaise</street>
                 <settlement>la Guérinière, Caen</settlement>
               </address>
-            </residence> <occupation>serveuse</occupation> </person> <listRelation> <relation
-            type="personal" name="spouse" mutual="#fr_P-1234 #fr_P-4332" /> </listRelation>
+            </residence> <occupation>serveuse</occupation> </person> <listRelation> <relation type="personal" name="spouse" mutual="#fr_P-1234 #fr_P-4332"/> </listRelation>
             </listPerson> </particDesc> </egXML>
         <p xmlns:teix="http://www.tei-c.org/ns/Examples"> Cet exemple montre une description très
             simple d'une personne et une description très détaillée, utilisant quelques éléments
@@ -84,15 +76,13 @@ $Id$
     <exemplum xml:lang="zh-TW">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#biblzh-tw_n25"> <particDesc>
             <listPerson> <person xml:id="zh-tw_P-1234" sex="2" age="mid">
-            <p>女性，穿了一件黑紗金絲相間的緊身旗袍，一個大道士髻梳得烏光水滑的高聳在頭頂上；耳墜、項鍊、手串、髮針、金碧輝煌的掛滿了一身。</p> </person> <person
-            xml:id="zh-tw_P-4332" sex="1"> <persName> <surname>金</surname> <forename>兆麗</forename>
+            <p>女性，穿了一件黑紗金絲相間的緊身旗袍，一個大道士髻梳得烏光水滑的高聳在頭頂上；耳墜、項鍊、手串、髮針、金碧輝煌的掛滿了一身。</p> </person> <person xml:id="zh-tw_P-4332" sex="1"> <persName> <surname>金</surname> <forename>兆麗</forename>
             <addName>金大班</addName> </persName> <residence notAfter="1970">
             <address>
                 <street>西門町</street>
                 <settlement>台北</settlement>
               </address>
-            </residence> <occupation>舞女</occupation> </person> <listRelation> <relation
-            type="personal" name="spouse" mutual="#zh-tw_P-1234 #zh-tw_P-4332" /> </listRelation>
+            </residence> <occupation>舞女</occupation> </person> <listRelation> <relation type="personal" name="spouse" mutual="#zh-tw_P-1234 #zh-tw_P-4332"/> </listRelation>
             </listPerson> </particDesc> </egXML>
     </exemplum>
     <remarks versionDate="2005-01-14" xml:lang="en">
@@ -109,7 +99,7 @@ $Id$
         <p rend="dataDesc"> 段落としてある散文の解説または，関連性の形式定義を選択的に持つ，人 物やグループの構造化リストが示されるかもしれない． </p>
     </remarks>
     <listRef>
-        <ptr target="#CCAH" />
+        <ptr target="#CCAH"/>
         <!--    <ptr target="#HD4"/>
     <ptr target="#CCAS2"/>-->
     </listRef>

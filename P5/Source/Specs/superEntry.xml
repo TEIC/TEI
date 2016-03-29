@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="superEntry">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="superEntry">
   <gloss versionDate="2007-06-12" xml:lang="fr">groupe d'entrées</gloss>
   <desc versionDate="2011-04-29" xml:lang="en">groups a sequence of entries within any kind of lexical resource, such
   as a dictionary or lexicon which function as a single unit, for
@@ -27,17 +24,17 @@ $Id$
     <memberOf key="att.sortable"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <group>
-        <optional>
-          <ref name="form"/>
-        </optional>
-        <oneOrMore>
-          <ref name="entry"/>
-        </oneOrMore>
-      </group>
-      <ref name="dictScrap"/>
-    </choice>
+    <alternate>
+      <sequence>
+        
+          <elementRef key="form" minOccurs="0"/>
+        
+        
+          <elementRef key="entry" minOccurs="1" maxOccurs="unbounded"/>
+        
+      </sequence>
+      <elementRef key="dictScrap"/>
+    </alternate>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="etym">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="dictionaries" ident="etym">
   <gloss versionDate="2005-01-14" xml:lang="en">etymology</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">어원</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">詞源</gloss>
@@ -30,23 +27,24 @@ $Id$
     <memberOf key="att.lexicographic"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <text/>
-        <ref name="model.gLike"/>
-        <ref name="model.phrase"/>
-        <ref name="model.inter"/>
-        <ref name="usg"/>
-        <ref name="lbl"/>
-        <ref name="def"/>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <textNode/>
+        <classRef key="model.gLike"/>
+        <classRef key="model.phrase"/>
+        <classRef key="model.inter"/>
+        <elementRef key="usg"/>
+        <elementRef key="lbl"/>
+        <elementRef key="def"/>
         <!--        <rng:ref name="trans"/>-->
         <!--        <rng:ref name="tr"/>-->
-        <ref name="model.morphLike"/>
+        <!-- classRef key="model.morphLike"/-->
         <!--        <rng:ref name="dicteg"/>-->
-        <ref name="xr"/>
-        <ref name="model.global"/>
-      </choice>
-    </zeroOrMore>
+        <elementRef key="gramGrp"/>
+        <elementRef key="xr"/>
+        <classRef key="model.global"/>
+      </alternate>
+    
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples"><entry><form><orth>publish</orth> ... </form><etym><lang>ME.</lang><mentioned>publisshen</mentioned>,

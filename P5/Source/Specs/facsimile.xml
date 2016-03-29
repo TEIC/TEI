@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="facsimile" module="transcr">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" ident="facsimile" module="transcr">
   <desc versionDate="2007-08-26" xml:lang="en">contains a representation of some written source in the form of
 a set of images rather than as transcribed or encoded text.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">전사 또는 부호화된 텍스트 형태보다는 이미지 집합의 형태로 기록 원본의 표상을 포함한다.</desc>
@@ -27,21 +23,21 @@ ou encodé.</desc>
     <memberOf key="att.declaring"/>
   </classes>
   <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
-    <rng:group>
-      <rng:optional>
-        <rng:ref name="front"/>
-      </rng:optional>
-      <rng:oneOrMore>
-        <rng:choice>
-          <rng:ref name="model.graphicLike"/>
-          <rng:ref name="surface"/>
-          <rng:ref name="surfaceGrp"/>
-        </rng:choice>
-      </rng:oneOrMore>
-      <rng:optional>
-        <rng:ref name="back"/>
-      </rng:optional>
-    </rng:group>
+    <sequence>
+      
+        <elementRef key="front" minOccurs="0"/>
+      
+      
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <classRef key="model.graphicLike"/>
+          <elementRef key="surface"/>
+          <elementRef key="surfaceGrp"/>
+        </alternate>
+      
+      
+        <elementRef key="back" minOccurs="0"/>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

@@ -1,14 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" type="atts" ident="att.datable.w3c" xml:id="DATABLEW3C">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<classSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:sch="http://purl.oclc.org/dsdl/schematron" module="tei" type="atts" ident="att.datable.w3c" xml:id="DATABLEW3C">
   <desc versionDate="2013-11-22" xml:lang="en">provides attributes for normalization of elements that contain
   datable events  conforming to the W3C
   <title ref="#XSD2">XML Schema Part 2: Datatypes Second Edition</title>.</desc>
@@ -20,20 +17,38 @@ $Id$
   d'événements datés ou susceptibles de l'être</desc>
   <desc versionDate="2007-11-06" xml:lang="it">indica degli attributi per la normalizzazione di elementi che contengono eventi databili utilizzando i tipi di dati del W3C</desc>
   <desc versionDate="2007-05-04" xml:lang="es">proporciona atributos para la normalización de elementos que contienen eventos datables.</desc>
+  <constraintSpec ident="att-datable-w3c-when" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:*[@when]">
+        <sch:report test="@notBefore|@notAfter|@from|@to" role="nonfatal">The @when attribute cannot be used with any other att.datable.w3c attributes.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="att-datable-w3c-from" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:*[@from]">
+        <sch:report test="@notBefore" role="nonfatal">The @from and @notBefore attributes cannot be used together.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
+  <constraintSpec ident="att-datable-w3c-to" scheme="isoschematron">
+    <constraint>
+      <sch:rule context="tei:*[@to]">
+        <sch:report test="@notAfter" role="nonfatal">The @to and @notAfter attributes cannot be used together.</sch:report>
+      </sch:rule>
+    </constraint>
+  </constraintSpec>
   <attList>
-    <!-- attribute "period" moved to att.datable -->
     <attDef ident="when" usage="opt">
       <desc versionDate="2008-07-23" xml:lang="en">supplies the value of the date or time in a standard form,
-      e.g. yyyy-mm-dd.</desc>
+        e.g. yyyy-mm-dd.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">표준형식으로 날짜 또는 시간의 값을 제공한다.</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">日付や時間を，標準形式で示す．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">spécifie une date exacte pour un événement sous
-          une forme normalisée, par ex. aaaa-mm-jj.</desc>
+        une forme normalisée, par ex. aaaa-mm-jj.</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica il valore di una data o di un orario in un formato standard</desc>
       <desc versionDate="2007-05-04" xml:lang="es">proporciona el valor de una fecha o una hora en un formato estandard.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-      </datatype>
+      <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
       <exemplum xml:lang="en">
         <p>Examples of W3C date, time, and date &amp; time formats.</p>
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -69,58 +84,52 @@ $Id$
           </p>
         </egXML>
       </exemplum>
-      <exemplum versionDate="2010-02-26" xml:lang="fr">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Ormesson-douane">Shakespeare meurt dix jours plus tard, à Stratford-on-Avon, Warwickshire, dans
-            l'Angleterre protestante et dans le calendrier julien, le <date calendar="#Julian" when="--04-23">mardi 23 avril ancien style</date>, c'est-à-dire le <date calendar="#Gregorian" when="--04-23">3 mai</date> dans le calendrier grégorien. </egXML>
-      </exemplum>
-      <exemplum versionDate="2010-02-26" xml:lang="fr">
-        <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Laclos-liaisons">
-          <opener>
-            <dateline><placeName>Paris,</placeName>, ce <date when="--12-11" notBefore="1699-12-31" notAfter="1799-12-31">11 décembre 17.. </date></dateline>
-            <salute>à Madame De Rosemonde.,</salute>
-          </opener>
-        </egXML>
+      <exemplum versionDate="2016-03-28" xml:lang="fr">
+	<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#fr-ex-Ormesson-douane">Shakespeare meurt dix jours plus tard, à Stratford-on-Avon,
+	  Warwickshire, dans l'Angleterre protestante et dans le
+	  calendrier julien, le
+	  <date calendar="#Julian" when="--05-03">mardi 23 avril ancien style</date>,
+	  c'est-à-dire le
+	  <date calendar="#Gregorian" when="--05-03">3 mai</date> dans
+	  le calendrier grégorien.</egXML>
       </exemplum>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">This list begins in
-the year 1632, more precisely on Trinity Sunday, i.e. the Sunday after
-Pentecost, in that year the <date calendar="#Julian" when="1632-06-06">27th of May (old style)</date>.</egXML>
+          the year 1632, more precisely on Trinity Sunday, i.e. the Sunday after
+          Pentecost, in that year the
+	  <date calendar="#Julian" when="1632-06-06">27th of May (old style)</date>.</egXML>
       </exemplum>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <opener><dateline><placeName>Dorchester, Village,</placeName><date when="1828-03-02">March 2d.  1828.</date></dateline><salute>To
-Mrs. Cornell,</salute> Sunday <time when="12:00:00">noon.</time>
-               </opener>
+            Mrs. Cornell,</salute> Sunday <time when="12:00:00">noon.</time>
+          </opener>
         </egXML>
       </exemplum>
     </attDef>
     <attDef ident="notBefore" usage="opt">
       <desc versionDate="2007-04-09" xml:lang="en">specifies the earliest possible date for the event in
-	  standard form, e.g. yyyy-mm-dd.</desc>
+        standard form, e.g. yyyy-mm-dd.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">yyyy-mm-dd와 같은 표준 형식으로 사건의 가능한 한 이른 날짜를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式說明該事件可能發生的最早日期，例如年-月-日。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該事象の一番古い日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">spécifie la date la plus ancienne pour
-          l'événement sous une forme normalisée, par ex. aaaa-mm-jj</desc>
+        l'événement sous une forme normalisée, par ex. aaaa-mm-jj</desc>
       <desc versionDate="2007-11-06" xml:lang="it">specifica la prima data possibile per un evento nel formato standard aaaa-mm-gg</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica la fecha más temprana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-      </datatype>
+      <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
     </attDef>
     <attDef ident="notAfter" usage="opt">
       <desc versionDate="2007-04-09" xml:lang="en">specifies the latest possible date for the event in
-	  standard form, e.g. yyyy-mm-dd.</desc>
+        standard form, e.g. yyyy-mm-dd.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">yyyy-mm-dd와 같은 표준 형식으로 사건의 가능한 한 나중 날짜를 명시한다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準形式標明該事件可能的最晚日期，例如年-月-日。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">当該事象の一番新しい日付を，標準形式で示す．例えば，yyyy-mm-dd．</desc>
       <desc versionDate="2007-06-12" xml:lang="fr">spécifie la date la plus récente possible pour
-          l'événement sous une forme normalisée, par ex. aaaa-mm-jj</desc>
+        l'événement sous une forme normalisée, par ex. aaaa-mm-jj</desc>
       <desc versionDate="2007-11-06" xml:lang="it">specifica l'ultima data possibile per un evento nel formato standard aaaa-mm-gg</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica la fecha más tardana posible para un evento en un formato estándard, p.ej. aaaa-mm-dd.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-      </datatype>
+      <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
     </attDef>
     <attDef ident="from" usage="opt">
       <desc versionDate="2008-02-10" xml:lang="en">indicates the starting point of the period in standard form, e.g. yyyy-mm-dd.</desc>
@@ -131,13 +140,11 @@ Mrs. Cornell,</salute> Sunday <time when="12:00:00">noon.</time>
         forme normalisée, par ex. aaaa-mm-jj</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica l'inizio del periodo nel formato standard</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el punto de inicio del período en el formato estándard.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-      </datatype>
+      <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
     </attDef>
     <attDef ident="to" usage="opt">
       <desc versionDate="2008-02-10" xml:lang="en">indicates the ending point of the period in standard
-	  form, e.g. yyyy-mm-dd.</desc>
+        form, e.g. yyyy-mm-dd.</desc>
       <desc versionDate="2007-12-20" xml:lang="ko">표준 형식으로 기간의 종료 지점을 나타낸다.</desc>
       <desc versionDate="2007-05-02" xml:lang="zh-TW">以標準格式表示該段時間的結束點。</desc>
       <desc versionDate="2008-04-05" xml:lang="ja">標準形で当該時間幅の終点を示す．</desc>
@@ -145,11 +152,10 @@ Mrs. Cornell,</salute> Sunday <time when="12:00:00">noon.</time>
         normalisée, par ex. aaaa-mm-jj</desc>
       <desc versionDate="2007-11-06" xml:lang="it">indica la fine del periodo nel formato standard</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el punto final de un periodo en formato estándard.</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.temporal.w3c"/>
-      </datatype>
+      <datatype><dataRef key="teidata.temporal.w3c"/></datatype>
     </attDef>
   </attList>
+  
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <date from="1863-05-28" to="1863-06-01">28 May through 1 June 1863</date>
@@ -158,8 +164,7 @@ Mrs. Cornell,</salute> Sunday <time when="12:00:00">noon.</time>
       <remarks versionDate="2008-07-23" xml:lang="en">
         <p>The value of these attributes should be a normalized
         representation of the date, time, or combined date &amp; time
-        intended, in any of the standard formats specified by <title
-        ref="#XSD2">XML Schema Part 2: Datatypes Second
+        intended, in any of the standard formats specified by <title ref="#XSD2">XML Schema Part 2: Datatypes Second
         Edition</title>, using the Gregorian calendar.</p>
         <p>The most commonly-encountered format for the date portion of
         a temporal attribute is <code>yyyy-mm-dd</code>, but

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" ident="set">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="drama" ident="set">
   <gloss versionDate="2007-07-04" xml:lang="en">setting</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">배경</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -36,24 +33,24 @@ $Id$
     <memberOf key="model.frontPart.drama"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <choice>
-          <ref name="model.headLike"/>
-          <ref name="model.global"/>
-        </choice>
-      </zeroOrMore>
-      <zeroOrMore>
-        <group>
-          <group>
-            <ref name="model.common"/>
-          </group>
-          <zeroOrMore>
-            <ref name="model.global"/>
-          </zeroOrMore>
-        </group>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.headLike"/>
+          <classRef key="model.global"/>
+        </alternate>
+      
+      
+        <sequence minOccurs="0" maxOccurs="unbounded">
+          
+            <classRef key="model.common"/>
+          
+          
+            <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>
+          
+        </sequence>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

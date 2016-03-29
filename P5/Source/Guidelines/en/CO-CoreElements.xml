@@ -8,7 +8,7 @@ $Id$
 -->
 
 
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="CO" n="6">
 <head>Elements Available in All TEI Documents</head>
@@ -29,7 +29,7 @@ paragraphs, the prototypical formal unit for running text
 in many TEI modules. This is followed, in
 section <ptr target="#COPU"/>, by a discussion of some specific problems
 associated with the interpretation of conventional punctuation, and the
-methods proposed by the Guidelines for resolving ambiguities
+methods proposed by these Guidelines for resolving ambiguities
 therein.</p>
 
 <p>The next section (section <ptr target="#COHQ"/>) describes a number
@@ -472,7 +472,7 @@ itself and the encoding of the underlying feature expressed by it.
 attributes <att>rend</att>, <att>rendition</att>, or <att>style</att>
 (see further <ptr target="#STGA"/>).  This allows the encoder both to
 specify the function of a highlighted phrase or word, by selecting the
-appropriate element described here or elsewhere in the Guidelines, and
+appropriate element described here or elsewhere in these Guidelines, and
 to further describe the way in which it is highlighted, by means of an
 attribute. If the encoder wishes to offer no interpretation of the
 feature underlying the use of highlighting in the source text, then
@@ -1069,21 +1069,26 @@ the class <ident type="class">model.emphLike</ident>.
 be linked to the term it is glossing by means of its <att>target</att>
 attribute. To establish such a link, the encoder should give an
 <att>xml:id</att> value to the <gi>term</gi> or <gi>mentioned</gi> element
-and provide that id as the value of the <att>target</att> attribute on
-the <gi>gloss</gi> element.  The following examples demonstrate this
-facility:   </p>
-<p>Examples:
+and provide that value, prefixed by a sharp sign, as the value of  the <att>target</att> attribute on
+the <gi>gloss</gi> element.  For example: 
+
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQU-eg-42">We may define <term xml:id="TDPv" rend="sc">discoursal point of view</term>
 as <gloss target="#TDPv">the relationship, expressed through discourse
 structure, between the implied author or some other addresser,
-and the fiction.</gloss></egXML>
+and the fiction.</gloss></egXML>  
 
 <egXML xmlns="http://www.tei-c.org/ns/Examples" source="#COHQU-eg-43"><gloss rend="unmarked" target="#PRSR">A computational device that infers
 structure from grammatical strings of words</gloss> is known as a
 <term xml:id="PRSR">parser</term>, and much of the history of NLP over the
 last 20 years has been occupied with the design of parsers.</egXML>
 </p>
-
+  <p>In the absence of a <gi>gloss</gi> in the source text, 
+    a <gi>term</gi> can also be associated with a gloss or definition by means of its <att>ref</att> attribute, as in this imaginary example:
+    <egXML xmlns="http://www.tei-c.org/ns/Examples">We discuss Leech's concept of <term
+      ref="#TDPV2" rend="sc">discoursal point of view</term> below. </egXML>
+ Here, the value <ident>#TDPV2</ident> references some other XML element in the same document. This might be, for example, an entry in a list of technical
+  vocabulary given in the document header, or in an appendix. This attribute could also reference an entry in some centrally maintained
+  terminological database, perhaps using one of the pointing mechanisms discussed in section <ptr target="#SAXP"/>. </p>
 <p>Note that the element <gi>term</gi> is intended for use with words
 or phrases identified as terminological in nature; where words or
 phrases are simply being cited, discussed, or glossed in a text, it
@@ -2279,7 +2284,7 @@ points to an external resource available on the network, the <att>mimeType</att>
  may be used to specify the mime type of that resource; this may be important 
  for to enable appropriate processing. For example:
     <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
-      <p>The current version of the TEI Guidelines source code is available in the TEI Sourceforge Repository; <ref target="http://sourceforge.net/p/tei/code/HEAD/tree/trunk/P5/Source/guidelines-en.xml" mimeType="application/tei+xml">guidelines-en.xml</ref> is the root document used to create the English version of the Guidelines.</p>
+      <p>The current version of the TEI Guidelines source code is available in the TEI Sourceforge Repository; <ref target="http://sourceforge.net/p/tei/code/HEAD/tree/trunk/P5/Source/guidelines-en.xml" mimeType="application/tei+xml">guidelines-en.xml</ref> is the root document used to create the English version of these Guidelines.</p>
     </egXML>
   </p><specGrp xml:id="DCOXR" >
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/ptr.xml"/>
@@ -2739,7 +2744,7 @@ in this example:
 topic of Arabic lemmatisation
 <index spanTo="#ALAMEND">
   <term>Lemmatization, Arabic</term>
-</index> concerning which it is important to note .....
+</index> concerning which it is important to note [...]
 <!-- much learned material omitted here -->
 and now we can  build our parser.<anchor xml:id="ALAMEND"/></p></egXML>
  </p>
@@ -5249,9 +5254,9 @@ a stage direction:
 <l>More tight at this, then thou:  Dispatch. O Loue,</l>
 <l>That thou couldst see my Warres to day, and knew'st</l>
 <l>The Royall Occupation, thou should'st see</l>
-<l part="I">A Workeman in't. <stage>Enter an Armed Soldier.</stage>
-</l>
-<l part="F">Good morrow to thee, welcome. </l></egXML> 
+<l part="I">A Workeman in't.</l>
+<stage>Enter an Armed Soldier.</stage>
+<l part="F">Good morrow to thee, welcome.</l></egXML> 
 In this encoding, the <att>part</att> attribute is used, as with
 <gi>div</gi>,  to indicate that the last two <gi>l</gi> elements
 should be regarded as the initial and final parts of a single line,

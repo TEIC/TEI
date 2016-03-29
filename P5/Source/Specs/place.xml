@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="place" module="namesdates">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" ident="place" module="namesdates">
   <gloss versionDate="2008-12-09" xml:lang="fr">lieu</gloss>
   <desc versionDate="2007-06-14" xml:lang="en">contains data about a geographic location</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">지리적 위치에 관한 데이터를 포함한다.</desc>
@@ -24,40 +20,40 @@ $Id$
     <memberOf key="model.placeLike"/>
   </classes>
   <content>
-    <rng:group>
-      <rng:zeroOrMore>
-        <rng:ref name="model.headLike"/>
-      </rng:zeroOrMore>
-      <rng:choice>
-        <rng:group>
-          <rng:zeroOrMore>
-            <rng:ref name="model.pLike"/>
-          </rng:zeroOrMore>
-        </rng:group>
-        <rng:zeroOrMore>
-          <rng:choice>
-            <rng:ref name="model.labelLike"/>
-            <rng:ref name="model.placeStateLike"/>
-            <rng:ref name="model.eventLike"/>
-          </rng:choice>
-        </rng:zeroOrMore>
-      </rng:choice>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.noteLike"/>
-          <rng:ref name="model.biblLike"/>
-          <rng:ref name="idno"/>
-          <rng:ref name="linkGrp"/>
-          <rng:ref name="link"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.placeLike"/>
-          <rng:ref name="listPlace"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-    </rng:group>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <alternate>
+        
+          
+            <classRef key="model.pLike" minOccurs="0" maxOccurs="unbounded"/>
+          
+        
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.labelLike"/>
+            <classRef key="model.placeStateLike"/>
+            <classRef key="model.eventLike"/>
+          </alternate>
+        
+      </alternate>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.noteLike"/>
+          <classRef key="model.biblLike"/>
+          <elementRef key="idno"/>
+          <elementRef key="linkGrp"/>
+          <elementRef key="link"/>
+        </alternate>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.placeLike"/>
+          <elementRef key="listPlace"/>
+        </alternate>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

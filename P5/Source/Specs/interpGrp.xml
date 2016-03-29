@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="interpGrp">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="analysis" ident="interpGrp">
   <gloss versionDate="2005-01-14" xml:lang="en">interpretation group</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">해석 집단</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">解釋群組</gloss>
@@ -31,14 +28,14 @@ $Id$
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <ref name="model.descLike"/>
-      </zeroOrMore>
-      <oneOrMore>
-        <ref name="interp"/>
-      </oneOrMore>
-    </group>
+    <sequence>
+      
+        <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="interp" minOccurs="1" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

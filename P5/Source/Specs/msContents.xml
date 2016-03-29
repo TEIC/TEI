@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSCONTENTS" ident="msContents">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="msdescription" xml:id="MSCONTENTS" ident="msContents">
   <gloss versionDate="2007-07-04" xml:lang="en">manuscript contents</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">원고 내용</gloss>
   <gloss versionDate="2008-04-06" xml:lang="es">contenido del manuscrito</gloss>
@@ -30,28 +27,28 @@ $Id$
     <memberOf key="att.msExcerpt"/>
   </classes>
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <oneOrMore>
-        <ref name="model.pLike"/>
-      </oneOrMore>
-      <group>
-        <optional>
-          <ref name="summary"/>
-        </optional>
-        <optional>
-          <ref name="textLang"/>
-        </optional>
-        <optional>
-          <ref name="titlePage"/>
-        </optional>
-        <zeroOrMore>
-          <choice>
-            <ref name="msItem"/>
-            <ref name="msItemStruct"/>
-          </choice>
-        </zeroOrMore>
-      </group>
-    </choice>
+    <alternate>
+      
+        <classRef key="model.pLike" minOccurs="1" maxOccurs="unbounded"/>
+      
+      <sequence>
+        
+          <elementRef key="summary" minOccurs="0"/>
+        
+        
+          <elementRef key="textLang" minOccurs="0"/>
+        
+        
+          <elementRef key="titlePage" minOccurs="0"/>
+        
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="msItem"/>
+            <elementRef key="msItemStruct"/>
+          </alternate>
+        
+      </sequence>
+    </alternate>
   </content>
   <attList>
     <attDef ident="class">
@@ -67,9 +64,7 @@ $Id$
         clasificaciones aplicables al objeto en cuestión.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">identifica la tipologia testuale o altre
         classificazioni applicabili all'oggetto in questione</desc>
-      <datatype minOccurs="1" maxOccurs="unbounded">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype minOccurs="1" maxOccurs="unbounded"><dataRef key="teidata.pointer"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">

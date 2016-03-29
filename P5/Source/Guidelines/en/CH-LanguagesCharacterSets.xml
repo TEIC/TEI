@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="CH" n="4"> 
 <head>Languages and Character Sets</head>
 <p>The documents which users of these Guidelines may wish to encode
@@ -60,7 +60,7 @@ of standardized characters, there will always be a need to encode
 documents which use non-standard characters and glyphs, particularly
 but not exclusively in historical material. Furthermore, the full
 potential of Unicode is still not yet realized in all software which
-users of the Guidelines are likely to encounter. The second part of
+users of these Guidelines are likely to encounter. The second part of
 this chapter therefore discusses in some detail the concepts and
 practice underlying this standard, and also introduces the methods
 available for extending beyond it, which are more fully discussed in
@@ -69,80 +69,72 @@ available for extending beyond it, which are more fully discussed in
 <div type="div2" xml:id="CHSH"><head>Language Identification</head>
   
 <p>Identification of the language a document or part thereof is
- written in is a crucial requirement for many envisioned usages of
- an electronic document. The TEI therefore accommodates this need in the
+written in is a crucial requirement for many envisioned usages of
+an electronic document. The TEI therefore accommodates this need in the
 following way:<list>
  <item>A global attribute <att>xml:lang</att> is defined for all TEI
- elements. Its value identifies the language and writing system used.</item>
+ elements. Its value identifies the language and writing system
+ used.</item>
  <item>The TEI header has a section set aside for the information
  about the languages used in a document: see further <ptr target="#HD41"/>.</item>
 </list></p>
- <p>The value of the attribute <att>xml:lang</att> identifies the
-language using a coded value. For maximal compatibility with
-existing processes, modelling this value in the following way is
-recommended (this parallels the modelling of <att>xml:lang</att>):
+<p>The value of the attribute <att>xml:lang</att> identifies the
+language using a coded value. For maximal compatibility with existing
+processes, the identifier for the language must be constructed as in
+<title>Best Current Practice 47</title><note place="bottom">Currently
+BCP 47 comprises two Internet Engineering Task Force documents,
+referred to separately as RFC 5646 and RFC 4647; over time, other IETF
+documents may succeed these as the best current practice.</note>. This
+<emph rend="bold">same</emph> identifier has to be used to identify
+the corresponding <gi>language</gi> element in the TEI header, if one
+is present.</p>
+<p>The first part of BCP 47 is called <ref
+target="#CH-BIBL-4"><title>Tags for Identifying
+Languages</title></ref>, and proposes the following mechanism for
+constructing an identifier (tag) for languages as administered by the
+Internet Assigned Numbers Authority (IANA). The tag is assembled from
+a sequence of subtags separated by the hyphen (-, U+002D) character.
+It gives the language (possibly further identified with a
+sublanguage), a script, and a region for the language, each possibly
+followed by a variant subtag.</p>
+<p>The authoritative list of registered subtags is maintained by IANA
+and is available at <ptr
+target="http://www.iana.org/assignments/language-subtag-registry"/>.
+For a good general overview of the construction of language tags, see
+<ptr
+target="http://www.w3.org/International/articles/language-tags/"/>,
+and for a practical step-by-step guide, see <ptr
+target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/>.</p>
+<p>In addition to the list of registered subtags, BCP 47 provides
+extensions that can be employed by private convention. The constructs
+provided can thus be used to generate identifiers for any language,
+past and present, in any usage in any area of the world. If such
+private extensions are used within the context of the TEI, they should
+be documented within the <gi>language</gi> element of the TEI header,
+which might also provide a prose description of the language described
+by the language tag.</p>
 
-<list>
- <item>The identifier for the language should be constructed as in
- <title>Best Current Practice 47</title><note place="bottom">Currently
- BCP 47 comprises two Internet Engineering Task Force documents,
- referred to separately as RFC 5646 and RFC 4647; over time, other
- IETF documents may succeed these as the best current
- practice.</note>. This <emph rend="bold">same</emph> identifier has
- to be used to identify the corresponding <gi>language</gi> element in
- the TEI header, if one is present.</item>
-</list></p>
- <p>The first part of BCP 47 is called <ref target="#CH-BIBL-4"><title>Tags for Identifying
- Languages</title></ref>, and
- proposes the following mechanism for constructing an identifier (tag)
- for languages as administered by the Internet Assigned Numbers
- Authority (IANA). The tag is assembled from a sequence of subtags
- separated by the hyphen (-, U+002D) character. It gives the language
- (possibly further identified with a sublanguage), a script and a
- region for this language, each possibly followed by a variant subtag.</p>
-  
-  <p>The authoritative list of registered subtags is maintained by IANA and 
-    is available at <ptr target="http://www.iana.org/assignments/language-subtag-registry"/>. 
-      For a good general overview of the construction of language tags, see 
-    <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
-    a practical step-by-step guide, see 
-    <ptr target="http://www.w3.org/International/questions/qa-choosing-language-tags"/>.
-</p>
-  
-  
- <p>In addition to the list of registered subtags, both BPC 47 
- and ISO 639-2 provide extensions that
- can be employed by private convention. The constructs provided
- can thus be used to generate identifiers for any language, past and
- present, in any used in any area of the world. If such private
- extensions are used within the context of the TEI, they should be
- documented within the <gi>language</gi> element of the TEI header,
- which might also provide a prose description of the language
- described by the language tag.</p>
-
-<p>While language, region and script can be adequately identified
+<p>While language, region, and script can be adequately identified
 using this mechanism, there is only very rough provision to express a
 dimension of time for the language of a document; those codes provided
-(e.g. <code>grc</code> for <q>Greek, Ancient (to 1453)</q> in ISO 639-2) might not
+(e.g. <code>grc</code> for <q>Greek, Ancient (to 1453)</q>) might not
 reflect the segments appropriate for a text at hand. Text encoders
 might express the time window of the language used in the document by
 means of the extension mechanism defined in BCP 47 and relate that
 to a <gi>date</gi> element in the corresponding <gi>language</gi>
-section of the TEI header. </p>
+section of the TEI header.</p>
 <p>Equivalences to language identifiers by other authorities can be
- given in the <gi>language</gi> section as well, but no formal
+given in the <gi>language</gi> section as well, but no formal
 mechanism for doing so has been defined.</p>
-<p>
- The scope of the language identification is extending to the whole
- subtree of the document anchored at the element that carries the
- <att>xml:lang</att> attribute, including all elements and all
- attributes where a language might apply.<note place="bottom">This will exclude all
- attributes where a non-textual datatype has been specified, for
- example tokens, boolean values or predefined value lists.</note>
-</p>
-</div>
+<p>The scope of the language identification extends to the whole
+subtree of the document anchored at the element that carries the
+<att>xml:lang</att> attribute, including all elements and those
+attributes, if any, where a language might apply.<note
+place="bottom">This excludes all attributes where a non-textual
+datatype has been specified, for example tokens, boolean values,
+dates, and predefined value lists.</note></p></div>
   
-  <div type="div2">
+  <div type="div2" xml:id="CHCS">
    <head>Characters and Character Sets</head>
   <p>All document encoding has to do with representing one thing by
    another in an agreed and systematic way. Applied to the smallest
@@ -821,11 +813,11 @@ mechanism for doing so has been defined.</p>
    <term>normalization</term> of Unicode documents. Normalization is
    the process of
    ensuring that a given abstract character is represented in one
-   way only in a given Unicode document  or document collection.
+   way only in a given Unicode document or document collection.
    The Unicode Consortium provides four standard normalization
    forms, of which the Normalization Form C (NFC)
    seems to be most appropriate for text encoding projects. The NFC, as 
-   far as possible, defines conversions for  all base characters followed 
+   far as possible, defines conversions for all base characters followed 
    by one or more combining characters into the corresponding precomposed 
    characters. The
    World Wide Web Consortium has produced a document entitled

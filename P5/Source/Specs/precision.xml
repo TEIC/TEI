@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
     Copyright TEI Consortium.
     Dual-licensed under CC-by and BSD2 licences
     See the file COPYING.txt for details
     $Date$
     $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" ident="precision">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="certainty" ident="precision">
   <desc versionDate="2009-06-05" xml:lang="en">indicates the numerical accuracy or precision  associated
   with some aspect of the text markup.</desc>
   <classes>
@@ -20,27 +16,23 @@
     <memberOf key="att.datable"/>
   </classes>
   <content>
-    <rng:zeroOrMore>
-      <rng:choice>
-        <rng:ref name="model.descLike"/>
-        <rng:ref name="model.certLike"/>
-      </rng:choice>
-    </rng:zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.descLike"/>
+        <classRef key="model.certLike"/>
+      </alternate>
+    
   </content>
   <attList>
     <attDef ident="precision">
       <desc versionDate="2011-04-13" xml:lang="en">characterizes the precision of the element or attribute pointed 
         to by the <gi>precision</gi> element.</desc>
-      <datatype>
-        <rng:ref name="data.certainty"/>
-      </datatype>
+      <datatype><dataRef key="teidata.certainty"/></datatype>
     </attDef>
     <attDef ident="stdDeviation" usage="opt">
       <desc versionDate="2009-06-05" xml:lang="en">supplies a standard deviation associated with the value in
       question</desc>
-      <datatype>
-        <rng:ref name="data.numeric"/>
-      </datatype>
+      <datatype><dataRef key="teidata.numeric"/></datatype>
     </attDef>
   </attList>
   <exemplum xml:lang="en">
@@ -54,8 +46,8 @@
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
       <date notBefore="1632" notAfter="1642">Not more than ten years before the start of the Civil War
-            <precision match="parent::date/@notBefore" precision="low"/>
-            <precision match="parent::date/@notAfter" precision="high"/>
+            <precision match="@notBefore" precision="low"/>
+            <precision match="@notAfter" precision="high"/>
          </date>
     </egXML>
   </exemplum>

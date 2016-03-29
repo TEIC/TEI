@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright TEI Consortium.
+Dual-licensed under CC-by and BSD2 licences
+See the file COPYING.txt for details
+-->
+<?xml-model href="../Exemplars/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="../Exemplars/tei_all.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>TEI P5 version 3.0.0 release notes</title>
+      </titleStmt>
+      <editionStmt>
+        <edition>
+          <date when="2016-03-29">29 March 2016</date>
+        </edition>
+      </editionStmt>
+      <publicationStmt>
+        <authority>The Text Encoding Initiative</authority>
+      </publicationStmt>
+      <sourceDesc>
+        <p>created retrospectively from ChangeLog and GitHub trackers</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <p>This version of the TEI Guidelines is a major step forward,
+      and thus merits an increment of the <soCalled>major</soCalled>
+      portion of the version number from <q>2</q> to <q>3</q>. The
+      significant changes that warrant this increment are twofold, as
+      follows.
+    <!-- version 2, which Elisa prefers: 
+            <p>This version of the TEI Guidelines is a major step
+            forward, meritting a change in the version number from
+            <q>2</q> to <q>3</q>. The significant changes that warrant
+            this are twofold, as follows. -->
+	    <list>
+          <item>The first is the implementation of Pure ODD, which
+          replaces RELAX NG content models with TEI elements in the
+          definitions of new elements and attributes. This means that
+          apart from Schematron constraints, TEI is now defined
+          entirely in TEI. The new specification elements and their
+          use are described in <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/TD.html">Chapter
+          22</ref>. The TEI Stylesheets have been extensively modified
+          to handle Pure ODD content models.</item>
+          <item>The second is the introduction of the new Processing
+          Model specification in <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/TD.html#TDPM">section
+          22.5.5</ref>. TEI Processing Models permit the writer of an
+          ODD to specify how TEI elements might be processed for
+          different output formats.</item>
+      </list></p>
+      <p>Release 3.0.0 of the TEI Guidelines also introduces other new
+      features and resolves a number of issues raised by the TEI
+      community. As always, the majority of these changes and
+      corrections are a consequence of feature requests or bugs
+      reported by the TEI community using the GitHub tracking system.
+      If you find something you think needs to change in the TEI
+      Guidelines, schemas, tools, or website, please submit a feature
+      request or bug issue at <ref target="https://github.com/TEIC/TEI/issues">https://github.com/TEIC/TEI/issues</ref>
+      for consideration. A full list of the issues resolved in the
+      course of this release cycle may be found under the <ref target="https://github.com/TEIC/TEI/issues?q=milestone%3AGuidelines-3.0.0+is%3Aclosed">3.0.0 milestone</ref>.</p>
+      <p>Some of the notable changes other than the Processing Model and Pure ODD in
+      <ref target="en/html/index.html">this release</ref> include:
+      <list>
+          <item>The new <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-msFrag.html"><gi>msFrag</gi></ref>
+          element was added to permit Manuscript Descriptions to
+          contain virtual reconstructions of fragmented documents as
+          well as to analyse their components.</item>
+          <item>The new <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-annotationBlock.html"><gi>annotationBlock</gi></ref>
+          element was added to group together linguistic annotations.
+         </item>
+          <item>The new <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-transcriptionDesc.html"><gi>transcriptionDesc</gi></ref>
+          element was added to describe the set of transcription
+          conventions used, particularly for spoken material.</item>
+	  <item>The <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-oVar.html"><gi>oVar</gi></ref> and <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-pVar.html"><gi>pVar</gi></ref> elements are no
+	  longer recommended; rather, use of <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-oRef.html"><gi>oRef</gi></ref> and
+	  <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-pRef.html"><gi>pRef</gi></ref> is recommended instead. The attributes of
+	  <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-oRef.html"><gi>oRef</gi></ref> and <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-pRef.html"><gi>pRef</gi></ref> have been adjusted to
+	  accommodate this usage.</item>
+	  <item>The <att>type</att> attribute of <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-stage.html"><gi>stage</gi></ref> now
+	  allows multiple values.</item>
+	  <item>The <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-TEI.html"><gi>TEI</gi></ref> and <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-table.html"><gi>table</gi></ref> elements now claim
+	  membership in <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.typed.html"><ident type="class">att.typed</ident></ref> (and
+	  thus gets the <att>type</att> and <att>subtype</att>
+	  attributes).</item>
+	  <item>The <att>hand</att> attribute was removed from <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.damaged.html"><ident type="class">att.damaged</ident></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.textCritical.html"><ident type="class">att.textCritical</ident></ref>, and <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.transcriptional.html"><ident type="class">att.transcriptional</ident></ref>, and added to a new
+	  <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.written.html"><ident type="class">att.written</ident></ref> class, to which
+	  <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.damaged.html"><ident type="class">att.damaged</ident></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.textCritical.html"><ident type="class">att.textCritical</ident></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.transcriptional.html"><ident type="class">att.transcriptional</ident></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-ab.html"><gi>ab</gi></ref>,
+	  <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-closer.html"><gi>closer</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-div.html"><gi>div</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-fw.html"><gi>fw</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-head.html"><gi>head</gi></ref>,
+	  <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-hi.html"><gi>hi</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-label.html"><gi>label</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-line.html"><gi>line</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-note.html"><gi>note</gi></ref>,
+	  <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-opener.html"><gi>opener</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-p.html"><gi>p</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-salute.html"><gi>salute</gi></ref>, <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-seg.html"><gi>seg</gi></ref>,
+	  <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-text.html"><gi>text</gi></ref>, and <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-zone.html"><gi>zone</gi></ref> belong.</item>
+	  <item>The <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-seg.html"><gi>seg</gi></ref> element was added to the content of <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-notatedMusic.html"><gi>notatedMusic</gi></ref>.</item>
+	  <item>The explanations and discussions of several features have been improved, including:
+	  <list>
+	    <item>the <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.scoping.html"><ident type="class">att.scoping</ident></ref> attributes
+	    <att>target</att> and <att>match</att></item>
+	    <item>the attributes of <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-att.datable.w3c.html"><ident type="class">att.datable.w3c</ident></ref></item>
+	    <item>the <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-attRef.html"><gi>attRef</gi></ref> element</item>
+	    <item>the <ref target="http://www.tei-c.org/Vault/P5/3.0.0/doc/tei-p5-doc/en/html/ref-revisionDesc.html"><gi>revisionDesc</gi></ref> element</item>
+	  </list>
+	  </item>
+	  <item>The display of element documentation has been
+	  re-ordered so that notes and examples now precede the
+	  content models (given in both Pure ODD and RELAX NG).</item>
+          <item>And, of course, many typos were corrected.</item>
+        </list>
+      </p>
+      <p>In addition, improvements have been made to the XSL stylesheets (which provide processing
+        of TEI ODD files for Roma and OxGarage as well as other TEI conversions). The Stylesheets
+        are maintained separately from the Guidelines and are at <ref target="https://github.com/TEIC/Stylesheets">https://github.com/TEIC/Stylesheets</ref>.</p>
+      <p>This release is dedicated to the memory of our colleague
+      Sebastian Rahtz (13 February 1955 – 15 March 2016). We are
+      greatly diminished without his generosity, wisdom, and humor;
+      however, release 3.0.0 has a lot of him in it. He was the
+      architect of the new Processing Model, and had implemented most
+      of the support for Pure ODD in the Stylesheets. Unlike poets,
+      the creators of software and living standards generally don't
+      get to make a <foreign xml:lang="la">monumentum aere
+      perennius</foreign>. At best, we can hope that our work will be
+      carried on, rewritten, extended, and refactored. That process
+      has already begun for Sebastian's TEI Stylesheets, and they will
+      continue to evolve to meet the community's needs going forward;
+      but they, and we, are immeasurably better off for his
+      contributions.
+      </p>
+    </body>
+  </text>
+</TEI>

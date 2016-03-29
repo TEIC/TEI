@@ -6,7 +6,7 @@ See the file COPYING.txt for details.
 $Date$
 $Id$
 -->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <div xmlns="http://www.tei-c.org/ns/1.0" xmlns:xi="http://www.w3.org/2001/XInclude" type="div1" xml:id="HD" n="5">
 <head>The TEI Header</head>
 <p>This chapter addresses the problems of describing an encoded work
@@ -1237,7 +1237,7 @@ section <ptr target="#CCAS"/>.
 <div type="div3" xml:id="HD57"><head>The Tagging Declaration</head>
 <p>The <gi>tagsDecl</gi> element is used to record
 the following information about the tagging used within a particular
-text:
+document:
 <list rend="bulleted">
 <item>the namespace to which elements appearing within the transcribed
 text belong.</item>
@@ -1253,7 +1253,12 @@ of an element.</item></list></p>
   <specDesc key="att.styleDef" atts="scheme schemeVersion"/>
 <specDesc key="namespace"/>
 <specDesc key="tagUsage"/>
-</specList></p>
+</specList></p><p>The <gi>tagsDecl</gi> element is descriptive, rather than prescriptive: if used, it simply documents
+practice in the TEI document containing it. The elements constituting a TEI customization file (discussed in chapter <ptr target="#TD"/>) by contrast
+document expected practice in a number of documents, and may thus be used prescriptively. If there is an inconsistency between 
+the actual state of a document and what is documented by its <gi>tagsDecl</gi>, then the latter should be corrected. If there is an
+inconsistency between a document and what is required by the customization file, or a schema derived from it, then it will usually be the
+document that requires correction.</p>
 <p>The <gi>tagsDecl</gi> element consists of an optional sequence of
 <gi>rendition</gi> elements, each of which must bear a unique
 identifier, followed by an optional sequence of one or more
@@ -2338,7 +2343,7 @@ expressed using that calendar system:
         </egXML>
 Note the use of the <att>when</att> attribute described in <ptr target="#CONADA"/> to provide a normalized
       form of the date. The content of the <gi>date</gi> element may
-      also be omitted, since no underlying source is being transcribed.      </p>
+      be omitted, since no underlying source is being transcribed.</p>
 
       <p>Several senders, recipients, etc. can be specified for a single
         <gi>correspAction</gi> if the action is considered to apply to them all acting as

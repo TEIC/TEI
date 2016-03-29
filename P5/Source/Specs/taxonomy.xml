@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="taxonomy">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="taxonomy">
   <gloss versionDate="2009-05-04" xml:lang="fr">taxinomie</gloss>
   <desc versionDate="2011-11-02" xml:lang="en">defines a typology either implicitly, by means of a bibliographic
     citation, or explicitly by a structured taxonomy.</desc>
@@ -28,27 +25,34 @@ $Id$
   <classes>
     <memberOf key="att.global"/>
   </classes>
+  <!-- MDH changed content model for issue #496 2015-10-29. -->
   <content>
-    <choice xmlns="http://relaxng.org/ns/structure/1.0">
-      <zeroOrMore>
-        <choice>
-          <ref name="model.glossLike"/>
-          <ref name="model.descLike"/>
-        </choice>
-      </zeroOrMore>
-      <oneOrMore>
-        <ref name="category"/>
-      </oneOrMore>
-      <group>
-        <group>
+    <alternate>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.glossLike"/>
+          <classRef key="model.descLike"/>
+        </alternate>
+      
+      
+        <alternate minOccurs="1" maxOccurs="unbounded">
+          <elementRef key="category"/>
+          <elementRef key="taxonomy"/>
+        </alternate>
+      
+      <sequence>
+        
           <!-- this group a hack for odd2dtd processing -->
-          <ref name="model.biblLike"/>
-        </group>
-        <zeroOrMore>
-          <ref name="category"/>
-        </zeroOrMore>
-      </group>
-    </choice>
+          <classRef key="model.biblLike"/>
+        
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="category"/>
+            <elementRef key="taxonomy"/>
+          </alternate>
+        
+      </sequence>
+    </alternate>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -197,10 +201,10 @@ $Id$
    <category xml:id="feetNumber">
       <catDesc>Number of feet</catDesc>
       <category xml:id="pentameter">
-         <catDesc>>Pentameter</catDesc>
+         <catDesc>&gt;Pentameter</catDesc>
       </category>
       <category xml:id="tetrameter">
-         <catDesc>>Tetrameter</catDesc>
+         <catDesc>&gt;Tetrameter</catDesc>
       </category>
    </category>
 </category>
@@ -215,6 +219,10 @@ $Id$
             
          </egXML>
 </exemplum>
+    <remarks versionDate="2015-10-31" xml:lang="en">
+        <p>Nested taxonomies are common in many fields, so the <gi>taxonomy</gi>
+        element can be nested.</p>
+    </remarks>
   <listRef>
     <ptr target="#HD55"/>
   </listRef>

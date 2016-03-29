@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="CHAR" ident="char">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="gaiji" xml:id="CHAR" ident="char">
   <gloss versionDate="2005-01-14" xml:lang="en">character</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">문자</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW">文字</gloss>
@@ -28,29 +24,29 @@ otherwise available in the document character set-->.</desc>
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <optional>
-        <ref name="charName"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="model.descLike"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="charProp"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="mapping"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="figure"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="model.graphicLike"/>
-      </zeroOrMore>
-      <zeroOrMore>
-        <ref name="model.noteLike"/>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      
+        <elementRef key="charName" minOccurs="0"/>
+      
+      
+        <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="charProp" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="mapping" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="figure" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <classRef key="model.graphicLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <classRef key="model.noteLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="und">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

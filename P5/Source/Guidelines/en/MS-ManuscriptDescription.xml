@@ -8,7 +8,7 @@ $Id$
 -->
 
 
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 
 <div xmlns="http://www.tei-c.org/ns/1.0" type="div1" xml:id="MS">
 <head>Manuscript Description</head>
@@ -83,6 +83,7 @@ remainder of this chapter.
 <specDesc key="history"/>
 <specDesc key="additional"/>
 <specDesc key="msPart"/>
+<specDesc key="msFrag"/>
 </specList></p>
 <p>The first of these components, <gi>msIdentifier</gi>, is the only
 one which is mandatory; it is described in more detail in <ptr target="#msid"/> below. It is followed optionally by one or more
@@ -91,9 +92,8 @@ as a series of <gi>p</gi> elements, or one or more of the specialized
 elements <gi>msContents</gi> (<ptr target="#msco"/>),
 <gi>physDesc</gi> (<ptr target="#msph"/>), <gi>history</gi> (<ptr target="#mshy"/>), and <gi>additional</gi> (<ptr target="#msad"/>).
 These elements are all optional, but if used they must appear in the
-order given here.  Finally, in the case of a composite manuscript, a
-full description may also contain one or more <gi>msPart</gi> elements
-(<ptr target="#mspt"/>).</p>
+order given here.  Finally, in the case of a composite manuscript (a manuscript composed of several codicological units) or a fragmented manuscript (a manuscript whose parts are now dispersed and kept at different places), a
+full description may also contain one or more <gi>msPart</gi> (<ptr target="#mspt"/>) elements and <gi>msFrag</gi> (<ptr target="#msfg"/>) elements, respectively.</p>
 
 
 
@@ -254,10 +254,6 @@ features demonstrated above, together with many other related
 matters.</p>
 
 
-
-
-
-
 <specGrp xml:id="msdesc.def">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/msDesc.xml"/>
 </specGrp>
@@ -403,23 +399,22 @@ following attributes: <specList><specDesc key="att.dimensions"
 atts="scope extent unit quantity"/>
 <specDesc key="att.ranging" atts="atLeast atMost min max ">
 </specDesc></specList></p>
-<p>Attributes <att>scope</att>, <att>min</att> and <att>max</att> are used only when the
-measurement applies to several items, for example the size of all
-leaves in a manuscript; attributes <att>atLeast</att> and
-<att>atMost</att> are used when the measurement applies to a single
-item, for example the size of a specific codex, but has had to be
-estimated. Attribute <att>quantity</att> is used when the measurement
-can be given exactly, and applies to a single item; this is the usual
-situation.  In this case, the units in which dimensions are measured
-may be specified using the <att>unit</att> attribute, which will
-normally take from a closed set of values appropriate to the project,
-using standard units of measurement wherever possible, such as
-following values: <val>cm</val>, <val>mm</val>, <val>in</val>,
-<val>line</val>, <val>char</val>. If however the only data available
-for the measurement uses some other unit, or it is preferred to
-normalize it in some other way, then it may be supplied as a string
-value by means of the <att>extent</att> attribute.
-</p>
+<p>Attributes <att>scope</att>, <att>min</att>, and <att>max</att> are
+used only when the measurement applies to several items, for example
+the size of all leaves in a manuscript; attributes <att>atLeast</att>
+and <att>atMost</att> are used when the measurement applies to a
+single item, for example the size of a specific codex, but has had to
+be estimated. Attribute <att>quantity</att> is used when the
+measurement can be given exactly, and applies to a single item; this
+is the usual situation. In this case, the units in which dimensions
+are measured may be specified using the <att>unit</att> attribute, the
+value of which will normally be taken from a closed set of values
+appropriate to the project, using standard units of measurement
+wherever possible, such as <val>cm</val>, <val>mm</val>,
+<val>in</val>, <val>line</val>, <val>char</val>. If however the only
+data available for the measurement uses some other unit, or it is
+preferred to normalize it in some other way, then it may be supplied
+as a string value by means of the <att>extent</att> attribute.</p>
 <p>In the simplest case, only the <att>extent</att> attribute may be
 supplied: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><width
@@ -1049,39 +1044,9 @@ It might, however, be preferable to include such information within
 the <gi>adminInfo</gi> element discussed in section <ptr target="#msadad"/> below.</p>
 
 <p>Cases of such changed or alternative identifiers should be clearly
-distinguished from cases of <soCalled>scattered</soCalled>
+distinguished from cases of <soCalled>fragmented</soCalled> (<ptr target="#msfg"/>)
 manuscripts, that is to say manuscripts which although physically
-disjoint are nevertheless generally treated as single units. One
-well-known example is the Old Church Slavonic manuscript known as
-<title>Codex Suprasliensis</title>, substantial parts of which are to
-be found in three separate repositories, in Ljubljana, Warsaw, and
-St. Petersburg. This should be represented using three distinct
-<gi>altIdentifier</gi> elements, using an appropriate value on the
-type attribute to indicate that these three identifiers are not
-alternate ways of referring to the same physical object, but three
-parts of the same entity.
-
-<egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="mul">
-<msIdentifier>
-  <msName xml:lang="la">Codex Suprasliensis</msName>
-    <altIdentifier type="partial">
-    <settlement>Ljubljana</settlement>
-    <repository>Narodna in univerzitetna knjiznica</repository>
-    <idno>MS Kopitar 2</idno>
-    <note>Contains ff. 10 to 42 only</note>
-  </altIdentifier>
-  <altIdentifier type="partial">
-    <settlement>Warszawa</settlement>
-    <repository>Biblioteka Narodowa</repository>
-    <idno>BO 3.201</idno>
-  </altIdentifier>
-  <altIdentifier type="partial">
-    <settlement>Sankt-Peterburg</settlement>
-    <repository>Rossiiskaia natsional'naia biblioteka</repository>
-    <idno>Q.p.I.72</idno>
-  </altIdentifier>
-</msIdentifier>
-</egXML></p>
+disjoint are nevertheless generally treated as single units.</p>
 
 <p>As mentioned above, the smallest possible description is one that
 contains only the element <gi>msIdentifier</gi>; good practice in all
@@ -2846,9 +2811,7 @@ TEI document, refer also to <ptr target="#PHFAX"/>. </p>
 </div>
 <div type="div2" xml:id="mspt">
 <head>Manuscript Parts</head>
-<p>The <gi>msPart</gi> element may be used in cases where what were
-originally physically separate manuscripts or parts of manuscripts
-have been bound together and/or share the same call number.
+<p>The <gi>msPart</gi> element may be used in cases where manuscripts or parts of manuscripts that were originally physically separate have been bound together and/or share the same call number.
 <specList>
 <specDesc key="msPart"/>
 </specList></p>
@@ -2857,35 +2820,120 @@ likelihood have its own content, physical description, history, and so
 on, the structure of <gi>msPart</gi> is in the main identical to that
 of <gi>msDesc</gi>, allowing one to retain the top level of
 identity (<gi>msIdentifier</gi>), but to branch out thereafter into as
-many parts, or even subparts, as necessary. Note that the parts of a
-composite manuscript may also have their own identifiers, which should
-be tagged using <gi>msIdentifier</gi> in the same way <!--. they should be tagged
+many parts, or even subparts, as necessary. 
+<!-- SG: The following example is a multivolume manuscript and not a composite manuscript : Should we discuss hoz to treat multivolume - manuscripts or not ? Should we keep this example and the corresponding prose ? -->
+<!--Original text : Note that the parts of a composite manuscript may also have their own identifiers, which should
+be tagged using <gi>msIdentifier</gi> in the same way--> <!-- Note Council: they should be tagged
 using the <gi>idno</gi> element, rather than the <gi>msIdentifier</gi>
-element, -->as in the following example:
-<!-- don't understand why these need to to wrapped in <altIdentifier> -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples">
-<msDesc>
+element, --> <!-- Original text : as in the following example:-->
+<!--Note Council: don't understand why these need to to wrapped in <altIdentifier> -->
+
+<!--<egXML xmlns="http://www.tei-c.org/ns/Examples"><msDesc>
 <msIdentifier>
 <settlement>Amiens</settlement>
 <repository>Bibliothèque Municipale</repository>
 <idno>MS 3</idno>
 <msName>Maurdramnus Bible</msName>
 </msIdentifier>
-<!-- other elements here -->
+<!-\- other elements here -\->
 <msPart>
 <msIdentifier><idno>MS 6</idno></msIdentifier>
-<!-- other information specific to this part here -->
+<!-\- other information specific to this part here -\->
 </msPart>
 <msPart>
 <msIdentifier><idno>MS 7</idno></msIdentifier>
-<!-- other information specific to this part here -->
+<!-\- other information specific to this part here -\->
 </msPart>
-<!-- other msParts here -->
+<!-\- other msParts here -\->
+</msDesc>
+</egXML>-->
+<egXML xmlns="http://www.tei-c.org/ns/Examples">
+<msDesc xml:id="KBR_ms_10066-77" xml:lang="eng" type="composite">
+<msIdentifier>
+<settlement key="tgn_7007868">Brussels</settlement>
+<repository>Koninklijke Bibliotheek van België / Bibliothèque royale de Belgique</repository>
+<idno>ms. 10066-77</idno>
+</msIdentifier>
+<msContents><summary xml:lang="lat">Miscellany of various texts; Prudentius, Psychomachia; Physiologus de natura animantium</summary>
+<textLang mainLang="lat">Latin</textLang>
+</msContents>
+<physDesc>
+<objectDesc form="composite_manuscript"></objectDesc>
+</physDesc>
+<msPart>
+<msIdentifier><idno>ms. 10066-77 ff. 140r-156v</idno>
+</msIdentifier>
+<msContents><summary xml:lang="lat">Physiologus</summary>
+<textLang mainLang="lat">Latin</textLang>
+</msContents>
+</msPart>        
+<msPart>
+<msIdentifier><idno>ms. 10066-77 ff. 112r-139r</idno>
+</msIdentifier>
+<msContents>
+<summary xml:lang="lat">Prudentius, Psychomachia</summary>
+<textLang mainLang="lat">Latin</textLang>
+</msContents>
+</msPart>
 </msDesc>
 </egXML>
 </p>
 <specGrp xml:id="mspart.def">
 <include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/msPart.xml"/>
+</specGrp>
+</div>
+<div type="div2" xml:id="msfg">
+
+<head>Manuscript Fragments</head>
+<p>The <gi>msFrag</gi> element may be used inside <gi>msDesc</gi> when encoding one or more fragments of a scattered or fragmented manuscript. 
+The fragment(s) described in a single <gi>msDesc</gi> element may be held either at several institutions 
+or at a single institution, so different call numbers may be attached to the fragments. 
+
+Inside the <gi>msFrag</gi> element, information about the single fragment 
+or each dispersed part is provided: e.g. the current shelfmark or call number, 
+the labels of the range of folios concerned if the fragment currently forms part of a larger manuscript, 
+dimensions, extent, title, author, annotations, illuminations and so on.
+<specList>
+<specDesc key="msFrag"/>
+</specList></p>
+<p>One well-known example of fragmentation is the Old Church Slavonic manuscript known as <title>Codex Suprasliensis</title>, substantial parts of which are to
+be found in three separate repositories, in Ljubljana, Warsaw, and St. Petersburg. 
+This manuscript should be represented using one single <gi>msDesc</gi> element in which <gi>msName</gi> is used to identify the fragmented manuscript, along with three distinct
+<gi>msFrag</gi> elements, each of which contains the current identifier of one of the fragments, a physical description, and other related information:
+  <egXML xmlns="http://www.tei-c.org/ns/Examples">
+    <msDesc>
+      <msIdentifier>
+        <msName xml:lang="la">Codex Suprasliensis</msName>
+      </msIdentifier>
+      <msFrag>
+        <msIdentifier>
+          <settlement>Ljubljana</settlement>
+          <repository>Narodna in univerzitetna knjiznica</repository>
+          <idno>MS Kopitar 2</idno>
+        </msIdentifier>
+        <msContents>
+          <summary>Contains ff. 10 to 42 only</summary>
+        </msContents>
+      </msFrag>
+      <msFrag>
+        <msIdentifier>
+          <settlement>Warszawa</settlement>
+          <repository>Biblioteka Narodowa</repository>
+          <idno>BO 3.201</idno>
+        </msIdentifier>
+      </msFrag>
+      <msFrag>
+        <msIdentifier>
+          <settlement>Sankt-Peterburg</settlement>
+          <repository>Rossiiskaia natsional'naia biblioteka</repository>
+          <idno>Q.p.I.72</idno>
+        </msIdentifier>
+      </msFrag>
+    </msDesc>
+  </egXML>
+</p>
+<specGrp xml:id="msfrag.def">
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/msFrag.xml"/>
 </specGrp>
 </div>
 <div type="div2" xml:id="MSref">

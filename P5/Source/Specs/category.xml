@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="category">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="header" ident="category">
   <gloss versionDate="2009-01-05" xml:lang="fr">catégorie</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">contains an individual descriptive category, possibly nested within a superordinate
     category, within a user-defined taxonomy.</desc>
@@ -29,22 +26,22 @@ $Id$
     <memberOf key="att.global"/>
   </classes>
   <content>
-    <group xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <oneOrMore>
-          <ref name="catDesc"/>
-        </oneOrMore>
-        <zeroOrMore>
-          <choice>
-            <ref name="model.descLike"/>
-            <ref name="model.glossLike"/>
-          </choice>
-        </zeroOrMore>
-      </choice>
-      <zeroOrMore>
-        <ref name="category"/>
-      </zeroOrMore>
-    </group>
+    <sequence>
+      <alternate>
+        
+          <elementRef key="catDesc" minOccurs="1" maxOccurs="unbounded"/>
+        
+        
+          <alternate minOccurs="0" maxOccurs="unbounded">
+            <classRef key="model.descLike"/>
+            <classRef key="model.glossLike"/>
+          </alternate>
+        
+      </alternate>
+      
+        <elementRef key="category" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

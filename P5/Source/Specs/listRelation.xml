@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listRelation">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="namesdates" ident="listRelation">
   <desc versionDate="2009-01-05" xml:lang="fr">donne des informations sur les relations qui existent
     entre des personnes, des lieux, ou des organisations, soit de manière informelle en prose, soit
     de manière formelle.</desc>
@@ -30,20 +26,20 @@ $Id$
     <memberOf key="model.biblPart"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:ref name="model.headLike"/>
-      </rng:zeroOrMore>
-      <rng:choice>
-        <rng:ref name="model.pLike"/>
-        <rng:oneOrMore>
-          <rng:choice>
-            <rng:ref name="relation"/>
-            <rng:ref name="listRelation"/>
-          </rng:choice>
-        </rng:oneOrMore>
-      </rng:choice>
-    </rng:group>
+    <sequence>
+      
+        <classRef key="model.headLike" minOccurs="0" maxOccurs="unbounded"/>
+      
+      <alternate>
+        <classRef key="model.pLike"/>
+        
+          <alternate minOccurs="1" maxOccurs="unbounded">
+            <elementRef key="relation"/>
+            <elementRef key="listRelation"/>
+          </alternate>
+        
+      </alternate>
+    </sequence>
   </content>
   <exemplum xml:lang="en">
     <egXML xmlns="http://www.tei-c.org/ns/Examples">

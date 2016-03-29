@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ -->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="join">
+<?xml version="1.0" encoding="UTF-8"?><!-- Copyright TEI Consortium. Dual-licensed under CC-by and BSD2 licences See the file COPYING.txt for details $Date$ $Id$ --><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="linking" ident="join">
   <gloss versionDate="2009-10-06" xml:lang="fr">jointure</gloss>
   <desc versionDate="2005-01-14" xml:lang="en">identifies a possibly fragmented segment of text, by pointing at the possibly discontiguous elements which compose it.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">텍스트를 구성하고 있는 비연소적 요소를 가리킴으로 텍스트의 파편화된 분절을 식별한다.</desc>
@@ -17,12 +14,12 @@
     <memberOf key="model.global.meta"/>
   </classes>
   <content>
-    <zeroOrMore xmlns="http://relaxng.org/ns/structure/1.0">
-      <choice>
-        <ref name="model.descLike"/>
-        <ref name="model.certLike"/>
-      </choice>
-    </zeroOrMore>
+    
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.descLike"/>
+        <classRef key="model.certLike"/>
+      </alternate>
+    
   </content>
   <constraintSpec ident="joinTargets3" scheme="isoschematron">
     <constraint>
@@ -40,9 +37,7 @@ You must supply at least two values for @target on <name/>
       <desc versionDate="2009-10-06" xml:lang="fr">spécifie le nom de l'élément que cette agrégation est censée former.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica el nombre del elemento representado por el conjunto de identificadores en cuestión.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica il nome dell'elemento rappresentato dall'insieme di identificatori in questione</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.name"/>
-      </datatype>
+      <datatype><dataRef key="teidata.name"/></datatype>
     </attDef>
     <attDef ident="scope" usage="rec">
       <desc versionDate="2005-01-14" xml:lang="en">indicates whether the targets to be joined include the entire element indicated (the entire subtree including its root), or just the children of the target (the branches of the subtree).</desc>
@@ -52,9 +47,7 @@ You must supply at least two values for @target on <name/>
       <desc versionDate="2007-06-12" xml:lang="fr">indique si les cibles à réunir incluent l'intégralité de l'élément indiqué (le sous-arbre entier y compris sa racine) ou seulement les enfants de la cible (les branches du sous-arbre).</desc>
       <desc versionDate="2007-05-04" xml:lang="es">especifica si las metas a enlazar incluyen el elemento entero indicado (el árbol entero con la raíz inclusive) o sólo los elementos que tienen como padre la misma meta (las ramas del árbol).</desc>
       <desc versionDate="2007-01-21" xml:lang="it">specifica se le destinazioni da collegare includono l'intero elemento indicato (l'intero albero compresa la radice) oppure solo gli elementi che hanno come genitore la stessa destinazione (i rami dell'albero)</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <defaultVal>root</defaultVal>
       <valList type="closed">
         <valItem ident="root">

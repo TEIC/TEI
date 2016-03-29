@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="GLOBAL" type="atts" ident="att.global">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><classSpec xmlns="http://www.tei-c.org/ns/1.0" module="tei" xml:id="GLOBAL" type="atts" ident="att.global">
   <desc versionDate="2007-10-02" xml:lang="en">provides attributes common to all elements in the TEI encoding scheme.</desc>
   <desc versionDate="2007-12-20" xml:lang="ko">TEI 부호화 스키마의 모든 요소에 공통 속성을 제공한다.</desc>
   <desc versionDate="2007-05-02" xml:lang="zh-TW">提供一組屬性，通用於TEI編碼標準中的所有元素。</desc>
@@ -43,9 +40,7 @@ $Id$
         al cual se asocia el atributo.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna un identificatore unico all'elemento a cui è
         associato l'attributo</desc>
-      <datatype>
-        <data xmlns="http://relaxng.org/ns/structure/1.0" type="ID"/>
-      </datatype>
+      <datatype><dataRef name="ID"/></datatype>
       <remarks versionDate="2005-10-10" xml:lang="en">
         <p>The <att>xml:id</att> attribute may be used to specify a canonical reference for an
           element; see section <ptr target="#CORS"/>.</p>
@@ -79,9 +74,7 @@ $Id$
         que no es necesariamente único en el documento.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">assegna un numero (o altra etichetta) a un elemento
         che non è necessariamente unico all'interno del documento</desc>
-      <datatype maxOccurs="1">
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.text"/>
-      </datatype>
+      <datatype maxOccurs="1"><dataRef key="teidata.text"/></datatype>
       <remarks versionDate="2013-12-06" xml:lang="en">
         <p>The value of this attribute is always understood to be a single token, even if it contains space or other punctuation characters, and need not be composed of numbers only. It is typically used to specify the numbering of chapters, sections,
           list items, etc.; it may also be used in the specification of a standard reference system
@@ -125,9 +118,7 @@ $Id$
         utilizzando i codici tratti da <ref target="http://www.ietf.org/rfc/rfc3066.txt">RFC
         3066</ref>
          </desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.language"/>
-      </datatype>
+      <datatype><dataRef key="teidata.language"/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples" xml:lang="en">
           <p> … The consequences of
@@ -149,7 +140,7 @@ and that a single TEI document may contain texts in many languages.</p>
           For a good general overview of the construction of language tags, see 
           <ptr target="http://www.w3.org/International/articles/language-tags/"/>, and for 
           a practical step-by-step guide, see 
-          <ptr target="http://www.w3.org/International/questions/qa-choosing-language-tags"/>.</p>
+          <ptr target="https://www.w3.org/International/questions/qa-choosing-language-tags.en.php"/>.</p>
 <p>The value used must conform with BCP 47. If the value is a
       private use code (i.e., starts with <val>x-</val> or contains
       <val>-x-</val>), a <gi>language</gi> element with a matching
@@ -198,9 +189,7 @@ and that a single TEI document may contain texts in many languages.</p>
       <desc versionDate="2007-01-21" xml:lang="it">assegna un riferimento URI di base grazie al quale
         eventuali applicazioni possono analizzare riferimenti URI relativi come riferimenti URI
         assoluti</desc>
-      <datatype>
-        <ref xmlns="http://relaxng.org/ns/structure/1.0" name="data.pointer"/>
-      </datatype>
+      <datatype><dataRef key="teidata.pointer"/></datatype>
       <exemplum xml:lang="en">
         <egXML xmlns="http://www.tei-c.org/ns/Examples">
           <div type="bibl">
@@ -282,9 +271,7 @@ and that a single TEI document may contain texts in many languages.</p>
       <desc versionDate="2007-05-04" xml:lang="es">señala la voluntad de hacer que el espaciado sea preservado por cualquier aplicación.</desc>
       <desc versionDate="2007-01-21" xml:lang="it">segnala la volontà di far sì che la spaziatura sia mantenuta da qualsivoglia applicazione.</desc>
       <desc versionDate="2006-10-28" xml:lang="ja">空白文字類をアプリケーションがどう解釈するかを示す．</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="default">
           <desc versionDate="2012-09-07" xml:lang="en">signals that the application's default white-space processing modes are acceptable</desc>

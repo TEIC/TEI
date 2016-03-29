@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
--->
-<?xml-model href="http://tei.oucs.ox.ac.uk/jenkins/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-
-<elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="macroSpec">
+--><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns="http://www.tei-c.org/ns/1.0" module="tagdocs" ident="macroSpec">
   <gloss versionDate="2007-07-04" xml:lang="en">macro specification</gloss>
   <gloss versionDate="2007-12-20" xml:lang="ko">매크로 명시</gloss>
   <gloss versionDate="2007-05-02" xml:lang="zh-TW"/>
@@ -29,32 +25,32 @@ $Id$
     <memberOf key="att.identified"/>
   </classes>
   <content>
-    <rng:group xmlns:rng="http://relaxng.org/ns/structure/1.0">
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="model.glossLike"/>
-          <rng:ref name="model.descLike"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:choice>
-          <rng:ref name="content"/>
-          <rng:ref name="valList"/>
-        </rng:choice>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="constraintSpec"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="exemplum"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="remarks"/>
-      </rng:zeroOrMore>
-      <rng:zeroOrMore>
-        <rng:ref name="listRef"/>
-      </rng:zeroOrMore>
-    </rng:group>
+    <sequence>
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <classRef key="model.glossLike"/>
+          <classRef key="model.descLike"/>
+        </alternate>
+      
+      
+        <alternate minOccurs="0" maxOccurs="unbounded">
+          <elementRef key="content"/>
+          <elementRef key="valList"/>
+        </alternate>
+      
+      
+        <elementRef key="constraintSpec" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="exemplum" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="remarks" minOccurs="0" maxOccurs="unbounded"/>
+      
+      
+        <elementRef key="listRef" minOccurs="0" maxOccurs="unbounded"/>
+      
+    </sequence>
   </content>
   <attList>
     <attDef ident="type" usage="opt">
@@ -69,9 +65,7 @@ $Id$
 					utilise la syntaxe XML DTD.</desc>
       <desc versionDate="2007-05-04" xml:lang="es">indica que tipo de entidad debe generarse cuando un procesador ODD genera un módulo utilizando la sintaxis SGML</desc>
       <desc versionDate="2007-01-21" xml:lang="it">indica quale tipo di entità deve essere generata quando un processore ODD genera un modulo utilizzando la sintassi SGML</desc>
-      <datatype>
-        <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="data.enumerated"/>
-      </datatype>
+      <datatype><dataRef key="teidata.enumerated"/></datatype>
       <valList type="closed">
         <valItem ident="pe">
           <gloss versionDate="2005-01-14" xml:lang="en">parameter entity</gloss>
