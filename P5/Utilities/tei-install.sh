@@ -2,7 +2,7 @@
 #
 # Install TEI packages on web site
 #
-# Sebastian Rahtz, May 2014 
+# Sebastian Rahtz, May 2014
 # copyright: TEI Consortium
 # license: GPL
 #
@@ -17,7 +17,7 @@ install()
     ${ECHO} mkdir -p ${Vault}/${name}/${version}
     echo unpack to ${Vault}/${name}/${version}
     ${ECHO} unzip -q -o ${pname}-${version}.zip -d ${Vault}/${name}/${version}
-    case $package in 
+    case $package in
 	Roma)
 	    ${ECHO} unzip -q -o ${pname}-${version}.zip -d /usr/share;;
 	TEIP5)
@@ -53,7 +53,7 @@ die()
 }
 
 Vault=/projects/tei/web/Vault
-Jenkins=http://bits.nsms.ox.ac.uk:8080/jenkins/job
+Jenkins=http://jenkins.tei-c.org/job
 ECHO=
 SFUSER=rahtz
 version=
@@ -68,7 +68,7 @@ while test $# -gt 0; do
       --upload)  JOB=upload;;
       --makecurrent)  JOB=makecurrent;;
       --install)  JOB=install;;
-   *) if test "$1" = "${1#--}" ; then 
+   *) if test "$1" = "${1#--}" ; then
 	   break
 	else
 	   echo "WARNING: Unrecognized option '$1' ignored"
@@ -76,19 +76,19 @@ while test $# -gt 0; do
   esac
   shift
 done
-if [ -z $version ] 
+if [ -z $version ]
 then
  echo You must use the --version option to specify which version of the package you are installing
  exit 1
 fi
-if [ -z $package ] 
+if [ -z $package ]
 then
  echo You must use the --package option to specify which package you are installing
  exit 1
 fi
-jenkinsdir=${Jenkins}/${package}/lastSuccessfulBuild/artifact
+jenkinsdir=${Jenkins}/${package}/lastSuccessfulBuild/artifact/P5
 SFNAME=$package
-case $package in 
+case $package in
   TEIP5)         name=P5;           pname=tei;      SFNAME=TEI-P5-all;;
   Stylesheets1)  name=Stylesheets1; pname=tei-xslt1;;
   Stylesheets)   name=Stylesheets;  pname=tei-xsl;;
@@ -101,11 +101,11 @@ ${ECHO} curl -O -s $jenkinsdir/${pname}-${version}.zip || \
     die "Unable to fetch package $jenkinsdir/${pname}-${version}.zip"
 
 echo Selected task is $JOB
-case $JOB in 
+case $JOB in
   all) install; makecurrent; upload;;
   install) install ;;
   makecurrent) makecurrent ;;
   upload) upload;;
 esac
 
-${ECHO} rm ${pname}-${version}.zip 
+${ECHO} rm ${pname}-${version}.zip
