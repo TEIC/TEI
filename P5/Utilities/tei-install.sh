@@ -11,6 +11,12 @@
 # bug fix: changed $dir to $jenkinsdir in the "Get special HTML pages
 # for TEI web site" section of install() function.
 
+# Changed 2016-03-30 by MDH to ensure that the oxygen folder with 
+# updateSite.oxygen in it is copied from the old current release to
+# the folder which will become the new one, so that it stays available
+# for users, and can also be retrieved for updating by the oxygen-tei
+# build script.
+
 install()
 {
     echo Install ${name}/${version} in ${Vault} as current
@@ -24,6 +30,8 @@ install()
 	    ${ECHO} rm -f teiwebsiteguidelines.zip;
 	    echo Get special HTML pages for TEI web site;
 	    ${ECHO} curl -O -s $jenkinsdir/teiwebsiteguidelines.zip || die "Unable to fetch package $jenkinsdir/teiwebsiteguidelines.zip";
+	    echo Copy oxygen folder with updateSite.oxygen to ${Vault}/${name}/${version}
+	    ${ECHO} cp -r ${Vault}/${name}/current/oxygen ${Vault}/${name}/${version}
 	    echo unpack web guidelines to ${Vault}/${name}/${version};
 	    ${ECHO} unzip -q -o teiwebsiteguidelines -d ${Vault}/${name}/${version}/doc/tei-p5-doc;
             ${ECHO} rm teiwebsiteguidelines.zip;;
