@@ -26,7 +26,7 @@ install()
     case $package in
 	Roma)
 	    ${ECHO} unzip -q -o ${pname}-${version}.zip -d /usr/share;;
-	TEIP5-master)
+	TEIP5)
 	    ${ECHO} rm -f teiwebsiteguidelines.zip;
 	    echo Get special HTML pages for TEI web site;
 	    ${ECHO} curl -O -s $jenkinsdir/teiwebsiteguidelines.zip || die "Unable to fetch package $jenkinsdir/teiwebsiteguidelines.zip";
@@ -94,10 +94,10 @@ then
  echo You must use the --package option to specify which package you are installing
  exit 1
 fi
-jenkinsdir=${Jenkins}/${package}/lastSuccessfulBuild/artifact/P5
+jenkinsdir=${Jenkins}/${package}-master/lastSuccessfulBuild/artifact/P5
 SFNAME=$package
 case $package in
-  TEIP5-master)         name=P5;           pname=tei;      SFNAME=TEI-P5-all;;
+  TEIP5)         name=P5;           pname=tei;      SFNAME=TEI-P5-all;;
   Stylesheets1)  name=Stylesheets1; pname=tei-xslt1;;
   Stylesheets)   name=Stylesheets;  pname=tei-xsl;;
   Roma)          name=Roma;         pname=tei-roma;;
