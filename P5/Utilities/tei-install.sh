@@ -11,7 +11,7 @@
 # bug fix: changed $dir to $jenkinsdir in the "Get special HTML pages
 # for TEI web site" section of install() function.
 
-# Changed 2016-03-30 by MDH to ensure that the oxygen folder with 
+# Changed 2016-03-30 by MDH to ensure that the oxygen folder with
 # updateSite.oxygen in it is copied from the old current release to
 # the folder which will become the new one, so that it stays available
 # for users, and can also be retrieved for updating by the oxygen-tei
