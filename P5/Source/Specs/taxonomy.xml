@@ -25,32 +25,38 @@ $Id$
   <classes>
     <memberOf key="att.global"/>
   </classes>
-  <!-- MDH changed content model for issue #496 2015-10-29. -->
   <content>
     <alternate>
-      
+      <!-- We'd like the following clause to be a simple one: -->
+      <!-- ( a*, b+ ) | ( a+, b* ) -->
+      <!-- where: -->
+      <!--   'a' = (glossLike|descLike), and -->
+      <!--   'b' = (category|taxonomy) -->
+      <!-- but that is non-deterministic or ambigious. Thus we -->
+      <!-- rewrite it as the mildly more confusing -->
+      <!-- ( b+ | ( a+, b* ) ) -->
+      <alternate>
+	<alternate minOccurs="1" maxOccurs="unbounded">
+          <elementRef key="category"/>
+          <elementRef key="taxonomy"/>
+	</alternate>
+	<sequence>
+	  <alternate minOccurs="1" maxOccurs="unbounded">
+            <classRef key="model.glossLike"/>
+            <classRef key="model.descLike"/>
+	  </alternate>
+	  <alternate minOccurs="0" maxOccurs="unbounded">
+            <elementRef key="category"/>
+            <elementRef key="taxonomy"/>
+	  </alternate>
+	</sequence>
+      </alternate>
+      <sequence>
+        <classRef key="model.biblLike"/>
         <alternate minOccurs="0" maxOccurs="unbounded">
-          <classRef key="model.glossLike"/>
-          <classRef key="model.descLike"/>
-        </alternate>
-      
-      
-        <alternate minOccurs="1" maxOccurs="unbounded">
           <elementRef key="category"/>
           <elementRef key="taxonomy"/>
         </alternate>
-      
-      <sequence>
-        
-          <!-- this group a hack for odd2dtd processing -->
-          <classRef key="model.biblLike"/>
-        
-        
-          <alternate minOccurs="0" maxOccurs="unbounded">
-            <elementRef key="category"/>
-            <elementRef key="taxonomy"/>
-          </alternate>
-        
       </sequence>
     </alternate>
   </content>
@@ -220,8 +226,8 @@ $Id$
          </egXML>
 </exemplum>
     <remarks versionDate="2015-10-31" xml:lang="en">
-        <p>Nested taxonomies are common in many fields, so the <gi>taxonomy</gi>
-        element can be nested.</p>
+      <p>Nested taxonomies are common in many fields, so the
+      <gi>taxonomy</gi> element can be nested.</p>
     </remarks>
   <listRef>
     <ptr target="#HD55"/>
