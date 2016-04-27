@@ -4,7 +4,7 @@ See the file COPYING for details.
 $Date$
 $Author$-->
 <!-- GE 8 : 0.3.1 11/03/06 -->
-<div type="div1" xml:id="HD" n="5" xmlns:xi="http://www.w3.org/2001/XInclude" >
+<div type="div1" xml:id="HD" n="5" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://www.tei-c.org/ns/1.0">
 <head>En-tête TEI</head>
 <!-- 5 -->
 <p>Ce chapitre traite des problèmes de description d’une oeuvre encodée afin que le
@@ -863,7 +863,7 @@ La description complète de ces éléments et leur contenu sont donnés dans la 
       <imprint>
         <pubPlace>Bruxelles et Leipzig</pubPlace>
         <publisher>C. Muquardt</publisher>
-        <date value="1846">1846</date>
+        <date when="1846">1846</date>
       </imprint>
     </monogr>
     </biblStruct>
@@ -1301,7 +1301,7 @@ le projet à l’origine du texte. Voir l’exemple simple à la suite :
     <p>Tous les mots ont été convertis dans l’orthographe de l’américain moderne selon
     la 9e édition du Websters Collegiate dictionary.</p>
   </normalization>
-  <quotation marks="all" form="std">
+  <quotation marks="all" >
     <p>Toutes les marques ouvrantes de citation sont représentées par référence à
     l’entité ODQ ; toutes les marques fermantes de citation sont représentées par
     référence à l’entité CDQ.</p>
@@ -1485,7 +1485,7 @@ cette méthode de spécification de la structure d’un système de référence 
  <p>L’attribut <att>n</att> de chaque texte de ce corpus porte un code d’identification
  unique pour l’ensemble du texte. Le titre du texte est pris comme le contenu de
  l’élément du premier <gi>en-tête</gi> dans chaque texte. L’attribut <att>n</att> de
- chaque <gi>div1</gi> et <gi>div2&gt;</gi> contient la référence canonique de chaque
+ chaque <gi>div1</gi> et <gi>div2</gi> contient la référence canonique de chaque
  subdivision, sous la forme ‘XX.yyy’, où XX est le numéro du livre en chiffres romains, et
  yyy le numéro de section en chiffres arabes. Les coupures de ligne sont indiquées par
  des éléments vides <gi>lb</gi>, chacun incluant le numéro réel de ligne dans l’édition
@@ -1553,8 +1553,8 @@ première édition, et <mentioned>yyy</mentioned> le numéro de ligne dans cette
 une déclaration de système de références comme dans l’exemple suivant conviendrait :
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><![CDATA[
 	]]><refsDecl>
-		<state ed="première" unit="page" length="2" delim="."/>
-		<state ed="première" unit="ligne" length="3"/>
+		<refState ed="première" unit="page" length="2" delim="."/>
+		<refState ed="première" unit="ligne" length="3"/>
 	</refsDecl><![CDATA[
  ]]></egXML>
 Cela implique que les balises de bornage suivantes
@@ -1609,7 +1609,7 @@ Lorsqu’il s’agit de bien identifier et documenter les systèmes de classific
 tels que la Classification décimale de Dewey ou autres thésaurus publiés, cet élément
 contient une simple référence bibliographique renvoyant à l’endroit où peut être trouvée
 la description complète d’une taxinomie particulière.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy id="ddc12">
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><taxonomy xml:id="ddc12">
 	<bibl>
 		 <title> Classification décimale de Dewey</title>
 		 <edition>12e édition, abrégée</edition>
@@ -1982,7 +1982,7 @@ La date et le lieu de composition sont souvent particulièrement importants pour
 des variantes linguistiques ; puisque de telles informations ne peuvent être déduites
 avec certitude de la description bibliographique de l’exemplaire, l’élément <gi>creation</gi> peut être utilisé pour stocker cette information de façon systématique :
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><creation>    
-   <date value="1992-08">Août 1992</date>
+   <date when="1992-08">Août 1992</date>
    <rs type="city">Taos, Nouveau Mexique</rs>
 </creation></egXML>
 </p>
@@ -2191,9 +2191,9 @@ la plus récente en premier.</p>
 	<!-- it's now a little bit shorter; i extracted this from the -->
 	<!-- WWP file elizabeth.godmed.sgml, and made some minor      -->
 	<!-- changes -sb 2001-11-03  [from 66 to 51 lines]            -->
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><revisionDesc>
+<!--<egXML xmlns="http://www.tei-c.org/ns/Examples"><revisionDesc>
 <change n="RCS:1.70">
-<date value="2001-04-11">Mercredi 11 avril 2001</date>
+<date when="2001-04-11">Mercredi 11 avril 2001</date>
     <respStmt>
 		<name key="zmizuho.zgk">Zoë Mizuho</name>
 		<resp>encodeur</resp>
@@ -2261,7 +2261,7 @@ la plus récente en premier.</p>
 		<item>Début de la saisie sur Mac, avec le logiciel Author/Editor v. 3.1 et la version
 	1.0.14 de la DTD.</item>
     </change> 
-</revisionDesc></egXML>
+</revisionDesc></egXML>-->
 </p>
 <p>L’élément <gi>revisionDesc</gi> a comme définition formelle :
 <specGrp xml:id="D226" n="The Revision Description">
@@ -2399,7 +2399,7 @@ Congrès) et la révision du fichier.
          <normalization>
             <p>Aucune normalisation n’a été faite hors celle de Foner. </p>
          </normalization>
-         <quotation marks="all" form="std">
+         <quotation marks="all">
             <p>Tous les guillemets doubles sont rendus par ", tous les simples par une
             apostrophe.</p>
          </quotation>
@@ -2442,48 +2442,12 @@ Congrès) et la révision du fichier.
          <classCode scheme="#lc">JC 177</classCode>
       </textClass>
    </profileDesc>
-   <revisionDesc>
-      <change>
-         <date>1996-01-22</date>
-         <respStmt>
-            <resp>éd</resp>
-            <name>CMSMcQ</name>
-         </respStmt>
-         <item>relecture d’épreuve terminée</item>
-      </change>
-      <change>
-         <date>1995-10-30</date>
-         <respStmt>
-            <resp>éd</resp>
-            <name>L.B. </name>
-         </respStmt>
-         <item>relecture d’épreuve terminée</item>
-      </change>
-      <change>
-         <date>1995-07-20</date>
-         <respStmt>
-            <resp>éd</resp>
-            <name>R.G. </name>
-         </respStmt>
-         <item>relecture d’épreuve terminée</item>
-      </change>
-      <change>
-         <date>1995-07-04</date>
-         <respStmt>
-            <resp>éd</resp>
-            <name>R.G. </name>
-         </respStmt>
-         <item>Fin de l’entrée des données</item>
-      </change>
-      <change>
-         <date>1995-01-15</date>
-         <respStmt>
-            <resp>éd</resp>
-            <name>R.G. </name>
-         </respStmt>
-         <item>Début de l’entrée des données.</item>
-      </change>
-   </revisionDesc>
+  <revisionDesc>
+    <change when="1996-01-22" who="#MSM">relecture d’épreuve terminée</change>
+    <change when="1995-10-30" who="#LB">relecture d’épreuve terminée</change>
+    <change notBefore="1995-07-04" who="#RG">fin de l’entrée des données</change>
+    <change notAfter="1995-01-01" who="#RG">début de l’entrée des données</change>
+  </revisionDesc> 
 </teiHeader></egXML>
 <!-- this is what Rich suggested: me, I think the  -->
 	<!-- contents of the supplementary file should be  -->
