@@ -26,20 +26,14 @@ $Id$
     <memberOf key="att.datcat"/>
   </classes>
   <content>
-    <alternate minOccurs="0" maxOccurs="unbounded">
-      <textNode/>
-      <classRef key="model.gLike"/>
+    <alternate minOccurs="1" maxOccurs="1">
+      <macroRef key="macro.xtext"/>
       <classRef key="model.featureVal"/>
     </alternate>    
   </content>
-  <constraintSpec ident="f-has-child-or-PCDATA" scheme="isoschematron">
+  <constraintSpec ident="f-has-content-or-fVal" scheme="isoschematron">
     <constraint>
-      <sch:report test="tei:*  and  text()[normalize-space(.) ne '']">A feature value cannot contain both text and element content</sch:report>
-    </constraint>
-  </constraintSpec>
-  <constraintSpec ident="f-has-max-one-child-element" scheme="isoschematron">
-    <constraint>
-      <sch:report test="count(tei:*) gt 1">A feature value can contain only one child element</sch:report>
+      <sch:assert test="tei:*  or  text()[normalize-space(.) ne '']  or  normalize-space(@fVal) ne ''">The value expressed by a feature value specification should be expressed as content (of the ＜f＞) or as a pointer (on @fVal)</sch:assert>
     </constraint>
   </constraintSpec>
   <attList>
