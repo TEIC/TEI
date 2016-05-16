@@ -1,10 +1,10 @@
 <xsl:stylesheet 
-    version="2.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
-    xmlns:teix="http://www.tei-c.org/ns/Examples"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-    xpath-default-namespace="http://www.tei-c.org/ns/1.0">
+  version="2.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xmlns:teix="http://www.tei-c.org/ns/Examples"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xpath-default-namespace="http://www.tei-c.org/ns/1.0">
   
   <!-- Read in a complete schema specification (i.e. p5.xml, p5subset.xml, or -->
   <!-- a compiled customization), and write out a list of attrs that are both -->
@@ -28,12 +28,19 @@
       <head>
         <title>Attributes duplicated in classes</title>
         <meta name="generated_by" content="P5/Utilities/listduplatts.xsl"/>
+        <style type="text/css">
+          td { vertical-align: top; padding: 1ex; }
+          body { margin: 1em; }
+        </style>
       </head>
-      <style type="text/css">
-        td { vertical-align: top; padding: 1ex; }
-        body { margins: 1em; }
-      </style>
       <body>
+        <p style="text-align:center;">
+          <xsl:text>Generated </xsl:text>
+          <xsl:value-of select="normalize-space( substring-before( current-dateTime() cast as xs:string, '.') )"/>
+          <xsl:text>Z from P5 “</xsl:text>
+          <xsl:value-of select="normalize-space( $doc/TEI/teiHeader/fileDesc/editionStmt )"/>
+          <xsl:text>”.</xsl:text>
+        </p>
         <table border="1">
           <thead>
             <tr>
@@ -41,7 +48,7 @@
               <th>class description</th>
               <th>locally defined attrs</th>
             </tr>
-          </thead>
+          </thead>          
           <xsl:variable name="x">
             <xsl:for-each select="//classSpec//attDef[tei:dupl(@ident)]">
               <xsl:sort select="@ident"/>
@@ -71,22 +78,28 @@
           </xsl:for-each>
         </table>
         <hr style="margin: 1em;"/>
-        <p style="text-align:center;">
-          <xsl:text>Generated </xsl:text>
-          <xsl:value-of select="substring-before( current-dateTime() cast as xs:string, '.')"/>
-          <xsl:text>Z from P5 “</xsl:text>
-          <xsl:value-of select="$doc/TEI/teiHeader/fileDesc/editionStmt"/>
-          <xsl:text>”.</xsl:text>
-        </p>
+        <p>Note: this table does not include <tt>&lt;attDef></tt>s that have an <tt>@mode</tt>:        </p>
+        <ul>
+          <xsl:for-each select="//attDef[ @mode ]">
+            <li style="font-family: monospace;">
+              <xsl:value-of select="concat(
+                ancestor::*[@ident][1]/@ident,
+                '/@',
+                @ident
+                )"/>
+            </li>
+          </xsl:for-each>
+        </ul>
       </body>
     </html>
   </xsl:template>
-
+  
   <xsl:function name="tei:dupl" as="xs:boolean">
     <xsl:param name="ident"/>
-    <xsl:sequence select="if ($doc//elementSpec//attDef[@ident=$ident
-      and not(@mode)])
-      then true() else false()"/>
+    <xsl:sequence
+      select="if ( $doc//elementSpec//attDef[@ident eq $ident  and  not( @mode ) ] )
+      then true()
+      else false()"/>
   </xsl:function>
-
+  
 </xsl:stylesheet>
