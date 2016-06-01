@@ -37,19 +37,19 @@
           td.n { vertical-align: middle; }
           
           span.att:before { content: "@"; }
-          span.att { font-family: Monaco, monospace; }
+          span.att { font-family: Monaco, monospace; font-size: 80%; }
           
           span.val:before { content: '"'; }
-          span.val { font-family: Monaco, monospace; }
+          span.val { font-family: Monaco, monospace; font-size: 80%; }
           span.val:after { content: '"'; }
           
-          span.gi { font-family: Monaco, monospace; }
+          span.gi { font-family: Monaco, monospace; font-size: 80%; }
           span.gi:after { content: '>'; }
           span.gi:before { content: '&lt;'; }
           
-          span.code { font-family: Monaco, monospace; }
+          span.code { font-family: Monaco, monospace; font-size: 80%; }
           
-          span.ident { font-family: Monaco, monospace; }
+          span.ident { font-family: Monaco, monospace; font-size: 80%; }
           
           span.term { font-style: italic; }
           
