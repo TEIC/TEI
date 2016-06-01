@@ -878,8 +878,21 @@ element is provided for this purpose:
 <specDesc key="default"/>
 </specList>
 </p> 
-<p>If the value of an <gi>f</gi> is explicitly stated to be the default one,
-using the <gi>default</gi> element, then the following two representations
+<p>The value of an empty <gi>f</gi> element which also lacks a <att>fVal</att>
+attribute is understood to be the most general
+case, i.e. any of the available values. Thus, assuming the feature
+system defined above, the following two representations are equivalent. 
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"/>
+<f name="gender">
+   <vAlt>
+      <symbol value="feminine"/>
+      <symbol value="masculine"/>
+      <symbol value="neuter"/>
+   </vAlt>
+</f></egXML>
+ </p>
+<p>If, however, the value is explicitly stated to be the default one,
+using the <gi>default</gi> element, then the  following two representations
 are equivalent: 
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"> <default/> </f></egXML>
 <egXML xmlns="http://www.tei-c.org/ns/Examples"><f name="gender"> <symbol value="neuter"/> </f></egXML>
