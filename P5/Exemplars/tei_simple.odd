@@ -14,9 +14,10 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
-      <change when="2016-05-31">Rewrite Jane Eyre discussion a bit. Revise mentions of resourceLike elts.
-      Remove weird PIs in valLists. Revise q/quote section to make sense.</change>
-      <change when="2016-05-19">Remove initial guff, XML intro, Simple propaganda, etc. Roll up sleeves. </change>
+      <change when="2016-05-31">Rewrite Jane Eyre discussion a bit. Revise mentions of resourceLike
+        elts. Remove weird PIs in valLists. Revise q/quote section to make sense.</change>
+      <change when="2016-05-19">Remove initial project desc, XML intro, Simple propaganda, etc. Roll
+        up sleeves. </change>
     </revisionDesc>
   </teiHeader>
   <text>
@@ -261,12 +262,12 @@ live without God in the world, and only mind earthly things.
               target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHFAX">Digital
               Facsimiles</ref> in the <title>Guidelines</title>. --></p>
           <p>A text may be <term>unitary</term> (a single work) or <term>composite</term> (a
-            collection of single works, such as an anthology). In either case, the text may have 
-            optional <term>front</term> or <term>back</term> matter such as title pages, prefaces, appendixes etc. 
-            We use the term <term>body</term> for
-            whatever comes between these in the source document.
-            In the case of a composite text, such as an anthology, the body may consist of <term>groups</term>, each
-            containing one or more texts, or groups of texts.</p>
+            collection of single works, such as an anthology). In either case, the text may have
+            optional <term>front</term> or <term>back</term> matter such as title pages, prefaces,
+            appendixes etc. We use the term <term>body</term> for whatever comes between these in
+            the source document. In the case of a composite text, such as an anthology, the body may
+            consist of <term>groups</term>, each containing one or more texts, or groups of
+            texts.</p>
           <p>A unitary text will be encoded using an overall structure like this: <egXML
               xmlns="http://www.tei-c.org/ns/Examples"><TEI>
                 <teiHeader><!-- [ TEI Header information ]  --></teiHeader>
@@ -289,11 +290,10 @@ live without God in the world, and only mind earthly things.
             the XML parser acting on them.</p>-->
           <p>In the remainder of this document, we discuss chiefly simple text structures, but
             composite texts are briefly discussed in <ptr target="#Simple-composite"/> In each of
-            the following sections we begin with a short list of relevant TEI <term>elements</term>
-            and give their formal definition, together with definitions for any
-              <term>attributes</term> specific to that element. These references are linked to full
-            specifications for each object, as given in the TEI <title>Guidelines</title>. In most
-            cases, short examples are also given.</p>
+            the following sections we include a short list of the TEI <term>elements</term> under
+            discussion, along with their formal definition. These are linked to full specifications
+            for each object, as given in the TEI <title>Guidelines</title>. In most cases, short
+            examples are also given.</p>
           <p>For example, here are the elements discussed so far: <specList>
               <specDesc key="TEI"/>
               <specDesc key="teiHeader"/>
@@ -304,11 +304,10 @@ live without God in the world, and only mind earthly things.
             </specList></p>
         </div>
 
-
         <div xml:id="Simple-body">
           <head>Encoding the Body</head>
-          <p>As indicated above, a simple TEI document at the textual level consists of the
-            following elements: <specList>
+          <p>As indicated above, a unitary text is encoded by means of the <gi>text</gi> element and
+            may contain the following elements: <specList>
               <specDesc key="front"/>
               <specDesc key="group"/>
               <specDesc key="body"/>
@@ -318,16 +317,16 @@ live without God in the world, and only mind earthly things.
             body of a text. </p>
           <div xml:id="divs">
             <head>Text Division Elements</head>
-            <p>The body of a prose text may be just a series of paragraphs, or these paragraphs may
-              be grouped together into chapters, sections, subsections, etc. Each paragraph is
-              tagged using the <gi>p</gi> tag. The <gi>div</gi> element is used to represent any
-              such grouping of paragraphs. <specList>
+            <p>The body of a prose text may be just a series of paragraphs or similar blocks, or
+              these paragraphs may be grouped together into chapters, sections, subsections, etc.
+              Each paragraph is tagged using the <gi>p</gi> tag. The <gi>div</gi> element is used to
+              represent any such grouping of paragraphs. <specList>
                 <specDesc key="p"/>
                 <specDesc key="div"/>
               </specList>
             </p>
             <p>The <att>type</att> attribute on the <gi>div</gi> element may be used to supply a
-              conventional name for this category of text division, or otherwise distinguish them.
+              conventional name for this category of text division in order to distinguish them.
               Typical values might be <q>book</q>, <q>chapter</q>, <q>section</q>, <q>part</q>,
                 <q>poem</q>, <q>song</q>, etc. For a given project, it will usually be advisable to
               define and adhere to a specific list of such values. </p>
@@ -335,15 +334,16 @@ live without God in the world, and only mind earthly things.
               mimicking the traditional structure of a book, which can be decomposed hierarchically
               into units such as parts, containing chapters, containing sections, and so on. TEI
               texts in general conform to this simple hierarchic model.</p>
-            <p> The <att>xml:id</att> attribute may be used to supply a unique identifier for the
-              division, which may be used for cross references or other links to it, such as a
-              commentary, as further discussed in section <ptr target="#Simple-ptrs"/>. It is often
-              useful to provide an <att>xml:id</att> attribute for every major structural unit in a
-              text, and to derive its values in some systematic way, for example by appending a
-              section number to a short code for the title of the work in question, as in the
-              examples below. It is particularly useful to supply such identifiers if the resource
+            <p> Here as elsewhere the <att>xml:id</att> attribute may be used to supply a unique
+              identifier for the division, which may be used for cross references or other links to
+              it, such as a commentary, as further discussed in section <ptr target="#Simple-ptrs"
+              />. It is good practice to provide an <att>xml:id</att> attribute for every major
+              structural unit in a text, and to derive its values in some systematic way, for
+              example by appending a section number to a short code for the title of the work in
+              question, as in the examples below.
+              <!--It is particularly useful to supply such identifiers if the resource
               concerned is to be made available over the web, since they make it much easier for
-              other web-based applications to link directly to the corresponding parts of your text. </p>
+              other web-based applications to link directly to the corresponding parts of your text-->. </p>
             <p>The <att>n</att> attribute may be used to supply (additionally or alternatively) a
               short mnemonic name or number for a division, or any other element. If a conventional
               form of reference or abbreviation for the parts of a work already exists (such as the
@@ -355,20 +355,22 @@ live without God in the world, and only mind earthly things.
               discussed in section <ptr target="#z636"/> below.</p>
             <p>The <att>rendition</att> attribute may be used to supply information about the
               rendition (appearance) of a division, or any other element, as further discussed in
-              section <ptr target="#Simple-hilites"/> below. You should document your use of the
+              section <ptr target="#Simple-hilites"/> below. Note that this attribute should
+              describe the appearance of your source text, which may not be the same as the
+              appearance of the same text when it is output.
+              <!--You should document your use of the
               possible values of <att>rendition</att> in the tagging declaration (<gi>tagsDecl</gi>)
-              of your header.</p>
+              of your header.--></p>
             <p> These four attributes, <att>xml:id</att>, <att>n</att>, <att>xml:lang</att>, and
-                <att>rend</att> are so widely useful that they are allowed on any element in any TEI
-              schema: they are <term>global attributes</term>. Other global attributes defined in
-              the TEI Simple schema are discussed in section <ptr target="#xatts"/>.</p>
-            <p>The value of every <att>xml:id</att> attribute should be unique within a document or
-              across a corpus, if your project spans many texts.. One simple way of ensuring that
-              this is so is to make it reflect the hierarchic structure of the document. For
-              example, Smith's <title>Wealth of Nations</title> as first published consists of five
-              books, each of which is divided into chapters, while some chapters are further
-              subdivided into parts. We might define <att>xml:id</att> values for this structure as
-              follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
+                <att>rendition</att> are so widely useful that they are allowed on any element in
+              any TEI schema: they are <term>global attributes</term>. Other global attributes
+              defined in the TEI Simple schema are discussed in section <ptr target="#xatts"/>.</p>
+            <p>As noted above, the value of every <att>xml:id</att> attribute must be unique within
+              a document. One simple way of ensuring this is to make it reflect the hierarchic
+              structure of the document. For example, Smith's <title>Wealth of Nations</title> as
+              first published consists of five books, each of which is divided into chapters, while
+              some chapters are further subdivided into parts. We might define <att>xml:id</att>
+              values for this structure as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
                   <div xml:id="WN1" n="I" type="book">
                     <div xml:id="WN101" n="I.1" type="chapter">
                       <!-- ... -->
@@ -422,8 +424,8 @@ live without God in the world, and only mind earthly things.
               to transcribe them: <specList>
                 <specDesc key="head"/>
                 <specDesc key="trailer"/>
-              </specList> Some other elements which may be necessary at the beginning or ending of
-              text divisions are discussed below in section <ptr target="#h52"/>.</p>
+              </specList> Some other elements which may be found at the beginning or ending of text
+              divisions are discussed below in section <ptr target="#h52"/>.</p>
             <p>Whether or not headings and trailers are included in a transcription is a matter for
               the individual transcriber to decide. Where a heading is completely regular (for
               example <q>Chapter 1</q>) or may be automatically constructed from attribute values
@@ -441,8 +443,8 @@ live without God in the world, and only mind earthly things.
           <div xml:id="vedr">
             <head>Prose, Verse and Drama</head>
             <p>As in the Bronte example above, the paragraphs making up a textual division are
-              tagged with the <gi>p</gi> tag. In poetic or dramatic texts different tags are needed,
-              to represent verse lines and stanzas in the first case, or individual speeches and
+              tagged with the <gi>p</gi> tag. In poetic or dramatic texts different tags are used,
+              representing verse lines and stanzas in the first case, or individual speeches and
               stage directions in the second. : <specList>
                 <specDesc key="l"/>
                 <specDesc key="lg"/>
@@ -452,19 +454,21 @@ live without God in the world, and only mind earthly things.
               </specList>
             </p>
             <p>Here, for example, is the start of a poetic text in which verse lines and stanzas are
-              tagged: <egXML xmlns="http://www.tei-c.org/ns/Examples"><lg n="I"><l>I Sing the
-                    progresse of a deathlesse soule,</l><l>Whom Fate, with God made, but doth not
-                    controule,</l><l>Plac'd in most shapes; all times before the law</l><l>Yoak'd
-                    us, and when, and since, in this I sing.</l><l>And the great world to his aged
-                    evening;</l><l>From infant morne, through manly noone I draw.</l><l>What the
-                    gold Chaldee, of silver Persian saw,</l><l>Greeke brass, or Roman iron, is in
-                    this one;</l><l>A worke t'out weare Seths pillars, bricke and stone,</l><l>And
-                    (holy writs excepted) made to yeeld to none,</l></lg></egXML></p>
-            <p>Note that the <gi>l</gi> element marks verse lines, not typographic lines: the
-              original lineation of the first few lines above has not therefore been made explicit
-              by this encoding, and may be lost. The <gi>lb</gi> element described in section <ptr
-                target="#Simple-pln"/> might additionally be used to mark typographic lines if so
-              desired. </p>
+              tagged: <egXML xmlns="http://www.tei-c.org/ns/Examples"><lg n="I">
+                  <l>I Sing the progresse of a deathlesse soule,</l>
+                  <l>Whom Fate, with God made, but doth not controule,</l>
+                  <l>Plac'd in most shapes; all times before the law</l>
+                  <l>Yoak'd us, and when, and since, in this I sing.</l>
+                  <l>And the great world to his aged evening;</l>
+                  <l>From infant morne, through manly noone I draw.</l>
+                  <l>What the gold Chaldee, of silver Persian saw,</l>
+                  <l>Greeke brass, or Roman iron, is in this one;</l>
+                  <l>A worke t'out weare Seths pillars, bricke and stone,</l>
+                  <l>And holy writs excepted) made to yeeld to none,</l></lg></egXML></p>
+            <p>Note that the <gi>l</gi> element marks verse lines, not typographic lines: as
+              elsewhere the original lineation of the source text is not therefore preserved by by
+              this encoding. The <gi>lb</gi> element described in section <ptr target="#Simple-pln"
+              /> might additionally be used to mark typographic lines if so desired. </p>
             <p>Here is the end of a famous dramatic text, in which speeches and stage directions are
               marked: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <sp><speaker>Vladimir</speaker><p>Pull on your trousers.</p></sp>
@@ -479,13 +483,13 @@ live without God in the world, and only mind earthly things.
               </egXML>
             </p>
             <p>Note that the <gi>stage</gi> (stage direction) element can appear either within a
-              speech or between speeches. The <gi>sp</gi> ("speech") element contains, following an
-              optional <gi>speaker</gi> element indicating who is speaking, either paragraphs (if
-              the speech is in prose) or verse lines or stanzas as in the next example. In this
-              case, it is quite common to find that verse lines are split between speakers. The
-              easiest way of encoding this is to use the <att>part</att> attribute to indicate that
-              the lines so fragmented are incomplete: <egXML
-                xmlns="http://www.tei-c.org/ns/Examples"><div type="Act" n="I">
+              speech or between speeches. The <gi>sp</gi> (for <q>speech</q>speech) element contains
+              first an optional <gi>speaker</gi> element containing the text used to indicate who is
+              speaking. This is followed by either paragraphs (if the speech is in prose) or verse
+              lines or stanzas as in the next example. In this case, it is quite common to find that
+              verse lines are split between speakers. The easiest way of encoding this is to use the
+                <att>part</att> attribute to indicate that the lines so fragmented are incomplete:
+                <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="Act" n="I">
                   <head>ACT I</head>
                   <div type="Scene" n="1">
                     <head>SCENE I</head>
@@ -517,7 +521,10 @@ live without God in the world, and only mind earthly things.
                     </sp>
                     <!-- ... -->
                   </div>
-                </div></egXML></p>
+                </div></egXML> The value of the <att>part</att> attribute may indicate just that the
+              element bearing it is a fragment rather than a complete verse line
+                (<code>part="Y"</code>); alternatively it may indicate whether this is an initial
+              (I), medial (M) or F (final) fragment. </p>
             <p>The same mechanism may be applied to stanzas which are divided between two speakers:
                 <egXML xmlns="http://www.tei-c.org/ns/Examples"><div>
                   <sp>
@@ -576,23 +583,22 @@ live without God in the world, and only mind earthly things.
               <specDesc key="lb"/>
               <specDesc key="milestone"/>
             </specList> The <gi>pb</gi> and <gi>lb</gi> elements are special cases of the general
-            class of <term>milestone</term> elements which mark reference points within a text. The
-            generic <gi>milestone</gi> element can mark any kind of reference point: for example, a
-            column break, the start of a new kind of section not otherwise tagged, or in general any
-            significant change in the text not marked by an XML element. Milestone elements have no
-            content; whatever they have to say is contained in their attributes, most frequently a
-              <gi>unit</gi> attribute in combination with an <att>n</att> attribute. Their "empty"
-            status is marked by the fact that their opening and closing tags are collapsed into one:
-            the notation &lt;milestone/&gt; is a shortcut for
-              <code>&lt;milestone>&lt;/milestone></code>. </p>
+            class of <term>milestone</term> elements, so-called because they mark reference points
+            within a text. The generic <gi>milestone</gi> element can mark any kind of reference
+            point: for example, a column break, the start of a new kind of section not otherwise
+            tagged, or in general any significant change in the text not enclosed by an XML element.
+            Unlike other elements, milestone elements do not enclose a piece of text and make an
+            assertion about it; instead they indicate a point in the text where something changes,
+            usually something expressed by the values of the milestone's attributes. </p>
           <p>The <gi>lb</gi> and <gi>pb</gi> elements are shortcuts or <term>syntactic sugar</term>
             for <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone unit="line"/></egXML> or
               <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone unit="page"/></egXML>
           </p>
 
-          <p>When working from a paginated original, it is often useful to record its pagination, if
-            only to simplify later proof-reading. It is also useful for aligning an encoded text
-            with a set of page images. The <att>facs</att> attribute helps with this alignment,
+          <p>When working from a paginated original, it is often useful to record its pagination,
+            whether to simplify later proof-reading. or to align the transcribed text with a set of
+            page images, as further discussed in section <ptr target="#Simple-fax"/>.
+            <!--The <att>facs</att> attribute helps with this alignment,
             which is not always straightforward. The numbering schemes of the printed pages and
             their image may, but often do not, correspond. The Text Creation Partnership
             transcriptions of Early English Books Online texts are a good example. The
@@ -607,38 +613,30 @@ live without God in the world, and only mind earthly things.
             example refers to a page image whose pages have no printed numbers. The value of the
               <att>facs</att> attribute could also be a complete URL to the site where the images
             are located, but if its first and longer part has been recorded once in the metadata,
-            the simple image number will be sufficient to construct a link.</p>
-          <p> The placement of <gi>pb</gi> elements relative to their surrounding elements is a
-            tricky matter of SHOULD. While TEI schema does not restrict their placement, it is
-            recommended that milestone elements for lines, pages, or whatever should mark their
-            beginning. Consider the case of a poem where two lines are split across different pages.
-            All of the following encodings are valid TEI: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples"><!-- @facs values are wrong -->
+            the simple image number will be sufficient to construct a link.</p>-->
+            Because <gi>pb</gi> and other milestone elements are empty, they may be placed freely
+            within or between other elements. However, it is recommended practice always to put them
+            at the <emph>beginning</emph> of whatever unit it is that their presence implies, and
+            not to nest them within elements contained by that unit. For example, in the following
+            example a page break occurs between two lines of a poem: <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
               <l>Mary had a little lamb</l>
-              <pb n="13" facs="7"/>
+              <pb n="13"/>
               <l>Its fleece was white as snow</l>
-            </egXML>
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            </egXML> The <gi>pb</gi> element should be placed ahead of all the text encoded on the
+            13th page. Contrast this with the following less accurate encoding: <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
               <l>Mary had a little lamb</l>
-              <l><pb n="13" facs="7"/>Its fleece was white as snow</l>
-            </egXML>
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <l>Mary had a little lamb<pb n="13" facs="7"/></l>
-              <l>Its fleece was white as snow</l>
-            </egXML> While the third example is valid, it breaks the rule that you should put
-            milestones at the beginning. The first and second examples observe that rule, but the
-            first example is preferable on logical, aesthetic and practical grounds. The new page
-            begins with the line rather than the first word in the line.The placement of the
-            milestone before the line makes processing a little easier. It is also a little easier
-            to read, and while XML documents are not created for readers, they are in principle
-            readable, and greater readability is a marginal benefit. </p>
-
-          <p> Line breaks in prose are for the most part typographical accidents, and many encoders
-            will rightly think of them as not worth their attention. But sometimes you do want to
-            make the transcription mirror the physical layout of the written word on the page. This
-            is especially true of manuscripts where the precise alignment of image and transcription
-            makes things easier for the reader. </p>
-          <p> Digital transcriptions produced with optical character recognition (OCR) create
+              <l><pb n="13"/>Its fleece was white as snow</l>
+            </egXML> This is less accurate because it implies that the second verse line actually
+            begins before the page break. </p>
+          <p>Similar considerations apply to line breaks (<gi>lb</gi>), though these are less
+            frequently considered useful when encoding modern printed textual sources. When
+            transcribing manuscripts or early printed books, however, it is often helpful to retain
+            them in an encoding, if only to facilitate alignment of transcription and original. Like
+              <gi>pb</gi>, the <gi>lb</gi> element should appear <emph>before</emph> the text of the
+            line whose start it signals.</p>
+          <!--<p> Digital transcriptions produced with optical character recognition (OCR) create
             special opportunities and challenges. They mimic the boundaries of characters, words,
             and lines on the page, and from their "whitespace XML" you can algorithmically infer
             much structural encoding, although the algorithmic constructs will always need some
@@ -677,11 +675,10 @@ live without God in the world, and only mind earthly things.
             that 'per' and 'suaded' are a single token. In a cost benefit analysis you have to
             figure out whether the additional processing cost is worth the gain of typographical
             detail.</p>
-
+-->
 
           <p>If features such as pagination or lineation are marked for more than one edition,
-            specify the edition in question using the <att>ed</att> attribute, and supply as many
-            values as necessary. For example, in the following passage we indicate where the page
+            specify the edition in question using the <att>ed</att> attribute. For example, in the following passage we indicate where the page
             breaks occur in two different editions (<val>ED1</val> and <val>ED2</val>) <egXML
               xmlns="http://www.tei-c.org/ns/Examples"><p>I wrote to Moor House and to Cambridge
                 immediately, to say what I had done: fully explaining also why I had thus acted.
@@ -758,11 +755,11 @@ live without God in the world, and only mind earthly things.
           <div xml:id="z635">
             <head>Quotations and Related Features</head>
             <p>Like changes of typeface, quotation marks are conventionally used to denote several
-              different features within a text, of which the most frequent is quotation, though
-              many other features are possible. The full Guidelines provide additional elements
-              such as <gi>mentioned</gi> or <gi>said</gi> to distinguish some of these features. In
-              TEI Simple however, we use the <gi>quote</gi> element for quotation only, and the <gi>q</gi>
-              element for all other material found within quotation marks in the text<specList>
+              different features within a text, of which the most frequent is quotation, though many
+              other features are possible. The full Guidelines provide additional elements such as
+                <gi>mentioned</gi> or <gi>said</gi> to distinguish some of these features. In TEI
+              Simple however, we use the <gi>quote</gi> element for quotation only, and the
+                <gi>q</gi> element for all other material found within quotation marks in the text<specList>
                 <specDesc key="q"/>
                 <specDesc key="quote"/>
                 <!--specDesc key="said"/-->
@@ -774,20 +771,20 @@ live without God in the world, and only mind earthly things.
             <p>Here is a simple example of a quotation: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples"><p>Few dictionary makers are likely to
                   forget Dr. Johnson's description of the lexicographer as <quote>a harmless
-                  drudge.</quote></p></egXML>
+                    drudge.</quote></p></egXML>
             </p>
-            <p>As elsewhere, the way that a citation or quotation was printed (for example, <term>in-line</term> or set off
-              as a <hi>display</hi> or <hi>block quotation</hi>), the <att>rendition</att> attribute
-              may be used. This may also be used to indicate the kind of quotation marks
-              used.</p>
+            <p>As elsewhere, the way that a citation or quotation was printed (for example,
+                <term>in-line</term> or set off as a <hi>display</hi> or <hi>block quotation</hi>),
+              the <att>rendition</att> attribute may be used. This may also be used to indicate the
+              kind of quotation marks used.</p>
             <p>Direct speech interrupted by a narrator can be represented simply by ending the
-              <gi>q</gi> element and beginning it again after the interruption, as in the following example:
-                <egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q>Who-e debel you?</q> — he at
-                  last said — <q>you no speak-e, damme, I kill-e.</q> And so saying, the lighted
-                  tomahawk began flourishing about me in the dark.</p></egXML> If it is important to
-              convey the idea that the two <gi>q</gi> elements together make up a single speech, the
-              linking attributes <att>next</att> and <att>prev</att> may be used, as described in
-              section <ptr target="#xatts"/>.</p>
+                <gi>q</gi> element and beginning it again after the interruption, as in the
+              following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><p><q>Who-e debel
+                    you?</q> — he at last said — <q>you no speak-e, damme, I kill-e.</q> And so
+                  saying, the lighted tomahawk began flourishing about me in the dark.</p></egXML>
+              If it is important to convey the idea that the two <gi>q</gi> elements together make
+              up a single speech, the linking attributes <att>next</att> and <att>prev</att> may be
+              used, as described in section <ptr target="#xatts"/>.</p>
             <p>Direct speech may be accompanied by a reference to the source or speaker, using the
                 <att>who</att> attribute, whether or not this is explicit in the text, as in the
               following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><q who="#Wilson"
@@ -800,7 +797,7 @@ live without God in the world, and only mind earthly things.
               by the tags or whether the tags are added and the quotation marks kept. If the
               quotation marks are removed from the text, the <att>rend</att> attribute may be used
               to record the way in which they were rendered in the copy text.</p>
-            
+
           </div>
           <div xml:id="z636">
             <head>Foreign Words or Expressions</head>
@@ -1537,10 +1534,10 @@ live without God in the world, and only mind earthly things.
             being transcribed for research, if only so that they will be properly formatted when the
             text is printed out. The element <gi>bibl</gi> is provided for this purpose. Where the
             components of a bibliographic reference are to be distinguished, the following elements
-            may be used as appropriate. It is generally useful to distinguish at least those parts (such as
-            the titles of articles, books, and journals) which will need special formatting. The
-            other elements are provided for cases where particular interest attaches to such
-            details. <specList>
+            may be used as appropriate. It is generally useful to distinguish at least those parts
+            (such as the titles of articles, books, and journals) which will need special
+            formatting. The other elements are provided for cases where particular interest attaches
+            to such details. <specList>
               <specDesc key="bibl"/>
               <specDesc key="author"/>
               <specDesc key="biblScope"/>
@@ -1557,21 +1554,20 @@ live without God in the world, and only mind earthly things.
               Warwickshire in 1445, and died March 14, 1470 (according to
                   <bibl><author>Kittredge</author>, <title>Harvard Studies</title> 5.
               88ff</bibl>).</egXML></p>
-          <p>The elements <gi>biblStruct</gi> and <gi>biblFull</gi> are also provided for cases where
-       bibliographic citations are required to follow more sophisticated or more standardised models
-       conforming to traditional bibliographic practice, for example by explicitly distinguishing monographic and
-       analytic levels.
-       <specList>
-         <specDesc key="biblStruct"/>
-         <specDesc key="analytic"/>
-         <specDesc key="monogr"/>
-         <specDesc key="biblFull"/>
-       </specList>
-       The full Guidelines should be consulted for further details and examples of the use of these elements.     
+          <p>The elements <gi>biblStruct</gi> and <gi>biblFull</gi> are also provided for cases
+            where bibliographic citations are required to follow more sophisticated or more
+            standardised models conforming to traditional bibliographic practice, for example by
+            explicitly distinguishing monographic and analytic levels. <specList>
+              <specDesc key="biblStruct"/>
+              <specDesc key="analytic"/>
+              <specDesc key="monogr"/>
+              <specDesc key="biblFull"/>
+            </specList> The full Guidelines should be consulted for further details and examples of
+            the use of these elements. </p>
+          <p>The <gi>listBibl</gi> element is used to group lists of bibliographic citations. It may
+            contain a series of <gi>bibl</gi>, <gi>biblStruct</gi>, or <gi>biblFull</gi> elements.
           </p>
-          <p>The <gi>listBibl</gi> element is used to group lists of bibliographic citations. It
-            may contain a series of <gi>bibl</gi>, <gi>biblStruct</gi>, or <gi>biblFull</gi> elements. </p>
-               </div>
+        </div>
         <div xml:id="Simple-tables">
           <head>Tables</head>
           <p>Tables represent a challenge for any text processing system, but simple tables, at
