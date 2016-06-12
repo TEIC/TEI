@@ -14,7 +14,9 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
-      <change when="2016-05-31">Rewrite Jane Eyre discussion a bit. Revise mentions of resourceLike
+      <change when="2016-06-01">
+        Various minor tweaks to former Lite material. 
+      </change><change when="2016-05-31">Rewrite Jane Eyre discussion a bit. Revise mentions of resourceLike
         elts. Remove weird PIs in valLists. Revise q/quote section to make sense.</change>
       <change when="2016-05-19">Remove initial project desc, XML intro, Simple propaganda, etc. Roll
         up sleeves. </change>
@@ -685,7 +687,21 @@ live without God in the world, and only mind earthly things.
                 Diana and <pb ed="ED1" n="475"/> Mary approved the step unreservedly. Diana
                 announced that she would <pb ed="ED2" n="485"/>just give me time to get over the
                 honeymoon, and then she would come and see me.</p></egXML></p>
-
+<p>As noted above, the <gi>pb</gi> element is also used to align parts of a transcription with a digital image of the page
+concerned. This may be done in a very simple but inflexible way by using the <att>facs</att> attribute to point to
+each page image concerned
+  <egXML
+    xmlns="http://www.tei-c.org/ns/Examples"><p>I wrote to Moor House and to Cambridge
+      immediately, to say what I had done: fully explaining also why I had thus acted.
+      Diana and <pb ed="ED1" n="475" facs="ed1p475.png"/> Mary approved the step unreservedly... </p></egXML>
+The <att>facs</att> attribute can supply (as here) a filename, or any other form of URI, if for example the
+page image is stored remotely. One drawback of this simplistic approach is that there must be exactly 
+one image file per page of text. It is not therefore suitable in the case where the available page images represent double page
+spreads, or where there are multiple images of the same page (for example at different resolutions). 
+</p>
+          <p>A more powerful approach is to use the <gi>facsimile</gi> element to define the organisation of the
+         set of images representing the text, and then use the <att>facs</att> attribute to point to individual 
+            components of that representation. </p>
         </div>
         <div xml:id="Simple-hilites">
           <head>Marking Highlighted Phrases</head>
@@ -698,15 +714,10 @@ live without God in the world, and only mind earthly things.
               wherever necessary to specify details of the highlighting used for it in the source.
               For example, a heading rendered in bold might be tagged <tag>head
                 rendition="#bold"</tag>, and one in italic <tag>head rendition="#italic"</tag>.</p>
-            <p>The values to be used for the <att>rendition</att> attribute are not specified by the
-              TEI Guidelines, since they will depend entirely on the needs of the particular
-              project. Some typical values might include <code>italic</code>, <code>bold</code>
-              <!--, <code>sup</code>(erior)--> etc. for font variations; <code>center</code>,
-                <code>right</code> etc. for alignment; <code>large</code>, <code>small</code> etc.
-              for size; <code>smallcaps</code>, <code>allcaps</code> etc. for type variants and so
-              on. <note>This isn't going to work unless those renditions have previously been
-                defined, of course. does the simple header include a set of predefined renditions?
-              </note>
+            <p>The values used for the <att>rendition</att> attribute point to definitions
+              provided for the formatting concerned. These definitions are typically 
+              provided by a <gi>rendition</gi> element in the document's Header, as further discussed
+              in section <ptr target="#hdr-rend"/>.
             </p>
             <p>It is not always possible or desirable to interpret the reasons for such changes of
               rendering in a text. In such cases, the element <gi>hi</gi> may be used to mark a
@@ -729,7 +740,7 @@ live without God in the world, and only mind earthly things.
                 <!--<specDesc key="term"/>-->
                 <specDesc key="title"/>
               </specList></p>
-            <p>Some features (notably quotations <!--and glosses--> {titles, and foreign words) may
+            <p>Some features (notably quotations <!--and glosses--> titles, and foreign words) may
               be found in a text either marked by highlighting, or with quotation marks. In either
               case, the element <gi>q</gi>
               <!--and
@@ -775,7 +786,7 @@ live without God in the world, and only mind earthly things.
             </p>
             <p>As elsewhere, the way that a citation or quotation was printed (for example,
                 <term>in-line</term> or set off as a <hi>display</hi> or <hi>block quotation</hi>),
-              the <att>rendition</att> attribute may be used. This may also be used to indicate the
+              may be represented using the <att>rendition</att> attribute. This may also be used to indicate the
               kind of quotation marks used.</p>
             <p>Direct speech interrupted by a narrator can be represented simply by ending the
                 <gi>q</gi> element and beginning it again after the interruption, as in the
@@ -795,9 +806,9 @@ live without God in the world, and only mind earthly things.
               (Wilson) quotes another speaker (Spaulding).</p>
             <p>The creator of the electronic text must decide whether quotation marks are replaced
               by the tags or whether the tags are added and the quotation marks kept. If the
-              quotation marks are removed from the text, the <att>rend</att> attribute may be used
+              quotation marks are removed from the text, the <att>rendition</att> attribute may be used
               to record the way in which they were rendered in the copy text.</p>
-
+<!-- example please -->
           </div>
           <div xml:id="z636">
             <head>Foreign Words or Expressions</head>
@@ -808,14 +819,28 @@ live without God in the world, and only mind earthly things.
                 <gi>foreign</gi> may be used, again using the <att>xml:lang</att> attribute. For
               example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>John has real <foreign
                     xml:lang="fr">savoir-faire</foreign>.</p><p>Have you read <title xml:lang="de"
-                    >Die Dreigroschenoper</title>?</p>
-                <div xml:lang="la">{75 pages of Latin}</div></egXML></p>
-            <p>As these examples show, the <gi>foreign</gi> element should not be used to tag
+                    >Die Dreigroschenoper</title>?</p></egXML></p>
+               <p>As these examples show, the <gi>foreign</gi> element should not be used to tag
               foreign words if some other more specific element such as <gi>title</gi>, or
                 <gi>div</gi> applies. </p>
+                <p>The value of the <att>xml:lang</att> attribute on an element
+                  applies hierarchically to everything contained by that element, unless
+                  overridden:</p>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <div xml:lang="la">
+                    <s>Pars haec Latine composita est.</s>
+                    <s xml:lang="en">Except that this sentence is in English.</s>
+                    <s>Vita brevis, ars longa.</s>
+                  </div>
+                </egXML>
+                <p>Here we specify that the whole <gi>div</gi> element uses the language with the coded identifier <q>la</q>
+                  i.e., Latin. Since it is
+                  contained by that <gi>div</gi> there is no need to supply this information again for the first <gi>s</gi>
+                  element. The second <gi>s</gi> element however overrides this value, and indicates that its content is in
+                  English (the language with identifier <code>en</code>). The third <gi>s</gi> element is again in Latin.</p>
             <p>The codes used to identify languages, supplied on the <att>xml:lang</att> attribute,
-              must be constructed in a particular way, and must conform to common Internet
-                standards<note place="foot">The relevant standard is <title>Best Current Practice
+               are predefined by an international standard 
+          <note place="foot">The relevant Internet standard is <title>Best Current Practice
                   47</title> (<ptr target="http://tools.ietf.org/html/bcp47"/>). The authoritative
                 list of registered subtags is maintained by IANA and is available at <ptr
                   target="http://www.iana.org/assignments/language-subtag-registry"/>. For a general
@@ -863,7 +888,7 @@ live without God in the world, and only mind earthly things.
           <head>Notes</head>
           <p>A note is any additional comment found in a text, marked in some way as being out of
             the main textual stream. It is a special and very common form of linking, because a note
-            always targets some part of the text, whether implicitly or explicitly. All notes should
+            always targets some part of the text, whether implicitly or explicitly. All kinds of note should
             be marked using the same tag, note, whether they appear as block notes in the main text
             area, at the foot of the page, at the end of the chapter or volume, in the margin, or in
             some other place: <specList>
@@ -873,7 +898,7 @@ live without God in the world, and only mind earthly things.
           <p>Notes may be in a different hand or typeface, may be authorial or editorial, and may
             have been added later. Use <att>type</att> and <att>resp</att> attributes to distinguish
             between different kinds of notes or identify their authors.</p>
-          <p>A note is typically linked to a <term>point of attachment</term> that is represented by
+          <p>A note is typically linked to a <term>point of attachment</term> represented in the text by
             a siglum such as an alphanumerical or other character, typically in superscripted form.
             When encoding such a text, it is conventional to replace this siglum by the content of
             the annotation, duly marked up with a note element. This may not always be possible for
@@ -882,29 +907,26 @@ live without God in the world, and only mind earthly things.
             or other element. </p>
 
 
-          <p>An alternative method takes a "belt and suspenders" approach towards making sure that
-            the relationship of a <gi>note</gi> element to its point of attachment is always spelled
-            out explicitly. In the following example, the source text marks the point of attachment
-            with a superscripted "7". A failsafe way of encoding this may take the following form:
+          <p>An alternative approach is to spell out explicitly the connexion between a <gi>note</gi> element 
+            and its point of attachment, by using the <gi>ref</gi> element to encode the point of attachment, and 
+            make its <att>target</att> attribute point to the <gi>note</gi> element which can then appear
+            anywhere convenient within the encoded text. In the following example, the source text marks the point of attachment
+            with a superscripted <mentioned>7</mentioned>
               <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <p>...some text <ref xml:id="r7" target="n7" rendition="#superscript">7</ref><note
-                  xml:id="n7" n="7">a note about some text</note></p>
-            </egXML> This is a rather verbose representation of a simple note marker in a printed
-            text. But it can usually be generated via a script, and it ensures that there is no
-            uncertainty about the relationship between a <gi>ref</gi> element in a stable location
-            and a <gi>note</gi> element whose physical location is a variable thing, whether in its
-            original form, its encoding, or its display in some output of that encoding. With this
-            notation it no longer matters whether you encode your notes in <term>inline</term> or in
-              <term>standoff</term> manner, that is to say, keep them next to their place of
-            attachment or in a separate place.</p>
-          <p>If the note lacks an explicit point of attachment in the text, which is often the case
+              <p>...some text <ref  target="#n7" rendition="#superscript">7</ref> ....
+                <note
+                  xml:id="n7">a note about some text</note></p>
+            </egXML> .</p>
+         <!-- <p>If the note lacks an explicit point of attachment in the text, which is often the case
             with marginal notes, you can use the <gi>ref</gi> as an empty element: <egXML
               xmlns="http://www.tei-c.org/ns/Examples">
               <p>...some text <ref xml:id="r7" target="n7"/><note xml:id="n7" n="7">a note about
                   some text</note></p>
             </egXML>
           </p>
-
+-->
+          <!-- this makes no sense: the point of attachment is alays the position of the ref, whether it has any content or not -->
+          
 
           <p>Marginal notes often are subject to different interpretations about their status. They
             are very common in Early Modern printed books, recede over the course of the 18th
@@ -1752,9 +1774,7 @@ live without God in the world, and only mind earthly things.
               practice to record the values used and their significance in the header.</p>
             <p/>
 
-            <note>But where is <gi>w</gi> discussed? this is all about <gi>seg</gi>. In particular,
-              does use of <gi>w</gi> imply that all text is thus segmented? it should</note>
-          </div>
+                    </div>
         </div>
 
 
@@ -1826,7 +1846,7 @@ live without God in the world, and only mind earthly things.
             <head>Front Matter</head>
             <p>For many purposes, particularly in older texts, the preliminary material such as
               title pages, prefatory epistles, etc., may provide very useful additional linguistic
-              or social information. P5 provides a set of recommendations for distinguishing the
+              or social information.The TEI Guidelines provide a set of recommendations for distinguishing the
               textual elements most commonly encountered in front matter, which are summarized
               here.</p>
             <div xml:id="h51">
