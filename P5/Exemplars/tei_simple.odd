@@ -2475,7 +2475,8 @@ live without God in the world, and only mind earthly things.
           <specGrpRef target="#base"/>
           <specGrpRef target="#header"/>
           <specGrpRef target="#header2"/>
-          <specGrpRef target="#transcr"/>
+          <!--specGrpRef target="#transcr"/-->
+          <specGrpRef target="#simpleFax"/>
           <specGrpRef target="#attclasses"/>
           <specGrpRef target="#modelclasses"/>
           <specGrpRef target="#simpleelements"/>
@@ -2504,7 +2505,7 @@ live without God in the world, and only mind earthly things.
             <moduleRef key="header"/>
             <elementRef key="att"/>
             <elementRef key="biblFull"/>
-            <elementRef key="biblScope"/>
+            <elementRef key="biblScope"/><!-- used by bibl -->
             <elementRef key="biblStruct"/>
             <elementRef key="change"/>
             <elementRef key="charDecl"/>
@@ -2558,7 +2559,7 @@ live without God in the world, and only mind earthly things.
                 scheme="isoschematron">
                 <constraint>
                   <rule xmlns="http://purl.oclc.org/dsdl/schematron"
-                    context="tei:att | tei:biblFull | tei:biblScope | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
+                    context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
                     | tei:editorialDecl | tei:email | tei:encodingDesc | tei:extent | tei:fileDesc | tei:gi | tei:glyph | tei:glyphName | 
                     tei:idno | tei:imprint | tei:keywords | tei:licence | tei:listChange | tei:listPerson | tei:localName | tei:monogr | 
                     tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
@@ -2572,12 +2573,11 @@ live without God in the world, and only mind earthly things.
             </elementSpec>
           </specGrp>
         </div>
-        <div>
+       <!-- <div>
           <head>Transcription</head>
           <p>In order to support the <gi>sourcedoc</gi> and <gi>facsimile</gi> elements, the basic
             transcriptional elements are loaded, and two attribute classes.</p>
-          <!-- wot no @facs ??? -->
-          <specGrp xml:id="transcr">
+            <specGrp xml:id="transcr">
             <elementRef key="damage"/>
             <elementRef key="damageSpan"/>
             <elementRef key="facsimile"/>
@@ -2598,6 +2598,14 @@ live without God in the world, and only mind earthly things.
             <classRef key="att.coordinated"/>
             <classRef key="att.global.change"/>
           </specGrp>
+        </div>-->
+        <div>
+          <head>Add support for facsimile</head>
+        <specGrp xml:id="simpleFax">  <elementRef key="facsimile"/>
+          <elementRef key="surface"/>
+          <elementRef key="surfaceGrp"/>
+          <elementRef key="zone"/>
+          <classRef key="att.coordinated"/></specGrp>
         </div>
         <div>
           <head>Attribute classes</head>
@@ -2645,15 +2653,13 @@ live without God in the world, and only mind earthly things.
                 <attDef ident="place" mode="change">
                   <valList type="closed" mode="replace">
                     <valItem ident="above">
-                      <?exactMatch supralinear?>
-                      <desc>above the line</desc>
+                                           <desc>above the line</desc>
                     </valItem>
                     <valItem ident="below">
                       <desc>below the line</desc>
                     </valItem>
                     <valItem ident="top">
-                      <?exactMatch pageTop?>
-                      <desc>at the top of the page</desc>
+                                           <desc>at the top of the page</desc>
                     </valItem>
                     <valItem ident="top-right">
                       <desc>at the top right of the page</desc>
@@ -2679,20 +2685,13 @@ live without God in the world, and only mind earthly things.
                       <desc>at the bottom centre of the page</desc>
                     </valItem>
                     <valItem ident="bottom">
-                      <?exactMatch foot?>
-                      <desc>at the foot of the page</desc>
+                                           <desc>at the foot of the page</desc>
                     </valItem>
                     <valItem ident="tablebottom">
                       <desc>underneath a table</desc>
-                      <?exactMatch tablefoot?>
-                    </valItem>
+                                         </valItem>
                     <valItem ident="margin-right">
-                      <?exactMatch right?>
-                      <?exactMatch marg1?>
-                      <?exactMatch marg2?>
-                      <?exactMatch marg3?>
-                      <?exactMatch marg4?>
-                      <desc>in the right-hand margin</desc>
+                                                                                                                               <desc>in the right-hand margin</desc>
                     </valItem>
                     <valItem ident="margin">
                       <?exactMatch margin-outer?>
@@ -2702,8 +2701,7 @@ live without God in the world, and only mind earthly things.
                       <desc>in the inner margin</desc>
                     </valItem>
                     <valItem ident="margin-left">
-                      <?exactMatch left?>
-                      <desc>in the left-hand margin</desc>
+                                           <desc>in the left-hand margin</desc>
                     </valItem>
                     <valItem ident="opposite">
                       <desc>on the opposite, i.e. facing, page.</desc>
@@ -2724,15 +2722,13 @@ live without God in the world, and only mind earthly things.
                       <desc>at the end the current paragraph.</desc>
                     </valItem>
                     <valItem ident="inline">
-                      <?exactMatch in?>
-                      <desc>within the body of the text.</desc>
+                                           <desc>within the body of the text.</desc>
                     </valItem>
                     <valItem ident="inspace">
                       <desc>in a predefined space, for example left by an earlier scribe.</desc>
                     </valItem>
                     <valItem ident="block">
-                      <?exactMatch display?>
-                      <desc>formatted as an indented paragraph</desc>
+                                           <desc>formatted as an indented paragraph</desc>
                     </valItem>
                   </valList>
                 </attDef>
@@ -2744,21 +2740,16 @@ live without God in the world, and only mind earthly things.
                   <valList mode="add" type="closed">
                     <valItem ident="chars">
                       <desc>characters</desc>
-                      <?exactMatch char?>
-                      <?exactMatch characters?>
-                    </valItem>
+                                                              </valItem>
                     <valItem ident="lines">
                       <desc>lines</desc>
-                      <?exactMatch line?>
-                    </valItem>
+                                         </valItem>
                     <valItem ident="pages">
                       <desc>pages</desc>
-                      <?exactMatch page?>
-                    </valItem>
+                                         </valItem>
                     <valItem ident="words">
                       <desc>words</desc>
-                      <?exactMatch word?>
-                    </valItem>
+                                         </valItem>
                     <valItem ident="cm">
                       <desc>centimetres</desc>
                     </valItem>
