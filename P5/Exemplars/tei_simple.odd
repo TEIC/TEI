@@ -1451,6 +1451,7 @@ live without God in the world, and only mind earthly things.
               <specDesc key="publisher"/>
               <specDesc key="pubPlace"/>
               <specDesc key="title"/>
+              <specDesc key="listBibl"/>
             </specList></p>
           <p>For example, the following editorial note might be transcribed as shown: <q
               rendition="display">He was a member of Parliament for Warwickshire in 1445, and died
@@ -1459,10 +1460,39 @@ live without God in the world, and only mind earthly things.
               Warwickshire in 1445, and died March 14, 1470 (according to
                   <bibl><author>Kittredge</author>, <title>Harvard Studies</title> 5.
               88ff</bibl>).</egXML></p>
+          <p>These elements are particularly useful in a born digital document which contains a bibliography, encoded using
+            the <gi>listBibl</gi> element. Entries in the bibliography
+            should be given an identifier, which can then be used as the target of cross references from elsewhere in the document:
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <p>Perec citing, amongst others <ref target="#MK_73">Sturm und Drang, 1973</ref>, concludes ... </p>
+              </egXML>
+            
+            </p>
+       <p>
+A <gi>bibl</gi> element may contain simply text, with possibly a few of its components
+            distinguished by tagging, and much use of conventionalised punctuation, as in this example:
+           
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <bibl xml:id="MK_73">Sturm, U. &amp; Drang, F. : <title>Musikalische Katastrophe</title>.
+                (Berlin, W. de Gruyter, 1973)</bibl>
+            </egXML>
+           Alternatively, each of the components of the bibliographic reference may be clearly distinguished
+           by tagging; in this case there is no requirement for conventionalised punctuation, since the
+           processor will be able to generate this appropriately.
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <bibl xml:id="MK73"><author>Sturm, U.</author>
+                <author>Drang, F.</author>
+                <title xml:lang="de" level="m">Musikalische Katastrophe </title>
+                <pubPlace>Berlin</pubPlace>
+                <publisher>W. de Gruyter</publisher>
+                <date>1973</date></bibl>
+            </egXML>
+          </p>
           <p>The elements <gi>biblStruct</gi> and <gi>biblFull</gi> are also provided for cases
             where bibliographic citations are required to follow more sophisticated or more
             standardised models conforming to traditional bibliographic practice, for example by
-            explicitly distinguishing monographic and analytic levels. <specList>
+            explicitly distinguishing monographic and analytic levels. Their use is however constrained to the TEI Header. 
+            <specList>
               <specDesc key="biblStruct"/>
               <specDesc key="analytic"/>
               <specDesc key="monogr"/>
@@ -1879,7 +1909,54 @@ live without God in the world, and only mind earthly things.
                   <item>A statement appearing at the end of a book describing the conditions of its
                     physical production.</item>
                 </list></p>
-            </div>
+           </div><div><head>Specialised front or back matter</head>
+           <p>TEI Simple also provides elements for some additional components of front or back matter which
+           are characteristic of particular kinds of text, in particular old play texts. These often include
+           lists of dramatis personae and notes about the setting of a play, for which the following elements are provided:
+           <specList>
+             <specDesc key="castList"/>
+             <specDesc key="castItem"/>
+             <specDesc key="castGroup"/>
+             <specDesc key="role"/>
+             <specDesc key="roleGrp"/>
+             <specDesc key="actor"/>
+             <specDesc key="set"/>
+             
+           </specList></p><p>Note that these elements are intended for use in marking up cast lists and setting notes as they appear in a source
+           document. They are not intended for use when marking up definitive lists of the different roles identified in
+           a play, except in so far as that may have been their original purpose.</p>
+          <p>The following example shows one way of encoding the last part of Shakespeare's <title>Tempest</title>, as printed
+          in the first folio: 
+          </p> 
+           <egXML xmlns="http://www.tei-c.org/ns/Examples">
+             <back>
+               <epilogue>
+                 <head>Epilogue, spoken by Prospero.</head>
+                 <sp>
+                   <l>Now my Charmes are all ore-throwne,</l>
+                   <l>And what strength I have's mine owne</l>
+                   <l>As you from crimes would pardon'd be,</l>
+                   <l>Let your Indulgence set me free.</l>
+                 </sp>
+                 <stage>Exit</stage>
+               </epilogue>
+               <set>
+                 <p>The Scene, an un-inhabited Island.</p>
+               </set>
+               <castList>
+                 <head>Names of the Actors.</head>
+                 <castItem>Alonso, K. of Naples</castItem>
+                 <castItem>Sebastian, his Brother.</castItem>
+                 <castItem>Prospero, the right Duke of Millaine.</castItem>
+               <!-- etc -->
+               </castList>
+               <trailer>FINIS</trailer>
+             </back>
+           </egXML>
+             <p>The full Guidelines also provide ways of encoding information about particular performances of a play 
+               (using the <gi>performance</gi> element) and full details of the roles, or actors involved but these are
+             not included in TEI Simple.</p>
+           </div>
           </div>
         </div>
         <div xml:id="Simple-header">
