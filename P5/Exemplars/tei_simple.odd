@@ -601,33 +601,33 @@ live without God in the world, and only mind earthly things.
             <p>Page and line breaks etc. may be marked with the following elements. <specList>
                 <specDesc key="pb"/>
                 <specDesc key="lb"/>
+                <specDesc key="cb"/>
                 <specDesc key="milestone"/>
-              </specList> The <gi>pb</gi> and <gi>lb</gi> elements are special cases of a general
-              class of elements known as <term>milestone</term>s because they mark reference points
-              within a text. The generic <gi>milestone</gi> element can mark any kind of reference
-              point: for example, a column break, the start of a new kind of section not otherwise
-              tagged, a change of author or style, or in general any significant change in the text
-              not enclosed by an XML element. Unlike other elements, milestone elements do not
-              enclose a piece of text and make an assertion about it; instead they indicate a point
-              in the text where something changes, as indicated by a change in the values of the
-              milestone's attributes <att>unit</att>, which indicates the <q>something</q>
-              concerned, and <att>n</att> which indicates the new value. </p>
-            <p>The <gi>lb</gi> and <gi>pb</gi> elements are shortcuts or <term>syntactic
-                sugar</term> for <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone
-                  unit="line"/></egXML> or <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  ><milestone unit="page"/></egXML>
-            </p>
+              </specList> The <gi>pb</gi>, <gi>cb</gi>, and <gi>lb</gi> elements are special cases
+              of a general class of elements known as <term>milestone</term>s because they mark
+              reference points within a text. The generic <gi>milestone</gi> element can mark any
+              kind of reference point: for example, a column break, the start of a new kind of
+              section not otherwise tagged, a change of author or style, or in general any
+              significant change in the text not enclosed by an XML element. Unlike other elements,
+              milestone elements do not enclose a piece of text and make an assertion about it;
+              instead they indicate a point in the text where something changes, as indicated by a
+              change in the values of the milestone's attributes <att>unit</att>, which indicates
+              the <q>something</q> concerned, and <att>n</att> which indicates the new value. </p>
+            <p>The <gi>lb</gi>, <gi>cb</gi>, and <gi>pb</gi> elements are shortcuts or
+                <term>syntactic sugar</term> for <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                  ><milestone unit="line"/></egXML>
+              <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone unit="column"/></egXML> and
+                <egXML xmlns="http://www.tei-c.org/ns/Examples"><milestone unit="page"/></egXML>
+              respectively. </p>
 
             <p>When working from a paginated original, it is often useful to record its pagination,
               whether to simplify later proof-reading. or to align the transcribed text with a set
               of page images, as further discussed below.</p>
-            <p>
-           
-              Because <gi>pb</gi> and other milestone elements are empty, they may be placed freely
-              within or between other elements. However, it is recommended practice always to put
-              them at the <emph>beginning</emph> of whatever unit it is that their presence implies,
-              and not to nest them within elements contained by that unit. For example, in the
-              following example a page break occurs between two lines of a poem: <egXML
+            <p> Because <gi>pb</gi> and other milestone elements are empty, they may be placed
+              freely within or between other elements. However, it is recommended practice always to
+              put them at the <emph>beginning</emph> of whatever unit it is that their presence
+              implies, and not to nest them within elements contained by that unit. For example, in
+              the following example a page break occurs between two lines of a poem: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples">
                 <l>Mary had a little lamb</l>
                 <pb n="13"/>
@@ -645,7 +645,7 @@ live without God in the world, and only mind earthly things.
               retain them in an encoding, if only to facilitate alignment of transcription and
               original. Like <gi>pb</gi>, the <gi>lb</gi> element should appear <emph>before</emph>
               the text of the line whose start it signals.</p>
-          
+
             <p>If features such as pagination or lineation are marked for more than one edition, the
               edition in question may be specified by the <att>ed</att> attribute. For example, in
               the following passage we indicate where the page breaks occur in two different
@@ -889,7 +889,7 @@ live without God in the world, and only mind earthly things.
                 <p>...some text <ref target="#n7" rendition="#superscript">7</ref> .... <note
                     xml:id="n7">a note about some text</note></p>
               </egXML> .</p>
-          
+
             <p>A marginal note may sometimes be hard to distinguish from a kind of label or
               subheading which introduces the text with which it is associated. Where the purpose of
               the note is clearly to label the asspociated text, rather than to comment on it, the
@@ -1057,7 +1057,7 @@ live without God in the world, and only mind earthly things.
                   me in the dark.</egXML></p>
             </div>
 
-         
+
           </div>
         </div>
 
@@ -1135,13 +1135,14 @@ live without God in the world, and only mind earthly things.
               element) for the person or other agency responsible for correcting the duplication of
                 <mentioned>for</mentioned>.</p>
             <p>If the source read <q>The following elements provided for simple editorial
-                interventions.</q> (i.e. if the word <mentioned>are</mentioned> had been inadvertently dropped) then the
-              the scholar identified as LB might choose to encode the corrected text as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">The
+                interventions.</q> (i.e. if the word <mentioned>are</mentioned> had been
+              inadvertently dropped) then the the scholar identified as LB might choose to encode
+              the corrected text as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">The
                 following elements <add resp="#LB">are</add> provided for simple editorial
                 interventions.</egXML></p>
-            <p>These elements may also be sed to record authorial changes in manuscripts. A manuscript
-              in which the author has first written <q>How it galls me, what a galling shadow</q>,
-              then crossed out the word <mentioned>galls</mentioned> and inserted
+            <p>These elements may also be sed to record authorial changes in manuscripts. A
+              manuscript in which the author has first written <q>How it galls me, what a galling
+                shadow</q>, then crossed out the word <mentioned>galls</mentioned> and inserted
                 <mentioned>dogs</mentioned> might be encoded thus: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples">How it <del hand="#DHL" type="overstrike"
                   >galls</del>
@@ -1149,7 +1150,8 @@ live without God in the world, and only mind earthly things.
               Again, the code <code>#DHL</code> points to another location where more information
               about the person concerned is to be found<note place="foot">The full TEI provides a
                 range of elements for encoding metadata about manuscript production and description,
-                which are not however included in TEI Simple</note> </p>
+                which are not however included in TEI Simple</note>
+            </p>
             <p>Similarly, the <gi>unclear</gi> and <gi>gap</gi> elements may be used together to
               indicate the omission of illegible material; the following example also shows the use
               of <gi>add</gi> for a conjectural emendation: <egXML
@@ -1164,9 +1166,9 @@ live without God in the world, and only mind earthly things.
                 xmlns="http://www.tei-c.org/ns/Examples"><p> ... An example of a list appearing in a
                   fief ledger of <name type="place">Koldinghus</name>
                   <date>1611/12</date> is given below. It shows cash income from a sale of
-                  honey.</p><gap extent="50 lines"><desc>quotation from ledger (in Danish)</desc></gap><p>A
-                  description of the overall structure of the account is once again ...
-              </p></egXML></p>
+                  honey.</p><gap extent="50 lines"><desc>quotation from ledger (in
+                  Danish)</desc></gap><p>A description of the overall structure of the account is
+                  once again ... </p></egXML></p>
             <p>Language corpora (particular those constructed before the widespread use of scanners)
               often systematically omit figures and mathematics: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples"><p>At the bottom of your screen below the
@@ -1208,8 +1210,17 @@ live without God in the world, and only mind earthly things.
               mentioned above may be used to group the abbreviated form with its proposed expansion:
                 <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <choice><abbr>wt</abbr><expan>with</expan></choice>
-              </egXML> For a fuller discussion of abbreviations and the intricacies of representing
-              them consult the section on <ref
+              </egXML>
+            </p>
+            <p>The elements <gi>expan</gi> and <gi>abbr</gi> should contain a full word, or the
+              abbreviated form of a full word respectively. If it is required to tag smaller
+              components of an abbreviated word, the following elements are also available in TEI
+              Simple: <specList>
+                <specDesc key="am"/>
+                <specDesc key="ex"/>
+
+              </specList> For a fuller discussion of abbreviations and the intricacies of
+              representing them consult the section on <ref
                 target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHAB"
                 >Abbreviations and Expansion</ref> in the <title>Guidelines</title>. </p>
           </div>
@@ -1336,9 +1347,9 @@ live without God in the world, and only mind earthly things.
           </p>
           <p>Individual list items are tagged with <gi>item</gi>. The first <gi>item</gi> may
             optionally be preceded by a <gi>head</gi>, which gives a heading for the list. The
-            numbering of items within the list may be omitted, indicated using the <att>n</att> attribute on each
-            item, or (rarely) tagged as content using the <gi>label</gi> element. The following are
-            all thus equivalent: <egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
+            numbering of items within the list may be omitted, indicated using the <att>n</att>
+            attribute on each item, or (rarely) tagged as content using the <gi>label</gi> element.
+            The following are all thus equivalent: <egXML xmlns="http://www.tei-c.org/ns/Examples"><list>
                 <head>A short list</head>
                 <item>First item in list.</item>
                 <item>Second item in list.</item>
@@ -1450,6 +1461,8 @@ live without God in the world, and only mind earthly things.
               <specDesc key="editor"/>
               <specDesc key="publisher"/>
               <specDesc key="pubPlace"/>
+              <specDesc key="relatedItem"/>
+              
               <specDesc key="title"/>
               <specDesc key="listBibl"/>
             </specList></p>
@@ -1460,26 +1473,23 @@ live without God in the world, and only mind earthly things.
               Warwickshire in 1445, and died March 14, 1470 (according to
                   <bibl><author>Kittredge</author>, <title>Harvard Studies</title> 5.
               88ff</bibl>).</egXML></p>
-          <p>These elements are particularly useful in a born digital document which contains a bibliography, encoded using
-            the <gi>listBibl</gi> element. Entries in the bibliography
-            should be given an identifier, which can then be used as the target of cross references from elsewhere in the document:
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <p>Perec citing, amongst others <ref target="#MK_73">Sturm und Drang, 1973</ref>, concludes ... </p>
-              </egXML>
-            
-            </p>
-       <p>
-A <gi>bibl</gi> element may contain simply text, with possibly a few of its components
-            distinguished by tagging, and much use of conventionalised punctuation, as in this example:
-           
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
-              <bibl xml:id="MK_73">Sturm, U. &amp; Drang, F. : <title>Musikalische Katastrophe</title>.
-                (Berlin, W. de Gruyter, 1973)</bibl>
+          <p>These elements are particularly useful in a born digital document which contains a
+            bibliography, encoded using the <gi>listBibl</gi> element. Entries in the bibliography
+            should be given an identifier, which can then be used as the target of cross references
+            from elsewhere in the document: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <p>Perec citing, amongst others <ref target="#MK_73">Sturm und Drang, 1973</ref>,
+                concludes ... </p>
             </egXML>
-           Alternatively, each of the components of the bibliographic reference may be clearly distinguished
-           by tagging; in this case there is no requirement for conventionalised punctuation, since the
-           processor will be able to generate this appropriately.
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          </p>
+          <p> A <gi>bibl</gi> element may contain simply text, with possibly a few of its components
+            distinguished by tagging, and much use of conventionalised punctuation, as in this
+            example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <bibl xml:id="MK_73">Sturm, U. &amp; Drang, F. : <title>Musikalische
+                  Katastrophe</title>. (Berlin, W. de Gruyter, 1973)</bibl>
+            </egXML> Alternatively, each of the components of the bibliographic reference may be
+            clearly distinguished by tagging; in this case there is no requirement for
+            conventionalised punctuation, since the processor will be able to generate this
+            appropriately. <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <bibl xml:id="MK73"><author>Sturm, U.</author>
                 <author>Drang, F.</author>
                 <title xml:lang="de" level="m">Musikalische Katastrophe </title>
@@ -1491,11 +1501,12 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
           <p>The elements <gi>biblStruct</gi> and <gi>biblFull</gi> are also provided for cases
             where bibliographic citations are required to follow more sophisticated or more
             standardised models conforming to traditional bibliographic practice, for example by
-            explicitly distinguishing monographic and analytic levels. Their use is however constrained to the TEI Header. 
-            <specList>
+            explicitly distinguishing monographic and analytic levels. Their use is however
+            constrained to the TEI Header. <specList>
               <specDesc key="biblStruct"/>
               <specDesc key="analytic"/>
               <specDesc key="monogr"/>
+              <specDesc key="imprint"/>
               <specDesc key="biblFull"/>
             </specList> The full Guidelines should be consulted for further details and examples of
             the use of these elements. </p>
@@ -1909,54 +1920,57 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
                   <item>A statement appearing at the end of a book describing the conditions of its
                     physical production.</item>
                 </list></p>
-           </div><div><head>Specialised front or back matter</head>
-           <p>TEI Simple also provides elements for some additional components of front or back matter which
-           are characteristic of particular kinds of text, in particular old play texts. These often include
-           lists of dramatis personae and notes about the setting of a play, for which the following elements are provided:
-           <specList>
-             <specDesc key="castList"/>
-             <specDesc key="castItem"/>
-             <specDesc key="castGroup"/>
-             <specDesc key="role"/>
-             <specDesc key="roleGrp"/>
-             <specDesc key="actor"/>
-             <specDesc key="set"/>
-             
-           </specList></p><p>Note that these elements are intended for use in marking up cast lists and setting notes as they appear in a source
-           document. They are not intended for use when marking up definitive lists of the different roles identified in
-           a play, except in so far as that may have been their original purpose.</p>
-          <p>The following example shows one way of encoding the last part of Shakespeare's <title>Tempest</title>, as printed
-          in the first folio: 
-          </p> 
-           <egXML xmlns="http://www.tei-c.org/ns/Examples">
-             <back>
-               <epilogue>
-                 <head>Epilogue, spoken by Prospero.</head>
-                 <sp>
-                   <l>Now my Charmes are all ore-throwne,</l>
-                   <l>And what strength I have's mine owne</l>
-                   <l>As you from crimes would pardon'd be,</l>
-                   <l>Let your Indulgence set me free.</l>
-                 </sp>
-                 <stage>Exit</stage>
-               </epilogue>
-               <set>
-                 <p>The Scene, an un-inhabited Island.</p>
-               </set>
-               <castList>
-                 <head>Names of the Actors.</head>
-                 <castItem>Alonso, K. of Naples</castItem>
-                 <castItem>Sebastian, his Brother.</castItem>
-                 <castItem>Prospero, the right Duke of Millaine.</castItem>
-               <!-- etc -->
-               </castList>
-               <trailer>FINIS</trailer>
-             </back>
-           </egXML>
-             <p>The full Guidelines also provide ways of encoding information about particular performances of a play 
-               (using the <gi>performance</gi> element) and full details of the roles, or actors involved but these are
-             not included in TEI Simple.</p>
-           </div>
+            </div>
+            <div>
+              <head>Specialised front or back matter</head>
+              <p>TEI Simple also provides elements for some additional components of front or back
+                matter which are characteristic of particular kinds of text, in particular old play
+                texts. These often include lists of dramatis personae and notes about the setting of
+                a play, for which the following elements are provided: <specList>
+                  <specDesc key="castList"/>
+                  <specDesc key="castItem"/>
+                  <specDesc key="castGroup"/>
+                  <specDesc key="role"/>
+                  <specDesc key="roleGrp"/>
+                  <specDesc key="actor"/>
+                  <specDesc key="set"/>
+
+                </specList></p>
+              <p>Note that these elements are intended for use in marking up cast lists and setting
+                notes as they appear in a source document. They are not intended for use when
+                marking up definitive lists of the different roles identified in a play, except in
+                so far as that may have been their original purpose.</p>
+              <p>The following example shows one way of encoding the last part of Shakespeare's
+                  <title>Tempest</title>, as printed in the first folio: </p>
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <back>
+                  <div type="epilogue">
+                    <head>Epilogue, spoken by Prospero.</head>
+                    <sp>
+                      <l>Now my Charmes are all ore-throwne,</l>
+                      <l>And what strength I have's mine owne</l>
+                      <l>As you from crimes would pardon'd be,</l>
+                      <l>Let your Indulgence set me free.</l>
+                    </sp>
+                    <stage>Exit</stage>
+                  </div>
+                  <set>
+                    <p>The Scene, an un-inhabited Island.</p>
+                  </set>
+                  <castList>
+                    <head>Names of the Actors.</head>
+                    <castItem>Alonso, K. of Naples</castItem>
+                    <castItem>Sebastian, his Brother.</castItem>
+                    <castItem>Prospero, the right Duke of Millaine.</castItem>
+                    <!-- etc -->
+                  </castList>
+                  <trailer>FINIS</trailer>
+                </back>
+              </egXML>
+              <p>The full Guidelines also provide ways of encoding information about particular
+                performances of a play (using the <gi>performance</gi> element) and full details of
+                the roles, or actors involved but these are not included in TEI Simple.</p>
+            </div>
           </div>
         </div>
         <div xml:id="Simple-header">
@@ -2068,6 +2082,8 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
                 statement is in prose. The following elements may occur within them: <specList>
                   <specDesc key="pubPlace"/>
                   <specDesc key="address"/>
+                  <specDesc key="addrLine"/>
+
                   <specDesc key="idno"/>
                   <specDesc key="availability"/>
                   <specDesc key="licence"/>
@@ -2280,15 +2296,24 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
           </div>
           <div>
             <head>The Revision Description</head>
-            <p>The <gi>revisionDesc</gi> element provides a change log in which each change made to
-              a text may be recorded. The log may be recorded as a sequence of <gi>change</gi>
-              elements each of which contains a brief description of the change. The attributes
+            <p>The <gi>revisionDesc</gi> element provides a change log in which each significant change made to
+              a text may be recorded. It contains the following elements:
+              <specList>
+                <specDesc key="change"/>
+                <specDesc key="listChange"/>
+              </specList>
+            </p>
+             <p>Each <gi>change</gi>
+              element contains a brief description of a significant change. The attributes
                 <att>when</att> and <att>who</att> may be used to identify when the change was
-              carried out and the agency responsible for it. </p>
+              carried out and the person responsible for it. </p><p>It is good practice (but not required) to group changes together within a
+              <gi>listChange</gi> element. </p>
             <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><revisionDesc>
-                  <change when="1991-03-06" who="#EMB">File format updated</change>
-                  <change when="1990-05-25" who="#EMB">Stuart's corrections entered</change>
-                </revisionDesc></egXML></p>
+              <listChange>
+                <change when="1991-11-11" who="#LB"> deleted chapter 10 </change>
+                <change when="1991-11-02" who="#MSM"> completed first draft </change>
+              </listChange>
+            </revisionDesc></egXML></p>
             <p>In a production environment it will usually be found preferable to use some kind of
               automated system to track and record changes. Many such <term>version control
                 systems</term>, as they are known, can also be configured to update the TEI Header
@@ -2582,7 +2607,8 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
             <moduleRef key="header"/>
             <elementRef key="att"/>
             <elementRef key="biblFull"/>
-            <elementRef key="biblScope"/><!-- used by bibl -->
+            <elementRef key="biblScope"/>
+            <!-- used by bibl -->
             <elementRef key="biblStruct"/>
             <elementRef key="change"/>
             <elementRef key="charDecl"/>
@@ -2650,7 +2676,7 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
             </elementSpec>
           </specGrp>
         </div>
-       <!-- <div>
+        <!-- <div>
           <head>Transcription</head>
           <p>In order to support the <gi>sourcedoc</gi> and <gi>facsimile</gi> elements, the basic
             transcriptional elements are loaded, and two attribute classes.</p>
@@ -2678,11 +2704,13 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
         </div>-->
         <div>
           <head>Add support for facsimile</head>
-        <specGrp xml:id="simpleFax">  <elementRef key="facsimile"/>
-          <elementRef key="surface"/>
-          <elementRef key="surfaceGrp"/>
-          <elementRef key="zone"/>
-          <classRef key="att.coordinated"/></specGrp>
+          <specGrp xml:id="simpleFax">
+            <elementRef key="facsimile"/>
+            <elementRef key="surface"/>
+            <elementRef key="surfaceGrp"/>
+            <elementRef key="zone"/>
+            <classRef key="att.coordinated"/>
+          </specGrp>
         </div>
         <div>
           <head>Attribute classes</head>
@@ -2730,13 +2758,13 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
                 <attDef ident="place" mode="change">
                   <valList type="closed" mode="replace">
                     <valItem ident="above">
-                                           <desc>above the line</desc>
+                      <desc>above the line</desc>
                     </valItem>
                     <valItem ident="below">
                       <desc>below the line</desc>
                     </valItem>
                     <valItem ident="top">
-                                           <desc>at the top of the page</desc>
+                      <desc>at the top of the page</desc>
                     </valItem>
                     <valItem ident="top-right">
                       <desc>at the top right of the page</desc>
@@ -2762,13 +2790,13 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
                       <desc>at the bottom centre of the page</desc>
                     </valItem>
                     <valItem ident="bottom">
-                                           <desc>at the foot of the page</desc>
+                      <desc>at the foot of the page</desc>
                     </valItem>
                     <valItem ident="tablebottom">
                       <desc>underneath a table</desc>
-                                         </valItem>
+                    </valItem>
                     <valItem ident="margin-right">
-                                                                                                                               <desc>in the right-hand margin</desc>
+                      <desc>in the right-hand margin</desc>
                     </valItem>
                     <valItem ident="margin">
                       <?exactMatch margin-outer?>
@@ -2778,7 +2806,7 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
                       <desc>in the inner margin</desc>
                     </valItem>
                     <valItem ident="margin-left">
-                                           <desc>in the left-hand margin</desc>
+                      <desc>in the left-hand margin</desc>
                     </valItem>
                     <valItem ident="opposite">
                       <desc>on the opposite, i.e. facing, page.</desc>
@@ -2799,13 +2827,13 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
                       <desc>at the end the current paragraph.</desc>
                     </valItem>
                     <valItem ident="inline">
-                                           <desc>within the body of the text.</desc>
+                      <desc>within the body of the text.</desc>
                     </valItem>
                     <valItem ident="inspace">
                       <desc>in a predefined space, for example left by an earlier scribe.</desc>
                     </valItem>
                     <valItem ident="block">
-                                           <desc>formatted as an indented paragraph</desc>
+                      <desc>formatted as an indented paragraph</desc>
                     </valItem>
                   </valList>
                 </attDef>
@@ -2817,16 +2845,16 @@ A <gi>bibl</gi> element may contain simply text, with possibly a few of its comp
                   <valList mode="add" type="closed">
                     <valItem ident="chars">
                       <desc>characters</desc>
-                                                              </valItem>
+                    </valItem>
                     <valItem ident="lines">
                       <desc>lines</desc>
-                                         </valItem>
+                    </valItem>
                     <valItem ident="pages">
                       <desc>pages</desc>
-                                         </valItem>
+                    </valItem>
                     <valItem ident="words">
                       <desc>words</desc>
-                                         </valItem>
+                    </valItem>
                     <valItem ident="cm">
                       <desc>centimetres</desc>
                     </valItem>
