@@ -267,8 +267,8 @@ live without God in the world, and only mind earthly things.
             collection of single works, such as an anthology). In either case, the text may have
             optional <term>front</term> or <term>back</term> matter such as title pages, prefaces,
             appendixes etc. We use the term <term>body</term> for whatever comes between these in
-            the source document. In a composite text, such as an anthology, the body may consist of
-              <term>groups</term>, each containing one or more texts, or groups of texts.</p>
+            the source document. We discuss various kinds of composite text in section <ptr
+              target="#Simple-composite"/> below.</p>
           <p>A unitary text will be encoded using an overall structure like this: <egXML
               xmlns="http://www.tei-c.org/ns/Examples"><TEI>
                 <teiHeader><!-- [ TEI Header information ]  --></teiHeader>
@@ -301,14 +301,14 @@ live without God in the world, and only mind earthly things.
               <specDesc key="text"/>
               <specDesc key="facsimile"/>
               <!--specDesc key="sourceDoc"/-->
-              <specDesc key="teiCorpus"/>
+
             </specList></p>
         </div>
 
         <div xml:id="Simple-body">
           <head>Encoding the Body</head>
-          <p>As indicated above, a unitary text is encoded by means of the <gi>text</gi> element and
-            may contain the following elements: <specList>
+          <p>As indicated above, a unitary text is encoded by means of a <gi>text</gi> element,
+            which may contain the following elements: <specList>
               <specDesc key="front"/>
               <specDesc key="group"/>
               <specDesc key="body"/>
@@ -343,10 +343,7 @@ live without God in the world, and only mind earthly things.
               />. It is good practice to provide an <att>xml:id</att> attribute for every major
               structural unit in a text, and to derive its values in some systematic way, for
               example by appending a section number to a short code for the title of the work in
-              question, as in the examples below.
-              <!--It is particularly useful to supply such identifiers if the resource
-              concerned is to be made available over the web, since they make it much easier for
-              other web-based applications to link directly to the corresponding parts of your text-->. </p>
+              question, as in the examples below. </p>
             <p>The <att>n</att> attribute may be used to supply (additionally or alternatively) a
               short mnemonic name or number for a division, or any other element. If a conventional
               form of reference or abbreviation for the parts of a work already exists (such as the
@@ -1462,7 +1459,7 @@ live without God in the world, and only mind earthly things.
               <specDesc key="publisher"/>
               <specDesc key="pubPlace"/>
               <specDesc key="relatedItem"/>
-              
+
               <specDesc key="title"/>
               <specDesc key="listBibl"/>
             </specList></p>
@@ -1703,10 +1700,19 @@ live without God in the world, and only mind earthly things.
 
 
         <div xml:id="Simple-composite">
-          <head/>
-          <p>A composite text also has an optional front and back. In between occur one or more
-            groups of texts, each with its own optional front and back matter. A composite text will
-            thus be encoded using an overall structure like this: <egXML
+          <head>Composite and floating texts</head>
+          <p>A composite text, like a simple text, has an optional front and back. In between
+            however, instead of a single body, it contains one or more discrete texts, each with its
+            own optional front and back matter. The following elements are provided to handle
+            composite texts of various kinds. <specList>
+              <specDesc key="group"/>
+              <specDesc key="floatingText"/>
+              <specDesc key="teiCorpus"/>
+
+            </specList>
+          </p>
+          <p> A typical example might be an anthology containing several distinct works, or any
+            other kind of collection, encoded using an overall structure like this: <egXML
               xmlns="http://www.tei-c.org/ns/Examples"><TEI>
                 <teiHeader>
                   <!--[ header information for the composite ]-->
@@ -1745,9 +1751,36 @@ live without God in the world, and only mind earthly things.
                   </back>
                 </text>
               </TEI></egXML></p>
-          <p>It is also possible to define a composite of complete TEI texts, each with its own
-            header. Such a collection is known as a <term>TEI corpus</term>, and must itself have a
-            header: <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus><teiHeader>
+          <p>A different kind of composite text occurs when one text is embedded within another, as
+            for example in the <title>Arabian Nights</title> or similar collections of stories, or
+            in other cases where one narrative is interrupted by another. The element
+              <gi>floatingText</gi> may be preferred to encode such materials as the following:
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <p>The Gentleman having finish'd his Story, Galecia waited on him to the Stairs-head;
+                and at her return, casting her Eyes on the Table, she saw lying there an old dirty
+                rumpled Book, and found in it the following story: </p>
+              <floatingText>
+                <body>
+                  <p> IN the time of the Holy War when Christians from all parts went into the Holy
+                    Land to oppose the Turks; Amongst these there was a certain English
+                    Knight...</p>
+                  <!-- rest of story here -->
+                  <p>The King graciously pardoned the Knight; Richard was kindly receiv'd into his
+                    Convent, and all things went on in good order: But from hence came the Proverb,
+                    We must not strike <hi>Robert</hi> for <hi>Richard.</hi>
+                  </p>
+                </body>
+              </floatingText>
+              <pb n="43"/>
+              <p>By this time Galecia's Maid brought up her Supper; after which she cast her Eyes
+                again on the foresaid little Book, where she found the following Story ....</p>
+            </egXML>
+          </p>
+          <p>Note that there is only a single TEI Header for composite texts of either kind, since
+            the assumption is that the composite is at some level describable as a single work.
+            However, it is also possible to define a composite of complete TEI texts, each with its
+            own header. Such a collection is known as a <term>TEI corpus</term>, and must itself
+            have a header: <egXML xmlns="http://www.tei-c.org/ns/Examples"><teiCorpus><teiHeader>
                   <!--[header information for the corpus]--></teiHeader><TEI>
                   <teiHeader><!--[header information for first text]--></teiHeader>
                   <text>
@@ -1931,6 +1964,8 @@ live without God in the world, and only mind earthly things.
                   <specDesc key="castItem"/>
                   <specDesc key="castGroup"/>
                   <specDesc key="role"/>
+                  <specDesc key="roleDesc"/>
+                  
                   <specDesc key="roleGrp"/>
                   <specDesc key="actor"/>
                   <specDesc key="set"/>
@@ -2296,24 +2331,23 @@ live without God in the world, and only mind earthly things.
           </div>
           <div>
             <head>The Revision Description</head>
-            <p>The <gi>revisionDesc</gi> element provides a change log in which each significant change made to
-              a text may be recorded. It contains the following elements:
-              <specList>
+            <p>The <gi>revisionDesc</gi> element provides a change log in which each significant
+              change made to a text may be recorded. It contains the following elements: <specList>
                 <specDesc key="change"/>
                 <specDesc key="listChange"/>
               </specList>
             </p>
-             <p>Each <gi>change</gi>
-              element contains a brief description of a significant change. The attributes
-                <att>when</att> and <att>who</att> may be used to identify when the change was
-              carried out and the person responsible for it. </p><p>It is good practice (but not required) to group changes together within a
-              <gi>listChange</gi> element. </p>
+            <p>Each <gi>change</gi> element contains a brief description of a significant change.
+              The attributes <att>when</att> and <att>who</att> may be used to identify when the
+              change was carried out and the person responsible for it. </p>
+            <p>It is good practice (but not required) to group changes together within a
+                <gi>listChange</gi> element. </p>
             <p>Example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><revisionDesc>
-              <listChange>
-                <change when="1991-11-11" who="#LB"> deleted chapter 10 </change>
-                <change when="1991-11-02" who="#MSM"> completed first draft </change>
-              </listChange>
-            </revisionDesc></egXML></p>
+                  <listChange>
+                    <change when="1991-11-11" who="#LB"> deleted chapter 10 </change>
+                    <change when="1991-11-02" who="#MSM"> completed first draft </change>
+                  </listChange>
+                </revisionDesc></egXML></p>
             <p>In a production environment it will usually be found preferable to use some kind of
               automated system to track and record changes. Many such <term>version control
                 systems</term>, as they are known, can also be configured to update the TEI Header
@@ -3041,7 +3075,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="add"/>
             <elementRef key="address"/>
             <elementRef key="addrLine"/>
-            <elementRef key="addSpan"/>
+            <!-- elementRef key="addSpan"/-->
             <elementRef key="am"/>
             <elementRef key="anchor"/>
             <elementRef key="argument"/>
@@ -3050,7 +3084,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="bibl"/>
             <elementRef key="body"/>
             <elementRef key="byline"/>
-            <elementRef key="c"/>
+            <!-- elementRef key="c"/ -->
             <elementRef key="castGroup"/>
             <elementRef key="castItem"/>
             <elementRef key="castList"/>
