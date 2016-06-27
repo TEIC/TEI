@@ -7,13 +7,14 @@
         <title>An Introduction to TEI Simple</title>
       </titleStmt>
       <publicationStmt>
-        <p/>
+        <p>For distribution from TEI </p>
       </publicationStmt>
       <sourceDesc>
         <p/>
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2016-06-22">Continue adding discussions for all textual elements</change>
       <change when="2016-06-01"> Various minor tweaks to former Lite material. </change>
       <change when="2016-05-31">Rewrite Jane Eyre discussion a bit. Revise mentions of resourceLike
         elts. Remove weird PIs in valLists. Revise q/quote section to make sense.</change>
@@ -653,14 +654,15 @@ live without God in the world, and only mind earthly things.
                   Diana and <pb ed="ED1" n="475"/> Mary approved the step unreservedly. Diana
                   announced that she would <pb ed="ED2" n="485"/>just give me time to get over the
                   honeymoon, and then she would come and see me.</p></egXML></p>
-            <p>When transcribing from a paginated source, the encoder must decide whether to suppress such
-              features as running titles, page signatures, catch words etc., to replace them by a
-              simplified representation using the <gi>pb</gi> element, perhaps using the
-                <att>n</att> attribute to preserve some of the information, or  to preserve
-              them entirely using the <gi>fw</gi> element. The latter strategy is appropriate in encodings 
-            which aim to retain as much information as possible about the original typography; it will however
-            make more complex the processing of the source for other purposes, as in the following example:
-              <egXML xmlns="http://www.tei-c.org/ns/Examples"><l>He also fix'd the wandering QUEEN OF NIGHT,</l>
+            <p>When transcribing from a paginated source, the encoder must decide whether to
+              suppress such features as running titles, page signatures, catch words etc., to
+              replace them by a simplified representation using the <gi>pb</gi> element, perhaps
+              using the <att>n</att> attribute to preserve some of the information, or to preserve
+              them entirely using the <gi>fw</gi> element. The latter strategy is appropriate in
+              encodings which aim to retain as much information as possible about the original
+              typography; it will however make more complex the processing of the source for other
+              purposes, as in the following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"
+                  ><l>He also fix'd the wandering QUEEN OF NIGHT,</l>
                 <fw type="sig">Ii 2</fw>
                 <fw type="catch">Whether</fw>
                 <pb n="244"/>
@@ -887,8 +889,6 @@ live without God in the world, and only mind earthly things.
               example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <p>...some text <note xml:id="n7">a note about some text</note> .... </p>
               </egXML> .</p>
-            <p>Though simple, this may not always be possible for example with marginal notes, where
-              the position of the attachment point is less precise.</p>
 
 
             <p>An alternative approach is to encode the point of attachment wherever it appears in
@@ -900,11 +900,13 @@ live without God in the world, and only mind earthly things.
               retained as part of the encoding: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <p>...some text <ref target="#n7" rendition="#superscript">7</ref> .... <note
                     xml:id="n7">a note about some text</note></p>
-              </egXML> .</p>
+              </egXML> </p>
+            <p>Note that it may be problematic to determine the precise position of the attachment
+              point, particularly in the case of marginal notes.</p>
 
-            <p>A marginal note may sometimes be hard to distinguish from a kind of label or
+            <p>A marginal note may also be hard to distinguish from a label or
               subheading which introduces the text with which it is associated. Where the purpose of
-              the note is clearly to label the asspociated text, rather than to comment on it, the
+              the note is clearly to label the associated text, rather than to comment on it, the
               element <gi>label</gi> may be preferable. Where it is clearly a subheading attached to
               a distinct subdivision, it may be preferable to start a new element <gi>div</gi> and
               encode the subheading as a <gi>head</gi>. Note however that a <gi>head</gi> cannot be
@@ -1115,7 +1117,7 @@ live without God in the world, and only mind earthly things.
             <p>Finally, a modern digital editor may decide to combine both possibilities in a single
               composite text, using the <gi>choice</gi> element. <specList>
                 <specDesc key="choice"/>
-              </specList> This allows an editor to mark where alternative readings are possible:
+              </specList> This allows an editor to indicate where alternative encodings are possible:
                 <egXML xmlns="http://www.tei-c.org/ns/Examples">... for his nose was as sharp as a
                 pen and <choice><orig>a</orig><reg>he</reg></choice>
                 <choice><corr resp="#Theobald">babbl'd</corr><sic>table</sic></choice> of green
@@ -1133,6 +1135,8 @@ live without God in the world, and only mind earthly things.
                 <specDesc key="gap"/>
                 <specDesc key="del"/>
                 <specDesc key="unclear"/>
+                <specDesc key="supplied"/>
+                <specDesc key="subst"/>
               </specList>
             </p>
             <p>These elements may be used to record changes made by an editor, by the transcriber,
@@ -1152,7 +1156,49 @@ live without God in the world, and only mind earthly things.
               the corrected text as follows: <egXML xmlns="http://www.tei-c.org/ns/Examples">The
                 following elements <add resp="#LB">are</add> provided for simple editorial
                 interventions.</egXML></p>
-            <p>These elements may also be sed to record authorial changes in manuscripts. A
+            <p>These elements may also be used to record the actual writing process, for
+                example to record passages which have been deleted, added, corrected etc. whether by the author of a
+                literary text or by a scribe copying out a manuscript. An analysis of such documentary modifications may
+                be essential before a reading text can be presented, and is clearly of importance in the editorial
+                process. </p>
+              <p>The example is taken from the surviving authorial manuscript of a poem by the English writer Wilfred
+                Owen, a part of which is shown here: </p>
+              <figure>
+                <graphic url="PHowen.png"  width="400px" height="100px"/>
+                <head type="legend">Detail from <title>Dulce et decorum est</title> autograph manuscript in the English Faculty Library,
+                  Oxford University. </head>
+              </figure>
+              <p>Owen first wrote <q>Helping the worst amongst us</q>, but then deleted it, adding <q>Dragging the worst
+                amongt us</q> over the top. In the same way, he revised the phrase <q>half&#x2013;blind</q> by deleting the
+                <q>half&#x2013;</q> and adding <q>all</q> above it. In the last line, he started a word beginning <q>fif</q>
+                before deleting it and writing the word <q>five&#x2013;nines</q>. We can encode all of this as follows: </p>
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <l>And towards our distant rest began to trudge,</l>
+                <l><subst><del>Helping the worst amongst us</del>
+                  <add>Dragging the worst amongt us</add>
+                </subst>, who&#x2019;d no boots </l>
+                <l>But limped on, blood&#x2013;shod. All went lame; <subst>
+                  <del status="shortEnd">half&#x2013;</del>
+                  <add>all</add></subst> blind;</l>
+                <l>Drunk with fatigue ; deaf even to the hoots</l>
+                <l>Of tired, outstripped <del>fif</del> five&#x2013;nines that dropped behind.</l>
+              </egXML>
+              <p>The tags <gi>add</gi> and <gi>del</gi> elements are used to enclose passages added or deleted
+                respectively. Additional attributes are available such as <att>resp</att> to indicate responsibility for
+                the modification, or <att>place</att> to indicate where in the text (for example, above or below the line)
+                the modification has been made. Where the encoder wishes to assert that the addition and deletion make up
+                a single editorial act of substitution, these elements can be combined within a <gi>subst</gi> element as
+                shown above.</p>
+              <p>A very careful examination of Owen&#x2019;s second modification shows that he really did write <q>amongt</q>
+                rather than <q>amongst</q>, presumably in error. An equally careful editor wishing to restore the missing
+                <q>s</q> might use the <gi>supplied</gi> element to indicate that they have done so:</p>
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                <add>Dragging the worst among<supplied resp="#ED">s</supplied>t us</add>
+              </egXML>
+              <p>Here the <att>resp</att> attribute has been used to indicate that the <val>S</val> was not supplied by
+                Owen but by someone else, specifically the person documented elsewhere by an element with the identifier
+                <val>ED</val>. </p>
+             <!-- A
               manuscript in which the author has first written <q>How it galls me, what a galling
                 shadow</q>, then crossed out the word <mentioned>galls</mentioned> and inserted
                 <mentioned>dogs</mentioned> might be encoded thus: <egXML
@@ -1161,9 +1207,9 @@ live without God in the world, and only mind earthly things.
                 <add hand="#DHL" place="supralinear">dogs</add> me, what a galling shadow</egXML>
               Again, the code <code>#DHL</code> points to another location where more information
               about the person concerned is to be found<note place="foot">The full TEI provides a
-                range of elements for encoding metadata about manuscript production and description,
+                large number of elements for encoding metadata about manuscript production and description,
                 which are not however included in TEI Simple</note>
-            </p>
+            </p>-->
             <p>Similarly, the <gi>unclear</gi> and <gi>gap</gi> elements may be used together to
               indicate the omission of illegible material; the following example also shows the use
               of <gi>add</gi> for a conjectural emendation: <egXML
@@ -1171,9 +1217,9 @@ live without God in the world, and only mind earthly things.
                 joined to me <unclear><gap reason="indecipherable"/></unclear> &amp; instantly,
                 would aid me signally <add hand="#ed">in?</add> an enterprise against
                 Wilmington.</egXML></p>
-            <p>The <gi>del</gi> element marks material which has been transcribed as part of the
-              electronic text despite being marked as deleted, while <gi>gap</gi> marks the location
-              of material which is omitted from the electronic text, whether it is legible or not. A
+            <p>The <gi>del</gi> element marks material which is deleted in a source, but has been transcribed as part of the
+              electronic text all the same, while <gi>gap</gi> marks the location
+              of source material which is omitted from the electronic text, whether it is legible or not. A
               language corpus, for example, might omit long quotations in foreign languages: <egXML
                 xmlns="http://www.tei-c.org/ns/Examples"><p> ... An example of a list appearing in a
                   fief ledger of <name type="place">Koldinghus</name>
@@ -1374,7 +1420,7 @@ live without God in the world, and only mind earthly things.
             </p>
           </div>
           <div>
-            <head>Numbers </head>
+            <head>Numbers and measurements</head>
             <p>Numbers can be written with either letters or digits (<code>twenty-one</code>,
                 <code>xxi</code>, and <code>21</code>) and their presentation is language-dependent
               (e.g. English <mentioned>5th</mentioned> becomes Greek <mentioned>5.</mentioned>;
@@ -1382,15 +1428,24 @@ live without God in the world, and only mind earthly things.
                 <mentioned>123.456,78</mentioned>). In natural-language processing or
               machine-translation applications, it is often helpful to distinguish them from other,
               more <soCalled>lexical</soCalled> parts of the text. In other applications, the
-              ability to record a number's value in standard notation is important. The <gi>num</gi>
-              element provides this possibility: <specList>
+              ability to record a number's value in standard notation is important. Similar considerations
+              apply to expressions of quantity, which may be very useful in a historical analysis, but
+              take very varied forms. The <gi>num</gi> and <gi>measure</gi>
+              elements are provided to facilitate normalisation of such strings: <specList>
                 <specDesc key="num"/>
+                <specDesc key="measure"/>
               </specList>
             </p>
             <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><num value="33"
                   >xxxiii</num><num type="cardinal" value="21">twenty-one</num><num
                   type="percentage" value="10">ten percent</num><num type="percentage" value="10"
-                  >10%</num><num type="ordinal" value="5">5th</num></egXML></p>
+                  >10%</num><num type="ordinal" value="5">5th</num></egXML>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                  <measure quantity="40" unit="hogshead" commodity="rum">2 score hh rum</measure>
+                  <measure quantity="1" unit="dozen" commodity="blooms">1 doz. roses</measure>
+                  <measure quantity="1" unit="count" commodity="blooms">a yellow tulip</measure>
+                </egXML>
+              </p>
           </div>
         </div>
         <div xml:id="Simple-lists">
@@ -4070,8 +4125,6 @@ live without God in the world, and only mind earthly things.
           </specGrp>
         </div>
       </div>
-
-
-    </body>
+  </body>
   </text>
 </TEI>
