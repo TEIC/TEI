@@ -14,7 +14,8 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
-      <change when="2016-06-28">Add hdr sections on listPrefixDef, tagUsage, abstract, postscript, xenodata</change>
+      <change when="2016-06-28">Add hdr sections on listPrefixDef, tagUsage, abstract, postscript,
+        xenodata</change>
       <change when="2016-06-22">Continue adding discussions for all textual elements</change>
       <change when="2016-06-01"> Various minor tweaks to former Lite material. </change>
       <change when="2016-05-31">Rewrite Jane Eyre discussion a bit. Revise mentions of resourceLike
@@ -25,8 +26,8 @@
   </teiHeader>
   <text>
     <body>
-         <xi:include href="out/elementList.xml"/>
- 
+      <xi:include href="out/elementList.xml"/>
+
       <div>
         <head>An introduction to TEI Simple</head>
 
@@ -461,18 +462,30 @@ live without God in the world, and only mind earthly things.
               tagged: <egXML xmlns="http://www.tei-c.org/ns/Examples"><lg n="I">
                   <l>I Sing the progresse of a deathlesse soule,</l>
                   <l>Whom Fate, with God made, but doth not controule,</l>
-                  <l>Plac'd in most shapes; all times before the law</l>
-                  <l>Yoak'd us, and when, and since, in this I sing.</l>
-                  <l>And the great world to his aged evening;</l>
-                  <l>From infant morne, through manly noone I draw.</l>
-                  <l>What the gold Chaldee, of silver Persian saw,</l>
-                  <l>Greeke brass, or Roman iron, is in this one;</l>
+                  <!-- ... -->
                   <l>A worke t'out weare Seths pillars, bricke and stone,</l>
                   <l>And holy writs excepted) made to yeeld to none,</l></lg></egXML></p>
             <p>Note that the <gi>l</gi> element marks verse lines, not typographic lines: as
               elsewhere the original lineation of the source text is not therefore preserved by by
               this encoding. The <gi>lb</gi> element described in section <ptr target="#Simple-pln"
               /> might additionally be used to mark typographic lines if so desired. </p>
+
+            <p>In a poetic text it may also be considered useful to tag the rhymes, for which the
+              following element may be used: <specList>
+                <specDesc key="verse"/>
+              </specList>, as in the following example: <egXML
+                xmlns="http://www.tei-c.org/ns/Examples"><lg rhyme="ABCCBBA">
+                  <l>The sunlight on the <rhyme label="A">garden</rhyme></l>
+                  <l><rhyme label="A">Harden</rhyme>s and grows <rhyme label="B">cold</rhyme>,</l>
+                  <l>We cannot cage the <rhyme label="C">minute</rhyme></l>
+                  <l>Wi<rhyme label="C">thin it</rhyme>s nets of <rhyme label="B">gold</rhyme>
+                  </l>
+                  <l>When all is <rhyme label="B">told</rhyme>
+                  </l>
+                  <l>We cannot beg for <rhyme label="A">pardon</rhyme>.</l>
+                </lg>
+              </egXML>
+            </p>
             <p>In a dramatic text, the <gi>sp</gi> element is used to represent each identified
               speech. It contains an optional speaker indication, marked with the <gi>speaker</gi>
               element, which can be followed by one or more <gi>l</gi> or <gi>p</gi> elements,
@@ -712,8 +725,8 @@ live without God in the world, and only mind earthly things.
                 </specList></p>
               <p>In the following example, the use of a distinct typeface for the subheading and for
                 the included name are recorded but not interpreted: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><p><hi rendition="#gothic">And this
-                      Indenture further witnesseth</hi> that the said <hi rendition="#italic">Walter
+                  xmlns="http://www.tei-c.org/ns/Examples"><p><hi rendition="simple:blackletter">And this
+                      Indenture further witnesseth</hi> that the said <hi rendition="simple:italic">Walter
                       Shandy</hi>, merchant, in consideration of the said intended marriage
                   ...</p></egXML></p>
               <p>Alternatively, where the cause for the highlighting can be identified with
@@ -734,9 +747,9 @@ live without God in the world, and only mind earthly things.
                 used. Again, the global <att>rendition</att> can be used to record details of the
                 highlighting used in the source if this is thought useful. </p>
               <p>As an example of the elements defined here, consider the following sentence: <q
-                  rendition="#display">On the one hand the <hi rendition="#it">Nibelungenlied</hi>
+                  rendition="simple:display">On the one hand the <hi rendition="simple:italic">Nibelungenlied</hi>
                   is associated with the new rise of romance of twelfth-century France, the <hi
-                    rendition="#it">romans d'antiquité</hi>, the romances of Chrétien de Troyes, and
+                    rendition="simple:italic">romans d'antiquité</hi>, the romances of Chrétien de Troyes, and
                   the German adaptations of these works by Heinrich van Veldeke, Hartmann von Aue,
                   and Wolfram von Eschenbach.</q> Interpreting the role of the highlighting, the
                 sentence might be encoded as follows : <egXML
@@ -746,8 +759,8 @@ live without God in the world, and only mind earthly things.
                     of Chrétien de Troyes, ...</p></egXML> Describing only the appearance of the
                 original, it might be encoded like this: <egXML
                   xmlns="http://www.tei-c.org/ns/Examples"><p>On the one hand the <hi
-                      rendition="#italic">Nibelungenlied</hi> is associated with the new rise of
-                    romance of twelfth-century France, the <hi rendition="#italic">romans
+                      rendition="simple:italic">Nibelungenlied</hi> is associated with the new rise of
+                    romance of twelfth-century France, the <hi rendition="simple:italic">romans
                       d'antiquité</hi>, the romances of Chrétien de Troyes, ...</p></egXML></p>
             </div>
             <div xml:id="z635">
@@ -1024,8 +1037,8 @@ live without God in the world, and only mind earthly things.
                 prefix is not standardized (except that the prefix <code>xml:</code> is reserved for
                 use by XML itself). A <gi>prefixDef</gi> element should be supplied within the TEI
                 Header specifying how the prefix (here <code>cesr</code>) should be translated to
-                give a full URL for the link. This is particularly useful when a document contains
-                many references to an external document, for example an authority file. </p>
+                give a full URL for the link. This is particularly useful if a document contains
+                many references to an external document such as an authority file. </p>
               <p>Parts of an XML document can be specified by means of other more sophisticated
                 mechanisms using a language called Xpointer, also defined by the W3C. This is useful
                 when, for example, the elements to be linked to do not bear identifiers.. Further
@@ -2567,23 +2580,26 @@ live without God in the world, and only mind earthly things.
                     </list></keywords></textClass></egXML></p>
             <p>Multiple classifications may be supplied using any of the mechanisms described in
               this section.</p>
-         </div><div><head>Other forms of metadata</head>
-         <p>The TEI Header was one of the first attempts to provide a full range of 
-         metadata elements, but it is by no means the
-         only standard now used for this purpose. To facilitate the management of large digital collections
-         and to simplify interoperability of TEI and non-TEI resources, the following element may be found useful:
-         <specList>
-           <specDesc key="xenoData"/>
-         </specList></p>
-         <p>A typical use for this element might be to store a set of descriptors conforming to the Dublin Core
-         standard in the Header rather than to generate them automatically from the corresponding TEI elements. 
-         For examples and discussion, see  the TEI Guidelines at <ptr 
-           target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD9"/></p></div>
+          </div>
+          <div>
+            <head>Other forms of metadata</head>
+            <p>The TEI Header was one of the first attempts to provide a full range of metadata
+              elements, but it is by no means the only standard now used for this purpose. To
+              facilitate the management of large digital collections and to simplify
+              interoperability of TEI and non-TEI resources, the following element may be found
+              useful: <specList>
+                <specDesc key="xenoData"/>
+              </specList></p>
+            <p>A typical use for this element might be to store a set of descriptors conforming to
+              the Dublin Core standard in the Header rather than to generate them automatically from
+              the corresponding TEI elements. For examples and discussion, see the TEI Guidelines at
+                <ptr target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/HD.html#HD9"/></p>
+          </div>
           <div>
             <head>The Revision Description</head>
             <p>The <gi>revisionDesc</gi> element provides a change log in which each significant
-              change made to a text may be recorded. It is always the last element in a <gi>teiHeader</gi>
-              and contains the following elements: <specList>
+              change made to a text may be recorded. It is always the last element in a
+                <gi>teiHeader</gi> and contains the following elements: <specList>
                 <specDesc key="change"/>
                 <specDesc key="listChange"/>
               </specList>
@@ -2885,12 +2901,12 @@ live without God in the world, and only mind earthly things.
         <div>
 
 
-         <!-- <p>All elements provided by the <ident>header</ident> module are included in TEI Header.
+          <!-- <p>All elements provided by the <ident>header</ident> module are included in TEI Header.
             Some additional elements from the <ident>tagDocs</ident>, <ident>msDescription</ident>,
             and <ident>core</ident> modules are also provided, but may only be used within the TEI
             Header. </p>-->
           <!-- this isnt true: we now have a principled selection of header elements-->
-          
+
           <specGrp xmlns="http://www.tei-c.org/ns/1.0"
             xmlns:XSL="http://www.w3.org/1999/XSL/Transform" xml:id="header">
 
@@ -3171,7 +3187,7 @@ live without God in the world, and only mind earthly things.
                 <constraint>
                   <rule xmlns="http://purl.oclc.org/dsdl/schematron" context="tei:*[@rendition]">
                     <let name="results"
-                      value="for $val in tokenize(normalize-space(@rendition),'\s+') return        starts-with($val,'simple:')        or        (starts-with($val,'#')        and        //tei:rendition[@xml:id=substring($val,2)])"/>
+                      value="for $val in tokenize(normalize-space(@rendition),'\s+') return starts-with($val,'simple:')        or        (starts-with($val,'#')        and        //tei:rendition[@xml:id=substring($val,2)])"/>
                     <assert test="every $x in $results satisfies $x"> Error: Each of the rendition
                       values in "<value-of select="@rendition"/>" must point to a local ID or to a
                       token in the Simple scheme (<value-of select="$results"/>)</assert>
@@ -3349,10 +3365,9 @@ live without God in the world, and only mind earthly things.
             <elementRef key="bibl"/>
             <elementRef key="biblScope"/>
             <!-- added for bibl -->
-
             <elementRef key="body"/>
             <elementRef key="byline"/>
-            <!-- elementRef key="c"/ -->
+            <elementRef key="c"/>
             <elementRef key="castGroup"/>
             <elementRef key="castItem"/>
             <elementRef key="castList"/>
@@ -3421,7 +3436,8 @@ live without God in the world, and only mind earthly things.
             <elementRef key="reg"/>
             <elementRef key="relatedItem"/>
             <!-- allowed in bibl -->
-            <!--elementRef key="rhyme"/-->
+            <elementRef key="rhyme"/>
+            <!-- restored under protest -->
             <elementRef key="role"/>
             <elementRef key="roleDesc"/>
             <elementRef key="row"/>
