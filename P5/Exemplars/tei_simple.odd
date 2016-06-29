@@ -13,7 +13,62 @@
         <p/>
       </sourceDesc>
     </fileDesc>
+    <encodingDesc>
+      <listPrefixDef>
+        <prefixDef ident="simple" matchPattern="[a-z]+" replacementPattern="./#$1"/>
+      </listPrefixDef>
+      <tagsDecl>
+        <rendition xml:id="allcaps">text-transform: uppercase;</rendition>
+        <rendition xml:id="blackletter">font-family: fantasy;</rendition>
+        <rendition xml:id="bold">font-weight: bold;</rendition>
+        <rendition xml:id="bottombraced">padding-bottom: 2pt; border-bottom: dashed gray
+          2pt;</rendition>
+        <rendition xml:id="block">display:block;</rendition>
+        <rendition xml:id="boxed">padding: 2pt; border: solid black 1pt;</rendition>
+        <rendition xml:id="centre">text-align: center;</rendition>
+        <rendition xml:id="cursive">font-family: cursive;</rendition>
+        <rendition xml:id="doublestrikethrough">text-decoration: line-through; color:
+          red;</rendition>
+        <rendition xml:id="doubleunderline">text-decoration: underline; color: red;</rendition>
+        <rendition xml:id="dropcap">font-size : 6em; font-family: cursive; font-weight : bold;
+          vertical-align: top; height: 1em; line-height: 1em; float : left; width : 1em; color :
+          #c00; margin: 0em; padding: 0px;</rendition>
+        <rendition xml:id="float">float:right; display: block; font-size: smaller; clear: right;
+          padding: 4pt; width: 15%; </rendition>
+        <rendition xml:id="hyphen"/>
+        <rendition xml:id="inline">display:inline;</rendition>
+        <rendition xml:id="italic">font-style: italic;</rendition>
+        <rendition xml:id="justify">text-align: justify;</rendition>
+        <rendition xml:id="larger">font-size: larger;</rendition>
+        <rendition xml:id="left">text-align: left;</rendition>
+        <rendition xml:id="leftbraced">padding-left: 2pt; border-left: dotted gray 2pt; </rendition>
+        <rendition xml:id="letterspace">letter-spacing: 0.5em;</rendition>
+        <rendition xml:id="literal">font-family:monospace; white-space:pre;</rendition>
+        <rendition xml:id="normalstyle">font-style:roman;</rendition>
+        <rendition xml:id="normalweight">font-weight:normal;</rendition>
+        <rendition xml:id="right">text-align: right;</rendition>
+        <rendition xml:id="rightbraced">padding-right: 2pt; border-right: dotted gray 2pt; </rendition>
+        <rendition xml:id="rotateleft">-webkit-transform: rotate(90deg); transform:
+          rotate(90deg);</rendition>
+        <rendition xml:id="rotateright">-webkit-transform: rotate(-90deg); transform:
+          rotate(-90deg);</rendition>
+        <rendition xml:id="rules">border: 1px solid black; padding:
+          2px;border-collapse:collapse;border-spacing:0;</rendition>
+        <rendition xml:id="smallcaps">font-variant: small-caps;</rendition>
+        <rendition xml:id="smaller">font-size: smaller;</rendition>
+        <rendition xml:id="strikethrough">text-decoration: line-through;</rendition>
+        <rendition xml:id="subscript">vertical-align: bottom; font-size: smaller;</rendition>
+        <rendition xml:id="superscript">vertical-align: super; font-size: smaller;</rendition>
+        <rendition xml:id="topbraced">padding-top: 2pt; border-top: dotted gray 2pt; </rendition>
+        <rendition xml:id="typewriter">font-family:monospace;</rendition>
+        <rendition xml:id="underline">text-decoration: underline;</rendition>
+        <rendition xml:id="wavyunderline">text-decoration: underline; text-decoration-style:
+          wavy;</rendition>
+      </tagsDecl>
+    </encodingDesc>
     <revisionDesc>
+      <change when="2016-06-29">Add JC hack for rendition; drastically revise proc mod
+        section</change>
       <change when="2016-06-28">Add hdr sections on listPrefixDef, tagUsage, abstract, postscript,
         xenodata</change>
       <change when="2016-06-22">Continue adding discussions for all textual elements</change>
@@ -26,8 +81,8 @@
   </teiHeader>
   <text>
     <body>
-      <xi:include href="out/elementList.xml"/>
-
+      <!--   <xi:include href="out/elementList.xml"/>
+-->
       <div>
         <head>An introduction to TEI Simple</head>
 
@@ -725,10 +780,10 @@ live without God in the world, and only mind earthly things.
                 </specList></p>
               <p>In the following example, the use of a distinct typeface for the subheading and for
                 the included name are recorded but not interpreted: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><p><hi rendition="simple:blackletter">And this
-                      Indenture further witnesseth</hi> that the said <hi rendition="simple:italic">Walter
-                      Shandy</hi>, merchant, in consideration of the said intended marriage
-                  ...</p></egXML></p>
+                  xmlns="http://www.tei-c.org/ns/Examples"><p><hi rendition="simple:blackletter">And
+                      this Indenture further witnesseth</hi> that the said <hi
+                      rendition="simple:italic">Walter Shandy</hi>, merchant, in consideration of
+                    the said intended marriage ...</p></egXML></p>
               <p>Alternatively, where the cause for the highlighting can be identified with
                 confidence, a number of other, more specific, elements are available. <specList>
                   <!-- <specDesc key="emph"/>-->
@@ -747,20 +802,20 @@ live without God in the world, and only mind earthly things.
                 used. Again, the global <att>rendition</att> can be used to record details of the
                 highlighting used in the source if this is thought useful. </p>
               <p>As an example of the elements defined here, consider the following sentence: <q
-                  rendition="simple:display">On the one hand the <hi rendition="simple:italic">Nibelungenlied</hi>
-                  is associated with the new rise of romance of twelfth-century France, the <hi
-                    rendition="simple:italic">romans d'antiquité</hi>, the romances of Chrétien de Troyes, and
-                  the German adaptations of these works by Heinrich van Veldeke, Hartmann von Aue,
-                  and Wolfram von Eschenbach.</q> Interpreting the role of the highlighting, the
-                sentence might be encoded as follows : <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><p>On the one hand the
+                  rendition="simple:display">On the one hand the <hi rendition="simple:italic"
+                    >Nibelungenlied</hi> is associated with the new rise of romance of
+                  twelfth-century France, the <hi rendition="simple:italic">romans d'antiquité</hi>,
+                  the romances of Chrétien de Troyes, and the German adaptations of these works by
+                  Heinrich van Veldeke, Hartmann von Aue, and Wolfram von Eschenbach.</q>
+                Interpreting the role of the highlighting, the sentence might be encoded as follows
+                : <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>On the one hand the
                       <title>Nibelungenlied</title> is associated with the new rise of romance of
                     twelfth-century France, the <foreign>romans d'antiquité</foreign>, the romances
                     of Chrétien de Troyes, ...</p></egXML> Describing only the appearance of the
                 original, it might be encoded like this: <egXML
                   xmlns="http://www.tei-c.org/ns/Examples"><p>On the one hand the <hi
-                      rendition="simple:italic">Nibelungenlied</hi> is associated with the new rise of
-                    romance of twelfth-century France, the <hi rendition="simple:italic">romans
+                      rendition="simple:italic">Nibelungenlied</hi> is associated with the new rise
+                    of romance of twelfth-century France, the <hi rendition="simple:italic">romans
                       d'antiquité</hi>, the romances of Chrétien de Troyes, ...</p></egXML></p>
             </div>
             <div xml:id="z635">
@@ -2363,13 +2418,17 @@ live without God in the world, and only mind earthly things.
             <div>
               <head>Project and Sampling Descriptions</head>
               <p>Examples of <gi>projectDesc</gi> and <gi>samplingDesc</gi>: <egXML
-                  xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc><projectDesc><p>Texts
-                        collected for use in the Claremont Shakespeare Clinic, June 1990.
-                      </p></projectDesc></encodingDesc></egXML>
-                <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                        ><encodingDesc><samplingDecl><p>Samples of 2000 words taken from the
-                        beginning of the text</p>
-                    </samplingDecl></encodingDesc></egXML></p>
+                  xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc>
+                    <projectDesc>
+                      <p>Texts collected for use in the Claremont Shakespeare Clinic, June 1990.
+                      </p>
+                    </projectDesc>
+                  </encodingDesc></egXML>
+                <egXML xmlns="http://www.tei-c.org/ns/Examples"><encodingDesc>
+                    <samplingDecl>
+                      <p>Samples of 2000 words taken from the beginning of the text</p>
+                    </samplingDecl>
+                  </encodingDesc></egXML></p>
             </div>
             <div>
               <head>Editorial Declarations</head>
@@ -2623,60 +2682,102 @@ live without God in the world, and only mind earthly things.
         </div>
       </div>
       <div xml:id="processingmodel">
-        <head>A Short Tour of the Processing Model</head>
+        <head>The Simple Processing Model</head>
+        <p>Unlike most other TEI customizations, TEI Simple includes documentation of the intended
+          processing associated with the majority of elements. As noted above, the TEI provides
+          components such as the <att>rendition</att> attribute to indicate the appearance of
+          particular parts of a document in the non-digital source from which it is derived. With
+          TEI Simple, it is also possible to indicate how in general the encoded element should be
+          processed, in particular its intended appearance when processed for display on a screen or
+          on paper. This ability derives from a number of capabilities recently added to the TEI
+          architecture for the specification of processing, which were developed as part of the
+          project that defined the TEI Simple schema.</p>
+
+        <p> The key feature of the processing model is a notation that allows the encoder to
+          associate each element with one or more categories, which we call its
+            <term>behaviour</term>s. In addition, a processing model indicates how the element
+          should be rendered, possibly differently in differing circumstances, using the W3C
+          Cascading Stylesheets Standard (CSS) mentioned above. It is consequently much easier to
+          develop processors for documents conforming to TEI Simple, since the complexity of the
+          task is much reduced.</p>
+
+        <p>About 26 different behaviours are currently defined by the TEI processing model. Their
+          names indicate informally the categorisation concerned, and should be readily
+          comprehensible for most programmers. The following list of behaviours indicates the TEI
+          Simple elements associated with each. <list>
+            <item><label> INLINE (49) </label><hi>creates inline element out of content if there's
+                something in <gi>outputRendition</gi>, use that formatting; otherwise just show text
+                of selected content.: </hi>abbr, actor, add, am author, bibl, c, choice, corr, date,
+              del, desc, docAuthor, docDate, docEdition, docImprint, ex, expan, figDesc, figure,
+              foreign, formula, formula, gap, handShift, hi, label, measure, milestone, name, note,
+              num, orig, pc, ref, reg, rhyme, rs, s, salute, seg, sic, signed, space, subst,
+              supplied, time, unclear, w, quote</item>
+            <item><label>BLOCK (35) </label><hi>create a block structure: </hi>address, addrLine,
+              argument, back, body, byline, closer, dateline, div, doctitle, epigraph, figure,
+              floatingText, formula, front, fw, group, head, imprimatur, l, lg, listBibl, note,
+              opener, postscript, q, quote, role, roleDesc, salute, signed, sp, speaker, titlePage,
+              titlePart, trailer </item>
+            <item><label>OMIT (10) </label><hi>do nothing, do not process children: </hi>author,
+              docAuthor, docDate, docEdition, docImprint, docTitle, encodingDesc, profileDesc,
+              publisher, pubPlace, revisionDesc</item>
+            <item><label>LIST (4) </label><hi>create a list by following content: </hi>castGroup,
+              castList, list, listBibl</item>
 
 
-        <p> The key feature of the Processing Model is a notation that allows each element to be
-          assigned to a structural category, which in turn is mapped to a description of how to
-          render it. This allows a processor to know whether to handle the element or not, and
-          broadly speaking how to display or otherwise process it.
-          <!--Several projects that have used
-          TEI Simple and its Processing Model report that it cuts the length of required code by two
-          thirds, reduces its complexity, and makes it easier to maintain. The model and rendition
-          instructions are part of the TEI ODD and can be customized. </p>
-        <p>ODD, short for <q>One Document Does it all</q>, is the technology used by the TEI for
-          maintaining its rules. An ODD is an XML document written in a <term>literate
-            programming</term> style, mixing code and explanatory prose. From an ODD and with the
-          use of an <term>ODD Processor</term> you can produce reference documentation as well as
-          schemas. Support for the Processing Model is a significant extension of the TEI ODD and
-          provides and answer to the question of what to do with a text once you have encoded it.
-          Encoding is often the easy part. For a fuller account of ODD see the chapter on <ref
-            target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html">Documentation
-            Elements</ref> in the Guidelines. --></p>
-        <p>In principle there are <!--a variety of --> many different ways in which a processor can
-          use processing instructions encoded in the ODD to produce a readable text, whether a Web
-          page, an epub, or a PDF. <!--In practice--> For example, <ref
-            target="http://showcases.exist-db.org/exist/apps/tei-simple/index.html">Wolfgang Meier's
-            XQuery based ODD processor</ref>
-          <!--is the fullest and most thoroughly tested current-->provides a very complete
-          implementation. From the instructions in the ODD it creates an XQuery Library module that
-          relies heavily on XQuery's typeswitch, a switch or case statement whose structure lends
-          itself to transforming each processing instruction in the ODD into an XQuery function. In
-          a second step the XQuery Library module is used to transform the TEI Simple text. </p>
-        <p>Other implementations are possible: for example, an XSLT stylesheet could be used to
-          generate another XSLT stylesheet which would transform specific input elements to the
-          desired output directly. <!-- e.g. Magda's? --></p>
-        <p>The elements used to define a processing model form part of the TEI module for Tag
-          Description and are fully documented in the chapter on <ref
-            target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html">Documentation
-            Elements</ref> in the Guidelines. We give below a brief summary. </p>
-        <div>
-          <head>The <gi>model</gi> element with some of its attributes and children</head>
+            <item><label>BREAK (3) </label><hi>create a line, column, or page break according to
+                type: </hi>cb, lb, pb</item>
+            <item><label>LISTITEM (3) </label><hi>create list item: </hi>bibl, castItem, item</item>
+            <item><label>ALTERNATE (2) </label><hi>: </hi>
+              <hi>create a specialized display of alternating elements for displaying the preferred
+                version and an alternative, both at once or by some method of toggling between the
+                two:</hi> date,choice</item>
+            <item><label>PARAGRAPH (2) </label><hi>create a paragraph out of content.: </hi>ab,
+              p</item>
 
-          <p>The processing model is defined as part of a TEI customization (an ODD file). This will
-            contain specifications for each element whose processing is to be defined, each one
-            recorded in an element called <gi>elementSpec</gi>, within which a child <gi>model </gi>
-            element is provided.
-            <!--The processing instructions for each element are kept in
-            one or more s that are children of <gi>elementSpec</gi>. In the
-            simplest and modal-->
+            <item><label>ANCHOR </label><hi>create an anchor with ID: </hi>anchor</item>
+            <item><label>BODY </label><hi>create the body of a document body: </hi></item>
+            <item><label>CELL </label><hi>create a table cell: </hi>cit</item>
+            <item><label>CIT </label><hi>show the content, with an indication of the source:
+              </hi>cit</item>
+            <item><label>DOCUMENT </label><hi>start a new output document: </hi> TEI</item>
+            <item><label>FIGURE </label><hi>make a figure with the title as caption: </hi>
+              figure</item>
+
+            <item><label>GLYPH </label><hi>show a character by looking up reference to a chardesc at
+                the given URI: </hi> g</item>
+            <item><label>GRAPHIC </label><hi>if url is present, uses it to display graphic, else
+                display a placeholder image. heading: </hi> graphic</item>
+            <item><label>HEADING </label><hi>creates a heading.: </hi> head</item>
+            <item><label>INDEX </label><hi>generate list according to type: </hi> body</item>
+            <item><label>LINK</label><hi>create hyperlink: </hi> ref</item>
+            <item><label>METADATA </label><hi>create metadata section: </hi> teiHeader</item>
+            <item><label>NOTE </label><hi>create an note, often out of line, depending on the value
+                of place; could be margin, footnote, endnote, inline: </hi>note</item>
+            <item><label>ROW </label><hi>create a table row: </hi> row</item>
+            <item><label>SECTION </label><hi>create a new section of the output document: </hi>
+              div</item>
+
+            <item><label>TABLE </label><hi>create a table: </hi>table</item>
+            <item><label>TEXT </label><hi>create literal text: </hi>title</item>
+            <item><label>TITLE </label><hi>create document title: </hi>fileDesc</item>
+
+          </list>
+        </p>
+
+
+        <p>Full documentation of the processing model is provided in section <ptr
+            target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html#TDPM"/> of the TEI
+          Guidelines, and we do not describe it further here. </p>
+        <!-- <p>
+        
+       
             This <gi>model</gi> element specifies how a particular element in a TEI customisation is
             to be processed. In the simplest case the processing required is indicated by the value
             of a <att>behaviour</att> attribute: <egXML xmlns="http://www.tei-c.org/ns/Examples"
                 ><elementSpec ident="back" mode="change">
                 <model behaviour="block"/>
               </elementSpec></egXML> This means <q>Apply the behaviour <term>block</term> to the
-              element <gi>back</gi></q>. <!-- the meaning of "block" is defined where? --></p>
+              element <gi>back</gi></q>. <!-\- the meaning of "block" is defined where? -\-></p>
 
           <p>A slightly more complex processing instruction says that the rendering of the source
             document should be followed but specifies a rendition if there is nothing in the source:
@@ -2714,7 +2815,7 @@ live without God in the world, and only mind earthly things.
           </p>
           <p>The <gi>param</gi> child of <gi>model</gi> associates a <term>behaviour</term> with the
             parameters or objects to which it applies. Thus the processing instruction for
-              <gi>list</gi> tells you that the behaviour <term>list</term> targets items: <!-- ????? -->
+              <gi>list</gi> tells you that the behaviour <term>list</term> targets items: <!-\- ????? -\->
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><elementSpec ident="list" mode="change">
                 <model predicate="@rendition" behaviour="list" useSourceRendition="true">
                   <param name="content" value="item"/>
@@ -2867,11 +2968,10 @@ live without God in the world, and only mind earthly things.
               </elementSpec></egXML> This sequence creates the framework for a display of the text
             together with a navigation panel that contains a table of context. The other (and rather
             daunting) <gi>modelSequence</gi> works through all the options of displaying titles in
-            various bibliographical environments. </p>
-        </div>
-
-
+            various bibliographical environments. </p>-->
       </div>
+
+
       <div>
         <head>The TEI Simple schema</head>
         <schemaSpec ident="teisimple" start="TEI teiCorpus">
@@ -2885,7 +2985,7 @@ live without God in the world, and only mind earthly things.
           <specGrpRef target="#simpleelements"/>
           <specGrpRef target="#simpleelementspm"/>
           <specGrpRef target="#simplechanges"/>
-          <specGrpRef target="#rendition"/>
+          <!--specGrpRef target="#rendition"/-->
         </schemaSpec>
         <div xmlns="http://www.tei-c.org/ns/1.0" xmlns:XSL="http://www.w3.org/1999/XSL/Transform">
           <head>Summary</head>
@@ -4205,7 +4305,7 @@ live without God in the world, and only mind earthly things.
               </attList>
             </elementSpec>
           </specGrp>
-          <specGrp xml:id="rendition">
+          <!--<specGrp xml:id="rendition">
             <outputRendition xml:id="allcaps">text-transform: uppercase;</outputRendition>
             <outputRendition xml:id="blackletter">font-family: fantasy;</outputRendition>
             <outputRendition xml:id="bold">font-weight: bold;</outputRendition>
@@ -4256,7 +4356,7 @@ live without God in the world, and only mind earthly things.
             <outputRendition xml:id="underline">text-decoration: underline;</outputRendition>
             <outputRendition xml:id="wavyunderline">text-decoration: underline;
               text-decoration-style: wavy;</outputRendition>
-          </specGrp>
+          </specGrp>-->
         </div>
       </div>
     </body>
