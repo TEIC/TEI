@@ -3022,17 +3022,17 @@ live without God in the world, and only mind earthly things.
         </schemaSpec>
         <div xmlns="http://www.tei-c.org/ns/1.0" xmlns:XSL="http://www.w3.org/1999/XSL/Transform">
           <head>Summary</head>
-          <p>In total 105 elements are selected for use in the <gi>text</gi> part of a document; an
-            additional 44 elements are allowed for in the header. </p>
-        </div>
-        <div>
-          <head>The TEI infrastructure</head>
+          <p>The TEI Simple schema defines a total of 166 elements, of which 56 appear in the TEI Header alone.
+          Processing Models are defined for most of the elements. </p>
+          <p>The schema embeds the whole of the TEI base module, the whole of the TEI gaiji module, and
+          the whole of the header module, with the exception of about 24 elements considered to be of
+          specialised interest only.</p>
           <specGrp xml:id="base">
             <moduleRef key="tei"/>
           </specGrp>
-        </div>
+     <!--   </div>
         <div>
-
+-->
 
           <!-- <p>All elements provided by the <ident>header</ident> module are included in TEI Header.
             Some additional elements from the <ident>tagDocs</ident>, <ident>msDescription</ident>,
@@ -3107,20 +3107,23 @@ live without God in the world, and only mind earthly things.
           <specGrp xml:id="header2">
             <!-- <p>Elements which are only intended to be used in the header are banned from the
                 <gi>text</gi>, using a Schematron rule.</p>-->
-            <p>The <gi>text</gi> element may not contain any of these additional header elements. A
-              schematron rule is provided to enforce this constraint.</p>
+            <p>A
+              schematron rule is provided to prevent some elements which could otherwise appear
+            in either header and text from appearing in the latter. </p>
             <elementSpec ident="text" mode="change">
               <constraintSpec xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:XSL="http://www.w3.org/1999/XSL/Transform" ident="headeronlyelement"
                 scheme="isoschematron">
                 <constraint>
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                 <!-- <rule xmlns="http://purl.oclc.org/dsdl/schematron"
                     context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
                     | tei:editorialDecl | tei:email | tei:encodingDesc | tei:extent | tei:fileDesc | tei:gi | tei:glyph | tei:glyphName | 
                     tei:idno | tei:imprint | tei:keywords | tei:licence | tei:listChange | tei:listPerson | tei:localName | tei:monogr | 
                     tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
                     tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
-                    | tei:titleStmt | tei:typeDesc | tei:val | tei:value">
+                    | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
+                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                    context=" tei:biblFull | tei:biblStruct">
                     <report test="ancestor::tei:text">Error: The element <name/> is not permitted
                       outside the header</report>
                   </rule>
