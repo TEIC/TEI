@@ -3,12 +3,11 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0"
     exclude-result-prefixes="tei rng" version="2.0">
 
-    <!-- This simply checks whether an ODD contains an elementSpec and a processing model 
-        for each element it references by means of an elementRef. It ought to do this
-        with reference to the elements in the schema it defines. That is left as an
-        exercise for the reader. -->
+    <!-- This checks whether an ODD contains an elementSpec and a processing model 
+        for each element it defines. It reads the list of elements from a special div created
+        by means of the preSpec.xsl stylesheet. If an element is defined by means of an elementRef,
+        we assume that it's a text element. -->
    
-
 
     <xsl:key name="specced" match="tei:specDesc" use="@key"/>
     <xsl:key name="modelled" match="tei:elementSpec[tei:model]" use="@ident"/>
@@ -18,16 +17,11 @@
       
         <table>
             <row role="label">
-                <cell>Reffed?</cell>
+                <cell>inText?</cell>
                 <cell>Specced?</cell>
                 <cell>Modelled?</cell>
                 <cell>Element</cell>
             </row>
-        <!--    <xsl:for-each select="//tei:elementRef">
-                <xsl:sort select="@key"/>
-                <xsl:variable name="theKey">
-                    <xsl:value-of select="@key"/>
-                </xsl:variable>-->
             
             <xsl:for-each select="//div[@type='elements']/list/item">
                 <xsl:sort select="."/>
