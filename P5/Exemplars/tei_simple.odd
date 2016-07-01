@@ -423,7 +423,7 @@ live without God in the world, and only mind earthly things.
               of your header.--></p>
             <p> These four attributes, <att>xml:id</att>, <att>n</att>, <att>xml:lang</att>, and
                 <att>rendition</att> are so widely useful that they are allowed on any element in
-              any TEI schema: they are <term>global attributes</term>. Other global attributes
+              any TEI schema: they are called <term>global attributes</term>. Other attributes
               defined in the TEI Simple schema are discussed in section <ptr target="#xatts"/>.</p>
             <p>As noted above, the value of every <att>xml:id</att> attribute must be unique within
               a document. One simple way of ensuring this is to make it reflect the hierarchic
@@ -1103,7 +1103,7 @@ live without God in the world, and only mind earthly things.
 
             </div>
             <div xml:id="xatts">
-              <head>Special kinds of Linking</head>
+              <head>Special Kinds of Linking</head>
               <p>The following special purpose <term>linking</term> attributes are defined for every
                 element in the TEI Simple schema: <list type="gloss">
                   <label><att>ana</att></label>
@@ -1305,8 +1305,10 @@ live without God in the world, and only mind earthly things.
               transcribed as part of the electronic text all the same, while <gi>gap</gi> marks the
               location of source material which is omitted from the electronic text, whether it is
               legible or not. A language corpus, for example, might omit long quotations in foreign
-              languages: <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... An example of a
-                  list appearing in a fief ledger of <name type="place">Koldinghus</name>
+              languages. The <gi>desc</gi> element can be used inside the <gi>gap</gi> element to
+              provide a brief characterisation of the omitted material, as in the following
+              examples: <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... An example of a list
+                  appearing in a fief ledger of <name type="place">Koldinghus</name>
                   <date>1611/12</date> is given below. It shows cash income from a sale of
                   honey.</p><gap extent="50 lines"><desc>quotation from ledger (in
                   Danish)</desc></gap><p>A description of the overall structure of the account is
@@ -1911,7 +1913,38 @@ live without God in the world, and only mind earthly things.
 
           </div>
         </div>
-
+        <div>
+          <head>Common attributes</head>
+          <p>Some attributes are available on many elements, though not on all. These attributes are
+            defined using a TEI attribute class, a concept which is discussed further in the TEI
+            Guidelines. We list here some attribute classes which have been adapted or customized
+            for use in TEI Simple. </p>
+          <p>The elements <gi>add</gi>, <gi>figure</gi>, <gi>fw</gi>, <gi>label</gi>, <gi>note</gi>
+            and <gi>stage</gi> all take the attribute <att>place</att> to indicate whereabouts on
+            the page they appear. In TEI simple the possible values for this attribute are limited
+            as indicated below: <specList>
+              <specDesc key="att.placement" atts="place"/>
+              <!-- stylesheets currently dont allow me to display valList here -->
+            </specList>
+          </p>
+          <p>The elements <gi>add</gi>, <gi>am</gi>, <gi>corr</gi>, <gi>date</gi>, <gi>del</gi>,
+              <gi>ex</gi>, <gi>expan</gi>,
+            <gi>gap</gi>, <gi>name</gi>, <gi>reg</gi>, <gi>space</gi>, <gi>subst</gi>,
+              <gi>supplied</gi>, <gi>time</gi> and <gi>unclear</gi> all use the attribute
+              <att>unit</att> to indicate the units in which the size of the feature concerned is
+            expressed. In TEI simple the possible values for this attribute are limited as indicated
+            below: <specList>
+              <specDesc key="att.dimensions" atts="unit"/>
+              <!-- stylesheets currently dont allow me to display valList here -->
+            </specList></p>
+          <p>Very many TEI elements take the value <att>type</att> (see the specification for
+              <ident>att.typed</ident> for a full list. In most cases, no constraint is placed on
+            the possible values for this attribute. In the case of the element <gi>name</gi>
+            however, the possible values for this attribute are limited as indicated below: <specList>
+              <specDesc key="name" atts="type"/>
+              <!-- stylesheets currently dont allow me to display valList here -->
+            </specList></p>
+        </div>
 
         <div xml:id="Simple-composite">
           <head>Composite and floating texts</head>
@@ -2701,7 +2734,7 @@ live without God in the world, and only mind earthly things.
           develop processors for documents conforming to TEI Simple, since the complexity of the
           task is much reduced.</p>
 
-        <p>About 26 different behaviours are currently defined by the TEI processing model. Their
+        <p>Twenty-six different behaviours are currently defined by the TEI processing model. Their
           names indicate informally the categorisation concerned, and should be readily
           comprehensible for most programmers. The following list of behaviours indicates the TEI
           Simple elements associated with each. <list>
@@ -2989,17 +3022,17 @@ live without God in the world, and only mind earthly things.
         </schemaSpec>
         <div xmlns="http://www.tei-c.org/ns/1.0" xmlns:XSL="http://www.w3.org/1999/XSL/Transform">
           <head>Summary</head>
-          <p>In total 105 elements are selected for use in the <gi>text</gi> part of a document; an
-            additional 44 elements are allowed for in the header. </p>
-        </div>
-        <div>
-          <head>The TEI infrastructure</head>
+          <p>The TEI Simple schema defines a total of 166 elements, of which 56 appear in the TEI Header alone.
+          Processing Models are defined for most of the elements. </p>
+          <p>The schema embeds the whole of the TEI base module, the whole of the TEI gaiji module, and
+          the whole of the header module, with the exception of about 24 elements considered to be of
+          specialised interest only.</p>
           <specGrp xml:id="base">
             <moduleRef key="tei"/>
           </specGrp>
-        </div>
+     <!--   </div>
         <div>
-
+-->
 
           <!-- <p>All elements provided by the <ident>header</ident> module are included in TEI Header.
             Some additional elements from the <ident>tagDocs</ident>, <ident>msDescription</ident>,
@@ -3074,20 +3107,23 @@ live without God in the world, and only mind earthly things.
           <specGrp xml:id="header2">
             <!-- <p>Elements which are only intended to be used in the header are banned from the
                 <gi>text</gi>, using a Schematron rule.</p>-->
-            <p>The <gi>text</gi> element may not contain any of these additional header elements. A
-              schematron rule is provided to enforce this constraint.</p>
+            <p>A
+              schematron rule is provided to prevent some elements which could otherwise appear
+            in either header and text from appearing in the latter. </p>
             <elementSpec ident="text" mode="change">
               <constraintSpec xmlns="http://www.tei-c.org/ns/1.0"
                 xmlns:XSL="http://www.w3.org/1999/XSL/Transform" ident="headeronlyelement"
                 scheme="isoschematron">
                 <constraint>
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                 <!-- <rule xmlns="http://purl.oclc.org/dsdl/schematron"
                     context="tei:att | tei:biblFull | tei:biblStruct | tei:change | tei:charDecl | tei:charProp | tei:editor
                     | tei:editorialDecl | tei:email | tei:encodingDesc | tei:extent | tei:fileDesc | tei:gi | tei:glyph | tei:glyphName | 
                     tei:idno | tei:imprint | tei:keywords | tei:licence | tei:listChange | tei:listPerson | tei:localName | tei:monogr | 
                     tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
                     tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
-                    | tei:titleStmt | tei:typeDesc | tei:val | tei:value">
+                    | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
+                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
+                    context=" tei:biblFull | tei:biblStruct">
                     <report test="ancestor::tei:text">Error: The element <name/> is not permitted
                       outside the header</report>
                   </rule>
@@ -3481,7 +3517,8 @@ live without God in the world, and only mind earthly things.
             <elementRef key="date"/>
             <elementRef key="dateline"/>
             <elementRef key="del"/>
-            <!--elementRef key="desc"/-->
+            <!-- <elementRef key="desc"/>
+         -->
             <elementRef key="div"/>
             <elementRef key="docAuthor"/>
             <elementRef key="docDate"/>
@@ -3565,6 +3602,9 @@ live without God in the world, and only mind earthly things.
             <elementRef key="trailer"/>
             <elementRef key="unclear"/>
             <elementRef key="w"/>
+            <elementSpec module="core" ident="desc">
+              <classes/>
+            </elementSpec>
           </specGrp>
           <specGrp xmlns="http://www.tei-c.org/ns/1.0"
             xmlns:XSL="http://www.w3.org/1999/XSL/Transform" xml:id="simpleelementspm">
@@ -3840,6 +3880,9 @@ live without God in the world, and only mind earthly things.
               <model behaviour="inline"/>
             </elementSpec>
             <elementSpec ident="gap" mode="change">
+              <content>
+                <elementRef key="desc" minOccurs="0" maxOccurs="1"/>
+              </content>
               <model predicate="desc" behaviour="inline">
                 <outputRendition>color: grey;</outputRendition>
               </model>
