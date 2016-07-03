@@ -1280,12 +1280,12 @@ XSL-FO</item>
 <item>using a project-defined formal language</item>
 </list></p>
 <p>One or more such specifications may be associated with elements of
-a document in three ways:
+a document in two ways:
 <list rend="bulleted">
-<item>the
+<!--<item>the
 <att>render</att> attribute of the appropriate <gi>tagUsage</gi>
 element may be used to indicate a default rendition for all occurrences of the named
-element</item>
+element</item>-->
   <item>the <att>selector</att> attribute on any <gi>rendition</gi> element may be used to select a collection of elements to which it applies</item>
 <item>the global <att>rendition</att> attribute may be used on any
 element to
@@ -1293,10 +1293,11 @@ indicate its rendition, overriding or complementing any supplied default value</
 </list>
 The global <att>rend</att> and <att>style</att> attributes may also be
 used to  describe the rendering of an element. See further <ptr
-target="#STGAre"/>
+target="#STGAre"/>.
 </p>
-
-<p>For example, the following schematic shows how an encoder might
+  <p>Note that the use of the <att>render</att> attribute on the <gi>tagUsage</gi> element to indicate a default rendition for an element has been deprecated and will no longer be permitted after 2016-12-31.</p>
+  <!--ebeshero 2016-07-02: commented out the following because the example contains deprecated code:
+    <p>For example, the following schematic shows how an encoder might
 specify that all <gi>p</gi> elements are by default to be rendered using one
 set of specifications identified as <val>style1</val>,
 while <gi>hi</gi>
@@ -1312,14 +1313,14 @@ elements are to use a different set, identified as <val>style2</val>:
    <tagUsage gi="p" render="#style1"> ... </tagUsage>
    <tagUsage gi="hi" render="#style2"> ... </tagUsage>
    </namespace>
-</tagsDecl><!-- elsewhere in the document -->
+</tagsDecl><!-\- elsewhere in the document -\->
 <p>This paragraph, mostly rendered in style1, contains a few words
 <hi>rendered in style2</hi></p>
 <p rendition="#style2">This paragraph is all rendered in style2</p>
 <p>This is back to style1</p>
 </egXML></p>
-
-<p>As noted above, the content of a <gi>rendition</gi> element may
+-->
+  <p>The content of a <gi>rendition</gi> element may
 describe the appearance of the source material using prose, a
 project-defined formal language, or any standard languages such as the
 Cascading Stylesheet Language (<ptr target="#CSS21"/>) or the XML
@@ -1327,11 +1328,11 @@ vocabulary for specifying formatting semantics which forms a part of
 the W3C's Extensible Stylesheet Language (<ptr target="#XSL11"/>). A
 <gi>styleDefDecl</gi> element (<ptr target="#HD57-1a"/>) may be
 supplied within the <gi>encodingDesc</gi> to specify which of these
-applies by default; it may be overridden for one or more specific
+applies by default, and it may be overridden for one or more specific
 <gi>rendition</gi> elements using the <att>scheme</att> attribute.
 </p>
   
-  <p>In the above example, all <gi>p</gi> elements are styled in the same way, as are all <gi>hi</gi> elements, except where <att>rendition</att> is used to override the default at the element level. However, suppose that all paragraphs in the <gi>front</gi> of a text appear in a large font, with significant top and bottom margins, while paragraphs in the main <gi>body</gi> are in regular font size and have no top and bottom margins. This would be difficult to express using <gi>tagUsage</gi>; and it would be inefficient to have to provide repeated <att>rendition</att> attributes on every paragraph in one or the other context. Instead, we can use the <att>selector</att> attribute on <gi>rendition</gi> for a more elegant solution:
+  <p><!--In the above example, all <gi>p</gi> elements are styled in the same way, as are all <gi>hi</gi> elements, except where <att>rendition</att> is used to override the default at the element level. However, suppose that all paragraphs in the <gi>front</gi> of a text appear in a large font, with significant top and bottom margins, while paragraphs in the main <gi>body</gi> are in regular font size and have no top and bottom margins. This would be difficult to express using <gi>tagUsage</gi>; and it would be inefficient to have to provide repeated <att>rendition</att> attributes on every paragraph in one or the other context. Instead, we can -->The recommended way to indicate a default rendition on one or more elements is to use the <att>selector</att> attribute together with the <att>scheme</att> attribute on <gi>rendition</gi>. For example, suppose that all paragraphs in the <gi>front</gi> of a text appear in a large font, with significant top and bottom margins, while paragraphs in the main <gi>body</gi> are in regular font size and have no top and bottom margins. The use of <att>selector</att> together with <att>scheme</att> provides an efficient way to specify the distinct styling for distinct contexts of the paragraph by means of CSS selectors:
 <egXML xmlns="http://www.tei-c.org/ns/Examples">
   <rendition 
     scheme="css" 
@@ -1351,8 +1352,9 @@ applies by default; it may be overridden for one or more specific
   </rendition>
 </egXML>
     
-It is recommended that in a single text, either <gi>rendition</gi>/<att>selector</att> or <gi>tagUsage</gi>/<att>render</att> be used; the combination of both is potentially confusing and harder to process.
-    
+<!--ebeshero 2016-07-02: commented this out because it indicates a deprecated usage:
+      It is recommended that in a single text, either <gi>rendition</gi>/<att>selector</att> or <gi>tagUsage</gi>/<att>render</att> be used; the combination of both is potentially confusing and harder to process.
+    -->
 </p>
 
 <p>In the following extended example we consider how to capture the
