@@ -150,7 +150,7 @@ identity transform
           
           <row>
             <cell><xsl:value-of select="@ident"/></cell>
-            <cell><xsl:value-of select="count(distinct-values(//elementSpec[descendant::rng:ref[@name=$ident]]/@ident))"/></cell>
+            <cell><xsl:value-of select="count(distinct-values(//elementSpec[descendant::macroRef[@key=$ident]]/@ident))"/></cell>
             <cell><xsl:apply-templates select="desc[1]"/></cell>
           </row>
           
