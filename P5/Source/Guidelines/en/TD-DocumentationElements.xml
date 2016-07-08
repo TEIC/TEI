@@ -1828,9 +1828,28 @@ most recent version of the Guidelines would be used instead.--></p>
          Note that in this last case, there is no need to specify the name of the module from which the two
         element declarations are to be found; in the TEI scheme, element names are unique across all modules.
         The module is simply a convenient way of grouping together a number of related declarations. </p>
+      
+      <p>In the same way, a schema may select a subset of the attributes available in a specific class, 
+      using the <gi>classRef</gi> element to point to an attribute class:
+        <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+          <moduleRef key="tei"/>
+          [...]
+          <classRef key="att.global.linking" include="corresp"/>
+          [...]
+        </schemaSpec></egXML>
+        Here, only the <att>corresp</att> attribute is included; the other attributes in the class
+        are not available. The same effect can be achieved using <att>except</att>:
+        <egXML xml:lang="en" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+          <moduleRef key="tei"/>
+          [...]
+          <classRef key="att.global.linking" except="copyOf exclude next prev sameAs select synch"/>
+          [...]
+        </schemaSpec></egXML>
+      </p>
+      
       <p>A schema may also include declarations for new elements, as in the following example:
         <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
-            <moduleRef key="teiheader"/>
+            <moduleRef key="header"/>
             <moduleRef key="verse"/>
             <elementSpec ident="soundClip">
               <classes><memberOf key="model.pPart.data"/></classes>
@@ -1839,10 +1858,27 @@ most recent version of the Guidelines would be used instead.--></p>
          A declaration for the element <gi scheme="imaginary">soundClip</gi>, which is not defined in the TEI
         scheme, will be added to the output schema. This element will also be added to the existing TEI class
           <ident type="class">model.pPart.data</ident>, and will thus be available in TEI conformant
-        documents.</p>
+        documents. Attributes from existing TEI classes could be added to the new element using <gi>attRef</gi>:
+      
+        <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
+          <moduleRef key="header"/>
+          <moduleRef key="verse"/>
+          <elementSpec ident="soundClip">
+            <classes><memberOf key="model.pPart.data"/></classes>
+            <attList>
+              <attRef class="att.source" name="source"/>
+            </attList>
+          </elementSpec>
+        </schemaSpec></egXML>
+        This will provide the <att>source</att> attribute from the <ident type="class">att.source</ident> class on the new 
+        <gi scheme="imaginary">soundClip</gi> element.
+      </p>
+      
+      
+      
       <p>A schema might also include re-declarations of existing elements, as in the following example:
         <egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples"><schemaSpec ident="example">
-            <moduleRef key="teiheader"/>
+            <moduleRef key="header"/>
             <moduleRef key="teistructure"/>
             <elementSpec ident="head" mode="change">
               <content><rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0" name="macro.xtext"/></content>
