@@ -10,7 +10,7 @@
         <p>For distribution from TEI </p>
       </publicationStmt>
       <sourceDesc>
-        <p>Derived  from TEI Lite <!-- insert guff here --></p>
+        <p>Derived from TEI Lite <!-- insert guff here --></p>
       </sourceDesc>
     </fileDesc>
     <encodingDesc>
@@ -73,6 +73,8 @@
       </tagsDecl>
     </encodingDesc>
     <revisionDesc>
+      <change when="2016-07-18">Add some prose at front; add particDesc listPerson and person
+        </change>
       <change when="2016-06-29">Add JC hack for rendition; drastically revise proc mod
         section</change>
       <change when="2016-06-28">Add hdr sections on listPrefixDef, tagUsage, abstract, postscript,
@@ -97,10 +99,29 @@
         the TEI. Further information on both these topics are available from many places, not least
         the TEI's own web site at http://www.tei-c.org.</p>
       <p>The TEI Simple schema was first elaborated as a part of a project funded by the Mellon
-        Foundation <!-- more guff needed here --></p>
+        Foundation (2010-2014). The project sought to define a new highly-constrained and
+        prescriptive subset of the Text Encoding Initiative (TEI) Guidelines suited to the
+        representation of early modern and modern books, a formally-defined set of processing rules
+        which permit modern web applications to easily present and analyze the encoded texts,
+        mapping to other ontologies, and processes to describe the encoding status and richness of a
+        TEI digital text. Its choice of elements reflected the practices followed in the encoding of
+        large-scale literary archives, notably those produced by the Text Creation Partnership.
+        Practice of other comparable archives such as the German Text Archive was also taken into
+        account.</p>
+      <p>The most distinctive feature of TEI Simple is its use of the TEI processing model, which
+        provides explicit and recommended options for the display or processing of every textual
+        element. Programmers developing systems to handle texts encoded with TEI Simple do not have
+        to look beyond this when building stylesheets or other components. This greatly reduces the
+        task of developing applications that will work reliably and consistently for many users and
+        across large corpora of documents.</p>
+      <p>The TEI Simple schema and the Processing Model were first defined by a working group led by
+        Martin Mueller (Northwestern University) and Sebastian Rahtz (Oxford University). Major
+        contributions to the project were made by Magdalena Turska (Oxford University), James
+        Cummings (Oxford University), and Brian Pytlik Zillig. The present document was extensively
+        revised and extended for the approval of the TEI Council in 2016 by Lou Burnard. </p>
     </front>
     <body>
-      <!--   <xi:include href="out/elementList.xml"/>
+      <!--    <xi:include href="out/elementList.xml"/>
 -->
       <div xml:id="Simple-eg">
         <head>A Short Example</head>
@@ -322,19 +343,7 @@ live without God in the world, and only mind earthly things.
             target="#Simple-header"/>. In what follows, we will focus chiefly on the use of the
             <gi>text</gi> element, though we describe one way of using the <gi>facsimile</gi>
           element in combination with it or alone in section <ptr target="#Simple-fax"/>. For the
-          other elements, the reader is referred to more detailed discussion in the TEI Guidelines.
-          <!--word "almost" at the beginning of the previous paragraph acknowledges the existence of a
-            form of TEI encoding that seeks to capture what is often called the
-              <term>materiality</term> of the text. Some of the relevant element names ,
-              <gi>facsimile</gi>, <gi>surface</gi>, <gi>zone</gi>, give you a sense of this
-            approach, where the content of element would be images or other media types rather than
-            transcribed text. While this set of elements is outside the scope of TEI Simple, digital
-            representations that combine transcription with facsimiles are likely to be more common
-            in the future. The global <att>facs</att> attribute is the obvious device for linking
-            pages or other chunks of transcribed TEI Simple text to facsimiles. For more information
-            consult the section on <ref
-              target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/PH.html#PHFAX">Digital
-              Facsimiles</ref> in the <title>Guidelines</title>. --></p>
+          other elements, the reader is referred to more detailed discussion in the TEI Guidelines. </p>
         <p>A text may be <term>unitary</term> (a single work) or <term>composite</term> (a
           collection of single works, such as an anthology). In either case, the text may have
           optional <term>front</term> or <term>back</term> matter such as title pages, prefaces,
@@ -356,12 +365,10 @@ live without God in the world, and only mind earthly things.
             </TEI></egXML></p>
 
 
-        <p>In the remainder of this document, we discuss chiefly simple text structures, but
-          composite texts are briefly discussed in <ptr target="#Simple-composite"/> In each of the
-          following sections we include a short list of the TEI <term>elements</term> under
-          discussion, along with their formal definition. These are linked to full specifications
-          for each object, as given in the TEI <title>Guidelines</title>. In most cases, short
-          examples are also given.</p>
+        <p>In each of the following sections we include a short list of the TEI
+            <term>elements</term> under discussion, along with their formal definition. These are
+          linked to full specifications for each object, as given in the TEI
+            <title>Guidelines</title>. In most cases, short examples are also given.</p>
         <p>For example, here are the elements discussed so far: <specList>
             <specDesc key="TEI"/>
             <specDesc key="teiHeader"/>
@@ -533,7 +540,7 @@ live without God in the world, and only mind earthly things.
               the following element may be used: <specList>
                 <specDesc key="rhyme" atts="label"/>
               </specList>.</p>
-            <p>The following example shows how this element can be used both to identify rhyming
+            <p>The following example shows how this element might be used both to identify rhyming
               words or word parts and to assign each rhyme to a part of a rhyming pattern by means
               of its <att>label</att> attribute. The rhyming pattern here is specified by the
                 <att>rhyme</att> attribute supplied on the <gi>lg</gi> representing the stanza
@@ -651,16 +658,14 @@ live without God in the world, and only mind earthly things.
                       present I will forbear.</p>
                   </sp>
                 </div></egXML> Here the <att>who</att> attribute values (<code>#OPI</code> etc.) are
-              links, pointing to a list of the characters in the novel, each of which has an
-              identifier: <egXML xmlns="http://www.tei-c.org/ns/Examples">
-                <list>
-                  <head>Characters in the novel</head>
-                  <item xml:id="OPI"><name>Dr Opimian</name> : named for the famous Roman fine
-                    wine</item>
-                  <item xml:id="GRM"><name>Mr Gryll</name> : named for the mythical Gryllus, one of
-                    Ulysses' sailors transformed by Circe into a pig, who argues that he was happier
-                    in that state than as a man</item>
-                </list></egXML></p>
+              links, pointing to items in a list of the characters in the novel. In the case of a
+              play, this list of characters might appear in the original source as a cast list or
+              dramatic personae, which might be marked up using the <gi>castList</gi> element
+              described in section <ptr target="#specfronbac"/> below. But such a list would not be
+              appropriate to provide descriptive information about each character, much of which
+              does not appear in the original source. Instead a <gi>particDesc</gi> (participant
+              description) element should be provided in the TEI Header, as further discussed in
+              section <ptr target="#particdesc"/> below. </p>
             <!-- could introduce particDesc here -->
           </div>
           <div xml:id="abseg">
@@ -2209,8 +2214,8 @@ live without God in the world, and only mind earthly things.
                   physical production.</item>
               </list></p>
           </div>
-          <div>
-            <head>Specialised front or back matter</head>
+          <div xml:id="specfronbac">
+            <head>Specialised Front and Back Matter</head>
             <p>TEI Simple also provides elements for some additional components of front or back
               matter which are characteristic of particular kinds of text, in particular old play
               texts. These often include lists of dramatis personae and notes about the setting of a
@@ -2597,6 +2602,7 @@ live without God in the world, and only mind earthly things.
             optional components: <specList>
               <specDesc key="creation"/>
               <specDesc key="abstract"/>
+              <specDesc key="particDesc"/>
               <specDesc key="langUsage"/>
               <specDesc key="textClass"/>
             </specList></p>
@@ -2617,6 +2623,22 @@ live without God in the world, and only mind earthly things.
               </profileDesc>
             </egXML>
           </p>
+          <p>The <gi>particDesc</gi> element can be used to list descriptive information about the
+            real or fictional participants in a text, for example the characters in a novel or a
+            play. It contains at least one <gi>listPerson</gi> element, which contains individual
+              <gi>person</gi> elements, as in the following example: <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <profileDesc>
+                <particDesc>
+                  <listPerson>
+                    <person xml:id="OPI"><p><name>Dr Opimian</name> : named for the famous Roman
+                        fine wine.</p></person>
+                    <person xml:id="GRM"><p><name>Mr Gryll</name> : named for the mythical Gryllus,
+                        one of Ulysses' sailors transformed by Circe into a pig, who argues that he
+                        was happier in that state than as a man.</p></person>
+                  </listPerson>
+                </particDesc></profileDesc>
+            </egXML></p>
           <p>The <gi>langUsage</gi> element is useful where a text contains many different
             languages. It may contain <gi>language</gi> elements to document each particular
             language used: <specList>
@@ -2835,7 +2857,14 @@ live without God in the world, and only mind earthly things.
               normalization punctuation quotation refState refsDecl samplingDecl scriptNote 
               segmentation styleDefDecl stdVals typeNote"/>
             <moduleRef key="gaiji"/>
-
+            <moduleRef key="corpus" include="particDesc"/>
+<p>We include particDesc from the corpus module, but remove it from the model.listLike class so that it can only
+appear inside encodingDesc.</p>
+            <elementSpec ident="particDesc" module="corpus" mode="change">
+  <classes>
+    <memberOf key="att.global"/>
+  </classes>
+</elementSpec>
             <!-- 
             <moduleRef key="header"/>
             <!-\- <elementRef key="att"/>-\->
@@ -2963,19 +2992,22 @@ live without God in the world, and only mind earthly things.
             <classRef key="att.global.facs"/>
             <classRef key="att.milestoneUnit"/>
             <classRef key="att.global.linking"/>
-            <p>We also need to delete some default classes which we don't plan to use.</p>
+            <p>We delete some classes which we don't plan to use.</p>
             <classSpec type="atts" ident="att.datcat" mode="delete"/>
             <classSpec type="atts" ident="att.declarable" mode="delete"/>
             <classSpec type="atts" ident="att.divLike" mode="delete"/>
             <p>Some uncommon attributes are removed from global linking.</p>
             <classSpec type="atts" ident="att.global.linking" mode="change">
               <attList>
+                <attDef ident="sameAs" mode="delete"/>
                 <attDef ident="synch" mode="delete"/>
                 <attDef ident="copyOf" mode="delete"/>
                 <attDef ident="exclude" mode="delete"/>
                 <attDef ident="select" mode="delete"/>
               </attList>
             </classSpec>
+
+
             <p>URLs have a constraint that a local pointer must have a corresponding ID.</p>
             <classSpec type="atts" ident="att.pointing" mode="change">
               <attList>
@@ -3339,6 +3371,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="lg"/>
             <elementRef key="list"/>
             <elementRef key="listBibl"/>
+            <elementRef key="listPerson"/>
             <elementRef key="measure"/>
             <elementRef key="milestone"/>
             <elementRef key="name"/>
@@ -3349,6 +3382,8 @@ live without God in the world, and only mind earthly things.
             <elementRef key="p"/>
             <elementRef key="pb"/>
             <elementRef key="pc"/>
+            <elementRef key="person"/>
+            
             <elementRef key="postscript"/>
             <elementRef key="publisher"/>
             <elementRef key="pubPlace"/>
@@ -3675,6 +3710,9 @@ live without God in the world, and only mind earthly things.
               <content>
                 <elementRef key="desc" minOccurs="0" maxOccurs="1"/>
               </content>
+              <attList>
+                <attDef ident="hand" mode="delete"/>
+              </attList>
               <model predicate="desc" behaviour="inline">
                 <outputRendition>color: grey;</outputRendition>
               </model>
@@ -4062,6 +4100,9 @@ live without God in the world, and only mind earthly things.
               </model>
             </elementSpec>
             <elementSpec ident="unclear" mode="change">
+              <attList>
+                <attDef ident="hand" mode="delete"/>
+              </attList>
               <model behaviour="inline">
                 <outputRendition scope="after">content: ' [?] ';</outputRendition>
               </model>
