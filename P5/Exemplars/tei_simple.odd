@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- stilltodo 21/7
   rs, name ? : use of @key rather than @ref
-  remove refs to biblstruct
   check attribute classes
   check procmod for all elts
   add ref to facsimile at end of discussn of graphics
@@ -87,8 +86,7 @@
       </tagsDecl>
     </encodingDesc>
     <revisionDesc>
-      <change when="2016-07-18">Add some prose at front; add particDesc listPerson and person
-        </change>
+      <change when="2016-07-18">Add some prose at front; add particDesc listPerson and person </change>
       <change when="2016-06-29">Add JC hack for rendition; drastically revise proc mod
         section</change>
       <change when="2016-06-28">Add hdr sections on listPrefixDef, tagUsage, abstract, postscript,
@@ -104,19 +102,19 @@
   <text>
     <front>
       <head>Preface</head>
-      <p>This document is the formal specification for TEI Simple, an entry-level customization of the Text
-        Encoding Initiative (TEI) Guidelines, intended to be generally useful to a large variety of
-        encoders attempting to cope with the standardized representation in digital form of a large
-        variety of documents.</p>
+      <p>This document is the formal specification for TEI Simple, an entry-level customization of
+        the Text Encoding Initiative (TEI) Guidelines, intended to be generally useful to a large
+        variety of encoders attempting to cope with the standardized representation in digital form
+        of a large variety of documents.</p>
       <p>The document is intended to be generally comprehensible and accessible, but does assume
         some knowledge of XML (the encoding language used by the TEI), and of the way it is used by
         the TEI. Further information on both these topics are available from many places, not least
         the TEI's own web site at http://www.tei-c.org.</p>
       <p>The TEI Simple schema was first elaborated as a part of a project funded by the Mellon
         Foundation (2012-2014). The project sought to define a new <soCalled>highly-constrained and
-        prescriptive subset </soCalled>of the Text Encoding Initiative (TEI) Guidelines suited to the
-        representation of early modern and modern books, a formally-defined set of processing rules
-        which permit modern web applications to easily present and analyze the encoded texts,
+          prescriptive subset </soCalled>of the Text Encoding Initiative (TEI) Guidelines suited to
+        the representation of early modern and modern books, a formally-defined set of processing
+        rules which permit modern web applications to easily present and analyze the encoded texts,
         mapping to other ontologies, and processes to describe the encoding status and richness of a
         TEI digital text. Its choice of elements reflected the practices followed in the encoding of
         large-scale literary archives, notably those produced by the Text Creation Partnership.
@@ -132,8 +130,8 @@
         Martin Mueller (Northwestern University) and Sebastian Rahtz (Oxford University). Major
         contributions to the project were made by Magdalena Turska (Oxford University), James
         Cummings (Oxford University), and Brian Pytlik Zillig. The changes to the TEI scheme needed
-        to support the processing model were reviewed and approved by the TEI Technical Council for inclusion
-        in release 3.0.0 of TEI P5 in February 2016.  The present document  was extensively
+        to support the processing model were reviewed and approved by the TEI Technical Council for
+        inclusion in release 3.0.0 of TEI P5 in February 2016. The present document was extensively
         revised and extended for the approval of the TEI Council in 2016 by Lou Burnard. </p>
     </front>
     <body>
@@ -1409,43 +1407,47 @@ live without God in the world, and only mind earthly things.
           features explicit, reduce the complexity of processing texts containing them.</p>
         <div xml:id="nomen">
           <head>Names and Referring Strings</head>
-          <p>A <term>referring string</term> is a phrase which refers to some person, place, object,
-            etc. Two elements are provided to mark such strings: <specList>
+          <p>A <term>referring string</term> is any phrase which refers to some person, place, object,
+            etc. A <term>name</term> is a referring string which contains proper nouns and honorifics only.
+            Two elements are provided to mark such strings: <specList>
               <specDesc key="rs"/>
               <specDesc key="name"/>
             </specList>
           </p>
-          <p> The <att>type</att> attribute is used to distinguish amongst (for example) names of
+          <p>The <att>type</att> attribute is used to distinguish amongst (for example) names of
             persons, places and organizations, where this is possible: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <rs type="person">Mr. Bennet</rs>,
-              </q> said his lady to him one day, <q>have you heard that <rs type="place">Netherfield
-                  Park</rs> is let at last?</q></egXML>
+              xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name type="person">Mr. Bennet</name>,
+              </q> said his lady to him one day, <q>have you heard that <name type="place">Netherfield
+                  Park</name> is let at last?</q></egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">It being one of the principles of the
-                <rs type="organization">Circumlocution Office</rs> never, on any account whatsoever,
-              to give a straightforward answer, <rs type="person">Mr Barnacle</rs> said,
+                <name type="organization">Circumlocution Office</name> never, on any account whatsoever,
+              to give a straightforward answer, <name type="person">Mr Barnacle</name> said,
                 <q>Possibly.</q></egXML></p>
-          <p>As the following example shows, the <gi>rs</gi> element may be used for any reference
-            to a person, place, etc, not necessarily one in the form of a proper noun or noun
-            phrase. <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <rs type="person">Mr.
-                  Bennet</rs>,</q> said <rs type="person">his lady</rs> to him one
+          <p>As the following example shows, the <gi>rs</gi> element may be used for a reference
+            to a person, place, etc, which does not contain a proper noun or noun
+            phrase. <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name type="person">Mr.
+                  Bennet</name>,</q> said <name type="person">his lady</name> to him one
             day...</egXML></p>
-          <p>The <gi>name</gi> element by contrast is provided for the special case of referencing
-            strings which consist only of proper nouns; it may be used synonymously with the
-              <gi>rs</gi> element, or nested within it if a referring string contains a mixture of
-            common and proper nouns.</p>
+         
           <p>Simply tagging something as a name is rarely enough to enable automatic processing of
             personal names into the canonical forms usually required for reference purposes. The
             name as it appears in the text may be inconsistently spelled, partial, or vague.
             Moreover, name prefixes such as <mentioned>van</mentioned> or <mentioned>de
               la</mentioned>, may or may not be included as part of the reference form of a name,
             depending on the language and country of origin of the bearer.</p>
-          <p>The <att>key</att> attribute provides an alternative normalized identifier for the
-            object being named, like a database record key. It may thus be useful as a means of
+          <p>The <att>ref</att> attribute provides a way of linking a name with a description of the object being named,
+            and may thus act as a 
+         normalized identifier for it.  It is also very useful as a means of
             gathering together all references to the same individual or location scattered
-            throughout a document: <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <rs
-                  type="person" key="BENM1">Mr. Bennet</rs>, </q> said <rs type="person" key="BENM2"
-                >his lady</rs> to him one day, <q>have you heard that <rs type="place" key="NETP1"
-                  >Netherfield Park</rs> is let at last?</q></egXML></p>
+            throughout a document: <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name
+                  type="person" ref="#BENM1">Mr. Bennet</name>, </q> said <rs type="person" ref="#BENM2"
+                >his lady</rs> to him one day, <q>have you heard that <name type="place" ref="#NETP1"
+                  >Netherfield Park</name> is let at last?</q></egXML></p>
+          <p>The values used for the <att>ref</att> attribute here (<code>#BENM1</code> etc.) are pointers; in this case
+          indicating an element with the identifier <code>BENM1</code> etc. somewhere in the current document, though any form of URI
+          could be used. The element indicated will typically (for a person) be a <gi>person</gi> element, listed within a <gi>particDesc</gi> 
+          element, or (for a place) a <gi>place</gi> element, listed within a <gi>settingDesc</gi> element in the TEI Header, as further
+          discussed in <ptr target="#particdesc"/> below.</p>
           <p>This use should be distinguished from the case of the <gi>reg</gi> (regularization)
             element, which provides a means of marking the standard form of a referencing string as
             demonstrated below: <egXML xmlns="http://www.tei-c.org/ns/Examples"><name type="person"
@@ -1512,8 +1514,8 @@ live without God in the world, and only mind earthly things.
             </specList>
           </p>
           <p>These elements have a number of attributes which can be used to provide normalised
-            versions of their values. <specList>
-              <specDesc key="att.datable" atts="calendar period when"/>
+            versions of their values in various ways. <specList>
+              <specDesc key="att.datable" atts="period when notBefore notAfter"/>
             </specList> The <att>when</att> attribute specifies a normalized form for the date or
             time, using one of the standard formats defined by ISO 8601. Partial dates or times
             (e.g. <q>1990</q>, <q>September 1990</q>, <q>twelvish</q>) can be expressed by omitting
@@ -1521,33 +1523,35 @@ live without God in the world, and only mind earthly things.
               xmlns="http://www.tei-c.org/ns/Examples"><date when="1980-02-21">21 Feb
                 1980</date><date when="1990">1990</date><date when="1990-09">September
                 1990</date><date when="--09">September</date><date when="2001-09-11T12:48:00">Sept
-                11th, 12 minutes before 9 am</date></egXML>Note in the last example the use of a
+                11th, 12 minutes before 9
+            am</date></egXML><!--Note in the last example the use of a
             normalized representation for the date string which includes a time: this example could
-            thus equally well be tagged using the <gi>time</gi> element. </p>
-          <p>
-            <egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the <date when="1977-06-12"
-                >Twelfth Day of June in the Year of Our Lord One Thousand Nine Hundred and
-                Seventy-seven of the Republic the Two Hundredth and first and of the University the
-                Eighty-Sixth.</date></egXML>
+            thus equally well be tagged using the <gi>time</gi> element.-->
+          </p>
+          <p>These attributes are typically used to make a date or time more easily processable, as
+            in the following examples: <egXML xmlns="http://www.tei-c.org/ns/Examples">Given on the
+                <date when="1977-06-12">Twelfth Day of June in the Year of Our Lord One Thousand
+                Nine Hundred and Seventy-seven of the Republic the Two Hundredth and first and of
+                the University the Eighty-Sixth.</date></egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <l>specially when it's nine below zero</l>
               <l>and <time when="15:00:00">three o'clock in the afternoon</time></l>
-            </egXML>
-          </p>
+            </egXML> They are also useful in cases where the date concerned is uncertain or only
+            vaguely specified: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <p>... <date period="secondEmpire">during the second empire</date></p></egXML>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples">
+              <date notAfter="1946-12-09" notBefore="1946-11-01">in the weeks shortly before my
+                birth</date></egXML></p>
         </div>
         <div>
           <head>Numbers and measurements</head>
-          <p>Numbers can be written with either letters or digits (<code>twenty-one</code>,
-              <code>xxi</code>, and <code>21</code>) and their presentation is language-dependent
-            (e.g. English <mentioned>5th</mentioned> becomes Greek <mentioned>5.</mentioned>;
-            English <mentioned>123,456.78</mentioned> equals French
-              <mentioned>123.456,78</mentioned>). In natural-language processing or
-            machine-translation applications, it is often helpful to distinguish them from other,
-            more <soCalled>lexical</soCalled> parts of the text. In other applications, the ability
-            to record a number's value in standard notation is important. Similar considerations
-            apply to expressions of quantity, which may be very useful in a historical analysis, but
-            take very varied forms. The <gi>num</gi> and <gi>measure</gi> elements are provided to
-            facilitate normalisation of such strings: <specList>
+          <p>Like dates, both numbers and quantities can be written with either letters or digits
+            and may therefore need to be normalised for ease of processing. Their presentation is
+            also highly language-dependent (e.g. English <mentioned>5th</mentioned> becomes Greek
+              <mentioned>5.</mentioned>; English <mentioned>123,456.78</mentioned> equals French
+              <mentioned>123.456,78</mentioned>). </p>
+          <p>The following elements are provided for the detailed encoding of numbers and
+            quantities: <specList>
               <specDesc key="num"/>
               <specDesc key="measure"/>
             </specList>
@@ -1693,7 +1697,6 @@ live without God in the world, and only mind earthly things.
             <specDesc key="pubPlace"/>
             <specDesc key="relatedItem"/>
             <specDesc key="title"/>
-            <specDesc key="listBibl"/>
           </specList></p>
         <p>For example, the following editorial note might be transcribed as shown: <q
             rendition="display">He was a member of Parliament for Warwickshire in 1445, and died
@@ -1727,21 +1730,20 @@ live without God in the world, and only mind earthly things.
               <date>1973</date></bibl>
           </egXML>
         </p>
-        <p>The elements <gi>biblStruct</gi> and <gi>biblFull</gi> are also provided for convience in
-          cases where bibliographic citations following more sophisticated models have been used,
-          for example explicitly distinguishing monographic and analytic levels. In a Simple
-          document, however, these elements may appear only in the TEI Header. <specList>
-            <specDesc key="biblStruct"/>
+        <p>The element <gi>biblFull</gi> is also provided for convience in cases where bibliographic
+          citations following a more sophisticated model have been used; it is permitted only in the
+          TEI Header. <!--A third bibliographic element
+          <gi>biblStruct</gi>, is provided only by the full TEI Guidelines. -->
+          <specList>
             <specDesc key="biblFull"/>
-            <specDesc key="analytic"/>
-            <specDesc key="monogr"/>
-            <specDesc key="imprint"/>
-            <specDesc key="biblFull"/>
-          </specList> The full Guidelines should be consulted for further details and examples of
-          the use of these elements. </p>
-        <p>The <gi>listBibl</gi> element is used to group lists of bibliographic citations. It may
-          contain a series of <gi>bibl</gi>, <gi>biblStruct</gi>, or <gi>biblFull</gi> elements.
+            <!-- <specDesc key="imprint"/>
+        -->
+            <specDesc key="listBibl"/>
+          </specList>
         </p>
+        <p>The <gi>listBibl</gi> element is used to group lists of bibliographic citations. It may
+          contain a series of <gi>bibl</gi><!--, <gi>biblStruct</gi>,--> or <gi>biblFull</gi>
+          elements. </p>
       </div>
       <div xml:id="Simple-tables">
         <head>Tables</head>
@@ -2290,7 +2292,7 @@ live without God in the world, and only mind earthly things.
             <specDesc key="surfaceGrp"/>
             <specDesc key="surface"/>
             <specDesc key="zone"/>
-            <specDesc key="line"/>
+            <!--<specDesc key="line"/>-->
           </specList>
         </p>
       </div>
@@ -2617,6 +2619,7 @@ live without God in the world, and only mind earthly things.
               <specDesc key="creation"/>
               <specDesc key="abstract"/>
               <specDesc key="particDesc"/>
+              <specDesc key="settingDesc"/>
               <specDesc key="langUsage"/>
               <specDesc key="textClass"/>
             </specList></p>
@@ -2653,6 +2656,20 @@ live without God in the world, and only mind earthly things.
                   </listPerson>
                 </particDesc></profileDesc>
             </egXML></p>
+          <p>In the same way, the <gi>settingDesc</gi> element can be used to list descriptive information about the
+            real or fictional places mentioned in a text. It contains at least one <gi>listPlace</gi> element, which contains individual
+            <gi>place</gi> elements, as in the following example: <egXML
+              xmlns="http://www.tei-c.org/ns/Examples">
+              <profileDesc>
+                <settingDesc>
+                  <listPlace>
+                    <head>Houses mentioned in <title>Pride and Prejudice</title></head>
+                    <place xml:id="NETF1"><p><name>Netherfield Park</name> : home of the Bingleys</p></place>
+                    <place xml:id="PEMB1"><p><name>Pemberley</name> : home of Mr Darcy</p></place>
+                  </listPlace>
+                </settingDesc></profileDesc>
+            </egXML></p>
+          
           <p>The <gi>langUsage</gi> element is useful where a text contains many different
             languages. It may contain <gi>language</gi> elements to document each particular
             language used: <specList>
@@ -2871,14 +2888,14 @@ live without God in the world, and only mind earthly things.
               normalization punctuation quotation refState refsDecl samplingDecl scriptNote 
               segmentation styleDefDecl stdVals typeNote"/>
             <moduleRef key="gaiji"/>
-            <moduleRef key="corpus" include="particDesc"/>
-<p>We include particDesc from the corpus module, but remove it from the model.listLike class so that it can only
-appear inside encodingDesc.</p>
+            <moduleRef key="corpus" include="particDesc settingDesc"/>
+            <p>We include particDesc from the corpus module, but remove it from the model.listLike
+              class so that it can only appear inside profileDesc.</p>
             <elementSpec ident="particDesc" module="corpus" mode="change">
-  <classes>
-    <memberOf key="att.global"/>
-  </classes>
-</elementSpec>
+              <classes>
+                <memberOf key="att.global"/>
+              </classes>
+            </elementSpec>
             <!-- 
             <moduleRef key="header"/>
             <!-\- <elementRef key="att"/>-\->
@@ -2951,8 +2968,7 @@ appear inside encodingDesc.</p>
                     tei:msDesc | tei:msIdentifier | tei:person | tei:physDesc | tei:profileDesc | tei:publicationStmt | tei:relatedItem | 
                     tei:repository | tei:resp | tei:respStmt | tei:sourceDesc | tei:tag | tei:teiHeader | tei:term | tei:textClass | tei:textDesc 
                     | tei:titleStmt | tei:typeDesc | tei:val | tei:value">-->
-                  <rule xmlns="http://purl.oclc.org/dsdl/schematron"
-                    context=" tei:biblFull | tei:biblStruct">
+                  <rule xmlns="http://purl.oclc.org/dsdl/schematron" context=" tei:biblFull ">
                     <report test="ancestor::tei:text">Error: The element <name/> is not permitted
                       outside the header</report>
                   </rule>
@@ -3020,8 +3036,12 @@ appear inside encodingDesc.</p>
                 <attDef ident="select" mode="delete"/>
               </attList>
             </classSpec>
-
-
+            <p>We simplify the att.canonical class by removing @key</p>
+            <classSpec type="atts" ident="att.canonical" mode="change">
+              <attList>
+                <attDef ident="key" mode="delete"/>
+              </attList>
+            </classSpec>
             <p>URLs have a constraint that a local pointer must have a corresponding ID.</p>
             <classSpec type="atts" ident="att.pointing" mode="change">
               <attList>
@@ -3386,6 +3406,8 @@ appear inside encodingDesc.</p>
             <elementRef key="list"/>
             <elementRef key="listBibl"/>
             <elementRef key="listPerson"/>
+            <elementRef key="listPlace"/>
+            
             <elementRef key="measure"/>
             <elementRef key="milestone"/>
             <elementRef key="name"/>
@@ -3397,6 +3419,7 @@ appear inside encodingDesc.</p>
             <elementRef key="pb"/>
             <elementRef key="pc"/>
             <elementRef key="person"/>
+            <elementRef key="place"/>
             
             <elementRef key="postscript"/>
             <elementRef key="publisher"/>
@@ -3406,6 +3429,8 @@ appear inside encodingDesc.</p>
             <elementRef key="ref"/>
             <elementRef key="reg"/>
             <elementRef key="relatedItem"/>
+            <elementRef key="resp"/>
+            <elementRef key="respStmt"/>
             <!-- allowed in bibl -->
             <elementRef key="rhyme"/>
             <!-- restored under protest -->
@@ -3416,7 +3441,7 @@ appear inside encodingDesc.</p>
             <elementRef key="s"/>
             <elementRef key="salute"/>
             <elementRef key="seg"/>
-            <elementRef key="set"/>          
+            <elementRef key="set"/>
             <elementRef key="sic"/>
             <elementRef key="signed"/>
             <elementRef key="sp"/>
@@ -4073,7 +4098,9 @@ appear inside encodingDesc.</p>
                 <model behaviour="inline">
                   <outputRendition>font-style: italic;</outputRendition>
                 </model>
-                <model predicate="ancestor::biblStruct or       ancestor::biblFull" behaviour="text">
+                <!--     <model predicate="ancestor::biblStruct or       ancestor::biblFull" behaviour="text">
+           -->
+                <model predicate="ancestor::biblFull" behaviour="text">
                   <param name="content" value="', '"/>
                 </model>
               </modelSequence>
@@ -4081,8 +4108,7 @@ appear inside encodingDesc.</p>
                 <model behaviour="inline">
                   <outputRendition>font-style: italic;</outputRendition>
                 </model>
-                <model
-                  predicate="following-sibling::* and     (ancestor::biblStruct  or     ancestor::biblFull)"
+                <model predicate="following-sibling::* and     (  ancestor::biblFull)"
                   behaviour="text">
                   <param name="content" value="', '"/>
                 </model>
@@ -4091,8 +4117,7 @@ appear inside encodingDesc.</p>
                 <model behaviour="inline">
                   <outputRendition>font-style: italic;</outputRendition>
                 </model>
-                <model
-                  predicate="following-sibling::* and     (ancestor::biblStruct  or     ancestor::biblFull)"
+                <model predicate="following-sibling::* and     (    ancestor::biblFull)"
                   behaviour="text">
                   <param name="content" value="'. '"/>
                 </model>
