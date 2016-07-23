@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- stilltodo 21/7
-  rs, name ? : use of @key rather than @ref
-  check attribute classes
+<!-- stilltodo 23/7
+   check attribute classes
   check procmod for all elts
-  add ref to facsimile at end of discussn of graphics
-  vallists are not being displayed in section 11; discussion of type there incomplete; axe section?
+   vallists are not being displayed in section 11; discussion of type there incomplete; axe section?
   cf suggested vallists for div in 13.1.2, 13.2.1
-  discuss facsimile children: is line included or not
-  resp, respStmt missing from schema?
-  samplingDecl, refsDecl
+ 
   make list of proc models into a table and check it
   examples
 -->  
@@ -86,6 +82,7 @@
       </tagsDecl>
     </encodingDesc>
     <revisionDesc>
+      <change when="2016-07-23">Beef up facsimile</change>
       <change when="2016-07-18">Add some prose at front; add particDesc listPerson and person </change>
       <change when="2016-06-29">Add JC hack for rendition; drastically revise proc mod
         section</change>
@@ -1407,47 +1404,49 @@ live without God in the world, and only mind earthly things.
           features explicit, reduce the complexity of processing texts containing them.</p>
         <div xml:id="nomen">
           <head>Names and Referring Strings</head>
-          <p>A <term>referring string</term> is any phrase which refers to some person, place, object,
-            etc. A <term>name</term> is a referring string which contains proper nouns and honorifics only.
-            Two elements are provided to mark such strings: <specList>
+          <p>A <term>referring string</term> is any phrase which refers to some person, place,
+            object, etc. A <term>name</term> is a referring string which contains proper nouns and
+            honorifics only. Two elements are provided to mark such strings: <specList>
               <specDesc key="rs"/>
               <specDesc key="name"/>
             </specList>
           </p>
           <p>The <att>type</att> attribute is used to distinguish amongst (for example) names of
             persons, places and organizations, where this is possible: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name type="person">Mr. Bennet</name>,
-              </q> said his lady to him one day, <q>have you heard that <name type="place">Netherfield
-                  Park</name> is let at last?</q></egXML>
+              xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name type="person">Mr.
+                  Bennet</name>, </q> said his lady to him one day, <q>have you heard that <name
+                  type="place">Netherfield Park</name> is let at last?</q></egXML>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">It being one of the principles of the
-                <name type="organization">Circumlocution Office</name> never, on any account whatsoever,
-              to give a straightforward answer, <name type="person">Mr Barnacle</name> said,
-                <q>Possibly.</q></egXML></p>
-          <p>As the following example shows, the <gi>rs</gi> element may be used for a reference
-            to a person, place, etc, which does not contain a proper noun or noun
-            phrase. <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name type="person">Mr.
+                <name type="organization">Circumlocution Office</name> never, on any account
+              whatsoever, to give a straightforward answer, <name type="person">Mr Barnacle</name>
+              said, <q>Possibly.</q></egXML></p>
+          <p>As the following example shows, the <gi>rs</gi> element may be used for a reference to
+            a person, place, etc, which does not contain a proper noun or noun phrase. <egXML
+              xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name type="person">Mr.
                   Bennet</name>,</q> said <name type="person">his lady</name> to him one
-            day...</egXML></p>
-         
+              day...</egXML></p>
+
           <p>Simply tagging something as a name is rarely enough to enable automatic processing of
             personal names into the canonical forms usually required for reference purposes. The
             name as it appears in the text may be inconsistently spelled, partial, or vague.
             Moreover, name prefixes such as <mentioned>van</mentioned> or <mentioned>de
               la</mentioned>, may or may not be included as part of the reference form of a name,
             depending on the language and country of origin of the bearer.</p>
-          <p>The <att>ref</att> attribute provides a way of linking a name with a description of the object being named,
-            and may thus act as a 
-         normalized identifier for it.  It is also very useful as a means of
-            gathering together all references to the same individual or location scattered
-            throughout a document: <egXML xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name
-                  type="person" ref="#BENM1">Mr. Bennet</name>, </q> said <rs type="person" ref="#BENM2"
-                >his lady</rs> to him one day, <q>have you heard that <name type="place" ref="#NETP1"
-                  >Netherfield Park</name> is let at last?</q></egXML></p>
-          <p>The values used for the <att>ref</att> attribute here (<code>#BENM1</code> etc.) are pointers; in this case
-          indicating an element with the identifier <code>BENM1</code> etc. somewhere in the current document, though any form of URI
-          could be used. The element indicated will typically (for a person) be a <gi>person</gi> element, listed within a <gi>particDesc</gi> 
-          element, or (for a place) a <gi>place</gi> element, listed within a <gi>settingDesc</gi> element in the TEI Header, as further
-          discussed in <ptr target="#particdesc"/> below.</p>
+          <p>The <att>ref</att> attribute provides a way of linking a name with a description of the
+            object being named, and may thus act as a normalized identifier for it. It is also very
+            useful as a means of gathering together all references to the same individual or
+            location scattered throughout a document: <egXML
+              xmlns="http://www.tei-c.org/ns/Examples"><q>My dear <name type="person" ref="#BENM1"
+                  >Mr. Bennet</name>, </q> said <rs type="person" ref="#BENM2">his lady</rs> to him
+              one day, <q>have you heard that <name type="place" ref="#NETP1">Netherfield
+                  Park</name> is let at last?</q></egXML></p>
+          <p>The values used for the <att>ref</att> attribute here (<code>#BENM1</code> etc.) are
+            pointers; in this case indicating an element with the identifier <code>BENM1</code> etc.
+            somewhere in the current document, though any form of URI could be used. The element
+            indicated will typically (for a person) be a <gi>person</gi> element, listed within a
+              <gi>particDesc</gi> element, or (for a place) a <gi>place</gi> element, listed within
+            a <gi>settingDesc</gi> element in the TEI Header, as further discussed in <ptr
+              target="#particdesc"/> below.</p>
           <p>This use should be distinguished from the case of the <gi>reg</gi> (regularization)
             element, which provides a means of marking the standard form of a referencing string as
             demonstrated below: <egXML xmlns="http://www.tei-c.org/ns/Examples"><name type="person"
@@ -1820,7 +1819,7 @@ live without God in the world, and only mind earthly things.
           image. The <gi>figure</gi> element provides a means of wrapping one or more such elements
           together as a kind of graphic <soCalled>block</soCalled>: <egXML
             xmlns="http://www.tei-c.org/ns/Examples"><figure>
-              <graphic url="images/fessipic.png"/>
+              <graphic url="images/fezzipic.png"/>
               <head>Mr Fezziwig's Ball</head>
               <figDesc>A Cruikshank engraving showing Mr Fezziwig leading a group of
                 revellers.</figDesc>
@@ -1828,9 +1827,9 @@ live without God in the world, and only mind earthly things.
         <p>These cases should be carefully distinguished from the case where an encoded text is
           complemented by a collection of digital images, maintained as a distinct resource. The
             <att>facs</att> attribute may be used to associate any element in an encoded text with a
-          digital facsimile of it. In the simple case where only page images are available, the
-            <att>facs</att> attribute on the <gi>pb</gi> element may be used to associate each image
-          with an appropriate point in the text: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+          digital facsimile of it. In the simplest case, the <att>facs</att> attribute on the
+            <gi>pb</gi> element may be used to supply a location for an image file corresponding
+          with that point in the text: <egXML xmlns="http://www.tei-c.org/ns/Examples">
             <text>
               <pb facs="page1.png" n="1"/>
               <!-- text contained on page 1 is encoded here -->
@@ -1839,13 +1838,13 @@ live without God in the world, and only mind earthly things.
             </text>
           </egXML> This method is only appropriate in the simple case where each digital image file
             <ident>page1.png</ident> etc. corresponds with a single transcribed and encoded page. If
-          more detailed alignment of image and transcription is required, for example because the
-          image files actually represent double page spreads, more sophisticated mechanisms are
-          provided in the full TEI Guidelines. </p>
+          multiple images are provided for each page, or more detailed alignment of image and
+          transcription is required, for example because the image files actually represent double
+          page spreads, more sophisticated mechanisms are needed, as further discussed in <ptr
+            target="#Simple-fax"/> below. </p>
       </div>
       <div xml:id="Simple-anal">
         <head> Analysis</head>
-
         <div>
           <head>Orthographic Sentences</head>
           <p>Interpretation typically ranges across the whole of a text, with no particular respect
@@ -2289,12 +2288,63 @@ live without God in the world, and only mind earthly things.
         <p>The following elements may be used to encode a text represented by a collection of
           digital images, either alone or in conjunction with a textual transcription. <specList>
             <specDesc key="facsimile"/>
-            <specDesc key="surfaceGrp"/>
+            <!--  <specDesc key="surfaceGrp"/>
+         -->
             <specDesc key="surface"/>
             <specDesc key="zone"/>
             <!--<specDesc key="line"/>-->
           </specList>
         </p>
+        <p>As mentioned in section <ptr target="#Simple-figs"/> above, a TEI Simple document may
+          reference a set of page images, alone, or in combination with a transcription. For ease of
+          management, it is strongly recommended that the <gi>graphic</gi> elements representing
+          those page images be grouped together within a <gi>facsimile</gi> element, as in the
+          following example: <egXML xmlns="http://www.tei-c.org/ns/Examples"><facsimile><graphic
+                url="page1.png" xml:id="page1"/>
+              <graphic url="page2.png" xml:id="page2"/></facsimile></egXML> If a transcription is
+          supplied in addition, the <att>xml:id</att> values can be used to align the page breaks
+          within it with the relevant image, rather than using the URL given on the <gi>graphic</gi>
+          element. <egXML xmlns="http://www.tei-c.org/ns/Examples"><text>
+              <!-- ...-->
+              <pb facs="#page1"/>
+              <!-- text contained on page 1 -->
+              <pb facs="#page2"/>
+              <!-- text contained on page 2 -->
+              <!-- ...-->
+            </text>
+          </egXML>
+        </p>
+        <p>The <gi>surface</gi> element is useful in two situations: when it is desired to group
+          different images of the same page, for example of different resolutions; and when it is
+          desired to align parts of a page image with parts of a transcription. The <gi>zone</gi>
+          element is used to define (and hence provide an identifier for) the location of a part of
+          an image with reference to the surface on which it appears. </p>
+        <p>In this example, a thumbnail and a high resolution image are associated with the same
+          surface: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <facsimile>
+              <surface>
+                <graphic xml:id="page1T" url="thumbs/page1.png"/>
+                <graphic xml:id="page1" url="page1.png"/>
+              </surface>
+            </facsimile></egXML></p>
+        <p>In this example, the <gi>head</gi> element in the transcription is aligned with the top
+          half of a square image: <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <facsimile>
+              <surface ulx="1" uly="1" lrx="4" lry="4">
+                <graphic url="page1.png" xml:id="page1"/>
+                <zone xml:id="topHalfP1" ulx="1" uly="1" lrx="2" lry="4"/>
+              </surface>
+            </facsimile>
+            <text>
+              <!-- ... -->
+              <pb facs="#page1"/>
+              <head facs="#topHalfP1">Text of Heading</head>
+              <!-- ...-->
+            </text>
+          </egXML>
+        </p>
+        <p>A more detailed explanation of the use of these attributes and other associated elements
+          is given in the full Guidelines. </p>
       </div>
       <div xml:id="Simple-header">
         <head>The Electronic Title Page</head>
@@ -2558,7 +2608,7 @@ live without God in the world, and only mind earthly things.
 
           </div>
           <div xml:id="refsdecl">
-            <head>Reference and Classification Declarations</head>
+            <head>Reference, Prefix, and Classification Declarations</head>
             <p>The <gi>refsDecl</gi> element is used to document the way in which any standard
               referencing scheme built into the encoding works. In its simplest form, it consists of
               prose description.</p>
@@ -2578,11 +2628,12 @@ live without God in the world, and only mind earthly things.
                     replacementPattern="http://www.example.com/personography.xml#$1"/>
                 </listPrefixDef></egXML>
             </p>
-            <p>In this case, a private URI of the form <code>psn:MDH</code> would be translated to
+            <p>In this case, a pointer value in the form <code>psn:MDH</code> would be translated to
                 <code>http://www.example.com/personography.xml#MDH</code>. </p>
             <p>The <gi>classDecl</gi> element groups together definitions or sources for any
-              descriptive classification schemes used by other parts of the header. At least one
-              such scheme must be provided, encoded using the following elements: <specList>
+              descriptive classification schemes or <term>taxonomies</term> used by other parts of
+              the header. These schemes may be defined in a number of different ways, using one or
+              more of the following elements: <specList>
                 <specDesc key="taxonomy"/>
                 <specDesc key="bibl"/>
                 <specDesc key="category"/>
@@ -2608,14 +2659,13 @@ live without God in the world, and only mind earthly things.
                 </taxonomy></egXML></p>
             <p>Linkage between a particular text and a category within such a taxonomy is made by
               means of the <gi>catRef</gi> element within the <gi>textClass</gi> element, as
-              described in the next section below.</p>
+              described in the next section.</p>
           </div>
         </div>
         <div>
           <head>The Profile Description</head>
-          <p>The <gi>profileDesc</gi> element enables information characterizing various descriptive
-            aspects of a text to be recorded within a single framework. It has the following
-            optional components: <specList>
+          <p>The <gi>profileDesc</gi> element gathers together information about various descriptive
+            aspects of a text. It has the following optional components: <specList>
               <specDesc key="creation"/>
               <specDesc key="abstract"/>
               <specDesc key="particDesc"/>
@@ -2640,11 +2690,13 @@ live without God in the world, and only mind earthly things.
               </profileDesc>
             </egXML>
           </p>
-          <p>The <gi>particDesc</gi> element can be used to list descriptive information about the
-            real or fictional participants in a text, for example the characters in a novel or a
-            play. It contains at least one <gi>listPerson</gi> element, which contains individual
-              <gi>person</gi> elements, as in the following example: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+          <p>The <gi>particDesc</gi> element is used to list descriptive information about the real
+            or fictional participants in a text, for example the characters in a novel or a play. It
+            contains at least one <gi>listPerson</gi> element, which contains individual
+              <gi>person</gi> elements <specList>
+              <specDesc key="listPerson"/>
+              <specDesc key="person"/>
+            </specList> For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <profileDesc>
                 <particDesc>
                   <listPerson>
@@ -2656,20 +2708,25 @@ live without God in the world, and only mind earthly things.
                   </listPerson>
                 </particDesc></profileDesc>
             </egXML></p>
-          <p>In the same way, the <gi>settingDesc</gi> element can be used to list descriptive information about the
-            real or fictional places mentioned in a text. It contains at least one <gi>listPlace</gi> element, which contains individual
-            <gi>place</gi> elements, as in the following example: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">
+          <p>In the same way, the <gi>settingDesc</gi> element can be used to list descriptive
+            information about the real or fictional places mentioned in a text. It contains at least
+            one <gi>listPlace</gi> element, which contains individual <gi>place</gi> elements. <specList>
+              <specDesc key="listPlace"/>
+              <specDesc key="place"/>
+            </specList> For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <profileDesc>
                 <settingDesc>
                   <listPlace>
                     <head>Houses mentioned in <title>Pride and Prejudice</title></head>
-                    <place xml:id="NETF1"><p><name>Netherfield Park</name> : home of the Bingleys</p></place>
+                    <place xml:id="NETF1"><p><name>Netherfield Park</name> : home of the
+                        Bingleys</p></place>
                     <place xml:id="PEMB1"><p><name>Pemberley</name> : home of Mr Darcy</p></place>
                   </listPlace>
                 </settingDesc></profileDesc>
             </egXML></p>
-          
+          <p>The full Guidelines provide a rich range of additional elements to define more
+            structured information about persons and places; these are not however available in TEI
+            Simple.</p>
           <p>The <gi>langUsage</gi> element is useful where a text contains many different
             languages. It may contain <gi>language</gi> elements to document each particular
             language used: <specList>
@@ -2885,7 +2942,7 @@ live without God in the world, and only mind earthly things.
             <moduleRef key="header"
               except="appInfo application cRefPattern calendar calendarDesc 
               correction correspAction correspContext correspDesc geoDecl hyphenation interpretation 
-              normalization punctuation quotation refState refsDecl samplingDecl scriptNote 
+              normalization punctuation quotation refState  scriptNote 
               segmentation styleDefDecl stdVals typeNote"/>
             <moduleRef key="gaiji"/>
             <moduleRef key="corpus" include="particDesc settingDesc"/>
@@ -3407,7 +3464,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="listBibl"/>
             <elementRef key="listPerson"/>
             <elementRef key="listPlace"/>
-            
+
             <elementRef key="measure"/>
             <elementRef key="milestone"/>
             <elementRef key="name"/>
@@ -3420,7 +3477,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="pc"/>
             <elementRef key="person"/>
             <elementRef key="place"/>
-            
+
             <elementRef key="postscript"/>
             <elementRef key="publisher"/>
             <elementRef key="pubPlace"/>
