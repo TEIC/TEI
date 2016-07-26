@@ -5,7 +5,6 @@
    vallists are not being displayed in section 11; discussion of type there incomplete; axe section?
   cf suggested vallists for div in 13.1.2, 13.2.1
  
-  make list of proc models into a table and check it
   examples
 -->  
 <?xml-model href="file:/home/lou/Public/TEI/P5/p5odds.rnc" type="application/relax-ng-compact-syntax"?>
@@ -82,6 +81,8 @@
       </tagsDecl>
     </encodingDesc>
     <revisionDesc>
+      <change when="2016-07-23">Rerun checks: remove space</change>
+
       <change when="2016-07-23">Beef up facsimile</change>
       <change when="2016-07-18">Add some prose at front; add particDesc listPerson and person </change>
       <change when="2016-06-29">Add JC hack for rendition; drastically revise proc mod
@@ -132,8 +133,9 @@
         revised and extended for the approval of the TEI Council in 2016 by Lou Burnard. </p>
     </front>
     <body>
-      <!--    <xi:include href="out/elementList.xml"/>
--->
+      <!--  <xi:include href="out/elementList.xml"/>
+
+ -->
       <div xml:id="Simple-eg">
         <head>A Short Example</head>
         <p>We begin with a short example. How should we go about transferring into a computer a
@@ -677,7 +679,7 @@ live without God in the world, and only mind earthly things.
               does not appear in the original source. Instead a <gi>particDesc</gi> (participant
               description) element should be provided in the TEI Header, as further discussed in
               section <ptr target="#particdesc"/> below. </p>
-            <!-- could introduce particDesc here -->
+
           </div>
           <div xml:id="abseg">
             <head>Other Kinds of Text Block</head>
@@ -1123,7 +1125,7 @@ live without God in the world, and only mind earthly things.
               references to an external document such as an authority file. </p>
             <p>Parts of an XML document can be specified by means of other more sophisticated
               mechanisms using a language called Xpointer, also defined by the W3C. This is useful
-              when, for example, the elements to be linked to do not bear identifiers.. Further
+              when, for example, the elements to be linked to do not bear identifiers. Further
               information about this and other forms of link addressing is provided in <ref
                 target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/SA.html">chapter 16 of
                 the TEI Guidelines</ref> but is beyond the scope of the present document.</p>
@@ -2823,15 +2825,15 @@ live without God in the world, and only mind earthly things.
           processing associated with the majority of elements. As noted above, the TEI provides
           components such as the <att>rendition</att> attribute to indicate the appearance of
           particular parts of a document in the non-digital source from which it is derived. With
-          TEI Simple, it is also possible to indicate how in general the encoded element should be
-          processed, in particular its intended appearance when processed for display on a screen or
-          on paper. This ability derives from a number of capabilities recently added to the TEI
-          architecture for the specification of processing, which were developed as part of the
-          project that defined the TEI Simple schema.</p>
+          TEI Simple, it is also possible to indicate how in general an element should be processed,
+          in particular its intended appearance when processed for display on a screen or on paper.
+          This ability derives from a number of capabilities recently added to the TEI architecture
+          for the specification of processing, which were developed as part of the project that
+          defined the TEI Simple schema.</p>
 
-        <p> The key feature of the processing model is a notation that allows the encoder to
-          associate each element with one or more categories, which we call its
-            <term>behaviour</term>s. In addition, a processing model indicates how the element
+        <p> The key feature of this <soCalled>processing model</soCalled> is a notation that allows
+          the encoder to associate each element with one or more categories, which we call its
+            <term>behaviour</term>s. In addition, the processing model indicates how the element
           should be rendered, possibly differently in differing circumstances, using the W3C
           Cascading Stylesheets Standard (CSS) mentioned above. It is consequently much easier to
           develop processors for documents conforming to TEI Simple, since the complexity of the
@@ -2840,67 +2842,214 @@ live without God in the world, and only mind earthly things.
         <p>Twenty-six different behaviours are currently defined by the TEI processing model. Their
           names indicate informally the categorisation concerned, and should be readily
           comprehensible for most programmers. The following list of behaviours indicates the TEI
-          Simple elements associated with each. <list>
-            <item><label> INLINE (49) </label><hi>creates inline element out of content if there's
-                something in <gi>outputRendition</gi>, use that formatting; otherwise just show text
-                of selected content.: </hi>abbr, actor, add, am author, bibl, c, choice, corr, date,
+          Simple elements associated with each. </p>
+
+
+        <!--<list>
+            <item><label> INLINE (49) </label>abbr, actor, add, am author, bibl, c, choice, corr, date,
               del, desc, docAuthor, docDate, docEdition, docImprint, ex, expan, figDesc, figure,
               foreign, formula, formula, gap, handShift, hi, label, measure, milestone, name, note,
               num, orig, pc, ref, reg, rhyme, rs, s, salute, seg, sic, signed, space, subst,
               supplied, time, unclear, w, quote</item>
-            <item><label>BLOCK (35) </label><hi>create a block structure: </hi>address, addrLine,
+            <item><label>BLOCK (35) </label>address, addrLine,
               argument, back, body, byline, closer, dateline, div, doctitle, epigraph, figure,
               floatingText, formula, front, fw, group, head, imprimatur, l, lg, listBibl, note,
               opener, postscript, q, quote, role, roleDesc, salute, signed, sp, speaker, titlePage,
               titlePart, trailer </item>
-            <item><label>OMIT (10) </label><hi>do nothing, do not process children: </hi>author,
+            <item><label>OMIT (10) </label>author,
               docAuthor, docDate, docEdition, docImprint, docTitle, encodingDesc, profileDesc,
               publisher, pubPlace, revisionDesc</item>
-            <item><label>LIST (4) </label><hi>create a list by following content: </hi>castGroup,
+            <item><label>LIST (4) </label>castGroup,
               castList, list, listBibl</item>
 
 
-            <item><label>BREAK (3) </label><hi>create a line, column, or page break according to
-                type: </hi>cb, lb, pb</item>
-            <item><label>LISTITEM (3) </label><hi>create list item: </hi>bibl, castItem, item</item>
+            <item><label>BREAK (3) </label>cb, lb, pb</item>
+            <item><label>LISTITEM (3) </label>bibl, castItem, item</item>
             <item><label>ALTERNATE (2) </label><hi>: </hi>
-              <hi>create a specialized display of alternating elements for displaying the preferred
-                version and an alternative, both at once or by some method of toggling between the
-                two:</hi> date,choice</item>
-            <item><label>PARAGRAPH (2) </label><hi>create a paragraph out of content.: </hi>ab,
+              date,choice</item>
+            <item><label>PARAGRAPH (2) </labelab,
               p</item>
 
-            <item><label>ANCHOR </label><hi>create an anchor with ID: </hi>anchor</item>
-            <item><label>BODY </label><hi>create the body of a document body: </hi></item>
-            <item><label>CELL </label><hi>create a table cell: </hi>cit</item>
-            <item><label>CIT </label><hi>show the content, with an indication of the source:
+            <item><label>ANCHOR </label>anchor</item>
+            <item><label>BODY </label></item>
+            <item><label>CELL </label>cit</item>
+            <item><label>CIT </label>
               </hi>cit</item>
-            <item><label>DOCUMENT </label><hi>start a new output document: </hi> TEI</item>
+            <item><label>DOCUMENT </label> TEI</item>
             <item><label>FIGURE </label><hi>make a figure with the title as caption: </hi>
               figure</item>
 
-            <item><label>GLYPH </label><hi>show a character by looking up reference to a chardesc at
-                the given URI: </hi> g</item>
-            <item><label>GRAPHIC </label><hi>if url is present, uses it to display graphic, else
-                display a placeholder image. heading: </hi> graphic</item>
-            <item><label>HEADING </label><hi>creates a heading.: </hi> head</item>
-            <item><label>INDEX </label><hi>generate list according to type: </hi> body</item>
-            <item><label>LINK</label><hi>create hyperlink: </hi> ref</item>
-            <item><label>METADATA </label><hi>create metadata section: </hi> teiHeader</item>
-            <item><label>NOTE </label><hi>create an note, often out of line, depending on the value
-                of place; could be margin, footnote, endnote, inline: </hi>note</item>
-            <item><label>ROW </label><hi>create a table row: </hi> row</item>
-            <item><label>SECTION </label><hi>create a new section of the output document: </hi>
+            <item><label>GLYPH </label> g</item>
+            <item><label>GRAPHIC </label> graphic</item>
+            <item><label>HEADING </label> head</item>
+            <item><label>INDEX </label> body</item>
+            <item><label>LINK</label> ref</item>
+            <item><label>METADATA </label> teiHeader</item>
+            <item><label>NOTE </label><note</item>
+            <item><label>ROW </label>row</item>
+            <item><label>SECTION </label>
               div</item>
 
-            <item><label>TABLE </label><hi>create a table: </hi>table</item>
+            <item><label>TABLE </label>table</item>
             <item><label>TEXT </label><hi>create literal text: </hi>title</item>
-            <item><label>TITLE </label><hi>create document title: </hi>fileDesc</item>
+            <item><label>TITLE </label>fileDesc</item>
 
           </list>
         </p>
+-->
+        <table>
+          <row role="label">
+            <cell>Behaviour</cell>
+            <cell>Used by</cell>
+            <cell>Effect</cell>
+          </row>
+          <row>
+            <cell>alternate</cell>
+            <cell>choice date</cell>
+            <cell>create a specialized display supporting  display of a preferred
+              version and an alternative, both at once or by some method of toggling between the
+              two</cell>
+          </row>
+          <row>
+            <cell>anchor</cell>
+            <cell>anchor </cell>
+            <cell>create an anchor point with an identifier </cell>
+          </row>
+          <row>
+            <cell>block</cell>
+            <cell>address addrLine argument back body byline closer dateline div docTitle epigraph
+              figure floatingText formula front fw group head imprimatur l lg listBibl note opener
+              postscript q quote role roleDesc salute signed sp speaker spGrp stage titlePage
+              titlePart trailer </cell>
+            <cell>create a block structure</cell>
+          </row>
+
+          <row>
+            <cell>body</cell>
+            <cell>text </cell>
+            <cell>create the body of a document</cell>
+          </row>
+          <row>
+            <cell>break</cell>
+            <cell>cb lb pb</cell>
+            <cell>create a line, column, or page break according to type</cell>
+          </row>
+
+          <row>
+            <cell>cell</cell>
+            <cell>cell </cell>
+            <cell>create a table cell</cell>
+          </row>
+          <row>
+            <cell>cit</cell>
+            <cell>cit </cell>
+            <cell>show the content, with an indication of the source</cell>
+          </row>
+          <row>
+            <cell>document</cell>
+            <cell>TEI </cell>
+            <cell>create a new output document</cell>
+          </row>
+          <row>
+            <cell>glyph</cell>
+            <cell>g </cell>
+            <cell>show a character by looking up reference to a chardesc at the given URI</cell>
+          </row>
+          <row>
+            <cell>graphic</cell>
+            <cell>graphic </cell>
+            <cell>if url is present, uses it to display graphic, else display a placeholder image.
+              heading: </cell>
+
+          </row>
+          <row>
+            <cell>heading</cell>
+            <cell>head </cell>
+            <cell>creates a heading.: </cell>
+          </row>
+          <row>
+            <cell>index</cell>
+            <cell>body </cell>
+            <cell>generate list according to type: </cell>
+          </row>
+          <row>
+            <cell>inline</cell>
+            <cell>abbr actor add am author bibl biblScope c choice code corr date del desc docAuthor
+              docDate docEdition docImprint editor email ex expan figDesc figure foreign formula fw
+              g gap handShift hi label measure milestone name note num orig pc q quote ref reg
+              relatedItem rhyme rs s salute seg sic signed subst supplied time title unclear w </cell>
+            <cell>creates inline element out of content if there's something in
+                <gi>outputRendition</gi>, use that formatting; otherwise just show text of selected
+              content.: </cell>
+          </row>
 
 
+          <row>
+            <cell>link</cell>
+            <cell>ref </cell>
+            <cell>create hyperlink: </cell>
+          </row>
+          <row>
+            <cell>list</cell>
+            <cell>castGroup castList list listBibl </cell>
+            <cell>create a list by following content: </cell>
+          </row>
+
+          <row>
+            <cell>listItem</cell>
+            <cell>bibl castItem item </cell>
+            <cell>create list item: </cell>
+          </row>
+          <row>
+            <cell>metadata</cell>
+            <cell>teiHeader </cell>
+            <cell>create metadata section: </cell>
+          </row>
+          <row>
+            <cell>note</cell>
+            <cell>note </cell>
+            <cell>create an note, often out of line, depending on the value of place; could be
+              margin, footnote, endnote, inline: </cell>
+          </row>
+          <row>
+            <cell>omit</cell>
+            <cell>author editor publisher pubPlace profileDesc revisionDesc encodingDesc </cell>
+            <cell>
+              <hi>do nothing, do not process children: </hi>
+            </cell>
+          </row>
+
+          <row>
+            <cell>paragraph</cell>
+            <cell>ab p</cell>
+            <cell>create a paragraph out of content.</cell>
+          </row>
+          <row>
+            <cell>row</cell>
+            <cell>row </cell>
+            <cell>create a table row:</cell>
+          </row>
+          <row>
+            <cell>section</cell>
+            <cell>div </cell>
+            <cell>create a new section of the output document: </cell>
+          </row>
+          <row>
+            <cell>table</cell>
+            <cell>table </cell>
+            <cell>create a table: </cell>
+          </row>
+          <row>
+            <cell>text</cell>
+            <cell>title</cell>
+            <cell>output literal text</cell>
+          </row>
+          <row>
+            <cell>title</cell>
+            <cell>fileDesc </cell>
+            <cell>create document title: </cell>
+          </row>
+        </table>
         <p>Full documentation of the processing model is provided in section <ptr
             target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html#TDPM"/> of the TEI
           Guidelines, and we do not describe it further here. </p>
@@ -3065,7 +3214,6 @@ live without God in the world, and only mind earthly things.
           <specGrp xml:id="simpleFax">
             <elementRef key="facsimile"/>
             <elementRef key="surface"/>
-            <elementRef key="surfaceGrp"/>
             <elementRef key="zone"/>
             <classRef key="att.coordinated"/>
           </specGrp>
@@ -3502,7 +3650,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="sic"/>
             <elementRef key="signed"/>
             <elementRef key="sp"/>
-            <elementRef key="space"/>
+            <!--elementRef key="space"/-->
             <elementRef key="speaker"/>
             <!--elementRef key="spGrp"/-->
             <elementRef key="stage"/>
@@ -3525,7 +3673,7 @@ live without God in the world, and only mind earthly things.
           </specGrp>
           <specGrp xml:id="simpleelementspm">
             <p>Processing Models are defined for all textual elements. </p>
-            <!-- currently missing models: facsimile,  surface, surfaceGrp, teiCorpus, zone -->
+            <!-- currently missing models: body, facsimile,  surface, teiCorpus, zone -->
             <elementSpec ident="ab" mode="change">
               <model behaviour="paragraph"/>
             </elementSpec>
@@ -3551,11 +3699,11 @@ live without God in the world, and only mind earthly things.
                 <outputRendition>white-space: nowrap;</outputRendition>
               </model>
             </elementSpec>
-            <elementSpec ident="addSpan" mode="change">
+            <!--  <elementSpec ident="addSpan" mode="change">
               <model behaviour="anchor">
                 <param name="id" value="@xml:id"/>
               </model>
-            </elementSpec>
+            </elementSpec>-->
             <elementSpec ident="am" mode="change">
               <model behaviour="inline"/>
             </elementSpec>
@@ -4064,9 +4212,9 @@ live without God in the world, and only mind earthly things.
             <elementSpec ident="sp" mode="change">
               <model behaviour="block"/>
             </elementSpec>
-            <elementSpec ident="space" mode="change">
+            <!--elementSpec ident="space" mode="change">
               <model behaviour="inline"/>
-            </elementSpec>
+            </elementSpec-->
             <elementSpec ident="speaker" mode="change">
               <model behaviour="block">
                 <outputRendition> font-style:italic; </outputRendition>
