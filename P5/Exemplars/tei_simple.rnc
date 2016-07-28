@@ -7,7 +7,7 @@ namespace teix = "http://www.tei-c.org/ns/Examples"
 namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# Schema generated from ODD source 2016-07-28T17:32:05Z. .
+# Schema generated from ODD source 2016-07-28T18:05:35Z. .
 # TEI Edition: Version 3.0.1a. Last updated on
 #	4th April 2016, revision 1b1f112
 # TEI Edition Location: http://www.tei-c.org/Vault/P5/Version 3.0.1a./
@@ -1279,7 +1279,7 @@ model.publicationStmtPart.agency = distributor | authority | publisher
 model.publicationStmtPart.detail =
   idno | availability | address | date | pubPlace
 model.availabilityPart = licence
-model.descLike = notAllowed
+model.descLike = desc
 model.quoteLike = cit | quote
 model.quoteLike_alternation = cit | quote
 model.quoteLike_sequence = cit, quote
@@ -2610,6 +2610,10 @@ del =
     att.typed.attributes,
     empty
   }
+desc =
+  
+  ## (description) contains a brief description of the object documented by its parent element, including its intended usage, purpose, or application where this is appropriate. [22.4.1. Description of Components]
+  element desc { macro.limitedContent, att.global.attributes, empty }
 \div =
   
   ## (text division) contains a subdivision of the front, body, or back of a text. [4.1. Divisions of the Body]
@@ -4121,8 +4125,4 @@ w =
     attribute lemmaRef { xsd:anyURI }?,
     empty
   }
-desc =
-  
-  ##
-  element desc { empty }
 start = TEI | teiCorpus
