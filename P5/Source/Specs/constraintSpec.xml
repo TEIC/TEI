@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Copyright TEI Consortium. 
 Dual-licensed under CC-by and BSD2 licences 
 See the file COPYING.txt for details
 $Date$
 $Id$
---><?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?><elementSpec xmlns:s="http://www.ascc.net/xml/schematron" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintSpec">
+-->
+<?xml-model href="http://jenkins.tei-c.org/job/TEIP5/lastSuccessfulBuild/artifact/P5/release/xml/tei/odd/p5.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<elementSpec xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" module="tagdocs" ident="constraintSpec">
   <gloss versionDate="2009-06-10" xml:lang="en">constraint on schema</gloss>
   <desc versionDate="2009-06-10" xml:lang="en">contains  a constraint, expressed in some formal syntax,
   which cannot be expressed in the structural content model</desc>
@@ -15,13 +18,13 @@ $Id$
     <memberOf key="model.oddDecl"/>
   </classes>
   <content>
-<sequence>
-    <alternate minOccurs="0" maxOccurs="unbounded">
-      <classRef key="model.glossLike"/>
-      <classRef key="model.descLike"/>
-    </alternate>
+    <sequence>
+      <alternate minOccurs="0" maxOccurs="unbounded">
+        <classRef key="model.glossLike"/>
+        <classRef key="model.descLike"/>
+      </alternate>
       <elementRef key="constraint" minOccurs="0"/>
-  </sequence>
+    </sequence>
   </content>    
   <constraintSpec ident="sch" scheme="isoschematron">
     <desc>Relationship between scheme attribute and contents: Schematron 1.x</desc>
@@ -41,7 +44,7 @@ $Id$
     <constraint>
       <sch:ns prefix="sch" uri="http://purl.oclc.org/dsdl/schematron"/>
       <sch:rule context="tei:macroSpec/tei:constraintSpec[@scheme='isoschematron']/tei:constraint">
-	<sch:report test="sch:assert|sch:report">An ISO Schematron constraint specification for a macro should not have an 'assert' or 'report' element without a parent 'rule' element</sch:report>
+        <sch:report test="sch:assert|sch:report">An ISO Schematron constraint specification for a macro should not have an 'assert' or 'report' element without a parent 'rule' element</sch:report>
       </sch:rule>
     </constraint>
   </constraintSpec>
@@ -69,7 +72,7 @@ $Id$
         <desc>Enforce the presence of the <att>spanTo</att> attribute</desc>
         <constraint>
           <sch:assert test="@spanTo">The spanTo= attribute of <sch:name/>
-	  is required.</sch:assert>
+          is required.</sch:assert>
         </constraint>
       </constraintSpec>
     </egXML>
@@ -81,8 +84,8 @@ $Id$
     have textual explanations</desc>
         <constraint>
           <sch:report test="not(tei:figDesc or tei:head)"> You should
-	  provide information in a figure from which
-	  we can construct an alt attribute in HTML </sch:report>
+          provide information in a figure from which
+          we can construct an alt attribute in HTML </sch:report>
         </constraint>
       </constraintSpec>
     </egXML>
@@ -94,7 +97,7 @@ $Id$
       <constraintSpec ident="local" scheme="SPITBOL">
         <constraint> 
 (output = leq(title,author)  "title and author cannot be the same")
-	</constraint>
+        </constraint>
       </constraintSpec>
     </egXML>
   </exemplum>
