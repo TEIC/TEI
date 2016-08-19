@@ -345,7 +345,9 @@ live without God in the world, and only mind earthly things.
         <p>Some aspects of the TEI header are described in more detail in section <ptr
             target="#Simple-header"/>. In what follows, we will focus chiefly on the use of the
             <gi>text</gi> element, though we describe one way of using the <gi>facsimile</gi>
-          element in combination with it or alone in section <ptr target="#Simple-fax"/>.</p>
+          element in combination with it or alone in section <ptr target="#Simple-fax"/>. We
+        do not consider the <gi>sourceDoc</gi> element further, since it is mainly used in very specialised applications
+        for which TEI Simple would not be appropriate. </p>
         <p>A text may be <term>unitary</term> (a single work) or <term>composite</term> (a
           collection of single works, such as an anthology). In either case, the text may have
           optional <term>front</term> or <term>back</term> matter such as title pages, prefaces,
@@ -574,7 +576,7 @@ live without God in the world, and only mind earthly things.
             <p>For example: <egXML xmlns="http://www.tei-c.org/ns/Examples">
                 <sp><speaker>Vladimir</speaker><p>Pull on your trousers.</p></sp>
                 <sp><speaker>Estragon</speaker><p>You want me to pull off my trousers?</p></sp>
-                <sp><speaker>Vladimir</speaker><p>Pull <emph>on</emph> your trousers.</p></sp>
+                <sp><speaker>Vladimir</speaker><p>Pull <hi>on</hi> your trousers.</p></sp>
                 <sp><speaker>Vladimir</speaker><p><stage>(realizing his trousers are down)</stage>.
                     True</p></sp>
                 <stage>He pulls up his trousers</stage>
@@ -843,7 +845,7 @@ live without God in the world, and only mind earthly things.
             <p>Like changes of typeface, quotation marks are conventionally used to denote several
               different features within a text, of which the most frequent is quotation, though many
               other features are possible. The full TEI Guidelines provide additional elements such as
-                <gi>mentioned</gi> or <gi>said</gi> to distinguish some of these features. In TEI
+                <gi>mentioned</gi> or <gi>said</gi> to distinguish some of these features, but these more specialised elements are not included in TEI Simple. In TEI
               Simple however, we use the <gi>quote</gi> element for quotation only, and the
                 <gi>q</gi> element for all other material found within quotation marks in the text.<specList>
                 <specDesc key="q"/>
@@ -902,11 +904,9 @@ live without God in the world, and only mind earthly things.
               to everything contained by that element, unless overridden:</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
               <div xml:lang="la">
-                <p>
-                  <s>Pars haec Latine composita est.</s>
-                  <s xml:lang="en">Except that this sentence is in English.</s>
-                  <s>Vita brevis, ars longa.</s>
-                </p>
+                  <p>Pars haec Latine composita est.</p>
+                  <p xml:lang="en">Except that this sentence is in English.</p>
+                  <p>Vita brevis, ars longa.</p>               
               </div>
             </egXML>
             <p>Here we specify that the whole <gi>div</gi> element uses the language with the coded
@@ -1194,32 +1194,34 @@ live without God in the world, and only mind earthly things.
             printing of Shakespeare's <title>Henry V</title>: <figure>
               <graphic url="../Images/tableofgreenfields.png" width="400px" height="100px"/>
               <head type="legend">Detail from <title>Henry V</title>, first quarto (1600)</head>
-            </figure> in particular the phrase we might transcribe directly as <eg> ... for his Nose
-              was as sharp as a Pen, and a Table of green feelds</eg>
+            </figure> in particular the phrase we might transcribe directly as
+            <eg> ... for his Nose
+              was as sharpe as a Pen, and a Table of greene fields</eg>
           </p>
           <p>A modern editor might wish to make a number of interventions here, specifically to
             modernize (or normalize) the Elizabethan spellings of <mentioned>a'</mentioned> and
-              <mentioned>feelds</mentioned> for <mentioned>he</mentioned> and
-              <mentioned>fields</mentioned> respectively. They might also want to emend
+              <mentioned>sharpe</mentioned> for <mentioned>he</mentioned> and
+              <mentioned>sharp</mentioned> respectively. They might also want to emend
               <mentioned>table</mentioned> to <mentioned>babbl'd</mentioned>, following an editorial
             tradition that goes back to the 18th century Shakespearian scholar Lewis Theobald. The
             following encoding would then be appropriate: <egXML
-              xmlns="http://www.tei-c.org/ns/Examples">... for his Nose was as sharp as a Pen and
+              xmlns="http://www.tei-c.org/ns/Examples">... for his Nose was as <reg>sharp</reg> as a Pen and
                 <reg>he</reg>
-              <corr resp="#Theobald">babbl'd</corr> of green <reg>fields</reg></egXML></p>
+              <corr resp="#Theobald">babbl'd</corr> of green fields</egXML></p>
           <p>A more conservative or source-oriented editor, however, might want to retain the
             original, but at the same time signal that some of the readings it contains are in some
             sense anomalous: <egXML xmlns="http://www.tei-c.org/ns/Examples">... for his Nose was as
-              sharp as a Pen, and <orig>a</orig>
-              <sic>Table</sic> of green <orig>feelds</orig></egXML></p>
+              <orig>sharpe</orig> as a Pen, and <orig>a</orig>
+              <sic>Table</sic> of green fields</egXML></p>
           <p>Finally, a modern digital editor may decide to combine both possibilities in a single
             composite text, using the <gi>choice</gi> element. <specList>
               <specDesc key="choice"/>
             </specList> This allows an editor to indicate where alternative encodings are possible:
-              <egXML xmlns="http://www.tei-c.org/ns/Examples">... for his Nose was as sharp as a
+              <egXML xmlns="http://www.tei-c.org/ns/Examples">... for his Nose was as 
+                <choice><orig>sharpe</orig><reg>sharp</reg></choice> as a
               Pen, and <choice><orig>a</orig><reg>he</reg></choice>
               <choice><corr resp="#Theobald">babbl'd</corr><sic>Table</sic></choice> of green
-                  <choice><orig>feelds</orig><reg>fields</reg></choice>
+                  fields
             </egXML></p>
         </div>
         <div xml:id="Simple-edit2">
@@ -1246,7 +1248,7 @@ live without God in the world, and only mind earthly things.
               following elements are provided for <del resp="#LB">for</del> simple editorial
               interventions.</egXML> The attribute value <val>#LB</val> on the <att>resp</att>
             attribute is used to point to a fuller definition (typically in a <gi>respStmt</gi>
-            element) for the person or other agency responsible for correcting the duplication of
+            element) of the person or other agency responsible for correcting the duplication of
               <mentioned>for</mentioned>.</p>
           <p>If the source read <q>The following elements provided for simple editorial
               interventions.</q> (i.e. if the word <mentioned>are</mentioned> had been inadvertently
@@ -1300,28 +1302,32 @@ live without God in the world, and only mind earthly things.
             not supplied by Owen but by someone else, specifically the person documented elsewhere
             by an element with the identifier <val>ED</val>. </p>
 
-          <p>Similarly, the <gi>unclear</gi> and <gi>gap</gi> elements may be used together to
-            indicate the omission of illegible material; the following example also shows the use of
-              <gi>add</gi> for a conjectural emendation: <egXML
+          <p>The <gi>unclear</gi> element is useful where material in the source is so hard to
+            read that the transcriber is uncertain as to whether they have done so correctly. It
+            The <gi>gap</gi> element by contrast should be used where the material is so illegible that
+            the transcriber does not wish even to attempt it. The two may however be used together as in the following example:  <egXML
               xmlns="http://www.tei-c.org/ns/Examples">One hundred &amp; twenty good regulars joined
-              to me <unclear><gap reason="indecipherable"/></unclear> &amp; instantly, would aid me
-              signally <add hand="#ed">in?</add> an enterprise against Wilmington.</egXML></p>
+             <unclear>to me <gap extent="2 words" reason="indecipherable"/> and </unclear> instantly, would aid me
+              signally in an enterprise against Wilmington.</egXML></p>
           <p>The <gi>del</gi> element marks material which is deleted in a source, but has been
             transcribed as part of the electronic text all the same, while <gi>gap</gi> marks the
             location of source material which is omitted from the electronic text, whether it is
             legible or not. A language corpus, for example, might omit long quotations in foreign
-            languages. The <gi>desc</gi> element can be used inside the <gi>gap</gi> element to
+            languages. An <att>extent</att> attribute is available on the <gi>gap</gi> element to indicate
+            how much material has been omitted. 
+            The <gi>desc</gi> element can be used inside the <gi>gap</gi> element to
             provide a brief characterisation of the omitted material, as in the following examples:
               <egXML xmlns="http://www.tei-c.org/ns/Examples"><p> ... An example of a list appearing
                 in a fief ledger of <name type="place">Koldinghus</name>
                 <date>1611/12</date> is given below. It shows cash income from a sale of
                 honey.</p><gap extent="50 lines"><desc>quotation from ledger (in
                 Danish)</desc></gap><p>A description of the overall structure of the account is once
-                again ... </p></egXML></p>
+                again ... </p></egXML>
+          (The <gi>name</gi> and <gi>date</gi> elements used in this example are discussed further below)</p>
           <p>Language corpora (particular those constructed before the widespread use of scanners)
             often systematically omit figures and mathematics: <egXML
               xmlns="http://www.tei-c.org/ns/Examples"><p>At the bottom of your screen below the
-                mode line is the <term>minibuffer</term>. This is the area where Emacs echoes the
+                mode line is the <hi>minibuffer</hi>. This is the area where Emacs echoes the
                 commands you enter and where you specify filenames for Emacs to find, values for
                 search and replace, and so on. <gap reason="graphic"><desc>diagram of Emacs
                     screen</desc></gap>
@@ -1427,7 +1433,7 @@ live without God in the world, and only mind earthly things.
           <p>This use should be distinguished from the case of the <gi>reg</gi> (regularization)
             element, which provides a means of marking the standard form of a referencing string as
             demonstrated below: <egXML xmlns="http://www.tei-c.org/ns/Examples"><name type="person"
-                key="WADLM1"><choice><orig>Walter de la Mare</orig><reg>de la Mare,
+                ref="#WADLM1"><choice><orig>Walter de la Mare</orig><reg>de la Mare,
                   Walter</reg></choice></name> was born at <name key="Ch1" type="place"
                 >Charlton</name>, in <name key="KT1" type="county">Kent</name>, in 1873.</egXML></p>
 
@@ -1580,9 +1586,9 @@ live without God in the world, and only mind earthly things.
             </list></egXML> The styles should not be mixed in the same list.</p>
         <p>A simple two-column table may be treated as a <term>glossary list</term>, tagged
             <tag>list type="gloss"</tag>. Here, each item comprises a <term>term</term> and a
-            <term>gloss</term>, marked with <gi>label</gi> and <gi>item</gi> respectively. These
+            <term>gloss</term>, marked with <gi>label</gi> and <gi>item</gi> respectively.<!-- These
           correspond to the elements <gi>term</gi> and <gi>gloss</gi>, which can occur anywhere in
-          prose text: <egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss">
+          prose text:--> <egXML xmlns="http://www.tei-c.org/ns/Examples"><list type="gloss">
               <head>Vocabulary</head>
               <label xml:lang="enm">nu</label>
               <item>now</item>
@@ -1596,7 +1602,7 @@ live without God in the world, and only mind earthly things.
               <item>wood</item>
               <label xml:lang="enm">awe</label>
               <item>ewe</item>
-              <label xml:lang="enm">lhouth</label>
+             <!-- <label xml:lang="enm">lhouth</label>
               <item>lows</item>
               <label xml:lang="enm">sterteth</label>
               <item>bounds, frisks</item>
@@ -1607,7 +1613,7 @@ live without God in the world, and only mind earthly things.
               <label xml:lang="enm">swik</label>
               <item>cease</item>
               <label xml:lang="enm">naver</label>
-              <item>never</item>
+              <item>never</item>-->
             </list></egXML></p>
         <p>Where the internal structure of a list item is more complex, it may be preferable to
           regard the list as a <term>table</term>, for which special-purpose tagging is defined in section
@@ -2055,6 +2061,7 @@ live without God in the world, and only mind earthly things.
             <label>place</label>
             <item>place</item>
           </list></p>
+       
       </div>
 
       <div xml:id="Simple-composite">
@@ -2307,8 +2314,8 @@ live without God in the world, and only mind earthly things.
                     <gi>listBibl</gi>.
                 </item>
                 <label>index</label>
-                <item>Any form of pre-existing index to the work (An index may also be generated for
-                  a document by using the <gi>index</gi> element described above).</item>
+                <item>Any form of pre-existing index to the work<!-- (An index may also be generated for
+                  a document by using the <gi>index</gi> element described above).--></item>
                 <label>colophon</label>
                 <item>A statement appearing at the end of a book describing the conditions of its
                   physical production.</item>
@@ -3695,8 +3702,7 @@ live without God in the world, and only mind earthly things.
             <elementRef key="date"/>
             <elementRef key="dateline"/>
             <elementRef key="del"/>
-            <elementRef key="desc"/>
-       
+            <elementRef key="desc"/>  
             <elementRef key="div"/>
             <elementRef key="docAuthor"/>
             <elementRef key="docDate"/>
