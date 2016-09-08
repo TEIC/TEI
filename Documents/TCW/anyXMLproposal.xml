@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_lite.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_lite.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>ANY XML and what should replace it</title>
+            <author>Lou Burnard</author>
+         </titleStmt>
+         <publicationStmt>
+            <p>Circulated to TEI Council for discussion in Vienna</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>No source</p>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+
+         <p>In an attempt to progress i<ref target="https://github.com/TEIC/TEI/issues/1373">issue
+               1173</ref>, I have defined a new element <gi>anyElement</gi> which is intended to
+            make a bit more transparent the currently rather obscure working of the macro
+               <ident>macro.anyXML</ident>. Think of it as a little piece of pure ODD we did not
+            finish. You can see its elementSpec <ref
+               target="https://github.com/TEIC/TEI/blob/dev/P5/Source/Specs/anyElement.xml"
+               >here,</ref> but of course it doesn't do anything yet since the stylesheets have yet
+            to be modified to take any notice of it. </p>
+         <p>In the rest of this note, I will try to summarize how I plan to change elements which
+            currently make use of macro.anyXML. There are five (or six) of them:
+            <gi>constraint</gi>, <gi>content</gi>, <gi>egXML</gi>, <gi>xenoData</gi>,
+               <ident>macro.schemaPattern</ident> and of course <ident>macro.anyXML</ident> itself.
+            This macro is declared in ST, but redefined in the ODDS for tei_AllPlus, tei_math, and
+            tei_svg, on which see further below. </p>
+
+         <div>
+            <head><gi>constraint</gi></head>
+            <table>
+               <row role="label">
+                  <cell>Current content model</cell>
+                  <cell>Proposed content model</cell>
+               </row>
+               <row>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <alternate minOccurs="0" maxOccurs="unbounded">
+                              <textNode/>
+                              <macroRef key="macro.anyXML"/>
+                           </alternate>
+                        </content>
+                     </egXML>
+                  </cell>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <alternate minOccurs="0" maxOccurs="unbounded">
+                              <textNode/>
+                              <elementRef key="anyElement"/>
+                           </alternate>
+                        </content>
+                     </egXML>
+                  </cell>
+               </row>
+
+               <row>
+                  <cell cols="2"> We simply replace the macroRef here with an elementRef. We could
+                     require that constraints be expressed using the ISO Schematron namespace:
+                           <code><tag>elementRef key="anyElement"
+                           include="http://purl.oclc.org/dsdl/schematron"</tag></code> But that
+                     would close the door to constraints expressed in any other schema language,
+                     which might not be such a good thing (and would invalidate an existing example)
+                  </cell>
+               </row>
+            </table>
+         </div>
+         <div>
+            <head><gi>content</gi></head>
+            <table>
+               <row role="label">
+                  <cell>Current content model</cell>
+                  <cell>Proposed content model</cell>
+               </row>
+               <row>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <alternate>
+                              <macroRef key="macro.anyXML"/>
+                              <classRef minOccurs="0" maxOccurs="unbounded" key="model.contentPart"
+                              />
+                           </alternate>
+                        </content>
+                     </egXML>
+                  </cell>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <alternate>
+                              <classRef minOccurs="0" maxOccurs="unbounded" key="model.contentPart"
+                              />
+                           </alternate>
+                        </content>
+                     </egXML>
+                  </cell>
+               </row>
+
+               <row>
+                  <cell cols="2"> Since <gi>anyElement</gi> and <gi>textNode</gi> are already
+                     members of model.contentPart, all that is needed here is to remove the
+                     macroRef. It would be nice to be able to add the constraint that elements
+                     appearing here should come from the RelaxNG namespace, but there is no obvious
+                     way of doing this without introducing an ambiguity. </cell>
+               </row>
+            </table>
+         </div>
+
+         <div>
+            <head><gi>egXML</gi></head>
+            <table>
+               <row role="label">
+                  <cell>Current content model</cell>
+                  <cell>Proposed content model</cell>
+               </row>
+               <row>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <alternate minOccurs="0" maxOccurs="unbounded">
+                              <textNode/>
+                              <macroRef key="macro.anyXML"/>
+                           </alternate>
+                        </content>
+                     </egXML>
+                  </cell>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <alternate minOccurs="0" maxOccurs="unbounded">
+                              <textNode/>
+                              <elementRef key="anyElement"
+                                 include="http://www.tei-c.org/ns/Examples"/>
+                           </alternate>
+                        </content>
+                     </egXML>
+                  </cell>
+               </row>
+
+               <row>
+                  <cell cols="2"> We can do better here, by requiring that the content be from the
+                     egXML namespace </cell>
+               </row>
+            </table>
+         </div>
+         <div>
+            <head><gi>xenoData</gi></head>
+            <table>
+               <row role="label">
+                  <cell>Current content model</cell>
+                  <cell>Proposed content model</cell>
+               </row>
+               <row>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <alternate>
+                              <textNode/>
+                              <macroRef key="macro.anyXML"/>
+                           </alternate>
+                        </content>
+                     </egXML>
+                  </cell>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <alternate minOccurs="1" maxOccurs="unbounded">
+                              <textNode/>
+                              <elementRef key="anyElement" exccept="http://www.tei-c.org/ns/1.0"/>
+                           </alternate>
+                        </content>
+                     </egXML>
+                  </cell>
+               </row>
+
+               <row>
+                  <cell cols="2"> Again, we can do better by excluding TEI namespaced elements from
+                     the content. Note that the original definition relied on repetition inherent in
+                     the macro. </cell>
+               </row>
+            </table>
+         </div>
+         <div>
+            <head><ident>macro.schemaPattern</ident></head>
+            <table>
+               <row role="label">
+                  <cell>Current content model</cell>
+                  <cell>Proposed content model</cell>
+               </row>
+               <row>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <macroRef key="macro.anyXML"/>
+                        </content>
+                     </egXML>
+                  </cell>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <elementRef key="anyElement"
+                              include="http://relaxng.org/ns/structure/1.0"/>
+                        </content>
+                     </egXML>
+                  </cell>
+               </row>
+
+               <row>
+                  <cell cols="2"> This macro is used only as part of the content model for
+                        <gi>datatype</gi>, in order to permit continued use of relaxng data
+                     definitions. The redefinition above makes this explicit.</cell>
+               </row>
+            </table>
+         </div>
+         <div>
+            <head><ident>macro.anyXML</ident> itself</head>
+            <table>
+               <row role="label">
+                  <cell>Current content model</cell>
+                  <cell>Proposed content model</cell>
+               </row>
+               <row>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <element xmlns="http://relaxng.org/ns/structure/1.0">
+                              <anyName>
+                                 <except>
+                                    <nsName ns="http://www.tei-c.org/ns/1.0"/>
+                                    <name ns="http://www.tei-c.org/ns/Examples">egXML</name>
+                                 </except>
+                              </anyName>
+                              <zeroOrMore>
+                                 <attribute>
+                                    <anyName/>
+                                 </attribute>
+                              </zeroOrMore>
+                              <zeroOrMore>
+                                 <choice>
+                                    <text/>
+                                    <ref name="macro.anyXML"/>
+                                 </choice>
+                              </zeroOrMore>
+                           </element>
+                        </content>
+                     </egXML>
+                  </cell>
+                  <cell>
+                     <egXML xmlns="http://www.tei-c.org/ns/Examples">
+                        <content>
+                           <sequence>
+                              <elementRef key="anyElement" except="http://www.tei-c.org/ns/1.0"/>
+                              <alternate minOccurs="0" maxOccurs="undefined">
+                                 <textNode/>
+                                 <elementRef key="anyElement" except="http://www.tei-c.org/ns/1.0"/>
+                              </alternate>
+                           </sequence>
+                        </content>
+                     </egXML>
+                  </cell>
+               </row>
+
+               <row>
+                  <cell cols="2"><p>The part of the original definition precluding a
+                           self-nesting<gi>teix:egXML</gi> has to be implemented with a schematron
+                           <gi>constraint</gi> if we want to include it.</p>
+                  </cell>
+               </row>
+            </table>
+         </div>
+         <div>
+            <head>Exemplars</head>
+            <p>As noted above, three of the supplied TEI exemplars redefine
+                  <ident>macro.anyXML</ident>. In each case, the redefinition is needed to exclude
+               elements from specific namespaces. In <ident>teiAllPlus</ident>, the
+                  <gi>elementRef</gi> needs to be <code> &lt;elementRef key="anyElement"
+                  except="http://www.tei-c.org/ns/1.0 http://www.w3.org/1998/Math/MathML
+                  http://www.w3.org/2000/svg"/> </code>. Similarly, in <ident>tei_math</ident>, the
+               exclusion list needs to include <code>http://www.w3.org/1998/Math/MathML</code> and
+               in <ident>tei_svg</ident>, <code>http://www.w3.org/2000/svg</code></p>
+         </div>
+      </body>
+   </text>
+</TEI>
