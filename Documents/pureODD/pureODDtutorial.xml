@@ -17,6 +17,7 @@
       </sourceDesc>
     </fileDesc>
     <revisionDesc>
+      <change when="2016-09-12">Add anyElement</change>
       <change when="2016-02-26">Typos etc from Martina</change>
       <change when="2016-01-25">Finalising discussion of dataspec</change>
       <change when="2014-11-28">Finalising discussion of text/interleave</change>
@@ -79,6 +80,17 @@
             </elementSpec>
           </egXML>
         </p>
+<p>In some unusual circumstances (for example, defining the content of an element such as the TEI's <gi>egXML</gi> element) 
+it may be necessary to say that a content model should permit any element at all, or any element from one or more specific  namespaces. The <gi>anyElement</gi>
+element is provided for this purpose:
+          <egXML xmlns="http://www.tei-c.org/ns/Examples">
+            <elementSpec ident="anynonTEIelements">
+              <desc>an element which may contain one or more elements not taken from the TEI namespace</desc>
+              <content><anyElement except="http://www.tei-c.org/ns/1.0"  minOccurs="1" maxOccurs="unbounded"/></content>
+            </elementSpec>
+          </egXML>
+</p>
+
         <div>
           <head>Grouping elements</head>
           <p>An element may contain references to more than one different element. These elements
