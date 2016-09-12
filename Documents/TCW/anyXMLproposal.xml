@@ -58,7 +58,7 @@
 <content>
    <alternate minOccurs="0" maxOccurs="unbounded">
       <textNode/>
-      <elementRef key="anyElement"/>
+      <anyElement/>
    </alternate>
 </content>
                      </egXML>
@@ -68,7 +68,7 @@
                <row>
                   <cell cols="2"> We simply replace the macroRef here with an elementRef. We could
                      require that constraints be expressed using the ISO Schematron namespace:
-                           <code><tag>elementRef key="anyElement"
+                           <code><tag>anyElement
                            include="http://purl.oclc.org/dsdl/schematron"</tag></code> But that
                      would close the door to constraints expressed in any other schema language,
                      which might not be such a good thing (and would invalidate an existing example)
@@ -97,10 +97,8 @@
                   <cell>
                      <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <content>
-   <alternate>
       <classRef minOccurs="0" maxOccurs="unbounded" key="model.contentPart"
       />
-   </alternate>
 </content>
                      </egXML>
                   </cell>
@@ -139,7 +137,7 @@
 <content>
    <alternate minOccurs="0" maxOccurs="unbounded">
       <textNode/>
-      <elementRef key="anyElement"
+      <anyElement
          include="http://www.tei-c.org/ns/Examples"/>
    </alternate>
 </content>
@@ -176,7 +174,7 @@
 <content>
    <alternate minOccurs="1" maxOccurs="unbounded">
       <textNode/>
-      <elementRef key="anyElement" exccept="http://www.tei-c.org/ns/1.0"/>
+      <anyElement except="http://www.tei-c.org/ns/1.0"/>
    </alternate>
 </content>
                      </egXML>
@@ -208,7 +206,7 @@
                   <cell>
                      <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <content>
-   <elementRef key="anyElement"
+   <anyElement
       include="http://relaxng.org/ns/structure/1.0"/>
 </content>
                      </egXML>
@@ -259,10 +257,10 @@
                      <egXML xmlns="http://www.tei-c.org/ns/Examples">
 <content>
    <sequence>
-      <elementRef key="anyElement" except="http://www.tei-c.org/ns/1.0"/>
+      <anyElement except="http://www.tei-c.org/ns/1.0"/>
       <alternate minOccurs="0" maxOccurs="undefined">
          <textNode/>
-         <elementRef key="anyElement" except="http://www.tei-c.org/ns/1.0"/>
+         <anyElement except="http://www.tei-c.org/ns/1.0"/>
       </alternate>
    </sequence>
 </content>
@@ -283,10 +281,10 @@
             <p>As noted above, three of the supplied TEI Exemplars redefine
                   <ident>macro.anyXML</ident>. In each case, the redefinition is needed to exclude
                elements from specific namespaces. In <ident>teiAllPlus</ident>, the
-                  <gi>elementRef</gi> needs to be <code> &lt;elementRef key="anyElement"
+                  <gi>elementRef</gi> needs to be <code> &lt;anyElement
                   except="http://www.tei-c.org/ns/1.0 http://www.w3.org/1998/Math/MathML
                   http://www.w3.org/2000/svg"/> </code>. Similarly, in <ident>tei_math</ident>, the
-               exclusion list needs to include <code>http://www.w3.org/1998/Math/MathML</code> and
+               exclusion list needs to mention <code>http://www.w3.org/1998/Math/MathML</code> and
                in <ident>tei_svg</ident>, <code>http://www.w3.org/2000/svg</code></p>
          </div>
       </body>
