@@ -3,6 +3,7 @@
   <xsl:import href="/usr/share/xml/tei/stylesheet/common/functions.xsl"/>
   <xsl:output method="html"/>
   <xsl:param name="lang">fr</xsl:param>
+  <xsl:param name="teiP5RefBase">http://www.tei-c.org/release/doc/tei-p5-doc/en/html/ref-</xsl:param>
   <xsl:variable name="top" select="/"/>
   <xsl:template match="/">
     <html>
@@ -15,6 +16,7 @@
           <thead>
             <tr>
               <th>name</th>
+	      <th>module</th>
               <th>desc</th>
               <th>translation</th>
               <th>gloss</th>
@@ -58,8 +60,21 @@
   <xsl:template  name="show">
     <tr>
       <td style="font-weight:bold;border: 1px solid black; padding: 2px;vertical-align:top">
-	<xsl:message>  <xsl:value-of select="(ancestor-or-self::*[@ident]/@ident)" separator="/"/></xsl:message>
-	  <xsl:value-of select="(ancestor-or-self::*[@ident]/@ident)" separator="/"/>
+	<xsl:variable name="defSequence" select="ancestor-or-self::*[@ident]/@ident"/>
+	<xsl:message>  <xsl:value-of select="$defSequence" separator="/"/></xsl:message>
+	<a href="{concat($teiP5RefBase,$defSequence[1])}">
+	  <xsl:value-of select="$defSequence" separator="/"/>
+	</a>
+      </td>
+      <td>
+	<xsl:choose>
+	  <xsl:when test="self::tei:attDef|self::tei:valItem">
+	    <xsl:value-of select="ancestor-or-self::tei:*[@module]/@module"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:value-of select="@module"/>
+	  </xsl:otherwise>
+	</xsl:choose>
       </td>
       <td style="border: 1px solid black; padding: 2px;vertical-align:top;font-style:italic">
 	<xsl:call-template name="display">
