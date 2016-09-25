@@ -286,7 +286,35 @@
                   http://www.w3.org/2000/svg"/> </code>. Similarly, in <ident>tei_math</ident>, the
                exclusion list needs to mention <code>http://www.w3.org/1998/Math/MathML</code> and
                in <ident>tei_svg</ident>, <code>http://www.w3.org/2000/svg</code></p>
-         </div>
+      </div><div><head>Implementation</head>
+      <p>Here's a sketch of a template that might be used to replace <gi>anyElement</gi> with suitable RELAXNG content: 
+      <egXML xmlns="http://www.tei-c.org/ns/Examples" xmlns:xsl="http://">
+         <xsl:template name="matchanyElement">
+            <element xmlns="http://relaxng.org/ns/structure/1.0">
+               <anyName>
+                  <xsl:choose>
+                     <xsl:when test="@except">
+                        <except>
+                           <nsName ns="{@except}"/>
+                        </except>
+                        <!-- this code will/may need revising to deal with multiple values for the attribute -->
+                     </xsl:when>
+                     <xsl:when test ="@include">
+                        <xsl:attribute name="ns">
+                           <xsl:value-of select="@include"/>
+                        </xsl:attribute>
+                        <!-- this code will/may need revising to deal with multiple values for the attribute -->                    
+                     </xsl:when>
+                  </xsl:choose>
+               </anyName>
+               <zeroOrMore>
+                  <attribute>
+                     <anyName/>
+                  </attribute>
+               </zeroOrMore>
+            </element>
+         </xsl:template> 
+      </egXML></p><p>It's not clear where exactly this or something like it should fit inside the current ODD processing stylesheets.</p></div>
       </body>
    </text>
 </TEI>
