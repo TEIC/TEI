@@ -1387,7 +1387,7 @@ The elements <gi>ab</gi>, and <gi>seg</gi> are members of
     easily be done with the help of the <gi>anchor</gi> element, as
     follows:
     <!-- Vladimir Nabokov, Pnin, 1953, p14 of 1967 Avon pb reprinting -->
-    <egXML xmlns="http://www.tei-c.org/ns/Examples">English language. Except for not very<anchor xml:id="eng1"/>
+    <egXML xmlns="http://www.tei-c.org/ns/Examples"  source="#PNIN1">English language. Except for not very<anchor xml:id="eng1"/>
 English at all at the time<anchor xml:id="eng2"/>
 English was still full of flaws<anchor xml:id="eng3"/>
 English. This was revised by young<anchor xml:id="eng4"/></egXML>
@@ -1683,6 +1683,241 @@ See further <ptr target="#CODR"/> and <ptr target="#DRPAL"/>.</p>
 </specGrp>
     </div>
     <div type="div2" xml:id="SACS">
+<div type="div2" xml:id="SASY">
+<head>Synchronization</head>
+<p>In the previous section we discussed two particular kinds of
+alignment: alignment of parallel texts in different languages; and
+alignment of texts and portions of an image. In this section we address
+another specialized form of alignment: synchronization. The need to
+mark the relative positions of text components with respect to time
+arises most naturally and frequently in transcribed spoken texts, but it
+may arise in any text in which quoted speech occurs, or events are
+described within a time frame. The methods described here are also
+generalizable for other kinds of alignment (for example, alignment of
+text elements with respect to space).</p>
+<div type="div3" xml:id="SASYNC">
+<head>Aligning Synchronous Events</head>
+
+<p>Provided that explicit elements are available to represent the
+parts or places to be synchronized, then the global linking attribute
+<att>synch</att> may be used to encode such synchronization, once it
+has been identified.
+  <specList>
+    <specDesc key="att.global.linking" atts="synch"/>
+  </specList>
+  This is another of the attributes made globally available by
+  the mechanism described in the introduction to this chapter.
+  Alternatively, the <gi>link</gi> and <gi>linkGrp</gi> elements
+  may be used to make explicit the fact that the synchronous
+  elements are aligned.</p>
+<p>To illustrate the use of these mechanisms for marking synchrony,
+consider the following representation of a spoken text:
+<!-- From BNC, via LB, retranscribed without SGML markup -->
+<eg xml:space="preserve"><![CDATA[B: The first time in twenty five years, we've cooked Christmas
+   (unclear) for a blooming great load of people.
+A: So you're [1] (unclear) [2]
+B: [1] It will be [2] nice in a way, but, [3] be strange. [4]
+A: [3] Yeah [4], yeah, cos it, it's [5] the [6]
+B: [5] not [6]]]></eg></p>
+<p>This representation uses numbers in brackets to mark the points at
+which speakers overlap each other. For example, the <mentioned>[1]</mentioned>
+in A's first speech is to be understood as coinciding with the
+<mentioned>[1]</mentioned> in B's second speech.<note place="bottom">This sample is taken from
+a conversation collected and transcribed for the British National
+Corpus.</note></p>
+<p>To encode this we use the  spoken texts module, described
+in chapter <ptr target="#TS"/>, together with the module
+described in the present chapter. First, we transcribe this text,
+marking the synchronous points with <gi>anchor</gi> elements, and
+providing a <att>synch</att> attribute on one of each of the pairs of
+synchronous anchors. As noted in the example given above (section <ptr target="#SACSAL"/>), correspondence, and hence synchrony, is a
+symmetric relation; therefore the attribute need only be specified on
+one of the pairs of synchronous anchors.
+<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SA-eg-02">    <div xml:id="BNC-d1" type="convers">
+<u xml:id="u2b" who="#b">
+  The first time in twenty five years,
+  we've cooked Christmas <unclear> for a blooming great
+  load of people.</unclear> </u>
+<u xml:id="u3a" who="#a">So you're
+  <anchor synch="#t1b" xml:id="t1a"/>
+  <unclear> <anchor synch="#t2b" xml:id="t2a"/> </unclear> </u>
+<u xml:id="u3b" who="#b"><anchor xml:id="t1b"/>It will be <anchor xml:id="t2b"/>
+  nice in a way, but, <anchor xml:id="t3b"/>
+  be strange.<anchor xml:id="t4b"/> </u>
+<u xml:id="u4a" who="#a"><anchor synch="#t3b" xml:id="t3a"/>Yeah
+  <anchor synch="#t4b" xml:id="t4a"/>, yeah, cos it, its
+  <anchor synch="#t5b" xml:id="t5a"/>the
+  <anchor synch="#t6b" xml:id="t6a"/> </u>
+<u xml:id="u4b" who="#b"><anchor xml:id="t5b"/>not<anchor xml:id="t6b"/> </u>
+<!-- ... --></div></egXML></p>
+<p>We can encode this same example using <gi>link</gi> and
+<gi>linkGrp</gi> elements to make the temporal alignment explicit. A <gi>back</gi>
+element has been used to enclose the <gi>linkGrp</gi> element, but the links
+may be located anywhere the encoder finds convenient:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><back>
+    <linkGrp xml:id="lg1" domains="#BNC-d1 #BNC-d1" targFunc="speaker.a speaker.b" type="synchronous_alignment">
+<link xml:id="L1" target="#t1a #t1b"/>
+<link xml:id="L2" target="#t2a #t2b"/>
+<link xml:id="L3" target="#t3a #t3b"/>
+<link xml:id="l4" target="#t4a #t4b"/>
+<link xml:id="l5" target="#t5a #t5b"/>
+<link xml:id="l6" target="#t6a #t6b"/>
+    </linkGrp>
+  </back></egXML>
+The
+<att>xml:id</att> attributes are provided for the <gi>link</gi> and
+<gi>linkGrp</gi> elements here for reasons discussed  in the next
+section, <ptr target="#SASYMP"/>. 
+</p>
+<p>As with other forms of alignment, synchronization may be expressed
+between stretches of speech as well as between points. When complete
+utterances are synchronous, for example, if one person says
+<mentioned>What?</mentioned> and another <mentioned>No!</mentioned> at the same time,
+that can be represented without <gi>anchor</gi> elements as follows.
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u synch="#u02" xml:id="u01" who="#a">What?</u>
+<u xml:id="u02" who="#b">No!</u></egXML></p>
+<p>A simple way of expressing <term>overlap</term> (where one speaker
+starts speaking before another has finished) is thus to use the
+<gi>seg</gi> element to encode the overlapping portions of speech. For
+example,
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a"> So you're <unclear synch="#u-b1"/> </u>
+<u who="#b"><seg xml:id="u-b1"> It will be </seg> nice in a way, but,
+     <seg synch="#u-a3"> be strange. </seg> </u>
+<u who="#a"><seg xml:id="u-a3"> Yeah </seg>, yeah, cos it,
+     its <seg synch="#u-b2"> the </seg> </u>
+<u xml:id="u-b2" who="#b"> not </u></egXML>
+Note in this encoding how synchronization has been effected between an
+empty <gi>unclear</gi> element and the content of a <gi>seg</gi> element, and between the
+content of an
+<gi>u</gi> element and that of another <gi>seg</gi>, using the <att>synch</att>
+attribute. Alternatively, a <gi>linkGrp</gi> could be used in the same
+way as above.</p></div>
+<div type="div3" xml:id="SASYMP">
+<head>Placing Synchronous Events in Time</head>
+<p>A synchronous alignment specifies which points in a spoken text occur
+at the same time, and the order in which they occur, but does not say at
+what time those points actually occur. If that information is available
+to the encoder it can be represented by means of the <gi>when</gi> and
+<gi>timeline</gi> elements, whose description and attributes are the
+following:
+<specList><specDesc key="when" atts="absolute interval unit since"/><specDesc key="timeline" atts="origin interval unit"/></specList></p>
+<p>Each <gi>when</gi> element indicates a point in time, either directly
+by means of the <att>absolute</att> attribute, whose value is a string
+which specifies a particular time, or indirectly by means of the
+<att>since</att> attribute, which points to another <gi>when</gi>. If
+the <att>since</att> is used, then the <att>interval</att> and
+<att>unit</att> attributes should also be used to indicate the amount of
+time that has elapsed since the time specified by the element pointed to
+by the <att>since</att> attribute; the value <val>-1</val>
+can be given to indicate that the interval is unknown.</p>
+<p>If the <gi>when</gi> elements are uniformly spaced in time, then the
+<att>interval</att> and <att>unit</att> values need be given once in the
+<gi>timeline</gi>, and not repeated in any of the <gi>when</gi>
+elements. If the intervals vary, but the units are all the same, then
+the <att>unit</att> attribute alone can be given in the
+<gi>timeline</gi> element, and the <att>interval</att> attribute given
+in the <gi>when</gi> element.</p>
+<p>The <att>origin</att> attribute in the <gi>timeline</gi> element
+points to a <gi>when</gi> element which specifies the reference or
+origin for the timings within the <gi>timeline</gi>; this must, of
+course, specify its position in time absolutely. If the origin of a
+timeline is unknown, then this attribute may be omitted.</p>
+<p>The following <gi>timeline</gi> might be used to accompany the marked
+up conversation shown in the preceding section:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline xml:id="tL1" origin="#w0" unit="ms">
+   <when xml:id="w0" absolute="11:30:00"/>
+   <when xml:id="w1" interval="unknown" since="#w0"/>
+   <when xml:id="w2" interval="100" since="#w1"/>
+   <when xml:id="w3" interval="200" since="#w2"/>
+   <when xml:id="w4" interval="150" since="#w3"/>
+   <when xml:id="w5" interval="250" since="#w4"/>
+   <when xml:id="w6" interval="100" since="#w5"/>
+</timeline></egXML>
+The information in this <gi>timeline</gi> could now be linked to the
+information in the <gi>linkGrp</gi> which provides the temporal
+alignment (synchronization) for the text, as follows:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="temporal_specification" domains="#lg1 #tL1" targFunc="synch.points when">
+   <link target="#L1 #w1"/>
+   <link target="#L2 #w2"/>
+   <link target="#L3 #w3"/>
+   <link target="#l4 #w4"/>
+   <link target="#l5 #w5"/>
+   <link target="#l6 #w6"/>
+</linkGrp></egXML></p>
+<p>To avoid the need for two distinct link groups (one marking the
+synchronization of anchors with each other, and the other marking their
+alignment with points on the time line) it would be better to link the
+<gi>when</gi> elements with the synchronous points directly:
+<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="temporal_specification" domains="#BNC-d1 #BNC-d1 #tL1" targFunc="speaker.a speaker.b when">
+   <link target="#t1a #t1b #w1"/>
+   <link target="#t2a #t2b #w2"/>
+   <link target="#t3a #t3b #w3"/>
+   <link target="#t4a #t4b #w4"/>
+   <link target="#t5a #t5b #w5"/>
+   <link target="#t6a #t6b #w6"/>
+</linkGrp></egXML></p>
+<?tei winita ?>
+<!-- We need to completely rewrite this para; I've started, but will
+need help to get the SMIL stuff right -sdb -->
+<p>Finally, suppose that a digitized audio recording is also
+available, and an XML file that assigns identifiers to the various
+temporal spans of sound is available. For example, the following
+Synchronized Multimedia Integration Language (SMIL, pronounced
+"smile") fragment:
+<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+ xml:id="au1" begin="05.2s" />
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+ xml:id="au2" begin="05.7s" />
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+ xml:id="au3" begin="05.9s" />
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+ xml:id="au4" begin="06.3s" />
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+ xml:id="au5" begin="06.9s" />
+<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
+ xml:id="au6" begin="07.4s" />
+</egXML>
+URIs pointing to the <gi scheme="SMIL">audio</gi> elements could also
+be included as a fourth component in each of the above <gi>link</gi>
+elements, thus providing a synchronized audio track to complement the
+transcribed text.</p>
+<p>For further discussion of this and related aspects of encoding
+transcribed speech, refer to chapter <ptr target="#TS"/>.</p>
+<specGrp xml:id="DSASYMP" n="Temporal specification">
+
+
+
+
+
+
+
+
+
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/when.xml"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/timeline.xml"/>
+
+
+
+
+
+
+</specGrp></div></div>
 <head>Correspondence and Alignment</head>
 <p>In this section we introduce the notions of
 <term>correspondence</term>, expressed by the <att>corresp</att>
@@ -2106,241 +2341,6 @@ correspond, we might express the link between them as follows:
 <link target="#string-range(e9806,16,7) #string-range(l9806,0,7)"/></egXML></p>
 
 </div></div>
-<div type="div2" xml:id="SASY">
-<head>Synchronization</head>
-<p>In the previous section we discussed two particular kinds of
-alignment: alignment of parallel texts in different languages; and
-alignment of texts and portions of an image. In this section we address
-another specialized form of alignment: synchronization. The need to
-mark the relative positions of text components with respect to time
-arises most naturally and frequently in transcribed spoken texts, but it
-may arise in any text in which quoted speech occurs, or events are
-described within a time frame. The methods described here are also
-generalizable for other kinds of alignment (for example, alignment of
-text elements with respect to space).</p>
-<div type="div3" xml:id="SASYNC">
-<head>Aligning Synchronous Events</head>
-
-<p>Provided that explicit elements are available to represent the
-parts or places to be synchronized, then the global linking attribute
-<att>synch</att> may be used to encode such synchronization, once it
-has been identified.
-  <specList>
-    <specDesc key="att.global.linking" atts="synch"/>
-  </specList>
-  This is another of the attributes made globally available by
-  the mechanism described in the introduction to this chapter.
-  Alternatively, the <gi>link</gi> and <gi>linkGrp</gi> elements
-  may be used to make explicit the fact that the synchronous
-  elements are aligned.</p>
-<p>To illustrate the use of these mechanisms for marking synchrony,
-consider the following representation of a spoken text:
-<!-- From BNC, via LB, retranscribed without SGML markup -->
-<eg xml:space="preserve"><![CDATA[B: The first time in twenty five years, we've cooked Christmas
-   (unclear) for a blooming great load of people.
-A: So you're [1] (unclear) [2]
-B: [1] It will be [2] nice in a way, but, [3] be strange. [4]
-A: [3] Yeah [4], yeah, cos it, it's [5] the [6]
-B: [5] not [6]]]></eg></p>
-<p>This representation uses numbers in brackets to mark the points at
-which speakers overlap each other. For example, the <mentioned>[1]</mentioned>
-in A's first speech is to be understood as coinciding with the
-<mentioned>[1]</mentioned> in B's second speech.<note place="bottom">This sample is taken from
-a conversation collected and transcribed for the British National
-Corpus.</note></p>
-<p>To encode this we use the  spoken texts module, described
-in chapter <ptr target="#TS"/>, together with the module
-described in the present chapter. First, we transcribe this text,
-marking the synchronous points with <gi>anchor</gi> elements, and
-providing a <att>synch</att> attribute on one of each of the pairs of
-synchronous anchors. As noted in the example given above (section <ptr target="#SACSAL"/>), correspondence, and hence synchrony, is a
-symmetric relation; therefore the attribute need only be specified on
-one of the pairs of synchronous anchors.
-<egXML xmlns="http://www.tei-c.org/ns/Examples" source="#SA-eg-02">    <div xml:id="BNC-d1" type="convers">
-<u xml:id="u2b" who="#b">
-  The first time in twenty five years,
-  we've cooked Christmas <unclear> for a blooming great
-  load of people.</unclear> </u>
-<u xml:id="u3a" who="#a">So you're
-  <anchor synch="#t1b" xml:id="t1a"/>
-  <unclear> <anchor synch="#t2b" xml:id="t2a"/> </unclear> </u>
-<u xml:id="u3b" who="#b"><anchor xml:id="t1b"/>It will be <anchor xml:id="t2b"/>
-  nice in a way, but, <anchor xml:id="t3b"/>
-  be strange.<anchor xml:id="t4b"/> </u>
-<u xml:id="u4a" who="#a"><anchor synch="#t3b" xml:id="t3a"/>Yeah
-  <anchor synch="#t4b" xml:id="t4a"/>, yeah, cos it, its
-  <anchor synch="#t5b" xml:id="t5a"/>the
-  <anchor synch="#t6b" xml:id="t6a"/> </u>
-<u xml:id="u4b" who="#b"><anchor xml:id="t5b"/>not<anchor xml:id="t6b"/> </u>
-<!-- ... --></div></egXML></p>
-<p>We can encode this same example using <gi>link</gi> and
-<gi>linkGrp</gi> elements to make the temporal alignment explicit. A <gi>back</gi>
-element has been used to enclose the <gi>linkGrp</gi> element, but the links
-may be located anywhere the encoder finds convenient:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><back>
-    <linkGrp xml:id="lg1" domains="#BNC-d1 #BNC-d1" targFunc="speaker.a speaker.b" type="synchronous_alignment">
-<link xml:id="L1" target="#t1a #t1b"/>
-<link xml:id="L2" target="#t2a #t2b"/>
-<link xml:id="L3" target="#t3a #t3b"/>
-<link xml:id="l4" target="#t4a #t4b"/>
-<link xml:id="l5" target="#t5a #t5b"/>
-<link xml:id="l6" target="#t6a #t6b"/>
-    </linkGrp>
-  </back></egXML>
-The
-<att>xml:id</att> attributes are provided for the <gi>link</gi> and
-<gi>linkGrp</gi> elements here for reasons discussed  in the next
-section, <ptr target="#SASYMP"/>. 
-</p>
-<p>As with other forms of alignment, synchronization may be expressed
-between stretches of speech as well as between points. When complete
-utterances are synchronous, for example, if one person says
-<mentioned>What?</mentioned> and another <mentioned>No!</mentioned> at the same time,
-that can be represented without <gi>anchor</gi> elements as follows.
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u synch="#u02" xml:id="u01" who="#a">What?</u>
-<u xml:id="u02" who="#b">No!</u></egXML></p>
-<p>A simple way of expressing <term>overlap</term> (where one speaker
-starts speaking before another has finished) is thus to use the
-<gi>seg</gi> element to encode the overlapping portions of speech. For
-example,
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><u who="#a"> So you're <unclear synch="#u-b1"/> </u>
-<u who="#b"><seg xml:id="u-b1"> It will be </seg> nice in a way, but,
-     <seg synch="#u-a3"> be strange. </seg> </u>
-<u who="#a"><seg xml:id="u-a3"> Yeah </seg>, yeah, cos it,
-     its <seg synch="#u-b2"> the </seg> </u>
-<u xml:id="u-b2" who="#b"> not </u></egXML>
-Note in this encoding how synchronization has been effected between an
-empty <gi>unclear</gi> element and the content of a <gi>seg</gi> element, and between the
-content of an
-<gi>u</gi> element and that of another <gi>seg</gi>, using the <att>synch</att>
-attribute. Alternatively, a <gi>linkGrp</gi> could be used in the same
-way as above.</p></div>
-<div type="div3" xml:id="SASYMP">
-<head>Placing Synchronous Events in Time</head>
-<p>A synchronous alignment specifies which points in a spoken text occur
-at the same time, and the order in which they occur, but does not say at
-what time those points actually occur. If that information is available
-to the encoder it can be represented by means of the <gi>when</gi> and
-<gi>timeline</gi> elements, whose description and attributes are the
-following:
-<specList><specDesc key="when" atts="absolute interval unit since"/><specDesc key="timeline" atts="origin interval unit"/></specList></p>
-<p>Each <gi>when</gi> element indicates a point in time, either directly
-by means of the <att>absolute</att> attribute, whose value is a string
-which specifies a particular time, or indirectly by means of the
-<att>since</att> attribute, which points to another <gi>when</gi>. If
-the <att>since</att> is used, then the <att>interval</att> and
-<att>unit</att> attributes should also be used to indicate the amount of
-time that has elapsed since the time specified by the element pointed to
-by the <att>since</att> attribute; the value <val>-1</val>
-can be given to indicate that the interval is unknown.</p>
-<p>If the <gi>when</gi> elements are uniformly spaced in time, then the
-<att>interval</att> and <att>unit</att> values need be given once in the
-<gi>timeline</gi>, and not repeated in any of the <gi>when</gi>
-elements. If the intervals vary, but the units are all the same, then
-the <att>unit</att> attribute alone can be given in the
-<gi>timeline</gi> element, and the <att>interval</att> attribute given
-in the <gi>when</gi> element.</p>
-<p>The <att>origin</att> attribute in the <gi>timeline</gi> element
-points to a <gi>when</gi> element which specifies the reference or
-origin for the timings within the <gi>timeline</gi>; this must, of
-course, specify its position in time absolutely. If the origin of a
-timeline is unknown, then this attribute may be omitted.</p>
-<p>The following <gi>timeline</gi> might be used to accompany the marked
-up conversation shown in the preceding section:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><timeline xml:id="tL1" origin="#w0" unit="ms">
-   <when xml:id="w0" absolute="11:30:00"/>
-   <when xml:id="w1" interval="unknown" since="#w0"/>
-   <when xml:id="w2" interval="100" since="#w1"/>
-   <when xml:id="w3" interval="200" since="#w2"/>
-   <when xml:id="w4" interval="150" since="#w3"/>
-   <when xml:id="w5" interval="250" since="#w4"/>
-   <when xml:id="w6" interval="100" since="#w5"/>
-</timeline></egXML>
-The information in this <gi>timeline</gi> could now be linked to the
-information in the <gi>linkGrp</gi> which provides the temporal
-alignment (synchronization) for the text, as follows:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="temporal_specification" domains="#lg1 #tL1" targFunc="synch.points when">
-   <link target="#L1 #w1"/>
-   <link target="#L2 #w2"/>
-   <link target="#L3 #w3"/>
-   <link target="#l4 #w4"/>
-   <link target="#l5 #w5"/>
-   <link target="#l6 #w6"/>
-</linkGrp></egXML></p>
-<p>To avoid the need for two distinct link groups (one marking the
-synchronization of anchors with each other, and the other marking their
-alignment with points on the time line) it would be better to link the
-<gi>when</gi> elements with the synchronous points directly:
-<egXML xmlns="http://www.tei-c.org/ns/Examples"><linkGrp type="temporal_specification" domains="#BNC-d1 #BNC-d1 #tL1" targFunc="speaker.a speaker.b when">
-   <link target="#t1a #t1b #w1"/>
-   <link target="#t2a #t2b #w2"/>
-   <link target="#t3a #t3b #w3"/>
-   <link target="#t4a #t4b #w4"/>
-   <link target="#t5a #t5b #w5"/>
-   <link target="#t6a #t6b #w6"/>
-</linkGrp></egXML></p>
-<?tei winita ?>
-<!-- We need to completely rewrite this para; I've started, but will
-need help to get the SMIL stuff right -sdb -->
-<p>Finally, suppose that a digitized audio recording is also
-available, and an XML file that assigns identifiers to the various
-temporal spans of sound is available. For example, the following
-Synchronized Multimedia Integration Language (SMIL, pronounced
-"smile") fragment:
-<egXML xml:lang="und" xmlns="http://www.tei-c.org/ns/Examples" valid="false">
-<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
- xml:id="au1" begin="05.2s" />
-<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
- xml:id="au2" begin="05.7s" />
-<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
- xml:id="au3" begin="05.9s" />
-<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
- xml:id="au4" begin="06.3s" />
-<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
- xml:id="au5" begin="06.9s" />
-<audio xmlns="http://www.w3.org/2001/SMIL20/Language" src="rtsp://soundstage.pi.cnr.it:554/home/az/bncSound/xmas4lots.mp3" 
- xml:id="au6" begin="07.4s" />
-</egXML>
-URIs pointing to the <gi scheme="SMIL">audio</gi> elements could also
-be included as a fourth component in each of the above <gi>link</gi>
-elements, thus providing a synchronized audio track to complement the
-transcribed text.</p>
-<p>For further discussion of this and related aspects of encoding
-transcribed speech, refer to chapter <ptr target="#TS"/>.</p>
-<specGrp xml:id="DSASYMP" n="Temporal specification">
-
-
-
-
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/when.xml"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<include xmlns="http://www.w3.org/2001/XInclude" href="../../Specs/timeline.xml"/>
-
-
-
-
-
-
-</specGrp></div></div>
 <div type="div2" xml:id="SAIE">
 <head>Identical Elements and Virtual Copies</head>
 <p>This section introduces the notion of a <term>virtual element</term>,
