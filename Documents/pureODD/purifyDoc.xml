@@ -124,20 +124,20 @@
                equivalent in the ODD language which is <code>&lt;macroRef
                   key="macro.phraseSeq"/></code>. </p>
             <p>In the ODD language, references to different kinds of object (elements, classes,
-               macros, etc.) in a content model are represented by different element types.The
+               macros, etc.) in a content model are represented by different element types, specifically <gi>elementRef</gi>, <gi>classRef</gi>, <gi>macroRef</gi>.<!--The
                following elements are available: <specList>
                   <specDesc key="elementRef"/>
                   <specDesc key="classRef"/>
                   <specDesc key="macroRef"/>
-               </specList> In general, a RELAXNG content model in the form <code>&lt;rng:ref
+               </specList> -->Hence, a RELAXNG content model in the form <code>&lt;rng:ref
                   name="x"></code> will become <tag>classRef key="x"/</tag> if <ident>x</ident>
                names a class, <tag>elementRef key="x"</tag> if it names an element, and
                   <tag>macroRef key="x"</tag> if it names a macro. </p>
             <p>Content models can of course be much more complicated. If your RELAXNG model uses an
-               alternation or a sequence of components, you will need to use one of the elements <specList>
+               alternation or a sequence of components, you will need to use one of the ODD elements <gi>alternate</gi> and <gi>sequence</gi><!--<specList>
                   <specDesc key="alternate"/>
                   <specDesc key="sequence"/>
-               </specList> to wrap them rather than the RELAXNG (semi)equivalents
+               </specList>--> to wrap them rather than the RELAXNG (semi)equivalents
                   <tag>rng:choice</tag> and <tag>rng:group</tag> respectively. For example, this
                RELAXNG model says that a <gi>foo</gi> can contain either a <gi>bar</gi> or a
                   <gi>baz</gi>: <egXML xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -161,12 +161,12 @@
             <p>An empty element is indicated in the RELAXNG language by a special pattern called
                   <code>empty</code>. In the ODD language, however, we indicate that an element has
                no content by supplying an empty <gi>content</gi> element in its specification. </p>
-            <p>The ODD language also provides the following special-purpose component elements for
-               content models: <specList>
+            <p>The ODD language also provides a few more special-purpose component elements for
+               content models: <!--<specList>
                   <specDesc key="textNode"/>
                   <specDesc key="valList"/>
                   <specDesc key="anyElement"/>
-               </specList></p>
+               </specList>--> <gi>textNode</gi><gi>valList</gi> and (probably) <gi>anyElement</gi>. </p>
             <p>The <gi>textNode</gi> element is provided as a replacement for the built-in RELAXNG
                pattern <code>text</code>. There are no restrictions on where it may be placed in an
                ODD content model, although existing schema languages mostly permit it to appear only
@@ -398,12 +398,12 @@
                community effort! </p>
          </div>
 
-         <div type="schemaSpec">
+        <!-- <div type="schemaSpec">
             <head>Schema Specification for this document</head>
             <p>This schema specification simply adds the tagdocs module to the existing TEI Bare ODD
                to provide a minimal schema for encoding ODDs.</p>
-            <!-- schemaSpec ident="ODDauthoring" source="http://www.tei-c.org/release/xml/tei/custom/odd/tei_bare.odd"-->
-            <!-- that chaining didnt work. Why? -->
+            <!-\- schemaSpec ident="ODDauthoring" source="http://www.tei-c.org/release/xml/tei/custom/odd/tei_bare.odd"-\->
+            <!-\- that chaining didnt work. Why? -\->
             <schemaSpec ident="ODDauthoring">
                <moduleRef key="tagdocs"/>
                <moduleRef key="core" include="p list item label head author title"/>
@@ -447,7 +447,7 @@
             </schemaSpec>
 
 
-         </div>
+         </div>-->
       </body>
    </text>
 </TEI>
