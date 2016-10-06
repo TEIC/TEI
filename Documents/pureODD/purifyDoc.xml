@@ -29,10 +29,11 @@
                intended to remove the system's reliance on other schema languages. These changes
                (colloquially known as <soCalled>purification</soCalled> because their motivation was
                to ensure that all aspects of a TEI specification should be encoded using TEI and
-               nothing else <note>See further "Durand Conundrum" paper</note>) affect only the way
-               that the content model of an element or the datatype of an attribute are defined, but
-               for completeness we have included reminders about some other customization features
-               that you may wish to review.</p>
+               nothing else <note place="end">See further <ref target="https://jtei.revues.org/842"
+                        ><title>Resolving the Durand Conundrum</title></ref></note>) affect only the
+               way that the content model of an element or the datatype of an attribute are defined,
+               but for completeness we have included reminders about some other customization
+               features that you may wish to review.</p>
             <p/>
          </div>
          <div>
@@ -46,14 +47,13 @@
                      introduced in TEI P5 <emph>after</emph> the date your ODD was created</item>
                   <item>Your TEI use risks becoming increasingly divergent from the mainstream, so
                      that interchange with others will become increasingly difficult</item>
-
                </list>
             </p>
             <p>Nothing in digital form is ever really finished. It's more than likely that the
                requirements of your project will have changed a little since your ODD was first
-               designed. It's almost inevitable that as your project evolves, you'll come across
-               things you'd do differently if you could start all over again. Reviewing your ODD is
-               a very good way of thinking about doing that. </p>
+               designed. It's almost inevitable that as your project evolves, you'll have come
+               across things you'd do differently if you could start all over again. Reviewing your
+               ODD is a very good way of thinking about doing that. </p>
          </div>
          <div>
             <head>Good things to review</head>
@@ -94,21 +94,26 @@
                </list>
             </p>
             <p>And yes, it's quite likely that as a result of this review, you may well need to
-               change all your data as well as your schema. But that's a simple matter of
-               programming in XSLT.</p>
+               change all your data as well as your schema. But that's a simple matter of XSLT
+               programming ...</p>
          </div>
          <div>
             <head>Content Model Revision</head>
             <p>In days of yore, (i.e. releases P1 to P3 inclusive) TEI Content Models were expressed
                in the SGML language. The first XML release TEI P4, and all releases of P5 prior to
-               3.0 used the ISO standard RELAXNG language for this purpose. But a design goal of the
-               TEI from the start was to define an encoding scheme indepent of the metalanguage in
-               which it was expressed. We demonstrate that by using the ODD language to define
-               components which are then processed to produce documentation in a variety of formats
-               (HTML, PDF, ePub etc.) and schemas in a number of different languages (RELAXNG, W3C
-               Schema, and XML DTD). At release 3.0 we extended this principle to the definition of
-               content models, which previously had been expressed using the RELAXNG language, but
-               which are now expressed using some special purpose TEI elements. </p>
+               3.0 used the ISO standard RELAXNG language for this purpose. But from the start, a
+               design goal of the TEI was to define an encoding scheme independent of any
+               implementation metalanguage. The TEI has always used its own
+               <soCalled>ODD</soCalled>language to define components which are then processed to
+               produce documentation in a variety of formats (HTML, PDF, ePub etc.) and schemas in a
+               number of different languages (RELAXNG, W3C Schema, and XML DTD). At release 3.0 this
+               principle was extended to the definition of content models, which previously had been
+               expressed using the RELAXNG language, but which are now expressed using some special
+               purpose TEI elements<note place="end">The authoritative source of information on
+                  these is of course chapter 22 of the Guidelines <ref
+                     target="http://www.tei-c.org/release/doc/tei-p5-doc/en/html/TD.html"
+                        ><title>Documentation Elements</title></ref>. In any disagreement between
+                  what is stated there and what is suggested here, the former is correct.</note>. </p>
             <p>If your customization changed the content model of any element, it will have done so
                using expressions in RELAXNG, typically using a <gi>rng:ref</gi> element to provide
                the name of a pattern. For example, suppose your customization defined a new element
@@ -165,7 +170,8 @@
             <p>The <gi>textNode</gi> element is provided as a replacement for the built-in RELAXNG
                pattern <code>text</code>. There are no restrictions on where it may be placed in an
                ODD content model, although existing schema languages mostly permit it to appear only
-               in mixed content models like the following: <egXML xmlns:rng="http://relaxng.org/ns/structure/1.0"
+               in mixed content models like the following: <egXML
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0"
                   xmlns="http://www.tei-c.org/ns/Examples">
                   <alternate minOccurs="0" maxOccurs="unbounded">
                      <textNode/>
@@ -173,87 +179,88 @@
                   </alternate></egXML></p>
             <p>The RELAXNG language allows a number of other components within a content model, some
                of which are difficult to convert, but few of which are likely to appear in a
-               pre-existing TEI ODD. If your ODD used the RELAXNG element
-                  <gi>rng:value</gi> to specify content explicitly, this must be expressed in an ODD
-               as a <gi>valItem</gi> within a <gi>valList</gi>. If your ODD used the
-               RELAXNG element <gi>rng:element</gi> to specify that any element is permitted at this
-               point in a content model, you can do something similar with the ODD
-                  <gi>anyElement</gi> element. In general, however, the presence of any of the
-               following in your old content model will require manual intervention:
-                  <code>rng:anyName rng:attribute rng:data rng:element rng:except rng:name nsName
-                  rng:param rng:value</code></p>
-            <p>Here are some example <gi>content</gi> elements taken from the content models
-                  of existing TEI elements: 
-                     <table>
-                        <row role="label">
-                           <cell>RELAXNG Specification</cell>
-                           <cell>ODD equivalent</cell>
-                        </row>
-                        <row>
-                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples" 
-                              xmlns:rng="http://relaxng.org/ns/structure/1.0">
-                              <content>
-                                 <rng:oneOrMore>
-                                    <rng:ref name="cell"/>
-                                 </rng:oneOrMore>
-                              </content>
-                           </egXML></cell>
-                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
-                              <content>
-                                 <elementRef key="cell" minOccurs="1" maxOccurs="unbounded"/>                        
-                              </content>
-                           </egXML>
-                           </cell></row>
-                        <row>
-                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples" 
-                              xmlns:rng="http://relaxng.org/ns/structure/1.0">
-                              <content>
-                               <rng:zeroOrMore> <rng:choice>
-                                   <rng:text/>
-                                   <rng:ref name="model.limitedPhrase"/>   
-                                   <rng:ref name="model.global"/>
-                                </rng:choice>
-                               </rng:zeroOrMore></content>
-                           </egXML></cell>
-                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
-                              <content>
-                                 <alternate minOccurs="0" maxOccurs="unbounded">
-                                    <textNode/>
-                                    <classRef key="model.limitedPhrase"/>
-                                    <classRef key="model.global"/>
-                                 </alternate>
-                                 
-                              </content>
-                           </egXML>
-                           </cell></row>
-                        <row>
-                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples" 
-                              xmlns:rng="http://relaxng.org/ns/structure/1.0">
-                              <content>
-                                 <group xmlns="http://relaxng.org/ns/structure/1.0">
+               pre-existing TEI ODD. If your ODD used the RELAXNG element <gi>rng:value</gi> to
+               specify content explicitly, this must be expressed in an ODD as a <gi>valItem</gi>
+               within a <gi>valList</gi>. If your ODD used the RELAXNG element <gi>rng:element</gi>
+               to specify that any element is permitted at this point in a content model, you can do
+               something similar with the ODD <gi>anyElement</gi> element. In general, however, the
+               presence of any of the following in your old content model will require manual
+               intervention: <code>rng:anyName rng:attribute rng:data rng:element rng:except
+                  rng:name nsName rng:param rng:value</code></p>
+            <p>Here are some example <gi>content</gi> elements taken from the content models of
+               existing TEI elements: <table>
+                  <row role="label">
+                     <cell>RELAXNG Specification</cell>
+                     <cell>ODD equivalent</cell>
+                  </row>
+                  <row>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples"
+                           xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                           <content>
+                              <rng:oneOrMore>
+                                 <rng:ref name="cell"/>
+                              </rng:oneOrMore>
+                           </content>
+                        </egXML></cell>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <elementRef key="cell" minOccurs="1" maxOccurs="unbounded"/>
+                           </content>
+                        </egXML>
+                     </cell>
+                  </row>
+                  <row>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples"
+                           xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                           <content>
+                              <rng:zeroOrMore>
+                                 <rng:choice>
+                                    <rng:text/>
+                                    <rng:ref name="model.limitedPhrase"/>
+                                    <rng:ref name="model.global"/>
+                                 </rng:choice>
+                              </rng:zeroOrMore></content>
+                        </egXML></cell>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <alternate minOccurs="0" maxOccurs="unbounded">
+                                 <textNode/>
+                                 <classRef key="model.limitedPhrase"/>
+                                 <classRef key="model.global"/>
+                              </alternate>
+                           </content>
+                        </egXML>
+                     </cell>
+                  </row>
+                  <row>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples"
+                           xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                           <content>
+                              <group xmlns="http://relaxng.org/ns/structure/1.0">
+                                 <zeroOrMore>
+                                    <ref name="analytic"/>
+                                 </zeroOrMore>
+                                 <oneOrMore>
+                                    <ref name="monogr"/>
                                     <zeroOrMore>
-                                       <ref name="analytic"/>
+                                       <ref name="series"/>
                                     </zeroOrMore>
-                                    <oneOrMore>
-                                       <ref name="monogr"/>
-                                       <zeroOrMore>
-                                          <ref name="series"/>
-                                       </zeroOrMore>
-                                    </oneOrMore>
-                                    <zeroOrMore>
-                                       <choice>
-                                          <ref name="model.noteLike"/>
-                                          <ref name="model.ptrLike"/>
-                                          <ref name="relatedItem"/>
-                                          <ref name="citedRange"/>
-                                       </choice>
-                                    </zeroOrMore>
-                                 </group>
-                              </content>
-                           </egXML></cell>
-                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
-                              <content>  <sequence>
-                                 <elementRef key="analytic" minOccurs="0" maxOccurs="unbounded"/>      
+                                 </oneOrMore>
+                                 <zeroOrMore>
+                                    <choice>
+                                       <ref name="model.noteLike"/>
+                                       <ref name="model.ptrLike"/>
+                                       <ref name="relatedItem"/>
+                                       <ref name="citedRange"/>
+                                    </choice>
+                                 </zeroOrMore>
+                              </group>
+                           </content>
+                        </egXML></cell>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <sequence>
+                                 <elementRef key="analytic" minOccurs="0" maxOccurs="unbounded"/>
                                  <sequence minOccurs="1" maxOccurs="unbounded">
                                     <elementRef key="monogr"/>
                                     <elementRef key="series" minOccurs="0" maxOccurs="unbounded"/>
@@ -265,9 +272,10 @@
                                     <elementRef key="citedRange"/>
                                  </alternate>
                               </sequence>
-                              </content>
-                           </egXML>
-                           </cell></row>
+                           </content>
+                        </egXML>
+                     </cell>
+                  </row>
                </table></p>
          </div>
          <div>
@@ -383,8 +391,11 @@
                daunting. They were used to transform the whole of the pre-3.0 TEI Guideline
                specifications semi-automatically. They deal with 99% of the situations you are
                likely to encounter, but they're not guaranteed ! You can find them on Github at <ptr
-                  target="https://github.com/TEIC/TEI/tree/dev/P5/Scripts"/>: use them in good health, but at your own
-               risk.</p>
+                  target="https://github.com/TEIC/TEI/tree/dev/P5/Scripts"/>: use them in good
+               health, but at your own risk.</p>
+            <p>Don't hesitate to share your experience, good or bad, on the TEI discussion list, by
+               raising a ticket on Github, or by contributing to the TEI wiki. The TEI is a
+               community effort! </p>
          </div>
 
          <div type="schemaSpec">
