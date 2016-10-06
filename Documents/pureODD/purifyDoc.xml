@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>How to Update your ODD</title>
+            <author>Lou Burnard</author>
+         </titleStmt>
+         <publicationStmt>
+            <p>Publication Information</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Information about the source</p>
+         </sourceDesc>
+      </fileDesc>
+      <revisionDesc>
+         <change when="2016-10-01">Started draft on way home from Vienna</change>
+      </revisionDesc>
+   </teiHeader>
+   <text>
+
+      <body>
+         <div>
+            <head>What is this for?</head>
+            <p>This little guide is intended to simplify and clarify the task of maintaining or
+               updating an existing TEI customization (an ODD), in particular an ODD which was
+               written before release 3.0 of TEI P5. That release introduced several new features
+               intended to remove the system's reliance on other schema languages. These changes
+               (colloquially known as <soCalled>purification</soCalled> because their motivation was
+               to ensure that all aspects of a TEI specification should be encoded using TEI and
+               nothing else <note>See further "Durand Conundrum" paper</note>) affect only the way
+               that the content model of an element or the datatype of an attribute are defined, but
+               for completeness we have included reminders about some other customization features
+               that you may wish to review.</p>
+            <p/>
+         </div>
+         <div>
+            <head>It aint broke: why fix it?</head>
+            <p>Since release 2.0 it has been possible to tie any ODD file to a particular release of
+               the Guidelines. If you know approximately the date of the release of TEI P5 against
+               which your ODD was first compiled, you can use the <att>source</att> attribute to
+               ensure that it continues to use that source. This has the obvious advantage that you
+               don't have to do any work to maintain it, but some equally obvious disadvantages: <list>
+                  <item>You can't use any of the new features, corrections, or other improvements
+                     introduced in TEI P5 <emph>after</emph> the date your ODD was created</item>
+                  <item>Your TEI use risks becoming increasingly divergent from the mainstream, so
+                     that interchange with others will become increasingly difficult</item>
+
+               </list>
+            </p>
+            <p>Nothing in digital form is ever really finished. It's more than likely that the
+               requirements of your project will have changed a little since your ODD was first
+               designed. It's almost inevitable that as your project evolves, you'll come across
+               things you'd do differently if you could start all over again. Reviewing your ODD is
+               a very good way of thinking about doing that. </p>
+         </div>
+         <div>
+            <head>Good things to review</head>
+            <p>Here's little checklist of things you might want to review in the light of
+               experience: <list>
+                  <item>Which elements are you actually using? Beginners often think that it's
+                     better to allow almost any kind of content in their schema: an extreme case of
+                     this misapprehension leads people to use TEI All for everything. It may well be
+                     that your project started out a bit uncertain about the kind of data it would
+                     have to be able to handle. But now you've encoded umpteen gazillion pages of
+                     Whatever, you surely know a bit better the kind of things that crop up. And
+                     every element you allow for in your schema is another element you need to
+                     explain to your encoders, document, find examples for, and check that it is
+                     being used consistently (if it is used at all). It's also another element that
+                     the poor benighted software developer you finally got funding for has to be
+                     prepared to handle in that swish new interface you've been promising yourself
+                     forever.</item>
+                  <item>Reducing the number of elements permitted by your schema makes it easier for
+                     you to concentrate on the quality of your documentation, for example by
+                     introducing examples more appropriate than those provided by vanilla TEI (which
+                     somehow manage to be both generic and very specialised).</item>
+                  <item>The same considerations apply to attributes, and in particular their range
+                     of values. At the outset you may not have been sure what values to permit for
+                     the <att>foo</att> attribute on your <gi>bar</gi> elements, so you allowed
+                     anything. Now you have discovered that some of your encoders gave this
+                     attribute the value <val>centre</val>, others used <val>center</val>, and yet
+                     others used <val>middle</val>, all meaning the same thing. Now that you know
+                     what values you want, add a <gi>valList</gi> to your ODD to insist on them, and
+                     do some data cleanup.</item>
+                  <item>Has the circus moved on? You may have spent a lot of time and effort
+                     defining new elements or attributes not available in the TEI at the time, only
+                     to find that the TEI (independently or as a result of your good work) has
+                     subsequently decided to implement exactly what you did, or something like it.
+                     Maybe you can remove your old modifications and be pure TEI again. Even if the
+                     TEI decided to do things differently from you, it might be worth looking at the
+                     TEI version of your smart idea to see if it can be adapted to your needs!
+                  </item>
+               </list>
+            </p>
+            <p>And yes, it's quite likely that as a result of this review, you may well need to
+               change all your data as well as your schema. But that's a simple matter of
+               programming in XSLT.</p>
+         </div>
+         <div>
+            <head>Content Model Revision</head>
+            <p>In days of yore, (i.e. releases P1 to P3 inclusive) TEI Content Models were expressed
+               in the SGML language. The first XML release TEI P4, and all releases of P5 prior to
+               3.0 used the ISO standard RELAXNG language for this purpose. But a design goal of the
+               TEI from the start was to define an encoding scheme indepent of the metalanguage in
+               which it was expressed. We demonstrate that by using the ODD language to define
+               components which are then processed to produce documentation in a variety of formats
+               (HTML, PDF, ePub etc.) and schemas in a number of different languages (RELAXNG, W3C
+               Schema, and XML DTD). At release 3.0 we extended this principle to the definition of
+               content models, which previously had been expressed using the RELAXNG language, but
+               which are now expressed using some special purpose TEI elements. </p>
+            <p>If your customization changed the content model of any element, it will have done so
+               using expressions in RELAXNG, typically using a <gi>rng:ref</gi> element to provide
+               the name of a pattern. For example, suppose your customization defined a new element
+               with a content model of <code>macro.phraseSeq</code>. In the <gi>elementSpec</gi>
+               defining your new element, there will be a <gi>content</gi> element containing
+               something like <code>&lt;rng:ref name="macro.phraseSeq"/></code>. To keep in step
+               with the current TEI P5 release, you need to change this RELAXNG content to its
+               equivalent in the ODD language which is <code>&lt;macroRef
+                  key="macro.phraseSeq"/></code>. </p>
+            <p>In the ODD language, references to different kinds of object (elements, classes,
+               macros, etc.) in a content model are represented by different element types.The
+               following elements are available: <specList>
+                  <specDesc key="elementRef"/>
+                  <specDesc key="classRef"/>
+                  <specDesc key="macroRef"/>
+               </specList> In general, a RELAXNG content model in the form <code>&lt;rng:ref
+                  name="x"></code> will become <tag>classRef key="x"/</tag> if <ident>x</ident>
+               names a class, <tag>elementRef key="x"</tag> if it names an element, and
+                  <tag>macroRef key="x"</tag> if it names a macro. </p>
+            <p>Content models can of course be much more complicated. If your RELAXNG model uses an
+               alternation or a sequence of components, you will need to use one of the elements <specList>
+                  <specDesc key="alternate"/>
+                  <specDesc key="sequence"/>
+               </specList> to wrap them rather than the RELAXNG (semi)equivalents
+                  <tag>rng:choice</tag> and <tag>rng:group</tag> respectively. For example, this
+               RELAXNG model says that a <gi>foo</gi> can contain either a <gi>bar</gi> or a
+                  <gi>baz</gi>: <egXML xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                  xmlns="http://www.tei-c.org/ns/Examples"><rng:choice>
+                     <rng:ref name="bar"/><rng:ref name="baz"/></rng:choice></egXML> Its equivalent
+               in pure ODD would be <egXML xmlns="http://www.tei-c.org/ns/Examples"><alternate>
+                     <elementRef key="bar"/><elementRef key="baz"/></alternate></egXML>
+            </p>
+            <p>If some components of your content model are optional or repeatable, you will have
+               used the RELAXNG elements <gi>rng:oneOrMore</gi> or <tag>rng:zeroOrMore</tag>. In ODD
+               optionality and repeatability are expressed using attributes <att>minOccurs</att> and
+                  <att>maxOccurs</att>, which can be supplied for any of the elements discussed so
+               far. For example, a RELAXNG content model such as <egXML
+                  xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                  xmlns="http://www.tei-c.org/ns/Examples"><rng:oneOrMore><rng:choice>
+                        <rng:ref name="bar"/><rng:ref name="baz"
+                  /></rng:choice></rng:oneOrMore></egXML> has the following equivalent in pure ODD
+                  <egXML xmlns="http://www.tei-c.org/ns/Examples"><alternate minOccurs="1"
+                     maxOccurs="unbounded">
+                     <elementRef key="bar"/><elementRef key="baz"/></alternate></egXML></p>
+            <p>An empty element is indicated in the RELAXNG language by a special pattern called
+                  <code>empty</code>. In the ODD language, however, we indicate that an element has
+               no content by supplying an empty <gi>content</gi> element in its specification. </p>
+            <p>The ODD language also provides the following special-purpose component elements for
+               content models: <specList>
+                  <specDesc key="textNode"/>
+                  <specDesc key="valList"/>
+                  <specDesc key="anyElement"/>
+               </specList></p>
+            <p>The <gi>textNode</gi> element is provided as a replacement for the built-in RELAXNG
+               pattern <code>text</code>. There are no restrictions on where it may be placed in an
+               ODD content model, although existing schema languages mostly permit it to appear only
+               in mixed content models like the following: <egXML xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                  xmlns="http://www.tei-c.org/ns/Examples">
+                  <alternate minOccurs="0" maxOccurs="unbounded">
+                     <textNode/>
+                     <elementRef key="foo"/>
+                  </alternate></egXML></p>
+            <p>The RELAXNG language allows a number of other components within a content model, some
+               of which are difficult to convert, but few of which are likely to appear in a
+               pre-existing TEI ODD. If your ODD used the RELAXNG element
+                  <gi>rng:value</gi> to specify content explicitly, this must be expressed in an ODD
+               as a <gi>valItem</gi> within a <gi>valList</gi>. If your ODD used the
+               RELAXNG element <gi>rng:element</gi> to specify that any element is permitted at this
+               point in a content model, you can do something similar with the ODD
+                  <gi>anyElement</gi> element. In general, however, the presence of any of the
+               following in your old content model will require manual intervention:
+                  <code>rng:anyName rng:attribute rng:data rng:element rng:except rng:name nsName
+                  rng:param rng:value</code></p>
+            <p>Here are some example <gi>content</gi> elements taken from the content models
+                  of existing TEI elements: 
+                     <table>
+                        <row role="label">
+                           <cell>RELAXNG Specification</cell>
+                           <cell>ODD equivalent</cell>
+                        </row>
+                        <row>
+                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples" 
+                              xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                              <content>
+                                 <rng:oneOrMore>
+                                    <rng:ref name="cell"/>
+                                 </rng:oneOrMore>
+                              </content>
+                           </egXML></cell>
+                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                              <content>
+                                 <elementRef key="cell" minOccurs="1" maxOccurs="unbounded"/>                        
+                              </content>
+                           </egXML>
+                           </cell></row>
+                        <row>
+                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples" 
+                              xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                              <content>
+                               <rng:zeroOrMore> <rng:choice>
+                                   <rng:text/>
+                                   <rng:ref name="model.limitedPhrase"/>   
+                                   <rng:ref name="model.global"/>
+                                </rng:choice>
+                               </rng:zeroOrMore></content>
+                           </egXML></cell>
+                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                              <content>
+                                 <alternate minOccurs="0" maxOccurs="unbounded">
+                                    <textNode/>
+                                    <classRef key="model.limitedPhrase"/>
+                                    <classRef key="model.global"/>
+                                 </alternate>
+                                 
+                              </content>
+                           </egXML>
+                           </cell></row>
+                        <row>
+                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples" 
+                              xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                              <content>
+                                 <group xmlns="http://relaxng.org/ns/structure/1.0">
+                                    <zeroOrMore>
+                                       <ref name="analytic"/>
+                                    </zeroOrMore>
+                                    <oneOrMore>
+                                       <ref name="monogr"/>
+                                       <zeroOrMore>
+                                          <ref name="series"/>
+                                       </zeroOrMore>
+                                    </oneOrMore>
+                                    <zeroOrMore>
+                                       <choice>
+                                          <ref name="model.noteLike"/>
+                                          <ref name="model.ptrLike"/>
+                                          <ref name="relatedItem"/>
+                                          <ref name="citedRange"/>
+                                       </choice>
+                                    </zeroOrMore>
+                                 </group>
+                              </content>
+                           </egXML></cell>
+                           <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                              <content>  <sequence>
+                                 <elementRef key="analytic" minOccurs="0" maxOccurs="unbounded"/>      
+                                 <sequence minOccurs="1" maxOccurs="unbounded">
+                                    <elementRef key="monogr"/>
+                                    <elementRef key="series" minOccurs="0" maxOccurs="unbounded"/>
+                                 </sequence>
+                                 <alternate minOccurs="0" maxOccurs="unbounded">
+                                    <classRef key="model.noteLike"/>
+                                    <classRef key="model.ptrLike"/>
+                                    <elementRef key="relatedItem"/>
+                                    <elementRef key="citedRange"/>
+                                 </alternate>
+                              </sequence>
+                              </content>
+                           </egXML>
+                           </cell></row>
+               </table></p>
+         </div>
+         <div>
+            <head>Attribute values and datatypes</head>
+            <p>As noted above, you may wish to change your existing ODD to be more precise in the
+               way that attribute values are specified. If you decide to introduce a
+                  <gi>valList</gi> (senmi-closed or closed) to constrain the possible values of an
+               attribute you will also need to change its <gi>datatype</gi> to reference
+                  <ident>teidata.enumerated</ident>. </p>
+            <p>If the <gi>datatype</gi> element appears in your ODD already, you will need to change
+               it to use a <gi>dataRef</gi> element pointing to one of the predefined
+                  <ident>teidata</ident> datatype specifications. A set of predefined data
+               specifications using RELAXNG has been retained for compatibility reasons, but these
+               will probably be withdrawn by the end of 2017. </p>
+            <p>Proceed as follows: <list>
+                  <item>if your existing <gi>datatype</gi> contains something like <code>rng:ref
+                        name="data.xxxx"</code>, change it to <tag>dataRef
+                     key="teidata.xxxx"</tag></item>
+                  <item>if your existing <gi>datatype</gi> contains something like <code>rng:data
+                        type="xxxx"</code>, change it to <tag>dataRef name="xxxx"</tag>
+                  </item>
+                  <item>if a component of your existing <gi>datatype</gi> contains something like
+                        <code>rng:param name='pattern'</code> you will need to add an attribute
+                        <att>restriction</att> to it, giving as value the content of the
+                        <gi>rng:param</gi> element</item>
+                  <item>If the datatype being defined permits multiple values, alternation, or
+                     anything else other than a single value, you must define it in a
+                        <gi>dataSpec</gi> element, using the same components as an element content
+                     model (<gi>alternate</gi>, <att>maxOccurs</att>, etc.) Note that the
+                        <gi>datatype</gi> element permits only a single <gi>dataRef</gi> child.
+                  </item>
+               </list></p>
+            <p>Here are some example <gi>content</gi> elements taken from the data specifications
+               used by some existing TEI datatypes : <table>
+                  <row role="label">
+                     <cell>RELAXNG Specification</cell>
+                     <cell>ODD equivalent</cell>
+                  </row>
+                  <row>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <data xmlns="http://relaxng.org/ns/structure/1.0" type="NCName"/>
+                           </content>
+                        </egXML></cell>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <dataRef name="NCName"/>
+                           </content>
+                        </egXML>
+                     </cell>
+                  </row>
+                  <row role="data">
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <data xmlns="http://relaxng.org/ns/structure/1.0"
+                                 type="nonNegativeInteger">
+                                 <param name="maxInclusive">100</param>
+                              </data>
+                           </content></egXML></cell>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                              <dataRef name="nonNegativeInteger" restriction="[0-9][0-9]?"/>
+                           </content></egXML></cell>
+                  </row>
+                  <row role="data">
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples"><content>
+                              <choice xmlns="http://relaxng.org/ns/structure/1.0">
+                                 <data type="float">
+                                    <param name="minExclusive">0</param>
+                                 </data>
+                                 <value>regular</value>
+                                 <value>irregular</value>
+                                 <value>unknown</value>
+                              </choice>
+                           </content></egXML></cell>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <alternate>
+                                 <dataRef name="float"/>
+                                 <valList>
+                                    <valItem ident="regular"/>
+                                    <valItem ident="irregular"/>
+                                    <valItem ident="unknown"/>
+                                 </valList>
+                              </alternate>
+                           </content></egXML></cell>
+                  </row>
+                  <row role="data">
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <choice xmlns:rng="http://relaxng.org/ns/structure/1.0">
+                                 <rng:value>high</rng:value>
+                                 <rng:value>medium</rng:value>
+                                 <rng:value>low</rng:value>
+                                 <rng:value>unknown</rng:value>
+                              </choice>
+                           </content></egXML></cell>
+                     <cell><egXML xmlns="http://www.tei-c.org/ns/Examples">
+                           <content>
+                              <valList type="closed">
+                                 <valItem ident="high"/>
+                                 <valItem ident="medium"/>
+                                 <valItem ident="low"/>
+                                 <valItem ident="unknown"/>
+                              </valList>
+                           </content></egXML></cell>
+                  </row>
+               </table></p>
+         </div>
+         <div>
+            <head>My head hurts: where's the script?</head>
+            <p>Yes, there is a script or two you can experiment with if you find this all too
+               daunting. They were used to transform the whole of the pre-3.0 TEI Guideline
+               specifications semi-automatically. They deal with 99% of the situations you are
+               likely to encounter, but they're not guaranteed ! You can find them on Github at <ptr
+                  target="https://github.com/TEIC/TEI/tree/dev/P5/Scripts"/>: use them in good health, but at your own
+               risk.</p>
+         </div>
+
+         <div type="schemaSpec">
+            <head>Schema Specification for this document</head>
+            <p>This schema specification simply adds the tagdocs module to the existing TEI Bare ODD
+               to provide a minimal schema for encoding ODDs.</p>
+            <!-- schemaSpec ident="ODDauthoring" source="http://www.tei-c.org/release/xml/tei/custom/odd/tei_bare.odd"-->
+            <!-- that chaining didnt work. Why? -->
+            <schemaSpec ident="ODDauthoring">
+               <moduleRef key="tagdocs"/>
+               <moduleRef key="core" include="p list item label head author title"/>
+               <moduleRef key="tei"/>
+               <moduleRef key="header"
+                  include="teiHeader fileDesc titleStmt publicationStmt sourceDesc"/>
+               <moduleRef key="textstructure" include="TEI text body div front back"/>
+               <classSpec ident="att.global" mode="change" module="tei" type="atts">
+                  <attList>
+                     <attDef ident="xml:space" mode="delete"/>
+                     <attDef ident="rend" mode="delete"/>
+                     <attDef ident="xml:base" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.fragmentable" mode="delete" module="tei" type="atts"/>
+               <classSpec ident="att.divLike" mode="change" module="tei" type="atts">
+                  <attList>
+                     <attDef ident="org" mode="delete"/>
+                     <attDef ident="sample" mode="delete"/>
+                  </attList>
+               </classSpec>
+               <classSpec ident="att.declaring" mode="delete" module="tei" type="atts"/>
+               <elementSpec ident="title" mode="change" module="core">
+                  <attList>
+                     <attDef ident="level" mode="delete"/>
+                  </attList>
+               </elementSpec>
+               <elementSpec ident="TEI" mode="change" module="textstructure">
+                  <attList>
+                     <attDef ident="version" mode="delete"/>
+                  </attList>
+               </elementSpec>
+
+               <elementSpec ident="sourceDesc" mode="change" module="header">
+                  <attList>
+                     <attDef ident="default" mode="delete"/>
+                  </attList>
+               </elementSpec>
+
+
+            </schemaSpec>
+
+
+         </div>
+      </body>
+   </text>
+</TEI>
