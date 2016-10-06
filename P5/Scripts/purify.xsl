@@ -25,14 +25,13 @@
   <!-- Process TEI ODD elements that need to change. -->
   <!-- ********************************************* -->
 
-  <!-- If the <content> has unusual or complicated stuff, just copy -->
-  <!-- it rather than process it. -->
+  <!-- If the <content> has unusual or complicated stuff, -->
+  <!-- we just copy it for manual treatment later         -->
   <xsl:template match="content[
       descendant::rng:anyName
     | descendant::rng:attribute
-    | descendant::rng:attribute
     | descendant::rng:data
-    | descendant::rng:elment
+    | descendant::rng:element
     | descendant::rng:except
     | descendant::rng:name
     | descendant::rng:nsName
@@ -45,13 +44,11 @@
   <xsl:template match="exemplum">
     <xsl:copy-of select="."/>
   </xsl:template>
+ 
+  <!-- ********************************************* -->
+  <!-- Process RNG elements that need to change. -->
+  <!-- ********************************************* -->
   
-  <!-- **************************** -->
-  <!-- Process the RELAX NG itself. -->
-  <!-- **************************** -->
-  <xsl:template match="datatype/rng:ref">
-    <dataRef key="{concat('tei',rng:ref/@name)}"/>
-  </xsl:template>
   <xsl:template match="rng:ref">
     <xsl:choose>
       <xsl:when test="starts-with(@name, 'model.')">
@@ -146,10 +143,24 @@
   </xsl:template>
 
   <xsl:template match="rng:empty"/>
-
+  
+  <!-- ********************************************* -->
+  <!-- Convert datatypes .                           -->
+  <!-- ********************************************* -->
+   
+  <xsl:template match="datatype/rng:ref">
+    <dataRef key="{concat('tei',rng:ref/@name)}"/>
+  </xsl:template>
+  
   <xsl:template match="datatype/rng:data">
     <dataRef name="{rng:data/@type}"/>
   </xsl:template>
+  
+  <!-- ********************************************* -->
+  <!-- Warn about the stuff we couldn't handle.      -->
+  <!-- ********************************************* -->
+
+  
   <xsl:template match="rng:anyName | rng:attribute | rng:data | rng:element | rng:except
                      | rng:name | rng:nsName | rng:param | rng:value">
     <xsl:message><xsl:value-of select="name(.)"/>/@<xsl:value-of select="@name"/> TODO</xsl:message>
@@ -165,9 +176,9 @@
     <xsl:processing-instruction name="tei-purify">an unprocessed <xsl:value-of select="name(.)"/> ended here</xsl:processing-instruction>
   </xsl:template>
 
-  <!-- *********** -->
-  <!-- subroutines -->
-  <!-- *********** -->
+  <!-- *********************************************** -->
+  <!-- subroutine to handle repetition and optionality -->
+  <!-- *********************************************** -->
   <xsl:template name="maxmin">
     <xsl:variable name="num_siblings" select="count(../*) -1"/>
     <xsl:choose>
